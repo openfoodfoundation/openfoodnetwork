@@ -139,7 +139,7 @@ module ProductImport
     end
 
     def import_results
-      { entries: entries_json, reset_counts: reset_counts }
+      { entries: entries_json, reset_counts: }
     end
 
     def save_results
@@ -151,7 +151,7 @@ module ProductImport
           inventory_updated: inventory_updated_count,
           products_reset: products_reset_count,
         },
-        updated_ids: updated_ids,
+        updated_ids:,
         errors: errors.full_messages
       }
     end
@@ -255,9 +255,9 @@ module ProductImport
     # build_entries and buils_all_entries
     def add_malformed_csv_error(error_message)
       unless errors.added?(:importer, I18n.t('admin.product_import.model.malformed_csv',
-                                             error_message: error_message))
+                                             error_message:))
         errors.add(:importer, I18n.t('admin.product_import.model.malformed_csv',
-                                     error_message: error_message))
+                                     error_message:))
       end
     end
 

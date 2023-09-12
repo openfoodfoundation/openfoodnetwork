@@ -12,20 +12,20 @@ class Invoice
       delegate :name_to_display, :options_text, to: :variant
 
       def display_amount_with_adjustments
-        Spree::Money.new((price_with_adjustments * quantity), currency: currency)
+        Spree::Money.new((price_with_adjustments * quantity), currency:)
       end
 
       def single_display_amount_with_adjustments
-        Spree::Money.new(price_with_adjustments, currency: currency)
+        Spree::Money.new(price_with_adjustments, currency:)
       end
 
       def display_line_items_taxes(display_zero: true)
         if included_tax.positive?
-          Spree::Money.new( included_tax, currency: currency)
+          Spree::Money.new( included_tax, currency:)
         elsif added_tax.positive?
-          Spree::Money.new( added_tax, currency: currency)
+          Spree::Money.new( added_tax, currency:)
         elsif display_zero
-          Spree::Money.new(0.00, currency: currency)
+          Spree::Money.new(0.00, currency:)
         end
       end
     end

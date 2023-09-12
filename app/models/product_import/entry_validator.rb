@@ -468,12 +468,12 @@ module ProductImport
     end
 
     def mark_as_not_updatable(entry, attribute)
-      mark_as_invalid(entry, attribute: attribute,
+      mark_as_invalid(entry, attribute:,
                              error: I18n.t("admin.product_import.model.not_updatable"))
     end
 
     def mark_as_values_must_be_same(entry, attribute)
-      mark_as_invalid(entry, attribute: attribute,
+      mark_as_invalid(entry, attribute:,
                              error: I18n.t("admin.product_import.model.values_must_be_same"))
     end
 

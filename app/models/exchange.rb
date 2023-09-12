@@ -118,7 +118,7 @@ class Exchange < ApplicationRecord
     return unless variant_ids.any?
 
     ExchangeVariant.insert_all( # rubocop:disable Rails/SkipsModelValidations
-      variant_ids.map{ |variant_id| { variant_id: variant_id, exchange_id: exchange_id } }
+      variant_ids.map{ |variant_id| { variant_id:, exchange_id: } }
     )
   end
 
@@ -127,7 +127,7 @@ class Exchange < ApplicationRecord
 
     ExchangeVariant.where(variant_id: variant_ids).
       joins(:exchange).
-      where(exchanges: { order_cycle: order_cycle, incoming: false }).
+      where(exchanges: { order_cycle:, incoming: false }).
       delete_all
   end
 end

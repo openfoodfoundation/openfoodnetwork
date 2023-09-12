@@ -17,7 +17,7 @@ class WebhookDeliveryJob < ApplicationJob
     body = {
       id: job_id,
       at: Time.zone.now.to_s,
-      event: event,
+      event:,
       data: payload,
     }
 

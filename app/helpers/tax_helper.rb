@@ -4,7 +4,7 @@ module TaxHelper
   def display_taxes(taxable, display_zero: true)
     if !taxable.included_tax_total.zero?
       amount = Spree::Money.new(taxable.included_tax_total, currency: taxable.currency)
-      I18n.t(:tax_amount_included, amount: amount)
+      I18n.t(:tax_amount_included, amount:)
     elsif !taxable.additional_tax_total.zero?
       Spree::Money.new(taxable.additional_tax_total, currency: taxable.currency)
     elsif display_zero

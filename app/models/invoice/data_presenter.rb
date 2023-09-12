@@ -116,19 +116,19 @@ class Invoice
     end
 
     def display_outstanding_balance
-      Spree::Money.new(new_outstanding_balance, currency: currency)
+      Spree::Money.new(new_outstanding_balance, currency:)
     end
 
     def display_checkout_tax_total
-      Spree::Money.new(total_tax, currency: currency)
+      Spree::Money.new(total_tax, currency:)
     end
 
     def display_checkout_total_less_tax
-      Spree::Money.new(total - total_tax, currency: currency)
+      Spree::Money.new(total - total_tax, currency:)
     end
 
     def display_total
-      Spree::Money.new(total, currency: currency)
+      Spree::Money.new(total, currency:)
     end
   end
 end

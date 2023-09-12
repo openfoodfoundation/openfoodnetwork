@@ -39,7 +39,7 @@ class Customer < ApplicationRecord
 
   scope :of, ->(enterprise) { where(enterprise_id: enterprise) }
   scope :managed_by, ->(user) {
-    user&.persisted? ? where(user: user).or(of(Enterprise.managed_by(user))) : none
+    user&.persisted? ? where(user:).or(of(Enterprise.managed_by(user))) : none
   }
   scope :created_manually, -> { where(created_manually: true) }
   scope :visible, -> { where(id: Spree::Order.complete.select(:customer_id)).or(created_manually) }
@@ -61,7 +61,7 @@ class Customer < ApplicationRecord
   end
 
   def associate_user
-    self.user = user || Spree::User.find_by(email: email)
+    self.user = user || Spree::User.find_by(email:)
   end
 
   def update_orders_and_delete_canceled_subscriptions

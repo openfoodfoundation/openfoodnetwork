@@ -69,7 +69,7 @@ class JsonApiSchema
         attributes: {
           type: :object,
           properties: attributes,
-          required: required
+          required:
         },
         relationships: {
           type: :object,

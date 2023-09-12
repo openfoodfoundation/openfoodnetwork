@@ -10,7 +10,7 @@ class ReportBlob < ActiveStorage::Blob
     # before we know anything about the report file. It enables us to use the
     # same blob in the controller to read the result.
     create_before_direct_upload!(
-      filename: filename,
+      filename:,
       byte_size: 0,
       checksum: "0",
       content_type: content_type(filename),

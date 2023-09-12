@@ -16,7 +16,7 @@ module Spree
                 "#{I18n.t('spree.user_mailer.reset_password_instructions.subject')}"
 
       I18n.with_locale valid_locale(user) do
-        mail(to: user.email, subject: subject)
+        mail(to: user.email, subject:)
       end
     end
 
@@ -39,7 +39,7 @@ module Spree
       I18n.with_locale valid_locale(@user) do
         subject = t('spree.user_mailer.confirmation_instructions.subject')
         mail(to: confirmation_email_address,
-             subject: subject)
+             subject:)
       end
     end
 

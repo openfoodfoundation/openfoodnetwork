@@ -12,7 +12,7 @@ class EnterpriseMailer < ApplicationMailer
                   enterprise: @enterprise.name,
                   sitename: Spree::Config[:site_name])
       mail(to: enterprise.contact.email,
-           subject: subject)
+           subject:)
     end
   end
 
@@ -23,7 +23,7 @@ class EnterpriseMailer < ApplicationMailer
     I18n.with_locale valid_locale(@enterprise.owner) do
       subject = t('enterprise_mailer.invite_manager.subject', enterprise: @enterprise.name)
       mail(to: user.email,
-           subject: subject)
+           subject:)
     end
   end
 

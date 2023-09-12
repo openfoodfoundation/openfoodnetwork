@@ -476,8 +476,8 @@ class Enterprise < ApplicationRecord
   end
 
   def name_is_unique
-    dups = Enterprise.where(name: name)
-    dups = dups.where.not(id: id) unless new_record?
+    dups = Enterprise.where(name:)
+    dups = dups.where.not(id:) unless new_record?
 
     errors.add :name, I18n.t(:enterprise_name_error, email: dups.first.owner.email) if dups.any?
   end
@@ -581,7 +581,7 @@ class Enterprise < ApplicationRecord
   # We avoid an infinite loop and don't need to touch the whole distributor tree.
   def touch_distributors
     Enterprise.distributing_products(supplied_products.select(:id)).
-      where.not(enterprises: { id: id }).
+      where.not(enterprises: { id: }).
       update_all(updated_at: Time.zone.now)
   end
 end

@@ -14,7 +14,7 @@ class ProducerMailer < ApplicationMailer
 
       mail(
         to: @producer.contact.email,
-        subject: subject,
+        subject:,
         reply_to: @coordinator.contact.email,
         cc: @coordinator.contact.email
       )

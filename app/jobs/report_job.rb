@@ -26,7 +26,7 @@ class ReportJob < ApplicationJob
   def email_result(user, blob)
     ReportMailer.with(
       to: user.email,
-      blob: blob,
+      blob:,
     ).report_ready.deliver_later
   end
 

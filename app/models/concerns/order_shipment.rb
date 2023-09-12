@@ -42,7 +42,7 @@ module OrderShipment
 
     shipment = shipments.first
 
-    shipping_rate = shipment.shipping_rates.find_by(shipping_method_id: shipping_method_id)
+    shipping_rate = shipment.shipping_rates.find_by(shipping_method_id:)
     return unless shipping_rate
 
     shipment.selected_shipping_rate_id = shipping_rate.id
