@@ -140,7 +140,7 @@
   &.select2-container-active,
   &.select2-dropdown-open {
     .select2-choices {
-      border-color: $color-sel-hover-bg !important;
+      border-color: $color-btn-hover-bg !important;
       box-shadow: none;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
@@ -156,14 +156,14 @@
       @include border-radius($border-radius);
       margin: 0 0 3px 3px;
       background-image: none;
-      background-color: $color-sel-bg;
+      background-color: $color-btn-bg;
       border: none;
       box-shadow: none;
       color: $color-1 !important;
       font-size: 85%;
 
       &:hover {
-        background-color: $color-sel-hover-bg;
+        background-color: $color-btn-hover-bg;
       }
 
       .select2-search-choice-close {
