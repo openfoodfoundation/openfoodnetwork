@@ -92,8 +92,8 @@ module Reporting
               summary_row: proc do |_key, items, _rows|
                 order = items.first.second
                 {
-                  total_excl_tax: order.total - order.total_tax,
-                  tax: order.total_tax,
+                  total_excl_tax: order.total - (order.total_tax + voucher_tax_adjustment(order)),
+                  tax: order.total_tax + voucher_tax_adjustment(order),
                   total_incl_tax: order.total,
                   first_name: order.customer&.first_name,
                   last_name: order.customer&.last_name,
@@ -130,20 +130,36 @@ module Reporting
         end
 
         def total_excl_tax(query_result_row)
-          order(query_result_row).total - order(query_result_row).total_tax
+          order = order(query_result_row)
+          total_excl_tax = order.total - order.total_tax
+
+          # Tax adjusment is a negative value, so we need to substract to add it to the total
+          total_excl_tax - voucher_tax_adjustment(order)
         end
 
         def tax_rate_total(query_result_row)
+          total_tax = non_adjusted_tax_rate_total(query_result_row)
+
+          # Tax adjustment is already a negative value
+          order = order(query_result_row)
+          total_tax + voucher_tax_adjustment(order)
+        end
+
+        def total_incl_tax(query_result_row)
+          order(query_result_row).total -
+            order(query_result_row).total_tax +
+            non_adjusted_tax_rate_total(query_result_row)
+        end
+
+        def non_adjusted_tax_rate_total(query_result_row)
           order(query_result_row).all_adjustments
             .tax
             .where(originator_id: tax_rate_id(query_result_row))
             .pick('sum(amount)') || 0
         end
 
-        def total_incl_tax(query_result_row)
-          order(query_result_row).total -
-            order(query_result_row).total_tax +
-            tax_rate_total(query_result_row)
+        def voucher_tax_adjustment(order)
+          order.all_adjustments.voucher_tax.first&.amount || 0
         end
 
         def first_name(query_result_row)

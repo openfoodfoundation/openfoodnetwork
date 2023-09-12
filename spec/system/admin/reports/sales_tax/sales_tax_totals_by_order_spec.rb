@@ -174,7 +174,7 @@ describe "Sales Tax Totals By order" do
         OrderWorkflow.new(order).complete!
       end
 
-      pending "generates the report with the correct tax amount" do
+      it "generates the report with the correct tax amount" do
         visit_sales_tax_totals_by_order
 
         expect(page).to have_button("Go")
