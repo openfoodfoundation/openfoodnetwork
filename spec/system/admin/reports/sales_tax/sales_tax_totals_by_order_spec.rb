@@ -153,6 +153,82 @@ describe "Sales Tax Totals By order" do
         "order1@example.com"
       ].join(" "))
     end
+
+    context "with a voucher" do
+      let(:voucher) do
+        create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 10)
+      end
+
+      before do
+        Flipper.enable :vouchers
+
+        # Add voucher to the order
+        voucher.create_adjustment(voucher.code, order)
+        VoucherAdjustmentsService.new(order).update
+
+        # the enterprise fees can be known only when the user selects the variants
+        # we'll need to create them by calling recreate_all_fees!
+        order.recreate_all_fees!
+
+        order.update_totals_and_states
+        OrderWorkflow.new(order).complete!
+      end
+
+      pending "generates the report with the correct tax amount" do
+        visit_sales_tax_totals_by_order
+
+        expect(page).to have_button("Go")
+        click_on "Go"
+        expect(page.find("table.report__table thead tr").text).to have_content(table_header)
+
+        # Calculation details :
+        # Price excl tax = order.total - total_tax + voucher tax (negative number)
+        # Tax amount = Non adjusted tax - voucher tax
+        # Price incl tac = Price excl tax + non adjusted tax
+        expect(page.find("table.report__table tbody").text).to have_content([
+          "DistributorEnterpriseWithTax",
+          "oc1",
+          "ORDER_NUMBER_1",
+          "GST Food",
+          "State",
+          "1.5 %",
+          "105.39", # 109.61 - 4.61 + 0.39
+          "1.34", # 1.73 (State tax) - 0.39 (Voucher tax)
+          "106.73", # 109.61 - 4.61 + 1.73
+          "cfname",
+          "clname",
+          "ABC123",
+          "order1@example.com"
+        ].join(" "))
+
+        expect(page.find("table.report__table tbody").text).to have_content([
+          "DistributorEnterpriseWithTax",
+          "oc1",
+          "ORDER_NUMBER_1",
+          "GST Food",
+          "Country",
+          "2.5 %",
+          "105.39", # 109.61 - 4.61 + 0.39
+          "2.49", # 2.88 (country tax) - 0.39 (voucher tax)
+          "107.88",  # 109.61 - 4.61 + 2.88
+          "cfname",
+          "clname",
+          "ABC123",
+          "order1@example.com"
+        ].join(" "))
+
+        expect(page.find("table.report__table tbody").text).to have_content([
+          "TOTAL",
+          "105.39", # 109.61 - 4.61 + 0.39
+          "4.22", # 1.73 + 2.88 (state + country tax) - 0.39  (Voucher tax)
+          "109.61",
+          "cfname",
+          "clname",
+          "ABC123",
+          "order1@example.com"
+        ].join(" "))
+      end
+    end
   end
 
   context 'included tax' do
