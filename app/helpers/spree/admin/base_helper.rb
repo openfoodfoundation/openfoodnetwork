@@ -129,7 +129,7 @@ module Spree
         link_to_with_icon('icon-plus',
                           name,
                           'javascript:',
-                          data: { target: target },
+                          data: { target: },
                           class: css_classes)
       end
 

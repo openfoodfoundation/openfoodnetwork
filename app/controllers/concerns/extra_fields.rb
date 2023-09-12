@@ -5,11 +5,11 @@ module ExtraFields
   extend ActiveSupport::Concern
 
   def invalid_query_param(name, status, msg)
-    render status: status, json: json_api_error(msg, error_options:
+    render status:, json: json_api_error(msg, error_options:
       {
         title: I18n.t("api.query_param.error.title"),
         source: { parameter: name },
-        status: status,
+        status:,
         code: Rack::Utils::SYMBOL_TO_STATUS_CODE[status]
       })
   end

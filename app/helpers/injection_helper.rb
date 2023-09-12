@@ -80,14 +80,14 @@ module InjectionHelper
     inject_json "currentOrder",
                 current_order,
                 Api::CurrentOrderSerializer,
-                current_distributor: current_distributor,
-                current_order_cycle: current_order_cycle
+                current_distributor:,
+                current_order_cycle:
   end
 
   def inject_current_order_cycle
     serializer = Api::OrderCycleSerializer.new(current_order_cycle)
     json = serializer.object.present? ? serializer.to_json : "{}"
-    render partial: "json/injection_ams", locals: { name: "orderCycleData", json: json }
+    render partial: "json/injection_ams", locals: { name: "orderCycleData", json: }
   end
 
   def inject_taxons
@@ -144,7 +144,7 @@ module InjectionHelper
   def inject_json(name, data, serializer, opts = {})
     serializer_instance = serializer.new(data, opts)
     json = serializer_instance.to_json
-    render partial: "json/injection_ams", locals: { name: name, json: json }
+    render partial: "json/injection_ams", locals: { name:, json: }
   end
 
   private

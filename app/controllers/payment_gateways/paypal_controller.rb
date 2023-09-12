@@ -50,7 +50,7 @@ module PaymentGateways
           payer_id: params[:PayerID]
         ),
         amount: @order.total,
-        payment_method: payment_method
+        payment_method:
       )
 
       process_payment_completion!

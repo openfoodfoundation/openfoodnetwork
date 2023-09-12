@@ -31,7 +31,7 @@ class LineItemsController < BaseController
 
   def unauthorized
     status = spree_current_user ? 403 : 401
-    render(body: nil, status: status) && return
+    render(body: nil, status:) && return
   end
 
   def not_found

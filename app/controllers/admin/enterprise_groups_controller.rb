@@ -39,7 +39,7 @@ module Admin
     # The ! version is important to raise a RecordNotFound error.
     def find_resource
       permalink = params[:id] || params[:enterprise_group_id]
-      EnterpriseGroup.find_by!(permalink: permalink)
+      EnterpriseGroup.find_by!(permalink:)
     end
 
     private

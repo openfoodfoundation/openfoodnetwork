@@ -38,7 +38,7 @@ module Admin
         format.html
         format.json {
           render_as_json @collection, ams_prefix: params[:ams_prefix],
-                                      spree_current_user: spree_current_user
+                                      spree_current_user:
         }
       end
     end
@@ -72,7 +72,7 @@ module Admin
           format.html { redirect_to location_after_save }
           format.js   { render layout: false }
           format.json {
-            render_as_json @object, ams_prefix: 'index', spree_current_user: spree_current_user
+            render_as_json @object, ams_prefix: 'index', spree_current_user:
           }
         end
       else
@@ -125,7 +125,7 @@ module Admin
             json: @collection,
             each_serializer: Api::Admin::ForOrderCycle::EnterpriseSerializer,
             order_cycle: @order_cycle,
-            spree_current_user: spree_current_user
+            spree_current_user:
           )
         end
       end
@@ -135,7 +135,7 @@ module Admin
       respond_to do |format|
         format.json do
           render_as_json @collection, ams_prefix: params[:ams_prefix] || 'basic',
-                                      spree_current_user: spree_current_user
+                                      spree_current_user:
         end
       end
     end
@@ -182,7 +182,7 @@ module Admin
       when :for_order_cycle
         @order_cycle = OrderCycle.find_by(id: params[:order_cycle_id]) if params[:order_cycle_id]
         coordinator = Enterprise.find_by(id: params[:coordinator_id]) if params[:coordinator_id]
-        @order_cycle ||= OrderCycle.new(coordinator: coordinator) if coordinator.present?
+        @order_cycle ||= OrderCycle.new(coordinator:) if coordinator.present?
 
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user, @order_cycle)
           .visible_enterprises

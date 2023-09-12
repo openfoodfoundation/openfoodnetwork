@@ -48,7 +48,7 @@ module Admin
     private
 
     def load_enterprise_fee_set
-      @enterprise_fee_set = Sets::EnterpriseFeeSet.new collection: collection
+      @enterprise_fee_set = Sets::EnterpriseFeeSet.new collection:
     end
 
     def load_data
@@ -61,7 +61,7 @@ module Admin
       when :for_order_cycle
         order_cycle = OrderCycle.find_by(id: params[:order_cycle_id]) if params[:order_cycle_id]
         coordinator = Enterprise.find_by(id: params[:coordinator_id]) if params[:coordinator_id]
-        order_cycle ||= OrderCycle.new(coordinator: coordinator) if coordinator.present?
+        order_cycle ||= OrderCycle.new(coordinator:) if coordinator.present?
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user,
                                                                  order_cycle).visible_enterprises
         EnterpriseFee.for_enterprises(enterprises).order('enterprise_id', 'fee_type', 'name')

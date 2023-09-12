@@ -51,7 +51,7 @@ module Admin
 
     def update_positions
       params[:positions].each do |id, index|
-        model_class.where(id: id).update_all(position: index)
+        model_class.where(id:).update_all(position: index)
       end
 
       respond_to do |format|

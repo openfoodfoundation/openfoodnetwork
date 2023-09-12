@@ -189,7 +189,7 @@ module Admin
       orders_close_at_gt = raw_params[:q]&.delete(:orders_close_at_gt) || 31.days.ago
       raw_params[:q] = {
         g: [raw_params.delete(:q) || {}, { m: 'or',
-                                           orders_close_at_gt: orders_close_at_gt,
+                                           orders_close_at_gt:,
                                            orders_close_at_null: true }]
       }
       @collection = collection

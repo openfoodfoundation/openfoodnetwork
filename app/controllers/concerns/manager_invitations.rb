@@ -5,7 +5,7 @@ module ManagerInvitations
 
   def create_new_manager(email, enterprise)
     password = Devise.friendly_token
-    new_user = Spree::User.create(email: email, unconfirmed_email: email, password: password)
+    new_user = Spree::User.create(email:, unconfirmed_email: email, password:)
     new_user.reset_password_token = Devise.friendly_token
     # Same time as used in Devise's lib/devise/models/recoverable.rb.
     new_user.reset_password_sent_at = Time.now.utc
