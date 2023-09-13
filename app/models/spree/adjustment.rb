@@ -109,7 +109,7 @@ module Spree
       if originator.present?
         amount = originator.compute_amount(calculable || adjustable)
         update_columns(
-          amount: amount,
+          amount:,
           updated_at: Time.zone.now,
         )
       end
@@ -122,7 +122,7 @@ module Spree
     end
 
     def display_amount
-      Spree::Money.new(amount, currency: currency)
+      Spree::Money.new(amount, currency:)
     end
 
     def admin?

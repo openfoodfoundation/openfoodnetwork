@@ -92,7 +92,7 @@ module Spree
     end
 
     def add_shipping_method(shipping_method, selected = false)
-      shipping_rates.create(shipping_method: shipping_method, selected: selected)
+      shipping_rates.create(shipping_method:, selected:)
     end
 
     def selected_shipping_rate
@@ -127,7 +127,7 @@ module Spree
              .exclude?(original_shipping_method_id)
         cost = estimator.calculate_cost(shipping_method, to_package)
         unless cost.nil?
-          original_shipping_rate = shipping_method.shipping_rates.new(cost: cost)
+          original_shipping_rate = shipping_method.shipping_rates.new(cost:)
           self.shipping_rates = distributor_shipping_rates + [original_shipping_rate]
           self.selected_shipping_rate_id = original_shipping_rate.id
         end
@@ -167,7 +167,7 @@ module Spree
     end
 
     def display_cost
-      Spree::Money.new(cost, currency: currency)
+      Spree::Money.new(cost, currency:)
     end
 
     alias_method :display_amount, :display_cost
@@ -177,7 +177,7 @@ module Spree
     end
 
     def display_item_cost
-      Spree::Money.new(item_cost, currency: currency)
+      Spree::Money.new(item_cost, currency:)
     end
 
     def update_amounts
@@ -195,7 +195,7 @@ module Spree
         states = {}
         units.group_by(&:state).each { |state, iu| states[state] = iu.count }
         scoper.scope(variant)
-        OpenStruct.new(variant: variant, quantity: units.length, states: states)
+        OpenStruct.new(variant:, quantity: units.length, states:)
       end
     end
 
@@ -268,7 +268,7 @@ module Spree
     end
 
     def set_up_inventory(state, variant, order)
-      inventory_units.create(variant_id: variant.id, state: state, order_id: order.id)
+      inventory_units.create(variant_id: variant.id, state:, order_id: order.id)
     end
 
     def fee_adjustment
@@ -361,7 +361,7 @@ module Spree
 
     def send_shipped_email
       delivery = !!shipping_method.require_ship_address
-      ShipmentMailer.shipped_email(id, delivery: delivery).deliver_later
+      ShipmentMailer.shipped_email(id, delivery:).deliver_later
     end
 
     def update_adjustments

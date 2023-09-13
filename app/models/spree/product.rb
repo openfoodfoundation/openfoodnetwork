@@ -220,7 +220,7 @@ module Spree
       ActiveRecord::Base.transaction do
         property = Property.where(name: property_name).first_or_create!(presentation: property_name)
         product_property = ProductProperty.where(product: self,
-                                                 property: property).first_or_initialize
+                                                 property:).first_or_initialize
         product_property.value = property_value
         product_property.save!
       end

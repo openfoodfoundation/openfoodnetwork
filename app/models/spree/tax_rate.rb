@@ -95,10 +95,10 @@ module Spree
 
       adjustments.create!(
         adjustable: item,
-        amount: amount,
-        order: order,
+        amount:,
+        order:,
         label: create_label(amount),
-        included: included
+        included:
       )
     end
 

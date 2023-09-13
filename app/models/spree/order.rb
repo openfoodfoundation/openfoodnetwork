@@ -168,8 +168,8 @@ module Spree
     scope :finalized, -> { where(state: FINALIZED_STATES) }
     scope :complete, -> { where.not(completed_at: nil) }
     scope :incomplete, -> { where(completed_at: nil) }
-    scope :by_state, lambda { |state| where(state: state) }
-    scope :not_state, lambda { |state| where.not(state: state) }
+    scope :by_state, lambda { |state| where(state:) }
+    scope :not_state, lambda { |state| where.not(state:) }
 
     def initialize(*_args)
       @checkout_processing = nil
@@ -193,15 +193,15 @@ module Spree
     end
 
     def display_item_total
-      Spree::Money.new(item_total, currency: currency)
+      Spree::Money.new(item_total, currency:)
     end
 
     def display_adjustment_total
-      Spree::Money.new(adjustment_total, currency: currency)
+      Spree::Money.new(adjustment_total, currency:)
     end
 
     def display_total
-      Spree::Money.new(total, currency: currency)
+      Spree::Money.new(total, currency:)
     end
 
     def to_param
@@ -312,9 +312,9 @@ module Spree
 
       # Persist the changes we just made,
       #   but don't use save since we might have an invalid address associated
-      self.class.unscoped.where(id: id).update_all(email: user.email,
-                                                   user_id: user.id,
-                                                   created_by_id: created_by_id)
+      self.class.unscoped.where(id:).update_all(email: user.email,
+                                                user_id: user.id,
+                                                created_by_id:)
     end
 
     def generate_order_number
@@ -393,7 +393,7 @@ module Spree
         previous_state: 'cart',
         next_state: 'complete',
         name: 'order',
-        user_id: user_id
+        user_id:
       )
     end
 
@@ -673,7 +673,7 @@ module Spree
     end
 
     def registered_email?
-      Spree::User.exists?(email: email)
+      Spree::User.exists?(email:)
     end
 
     def adjustments_fetcher

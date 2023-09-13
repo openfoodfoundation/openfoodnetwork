@@ -9,9 +9,9 @@ class InviteManagerReflex < ApplicationReflex
 
     authorize! :edit, enterprise
 
-    existing_user = Spree::User.find_by(email: email)
+    existing_user = Spree::User.find_by(email:)
 
-    locals = { error: nil, success: nil, email: email, enterprise: enterprise }
+    locals = { error: nil, success: nil, email:, enterprise: }
 
     if existing_user
       locals[:error] = I18n.t('admin.enterprises.invite_manager.user_already_exists')
@@ -36,7 +36,7 @@ class InviteManagerReflex < ApplicationReflex
   def return_morph(locals)
     morph "#add_manager_modal",
           with_locale {
-            render(partial: "admin/enterprises/form/add_new_unregistered_manager", locals: locals)
+            render(partial: "admin/enterprises/form/add_new_unregistered_manager", locals:)
           }
   end
 end

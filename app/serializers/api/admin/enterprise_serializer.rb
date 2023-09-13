@@ -75,7 +75,7 @@ module Api
           return tag_group if tag_group[:tags].length == tags.length &&
                               (tag_group[:tags] & tags) == tag_group[:tags]
         end
-        { tags: tags, rules: [] }
+        { tags:, rules: [] }
       end
 
       private

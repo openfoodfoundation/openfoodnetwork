@@ -51,7 +51,7 @@ module Admin
       cancelled_orders.each do |order|
         cable_ready.replace(
           selector: dom_id(order),
-          html: render(partial: "spree/admin/orders/table_row", locals: { order: order })
+          html: render(partial: "spree/admin/orders/table_row", locals: { order: })
         )
       end
 
@@ -89,7 +89,7 @@ module Admin
     end
 
     def success(i18n_key, count)
-      flash[:success] = with_locale { I18n.t(i18n_key, count: count) }
+      flash[:success] = with_locale { I18n.t(i18n_key, count:) }
       cable_ready.dispatch_event(name: "modal:close")
       morph_admin_flashes
     end

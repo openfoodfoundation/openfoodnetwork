@@ -33,7 +33,7 @@ module Spree
     end
 
     def display_amount
-      Spree::Money.new(amount, currency: currency)
+      Spree::Money.new(amount, currency:)
     end
 
     def add_variant(variant_id, quantity)
@@ -101,7 +101,7 @@ module Spree
       Adjustment.create(
         amount: -amount.abs,
         label: I18n.t('spree.rma_credit'),
-        order: order,
+        order:,
         adjustable: order,
         originator: self
       )

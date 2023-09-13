@@ -13,7 +13,7 @@ class WhiteLabelReflex < ApplicationReflex
 
     html = with_locale {
       render(partial: "admin/enterprises/form/white_label",
-             locals: { f: f, enterprise: @enterprise })
+             locals: { f:, enterprise: @enterprise })
     }
     morph "#white_label_panel", html
 

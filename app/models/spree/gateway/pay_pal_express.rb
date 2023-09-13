@@ -100,7 +100,7 @@ module Spree
             refunded_at: Time.now,
             refund_transaction_id: refund_transaction_response.RefundTransactionID,
             state: "refunded",
-            refund_type: refund_type
+            refund_type:
           )
 
           payment.class.create!(

@@ -102,7 +102,7 @@ module Spree
     end
 
     def money
-      Spree::Money.new(amount, currency: currency)
+      Spree::Money.new(amount, currency:)
     end
     alias display_amount money
 
@@ -220,7 +220,7 @@ module Spree
     # Makes newly entered payments invalidate previously entered payments so the most recent payment
     # is used by the gateway.
     def invalidate_old_payments
-      order.payments.incomplete.where.not(id: id).each do |payment|
+      order.payments.incomplete.where.not(id:).each do |payment|
         # Using update_column skips validations and so it skips validate_source. As we are just
         # invalidating past payments here, we don't want to validate all of them at this stage.
         payment.update_columns(
@@ -245,7 +245,7 @@ module Spree
     # and this is it. Related to #1998.
     # See https://github.com/spree/spree/issues/1998#issuecomment-12869105
     def set_unique_identifier
-      self.identifier = generate_identifier while self.class.exists?(identifier: identifier)
+      self.identifier = generate_identifier while self.class.exists?(identifier:)
     end
 
     def generate_identifier

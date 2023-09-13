@@ -19,7 +19,7 @@ module Spree
     delegate :name, to: :shipping_method
 
     def display_price
-      Spree::Money.new(cost, { currency: currency })
+      Spree::Money.new(cost, { currency: })
     end
 
     alias_method :display_cost, :display_price

@@ -145,8 +145,8 @@ module Spree
             state_changes.create(
               previous_state: old_state,
               next_state: __send__(state),
-              name: name,
-              user_id: user_id
+              name:,
+              user_id:
             )
           end
 

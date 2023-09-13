@@ -142,12 +142,12 @@ module Spree
     alias total amount
 
     def single_money
-      Spree::Money.new(price, currency: currency)
+      Spree::Money.new(price, currency:)
     end
     alias single_display_amount single_money
 
     def money
-      Spree::Money.new(amount, currency: currency)
+      Spree::Money.new(amount, currency:)
     end
     alias display_total money
     alias display_amount money
@@ -209,7 +209,7 @@ module Spree
     end
 
     def single_display_amount_with_adjustments
-      Spree::Money.new(price_with_adjustments, currency: currency)
+      Spree::Money.new(price_with_adjustments, currency:)
     end
 
     def amount_with_adjustments
@@ -219,11 +219,11 @@ module Spree
     end
 
     def display_amount_with_adjustments
-      Spree::Money.new(amount_with_adjustments, currency: currency)
+      Spree::Money.new(amount_with_adjustments, currency:)
     end
 
     def display_included_tax
-      Spree::Money.new(included_tax, currency: currency)
+      Spree::Money.new(included_tax, currency:)
     end
 
     def unit_value

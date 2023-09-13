@@ -18,7 +18,7 @@ module Spree
 
     # Wrapper for creating a new stock item respecting the backorderable config
     def propagate_variant(variant)
-      stock_items.create!(variant: variant, backorderable: backorderable_default)
+      stock_items.create!(variant:, backorderable: backorderable_default)
     end
 
     def stock_item(variant)
@@ -26,7 +26,7 @@ module Spree
     end
 
     def stock_item_or_create(variant)
-      stock_item(variant) || stock_items.create(variant: variant)
+      stock_item(variant) || stock_items.create(variant:)
     end
 
     def count_on_hand(variant)

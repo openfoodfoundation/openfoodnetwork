@@ -69,7 +69,7 @@ module Spree
         customer, payment_method =
           Stripe::CreditCardCloner.new(creditcard, stripe_account_id).find_or_clone
 
-        options = basic_options(gateway_options).merge(customer: customer, off_session: true)
+        options = basic_options(gateway_options).merge(customer:, off_session: true)
         provider.purchase(money, payment_method, options)
       rescue Stripe::StripeError => e
         failed_activemerchant_billing_response(e.message)
@@ -164,7 +164,7 @@ module Spree
         state = payment_intent_response.status
         return if state == 'requires_capture'
 
-        raise Stripe::StripeError, I18n.t(:invalid_payment_state, state: state)
+        raise Stripe::StripeError, I18n.t(:invalid_payment_state, state:)
       end
 
       def fetch_payment(creditcard, gateway_options)

@@ -30,8 +30,8 @@ class Voucher < ApplicationRecord
     adjustment_attributes = {
       amount: 0,
       originator: self,
-      order: order,
-      label: label,
+      order:,
+      label:,
       mandatory: false,
       state: "open",
       tax_category: nil
