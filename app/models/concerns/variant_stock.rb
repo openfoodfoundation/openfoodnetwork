@@ -122,7 +122,7 @@ module VariantStock
     # This is the original Spree::StockLocation#move,
     #   except that we raise an error if the stock item is missing,
     #   because, unlike Spree, we should always have exactly one stock item per variant.
-    stock_item.stock_movements.create!(quantity: quantity, originator: originator)
+    stock_item.stock_movements.create!(quantity:, originator:)
   end
 
   private

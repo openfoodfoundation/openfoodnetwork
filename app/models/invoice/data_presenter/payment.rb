@@ -14,7 +14,7 @@ class Invoice
       end
 
       def display_amount
-        Spree::Money.new(amount, currency: currency)
+        Spree::Money.new(amount, currency:)
       end
 
       def payment_method_name

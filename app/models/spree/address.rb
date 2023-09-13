@@ -86,13 +86,13 @@ module Spree
     def active_merchant_hash
       {
         name: full_name,
-        address1: address1,
-        address2: address2,
-        city: city,
+        address1:,
+        address2:,
+        city:,
         state: state_text,
         zip: zipcode,
         country: country.try(:iso),
-        phone: phone
+        phone:
       }
     end
 

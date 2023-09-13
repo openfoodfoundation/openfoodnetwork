@@ -8,7 +8,7 @@ class PaymentMailer < ApplicationMailer
     subject = I18n.t('spree.payment_mailer.authorize_payment.subject',
                      distributor: @payment.order.distributor.name)
     I18n.with_locale valid_locale(@payment.order.user) do
-      mail(to: payment.order.email, subject: subject)
+      mail(to: payment.order.email, subject:)
     end
   end
 
@@ -19,7 +19,7 @@ class PaymentMailer < ApplicationMailer
                      order: @payment.order)
     I18n.with_locale valid_locale(shop_owner) do
       mail(to: shop_owner.email,
-           subject: subject)
+           subject:)
     end
   end
 end

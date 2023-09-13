@@ -45,13 +45,13 @@ module CalculatedAdjustments
     return if amount.zero? && !mandatory
 
     adjustment_attributes = {
-      amount: amount,
+      amount:,
       originator: self,
       order: order_object_for(adjustable),
-      label: label,
-      mandatory: mandatory,
-      state: state,
-      tax_category: tax_category
+      label:,
+      mandatory:,
+      state:,
+      tax_category:
     }
 
     if adjustable.respond_to?(:adjustments)

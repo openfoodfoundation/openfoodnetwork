@@ -57,7 +57,7 @@ class SubscriptionMailer < ApplicationMailer
       confirm_email_subject = t('spree.order_mailer.confirm_email.subject')
       subject = "#{Spree::Config[:site_name]} #{confirm_email_subject} ##{order.number}"
       mail(to: order.email,
-           subject: subject,
+           subject:,
            reply_to: order.distributor.contact.email)
     end
   end
