@@ -19,7 +19,7 @@
             .name {{ product.name }}
           .supplier {{ product.supplier_name }}
 
-        .exchange-product-variant{'ng-repeat' => 'variant in product.variants | visibleVariants:exchange:order_cycle.visible_variants_for_outgoing_exchanges | filter:variantSuppliedToOrderCycle'}
+        .exchange-product-variant{'ng-repeat' => 'variant in product.variants | visibleVariants:exchange:order_cycle.visible_variants_for_outgoing_exchanges | filter:variantSuppliedToOrderCycle as filteredVariants'}
           %label
             %input{ type: 'checkbox', name: 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
               value: 1,
@@ -27,5 +27,8 @@
               'id' => 'order_cycle_outgoing_exchange_{{ $parent.$parent.$index }}_variants_{{ variant.id }}',
               'ng-disabled' => '!order_cycle.editable_variants_for_outgoing_exchanges.hasOwnProperty(exchange.enterprise_id) || order_cycle.editable_variants_for_outgoing_exchanges[exchange.enterprise_id].indexOf(variant.id) < 0' }
             {{ variant.label }}
+        
+        %em{ 'ng-if' => 'filteredVariants.length === 0' }
+          {{ 'js.admin.panels.exchange_products.no_variants' | t }}
 
     %div{ 'ng-include' => "'admin/panels/exchange_products_panel_footer.html'" }

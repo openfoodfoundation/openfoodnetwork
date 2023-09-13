@@ -1,5 +1,7 @@
 .exchange-load-all-variants
   %div
     {{ 'js.admin.panels.exchange_products.variants_loaded' | t:{ num_of_variants_loaded: enterprises[exchange.enterprise_id].loaded_variants, total_number_of_variants: exchangeTotalVariants(exchange) } }}
+    %em{ 'ng-if': 'enterprises[exchange.enterprise_id].loaded_variants > exchangeTotalVariants(exchange)' }
+      {{ 'js.admin.panels.exchange_products.some_variants_hidden' | t }}
     %a{ 'ng-click' => 'loadAllExchangeProducts(exchange)', 'ng-show' => 'enterprises[exchange.enterprise_id].last_page_loaded < enterprises[exchange.enterprise_id].num_of_pages' }
       {{ 'js.admin.panels.exchange_products.load_all_variants' | t }}
