@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require DfcProvider::Engine.root.join("spec/spec_helper")
+require_relative "../spec_helper"
 
 describe EnterpriseBuilder do
   subject(:builder) { described_class }
@@ -21,7 +21,7 @@ describe EnterpriseBuilder do
 
     it "assigns a semantic id" do
       expect(result.semanticId).to eq(
-        "http://test.host/api/dfc-v1.7/enterprises/10000"
+        "http://test.host/api/dfc/enterprises/10000"
       )
     end
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require DfcProvider::Engine.root.join("spec/swagger_helper")
+require_relative "../swagger_helper"
 
-describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_autodoc: true do
+describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true do
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) do
     create(
@@ -23,7 +23,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rs
 
   before { login_as user }
 
-  path "/api/dfc-v1.7/enterprises/{id}" do
+  path "/api/dfc/enterprises/{id}" do
     get "Show enterprise" do
       parameter name: :id, in: :path, type: :string
       produces "application/json"

@@ -14,7 +14,7 @@ describe "API documentation", type: :request do
   end
 
   it "can load the Swagger config" do
-    get "/api-docs/v1/swagger.yaml"
+    get "/api-docs/v1.yaml"
     expect(response).to have_http_status :success
   end
 end

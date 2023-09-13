@@ -14,7 +14,7 @@ describe AddressBuilder do
   describe ".address" do
     it "assigns a semantic id" do
       expect(result.semanticId).to eq(
-        "http://test.host/api/dfc-v1.7/addresses/1"
+        "http://test.host/api/dfc/addresses/1"
       )
     end
 

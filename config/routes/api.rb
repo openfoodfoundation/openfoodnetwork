@@ -6,12 +6,12 @@ Openfoodnetwork::Application.routes.draw do
 
     # Mount DFC API endpoints
     #
-    # Latest implemented version:
-    mount DfcProvider::Engine, at: '/dfc/'
-
     # The DFC prototype is still pointing to the old URL though:
     mount DfcProvider::Engine, at: '/dfc-v1.6/', as: :legacy_dfc_provider_engine
     mount DfcProvider::Engine, at: '/dfc-v1.7/', as: :v1_7_dfc_provider_engine
+
+    # Latest implemented version:
+    mount DfcProvider::Engine, at: '/dfc/'
 
     namespace :v0 do
       resources :products do

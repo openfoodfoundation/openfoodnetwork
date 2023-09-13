@@ -2,14 +2,14 @@
 
 require DfcProvider::Engine.root.join("spec/swagger_helper")
 
-describe "Addresses", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswag_autodoc: true do
+describe "Addresses", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true do
   let(:user) { create(:oidc_user) }
   let(:address) { create(:address, id: 40_000) }
   let(:result) { json_response }
 
   before { login_as user }
 
-  path "/api/dfc-v1.7/addresses/{id}" do
+  path "/api/dfc/addresses/{id}" do
     get "Show address" do
       parameter name: :id, in: :path, type: :string
       produces "application/json"
@@ -20,7 +20,7 @@ describe "Addresses", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml", rswa
         before { create(:enterprise, owner: user, address:) }
 
         run_test! do
-          expect(result["@id"]).to eq "http://test.host/api/dfc-v1.7/addresses/40000"
+          expect(result["@id"]).to eq "http://test.host/api/dfc/addresses/40000"
           expect(result["@type"]).to eq "dfc-b:Address"
         end
       end

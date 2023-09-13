@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require Rails.root.join('lib/data_food_consortium/connector/connector')
+require_relative "../../../spec_helper"
+require "data_food_consortium/connector/connector"
 
 describe DataFoodConsortium::Connector::Importer do
   let(:connector) { DataFoodConsortium::Connector::Connector.instance }

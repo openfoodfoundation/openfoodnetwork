@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require DfcProvider::Engine.root.join("spec/spec_helper")
+require_relative "../spec_helper"
 
 describe SuppliedProductBuilder do
   subject(:builder) { described_class }
@@ -13,7 +13,7 @@ describe SuppliedProductBuilder do
       product = builder.supplied_product(variant)
 
       expect(product.semanticId).to eq(
-        "http://test.host/api/dfc-v1.7/enterprises/7/supplied_products/5"
+        "http://test.host/api/dfc/enterprises/7/supplied_products/5"
       )
     end
 

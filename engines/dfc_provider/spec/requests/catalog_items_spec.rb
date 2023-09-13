@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require DfcProvider::Engine.root.join("spec/swagger_helper")
+require_relative "../swagger_helper"
 
-describe "CatalogItems", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
+describe "CatalogItems", type: :request, swagger_doc: "dfc.yaml",
                          rswag_autodoc: true do
   let(:user) { create(:oidc_user, id: 12_345) }
   let(:enterprise) {
@@ -23,7 +23,7 @@ describe "CatalogItems", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
 
   before { login_as user }
 
-  path "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items" do
+  path "/api/dfc/enterprises/{enterprise_id}/catalog_items" do
     parameter name: :enterprise_id, in: :path, type: :string
 
     get "List CatalogItems" do
@@ -77,7 +77,7 @@ describe "CatalogItems", type: :request, swagger_doc: "dfc-v1.7/swagger.yaml",
     end
   end
 
-  path "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items/{id}" do
+  path "/api/dfc/enterprises/{enterprise_id}/catalog_items/{id}" do
     parameter name: :enterprise_id, in: :path, type: :string
     parameter name: :id, in: :path, type: :string
 

@@ -38,7 +38,7 @@ security:
 - ofn_api_token: []
 - ofn_session: []
 paths:
-  "/api/dfc-v1.7/addresses/{id}":
+  "/api/dfc/addresses/{id}":
     get:
       summary: Show address
       parameters:
@@ -47,6 +47,8 @@ paths:
         required: true
         schema:
           type: string
+      tags:
+      - Addresses
       responses:
         '200':
           description: successful
@@ -56,7 +58,7 @@ paths:
                 test_example:
                   value:
                     "@context": https://www.datafoodconsortium.org
-                    "@id": http://test.host/api/dfc-v1.7/addresses/40000
+                    "@id": http://test.host/api/dfc/addresses/40000
                     "@type": dfc-b:Address
                     dfc-b:hasStreet: 10 Lovely Street
                     dfc-b:hasPostalCode: '20170'
@@ -64,7 +66,7 @@ paths:
                     dfc-b:hasCountry: Australia
         '404':
           description: not found
-  "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items":
+  "/api/dfc/enterprises/{enterprise_id}/catalog_items":
     parameters:
     - name: enterprise_id
       in: path
@@ -73,6 +75,8 @@ paths:
         type: string
     get:
       summary: List CatalogItems
+      tags:
+      - CatalogItems
       responses:
         '404':
           description: not found
@@ -85,23 +89,23 @@ paths:
                   value:
                     "@context": https://www.datafoodconsortium.org
                     "@graph":
-                    - "@id": http://test.host/api/dfc-v1.7/persons/12345
+                    - "@id": http://test.host/api/dfc/persons/12345
                       "@type": dfc-b:Person
-                      dfc-b:affiliates: http://test.host/api/dfc-v1.7/enterprises/10000
-                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000
+                      dfc-b:affiliates: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000
                       "@type": dfc-b:Enterprise
-                      dfc-b:hasAddress: http://test.host/api/dfc-v1.7/addresses/40000
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
                       dfc-b:hasName: Fred's Farm
                       dfc-b:hasDescription: Beautiful
-                      dfc-b:supplies: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
-                      dfc-b:manages: http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
-                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
+                      dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       "@type": dfc-b:CatalogItem
-                      dfc-b:references: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       dfc-b:sku: AR
                       dfc-b:stockLimitation: 0
-                      dfc-b:offeredThrough: http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
-                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple
                       dfc-b:description: Red
@@ -114,13 +118,13 @@ paths:
                       dfc-b:lifetime: ''
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
-                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
                       dfc-b:price: 19.99
                       dfc-b:stockLimitation: 0
         '401':
           description: unauthorized
-  "/api/dfc-v1.7/enterprises/{enterprise_id}/catalog_items/{id}":
+  "/api/dfc/enterprises/{enterprise_id}/catalog_items/{id}":
     parameters:
     - name: enterprise_id
       in: path
@@ -134,6 +138,8 @@ paths:
         type: string
     get:
       summary: Show CatalogItem
+      tags:
+      - CatalogItems
       responses:
         '200':
           description: success
@@ -144,13 +150,13 @@ paths:
                   value:
                     "@context": https://www.datafoodconsortium.org
                     "@graph":
-                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       "@type": dfc-b:CatalogItem
-                      dfc-b:references: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       dfc-b:sku: AR
                       dfc-b:stockLimitation: 0
-                      dfc-b:offeredThrough: http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
-                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
                       dfc-b:price: 19.99
                       dfc-b:stockLimitation: 0
@@ -159,6 +165,8 @@ paths:
     put:
       summary: Update CatalogItem
       parameters: []
+      tags:
+      - CatalogItems
       responses:
         '204':
           description: no content
@@ -226,7 +234,7 @@ paths:
                     "@type": "@id"
                 dfc-b:stockLimitation: '3'
                 dfc-b:sku: new-sku
-  "/api/dfc-v1.7/enterprises/{id}":
+  "/api/dfc/enterprises/{id}":
     get:
       summary: Show enterprise
       parameters:
@@ -235,6 +243,8 @@ paths:
         required: true
         schema:
           type: string
+      tags:
+      - Enterprises
       responses:
         '200':
           description: successful
@@ -245,21 +255,21 @@ paths:
                   value:
                     "@context": https://www.datafoodconsortium.org
                     "@graph":
-                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000
+                    - "@id": http://test.host/api/dfc/enterprises/10000
                       "@type": dfc-b:Enterprise
-                      dfc-b:hasAddress: http://test.host/api/dfc-v1.7/addresses/40000
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
                       dfc-b:hasName: Fred's Farm
                       dfc-b:hasDescription: This is an awesome enterprise
                       dfc-b:VATnumber: 123 456
-                      dfc-b:supplies: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
-                      dfc-b:manages: http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
-                    - "@id": http://test.host/api/dfc-v1.7/addresses/40000
+                      dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                    - "@id": http://test.host/api/dfc/addresses/40000
                       "@type": dfc-b:Address
                       dfc-b:hasStreet: 42 Doveton Street
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
                       dfc-b:hasCountry: Australia
-                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple
                       dfc-b:description: Round
@@ -272,15 +282,15 @@ paths:
                       dfc-b:lifetime: ''
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
-                    - "@id": http://test.host/api/dfc-v1.7/enterprises/10000/catalog_items/10001
+                    - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       "@type": dfc-b:CatalogItem
-                      dfc-b:references: http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                      dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       dfc-b:sku: APP
                       dfc-b:stockLimitation: 0
-                      dfc-b:offeredThrough: http://test.host/api/dfc-v1.7/enterprises/10000/offers/10001
+                      dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
         '404':
           description: not found
-  "/api/dfc-v1.7/persons/{id}":
+  "/api/dfc/persons/{id}":
     get:
       summary: Show person
       parameters:
@@ -289,6 +299,8 @@ paths:
         required: true
         schema:
           type: string
+      tags:
+      - Persons
       responses:
         '200':
           description: successful
@@ -298,11 +310,11 @@ paths:
                 test_example:
                   value:
                     "@context": https://www.datafoodconsortium.org
-                    "@id": http://test.host/api/dfc-v1.7/persons/10000
+                    "@id": http://test.host/api/dfc/persons/10000
                     "@type": dfc-b:Person
         '404':
           description: not found
-  "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products":
+  "/api/dfc/enterprises/{enterprise_id}/supplied_products":
     parameters:
     - name: enterprise_id
       in: path
@@ -312,6 +324,8 @@ paths:
     post:
       summary: Create SuppliedProduct
       parameters: []
+      tags:
+      - SuppliedProducts
       responses:
         '400':
           description: bad request
@@ -323,7 +337,7 @@ paths:
                 test_example:
                   value:
                     "@context": https://www.datafoodconsortium.org
-                    "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                    "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Apple
                     dfc-b:description: A delicious heritage apple
@@ -347,7 +361,7 @@ paths:
                   dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
                   dfc-b:hasUnit:
                     "@type": "@id"
-                "@id": http://test.host/api/dfc-v1.7/enterprises/6201/supplied_products/0
+                "@id": http://test.host/api/dfc/enterprises/6201/supplied_products/0
                 "@type": dfc-b:SuppliedProduct
                 dfc-b:name: Apple
                 dfc-b:description: A delicious heritage apple
@@ -360,7 +374,7 @@ paths:
                 dfc-b:lifetime: ''
                 dfc-b:usageOrStorageCondition: ''
                 dfc-b:totalTheoreticalStock: 0.0
-  "/api/dfc-v1.7/enterprises/{enterprise_id}/supplied_products/{id}":
+  "/api/dfc/enterprises/{enterprise_id}/supplied_products/{id}":
     parameters:
     - name: enterprise_id
       in: path
@@ -374,6 +388,8 @@ paths:
         type: string
     get:
       summary: Show SuppliedProduct
+      tags:
+      - SuppliedProducts
       responses:
         '200':
           description: success
@@ -383,7 +399,7 @@ paths:
                 test_example:
                   value:
                     "@context": https://www.datafoodconsortium.org
-                    "@id": http://test.host/api/dfc-v1.7/enterprises/10000/supplied_products/10001
+                    "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Pesto
                     dfc-b:description: Basil Pesto
@@ -401,6 +417,8 @@ paths:
     put:
       summary: Update SuppliedProduct
       parameters: []
+      tags:
+      - SuppliedProducts
       responses:
         '401':
           description: unauthorized
