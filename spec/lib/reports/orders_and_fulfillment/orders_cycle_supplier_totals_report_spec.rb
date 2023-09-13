@@ -67,7 +67,8 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
 
     it "is summarised" do
       expect(report).to receive(:display_summary_row?).and_return(true)
-
+      # assures product appears first on report table
+      variant.product.update!(name: "Alpha-Product #000")
       variant.product.update!(variant_unit: "weight")
       variant.update!(unit_value: 200) # grams
       item.update!(final_weight_volume: nil) # reset unit information
