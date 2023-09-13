@@ -6,5 +6,6 @@ DfcProvider::Engine.routes.draw do
     resources :catalog_items, only: [:index, :show, :update]
     resources :supplied_products, only: [:create, :show, :update]
   end
+  resources :enterprise_groups, only: [:index, :show]
   resources :persons, only: [:show]
 end

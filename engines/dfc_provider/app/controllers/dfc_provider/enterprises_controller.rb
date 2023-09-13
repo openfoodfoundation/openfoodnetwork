@@ -7,6 +7,12 @@ module DfcProvider
 
     def show
       enterprise = EnterpriseBuilder.enterprise(current_enterprise)
+
+      group_ids = current_enterprise.groups.map do |group|
+        DfcProvider::Engine.routes.url_helpers.enterprise_group_url(group.id)
+      end
+      enterprise.registerSemanticProperty("dfc-b:affiliates") { group_ids }
+
       render json: DfcIo.export(
         enterprise,
         *enterprise.localizations,

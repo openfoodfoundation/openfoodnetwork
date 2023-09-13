@@ -12,6 +12,13 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
       address: build(:address, id: 40_000, address1: "42 Doveton Street"),
     )
   end
+  let!(:enterprise_group) do
+    create(
+      :enterprise_group,
+      id: 60_000, owner: user, name: "Local Farmers",
+      enterprises: [enterprise],
+    )
+  end
   let!(:product) {
     create(
       :base_product,
@@ -48,6 +55,10 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
             expect(response.body).to include "123 456"
             expect(response.body).to include "Apple"
             expect(response.body).to include "42 Doveton Street"
+
+            expect(json_response["@graph"][0]).to include(
+              "dfc-b:affiliates" => "http://test.host/api/dfc/enterprise_groups/60000",
+            )
           end
         end
       end

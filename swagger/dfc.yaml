@@ -234,6 +234,64 @@ paths:
                     "@type": "@id"
                 dfc-b:stockLimitation: '3'
                 dfc-b:sku: new-sku
+  "/api/dfc/enterprise_groups":
+    get:
+      summary: List groups
+      tags:
+      - EnterpriseGroups
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/persons/12345
+                      "@type": dfc-b:Person
+                      dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
+                    - "@id": http://test.host/api/dfc/enterprise_groups/60000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasName: Sustainable Farmers
+                      dfc-b:hasDescription: this is a group
+                      dfc-b:VATnumber: ''
+                      dfc-b:affiliatedBy: http://test.host/api/dfc/enterprises/10000
+  "/api/dfc/enterprise_groups/{id}":
+    get:
+      summary: Show groups
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - EnterpriseGroups
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@graph":
+                    - "@id": http://test.host/api/dfc/enterprise_groups/60000
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
+                      dfc-b:hasName: Sustainable Farmers
+                      dfc-b:hasDescription: this is a group
+                      dfc-b:VATnumber: ''
+                      dfc-b:affiliatedBy: http://test.host/api/dfc/enterprises/10000
+                    - "@id": http://test.host/api/dfc/addresses/40000
+                      "@type": dfc-b:Address
+                      dfc-b:hasStreet: 8 Acres Drive
+                      dfc-b:hasPostalCode: '20170'
+                      dfc-b:hasCity: Herndon
+                      dfc-b:hasCountry: Australia
   "/api/dfc/enterprises/{id}":
     get:
       summary: Show enterprise
@@ -263,6 +321,7 @@ paths:
                       dfc-b:VATnumber: 123 456
                       dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
+                      dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
                     - "@id": http://test.host/api/dfc/addresses/40000
                       "@type": dfc-b:Address
                       dfc-b:hasStreet: 42 Doveton Street
