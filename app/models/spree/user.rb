@@ -106,7 +106,7 @@ module Spree
     def build_enterprise_roles
       Enterprise.all.find_each do |enterprise|
         unless enterprise_roles.find_by enterprise_id: enterprise.id
-          enterprise_roles.build(enterprise: enterprise)
+          enterprise_roles.build(enterprise:)
         end
       end
     end
@@ -130,7 +130,7 @@ module Spree
     end
 
     def associate_customers
-      self.customers = Customer.where(email: email)
+      self.customers = Customer.where(email:)
     end
 
     def associate_orders
@@ -190,8 +190,8 @@ module Spree
       return unless owned_enterprises.size > enterprise_limit
 
       errors.add(:owned_enterprises, I18n.t(:spree_user_enterprise_limit_error,
-                                            email: email,
-                                            enterprise_limit: enterprise_limit))
+                                            email:,
+                                            enterprise_limit:))
     end
 
     def remove_payments_in_checkout(enterprises)

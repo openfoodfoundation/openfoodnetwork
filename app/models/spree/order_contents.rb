@@ -88,7 +88,7 @@ module Spree
         line_item.target_shipment = shipment
         line_item.quantity += quantity.to_i
       else
-        line_item = order.line_items.new(quantity: quantity, variant: variant)
+        line_item = order.line_items.new(quantity:, variant:)
         line_item.target_shipment = shipment
         line_item.price = variant.price
       end

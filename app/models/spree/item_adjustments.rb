@@ -22,9 +22,9 @@ module Spree
       additional_tax_total = tax_adjustments.additional.reload.map(&:update_adjustment!).compact.sum
 
       item.update_columns(
-        included_tax_total: included_tax_total,
-        additional_tax_total: additional_tax_total,
-        adjustment_total: adjustment_total,
+        included_tax_total:,
+        additional_tax_total:,
+        adjustment_total:,
         updated_at: Time.zone.now
       )
     end

@@ -25,7 +25,7 @@ module Spree
 
       def exist?(key)
         @cache.exist?(key) ||
-          (should_persist? && Spree::Preference.where(key: key).exists?)
+          (should_persist? && Spree::Preference.where(key:).exists?)
       end
 
       def get(key, fallback = nil)
@@ -39,7 +39,7 @@ module Spree
         # If it's not in the cache, maybe it's in the database, but has been cleared from the cache
         # does it exist in the database?
         if should_persist? && Spree::Preference.table_exists?
-          preference = Spree::Preference.find_by(key: key)
+          preference = Spree::Preference.find_by(key:)
           if preference
             # it does exist, so let's put it back into the cache
             @cache.write(preference.key, preference.value)

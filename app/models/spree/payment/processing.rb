@@ -22,7 +22,7 @@ module Spree
 
       def authorize!(return_url = nil)
         started_processing!
-        gateway_action(source, :authorize, :pend, return_url: return_url)
+        gateway_action(source, :authorize, :pend, return_url:)
       end
 
       def purchase!
@@ -100,9 +100,9 @@ module Spree
 
           if response.success?
             self.class.create!(
-              order: order,
+              order:,
               source: self,
-              payment_method: payment_method,
+              payment_method:,
               amount: credit_amount.abs * -1,
               response_code: response.authorization,
               state: 'completed',
@@ -139,9 +139,9 @@ module Spree
 
           if response.success?
             self.class.create!(
-              order: order,
+              order:,
               source: self,
-              payment_method: payment_method,
+              payment_method:,
               amount: refund_amount.abs * -1,
               response_code: response.authorization,
               state: 'completed',
@@ -174,7 +174,7 @@ module Spree
                        tax: order.additional_tax_total * 100,
                        subtotal: order.item_total * 100,
                        discount: 0,
-                       currency: currency)
+                       currency:)
 
         options.merge!({ billing_address: order.bill_address.try(:active_merchant_hash),
                          shipping_address: order.ship_address.try(:active_merchant_hash) })
