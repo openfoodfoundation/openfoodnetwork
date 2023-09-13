@@ -2,7 +2,7 @@
 
 module Reporting
   module Reports
-    class List
+    class List # rubocop:disable Metrics/ClassLength # Because it's a simple class
       def self.all
         new.all
       end
@@ -66,7 +66,12 @@ module Reporting
           [
             i18n_translate('enterprise_fees_with_tax_report_by_order'),
             :enterprise_fees_with_tax_report_by_order
-          ]
+          ],
+          [
+            i18n_translate('enterprise_fees_with_tax_report_by_producer'),
+            :enterprise_fees_with_tax_report_by_producer,
+            { deprecated: true }, # Not supported until specific details are finalised.
+          ],
         ]
       end
 

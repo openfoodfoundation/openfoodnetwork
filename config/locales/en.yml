@@ -1577,6 +1577,7 @@ en:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
       enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
+      enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
@@ -1760,10 +1761,10 @@ en:
     orders:
       failed_to_update: "Failed to update order"
     query_param:
-      error: 
+      error:
         title: Invalid query parameter
-        extra_fields: "Unsupported fields: %{fields}" 
-      
+        extra_fields: "Unsupported fields: %{fields}"
+
 
 # Frontend views
 #
@@ -2137,8 +2138,8 @@ en:
       cancel: Back to Your details
       voucher:
         voucher: "%{voucher_amount} Voucher"
-        apply_voucher: Apply voucher 
-        apply: Apply 
+        apply_voucher: Apply voucher
+        apply: Apply
         placeholder: Enter voucher code
         remove_code: Remove code
         confirm_delete: Are you sure you want to remove the voucher?
@@ -3036,7 +3037,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_distributor_address: Distributor address
   report_header_distributor_city: Distributor city
   report_header_distributor_postcode: Distributor postcode
-  report_header_distributor_tax_status: Distributor Tax Status  
+  report_header_distributor_tax_status: Distributor Tax Status
   report_header_delivery_address: Delivery Address
   report_header_delivery_postcode: Delivery Postcode
   report_header_bulk_unit_size: Bulk Unit Size
@@ -3095,6 +3096,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_line_cost_of_produce: Cost of produce
+  report_line_line_items: line items
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
