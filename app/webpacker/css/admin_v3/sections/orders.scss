@@ -16,7 +16,7 @@
   .order-total {
     font-size: 35px;
     font-weight: 600;
-    color: $color-success;
+    color: $teal;
   }
 }
 
@@ -25,10 +25,10 @@
     color: $color-body-text;
 
     .shipment-number {
-      color: $color-success;
+      color: $teal;
     }
     .stock-location-name {
-      color: $color-success;
+      color: $teal;
     }
   }
 }
