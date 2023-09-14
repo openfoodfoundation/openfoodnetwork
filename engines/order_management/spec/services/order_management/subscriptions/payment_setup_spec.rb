@@ -48,8 +48,8 @@ module OrderManagement
         end
 
         context "when more that one payment exists on the order" do
-          let!(:payment1) { create(:payment, order: order) }
-          let!(:payment2) { create(:payment, order: order) }
+          let!(:payment1) { create(:payment, order:) }
+          let!(:payment2) { create(:payment, order:) }
 
           before do
             allow(order).to receive(:new_outstanding_balance) { 7 }

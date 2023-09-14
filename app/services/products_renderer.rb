@@ -23,7 +23,7 @@ class ProductsRenderer
                                      current_order_cycle: order_cycle,
                                      current_distributor: distributor,
                                      variants: variants_for_shop_by_id,
-                                     enterprise_fee_calculator: enterprise_fee_calculator).to_json
+                                     enterprise_fee_calculator:).to_json
   end
 
   private

@@ -9,7 +9,7 @@ module Shop
 
     def self.ready_for_checkout_for(distributor, customer)
       new(distributor, customer).call.select do |order_cycle|
-        order = Spree::Order.new(distributor: distributor, order_cycle: order_cycle)
+        order = Spree::Order.new(distributor:, order_cycle:)
         OrderAvailablePaymentMethods.new(order, customer).to_a.any? &&
           OrderAvailableShippingMethods.new(order, customer).to_a.any?
       end

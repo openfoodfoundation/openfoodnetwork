@@ -14,14 +14,14 @@ module Web
     end
 
     def destroy
-      cookies.delete(COOKIE_NAME, domain: domain)
+      cookies.delete(COOKIE_NAME, domain:)
     end
 
     def set
       cookies[COOKIE_NAME] = {
         value: COOKIE_NAME,
         expires: 1.year.from_now,
-        domain: domain,
+        domain:,
         httponly: true
       }
     end

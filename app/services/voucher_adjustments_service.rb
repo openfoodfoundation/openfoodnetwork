@@ -76,8 +76,8 @@ class VoucherAdjustmentsService
     return unless amount != adjustment.amount || included_tax != 0
 
     adjustment.update_columns(
-      amount: amount,
-      included_tax: included_tax,
+      amount:,
+      included_tax:,
       updated_at: Time.zone.now
     )
   end

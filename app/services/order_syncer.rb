@@ -13,7 +13,7 @@ class OrderSyncer
 
   def sync!
     orders_in_order_cycles_not_closed.all? do |order|
-      order.assign_attributes(customer_id: customer_id, email: customer&.email,
+      order.assign_attributes(customer_id:, email: customer&.email,
                               distributor_id: shop_id)
       update_associations_for(order)
       line_item_syncer.sync!(order)
@@ -60,9 +60,9 @@ class OrderSyncer
       with_state('checkout').where(payment_method_id: payment_method_id_was).last
     if payment
       payment&.void_transaction!
-      order.payments.create(payment_method_id: payment_method_id, amount: order.reload.total)
+      order.payments.create(payment_method_id:, amount: order.reload.total)
     else
-      unless order.payments.with_state('checkout').where(payment_method_id: payment_method_id).any?
+      unless order.payments.with_state('checkout').where(payment_method_id:).any?
         order_update_issues.add(order, I18n.t('admin.payment_method'))
       end
     end

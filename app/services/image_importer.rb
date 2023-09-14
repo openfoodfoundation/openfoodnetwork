@@ -7,7 +7,7 @@ class ImageImporter
     filename = File.basename(valid_url.path)
 
     Spree::Image.create(
-      attachment: { io: file, filename: filename },
+      attachment: { io: file, filename: },
       viewable_id: product.id,
       viewable_type: Spree::Product,
     )

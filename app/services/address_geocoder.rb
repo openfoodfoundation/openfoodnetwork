@@ -10,7 +10,7 @@ class AddressGeocoder
 
     return unless latitude.present? && longitude.present?
 
-    address.update(latitude: latitude, longitude: longitude)
+    address.update(latitude:, longitude:)
   end
 
   private

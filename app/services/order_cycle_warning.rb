@@ -28,10 +28,10 @@ class OrderCycleWarning
 
     if distributors.count > 1
       I18n.t(:active_distributors_not_ready_for_checkout_message_plural,
-             distributor_names: distributor_names)
+             distributor_names:)
     else
       I18n.t(:active_distributors_not_ready_for_checkout_message_singular,
-             distributor_names: distributor_names)
+             distributor_names:)
     end
   end
 end

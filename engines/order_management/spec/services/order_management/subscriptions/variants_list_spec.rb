@@ -12,9 +12,9 @@ module OrderManagement
         let!(:variant) { product.variants.first }
 
         let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
-        let!(:subscription) { create(:subscription, shop: shop, schedule: schedule) }
+        let!(:subscription) { create(:subscription, shop:, schedule:) }
         let!(:subscription_line_item) do
-          create(:subscription_line_item, subscription: subscription, variant: variant)
+          create(:subscription_line_item, subscription:, variant:)
         end
 
         let(:current_order_cycle) do

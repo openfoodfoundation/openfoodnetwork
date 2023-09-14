@@ -10,7 +10,7 @@ module OrderManagement
 
       context "updating order totals" do
         before do
-          2.times { create(:line_item, order: order, price: 10) }
+          2.times { create(:line_item, order:, price: 10) }
         end
 
         it "updates payment totals" do
@@ -151,7 +151,7 @@ module OrderManagement
         end
 
         context "when the order has a payment that requires authorization" do
-          let!(:payment) { create(:payment, order: order, state: "requires_authorization") }
+          let!(:payment) { create(:payment, order:, state: "requires_authorization") }
 
           it "returns requires_authorization" do
             expect {
@@ -161,8 +161,8 @@ module OrderManagement
         end
 
         context "when order has a payment that requires authorization and a completed payment" do
-          let!(:payment) { create(:payment, order: order, state: "requires_authorization") }
-          let!(:completed_payment) { create(:payment, :completed, order: order) }
+          let!(:payment) { create(:payment, order:, state: "requires_authorization") }
+          let!(:completed_payment) { create(:payment, :completed, order:) }
 
           it "returns paid" do
             updater.update_payment_state
@@ -282,7 +282,7 @@ module OrderManagement
       context '#shipping_address_from_distributor' do
         let(:distributor) { build(:distributor_enterprise) }
         let(:shipment) {
-          create(:shipment_with, :shipping_method, shipping_method: shipping_method)
+          create(:shipment_with, :shipping_method, shipping_method:)
         }
 
         before do
@@ -337,7 +337,7 @@ module OrderManagement
 
             context "and the order has legacy taxes" do
               let!(:legacy_tax_adjustment) {
-                create(:adjustment, order: order, adjustable: order, included: false,
+                create(:adjustment, order:, adjustable: order, included: false,
                                     originator_type: "Spree::TaxRate")
               }
 

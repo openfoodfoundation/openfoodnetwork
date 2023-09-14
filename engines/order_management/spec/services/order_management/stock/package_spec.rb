@@ -9,7 +9,7 @@ module OrderManagement
         let(:variant) { build(:variant, weight: 25.0) }
         let(:stock_location) { build(:stock_location) }
         let(:distributor) { create(:enterprise) }
-        let(:order) { build(:order, distributor: distributor) }
+        let(:order) { build(:order, distributor:) }
 
         subject { Package.new(stock_location, order) }
 
@@ -91,7 +91,7 @@ module OrderManagement
 
           shipping_method = build(:shipping_method)
           subject.shipping_rates = [
-            Spree::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true)
+            Spree::ShippingRate.new(shipping_method:, cost: 10.00, selected: true)
           ]
 
           shipment = subject.to_shipment

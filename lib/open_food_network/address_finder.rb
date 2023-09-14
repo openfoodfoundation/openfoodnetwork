@@ -77,7 +77,7 @@ module OpenFoodNetwork
       return nil unless allow_search_by_email?
 
       Spree::Order.joins(:bill_address).order('id DESC')
-        .complete.where(email: email)
+        .complete.where(email:)
         .first&.bill_address
     end
 
@@ -85,7 +85,7 @@ module OpenFoodNetwork
       return nil unless allow_search_by_email?
 
       Spree::Order.complete.joins(:ship_address, shipments: :shipping_methods).order('id DESC')
-        .where(email: email, spree_shipping_methods: { require_ship_address: true })
+        .where(email:, spree_shipping_methods: { require_ship_address: true })
         .first&.ship_address
     end
 

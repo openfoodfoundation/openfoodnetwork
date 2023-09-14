@@ -18,7 +18,7 @@ class CustomerSyncer
 
     return unless email && customer && email != customer.email
 
-    duplicate = Customer.find_by(email: email, enterprise: order.distributor)
+    duplicate = Customer.find_by(email:, enterprise: order.distributor)
 
     if duplicate.present?
       Spree::Order.where(customer_id: duplicate.id).update_all(customer_id: customer.id)
@@ -27,7 +27,7 @@ class CustomerSyncer
       duplicate.destroy
     end
 
-    customer.update(email: email)
+    customer.update(email:)
   end
 
   def self.create_customer(order)

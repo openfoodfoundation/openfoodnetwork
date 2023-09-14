@@ -40,7 +40,7 @@ module OrderManagement
         uninitialised_order_cycle_ids.each do |order_cycle_id|
           Rails.logger.info "Initializing Proxy Order " \
                             "of subscription #{@subscription.id} in order cycle #{order_cycle_id}"
-          proxy_orders << ProxyOrder.new(subscription: subscription, order_cycle_id: order_cycle_id)
+          proxy_orders << ProxyOrder.new(subscription:, order_cycle_id:)
         end
       end
 

@@ -9,7 +9,7 @@ class RecurringPayments
       Stripe::CreditCardCloner.new(card, stripe_account).find_or_clone
     setup_intent = Stripe::SetupIntent.create(
       { payment_method: payment_method_id, customer: customer_id },
-      stripe_account: stripe_account
+      stripe_account:
     )
     setup_intent.client_secret
   end
