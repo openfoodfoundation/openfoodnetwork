@@ -26,7 +26,7 @@ assignees: ''
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
     - Select new release tag
     - _Generate release notes_ and check to ensure all items are arranged in the right category.
-- [ ] Notify [#instance-managers] of user-facing changes.
+- [ ] Notify [#instance-managers] of both user-facing :eyes: and :warning: API changes.
 
 ## 2. Testing
 
