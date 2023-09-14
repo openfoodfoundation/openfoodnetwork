@@ -25,7 +25,7 @@ assignees: ''
 - [ ] Create a tag: `git push upstream HEAD:refs/tags/vX.Y.Z`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
     - Select new release tag
-    - _Generate release notes_ and arrange into categories as required.
+    - _Generate release notes_ and check to ensure all items are arranged in the right category.
 - [ ] Notify [#instance-managers] of user-facing changes.
 
 ## 2. Testing
@@ -53,7 +53,7 @@ The full process is described at https://github.com/openfoodfoundation/openfoodn
 
 [Ready To Go]: #zenhub
 [Transifex pull request]: https://github.com/openfoodfoundation/openfoodnetwork/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+head%3Atransifex
-[Draft new release]: https://github.com/openfoodfoundation/openfoodnetwork/releases/new?tag=v&title=v+Code+Name&body=Congrats%0A%0ADescription%0A%0A%23%23+User+facing+changes+:eyes:%0A%0A%0A%23%23%23+Experimental+features+for+testing+:sunglasses:%0A%0A%0A%23%23+Technical+changes+:wrench:%0A%0A
+[Draft new release]: https://github.com/openfoodfoundation/openfoodnetwork/releases/new?tag=v&title=v+Code+Name&body=Congrats%0A%0ADescription%0A%0A
 [releases]: https://github.com/openfoodfoundation/openfoodnetwork/releases
 [#instance-managers]: https://app.slack.com/client/T02G54U79/CG7NJ966B
 [#testing]: https://openfoodnetwork.slack.com/app_redirect?channel=C02TZ6X00
