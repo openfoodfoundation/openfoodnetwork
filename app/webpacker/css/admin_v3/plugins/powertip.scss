@@ -70,25 +70,25 @@
   &.capture,
   &.save,
   &.add {
-    background-color: $color-success;
+    background-color: $teal;
 
     &.n:before,
     &.ne:before,
     &.nw:before {
-      border-top-color: $color-success;
+      border-top-color: $teal;
     }
     &.e:before,
     &.nw:before,
     &.sw:before {
-      border-right-color: $color-success;
+      border-right-color: $teal;
     }
     &.s:before,
     &.se:before,
     &.sw:before {
-      border-bottom-color: $color-success;
+      border-bottom-color: $teal;
     }
     &.w:before {
-      border-left-color: $color-success;
+      border-left-color: $teal;
     }
   }
   &.remove,
