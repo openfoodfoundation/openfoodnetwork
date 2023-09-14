@@ -10,12 +10,3 @@
     }
   }
 }
-
-.button.big {
-  width: 100%;
-  font-size: 1rem;
-
-  @include border-radius(25px);
-
-  padding: 15px;
-}
