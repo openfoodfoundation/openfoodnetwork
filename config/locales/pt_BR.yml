@@ -473,7 +473,6 @@ pt_BR:
       show:
         title: "Arquivos de Termos de Serviço"
         no_files: "Nenhum termo de serviço foi adicionado ainda. "
-        using_default_terms_html: "No momento o site está redirecionando para o seu antigo %{tos_link}."
         current_terms_html: "Ver o atual%{tos_link}. Tempo de upload: %{datetime}."
         terms_of_service: "Termos de serviço"
         delete: "Deletar arquivo"

@@ -592,7 +592,6 @@ fr:
       show:
         title: "CGU & CGV"
         no_files: "Aucun document n'a été mis en ligne pour l'instant."
-        using_default_terms_html: "Le site pointe actuellement sur l'ancien %{tos_link}."
         current_terms_html: "Visualiser l'actuel %{tos_link}. Temps de chargement : %{datetime}."
         terms_of_service: "Conditions Générales d'Utilisation"
         delete: "Supprimer le fichier"
@@ -3250,6 +3249,8 @@ fr:
           select_all_variants: "Sélectionnez toutes les %{total_number_of_variants} variantes"
           variants_loaded: " %{num_of_variants_loaded} sur %{total_number_of_variants} variantes"
           loading_variants: "Chargement des variantes"
+          no_variants: "Pas de variante disponible pour ce produit (caché via les paramètres du catalogue boutique). "
+          some_variants_hidden: "(Certaines variantes sont susceptibles d'être cachées via les paramètres du catalogue boutique)"
       tag_rules:
         shipping_method_tagged_top: "Les méthodes de livraison taguées"
         shipping_method_tagged_bottom: "sont:"
@@ -4226,6 +4227,7 @@ fr:
           enterprise_limit: "Nombre max d'entreprises"
           confirm_password: "Confirmez votre mot de passe"
           password: "Mot de passe"
+          locale: "langue"
         email_confirmation:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
       variants:

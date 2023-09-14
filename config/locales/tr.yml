@@ -453,7 +453,6 @@ tr:
       show:
         title: "Üyelik Sözleşmesi dosyaları"
         no_files: "Yüklenmiş Üyelik Sözleşmesi bulunmamaktadır. "
-        using_default_terms_html: "Bu site sizin eski %{tos_link}bağlanmaktadır."
         current_terms_html: "Güncel%{tos_link}görüntüleyin. İçe aktarma zamanı: %{datetime}"
         terms_of_service: "Üyelik Sözleşmesi"
         delete: "Dosyayı sil"

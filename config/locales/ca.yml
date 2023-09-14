@@ -525,7 +525,6 @@ ca:
       show:
         title: "Fitxers de Condicions del servei"
         no_files: "Encara no s’han penjat termes de serveis."
-        using_default_terms_html: "El lloc actualment enllaça amb el vostre antic %{tos_link}."
         current_terms_html: "Vegeu l’actual %{tos_link}. Temps de càrrega: %{datetime}."
         terms_of_service: "Termes del servei"
         delete: "Eliminar arxiu"

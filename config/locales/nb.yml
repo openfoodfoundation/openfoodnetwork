@@ -545,7 +545,6 @@ nb:
       show:
         title: "Filer for Tjenestevilkår"
         no_files: "Ingen vilkår for tjenester er lastet opp ennå."
-        using_default_terms_html: "Nettstedet lenker for øyeblikket til din gamle %{tos_link}."
         current_terms_html: "Se gjeldende %{tos_link}. Opplastingstidspunkt: %{datetime}."
         terms_of_service: "Vilkår for bruk"
         delete: "Slett fil"

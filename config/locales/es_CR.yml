@@ -535,7 +535,6 @@ es_CR:
       show:
         title: "Archivos de términos de servicio"
         no_files: "Aún no se han subido términos de servicio."
-        using_default_terms_html: "El sitio actualmente está vinculado a su antiguo %{tos_link}."
         current_terms_html: "Ver el actual %{tos_link}. Tiempo de carga: %{datetime}."
         terms_of_service: "Términos de servicio"
         delete: "Borrar archivo"

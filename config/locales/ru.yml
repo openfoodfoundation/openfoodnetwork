@@ -591,7 +591,6 @@ ru:
       show:
         title: "Файлы Условий Сервиса"
         no_files: "Условия Сервиса еще не загружены."
-        using_default_terms_html: "Сайт в настоящее время ссылается на ваш старый %{tos_link}."
         current_terms_html: "Просмотреть текущий файл %{tos_link}. Время загрузки: %{datetime}."
         terms_of_service: "Условия Сервиса"
         delete: "Удалить файл"

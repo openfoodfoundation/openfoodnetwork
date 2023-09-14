@@ -535,7 +535,6 @@ uk:
       show:
         title: "Файли умов надання послуг"
         no_files: "Умови надання послуг ще не завантажено."
-        using_default_terms_html: "Зараз сайт посилається на ваш старий %{tos_link}."
         current_terms_html: "Переглянути поточний %{tos_link}. Час завантаження: %{datetime}."
         terms_of_service: "Умови обслуговування"
         delete: "Видалити файл"

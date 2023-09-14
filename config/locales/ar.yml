@@ -543,7 +543,6 @@ ar:
       show:
         title: "ملفات شروط الخدمة"
         no_files: "لم يتم تحميل أي شروط الخدمات حتى الآن."
-        using_default_terms_html: "يرتبط الموقع حاليًا بـ %{tos_link} القديم الخاص بك."
         current_terms_html: "عرض الملف %{tos_link} الحالي. وقت التحميل: %{datetime}."
         terms_of_service: "شروط الخدمة"
         delete: "حذف ملف"

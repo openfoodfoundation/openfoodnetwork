@@ -586,7 +586,6 @@ cy:
       show:
         title: "Ffeiliau Telerau Gwasanaeth"
         no_files: "Ni lanlwythwyd unrhyw delerau gwasanaeth eto."
-        using_default_terms_html: "Ar hyn o bryd mae'r wefan yn cysylltu â'ch hen %{tos_link}"
         current_terms_html: "Gweld y %{tos_link}cyfredol.  Amser lanlwytho. %{datetime}"
         terms_of_service: "Telerau Gwasanaeth"
         delete: "Dileu ffeil"

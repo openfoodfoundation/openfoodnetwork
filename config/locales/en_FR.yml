@@ -592,7 +592,6 @@ en_FR:
       show:
         title: "Terms of Service files"
         no_files: "No terms of services have been uploaded yet."
-        using_default_terms_html: "The site is currently linking to your old %{tos_link}."
         current_terms_html: "View the current %{tos_link}. Upload time: %{datetime}."
         terms_of_service: "Terms of Service"
         delete: "Delete file"
@@ -3218,6 +3217,8 @@ en_FR:
           select_all_variants: "Select All %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
           loading_variants: "Loading Variants"
+          no_variants: "No variant available for this product (hidden via inventory settings)."
+          some_variants_hidden: "(Some variants might be hidden via inventory settings)"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
@@ -4168,6 +4169,7 @@ en_FR:
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"
+          locale: "Language"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:

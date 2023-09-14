@@ -592,7 +592,6 @@ de_DE:
       show:
         title: "Nutzungsbedingungen"
         no_files: "Es wurden noch keine Nutzungsbedingungen hochgeladen."
-        using_default_terms_html: "Die Website verweist derzeit auf die alten %{tos_link}."
         current_terms_html: "Aktuelle %{tos_link} anzeigen. Hochgeladen am: %{datetime}"
         terms_of_service: "Nutzungsbedingungen"
         delete: "Löschen"

@@ -564,7 +564,6 @@ it:
       show:
         title: "Documenti Termini di Servizio"
         no_files: "Non sono ancora stati caricati Termini di Servizio"
-        using_default_terms_html: "Il sito punta attualmente al tuo vecchio %{tos_link}."
         current_terms_html: "Visualizza l'attuale %{tos_link}. Tempo di caricamento: %{datetime}."
         terms_of_service: "Termini di Servizio"
         delete: "Cancella documento"

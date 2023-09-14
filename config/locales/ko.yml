@@ -535,7 +535,6 @@ ko:
       show:
         title: "서비스 약관 파일"
         no_files: "아직 업로드된 서비스 약관이 없습니다."
-        using_default_terms_html: "사이트가 현재 이전 %{tos_link} 사이트에 링크되어 있습니다."
         current_terms_html: "현재 %{tos_link} 사이트 보기. 업로드 시간 : %{datetime}"
         terms_of_service: "서비스 약관"
         delete: "파일 삭제"

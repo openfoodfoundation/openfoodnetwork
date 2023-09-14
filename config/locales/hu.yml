@@ -522,7 +522,6 @@ hu:
       show:
         title: "Szolgáltatási feltételek fájlok"
         no_files: "Még nem töltöttek fel szolgáltatási feltételeket."
-        using_default_terms_html: "A webhely jelenleg hivatkozik a régi %{tos_link} oldalára."
         current_terms_html: "Az aktuális %{tos_link} megtekintése. Feltöltés ideje: %{datetime}."
         terms_of_service: "Szolgáltatás feltételei"
         delete: "Fájl törlése"
