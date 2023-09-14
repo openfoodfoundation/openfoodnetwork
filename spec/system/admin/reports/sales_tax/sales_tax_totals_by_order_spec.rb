@@ -210,7 +210,7 @@ describe "Sales Tax Totals By order" do
           "2.5 %",
           "105.39", # 109.61 - 4.61 + 0.39
           "2.49", # 2.88 (country tax) - 0.39 (voucher tax)
-          "107.88",  # 109.61 - 4.61 + 2.88
+          "107.88", # 109.61 - 4.61 + 2.88
           "cfname",
           "clname",
           "ABC123",
@@ -235,12 +235,12 @@ describe "Sales Tax Totals By order" do
     before do
       state_tax_rate.update!({ included_in_price: true })
       country_tax_rate.update!({ included_in_price: true })
-
-      order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
     end
 
     it "generates the report" do
+      order.recreate_all_fees!
+      OrderWorkflow.new(order).complete!
+
       visit_sales_tax_totals_by_order
 
       expect(page).to have_button("Go")
@@ -289,6 +289,82 @@ describe "Sales Tax Totals By order" do
         "ABC123",
         "order1@example.com"
       ].join(" "))
+    end
+
+    context "with a voucher" do
+      let(:voucher) do
+        create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 10)
+      end
+
+      before do
+        Flipper.enable :vouchers
+
+        # Add voucher to the order
+        voucher.create_adjustment(voucher.code, order)
+        VoucherAdjustmentsService.new(order).update
+
+        # the enterprise fees can be known only when the user selects the variants
+        # we'll need to create them by calling recreate_all_fees!
+        order.recreate_all_fees!
+
+        order.update_totals_and_states
+        OrderWorkflow.new(order).complete!
+      end
+
+      it "generates the report with the correct tax amount" do
+        visit_sales_tax_totals_by_order
+
+        expect(page).to have_button("Go")
+        click_on "Go"
+        expect(page.find("table.report__table thead tr").text).to have_content(table_header)
+
+        # Calculation details :
+        # Price excl tax = order.total - total_tax + voucher included tax (negative number)
+        # Tax amount = Non adjusted tax - voucher included tax
+        # Price incl tac = Price excl tax + non adjusted tax
+        expect(page.find("table.report__table tbody").text).to have_content([
+          "DistributorEnterpriseWithTax",
+          "oc1",
+          "ORDER_NUMBER_1",
+          "GST Food",
+          "State",
+          "1.5 %",
+          "100.89", # 105 - 4.5 + 0.39
+          "1.31", # 1.7 (State tax) - 0.39 (Voucher tax)
+          "102.2", # 105 - 4.5 + 1.7 TODO ?
+          "cfname",
+          "clname",
+          "ABC123",
+          "order1@example.com"
+        ].join(" "))
+
+        expect(page.find("table.report__table tbody").text).to have_content([
+          "DistributorEnterpriseWithTax",
+          "oc1",
+          "ORDER_NUMBER_1",
+          "GST Food",
+          "Country",
+          "2.5 %",
+          "100.89", # 105 - 4.5 + 0.39
+          "2.41", # 2.8 (country tax) - 0.39 (voucher tax)
+          "103.3",  # 105 - 4.5 + 2.8
+          "cfname",
+          "clname",
+          "ABC123",
+          "order1@example.com"
+        ].join(" "))
+
+        expect(page.find("table.report__table tbody").text).to have_content([
+          "TOTAL",
+          "100.89", # 105 - 4.5 + 0.39
+          "4.11", # 1.7 + 2.8 (state + country tax) - 0.39  (Voucher tax)
+          "105.0",
+          "cfname",
+          "clname",
+          "ABC123",
+          "order1@example.com"
+        ].join(" "))
+      end
     end
   end
 

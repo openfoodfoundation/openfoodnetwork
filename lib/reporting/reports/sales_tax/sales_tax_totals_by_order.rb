@@ -159,7 +159,10 @@ module Reporting
         end
 
         def voucher_tax_adjustment(order)
-          order.all_adjustments.voucher_tax.first&.amount || 0
+          included_tax_voucher_adjustment = order.voucher_adjustments.first&.included_tax || 0
+          excluded_tax_voucher_adjustment = order.all_adjustments.voucher_tax.first&.amount || 0
+
+          included_tax_voucher_adjustment + excluded_tax_voucher_adjustment
         end
 
         def first_name(query_result_row)
