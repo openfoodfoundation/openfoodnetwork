@@ -3,7 +3,7 @@ class ContactMailer < ApplicationMailer
     @name = name
     @message = message
 
-    mail(to: 'contact.afg.updates@gmail.com', subject: subject, from: email) do |format|
+    mail(from: email, to: 'contact.afg.updates@gmail.com', subject: subject) do |format|
       format.text { render plain: message }
     end
   end
