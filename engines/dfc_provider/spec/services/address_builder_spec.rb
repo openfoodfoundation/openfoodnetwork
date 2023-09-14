@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require DfcProvider::Engine.root.join("spec/spec_helper")
+require_relative "../spec_helper"
 
 describe AddressBuilder do
   subject(:result) { described_class.address(address) }
