@@ -1,0 +1,110 @@
+#change_type {
+  section {
+    margin: 2em 0 0 0;
+
+    &,
+    & * {
+      color: $spree-blue;
+    }
+  }
+
+  .description {
+    background-color: $spree-light-blue;
+    margin-top: -2em;
+    padding: 4em 2em 2em 1em;
+
+    @media all and (max-width: 786px) {
+      margin-bottom: 2em;
+    }
+  }
+
+  .admin-cta {
+    border: 1px solid $spree-blue;
+
+    @include border-radius(3px);
+
+    text-align: center;
+    padding: 1em;
+  }
+
+  .error {
+    display: block;
+    color: #f57e80;
+    border: 1px solid #f57e80;
+    background-color: #fde6e7;
+
+    @include border-radius(3px);
+
+    margin-bottom: 1em;
+    padding: 0.5em;
+  }
+
+  a.selector {
+    position: relative;
+    border: 2px solid black;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+
+    &,
+    & * {
+      color: white;
+    }
+
+    &:after,
+    &:before {
+      top: 100%;
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    &:after {
+      border-color: rgba(136, 183, 213, 0);
+      border-top-color: $spree-blue;
+      border-width: 12px;
+      margin-left: -12px;
+    }
+
+    &:hover {
+      &:after {
+        border-top-color: $spree-green;
+      }
+    }
+
+    &:before {
+      border-color: rgba(84, 152, 218, 0);
+      border-top-color: black;
+      border-width: 15px;
+      margin-left: -15px;
+    }
+
+    .bottom {
+      background: repeating-linear-gradient(
+        60deg,
+        rgba(84, 152, 218, 0),
+        rgba(84, 152, 218, 0) 5px,
+        rgba(255, 255, 255, 0.25) 5px,
+        rgba(255, 255, 255, 0.25) 10px
+      );
+      margin-top: 1em;
+      margin-left: -15px;
+      margin-right: -15px;
+      padding: 5px;
+      text-transform: uppercase;
+    }
+
+    &.selected {
+      background-color: black;
+
+      &:after,
+      &:hover &:after {
+        border-top-color: black;
+      }
+    }
+  }
+}
