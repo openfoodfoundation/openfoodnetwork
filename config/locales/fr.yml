@@ -1888,9 +1888,9 @@ fr:
       cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
   brandstory_headline: "Les circuits courts connectés"
-  brandstory_intro: "La Belle Orange est une plateforme libre, et accessible à tous."
+  brandstory_intro: "La Belle Orange est une initiative libre, et accessible à tous."
   brandstory_part1: "Les organisateurs de circuits courts qui gèrent les différents points de distribution sont au coeur de notre réussite. Ils aident l’activité de La Belle Orange, le plus souvent de bon coeur, bénévolement, pour vous fournir des fruits et produits les meilleurs possible, au meilleur prix. "
-  brandstory_part2: "Afin de permettre à tout type d’initiative de circuit court de fonctionner efficacement, nous nous adaptons à la diversité : qu'ils gèrent un groupement d’achat bénévolement, une petite épicerie, ou une entreprise familiale de distribution, La Belle Orange trouve des solutions :-)"
+  brandstory_part2: "Afin de permettre à tout type de circuit court de fonctionner efficacement, nous nous adaptons à la diversité : groupement d’achat bénévole, petite épicerie, ou entreprise familiale de distribution, nous trouvons toujours des solutions :-)"
   brandstory_part3: " "
   brandstory_part4: " "
   brandstory_part5_strong: " "
@@ -1902,7 +1902,8 @@ fr:
   system_step2_text: "Commandez en ligne des produits bios/locaux auprès du circuit court sélectionné."
   system_step3: "3. Retrait / Livraison"
   system_step3_text: "Retirez votre panier au lieu et à l’heure indiqués lors de votre commande."
-  cta_headline: "Des achats qui rendent le monde un peu meilleur."
+  cta_headline: "Des achats qui rendent le monde un peu meilleur.<br>
+  Ne vous privez pas !"
   cta_label: "Je vote avec mes achats"
   stats_headline: "Nous créons un nouveau système alimentaire."
   stats_producers: "agriculteurs et producteurs"
@@ -4679,15 +4680,15 @@ Conformément au Règlement (UE) 2016/679 (GDPR/RGPD), vous bénéficiez d’un 
   email_address_contact: "Votre Adresse e-mail"
   contact_message: "Message"
   send_message_contact: "Envoyer le message"
-  terms_of_service_title: "<b>Conditions Générales de Vente et d'Utilisation<b>"
-  terms_of_service_description: "1 – Généralités<br>
+  terms_of_service_title: "<b>Conditions Générales de Vente et d'Utilisation</b>"
+  terms_of_service_description: "<b>1 – Généralités</b><br>
 La société La Belle Orange SL édite et exploite un site internet à l’adresse labelleorange.es (ci-après le « Site ») afin de proposer des produits alimentaires frais ou secs (ci-après les « Produits ») à un prix ferme.
 Le service proposé sur le Site de La Belle Orange (ci-après « le Service ») permet aux consommateurs (ci-après « Acheteurs ») et/ou points de distribution (ci-après « Points de Distribution ») de se procurer, acheter, ou vendre les produits de La Belle Orange SA (ci-après « le Vendeur »). 
 Les présentes Conditions Générales de Vente (ci-après les « CGV») s'appliquent, dès lors qu’une commande est passée par un Acheteur sur le site labelleorange.es. Dans ce cadre, la société La Belle Orange SA intervient uniquement en qualité d’éditeur du Site et de Vendeur. 
 Les CGV sont opposables à l’Acheteur qui reconnaît, en cochant une case prévue à cet effet, en avoir eu connaissance et les avoir acceptées avant de passer commande. Les CGV sont directement consultables sur le Site.
 Elles pourront faire l’objet de modifications à tout moment. Les CGV applicables à l’Acheteur demeurent celles en vigueur à la date de la commande.<br><br><br>
 
-2 – Modalités de commande et prix<br>
+<b>2 – Modalités de commande et prix</b><br>
 2.1 Inscription sur le Site<br>
 Pour passer une commande, l’Acheteur doit créer un compte client au moyen d’une adresse email valide et d’un mot de passe.
 Lors de la création de ce compte, l’Acheteur doit remplir un formulaire comportant des données personnelles à renseigner obligatoirement.
@@ -4737,13 +4738,13 @@ En cas de défaut de paiement, La Belle Orange SL se réserve le droit d'interro
 Le Site fait l'objet d'un système de sécurisation selon le procédé de cryptage SSL.<br><br>
 
 
-3 – Droit de rétractation<br>
+<b>3 – Droit de rétractation</b><br>
 L’Acheteur dispose d’un délai de rétractation de 3 jours calendaires à compter de la date d’achat de Produits alimentaires secs non susceptibles de se détériorer ou de se périmer rapidement; l’Acheteur peut exercer son droit de rétractation, sans avoir à justifier de motifs, ni à payer de pénalités.<br>
 Conformément à l’article L 121-21-8 du code de la consommation, l’Acheteur ne peut pas se rétracter lorsque le Produit est un bien susceptible de se détériorer ou de se périmer rapidement comme les produits alimentaires frais (fruits et légumes, fromage, etc.). Notons que cet article du Code de la consommation est un exemple relatif au droit français, et que les présentes Conditions Générales de Vente et les opérations qui en découlent sont également régies et soumises aux droits Français, Suisse, Allemand, Italien, Espagnol, et Européen.<br>
 L'Acheteur exerce son droit de rétractation directement auprès du Vendeur en envoyant un mail à fruits(arobase)labelleorange.es ou par tout moyen fourni via l’interface du Site.<br>
 En cas d’exercice du droit de rétractation, seul le prix du ou des Produits objets de la rétractation ainsi que les frais de livraison seront remboursés par le Vendeur. Les frais de livraison ne seront pas remboursés si un Acheteur conserve une partie des Produits achetés auprès du même Vendeur. Ils seront remboursés partiellement en cas de rétractation partielle de la commande.<br><br>
 
-4 – Livraison<br>
+<b>4 – Livraison</b><br>
 Les Produits vendus via le Service peuvent uniquement être expédiés à des adresses de livraison correspondant aux Points de Distribution indiqués sur le Site.<br>
 L’Acheteur devra être présent pour la remise en main propre de sa commande.<br>
 En cas d’absence de l’Acheteur au moment de la livraison, l’Acheteur devra s’organiser avec le Point de Distribution pour essayer de récupérer sa commande en dehors des créneaux horaires et dates initialement convenus. Le Point de Distribution ne pourra pas s’engager à être disponible, car les Points de Distribution offrent gracieusement leur espace pour remettre les produits de La Belle Orange, mais des solutions sont généralement trouvées en cas d’absence de l’Acheteur pour des raisons exceptionnelles. Dans tous les cas, l’Acheteur sera redevable de sa commande, car La Belle Orange ne peut pas organiser de retour de ses produits.<br> 
@@ -4751,12 +4752,12 @@ En cas d’absence ou retard du Vendeur au moment de la livraison, le Vendeur s�
 En raison de la spécificité des produits frais qui sont des denrées périssables, la responsabilité du transporteur ou de La Belle Orange SL ne pourra être engagée en cas d’absence de l’Acheteur aux heures et jours de livraison et/ou de relivraison.<br> 
 L’Acheteur est particulièrement informé que compte tenu du caractère périssable des produits frais, si l’Acheteur ne réceptionne pas sa commande ou ne va pas chercher sa commande, il ne sera procédé à aucun remboursement.<br><br>
 
-5 - Responsabilité<br>
+<b>5 - Responsabilité</b><br>
 Le Vendeur assume toute responsabilité relative aux Produits mis en vente sur le Site et aux réclamations afférentes. La Belle Orange SL a pour objectif de vendre des produits frais de qualité exceptionnelle, et s’engage à prendre en charge, au meilleur de ses capacités, toute réclamation provenant d’un Acheteur.<br> 
 Cependant, la responsabilité du Vendeur ne pourra être engagée en cas d'inexécution ou de mauvaise exécution du contrat de vente dûe soit au fait de l’Acheteur, notamment mais non limitativement, en cas de mauvaise utilisation du Site par l’Acheteur ou d’une faute de ce dernier, soit au fait imprévisible et insurmontable d'un tiers au contrat ou à un cas de force majeure telle que définie par la jurisprudence française.<br>
 La Belle Orange SL ne saurait voir sa responsabilité engagée à raison des contenus ou appréciations que les Acheteurs font sur le Site.<br><br>
 
-6 - Réclamations<br>
+<b>6 - Réclamations</b><br>
 A tout moment, l’Acheteur a la possibilité de contacter le Vendeur, d’adresser toute demande, réclamation relative aux Produits commandés en utilisant l’outil de messagerie mis à disposition dans le cadre du Service, ou par mail simplement, notamment pour faire valoir ses garanties quand elles sont en cours.
 En sus de l’outil de messagerie, il est mis à la disposition un bouton dédié permettant à tout Acheteur de signaler dans son compte, dans un délai de 30 jours à compter de la date de débit de son compte pour les achats effectués auprès d’un Vendeur toute réclamation concernant les Produits commandés.
 En cas de réclamation d'un Acheteur concernant un Produit, y compris lorsque le Vendeur est informé de ladite réclamation par le biais de l'outil d'information mis à sa disposition dans le Service, le Vendeur fait son affaire personnelle de la résolution du différend qui l'oppose à l'Acheteur. Les litiges sont directement réglés entre l'Acheteur et le Vendeur, le cas échéant à l'aide de l'outil de messagerie mis à leur disposition sur le Service. Le Vendeur fera ses meilleurs efforts pour résoudre le litige l'opposant à l'Acheteur amiablement.
@@ -4764,13 +4765,13 @@ Si la contestation de l'Acheteur s'avère fondée, le Vendeur procèdera soit au
 Toute question ou demande de précision concernant un retard ou défaut de livraison devront être transmises à la Belle Orange, par email pour par le biais du Site. 
 Le réclamant consommateur a la possibilité, si la réponse de La Belle Orange SL ne le satisfait pas ou s’il n’a pas reçu de réponse 2 mois après le dépôt de sa réclamation, de saisir un médiateur compétent pour tout litige concernant l’ensemble des services couverts par les présentes conditions générales de vente. La procédure de médiation est gratuite. Un médiateur peut être saisi par les consommateurs soit directement soit par un intermédiaire (association de consommateurs, avocat, élu, autre médiateur…).<br><br>
 
-7 - Garanties des produits<br>
+<b>7 - Garanties des produits</b><br>
 Les Produits vendus sur le Site sont conformes aux règlementations en vigueur dans les pays où La Belle Orange SL exerce ses activités opérationnelles et commerciales.
 Au titre de ces garanties, le Vendeur s'engage, au choix de l’Acheteur, à lui faire un avoir, le rembourser, ou à échanger les produits défectueux ou ne correspondant pas à sa commande.
 Les remboursements des Produits jugés non conformes ou défectueux seront effectués dans les meilleurs délais suivant la constatation par le Vendeur du défaut de conformité ou du vice caché. Le remboursement s’effectuera par virement sur le compte bancaire de l’Acheteur. Un avoir peut également avoir lieu (c’est généralement la solution la plus simple employée).
 Indépendamment de la garantie commerciale que le Vendeur peut accorder à l’Acheteur en vertu de ses Conditions de Vente, le Vendeur est responsable des défauts de conformité et des vices cachés du produit. <br><br>
  
-8 – Droit applicable<br>
+<b>8 – Droit applicable</b><br>
 Les présentes Conditions Générales de Vente et les opérations qui en découlent sont régies et soumises aux droits Français, Suisse, Allemand, Italien, Espagnol, et Européen.
 Voici une liste des lois et règlements les plus pertinents auxquels La Belle Orange SL se conforme :
 De manière générale :<br>

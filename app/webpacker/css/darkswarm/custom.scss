@@ -1,4 +1,8 @@
-/* Copy of CSS */
+/* Page Accueil */
+#tagline > div > div > h1 > img {display: none;}
+
+
+
 
 /* General layouts */
 #system > div > div > div > div {text-align: jutify !important;}
@@ -52,9 +56,24 @@ button:hover {
 
 /* Page About Us */
     #tagline { 
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;}
+    position: relative!important;
+    width: 100%!important;
+    height: 300px!important;}
+
+#tagline:before {
+    content: "";
+    background-size: cover!important;
+    background-position: 50%!important;
+    background-repeat: no-repeat!important;
+    position: absolute!important;
+    top: 0!important;
+    right: 0!important;
+    bottom: 0!important;
+    left: 0!important;
+    height: 100%!important;
+    width: 100%!important;
+}
+
 
 
 /* Page Compte client */
@@ -71,6 +90,9 @@ body > div.off-canvas-wrap.ng-isolate-scope > div.inner-wrap > section > div.dar
 
 
 /* Page Shops */
+
+#hubs > div:nth-child(3) > div > a.button.success.tiny.filterbtn.ng-binding {display: none;}
+#hubs > div:nth-child(6) > div > div.distance-matches.ng-scope > div > producer > p {display: none;}
 
 .filter-box .tdhead {color: green !important; border-bottom: greenyellow !important;}
 

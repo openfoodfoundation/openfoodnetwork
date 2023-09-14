@@ -3810,7 +3810,7 @@ es:
           order_total: "Total del pedido"
       overview:
         enterprises_header:
-          ofn_with_tip: Las Organizaciones son Productoras y/o Grupos y son la unidad básica de organización dentro de la La Belle Orange.
+          ofn_with_tip: Las Organizaciones son Productoras y/o Grupos y son la unidad básica de organización dentro de La Belle Orange.
         enterprise_row:
           has_no_enterprise_fees: "no tiene comisiones de organización"
           has_no_payment_methods: "no tiene métodos de pago"
