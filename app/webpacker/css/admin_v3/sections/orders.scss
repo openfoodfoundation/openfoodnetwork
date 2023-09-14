@@ -1,0 +1,65 @@
+// Customize orders filter
+.admin-orders-index-search {
+  select[data-placeholder="Status"] {
+    width: 100%;
+  }
+
+  .select2-container {
+    width: 100% !important;
+  }
+}
+
+// Order-total
+.order-details-total {
+  text-align: center;
+
+  .order-total {
+    font-size: 35px;
+    font-weight: 600;
+    color: $color-success;
+  }
+}
+
+.admin-order-form-fields {
+  legend.stock-location {
+    color: $color-body-text;
+
+    .shipment-number {
+      color: $color-success;
+    }
+    .stock-location-name {
+      color: $color-success;
+    }
+  }
+}
+
+.insufficient-stock-items {
+  legend {
+    color: $color-error;
+  }
+
+  table tr:last-child th {
+    border-bottom: 1px solid $color-tbl-border;
+  }
+}
+
+// Customize orduct add fieldset
+#add-line-item {
+  fieldset {
+    padding: 10px 0;
+
+    .field {
+      margin-bottom: 0;
+
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+      }
+    }
+    .actions {
+      .button {
+        margin-top: 28px;
+      }
+    }
+  }
+}
