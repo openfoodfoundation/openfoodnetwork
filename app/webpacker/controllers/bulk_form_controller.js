@@ -3,6 +3,9 @@ import { Controller } from "stimulus";
 // Manages "modified" state for a form with multiple records
 export default class BulkFormController extends Controller {
   static targets = ["actions", "modifiedSummary"];
+  static values = {
+    disableSelector: String,
+  };
   recordElements = {};
 
   connect() {
@@ -24,6 +27,11 @@ export default class BulkFormController extends Controller {
     }
   }
 
+  disconnect() {
+    // Make sure to clean up anything that happened outside
+    this.#disableOtherElements(false);
+  }
+
   toggleModified(e) {
     const element = e.target;
     const modified = element.value != element.defaultValue;
@@ -39,13 +47,28 @@ export default class BulkFormController extends Controller {
         return element.value != element.defaultValue;
       });
     }).length;
+    const formModified = modifiedRecordCount > 0;
 
-    this.actionsTarget.classList.toggle("hidden", modifiedRecordCount == 0);
+    // Show actions
+    this.actionsTarget.classList.toggle("hidden", !formModified);
+    this.#disableOtherElements(formModified); // like filters and sorting
 
     // Display number of records modified
     const key = this.modifiedSummaryTarget && this.modifiedSummaryTarget.dataset.translationKey;
     if (key) {
       this.modifiedSummaryTarget.textContent = I18n.t(key, { count: modifiedRecordCount });
+    }
+  }
+
+  // private
+
+  #disableOtherElements(disable) {
+    this.disableElements ||= document.querySelectorAll(this.disableSelectorValue);
+
+    if (this.disableElements) {
+      this.disableElements.forEach((element) => {
+        element.classList.toggle("disabled-section", disable);
+      });
     }
   }
 }

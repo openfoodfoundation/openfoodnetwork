@@ -28,7 +28,9 @@ describe("BulkFormController", () => {
 
   beforeEach(() => {
     document.body.innerHTML = `
-      <form data-controller="bulk-form">
+      <div id="disable1"></div>
+      <div id="disable2"></div>
+      <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
         <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
         <div id="modified_summary" data-bulk-form-target="modifiedSummary" data-translation-key="modified_summary"></div>
         <div data-record-id="1">
@@ -38,6 +40,7 @@ describe("BulkFormController", () => {
         <div data-record-id="2">
           <input id="input2" type="text" value="initial2">
         </div>
+        <input type="submit">
       </form>
     `;
   });
@@ -47,6 +50,8 @@ describe("BulkFormController", () => {
     // would be repeated if these were broken into multiple examples. So it seems impractical to
     // write individual unit tests.
     it("counts modified fields and records", () => {
+      const disable1 = document.getElementById("disable1");
+      const disable2 = document.getElementById("disable2");
       const actions = document.getElementById("actions");
       const modified_summary = document.getElementById("modified_summary");
       const input1a = document.getElementById("input1a");
@@ -56,12 +61,15 @@ describe("BulkFormController", () => {
       // Record 1: First field changed (we're not simulating a user in a browser here; we're testing DOM events directly)
       input1a.value = 'updated1a';
       input1a.dispatchEvent(new Event("change"));
-      // Expect only first field to show modified, and show modified summary translation
+      // Expect only first field to show modified
       expect(input1a.classList).toContain('modified');
       expect(input1b.classList).not.toContain('modified');
       expect(input2.classList).not.toContain('modified');
+      // Actions and modified summary are shown, with other sections disabled
       expect(actions.classList).not.toContain('hidden');
       expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
+      expect(disable1.classList).toContain('disabled-section');
+      expect(disable2.classList).toContain('disabled-section');
 
       // Record 1: Second field changed
       input1b.value = 'updated1b';
@@ -102,6 +110,8 @@ describe("BulkFormController", () => {
       expect(input2.classList).toContain('modified');
       expect(actions.classList).not.toContain('hidden');
       expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
+      expect(disable1.classList).toContain('disabled-section');
+      expect(disable2.classList).toContain('disabled-section');
 
       // Record 2: Change back to original value
       input2.value = 'initial2';
@@ -110,8 +120,34 @@ describe("BulkFormController", () => {
       expect(input1a.classList).not.toContain('modified');
       expect(input1b.classList).not.toContain('modified');
       expect(input2.classList).not.toContain('modified');
+      // Actions are hidden and other sections are now re-enabled
       expect(actions.classList).toContain('hidden');
       expect(modified_summary.textContent).toBe('modified_summary, {"count":0}');
+      expect(disable1.classList).not.toContain('disabled-section');
+      expect(disable2.classList).not.toContain('disabled-section');
     });
   });
+
+  // unable to test disconnect at this stage
+  // describe("disconnect()", () => {
+  //   it("resets other elements", () => {
+  //     const disable1 = document.getElementById("disable1");
+  //     const disable2 = document.getElementById("disable2");
+  //     const controller = document.querySelector('[data-controller="bulk-form"]');
+  //     const form = document.querySelector('[data-controller="bulk-form"]');
+
+  //     // Form is modified and other sections are disabled
+  //     input1a.value = 'updated1a';
+  //     input1a.dispatchEvent(new Event("change"));
+  //     expect(disable1.classList).toContain('disabled-section');
+  //     expect(disable2.classList).toContain('disabled-section');
+
+  //     // form.submit(); //not implemented
+  //     document.body.removeChild(controller); //doesn't trigger disconnect
+  //     controller.innerHTML = ''; //doesn't trigger disconnect
+
+  //     expect(disable1.classList).not.toContain('disabled-section');
+  //     expect(disable2.classList).not.toContain('disabled-section');
+  //   });
+  // });
 });
