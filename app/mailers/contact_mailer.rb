@@ -4,7 +4,7 @@ class ContactMailer < ApplicationMailer
     @message = message
     @user_email = email 
 
-    mail(to: 'contact.afg.updates@gmail.com', subject: subject) do |format|
+    mail(to: ContentConfig.footer_email, subject: subject) do |format|
       format.text { render plain: "User Email: #{@user_email}\n\n#{@message}" }
     end
   end
