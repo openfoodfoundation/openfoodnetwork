@@ -1,11 +1,11 @@
 :css
-  #tagline:before { background-image: url("/default_images/about_us.jpg") }
+  #tagline:before { background-image: url("/default_images/about_hero.jpg") }
 
 
 - content_for :page_alert do
   = render "shared/menu/alert"
 
-%div#about-us{"ng-controller" => "HomeCtrl"}
+%div{"ng-controller" => "HomeCtrl"}
   = render "home/abouthero"
 
   #panes
