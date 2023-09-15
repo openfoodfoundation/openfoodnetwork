@@ -32,6 +32,8 @@ class VoucherAdjustmentsService
     end
   end
 
+  private
+
   def handle_tax_excluded_from_price(voucher)
     voucher_rate = voucher.rate(@order)
     adjustment = @order.voucher_adjustments.first
