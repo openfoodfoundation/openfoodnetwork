@@ -41,7 +41,7 @@ div.sidebar_item {
           background-color: #fcf6ef;
 
           &:hover {
-            background-color: $spree-green;
+            background-color: $color-btn-bg;
           }
         }
       }
@@ -93,7 +93,7 @@ div.sidebar_item {
     &.odd {
       &:hover {
         color: #ffffff;
-        background-color: $spree-green;
+        background-color: $color-btn-bg;
 
         a {
           color: #ffffff;
@@ -104,7 +104,6 @@ div.sidebar_item {
 
   a.button {
     color: #fff;
-    padding: 15px 15px;
     font-weight: bold;
     text-align: center;
     border-radius: 0px;
@@ -118,7 +117,7 @@ div.sidebar_item {
     }
 
     &:hover {
-      background-color: $spree-green;
+      background-color: $color-btn-hover-bg;
     }
   }
 }
