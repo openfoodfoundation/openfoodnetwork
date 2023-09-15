@@ -1,0 +1,124 @@
+div.sidebar_item {
+  margin-bottom: 30px;
+
+  .centered {
+    text-align: center;
+  }
+
+  div.header {
+    font-size: 105%;
+    color: #fff;
+    padding: 10px 0px;
+    position: relative;
+
+    &.blue {
+      background-color: $spree-blue;
+    }
+
+    &.red {
+      background-color: $color-warning;
+    }
+  }
+
+  .list {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &.red {
+      color: $color-warning;
+
+      .list-item {
+        border: solid $color-warning;
+        border-width: 0px 3px 0px 3px;
+
+        a.alpha,
+        span.alpha {
+          margin-left: -3px;
+        }
+
+        &.odd {
+          background-color: #fcf6ef;
+
+          &:hover {
+            background-color: $spree-green;
+          }
+        }
+      }
+
+      a {
+        color: $color-warning;
+      }
+    }
+  }
+
+  .list-item {
+    .icon-arrow-right {
+      padding-top: 6px;
+      font-size: 20px;
+    }
+
+    border: solid $spree-blue;
+    border-width: 0px 1px 0px 1px;
+
+    a.alpha,
+    span.alpha {
+      font-weight: bold;
+      margin-left: -1px;
+      padding: 10px 2px 10px 5%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    span.omega {
+      padding: 8px 18px 8px 0px;
+      margin-right: -3px;
+      text-align: right;
+    }
+
+    .icon-remove-sign {
+      color: $color-warning;
+      font-size: 18px;
+    }
+
+    &.even {
+      background-color: #fff;
+    }
+
+    &.odd {
+      background-color: $spree-light-blue;
+    }
+
+    &.even,
+    &.odd {
+      &:hover {
+        color: #ffffff;
+        background-color: $spree-green;
+
+        a {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  a.button {
+    color: #fff;
+    padding: 15px 15px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 0px;
+
+    &.blue {
+      background-color: $spree-blue;
+    }
+
+    &.red {
+      background-color: $color-warning;
+    }
+
+    &:hover {
+      background-color: $spree-green;
+    }
+  }
+}
