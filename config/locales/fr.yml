@@ -264,7 +264,7 @@ fr:
       userguide: "Guide utilisateur"
       email_admin_html: "Pour gérez votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez La Belle Orange pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
       admin_panel: "interface d'administration"
-      email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}"
+      email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit au plus près des producteurs. Nous vous invitons à y participer ! %{link}"
       join_community: "Accéder au forum"
     invite_manager:
       subject: "%{enterprise} vous a invité comme gestionnaire"
@@ -326,7 +326,7 @@ fr:
   home: "OFF"
   title: "La Belle Orange"
   welcome_to: "Bienvenue sur"
-  site_meta_description: "Le service proposé est basé sur le logiciel libre Open Food Network. Les organisateurs de circuits courts qui utilisent la plateforme décident ensemble des évolutions à apporter au logiciel, et gèrent conjointement l’activité de la coopérative La Belle Orange. Ils décident notamment du prix qu’ils paieront pour utiliser cette plateforme."
+  site_meta_description: "Les organisateurs et ceux qui utilisent la plateforme décident ensemble des évolutions à apporter, et gèrent conjointement l’activité de La Belle Orange."
   search_by_name: Recherche par nom ou département...
   producers_join: Les producteurs et autres circuits courts basés en France sont invités à rejoindre La Belle Orange.
   charges_sales_tax: Soumis à la TVA?
@@ -1160,14 +1160,14 @@ fr:
         producer_profile: Profil simple
         connect_ofn: Pour apparaître sur la carte et la liste des producteurs
         always_free: ' '
-        producer_description_text: Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant. Vous pourrez renseigner votre catalogue produits et le partager avec les circuits courts qui souhaitent vendre vos produits dans leur boutique sur La Belle Orange.
+        producer_description_text: Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant. Vous pourrez renseigner votre catalogue produits et le partager avec ceux qui souhaitent vendre vos produits dans leur boutique sur La Belle Orange.
         producer_shop: Boutique Producteur
         sell_your_produce: Pour vendre vos produits
-        producer_shop_description_text: Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique.
-        producer_shop_description_text2: 'ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser La Belle Orange pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit court utilisant La Belle Orange pour vendre, mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez “profil simple”.'
+        producer_shop_description_text: Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, et partager votre catalogue produits avec d’autres points de distribution.
+        producer_shop_description_text2: 'ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser La Belle Orange pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit utilisant La Belle Orange pour vendre, mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez “profil simple”.'
         producer_hub: Boutique multi-producteurs
         producer_hub_text: Pour vendre vos produits ainsi que ceux d’autres producteurs
-        producer_hub_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, vendre les produits d''autres producteurs, et partager votre catalogue produits avec d’autres circuits courts souhaitant les distribuer dans leur boutique. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser La Belle Orange pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit court utilisant La Belle Orange pour vendre, mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez “profil simple”.'
+        producer_hub_description_text: 'Vous pourrez paramétrer votre boutique en ligne selon votre fonctionnement, vendre les produits d'autres producteurs, et partager votre catalogue produits avec d’autres circuits souhaitant les distribuer dans leur boutique. ATTENTION : Si vous vendez via un autre outil en ligne, et n’envisagez pas d’utiliser La Belle Orange pour cet usage, choisissez “profil simple”. De même, si vous fournissez un circuit utilisant La Belle Orange pour vendre, mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez “profil simple”.'
         profile: Profil simple
         get_listing: Pour apparaître sur la carte
         profile_description_text: Nous vous invitons à renseigner votre profil de la façon la plus complète possible. Un profil complet et avec des images attire plus ! Vous pourrez mettre des liens pour rediriger les visiteurs vers votre site internet ou espace de vente en ligne le cas échéant.
@@ -1854,7 +1854,7 @@ fr:
     cookies_policy:
       header: "Notre usage des Cookies"
       desc_part_1: "Les cookies sont de tout petits fichiers texte qui sont stockés sur votre ordinateur quand vous naviguez sur certains sites web."
-      desc_part_2: "Chez La Belle Orange nous sommes particulièrement soucieux de votre vie privée. Nous n'utilisons que les cookies nécessaires pour vous offrir un service d'achat/vente en ligne performant. Nous ne vendons aucunes de vos données. Peut-être vous proposerons-nous dans le futur de jolis projets qui peuvent être utiles pour faire progresser la vente en circuits courts, et pour lesquels vos données pourraient nous permettre de trouver de nouvelles solutions aux problèmes que vous rencontrez, comme par exemple la construction de services logistiques mutualisés. Mais nous n'y sommes pas encore, et nous ne ferons rien sans votre autorisation :-)"
+      desc_part_2: "Chez La Belle Orange nous sommes particulièrement soucieux de votre vie privée. Nous n'utilisons que les cookies nécessaires pour vous offrir un service d'achat/vente en ligne performant. Nous ne vendons aucunes de vos données. Peut-être vous proposerons-nous dans le futur de jolis projets qui peuvent être utiles pour faire progresser la vente au plus près des producteurs, et pour lesquels vos données pourraient nous permettre de trouver de nouvelles solutions aux problèmes que vous rencontrez, comme par exemple la construction de services logistiques mutualisés. Mais nous n'y sommes pas encore, et nous ne ferons rien sans votre autorisation :-)"
       desc_part_3: "Nous utilisons des cookies principalement pour vous permettre de rester connecté(e) après votre première connexion si vous le souhaitez (et éviter de saisir votre mot de passe à chaque fois!), ou encore pour mémoriser les produits dans votre panier. Si vous naviguez sur le site sans cliquer sur \"Accepter les cookies\", cela vaut consentement à l'utilisation des cookies nécessaires au bon fonctionnement du site labelleorange.es. Voilà la liste détaillée des cookies que nous utilisons."
       essential_cookies: "Cookies essentiels"
       essential_cookies_desc: "Les cookies suivants sont nécessaires au fonctionnement du site labelleorange.es."
@@ -1887,23 +1887,22 @@ fr:
       cookies_policy_link: "politique de cookies"
       cookies_accept_button: "Accepter les cookies"
   home_shop: Faire mes courses
-  brandstory_headline: "Les circuits courts connectés"
+  brandstory_headline: "Un circuit au plus près des producteurs"
   brandstory_intro: "La Belle Orange est une initiative libre, et accessible à tous."
   brandstory_part1: "Les organisateurs de circuits courts qui gèrent les différents points de distribution sont au coeur de notre réussite. Ils aident l’activité de La Belle Orange, le plus souvent de bon coeur, bénévolement, pour vous fournir des fruits et produits les meilleurs possible, au meilleur prix. "
-  brandstory_part2: "Afin de permettre à tout type de circuit court de fonctionner efficacement, nous nous adaptons à la diversité : groupement d’achat bénévole, petite épicerie, ou entreprise familiale de distribution, nous trouvons toujours des solutions :-)"
+  brandstory_part2: "Afin de permettre à tout type d'initiative vertueuse de fonctionner efficacement, nous nous adaptons à la diversité : groupement d’achat bénévole, petite épicerie, ou entreprise familiale de distribution, nous trouvons toujours des solutions :-)"
   brandstory_part3: " "
   brandstory_part4: " "
   brandstory_part5_strong: " "
   brandstory_part6: " "
   system_headline: "Commander en ligne - comment ça marche?"
   system_step1: "1. Recherche"
-  system_step1_text: "Trouvez le circuit court qui vous convient parmi de multiples points d’achat indépendants aux modèles variés."
+  system_step1_text: "Trouvez le circuit qui vous convient parmi de multiples points d’achat indépendants."
   system_step2: "2. Achat"
-  system_step2_text: "Commandez en ligne des produits bios/locaux auprès du circuit court sélectionné."
+  system_step2_text: "Commandez en ligne des produits bios/locaux au plus près des producteurs."
   system_step3: "3. Retrait / Livraison"
   system_step3_text: "Retirez votre panier au lieu et à l’heure indiqués lors de votre commande."
-  cta_headline: "Des achats qui rendent le monde un peu meilleur.<br>
-  Ne vous privez pas !"
+  cta_headline: "Des achats qui rendent le monde meilleur. Profitez-en !"
   cta_label: "Je vote avec mes achats"
   stats_headline: "Nous créons un nouveau système alimentaire."
   stats_producers: "agriculteurs et producteurs"
@@ -2122,7 +2121,7 @@ fr:
   email_signup_welcome: "Bienvenue sur %{sitename} !"
   email_signup_confirmed_email: "Merci d'avoir confirmé votre email."
   email_signup_shop_html: "Vous pouvez maintenant vous connecter sur %{link}."
-  email_signup_text: "Si vous organisez / fournissez un circuit court, n’hésitez pas à nous contacter à fruits(at)labelleorange.es, nous sommes là pour vous accompagner dans la création de votre espace de vente / commande en ligne. Si vous achetez via un circuit court utilisant La Belle Orange, connectez-vous avant de passer commande pour que vos informations personnelles soient gardées en mémoire, cela vous évitera de les ressaisir à chaque commande ! "
+  email_signup_text: "Si vous organisez / fournissez un circuit, n’hésitez pas à nous contacter à fruits(at)labelleorange.es, nous sommes là pour vous accompagner dans la création de votre espace de vente / commande en ligne. Si vous achetez via un circuit utilisant La Belle Orange, connectez-vous avant de passer commande pour que vos informations personnelles soient gardées en mémoire, cela vous évitera de les ressaisir à chaque commande ! "
   email_signup_help_html: "Des retours à nous faire quant à votre utilisation de la plateforme ? Écrivez-nous à fruits(at)labelleorange.es."
   invite_email:
     greeting: "Bonjour,"
@@ -2288,13 +2287,13 @@ fr:
   sell_ask_services: "Nous consulter pour en savoir plus."
   shops_title: Boutiques
   shops_headline: Mes achats ont un sens.
-  shops_text: Trouvez des circuits de distribution pour vous approvisionner près de chez vous en bio/local/éthique.
+  shops_text: Trouvez des points de distribution pour vous approvisionner près de chez vous en bio/local/éthique.
   shops_signup_title: S'inscrire et créer une boutique multi-producteurs
-  shops_signup_headline: Des circuits courts offrant une large gamme de produits
-  shops_signup_motivation: 'Que vous soyez vous-même producteur, ou que vous gériez un groupement d’achat, un drive ou autre circuit court, proposez à la vente des produits venant de différents producteurs via votre boutique multi-producteurs. Gagnez du temps sur la gestion de votre commercialisation grâce à La Belle Orange, votre partenaire coopératif et engagé ! '
+  shops_signup_headline: Des circuits au plus près des producteurs et offrant une large gamme de produits
+  shops_signup_motivation: 'Que vous soyez vous-même producteur, ou que vous gériez un groupement d’achat, proposez à la vente des produits venant de différents producteurs via votre boutique multi-producteurs. Gagnez du temps sur la gestion de votre commercialisation grâce à La Belle Orange, votre partenaire coopératif et engagé ! '
   shops_signup_action: S'inscrire
   shops_signup_pricing: La Belle Orange vous simplifie la vie
-  shops_signup_stories: Histoires de circuits courts
+  shops_signup_stories: Histoires de distribution éthique
   shops_signup_help: Rejoindre le réseau
   shops_signup_help_text: Créez votre profil distributeur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne.
   shops_signup_detail: Les avantages La Belle Orange
@@ -2400,7 +2399,7 @@ fr:
     steps:
       introduction:
         registration_greeting: "Bonjour,"
-        registration_intro: "Vous pouvez maintenant créer votre profil “entreprise” (producteur ou circuit court)"
+        registration_intro: "Vous pouvez maintenant créer votre profil “entreprise” (producteur ou point de distribution)"
         registration_checklist: "De quoi ai-je besoin ?"
         registration_time: "5-10 minutes"
         registration_enterprise_address: "L'adresse de l'entreprise"
@@ -2460,7 +2459,7 @@ fr:
         no_producer: "Non, je ne suis pas un producteur"
         producer_field_error: "Veuillez faire un choix. Etes vous un producteur?"
         yes_producer_help: "Vous êtes un producteur si vous faites pousser, élevez, pétrissez, transformez, fermentez, réduisez en grains, façonnez, cuisinez, etc."
-        no_producer_help: "Si vous n'êtes pas un producteur, vous êtes probablement organisateur d’un circuit court type drive fermier, groupement d’achat, revendeur, grossiste ou autre."
+        no_producer_help: "Si vous n'êtes pas un producteur, vous êtes probablement organisateur d’un circuit de type fermier, groupement d’achat, revendeur, grossiste ou autre."
         create_profile: "Créer votre profil"
       about:
         title: "A propos"
@@ -3102,7 +3101,7 @@ fr:
           hub_shop_text2: >
               Une boutique multi-producteurs n'a pas de modèle figé, il peut s'agir
               d'un groupement d'achat, d'une épicerie coopérative, d'une épicerie
-              locale de quartier ou épicerie en circuit court en ligne, etc.
+              locale de quartier ou épicerie, ou en ligne, etc.
           hub_shop_text3: >2+
 
           choose_package: Choisir le type d'entreprise souhaité
@@ -3123,7 +3122,7 @@ fr:
               ou espace de vente en ligne le cas échéant.
           profile_only_text3: >
               Vous pourrez renseigner votre catalogue produits et le partager avec
-              les circuits courts qui souhaitent vendre vos produits dans leur boutique
+              les circuits qui souhaitent vendre vos produits dans leur boutique
               sur La Belle Orange.
           producer_shop: Boutique Producteur
           producer_shop_text1: >
@@ -3133,7 +3132,7 @@ fr:
               commande et livraison, etc.
           producer_shop_text2: >
               Vous pourrez renseigner votre catalogue produits et le partager avec
-              d’autres circuits courts qui souhaitent vendre vos produits dans leur
+              d’autres circuits ou initiatives qui souhaitent vendre vos produits dans leur
               boutique sur La Belle Orange.
 
               ATTENTION :
@@ -3142,7 +3141,7 @@ fr:
               La Belle Orange pour organiser vos ventes / commandes, choisissez la catégorie
               “profil simple”.
 
-              - Si vous fournissez un circuit court utilisant La Belle Orange pour vendre,
+              - Si vous fournissez un circuit utilisant La Belle Orange pour vendre,
               mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez
               la catégorie “profil simple”.
           producer_hub: Boutique multi-producteurs
@@ -3153,7 +3152,7 @@ fr:
               rythmes de commande et livraison, etc.
           producer_hub_text2: >
               Vous pourrez renseigner votre catalogue produits et le partager avec
-              d’autres circuits courts qui souhaitent vendre vos produits dans leur
+              d’autres circuits qui souhaitent vendre vos produits dans leur
               boutique sur La Belle Orange.
           producer_hub_text3: >
               ATTENTION :
@@ -3162,7 +3161,7 @@ fr:
               La Belle Orange pour organiser vos ventes / commandes, choisissez la catégorie
               “profil simple”.
 
-              - Si vous fournissez un circuit court utilisant La Belle Orange pour vendre,
+              - Si vous fournissez un circuit utilisant La Belle Orange pour vendre,
               mais ne vendez pas vous-même en direct sur La Belle Orange, choisissez
               la catégorie “profil simple”.
           get_listing: Pour apparaître sur la carte
@@ -3988,7 +3987,7 @@ fr:
           order_total: "Total Commande"
       overview:
         enterprises_header:
-          ofn_with_tip: Les Entreprises sont les entités qui organisent des circuits courts et utilisent pour cela La Belle Orange.
+          ofn_with_tip: Les Entreprises sont les entités qui organisent des circuits et utilisent pour cela La Belle Orange.
         enterprise_row:
           has_no_enterprise_fees: "n'a pas de marge ou commission"
           has_no_payment_methods: "n'a pas de méthode de paiement"
@@ -4627,7 +4626,7 @@ Les destinataires des données sont donc :
 <br>La Belle Orange se réserve le droit de modifier à tout moment cette Politique de protection des données. En cas de modification substantielle telle que l’introduction d’une nouvelle finalité, La Belle Orange vous fournira au préalable des informations au sujet de cette autre finalité. Ceci afin de s’assurer que vous disposez d'un délai raisonnable pour exercer vos droits en vertu de la loi Informatique et Libertés du 6 janvier 1978 et du Règlement européen. Nous vous encourageons néanmoins à consulter régulièrement la Politique afin de prendre connaissance des modalités de protection de vos informations personnelles prévues par La Belle Orange. Cette Politique a été mise à jour pour la dernière fois le 01 septembre 2023.
 <br><br>
 <b>Contact</b><br>
-Pour toute question relative à notre Politique, vous pouvez nous contacter directement en vous adressant à :<br>
+Pour toute question, vous pouvez nous contacter directement en vous adressant à :<br>
 fruits(at)labelleorange.es<br>
 ou par courrier<br>
 La Belle Orange – Calle Porvenir – 3 Nave 8 – 29560 Pizarra (Espagne).
