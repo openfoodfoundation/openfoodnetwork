@@ -591,7 +591,7 @@ describe '
           perform_enqueued_jobs(only: BulkInvoiceJob)
 
           expect(page).to have_content "Bulk Invoice created"
-          expect(page).to have_content "VIEW FILE"
+          expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
         end
 
         it "can bulk cancel 2 orders" do
