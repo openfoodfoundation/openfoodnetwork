@@ -9,7 +9,7 @@
           .error
             = error_msg
       .form-buttons.six.columns
-        = form.submit t('.reset'), type: :reset, class: "medium"
+        = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
         = form.submit t('.save'), class: "medium"
   %table.products
     %col{ width:"15%" }
