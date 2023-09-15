@@ -148,6 +148,7 @@ describe("BulkFormController", () => {
 
   //     expect(disable1.classList).not.toContain('disabled-section');
   //     expect(disable2.classList).not.toContain('disabled-section');
+  //     //TODO: expect window to have no beforeunload event listener
   //   });
   // });
 });

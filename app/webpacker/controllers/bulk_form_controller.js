@@ -30,6 +30,7 @@ export default class BulkFormController extends Controller {
   disconnect() {
     // Make sure to clean up anything that happened outside
     this.#disableOtherElements(false);
+    window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
   }
 
   toggleModified(e) {
@@ -58,6 +59,21 @@ export default class BulkFormController extends Controller {
     if (key) {
       this.modifiedSummaryTarget.textContent = I18n.t(key, { count: modifiedRecordCount });
     }
+
+    // Prevent accidental data loss
+    if (formModified) {
+      window.addEventListener("beforeunload", this.preventLeavingBulkForm);
+    } else {
+      window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
+    }
+  }
+
+  preventLeavingBulkForm(e) {
+    // Cancel the event
+    e.preventDefault();
+    // Chrome requires returnValue to be set. Other browsers may display this if provided, but let's
+    // not create a new translation key, and keep the behaviour consistent.
+    e.returnValue = "";
   }
 
   // private

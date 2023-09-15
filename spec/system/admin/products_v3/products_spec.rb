@@ -211,6 +211,14 @@ describe 'As an admin, I can see the new product page' do
         fill_in "Name", with: "Pommes"
       end
 
+      # Expect to be alerted when attempting to navigate away. Cancel.
+      dismiss_confirm do
+        click_link "Dashboard"
+      end
+      within row_containing_name("Apples") do
+        expect(page).to have_field "Name", with: "Pommes" # Changed value wasn't lost
+      end
+
       # Meanwhile, the SKU was updated
       product_a.update! sku: "APL-10"
 
