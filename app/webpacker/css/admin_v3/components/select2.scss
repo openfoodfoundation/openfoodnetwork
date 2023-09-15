@@ -189,8 +189,22 @@ label .select2-container {
 }
 
 .select2-container {
+  .select2-choice,
+  .select2-choices {
+    height: $btn-relaxed-height !important; // !important is needed because of vendor/assets/stylesheets/select2.css.scss
+    padding: 10px;
+  }
+}
+
+.select2-container .select2-choices {
+  input {
+    position: relative;
+    top: -10px;
+  }
+}
+
+.select2-container {
   .select2-choice {
-    height: $btn-relaxed-height;
     padding: 10px 15px;
     color: $near-black !important;
 
