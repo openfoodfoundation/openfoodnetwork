@@ -6,7 +6,7 @@ module OrderManagement
   module Stock
     describe Packer do
       let(:distributor) { create(:distributor_enterprise) }
-      let(:order) { create(:order_with_line_items, line_items_count: 5, distributor: distributor) }
+      let(:order) { create(:order_with_line_items, line_items_count: 5, distributor:) }
       let(:stock_location) { create(:stock_location) }
 
       subject { Packer.new(stock_location, order) }
@@ -34,7 +34,7 @@ module OrderManagement
         variant.on_demand = false
         variant.save
         expect {
-          create(:variant_override, variant: variant, hub: distributor, count_on_hand: 10)
+          create(:variant_override, variant:, hub: distributor, count_on_hand: 10)
         }.to change {
           subject.package.on_hand.size
         }.from(4).to(5)

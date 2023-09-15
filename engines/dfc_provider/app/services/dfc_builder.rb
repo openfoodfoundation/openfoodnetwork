@@ -9,7 +9,7 @@ class DfcBuilder
     product = SuppliedProductBuilder.supplied_product(variant)
 
     DataFoodConsortium::Connector::CatalogItem.new(
-      id, product: product,
+      id, product:,
           sku: variant.sku,
           stockLimitation: stock_limitation(variant),
           offers: [offer(variant)],

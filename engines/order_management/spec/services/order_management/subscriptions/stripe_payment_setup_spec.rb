@@ -20,7 +20,7 @@ module OrderManagement
         end
 
         context "when a payment is present" do
-          let(:payment) { create(:payment, payment_method: payment_method, amount: 10) }
+          let(:payment) { create(:payment, payment_method:, amount: 10) }
 
           before { allow(order).to receive(:pending_payments).once { [payment] } }
 

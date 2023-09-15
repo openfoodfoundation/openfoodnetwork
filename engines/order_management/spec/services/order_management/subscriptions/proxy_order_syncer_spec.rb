@@ -62,7 +62,7 @@ module OrderManagement
               :subscription,
               begins_at: now + 1.minute,
               ends_at: now + 2.minutes,
-              schedule: schedule
+              schedule:
             )
           end
 
@@ -140,7 +140,7 @@ module OrderManagement
           before { expect(subscription.save!).to be true }
 
           context "when a proxy order exists" do
-            let!(:proxy_order) { create(:proxy_order, subscription: subscription, order_cycle: oc) }
+            let!(:proxy_order) { create(:proxy_order, subscription:, order_cycle: oc) }
 
             context "for an oc included in the relevant schedule" do
               context "and the proxy order has already been placed" do
@@ -228,7 +228,7 @@ module OrderManagement
                       :subscription,
                       begins_at: now + 1.minute,
                       ends_at: now + 2.minutes,
-                      schedule: schedule
+                      schedule:
                     )
                   end
 
@@ -284,7 +284,7 @@ module OrderManagement
 
             context "for an oc not included in the relevant schedule" do
               let!(:proxy_order) {
-                create(:proxy_order, subscription: subscription, order_cycle: open_oc)
+                create(:proxy_order, subscription:, order_cycle: open_oc)
               }
               before do
                 open_oc.schedule_ids = []
@@ -412,7 +412,7 @@ module OrderManagement
                 :subscription,
                 begins_at: now + 1.minute,
                 ends_at: now + 2.minutes,
-                schedule: schedule
+                schedule:
               )
             end
             let(:syncer) { ProxyOrderSyncer.new(subscription) }

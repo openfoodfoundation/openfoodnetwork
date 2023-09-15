@@ -2,7 +2,7 @@
 
 module AuthorizationHelper
   def auth_header(email)
-    token = allow_token_for(email: email)
+    token = allow_token_for(email:)
     { "Authorization" => "JWT #{token}" }
   end
 

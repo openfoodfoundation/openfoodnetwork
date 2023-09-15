@@ -65,7 +65,7 @@ class OrderInvoiceComparator
 
   def current_state_invoice
     @current_state_invoice ||= Invoice.new(
-      order: order,
+      order:,
       data: serialize_for_invoice,
       date: Time.zone.today,
       number: invoices.count + 1

@@ -116,7 +116,7 @@ module OrderManagement
         return if available_variant_ids.include? variant.id
 
         name = "#{variant.product.name} - #{variant.full_name}"
-        errors.add(:subscription_line_items, :not_available, name: name)
+        errors.add(:subscription_line_items, :not_available, name:)
       end
 
       def available_variant_ids

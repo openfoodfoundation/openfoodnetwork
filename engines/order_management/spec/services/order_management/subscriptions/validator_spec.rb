@@ -6,10 +6,10 @@ module OrderManagement
   module Subscriptions
     describe Validator do
       let(:owner) { create(:user) }
-      let(:shop) { create(:enterprise, name: "Shop", owner: owner) }
+      let(:shop) { create(:enterprise, name: "Shop", owner:) }
 
       describe "delegation" do
-        let(:subscription) { create(:subscription, shop: shop) }
+        let(:subscription) { create(:subscription, shop:) }
         let(:validator) { Validator.new(subscription) }
 
         it "delegates to subscription" do
@@ -28,7 +28,7 @@ module OrderManagement
       describe "validations" do
         let(:subscription_stubs) do
           {
-            shop: shop,
+            shop:,
             customer: true,
             schedule: true,
             shipping_method: true,
