@@ -15,7 +15,7 @@ module Reporting
             total_cost: proc { |line_items| line_items.sum(&:amount) },
             sku: variant_sku,
             producer_charges_sales_tax?: supplier_charges_sales_tax?,
-            product_tax_category: product_tax_category
+            product_tax_category:
           }
         end
 

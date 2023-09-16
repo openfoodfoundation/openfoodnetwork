@@ -55,7 +55,7 @@ module Reporting
     def to_html(layout: nil)
       ApplicationController.render(
         template: "admin/reports/_table",
-        layout: layout,
+        layout:,
         locals: { report: @report }
       )
     end

@@ -29,7 +29,7 @@ module Stripe
     def stripe_account_id
       enterprise_id = payment.payment_method&.preferred_enterprise_id
 
-      StripeAccount.find_by(enterprise_id: enterprise_id)&.stripe_user_id
+      StripeAccount.find_by(enterprise_id:)&.stripe_user_id
     end
 
     def raise_if_last_payment_error_present(payment_intent_response)

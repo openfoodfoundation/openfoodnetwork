@@ -22,7 +22,7 @@ namespace :ofn do
             puts "Last edited on #{subscription.updated_at}"
             puts "Canceled at #{subscription.canceled_at} and paused at #{subscription.paused_at}"
 
-            ProxyOrder.where(order_cycle_id: order_cycle_id,
+            ProxyOrder.where(order_cycle_id:,
                              subscription_id: subscription.id).each do |proxy_order|
               puts
               puts "Proxy Order #{proxy_order.id}"

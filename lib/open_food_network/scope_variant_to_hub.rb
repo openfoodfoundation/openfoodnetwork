@@ -19,7 +19,7 @@ module OpenFoodNetwork
       end
 
       def price_in(currency)
-        Spree::Price.new(amount: price, currency: currency)
+        Spree::Price.new(amount: price, currency:)
       end
 
       # Uses variant_override.count_on_hand instead of Stock::Quantifier.stock_items.count_on_hand

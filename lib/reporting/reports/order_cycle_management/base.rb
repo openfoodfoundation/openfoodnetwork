@@ -72,7 +72,7 @@ module Reporting
         end
 
         def customer_code(email)
-          customer = Customer.where(email: email).first
+          customer = Customer.where(email:).first
           customer.nil? ? "" : customer.code
         end
       end

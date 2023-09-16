@@ -10,8 +10,8 @@ module Addressing
       address1: parts[0],
       city: parts[1],
       zipcode: parts[2],
-      state: state,
-      country: country
+      state:,
+      country:
     )
   end
 

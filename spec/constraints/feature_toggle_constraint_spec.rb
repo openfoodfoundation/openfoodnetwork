@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe FeatureToggleConstraint do
   subject { described_class.new("baking") }
-  let(:request) { double(env: env) }
+  let(:request) { double(env:) }
   let(:env) { {} }
 
   it "constraints an unknown feature" do

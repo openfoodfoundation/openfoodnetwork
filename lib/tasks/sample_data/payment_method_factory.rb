@@ -48,8 +48,8 @@ module SampleData
 
     def create_payment_method(provider_class, enterprise, name, description, calculator)
       payment_method = provider_class.new(
-        name: name,
-        description: description,
+        name:,
+        description:,
         environment: Rails.env,
         distributor_ids: [enterprise.id]
       )

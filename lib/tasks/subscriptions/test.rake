@@ -19,7 +19,7 @@ namespace :ofn do
 
         # Reset Proxy Orders of the Order Cycle
         #   by detatching them from existing orders and resetting placed and confirmed dates
-        ProxyOrder.find_by(order_cycle_id: order_cycle_id)&.update!(
+        ProxyOrder.find_by(order_cycle_id:)&.update!(
           order_id: nil,
           confirmed_at: nil,
           placed_at: nil)

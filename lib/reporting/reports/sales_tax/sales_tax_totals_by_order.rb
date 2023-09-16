@@ -33,8 +33,8 @@ module Reporting
             tax_rate_ids << nil if tax_rate_ids.empty?
             tax_rate_ids.map do |tax_rate_id|
               {
-                tax_rate_id: tax_rate_id,
-                order: order
+                tax_rate_id:,
+                order:
               }
             end
           end

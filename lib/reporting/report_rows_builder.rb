@@ -42,7 +42,7 @@ module Reporting
 
       @computed_data = report.query_result.map { |item|
         row = @builder.build_row(item)
-        OpenStruct.new(item: item, full_row: row, row: @builder.slice_and_format_row(row))
+        OpenStruct.new(item:, full_row: row, row: @builder.slice_and_format_row(row))
       }
 
       @computed_data.uniq! { |data| data.row.to_h.values } if @report.skip_duplicate_rows?

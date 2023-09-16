@@ -24,11 +24,11 @@ module OpenFoodNetwork
 
         if exchange_exists?(exchange[:enterprise_id], @order_cycle.coordinator_id, true)
           update_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, true,
-                          variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
+                          variant_ids:, enterprise_fee_ids:,
                           receival_instructions: exchange[:receival_instructions] )
         else
           add_exchange(exchange[:enterprise_id], @order_cycle.coordinator_id, true,
-                       variant_ids: variant_ids, enterprise_fee_ids: enterprise_fee_ids,
+                       variant_ids:, enterprise_fee_ids:,
                        receival_instructions: exchange[:receival_instructions], )
         end
       end
@@ -40,15 +40,15 @@ module OpenFoodNetwork
 
         if exchange_exists?(@order_cycle.coordinator_id, exchange[:enterprise_id], false)
           update_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], false,
-                          variant_ids: variant_ids,
-                          enterprise_fee_ids: enterprise_fee_ids,
+                          variant_ids:,
+                          enterprise_fee_ids:,
                           pickup_time: exchange[:pickup_time],
                           pickup_instructions: exchange[:pickup_instructions],
                           tag_list: exchange[:tag_list] )
         else
           add_exchange(@order_cycle.coordinator_id, exchange[:enterprise_id], false,
-                       variant_ids: variant_ids,
-                       enterprise_fee_ids: enterprise_fee_ids,
+                       variant_ids:,
+                       enterprise_fee_ids:,
                        pickup_time: exchange[:pickup_time],
                        pickup_instructions: exchange[:pickup_instructions],
                        tag_list: exchange[:tag_list] )
@@ -63,13 +63,13 @@ module OpenFoodNetwork
     attr_accessor :touched_exchanges
 
     def exchange_exists?(sender_id, receiver_id, incoming)
-      @order_cycle.exchanges.where(sender_id: sender_id, receiver_id: receiver_id,
-                                   incoming: incoming).present?
+      @order_cycle.exchanges.where(sender_id:, receiver_id:,
+                                   incoming:).present?
     end
 
     def add_exchange(sender_id, receiver_id, incoming, attrs = {})
-      attrs = attrs.reverse_merge(sender_id: sender_id, receiver_id: receiver_id,
-                                  incoming: incoming)
+      attrs = attrs.reverse_merge(sender_id:, receiver_id:,
+                                  incoming:)
       variant_ids = attrs.delete :variant_ids
       exchange = @order_cycle.exchanges.build attrs
 
@@ -82,8 +82,8 @@ module OpenFoodNetwork
     end
 
     def update_exchange(sender_id, receiver_id, incoming, attrs = {})
-      exchange = @order_cycle.exchanges.where(sender_id: sender_id, receiver_id: receiver_id,
-                                              incoming: incoming).first
+      exchange = @order_cycle.exchanges.where(sender_id:, receiver_id:,
+                                              incoming:).first
       return unless permission_for(exchange)
 
       remove_unauthorized_exchange_attributes(exchange, attrs)
@@ -148,7 +148,7 @@ module OpenFoodNetwork
 
     def find_exchange(sender_id, receiver_id, incoming)
       @order_cycle.exchanges.
-        find_by(sender_id: sender_id, receiver_id: receiver_id, incoming: incoming)
+        find_by(sender_id:, receiver_id:, incoming:)
     end
 
     def incoming_exchange_variant_ids(attrs)
