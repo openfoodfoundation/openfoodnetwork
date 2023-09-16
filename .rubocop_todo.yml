@@ -176,7 +176,6 @@ Metrics/BlockLength:
     - 'spec/support/cancan_helper.rb'
     - 'spec/support/matchers/select2_matchers.rb'
     - 'spec/support/matchers/table_matchers.rb'
-    - 'spec/swagger_helper.rb'
     - 'spec/system/consumer/shopping/checkout_spec.rb'
     - 'spec/system/consumer/shopping/checkout_stripe_spec.rb'
     - 'spec/system/consumer/shopping/variant_overrides_spec.rb'
@@ -187,7 +186,7 @@ Metrics/BlockNesting:
   Exclude:
     - 'app/models/spree/payment/processing.rb'
 
-# Offense count: 44
+# Offense count: 45
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
@@ -233,9 +232,9 @@ Metrics/ClassLength:
     - 'lib/open_food_network/order_cycle_permissions.rb'
     - 'lib/open_food_network/permissions.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/enterprise_fees_with_tax_report_by_order.rb'
+    - 'lib/reporting/reports/enterprise_fee_summary/enterprise_fees_with_tax_report_by_producer.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
-    - 'lib/reporting/reports/enterprise_fee_summary/enterprise_fees_with_tax_report_by_producer.rb'
 
 # Offense count: 34
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
@@ -577,21 +576,15 @@ Rails/PluckInWhere:
   Exclude:
     - 'app/models/spree/variant.rb'
 
-# Offense count: 15
+# Offense count: 5
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RedundantActiveRecordAllMethod:
   Exclude:
     - 'app/models/spree/tax_rate.rb'
     - 'app/models/spree/user.rb'
     - 'app/models/spree/variant.rb'
-    - 'spec/support/request/shop_workflow.rb'
-    - 'spec/support/request/web_helper.rb'
-    - 'spec/system/admin/bulk_product_update_spec.rb'
-    - 'spec/system/admin/order_cycles/complex_editing_spec.rb'
     - 'spec/system/admin/product_import_spec.rb'
-    - 'spec/system/admin/products_spec.rb'
     - 'spec/system/admin/tag_rules_spec.rb'
-    - 'spec/system/consumer/shopping/shopping_spec.rb'
 
 # Offense count: 22
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -875,43 +868,13 @@ Style/HashLikeCase:
   Exclude:
     - 'app/models/enterprise.rb'
 
-# Offense count: 1563
+# Offense count: 1440
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
 # SupportedShorthandSyntax: always, never, either, consistent
 Style/HashSyntax:
   Exclude:
-    - 'lib/open_food_network/enterprise_fee_calculator.rb'
-    - 'lib/open_food_network/i18n_inflections.rb'
-    - 'lib/open_food_network/order_cycle_form_applicator.rb'
-    - 'lib/open_food_network/scope_variant_to_hub.rb'
-    - 'lib/reporting/report_headers_builder.rb'
-    - 'lib/reporting/report_renderer.rb'
-    - 'lib/reporting/report_rows_builder.rb'
-    - 'lib/reporting/reports/enterprise_fee_summary/enterprise_fees_with_tax_report_by_order.rb'
-    - 'lib/reporting/reports/enterprise_fee_summary/fee_summary.rb'
-    - 'lib/reporting/reports/list.rb'
-    - 'lib/reporting/reports/order_cycle_management/base.rb'
-    - 'lib/reporting/reports/orders_and_fulfillment/order_cycle_supplier_totals.rb'
-    - 'lib/reporting/reports/packing/customer.rb'
-    - 'lib/reporting/reports/packing/product.rb'
-    - 'lib/reporting/reports/packing/supplier.rb'
-    - 'lib/reporting/reports/sales_tax/sales_tax_totals_by_order.rb'
-    - 'lib/reporting/reports/sales_tax/sales_tax_totals_by_producer.rb'
-    - 'lib/spree/core/controller_helpers/respond_with.rb'
-    - 'lib/stripe/account_connector.rb'
-    - 'lib/stripe/credit_card_clone_destroyer.rb'
-    - 'lib/stripe/credit_card_clone_finder.rb'
-    - 'lib/stripe/payment_intent_validator.rb'
-    - 'lib/tasks/sample_data/addressing.rb'
-    - 'lib/tasks/sample_data/enterprise_factory.rb'
-    - 'lib/tasks/sample_data/order_cycle_factory.rb'
-    - 'lib/tasks/sample_data/payment_method_factory.rb'
-    - 'lib/tasks/sample_data/user_factory.rb'
-    - 'lib/tasks/subscriptions/debug.rake'
-    - 'lib/tasks/subscriptions/test.rake'
-    - 'spec/constraints/feature_toggle_constraint_spec.rb'
     - 'spec/controllers/admin/bulk_line_items_controller_spec.rb'
     - 'spec/controllers/admin/customers_controller_spec.rb'
     - 'spec/controllers/admin/enterprises_controller_spec.rb'
