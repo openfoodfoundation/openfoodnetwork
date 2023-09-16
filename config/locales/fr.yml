@@ -4395,7 +4395,7 @@ fr:
           orders: Commandes
           cards: Cartes bancaires
           transactions: Achats
-          settings: Paramètres du Compte
+          settings: Paramètres
         unconfirmed_email: "Attente de validation pour l'email: %{unconfirmed_email}. Votre adresse email sera mise à jour quand le nouvel email aura été confirmé."
       orders:
         open_orders: Commandes Ouvertes

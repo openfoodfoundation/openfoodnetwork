@@ -13,9 +13,10 @@
     border-radius: 8px;
 }
 
-button:hover {
+.button:hover {
     background-color: darkgreen!important;
 }
+
 
 
 @media only screen and (min-width: 40.0625em) {
@@ -55,10 +56,26 @@ button:hover {
 
 
 /* Page About Us */
-    #tagline { 
+#tagline {
     position: relative!important;
     width: 100%!important;
-    height: 300px!important;}
+    height: 400px!important;
+}
+
+/* Pour les écrans de taille moyenne */
+@media (max-width: 768px) {
+    #tagline {
+        height: 200px!important;
+    }
+}
+
+/* Pour les petits écrans */
+@media (max-width: 480px) {
+    #tagline {
+        height: 100px!important;
+    }
+}
+
 
 #tagline:before {
     content: "";
@@ -79,6 +96,7 @@ button:hover {
 /* Page Compte client */
 
 body > div.off-canvas-wrap.ng-isolate-scope > div.inner-wrap > section > div.darkswarm > div.row.pad-top > div {padding-bottom: 1em;}
+
 .tabset-ctrl:not(#shop-tabs) .tab.selected {border-bottom: 4px solid green!important;}
 .tabset-ctrl:not(#shop-tabs) .tab.selected a {color: green!important;}
 .tabset-ctrl:not(#shop-tabs) .tab a {color: green!important;}
@@ -90,6 +108,9 @@ body > div.off-canvas-wrap.ng-isolate-scope > div.inner-wrap > section > div.dar
 
 
 /* Page Shops */
+
+#shops.pane {background-color: green!important;}
+
 
 #hubs > div:nth-child(3) > div > a.button.success.tiny.filterbtn.ng-binding {display: none;}
 #hubs > div:nth-child(6) > div > div.distance-matches.ng-scope > div > producer > p {display: none;}
@@ -124,8 +145,6 @@ ordercycle .order-cycle-select {border: 1px solid yellowgreen;}
 
 
 #shop-tabs .page a:active, #shop-tabs .page a:hover {color: #008000!important;}
-
-
 #shop-tabs .page a.selected {border-bottom: 4px solid #008000!important;}
 
 .question-mark-icon {margin-right: 4px;}
