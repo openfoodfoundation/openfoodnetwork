@@ -109,6 +109,10 @@ body > div.off-canvas-wrap.ng-isolate-scope > div.inner-wrap > section > div.dar
 
 /* Page Shops */
 
+#shop-tabs .page a:active, #shop-tabs .page a:hover {color: #008000!important;}
+#shop-tabs .page a.selected {border-bottom: solid green!important;}
+
+
 #shops.pane {background-color: green!important;}
 
 
@@ -144,8 +148,7 @@ ordercycle .order-cycle-select {border: 1px solid yellowgreen;}
 .darkswarm products product .summary .summary-header .product-producer {display: none;}
 
 
-#shop-tabs .page a:active, #shop-tabs .page a:hover {color: #008000!important;}
-#shop-tabs .page a.selected {border-bottom: 4px solid #008000!important;}
+
 
 .question-mark-icon {margin-right: 4px;}
 .darkswarm products product .row.variants .total-price {padding-left: 10px; font-weight: bold;}
