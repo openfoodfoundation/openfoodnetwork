@@ -20,7 +20,7 @@ module Reporting
             {
               group_by: :supplier,
               header: true,
-              summary_row: summary_row,
+              summary_row:,
               summary_row_label: I18n.t('admin.reports.total_by_supplier').upcase
             },
             {
@@ -28,7 +28,7 @@ module Reporting
               header: true,
               header_class: 'h4',
               fields_used_in_header: [:first_name, :last_name, :customer_code, :phone],
-              summary_row: summary_row,
+              summary_row:,
               summary_row_class: "",
               summary_row_label: I18n.t('admin.reports.total_by_customer')
             }

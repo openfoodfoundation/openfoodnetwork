@@ -25,7 +25,7 @@ module Stripe
       StripeAccount.create(
         stripe_user_id: token.stripe_user_id,
         stripe_publishable_key: token.stripe_publishable_key,
-        enterprise: enterprise
+        enterprise:
       )
     end
 

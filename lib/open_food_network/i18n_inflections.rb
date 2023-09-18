@@ -35,7 +35,7 @@ module OpenFoodNetwork
 
       return word unless key
 
-      I18n.t(key, scope: "inflections", count: count, default: word)
+      I18n.t(key, scope: "inflections", count:, default: word)
     end
 
     private

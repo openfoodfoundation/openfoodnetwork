@@ -27,7 +27,7 @@ module Reporting
               group_by: proc { |_item, row| "#{row.product} - #{row.variant}" },
               header: true,
               fields_used_in_header: [:product, :variant],
-              summary_row: summary_row,
+              summary_row:,
               header_class: "h3",
             }
           ]

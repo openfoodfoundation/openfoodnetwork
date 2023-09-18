@@ -139,7 +139,7 @@ module OpenFoodNetwork
     def calculate_fee_for(variant, enterprise_fee)
       # Spree's Calculator interface accepts Orders or LineItems,
       # so we meet that interface with a struct.
-      line_item = OpenStruct.new variant: variant, quantity: 1, price: variant.price,
+      line_item = OpenStruct.new variant:, quantity: 1, price: variant.price,
                                  amount: variant.price
       enterprise_fee.compute_amount(line_item)
     end

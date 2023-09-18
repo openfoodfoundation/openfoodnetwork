@@ -19,7 +19,7 @@ module ActionController
          !ApplicationController.spree_responders[self.class.to_s.to_sym].try(:[],
                                                                              action_name.to_sym)
         if action = options.delete(:action)
-          render action: action
+          render(action:)
         else
           defined_response.call
         end

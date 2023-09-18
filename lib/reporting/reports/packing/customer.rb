@@ -22,7 +22,7 @@ module Reporting
               group_by: proc { |_item, row| row_header(row) },
               header: true,
               fields_used_in_header: [:first_name, :last_name, :customer_code, :phone],
-              summary_row: summary_row,
+              summary_row:,
             }
           ]
         end

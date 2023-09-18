@@ -16,7 +16,7 @@ module Reporting
           customers: customers_report_types,
           products_and_inventory: products_and_inventory_report_types,
           users_and_enterprises: [],
-          enterprise_fee_summary: enterprise_fee_summary,
+          enterprise_fee_summary:,
           order_cycle_management: order_cycle_management_report_types,
           sales_tax: sales_tax_report_types,
           xero_invoices: xero_report_types,

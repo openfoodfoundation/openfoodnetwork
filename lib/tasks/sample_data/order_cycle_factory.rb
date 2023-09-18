@@ -52,7 +52,7 @@ module SampleData
 
     def create_order_cycle(name, coordinator_name, supplier_names, distributor_names, data)
       coordinator = Enterprise.find_by(name: coordinator_name)
-      return if OrderCycle.active.where(name: name).exists?
+      return if OrderCycle.active.where(name:).exists?
 
       log "- #{name}"
       cycle = create_order_cycle_with_fee(name, coordinator)
@@ -61,10 +61,10 @@ module SampleData
 
     def create_order_cycle_with_fee(name, coordinator)
       cycle = OrderCycle.create!(
-        name: name,
+        name:,
         orders_open_at: 1.day.ago,
         orders_close_at: 1.month.from_now,
-        coordinator: coordinator
+        coordinator:
       )
       cycle.coordinator_fees << coordinator.enterprise_fees.first
       cycle

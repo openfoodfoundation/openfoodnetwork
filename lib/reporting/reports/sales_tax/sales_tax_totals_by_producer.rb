@@ -27,7 +27,7 @@ module Reporting
               line_item.tax_rates.map do |tax_rate|
                 {
                   tax_rate_id: tax_rate.id,
-                  line_item: line_item
+                  line_item:
                 }
               end
             end.group_by do |hash|
@@ -81,8 +81,8 @@ module Reporting
                   line_item.adjustments.eligible.tax.sum(&:amount)
                 end.sum
                 {
-                  total_excl_tax: total_excl_tax,
-                  tax: tax,
+                  total_excl_tax:,
+                  tax:,
                   total_incl_tax: total_excl_tax + tax
                 }
               end

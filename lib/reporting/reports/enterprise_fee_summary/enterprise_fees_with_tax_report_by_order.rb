@@ -7,7 +7,7 @@ module Reporting
         attr_accessor :parameters
 
         def initialize(user, params = {}, render: false)
-          super(user, params, render: render)
+          super(user, params, render:)
         end
 
         def search
@@ -45,9 +45,9 @@ module Reporting
               .filter(&method(:filter_enterprise_fee_by_owner))
               .map do |enterprise_fee_id, enterprise_fee_adjustment_ids|
               {
-                enterprise_fee_id: enterprise_fee_id,
-                enterprise_fee_adjustment_ids: enterprise_fee_adjustment_ids,
-                order: order
+                enterprise_fee_id:,
+                enterprise_fee_adjustment_ids:,
+                order:
               }
             end
           end
@@ -88,7 +88,7 @@ module Reporting
             tax_rate_ids << nil if tax_rate_ids.empty?
             tax_rate_ids.map do |tax_rate_id|
               {
-                tax_rate_id: tax_rate_id,
+                tax_rate_id:,
                 enterprise_fee_id: item[:enterprise_fee_id],
                 order: item[:order],
               }
@@ -234,7 +234,7 @@ module Reporting
           query = Spree::Adjustment.tax
           query = query.where(included: true) unless included.nil?
           query = query.where(originator_id: tax_rate_id(query_result_row)) unless all == true
-          query.where(order_id: order_id)
+          query.where(order_id:)
             .where(adjustable_type: 'Spree::Adjustment')
             .where(adjustable_id: adjustment_ids)
             .pick("sum(amount)") || 0
