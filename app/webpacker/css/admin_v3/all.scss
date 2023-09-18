@@ -37,23 +37,22 @@
 
 @import "../shared/trix";
 
-@import "../admin/plugins/flatpickr-customization";
-@import "../admin/plugins/powertip";
+@import "plugins/flatpickr-customization"; // admin_v3
+@import "plugins/powertip"; // admin_v3
 @import "../admin/plugins/jstree";
-@import "../admin/plugins/select2";
 
-@import "../admin/sections/orders";
+@import "sections/orders"; // admin_v3
 @import "../admin/sections/products";
 
 @import "../admin/hacks/mozilla";
 @import "../admin/hacks/opera";
 @import "../admin/hacks/ie";
 
-@import "../admin/components/actions";
+@import "components/actions"; // admin_v3
 @import "../admin/components/alert-box";
 @import "../admin/components/alert_row";
 @import "components/buttons"; // admin_v3
-@import "../admin/components/date-picker";
+@import "components/date-picker"; // admin_v3
 @import "../admin/components/dialogs";
 @import "../admin/components/input";
 @import "../admin/components/jquery_dialog";
@@ -66,7 +65,7 @@
 @import "../admin/components/product_autocomplete";
 @import "../admin/components/progress";
 @import "../admin/components/save_bar";
-@import "../admin/components/sidebar";
+@import "components/sidebar"; // admin_v3
 @import "../admin/components/simple_modal";
 @import "../admin/components/states";
 @import "../admin/components/stripe_connect_button";
@@ -77,6 +76,7 @@
 @import "../admin/components/todo";
 @import "../admin/components/tooltip";
 @import "../admin/components/wizard_progress";
+@import "components/text-angular"; // admin_v3
 
 @import "../admin/pages/enterprise_form";
 @import "../admin/pages/subscription_form";
@@ -86,14 +86,14 @@
 @import "../admin/advanced_settings";
 @import "../admin/alert";
 @import "../admin/animations";
-@import "../admin/change_type_form";
+@import "pages/change_type_form"; // admin_v3
 @import "../admin/customers";
-@import "../admin/dashboard_item";
-@import "../admin/dashboard-single-ent";
+@import "dashboard/dashboard_item"; // admin_v3
+@import "pages/dashboard-single-ent"; // admin_v3
 @import "../admin/dialog";
 @import "../admin/disabled";
-@import "../admin/dropdown";
-@import "../admin/enterprise_index_panels";
+@import "components/dropdown"; // admin_v3
+@import "pages/enterprise_index_panels"; // admin_v3
 @import "../admin/enterprises";
 @import "../admin/filters_and_controls";
 @import "../admin/grid";
@@ -105,14 +105,14 @@
 @import "../admin/openfoodnetwork";
 @import "../admin/order_cycles";
 @import "../admin/orders";
-@import "../admin/product_import";
+@import "pages/product_import"; // admin_v3
 @import "../admin/products";
 @import "../admin/products_v3";
 @import "../admin/question-mark-tooltip";
 @import "../admin/relationships";
 @import "../admin/reports";
-@import "../admin/select2";
-@import "../admin/sidebar-item";
+@import "components/select2"; // admin_v3
+@import "components/sidebar-item"; // admin_v3
 @import "../admin/side_menu";
 @import "../admin/tables";
 @import "../admin/tag_rules";
@@ -129,3 +129,4 @@
 
 @import "app/components/help_modal_component/help_modal_component";
 @import "app/components/confirm_modal_component/confirm_modal_component";
+@import "app/webpacker/css/admin/trix.scss";

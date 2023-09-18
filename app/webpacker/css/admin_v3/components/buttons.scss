@@ -48,8 +48,8 @@ button:not(.plain):not(.trix-button),
 
     &:hover {
       background-color: $color-11;
-      border: 1px solid $color-10;
-      color: $color-10;
+      border: 1px solid $color-btn-hover-bg;
+      color: $color-btn-hover-bg;
     }
 
     &:active,
@@ -87,6 +87,24 @@ button:not(.plain):not(.trix-button),
   &.relaxed {
     line-height: $btn-relaxed-height - 2px; // remove 2px to compensate for border
     height: $btn-relaxed-height;
+  }
+
+  &.big {
+    @extend .relaxed; // use relaxed height
+    width: 100%;
+    font-size: 1rem;
+    @include border-radius(25px);
+    text-transform: uppercase;
+  }
+
+  &.red {
+    background-color: $color-btn-red-bg;
+    border-color: $color-btn-red-bg;
+
+    &:hover {
+      background-color: $color-btn-red-hover-bg;
+      border-color: $color-btn-red-hover-bg;
+    }
   }
 
   .badge {

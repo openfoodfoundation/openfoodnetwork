@@ -9,15 +9,20 @@
   justify-content: center;
   gap: 8px;
 
+  button.page,
   .page {
-    width: 40px;
-    line-height: 40px;
+    width: $btn-relaxed-height;
+    line-height: $btn-relaxed-height;
+    height: $btn-relaxed-height;
+    padding: 0;
+    margin: 0;
     text-align: center;
     display: inline-block;
     text-align: center;
     background-color: $color-1;
     @include defaultBoxShadow;
     border-radius: 4px;
+    border: none;
     color: $color-8;
     font-weight: 600;
 
@@ -29,6 +34,10 @@
     &.current {
       background-color: $color-5;
       color: $white;
+    }
+
+    &.disabled {
+      display: none;
     }
 
     &.prev {
@@ -45,15 +54,21 @@
       }
     }
 
+    &:hover:not(.gap):not(.disabled),
     &[href]:hover {
       background-color: $color-5;
       color: $white;
+      border: none;
     }
 
     &.gap {
       background-color: transparent;
       box-shadow: none;
       width: auto;
+    }
+
+    &:active {
+      border: none;
     }
   }
 

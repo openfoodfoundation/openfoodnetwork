@@ -45,10 +45,12 @@ $color-btn-hover-bg:             $orient !default;
 $color-btn-hover-text:           $white !default;
 $color-btn-hover-border:         $dark-blue !default;
 $color-btn-disabled-bg:          $light-grey !default;
+$color-btn-red-bg:               $red !default;
+$color-btn-red-hover-bg:         $roof-terracotta !default;
 
 // Actions colors
-$color-action-edit-bg:           very-light($color-success, 5  ) !default;
-$color-action-edit-brd:          very-light($color-success, 20 ) !default;
+$color-action-edit-bg:           very-light($teal) !default;
+$color-action-edit-brd:          #81B4BC !default;
 $color-action-clone-bg:          very-light($color-notice,  5  ) !default;
 $color-action-clone-brd:         very-light($color-notice,  15 ) !default;
 $color-action-remove-bg:         very-light($color-error,   5  ) !default;
@@ -65,10 +67,8 @@ $color-action-mail-bg:           very-light($color-success, 5  ) !default;
 $color-action-mail-brd:          very-light($color-success, 20 ) !default;
 
 // Select2 select field colors
-$color-sel-bg:                   $teal !default;
-$color-sel-text:                 $white !default;
-$color-sel-hover-bg:             lighten($color-sel-bg, 2) !default;
-$color-sel-hover-text:           $white !default;
+$color-sel-bg:                   $lighter-grey !default;
+$color-sel-hover-bg:             $lighter-grey !default;
 
 // Text inputs styles
 $color-txt-brd:                  $color-border !default;

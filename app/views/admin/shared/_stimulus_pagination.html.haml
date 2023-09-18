@@ -2,21 +2,29 @@
 
 .pagination{ "data-controller": "search" }
   - if pagy.prev
-    %button{ data: { action: 'click->search#changePage', page: pagy.prev } }!= pagy_t('pagy.nav.prev')
+    %button.page.prev{ data: { action: 'click->search#changePage', page: pagy.prev } }
+      - if feature?(:admin_style_v3, spree_current_user)
+        %i.icon-chevron-left{ data: { action: 'click->search#changePage', page: pagy.prev } }
+      - else
+        != pagy_t('pagy.nav.prev')
   - else
-    %button.disabled{disabled: "disabled"}!= pagy_t('pagy.nav.prev')
+    %button.page.disabled{disabled: "disabled"}!= pagy_t('pagy.nav.prev')
 
   - pagy.series.each do |item|                      # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
     - if item.is_a?(Integer)                        # page link
-      %button{ data: { action: 'click->search#changePage', page: item } }= item
+      %button.page{ data: { action: 'click->search#changePage', page: item } }= item
 
     - elsif item.is_a?(String)                      # current page
-      %button.active= item
+      %button.page.current.active= item
 
     - elsif item == :gap                            # page gap
-      %span.pagination-ellipsis!= pagy_t('pagy.nav.gap')
+      %span.page.gap.pagination-ellipsis!= pagy_t('pagy.nav.gap')
 
   - if pagy.next
-    %button{ data: { action: 'click->search#changePage', page: pagy.next } }!= pagy_t('pagy.nav.next')
+    %button.page.next{ data: { action: 'click->search#changePage', page: pagy.next } }
+      - if feature?(:admin_style_v3, spree_current_user)
+        %i.icon-chevron-right{ data: { action: 'click->search#changePage', page: pagy.next } }
+      - else
+        != pagy_t('pagy.nav.next')
   - else
-    %button.disabled.pagination-next{disabled: "disabled"}!= pagy_t('pagy.nav.next')
+    %button.page.disabled.pagination-next{disabled: "disabled"}!= pagy_t('pagy.nav.next')

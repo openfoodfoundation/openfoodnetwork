@@ -4,14 +4,23 @@ $text-inputs: "input[type=text], input[type=password], input[type=email], input[
 input[type="date"],
 input[type="datetime"],
 input[type="time"],
+input[type="number"] {
+  height: $btn-relaxed-height;
+}
+
+#{$text-inputs},
+input[type="date"],
+input[type="datetime"],
+input[type="time"],
 input[type="number"],
 textarea,
 fieldset {
   @include border-radius($border-radius);
   padding: $vpadding-txt $hpadding-txt;
-  border: 1px solid $color-txt-brd;
+  border: 1px solid $lighter-grey;
   color: $color-txt-text;
   font-size: 90%;
+  background-color: $lighter-grey;
 
   &:focus {
     outline: none;
@@ -141,7 +150,7 @@ fieldset {
 
   legend {
     background-color: $color-1;
-    color: $color-2;
+    color: $red;
     font-size: 14px;
     font-weight: 600;
     text-align: center;
