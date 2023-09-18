@@ -22,8 +22,6 @@ module Spree
                             join_table: 'spree_roles_users',
                             class_name: "Spree::Role"
 
-    has_many :spree_orders, class_name: "Spree::Order"
-
     before_validation :set_login
     after_create :associate_customers, :associate_orders
     before_destroy :check_completed_orders
@@ -153,7 +151,7 @@ module Spree
     end
 
     def last_incomplete_spree_order
-      spree_orders.incomplete.where(created_by_id: id).order('created_at DESC').first
+      orders.incomplete.where(created_by_id: id).order('created_at DESC').first
     end
 
     def disabled
