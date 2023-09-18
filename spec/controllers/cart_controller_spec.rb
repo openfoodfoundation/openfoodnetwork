@@ -50,11 +50,11 @@ describe CartController, type: :controller do
 
     let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let!(:variant_override_in_the_order) {
-      create(:variant_override, hub: hub, variant: variant_in_the_order, price: 55.55,
+      create(:variant_override, hub:, variant: variant_in_the_order, price: 55.55,
                                 count_on_hand: 20, default_stock: nil, resettable: false)
     }
     let!(:variant_override_not_in_the_order) {
-      create(:variant_override, hub: hub, variant: variant_not_in_the_order, count_on_hand: 7,
+      create(:variant_override, hub:, variant: variant_not_in_the_order, count_on_hand: 7,
                                 default_stock: nil, resettable: false)
     }
 
@@ -63,7 +63,7 @@ describe CartController, type: :controller do
     }
     let!(:order) { subject.current_order(true) }
     let!(:line_item) {
-      create(:line_item, order: order, variant: variant_in_the_order, quantity: 2, max_quantity: 3)
+      create(:line_item, order:, variant: variant_in_the_order, quantity: 2, max_quantity: 3)
     }
 
     before do

@@ -10,10 +10,10 @@ describe Admin::InventoryItemsController, type: :controller do
       let(:enterprise) { create(:distributor_enterprise) }
       let(:variant) { create(:variant) }
       let(:inventory_item) {
-        create(:inventory_item, enterprise: enterprise, variant: variant, visible: true)
+        create(:inventory_item, enterprise:, variant:, visible: true)
       }
       let(:params) {
-        { format: format,
+        { format:,
           inventory_item: { enterprise_id: enterprise.id, variant_id: variant.id, visible: false } }
       }
 
@@ -61,7 +61,7 @@ describe Admin::InventoryItemsController, type: :controller do
           context "with unacceptable data" do
             render_views
             let!(:bad_params) {
-              { format: format,
+              { format:,
                 inventory_item: { enterprise_id: enterprise.id, variant_id: variant.id,
                                   visible: nil } }
             }
@@ -83,9 +83,9 @@ describe Admin::InventoryItemsController, type: :controller do
       let(:enterprise) { create(:distributor_enterprise) }
       let(:variant) { create(:variant) }
       let(:inventory_item) {
-        create(:inventory_item, enterprise: enterprise, variant: variant, visible: true)
+        create(:inventory_item, enterprise:, variant:, visible: true)
       }
-      let(:params) { { format: format, id: inventory_item.id, inventory_item: { visible: false } } }
+      let(:params) { { format:, id: inventory_item.id, inventory_item: { visible: false } } }
 
       context "where I don't manage the inventory item enterprise" do
         before do
@@ -129,7 +129,7 @@ describe Admin::InventoryItemsController, type: :controller do
           context "with unacceptable data" do
             render_views
             let!(:bad_params) {
-              { format: format, id: inventory_item.id, inventory_item: { visible: nil } }
+              { format:, id: inventory_item.id, inventory_item: { visible: nil } }
             }
 
             it "returns an error message" do

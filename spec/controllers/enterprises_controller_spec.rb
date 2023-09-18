@@ -59,7 +59,7 @@ describe EnterprisesController, type: :controller do
                                     orders_close_at: 4.days.from_now)
       }
       let!(:oc3_exchange) { order_cycle3.exchanges.outgoing.to_enterprise(distributor).first }
-      let(:customer) { create(:customer, user: user, enterprise: distributor) }
+      let(:customer) { create(:customer, user:, enterprise: distributor) }
 
       it "shows order cycles allowed by the rules" do
         create(:filter_order_cycles_tag_rule,
@@ -114,7 +114,7 @@ describe EnterprisesController, type: :controller do
 
     describe "when an out of stock item is in the cart" do
       let(:variant) { create(:variant, on_demand: false, on_hand: 10) }
-      let(:line_item) { create(:line_item, variant: variant) }
+      let(:line_item) { create(:line_item, variant:) }
       let(:order_cycle) {
         create(:simple_order_cycle, distributors: [current_distributor], variants: [variant])
       }

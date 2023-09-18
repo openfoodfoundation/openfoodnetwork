@@ -22,13 +22,13 @@ describe Admin::SchedulesController, type: :controller do
 
         it "scopes @collection to schedules containing order_cycles " \
            "coordinated by enterprises I manage" do
-          get :index, params: params
+          get(:index, params:)
           expect(assigns(:collection)).to eq [coordinated_schedule]
         end
 
         it "serializes the data" do
           expect(ActiveModel::ArraySerializer).to receive(:new)
-          get :index, params: params
+          get :index, params:
         end
 
         context "and there is a schedule of an OC coordinated by _another_ enterprise " \
@@ -46,7 +46,7 @@ describe Admin::SchedulesController, type: :controller do
 
           it "scopes @collection to schedules containing order_cycles " \
              "coordinated by the first enterprise" do
-            get :index, params: params
+            get(:index, params:)
             expect(assigns(:collection)).to eq [coordinated_schedule]
           end
         end
@@ -107,8 +107,8 @@ describe Admin::SchedulesController, type: :controller do
         it "allows me to add/remove only order cycles I coordinate to/from the schedule" do
           order_cycle_ids = [coordinated_order_cycle2.id, uncoordinated_order_cycle2.id,
                              uncoordinated_order_cycle3.id]
-          spree_put :update, format: :json, id: coordinated_schedule.id,
-                             order_cycle_ids: order_cycle_ids
+          spree_put(:update, format: :json, id: coordinated_schedule.id,
+                             order_cycle_ids:)
           expect(assigns(:schedule)).to eq coordinated_schedule
           # coordinated_order_cycle2 is added, uncoordinated_order_cycle is NOT removed
           expect(coordinated_schedule.reload.order_cycles).to include coordinated_order_cycle2,

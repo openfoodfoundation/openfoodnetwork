@@ -35,7 +35,7 @@ describe Admin::StripeAccountsController, type: :controller do
     end
 
     context "when the specified stripe account exists" do
-      let(:stripe_account) { create(:stripe_account, enterprise: enterprise) }
+      let(:stripe_account) { create(:stripe_account, enterprise:) }
 
       before do
         # So that we can stub #deauthorize_and_destroy
@@ -96,7 +96,7 @@ describe Admin::StripeAccountsController, type: :controller do
       end
 
       it "redirects to unauthorized" do
-        get :status, params: params
+        get(:status, params:)
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -108,7 +108,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
       context "when Stripe is not enabled" do
         it "returns with a status of 'stripe_disabled'" do
-          get :status, params: params
+          get(:status, params:)
           json_response = JSON.parse(response.body)
           expect(json_response["status"]).to eq "stripe_disabled"
         end
@@ -119,7 +119,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
         context "when no stripe account is associated with the specified enterprise" do
           it "returns with a status of 'account_missing'" do
-            get :status, params: params
+            get(:status, params:)
             json_response = JSON.parse(response.body)
             expect(json_response["status"]).to eq "account_missing"
           end
@@ -127,7 +127,7 @@ describe Admin::StripeAccountsController, type: :controller do
 
         context "when a stripe account is associated with the specified enterprise" do
           let!(:account) {
-            create(:stripe_account, stripe_user_id: "acc_123", enterprise: enterprise)
+            create(:stripe_account, stripe_user_id: "acc_123", enterprise:)
           }
 
           context "but access has been revoked or does not exist on stripe's servers" do
@@ -137,7 +137,7 @@ describe Admin::StripeAccountsController, type: :controller do
             end
 
             it "returns with a status of 'access_revoked'" do
-              get :status, params: params
+              get(:status, params:)
               json_response = JSON.parse(response.body)
               expect(json_response["status"]).to eq "access_revoked"
             end
@@ -159,7 +159,7 @@ describe Admin::StripeAccountsController, type: :controller do
             end
 
             it "returns with a status of 'connected'" do
-              get :status, params: params
+              get(:status, params:)
               json_response = JSON.parse(response.body)
               expect(json_response["status"]).to eq "connected"
               # serializes required attrs

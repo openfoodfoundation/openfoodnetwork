@@ -18,7 +18,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
-          get :index, params: params
+          get(:index, params:)
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -28,10 +28,10 @@ describe Admin::SubscriptionsController, type: :controller do
         let!(:not_enabled_shop) { create(:distributor_enterprise, owner: user) }
 
         context "where I manage a shop that is set up for subscriptions" do
-          let!(:subscription) { create(:subscription, shop: shop) }
+          let!(:subscription) { create(:subscription, shop:) }
 
           it 'renders the index page with appropriate data' do
-            get :index, params: params
+            get(:index, params:)
             expect(response).to render_template 'index'
             expect(assigns(:collection)).to eq [] # No collection loaded
             expect(assigns(:shops)).to eq [shop] # Shops are loaded
@@ -40,7 +40,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
         context "where I don't manage a shop that is set up for subscriptions" do
           it 'renders the setup_explanation page' do
-            get :index, params: params
+            get(:index, params:)
             expect(response).to render_template 'setup_explanation'
             expect(assigns(:collection)).to eq [] # No collection loaded
             expect(assigns(:shop)).to eq shop # First SO enabled shop is loaded
@@ -51,11 +51,11 @@ describe Admin::SubscriptionsController, type: :controller do
 
     context 'json' do
       let(:params) { { format: :json } }
-      let!(:subscription) { create(:subscription, shop: shop) }
+      let!(:subscription) { create(:subscription, shop:) }
 
       context 'as a regular user' do
         it 'redirects to unauthorized' do
-          get :index, params: params
+          get(:index, params:)
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -66,7 +66,7 @@ describe Admin::SubscriptionsController, type: :controller do
         let!(:subscription2) { create(:subscription, shop: shop2) }
 
         it 'renders the collection as json' do
-          get :index, params: params
+          get(:index, params:)
           json_response = JSON.parse(response.body)
           expect(json_response.count).to be 2
           expect(json_response.map{ |so| so['id'] }).to include subscription.id, subscription2.id
@@ -76,7 +76,7 @@ describe Admin::SubscriptionsController, type: :controller do
           before { params.merge!(q: { shop_id_eq: shop2.id }) }
 
           it "restricts the list of subscriptions" do
-            get :index, params: params
+            get(:index, params:)
             json_response = JSON.parse(response.body)
             expect(json_response.count).to be 1
             ids = json_response.map{ |so| so['id'] }
@@ -207,7 +207,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
         context 'where the specified variants are available from the shop' do
           let!(:exchange) {
-            create(:exchange, order_cycle: order_cycle, incoming: false, receiver: shop,
+            create(:exchange, order_cycle:, incoming: false, receiver: shop,
                               variants: [variant])
           }
 
@@ -240,11 +240,11 @@ describe Admin::SubscriptionsController, type: :controller do
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
     let!(:subscription) {
       create(:subscription,
-             shop: shop,
+             shop:,
              customer: customer1,
-             schedule: schedule,
-             payment_method: payment_method,
-             shipping_method: shipping_method)
+             schedule:,
+             payment_method:,
+             shipping_method:)
     }
 
     before do
@@ -280,11 +280,11 @@ describe Admin::SubscriptionsController, type: :controller do
     let!(:shipping_method) { create(:shipping_method, distributors: [shop]) }
     let!(:subscription) {
       create(:subscription,
-             shop: shop,
-             customer: customer,
-             schedule: schedule,
-             payment_method: payment_method,
-             shipping_method: shipping_method,
+             shop:,
+             customer:,
+             schedule:,
+             payment_method:,
+             shipping_method:,
              subscription_line_items: [create(:subscription_line_item, variant: variant1,
                                                                        quantity: 2)])
     }
@@ -418,9 +418,9 @@ describe Admin::SubscriptionsController, type: :controller do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
     let!(:order_cycle) { create(:simple_order_cycle, orders_close_at: 1.day.from_now) }
-    let!(:subscription) { create(:subscription, shop: shop, with_items: true) }
+    let!(:subscription) { create(:subscription, shop:, with_items: true) }
     let!(:proxy_order) {
-      create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+      create(:proxy_order, subscription:, order_cycle:)
     }
 
     before do
@@ -454,7 +454,7 @@ describe Admin::SubscriptionsController, type: :controller do
           context "when at least one associated order is still 'open'" do
             let(:order_cycle) { subscription.order_cycles.first }
             let(:proxy_order) {
-              create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+              create(:proxy_order, subscription:, order_cycle:)
             }
             let!(:order) { proxy_order.initialise_order! }
 
@@ -525,7 +525,7 @@ describe Admin::SubscriptionsController, type: :controller do
   describe 'pause' do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
-    let!(:subscription) { create(:subscription, shop: shop, with_items: true) }
+    let!(:subscription) { create(:subscription, shop:, with_items: true) }
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
@@ -558,7 +558,7 @@ describe Admin::SubscriptionsController, type: :controller do
           context "when at least one associated order is still 'open'" do
             let(:order_cycle) { subscription.order_cycles.first }
             let(:proxy_order) {
-              create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+              create(:proxy_order, subscription:, order_cycle:)
             }
             let!(:order) { proxy_order.initialise_order! }
 
@@ -630,7 +630,7 @@ describe Admin::SubscriptionsController, type: :controller do
     let!(:user) { create(:user, enterprise_limit: 10) }
     let!(:shop) { create(:distributor_enterprise) }
     let!(:subscription) {
-      create(:subscription, shop: shop, paused_at: Time.zone.now, with_items: true)
+      create(:subscription, shop:, paused_at: Time.zone.now, with_items: true)
     }
 
     before do
@@ -664,7 +664,7 @@ describe Admin::SubscriptionsController, type: :controller do
           context "when at least one order in an open order cycle is 'complete'" do
             let(:order_cycle) { subscription.order_cycles.first }
             let(:proxy_order) {
-              create(:proxy_order, subscription: subscription, order_cycle: order_cycle)
+              create(:proxy_order, subscription:, order_cycle:)
             }
             let!(:order) { proxy_order.initialise_order! }
 
@@ -750,7 +750,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
     before do
       allow(controller).to receive(:spree_current_user) { user }
-      controller.instance_variable_set(:@subscription, Subscription.new(shop: shop))
+      controller.instance_variable_set(:@subscription, Subscription.new(shop:))
     end
 
     it "assigns data to instance variables" do

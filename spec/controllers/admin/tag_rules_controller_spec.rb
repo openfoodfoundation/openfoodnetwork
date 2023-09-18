@@ -8,8 +8,8 @@ describe Admin::TagRulesController, type: :controller do
       let(:format) { :json }
 
       let(:enterprise) { create(:distributor_enterprise) }
-      let!(:tag_rule) { create(:filter_order_cycles_tag_rule, enterprise: enterprise) }
-      let(:params) { { format: format, id: tag_rule.id } }
+      let!(:tag_rule) { create(:filter_order_cycles_tag_rule, enterprise:) }
+      let(:params) { { format:, id: tag_rule.id } }
 
       context "where I don't manage the tag rule enterprise" do
         let(:user) { create(:user) }

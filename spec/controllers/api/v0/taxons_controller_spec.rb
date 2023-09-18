@@ -6,8 +6,8 @@ describe Api::V0::TaxonsController do
   render_views
 
   let(:taxonomy) { create(:taxonomy) }
-  let(:taxon) { create(:taxon, name: "Ruby", taxonomy: taxonomy) }
-  let(:taxon2) { create(:taxon, name: "Rails", taxonomy: taxonomy) }
+  let(:taxon) { create(:taxon, name: "Ruby", taxonomy:) }
+  let(:taxon2) { create(:taxon, name: "Rails", taxonomy:) }
   let(:attributes) {
     ["id", "name", "pretty_name", "permalink", "position", "parent_id", "taxonomy_id"]
   }
@@ -15,7 +15,7 @@ describe Api::V0::TaxonsController do
   before do
     allow(controller).to receive(:spree_current_user) { current_api_user }
 
-    taxon2.children << create(:taxon, name: "3.2.2", taxonomy: taxonomy)
+    taxon2.children << create(:taxon, name: "3.2.2", taxonomy:)
     taxon.children << taxon2
     taxonomy.root.children << taxon
   end

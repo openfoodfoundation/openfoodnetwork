@@ -78,7 +78,7 @@ describe Api::V0::EnterprisesController, type: :controller do
     let(:enterprise_manager) { create(:user) }
 
     before do
-      enterprise_manager.enterprise_roles.build(enterprise: enterprise).save
+      enterprise_manager.enterprise_roles.build(enterprise:).save
       allow(controller).to receive(:spree_current_user) { enterprise_manager }
     end
 
@@ -90,7 +90,7 @@ describe Api::V0::EnterprisesController, type: :controller do
       end
 
       it "I can update enterprise logo image" do
-        api_post :update_image, logo: logo, id: enterprise.id
+        api_post :update_image, logo:, id: enterprise.id
         expect(response.status).to eq 200
         expect(response.content_type).to eq "text/html"
         expect(response.body).to match /logo\.png$/

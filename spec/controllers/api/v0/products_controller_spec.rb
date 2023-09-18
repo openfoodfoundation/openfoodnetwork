@@ -8,10 +8,10 @@ describe Api::V0::ProductsController, type: :controller do
 
   let(:supplier) { create(:supplier_enterprise) }
   let(:supplier2) { create(:supplier_enterprise) }
-  let!(:product) { create(:product, supplier: supplier) }
+  let!(:product) { create(:product, supplier:) }
   let!(:other_product) { create(:product) }
   let(:product_other_supplier) { create(:product, supplier: supplier2) }
-  let(:product_with_image) { create(:product_with_image, supplier: supplier) }
+  let(:product_with_image) { create(:product_with_image, supplier:) }
   let(:all_attributes) { ["id", "name", "variants"] }
   let(:variants_attributes) {
     ["id", "options_text", "unit_value", "unit_description", "unit_to_display", "on_demand",
@@ -210,7 +210,7 @@ describe Api::V0::ProductsController, type: :controller do
   describe '#bulk_products' do
     context "as an enterprise user" do
       let!(:taxon) { create(:taxon) }
-      let!(:product2) { create(:product, supplier: supplier, primary_taxon: taxon) }
+      let!(:product2) { create(:product, supplier:, primary_taxon: taxon) }
       let!(:product3) { create(:product, supplier: supplier2, primary_taxon: taxon) }
       let!(:product4) { create(:product, supplier: supplier2) }
       let(:current_api_user) { supplier_enterprise_user(supplier) }
@@ -271,7 +271,7 @@ describe Api::V0::ProductsController, type: :controller do
 
   def supplier_enterprise_user(enterprise)
     user = create(:user)
-    user.enterprise_roles.create(enterprise: enterprise)
+    user.enterprise_roles.create(enterprise:)
     user
   end
 

@@ -88,7 +88,7 @@ describe Api::V0::VariantsController, type: :controller do
   context "as an enterprise user" do
     let(:current_api_user) { create(:user, enterprises: [supplier]) }
     let(:supplier_other) { create(:supplier_enterprise) }
-    let!(:product) { create(:product, supplier: supplier) }
+    let!(:product) { create(:product, supplier:) }
     let(:variant) { product.variants.first }
     let(:product_other) { create(:product, supplier: supplier_other) }
     let(:variant_other) { product_other.variants.first }
@@ -102,7 +102,7 @@ describe Api::V0::VariantsController, type: :controller do
     end
 
     context "with more than one variants" do
-      let(:variant_to_delete) { create(:variant, product: product) }
+      let(:variant_to_delete) { create(:variant, product:) }
 
       it "deletes a variant" do
         api_delete :destroy, id: variant_to_delete.id
@@ -127,7 +127,7 @@ describe Api::V0::VariantsController, type: :controller do
 
     let(:product) { create(:product) }
     let(:variant) { product.variants.first }
-    let!(:variant2) { create(:variant, product: product) }
+    let!(:variant2) { create(:variant, product:) }
 
     context "deleted variants" do
       before do
