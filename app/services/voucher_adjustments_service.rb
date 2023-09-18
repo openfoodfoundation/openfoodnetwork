@@ -5,6 +5,10 @@ class VoucherAdjustmentsService
     @order = order
   end
 
+  # The tax part of the voucher is stored as explained below:
+  # * tax included in price: included_tax field of the voucher adjustment
+  # * tax exckuded from price: as an extra voucher adjustment, with label starting by "Tax "
+  #
   def update
     return if @order.nil?
 
@@ -30,6 +34,21 @@ class VoucherAdjustmentsService
       adjustment.amount = amount
       adjustment.save
     end
+  end
+
+  def voucher_included_tax
+    return 0.0 if @order.voucher_adjustments.empty?
+
+    # We only support one voucher per order for now
+    @order.voucher_adjustments.first.included_tax
+  end
+
+  def voucher_excluded_tax
+    return 0.0 if @order.voucher_adjustments.empty?
+
+    return 0.0 if @order.voucher_adjustments.where("label LIKE 'Tax%'").empty?
+
+    @order.voucher_adjustments.where("label LIKE 'Tax%'").first.amount
   end
 
   private

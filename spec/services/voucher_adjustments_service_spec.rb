@@ -294,4 +294,70 @@ describe VoucherAdjustmentsService do
       end
     end
   end
+
+  describe "#voucher_included_tax" do
+    subject(:voucher_included_tax) { VoucherAdjustmentsService.new(order).voucher_included_tax }
+
+    let(:order) { create(:order_with_totals) }
+    let(:enterprise) { build(:enterprise) }
+    let(:voucher) do
+      create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+    end
+
+    it "returns included tax from voucher adjusment" do
+      voucher_adjustment = voucher.create_adjustment(voucher.code, order)
+      # Manually update included tax, so we don't have to do a big data setup to be able to use
+      # VoucherAdjustmentsService.update
+      voucher_adjustment.update(included_tax: 0.5)
+
+      expect(voucher_included_tax).to eq(0.5)
+    end
+
+    context "When no voucher adjustment linked to the order" do
+      it "returns 0.0" do
+        expect(voucher_included_tax).to eq(0.0)
+      end
+    end
+  end
+
+  describe "#voucher_excluded_tax" do
+    subject(:voucher_excluded_tax) { VoucherAdjustmentsService.new(order).voucher_excluded_tax }
+    let(:order) { create(:order_with_totals) }
+    let(:enterprise) { build(:enterprise) }
+    let(:voucher) do
+      create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+    end
+
+    it "returns the amount from the tax voucher adjustment" do
+      voucher_adjustment = voucher.create_adjustment(voucher.code, order)
+      # Manually add voucher tax adjustment, so we don't have to do a big data setup to be able to
+      # use VoucherAdjustmentsService.update
+      order.adjustments.create!(
+        originator: voucher_adjustment.originator,
+        order: order,
+        label: "Tax #{voucher_adjustment.label}",
+        mandatory: false,
+        state: 'open',
+        tax_category: nil,
+        included_tax: 0,
+        amount: 0.5
+      )
+
+      expect(voucher_excluded_tax).to eq(0.5)
+    end
+
+    context "when no voucher adjustment tax" do
+      it "returns 0" do
+        voucher_adjustment = voucher.create_adjustment(voucher.code, order)
+
+        expect(voucher_excluded_tax).to eq(0.0)
+      end
+    end
+
+    context "when no voucher adjustment linked to the order" do
+      it "returns 0.0" do
+        expect(voucher_excluded_tax).to eq(0.0)
+      end
+    end
+  end
 end
