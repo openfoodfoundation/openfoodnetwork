@@ -117,6 +117,10 @@ en:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+        voucher:
+          attributes:
+            code:
+              invalid: "can't start with 'Tax'"
       messages:
         confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"

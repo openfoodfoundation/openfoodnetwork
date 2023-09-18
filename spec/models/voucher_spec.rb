@@ -28,6 +28,11 @@ describe Voucher do
 
     it { is_expected.to validate_presence_of(:code) }
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
+    it "doesn't accept code starting with 'Tax'" do
+      voucher = build(:voucher_flat_rate, code: 'Taxnew_code', enterprise: enterprise)
+
+      expect(voucher.valid?).to be(false)
+    end
   end
 
   describe '#display_value' do

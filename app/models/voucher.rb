@@ -13,6 +13,9 @@ class Voucher < ApplicationRecord
            dependent: :nullify
 
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
+  # We store the tax portion of a voucher in a separate adjustment with a label starting by "Tax"
+  # when tax are exluded from price. To avoid any issue we a code stating by Tax in not allowed
+  validates :code, format: { without: /\ATax/ }
 
   TYPES = ["Vouchers::FlatRate", "Vouchers::PercentageRate"].freeze
 
