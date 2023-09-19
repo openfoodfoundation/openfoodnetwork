@@ -46,10 +46,7 @@ describe("BulkFormController", () => {
   });
 
   describe("Modifying input values", () => {
-    // This is more of a behaviour spec. Jest doesn't have all the niceties of RSpec so lots of code
-    // would be repeated if these were broken into multiple examples. So it seems impractical to
-    // write individual unit tests.
-    it("counts modified fields and records", () => {
+    beforeEach(() => {
       const disable1 = document.getElementById("disable1");
       const disable2 = document.getElementById("disable2");
       const actions = document.getElementById("actions");
@@ -57,74 +54,97 @@ describe("BulkFormController", () => {
       const input1a = document.getElementById("input1a");
       const input1b = document.getElementById("input1b");
       const input2 = document.getElementById("input2");
+    });
 
-      // Record 1: First field changed (we're not simulating a user in a browser here; we're testing DOM events directly)
-      input1a.value = 'updated1a';
-      input1a.dispatchEvent(new Event("change"));
-      // Expect only first field to show modified
-      expect(input1a.classList).toContain('modified');
-      expect(input1b.classList).not.toContain('modified');
-      expect(input2.classList).not.toContain('modified');
-      // Actions and modified summary are shown, with other sections disabled
-      expect(actions.classList).not.toContain('hidden');
-      expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
-      expect(disable1.classList).toContain('disabled-section');
-      expect(disable2.classList).toContain('disabled-section');
+    describe("marking changed fields", () => {
+      it("onChange", () => {
+        input1a.value = 'updated1a';
+        input1a.dispatchEvent(new Event("change"));
+        // Expect only first field to show modified
+        expect(input1a.classList).toContain('modified');
+        expect(input1b.classList).not.toContain('modified');
+        expect(input2.classList).not.toContain('modified');
 
-      // Record 1: Second field changed
-      input1b.value = 'updated1b';
-      input1b.dispatchEvent(new Event("change"));
-      // Expect to show modified, and same summary translation
-      expect(input1a.classList).toContain('modified');
-      expect(input1b.classList).toContain('modified');
-      expect(input2.classList).not.toContain('modified');
-      expect(actions.classList).not.toContain('hidden');
-      expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
+        // Change back to original value
+        input1a.value = 'initial1a';
+        input1a.dispatchEvent(new Event("change"));
+        expect(input1a.classList).not.toContain('modified');
 
-      // Record 2: has been changed
-      input2.value = 'updated2';
-      input2.dispatchEvent(new Event("change"));
-      // Expect all fields to show modified, summary counts both records
-      expect(input1a.classList).toContain('modified');
-      expect(input1b.classList).toContain('modified');
-      expect(input2.classList).toContain('modified');
-      expect(actions.classList).not.toContain('hidden');
-      expect(modified_summary.textContent).toBe('modified_summary, {"count":2}');
+      });
 
-      // Record 1: Change first field back to original value
-      input1a.value = 'initial1a';
-      input1a.dispatchEvent(new Event("change"));
-      // Expect first field to not show modified. But both records are still modified.
-      expect(input1a.classList).not.toContain('modified');
-      expect(input1b.classList).toContain('modified');
-      expect(input2.classList).toContain('modified');
-      expect(actions.classList).not.toContain('hidden');
-      expect(modified_summary.textContent).toBe('modified_summary, {"count":2}');
+      it("multiple fields", () => {
+        input1a.value = 'updated1a';
+        input1a.dispatchEvent(new Event("change"));
+        input2.value = 'updated2';
+        input2.dispatchEvent(new Event("change"));
+        // Expect only first field to show modified
+        expect(input1a.classList).toContain('modified');
+        expect(input1b.classList).not.toContain('modified');
+        expect(input2.classList).toContain('modified');
 
-      // Record 1: Change second field back to original value
-      input1b.value = 'initial1b';
-      input1b.dispatchEvent(new Event("change"));
-      // Both fields for record 1 show unmodified, but second record is still modified
-      expect(input1a.classList).not.toContain('modified');
-      expect(input1b.classList).not.toContain('modified');
-      expect(input2.classList).toContain('modified');
-      expect(actions.classList).not.toContain('hidden');
-      expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
-      expect(disable1.classList).toContain('disabled-section');
-      expect(disable2.classList).toContain('disabled-section');
+        // Change only one back to original value
+        input1a.value = 'initial1a';
+        input1a.dispatchEvent(new Event("change"));
+        expect(input1a.classList).not.toContain('modified');
+        expect(input1b.classList).not.toContain('modified');
+        expect(input2.classList).toContain('modified');
+      });
+    })
 
-      // Record 2: Change back to original value
-      input2.value = 'initial2';
-      input2.dispatchEvent(new Event("change"));
-      // No fields or records are modified
-      expect(input1a.classList).not.toContain('modified');
-      expect(input1b.classList).not.toContain('modified');
-      expect(input2.classList).not.toContain('modified');
-      // Actions are hidden and other sections are now re-enabled
-      expect(actions.classList).toContain('hidden');
-      expect(modified_summary.textContent).toBe('modified_summary, {"count":0}');
-      expect(disable1.classList).not.toContain('disabled-section');
-      expect(disable2.classList).not.toContain('disabled-section');
+    describe("activating sections, and showing a summary", () => {
+      // This scenario should probably be broken up into smaller units.
+      it("counts modified records ", () => {
+        // Record 1: First field changed
+        input1a.value = 'updated1a';
+        input1a.dispatchEvent(new Event("change"));
+        // Actions and modified summary are shown, with other sections disabled
+        expect(actions.classList).not.toContain('hidden');
+        expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
+        expect(disable1.classList).toContain('disabled-section');
+        expect(disable2.classList).toContain('disabled-section');
+
+        // Record 1: Second field changed
+        input1b.value = 'updated1b';
+        input1b.dispatchEvent(new Event("change"));
+        // Expect to show same summary translation
+        expect(actions.classList).not.toContain('hidden');
+        expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
+
+        // Record 2: has been changed
+        input2.value = 'updated2';
+        input2.dispatchEvent(new Event("change"));
+        // Expect summary to count both records
+        expect(actions.classList).not.toContain('hidden');
+        expect(modified_summary.textContent).toBe('modified_summary, {"count":2}');
+
+        // Record 1: Change first field back to original value
+        input1a.value = 'initial1a';
+        input1a.dispatchEvent(new Event("change"));
+        // Both records are still modified.
+        expect(input1a.classList).not.toContain('modified');
+        expect(input1b.classList).toContain('modified');
+        expect(input2.classList).toContain('modified');
+        expect(actions.classList).not.toContain('hidden');
+        expect(modified_summary.textContent).toBe('modified_summary, {"count":2}');
+
+        // Record 1: Change second field back to original value
+        input1b.value = 'initial1b';
+        input1b.dispatchEvent(new Event("change"));
+        // Both fields for record 1 show unmodified, but second record is still modified
+        expect(actions.classList).not.toContain('hidden');
+        expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
+        expect(disable1.classList).toContain('disabled-section');
+        expect(disable2.classList).toContain('disabled-section');
+
+        // Record 2: Change back to original value
+        input2.value = 'initial2';
+        input2.dispatchEvent(new Event("change"));
+        // Actions are hidden and other sections are now re-enabled
+        expect(actions.classList).toContain('hidden');
+        expect(modified_summary.textContent).toBe('modified_summary, {"count":0}');
+        expect(disable1.classList).not.toContain('disabled-section');
+        expect(disable2.classList).not.toContain('disabled-section');
+      });
     });
   });
 
