@@ -1,0 +1,62 @@
+.vertical-ellipsis-menu {
+  position: relative;
+  width: $btn-relaxed-height;
+
+  i.fa-ellipsis-v {
+    cursor: pointer;
+    display: block;
+    height: $btn-relaxed-height;
+    width: $btn-relaxed-height;
+    line-height: $btn-relaxed-height;
+    text-align: center;
+    border-radius: 3px;
+    background-color: white;
+  }
+
+  .vertical-ellipsis-menu-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: white;
+    @include defaultBoxShadow;
+    border-radius: 3px;
+    min-width: 80px;
+    display: none;
+    z-index: 100;
+
+    &.show {
+      display: block;
+    }
+
+    .vertical-ellipsis-menu-content-item {
+      display: block;
+      padding: 5px 10px;
+      cursor: pointer;
+      text-align: left;
+      border-left: 3px solid white;
+      color: $near-black;
+      text-decoration: none;
+      border-bottom: none;
+
+      &:hover {
+        background-color: $light-grey;
+        border-left: 3px solid $spree-blue;
+      }
+
+      &.delete {
+        color: $red;
+
+        &:hover {
+          border-left: 3px solid $red;
+          background-color: $fair-pink;
+        }
+      }
+    }
+  }
+}
+
+table.products td .vertical-ellipsis-menu {
+  float: right;
+}
