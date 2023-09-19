@@ -550,6 +550,7 @@ en:
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
+        actions: Actions
       columns_selector:
         unit: Unit
         price: Price

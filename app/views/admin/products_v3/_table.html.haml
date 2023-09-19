@@ -21,6 +21,7 @@
     %col{ width:"10%" }
     %col{ width:"5%" }
     %col{ width:"5%", style: "max-width:5em" }
+    %col{ width:"5%", style: "max-width:5em" }
     %thead
       %tr
         %th.align-left.with-input= t('admin.products_page.columns.name')
@@ -32,6 +33,7 @@
         %th.align-left= t('admin.products_page.columns.category')
         %th.align-left= t('admin.products_page.columns.tax_category')
         %th.align-left= t('admin.products_page.columns.inherits_properties')
+        %th.align-right= t('admin.products_page.columns.actions')
     - products.each do |product|
       = form.fields_for("products", product, index: nil) do |product_form|
         %tbody.relaxed
@@ -58,6 +60,7 @@
             %td.align-left
             %td.align-left
               .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
+            %td.align-right
           - product.variants.each do |variant|
             - prefix = "[products][][variants_attributes][]" # Couldn't convince the formbuilder to generate this for me, so for now we manually add the prefix
             = form.fields_for(variant) do |variant_form|
@@ -81,3 +84,4 @@
                   .line-clamp-1= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
                 %td.align-left
                   -# empty
+                %td.align-right
