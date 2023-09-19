@@ -1,0 +1,7 @@
+.vertical-ellipsis-menu{ "data-controller": "vertical-ellipsis-menu" }
+  %i.fa.fa-ellipsis-v{ "data-action": "click->vertical-ellipsis-menu#toggle" }
+  .vertical-ellipsis-menu-content{ "data-vertical-ellipsis-menu-target": "content" }
+    - if defined?(variant)
+      = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(product, variant), class: "vertical-ellipsis-menu-content-item"
+    - else
+      = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product), class: "vertical-ellipsis-menu-content-item"
