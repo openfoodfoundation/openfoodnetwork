@@ -53,7 +53,7 @@ namespace :ofn do
       previous_models[model_class.table_name] ||= []
       previous_models[model_class.table_name] << foreign_key_table_name
 
-      generate_migration(model_class, association, foreign_key_table_name)
+      generate_migration(model_class, association, foreign_key_table_name, foreign_key_column)
 
       query = generate_orphaned_records_query(model_class, foreign_key_table_name,
                                               foreign_key_column)
@@ -80,8 +80,8 @@ namespace :ofn do
       foreign_key_table_name
     end
 
-    def generate_migration(model_class, association, foreign_key_table_name)
-      migration_name = "add_foreign_key_to_#{model_class.table_name}_#{association.name}"
+    def generate_migration(model_class, association, foreign_key_table_name, foreign_key_column)
+      migration_name = "add_foreign_key_to_#{model_class.table_name}_#{foreign_key_table_name}"
       migration_class_name = migration_name.camelize
       migration_file_name = "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S')}_" \
                             "#{migration_name}.rb"
@@ -90,7 +90,7 @@ namespace :ofn do
         file.puts <<~MIGRATION
           class #{migration_class_name} < ActiveRecord::Migration[6.0]
             def change
-              add_foreign_key :#{model_class.table_name}, :#{foreign_key_table_name}, on_delete: :cascade
+              add_foreign_key :#{model_class.table_name}, :#{foreign_key_table_name}, column: :#{foreign_key_column}
             end
           end
         MIGRATION
