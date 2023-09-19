@@ -71,7 +71,7 @@ module Spree
              },
              class_name: 'Spree::Adjustment',
              dependent: :destroy
-    has_many :invoices, dependent: :destroy
+    has_many :invoices, dependent: :restrict_with_exception
 
     belongs_to :order_cycle
     belongs_to :distributor, class_name: 'Enterprise'
