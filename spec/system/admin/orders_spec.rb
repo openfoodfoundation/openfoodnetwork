@@ -577,13 +577,21 @@ describe '
 
           page.find("span.icon-reorder", text: "ACTIONS").click
           within ".ofn-drop-down .menu" do
-            page.find("span", text: "Print Invoices").click
+            expect {
+              page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+            }.to enqueue_job(BulkInvoiceJob).exactly(:once)
           end
 
           expect(page).to have_content "Compiling Invoices"
           expect(page).to have_content "Please wait until the PDF is ready " \
                                        "before closing this modal."
-          # an error 422 is generated in the console
+
+          # we don't run Sidekiq in test environment, so we need to manually run enqueued jobs
+          # to generate PDF files, and change the modal accordingly
+          perform_enqueued_jobs(only: BulkInvoiceJob)
+
+          expect(page).to have_content "Bulk Invoice created"
+          expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
         end
 
         it "can bulk cancel 2 orders" do
