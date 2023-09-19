@@ -72,6 +72,20 @@ describe("BulkFormController", () => {
 
       });
 
+      it("onKeyup", () => {
+        input1a.value = 'u1a';
+        input1a.dispatchEvent(new Event("keyup"));
+        // Expect only first field to show modified
+        expect(input1a.classList).toContain('modified');
+        expect(input1b.classList).not.toContain('modified');
+        expect(input2.classList).not.toContain('modified');
+
+        // Change back to original value
+        input1a.value = 'initial1a';
+        input1a.dispatchEvent(new Event("keyup"));
+        expect(input1a.classList).not.toContain('modified');
+      });
+
       it("multiple fields", () => {
         input1a.value = 'updated1a';
         input1a.dispatchEvent(new Event("change"));
