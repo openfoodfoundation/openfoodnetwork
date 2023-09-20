@@ -55,12 +55,15 @@ module Sets
     end
 
     def update_product(product, attributes)
-      return false unless update_product_only_attributes(product, attributes)
+      # Attempt all updates, but return false if any failed.
+      success = [
+        update_product_only_attributes(product, attributes),
+        update_product_variants(product, attributes),
+        update_product_master(product, attributes),
+      ].all?
 
       ExchangeVariantDeleter.new.delete(product) if product.saved_change_to_supplier_id?
-
-      update_product_variants(product, attributes) &&
-        update_product_master(product, attributes)
+      success
     end
 
     def update_product_only_attributes(product, attributes)

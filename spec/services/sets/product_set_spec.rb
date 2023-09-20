@@ -137,6 +137,19 @@ describe Sets::ProductSet do
                   .and change { product.variants.first.sku }.to("123")
               end
             end
+
+            context 'and when product attributes have an error' do
+              it 'updates variant attributes' do
+                collection_hash[0][:name] = "" # product.name can't be blank
+
+                expect {
+                  product_set.save
+                  product.reload
+                }.to change { product.variants.first.sku }.to("123")
+
+                expect(product.name).to_not eq ""
+              end
+            end
           end
 
           context 'when :master_attributes is passed' do
