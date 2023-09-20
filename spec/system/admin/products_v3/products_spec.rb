@@ -263,10 +263,14 @@ describe 'As an admin, I can see the new product page' do
       end
     end
 
-    it "shows errors for product fields" do
+    it "shows errors for both product and variant fields" do
       within row_containing_name("Apples") do
         fill_in "Name", with: ""
         fill_in "SKU", with: "A" * 256
+      end
+      within row_containing_name("Medium box") do
+        fill_in "Name", with: "L" * 256
+        fill_in "SKU", with: "1" * 256
       end
 
       expect {
@@ -282,6 +286,13 @@ describe 'As an admin, I can see the new product page' do
         expect(page).to have_content "is too long"
       end
       pending
+      within row_containing_name("L" * 256) do
+        expect(page).to have_field "Name", with: "L" * 256
+        expect(page).to have_field "SKU", with: "1" * 256
+        expect(page).to have_content "is too long"
+        expect(page).to have_field "Price", with: "10.25"
+      end
+
       expect(page).to have_content "Please review the errors and try again"
     end
   end

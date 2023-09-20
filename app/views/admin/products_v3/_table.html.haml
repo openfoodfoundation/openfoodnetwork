@@ -67,15 +67,18 @@
           - product.variants.each do |variant|
             = form.fields_for("products][][variants_attributes][", variant, index: nil) do |variant_form|
               %tr.condensed
-                %td.align-left
+                %td.field
                   = variant_form.hidden_field :id
                   = variant_form.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name
-                %td.align-right
+                  = error_message_on variant, :display_name
+                %td.field
                   = variant_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
+                  = error_message_on variant, :sku
                 %td.align-right
                   .content= variant.unit_to_display
-                %td.align-right
+                %td.field
                   = variant_form.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
+                  = error_message_on variant, :price
                 %td.align-right
                   .content= variant.on_hand || 0 #TODO: spec for this according to requirements.
                 %td.align-left
