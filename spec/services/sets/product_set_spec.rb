@@ -138,12 +138,11 @@ describe Sets::ProductSet do
               it 'updates product and variant attributes' do
                 collection_hash[0][:sku] = "test_sku"
 
-                product_set.save
-
-                expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
-                expect(product.reload.attributes).to include(
-                  'sku' => "test_sku"
-                )
+                expect {
+                  product_set.save
+                  product.reload
+                }.to change { product.sku }.to("test_sku")
+                  .and change { product.variants.first.sku }.to("123")
               end
             end
           end
