@@ -109,6 +109,10 @@
     // "Naked" inputs. Row hover helps reveal them.
     input {
       border-color: transparent;
+      background-color: $color-tbl-cell-bg;
+      height: auto;
+      font-size: inherit;
+      font-weight: inherit;
 
       &:focus {
         border-color: $color-txt-hover-brd;
