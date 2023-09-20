@@ -54,7 +54,8 @@ module Spree
     has_many :variant_images, -> { order(:position) }, source: :images,
                                                        through: :variants
 
-    validates :name, presence: true
+    validates :name, presence: true, length: { maximum: columns_hash['name'].limit }
+    validates :sku, length: { maximum: columns_hash['sku'].limit }
 
     validates :variant_unit, presence: true
     validates :unit_value, numericality: {
