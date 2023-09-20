@@ -17,7 +17,25 @@ class SuppliedProductBuilder < DfcBuilder
     )
   end
 
-  def self.import(supplied_product)
+  def self.import_variant(supplied_product)
+    product_id = supplied_product.spree_product_id
+
+    if product_id.present?
+      product = Spree::Product.find(product_id)
+      Spree::Variant.new(
+        product:,
+        price: 0,
+      ).tap do |variant|
+        apply(supplied_product, variant)
+      end
+    else
+      product = import_product(supplied_product)
+      product.ensure_standard_variant
+      product.variants.first
+    end
+  end
+
+  def self.import_product(supplied_product)
     Spree::Product.new(
       name: supplied_product.name,
       description: supplied_product.description,

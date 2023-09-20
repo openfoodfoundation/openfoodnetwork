@@ -127,11 +127,14 @@ module DataFoodConsortium
       end
 
       def guess_setter_name(predicate)
-        fragment = predicate.fragment
+        name =
 
-        # Some predicates are named like `hasQuantity`
-        # but the attribute name would be `quantity`.
-        name = fragment.sub(/^has/, "").camelize(:lower)
+          # Some predicates are named like `hasQuantity`
+          # but the attribute name would be `quantity`.
+          predicate.fragment&.sub(/^has/, "")&.camelize(:lower) ||
+
+          # And sometimes the URI looks like `ofn:spree_product_id`.
+          predicate.to_s.split(":").last
 
         "#{name}="
       end

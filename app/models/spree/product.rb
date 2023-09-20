@@ -272,18 +272,6 @@ module Spree
       end
     end
 
-    private
-
-    def update_units
-      return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
-
-      variants.each(&:update_units)
-    end
-
-    def touch_distributors
-      Enterprise.distributing_products(id).each(&:touch)
-    end
-
     def ensure_standard_variant
       return unless variants.empty?
 
@@ -296,6 +284,18 @@ module Spree
       variant.tax_category_id = tax_category_id
       variant.shipping_category_id = shipping_category_id
       variants << variant
+    end
+
+    private
+
+    def update_units
+      return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
+
+      variants.each(&:update_units)
+    end
+
+    def touch_distributors
+      Enterprise.distributing_products(id).each(&:touch)
     end
 
     def validate_image
