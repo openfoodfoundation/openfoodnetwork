@@ -120,9 +120,20 @@ span.info {
   }
   // Inline error message
   .formError {
+    display: inline-block;
     color: $color-error;
-    font-style: italic;
     font-size: 85%;
+
+    // Icon on left, with subsequent lines indented
+    text-indent: -0.6em;
+    margin-left: 1.2em;
+
+    @extend .icon-remove-sign;
+    @extend [class^="icon-"];
+
+    &:before {
+      margin-right: 0.3em;
+    }
   }
 }
 

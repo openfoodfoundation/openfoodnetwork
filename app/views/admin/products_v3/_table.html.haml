@@ -38,11 +38,11 @@
       = form.fields_for("products", product, index: nil) do |product_form|
         %tbody.relaxed{ 'data-record-id': product_form.object.id }
           %tr
-            %td.align-left.header
+            %td.field.align-left.header
               = product_form.hidden_field :id
               = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
               = error_message_on product, :name
-            %td.align-right
+            %td.field
               = product_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
               = error_message_on product, :sku
             %td.align-right
