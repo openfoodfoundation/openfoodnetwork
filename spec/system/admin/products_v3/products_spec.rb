@@ -205,6 +205,33 @@ describe 'As an admin, I can see the new product page' do
       pending
       expect(page).to have_content "Changes saved"
     end
+
+    it "can discard changes and reload latest data" do
+      within row_containing_name("Apples") do
+        fill_in "Name", with: "Pommes"
+      end
+
+      # Expect to be alerted when attempting to navigate away. Cancel.
+      dismiss_confirm do
+        click_link "Dashboard"
+      end
+      within row_containing_name("Apples") do
+        expect(page).to have_field "Name", with: "Pommes" # Changed value wasn't lost
+      end
+
+      # Meanwhile, the SKU was updated
+      product_a.update! sku: "APL-10"
+
+      expect {
+        click_button "Discard changes"
+        product_a.reload
+      }.to_not change { product_a.name }
+
+      within row_containing_name("Apples") do
+        expect(page).to have_field "Name", with: "Apples" # Changed value wasn't saved
+        expect(page).to have_field "SKU", with: "APL-10" # Updated value shown
+      end
+    end
   end
 
   def expect_page_to_be(page_number)

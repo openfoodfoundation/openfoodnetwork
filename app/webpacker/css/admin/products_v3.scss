@@ -15,6 +15,19 @@
     padding: 0;
   }
 
+  .results {
+    position: relative;
+  }
+
+  // Form actions floats over other controls when active
+  .form-actions {
+    position: absolute;
+    top: -1em;
+    left: 0;
+    right: 0;
+    z-index: 1; // Ensure tom-select and .disabled-section are covered
+  }
+
   // Hopefully these rules will be moved to component(s).
   table.products {
     table-layout: fixed; // Column widths are based solely on col definitions (not content). This allows more efficient rendering.
@@ -99,6 +112,10 @@
 
       &:focus {
         border-color: $color-txt-hover-brd;
+      }
+
+      &.modified {
+        border-color: $color-txt-modified-brd;
       }
     }
 
@@ -216,6 +233,24 @@
           padding-left: 30px;
         }
       }
+    }
+  }
+
+  // Blurred and non-clickable
+  $disabled-blur: 1.5px;
+  .disabled-section {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      backdrop-filter: blur($disabled-blur);
+      // Stretch outside for a soft blur edge:
+      left: -$disabled-blur;
+      top: -$disabled-blur;
+      bottom: -$disabled-blur;
+      right: -$disabled-blur;
+      z-index: 1; // Ensure tom-select is covered
     }
   }
 }

@@ -30,6 +30,10 @@ fieldset {
   &[disabled] {
     opacity: 0.7;
   }
+
+  &.modified {
+    border-color: $color-txt-modified-brd;
+  }
 }
 
 textarea {
