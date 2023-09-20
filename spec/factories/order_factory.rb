@@ -16,7 +16,7 @@ FactoryBot.define do
       order_cycle { create(:order_cycle, distributors: [distributor]) }
 
       after(:create) do |order|
-        order.line_items << build(:line_item, order: order)
+        order.line_items << build(:line_item, order:)
         order.update_totals_and_states
 
         order.order_cycle.exchanges.outgoing.first.variants << order.line_items.first.variant
@@ -47,7 +47,7 @@ FactoryBot.define do
 
     factory :order_with_totals do
       after(:create) do |order|
-        create(:line_item, order: order)
+        create(:line_item, order:)
         order.line_items.reload # to ensure order.line_items is accessible after
         order.update_totals_and_states
       end
@@ -62,10 +62,10 @@ FactoryBot.define do
       end
 
       after(:create) do |order, evaluator|
-        create(:shipment, order: order)
+        create(:shipment, order:)
         order.shipments.reload
 
-        create_list(:line_item, evaluator.line_items_count, order: order)
+        create_list(:line_item, evaluator.line_items_count, order:)
         order.line_items.reload
         order.update_order!
       end
@@ -82,7 +82,7 @@ FactoryBot.define do
           payment_state { 'paid' }
           shipment_state { 'ready' }
           after(:create) do |order|
-            create(:payment, :completed, amount: order.total, order: order)
+            create(:payment, :completed, amount: order.total, order:)
 
             order.shipments.each do |shipment|
               shipment.inventory_units.each { |u| u.update_column('state', 'on_hand') }
@@ -110,7 +110,7 @@ FactoryBot.define do
       end
 
       after(:create) do |order, evaluator|
-        line_item = create(:line_item_with_shipment, order: order,
+        line_item = create(:line_item_with_shipment, order:,
                                                      variant: evaluator.variant,
                                                      shipping_method: evaluator.shipping_method)
         order.shipments << line_item.target_shipment
@@ -124,7 +124,7 @@ FactoryBot.define do
       end
 
       after(:create) do |order, evaluator|
-        create(:payment, state: "checkout", order: order, amount: order.total,
+        create(:payment, state: "checkout", order:, amount: order.total,
                          payment_method: evaluator.payment_method)
         order.recreate_all_fees!
         order.ship_address = evaluator.ship_address
@@ -146,8 +146,8 @@ FactoryBot.define do
     after(:create) do |order, proxy|
       product = create(:simple_product)
       create(:line_item_with_shipment, shipping_fee: proxy.shipping_fee,
-                                       order: order,
-                                       product: product)
+                                       order:,
+                                       product:)
       order.reload
     end
 
@@ -161,7 +161,7 @@ FactoryBot.define do
 
       after(:create) do |order, evaluator|
         # Ensure order is valid and passes through necessary checkout steps
-        create(:payment, state: "checkout", order: order, amount: order.total,
+        create(:payment, state: "checkout", order:, amount: order.total,
                          payment_method: evaluator.payment_method)
         order.ship_address = evaluator.ship_address
         break unless order.next! while !order.completed?
@@ -198,7 +198,7 @@ FactoryBot.define do
                                        tax_rate_name: proxy.tax_rate_name,
                                        included_in_price: proxy.included_in_price)
 
-      create(:line_item, order: order, variant: product.variants.first, price: product.price)
+      create(:line_item, order:, variant: product.variants.first, price: product.price)
       order.reload
     end
   end
@@ -212,7 +212,7 @@ FactoryBot.define do
     end
 
     after(:create) do |order, evaluator|
-      create(:payment, :completed, amount: order.total + evaluator.credit_amount, order: order)
+      create(:payment, :completed, amount: order.total + evaluator.credit_amount, order:)
 
       order.reload
     end
@@ -227,7 +227,7 @@ FactoryBot.define do
     end
 
     after(:create) do |order, evaluator|
-      create(:payment, amount: order.total - evaluator.unpaid_amount, order: order,
+      create(:payment, amount: order.total - evaluator.unpaid_amount, order:,
                        state: "completed")
       order.reload
     end
@@ -244,15 +244,15 @@ FactoryBot.define do
     order_cycle { create(:simple_order_cycle) }
 
     after(:create) do |order, evaluator|
-      create(:line_item, order: order)
+      create(:line_item, order:)
       product = create(:simple_product)
-      create(:line_item, order: order, product: product)
+      create(:line_item, order:, product:)
 
       payment_calculator = build(:calculator_per_item, preferred_amount: evaluator.payment_fee)
       payment_method = create(:payment_method, calculator: payment_calculator)
-      create(:payment, order: order,
+      create(:payment, order:,
                        amount: order.total,
-                       payment_method: payment_method,
+                       payment_method:,
                        state: 'checkout')
 
       create(:shipping_method_with, :shipping_fee, shipping_fee: evaluator.shipping_fee,

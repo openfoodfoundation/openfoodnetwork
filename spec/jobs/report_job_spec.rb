@@ -4,8 +4,8 @@ require 'spec_helper'
 
 describe ReportJob do
   let(:report_args) {
-    { report_class: report_class, user: user, params: params, format: format,
-      blob: blob }
+    { report_class:, user:, params:, format:,
+      blob: }
   }
   let(:report_class) { Reporting::Reports::UsersAndEnterprises::Base }
   let(:user) { enterprise.owner }
@@ -46,7 +46,7 @@ describe ReportJob do
     }.to enqueue_mail(ReportMailer, :report_ready).with(
       params: {
         to: user.email,
-        blob: blob,
+        blob:,
       },
       args: [],
     )

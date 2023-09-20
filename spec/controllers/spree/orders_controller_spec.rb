@@ -13,7 +13,7 @@ describe Spree::OrdersController, type: :controller do
   describe "viewing an order" do
     let(:customer) { create(:customer) }
     let(:order) {
-      create(:order_with_credit_payment, customer: customer, distributor: customer.enterprise)
+      create(:order_with_credit_payment, customer:, distributor: customer.enterprise)
     }
 
     before do
@@ -115,7 +115,7 @@ describe Spree::OrdersController, type: :controller do
 
       order = subject.current_order(true)
       allow(distributor).to receive(:ready_for_checkout?) { false }
-      allow(order).to receive_messages(distributor: distributor, order_cycle: order_cycle)
+      allow(order).to receive_messages(distributor:, order_cycle:)
 
       expect(order).to receive(:empty!)
       expect(order).to receive(:set_distribution!).with(nil, nil)
@@ -234,9 +234,9 @@ describe Spree::OrdersController, type: :controller do
       }
       let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
       let(:order) {
-        create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee,
-                                           payment_fee: payment_fee,
-                                           shipping_tax_category: shipping_tax_category)
+        create(:completed_order_with_fees, distributor:, shipping_fee:,
+                                           payment_fee:,
+                                           shipping_tax_category:)
       }
       let(:line_item1) { order.line_items.first }
       let(:line_item2) { order.line_items.second }
@@ -288,9 +288,9 @@ describe Spree::OrdersController, type: :controller do
                           enterprise_fees: [enterprise_fee])
       }
       let!(:order) do
-        order = create(:completed_order_with_totals, line_items_count: 2, user: user,
-                                                     distributor: distributor,
-                                                     order_cycle: order_cycle)
+        order = create(:completed_order_with_totals, line_items_count: 2, user:,
+                                                     distributor:,
+                                                     order_cycle:)
         order.reload.line_items.first.update(variant_id: variant1.id)
         order.reload.line_items.last.update(variant_id: variant2.id)
         break unless order.next! while !order.completed?
@@ -451,7 +451,7 @@ describe Spree::OrdersController, type: :controller do
 
   describe "cancelling an order" do
     let(:user) { create(:user) }
-    let(:order) { create(:order, user: user) }
+    let(:order) { create(:order, user:) }
     let(:params) { { id: order.number } }
 
     context "when the user does not have permission to cancel the order" do
@@ -478,7 +478,7 @@ describe Spree::OrdersController, type: :controller do
 
       context "when the order is complete" do
         let(:order) {
-          create(:completed_order_with_totals, user: user,
+          create(:completed_order_with_totals, user:,
                                                distributor: create(:distributor_enterprise))
         }
 

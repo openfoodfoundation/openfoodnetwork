@@ -868,43 +868,13 @@ Style/HashLikeCase:
   Exclude:
     - 'app/models/enterprise.rb'
 
-# Offense count: 1440
+# Offense count: 1043
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
 # SupportedShorthandSyntax: always, never, either, consistent
 Style/HashSyntax:
   Exclude:
-    - 'spec/controllers/payment_gateways/stripe_controller_spec.rb'
-    - 'spec/controllers/split_checkout_controller_spec.rb'
-    - 'spec/controllers/spree/admin/adjustments_controller_spec.rb'
-    - 'spec/controllers/spree/admin/orders/customer_details_controller_spec.rb'
-    - 'spec/controllers/spree/admin/orders/payments/payments_controller_refunds_spec.rb'
-    - 'spec/controllers/spree/admin/orders/payments/payments_controller_spec.rb'
-    - 'spec/controllers/spree/admin/orders_controller_spec.rb'
-    - 'spec/controllers/spree/admin/payment_methods_controller_spec.rb'
-    - 'spec/controllers/spree/admin/search_controller_spec.rb'
-    - 'spec/controllers/spree/admin/taxons_controller_spec.rb'
-    - 'spec/controllers/spree/credit_cards_controller_spec.rb'
-    - 'spec/controllers/spree/orders_controller_spec.rb'
-    - 'spec/controllers/stripe/webhooks_controller_spec.rb'
-    - 'spec/factories/line_item_factory.rb'
-    - 'spec/factories/order_cycle_factory.rb'
-    - 'spec/factories/order_factory.rb'
-    - 'spec/factories/shipment_factory.rb'
-    - 'spec/factories/subscription_factory.rb'
-    - 'spec/helpers/admin/orders_helper_spec.rb'
-    - 'spec/helpers/checkout_helper_spec.rb'
-    - 'spec/helpers/spree/base_helper_spec.rb'
-    - 'spec/jobs/report_job_spec.rb'
-    - 'spec/jobs/subscription_confirm_job_spec.rb'
-    - 'spec/jobs/webhook_delivery_job_spec.rb'
-    - 'spec/lib/open_food_network/address_finder_spec.rb'
-    - 'spec/lib/open_food_network/enterprise_fee_applicator_spec.rb'
-    - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
-    - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
-    - 'spec/lib/open_food_network/order_cycle_permissions_spec.rb'
-    - 'spec/lib/open_food_network/property_merge_spec.rb'
     - 'spec/lib/open_food_network/scope_variant_to_hub_spec.rb'
     - 'spec/lib/open_food_network/scope_variants_to_search_spec.rb'
     - 'spec/lib/open_food_network/tag_rule_applicator_spec.rb'

@@ -118,7 +118,7 @@ describe CheckoutHelper, type: :helper do
 
   it "knows if guests can checkout" do
     distributor = create(:distributor_enterprise)
-    order = create(:order, distributor: distributor)
+    order = create(:order, distributor:)
     allow(helper).to receive(:current_order) { order }
     expect(helper.guest_checkout_allowed?).to be true
 
@@ -131,7 +131,7 @@ describe CheckoutHelper, type: :helper do
     let(:enterprise_fee) { create(:enterprise_fee, amount: 123) }
     let!(:fee_adjustment) {
       create(:adjustment, originator: enterprise_fee, adjustable: order,
-                          order: order, label: "Enterprise Fee")
+                          order:, label: "Enterprise Fee")
     }
 
     before do
@@ -153,19 +153,19 @@ describe CheckoutHelper, type: :helper do
       let!(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: ::Calculator::DefaultTax.new) }
       let!(:line_item_fee_adjustment) {
         create(:adjustment, originator: enterprise_fee, adjustable: order.line_items.first,
-                            order: order)
+                            order:)
       }
       let!(:order_tax_adjustment) {
         create(:adjustment,
                originator: tax_rate,
                adjustable: fee_adjustment,
-               order: order)
+               order:)
       }
       let!(:line_item_fee_adjustment_tax_adjustment) {
         create(:adjustment,
                originator: tax_rate,
                adjustable: line_item_fee_adjustment,
-               order: order)
+               order:)
       }
 
       it "removes tax rate adjustments" do
@@ -180,7 +180,7 @@ describe CheckoutHelper, type: :helper do
     context "with return authorization adjustments" do
       let!(:return_adjustment) {
         create(:adjustment, originator_type: 'Spree::ReturnAuthorization', adjustable: order,
-                            order: order)
+                            order:)
       }
 
       it "includes return adjustments" do

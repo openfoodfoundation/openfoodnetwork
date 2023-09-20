@@ -11,17 +11,17 @@ module Spree
     describe "index" do
       let!(:order) { create(:completed_order_with_totals) }
       let!(:adjustment1) {
-        create(:adjustment, originator_type: "Spree::ShippingMethod", order: order,
+        create(:adjustment, originator_type: "Spree::ShippingMethod", order:,
                             adjustable: order.shipment)
       }
       let!(:adjustment2) {
-        create(:adjustment, originator_type: "Spree::PaymentMethod", eligible: true, order: order)
+        create(:adjustment, originator_type: "Spree::PaymentMethod", eligible: true, order:)
       }
       let!(:adjustment3) {
-        create(:adjustment, originator_type: "Spree::PaymentMethod", eligible: false, order: order)
+        create(:adjustment, originator_type: "Spree::PaymentMethod", eligible: false, order:)
       }
-      let!(:adjustment4) { create(:adjustment, originator_type: "EnterpriseFee", order: order) }
-      let!(:adjustment5) { create(:adjustment, originator: nil, adjustable: order, order: order) }
+      let!(:adjustment4) { create(:adjustment, originator_type: "EnterpriseFee", order:) }
+      let!(:adjustment5) { create(:adjustment, originator: nil, adjustable: order, order:) }
 
       it "displays eligible adjustments" do
         spree_get :index, order_id: order.number
@@ -46,7 +46,7 @@ module Spree
     describe "setting the adjustment's tax" do
       let(:order) { create(:order) }
       let(:zone) { create(:zone_with_member) }
-      let(:tax_rate) { create(:tax_rate, amount: 0.1, zone: zone, included_in_price: true ) }
+      let(:tax_rate) { create(:tax_rate, amount: 0.1, zone:, included_in_price: true ) }
 
       describe "creating an adjustment" do
         let(:tax_category_param) { '' }
@@ -98,12 +98,12 @@ module Spree
         context "when the tax category has multiple rates for the same tax zone" do
           let(:tax_category) { create(:tax_category) }
           let!(:tax_rate1) {
-            create(:tax_rate, amount: 0.1, zone: zone, included_in_price: false,
-                              tax_category: tax_category )
+            create(:tax_rate, amount: 0.1, zone:, included_in_price: false,
+                              tax_category: )
           }
           let!(:tax_rate2) {
-            create(:tax_rate, amount: 0.2, zone: zone, included_in_price: false,
-                              tax_category: tax_category )
+            create(:tax_rate, amount: 0.2, zone:, included_in_price: false,
+                              tax_category: )
           }
           let(:tax_category_param) { tax_category.id.to_s }
           let(:params) {
@@ -145,7 +145,7 @@ module Spree
           }
         }
         let(:adjustment) {
-          create(:adjustment, adjustable: order, order: order,
+          create(:adjustment, adjustable: order, order:,
                               amount: 1100, tax_category: old_tax_category)
         }
 
@@ -190,7 +190,7 @@ module Spree
     describe "#delete" do
       let!(:order) { create(:completed_order_with_totals) }
       let(:payment_fee) {
-        create(:adjustment, amount: 0.50, order: order, adjustable: order.payments.first)
+        create(:adjustment, amount: 0.50, order:, adjustable: order.payments.first)
       }
 
       context "as an enterprise user with edit permissions on the order" do
@@ -226,7 +226,7 @@ module Spree
       let(:order) { create(:completed_order_with_totals) }
       let(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: ::Calculator::DefaultTax.new) }
       let(:adjustment) {
-        create(:adjustment, adjustable: order, order: order, amount: 1100)
+        create(:adjustment, adjustable: order, order:, amount: 1100)
       }
 
       before do

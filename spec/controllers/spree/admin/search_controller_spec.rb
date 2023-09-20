@@ -7,7 +7,7 @@ describe Spree::Admin::SearchController, type: :controller do
     let!(:owner) { create(:user, email: "test1@email.com" ) }
     let!(:manager) { create(:user, email: "test2@email.com" ) }
     let!(:random) { create(:user, email: "test3@email.com" ) }
-    let!(:enterprise) { create(:enterprise, owner: owner, users: [owner, manager]) }
+    let!(:enterprise) { create(:enterprise, owner:, users: [owner, manager]) }
     before { controller_login_as_enterprise_user [enterprise] }
 
     describe 'searching for known users' do
@@ -34,8 +34,8 @@ describe Spree::Admin::SearchController, type: :controller do
     end
 
     describe 'searching for customers' do
-      let!(:customer_1) { create(:customer, enterprise: enterprise, email: 'test1@email.com') }
-      let!(:customer_2) { create(:customer, enterprise: enterprise, first_name: 'test2') }
+      let!(:customer_1) { create(:customer, enterprise:, email: 'test1@email.com') }
+      let!(:customer_2) { create(:customer, enterprise:, first_name: 'test2') }
       let!(:customer_3) { create(:customer, email: 'test3@email.com') }
 
       describe 'when search owned enterprises' do

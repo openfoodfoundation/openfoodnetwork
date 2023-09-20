@@ -9,8 +9,8 @@ describe SplitCheckoutController, type: :controller do
   let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
   let(:exchange) { order_cycle.exchanges.outgoing.first }
   let(:order) {
-    create(:order_with_line_items, line_items_count: 1, distributor: distributor,
-                                   order_cycle: order_cycle)
+    create(:order_with_line_items, line_items_count: 1, distributor:,
+                                   order_cycle:)
   }
   let(:payment_method) { distributor.payment_methods.first }
   let(:shipping_method) { distributor.shipping_methods.first }
@@ -72,7 +72,7 @@ describe SplitCheckoutController, type: :controller do
 
   describe "#update" do
     let(:checkout_params) { {} }
-    let(:params) { { step: step }.merge(checkout_params) }
+    let(:params) { { step: }.merge(checkout_params) }
 
     context "details step" do
       let(:step) { "details" }
@@ -81,7 +81,7 @@ describe SplitCheckoutController, type: :controller do
         let(:checkout_params) { { order: { email: user.email } } }
 
         it "returns 422 and some feedback" do
-          put :update, params: params
+          put(:update, params:)
 
           expect(response.status).to eq 422
           expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
@@ -102,7 +102,7 @@ describe SplitCheckoutController, type: :controller do
         end
 
         it "updates and redirects to payment step" do
-          put :update, params: params
+          put(:update, params:)
 
           expect(response).to redirect_to checkout_step_path(:payment)
           expect(order.reload.state).to eq "payment"
@@ -156,7 +156,7 @@ describe SplitCheckoutController, type: :controller do
         let(:checkout_params) { { order: { email: user.email } } }
 
         it "returns 422 and some feedback" do
-          put :update, params: params
+          put(:update, params:)
 
           expect(response.status).to eq 422
           expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
@@ -176,7 +176,7 @@ describe SplitCheckoutController, type: :controller do
         end
 
         it "updates and redirects to payment step" do
-          put :update, params: params
+          put(:update, params:)
 
           expect(response).to redirect_to checkout_step_path(:summary)
           expect(order.reload.state).to eq "confirmation"
@@ -198,7 +198,7 @@ describe SplitCheckoutController, type: :controller do
         end
 
         it "applies the fee and updates the order total" do
-          put :update, params: params
+          put(:update, params:)
 
           expect(response).to redirect_to checkout_step_path(:summary)
 
@@ -223,7 +223,7 @@ describe SplitCheckoutController, type: :controller do
         end
 
         it "allows proceeding to confirmation" do
-          put :update, params: params
+          put(:update, params:)
 
           expect(response).to redirect_to checkout_step_path(:summary)
           expect(order.reload.state).to eq "confirmation"
@@ -233,7 +233,7 @@ describe SplitCheckoutController, type: :controller do
       end
 
       context "with a saved credit card" do
-        let!(:saved_card) { create(:stored_credit_card, user: user) }
+        let!(:saved_card) { create(:stored_credit_card, user:) }
         let(:checkout_params) do
           {
             order: {
@@ -246,7 +246,7 @@ describe SplitCheckoutController, type: :controller do
         end
 
         it "updates and redirects to payment step" do
-          put :update, params: params
+          put(:update, params:)
 
           expect(response).to redirect_to checkout_step_path(:summary)
           expect(order.reload.state).to eq "confirmation"
@@ -264,13 +264,13 @@ describe SplitCheckoutController, type: :controller do
         order.select_shipping_method shipping_method.id
         OrderWorkflow.new(order).advance_to_payment
 
-        order.payments << build(:payment, amount: order.total, payment_method: payment_method)
+        order.payments << build(:payment, amount: order.total, payment_method:)
         order.next
       end
 
       describe "confirming the order" do
         it "completes the order and redirects to order confirmation" do
-          put :update, params: params
+          put(:update, params:)
 
           expect(response).to redirect_to order_path(order, order_token: order.token)
           expect(order.reload.state).to eq "complete"
@@ -286,7 +286,7 @@ describe SplitCheckoutController, type: :controller do
           let(:checkout_params) { {} }
 
           it "returns 422 and some feedback" do
-            put :update, params: params
+            put(:update, params:)
 
             expect(response.status).to eq 422
             expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
@@ -298,7 +298,7 @@ describe SplitCheckoutController, type: :controller do
           let(:checkout_params) { { accept_terms: true } }
 
           it "completes the order and redirects to order confirmation" do
-            put :update, params: params
+            put(:update, params:)
 
             expect(response).to redirect_to order_path(order, order_token: order.token)
             expect(order.reload.state).to eq "complete"
@@ -316,7 +316,7 @@ describe SplitCheckoutController, type: :controller do
 
         describe "confirming the order" do
           it "redirects to the payment gateway's URL" do
-            put :update, params: params
+            put(:update, params:)
 
             expect(response.body).to match("https://example.com/pay").and match("redirect")
             expect(order.reload.state).to eq "confirmation"
@@ -332,7 +332,7 @@ describe SplitCheckoutController, type: :controller do
     before do
       allow(controller).to receive(:current_order).and_return(order)
       allow(order).to receive(:distributor).and_return(distributor)
-      order.update(order_cycle: order_cycle)
+      order.update(order_cycle:)
 
       allow(OrderCycleDistributedVariants).to receive(:new).and_return(
         order_cycle_distributed_variants

@@ -6,8 +6,8 @@ describe Spree::Admin::TaxonsController do
   render_views
 
   let(:taxonomy) { create(:taxonomy) }
-  let(:taxon) { create(:taxon, name: "Ruby", taxonomy: taxonomy) }
-  let(:taxon2) { create(:taxon, name: "Rails", taxonomy: taxonomy) }
+  let(:taxon) { create(:taxon, name: "Ruby", taxonomy:) }
+  let(:taxon2) { create(:taxon, name: "Rails", taxonomy:) }
 
   before do
     allow(controller).to receive(:spree_current_user) { current_api_user }

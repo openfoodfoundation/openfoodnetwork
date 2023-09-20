@@ -12,7 +12,7 @@ module OpenFoodNetwork
     }
     let(:fee_tax_category) { nil }
     let(:tax_category) { create(:tax_category) }
-    let!(:target_variant) { create(:variant, tax_category: tax_category) }
+    let!(:target_variant) { create(:variant, tax_category:) }
     let(:product) { variant.product }
     let(:applicator) { EnterpriseFeeApplicator.new(enterprise_fee, target_variant, 'role') }
 

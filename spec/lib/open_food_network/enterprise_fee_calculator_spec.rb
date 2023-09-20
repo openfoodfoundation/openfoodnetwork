@@ -24,12 +24,12 @@ module OpenFoodNetwork
 
           describe "supplier fees" do
             let!(:exchange1) {
-              create(:exchange, order_cycle: order_cycle, sender: supplier1, receiver: coordinator,
+              create(:exchange, order_cycle:, sender: supplier1, receiver: coordinator,
                                 incoming: true, enterprise_fees: [enterprise_fee1],
                                 variants: [product1.variants.first])
             }
             let!(:exchange2) {
-              create(:exchange, order_cycle: order_cycle, sender: supplier2, receiver: coordinator,
+              create(:exchange, order_cycle:, sender: supplier2, receiver: coordinator,
                                 incoming: true, enterprise_fees: [enterprise_fee2],
                                 variants: [product2.variants.first])
             }
@@ -51,7 +51,7 @@ module OpenFoodNetwork
 
           describe "coordinator fees" do
             let!(:exchange) {
-              create(:exchange, order_cycle: order_cycle, sender: coordinator,
+              create(:exchange, order_cycle:, sender: coordinator,
                                 receiver: distributor, incoming: false, enterprise_fees: [],
                                 variants: [product1.variants.first])
             }
@@ -73,7 +73,7 @@ module OpenFoodNetwork
 
           describe "distributor fees" do
             let!(:exchange) {
-              create(:exchange, order_cycle: order_cycle, sender: coordinator,
+              create(:exchange, order_cycle:, sender: coordinator,
                                 receiver: distributor, incoming: false,
                                 enterprise_fees: [enterprise_fee1,
                                                   enterprise_fee2,
@@ -103,7 +103,7 @@ module OpenFoodNetwork
             )
           }
           let!(:exchange) {
-            create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor,
+            create(:exchange, order_cycle:, sender: coordinator, receiver: distributor,
                               incoming: false, enterprise_fees: [enterprise_fee1],
                               variants: [product1.variants.first])
           }
@@ -133,7 +133,7 @@ module OpenFoodNetwork
           create(:enterprise_fee, fee_type: 'fundraising', amount: 3.45, name: "Fundraising")
         }
         let!(:exchange) {
-          create(:exchange, order_cycle: order_cycle,
+          create(:exchange, order_cycle:,
                             sender: coordinator, receiver: distributor, incoming: false,
                             enterprise_fees: [
                               ef_admin, ef_sales, ef_packing, ef_transport, ef_fundraising
@@ -180,14 +180,14 @@ module OpenFoodNetwork
       end
 
       describe "creating adjustments" do
-        let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
-        let!(:line_item) { create(:line_item, order: order, variant: product1.variants.first) }
+        let(:order) { create(:order, distributor:, order_cycle:) }
+        let!(:line_item) { create(:line_item, order:, variant: product1.variants.first) }
         let(:enterprise_fee_line_item) { create(:enterprise_fee) }
         let(:enterprise_fee_order) {
           create(:enterprise_fee, calculator: Calculator::FlatRate.new(preferred_amount: 2))
         }
         let!(:exchange) {
-          create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: distributor,
+          create(:exchange, order_cycle:, sender: coordinator, receiver: distributor,
                             incoming: false, variants: [product1.variants.first])
         }
 
@@ -225,7 +225,7 @@ module OpenFoodNetwork
       let!(:ef_other_distributor) { create(:enterprise_fee) }
       let!(:exchange) {
         create(:exchange, sender: order_cycle.coordinator, receiver: distributor,
-                          order_cycle: order_cycle, enterprise_fees: [ef_exchange], variants: [v])
+                          order_cycle:, enterprise_fees: [ef_exchange], variants: [v])
       }
       let(:v) { create(:variant) }
       let(:indexed_variants) { { v.id => v } }
@@ -244,7 +244,7 @@ module OpenFoodNetwork
         end
 
         it "does not include outgoing exchanges to other distributors" do
-          create(:exchange, order_cycle: order_cycle, sender: order_cycle.coordinator,
+          create(:exchange, order_cycle:, sender: order_cycle.coordinator,
                             receiver: distributor_other, enterprise_fees: [ef_other_distributor],
                             variants: [v])
 
@@ -281,7 +281,7 @@ module OpenFoodNetwork
 
       describe "for a line item" do
         let(:variant) { double(:variant) }
-        let(:line_item) { double(:line_item, variant: variant, order: order) }
+        let(:line_item) { double(:line_item, variant:, order:) }
 
         before do
           allow(incoming_exchange).to receive(:enterprise_fees) {
@@ -296,7 +296,7 @@ module OpenFoodNetwork
 
         context "with order_cycle and distributor set" do
           let(:efc) { EnterpriseFeeCalculator.new(distributor, oc) }
-          let(:order) { double(:order, distributor: distributor, order_cycle: oc) }
+          let(:order) { double(:order, distributor:, order_cycle: oc) }
 
           it "creates an adjustment for each fee" do
             expect(efc).to receive(:per_item_enterprise_fee_applicators_for).with(variant) {
@@ -341,7 +341,7 @@ module OpenFoodNetwork
 
         context "with order_cycle and distributor set" do
           let(:efc) { EnterpriseFeeCalculator.new(distributor, oc) }
-          let(:order) { double(:order, distributor: distributor, order_cycle: oc) }
+          let(:order) { double(:order, distributor:, order_cycle: oc) }
 
           it "creates an adjustment for each fee" do
             expect(efc).to receive(:per_order_enterprise_fee_applicators_for).with(order) {

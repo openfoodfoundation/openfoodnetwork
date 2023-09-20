@@ -18,7 +18,7 @@ module OpenFoodNetwork
                               enterprise_fee_ids: [1, 2],
                               receival_instructions: 'receival instructions' }
 
-        oc = double(:order_cycle, coordinator_id: coordinator_id, exchanges: [],
+        oc = double(:order_cycle, coordinator_id:, exchanges: [],
                                   incoming_exchanges: [incoming_exchange], outgoing_exchanges: [])
 
         applicator = OrderCycleFormApplicator.new(oc, user)
@@ -46,7 +46,7 @@ module OpenFoodNetwork
                               enterprise_fee_ids: [1, 2], pickup_time: 'pickup time',
                               pickup_instructions: 'pickup instructions', tag_list: 'wholesale' }
 
-        oc = double(:order_cycle, coordinator_id: coordinator_id, exchanges: [],
+        oc = double(:order_cycle, coordinator_id:, exchanges: [],
                                   incoming_exchanges: [], outgoing_exchanges: [outgoing_exchange])
 
         applicator = OrderCycleFormApplicator.new(oc, user)
@@ -77,7 +77,7 @@ module OpenFoodNetwork
                               receival_instructions: 'receival instructions' }
 
         oc = double(:order_cycle,
-                    coordinator_id: coordinator_id,
+                    coordinator_id:,
                     exchanges: [double(:exchange, sender_id: supplier_id,
                                                   receiver_id: coordinator_id, incoming: true)],
                     incoming_exchanges: [incoming_exchange],
@@ -109,7 +109,7 @@ module OpenFoodNetwork
                               pickup_instructions: 'pickup instructions', tag_list: 'wholesale' }
 
         oc = double(:order_cycle,
-                    coordinator_id: coordinator_id,
+                    coordinator_id:,
                     exchanges: [double(:exchange, sender_id: coordinator_id,
                                                   receiver_id: distributor_id, incoming: false)],
                     incoming_exchanges: [],
@@ -141,7 +141,7 @@ module OpenFoodNetwork
                                        incoming: true)
 
           oc = double(:order_cycle,
-                      coordinator_id: coordinator_id,
+                      coordinator_id:,
                       exchanges: [exchange],
                       incoming_exchanges: [],
                       outgoing_exchanges: [])
@@ -427,7 +427,7 @@ module OpenFoodNetwork
         let!(:enterprise_fee3) { create(:enterprise_fee) }
 
         let!(:exchange) {
-          create(:exchange, order_cycle: oc, sender: sender, receiver: receiver, incoming: incoming,
+          create(:exchange, order_cycle: oc, sender:, receiver:, incoming:,
                             variant_ids: [variant1.id, variant2.id],
                             enterprise_fee_ids: [enterprise_fee1.id, enterprise_fee2.id])
         }
@@ -527,8 +527,8 @@ module OpenFoodNetwork
         oc = FactoryBot.create(:simple_order_cycle)
         applicator = OrderCycleFormApplicator.new(oc, user)
         incoming = true
-        exchange = FactoryBot.create(:exchange, order_cycle: oc, sender: sender,
-                                                receiver: receiver, incoming: incoming)
+        exchange = FactoryBot.create(:exchange, order_cycle: oc, sender:,
+                                                receiver:, incoming:)
         variant1 = FactoryBot.create(:variant)
 
         applicator.send(:touched_exchanges=, [])
