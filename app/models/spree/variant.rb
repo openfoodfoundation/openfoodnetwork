@@ -81,8 +81,8 @@ module Spree
     before_validation :ensure_shipping_category
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
+    before_validation :convert_variant_weight_to_decimal
 
-    before_save :convert_variant_weight_to_decimal
     before_save :assign_units, if: ->(variant) {
       variant.new_record? || variant.changed_attributes.keys.intersection(NAME_FIELDS).any?
     }
