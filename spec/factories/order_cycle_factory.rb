@@ -16,14 +16,14 @@ FactoryBot.define do
     after(:create) do |_oc, proxy|
       proxy.exchanges.incoming.each do |exchange|
         ExchangeFee.create!(
-          exchange: exchange,
+          exchange:,
           enterprise_fee: create(:enterprise_fee, enterprise: exchange.sender)
         )
       end
 
       proxy.exchanges.outgoing.each do |exchange|
         ExchangeFee.create!(
-          exchange: exchange,
+          exchange:,
           enterprise_fee: create(:enterprise_fee, enterprise: exchange.receiver)
         )
       end
@@ -52,7 +52,7 @@ FactoryBot.define do
   factory :order_cycle_with_overrides, parent: :order_cycle do
     after(:create) do |oc|
       oc.variants.each do |variant|
-        create(:variant_override, variant: variant,
+        create(:variant_override, variant:,
                                   hub: oc.distributors.first,
                                   price: variant.price + 100)
       end

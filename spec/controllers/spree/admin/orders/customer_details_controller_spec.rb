@@ -16,7 +16,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
           :order_with_totals_and_distribution,
           state: 'cart',
           shipments: [shipment],
-          distributor: distributor,
+          distributor:,
           user: nil,
           email: nil,
           bill_address: nil,

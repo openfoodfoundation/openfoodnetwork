@@ -26,8 +26,8 @@ describe WebhookDeliveryJob do
       expected_body = {
         id: /.+/,
         at: Time.zone.now.to_s,
-        event: event,
-        data: data,
+        event:,
+        data:,
       }
 
       subject.perform_now

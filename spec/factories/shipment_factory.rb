@@ -39,7 +39,7 @@ FactoryBot.define do
       end
 
       shipping_rates {
-        [Spree::ShippingRate.create(shipping_method: shipping_method, selected: true)]
+        [Spree::ShippingRate.create(shipping_method:, selected: true)]
       }
 
       after(:create) do |shipment, _evaluator|

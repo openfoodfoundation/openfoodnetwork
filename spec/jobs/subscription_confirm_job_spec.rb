@@ -16,9 +16,9 @@ describe SubscriptionConfirmJob do
                                   updated_at: 1.day.ago)
     }
     let(:schedule) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
-    let(:subscription) { create(:subscription, with_items: true, shop: shop, schedule: schedule) }
+    let(:subscription) { create(:subscription, with_items: true, shop:, schedule:) }
     let!(:proxy_order) do
-      create(:proxy_order, subscription: subscription, order_cycle: order_cycle1,
+      create(:proxy_order, subscription:, order_cycle: order_cycle1,
                            placed_at: 5.minutes.ago)
     end
     let!(:order) { proxy_order.initialise_order! }
@@ -135,7 +135,7 @@ describe SubscriptionConfirmJob do
     let(:order_cycle1) { create(:simple_order_cycle, coordinator: shop) }
     let(:order_cycle2) { create(:simple_order_cycle, coordinator: shop) }
     let(:schedule1) { create(:schedule, order_cycles: [order_cycle1, order_cycle2]) }
-    let(:subscription1) { create(:subscription, shop: shop, schedule: schedule1, with_items: true) }
+    let(:subscription1) { create(:subscription, shop:, schedule: schedule1, with_items: true) }
     let(:proxy_order) { create(:proxy_order, subscription: subscription1) }
     let(:order) { proxy_order.initialise_order! }
 

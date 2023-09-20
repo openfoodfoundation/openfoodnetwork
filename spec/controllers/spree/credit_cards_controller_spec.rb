@@ -80,7 +80,7 @@ describe Spree::CreditCardsController, type: :controller do
           exp_month: 12,
           exp_year: Time.now.year.next,
           last4: 4242,
-          token: token,
+          token:,
           cc_type: "visa"
         }
       end

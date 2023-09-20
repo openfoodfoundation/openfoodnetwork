@@ -18,7 +18,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           originator_type: "Spree::PaymentMethod",
           label: "invalid adjustment",
           eligible: false,
-          order: order,
+          order:,
           amount: 0
         )
 
@@ -81,8 +81,8 @@ describe Spree::Admin::OrdersController, type: :controller do
         }
         let!(:order) do
           order = create(:completed_order_with_totals, line_items_count: 2,
-                                                       distributor: distributor,
-                                                       order_cycle: order_cycle)
+                                                       distributor:,
+                                                       order_cycle:)
           order.reload.line_items.first.update(variant_id: variant1.id)
           order.line_items.last.update(variant_id: variant2.id)
           break unless order.next! while !order.completed?
@@ -147,7 +147,7 @@ describe Spree::Admin::OrdersController, type: :controller do
           let(:zone) { create(:zone_with_member) }
           let(:tax_included) { true }
           let(:tax_rate) {
-            create(:tax_rate, amount: 0.25, included_in_price: tax_included, zone: zone)
+            create(:tax_rate, amount: 0.25, included_in_price: tax_included, zone:)
           }
           let!(:enterprise_fee) {
             create(:enterprise_fee, tax_category: tax_rate.tax_category, amount: 1)
@@ -187,7 +187,7 @@ describe Spree::Admin::OrdersController, type: :controller do
             context "when the order has legacy taxes" do
               let(:legacy_tax_adjustment) {
                 create(:adjustment, amount: 0.5, included: false, originator: tax_rate,
-                                    order: order, adjustable: order, state: "closed")
+                                    order:, adjustable: order, state: "closed")
               }
 
               before do

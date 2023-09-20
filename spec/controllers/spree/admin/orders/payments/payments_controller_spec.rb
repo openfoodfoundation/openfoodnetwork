@@ -6,7 +6,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }
   let!(:order) { create(:order, distributor: shop, state: 'complete') }
-  let!(:line_item) { create(:line_item, order: order, price: 5.0) }
+  let!(:line_item) { create(:line_item, order:, price: 5.0) }
 
   before do
     allow(controller).to receive(:spree_current_user) { user }
@@ -106,7 +106,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
               year: "2100"
             }
 
-            spree_post :create, payment: params.merge({ source_attributes: source_attributes }),
+            spree_post :create, payment: params.merge({ source_attributes: }),
                                 order_id: order.number
 
             payment = order.reload.payments.last
@@ -149,7 +149,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
     end
     let(:order) { create(:order, state: 'complete') }
     let(:payment) do
-      create(:payment, order: order, payment_method: payment_method, amount: order.total)
+      create(:payment, order:, payment_method:, amount: order.total)
     end
 
     let(:successful_response) { ActiveMerchant::Billing::Response.new(true, "Yay!") }
@@ -275,7 +275,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       end
       let!(:order) { create(:order, state: 'canceled') }
       let!(:payment) do
-        create(:payment, order: order, payment_method: payment_method, amount: order.total)
+        create(:payment, order:, payment_method:, amount: order.total)
       end
 
       it "renders the payments tab" do

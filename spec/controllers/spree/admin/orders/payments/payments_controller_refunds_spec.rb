@@ -9,7 +9,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
   let!(:shop) { create(:enterprise) }
   let!(:user) { shop.owner }
   let!(:order) { create(:completed_order_with_totals, distributor: shop) }
-  let!(:line_item) { create(:line_item, order: order, price: 5.0) }
+  let!(:line_item) { create(:line_item, order:, price: 5.0) }
 
   before do
     allow(controller).to receive(:spree_current_user) { user }
@@ -26,7 +26,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [shop]) }
         let!(:payment) do
-          create(:payment, :completed, order: order, payment_method: payment_method,
+          create(:payment, :completed, order:, payment_method:,
                                        response_code: 'pi_123', amount: order.total)
         end
         let(:stripe_account) { create(:stripe_account, enterprise: shop) }
@@ -136,7 +136,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       context "that was processed by stripe" do
         let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [shop]) }
         let!(:payment) do
-          create(:payment, :completed, order: order, payment_method: payment_method,
+          create(:payment, :completed, order:, payment_method:,
                                        response_code: 'pi_123', amount: order.total + 5)
         end
 

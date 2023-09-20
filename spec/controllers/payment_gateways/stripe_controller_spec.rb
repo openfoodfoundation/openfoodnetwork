@@ -8,7 +8,7 @@ module PaymentGateways
 
     let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
     let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
-    let!(:order) { create(:order_with_totals, distributor: distributor, order_cycle: order_cycle) }
+    let!(:order) { create(:order_with_totals, distributor:, order_cycle:) }
     let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
 
     let(:order_cycle_distributed_variants) { instance_double(OrderCycleDistributedVariants) }
@@ -27,7 +27,7 @@ module PaymentGateways
             :payment,
             amount: order.total,
             state: "requires_authorization",
-            payment_method: payment_method,
+            payment_method:,
             response_code: "pi_123"
           )
         }
@@ -35,7 +35,7 @@ module PaymentGateways
         before do
           Stripe.api_key = "sk_test_12345"
           stub_payment_intent_get_request
-          stub_successful_capture_request(order: order)
+          stub_successful_capture_request(order:)
 
           allow(controller).to receive(:spree_current_user).and_return(user)
           user.bill_address = create(:address)
@@ -155,9 +155,9 @@ please check the details you entered"
         end
 
         context "handling pending payments" do
-          let!(:payment) { create(:payment, state: "pending", amount: order.total, order: order) }
+          let!(:payment) { create(:payment, state: "pending", amount: order.total, order:) }
           let!(:transaction_fee) {
-            create(:adjustment, state: "open", amount: 10, order: order, adjustable: payment)
+            create(:adjustment, state: "open", amount: 10, order:, adjustable: payment)
           }
 
           before do
@@ -191,17 +191,17 @@ completed due to stock issues."
     describe "#authorize" do
       let(:customer) { create(:customer) }
       let(:order) {
-        create(:order_with_totals, customer: customer, distributor: customer.enterprise,
+        create(:order_with_totals, customer:, distributor: customer.enterprise,
                                    state: "payment")
       }
       let(:payment_method) { create(:stripe_sca_payment_method) }
       let!(:payment) {
         create(
           :payment,
-          payment_method: payment_method,
+          payment_method:,
           cvv_response_message: "https://stripe.com/redirect",
           response_code: "pi_123",
-          order: order,
+          order:,
           state: "requires_authorization"
         )
       }
@@ -230,7 +230,7 @@ completed due to stock issues."
                 payment.complete!
               end
 
-              get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
+              get :authorize, params: { order_number: order.number, payment_intent: }
 
               expect(response).to redirect_to order_path(order)
               payment.reload
@@ -243,7 +243,7 @@ completed due to stock issues."
                 payment.complete!
               end
 
-              get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
+              get :authorize, params: { order_number: order.number, payment_intent: }
 
               expect(order.reload.state).to eq "complete"
             end
@@ -259,7 +259,7 @@ completed due to stock issues."
                 payment.complete!
               end
 
-              get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
+              get :authorize, params: { order_number: order.number, payment_intent: }
 
               expect(response).to redirect_to order_path(order)
               payment.reload
@@ -274,7 +274,7 @@ completed due to stock issues."
                 payment.complete!
               end
 
-              get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
+              get :authorize, params: { order_number: order.number, payment_intent: }
 
               expect(response).to redirect_to order_path(order)
               payment.reload
@@ -293,7 +293,7 @@ completed due to stock issues."
           end
 
           it "does not complete the payment" do
-            get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
+            get :authorize, params: { order_number: order.number, payment_intent: }
 
             expect(response).to redirect_to order_path(order)
             expect(flash[:error]).to eq("The payment could not be processed. error message")
@@ -316,7 +316,7 @@ completed due to stock issues."
           end
 
           it "does not complete the payment" do
-            get :authorize, params: { order_number: order.number, payment_intent: payment_intent }
+            get :authorize, params: { order_number: order.number, payment_intent: }
 
             expect(response).to redirect_to order_path(order)
             expect(flash[:error]).to eq("The payment could not be processed. ")

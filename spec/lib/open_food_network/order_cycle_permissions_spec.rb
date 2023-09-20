@@ -9,7 +9,7 @@ module OpenFoodNetwork
     let(:hub) { create(:distributor_enterprise) }
     let(:producer) { create(:supplier_enterprise) }
     let(:user) { double(:user) }
-    let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
+    let(:oc) { create(:simple_order_cycle, coordinator:) }
     let(:permissions) { OrderCyclePermissions.new(user, oc) }
 
     describe "finding enterprises that can be viewed in the order cycle interface" do
@@ -424,7 +424,7 @@ module OpenFoodNetwork
           context "where my hub's outgoing exchange contains variants of a producer " \
                   "I don't manage and has not given my hub P-OC" do
             let!(:product) { create(:product, supplier: producer) }
-            let!(:variant) { create(:variant, product: product) }
+            let!(:variant) { create(:variant, product:) }
             let!(:ex_out) {
               create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: true)
             }
@@ -485,7 +485,7 @@ module OpenFoodNetwork
         describe "legacy compatability" do
           context "where an outgoing exchange contains variants of a producer I manage" do
             let!(:product) { create(:product, supplier: producer) }
-            let!(:variant) { create(:variant, product: product) }
+            let!(:variant) { create(:variant, product:) }
             before { ex_out.variants << variant }
 
             context "where my producer supplies to the order cycle" do
