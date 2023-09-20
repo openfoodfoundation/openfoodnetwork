@@ -10,9 +10,9 @@ describe Admin::VariantOverridesController, type: :controller do
       let(:hub) { create(:distributor_enterprise) }
       let(:variant) { create(:variant) }
       let!(:inventory_item) {
-        create(:inventory_item, enterprise: hub, variant: variant, visible: true)
+        create(:inventory_item, enterprise: hub, variant:, visible: true)
       }
-      let!(:variant_override) { create(:variant_override, hub: hub, variant: variant) }
+      let!(:variant_override) { create(:variant_override, hub:, variant:) }
       let(:variant_override_params) {
         [{ id: variant_override.id, price: 123.45, count_on_hand: 321, sku: "MySKU",
            on_demand: false }]
@@ -43,7 +43,7 @@ describe Admin::VariantOverridesController, type: :controller do
           end
 
           it 'only authorizes the updated variant overrides' do
-            other_variant_override = create(:variant_override, hub: hub, variant: create(:variant))
+            other_variant_override = create(:variant_override, hub:, variant: create(:variant))
             expect(controller).not_to receive(:authorize!).with(:update, other_variant_override)
 
             put :bulk_update, as: format, params: { variant_overrides: variant_override_params }
@@ -89,7 +89,7 @@ describe Admin::VariantOverridesController, type: :controller do
           context "and there is a variant override for a deleted variant" do
             let(:deleted_variant) { create(:variant) }
             let!(:variant_override_of_deleted_variant) {
-              create(:variant_override, hub: hub, variant: deleted_variant)
+              create(:variant_override, hub:, variant: deleted_variant)
             }
 
             before { deleted_variant.update_attribute :deleted_at, Time.zone.now }
@@ -114,18 +114,18 @@ describe Admin::VariantOverridesController, type: :controller do
       let(:hub) { create(:distributor_enterprise) }
       let(:producer) { create(:supplier_enterprise) }
       let(:product) { create(:product, supplier: producer) }
-      let(:variant1) { create(:variant, product: product) }
-      let(:variant2) { create(:variant, product: product) }
+      let(:variant1) { create(:variant, product:) }
+      let(:variant2) { create(:variant, product:) }
       let!(:variant_override1) {
-        create(:variant_override, hub: hub, variant: variant1, count_on_hand: 5, default_stock: 7,
+        create(:variant_override, hub:, variant: variant1, count_on_hand: 5, default_stock: 7,
                                   resettable: true)
       }
       let!(:variant_override2) {
-        create(:variant_override, hub: hub, variant: variant2, count_on_hand: 2, default_stock: 1,
+        create(:variant_override, hub:, variant: variant2, count_on_hand: 2, default_stock: 1,
                                   resettable: false)
       }
 
-      let(:params) { { format: format, hub_id: hub.id } }
+      let(:params) { { format:, hub_id: hub.id } }
 
       context "where I don't manage the variant override hub" do
         before do
@@ -135,7 +135,7 @@ describe Admin::VariantOverridesController, type: :controller do
         end
 
         it "redirects to unauthorized" do
-          put :bulk_reset, params: params
+          put(:bulk_reset, params:)
           expect(response).to redirect_to unauthorized_path
         end
       end
@@ -148,7 +148,7 @@ describe Admin::VariantOverridesController, type: :controller do
         context "where the producer has not granted create_variant_overrides permission " \
                 "to the hub" do
           it "restricts access" do
-            put :bulk_reset, params: params
+            put(:bulk_reset, params:)
             expect(response).to redirect_to unauthorized_path
           end
         end
@@ -160,7 +160,7 @@ describe Admin::VariantOverridesController, type: :controller do
           }
 
           it "loads data" do
-            put :bulk_reset, params: params
+            put(:bulk_reset, params:)
             expect(assigns[:hubs]).to eq [hub]
             expect(assigns[:producers]).to eq [producer]
             expect(assigns[:hub_permissions]).to eq Hash[hub.id, [producer.id]]
@@ -170,7 +170,7 @@ describe Admin::VariantOverridesController, type: :controller do
           it "updates stock to default values where reset is enabled" do
             expect(variant_override1.reload.count_on_hand).to eq 5 # reset enabled
             expect(variant_override2.reload.count_on_hand).to eq 2 # reset disabled
-            put :bulk_reset, params: params
+            put(:bulk_reset, params:)
             expect(variant_override1.reload.count_on_hand).to eq 7 # reset enabled
             expect(variant_override2.reload.count_on_hand).to eq 2 # reset disabled
           end
@@ -180,7 +180,7 @@ describe Admin::VariantOverridesController, type: :controller do
             before { hub.owner.update_attribute(:enterprise_limit, 2) }
             let(:hub2) { create(:distributor_enterprise, owner: hub.owner) }
             let(:product) { create(:product, supplier: producer) }
-            let(:variant3) { create(:variant, product: product) }
+            let(:variant3) { create(:variant, product:) }
             let!(:variant_override3) {
               create(:variant_override, hub: hub2, variant: variant3, count_on_hand: 1,
                                         default_stock: 13, resettable: true)
@@ -192,7 +192,7 @@ describe Admin::VariantOverridesController, type: :controller do
 
             it "does not reset count_on_hand for variant_overrides not in params" do
               expect {
-                put :bulk_reset, params: params
+                put :bulk_reset, params:
               }.to_not change{ variant_override3.reload.count_on_hand }
             end
           end

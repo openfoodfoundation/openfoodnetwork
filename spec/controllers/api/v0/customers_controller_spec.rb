@@ -27,7 +27,7 @@ module Api
     end
 
     describe "#update" do
-      let(:customer) { create(:customer, user: user) }
+      let(:customer) { create(:customer, user:) }
       let(:params) { { format: :json, id: customer.id, customer: { code: '123' } } }
 
       context "as a user who is not associated with the customer" do

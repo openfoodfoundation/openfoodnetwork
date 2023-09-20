@@ -20,7 +20,7 @@ describe Admin::MatomoSettingsController, type: :controller do
 
     it "changes Matomo settings" do
       expect {
-        post :update, params: params
+        post :update, params:
       }.to change {
         [
           Spree::Config[:matomo_url],

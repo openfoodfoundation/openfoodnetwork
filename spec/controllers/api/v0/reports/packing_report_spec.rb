@@ -21,7 +21,7 @@ describe Api::V0::ReportsController, type: :controller do
   describe "packing report" do
     context "as an enterprise user with full order permissions (distributor)" do
       let!(:distributor) { create(:distributor_enterprise) }
-      let!(:order) { create(:completed_order_with_totals, distributor: distributor) }
+      let!(:order) { create(:completed_order_with_totals, distributor:) }
       let(:current_user) { distributor.owner }
 
       it "renders results" do

@@ -31,7 +31,7 @@ describe BaseController, type: :controller do
     end
 
     it "uses the last incomplete order" do
-      last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
+      last_cart = create(:order, user:, created_by: user, state: "cart", completed_at: nil)
       allow(controller).to receive(:spree_current_user).and_return(user)
 
       expect {
@@ -46,12 +46,12 @@ describe BaseController, type: :controller do
       # And we used to override that logic to delete old incomplete orders.
       # Now we are checking here that none of that is happening.
 
-      last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
+      last_cart = create(:order, user:, created_by: user, state: "cart", completed_at: nil)
       last_cart.line_items << create(:line_item)
 
       current_cart = create(
         :order,
-        user: user,
+        user:,
         created_by: user,
         state: "cart",
         completed_at: nil,
@@ -69,12 +69,12 @@ describe BaseController, type: :controller do
     end
 
     it "doesn't recover old orders after checkout, a new empty one is created" do
-      last_cart = create(:order, user: user, created_by: user, state: "cart", completed_at: nil)
+      last_cart = create(:order, user:, created_by: user, state: "cart", completed_at: nil)
       last_cart.line_items << create(:line_item)
 
       just_completed_order = create(
         :order,
-        user: user,
+        user:,
         created_by: user,
         state: "complete",
         completed_at: Time.zone.now,

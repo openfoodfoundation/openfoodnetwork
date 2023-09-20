@@ -246,7 +246,7 @@ describe Admin::EnterprisesController, type: :controller do
 
       describe "tag rules" do
         let(:enterprise) { create(:distributor_enterprise) }
-        let!(:tag_rule) { create(:filter_order_cycles_tag_rule, enterprise: enterprise) }
+        let!(:tag_rule) { create(:filter_order_cycles_tag_rule, enterprise:) }
 
         before do
           controller_login_as_enterprise_user [enterprise]

@@ -75,7 +75,7 @@ describe Api::V0::ShipmentsController, type: :controller do
         hub = create(:distributor_enterprise)
         order.update_attribute(:distributor, hub)
         shipment.shipping_method.distributors << hub
-        variant_override = create(:variant_override, hub: hub, variant: variant)
+        variant_override = create(:variant_override, hub:, variant:)
 
         spree_post :create, params
 
@@ -202,7 +202,7 @@ describe Api::V0::ShipmentsController, type: :controller do
         }
         let!(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
         let!(:order) {
-          create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor)
+          create(:completed_order_with_totals, order_cycle:, distributor:)
         }
         let(:shipping_fee) { order.reload.shipment.adjustments.first }
 
@@ -240,7 +240,7 @@ describe Api::V0::ShipmentsController, type: :controller do
       }
       let!(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
       let!(:order) {
-        create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor)
+        create(:completed_order_with_totals, order_cycle:, distributor:)
       }
       let(:new_shipping_rate) {
         order.shipment.shipping_rates.select{ |sr| sr.shipping_method == shipping_method2 }.first
@@ -341,7 +341,7 @@ describe Api::V0::ShipmentsController, type: :controller do
         it 'adds a variant override to the shipment' do
           hub = create(:distributor_enterprise)
           order.update_attribute(:distributor, hub)
-          variant_override = create(:variant_override, hub: hub, variant: variant)
+          variant_override = create(:variant_override, hub:, variant:)
 
           spree_put :add, params
 

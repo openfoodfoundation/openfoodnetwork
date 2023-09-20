@@ -22,7 +22,7 @@ module Api
     let!(:product3) { create(:product, primary_taxon: taxon2) }
     let!(:product4) { create(:product, primary_taxon: taxon3, properties: [property3]) }
     let!(:user) { create(:user) }
-    let(:customer) { create(:customer, user: user, enterprise: distributor) }
+    let(:customer) { create(:customer, user:, enterprise: distributor) }
 
     before do
       exchange.variants << product1.variants.first
@@ -95,9 +95,9 @@ module Api
           let!(:supplier) { create(:supplier_enterprise, properties: [supplier_property]) }
 
           before do
-            product1.update!(supplier: supplier)
-            product2.update!(supplier: supplier)
-            product3.update!(supplier: supplier, inherits_properties: false)
+            product1.update!(supplier:)
+            product2.update!(supplier:)
+            product3.update!(supplier:, inherits_properties: false)
           end
 
           it "filter out the product that don't inherits from supplier properties" do
@@ -248,16 +248,16 @@ module Api
     context "with custom taxon ordering applied and duplicate product names in the order cycle" do
       let!(:supplier) { create(:supplier_enterprise) }
       let!(:product5) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier: supplier)
+        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier:)
       }
       let!(:product6) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier: supplier)
+        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier:)
       }
       let!(:product7) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier: supplier)
+        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier:)
       }
       let!(:product8) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier: supplier)
+        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier:)
       }
 
       before do

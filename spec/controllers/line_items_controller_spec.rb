@@ -9,8 +9,8 @@ describe LineItemsController, type: :controller do
 
   context "listing bought items" do
     let!(:completed_order) do
-      order = create(:completed_order_with_totals, user: user, distributor: distributor,
-                                                   order_cycle: order_cycle, line_items_count: 1)
+      order = create(:completed_order_with_totals, user:, distributor:,
+                                                   order_cycle:, line_items_count: 1)
       break unless order.next! while !order.completed?
       order
     end
@@ -34,7 +34,7 @@ describe LineItemsController, type: :controller do
     context "on a completed order" do
       let(:item) do
         order = create(:completed_order_with_totals)
-        item = create(:line_item, order: order)
+        item = create(:line_item, order:)
         break unless order.next! while !order.completed?
         item
       end
@@ -52,7 +52,7 @@ describe LineItemsController, type: :controller do
 
         context "where the item's order is not associated with the user" do
           it "denies deletion" do
-            delete :destroy, params: params
+            delete(:destroy, params:)
             expect(response.status).to eq 403
           end
         end
@@ -65,7 +65,7 @@ describe LineItemsController, type: :controller do
 
           context "without an order cycle or distributor" do
             it "denies deletion" do
-              delete :destroy, params: params
+              delete(:destroy, params:)
               expect(response.status).to eq 403
             end
           end
@@ -75,7 +75,7 @@ describe LineItemsController, type: :controller do
 
             context "where changes are not allowed" do
               it "denies deletion" do
-                delete :destroy, params: params
+                delete(:destroy, params:)
                 expect(response.status).to eq 403
               end
             end
@@ -84,20 +84,20 @@ describe LineItemsController, type: :controller do
               before { distributor.update!(allow_order_changes: true) }
 
               it "deletes the line item" do
-                delete :destroy, params: params
+                delete(:destroy, params:)
                 expect(response.status).to eq 204
                 expect { item.reload }.to raise_error ActiveRecord::RecordNotFound
               end
 
               context "after a payment is captured" do
                 let(:payment) {
-                  create(:check_payment, :completed, amount: order.total, order: order)
+                  create(:check_payment, :completed, amount: order.total, order:)
                 }
                 before { payment.capture! }
 
                 it 'updates the payment state' do
                   expect(order.payment_state).to eq 'paid'
-                  delete :destroy, params: params
+                  delete(:destroy, params:)
                   order.reload
                   expect(order.payment_state).to eq 'credit_owed'
                 end
@@ -114,7 +114,7 @@ describe LineItemsController, type: :controller do
         create(:tax_rate, included_in_price: true,
                           calculator: Calculator::DefaultTax.new,
                           amount: 0.25,
-                          zone: zone)
+                          zone:)
       end
       let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
       let(:shipping_fee) { 3 }
@@ -122,8 +122,8 @@ describe LineItemsController, type: :controller do
       let(:distributor_with_taxes) { create(:distributor_enterprise_with_tax) }
       let(:order) {
         create(:completed_order_with_fees, distributor: distributor_with_taxes,
-                                           shipping_fee: shipping_fee, payment_fee: payment_fee,
-                                           shipping_tax_category: shipping_tax_category)
+                                           shipping_fee:, payment_fee:,
+                                           shipping_tax_category:)
       }
 
       before do
@@ -166,15 +166,15 @@ describe LineItemsController, type: :controller do
         Calculator::PriceSack.new(preferred_minimal_amount: 15, preferred_normal_amount: 22,
                                   preferred_discount_amount: 11)
       }
-      let(:enterprise_fee) { create(:enterprise_fee, calculator: calculator) }
+      let(:enterprise_fee) { create(:enterprise_fee, calculator:) }
       let!(:exchange) {
         create(:exchange, incoming: true, sender: variant1.product.supplier,
                           receiver: order_cycle.coordinator, variants: [variant1, variant2],
                           enterprise_fees: [enterprise_fee])
       }
       let!(:order) do
-        order = create(:completed_order_with_totals, user: user, distributor: distributor,
-                                                     order_cycle: order_cycle, line_items_count: 2)
+        order = create(:completed_order_with_totals, user:, distributor:,
+                                                     order_cycle:, line_items_count: 2)
         order.reload.line_items.first.update(variant_id: variant1.id)
         order.line_items.last.update(variant_id: variant2.id)
         break unless order.next! while !order.completed?
@@ -187,7 +187,7 @@ describe LineItemsController, type: :controller do
         expect(order.reload.adjustment_total).to eq calculator.preferred_discount_amount
 
         allow(controller).to receive_messages spree_current_user: user
-        delete :destroy, params: params
+        delete(:destroy, params:)
         expect(response.status).to eq 204
 
         expect(order.reload.adjustment_total).to eq calculator.preferred_normal_amount

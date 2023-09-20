@@ -46,7 +46,7 @@ module Admin
             let(:q) { { orders_close_at_gt: 45.days.ago } }
 
             it "loads order cycles closed after specified date, and orders w/o a close_at date" do
-              get :index, as: :json, params: { q: q }
+              get :index, as: :json, params: { q: }
               expect(assigns(:collection)).to_not include oc1
               expect(assigns(:collection)).to include oc2, oc3, oc4
             end
@@ -55,7 +55,7 @@ module Admin
               before { q.merge!(id_not_in: [oc2.id, oc4.id]) }
 
               it "loads order cycles that meet all conditions" do
-                get :index, format: :json, params: { q: q }
+                get :index, format: :json, params: { q: }
                 expect(assigns(:collection)).to_not include oc1, oc2, oc4
                 expect(assigns(:collection)).to include oc3
               end
@@ -221,16 +221,16 @@ module Admin
           let!(:p) { create(:product) }
           let!(:v) { p.variants.first }
           let!(:incoming_exchange) {
-            create(:exchange, order_cycle: order_cycle, sender: producer, receiver: coordinator,
+            create(:exchange, order_cycle:, sender: producer, receiver: coordinator,
                               incoming: true, variants: [v])
           }
           let!(:outgoing_exchange) {
-            create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: coordinator,
+            create(:exchange, order_cycle:, sender: coordinator, receiver: coordinator,
                               incoming: false, variants: [v])
           }
-          let!(:subscription) { create(:subscription, shop: coordinator, schedule: schedule) }
+          let!(:subscription) { create(:subscription, shop: coordinator, schedule:) }
           let!(:subscription_line_item) {
-            create(:subscription_line_item, subscription: subscription, variant: v)
+            create(:subscription_line_item, subscription:, variant: v)
           }
 
           before do
@@ -308,11 +308,11 @@ module Admin
       let(:hub) { create(:distributor_enterprise) }
       let(:v) { create(:variant) }
       let!(:incoming_exchange) {
-        create(:exchange, order_cycle: order_cycle, sender: producer, receiver: coordinator,
+        create(:exchange, order_cycle:, sender: producer, receiver: coordinator,
                           incoming: true, variants: [v])
       }
       let!(:outgoing_exchange) {
-        create(:exchange, order_cycle: order_cycle, sender: coordinator, receiver: hub,
+        create(:exchange, order_cycle:, sender: coordinator, receiver: hub,
                           incoming: false, variants: [v])
       }
 

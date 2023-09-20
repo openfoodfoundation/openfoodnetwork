@@ -11,7 +11,7 @@ describe Admin::SubscriptionLineItemsController, type: :controller do
     let(:unmanaged_shop) { create(:enterprise) }
     let!(:product) { create(:product) }
     let!(:variant) {
-      create(:variant, product: product, unit_value: '100', price: 15.00)
+      create(:variant, product:, unit_value: '100', price: 15.00)
     }
     let!(:outgoing_exchange) {
       order_cycle.exchanges.create(sender: shop, receiver: shop, variants: [variant],

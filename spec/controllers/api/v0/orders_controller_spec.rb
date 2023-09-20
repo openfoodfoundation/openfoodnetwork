@@ -12,7 +12,7 @@ module Api
 
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:coordinator) { create(:distributor_enterprise) }
-    let!(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
+    let!(:order_cycle) { create(:simple_order_cycle, coordinator:) }
 
     describe '#index' do
       let!(:distributor2) { create(:distributor_enterprise) }
@@ -20,18 +20,18 @@ module Api
       let!(:supplier) { create(:supplier_enterprise) }
       let!(:order_cycle2) { create(:simple_order_cycle, coordinator: coordinator2) }
       let!(:order1) do
-        create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor, billing_address: create(:address, lastname: "c"),
+        create(:order, order_cycle:, state: 'complete', completed_at: Time.zone.now,
+                       distributor:, billing_address: create(:address, lastname: "c"),
                        total: 5.0)
       end
       let!(:order2) do
-        create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
+        create(:order, order_cycle:, state: 'complete', completed_at: Time.zone.now,
                        distributor: distributor2, billing_address: create(:address, lastname: "a"),
                        total: 10.0)
       end
       let!(:order3) do
-        create(:order, order_cycle: order_cycle, state: 'complete', completed_at: Time.zone.now,
-                       distributor: distributor, billing_address: create(:address, lastname: "b"),
+        create(:order, order_cycle:, state: 'complete', completed_at: Time.zone.now,
+                       distributor:, billing_address: create(:address, lastname: "b"),
                        total: 1.0 )
       end
       let!(:order4) do
@@ -42,19 +42,19 @@ module Api
       let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
         create(:line_item_with_shipment, order: order1,
-                                         product: create(:product, supplier: supplier))
+                                         product: create(:product, supplier:))
       end
       let!(:line_item2) do
         create(:line_item_with_shipment, order: order2,
-                                         product: create(:product, supplier: supplier))
+                                         product: create(:product, supplier:))
       end
       let!(:line_item3) do
         create(:line_item_with_shipment, order: order2,
-                                         product: create(:product, supplier: supplier))
+                                         product: create(:product, supplier:))
       end
       let!(:line_item4) do
         create(:line_item_with_shipment, order: order3,
-                                         product: create(:product, supplier: supplier))
+                                         product: create(:product, supplier:))
       end
 
       context 'as a regular user' do
@@ -152,8 +152,8 @@ module Api
 
         context "with an order without billing address" do
           let!(:order7) {
-            create(:order_with_line_items, billing_address: nil, order_cycle: order_cycle,
-                                           distributor: distributor)
+            create(:order_with_line_items, billing_address: nil, order_cycle:,
+                                           distributor:)
           }
 
           it 'can show orders without bill address' do
@@ -200,7 +200,7 @@ module Api
 
     describe "#show" do
       let!(:order) {
-        create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor )
+        create(:completed_order_with_totals, order_cycle:, distributor: )
       }
 
       context "Resource not found" do
@@ -253,7 +253,7 @@ module Api
 
       context "as distributor owner" do
         let!(:order) {
-          create(:completed_order_with_fees, order_cycle: order_cycle, distributor: distributor )
+          create(:completed_order_with_fees, order_cycle:, distributor: )
         }
 
         before { allow(controller).to receive(:spree_current_user) { order.distributor.owner } }
@@ -318,13 +318,13 @@ module Api
       }
       let!(:order) {
         create(:order_with_totals_and_distribution,
-               user: user, distributor: distributor, order_cycle: order_cycle,
+               user:, distributor:, order_cycle:,
                state: 'complete', payment_state: 'balance_due')
       }
 
       before do
         order.finalize!
-        order.payments << create(:check_payment, order: order, amount: order.total)
+        order.payments << create(:check_payment, order:, amount: order.total)
         allow(controller).to receive(:spree_current_user) { order.distributor.owner }
       end
 

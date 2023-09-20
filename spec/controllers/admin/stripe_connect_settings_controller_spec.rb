@@ -84,7 +84,7 @@ describe Admin::StripeConnectSettingsController, type: :controller do
       before { allow(controller).to receive(:spree_current_user) { user } }
 
       it "does not allow access" do
-        get :update, params: params
+        get(:update, params:)
         expect(response).to redirect_to unauthorized_path
       end
     end
@@ -97,7 +97,7 @@ describe Admin::StripeConnectSettingsController, type: :controller do
 
       it "sets global config to the specified values" do
         expect(Spree::Config.stripe_connect_enabled).to be true
-        get :update, params: params
+        get(:update, params:)
         expect(Spree::Config.stripe_connect_enabled).to be false
       end
     end
