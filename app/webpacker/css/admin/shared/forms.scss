@@ -97,21 +97,21 @@ span.info {
     }
   }
 
-  &.withError {
-    .field_with_errors {
-      label {
-        color: $color-error;
-      }
-
-      input {
-        border-color: $color-error;
-      }
-    }
-    .formError {
+  // Errors described by default form builder
+  .field_with_errors {
+    label {
       color: $color-error;
-      font-style: italic;
-      font-size: 85%;
     }
+
+    input {
+      border-color: $color-error;
+    }
+  }
+  // Errors described by Spree::Admin::BaseHelper
+  .formError {
+    color: $color-error;
+    font-style: italic;
+    font-size: 85%;
   }
 }
 
