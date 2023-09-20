@@ -56,22 +56,14 @@ describe Sets::ProductSet do
             }
           end
 
-          it 'updates the product' do
-            product_set.save
+          it 'updates the product without error' do
+            expect(product_set.save).to eq true
 
             expect(product.reload.attributes).to include(
               'variant_unit' => 'weight'
             )
-          end
 
-          it 'does not add an error' do
-            product_set.save
-            expect(product_set.errors)
-              .to be_empty
-          end
-
-          it 'returns true' do
-            expect(product_set.save).to eq(true)
+            expect(product_set.errors).to be_empty
           end
         end
 
