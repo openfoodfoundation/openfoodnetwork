@@ -43,11 +43,9 @@ export default class BulkFormController extends Controller {
 
   toggleFormModified() {
     // For each record, check if any fields are modified
-    const modifiedRecordCount = Object.keys(this.recordElements).filter((recordId) => {
-      return this.recordElements[recordId].some((element) => {
-        return element.value != element.defaultValue;
-      });
-    }).length;
+    const modifiedRecordCount = Object.values(this.recordElements).filter((elements) =>
+      elements.some((element) => element.value != element.defaultValue)
+    ).length;
     const formModified = modifiedRecordCount > 0;
 
     // Show actions
