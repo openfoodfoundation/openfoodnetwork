@@ -41,8 +41,10 @@
             %td.align-left.header
               = product_form.hidden_field :id
               = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
+              = error_message_on product, :name
             %td.align-right
               = product_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
+              = error_message_on product, :sku
             %td.align-right
               .content
                 = product.variant_unit.upcase_first

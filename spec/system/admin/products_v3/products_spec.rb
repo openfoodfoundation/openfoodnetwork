@@ -201,7 +201,7 @@ describe 'As an admin, I can see the new product page' do
       visit admin_products_v3_index_url
     end
 
-    it "can update product and variant fields" do
+    it "updates product and variant fields" do
       within row_containing_name("Apples") do
         fill_in "Name", with: "Pommes"
         fill_in "SKU", with: "POM-00"
@@ -236,7 +236,7 @@ describe 'As an admin, I can see the new product page' do
       expect(page).to have_content "Changes saved"
     end
 
-    it "can discard changes and reload latest data" do
+    it "discards changes and reloads latest data" do
       within row_containing_name("Apples") do
         fill_in "Name", with: "Pommes"
       end
@@ -261,6 +261,28 @@ describe 'As an admin, I can see the new product page' do
         expect(page).to have_field "Name", with: "Apples" # Changed value wasn't saved
         expect(page).to have_field "SKU", with: "APL-10" # Updated value shown
       end
+    end
+
+    it "shows errors for product fields" do
+      within row_containing_name("Apples") do
+        fill_in "Name", with: ""
+        fill_in "SKU", with: "A" * 256
+      end
+
+      expect {
+        click_button "Save changes"
+        product_a.reload
+      }.to_not change { product_a.name }
+
+      # (there's no identifier displayed, so the user must remember which product it is..)
+      within row_containing_name("") do
+        expect(page).to have_field "Name", with: ""
+        expect(page).to have_content "can't be blank"
+        expect(page).to have_field "SKU", with: "A" * 256
+        expect(page).to have_content "is too long"
+      end
+      pending
+      expect(page).to have_content "Please review the errors and try again"
     end
   end
 
