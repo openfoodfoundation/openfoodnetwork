@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
   let!(:distributor) { create(:distributor_enterprise, name: "Apple Market") }
-  let!(:customer) { create(:customer, enterprise: distributor, user: user, code: "JHN") }
+  let!(:customer) { create(:customer, enterprise: distributor, user:, code: "JHN") }
   let(:user) { create(:user, email: "john@example.net") }
   let(:current_user) { distributor.owner }
   let(:params) { { display_summary_row: true, q: search_params } }
@@ -25,8 +25,8 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
         number: "R644360121",
         line_items_count: 1,
         user: customer.user,
-        customer: customer,
-        distributor: distributor,
+        customer:,
+        distributor:,
         completed_at: order_date,
       ).tap do |order|
         order.line_items[0].product.supplier.update(name: "Apple Farmer")
@@ -84,7 +84,7 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
       create(
         :completed_order_with_totals,
         line_items_count: 1, user: customer.user,
-        customer: customer, distributor: distributor,
+        customer:, distributor:,
         completed_at: order_date,
       )
     end
@@ -105,12 +105,12 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
         create(
           :order_ready_to_ship,
           user: customer.user,
-          customer: customer, distributor: distributor,
+          customer:, distributor:,
           completed_at: order_date,
         )
       }
       let(:completed_payment) { order.payments.completed.first }
-      let!(:failed_payment) { create(:payment, order: order, state: "failed") }
+      let!(:failed_payment) { create(:payment, order:, state: "failed") }
 
       before do
         completed_payment.adjustment.update amount: 123.00
@@ -128,7 +128,7 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
       create(
         :completed_order_with_totals,
         line_items_count: 1, user: customer.user,
-        customer: customer, distributor: distributor,
+        customer:, distributor:,
         completed_at: order_date,
       )
     end

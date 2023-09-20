@@ -67,12 +67,12 @@ module Reporting
 
           describe "fetching orders" do
             let(:supplier) { create(:supplier_enterprise) }
-            let(:product) { create(:simple_product, supplier: supplier) }
+            let(:product) { create(:simple_product, supplier:) }
             let(:order) { create(:order, completed_at: 1.day.ago) }
 
             it "only shows orders managed by the current user" do
               d1 = create(:distributor_enterprise)
-              d1.enterprise_roles.create!(user: user)
+              d1.enterprise_roles.create!(user:)
               d2 = create(:distributor_enterprise)
               d2.enterprise_roles.create!(user: create(:user))
 
@@ -85,8 +85,8 @@ module Reporting
 
             it "does not show orders through a hub that the current user does not manage" do
               # Given a supplier enterprise with an order for one of its products
-              supplier.enterprise_roles.create!(user: user)
-              order.line_items << create(:line_item_with_shipment, product: product)
+              supplier.enterprise_roles.create!(user:)
+              order.line_items << create(:line_item_with_shipment, product:)
 
               # When I fetch orders, I should see no orders
               expect(subject).to receive(:filter).with([]).and_return([])
@@ -151,7 +151,7 @@ module Reporting
             subject { Base.new(user, params) }
 
             let(:distributor) { create(:distributor_enterprise) }
-            before { distributor.enterprise_roles.create!(user: user) }
+            before { distributor.enterprise_roles.create!(user:) }
 
             context 'when the report type is payment_methods' do
               subject { PaymentMethods.new(user) }
@@ -159,7 +159,7 @@ module Reporting
               let!(:order) do
                 create(
                   :completed_order_with_totals,
-                  distributor: distributor,
+                  distributor:,
                   completed_at: 1.day.ago
                 )
               end
@@ -186,7 +186,7 @@ module Reporting
               let!(:order) do
                 create(
                   :completed_order_with_totals,
-                  distributor: distributor,
+                  distributor:,
                   completed_at: 1.day.ago
                 )
               end

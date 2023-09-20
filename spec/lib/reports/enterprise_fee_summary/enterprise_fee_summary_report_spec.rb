@@ -30,7 +30,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
   let!(:other_coordinator_fee) { create(:enterprise_fee, :per_item, enterprise: coordinator) }
 
   # Set up other requirements for ordering.
-  let!(:order_cycle) { create(:simple_order_cycle, coordinator: coordinator) }
+  let!(:order_cycle) { create(:simple_order_cycle, coordinator:) }
   let!(:product) { create(:product) }
   let!(:product_tax_category) { create(:tax_category, name: "Sample Product Tax") }
   let!(:variant) { prepare_variant(tax_category: product_tax_category) }
@@ -50,7 +50,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
 
   describe "grouping and sorting of entries" do
     let!(:order_cycle) do
-      create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: order_cycle_fees)
+      create(:simple_order_cycle, coordinator:, coordinator_fees: order_cycle_fees)
     end
 
     let!(:variant) do
@@ -95,9 +95,9 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
     end
     let!(:distributor_tax_category) { create(:tax_category, name: "Sample Distributor Tax") }
 
-    let!(:customer_order) { prepare_order(customer: customer) }
-    let!(:customer_incomplete_order) { prepare_incomplete_order(customer: customer) }
-    let!(:second_customer_order) { prepare_order(customer: customer) }
+    let!(:customer_order) { prepare_order(customer:) }
+    let!(:customer_incomplete_order) { prepare_incomplete_order(customer:) }
+    let!(:second_customer_order) { prepare_order(customer:) }
     let!(:other_customer_order) { prepare_order(customer: another_customer) }
 
     it "doesn't delete params" do
@@ -164,7 +164,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
 
   describe "data exclusions" do
     describe "invalid adjustments (through 'eligible') like failed payments" do
-      let!(:customer_order) { prepare_order(customer: customer) }
+      let!(:customer_order) { prepare_order(customer:) }
 
       before do
         # Make the payment fail. See Spree::Payment#revoke_adjustment_eligibility.
@@ -197,7 +197,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
                                            fee_type: "admin", amount: 0)
       end
 
-      let!(:customer_order) { prepare_order(customer: customer) }
+      let!(:customer_order) { prepare_order(customer:) }
 
       before do
         # Change "eligible" in enterprise fee adjustment to false. $0 adjustments that are not
@@ -231,7 +231,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
         create(:payment_method, :per_item, amount: 0, name: "Sample Payment Method")
       end
 
-      let!(:customer_order) { prepare_order(customer: customer) }
+      let!(:customer_order) { prepare_order(customer:) }
 
       it "is included" do
         totals = subject.query_result
@@ -263,22 +263,22 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
         tax_category = create(:tax_category, name: "Sample Producer Tax")
         create(:enterprise_fee, :per_item, name: "Sample Producer Fee", enterprise: producer,
                                            fee_type: "sales", amount: 64.0,
-                                           tax_category: tax_category)
+                                           tax_category:)
       end
       let!(:coordinator_fee) do
         tax_category = create(:tax_category, name: "Sample Coordinator Tax")
         create(:enterprise_fee, :per_item, name: "Sample Coordinator Fee", enterprise: coordinator,
                                            fee_type: "admin", amount: 512.0,
-                                           tax_category: tax_category)
+                                           tax_category:)
       end
       let!(:distributor_fee) do
         tax_category = create(:tax_category, name: "Sample Distributor Tax")
         create(:enterprise_fee, :per_item, name: "Sample Distributor Fee", enterprise: distributor,
                                            fee_type: "admin", amount: 4.0,
-                                           tax_category: tax_category)
+                                           tax_category:)
       end
 
-      let!(:customer_order) { prepare_order(customer: customer) }
+      let!(:customer_order) { prepare_order(customer:) }
 
       it "fetches data correctly" do
         totals = subject.query_result
@@ -310,13 +310,13 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
       let!(:producer_fee) do
         tax_category = create(:tax_category, name: "Producer Tax A")
         create(:enterprise_fee, :flat_rate, name: "Producer Fee A", enterprise: producer,
-                                            fee_type: "sales", tax_category: tax_category,
+                                            fee_type: "sales", tax_category:,
                                             amount: 10)
       end
       let!(:coordinator_fee) do
         tax_category = create(:tax_category, name: "Coordinator Tax A")
         create(:enterprise_fee, :flat_rate, name: "Coordinator Fee A", enterprise: coordinator,
-                                            fee_type: "admin", tax_category: tax_category,
+                                            fee_type: "admin", tax_category:,
                                             amount: 15)
       end
       let!(:coordinator_fee_inheriting_product_tax_category) do
@@ -344,7 +344,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
       end
 
       let!(:order_cycle) do
-        create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: coordinator_fees)
+        create(:simple_order_cycle, coordinator:, coordinator_fees:)
       end
 
       let!(:variant_incoming_exchange_fees) { [producer_fee, coordinator_fee, distributor_fee] }
@@ -355,7 +355,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
                         outgoing_exchange_fees: variant_outgoing_exchange_fees)
       end
 
-      let!(:customer_order) { prepare_order(customer: customer) }
+      let!(:customer_order) { prepare_order(customer:) }
 
       it "fetches data correctly" do
         totals = subject.query_result
@@ -408,8 +408,8 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
                                       shipping_methods: [shipping_method])
     end
 
-    let!(:order_cycle_a) { create(:simple_order_cycle, coordinator: coordinator) }
-    let!(:order_cycle_b) { create(:simple_order_cycle, coordinator: coordinator) }
+    let!(:order_cycle_a) { create(:simple_order_cycle, coordinator:) }
+    let!(:order_cycle_b) { create(:simple_order_cycle, coordinator:) }
 
     let!(:variant_a) { prepare_variant(distributor: distributor_a, order_cycle: order_cycle_a) }
     let!(:variant_b) { prepare_variant(distributor: distributor_b, order_cycle: order_cycle_b) }
@@ -575,9 +575,9 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
                                         shipping_methods: [shipping_method])
       end
 
-      let!(:order_cycle_a) { create(:simple_order_cycle, coordinator: coordinator) }
-      let!(:order_cycle_b) { create(:simple_order_cycle, coordinator: coordinator) }
-      let!(:order_cycle_c) { create(:simple_order_cycle, coordinator: coordinator) }
+      let!(:order_cycle_a) { create(:simple_order_cycle, coordinator:) }
+      let!(:order_cycle_b) { create(:simple_order_cycle, coordinator:) }
+      let!(:order_cycle_c) { create(:simple_order_cycle, coordinator:) }
 
       let!(:variant_a) { prepare_variant(distributor: distributor_a, order_cycle: order_cycle_a) }
       let!(:variant_b) { prepare_variant(distributor: distributor_b, order_cycle: order_cycle_b) }
@@ -606,7 +606,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
       let!(:variant) { prepare_variant(outgoing_exchange_fees: variant_outgoing_exchange_fees) }
       let!(:variant_outgoing_exchange_fees) { [fee_a, fee_b, fee_c] }
 
-      let!(:order) { prepare_order(variant: variant) }
+      let!(:order) { prepare_order(variant:) }
 
       let(:parameters_attributes) { { enterprise_fee_ids: [fee_a.id, fee_b.id] } }
 
@@ -703,8 +703,8 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
   end
 
   def default_order_options
-    { customer: customer, distributor: distributor, order_cycle: order_cycle,
-      shipping_method: shipping_method, variant: variant }
+    { customer:, distributor:, order_cycle:,
+      shipping_method:, variant: }
   end
 
   def prepare_incomplete_order(options = {})
@@ -713,14 +713,14 @@ describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
   end
 
   def prepare_order(options = {})
-    factory_trait_options = { payment_method: payment_method }
+    factory_trait_options = { payment_method: }
     target_options = default_order_options.merge(factory_trait_options).merge(options)
     create(:order, :with_line_item, :completed, target_options)
   end
 
   def default_variant_options
-    { product: product, producer: producer, coordinator: coordinator,
-      distributor: distributor, order_cycle: order_cycle }
+    { product:, producer:, coordinator:,
+      distributor:, order_cycle: }
   end
 
   def prepare_variant(options = {})

@@ -93,21 +93,21 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
           variant = create(:simple_product).variants.first
           variant.stock_items.first.update!(backorderable: false, count_on_hand: 1)
           create(:simple_order_cycle, distributors: [d1], variants: [variant])
-          create(:variant_override, variant: variant, hub: d1, on_demand: false, count_on_hand: 0)
+          create(:variant_override, variant:, hub: d1, on_demand: false, count_on_hand: 0)
           variant
         end
         let!(:distributor1_variant_with_override_without_stock_level_set_and_no_producer_stock) do
           variant = create(:simple_product).variants.first
           variant.stock_items.first.update!(backorderable: false, count_on_hand: 0)
           create(:simple_order_cycle, distributors: [d1], variants: [variant])
-          create(:variant_override, variant: variant, hub: d1, on_demand: nil, count_on_hand: nil)
+          create(:variant_override, variant:, hub: d1, on_demand: nil, count_on_hand: nil)
           variant
         end
         let!(:distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock) do
           variant = create(:simple_product).variants.first
           variant.stock_items.first.update!(backorderable: false, count_on_hand: 1)
           create(:simple_order_cycle, distributors: [d1], variants: [variant])
-          create(:variant_override, variant: variant, hub: d1, on_demand: nil, count_on_hand: nil)
+          create(:variant_override, variant:, hub: d1, on_demand: nil, count_on_hand: nil)
           variant
         end
         let!(:distributor2_variant_with_override_in_stock) do
@@ -191,7 +191,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
     variant.stock_items.first.update!(backorderable: false, count_on_hand: 0)
     create(:simple_order_cycle, distributors: [distributor], variants: [variant])
     create(:variant_override, {
-      variant: variant,
+      variant:,
       hub: distributor
     }.merge(variant_override_attributes))
     variant

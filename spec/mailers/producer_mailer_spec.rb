@@ -6,7 +6,7 @@ require 'yaml'
 describe ProducerMailer, type: :mailer do
   let!(:zone) { create(:zone_with_member) }
   let!(:tax_rate) {
-    create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone: zone,
+    create(:tax_rate, included_in_price: true, calculator: Calculator::DefaultTax.new, zone:,
                       amount: 0.1)
   }
   let!(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
@@ -34,7 +34,7 @@ describe ProducerMailer, type: :mailer do
   }
 
   let!(:order) do
-    order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'complete')
+    order = create(:order, distributor: d1, order_cycle:, state: 'complete')
     order.line_items << create(:line_item, quantity: 1, variant: p1.variants.first)
     order.line_items << create(:line_item, quantity: 2, variant: p1.variants.first)
     order.line_items << create(:line_item, quantity: 3, variant: p2.variants.first)
@@ -44,13 +44,13 @@ describe ProducerMailer, type: :mailer do
     order
   end
   let!(:order_incomplete) do
-    order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'payment')
+    order = create(:order, distributor: d1, order_cycle:, state: 'payment')
     order.line_items << create(:line_item, variant: p3.variants.first)
     order.save
     order
   end
   let!(:order_canceled) do
-    order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'complete')
+    order = create(:order, distributor: d1, order_cycle:, state: 'complete')
     order.line_items << create(:line_item, variant: p5.variants.first)
     order.finalize!
     order.cancel
@@ -102,7 +102,7 @@ describe ProducerMailer, type: :mailer do
 
   context "when a cancelled order has been resumed" do
     let!(:order_resumed) do
-      order = create(:order, distributor: d1, order_cycle: order_cycle, state: 'complete')
+      order = create(:order, distributor: d1, order_cycle:, state: 'complete')
       order.line_items << create(:line_item, variant: p6.variants.first)
       order.finalize!
       order.cancel
@@ -165,9 +165,9 @@ describe ProducerMailer, type: :mailer do
     end
 
     it "it orders list via last name" do
-      create(:order, :with_line_item, distributor: d1, order_cycle: order_cycle, state: 'complete',
+      create(:order, :with_line_item, distributor: d1, order_cycle:, state: 'complete',
                                       bill_address: FactoryBot.create(:address, last_name: "Abby"))
-      create(:order, :with_line_item, distributor: d1, order_cycle: order_cycle, state: 'complete',
+      create(:order, :with_line_item, distributor: d1, order_cycle:, state: 'complete',
                                       bill_address: FactoryBot.create(:address, last_name: "smith"))
       expect(mail.body.encoded).to match(/.*Abby.*Doe.*smith/m)
     end

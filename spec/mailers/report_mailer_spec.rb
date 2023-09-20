@@ -7,7 +7,7 @@ describe ReportMailer do
     subject(:email) {
       ReportMailer.with(
         to: "current_user@example.net",
-        blob: blob,
+        blob:,
       ).report_ready
     }
     let(:blob) { ReportBlob.create_for_upload_later!("customers.csv") }

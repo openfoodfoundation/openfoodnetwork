@@ -6,7 +6,7 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
   let!(:distributor) { create(:distributor_enterprise) }
 
   let!(:order) do
-    create(:completed_order_with_totals, line_items_count: 1, distributor: distributor)
+    create(:completed_order_with_totals, line_items_count: 1, distributor:)
   end
   let!(:supplier) do
     order.line_items.first.variant.product.supplier
@@ -75,7 +75,7 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
       item.update!(quantity: 3)
 
       # And a second item to add up with:
-      item2 = create(:line_item, order: order)
+      item2 = create(:line_item, order:)
 
       expect(table_headers[4]).to eq "Total Units"
       expect(report_table[0][4]).to eq 0.6 # kg (= 3 * 0.2kg)

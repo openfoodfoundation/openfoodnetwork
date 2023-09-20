@@ -10,7 +10,7 @@ describe Calculator::PriceSack do
     calculator.preferred_discount_amount = 1
     calculator
   end
-  let(:line_item) { build_stubbed(:line_item, price: price, quantity: 2) }
+  let(:line_item) { build_stubbed(:line_item, price:, quantity: 2) }
 
   it { is_expected.to validate_numericality_of(:preferred_minimal_amount) }
   it { is_expected.to validate_numericality_of(:preferred_normal_amount) }

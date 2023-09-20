@@ -45,9 +45,9 @@ module Reporting
               create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
             }
             let(:hub) { create(:distributor_enterprise, address: hub_address) }
-            let(:variant2_override) { create(:variant_override, hub: hub, variant: variant2) }
+            let(:variant2_override) { create(:variant_override, hub:, variant: variant2) }
             let(:variant3_override) {
-              create(:variant_override, hub: hub, variant: variant3, count_on_hand: 0)
+              create(:variant_override, hub:, variant: variant3, count_on_hand: 0)
             }
 
             it "all items" do

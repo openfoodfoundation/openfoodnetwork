@@ -32,12 +32,12 @@ module Reporting
             let(:order) {
               create(:order,
                      state: 'complete', completed_at: Time.zone.now,
-                     distributor: distributor, bill_address: bill_address,
+                     distributor:, bill_address:,
                      special_instructions: shipping_instructions)
             }
             let(:payment_method) { create(:payment_method, distributors: [distributor]) }
-            let(:payment) { create(:payment, payment_method: payment_method, order: order) }
-            let(:line_item) { create(:line_item_with_shipment, product: product, order: order) }
+            let(:payment) { create(:payment, payment_method:, order:) }
+            let(:line_item) { create(:line_item_with_shipment, product:, order:) }
 
             before do
               order.select_shipping_method(shipping_method.id)
@@ -76,7 +76,7 @@ module Reporting
             end
 
             it "prints one row per line item" do
-              create(:line_item_with_shipment, order: order)
+              create(:line_item_with_shipment, order:)
 
               subject = Base.new(create(:admin_user))
 
@@ -86,7 +86,7 @@ module Reporting
 
             context "filtering by distributor" do
               it do
-                create(:line_item_with_shipment, order: order)
+                create(:line_item_with_shipment, order:)
 
                 report1 = Base.new(create(:admin_user), {})
                 table = report1.table_rows

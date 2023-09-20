@@ -4,8 +4,8 @@ require "spec_helper"
 
 describe Reporting::Reports::EnterpriseFeeSummary::Permissions do
   let!(:order_cycle) { create(:simple_order_cycle) }
-  let!(:incoming_exchange) { create(:exchange, incoming: true, order_cycle: order_cycle) }
-  let!(:outgoing_exchange) { create(:exchange, incoming: false, order_cycle: order_cycle) }
+  let!(:incoming_exchange) { create(:exchange, incoming: true, order_cycle:) }
+  let!(:outgoing_exchange) { create(:exchange, incoming: false, order_cycle:) }
 
   # The factory for order cycle uses the first distributor it finds in the database, if it exists.
   # However, for this example group, we need to make sure that the coordinator for the second order

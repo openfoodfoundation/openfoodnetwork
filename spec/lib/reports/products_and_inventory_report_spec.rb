@@ -85,7 +85,7 @@ module Reporting
 
           describe "fetching child variants" do
             it "returns some variants" do
-              product1 = create(:simple_product, supplier: supplier)
+              product1 = create(:simple_product, supplier:)
               variant1 = product1.variants.first
               variant2 = create(:variant, product: product1)
 
@@ -94,7 +94,7 @@ module Reporting
 
             it "should only return variants managed by the user" do
               product1 = create(:simple_product, supplier: create(:supplier_enterprise))
-              product2 = create(:simple_product, supplier: supplier)
+              product2 = create(:simple_product, supplier:)
               variant1 = product1.variants.first
               variant2 = product2.variants.first
 
@@ -107,8 +107,8 @@ module Reporting
 
             describe "based on report type" do
               it "returns only variants on hand" do
-                product1 = create(:simple_product, supplier: supplier, on_hand: 99)
-                product2 = create(:simple_product, supplier: supplier, on_hand: 0)
+                product1 = create(:simple_product, supplier:, on_hand: 99)
+                product2 = create(:simple_product, supplier:, on_hand: 0)
 
                 subject = Inventory.new enterprise_user
                 expect(subject.filter(variants)).to eq([product1.variants.first])
@@ -116,7 +116,7 @@ module Reporting
             end
             it "filters to a specific supplier" do
               supplier2 = create(:supplier_enterprise)
-              product1 = create(:simple_product, supplier: supplier)
+              product1 = create(:simple_product, supplier:)
               product2 = create(:simple_product, supplier: supplier2)
 
               allow(subject).to receive(:params).and_return(supplier_id: supplier.id)
@@ -124,8 +124,8 @@ module Reporting
             end
             it "filters to a specific distributor" do
               distributor = create(:distributor_enterprise)
-              product1 = create(:simple_product, supplier: supplier)
-              product2 = create(:simple_product, supplier: supplier)
+              product1 = create(:simple_product, supplier:)
+              product2 = create(:simple_product, supplier:)
               order_cycle = create(:simple_order_cycle, suppliers: [supplier],
                                                         distributors: [distributor],
                                                         variants: [product2.variants.first])
@@ -136,12 +136,12 @@ module Reporting
 
             it "ignores variant overrides without filter" do
               distributor = create(:distributor_enterprise)
-              product = create(:simple_product, supplier: supplier, price: 5)
+              product = create(:simple_product, supplier:, price: 5)
               variant = product.variants.first
               order_cycle = create(:simple_order_cycle, suppliers: [supplier],
                                                         distributors: [distributor],
                                                         variants: [product.variants.first])
-              create(:variant_override, hub: distributor, variant: variant, price: 2)
+              create(:variant_override, hub: distributor, variant:, price: 2)
 
               result = subject.filter(variants)
 
@@ -150,12 +150,12 @@ module Reporting
 
             it "considers variant overrides with distributor" do
               distributor = create(:distributor_enterprise)
-              product = create(:simple_product, supplier: supplier, price: 5)
+              product = create(:simple_product, supplier:, price: 5)
               variant = product.variants.first
               order_cycle = create(:simple_order_cycle, suppliers: [supplier],
                                                         distributors: [distributor],
                                                         variants: [product.variants.first])
-              create(:variant_override, hub: distributor, variant: variant, price: 2)
+              create(:variant_override, hub: distributor, variant:, price: 2)
 
               allow(subject).to receive(:params).and_return(distributor_id: distributor.id)
               result = subject.filter(variants)
@@ -165,8 +165,8 @@ module Reporting
 
             it "filters to a specific order cycle" do
               distributor = create(:distributor_enterprise)
-              product1 = create(:simple_product, supplier: supplier)
-              product2 = create(:simple_product, supplier: supplier)
+              product1 = create(:simple_product, supplier:)
+              product2 = create(:simple_product, supplier:)
               order_cycle = create(:simple_order_cycle, suppliers: [supplier],
                                                         distributors: [distributor],
                                                         variants: [product1.variants.first])
@@ -181,14 +181,14 @@ module Reporting
               distributor = create(:distributor_enterprise)
               other_distributor = create(:distributor_enterprise)
               other_supplier = create(:supplier_enterprise)
-              not_filtered_variant = create(:simple_product, supplier: supplier).variants.first
+              not_filtered_variant = create(:simple_product, supplier:).variants.first
               variant_filtered_by_order_cycle = create(:simple_product,
-                                                       supplier: supplier).variants.first
+                                                       supplier:).variants.first
               variant_filtered_by_distributor = create(:simple_product,
-                                                       supplier: supplier).variants.first
+                                                       supplier:).variants.first
               variant_filtered_by_supplier = create(:simple_product,
                                                     supplier: other_supplier).variants.first
-              variant_filtered_by_stock = create(:simple_product, supplier: supplier,
+              variant_filtered_by_stock = create(:simple_product, supplier:,
                                                                   on_hand: 0).variants.first
 
               # This OC contains all products except the one that should be filtered

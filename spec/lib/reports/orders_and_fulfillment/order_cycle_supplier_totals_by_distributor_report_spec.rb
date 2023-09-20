@@ -9,7 +9,7 @@ module Reporting
         let!(:distributor) { create(:distributor_enterprise) }
 
         let!(:order) do
-          create(:completed_order_with_totals, line_items_count: 3, distributor: distributor)
+          create(:completed_order_with_totals, line_items_count: 3, distributor:)
         end
 
         let(:current_user) { distributor.owner }
