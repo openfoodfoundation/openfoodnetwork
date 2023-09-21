@@ -22,6 +22,11 @@ module Admin
     rescue ActiveRecord::SubclassNotFound
       @voucher.errors.add(:type)
       render_error
+    rescue ActiveRecord::RecordNotUnique
+      # Rails unique validation doesn't work with soft deleted object, so we rescue the database
+      # exception  to display a nice message to the user
+      @voucher.errors.add(:code, :taken)
+      render_error
     end
 
     private

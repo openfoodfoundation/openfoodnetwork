@@ -1139,14 +1139,27 @@ describe "As a consumer, I want to checkout my order" do
 
         before do
           add_voucher_to_order(voucher, order)
-
-          visit checkout_step_path(:summary)
         end
 
         it "shows the applied voucher" do
+          visit checkout_step_path(:summary)
+
           within ".summary-right" do
             expect(page).to have_content "some_code"
             expect(page).to have_content "-6"
+          end
+        end
+
+        context "with voucher deactivated after being added to an order" do
+          it "completes the order" do
+            visit checkout_step_path(:summary)
+
+            # Deactivate voucher
+            voucher.destroy
+
+            place_order
+
+            expect(order.reload.state).to eq "complete"
           end
         end
       end

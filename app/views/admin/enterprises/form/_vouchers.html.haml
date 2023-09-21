@@ -3,12 +3,13 @@
     = t('.add_new')
 %br
 
-- if @enterprise.vouchers.present?
+- if @enterprise.vouchers.with_deleted.present?
   %table
     %thead
       %tr
         %th= t('.voucher_code')
         %th= t('.rate')
+        %th= t('.active')
         /%th= t('.label')
         /%th= t('.purpose')
         /%th= t('.expiry')
@@ -16,17 +17,16 @@
         /%th= t('.customers')
         /%th= t('.net_value')
     %tbody
-      - @enterprise.vouchers.each do |voucher|
+      - @enterprise.vouchers.with_deleted.order(deleted_at: :desc, code: :asc).each do |voucher|
         %tr
           %td= voucher.code
           %td= voucher.display_value  
+          %td= f.check_box :voucher_ids, { :multiple => true }, voucher.id, nil
           /%td
           /%td
           /%td
           /%td
           /%td
-          /%td
-
 - else
   %p.text-center
     = t('.no_voucher_yet')

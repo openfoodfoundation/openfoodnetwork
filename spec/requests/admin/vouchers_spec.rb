@@ -81,6 +81,20 @@ describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
       end
     end
 
+    context "with a code used by a deactivated voucher" do
+      before do
+        voucher = create(:voucher, code:, enterprise:)
+        voucher.destroy
+      end
+
+      it "render the new page with a code taken error" do
+        create_voucher
+
+        expect(response).to render_template("admin/vouchers/new")
+        expect(flash[:error]).to eq("Code has already been taken")
+      end
+    end
+
     it "redirects to admin enterprise setting page, voucher panel" do
       create_voucher
 
