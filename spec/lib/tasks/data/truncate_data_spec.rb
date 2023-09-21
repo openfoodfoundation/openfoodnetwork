@@ -15,7 +15,7 @@ describe TruncateData do
         order_cycle = create(
           :order_cycle, orders_open_at: 25.months.ago, orders_close_at: 25.months.ago + 1.day
         )
-        create(:order, order_cycle: order_cycle)
+        create(:order, order_cycle:)
 
         TruncateData.new.call
 
@@ -28,7 +28,7 @@ describe TruncateData do
         order_cycle = create(
           :order_cycle, orders_open_at: 25.months.ago, orders_close_at: 25.months.ago + 1.day
         )
-        create(:order, order_cycle: order_cycle)
+        create(:order, order_cycle:)
 
         TruncateData.new(nil).call
 

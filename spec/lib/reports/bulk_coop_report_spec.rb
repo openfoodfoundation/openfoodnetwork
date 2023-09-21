@@ -112,7 +112,7 @@ module Reporting
             let(:s1) { create(:supplier_enterprise) }
 
             before do
-              s1.enterprise_roles.create!(user: user)
+              s1.enterprise_roles.create!(user:)
             end
 
             context "that has granted P-OC to the distributor" do

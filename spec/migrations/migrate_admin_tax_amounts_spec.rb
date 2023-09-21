@@ -78,8 +78,8 @@ describe MigrateAdminTaxAmounts do
 
   describe "#applicabe_rates" do
     let(:distributor) { create(:enterprise) }
-    let(:order) { create(:order, distributor: distributor) }
-    let!(:adjustment) { create(:adjustment, order: order) }
+    let(:order) { create(:order, distributor:) }
+    let!(:adjustment) { create(:adjustment, order:) }
 
     context "when the order is nil" do
       let(:order) { nil }

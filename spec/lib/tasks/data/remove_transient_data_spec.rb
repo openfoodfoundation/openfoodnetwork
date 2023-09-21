@@ -41,11 +41,11 @@ describe RemoveTransientData do
       let(:variant) { product.variants.first }
 
       let!(:cart) { create(:order, state: 'cart') }
-      let!(:line_item) { create(:line_item, order: cart, variant: variant) }
+      let!(:line_item) { create(:line_item, order: cart, variant:) }
       let!(:adjustment) { create(:adjustment, order: cart) }
 
       let!(:old_cart) { create(:order, state: 'cart', updated_at: retention_period - 1.day) }
-      let!(:old_line_item) { create(:line_item, order: old_cart, variant: variant) }
+      let!(:old_line_item) { create(:line_item, order: old_cart, variant:) }
       let!(:old_adjustment) { create(:adjustment, order: old_cart) }
 
       before do

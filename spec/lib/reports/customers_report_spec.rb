@@ -163,7 +163,7 @@ module Reporting
                     [:first_name, :last_name, :billing_address, :email, :phone, :hub, :hub_address,
                      :shipping_method]
                   end
-                  subject { Addresses.new(user, { fields_to_show: fields_to_show }) }
+                  subject { Addresses.new(user, { fields_to_show: }) }
 
                   it "returns one row per customer per shipping method" do
                     expect(subject.query_result.size).to eq(2)
@@ -199,7 +199,7 @@ module Reporting
                   let(:fields_to_show) do
                     [:first_name, :last_name, :billing_address, :email, :phone, :hub, :hub_address]
                   end
-                  subject { Addresses.new(user, { fields_to_show: fields_to_show }) }
+                  subject { Addresses.new(user, { fields_to_show: }) }
 
                   it "returns a single row for the customer, otherwise it would return two identical
                       rows" do
@@ -249,12 +249,12 @@ module Reporting
 
           describe "fetching orders" do
             let(:supplier) { create(:supplier_enterprise) }
-            let(:product) { create(:simple_product, supplier: supplier) }
+            let(:product) { create(:simple_product, supplier:) }
             let(:order) { create(:order, completed_at: 1.day.ago) }
 
             it "only shows orders managed by the current user" do
               d1 = create(:distributor_enterprise)
-              d1.enterprise_roles.build(user: user).save
+              d1.enterprise_roles.build(user:).save
               d2 = create(:distributor_enterprise)
               d2.enterprise_roles.build(user: create(:user)).save
 
@@ -267,8 +267,8 @@ module Reporting
 
             it "does not show orders through a hub that the current user does not manage" do
               # Given a supplier enterprise with an order for one of its products
-              supplier.enterprise_roles.build(user: user).save
-              order.line_items << create(:line_item_with_shipment, product: product)
+              supplier.enterprise_roles.build(user:).save
+              order.line_items << create(:line_item_with_shipment, product:)
 
               # When I fetch orders, I should see no orders
               expect(subject).to receive(:filter).with([]).and_return([])
@@ -287,7 +287,7 @@ module Reporting
             it "returns orders with a specific supplier" do
               supplier = create(:supplier_enterprise)
               supplier2 = create(:supplier_enterprise)
-              product1 = create(:simple_product, supplier: supplier)
+              product1 = create(:simple_product, supplier:)
               product2 = create(:simple_product, supplier: supplier2)
               order1 = create(:order)
               order2 = create(:order)

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Calculator::FlexiRate do
-  let(:line_item) { build_stubbed(:line_item, quantity: quantity) }
+  let(:line_item) { build_stubbed(:line_item, quantity:) }
   let(:calculator) do
     Calculator::FlexiRate.new(
       preferred_first_item: 2,

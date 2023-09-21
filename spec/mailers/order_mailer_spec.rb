@@ -139,7 +139,7 @@ describe Spree::OrderMailer do
 
   describe "#cancel_email_for_shop" do
     let(:distributor) { create(:distributor_enterprise) }
-    let(:order) { create(:order, distributor: distributor, state: "canceled") }
+    let(:order) { create(:order, distributor:, state: "canceled") }
     let(:admin_order_link_href) { "href=\"#{spree.edit_admin_order_url(order)}\"" }
     let(:mail) { Spree::OrderMailer.cancel_email_for_shop(order) }
 
@@ -163,8 +163,8 @@ describe Spree::OrderMailer do
       create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
     }
     let(:order) {
-      create(:order_with_line_items, distributor: distributor, bill_address: bill_address,
-                                     ship_address: ship_address,
+      create(:order_with_line_items, distributor:, bill_address:,
+                                     ship_address:,
                                      special_instructions: shipping_instructions)
     }
 

@@ -41,7 +41,7 @@ describe Reporting::LineItems do
         shipments: [build(:shipment)]
       )
     end
-    let!(:line_item1) { create(:line_item, order: order) }
+    let!(:line_item1) { create(:line_item, order:) }
 
     let(:orders_relation) { Spree::Order.where(id: order.id) }
     let(:order_permissions) { FakeOrderPermissions.new([line_item1], orders_relation) }
@@ -55,8 +55,8 @@ describe Reporting::LineItems do
     context "when filtering by product" do
       subject(:line_items) { reports_line_items.list }
 
-      let!(:line_item2) { create(:line_item, order: order) }
-      let!(:line_item3) { create(:line_item, order: order) }
+      let!(:line_item2) { create(:line_item, order:) }
+      let!(:line_item3) { create(:line_item, order:) }
       let(:order_permissions) do
         FakeOrderPermissions.new([line_item1, line_item2, line_item3], orders_relation)
       end

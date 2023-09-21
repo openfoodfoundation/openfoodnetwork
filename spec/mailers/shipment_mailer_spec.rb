@@ -6,10 +6,10 @@ describe Spree::ShipmentMailer do
   let(:shipment) do
     order = build(:order_with_distributor)
     product = build(:product, name: %{The "BEST" product})
-    variant = build(:variant, product: product)
-    line_item = build(:line_item, variant: variant, order: order, quantity: 1, price: 5)
+    variant = build(:variant, product:)
+    line_item = build(:line_item, variant:, order:, quantity: 1, price: 5)
     shipment = build(:shipment)
-    allow(shipment).to receive_messages(line_items: [line_item], order: order)
+    allow(shipment).to receive_messages(line_items: [line_item], order:)
     allow(shipment).to receive_messages(tracking_url: "TRACK_ME")
     shipment
   end

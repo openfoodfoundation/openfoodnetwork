@@ -11,8 +11,8 @@ describe SubscriptionMailer, type: :mailer do
 
     let(:shop) { create(:enterprise) }
     let(:customer) { create(:customer, enterprise: shop) }
-    let(:subscription) { create(:subscription, shop: shop, customer: customer, with_items: true) }
-    let(:proxy_order) { create(:proxy_order, subscription: subscription) }
+    let(:subscription) { create(:subscription, shop:, customer:, with_items: true) }
+    let(:proxy_order) { create(:proxy_order, subscription:) }
     let!(:order) { proxy_order.initialise_order! }
 
     context "when changes have been made to the order" do
@@ -109,8 +109,8 @@ describe SubscriptionMailer, type: :mailer do
     subject(:email) { SubscriptionMailer.confirmation_email(order) }
 
     let(:customer) { create(:customer) }
-    let(:subscription) { create(:subscription, customer: customer, with_items: true) }
-    let(:proxy_order) { create(:proxy_order, subscription: subscription) }
+    let(:subscription) { create(:subscription, customer:, with_items: true) }
+    let(:proxy_order) { create(:proxy_order, subscription:) }
     let!(:order) { proxy_order.initialise_order! }
     let(:user) { order.user }
 
@@ -174,7 +174,7 @@ describe SubscriptionMailer, type: :mailer do
 
   describe "empty order notification" do
     let(:subscription) { create(:subscription, with_items: true) }
-    let(:proxy_order) { create(:proxy_order, subscription: subscription) }
+    let(:proxy_order) { create(:proxy_order, subscription:) }
     let!(:order) { proxy_order.initialise_order! }
 
     before do
@@ -192,8 +192,8 @@ describe SubscriptionMailer, type: :mailer do
 
   describe "failed payment notification" do
     let(:customer) { create(:customer) }
-    let(:subscription) { create(:subscription, customer: customer, with_items: true) }
-    let(:proxy_order) { create(:proxy_order, subscription: subscription) }
+    let(:subscription) { create(:subscription, customer:, with_items: true) }
+    let(:proxy_order) { create(:proxy_order, subscription:) }
     let!(:order) { proxy_order.initialise_order! }
 
     before do

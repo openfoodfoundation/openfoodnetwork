@@ -74,7 +74,7 @@ module Stripe
 
             context "and the user manages the corresponding enterprise" do
               before do
-                user.enterprise_roles.create(enterprise: enterprise)
+                user.enterprise_roles.create(enterprise:)
               end
 
               it "raises no errors" do
