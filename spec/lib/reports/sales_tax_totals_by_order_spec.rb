@@ -75,6 +75,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
     # sould be able to only create the adjustment we need, or maybe mock them ?
     it "returns tax amount filtered by tax rate in query_row" do
       OrderWorkflow.new(order).complete!
+      mock_voucher_adjustment_service
 
       filtered_tax_total = report.filtered_tax_rate_total(query_row)
 
@@ -95,6 +96,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
     it "returns the tax amount filtered by tax rate in the query_row" do
       OrderWorkflow.new(order).complete!
+      mock_voucher_adjustment_service
 
       tax_total = report.tax_rate_total(query_row)
 
@@ -111,6 +113,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
       it "returns the tax amount adjusted with voucher tax discount" do
         add_voucher(order, voucher)
+        mock_voucher_adjustment_service(excluded_tax: -0.29)
 
         tax_total = report.tax_rate_total(query_row)
 
@@ -130,6 +133,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
     it "returns the total excluding tax specified in query_row" do
       OrderWorkflow.new(order).complete!
+      mock_voucher_adjustment_service
 
       total = report.total_excl_tax(query_row)
 
@@ -144,6 +148,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
       it "returns the total exluding tax and indcluding voucher tax discount" do
         add_voucher(order, voucher)
+        mock_voucher_adjustment_service(excluded_tax: -0.29)
 
         total = report.total_excl_tax(query_row)
 
@@ -162,6 +167,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
     it "returns the total including the tax specified in query_row" do
       OrderWorkflow.new(order).complete!
+      mock_voucher_adjustment_service
 
       total = report.total_incl_tax(query_row)
 
@@ -176,6 +182,8 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
     end
 
     it "returns rules" do
+      mock_voucher_adjustment_service
+
       expected_rules = [
         {
           group_by: :distributor,
@@ -194,6 +202,8 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
     describe "summary_row" do
       it "returns expected totals" do
+        mock_voucher_adjustment_service
+
         expected_summary = {
           total_excl_tax: 110.00,
           tax: 3.3,
@@ -220,6 +230,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
         it "adjusts total_excl_tax and tax with voucher tax" do
           add_voucher(order, voucher)
+          mock_voucher_adjustment_service(excluded_tax: -0.29)
 
           # total_excl_tax = order.total - (order.total_tax - voucher_tax)
           # tax = order.total_tax - voucher_tax
@@ -245,6 +256,32 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
     end
   end
 
+  describe "#voucher_tax_adjustment" do
+    context "with tax excluded from price" do
+      it "returns the tax related voucher adjustment" do
+        mock_voucher_adjustment_service(excluded_tax: -0.1)
+
+        expect(report.voucher_tax_adjustment(order)).to eq(-0.1)
+      end
+    end
+
+    context "with tax included in price" do
+      it "returns the tax part of the voucher adjustment" do
+        mock_voucher_adjustment_service(included_tax: -0.2)
+
+        expect(report.voucher_tax_adjustment(order)).to eq(-0.2)
+      end
+    end
+
+    context "with both type of tax" do
+      it "returns sum of the tax part of voucher adjustment and tax related voucher adjusment" do
+        mock_voucher_adjustment_service(included_tax: -0.5, excluded_tax: -0.1)
+
+        expect(report.voucher_tax_adjustment(order)).to eq(-0.6)
+      end
+    end
+  end
+
   def add_voucher(order, voucher)
     Flipper.enable :vouchers
 
@@ -254,5 +291,15 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
     order.update_totals_and_states
 
     OrderWorkflow.new(order).complete!
+  end
+
+  def mock_voucher_adjustment_service(included_tax: 0.0, excluded_tax: 0.0)
+    service = instance_double(
+      VoucherAdjustmentsService,
+      voucher_included_tax: included_tax,
+      voucher_excluded_tax: excluded_tax
+    )
+
+    allow(VoucherAdjustmentsService).to receive(:new).and_return(service)
   end
 end
