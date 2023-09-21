@@ -8,8 +8,13 @@ module Admin
       payment_capture = OrderCaptureService.new(@order)
 
       if payment_capture.call
-        morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
-                                     locals: { order: @order.reload, success: true })
+        cable_ready.inner_html(
+          selector: dom_id(@order),
+          html: render(partial: "spree/admin/orders/table_row",
+                       locals: { order: @order.reload, success: true })
+        ).broadcast
+
+        morph :nothing
       else
         flash[:error] = payment_capture.gateway_error || I18n.t(:payment_processing_failed)
         morph_admin_flashes

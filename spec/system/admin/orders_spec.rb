@@ -750,6 +750,28 @@ describe '
           end
         end
 
+        it "displays Ship and Edit tooltips, after capturing a payment" do
+          within "tr#order_#{order.id}" do
+            # checks the order has an uncaptured payment
+            find(".icon-capture").hover
+            expect(page).to have_content "Capture"
+
+            # captures the payment
+            find(".icon-capture").click
+            expect(page).not_to have_content "Capture"
+
+            # checks shipment state
+            expect(page).to have_content "READY"
+            # mouse-hovers and finds Ship tooltip
+            find(".icon-road").hover
+            expect(page).to have_content "Ship"
+
+            # mouse-hovers and finds Edit tooltip
+            find(".icon-edit").hover
+            expect(page).to have_content "Edit"
+          end
+        end
+
         it "displays Edit tooltip" do
           within "tr#order_#{order.id}" do
             # checks shipment state
