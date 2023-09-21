@@ -1,0 +1,5 @@
+class AddForeignKeyToInventoryItemsSpreeVariants < ActiveRecord::Migration[6.0]
+  def change
+    add_foreign_key :inventory_items, :spree_variants, column: :variant_id, on_delete: :cascade
+  end
+end
