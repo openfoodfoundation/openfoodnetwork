@@ -51,7 +51,7 @@ describe OrderInvoiceComparator do
             end
           end
 
-          it "returns returns true" do
+          it "returns true" do
             Spree::TaxRate.first.update!(amount: 0.15)
             order.create_tax_charge!
             order.reload
@@ -69,7 +69,7 @@ describe OrderInvoiceComparator do
             end
           end
 
-          it "returns returns true" do
+          it "returns true" do
             Spree::TaxRate.first.update!(amount: 0.15)
             order.create_tax_charge!
             order.reload
@@ -79,7 +79,7 @@ describe OrderInvoiceComparator do
 
         context "shipping method changes" do
           let(:shipping_method) { create(:shipping_method) }
-          it "returns returns true" do
+          it "returns true" do
             Spree::ShippingRate.first.update(shipping_method_id: shipping_method.id)
             expect(subject).to be true
           end
@@ -145,7 +145,7 @@ describe OrderInvoiceComparator do
     }
 
     context "changes on the order object" do
-      it "returns true if the order didn't change" do
+      it "returns false if the order didn't change" do
         expect(subject).to be false
       end
 

@@ -16,7 +16,7 @@ class Invoice
     has_many :all_eligible_adjustments, serializer: Invoice::AdjustmentSerializer
 
     def all_eligible_adjustments
-      object.all_adjustments.eligible
+      object.all_adjustments.eligible.order(:id)
     end
 
     def completed_at
