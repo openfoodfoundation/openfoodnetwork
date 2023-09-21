@@ -138,7 +138,7 @@ module Reporting
         end
 
         def tax_rate_total(query_result_row)
-          total_tax = non_adjusted_tax_rate_total(query_result_row)
+          total_tax = filtered_tax_rate_total(query_result_row)
 
           # Tax adjustment is already a negative value
           order = order(query_result_row)
@@ -148,10 +148,11 @@ module Reporting
         def total_incl_tax(query_result_row)
           order(query_result_row).total -
             order(query_result_row).total_tax +
-            non_adjusted_tax_rate_total(query_result_row)
+            filtered_tax_rate_total(query_result_row)
         end
 
-        def non_adjusted_tax_rate_total(query_result_row)
+        # filtered tax total, relevant when there are more than one tax rate
+        def filtered_tax_rate_total(query_result_row)
           order(query_result_row).all_adjustments
             .tax
             .where(originator_id: tax_rate_id(query_result_row))
