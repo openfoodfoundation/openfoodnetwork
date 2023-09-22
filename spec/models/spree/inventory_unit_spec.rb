@@ -64,8 +64,8 @@ describe Spree::InventoryUnit do
     let(:variant) { create(:variant) }
     let(:inventory_units) {
       [
-        create(:inventory_unit, variant: variant),
-        create(:inventory_unit, variant: variant)
+        create(:inventory_unit, variant:),
+        create(:inventory_unit, variant:)
       ]
     }
 

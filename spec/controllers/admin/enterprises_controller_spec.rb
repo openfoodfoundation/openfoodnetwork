@@ -290,8 +290,8 @@ describe Admin::EnterprisesController, type: :controller do
 
       describe "vouchers" do
         let(:enterprise) { create(:distributor_enterprise) }
-        let!(:voucher_a) { create(:voucher, enterprise: enterprise, code: "voucher 1") }
-        let(:voucher_b) { create(:voucher, enterprise: enterprise, code: "voucher 2") }
+        let!(:voucher_a) { create(:voucher, enterprise:, code: "voucher 1") }
+        let(:voucher_b) { create(:voucher, enterprise:, code: "voucher 2") }
 
         before do
           controller_login_as_enterprise_user [enterprise]
@@ -333,7 +333,7 @@ describe Admin::EnterprisesController, type: :controller do
         context "when activating and deactivating voucher at the same time" do
           it "deactivates and activates accordingly" do
             voucher_b
-            voucher_c = create(:voucher, enterprise: enterprise, code: "voucher 3")
+            voucher_c = create(:voucher, enterprise:, code: "voucher 3")
             voucher_c.destroy
 
             spree_put :update,

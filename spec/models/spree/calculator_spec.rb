@@ -8,8 +8,8 @@ module Spree
     let!(:enterprise) { create(:enterprise) }
     let!(:order) { create(:order) }
     let!(:shipment) { create(:shipment) }
-    let!(:line_item) { create(:line_item, order: order) }
-    let!(:line_item2) { create(:line_item, order: order) }
+    let!(:line_item) { create(:line_item, order:) }
+    let!(:line_item2) { create(:line_item, order:) }
 
     before do
       order.reload.shipments = [shipment]

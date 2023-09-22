@@ -128,7 +128,7 @@ describe Enterprise do
 
     describe "name uniqueness" do
       let(:owner) { create(:user, email: 'owner@example.com') }
-      let!(:enterprise) { create(:enterprise, name: 'Enterprise', owner: owner) }
+      let!(:enterprise) { create(:enterprise, name: 'Enterprise', owner:) }
 
       it "prevents duplicate names for new records" do
         e = Enterprise.new name: enterprise.name
@@ -552,7 +552,7 @@ describe Enterprise do
         user.spree_roles = []
         e1 = create(:enterprise)
         e2 = create(:enterprise)
-        e1.enterprise_roles.build(user: user).save
+        e1.enterprise_roles.build(user:).save
 
         enterprises = Enterprise.managed_by user
         expect(enterprises.count).to eq(1)
@@ -575,11 +575,11 @@ describe Enterprise do
   describe "callbacks" do
     describe "after creation" do
       let(:owner) { create(:user, enterprise_limit: 10) }
-      let(:hub1) { create(:distributor_enterprise, owner: owner) }
-      let(:hub2) { create(:distributor_enterprise, owner: owner) }
-      let(:hub3) { create(:distributor_enterprise, owner: owner) }
-      let(:producer1) { create(:supplier_enterprise, owner: owner) }
-      let(:producer2) { create(:supplier_enterprise, owner: owner) }
+      let(:hub1) { create(:distributor_enterprise, owner:) }
+      let(:hub2) { create(:distributor_enterprise, owner:) }
+      let(:hub3) { create(:distributor_enterprise, owner:) }
+      let(:producer1) { create(:supplier_enterprise, owner:) }
+      let(:producer2) { create(:supplier_enterprise, owner:) }
 
       describe "when a producer is created" do
         before do

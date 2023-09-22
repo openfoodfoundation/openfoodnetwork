@@ -145,9 +145,9 @@ describe EnterpriseFee do
   describe "clearing all enterprise fee adjustments on an order" do
     it "clears adjustments from many fees and on all line items" do
       order_cycle = create(:order_cycle)
-      order = create(:order, order_cycle: order_cycle)
-      line_item1 = create(:line_item, order: order, variant: order_cycle.variants.first)
-      line_item2 = create(:line_item, order: order, variant: order_cycle.variants.second)
+      order = create(:order, order_cycle:)
+      line_item1 = create(:line_item, order:, variant: order_cycle.variants.first)
+      line_item2 = create(:line_item, order:, variant: order_cycle.variants.second)
 
       order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1.order, true)
       order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2.order, true)
@@ -187,7 +187,7 @@ describe EnterpriseFee do
 
   describe "soft-deletion" do
     let(:tax_category) { create(:tax_category) }
-    let(:enterprise_fee) { create(:enterprise_fee, tax_category: tax_category ) }
+    let(:enterprise_fee) { create(:enterprise_fee, tax_category: ) }
     let!(:adjustment) { create(:adjustment, originator: enterprise_fee) }
 
     before do

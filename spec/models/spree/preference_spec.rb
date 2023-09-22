@@ -19,7 +19,7 @@ describe Spree::Preference do
       p.key = key
       p.save
 
-      Spree::Preference.find_by(key: key)
+      Spree::Preference.find_by(key:)
     end
 
     it ":boolean" do

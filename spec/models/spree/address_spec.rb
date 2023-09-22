@@ -65,7 +65,7 @@ describe Spree::Address do
 
     let(:state) { build_stubbed(:state, name: 'maryland', abbr: 'md') }
     let(:country) { state.country }
-    let(:address) { build_stubbed(:address, country: country, state: state) }
+    let(:address) { build_stubbed(:address, country:, state:) }
 
     before do
       country.states_required = true
@@ -178,13 +178,13 @@ describe Spree::Address do
   context '#state_text' do
     context 'both name and abbr is present' do
       let(:state) { build(:state, name: 'virginia', abbr: 'va') }
-      let(:address) { build(:address, state: state) }
+      let(:address) { build(:address, state:) }
       specify { expect(address.state_text).to eq 'va' }
     end
 
     context 'only name is present' do
       let(:state) { build(:state, name: 'virginia', abbr: nil) }
-      let(:address) { build(:address, state: state) }
+      let(:address) { build(:address, state:) }
       specify { expect(address.state_text).to eq 'virginia' }
     end
   end

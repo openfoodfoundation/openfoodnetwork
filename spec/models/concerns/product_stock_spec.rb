@@ -21,7 +21,7 @@ describe ProductStock do
 
   context 'when product has more than one variant' do
     before do
-      product.variants << create(:variant, product: product)
+      product.variants << create(:variant, product:)
     end
 
     describe "product.on_demand" do

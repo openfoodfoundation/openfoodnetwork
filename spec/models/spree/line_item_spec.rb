@@ -252,7 +252,7 @@ module Spree
 
       context "when a variant override is in place" do
         let!(:hub) { create(:distributor_enterprise) }
-        let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 2) }
+        let!(:vo) { create(:variant_override, hub:, variant: v, count_on_hand: 2) }
 
         before do
           li.order.update(distributor_id: hub.id)
@@ -278,12 +278,12 @@ module Spree
           create(:order,
                  distributor: hub,
                  order_cycle: create(:simple_order_cycle),
-                 bill_address: bill_address,
+                 bill_address:,
                  ship_address: bill_address)
         }
         let!(:shipping_method) { create(:shipping_method, distributors: [hub]) }
         let!(:line_item) {
-          create(:line_item, variant: variant_on_demand, quantity: 10, order: order)
+          create(:line_item, variant: variant_on_demand, quantity: 10, order:)
         }
 
         before do
@@ -335,7 +335,7 @@ module Spree
         let!(:variant) { line_item.variant }
 
         context "when a variant override applies" do
-          let!(:vo) { create(:variant_override, hub: shop, variant: variant, count_on_hand: 3 ) }
+          let!(:vo) { create(:variant_override, hub: shop, variant:, count_on_hand: 3 ) }
 
           it "draws stock from the variant override" do
             expect(vo.reload.count_on_hand).to eq 3
@@ -363,7 +363,7 @@ module Spree
         let!(:variant) { line_item.variant }
 
         context "when a variant override applies" do
-          let!(:vo) { create(:variant_override, hub: shop, variant: variant, count_on_hand: 3 ) }
+          let!(:vo) { create(:variant_override, hub: shop, variant:, count_on_hand: 3 ) }
 
           it "restores stock to the variant override" do
             expect(vo.reload.count_on_hand).to eq 3
@@ -406,7 +406,7 @@ module Spree
         end
 
         context "when a variant override is in place" do
-          let!(:vo) { create(:variant_override, hub: hub, variant: v, count_on_hand: 5) }
+          let!(:vo) { create(:variant_override, hub:, variant: v, count_on_hand: 5) }
 
           context "and stock on the variant override is sufficient" do
             it { expect(li.sufficient_stock?).to be true }
@@ -788,7 +788,7 @@ module Spree
 
     describe "when the associated variant is soft-deleted" do
       let!(:variant) { create(:variant) }
-      let!(:line_item) { create(:line_item, variant: variant) }
+      let!(:line_item) { create(:line_item, variant:) }
 
       it "returns the associated variant or product" do
         line_item.variant.delete

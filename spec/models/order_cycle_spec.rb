@@ -434,21 +434,21 @@ describe OrderCycle do
     let(:user) { create(:user) }
     let(:oc) { create(:order_cycle) }
     let!(:order) {
-      create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)
+      create(:completed_order_with_totals, distributor: shop, user:, order_cycle: oc)
     }
     let!(:order_from_other_hub) {
-      create(:completed_order_with_totals, distributor: create(:enterprise), user: user,
+      create(:completed_order_with_totals, distributor: create(:enterprise), user:,
                                            order_cycle: oc)
     }
     let!(:order_from_other_user) {
       create(:completed_order_with_totals, distributor: shop, user: create(:user), order_cycle: oc)
     }
     let!(:order_from_other_oc) {
-      create(:completed_order_with_totals, distributor: shop, user: user,
+      create(:completed_order_with_totals, distributor: shop, user:,
                                            order_cycle: create(:order_cycle))
     }
     let!(:order_cancelled) {
-      create(:completed_order_with_totals, distributor: shop, user: user, order_cycle: oc)
+      create(:completed_order_with_totals, distributor: shop, user:, order_cycle: oc)
     }
 
     before { order_cancelled.cancel }
@@ -520,7 +520,7 @@ describe OrderCycle do
       create(:simple_order_cycle, orders_open_at: 1.week.ago, orders_close_at: 1.day.ago)
     }
     let(:schedule) { create(:schedule, order_cycles: [oc]) }
-    let!(:subscription) { create(:subscription, schedule: schedule, with_items: true) }
+    let!(:subscription) { create(:subscription, schedule:, with_items: true) }
 
     it "syncs subscriptions when transitioning from closed to open" do
       expect(OrderManagement::Subscriptions::ProxyOrderSyncer).to receive(:new).and_call_original

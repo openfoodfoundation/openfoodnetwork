@@ -164,7 +164,7 @@ describe EnterpriseRelationship do
                                                               :create_variant_overrides] )
         }
         let!(:vo1) {
-          create(:variant_override, hub: hub,
+          create(:variant_override, hub:,
                                     variant: create(
                                       :variant,
                                       product: create(
@@ -173,7 +173,7 @@ describe EnterpriseRelationship do
                                     ))
         }
         let!(:vo2) {
-          create(:variant_override, hub: hub,
+          create(:variant_override, hub:,
                                     variant: create(
                                       :variant,
                                       product: create(
@@ -182,7 +182,7 @@ describe EnterpriseRelationship do
                                     ))
         }
         let!(:vo3) {
-          create(:variant_override, hub: hub,
+          create(:variant_override, hub:,
                                     variant: create(
                                       :variant,
                                       product: create(
@@ -237,7 +237,7 @@ describe EnterpriseRelationship do
                                            permissions_list: [:add_to_order_cycles] )
         }
         let!(:vo1) {
-          create(:variant_override, hub: hub,
+          create(:variant_override, hub:,
                                     variant: create(
                                       :variant,
                                       product: create(
@@ -247,7 +247,7 @@ describe EnterpriseRelationship do
                                     permission_revoked_at: Time.now.in_time_zone)
         }
         let!(:vo2) {
-          create(:variant_override, hub: hub,
+          create(:variant_override, hub:,
                                     variant: create(
                                       :variant,
                                       product: create(
@@ -257,7 +257,7 @@ describe EnterpriseRelationship do
                                     permission_revoked_at: Time.now.in_time_zone)
         }
         let!(:vo3) {
-          create(:variant_override, hub: hub,
+          create(:variant_override, hub:,
                                     variant: create(
                                       :variant,
                                       product: create(
@@ -322,7 +322,7 @@ describe EnterpriseRelationship do
         let!(:some_other_variant) { create(:variant) }
         let!(:incoming_external_variant) {
           incoming_external_exchange.exchange_variants.create!(
-            exchange: incoming_external_exchange, variant: variant
+            exchange: incoming_external_exchange, variant:
           )
         }
         let!(:incoming_internal_only_variant) {
@@ -332,7 +332,7 @@ describe EnterpriseRelationship do
         }
         let!(:outgoing_internal_variant) {
           outgoing_internal_exchange.exchange_variants.create!(
-            exchange: outgoing_internal_exchange, variant: variant
+            exchange: outgoing_internal_exchange, variant:
           )
         }
         let!(:outgoing_internal_only_variant) {

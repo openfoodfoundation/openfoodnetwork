@@ -34,8 +34,8 @@ module Spree
         let(:adjustable) { instance_double(LineItem) }
 
         before do
-          allow(adjustment).to receive_messages originator: originator, label: 'adjustment',
-                                                adjustable: adjustable, amount: 0
+          allow(adjustment).to receive_messages originator:, label: 'adjustment',
+                                                adjustable:, amount: 0
         end
 
         it "should do nothing when closed" do
@@ -180,7 +180,7 @@ module Spree
       describe "TaxRate adjustments" do
         let!(:zone)        { create(:zone_with_member) }
         let!(:order)       { create(:order, bill_address: create(:address)) }
-        let!(:line_item)   { create(:line_item, order: order) }
+        let!(:line_item)   { create(:line_item, order:) }
         let(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
         let(:tax_rate)     { create(:tax_rate, included_in_price: true, amount: 0.10) }
         let(:adjustment)   { line_item.adjustments.reload.first }
@@ -220,18 +220,18 @@ module Spree
         let(:zone) { create(:zone_with_member) }
         let(:inclusive_tax) { true }
         let(:tax_rate) {
-          create(:tax_rate, included_in_price: inclusive_tax, zone: zone, amount: 0.25)
+          create(:tax_rate, included_in_price: inclusive_tax, zone:, amount: 0.25)
         }
         let(:tax_category)    { create(:tax_category, name: "Shipping", tax_rates: [tax_rate] ) }
         let(:hub)             { create(:distributor_enterprise, charges_sales_tax: true) }
         let(:order)           { create(:order, distributor: hub, state: 'payment') }
-        let(:line_item)       { create(:line_item, order: order) }
+        let(:line_item)       { create(:line_item, order:) }
 
         let(:shipping_method) {
-          create(:shipping_method_with, :flat_rate, tax_category: tax_category)
+          create(:shipping_method_with, :flat_rate, tax_category:)
         }
         let(:shipment) {
-          create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
+          create(:shipment_with, :shipping_method, shipping_method:, order:)
         }
 
         describe "the shipping charge" do
@@ -337,19 +337,19 @@ module Spree
         let(:zone)             { create(:zone_with_member) }
         let(:fee_tax_rate)     {
           create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new,
-                            zone: zone, amount: 0.1)
+                            zone:, amount: 0.1)
         }
         let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
 
         let(:coordinator) { create(:distributor_enterprise, charges_sales_tax: true) }
         let(:variant)     { create(:variant, product: create(:product, tax_category: nil)) }
         let(:order_cycle) {
-          create(:simple_order_cycle, coordinator: coordinator, coordinator_fees: [enterprise_fee],
+          create(:simple_order_cycle, coordinator:, coordinator_fees: [enterprise_fee],
                                       distributors: [coordinator], variants: [variant])
         }
-        let(:line_item)   { create(:line_item, variant: variant) }
+        let(:line_item)   { create(:line_item, variant:) }
         let(:order)       {
-          create(:order, line_items: [line_item], order_cycle: order_cycle,
+          create(:order, line_items: [line_item], order_cycle:,
                          distributor: coordinator, state: 'payment')
         }
         let(:fee)         { order.all_adjustments.reload.enterprise_fee.first }
@@ -430,7 +430,7 @@ module Spree
         context "when enterprise fees inherit tax_category from the product they are applied to" do
           let(:product_tax_rate) {
             create(:tax_rate, included_in_price: true, calculator: ::Calculator::DefaultTax.new,
-                              zone: zone, amount: 0.2)
+                              zone:, amount: 0.2)
           }
           let(:product_tax_category) { create(:tax_category, tax_rates: [product_tax_rate]) }
 
@@ -525,20 +525,20 @@ module Spree
       let!(:zone) { create(:zone_with_member) }
       let!(:tax_category) { create(:tax_category, name: "Tax Test") }
       let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
-      let(:order) { create(:order, distributor: distributor, state: "payment") }
+      let(:order) { create(:order, distributor:, state: "payment") }
       let(:included_in_price) { true }
       let(:tax_rate) {
-        create(:tax_rate, included_in_price: included_in_price, zone: zone,
+        create(:tax_rate, included_in_price:, zone:,
                           calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1))
       }
-      let(:variant) { create(:variant, tax_category: tax_category) }
+      let(:variant) { create(:variant, tax_category:) }
       let(:product) { variant.product }
 
       describe "tax adjustment creation" do
         before do
           tax_category.tax_rates << tax_rate
           allow(order).to receive(:tax_zone) { zone }
-          order.line_items << create(:line_item, variant: variant, quantity: 5)
+          order.line_items << create(:line_item, variant:, quantity: 5)
           order.update(state: "payment")
           order.create_tax_charge!
         end
@@ -563,7 +563,7 @@ module Spree
       describe "inclusive and additional scopes" do
         let(:included) { true }
         let(:adjustment) {
-          create(:adjustment, adjustable: order, originator: tax_rate, included: included)
+          create(:adjustment, adjustable: order, originator: tax_rate, included:)
         }
 
         context "when tax is included in price" do
@@ -586,7 +586,7 @@ module Spree
       let!(:return_authorization) { create(:return_authorization, amount: 123) }
       let(:order) { return_authorization.order }
       let!(:return_adjustment) {
-        create(:adjustment, originator: return_authorization, order: order,
+        create(:adjustment, originator: return_authorization, order:,
                             adjustable: order, amount: 456)
       }
 
