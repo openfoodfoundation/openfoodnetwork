@@ -5,15 +5,19 @@ export default class extends Controller {
 
   connect() {
     super.connect();
-    window.addEventListener("click", (e) => {
-      if (this.element.contains(e.target)) return;
-      this.#hide();
-    });
+    window.addEventListener("click", this.#hideIfClickedOutside);
   }
 
   toggle() {
     this.contentTarget.classList.toggle("show");
   }
+
+  #hideIfClickedOutside = (event) => {
+    if (this.element.contains(event.target)) {
+      return;
+    }
+    this.#hide();
+  };
 
   #hide() {
     this.contentTarget.classList.remove("show");
