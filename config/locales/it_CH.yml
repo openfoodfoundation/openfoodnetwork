@@ -1052,6 +1052,7 @@ it_CH:
         vouchers:
           rate: Tariffa
           customers: Cliente
+          active: Attivo?
       actions:
         edit_profile: Impostazioni
         properties: Proprietà

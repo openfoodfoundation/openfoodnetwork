@@ -756,6 +756,9 @@ fr:
         import_products: Importer plusieurs produits
         no_products_found_for_search: Aucun produit trouvé avec vos critères de recherche
       table:
+        modified_summary:
+          one: "%{count} produits modifiés"
+          other: "%{count} produits modifiés"
         save: Sauvegarder les changements
         reset: Annuler les changements
       bulk_update:
@@ -1177,6 +1180,7 @@ fr:
           use_limit: Date limite
           customers: Acheteur
           net_value: Valeur nette
+          active: Active ?
           add_new: Ajouter nouveau
           no_voucher_yet: Pas encore de bons de réduction
         white_label:
@@ -1518,6 +1522,7 @@ fr:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
       enterprise_fees_with_tax_report_by_order: "Détail des montants de taxe par commande"
+      enterprise_fees_with_tax_report_by_producer: "Détail des montants de taxe par producteur"
       errors:
         no_report_type: "Merci de sélectionner un type de rapport"
         report_not_found: "Le rapport n'a pas été trouvé"
@@ -2965,6 +2970,8 @@ fr:
   report_header_transaction_fee: Frais de Transaction (TVA non incluse)
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
+  report_line_cost_of_produce: 'Coût des produits hors '
+  report_line_line_items: produits
   report_xero_configuration: Configuration Xero
   initial_invoice_number: "N° de facture initial :"
   invoice_date: "Date de facture :"

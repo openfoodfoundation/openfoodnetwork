@@ -936,6 +936,7 @@ el:
           email_not_confirmed: "Το email δεν επιβεβαιώθηκε"
         vouchers:
           customers: Πελάτης
+          active: Ενεργό;
       actions:
         edit_profile: Ρυθμήσεις
         properties: Ιδιότητες

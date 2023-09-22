@@ -1101,6 +1101,7 @@ es:
           rate: Impuesto
           customers: Consumidora
           net_value: Valor neto
+          active: ¿Activo?
           add_new: Añadir nuevo
         white_label:
           hide_ofn_navigation: "Ocultar la navegación de OFN"

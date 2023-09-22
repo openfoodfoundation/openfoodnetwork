@@ -6,9 +6,22 @@ nb:
       spree/shipping_method: Leveringsmetode
     attributes:
       spree/order/ship_address:
+        address1: "Leveringsadresse (Gate + Husnummer)"
+        address2: "Leveringsadresse linje 2"
+        city: "Leveringsadresse by"
+        country: "Leveringsadresse land"
         phone: "Telefonnummer"
         firstname: "Fornavn"
         lastname: "Etternavn"
+        zipcode: "Leveringsadresse postnummer"
+      spree/order/bill_address:
+        address1: "Fakturaadresse (Gate + Husnummer)"
+        zipcode: "Faktureraadresse postnummer"
+        city: "Fakturaadresse by"
+        country: "Fakturaadresse land"
+        firstname: "Fakturaadresse fornavn"
+        lastname: "Fakturaadresse etternavn"
+        phone: Kundetelefon
       spree/user:
         password: "Passord"
         password_confirmation: "Passord-bekreftelse"
@@ -34,6 +47,7 @@ nb:
         shipping_category_id: "Leveringskategori"
         variant_unit: "Variant Enhet"
         variant_unit_name: "Enhetsnavn Variant"
+        unit_value: "Enhetsverdi"
       spree/credit_card:
         base: "Kredittkort"
         number: "Antall"
@@ -44,8 +58,23 @@ nb:
         orders_close_at: Lukkedato
       variant_override:
         count_on_hand: "Tilgjengelig"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Kalkulator Flat Prosent:"
+        preferred_amount: "Kalkulator Beløp:"
+        preferred_first_item: "Kalkulator Første Element:"
+        preferred_additional_item: "Kalkulator Ekstra varekostnad:"
+        preferred_max_items: "Kalkulator Maks. varer:"
+        preferred_minimal_amount: "Kalkulator Min. Beløp:"
+        preferred_normal_amount: "Kalkulator Normalt beløp:"
+        preferred_discount_amount: "Kalkulator Rabattbeløp:"
+        preferred_unit_from_list: "Kalkulator Enhet fra liste:"
+        preferred_per_unit: "Kalkulator Per Enhet:"
+      enterprise:
+        white_label_logo_link: "Link til logoen som brukes i butikk"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Å arve skattekategorien krever en varekalkulator."
         spree/user:
           attributes:
             email:
@@ -68,7 +97,9 @@ nb:
             on_demand_but_count_on_hand_set: "må være tom hvis på forespørsel"
             limited_stock_but_no_count_on_hand: "må spesifiseres fordi det tvinger begrenset lager"
       messages:
+        confirmation: "samsvarer ikke med %{attribute}"
         blank: "kan ikke være tomt"
+        too_short: "er for kort (minimum er %{count} tegn)"
   errors:
     messages:
       content_type_invalid: "har en ugyldig innholdstype"
@@ -217,6 +248,8 @@ nb:
         updated_not_active: "Ditt passord har blitt tilbakestilt, men epostadressen din er ikke bekreftet enda."
         updated: "Passordendringen var vellykket. Du er nå pålogget."
         send_instructions: "Du vil motta en epost med instruksjoner om hvordan du bekrefter kontoen din om noen få minutter."
+    oidc:
+      failure: "Kunne ikke logge på: %{error}"
   home_page_alert_html: "HTML for varsler på hjemmeside "
   hub_signup_case_studies_html: "Hub-registrering studier HTML"
   hub_signup_detail_html: "Hub registrering detaljer HTML"
@@ -276,6 +309,13 @@ nb:
     order_cycle:
       subject: "Bestillingsrunderapport for %{producer}"
   provider_settings: "Leverandørinnstillinger"
+  report_mailer:
+    report_ready:
+      subject: "Rapport klar"
+      heading: "Rapport klar for nedlasting"
+      intro: |
+          Linken nedenfor utløper etter en uke.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Kjære Kunde,"
@@ -341,7 +381,10 @@ nb:
   confirm_resend_order_confirmation: "Er du sikker på at du vil sende ordrebekreftelse via epost på nytt?"
   must_have_valid_business_number: "%{enterprise_name} må ha et gyldig ORG nr. før fakturaer kan sendes."
   invoice: "Faktura"
+  invoices: "Fakturaer"
+  file: "Fil"
   active: "Aktiv"
+  download: "Last ned"
   cancelled: "Avbrutt"
   more: "Mer"
   say_no: "Nei"
@@ -399,6 +442,7 @@ nb:
   none: Ingen
   notes: Merknader
   error: Feil
+  voucher: Kupong
   processing_payment: "Behandler betaling ..."
   no_pending_payments: "Ingen ventende betalinger"
   invalid_payment_state: "Ugyldig betalingsstatus: %{state}"
@@ -445,8 +489,11 @@ nb:
       filters:
         categories:
           title: Kategorier
+          selected_categories: "%{count} kategorier valgt"
         producers:
           title: Produsenter
+          selected_producers: "%{count} produsenter valgt"
+        per_page: "%{count} elementer per side"
         colums: Kolonner
       columns:
         name: Navn
@@ -687,15 +734,38 @@ nb:
       index:
         header:
           title: Endre produkter i bulk
+        loading: Laster inn produktene dine
       sort:
         pagination:
+          total_html: "<strong>%{total} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
+          per_page:
+            show: Vis
+            per_page: "%{num} per side"
           clear_search: Tøm søk
       filters:
+        search_products: Søk etter produkter
+        all_producers: Alle produsenter
+        all_categories: Alle kategorier
         producers:
           label: Produsenter
         categories:
           label: Kategorier
         search: Søk
+      no_products:
+        no_products_found: Ingen produkter funnet
+        import_products: Importer flere produkter
+        no_products_found_for_search: Ingen produkter funnet for søkekriteriene dine
+      table:
+        modified_summary:
+          one: "%{count} produkt endret."
+          other: "%{count} produkter endret."
+        save: Lagre endringer
+        reset: Forkaste endringer
+      bulk_update:
+        success: "Produktene er oppdatert"
+        products_have_error:
+          one: "%{count} produkt har en feil."
+          other: "%{count} produkter har en feil."
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes
@@ -708,7 +778,9 @@ nb:
         conditional_blank: kan ikke være tom hvis unit_type er tom
         no_product: samsvarte ikke med noen produkter i databasen
         not_found: ikke funnet i databasen
+        category_not_found: samsvarer ikke med tillatte kategorier. Se de riktige kategoriene å velge mellom på produktimportsiden, eller sjekk at det ikke er stavefeil.
         not_updatable: kan ikke oppdateres på eksisterende produkter via produktimport
+        values_must_be_same: må være det samme for produkter med samme navn
         blank: kan ikke være tomt
         products_no_permission: du har ikke tillatelse til å administrere produkter for denne bedriften
         inventory_no_permission: du har ikke tillatelse til å opprette lager for denne produsenten
@@ -883,6 +955,7 @@ nb:
           legend: "Adresse"
         business_details:
           legend: "Forretningsdetaljer"
+          upload: 'last opp'
           abn: Org. nr.
           abn_placeholder: f.eks. 999 000 123
           acn: MVA nr.
@@ -1096,8 +1169,30 @@ nb:
           email_confirmed: "Epost bekreftet"
           email_not_confirmed: "Epost ikke bekreftet"
         vouchers:
+          legend: Kuponger
+          voucher_code: Kupongkode
           rate: Sats
+          label: Merkelapp
+          purpose: Hensikt
+          expiry: Utløp
+          use_limit: Bruk/Grense
           customers: Kunde
+          net_value: Nettoverdi
+          active: Aktiv?
+          add_new: Legg til ny
+          no_voucher_yet: Ingen kuponger ennå
+        white_label:
+          legend: "Blank"
+          hide_ofn_navigation: "Skjul OFN-navigasjon"
+          upload_logo: "Logo brukt i butikk"
+          remove_logo: "Fjern logo"
+          remove_logo_confirm: "Er du sikker på at du vil fjerne denne logoen?"
+          remove_logo_success: "Logo fjernet"
+          white_label_logo_link_label: "Link til logoen som brukes i butikk"
+          hide_groups_tab: "Skjul grupper-fanen i butikken"
+          create_custom_tab: "Lag egendefinert fane i butikk"
+          custom_tab_title: "Tittel for egendefinert fane"
+          custom_tab_content: "Innhold for egendefinert fane"
       actions:
         edit_profile: Innstillinger
         properties: Egenskaper
@@ -1308,6 +1403,10 @@ nb:
         could_not_cancel_the_order: Kunne ikke avbryte bestillingen
       resume:
         could_not_resume_the_order: Kunne ikke gjenoppta bestillingen
+    select2:
+      minimal_search_length: Skriv inn %{count} eller flere tegn
+      searching: Søker...
+      no_matches: Ingen treff funnet
     shared:
       user_guide_link:
         user_guide: Brukermanual
@@ -1333,6 +1432,8 @@ nb:
           tag_rules: "Regler for Merkelapper"
           shop_preferences: "Butikkvalg"
           users: "Brukere"
+          vouchers: Kuponger
+          white_label: "Blank"
         enterprise_group:
           primary_details: "Primærdetaljer"
           users: "Brukere"
@@ -1532,6 +1633,7 @@ nb:
       new:
         back: Tilbake
         save: Lagre
+        voucher_code: Kupongkode
         voucher_amount: Antall
     controllers:
       enterprises:
@@ -2876,6 +2978,7 @@ nb:
   new_payment: "Ny betaling"
   date_completed: "Dato Fullført"
   amount: "Beløp"
+  invoice_file: "Fil"
   state_names:
     ready: Klar
     pending: Venter

@@ -974,6 +974,7 @@ tr:
         vouchers:
           rate: oran
           customers: Müşteri
+          active: AKTİF?
       actions:
         edit_profile: Ayarlar
         properties: ÖZELLİKLER

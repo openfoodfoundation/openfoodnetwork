@@ -946,6 +946,7 @@ pt:
         vouchers:
           rate: Taxa
           customers: Consumidor
+          active: Activo?
       actions:
         edit_profile: Definições
         properties: Propriedades

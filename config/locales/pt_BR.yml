@@ -987,6 +987,7 @@ pt_BR:
           email_not_confirmed: "Email não confirmado"
         vouchers:
           customers: Consumidor
+          active: Ativo?
       actions:
         edit_profile: Configurações
         properties: Propriedades

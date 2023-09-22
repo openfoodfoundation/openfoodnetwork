@@ -756,6 +756,9 @@ en_FR:
         import_products: Import multiple products
         no_products_found_for_search: No products found for your search criteria
       table:
+        modified_summary:
+          one: "%{count} product modified."
+          other: "%{count} products modified."
         save: Save changes
         reset: Discard changes
       bulk_update:
@@ -1175,6 +1178,7 @@ en_FR:
           use_limit: Use/Limit
           customers: Customer
           net_value: Net Value
+          active: Active?
           add_new: Add New
           no_voucher_yet: No Vouchers yet
         white_label:
@@ -1514,6 +1518,7 @@ en_FR:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
       enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
+      enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
@@ -2959,6 +2964,8 @@ en_FR:
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_line_cost_of_produce: Cost of produce
+  report_line_line_items: line items
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"

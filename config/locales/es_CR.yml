@@ -1090,6 +1090,7 @@ es_CR:
         vouchers:
           rate: Impuesto
           customers: Cliente
+          active: Activo?
       actions:
         edit_profile: Configuración
         properties: Propiedades

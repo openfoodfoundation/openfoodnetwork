@@ -1099,6 +1099,7 @@ en_IE:
         vouchers:
           rate: Rate
           customers: Customer
+          active: Active?
       actions:
         edit_profile: Settings
         properties: Properties

@@ -1159,6 +1159,7 @@ ru:
           use_limit: Использование/Ограничение
           customers: Клиент
           net_value: Чистая стоимость
+          active: Применяется?
           add_new: Добавить новое
           no_voucher_yet: Купонов пока нет
         white_label:

@@ -1087,6 +1087,7 @@ uk:
         vouchers:
           rate: Оцінка
           customers: Замовник
+          active: Активний?
       actions:
         edit_profile: Налаштування
         properties: Властивості

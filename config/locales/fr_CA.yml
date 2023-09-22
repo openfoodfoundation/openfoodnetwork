@@ -1122,6 +1122,7 @@ fr_CA:
         vouchers:
           rate: Taux
           customers: Acheteur
+          active: Active ?
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés

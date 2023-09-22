@@ -1168,6 +1168,7 @@ de_DE:
           use_limit: Verwendung
           customers: Kunde
           net_value: Nettowert
+          active: Aktiv?
           add_new: Neuer Gutschein
           no_voucher_yet: Noch keine Gutscheine vorhanden.
         white_label:

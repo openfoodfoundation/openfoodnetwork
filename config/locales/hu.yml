@@ -1073,6 +1073,7 @@ hu:
         vouchers:
           rate: Mérték
           customers: Vevő
+          active: Aktív?
       actions:
         edit_profile: Beállítások
         properties: Tulajdonságok

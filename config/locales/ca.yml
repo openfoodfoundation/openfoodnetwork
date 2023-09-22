@@ -1078,6 +1078,7 @@ ca:
         vouchers:
           rate: Taxa
           customers: Consumidora
+          active: Actiu?
       actions:
         edit_profile: Configuració
         properties: Propietats

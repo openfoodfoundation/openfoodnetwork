@@ -1043,6 +1043,7 @@ fr_BE:
         vouchers:
           rate: 'Taux '
           customers: Acheteur·euse
+          active: Actif?
         white_label:
           legend: "Marque blanche"
           hide_ofn_navigation: "Masquer la navigation du site OFN"
@@ -3242,7 +3243,7 @@ fr_BE:
   payments: "Paiements"
   return_authorizations: "Autorisations de retour"
   credit_owed: "Crédit redevable"
-  new_adjustment: "Nouvelle ajustement"
+  new_adjustment: "Nouvel ajustement"
   payment: "Paiement"
   payment_method: "Méthode de paiement"
   shipment: "Envoi"
@@ -3267,19 +3268,32 @@ fr_BE:
   previous: "Précédent"
   last: "Fin"
   spree:
+    order_updated: "Commande mise à jour"
     add_country: "Ajouter un pays"
     add_state: "Ajouter une province"
+    adjustment: "Ajustement"
     all: "Tous"
+    back_to_adjustments_list: "Retour aux ajustements"
+    back_to_users_list: "Retour aux utilisateurs"
+    back_to_zones_list: "Retour aux zones"
     card_number: "Numéro de carte"
     category: "Catégorie"
+    created_successfully: "Créé avec succès"
     credit: "Crédit"
     editing_tax_category: "Modification de la catégorie de taxe"
     editing_tax_rate: "Modification du taux de taxe"
+    expiration: "Expiration"
+    invalid_payment_provider: "Fournisseur de paiement invalide"
+    items_cannot_be_shipped: "Les articles ne peuvent pas être expédiés"
+    gateway_error: "Paiement échoué"
     more: "Plus"
+    new_adjustment: "Nouvel ajustement"
     new_order_completed: "Nouvelle commande terminée"
     new_tax_category: "Nouvelle catégorie de taxe"
     no_pending_payments: "Aucun paiement en attente"
     none: "Aucun"
+    notice_messages:
+      variant_deleted: "Variante supprimée"
     start_date: "Date de début"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, merci de chercher et d'ajouter un des produits ci-dessus"

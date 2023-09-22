@@ -1072,6 +1072,7 @@ ko:
         vouchers:
           rate: 비율
           customers: 고객
+          active: 활성화 하시겠습니까?
       actions:
         edit_profile: 설정
         properties: 특성

@@ -906,6 +906,7 @@ nl_BE:
         vouchers:
           rate: Percentage
           customers: Klant
+          active: Actief?
       actions:
         edit_profile: Instellingen
         properties: Eigenschappen

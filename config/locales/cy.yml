@@ -1149,6 +1149,7 @@ cy:
           use_limit: Defnydd/Cyfyngiad
           customers: Cwsmer
           net_value: Gwerth Net
+          active: Egnïol?
           add_new: Ychwanegu newydd
           no_voucher_yet: Dim talebau eto
         white_label:

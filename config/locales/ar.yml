@@ -1105,6 +1105,7 @@ ar:
           use_limit: استخدام / تحديد
           customers: عميل
           net_value: صافي القيمة
+          active: نشيط؟
           add_new: اضف جديد
           no_voucher_yet: لا قسائم حتى الآن
       actions:

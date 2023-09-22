@@ -1078,6 +1078,7 @@ fr_CH:
         vouchers:
           rate: Taux
           customers: Client
+          active: Active ?
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés

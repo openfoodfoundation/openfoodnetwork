@@ -1046,6 +1046,7 @@ en_US:
         vouchers:
           rate: Rate
           customers: Customer
+          active: Active?
       actions:
         edit_profile: Settings
         properties: Properties

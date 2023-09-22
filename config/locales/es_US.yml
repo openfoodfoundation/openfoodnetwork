@@ -1045,6 +1045,7 @@ es_US:
         vouchers:
           rate: Impuesto
           customers: Consumidora
+          active: ¿Activo?
       actions:
         edit_profile: Configuración
         properties: Propiedades
