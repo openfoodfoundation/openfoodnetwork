@@ -136,6 +136,12 @@ describe VoucherAdjustmentsService do
           # -0.058479532 * 11 = -0.64
           expect(tax_adjustment.amount.to_f).to eq(-0.64)
           expect(tax_adjustment.label).to match("Tax")
+
+          expect(tax_adjustment.metadata.enterprise_id).to eq(
+            tax_adjustment.originator.enterprise.id
+          )
+          expect(tax_adjustment.metadata.fee_name).to eq("Tax")
+          expect(tax_adjustment.metadata.fee_type).to eq("Voucher")
         end
 
         context "when re calculating" do
@@ -330,9 +336,9 @@ describe VoucherAdjustmentsService do
 
     it "returns the amount from the tax voucher adjustment" do
       voucher_adjustment = voucher.create_adjustment(voucher.code, order)
-      # Manually add voucher tax adjustment, so we don't have to do a big data setup to be able to
-      # use VoucherAdjustmentsService.update
-      order.adjustments.create!(
+      # Manually add voucher tax adjustment and metadata, so we don't have to do a big data setup
+      # to be able to use VoucherAdjustmentsService.update
+      tax_adjustment = order.adjustments.create!(
         originator: voucher_adjustment.originator,
         order: order,
         label: "Tax #{voucher_adjustment.label}",
@@ -341,6 +347,12 @@ describe VoucherAdjustmentsService do
         tax_category: nil,
         included_tax: 0,
         amount: 0.5
+      )
+      AdjustmentMetadata.create(
+        adjustment: tax_adjustment,
+        enterprise: tax_adjustment.originator.enterprise,
+        fee_name: "Tax",
+        fee_type: "Voucher"
       )
 
       expect(voucher_excluded_tax).to eq(0.5)

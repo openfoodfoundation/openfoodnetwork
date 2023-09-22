@@ -44,11 +44,9 @@ class VoucherAdjustmentsService
   end
 
   def voucher_excluded_tax
-    return 0.0 if @order.voucher_adjustments.empty?
+    return 0.0 if @order.voucher_adjustments.voucher_tax.empty?
 
-    return 0.0 if @order.voucher_adjustments.where("label LIKE 'Tax%'").empty?
-
-    @order.voucher_adjustments.where("label LIKE 'Tax%'").first.amount
+    @order.voucher_adjustments.voucher_tax.first.amount
   end
 
   private
@@ -86,6 +84,14 @@ class VoucherAdjustmentsService
     tax_adjustment = @order.adjustments.find_or_initialize_by(adjustment_attributes)
     tax_adjustment.amount = tax_amount
     tax_adjustment.save
+
+    # Add metada so we know which voucher adjustment is Tax related
+    AdjustmentMetadata.create(
+      adjustment: tax_adjustment,
+      enterprise: adjustment.originator.enterprise,
+      fee_name: "Tax",
+      fee_type: "Voucher"
+    )
   end
 
   def handle_tax_included_in_price(amount, voucher)
