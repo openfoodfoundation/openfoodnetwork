@@ -1530,8 +1530,6 @@ en:
       all_products: All products
       inventory: Inventory (on hand)
       lettuce_share: LettuceShare
-      mailing_list: Mailing List
-      addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       sales_tax_totals_by_producer: Sales Tax Totals By Producer
@@ -2912,6 +2910,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   hub_sidebar_red: "red"
   order_cycles_closed_for_hub: "The hub you have selected is temporarily closed for orders. Please try again later."
   report_customers_distributor: "Distributor"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
@@ -3106,6 +3105,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
   report_line_cost_of_produce: Cost of produce
   report_line_line_items: line items
+  report_header_last_completed_order_date: Last completed order date
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
