@@ -104,7 +104,11 @@ describe "Sales Tax Totals By order" do
     end
 
     it "generates the report" do
-      visit_sales_tax_totals_by_order
+      # Check we can access the report as user would do.
+      # For speed sake we'll use `visit_sales_tax_totals_by_order` helper for the rest of the spec
+      login_as admin
+      visit admin_reports_path
+      click_on "Sales Tax Totals By Order"
 
       expect(page).to have_button("Go")
       click_on "Go"
@@ -464,8 +468,10 @@ describe "Sales Tax Totals By order" do
 
   def visit_sales_tax_totals_by_order
     login_as admin
-    visit admin_reports_path
-    click_on "Sales Tax Totals By Order"
+    visit admin_report_path(
+      report_type: :sales_tax,
+      report_subtype: :sales_tax_totals_by_order
+    )
   end
 
   def generate_report
