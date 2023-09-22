@@ -31,7 +31,7 @@ module Spree
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
 
-    delegate_belongs_to :product, :name, :description, :meta_keywords
+    delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
     has_many :inventory_units, inverse_of: :variant
     has_many :line_items, inverse_of: :variant
@@ -51,8 +51,8 @@ module Spree
     has_many :prices,
              class_name: 'Spree::Price',
              dependent: :destroy
-    delegate_belongs_to :default_price, :display_price, :display_amount,
-                        :price, :price=, :currency
+    delegate :display_price, :display_amount, :price, :price=, :currency, :currency=,
+             to: :find_or_build_default_price
 
     has_many :exchange_variants
     has_many :exchanges, through: :exchange_variants
@@ -219,6 +219,10 @@ module Spree
 
     def save_default_price
       default_price.save if default_price && (default_price.changed? || default_price.new_record?)
+    end
+
+    def find_or_build_default_price
+      default_price || build_default_price
     end
 
     def set_cost_currency
