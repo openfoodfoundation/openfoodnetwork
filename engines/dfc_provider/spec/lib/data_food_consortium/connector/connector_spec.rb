@@ -21,7 +21,7 @@ describe DataFoodConsortium::Connector::Connector, vcr: true do
   it "imports" do
     json = connector.export(product)
     result = connector.import(json)
-    expect(result.class).to eq product.class
+    expect(result).to be_a product.class
     expect(result.semanticType).to eq product.semanticType
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
@@ -32,7 +32,7 @@ describe DataFoodConsortium::Connector::Connector, vcr: true do
     io = StringIO.new(json)
     result = connector.import(io)
 
-    expect(result.class).to eq product.class
+    expect(result).to be_a product.class
     expect(result.semanticType).to eq product.semanticType
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"

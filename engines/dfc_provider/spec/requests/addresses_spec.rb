@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require DfcProvider::Engine.root.join("spec/swagger_helper")
+require_relative "../swagger_helper"
 
 describe "Addresses", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true do
   let(:user) { create(:oidc_user) }

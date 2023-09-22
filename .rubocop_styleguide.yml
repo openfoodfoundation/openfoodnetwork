@@ -39,6 +39,7 @@ Metrics/BlockLength:
     "put",
     "resource",
     "resources",
+    "response",
     "scenario",
     "shared_examples",
     "shared_examples_for",

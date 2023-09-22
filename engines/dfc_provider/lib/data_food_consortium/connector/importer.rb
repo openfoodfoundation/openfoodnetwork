@@ -15,21 +15,28 @@ module DataFoodConsortium
       ].freeze
 
       def self.type_map
-        @type_map ||= TYPES.each_with_object({}) do |clazz, result|
-          # Methods with variable arguments have a negative arity of -n-1
-          # where n is the number of required arguments.
-          number_of_required_args = -1 * (clazz.instance_method(:initialize).arity + 1)
-          args = Array.new(number_of_required_args)
-          type_uri = clazz.new(*args).semanticType
-          result[type_uri] = clazz
-
-          # Add support for the old DFC v1.7 URLs:
-          new_type_uri = type_uri.gsub(
-            "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
-            "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#"
-          )
-          result[new_type_uri] = clazz
+        unless @type_map
+          @type_map = {}
+          TYPES.each(&method(:register_type))
         end
+
+        @type_map
+      end
+
+      def self.register_type(clazz)
+        # Methods with variable arguments have a negative arity of -n-1
+        # where n is the number of required arguments.
+        number_of_required_args = -1 * (clazz.instance_method(:initialize).arity + 1)
+        args = Array.new(number_of_required_args)
+        type_uri = clazz.new(*args).semanticType
+        type_map[type_uri] = clazz
+
+        # Add support for the old DFC v1.7 URLs:
+        new_type_uri = type_uri.gsub(
+          "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
+          "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#"
+        )
+        type_map[new_type_uri] = clazz
       end
 
       def import(json_string_or_io)
@@ -120,11 +127,12 @@ module DataFoodConsortium
       end
 
       def guess_setter_name(predicate)
-        fragment = predicate.fragment
-
-        # Some predicates are named like `hasQuantity`
-        # but the attribute name would be `quantity`.
-        name = fragment.sub(/^has/, "").camelize(:lower)
+        name =
+          # Some predicates are named like `hasQuantity`
+          # but the attribute name would be `quantity`.
+          predicate.fragment&.sub(/^has/, "")&.camelize(:lower) ||
+          # And sometimes the URI looks like `ofn:spree_product_id`.
+          predicate.to_s.split(":").last
 
         "#{name}="
       end

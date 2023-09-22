@@ -9,6 +9,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
   let!(:product) {
     create(
       :base_product,
+      id: 90_000,
       supplier: enterprise, name: "Pesto", description: "Basil Pesto",
       variants: [variant],
     )
@@ -78,7 +79,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
           example.metadata[:operation][:parameters].first[:schema][:example]
         end
 
-        it "creates a variant" do |example|
+        it "creates a product and variant" do |example|
           expect { submit_request(example.metadata) }
             .to change { enterprise.supplied_products.count }.by(1)
 
@@ -87,16 +88,44 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
             %r|^http://test\.host/api/dfc/enterprises/10000/supplied_products/[0-9]+$|
           )
 
+          spree_product_id = json_response["ofn:spree_product_id"].to_i
+
           variant_id = dfc_id.split("/").last.to_i
           variant = Spree::Variant.find(variant_id)
           expect(variant.name).to eq "Apple"
           expect(variant.unit_value).to eq 3
+          expect(variant.product_id).to eq spree_product_id
+
+          # References the associated Spree::Product
+          product_id = json_response["ofn:spree_product_id"]
+          product = Spree::Product.find(product_id)
+          expect(product.name).to eq "Apple"
+          expect(product.variants).to eq [variant]
+
+          # Creates a variant for existing product
+          supplied_product[:'ofn:spree_product_id'] = product_id
+          supplied_product[:'dfc-b:hasQuantity'][:'dfc-b:value'] = 6
+
+          expect {
+            submit_request(example.metadata)
+            product.variants.reload
+          }
+            .to change { product.variants.count }.by(1)
+
+          variant_id = json_response["@id"].split("/").last.to_i
+          second_variant = Spree::Variant.find(variant_id)
+          expect(product.variants).to match_array [variant, second_variant]
+          expect(second_variant.unit_value).to eq 6
 
           # Insert static value to keep documentation deterministic:
           response.body.gsub!(
             "supplied_products/#{variant_id}",
             "supplied_products/10001"
           )
+            .gsub!(
+              "\"ofn:spree_product_id\":#{spree_product_id}",
+              '"ofn:spree_product_id":90000'
+            )
         end
       end
     end
@@ -116,6 +145,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
 
         run_test! do
           expect(response.body).to include variant.name
+          expect(json_response["ofn:spree_product_id"]).to eq 90_000
         end
       end
 
