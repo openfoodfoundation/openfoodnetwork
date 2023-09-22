@@ -55,7 +55,7 @@ describe Exchange do
     let(:supplier) { create(:supplier_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
     let(:distributor) { create(:distributor_enterprise) }
-    let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
+    let(:oc) { create(:simple_order_cycle, coordinator:) }
     let(:incoming_exchange) {
       oc.exchanges.create! sender: supplier, receiver: coordinator, incoming: true
     }
@@ -102,7 +102,7 @@ describe Exchange do
     let(:supplier) { create(:supplier_enterprise) }
     let(:coordinator) { create(:distributor_enterprise, is_primary_producer: true) }
     let(:distributor) { create(:distributor_enterprise) }
-    let(:oc) { create(:simple_order_cycle, coordinator: coordinator) }
+    let(:oc) { create(:simple_order_cycle, coordinator:) }
 
     describe "finding exchanges managed by a particular user" do
       let(:user) do

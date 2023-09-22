@@ -53,24 +53,24 @@ describe Customer, type: :model do
     let!(:enterprise) { create(:distributor_enterprise) }
 
     it "associates no user using non-existing email" do
-      c = Customer.create(enterprise: enterprise,
+      c = Customer.create(enterprise:,
                           email: 'some-email-not-associated-with-a-user@email.com')
       expect(c.user).to be_nil
     end
 
     it "associates an existing user using email" do
       non_existing_email = 'some-email-not-associated-with-a-user@email.com'
-      c1 = Customer.create(enterprise: enterprise, email: non_existing_email, user: user1)
+      c1 = Customer.create(enterprise:, email: non_existing_email, user: user1)
       expect(c1.user).to eq user1
       expect(c1.email).to eq non_existing_email
       expect(c1.email).to_not eq user1.email
 
-      c2 = Customer.create(enterprise: enterprise, email: user2.email)
+      c2 = Customer.create(enterprise:, email: user2.email)
       expect(c2.user).to eq user2
     end
 
     it "associates an existing user using email case-insensitive" do
-      c = Customer.create(enterprise: enterprise, email: user2.email.upcase)
+      c = Customer.create(enterprise:, email: user2.email.upcase)
       expect(c.user).to eq user2
     end
   end
@@ -79,8 +79,8 @@ describe Customer, type: :model do
     context 'managed_by' do
       let!(:user) { create(:user) }
       let!(:enterprise) { create(:enterprise, owner: user) }
-      let!(:customer) { create(:customer, enterprise: enterprise, user: user) }
-      let!(:customer1) { create(:customer, enterprise: enterprise) }
+      let!(:customer) { create(:customer, enterprise:, user:) }
+      let!(:customer1) { create(:customer, enterprise:) }
 
       let!(:user1) { create(:user) }
       let!(:enterprise1) { create(:enterprise, owner: user1) }
@@ -103,7 +103,7 @@ describe Customer, type: :model do
 
       it 'returns customers of managed enterprises' do
         user2 = create(:user)
-        EnterpriseRole.create!(user: user2, enterprise: enterprise)
+        EnterpriseRole.create!(user: user2, enterprise:)
         expect(Customer.managed_by(user2)).to match_array [customer, customer1]
       end
 
@@ -124,7 +124,7 @@ describe Customer, type: :model do
       let!(:customer4) { create(:customer) }
       let!(:customer5) { create(:customer, created_manually: true) }
 
-      let!(:order_ready_for_details) { create(:order_ready_for_details, customer: customer) }
+      let!(:order_ready_for_details) { create(:order_ready_for_details, customer:) }
       let!(:order_ready_for_payment) { create(:order_ready_for_payment, customer: customer2) }
       let!(:order_ready_for_confirmation) {
         create(:order_ready_for_confirmation, customer: customer3)

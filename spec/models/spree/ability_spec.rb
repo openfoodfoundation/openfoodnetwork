@@ -327,7 +327,7 @@ describe Spree::Ability do
       let(:user) do
         user = create(:user)
         user.spree_roles = []
-        s1.enterprise_roles.build(user: user).save
+        s1.enterprise_roles.build(user:).save
         user
       end
 
@@ -470,7 +470,7 @@ describe Spree::Ability do
         context "where the enterprise is in an order_cycle" do
           let!(:order_cycle) { create(:simple_order_cycle) }
           let!(:exchange){
-            create(:exchange, incoming: true, order_cycle: order_cycle,
+            create(:exchange, incoming: true, order_cycle:,
                               receiver: order_cycle.coordinator, sender: s1)
           }
 
@@ -497,7 +497,7 @@ describe Spree::Ability do
       let(:user) do
         user = create(:user)
         user.spree_roles = []
-        d1.enterprise_roles.build(user: user).save
+        d1.enterprise_roles.build(user:).save
         user
       end
       # create order for each enterprise
@@ -683,7 +683,7 @@ describe Spree::Ability do
       context "for a given order_cycle" do
         let!(:order_cycle) { create(:simple_order_cycle, coordinator: d2) }
         let!(:exchange){
-          create(:exchange, incoming: false, order_cycle: order_cycle, receiver: d1,
+          create(:exchange, incoming: false, order_cycle:, receiver: d1,
                             sender: order_cycle.coordinator)
         }
 
@@ -709,7 +709,7 @@ describe Spree::Ability do
       let(:user) do
         user = create(:user)
         user.spree_roles = []
-        d1.enterprise_roles.build(user: user).save
+        d1.enterprise_roles.build(user:).save
         user
       end
 
@@ -748,7 +748,7 @@ describe Spree::Ability do
       let(:user) do
         user = create(:user)
         user.spree_roles = []
-        s1.enterprise_roles.build(user: user).save
+        s1.enterprise_roles.build(user:).save
         user
       end
 
@@ -799,8 +799,8 @@ describe Spree::Ability do
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:producer) { create(:supplier_enterprise) }
     let!(:product) { create(:product, supplier: producer) }
-    let!(:variant) { create(:variant, product: product) }
-    let!(:variant_override) { create(:variant_override, hub: distributor, variant: variant) }
+    let!(:variant) { create(:variant, product:) }
+    let!(:variant_override) { create(:variant_override, hub: distributor, variant:) }
 
     subject { user }
 

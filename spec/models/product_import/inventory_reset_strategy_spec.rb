@@ -14,7 +14,7 @@ describe ProductImport::InventoryResetStrategy do
           :variant_override,
           count_on_hand: 10,
           hub: enterprise,
-          variant: variant
+          variant:
         )
       end
       let(:excluded_items_ids) { [variant_override.id] }
@@ -55,7 +55,7 @@ describe ProductImport::InventoryResetStrategy do
             :variant_override,
             count_on_hand: 10,
             hub: enterprise,
-            variant: variant
+            variant:
           )
         end
         let!(:variant_override_on_demand) do
@@ -64,7 +64,7 @@ describe ProductImport::InventoryResetStrategy do
             count_on_hand: nil,
             on_demand: true,
             hub: enterprise,
-            variant: variant
+            variant:
           )
         end
         let(:excluded_items_ids) do
@@ -82,14 +82,14 @@ describe ProductImport::InventoryResetStrategy do
             :variant_override,
             count_on_hand: 3,
             hub: enterprise,
-            variant: variant
+            variant:
           )
           non_excluded_variant_override_on_demand = create(
             :variant_override,
             count_on_hand: nil,
             on_demand: true,
             hub: enterprise,
-            variant: variant
+            variant:
           )
           inventory_reset.reset(supplier_ids)
           expect(non_excluded_variant_override_with_count_on_hand.reload.count_on_hand).to eq(0)
@@ -140,7 +140,7 @@ describe ProductImport::InventoryResetStrategy do
               :variant_override,
               count_on_hand: 10,
               hub: enterprise,
-              variant: variant
+              variant:
             )
           end
 
@@ -157,7 +157,7 @@ describe ProductImport::InventoryResetStrategy do
               count_on_hand: nil,
               on_demand: true,
               hub: enterprise,
-              variant: variant
+              variant:
             )
           end
 
@@ -211,7 +211,7 @@ describe ProductImport::InventoryResetStrategy do
               :variant_override,
               count_on_hand: 10,
               hub: enterprise,
-              variant: variant
+              variant:
             )
           end
 
@@ -228,7 +228,7 @@ describe ProductImport::InventoryResetStrategy do
               count_on_hand: nil,
               on_demand: true,
               hub: enterprise,
-              variant: variant
+              variant:
             )
           end
 

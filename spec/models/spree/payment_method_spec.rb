@@ -34,7 +34,7 @@ describe Spree::PaymentMethod do
       [nil, 'both', 'back_end'].each do |display_on|
         Spree::Gateway::Test.create(
           name: 'Display Both',
-          display_on: display_on,
+          display_on:,
           active: true,
           environment: 'test',
           description: 'foofah',

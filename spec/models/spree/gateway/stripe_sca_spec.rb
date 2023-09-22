@@ -11,7 +11,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
     create(
       :payment,
       state: "checkout",
-      order: order,
+      order:,
       amount: order.total,
       payment_method: subject,
       source: credit_card,
@@ -92,7 +92,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
       expect(Checkout::StripeRedirect).to receive(:new).with(subject, order) { redirect_double }
       expect(redirect_double).to receive(:path).and_return("http://stripe-test.org")
 
-      expect(subject.external_payment_url(order: order)).to eq "http://stripe-test.org"
+      expect(subject.external_payment_url(order:)).to eq "http://stripe-test.org"
     end
   end
 
@@ -101,9 +101,9 @@ describe Spree::Gateway::StripeSCA, type: :model do
   def payment_intent(amount, status)
     JSON.generate(
       object: "payment_intent",
-      amount: amount,
-      status: status,
-      charges: { data: [{ id: "ch_1234", amount: amount }] }
+      amount:,
+      status:,
+      charges: { data: [{ id: "ch_1234", amount: }] }
     )
   end
 end

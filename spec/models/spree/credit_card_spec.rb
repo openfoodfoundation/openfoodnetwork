@@ -218,11 +218,11 @@ module Spree
     describe "setting default credit card for a user" do
       let(:user) { create(:user) }
       let(:onetime_card_attrs) do
-        { user: user, gateway_payment_profile_id: "tok_1EY..." }
+        { user:, gateway_payment_profile_id: "tok_1EY..." }
       end
       let(:stored_card_attrs) do
         {
-          user: user,
+          user:,
           gateway_customer_profile_id: "cus_F2T...",
           gateway_payment_profile_id: "card_1EY..."
         }
@@ -255,7 +255,7 @@ module Spree
         end
 
         context "and I update another card" do
-          let!(:card2) { create(:credit_card, user: user) }
+          let!(:card2) { create(:credit_card, user:) }
 
           context "without specifying it as the default" do
             it "keeps the existing default" do

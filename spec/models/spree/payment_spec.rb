@@ -51,8 +51,8 @@ describe Spree::Payment do
 
     context "creating a new payment alongside other incomplete payments" do
       let(:order) { create(:order_with_totals) }
-      let!(:incomplete_payment) { create(:payment, order: order, state: "pending") }
-      let(:new_payment) { create(:payment, order: order, state: "checkout") }
+      let!(:incomplete_payment) { create(:payment, order:, state: "pending") }
+      let(:new_payment) { create(:payment, order:, state: "checkout") }
 
       it "invalidates other incomplete payments on the order" do
         new_payment
@@ -378,13 +378,13 @@ describe Spree::Payment do
           }
 
           it "should create another adjustment and revoke the previous one" do
-            payment = create(:payment, order: order, payment_method: payment_method)
+            payment = create(:payment, order:, payment_method:)
             expect(order.all_adjustments.payment_fee.eligible.length).to eq(1)
 
             payment.void_transaction!
             expect(order.all_adjustments.payment_fee.eligible.length).to eq(0)
 
-            payment = create(:payment, order: order, payment_method: payment_method)
+            payment = create(:payment, order:, payment_method:)
             expect(order.all_adjustments.payment_fee.eligible.length).to eq(1)
           end
         end
@@ -598,7 +598,7 @@ describe Spree::Payment do
     context "#save" do
       context "completed payments" do
         it "updates order payment total" do
-          payment = create(:payment, :completed, amount: 100, order: order)
+          payment = create(:payment, :completed, amount: 100, order:)
           expect(order.payment_total).to eq payment.amount
         end
       end
@@ -606,13 +606,13 @@ describe Spree::Payment do
       context "non-completed payments" do
         it "doesn't update order payment total" do
           expect {
-            create(:payment, amount: 100, order: order)
+            create(:payment, amount: 100, order:)
           }.not_to change { order.payment_total }
         end
       end
 
       context 'when the payment was completed but now void' do
-        let(:payment) { create(:payment, :completed, amount: 100, order: order) }
+        let(:payment) { create(:payment, :completed, amount: 100, order:) }
 
         it 'updates order payment total' do
           payment.void
@@ -634,7 +634,7 @@ describe Spree::Payment do
 
           expect(order_updater).to receive(:update_payment_state)
           expect(order_updater).to receive(:update_shipment_state)
-          create(:payment, amount: 100, order: order)
+          create(:payment, amount: 100, order:)
         end
       end
 
@@ -653,7 +653,7 @@ describe Spree::Payment do
             expect do
               Spree::Payment.create(
                 amount: 100,
-                order: order,
+                order:,
                 source: card,
                 payment_method: gateway
               )
@@ -703,7 +703,7 @@ describe Spree::Payment do
       end
 
       context 'when the payment was completed but now void' do
-        let(:payment) { create(:payment, :completed, amount: 100, order: order) }
+        let(:payment) { create(:payment, :completed, amount: 100, order:) }
 
         it 'updates order payment total' do
           payment.void
@@ -912,7 +912,7 @@ describe Spree::Payment do
 
     describe "applying transaction fees" do
       let!(:order) { create(:order) }
-      let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
+      let!(:line_item) { create(:line_item, order:, quantity: 3, price: 5.00) }
 
       before do
         order.reload.update_order!
@@ -920,7 +920,7 @@ describe Spree::Payment do
 
       context "when order-based calculator" do
         let!(:shop) { create(:enterprise) }
-        let!(:payment_method) { create(:payment_method, calculator: calculator) }
+        let!(:payment_method) { create(:payment_method, calculator:) }
         let!(:calculator) do
           ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
         end
@@ -928,10 +928,10 @@ describe Spree::Payment do
         context "when order complete" do
           let!(:order) { create(:completed_order_with_totals, distributor: shop) }
           let!(:variant) { order.line_items.first.variant }
-          let!(:inventory_item) { create(:inventory_item, enterprise: shop, variant: variant) }
+          let!(:inventory_item) { create(:inventory_item, enterprise: shop, variant:) }
 
           it "creates adjustment" do
-            payment = create(:payment, order: order, payment_method: payment_method,
+            payment = create(:payment, order:, payment_method:,
                                        amount: order.total)
             expect(payment.adjustment).to be_present
             expect(payment.adjustment.amount).not_to eq(0)
@@ -944,7 +944,7 @@ describe Spree::Payment do
   context 'OFN specs from previously decorated model' do
     describe "applying transaction fees" do
       let!(:order) { create(:order) }
-      let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
+      let!(:line_item) { create(:line_item, order:, quantity: 3, price: 5.00) }
 
       before do
         order.reload.update_order!
@@ -957,7 +957,7 @@ describe Spree::Payment do
                                              preferred_enterprise_id: shop.id)
         }
         let(:payment) {
-          create(:payment, order: order, payment_method: payment_method, amount: order.total)
+          create(:payment, order:, payment_method:, amount: order.total)
         }
         let(:calculator) { ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 

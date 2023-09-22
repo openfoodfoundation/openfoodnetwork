@@ -14,7 +14,7 @@ describe ProxyOrder, type: :model do
 
     context "when the order cycle is not yet closed" do
       let(:proxy_order) {
-        create(:proxy_order, subscription: subscription, order: order, order_cycle: order_cycle)
+        create(:proxy_order, subscription:, order:, order_cycle:)
       }
       before { order_cycle.update(orders_open_at: 1.day.ago, orders_close_at: 3.days.from_now) }
 
@@ -56,7 +56,7 @@ describe ProxyOrder, type: :model do
 
     context "when the order cycle is already closed" do
       let(:proxy_order) {
-        create(:proxy_order, subscription: subscription, order: order, order_cycle: order_cycle)
+        create(:proxy_order, subscription:, order:, order_cycle:)
       }
       before { order_cycle.update(orders_open_at: 3.days.ago, orders_close_at: 1.minute.ago) }
 
@@ -91,7 +91,7 @@ describe ProxyOrder, type: :model do
                                  payments: [create(:payment)],
                                  distributor: shipment.shipping_method.distributors.first)
     }
-    let(:proxy_order) { create(:proxy_order, order: order, canceled_at: Time.zone.now) }
+    let(:proxy_order) { create(:proxy_order, order:, canceled_at: Time.zone.now) }
     let(:order_cycle) { proxy_order.order_cycle }
 
     around do |example|

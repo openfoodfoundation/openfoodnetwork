@@ -7,7 +7,7 @@ require 'spec_helper'
 #   So we'll just test it using Order and ShippingMethod. These classes are including the module.
 describe CalculatedAdjustments do
   let(:calculator) { build(:calculator) }
-  let(:tax_rate) { Spree::TaxRate.new(calculator: calculator) }
+  let(:tax_rate) { Spree::TaxRate.new(calculator:) }
 
   before do
     allow(calculator).to receive(:compute) { 10 }

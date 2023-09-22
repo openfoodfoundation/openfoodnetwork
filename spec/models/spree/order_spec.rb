@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Spree::Order do
   let(:user) { build(:user, email: "spree@example.com") }
-  let(:order) { build(:order, user: user) }
+  let(:order) { build(:order, user:) }
 
   describe "#errors" do
     it "provides friendly error messages" do
@@ -192,7 +192,7 @@ describe Spree::Order do
     end
 
     it "should change the shipment state to ready if order is paid" do
-      Spree::Shipment.create(order: order)
+      Spree::Shipment.create(order:)
       order.shipments.reload
 
       allow(order).to receive_messages(paid?: true, complete?: true)
@@ -293,7 +293,7 @@ describe Spree::Order do
 
   context "#amount" do
     before do
-      @order = create(:order, user: user)
+      @order = create(:order, user:)
       @order.line_items = [create(:line_item, price: 1.0, quantity: 2),
                            create(:line_item, price: 1.0, quantity: 1)]
     end
@@ -708,7 +708,7 @@ describe Spree::Order do
 
     context "with a taxed shipment" do
       let!(:shipment) {
-        create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
+        create(:shipment_with, :shipping_method, shipping_method:, order:)
       }
 
       before do
@@ -735,19 +735,19 @@ describe Spree::Order do
     let(:enterprise_fee) { create(:enterprise_fee) }
     let!(:fee_adjustment) {
       create(:adjustment, adjustable: order, originator: enterprise_fee,
-                          amount: 100, order: order, state: "closed")
+                          amount: 100, order:, state: "closed")
     }
     let!(:fee_tax1) {
       create(:adjustment, adjustable: fee_adjustment, originator_type: "Spree::TaxRate",
-                          amount: 12.3, order: order, state: "closed")
+                          amount: 12.3, order:, state: "closed")
     }
     let!(:fee_tax2) {
       create(:adjustment, adjustable: fee_adjustment, originator_type: "Spree::TaxRate",
-                          amount: 4.5, order: order, state: "closed")
+                          amount: 4.5, order:, state: "closed")
     }
     let!(:admin_adjustment) {
       create(:adjustment, adjustable: order, originator: nil,
-                          amount: 6.7, order: order, state: "closed")
+                          amount: 6.7, order:, state: "closed")
     }
 
     it "returns a sum of all taxes on enterprise fees" do
@@ -761,20 +761,20 @@ describe Spree::Order do
     let(:order) { create(:order) }
     let(:shipping_method) { create(:shipping_method_with, :flat_rate) }
     let!(:shipment) do
-      create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
+      create(:shipment_with, :shipping_method, shipping_method:, order:)
     end
     let(:enterprise_fee) { create(:enterprise_fee) }
     let!(:fee) {
       create(:adjustment, adjustable: order, originator: enterprise_fee, label: "EF", amount: 20,
-                          order: order)
+                          order:)
     }
     let!(:fee_tax) {
       create(:adjustment, adjustable: fee, originator: fee_tax_rate,
-                          amount: 2, order: order, state: "closed")
+                          amount: 2, order:, state: "closed")
     }
     let!(:shipping_tax) {
       create(:adjustment, adjustable: shipment, originator: shipping_tax_rate,
-                          amount: 10, order: order, state: "closed")
+                          amount: 10, order:, state: "closed")
     }
 
     before do
@@ -955,7 +955,7 @@ describe Spree::Order do
 
   describe "sending confirmation emails" do
     let!(:distributor) { create(:distributor_enterprise) }
-    let!(:order) { create(:order, distributor: distributor) }
+    let!(:order) { create(:order, distributor:) }
 
     it "sends confirmation emails" do
       mailer = double(:mailer, deliver_later: true)
@@ -966,7 +966,7 @@ describe Spree::Order do
     end
 
     it "does not send confirmation emails when the order belongs to a subscription" do
-      create(:proxy_order, order: order)
+      create(:proxy_order, order:)
 
       expect(Spree::OrderMailer).not_to receive(:confirm_email_for_customer)
       expect(Spree::OrderMailer).not_to receive(:confirm_email_for_shop)
@@ -1005,7 +1005,7 @@ describe Spree::Order do
     context "when creating an order" do
       it "does not create a customer" do
         expect {
-          create(:order, distributor: distributor)
+          create(:order, distributor:)
         }.to_not change {
           Customer.count
         }
@@ -1014,11 +1014,11 @@ describe Spree::Order do
       it "associates an existing customer" do
         customer = create(
           :customer,
-          user: user,
+          user:,
           email: user.email,
           enterprise: distributor
         )
-        order = create(:order, user: user, distributor: distributor)
+        order = create(:order, user:, distributor:)
 
         expect(order.customer).to eq customer
       end
@@ -1026,13 +1026,13 @@ describe Spree::Order do
 
     context "when updating the order" do
       before do
-        order.update!(distributor: distributor)
+        order.update!(distributor:)
       end
 
       it "associates an existing customer" do
         customer = create(
           :customer,
-          user: user,
+          user:,
           email: user.email,
           enterprise: distributor
         )
@@ -1062,7 +1062,7 @@ describe Spree::Order do
         # Change email instantly without confirmation via Devise:
         order.user.update_columns(email: "new@email.org")
 
-        other_order = create(:order, user: order.user, distributor: distributor)
+        other_order = create(:order, user: order.user, distributor:)
 
         expect {
           other_order.update!(state: "complete")
@@ -1077,7 +1077,7 @@ describe Spree::Order do
         order.update!(state: "complete")
 
         # The user may check out as guest first:
-        guest_order = create(:order, user: nil, email: "new@email.org", distributor: distributor)
+        guest_order = create(:order, user: nil, email: "new@email.org", distributor:)
         guest_order.update!(state: "complete")
 
         # Afterwards the user changes their email in their profile.
@@ -1088,7 +1088,7 @@ describe Spree::Order do
 
         # The two customer entries are merged and one is deleted:
         expect {
-          other_order = create(:order, user: order.user, distributor: distributor)
+          other_order = create(:order, user: order.user, distributor:)
         }.to change { Customer.count }.by(-1)
 
         expect(other_order.customer.email).to eq "new@email.org"
@@ -1103,7 +1103,7 @@ describe Spree::Order do
   end
 
   describe "when a guest order is placed with a registered email" do
-    let(:order) { create(:order_with_totals_and_distribution, user: user) }
+    let(:order) { create(:order_with_totals_and_distribution, user:) }
     let(:payment_method) { create(:payment_method, distributors: [order.distributor]) }
     let(:shipping_method) { create(:shipping_method, distributors: [order.distributor]) }
     let(:user) { create(:user, email: 'registered@email.com') }
@@ -1128,12 +1128,12 @@ describe Spree::Order do
   describe "a completed order with shipping and transaction fees" do
     let(:distributor) { create(:distributor_enterprise_with_tax) }
     let(:zone) { create(:zone_with_member) }
-    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, included_in_price: true, zone: zone) }
+    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, included_in_price: true, zone:) }
     let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
     let(:order) {
-      create(:completed_order_with_fees, distributor: distributor, shipping_fee: shipping_fee,
-                                         payment_fee: payment_fee,
-                                         shipping_tax_category: shipping_tax_category)
+      create(:completed_order_with_fees, distributor:, shipping_fee:,
+                                         payment_fee:,
+                                         shipping_tax_category:)
     }
     let(:shipping_fee) { 3 }
     let(:payment_fee) { 5 }
@@ -1189,7 +1189,7 @@ describe Spree::Order do
 
       it "updates shipping fees" do
         order.shipments = [create(:shipment_with, :shipping_method,
-                                  shipping_method: shipping_method)]
+                                  shipping_method:)]
         order.save
 
         expect(order.adjustment_total).to eq expected_fees - (item_num * shipping_fee)
@@ -1218,7 +1218,7 @@ describe Spree::Order do
   describe "retrieving previously ordered items" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle) }
-    let!(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+    let!(:order) { create(:order, distributor:, order_cycle:) }
 
     it "returns no items if nothing has been ordered" do
       expect(order.finalised_line_items).to eq []
@@ -1238,11 +1238,11 @@ describe Spree::Order do
 
     context "when an order has been finalised in this order cycle" do
       let!(:prev_order) {
-        create(:completed_order_with_totals, distributor: distributor, order_cycle: order_cycle,
+        create(:completed_order_with_totals, distributor:, order_cycle:,
                                              user: order.user)
       }
       let!(:prev_order2) {
-        create(:completed_order_with_totals, distributor: distributor, order_cycle: order_cycle,
+        create(:completed_order_with_totals, distributor:, order_cycle:,
                                              user: order.user)
       }
       let(:product) { create(:product) }
@@ -1267,7 +1267,7 @@ describe Spree::Order do
     let!(:payment_method) {
       create(:stripe_sca_payment_method, distributor_ids: [enterprise.id])
     }
-    let!(:payment) { create(:payment, order: order, payment_method: payment_method) }
+    let!(:payment) { create(:payment, order:, payment_method:) }
 
     it "does not include the :confirm step" do
       expect(order.checkout_steps).to_not include "confirm"
@@ -1296,7 +1296,7 @@ describe Spree::Order do
       it "advances to complete state without error" do
         advance_to_delivery_state(order)
         order.next!
-        order.payments << create(:payment, order: order)
+        order.payments << create(:payment, order:)
 
         expect { order.next! }.to change { order.state }.from("payment").to("confirmation")
         expect { order.next! }.to change { order.state }.from("confirmation").to("complete")
@@ -1304,7 +1304,7 @@ describe Spree::Order do
     end
 
     context "when the order is a subscription" do
-      let!(:proxy_order) { create(:proxy_order, order: order) }
+      let!(:proxy_order) { create(:proxy_order, order:) }
       let!(:order_cycle) { proxy_order.order_cycle }
 
       context "and order_cycle has no order_close_at set" do
@@ -1380,7 +1380,7 @@ describe Spree::Order do
   end
 
   describe "#ensure_updated_shipments" do
-    before { Spree::Shipment.create!(order: order) }
+    before { Spree::Shipment.create!(order:) }
 
     context "when the order is not completed" do
       it "destroys current shipments" do
@@ -1422,7 +1422,7 @@ describe Spree::Order do
 
     let(:distributor) { create(:distributor_enterprise) }
     let(:order) do
-      create(:order, distributor: distributor).tap do |order|
+      create(:order, distributor:).tap do |order|
         order.line_items << build(:line_item, variant: aaron_apple.variants.first)
         order.line_items << build(:line_item, variant: zed_banana.variants.first)
         order.line_items << build(:line_item, variant: zed_apple.variants.first)
@@ -1465,7 +1465,7 @@ describe Spree::Order do
 
   describe "#voucher_adjustments" do
     let(:distributor) { create(:distributor_enterprise) }
-    let(:order) { create(:order, user: user, distributor: distributor) }
+    let(:order) { create(:order, user:, distributor:) }
     let(:voucher) { create(:voucher_flat_rate, code: 'new_code', enterprise: order.distributor) }
 
     context "when no voucher adjustment" do

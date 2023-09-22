@@ -5,7 +5,7 @@ require 'spec_helper'
 describe ColumnPreference, type: :model do
   subject {
     ColumnPreference.new(
-      user: user, action_name: :customers_index, column_name: :email
+      user:, action_name: :customers_index, column_name: :email
     )
   }
   let(:user) { build(:user) }
@@ -19,11 +19,11 @@ describe ColumnPreference, type: :model do
     end
 
     let!(:col1_pref) {
-      ColumnPreference.create(user: user, action_name: 'some_action', column_name: 'col1',
+      ColumnPreference.create(user:, action_name: 'some_action', column_name: 'col1',
                               visible: true)
     }
     let!(:col2_pref) {
-      ColumnPreference.create(user: user, action_name: 'some_action', column_name: 'col2',
+      ColumnPreference.create(user:, action_name: 'some_action', column_name: 'col2',
                               visible: false)
     }
     let(:defaults) {

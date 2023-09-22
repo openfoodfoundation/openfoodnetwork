@@ -9,7 +9,7 @@ module Spree
     context "#tax_zone" do
       let(:bill_address) { create :address }
       let(:ship_address) { create :address }
-      let(:order) { Spree::Order.create(ship_address: ship_address, bill_address: bill_address) }
+      let(:order) { Spree::Order.create(ship_address:, bill_address:) }
       let(:zone) { create :zone }
 
       context "when no zones exist" do
@@ -119,23 +119,23 @@ module Spree
         let(:order) { create(:order) }
         let(:zone) { create(:zone_with_member) }
         let(:tax_rate20) {
-          create(:tax_rate, amount: 0.20, included_in_price: false, zone: zone)
+          create(:tax_rate, amount: 0.20, included_in_price: false, zone:)
         }
         let(:tax_rate30) {
-          create(:tax_rate, amount: 0.30, included_in_price: false, zone: zone)
+          create(:tax_rate, amount: 0.30, included_in_price: false, zone:)
         }
         let!(:variant) {
           create(:variant, tax_category: tax_rate20.tax_category, price: 10)
         }
         let!(:line_item) {
-          create(:line_item, variant: variant, order: order, quantity: 2)
+          create(:line_item, variant:, order:, quantity: 2)
         }
         let!(:shipping_method) {
           create(:shipping_method, tax_category: tax_rate30.tax_category)
         }
         let!(:shipment) {
-          create(:shipment_with, :shipping_method, order: order, cost: 50,
-                                                   shipping_method: shipping_method)
+          create(:shipment_with, :shipping_method, order:, cost: 50,
+                                                   shipping_method:)
         }
 
         before do
@@ -148,7 +148,7 @@ module Spree
 
         context "when the order has legacy taxes" do
           let!(:legacy_tax_adjustment) {
-            create(:adjustment, order: order, adjustable: order, included: false,
+            create(:adjustment, order:, adjustable: order, included: false,
                                 label: "legacy", originator_type: "Spree::TaxRate")
           }
 

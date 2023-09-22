@@ -934,7 +934,7 @@ describe ProductImport::ProductImporter do
 
       updated_ids = importer.updated_ids
 
-      importer = import_data csv_data, reset_all_absent: true, updated_ids: updated_ids,
+      importer = import_data csv_data, reset_all_absent: true, updated_ids:,
                                        enterprises_to_reset: [enterprise.id]
       importer.reset_absent(updated_ids)
 
@@ -973,7 +973,7 @@ describe ProductImport::ProductImporter do
       updated_ids = importer.updated_ids
 
       importer = import_data csv_data, import_into: 'inventories', reset_all_absent: true,
-                                       updated_ids: updated_ids,
+                                       updated_ids:,
                                        enterprises_to_reset: [enterprise2.id]
       importer.reset_absent(updated_ids)
 
@@ -1013,9 +1013,9 @@ def import_data(csv_data, args = {})
                                      import_user,
                                      start: start_row,
                                      end: end_row,
-                                     updated_ids: updated_ids,
-                                     enterprises_to_reset: enterprises_to_reset,
-                                     settings: settings)
+                                     updated_ids:,
+                                     enterprises_to_reset:,
+                                     settings:)
 end
 
 def filter(type, entries)

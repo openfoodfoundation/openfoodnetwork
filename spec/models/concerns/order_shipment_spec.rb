@@ -15,7 +15,7 @@ describe OrderShipment do
     context "when order has single shipment" do
       it "returns the shipments shipping_method" do
         shipping_method = create(:shipping_method_with, :flat_rate)
-        shipment = create(:shipment_with, :shipping_method, shipping_method: shipping_method)
+        shipment = create(:shipment_with, :shipping_method, shipping_method:)
         order.shipments = [shipment]
 
         expect(order.shipping_method).to eq shipment.shipping_method
@@ -33,7 +33,7 @@ describe OrderShipment do
     end
 
     context "when order has a shipment" do
-      let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+      let(:shipment) { create(:shipment_with, :shipping_method, shipping_method:) }
       before { order.shipments = [shipment] }
 
       context "when no shipping_method_id is provided" do
