@@ -20,12 +20,11 @@ describe("VerticalEllipsisMenuController test", () => {
         </div>
       </div>
     `;
+    const button = document.getElementById("button");
+    const content = document.getElementById("content");
   });
 
   it("add show class to content when toggle is called", () => {
-    const button = document.getElementById("button");
-    const content = document.getElementById("content");
-
     expect(content.classList.contains("show")).toBe(false);
     button.click();
     expect(content.classList.contains("show")).toBe(true);
@@ -33,9 +32,6 @@ describe("VerticalEllipsisMenuController test", () => {
 
 
   it("remove show class from content when clicking button", () => {
-    const button = document.getElementById("button");
-    const content = document.getElementById("content");
-
     button.click();
     expect(content.classList.contains("show")).toBe(true);
     button.click();
@@ -44,9 +40,6 @@ describe("VerticalEllipsisMenuController test", () => {
 
   
   it("remove show class from content when clicking outside", () => {
-    const button = document.getElementById("button");
-    const content = document.getElementById("content");
-
     button.click();
     expect(content.classList.contains("show")).toBe(true);
     document.body.click();
