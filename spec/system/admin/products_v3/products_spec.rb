@@ -157,6 +157,36 @@ describe 'As an admin, I can see the new product page' do
     end
   end
 
+  describe "Actions columns (edit)" do
+    let!(:variant_a1) {
+      create(:variant,
+             product: product_a,
+             display_name: "Medium box",
+             sku: "APL-01",
+             price: 5.25)
+    }
+    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
+
+    before do
+      visit admin_products_v3_index_url
+    end
+
+    it "shows an actions memu with an edit link when clicking on icon for product" do
+      within row_containing_name("Apples") do
+        page.find(".vertical-ellipsis-menu").click
+        expect(page).to have_link "Edit", href: spree.edit_admin_product_path(product_a)
+      end
+    end
+
+    it "shows an actions memu with an edit link when clicking on icon for variant" do
+      within row_containing_name("Medium box") do
+        page.find(".vertical-ellipsis-menu").click
+        expect(page).to have_link "Edit",
+                                  href: spree.edit_admin_product_variant_path(product_a, variant_a1)
+      end
+    end
+  end
+
   describe "updating" do
     let!(:variant_a1) {
       create(:variant,
