@@ -19,14 +19,20 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
     create(:ship_address, state: state_zone.members.first.zoneable,
                           country: country_zone.members.first.zoneable)
   end
-  let(:variant) { create(:variant) }
+  let(:variant) { create(:variant, tax_category: ) }
   let(:product) { variant.product }
   let(:supplier) do
     create(:supplier_enterprise, name: 'SupplierEnterprise', charges_sales_tax: true)
   end
   let(:distributor) do
-    create(:distributor_enterprise_with_tax, name: 'DistributorEnterpriseWithTax',
-                                             charges_sales_tax: true)
+    create(
+      :distributor_enterprise_with_tax,
+      name: 'DistributorEnterpriseWithTax',
+      charges_sales_tax: true
+    ).tap do |distributor|
+      distributor.shipping_methods << shipping_method
+      distributor.payment_methods << payment_method
+    end
   end
   let(:payment_method) { create(:payment_method, :flat_rate) }
   let(:shipping_method) do
@@ -43,11 +49,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
   end
 
   before do
-    distributor.shipping_methods << shipping_method
-    distributor.payment_methods << payment_method
-
     product.update!(supplier_id: supplier.id)
-    variant.update!(tax_category_id: tax_category.id)
 
     order.update!(
       number: 'ORDER_NUMBER_1',
@@ -71,8 +73,6 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
       ]
     end
 
-    # TODO see if we can simplify setup
-    # sould be able to only create the adjustment we need, or maybe mock them ?
     it "returns tax amount filtered by tax rate in query_row" do
       OrderWorkflow.new(order).complete!
       mock_voucher_adjustment_service
