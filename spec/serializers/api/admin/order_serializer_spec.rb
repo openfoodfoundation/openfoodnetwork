@@ -41,7 +41,7 @@ describe Api::Admin::OrderSerializer do
       let!(:payment) do
         create(
           :payment,
-          order: order,
+          order:,
           state: 'requires_authorization',
           amount: 123.45,
           cvv_response_message: "https://stripe.com/redirect"
@@ -57,7 +57,7 @@ describe Api::Admin::OrderSerializer do
       let!(:pending_payment) do
         create(
           :payment,
-          order: order,
+          order:,
           state: 'pending',
           amount: 123.45,
         )

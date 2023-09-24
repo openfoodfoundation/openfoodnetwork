@@ -6,8 +6,8 @@ describe Spree::ShippingRate do
   let(:shipment) { create(:shipment) }
   let(:shipping_method) { build_stubbed(:shipping_method) }
   let(:shipping_rate) {
-    Spree::ShippingRate.new(shipment: shipment,
-                            shipping_method: shipping_method,
+    Spree::ShippingRate.new(shipment:,
+                            shipping_method:,
                             cost: 10.55)
   }
 

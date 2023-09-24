@@ -58,7 +58,7 @@ module Spree
           let(:variant) { line_item.variant }
           let(:vo_stock) { 999 }
           let!(:variant_override) {
-            create(:variant_override, variant: variant, hub: hub, count_on_hand: vo_stock)
+            create(:variant_override, variant:, hub:, count_on_hand: vo_stock)
           }
 
           context "when the override has stock" do

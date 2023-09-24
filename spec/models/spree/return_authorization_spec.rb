@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Spree::ReturnAuthorization do
   let(:order) { create(:shipped_order) }
   let(:variant) { order.shipments.first.inventory_units.first.variant }
-  let(:return_authorization) { Spree::ReturnAuthorization.new(order: order) }
+  let(:return_authorization) { Spree::ReturnAuthorization.new(order:) }
 
   context "save" do
     it "should be invalid when order has no inventory units" do
@@ -87,7 +87,7 @@ describe Spree::ReturnAuthorization do
       expect(Spree::Adjustment).to receive(:create).with(
         amount: -20,
         label: 'RMA credit',
-        order: order,
+        order:,
         adjustable: order,
         originator: return_authorization
       )

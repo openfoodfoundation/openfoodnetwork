@@ -10,7 +10,7 @@ describe StripeAccount do
     let(:client_id) { 'ca_abc123' }
     let(:stripe_user_id) { 'acct_abc123' }
     let!(:stripe_account) {
-      create(:stripe_account, enterprise: enterprise, stripe_user_id: stripe_user_id)
+      create(:stripe_account, enterprise:, stripe_user_id:)
     }
 
     before do
@@ -37,7 +37,7 @@ describe StripeAccount do
       before do
         stub_request(:post, "https://connect.stripe.com/oauth/deauthorize").
           with(body: { "client_id" => client_id, "stripe_user_id" => stripe_user_id }).
-          to_return(status: 200, body: JSON.generate(stripe_user_id: stripe_user_id))
+          to_return(status: 200, body: JSON.generate(stripe_user_id:))
       end
 
       it "destroys the record" do
@@ -48,7 +48,7 @@ describe StripeAccount do
 
     context "if the account is also associated with another Enterprise" do
       let!(:another_stripe_account) {
-        create(:stripe_account, enterprise: enterprise2, stripe_user_id: stripe_user_id)
+        create(:stripe_account, enterprise: enterprise2, stripe_user_id:)
       }
 
       it "Doesn't make a Stripe API disconnection request " do

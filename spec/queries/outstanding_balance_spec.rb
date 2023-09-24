@@ -96,7 +96,7 @@ describe OutstandingBalance do
       before do
         order = create(:order, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, total: order_total, payment_total: payment_total)
+        order = create(:order, total: order_total, payment_total:)
         order.update_attribute(:state, 'complete')
       end
 
@@ -128,7 +128,7 @@ describe OutstandingBalance do
       before do
         order = create(:order, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, total: order_total, payment_total: payment_total)
+        order = create(:order, total: order_total, payment_total:)
         order.update_attribute(:state, 'resumed')
       end
 
@@ -144,7 +144,7 @@ describe OutstandingBalance do
       before do
         order = create(:order, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, total: order_total, payment_total: payment_total)
+        order = create(:order, total: order_total, payment_total:)
         order.update_attribute(:state, 'payment')
       end
 
@@ -160,7 +160,7 @@ describe OutstandingBalance do
       before do
         order = create(:order, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, total: order_total, payment_total: payment_total)
+        order = create(:order, total: order_total, payment_total:)
         order.update_attribute(:state, 'awaiting_return')
       end
 
@@ -175,7 +175,7 @@ describe OutstandingBalance do
       let(:non_returned_orders_total) { order_total }
 
       before do
-        order = create(:order, total: order_total, payment_total: payment_total)
+        order = create(:order, total: order_total, payment_total:)
         order.update_attribute(:state, 'returned')
         order = create(:order, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')

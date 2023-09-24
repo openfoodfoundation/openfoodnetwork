@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Api::EnterpriseSerializer do
-  let(:serializer) { Api::EnterpriseSerializer.new enterprise, data: data }
+  let(:serializer) { Api::EnterpriseSerializer.new enterprise, data: }
   let(:enterprise) { create(:distributor_enterprise, is_primary_producer: true) }
   let(:taxon) { create(:taxon) }
   let(:data) {

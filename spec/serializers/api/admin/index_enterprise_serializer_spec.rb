@@ -7,7 +7,7 @@ describe Api::Admin::IndexEnterpriseSerializer do
   context "when spree_current_user is a manager" do
     let(:user) { create(:user) }
     before do
-      user.enterprise_roles.create(enterprise: enterprise)
+      user.enterprise_roles.create(enterprise:)
     end
 
     it "sets 'owned' to false" do

@@ -19,7 +19,7 @@ module Spree
 
       context "product has variants" do
         before do
-          product.reload.variants << create(:variant, product: product)
+          product.reload.variants << create(:variant, product:)
         end
 
         context "#destroy" do
@@ -148,7 +148,7 @@ module Spree
       let(:stock_item) { variant.stock_items.first }
 
       it "doesnt raise ReadOnlyRecord error" do
-        Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
+        Spree::StockMovement.create!(stock_item:, quantity: 1)
         expect { product.destroy }.not_to raise_error
       end
     end
@@ -195,7 +195,7 @@ module Spree
       context "when the product has variants" do
         let(:product) do
           product = create(:simple_product)
-          create(:variant, product: product)
+          create(:variant, product:)
           product.reload
         end
 
@@ -512,7 +512,7 @@ module Spree
         it "shows only products for given user" do
           user = create(:user)
           user.spree_roles = []
-          @e1.enterprise_roles.build(user: user).save
+          @e1.enterprise_roles.build(user:).save
 
           product = Product.managed_by user
           expect(product.count).to eq(1)
@@ -535,17 +535,17 @@ module Spree
         let!(:hidden_variant) { create(:variant) }
 
         let!(:product) { create(:product) }
-        let!(:visible_variant1) { create(:variant, product: product) }
-        let!(:visible_variant2) { create(:variant, product: product) }
+        let!(:visible_variant1) { create(:variant, product:) }
+        let!(:visible_variant2) { create(:variant, product:) }
 
         let!(:hidden_inventory_item) {
-          create(:inventory_item, enterprise: enterprise, variant: hidden_variant, visible: false )
+          create(:inventory_item, enterprise:, variant: hidden_variant, visible: false )
         }
         let!(:visible_inventory_item1) {
-          create(:inventory_item, enterprise: enterprise, variant: visible_variant1, visible: true )
+          create(:inventory_item, enterprise:, variant: visible_variant1, visible: true )
         }
         let!(:visible_inventory_item2) {
-          create(:inventory_item, enterprise: enterprise, variant: visible_variant2, visible: true )
+          create(:inventory_item, enterprise:, variant: visible_variant2, visible: true )
         }
 
         let!(:products) { Spree::Product.visible_for(enterprise) }
@@ -604,7 +604,7 @@ module Spree
 
       it "returns producer properties as a hash" do
         supplier = create(:supplier_enterprise)
-        product = create(:simple_product, supplier: supplier)
+        product = create(:simple_product, supplier:)
 
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = supplier.properties.last
@@ -616,7 +616,7 @@ module Spree
 
       it "overrides producer properties with product properties" do
         supplier = create(:supplier_enterprise)
-        product = create(:simple_product, supplier: supplier)
+        product = create(:simple_product, supplier:)
 
         product.set_property 'Organic Certified', 'NASAA 12345'
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
@@ -629,7 +629,7 @@ module Spree
 
       context "when product has an inherit_properties value set to true" do
         let(:supplier) { create(:supplier_enterprise) }
-        let(:product) { create(:simple_product, supplier: supplier, inherits_properties: true) }
+        let(:product) { create(:simple_product, supplier:, inherits_properties: true) }
 
         it "inherits producer properties" do
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
@@ -643,7 +643,7 @@ module Spree
 
       context "when product has an inherit_properties value set to false" do
         let(:supplier) { create(:supplier_enterprise) }
-        let(:product) { create(:simple_product, supplier: supplier, inherits_properties: false) }
+        let(:product) { create(:simple_product, supplier:, inherits_properties: false) }
 
         it "does not inherit producer properties" do
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
@@ -654,7 +654,7 @@ module Spree
 
       it "sorts by position" do
         supplier = create(:supplier_enterprise)
-        product = create(:simple_product, supplier: supplier)
+        product = create(:simple_product, supplier:)
 
         pa = Spree::Property.create! name: 'A', presentation: 'A'
         pb = Spree::Property.create! name: 'B', presentation: 'B'
@@ -748,8 +748,8 @@ module Spree
       end
 
       context "when the variants do not have an import date" do
-        let!(:variant_a) { create(:variant, product: product, import_date: nil) }
-        let!(:variant_b) { create(:variant, product: product, import_date: nil) }
+        let!(:variant_a) { create(:variant, product:, import_date: nil) }
+        let!(:variant_b) { create(:variant, product:, import_date: nil) }
 
         it "returns nil" do
           expect(product.import_date).to be_nil
@@ -757,12 +757,12 @@ module Spree
       end
 
       context "when some variants have import date and some do not" do
-        let!(:variant_a) { create(:variant, product: product, import_date: nil) }
+        let!(:variant_a) { create(:variant, product:, import_date: nil) }
         let!(:variant_b) {
-          create(:variant, product: product, import_date: reference_time - 1.hour)
+          create(:variant, product:, import_date: reference_time - 1.hour)
         }
         let!(:variant_c) {
-          create(:variant, product: product, import_date: reference_time - 2.hours)
+          create(:variant, product:, import_date: reference_time - 2.hours)
         }
 
         it "returns the most recent import date" do
@@ -772,13 +772,13 @@ module Spree
 
       context "when all variants have import date" do
         let!(:variant_a) {
-          create(:variant, product: product, import_date: reference_time - 2.hours)
+          create(:variant, product:, import_date: reference_time - 2.hours)
         }
         let!(:variant_b) {
-          create(:variant, product: product, import_date: reference_time - 1.hour)
+          create(:variant, product:, import_date: reference_time - 1.hour)
         }
         let!(:variant_c) {
-          create(:variant, product: product, import_date: reference_time - 3.hours)
+          create(:variant, product:, import_date: reference_time - 3.hours)
         }
 
         it "returns the most recent import date" do

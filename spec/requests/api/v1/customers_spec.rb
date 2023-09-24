@@ -80,7 +80,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
       context "as a user who manages the enterprise" do
         let!(:user){ enterprise3.users.first }
         before do
-          EnterpriseRole.create!(user: user, enterprise: enterprise1)
+          EnterpriseRole.create!(user:, enterprise: enterprise1)
           login_as user
         end
 

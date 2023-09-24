@@ -8,11 +8,11 @@ describe "checking out an order that initially fails", type: :request do
   let!(:shop) { create(:enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle) }
   let!(:exchange) {
-    create(:exchange, order_cycle: order_cycle, sender: order_cycle.coordinator, receiver: shop,
+    create(:exchange, order_cycle:, sender: order_cycle.coordinator, receiver: shop,
                       incoming: false, pickup_time: "Monday")
   }
   let!(:address) { create(:address) }
-  let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
+  let!(:line_item) { create(:line_item, order:, quantity: 3, price: 5.00) }
   let!(:payment_method) {
     create(:bogus_payment_method, distributor_ids: [shop.id], environment: Rails.env)
   }
@@ -20,9 +20,9 @@ describe "checking out an order that initially fails", type: :request do
     create(:payment_method, distributor_ids: [shop.id], environment: Rails.env)
   }
   let!(:shipping_method) { create(:shipping_method, distributor_ids: [shop.id]) }
-  let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+  let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method:) }
   let!(:order) {
-    create(:order, shipments: [shipment], distributor: shop, order_cycle: order_cycle)
+    create(:order, shipments: [shipment], distributor: shop, order_cycle:)
   }
   let(:params) do
     { order: {
@@ -61,7 +61,7 @@ describe "checking out an order that initially fails", type: :request do
     end
 
     it "clears shipments and payments before rendering the checkout" do
-      put update_checkout_path, params: params, as: :json
+      put update_checkout_path, params:, as: :json
 
       # Checking out a BogusGateway without a source fails at :payment
       # Shipments and payments should then be cleared before rendering checkout
@@ -74,12 +74,12 @@ describe "checking out an order that initially fails", type: :request do
       expect(order.adjustment_total).to eq 0
 
       # Add another line item to change the fee totals
-      create(:line_item, order: order, quantity: 3, price: 5.00)
+      create(:line_item, order:, quantity: 3, price: 5.00)
 
       # Use a check payment method, which should work
       params[:order][:payments_attributes][0][:payment_method_id] = check_payment_method.id
 
-      put update_checkout_path, params: params, as: :json
+      put update_checkout_path, params:, as: :json
 
       expect(response.status).to be 200
       order.reload

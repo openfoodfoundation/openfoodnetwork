@@ -9,7 +9,7 @@ describe "checking out an order with a paypal express payment method", type: :re
   let!(:address) { create(:address) }
   let!(:shop) { create(:enterprise) }
   let!(:shipping_method) { create(:shipping_method_with, :distributor, distributor: shop) }
-  let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+  let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method:) }
   let!(:order) do
     create(
       :order,
@@ -19,7 +19,7 @@ describe "checking out an order with a paypal express payment method", type: :re
       bill_address: address.dup
     )
   end
-  let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
+  let!(:line_item) { create(:line_item, order:, quantity: 3, price: 5.00) }
   let!(:payment_method) do
     Spree::Gateway::PayPalExpress.create!(
       name: "PayPalExpress",
@@ -56,7 +56,7 @@ describe "checking out an order with a paypal express payment method", type: :re
       expect(order.all_adjustments.payment_fee.count).to eq 1
       expect(order.all_adjustments.payment_fee.first.amount).to eq 1.5
 
-      get payment_gateways_confirm_paypal_path, params: params
+      get(payment_gateways_confirm_paypal_path, params:)
 
       # Processing was successful, order is complete
       expect(response).to redirect_to order_path(order, order_token: order.token)

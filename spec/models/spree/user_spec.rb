@@ -128,10 +128,10 @@ describe Spree::User do
       let(:email) { generate(:random_email) }
       let(:enterprise1) { create(:enterprise) }
       let(:enterprise2) { create(:enterprise) }
-      let!(:customer1) { create(:customer, user: nil, email: email, enterprise: enterprise1) }
-      let!(:customer2) { create(:customer, user: nil, email: email, enterprise: enterprise2) }
+      let!(:customer1) { create(:customer, user: nil, email:, enterprise: enterprise1) }
+      let!(:customer2) { create(:customer, user: nil, email:, enterprise: enterprise2) }
       let!(:order) { create(:order, customer: customer1) }
-      let!(:user) { create(:user, email: email) }
+      let!(:user) { create(:user, email:) }
 
       it "should associate these customers with the created user" do
         expect(user.customers.reload).to include customer1, customer2
@@ -190,7 +190,7 @@ describe Spree::User do
     end
 
     context "when the user has one credit card" do
-      let!(:card) { create(:stored_credit_card, user: user) }
+      let!(:card) { create(:stored_credit_card, user:) }
 
       it "should be assigned as the default and be returned" do
         expect(card.reload.is_default).to be true
@@ -199,8 +199,8 @@ describe Spree::User do
     end
 
     context "when the user has more than one card" do
-      let!(:non_default_card) { create(:stored_credit_card, user: user) }
-      let!(:default_card) { create(:stored_credit_card, user: user, is_default: true) }
+      let!(:non_default_card) { create(:stored_credit_card, user:) }
+      let!(:default_card) { create(:stored_credit_card, user:, is_default: true) }
 
       it "returns the card which is specified as the default" do
         expect(user.default_card.id).to be default_card.id

@@ -19,7 +19,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
     )
   end
   let!(:payment_method) { create(:stripe_sca_payment_method, distributors: [enterprise]) }
-  let!(:stripe_account) { create(:stripe_account, enterprise: enterprise) }
+  let!(:stripe_account) { create(:stripe_account, enterprise:) }
   let!(:line_item) { create(:line_item, price: 12.34) }
   let!(:order) { line_item.order }
   let(:address) { create(:address) }
@@ -129,7 +129,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
     context "and the payment intent request is successful" do
       it "should process the payment without storing card details" do
-        put update_checkout_path, params: params
+        put(update_checkout_path, params:)
 
         expect(json_response["path"]).to eq order_path(order, order_token: order.token)
         expect(order.payments.completed.count).to be 1
@@ -151,7 +151,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
       end
 
       it "should not process the payment" do
-        put update_checkout_path, params: params
+        put(update_checkout_path, params:)
 
         expect(response.status).to be 400
 
@@ -217,7 +217,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
       context "and the customer, payment_method and payment_intent requests are successful" do
         it "should process the payment, and store the card/customer details" do
-          put update_checkout_path, params: params
+          put(update_checkout_path, params:)
 
           expect(json_response["path"]).to eq order_path(order, order_token: order.token)
           expect(order.payments.completed.count).to be 1
@@ -239,7 +239,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         end
 
         it "should not process the payment" do
-          put update_checkout_path, params: params
+          put(update_checkout_path, params:)
 
           expect(response.status).to be 400
 
@@ -256,7 +256,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         end
 
         it "should not process the payment" do
-          put update_checkout_path, params: params
+          put(update_checkout_path, params:)
 
           expect(response.status).to be 400
 
@@ -271,7 +271,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         end
 
         it "should not process the payment" do
-          put update_checkout_path, params: params
+          put(update_checkout_path, params:)
 
           expect(response.status).to be 400
 
@@ -303,7 +303,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
 
       context "and the payment intent and payment method requests are accepted" do
         it "should process the payment, and keep the profile ids and other card details" do
-          put update_checkout_path, params: params
+          put(update_checkout_path, params:)
 
           expect(json_response["path"]).to eq order_path(order, order_token: order.token)
           expect(order.payments.completed.count).to be 1
@@ -325,7 +325,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         end
 
         it "should not process the payment" do
-          put update_checkout_path, params: params
+          put(update_checkout_path, params:)
 
           expect(response.status).to be 400
 
@@ -346,7 +346,7 @@ describe "checking out an order with a Stripe SCA payment method", type: :reques
         end
 
         it "redirects the user to the authorization stripe url" do
-          put update_checkout_path, params: params
+          put(update_checkout_path, params:)
 
           expect(response.status).to be 200
           expect(response.body).to include stripe_redirect_url

@@ -9,7 +9,7 @@ module Spree
       let!(:order) { create(:order, distributor: hub, bill_address: create(:address)) }
       let!(:tax_rate) {
         create(:tax_rate, included_in_price: true,
-                          calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1), zone: zone)
+                          calculator: ::Calculator::FlatRate.new(preferred_amount: 0.1), zone:)
       }
 
       describe "when the order's hub charges sales tax" do
@@ -69,8 +69,8 @@ module Spree
               rate = Spree::TaxRate.create(
                 amount: 1,
                 zone: @zone,
-                tax_category: tax_category,
-                calculator: calculator
+                tax_category:,
+                calculator:
               )
 
               allow(order).to receive(:tax_zone) { @zone }
@@ -82,14 +82,14 @@ module Spree
               rate1 = Spree::TaxRate.create(
                 amount: 1,
                 zone: @zone,
-                tax_category: tax_category,
-                calculator: calculator
+                tax_category:,
+                calculator:
               )
 
               rate2 = Spree::TaxRate.create(
                 amount: 2,
                 zone: @zone,
-                tax_category: tax_category,
+                tax_category:,
                 calculator: ::Calculator::FlatRate.new
               )
 
@@ -101,14 +101,14 @@ module Spree
             context "when the tax_zone is contained within a rate zone" do
               before do
                 sub_zone = create(:zone, name: "State Zone", zone_members: [])
-                sub_zone.zone_members.create(zoneable: create(:state, country: country))
+                sub_zone.zone_members.create(zoneable: create(:state, country:))
                 allow(order).to receive(:tax_zone) { sub_zone }
 
                 @rate = Spree::TaxRate.create(
                   amount: 1,
                   zone: @zone,
-                  tax_category: tax_category,
-                  calculator: calculator
+                  tax_category:,
+                  calculator:
                 )
               end
 
@@ -128,9 +128,9 @@ module Spree
             let!(:rate) do
               Spree::TaxRate.create(amount: 1,
                                     zone: @zone,
-                                    tax_category: tax_category,
-                                    calculator: calculator,
-                                    included_in_price: included_in_price)
+                                    tax_category:,
+                                    calculator:,
+                                    included_in_price:)
             end
 
             subject { Spree::TaxRate.match(order) }
@@ -224,7 +224,7 @@ module Spree
         end
 
         context "with shipments" do
-          let(:shipment) { build_stubbed(:shipment, order: order) }
+          let(:shipment) { build_stubbed(:shipment, order:) }
           let(:shipments) { [shipment] }
 
           before do
@@ -264,8 +264,8 @@ module Spree
               rate = Spree::TaxRate.create(
                 amount: 1,
                 zone: @zone,
-                tax_category: tax_category,
-                calculator: calculator
+                tax_category:,
+                calculator:
               )
             end
 
@@ -284,18 +284,18 @@ module Spree
 
       describe "#adjust" do
         let!(:country) { create(:country, name: "Default Country") }
-        let!(:state) { create(:state, name: "Default State", country: country) }
+        let!(:state) { create(:state, name: "Default State", country:) }
         let!(:zone) { create(:zone_with_member, default_tax: true, member: country ) }
         let!(:category) { create(:tax_category, name: "Taxable Foo") }
         let!(:category2) { create(:tax_category, name: "Non Taxable") }
         let!(:rate1) {
-          create(:tax_rate, amount: 0.10, zone: zone, tax_category: category)
+          create(:tax_rate, amount: 0.10, zone:, tax_category: category)
         }
         let!(:rate2) {
-          create(:tax_rate, amount: 0.05, zone: zone, tax_category: category)
+          create(:tax_rate, amount: 0.05, zone:, tax_category: category)
         }
         let(:hub) { create(:distributor_enterprise, charges_sales_tax: true) }
-        let(:address) { create(:address, state: country.states.first, country: country) }
+        let(:address) { create(:address, state: country.states.first, country:) }
         let!(:order) {
           create(:order_with_line_items, line_items_count: 2, distributor: hub,
                                          ship_address: address)
@@ -393,7 +393,7 @@ module Spree
             before do
               allow(order).to receive(:tax_zone) { zone }
               [rate1, rate2].each do |rate|
-                rate.update(included_in_price: false, zone: zone)
+                rate.update(included_in_price: false, zone:)
               end
 
               Spree::TaxRate.adjust(order, order.line_items)

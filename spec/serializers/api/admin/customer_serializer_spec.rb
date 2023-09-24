@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Api::Admin::CustomerSerializer do
   let(:tag_list) { ["one", "two", "three"] }
-  let(:customer) { create(:customer, tag_list: tag_list) }
+  let(:customer) { create(:customer, tag_list:) }
   let!(:tag_rule) {
     create(:filter_order_cycles_tag_rule, enterprise: customer.enterprise,
                                           preferred_customer_tags: "two")
@@ -14,7 +14,7 @@ describe Api::Admin::CustomerSerializer do
     tag_rule_mapping = TagRule.mapping_for(Enterprise.where(id: customer.enterprise_id))
     customer_tag_list = { customer.id => tag_list }
     serializer = Api::Admin::CustomerSerializer.new customer,
-                                                    tag_rule_mapping: tag_rule_mapping,
+                                                    tag_rule_mapping:,
                                                     customer_tags: customer_tag_list
     result = JSON.parse(serializer.to_json)
     expect(result['email']).to eq customer.email

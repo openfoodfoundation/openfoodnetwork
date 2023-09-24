@@ -8,10 +8,10 @@ describe 'checkout endpoints', type: :request do
   let!(:shop) { create(:enterprise) }
   let!(:order_cycle) { create(:simple_order_cycle) }
   let!(:exchange) {
-    create(:exchange, order_cycle: order_cycle, sender: order_cycle.coordinator, receiver: shop,
+    create(:exchange, order_cycle:, sender: order_cycle.coordinator, receiver: shop,
                       incoming: false, pickup_time: "Monday")
   }
-  let!(:line_item) { create(:line_item, order: order, quantity: 3, price: 5.00) }
+  let!(:line_item) { create(:line_item, order:, quantity: 3, price: 5.00) }
   let!(:payment_method) {
     create(:bogus_payment_method, distributor_ids: [shop.id], environment: Rails.env)
   }
@@ -19,9 +19,9 @@ describe 'checkout endpoints', type: :request do
     create(:payment_method, distributor_ids: [shop.id], environment: Rails.env)
   }
   let!(:shipping_method) { create(:shipping_method, distributor_ids: [shop.id]) }
-  let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+  let!(:shipment) { create(:shipment_with, :shipping_method, shipping_method:) }
   let!(:order) {
-    create(:order, shipments: [shipment], distributor: shop, order_cycle: order_cycle)
+    create(:order, shipments: [shipment], distributor: shop, order_cycle:)
   }
 
   before do

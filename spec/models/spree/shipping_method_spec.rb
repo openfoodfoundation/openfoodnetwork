@@ -208,7 +208,7 @@ module Spree
       let!(:shipping_method) { create(:shipping_method) }
       let!(:shipment) do
         shipment = create(:shipment)
-        shipment.shipping_rates.create!(shipping_method: shipping_method)
+        shipment.shipping_rates.create!(shipping_method:)
         shipment
       end
 

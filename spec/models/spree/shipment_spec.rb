@@ -7,8 +7,8 @@ describe Spree::Shipment do
   let(:order) { build(:order) }
   let(:shipping_method) { build(:shipping_method, name: "UPS") }
   let(:shipment) do
-    shipment = Spree::Shipment.new order: order
-    allow(shipment).to receive_messages(shipping_method: shipping_method)
+    shipment = Spree::Shipment.new(order:)
+    allow(shipment).to receive_messages(shipping_method:)
     shipment.state = 'pending'
     shipment
   end
@@ -106,7 +106,7 @@ describe Spree::Shipment do
     end
 
     context 'refresh_rates' do
-      let(:mock_estimator) { double('estimator', shipping_rates: shipping_rates) }
+      let(:mock_estimator) { double('estimator', shipping_rates:) }
 
       it 'should request new rates, and maintain shipping_method selection' do
         expect(OrderManagement::Stock::Estimator).
@@ -143,13 +143,13 @@ describe Spree::Shipment do
               includes: [
                 build_stubbed(
                   :inventory_unit,
-                  shipment: shipment,
+                  shipment:,
                   variant: build_stubbed(:variant),
                   state: 'on_hand'
                 ),
                 build_stubbed(
                   :inventory_unit,
-                  shipment: shipment,
+                  shipment:,
                   variant: build_stubbed(:variant),
                   state: 'backordered'
                 )
@@ -288,7 +288,7 @@ describe Spree::Shipment do
     end
 
     it 'restocks the items' do
-      unit = double(:inventory_unit, variant: variant)
+      unit = double(:inventory_unit, variant:)
       allow(unit).to receive(:quantity) { 1 }
       allow(shipment).to receive_message_chain(:inventory_units,
                                                :group_by,
@@ -312,7 +312,7 @@ describe Spree::Shipment do
     end
 
     it 'unstocks the items' do
-      unit = create(:inventory_unit, variant: variant)
+      unit = create(:inventory_unit, variant:)
       allow(unit).to receive(:quantity) { 1 }
       allow(shipment).to receive_message_chain(:inventory_units,
                                                :group_by,
@@ -463,7 +463,7 @@ describe Spree::Shipment do
       { variant_id: variant.id, state: 'on_hand', order_id: order.id }
     end
 
-    before { allow(shipment).to receive_messages inventory_units: inventory_units }
+    before { allow(shipment).to receive_messages(inventory_units:) }
 
     it "associates variant and order" do
       expect(inventory_units).to receive(:create).with(params)
