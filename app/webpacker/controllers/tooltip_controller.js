@@ -1,16 +1,28 @@
 import { Controller } from "stimulus";
 import { computePosition, offset, arrow } from "@floating-ui/dom";
 
+// This is meant to be used with the follwing html where element can be a
+// "div", "a", "span" or "button", etc... :
+//
+//  <div data-controller="tooltip">
+//    <element data-tooltip-target="element">
+//    <div class="tooltip-container">
+//      <div class="tooltip" data-tooltip-target="tooltip">
+//        tooltip_text
+//        <div class=arrow data-tooltip-target="arrow"></div>
+//      </div>
+//    </div>
+//  </div>
+//
+//  You can also use this partial app/views/admin/shared/_tooltip.html.haml
+
 export default class extends Controller {
   static targets = ["element", "tooltip", "arrow"];
   static values = {
-    tip: String,
     placement: { type: String, default: "top" },
   };
 
   connect() {
-    if (this.hasTipValue) { this.insertToolTipMarkup() }
-
     this.elementTarget.addEventListener("mouseenter", this.showTooltip);
     this.elementTarget.addEventListener("mouseleave", this.hideTooltip);
   }
@@ -56,23 +68,4 @@ export default class extends Controller {
   hideTooltip = () => {
     this.tooltipTarget.style.display = "";
   };
-
-  insertToolTipMarkup() {
-    let container = document.createElement("div");
-    let tooltip = document.createElement("div");
-    let arrow = document.createElement("div");
-    let text = document.createTextNode(this.tipValue);
-
-    container.classList.add("tooltip-container");
-    tooltip.classList.add("tooltip");
-    tooltip.setAttribute("data-tooltip-target", "tooltip");
-    arrow.classList.add("arrow");
-    arrow.setAttribute("data-tooltip-target", "arrow");
-
-    container.appendChild(tooltip);
-    tooltip.appendChild(text);
-    tooltip.appendChild(arrow);
-
-    this.elementTarget.appendChild(container);
-  }
 }
