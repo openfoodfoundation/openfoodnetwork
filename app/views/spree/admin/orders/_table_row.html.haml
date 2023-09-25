@@ -14,6 +14,10 @@
         %div{ "data-controller": "tooltip", "data-tooltip-tip-value": order.special_instructions.to_s }
           %span.icon-warning-sign{ "data-tooltip-target": "element" }
             = t('spree.admin.orders.index.note')
+            .tooltip-container
+              .tooltip{"data-tooltip-target": "tooltip"}
+                = sanitize order.special_instructions.to_s
+                .arrow{"data-tooltip-target": "arrow"}
   %td.align-left
     %span.state{ class: order.state.to_s }
       = t('js.admin.orders.order_state.' + order.state.to_s)
@@ -41,13 +45,8 @@
     %div.row-loading-icons
       - if local_assigns[:success]
         %i.success.icon-ok-sign{"data-controller": "ephemeral"}
-    %a.icon_link.with-tip.icon-edit.no-text{href: edit_admin_order_path(order), "data-controller": "tooltip", "data-tooltip-tip-value": t('spree.admin.orders.index.edit'), "data-tooltip-target": "element"}
+    = render partial: 'admin/shared/tooltip', locals: {link_class: "icon_link with-tip icon-edit no-text" ,link: edit_admin_order_path(order), link_text: "",  tooltip_text: t('spree.admin.orders.index.edit')}
     - if order.ready_to_ship?
-      %div{ "data-controller": "tooltip", "data-tooltip-tip-value": t('spree.admin.orders.index.ship') }
-        %button.icon-road.icon_link.with-tip.no-text{"data-reflex": "click->Admin::OrdersReflex#ship", "data-id": order.id.to_s,
-        "data-tooltip-target": "element" }
-
+      = render partial: 'admin/shared/tooltip_button', locals: {button_class: "icon-road icon_link with-tip no-text", button_reflex: "click->Admin::OrdersReflex#ship", reflex_data_id: order.id.to_s,  tooltip_text: t('spree.admin.orders.index.ship')}
     - if order.payment_required? && order.pending_payments.reject(&:requires_authorization?).any?
-      %div{ "data-controller": "tooltip", "data-tooltip-tip-value": t('spree.admin.orders.index.capture') }
-        %button.icon-capture.icon_link.no-text{"data-reflex": "click->Admin::OrdersReflex#capture", "data-id": order.id.to_s,
-        "data-tooltip-target": "element" }
+      = render partial: 'admin/shared/tooltip_button', locals: {button_class: "icon-capture icon_link no-text", button_reflex: "click->Admin::OrdersReflex#capture", reflex_data_id: order.id.to_s,  tooltip_text: t('spree.admin.orders.index.capture')}

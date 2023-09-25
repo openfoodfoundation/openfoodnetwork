@@ -1,0 +1,7 @@
+%div{ "data-controller": "tooltip" }
+  %button{class: button_class, "data-reflex": button_reflex, "data-id": reflex_data_id, "data-tooltip-target": "element" }
+  .tooltip-container
+    .tooltip{"data-tooltip-target": "tooltip"}
+      = sanitize tooltip_text
+      .arrow{"data-tooltip-target": "arrow"}
+

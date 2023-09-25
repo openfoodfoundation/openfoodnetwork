@@ -443,8 +443,9 @@ describe '
 
         it "displays a note with order instructions" do
           within "tr#order_#{order3.id}" do
-            expect(page).to have_content I18n.t('spree.admin.orders.index.note')
-            expect(page).to have_css "[data-tooltip-tip-value='#{order3.special_instructions}']"
+            expect(page).to have_content "Note"
+            find(".icon-warning-sign").hover
+            expect(page).to have_content /#{order3.special_instructions}/i
           end
         end
       end
@@ -762,6 +763,11 @@ describe '
 
             # checks shipment state
             expect(page).to have_content "READY"
+
+            # move away from the Ship button so we can trigger the mouseenter event by moving back.
+            # We are already on the "Ship" button when it gets rendered because of
+            # the previous click
+            find(".icon-edit").hover
             # mouse-hovers and finds Ship tooltip
             find(".icon-road").hover
             expect(page).to have_content "Ship"
