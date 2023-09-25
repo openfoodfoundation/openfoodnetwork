@@ -83,15 +83,15 @@ class VoucherAdjustmentsService
     # Update the amount if tax adjustment already exist, create if not
     tax_adjustment = @order.adjustments.find_or_initialize_by(adjustment_attributes)
     tax_adjustment.amount = tax_amount
-    tax_adjustment.save
 
     # Add metada so we know which voucher adjustment is Tax related
-    AdjustmentMetadata.create(
-      adjustment: tax_adjustment,
+    tax_adjustment.metadata ||= AdjustmentMetadata.new(
       enterprise: adjustment.originator.enterprise,
       fee_name: "Tax",
       fee_type: "Voucher"
     )
+
+    tax_adjustment.save
   end
 
   def handle_tax_included_in_price(amount, voucher)
