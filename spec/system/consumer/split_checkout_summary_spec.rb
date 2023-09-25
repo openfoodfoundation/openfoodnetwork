@@ -15,7 +15,7 @@ describe "As a consumer, I want to checkout my order" do
   let(:supplier) { create(:supplier_enterprise) }
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:product) {
-    create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1)
+    create(:taxed_product, supplier:, price: 10, zone:, tax_rate_amount: 0.1)
   }
   let(:variant) { product.variants.first }
   let!(:order_cycle) {
@@ -23,12 +23,12 @@ describe "As a consumer, I want to checkout my order" do
                                 coordinator: create(:distributor_enterprise), variants: [variant])
   }
   let(:order) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil,
+    create(:order, order_cycle:, distributor:, bill_address_id: nil,
                    ship_address_id: nil, state: "cart",
-                   line_items: [create(:line_item, variant: variant)])
+                   line_items: [create(:line_item, variant:)])
   }
 
-  let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
+  let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone:, included_in_price: true) }
   let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
 
@@ -41,7 +41,7 @@ describe "As a consumer, I want to checkout my order" do
                              description: "yellow",
                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
-  let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone: zone, included_in_price: true) }
+  let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone:, included_in_price: true) }
   let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
   let(:shipping_with_fee) {
     create(:shipping_method, require_ship_address: true, tax_category: shipping_tax_category,
@@ -86,7 +86,7 @@ describe "As a consumer, I want to checkout my order" do
 
     context "summary step" do
       let(:order) {
-        create(:order_ready_for_confirmation, distributor: distributor)
+        create(:order_ready_for_confirmation, distributor:)
       }
 
       describe "display the delivery address and not the ship address" do
@@ -153,7 +153,7 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       describe "terms and conditions" do
-        let(:customer) { create(:customer, enterprise: order.distributor, user: user) }
+        let(:customer) { create(:customer, enterprise: order.distributor, user:) }
         let(:tos_url) { "https://example.org/tos" }
         let(:system_terms_path) { Rails.public_path.join('Terms-of-service.pdf') }
         let(:shop_terms_path) { Rails.public_path.join('Terms-of-ServiceUK.pdf') }
@@ -351,12 +351,12 @@ describe "As a consumer, I want to checkout my order" do
 
     context "with previous open orders" do
       let(:order) {
-        create(:order_ready_for_confirmation, distributor: distributor,
-                                              order_cycle: order_cycle, user_id: user.id)
+        create(:order_ready_for_confirmation, distributor:,
+                                              order_cycle:, user_id: user.id)
       }
       let!(:prev_order) {
         create(:completed_order_with_totals,
-               order_cycle: order_cycle, distributor: distributor, user_id: order.user_id)
+               order_cycle:, distributor:, user_id: order.user_id)
       }
 
       context "when distributor allows order changes" do

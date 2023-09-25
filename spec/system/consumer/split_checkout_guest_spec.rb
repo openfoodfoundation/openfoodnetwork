@@ -12,7 +12,7 @@ describe "As a consumer, I want to checkout my order" do
   let(:supplier) { create(:supplier_enterprise) }
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:product) {
-    create(:taxed_product, supplier: supplier, price: 10, zone: zone, tax_rate_amount: 0.1)
+    create(:taxed_product, supplier:, price: 10, zone:, tax_rate_amount: 0.1)
   }
   let(:variant) { product.variants.first }
   let!(:order_cycle) {
@@ -20,12 +20,12 @@ describe "As a consumer, I want to checkout my order" do
                                 coordinator: create(:distributor_enterprise), variants: [variant])
   }
   let(:order) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil,
+    create(:order, order_cycle:, distributor:, bill_address_id: nil,
                    ship_address_id: nil, state: "cart",
-                   line_items: [create(:line_item, variant: variant)])
+                   line_items: [create(:line_item, variant:)])
   }
 
-  let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone: zone, included_in_price: true) }
+  let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone:, included_in_price: true) }
   let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
 
@@ -38,7 +38,7 @@ describe "As a consumer, I want to checkout my order" do
                              description: "yellow",
                              calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
-  let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone: zone, included_in_price: true) }
+  let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone:, included_in_price: true) }
   let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
   let(:shipping_with_fee) {
     create(:shipping_method, require_ship_address: true, tax_category: shipping_tax_category,
@@ -244,7 +244,7 @@ describe "As a consumer, I want to checkout my order" do
 
     describe "hidding a shipping method" do
       let(:user) { create(:user) }
-      let(:customer) { create(:customer, user: user, enterprise: distributor) }
+      let(:customer) { create(:customer, user:, enterprise: distributor) }
 
       it "shows shipping methods allowed by the rule" do
         visit checkout_path
