@@ -4,13 +4,13 @@ require "spec_helper"
 
 describe Api::Admin::ForOrderCycle::SuppliedProductSerializer do
   let(:coordinator)         { create(:distributor_enterprise) }
-  let(:order_cycle)         { double(:order_cycle, coordinator: coordinator) }
+  let(:order_cycle)         { double(:order_cycle, coordinator:) }
   let!(:product) { create(:simple_product) }
   let!(:non_inventory_variant) { product.variants.first }
   let!(:inventory_variant) { create(:variant, product: product.reload) }
   let(:serialized_product) {
     Api::Admin::ForOrderCycle::SuppliedProductSerializer.new(product,
-                                                             order_cycle: order_cycle ).to_json
+                                                             order_cycle: ).to_json
   }
   let!(:inventory_item) {
     create(:inventory_item, enterprise: coordinator, variant: inventory_variant, visible: true)

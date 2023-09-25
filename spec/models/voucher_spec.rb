@@ -24,14 +24,14 @@ describe Voucher do
   end
 
   describe 'validations' do
-    subject { build(:voucher_flat_rate, code: 'new_code', enterprise: enterprise) }
+    subject { build(:voucher_flat_rate, code: 'new_code', enterprise:) }
 
     it { is_expected.to validate_presence_of(:code) }
     it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
   end
 
   describe '#display_value' do
-    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise: enterprise) }
+    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise:) }
 
     it "raises not implemented error" do
       expect{ voucher.display_value }
@@ -40,7 +40,7 @@ describe Voucher do
   end
 
   describe '#compute_amount' do
-    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise: enterprise) }
+    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise:) }
 
     it "raises not implemented error" do
       expect{ voucher.compute_amount(nil) }
@@ -52,7 +52,7 @@ describe Voucher do
     subject(:adjustment) { voucher.create_adjustment(voucher.code, order) }
 
     let(:voucher) do
-      create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 25)
+      create(:voucher_flat_rate, code: 'new_code', enterprise:, amount: 25)
     end
     let(:order) { create(:order_with_line_items, line_items_count: 3, distributor: enterprise) }
 
@@ -70,7 +70,7 @@ describe Voucher do
   end
 
   describe '#rate' do
-    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise: enterprise) }
+    subject(:voucher) { Vouchers::TestVoucher.new(code: 'new_code', enterprise:) }
 
     it "raises not implemented error" do
       expect{ voucher.rate(nil) }

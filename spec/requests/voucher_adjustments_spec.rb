@@ -12,8 +12,8 @@ describe VoucherAdjustmentsController, type: :request do
     create(
       :order_with_line_items,
       line_items_count: 1,
-      distributor: distributor,
-      order_cycle: order_cycle,
+      distributor:,
+      order_cycle:,
       bill_address: address,
       ship_address: address
     )
@@ -34,7 +34,7 @@ describe VoucherAdjustmentsController, type: :request do
     let(:params) { { order: { voucher_code: voucher.code } } }
 
     it "adds a voucher to the user's current order" do
-      post "/voucher_adjustments", params: params
+      post("/voucher_adjustments", params:)
 
       expect(response).to be_successful
       expect(order.reload.voucher_adjustments.length).to eq(1)
@@ -44,7 +44,7 @@ describe VoucherAdjustmentsController, type: :request do
       let(:params) { { order: { voucher_code: "non_voucher" } } }
 
       it "returns 422 and an error message" do
-        post "/voucher_adjustments", params: params
+        post("/voucher_adjustments", params:)
 
         expect(response).to be_unprocessable
         expect(flash[:error]).to match "Voucher code Not found"
@@ -58,7 +58,7 @@ describe VoucherAdjustmentsController, type: :request do
         allow(voucher).to receive(:create_adjustment).and_return(bad_adjustment)
         allow(Voucher).to receive(:find_by).and_return(voucher)
 
-        post "/voucher_adjustments", params: params
+        post("/voucher_adjustments", params:)
 
         expect(response).to be_unprocessable
         expect(flash[:error]).to match("Voucher code There was an error while adding the voucher")
@@ -66,22 +66,22 @@ describe VoucherAdjustmentsController, type: :request do
     end
 
     context "when the order has a payment and payment feed" do
-      let(:payment_method) { create(:payment_method, calculator: calculator) }
+      let(:payment_method) { create(:payment_method, calculator:) }
       let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
       before do
-        create(:payment, order: order, payment_method: payment_method, amount: order.total)
+        create(:payment, order:, payment_method:, amount: order.total)
       end
 
       it "removes existing payments" do
         expect do
-          post "/voucher_adjustments", params: params
+          post "/voucher_adjustments", params:
         end.to change { order.reload.payments.count }.from(1).to(0)
       end
 
       it "removes existing payment fees" do
         expect do
-          post "/voucher_adjustments", params: params
+          post "/voucher_adjustments", params:
         end.to change { order.reload.all_adjustments.payment_fee.count }.from(1).to(0)
       end
     end
@@ -122,7 +122,7 @@ describe VoucherAdjustmentsController, type: :request do
         adjustment_attributes = {
           amount: 2.00,
           originator: adjustment.originator,
-          order: order,
+          order:,
           label: "Tax #{adjustment.label}",
           mandatory: false,
           state: 'closed',

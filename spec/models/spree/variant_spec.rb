@@ -107,7 +107,7 @@ describe Spree::Variant do
 
   describe '.price_in' do
     before do
-      variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
+      variant.prices << create(:price, variant:, currency: "EUR", amount: 33.33)
     end
     subject { variant.price_in(currency).display_amount }
 
@@ -138,7 +138,7 @@ describe Spree::Variant do
 
   describe '.amount_in' do
     before do
-      variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
+      variant.prices << create(:price, variant:, currency: "EUR", amount: 33.33)
     end
 
     subject { variant.amount_in(currency) }
@@ -324,10 +324,10 @@ describe Spree::Variant do
       let!(:visible_variant) { create(:variant) }
 
       let!(:hidden_inventory_item) {
-        create(:inventory_item, enterprise: enterprise, variant: hidden_variant, visible: false )
+        create(:inventory_item, enterprise:, variant: hidden_variant, visible: false )
       }
       let!(:visible_inventory_item) {
-        create(:inventory_item, enterprise: enterprise, variant: visible_variant, visible: true )
+        create(:inventory_item, enterprise:, variant: visible_variant, visible: true )
       }
 
       context "finding variants that are not hidden from an enterprise's inventory" do
@@ -509,7 +509,7 @@ describe Spree::Variant do
 
   context "when the product has variants" do
     let!(:product) { create(:simple_product) }
-    let!(:variant) { create(:variant, product: product) }
+    let!(:variant) { create(:variant, product:) }
 
     %w(weight volume).each do |unit|
       context "when the product's unit is #{unit}" do

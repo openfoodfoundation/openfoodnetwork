@@ -16,7 +16,7 @@ describe CompleteOrdersWithBalance do
       let!(:other_order) do
         create(
           :order,
-          user: user,
+          user:,
           state: 'complete',
           total: 2.0,
           payment_total: 1.0,
