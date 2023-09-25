@@ -9,7 +9,7 @@ describe OrderCycleWebhookService do
       name: "Order cycle 1",
       orders_open_at: "2022-09-19 09:00:00".to_time,
       orders_close_at: "2022-09-19 17:00:00".to_time,
-      coordinator: coordinator,
+      coordinator:,
     )
   }
   let(:coordinator) { create :distributor_enterprise, name: "Starship Enterprise" }
@@ -66,7 +66,7 @@ describe OrderCycleWebhookService do
         let(:order_cycle) {
           create(
             :simple_order_cycle,
-            coordinator: coordinator,
+            coordinator:,
             distributors: two_distributors,
           )
         }
@@ -97,7 +97,7 @@ describe OrderCycleWebhookService do
         let(:order_cycle) {
           create(
             :simple_order_cycle,
-            coordinator: coordinator,
+            coordinator:,
             distributors: [create(:distributor_enterprise, owner: user)],
           )
         }
@@ -116,7 +116,7 @@ describe OrderCycleWebhookService do
         let(:order_cycle) {
           create(
             :simple_order_cycle,
-            coordinator: coordinator,
+            coordinator:,
             suppliers: [supplier],
           )
         }

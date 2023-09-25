@@ -7,7 +7,7 @@ describe PlaceProxyOrder do
 
   subject { described_class.new(proxy_order, summarizer, logger, stock_changes_loader) }
 
-  let(:proxy_order) { create(:proxy_order, order: order) }
+  let(:proxy_order) { create(:proxy_order, order:) }
   let(:order) { build(:order, distributor: build(:enterprise)) }
   let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }
   let(:logger) { instance_double(JobLogger.logger.class, info: true) }
@@ -16,7 +16,7 @@ describe PlaceProxyOrder do
 
   describe "#call" do
     let!(:subscription) { create(:subscription, with_items: true) }
-    let!(:proxy_order) { create(:proxy_order, subscription: subscription, order: order) }
+    let!(:proxy_order) { create(:proxy_order, subscription:, order:) }
 
     let(:changes) { {} }
     let(:stock_changes_loader) { instance_double(CapQuantity) }
@@ -47,7 +47,7 @@ describe PlaceProxyOrder do
         instance_double(OrderManagement::Subscriptions::Summarizer, record_order: true)
       }
 
-      let!(:proxy_order) { create(:proxy_order, subscription: subscription) }
+      let!(:proxy_order) { create(:proxy_order, subscription:) }
       let(:order) { proxy_order.order }
 
       before do
@@ -68,9 +68,9 @@ describe PlaceProxyOrder do
         let(:shop) { create(:distributor_enterprise) }
         let(:shipping_method) { create(:shipping_method, distributors: [shop]) }
         let!(:subscription) do
-          create(:subscription, shop: shop, shipping_method: shipping_method, with_items: true)
+          create(:subscription, shop:, shipping_method:, with_items: true)
         end
-        let(:proxy_order) { create(:proxy_order, subscription: subscription) }
+        let(:proxy_order) { create(:proxy_order, subscription:) }
 
         before do
           proxy_order.order_cycle.orders_close_at = 1.day.ago

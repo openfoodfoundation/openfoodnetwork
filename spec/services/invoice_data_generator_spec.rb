@@ -8,13 +8,13 @@ describe InvoiceDataGenerator do
     let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
     let!(:latest_invoice){
       create(:invoice,
-             order: order,
+             order:,
              data: invoice_data_generator.serialize_for_invoice)
     }
     let(:new_invoice_data) {
       InvoiceDataGenerator.new(order).generate
     }
-    let(:new_invoice) { create(:invoice, order: order, data: new_invoice_data) }
+    let(:new_invoice) { create(:invoice, order:, data: new_invoice_data) }
     let(:new_invoice_presenter) { new_invoice.presenter }
 
     context "mutable attribute updated" do

@@ -169,7 +169,7 @@ describe ProductsRenderer do
     end
 
     it "loads tag_list for variants" do
-      VariantOverride.create(variant: variant, hub: distributor, tag_list: 'lalala')
+      VariantOverride.create(variant:, hub: distributor, tag_list: 'lalala')
       expect(products_renderer.products_json).to include "[\"lalala\"]"
     end
   end

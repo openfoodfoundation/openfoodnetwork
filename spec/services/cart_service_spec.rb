@@ -15,7 +15,7 @@ describe CartService do
   end
 
   context "end-to-end" do
-    let(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+    let(:order) { create(:order, distributor:, order_cycle:) }
     let(:distributor) { create(:distributor_enterprise) }
     let(:order_cycle) {
       create(:simple_order_cycle, distributors: [distributor],
@@ -89,7 +89,7 @@ describe CartService do
 
         describe "when the soft-deleted variant is already in the cart" do
           let!(:existing_line_item) {
-            create(:line_item, variant: variant, quantity: 2, order: order)
+            create(:line_item, variant:, quantity: 2, order:)
           }
 
           it "removes the line_item from the cart" do
@@ -181,7 +181,7 @@ describe CartService do
         and_return(true)
       expect(variant).to receive(:on_demand).and_return(false)
       expect(order).to receive_message_chain(:contents, :update_or_create).
-        with(variant, { quantity: quantity, max_quantity: nil })
+        with(variant, { quantity:, max_quantity: nil })
 
       cart_service.send(:attempt_cart_add, variant, quantity)
     end
@@ -280,7 +280,7 @@ describe CartService do
 
     describe "checking variant is available under the distributor" do
       let(:product) { double(:product) }
-      let(:variant) { double(:variant, product: product) }
+      let(:variant) { double(:variant, product:) }
       let(:order_cycle_distributed_variants) { double(:order_cycle_distributed_variants) }
 
       before do

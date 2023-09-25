@@ -150,7 +150,7 @@ describe OrderSyncer do
     let!(:distributor_address) { create(:address, :randomized) }
     let!(:distributor) { create(:distributor_enterprise, address: distributor_address) }
     let(:subscription) do
-      create(:subscription, shop: distributor, shipping_method: shipping_method, with_items: true,
+      create(:subscription, shop: distributor, shipping_method:, with_items: true,
                             with_proxy_orders: true)
     end
     let!(:order) { subscription.proxy_orders.first.initialise_order! }
@@ -258,7 +258,7 @@ describe OrderSyncer do
     let!(:distributor_address) { create(:address, :randomized) }
     let!(:distributor) { create(:distributor_enterprise, address: distributor_address) }
     let!(:subscription) do
-      create(:subscription, shop: distributor, shipping_method: shipping_method, with_items: true,
+      create(:subscription, shop: distributor, shipping_method:, with_items: true,
                             with_proxy_orders: true)
     end
     let!(:order) { subscription.proxy_orders.first.initialise_order! }
@@ -307,7 +307,7 @@ describe OrderSyncer do
           let(:subscription) do
             create(:subscription, shop: distributor, bill_address: original_bill_address,
                                   ship_address: original_ship_address,
-                                  shipping_method: shipping_method, with_items: true,
+                                  shipping_method:, with_items: true,
                                   with_proxy_orders: true)
           end
 

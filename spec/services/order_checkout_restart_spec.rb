@@ -15,9 +15,9 @@ describe OrderCheckoutRestart do
 
     context "when the order is in a subsequent state" do
       # 'pending' is the only shipment state possible for incomplete orders
-      let!(:shipment_pending) { create(:shipment, order: order, state: 'pending') }
-      let!(:payment_failed) { create(:payment, order: order, state: 'failed') }
-      let!(:payment_checkout) { create(:payment, order: order, state: 'checkout') }
+      let!(:shipment_pending) { create(:shipment, order:, state: 'pending') }
+      let!(:payment_failed) { create(:payment, order:, state: 'failed') }
+      let!(:payment_checkout) { create(:payment, order:, state: 'checkout') }
 
       before do
         order.update_attribute(:state, "payment")

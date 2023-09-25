@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe OrderFeesHandler do
   let(:order_cycle) { create(:order_cycle) }
-  let(:order) { create(:order_with_line_items, line_items_count: 1, order_cycle: order_cycle) }
+  let(:order) { create(:order_with_line_items, line_items_count: 1, order_cycle:) }
   let(:line_item) { order.line_items.first }
 
   let(:service) { OrderFeesHandler.new(order) }

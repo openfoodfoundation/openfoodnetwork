@@ -6,7 +6,7 @@ describe OrderAvailableShippingMethods do
   context "when the order has no current_distributor" do
     it "returns an empty array" do
       order_cycle = create(:sells_own_order_cycle)
-      order = build(:order, distributor: nil, order_cycle: order_cycle)
+      order = build(:order, distributor: nil, order_cycle:)
 
       expect(OrderAvailableShippingMethods.new(order).to_a).to eq []
     end
@@ -18,7 +18,7 @@ describe OrderAvailableShippingMethods do
     backoffice_only_shipping_method = create(:shipping_method,
                                              distributors: [distributor], display_on: 'back_end')
     order_cycle = create(:sells_own_order_cycle)
-    order = build(:order, distributor: distributor, order_cycle: order_cycle)
+    order = build(:order, distributor:, order_cycle:)
 
     available_shipping_methods = OrderAvailableShippingMethods.new(order).to_a
 
@@ -36,7 +36,7 @@ describe OrderAvailableShippingMethods do
         shipping_method_ii = create(:shipping_method, distributors: [distributor_ii])
         shipping_method_iii = create(:shipping_method, distributors: [distributor_iii])
         order_cycle = create(:sells_own_order_cycle, distributors: [distributor_i, distributor_ii])
-        order = build(:order, distributor: distributor_i, order_cycle: order_cycle)
+        order = build(:order, distributor: distributor_i, order_cycle:)
 
         available_shipping_methods = OrderAvailableShippingMethods.new(order).to_a
 
@@ -59,7 +59,7 @@ describe OrderAvailableShippingMethods do
           distributor_i.distributor_shipping_methods.first,
           distributor_ii.distributor_shipping_methods.first,
         ]
-        order = build(:order, distributor: distributor_i, order_cycle: order_cycle)
+        order = build(:order, distributor: distributor_i, order_cycle:)
 
         available_shipping_methods = OrderAvailableShippingMethods.new(order).to_a
 
@@ -76,7 +76,7 @@ describe OrderAvailableShippingMethods do
     let!(:other_distributor_shipping_method) do
       create(:shipping_method, distributors: [other_distributor])
     end
-    let(:customer) { create(:customer, user: user, enterprise: distributor) }
+    let(:customer) { create(:customer, user:, enterprise: distributor) }
     let!(:tag_rule) {
       create(:filter_shipping_methods_tag_rule,
              enterprise: distributor,
@@ -107,7 +107,7 @@ describe OrderAvailableShippingMethods do
       }
 
       let(:order_cycle) { create(:sells_own_order_cycle) }
-      let(:order) { build(:order, distributor: distributor, order_cycle: order_cycle) }
+      let(:order) { build(:order, distributor:, order_cycle:) }
 
       context "when the customer is nil" do
         let(:available_shipping_methods) { OrderAvailableShippingMethods.new(order).to_a }
@@ -154,7 +154,7 @@ describe OrderAvailableShippingMethods do
       }
 
       let(:order_cycle) { create(:sells_own_order_cycle) }
-      let(:order) { build(:order, distributor: distributor, order_cycle: order_cycle) }
+      let(:order) { build(:order, distributor:, order_cycle:) }
 
       context "when the customer is nil" do
         let(:available_shipping_methods) { OrderAvailableShippingMethods.new(order).to_a }
@@ -217,7 +217,7 @@ describe OrderAvailableShippingMethods do
 
   context "when certain shipping categories are required" do
     subject { OrderAvailableShippingMethods.new(order) }
-    let(:order) { build(:order, distributor: distributor, order_cycle: oc) }
+    let(:order) { build(:order, distributor:, order_cycle: oc) }
     let(:oc) { create(:order_cycle) }
     let(:distributor) { oc.distributors.first }
     let(:standard_shipping) {

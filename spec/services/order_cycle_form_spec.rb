@@ -139,7 +139,7 @@ describe OrderCycleForm do
     let(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
     let(:distributor_payment_method) { payment_method.distributor_payment_methods.first }
     let(:distributor_shipping_method) { shipping_method.distributor_shipping_methods.first }
-    let(:variant) { create(:variant, product: create(:product, supplier: supplier)) }
+    let(:variant) { create(:variant, product: create(:product, supplier:)) }
     let(:params) { { name: 'Some new name' } }
     let(:form) { OrderCycleForm.new(order_cycle, params, user) }
     let(:outgoing_exchange_params) do

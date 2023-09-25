@@ -20,40 +20,40 @@ describe PaypalItemsBuilder do
 
   context "listing adjustments" do
     let!(:admin_adjustment) {
-      create(:adjustment, label: "Admin Adjustment", order: order, adjustable: order,
+      create(:adjustment, label: "Admin Adjustment", order:, adjustable: order,
                           amount: 12, originator: nil, state: "closed")
     }
     let!(:ineligible_adjustment) {
-      create(:adjustment, label: "Ineligible Adjustment", order: order, adjustable: order,
+      create(:adjustment, label: "Ineligible Adjustment", order:, adjustable: order,
                           amount: 34, eligible: false, state: "closed",
                           originator_type: "Spree::PaymentMethod")
     }
     let!(:zone) { create(:zone_with_member) }
     let!(:included_tax_rate) {
-      create(:tax_rate, amount: 12, included_in_price: true, zone: zone,
+      create(:tax_rate, amount: 12, included_in_price: true, zone:,
                         calculator: ::Calculator::DefaultTax.new)
     }
     let!(:additional_tax_rate) {
-      create(:tax_rate, amount: 34, included_in_price: false, zone: zone,
+      create(:tax_rate, amount: 34, included_in_price: false, zone:,
                         calculator: ::Calculator::DefaultTax.new)
     }
     let!(:included_tax_adjustment) {
-      create(:adjustment, label: "Included Tax Adjustment", order: order,
+      create(:adjustment, label: "Included Tax Adjustment", order:,
                           adjustable: order.line_items.first, amount: 56,
                           originator: included_tax_rate, included: true, state: "closed")
     }
     let!(:additional_tax_adjustment) {
-      create(:adjustment, label: "Additional Tax Adjustment", order: order,
+      create(:adjustment, label: "Additional Tax Adjustment", order:,
                           adjustable: order.shipment, amount: 78, originator: additional_tax_rate,
                           state: "closed")
     }
     let!(:enterprise_fee) { create(:enterprise_fee) }
     let!(:line_item_enterprise_fee) {
-      create(:adjustment, label: "Line Item Fee", order: order, adjustable: order.line_items.first,
+      create(:adjustment, label: "Line Item Fee", order:, adjustable: order.line_items.first,
                           amount: 91, originator: enterprise_fee, state: "closed")
     }
     let!(:order_enterprise_fee) {
-      create(:adjustment, label: "Order Fee", order: order, adjustable: order,
+      create(:adjustment, label: "Order Fee", order:, adjustable: order,
                           amount: 23, originator: enterprise_fee, state: "closed")
     }
 
