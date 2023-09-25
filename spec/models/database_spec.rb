@@ -39,18 +39,22 @@ RSpec.describe "Database" do
       end
     end
 
-    if migrations
-      puts "Foreign key(s) appear to be absent from the database. " \
-           "You can add it/them using the following migration(s):"
-      puts migrations.join("\n")
-      puts "\nTo disable this warning, add the class name(s) of the model(s) to models_todo " \
-           "in #{__FILE__}"
-    end
+    print_missing_foreign_key_warnings(migrations)
 
     puts "The following models are marked as todo in #{__FILE__}:"
     puts pending_models.join(", ")
 
     migrations
+  end
+
+  def print_missing_foreign_key_warnings(migrations)
+    return if migrations.empty?
+
+    puts "Foreign key(s) appear to be absent from the database. " \
+         "You can add it/them using the following migration(s):"
+    puts migrations.join("\n")
+    puts "\nTo disable this warning, add the class name(s) of the model(s) to models_todo " \
+         "in #{__FILE__}"
   end
 
   def process_association(model_class, association, previous_models)
