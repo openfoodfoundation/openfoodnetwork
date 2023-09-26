@@ -47,6 +47,12 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
     create(:customer, enterprise: create(:enterprise), user: create(:user),
                       first_name: 'cfname', last_name: 'clname', code: 'ABC123')
   end
+  let(:query_row) do
+    [
+      [state_tax_rate.id, order.id],
+      order
+    ]
+  end
 
   before do
     product.update!(supplier_id: supplier.id)
@@ -87,13 +93,6 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
   end
 
   describe "#tax_rate_total" do
-    let(:query_row) do
-      [
-        [state_tax_rate.id, order.id],
-        order
-      ]
-    end
-
     it "returns the tax amount filtered by tax rate in the query_row" do
       OrderWorkflow.new(order).complete!
       mock_voucher_adjustment_service
@@ -124,13 +123,6 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
   end
 
   describe "#total_excl_tax" do
-    let(:query_row) do
-      [
-        [state_tax_rate.id, order.id],
-        order
-      ]
-    end
-
     it "returns the total excluding tax specified in query_row" do
       OrderWorkflow.new(order).complete!
       mock_voucher_adjustment_service
@@ -152,19 +144,13 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
         total = report.total_excl_tax(query_row)
 
-        # order.total - order.total_tax + voucher tax
-        expect(total).to eq(103.3 - 3.3 + 0.29)
+        # discounted order total - discounted order tax
+        expect(total).to eq((113.3 - 10) - (3.3 - 0.29))
       end
     end
   end
 
   describe "#total_incl_tax" do
-    let(:query_row) do
-      [
-        [state_tax_rate.id, order.id], order
-      ]
-    end
-
     it "returns the total including the tax specified in query_row" do
       OrderWorkflow.new(order).complete!
       mock_voucher_adjustment_service
@@ -204,7 +190,13 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
       it "returns expected totals" do
         mock_voucher_adjustment_service
 
-        expected_summary = {
+        rules = report.rules
+
+        # Running the "summary row" Proc
+        item = [[state_tax_rate.id, order.id], order]
+        summary_row = rules.third[:summary_row].call(nil, [item], nil)
+
+        expect(summary_row).to eq({
           total_excl_tax: 110.00,
           tax: 3.3,
           total_incl_tax: 113.30,
@@ -212,15 +204,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
           last_name: "clname",
           code: "ABC123",
           email: "order1@example.com"
-        }
-
-        rules = report.rules
-
-        # Running the "summary row" Proc
-        item = [[state_tax_rate.id, order.id], order]
-        summary_row = rules.third[:summary_row].call(nil, [item], nil)
-
-        expect(summary_row).to eq(expected_summary)
+        })
       end
 
       context "with a voucher" do
