@@ -67,16 +67,14 @@ module ProductImport
     end
 
     def mark_as_new_variant(entry, product_id)
+      variant_attributes = entry.assignable_attributes.except(
+        'id', 'product_id', 'on_hand', 'on_demand', 'variant_unit', 'variant_unit_name',
+        'variant_unit_scale', 'primary_taxon_id'
+      )
       # Variant needs a product. Product needs to be assigned first in order for
       # delegate to work. name= will fail otherwise.
-      new_variant = Spree::Variant.new(
-        { product_id: }
-        .merge(
-          entry.assignable_attributes.except('id', 'product_id', 'on_hand', 'on_demand',
-                                             'variant_unit', 'variant_unit_name',
-                                             'variant_unit_scale', 'primary_taxon_id')
-        )
-      )
+      new_variant = Spree::Variant.new(product_id:, **variant_attributes)
+
       new_variant.save
       if new_variant.persisted?
         if entry.attributes['on_demand'].present?
