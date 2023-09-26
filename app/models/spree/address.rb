@@ -6,7 +6,7 @@ module Spree
 
     self.belongs_to_required_by_default = false
 
-    searchable_attributes :firstname, :lastname, :phone, :full_name
+    searchable_attributes :firstname, :lastname, :phone, :full_name, :full_name_comma_delimited, :full_name_reverse_comma_delimited
     searchable_associations :country, :state
 
     belongs_to :country, class_name: "Spree::Country"
@@ -36,12 +36,64 @@ module Spree
       )
     end
 
+    ransacker :full_name_comma_delimited, formatter: proc { |value| value.to_s } do |parent|
+      if parent.table_name.lastname.nil?
+        return parent.table_name.firstname || ''
+      end
+
+      if parent.table_name.firstname.nil?
+        return parent.table_name.lastname || ''
+      end
+
+      Arel::Nodes::SqlLiteral.new(
+        "CONCAT(#{parent.table_name}.firstname, ', ', #{parent.table_name}.lastname)"
+      )
+    end
+
+    ransacker :full_name_reverse_comma_delimited, formatter: proc { |value| value.to_s } do |parent|
+      if parent.table_name.lastname.nil?
+        return parent.table_name.firstname || ''
+      end
+
+      if parent.table_name.firstname.nil?
+        return parent.table_name.lastname || ''
+      end
+
+      Arel::Nodes::SqlLiteral.new(
+        "CONCAT(#{parent.table_name}.lastname, ', ', #{parent.table_name}.firstname)"
+      )
+    end
+
     def self.default
       new(country: DefaultCountry.country)
     end
 
     def full_name
       "#{firstname} #{lastname}".strip
+    end
+
+    def full_name_comma_delimited
+      if parent.table_name.lastname.nil?
+        return parent.table_name.firstname || ''
+      end
+
+      if parent.table_name.firstname.nil?
+        return parent.table_name.lastname || ''
+      end
+
+      "#{firstname}, #{lastname}".strip
+    end
+
+    def full_name_reverse_comma_delimited
+      if parent.table_name.lastname.nil?
+        return parent.table_name.firstname || ''
+      end
+
+      if parent.table_name.firstname.nil?
+        return parent.table_name.lastname || ''
+      end
+
+      "#{lastname}, #{firstname}".strip
     end
 
     def state_text

@@ -12,6 +12,30 @@ class Invoice
         "#{firstname} #{lastname}".strip
       end
 
+      def full_name_comma_delimited
+        if lastname.nil?
+          return firstname || ''
+        end
+
+        if firstname.nil?
+          return lastname || ''
+        end
+
+        "#{firstname}, #{lastname}".strip
+      end
+
+      def full_name_reverse_comma_delimited
+        if lastname.nil?
+          return firstname || ''
+        end
+
+        if firstname.nil?
+          return lastname || ''
+        end
+
+        "#{lastname}, #{firstname}".strip
+      end
+
       def address_part1
         render_address([address1, address2])
       end

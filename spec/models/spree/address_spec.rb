@@ -175,6 +175,50 @@ describe Spree::Address do
     end
   end
 
+  context '#full_name_comma_delimited' do
+    context 'both first and last names are present' do
+      let(:address) { build(:address, firstname: 'Michael', lastname: 'Jackson') }
+      specify { expect(address.full_name_comma_delimited).to eq 'Michael, Jackson' }
+    end
+
+    context 'first name is blank' do
+      let(:address) { build(:address, firstname: nil, lastname: 'Jackson') }
+      specify { expect(address.full_name_comma_delimited).to eq 'Jackson' }
+    end
+
+    context 'last name is blank' do
+      let(:address) { build(:address, firstname: 'Michael', lastname: nil) }
+      specify { expect(address.full_name_comma_delimited).to eq 'Michael' }
+    end
+
+    context 'both first and last names are blank' do
+      let(:address) { build(:address, firstname: nil, lastname: nil) }
+      specify { expect(address.full_name_comma_delimited).to eq '' }
+    end
+  end
+
+  context '#full_name_reverse_comma_delimited' do
+    context 'both first and last names are present' do
+      let(:address) { build(:address, firstname: 'Michael', lastname: 'Jackson') }
+      specify { expect(address.full_name_reverse_comma_delimited).to eq 'Jackson, Michael' }
+    end
+
+    context 'first name is blank' do
+      let(:address) { build(:address, firstname: nil, lastname: 'Jackson') }
+      specify { expect(address.full_name_reverse_comma_delimited).to eq 'Jackson' }
+    end
+
+    context 'last name is blank' do
+      let(:address) { build(:address, firstname: 'Michael', lastname: nil) }
+      specify { expect(address.full_name_reverse_comma_delimited).to eq 'Michael' }
+    end
+
+    context 'both first and last names are blank' do
+      let(:address) { build(:address, firstname: nil, lastname: nil) }
+      specify { expect(address.full_name_reverse_comma_delimited).to eq '' }
+    end
+  end
+
   context '#state_text' do
     context 'both name and abbr is present' do
       let(:state) { build(:state, name: 'virginia', abbr: 'va') }
