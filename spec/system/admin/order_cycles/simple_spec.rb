@@ -376,7 +376,7 @@ describe '
                                       name: 'Order Cycle 1' )
         end
         let(:product) { create(:product, supplier: supplier_managed) }
-        let(:v1) { create(:variant, product: product ) }
+        let(:v1) { create(:variant, product: ) }
         let(:inventory_item_v1) {
           create(:inventory_item, enterprise: distributor_managed, variant: v1, visible: false)
         }
@@ -596,10 +596,10 @@ describe '
     let!(:v1) { p1.variants.first }
     let!(:v2) { p2.variants.first }
     let!(:v3) { p3.variants.first }
-    let!(:fee) { create(:enterprise_fee, enterprise: enterprise, name: 'Coord fee') }
+    let!(:fee) { create(:enterprise_fee, enterprise:, name: 'Coord fee') }
 
     before do
-      user.enterprise_roles.create! enterprise: enterprise
+      user.enterprise_roles.create!(enterprise:)
       login_as user
     end
 
@@ -685,7 +685,7 @@ describe '
 
     it "editing an order cycle" do
       # Given an order cycle with pickup time and instructions
-      fee = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
+      fee = create(:enterprise_fee, name: 'my fee', enterprise:)
       oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise,
                                        distributors: [enterprise], variants: [v1],
                                        coordinator_fees: [fee])
@@ -722,8 +722,8 @@ describe '
 
     it "updating an order cycle" do
       # Given an order cycle with pickup time and instructions
-      fee1 = create(:enterprise_fee, name: 'my fee', enterprise: enterprise)
-      fee2 = create(:enterprise_fee, name: 'that fee', enterprise: enterprise)
+      fee1 = create(:enterprise_fee, name: 'my fee', enterprise:)
+      fee2 = create(:enterprise_fee, name: 'that fee', enterprise:)
       oc = create(:simple_order_cycle, suppliers: [enterprise], coordinator: enterprise,
                                        distributors: [enterprise], variants: [v1],
                                        coordinator_fees: [fee1])

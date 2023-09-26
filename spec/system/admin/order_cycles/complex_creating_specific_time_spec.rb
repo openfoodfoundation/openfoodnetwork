@@ -16,9 +16,9 @@ describe '
   # Given coordinating, supplying and distributing enterprises with some products with variants
   let!(:coordinator) { create(:distributor_enterprise, name: 'My coordinator') }
   let!(:supplier) { create(:supplier_enterprise, name: 'My supplier') }
-  let!(:product) { create(:product, supplier: supplier) }
-  let!(:v1) { create(:variant, product: product) }
-  let!(:v2) { create(:variant, product: product) }
+  let!(:product) { create(:product, supplier:) }
+  let!(:v1) { create(:variant, product:) }
+  let!(:v2) { create(:variant, product:) }
   let!(:distributor) {
     create(:distributor_enterprise, name: 'My distributor', with_payment_and_shipping: true)
   }

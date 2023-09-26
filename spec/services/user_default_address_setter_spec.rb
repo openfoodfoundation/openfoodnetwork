@@ -9,7 +9,7 @@ describe UserDefaultAddressSetter do
     create(:customer, bill_address: customer_address, ship_address: customer_address)
   end
   let(:order) do
-    create(:order, customer: customer, bill_address: order_address, ship_address: order_address)
+    create(:order, customer:, bill_address: order_address, ship_address: order_address)
   end
   let(:user) { create(:user) }
 

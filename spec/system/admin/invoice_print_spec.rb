@@ -21,8 +21,8 @@ describe '
   end
 
   let(:order) do
-    create(:order_with_totals_and_distribution, user: user, distributor: distributor,
-                                                order_cycle: order_cycle, state: 'complete',
+    create(:order_with_totals_and_distribution, user:, distributor:,
+                                                order_cycle:, state: 'complete',
                                                 payment_state: 'balance_due')
   end
 
@@ -54,7 +54,7 @@ describe '
 
     context "with one payment" do
       let!(:payment1) do
-        create(:payment, :completed, order: order, payment_method: payment_method1)
+        create(:payment, :completed, order:, payment_method: payment_method1)
       end
       before do
         order.save!
@@ -72,10 +72,10 @@ describe '
     context "with two payments, and one that failed" do
       before do
         order.update payments: []
-        order.payments << create(:payment, :completed, order: order,
+        order.payments << create(:payment, :completed, order:,
                                                        payment_method: payment_method1,
                                                        created_at: 1.day.ago)
-        order.payments << create(:payment, order: order, state: 'failed',
+        order.payments << create(:payment, order:, state: 'failed',
                                            payment_method: payment_method2, created_at: 2.days.ago)
         order.save!
       end
@@ -92,10 +92,10 @@ describe '
     context "with two completed payments" do
       before do
         order.update payments: []
-        order.payments << create(:payment, :completed, order: order,
+        order.payments << create(:payment, :completed, order:,
                                                        payment_method: payment_method1,
                                                        created_at: 2.days.ago)
-        order.payments << create(:payment, :completed, order: order,
+        order.payments << create(:payment, :completed, order:,
                                                        payment_method: payment_method2,
                                                        created_at: 1.day.ago)
         order.save!
@@ -113,7 +113,7 @@ describe '
 
   shared_examples "Check display on each invoice: legacy and alternative" do |alternative_invoice|
     let!(:completed_order) do
-      create(:completed_order_with_fees, distributor: distributor, order_cycle: order_cycle,
+      create(:completed_order_with_fees, distributor:, order_cycle:,
                                          user: create(:user, email: "xxxxxx@example.com"),
                                          bill_address: create(:address, phone: '1234567890'))
     end
@@ -141,10 +141,10 @@ describe '
 
     context "included" do
       let(:shipping_tax_rate_included) {
-        create(:tax_rate, amount: 0.1, included_in_price: true, zone: zone)
+        create(:tax_rate, amount: 0.1, included_in_price: true, zone:)
       }
       let(:enterprise_fee_rate_included) {
-        create(:tax_rate, amount: 0.15, included_in_price: true, zone: zone)
+        create(:tax_rate, amount: 0.15, included_in_price: true, zone:)
       }
       let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate_included]) }
       let(:fee_tax_category) { create(:tax_category, tax_rates: [enterprise_fee_rate_included]) }
@@ -164,15 +164,15 @@ describe '
       }
 
       let!(:order1) {
-        create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first,
+        create(:order, order_cycle:, distributor: user1.enterprises.first,
                        ship_address: address, bill_address: address)
       }
       let!(:product1) {
-        create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0,
+        create(:taxed_product, zone:, price: 12.54, tax_rate_amount: 0,
                                included_in_price: true)
       }
       let!(:product2) {
-        create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2,
+        create(:taxed_product, zone:, price: 500.15, tax_rate_amount: 0.2,
                                included_in_price: true)
       }
 
@@ -275,10 +275,10 @@ describe '
 
     context "added" do
       let(:shipping_tax_rate_added) {
-        create(:tax_rate, amount: 0.10, included_in_price: false, zone: zone)
+        create(:tax_rate, amount: 0.10, included_in_price: false, zone:)
       }
       let(:enterprise_fee_rate_added) {
-        create(:tax_rate, amount: 0.15, included_in_price: false, zone: zone)
+        create(:tax_rate, amount: 0.15, included_in_price: false, zone:)
       }
       let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate_added]) }
       let(:fee_tax_category) { create(:tax_category, tax_rates: [enterprise_fee_rate_added]) }
@@ -302,11 +302,11 @@ describe '
                        ship_address: address, bill_address: address)
       }
       let(:product3) {
-        create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0,
+        create(:taxed_product, zone:, price: 12.54, tax_rate_amount: 0,
                                included_in_price: false)
       }
       let(:product4) {
-        create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2,
+        create(:taxed_product, zone:, price: 500.15, tax_rate_amount: 0.2,
                                included_in_price: false)
       }
 

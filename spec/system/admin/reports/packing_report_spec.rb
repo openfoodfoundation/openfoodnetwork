@@ -26,18 +26,18 @@ describe "Packing Reports" do
     }
     let(:distributor) { create(:distributor_enterprise, address: distributor_address) }
     let(:order1) {
-      create(:completed_order_with_totals, line_items_count: 0, distributor: distributor,
+      create(:completed_order_with_totals, line_items_count: 0, distributor:,
                                            bill_address: bill_address1)
     }
     let(:order2) {
-      create(:completed_order_with_totals, line_items_count: 0, distributor: distributor,
+      create(:completed_order_with_totals, line_items_count: 0, distributor:,
                                            bill_address: bill_address2)
     }
     let(:supplier) { create(:supplier_enterprise, name: "Supplier") }
-    let(:product1) { create(:simple_product, name: "Product 1", supplier: supplier ) }
+    let(:product1) { create(:simple_product, name: "Product 1", supplier: ) }
     let(:variant1) { create(:variant, product: product1, unit_description: "Big") }
     let(:variant2) { create(:variant, product: product1, unit_description: "Small") }
-    let(:product2) { create(:simple_product, name: "Product 2", supplier: supplier) }
+    let(:product2) { create(:simple_product, name: "Product 2", supplier:) }
 
     before do
       order1.finalize!
@@ -115,7 +115,7 @@ describe "Packing Reports" do
     let(:oc) { create(:simple_order_cycle) }
     let(:order) {
       create(:completed_order_with_totals, line_items_count: 0,
-                                           order_cycle: oc, distributor: distributor)
+                                           order_cycle: oc, distributor:)
     }
     let(:li1) { build(:line_item_with_shipment) }
     let(:li2) { build(:line_item_with_shipment) }

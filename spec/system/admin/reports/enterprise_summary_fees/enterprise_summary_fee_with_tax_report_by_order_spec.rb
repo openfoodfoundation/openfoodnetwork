@@ -36,10 +36,10 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
   let!(:country_zone){ create(:zone_with_member) }
   let!(:tax_category){ create(:tax_category, name: 'tax_category') }
   let!(:state_tax_rate){
-    create(:tax_rate, zone: state_zone, tax_category: tax_category, name: 'State', amount: 0.015)
+    create(:tax_rate, zone: state_zone, tax_category:, name: 'State', amount: 0.015)
   }
   let!(:country_tax_rate){
-    create(:tax_rate, zone: country_zone, tax_category: tax_category, name: 'Country',
+    create(:tax_rate, zone: country_zone, tax_category:, name: 'Country',
                       amount: 0.025)
   }
   let!(:ship_address){ create(:ship_address) }
@@ -51,7 +51,7 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
   let!(:payment_method){ create(:payment_method, :flat_rate) }
   let!(:shipping_method){ create(:shipping_method, :flat_rate) }
 
-  let!(:order){ create(:order_with_distributor, distributor: distributor, number: order_number) }
+  let!(:order){ create(:order_with_distributor, distributor:, number: order_number) }
   let!(:order_cycle){
     create(:simple_order_cycle, name: "oc1", suppliers: [supplier], distributors: [distributor],
                                 variants: [variant])
@@ -63,19 +63,19 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
     create(:enterprise_fee, :flat_rate, enterprise: distributor, amount: 20,
                                         name: 'Adminstration',
                                         fee_type: 'admin',
-                                        tax_category: tax_category)
+                                        tax_category:)
   }
   let!(:supplier_fees){
     create(:enterprise_fee, :flat_rate, enterprise: supplier, amount: 15,
                                         name: 'Transport',
                                         fee_type: 'transport',
-                                        tax_category: tax_category)
+                                        tax_category:)
   }
   let!(:distributor_fee){
     create(:enterprise_fee, :flat_rate, enterprise: distributor, amount: 10,
                                         name: 'Packing',
                                         fee_type: 'packing',
-                                        tax_category: tax_category)
+                                        tax_category:)
   }
 
   let!(:customer_first_name){ "Customer First Name" }
@@ -100,7 +100,7 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
 
   context 'added tax' do
     before do
-      order.line_items.create({ variant: variant, quantity: 1, price: 100 })
+      order.line_items.create({ variant:, quantity: 1, price: 100 })
       order.update!({
                       order_cycle_id: order_cycle.id,
                       ship_address_id: ship_address.id
@@ -183,7 +183,7 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
       state_tax_rate.update!({ included_in_price: true })
       country_tax_rate.update!({ included_in_price: true })
 
-      order.line_items.create({ variant: variant, quantity: 1, price: 100 })
+      order.line_items.create({ variant:, quantity: 1, price: 100 })
       order.update!({
                       order_cycle_id: order_cycle.id,
                       ship_address_id: ship_address.id

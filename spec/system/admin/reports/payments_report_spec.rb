@@ -10,7 +10,7 @@ describe "Payments Reports" do
       :order_with_distributor,
       state: 'complete',
       completed_at: Time.zone.now,
-      order_cycle: order_cycle
+      order_cycle:
     )
   end
   let(:other_order) do
@@ -18,17 +18,17 @@ describe "Payments Reports" do
       :order_with_distributor,
       state: 'complete',
       completed_at: Time.zone.now,
-      order_cycle: order_cycle,
+      order_cycle:,
       distributor: order.distributor
     )
   end
   let(:order_cycle) { create(:simple_order_cycle) }
-  let(:product) { create(:product, supplier: supplier) }
+  let(:product) { create(:product, supplier:) }
   let(:supplier) { create(:supplier_enterprise) }
 
   before do
-    create(:line_item_with_shipment, order: order, product: product)
-    create(:line_item_with_shipment, order: other_order, product: product)
+    create(:line_item_with_shipment, order:, product:)
+    create(:line_item_with_shipment, order: other_order, product:)
 
     login_as_admin
     visit admin_reports_path
@@ -62,7 +62,7 @@ describe "Payments Reports" do
   context 'when choosing payment totals report type' do
     let(:paypal) { create(:payment_method, name: "PayPal") }
     let!(:paypal_payment) {
-      create(:payment, order: order, payment_method: paypal, state: "completed", amount: 5)
+      create(:payment, order:, payment_method: paypal, state: "completed", amount: 5)
     }
 
     let(:eft) { create(:payment_method, name: "EFT") }

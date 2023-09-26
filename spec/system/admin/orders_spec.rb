@@ -23,16 +23,16 @@ describe '
   let(:billing_address5) { create(:address, :randomized) }
   let(:product) { create(:simple_product) }
   let(:distributor) {
-    create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true,
+    create(:distributor_enterprise, owner:, with_payment_and_shipping: true,
                                     charges_sales_tax: true)
   }
-  let(:distributor2) { create(:distributor_enterprise_with_tax, owner: owner) }
+  let(:distributor2) { create(:distributor_enterprise_with_tax, owner:) }
   let(:distributor3) {
-    create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true,
+    create(:distributor_enterprise, owner:, with_payment_and_shipping: true,
                                     charges_sales_tax: true)
   }
   let(:distributor4) {
-    create(:distributor_enterprise, owner: owner, with_payment_and_shipping: true,
+    create(:distributor_enterprise, owner:, with_payment_and_shipping: true,
                                     charges_sales_tax: true)
   }
   let(:distributor5) { create(:distributor_enterprise, owner: owner2, charges_sales_tax: true) }
@@ -52,8 +52,8 @@ describe '
 
   context "with a complete order" do
     let(:order) do
-      create(:order_with_totals_and_distribution, user: customer, distributor: distributor,
-                                                  order_cycle: order_cycle,
+      create(:order_with_totals_and_distribution, user: customer, distributor:,
+                                                  order_cycle:,
                                                   state: 'complete', payment_state: 'balance_due',
                                                   bill_address_id: billing_address.id)
     end
@@ -691,7 +691,7 @@ describe '
     context "with a capturable order" do
       before do
         order.finalize! # ensure order has a payment to capture
-        order.payments << create(:check_payment, order: order, amount: order.total)
+        order.payments << create(:check_payment, order:, amount: order.total)
       end
 
       it "capture payment" do
@@ -766,8 +766,8 @@ describe '
 
   context "with incomplete order" do
     it "can edit order" do
-      incomplete_order = create(:order_with_line_items, distributor: distributor,
-                                                        order_cycle: order_cycle,
+      incomplete_order = create(:order_with_line_items, distributor:,
+                                                        order_cycle:,
                                                         line_items_count: 1)
 
       login_as_admin
@@ -783,13 +783,13 @@ describe '
 
   context "test the 'Only show the complete orders' checkbox" do
     it "display or not incomplete order" do
-      incomplete_order = create(:order_with_line_items, distributor: distributor,
-                                                        order_cycle: order_cycle,
+      incomplete_order = create(:order_with_line_items, distributor:,
+                                                        order_cycle:,
                                                         line_items_count: 1)
       complete_order = create(
         :order_with_line_items,
-        distributor: distributor,
-        order_cycle: order_cycle,
+        distributor:,
+        order_cycle:,
         user: customer,
         state: 'complete',
         payment_state: 'balance_due',
@@ -799,8 +799,8 @@ describe '
 
       empty_complete_order = create(
         :order_with_line_items,
-        distributor: distributor,
-        order_cycle: order_cycle,
+        distributor:,
+        order_cycle:,
         user: customer,
         state: 'complete',
         payment_state: 'balance_due',
@@ -808,7 +808,7 @@ describe '
         line_items_count: 0
       )
 
-      empty_order = create(:order, distributor: distributor, order_cycle: order_cycle)
+      empty_order = create(:order, distributor:, order_cycle:)
 
       login_as_admin
       visit spree.admin_orders_path
@@ -832,9 +832,9 @@ describe '
     let!(:order) do
       create(
         :order,
-        distributor: distributor,
-        order_cycle: order_cycle,
-        user: user,
+        distributor:,
+        order_cycle:,
+        user:,
         number: "R123456",
         state: 'complete',
         payment_state: 'balance_due',

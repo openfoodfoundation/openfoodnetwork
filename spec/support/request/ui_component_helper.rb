@@ -37,7 +37,7 @@ module UIComponentHelper
 
   def select_login_tab(text)
     within ".login-modal" do
-      page.find("a", text: text).click
+      page.find("a", text:).click
     end
     sleep 0.2
   end

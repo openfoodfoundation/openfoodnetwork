@@ -17,7 +17,7 @@ module OpenFoodNetwork
         user = create(:user)
         user.spree_roles = []
         enterprises.each do |enterprise|
-          enterprise.enterprise_roles.create!(user: user)
+          enterprise.enterprise_roles.create!(user:)
         end
         user
       end

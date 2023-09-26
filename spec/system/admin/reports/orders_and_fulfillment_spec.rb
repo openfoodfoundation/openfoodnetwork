@@ -25,19 +25,19 @@ describe "Orders And Fulfillment" do
     }
     let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
     let(:order1) {
-      create(:completed_order_with_totals, line_items_count: 0, distributor: distributor,
+      create(:completed_order_with_totals, line_items_count: 0, distributor:,
                                            bill_address: bill_address1,
                                            order_cycle_id: order_cycle.id)
     }
     let(:order2) {
-      create(:completed_order_with_totals, line_items_count: 0, distributor: distributor,
+      create(:completed_order_with_totals, line_items_count: 0, distributor:,
                                            bill_address: bill_address2,
                                            order_cycle_id: order_cycle.id)
     }
     let(:supplier) { create(:supplier_enterprise, name: "Supplier Name") }
-    let(:product) { create(:simple_product, name: "Baked Beans", supplier: supplier ) }
-    let(:variant1) { create(:variant, product: product, unit_description: "Big") }
-    let(:variant2) { create(:variant, product: product, unit_description: "Small") }
+    let(:product) { create(:simple_product, name: "Baked Beans", supplier: ) }
+    let(:variant1) { create(:variant, product:, unit_description: "Big") }
+    let(:variant2) { create(:variant, product:, unit_description: "Small") }
 
     before do
       # order1 has two line items / variants
@@ -153,12 +153,12 @@ describe "Orders And Fulfillment" do
         let(:bill_address4) { create(:address, firstname: "Ave", lastname: "Zebu") }
         let(:order3) {
           create(:completed_order_with_totals, line_items_count: 0,
-                                               distributor: distributor,
+                                               distributor:,
                                                bill_address: bill_address3)
         }
         let(:order4) {
           create(:completed_order_with_totals, line_items_count: 0,
-                                               distributor: distributor,
+                                               distributor:,
                                                bill_address: bill_address4)
         }
 
@@ -178,7 +178,7 @@ describe "Orders And Fulfillment" do
       end
 
       context "When filtering by product" do
-        let(:variant1) { create(:variant, product: product, unit_description: "Big") }
+        let(:variant1) { create(:variant, product:, unit_description: "Big") }
         let(:variant3) { create(:variant) }
 
         before do
@@ -212,7 +212,7 @@ describe "Orders And Fulfillment" do
       context "for three different orders" do
         let(:order3) {
           create(:completed_order_with_totals, line_items_count: 0,
-                                               distributor: distributor,
+                                               distributor:,
                                                bill_address: bill_address1,
                                                order_cycle_id: order_cycle.id)
         }
@@ -403,7 +403,7 @@ describe "Orders And Fulfillment" do
         let(:product2) { create(:simple_product, name: "Salted Peanuts", supplier: supplier2 ) }
         let(:variant3) { create(:variant, product: product2, unit_description: "Bag") }
         let(:order4) {
-          create(:completed_order_with_totals, line_items_count: 0, distributor: distributor,
+          create(:completed_order_with_totals, line_items_count: 0, distributor:,
                                                bill_address: bill_address1,
                                                order_cycle_id: order_cycle.id)
         }

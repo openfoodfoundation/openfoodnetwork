@@ -6,19 +6,19 @@ describe TaxRateFinder do
   describe "getting the corresponding tax rate" do
     let(:amount) { BigDecimal(120) }
     let(:tax_rate) {
-      create(:tax_rate, amount: 0.2, calculator: Calculator::DefaultTax.new, zone: zone)
+      create(:tax_rate, amount: 0.2, calculator: Calculator::DefaultTax.new, zone:)
     }
     let(:tax_rate_shipping) {
-      create(:tax_rate, amount: 0.05, calculator: Calculator::DefaultTax.new, zone: zone)
+      create(:tax_rate, amount: 0.05, calculator: Calculator::DefaultTax.new, zone:)
     }
     let(:tax_category) { create(:tax_category, tax_rates: [tax_rate]) }
     let(:tax_category_shipping) { create(:tax_category, tax_rates: [tax_rate_shipping]) }
     let(:zone) { create(:zone_with_member) }
     let(:shipping_method) { create(:shipping_method, tax_category: tax_category_shipping) }
-    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method:) }
     let(:line_item) { create(:line_item) }
-    let(:enterprise_fee) { create(:enterprise_fee, tax_category: tax_category) }
-    let(:order) { create(:order_with_taxes, zone: zone) }
+    let(:enterprise_fee) { create(:enterprise_fee, tax_category:) }
+    let(:order) { create(:order_with_taxes, zone:) }
 
     subject { TaxRateFinder.new }
 

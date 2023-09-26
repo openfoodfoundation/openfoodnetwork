@@ -47,9 +47,9 @@ module ControllerRequestsHelper
 
   def process_action_with_route(action, params = {}, session = nil, flash = nil, method = "GET")
     process(action,
-            method: method,
+            method:,
             params: params.reverse_merge!(use_route: :main_app),
-            session: session,
-            flash: flash)
+            session:,
+            flash:)
   end
 end

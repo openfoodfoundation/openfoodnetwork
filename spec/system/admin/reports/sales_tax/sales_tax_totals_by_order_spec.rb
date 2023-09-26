@@ -32,11 +32,11 @@ describe "Sales Tax Totals By order" do
   let!(:country_zone){ create(:zone_with_member) }
   let!(:tax_category){ create(:tax_category, name: 'GST Food') }
   let!(:state_tax_rate){
-    create(:tax_rate, zone: state_zone, tax_category: tax_category,
+    create(:tax_rate, zone: state_zone, tax_category:,
                       name: 'State', amount: 0.015)
   }
   let!(:country_tax_rate){
-    create(:tax_rate, zone: country_zone, tax_category: tax_category,
+    create(:tax_rate, zone: country_zone, tax_category:,
                       name: 'Country', amount: 0.025)
   }
   let!(:ship_address){
@@ -64,7 +64,7 @@ describe "Sales Tax Totals By order" do
     create(:shipping_method, :flat_rate, amount: 10, tax_category_id: tax_category.id)
   }
 
-  let!(:order){ create(:order_with_distributor, distributor: distributor) }
+  let!(:order){ create(:order_with_distributor, distributor:) }
   let!(:order_cycle){
     create(:simple_order_cycle, name: 'oc1', suppliers: [supplier], distributors: [distributor],
                                 variants: [variant])
@@ -92,7 +92,7 @@ describe "Sales Tax Totals By order" do
       customer_id: customer1.id,
       email: 'order1@example.com'
     )
-    order.line_items.create(variant: variant, quantity: 1, price: 100)
+    order.line_items.create(variant:, quantity: 1, price: 100)
   end
 
   context 'added tax' do
@@ -220,7 +220,7 @@ describe "Sales Tax Totals By order" do
   end
 
   context 'should filter by customer' do
-    let!(:order2){ create(:order_with_distributor, distributor: distributor) }
+    let!(:order2){ create(:order_with_distributor, distributor:) }
     let!(:customer2){ create(:customer, enterprise: create(:enterprise), user: create(:user)) }
     let!(:customer_email_dropdown_selector){ "#s2id_q_customer_id_in" }
     let!(:table_raw_selector){ "table.report__table tbody tr" }
@@ -323,7 +323,7 @@ describe "Sales Tax Totals By order" do
       OrderWorkflow.new(order).complete!
 
       customer2.update!({ first_name: 'c2fname', last_name: 'c2lname', code: 'DEF456' })
-      order2.line_items.create({ variant: variant, quantity: 1, price: 200 })
+      order2.line_items.create({ variant:, quantity: 1, price: 200 })
       order2.update!({
                        order_cycle_id: order_cycle.id,
                        ship_address_id: customer2.bill_address_id,

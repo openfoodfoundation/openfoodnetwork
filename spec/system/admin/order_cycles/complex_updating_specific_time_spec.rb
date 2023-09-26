@@ -27,9 +27,9 @@ xdescribe '
     supplier = create(:supplier_enterprise, name: 'My supplier')
     distributor = create(:distributor_enterprise, name: 'My distributor',
                                                   with_payment_and_shipping: true)
-    product = create(:product, supplier: supplier)
-    v1 = create(:variant, product: product)
-    v2 = create(:variant, product: product)
+    product = create(:product, supplier:)
+    v1 = create(:variant, product:)
+    v2 = create(:variant, product:)
 
     # Relationships required for interface to work
     create(:enterprise_relationship, parent: supplier, child: coordinator,

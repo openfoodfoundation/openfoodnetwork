@@ -33,10 +33,10 @@ describe '
 
     context "for a complete order" do
       context "with a card that succeeds on card registration" do
-        before { stub_payment_intents_post_request order: order, stripe_account_header: true }
+        before { stub_payment_intents_post_request order:, stripe_account_header: true }
 
         context "and succeeds on payment capture" do
-          before { stub_successful_capture_request order: order }
+          before { stub_successful_capture_request order: }
 
           it "adds a payment with state complete" do
             login_as_admin
@@ -54,7 +54,7 @@ describe '
         context "but fails on payment capture" do
           let(:error_message) { "Card was declined: insufficient funds." }
 
-          before { stub_failed_capture_request order: order, response: { message: error_message } }
+          before { stub_failed_capture_request order:, response: { message: error_message } }
 
           it "fails to add a payment due to card error" do
             login_as_admin
@@ -73,7 +73,7 @@ describe '
 
       context "with a card that fails on registration because it requires(redirects) extra auth" do
         before do
-          stub_payment_intents_post_request_with_redirect order: order,
+          stub_payment_intents_post_request_with_redirect order:,
                                                           redirect_url: "https://www.stripe.com/authorize"
         end
 
@@ -97,8 +97,8 @@ describe '
       let!(:order) { create(:order_with_line_items, distributor: create(:enterprise)) }
 
       before do
-        stub_payment_intents_post_request order: order, stripe_account_header: true
-        stub_successful_capture_request order: order
+        stub_payment_intents_post_request order:, stripe_account_header: true
+        stub_successful_capture_request(order:)
 
         break unless order.next! while !order.payment?
       end
@@ -120,7 +120,7 @@ describe '
   context "with a payment using a StripeSCA payment method" do
     before do
       order.update payments: []
-      order.payments << create(:payment, payment_method: stripe_payment_method, order: order)
+      order.payments << create(:payment, payment_method: stripe_payment_method, order:)
     end
 
     it "renders the payment details" do
