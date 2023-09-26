@@ -10,19 +10,19 @@ module Permissions
     let(:distributor) { create(:distributor_enterprise) }
     let(:coordinator) { create(:distributor_enterprise) }
     let(:order_cycle) {
-      create(:simple_order_cycle, coordinator: coordinator, distributors: [distributor])
+      create(:simple_order_cycle, coordinator:, distributors: [distributor])
     }
     let(:order_completed) {
-      create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor )
+      create(:completed_order_with_totals, order_cycle:, distributor: )
     }
     let(:order_cancelled) {
-      create(:order, order_cycle: order_cycle, distributor: distributor, state: 'canceled' )
+      create(:order, order_cycle:, distributor:, state: 'canceled' )
     }
     let(:order_cart) {
-      create(:order, order_cycle: order_cycle, distributor: distributor, state: 'cart' )
+      create(:order, order_cycle:, distributor:, state: 'cart' )
     }
     let(:order_from_last_year) {
-      create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor,
+      create(:completed_order_with_totals, order_cycle:, distributor:,
                                            completed_at: 1.year.ago)
     }
 
@@ -30,8 +30,8 @@ module Permissions
 
     describe "finding orders that are visible in reports" do
       let(:random_enterprise) { create(:distributor_enterprise) }
-      let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor ) }
-      let!(:line_item) { create(:line_item, order: order) }
+      let(:order) { create(:order, order_cycle:, distributor: ) }
+      let!(:line_item) { create(:line_item, order:) }
       let!(:producer) { create(:supplier_enterprise) }
 
       before do
@@ -120,9 +120,9 @@ module Permissions
 
     describe "finding line items that are visible in reports" do
       let(:random_enterprise) { create(:distributor_enterprise) }
-      let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor ) }
-      let!(:line_item1) { create(:line_item, order: order) }
-      let!(:line_item2) { create(:line_item, order: order) }
+      let(:order) { create(:order, order_cycle:, distributor: ) }
+      let!(:line_item1) { create(:line_item, order:) }
+      let!(:line_item2) { create(:line_item, order:) }
       let!(:producer) { create(:supplier_enterprise) }
 
       before do

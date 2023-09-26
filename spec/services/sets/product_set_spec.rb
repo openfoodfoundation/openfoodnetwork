@@ -156,7 +156,7 @@ describe Sets::ProductSet do
             end
 
             context 'and the variant does exist' do
-              let!(:variant) { create(:variant, product: product) }
+              let!(:variant) { create(:variant, product:) }
 
               before { master_attributes[:id] = variant.id }
 

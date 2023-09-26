@@ -6,9 +6,9 @@ describe CapQuantity do
   describe "checking that line items are available to purchase" do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:shop) { order_cycle.coordinator }
-    let(:order) { create(:order, order_cycle: order_cycle, distributor: shop) }
+    let(:order) { create(:order, order_cycle:, distributor: shop) }
     let(:ex) {
-      create(:exchange, order_cycle: order_cycle, sender: shop, receiver: shop, incoming: false)
+      create(:exchange, order_cycle:, sender: shop, receiver: shop, incoming: false)
     }
     let(:variant1) { create(:variant, on_hand: 5) }
     let(:variant2) { create(:variant, on_hand: 5) }

@@ -62,7 +62,7 @@ describe OrderCycleDistributedProducts do
 
       context "with variant overrides" do
         let!(:override) {
-          create(:variant_override, hub: distributor, variant: variant, count_on_hand: 0)
+          create(:variant_override, hub: distributor, variant:, count_on_hand: 0)
         }
 
         it "does not return product when an override is out of stock" do
@@ -85,9 +85,9 @@ describe OrderCycleDistributedProducts do
     let(:oc) { create(:simple_order_cycle, distributors: [distributor], variants: [v1, v3]) }
     let(:customer) { create(:customer) }
     let(:product) { create(:simple_product) }
-    let!(:v1) { create(:variant, product: product) }
-    let!(:v2) { create(:variant, product: product) }
-    let!(:v3) { create(:variant, product: product) }
+    let!(:v1) { create(:variant, product:) }
+    let!(:v2) { create(:variant, product:) }
+    let!(:v3) { create(:variant, product:) }
     let!(:vo) { create(:variant_override, hub: distributor, variant_id: v3.id, count_on_hand: 0) }
     let(:variants) { described_class.new(distributor, oc, customer).variants_relation }
 

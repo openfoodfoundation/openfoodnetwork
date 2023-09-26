@@ -5,7 +5,7 @@ require 'spec_helper'
 describe OrderDataMasker do
   describe '#call' do
     let(:distributor) { create(:enterprise) }
-    let(:order) { create(:order, distributor: distributor, ship_address: create(:address)) }
+    let(:order) { create(:order, distributor:, ship_address: create(:address)) }
 
     context 'when displaying customer names is allowed' do
       before { distributor.show_customer_names_to_suppliers = true }

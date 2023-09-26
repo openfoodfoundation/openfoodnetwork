@@ -6,7 +6,7 @@ describe OrderFactory do
   let(:variant1) { create(:variant, price: 5.0) }
   let(:variant2) { create(:variant, price: 7.0) }
   let(:user) { create(:user) }
-  let(:customer) { create(:customer, user: user) }
+  let(:customer) { create(:customer, user:) }
   let(:shop) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:other_shipping_method_a) { create(:shipping_method) }

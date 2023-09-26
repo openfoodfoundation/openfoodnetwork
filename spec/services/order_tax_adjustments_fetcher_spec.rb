@@ -11,31 +11,31 @@ describe OrderTaxAdjustmentsFetcher do
       create(:tax_rate, included_in_price: true,
                         calculator: Calculator::DefaultTax.new,
                         amount: 0.1,
-                        zone: zone)
+                        zone:)
     end
     let(:tax_rate15) do
       create(:tax_rate, included_in_price: true,
                         calculator: Calculator::DefaultTax.new,
                         amount: 0.15,
-                        zone: zone)
+                        zone:)
     end
     let(:tax_rate20) do
       create(:tax_rate, included_in_price: true,
                         calculator: Calculator::DefaultTax.new,
                         amount: 0.2,
-                        zone: zone)
+                        zone:)
     end
     let(:tax_rate25) do
       create(:tax_rate, included_in_price: true,
                         calculator: Calculator::DefaultTax.new,
                         amount: 0.25,
-                        zone: zone)
+                        zone:)
     end
     let(:tax_rate30) do
       create(:tax_rate, included_in_price: false,
                         calculator: Calculator::DefaultTax.new,
                         amount: 0.30,
-                        zone: zone)
+                        zone:)
     end
     let(:tax_category10) { create(:tax_category, tax_rates: [tax_rate10]) }
     let(:tax_category15) { create(:tax_category, tax_rates: [tax_rate15]) }
@@ -50,26 +50,26 @@ describe OrderTaxAdjustmentsFetcher do
                               calculator: Calculator::FlatRate.new(preferred_amount: 48.0))
     end
     let(:admin_adjustment) do
-      create(:adjustment, order: order, amount: 50.0, tax_category: tax_category25,
+      create(:adjustment, order:, amount: 50.0, tax_category: tax_category25,
                           label: "Admin Adjustment").tap do |adjustment|
                             Spree::TaxRate.adjust(order, [adjustment])
                           end
     end
 
     let(:order_cycle) do
-      create(:simple_order_cycle, coordinator: coordinator,
+      create(:simple_order_cycle, coordinator:,
                                   coordinator_fees: [enterprise_fee],
                                   distributors: [coordinator],
                                   variants: [variant])
     end
-    let(:line_item1) { create(:line_item, variant: variant, price: 44.0) }
-    let(:line_item2) { create(:line_item, variant: variant, price: 44.0) }
+    let(:line_item1) { create(:line_item, variant:, price: 44.0) }
+    let(:line_item2) { create(:line_item, variant:, price: 44.0) }
     let(:order) do
       create(
         :order,
         line_items: [line_item1, line_item2],
         bill_address: create(:address),
-        order_cycle: order_cycle,
+        order_cycle:,
         distributor: coordinator,
         state: 'payment'
       )
@@ -79,10 +79,10 @@ describe OrderTaxAdjustmentsFetcher do
                                tax_category: tax_category15)
     end
     let!(:shipment) do
-      create(:shipment_with, :shipping_method, shipping_method: shipping_method, order: order)
+      create(:shipment_with, :shipping_method, shipping_method:, order:)
     end
     let(:legacy_tax_adjustment) do
-      create(:adjustment, order: order, adjustable: order, amount: 1.23, originator: tax_rate30,
+      create(:adjustment, order:, adjustable: order, amount: 1.23, originator: tax_rate30,
                           label: "Additional Tax Adjustment", state: "closed")
     end
 

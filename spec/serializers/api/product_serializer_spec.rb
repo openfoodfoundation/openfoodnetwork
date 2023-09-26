@@ -12,7 +12,7 @@ describe Api::ProductSerializer do
   let!(:taxon) { create(:taxon) }
   let!(:property) { create(:property) }
   let!(:product) { create(:product, primary_taxon: taxon, properties: [property], price: 20.00) }
-  let(:variant1) { create(:variant, product: product) }
+  let(:variant1) { create(:variant, product:) }
 
   let(:serializer) {
     described_class.new(product,

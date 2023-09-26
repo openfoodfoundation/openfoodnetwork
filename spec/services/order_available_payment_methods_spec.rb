@@ -6,7 +6,7 @@ describe OrderAvailablePaymentMethods do
   context "when the order has no current_distributor" do
     it "returns an empty array" do
       order_cycle = create(:sells_own_order_cycle)
-      order = build(:order, distributor: nil, order_cycle: order_cycle)
+      order = build(:order, distributor: nil, order_cycle:)
 
       expect(OrderAvailablePaymentMethods.new(order).to_a).to eq []
     end
@@ -19,7 +19,7 @@ describe OrderAvailablePaymentMethods do
                                             distributors: [distributor],
                                             display_on: 'back_end')
     order_cycle = create(:sells_own_order_cycle)
-    order = build(:order, distributor: distributor, order_cycle: order_cycle)
+    order = build(:order, distributor:, order_cycle:)
 
     available_payment_methods = OrderAvailablePaymentMethods.new(order).to_a
 
@@ -33,7 +33,7 @@ describe OrderAvailablePaymentMethods do
                                          distributors: [distributor],
                                          display_on: 'back_end')
     order_cycle = create(:sells_own_order_cycle)
-    order = build(:order, distributor: distributor, order_cycle: order_cycle)
+    order = build(:order, distributor:, order_cycle:)
 
     available_payment_methods = OrderAvailablePaymentMethods.new(order).to_a
 
@@ -51,7 +51,7 @@ describe OrderAvailablePaymentMethods do
         payment_method_ii = create(:payment_method, distributors: [distributor_ii])
         payment_method_iii = create(:payment_method, distributors: [distributor_iii])
         order_cycle = create(:sells_own_order_cycle, distributors: [distributor_i, distributor_ii])
-        order = build(:order, distributor: distributor_i, order_cycle: order_cycle)
+        order = build(:order, distributor: distributor_i, order_cycle:)
 
         available_payment_methods = OrderAvailablePaymentMethods.new(order).to_a
 
@@ -74,7 +74,7 @@ describe OrderAvailablePaymentMethods do
           distributor_i.distributor_payment_methods.first,
           distributor_ii.distributor_payment_methods.first,
         ]
-        order = build(:order, distributor: distributor_i, order_cycle: order_cycle)
+        order = build(:order, distributor: distributor_i, order_cycle:)
 
         available_payment_methods = OrderAvailablePaymentMethods.new(order).to_a
 
@@ -91,7 +91,7 @@ describe OrderAvailablePaymentMethods do
     let!(:other_distributor_payment_method) do
       create(:payment_method, distributors: [other_distributor])
     end
-    let(:customer) { create(:customer, user: user, enterprise: distributor) }
+    let(:customer) { create(:customer, user:, enterprise: distributor) }
     let!(:tag_rule) {
       create(:filter_payment_methods_tag_rule,
              enterprise: distributor,
@@ -122,7 +122,7 @@ describe OrderAvailablePaymentMethods do
       }
 
       let(:order_cycle) { create(:sells_own_order_cycle) }
-      let(:order) { build(:order, distributor: distributor, order_cycle: order_cycle) }
+      let(:order) { build(:order, distributor:, order_cycle:) }
 
       context "when the customer is nil" do
         let(:available_payment_methods) { OrderAvailablePaymentMethods.new(order).to_a }
@@ -172,7 +172,7 @@ describe OrderAvailablePaymentMethods do
       }
 
       let(:order_cycle) { create(:sells_own_order_cycle) }
-      let(:order) { build(:order, distributor: distributor, order_cycle: order_cycle) }
+      let(:order) { build(:order, distributor:, order_cycle:) }
 
       context "when the customer is nil" do
         let(:available_payment_methods) { OrderAvailablePaymentMethods.new(order).to_a }

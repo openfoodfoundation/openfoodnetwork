@@ -7,8 +7,8 @@ describe OrderPaymentFinder do
   let(:finder) { OrderPaymentFinder.new(order) }
 
   context "when order has several non pending payments" do
-    let!(:failed_payment) { create(:payment, order: order, state: 'failed') }
-    let!(:complete_payment) { create(:payment, :completed, order: order) }
+    let!(:failed_payment) { create(:payment, order:, state: 'failed') }
+    let!(:complete_payment) { create(:payment, :completed, order:) }
 
     it "#last_payment returns the last payment" do
       expect(finder.last_payment).to eq complete_payment
@@ -20,8 +20,8 @@ describe OrderPaymentFinder do
   end
 
   context "when order has a pending payment and a non pending payment" do
-    let!(:processing_payment) { create(:payment, order: order, state: 'processing') }
-    let!(:failed_payment) { create(:payment, order: order, state: 'failed') }
+    let!(:processing_payment) { create(:payment, order:, state: 'processing') }
+    let!(:failed_payment) { create(:payment, order:, state: 'failed') }
 
     it "#last_payment returns the last payment" do
       expect(finder.last_payment).to eq failed_payment
@@ -33,7 +33,7 @@ describe OrderPaymentFinder do
     end
 
     context "and an extra last pending payment" do
-      let!(:pending_payment) { create(:payment, order: order, state: 'pending') }
+      let!(:pending_payment) { create(:payment, order:, state: 'pending') }
 
       it "#last_payment returns the last payment" do
         expect(finder.last_payment).to eq pending_payment

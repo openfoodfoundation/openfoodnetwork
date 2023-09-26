@@ -9,7 +9,7 @@ describe OrderInvoiceComparator do
     let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
     let!(:invoice){
       create(:invoice,
-             order: order,
+             order:,
              data: invoice_data_generator.serialize_for_invoice)
     }
     let(:subject) {
@@ -137,7 +137,7 @@ describe OrderInvoiceComparator do
     let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
     let!(:invoice){
       create(:invoice,
-             order: order,
+             order:,
              data: invoice_data_generator.serialize_for_invoice)
     }
     let(:subject) {

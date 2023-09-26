@@ -8,7 +8,7 @@ describe ProcessPaymentIntent do
   describe "processing a payment intent" do
     let(:customer) { create(:customer) }
     let(:order) {
-      create(:order_with_totals, customer: customer, distributor: customer.enterprise,
+      create(:order_with_totals, customer:, distributor: customer.enterprise,
                                  state: "confirmation")
     }
     let(:payment_method) { create(:stripe_sca_payment_method) }
@@ -16,10 +16,10 @@ describe ProcessPaymentIntent do
     let!(:payment) {
       create(
         :payment,
-        payment_method: payment_method,
+        payment_method:,
         cvv_response_message: "https://stripe.com/redirect",
         response_code: "pi_123",
-        order: order,
+        order:,
         state: "requires_authorization"
       )
     }

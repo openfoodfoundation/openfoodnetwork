@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe OrderCartReset do
   let(:distributor) { create(:distributor_enterprise) }
-  let(:order) { create(:order, :with_line_item, distributor: distributor) }
+  let(:order) { create(:order, :with_line_item, distributor:) }
 
   context "if order distributor is not the requested distributor" do
     let(:new_distributor) { create(:distributor_enterprise) }

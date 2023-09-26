@@ -4,8 +4,8 @@ require 'spec_helper'
 
 describe Checkout::PaymentMethodFetcher do
   let!(:order) { create(:completed_order_with_totals) }
-  let(:payment1) { build(:payment, order: order) }
-  let(:payment2) { build(:payment, order: order) }
+  let(:payment1) { build(:payment, order:) }
+  let(:payment2) { build(:payment, order:) }
   let(:service) { Checkout::PaymentMethodFetcher.new(order) }
 
   describe '#call' do
