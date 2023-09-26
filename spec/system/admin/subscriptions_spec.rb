@@ -36,146 +36,144 @@ describe 'Subscriptions' do
         subscription.subscription_line_items.each do |sli|
           sli.update(price_estimate: 5)
         end
+        visit admin_subscriptions_path
       end
 
-      it "passes the smoke test" do
-        visit spree.admin_dashboard_path
-        click_link 'Orders'
-        click_link 'Subscriptions'
+      context "for pre-existing subscriptions" do
+        it "passes the smoke test" do
+          expect(page).to have_select2 "shop_id", with_options: [shop.name, shop2.name],
+                                                  without_options: [shop_unmanaged.name]
 
-        expect(page).to have_select2 "shop_id", with_options: [shop.name, shop2.name],
-                                                without_options: [shop_unmanaged.name]
+          select2_select shop2.name, from: "shop_id"
 
-        select2_select shop2.name, from: "shop_id"
-
-        # Loads the right subscriptions
-        expect(page).to have_selector "tr#so_#{subscription2.id}"
-        expect(page).to have_no_selector "tr#so_#{subscription.id}"
-        expect(page).to have_no_selector "tr#so_#{subscription_unmanaged.id}"
-        within "tr#so_#{subscription2.id}" do
-          expect(page).to have_selector "td.customer", text: subscription2.customer.email
-        end
-
-        # Changing Shops
-        select2_select shop.name, from: "shop_id"
-
-        # Loads the right subscriptions
-        expect(page).to have_selector "tr#so_#{subscription.id}"
-        expect(page).to have_no_selector "tr#so_#{subscription2.id}"
-        expect(page).to have_no_selector "tr#so_#{subscription_unmanaged.id}"
-        within "tr#so_#{subscription.id}" do
-          expect(page).to have_selector "td.customer", text: subscription.customer.email
-        end
-
-        # Using the Quick Search
-        expect(page).to have_selector "tr#so_#{subscription.id}"
-        expect(page).to have_selector "tr#so_#{other_subscription.id}"
-
-        # Using the Quick Search: no result
-        fill_in 'query', with: 'blah blah blah'
-        expect(page).to have_no_selector "tr#so_#{subscription.id}"
-        expect(page).to have_no_selector "tr#so_#{other_subscription.id}"
-
-        # Using the Quick Search: filter by email
-        fill_in 'query', with: other_subscription.customer.email
-        expect(page).to have_selector "tr#so_#{other_subscription.id}"
-        expect(page).to have_no_selector "tr#so_#{subscription.id}"
-
-        # Using the Quick Search: filter by first_name
-        fill_in 'query', with: other_subscription.customer.first_name
-        expect(page).to have_selector "tr#so_#{other_subscription.id}"
-        expect(page).to have_no_selector "tr#so_#{subscription.id}"
-
-        # Using the Quick Search: filter by last_name
-        fill_in 'query', with: other_subscription.customer.last_name
-        expect(page).to have_selector "tr#so_#{other_subscription.id}"
-        expect(page).to have_no_selector "tr#so_#{subscription.id}"
-
-        # Using the Quick Search: reset filter
-        fill_in 'query', with: ''
-        expect(page).to have_selector "tr#so_#{subscription.id}"
-        expect(page).to have_selector "tr#so_#{other_subscription.id}"
-
-        # Toggling columns
-        expect(page).to have_selector "th.customer"
-        expect(page).to have_content subscription.customer.email
-        toggle_columns "Customer"
-        expect(page).to have_no_selector "th.customer"
-        expect(page).to have_no_content subscription.customer.email
-
-        # Viewing Products
-        open_subscription_products_panel
-
-        within "#subscription-line-items" do
-          expect(page).to have_selector "span#order_subtotal", text: "$15.00" # 3 x $5 items
-          expect(page).to have_selector "span#order_fees", text: "$3.50" # $3.5 shipping
-          # 3 x $5 items + $3.5 shipping
-          expect(page).to have_selector "span#order_form_total", text: "$18.50"
-        end
-
-        # Viewing Orders
-        within "tr#so_#{subscription.id}" do
-          expect(page).to have_selector "td.orders.panel-toggle", text: 1
-          page.find("td.orders.panel-toggle").click
-        end
-
-        within ".subscription-orders" do
-          expect(page).to have_selector "tr.proxy_order", count: 1
-          expect(page).to have_content "$18.50" # 3 x $5 items + $3.5 shipping
-
-          proxy_order = subscription.proxy_orders.first
-          within "tr#po_#{proxy_order.id}" do
-            expect(page).to have_no_content 'CANCELLED'
-            accept_alert 'Are you sure?' do
-              find("a.cancel-order").click
-            end
-            expect(page).to have_content 'CANCELLED'
-            expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
-
-            # Resuming an order
-            accept_alert 'Are you sure?' do
-              find("a.resume-order").click
-            end
-            # Note: the order itself was not complete when 'cancelled', so state remained as cart
-            expect(page).to have_content 'PENDING'
-            expect(proxy_order.reload.canceled_at).to be nil
+          # Loads the right subscriptions
+          expect(page).to have_selector "tr#so_#{subscription2.id}"
+          expect(page).to have_no_selector "tr#so_#{subscription.id}"
+          expect(page).to have_no_selector "tr#so_#{subscription_unmanaged.id}"
+          within "tr#so_#{subscription2.id}" do
+            expect(page).to have_selector "td.customer", text: subscription2.customer.email
           end
-        end
 
-        # Pausing a subscription
-        within "tr#so_#{subscription.id}" do
-          find("a.pause-subscription").click
-        end
-        click_button "Yes, I'm sure"
-        within "tr#so_#{subscription.id}" do
-          expect(page).to have_selector ".state.paused", text: "PAUSED"
-          expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
-        end
+          # Changing Shops
+          select2_select shop.name, from: "shop_id"
 
-        # Unpausing a subscription
-        within "tr#so_#{subscription.id}" do
-          find("a.unpause-subscription").click
-        end
-        click_button "Yes, I'm sure"
-        within "tr#so_#{subscription.id}" do
-          expect(page).to have_selector ".state.active", text: "ACTIVE"
-          expect(subscription.reload.paused_at).to be nil
-        end
+          # Loads the right subscriptions
+          expect(page).to have_selector "tr#so_#{subscription.id}"
+          expect(page).to have_no_selector "tr#so_#{subscription2.id}"
+          expect(page).to have_no_selector "tr#so_#{subscription_unmanaged.id}"
+          within "tr#so_#{subscription.id}" do
+            expect(page).to have_selector "td.customer", text: subscription.customer.email
+          end
 
-        # Cancelling a subscription
-        within "tr#so_#{subscription.id}" do
-          find("a.cancel-subscription").click
-        end
-        click_button "Yes, I'm sure"
-        within "tr#so_#{subscription.id}" do
-          expect(page).to have_selector ".state.canceled", text: "CANCELLED"
-          expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+          # Using the Quick Search
+          expect(page).to have_selector "tr#so_#{subscription.id}"
+          expect(page).to have_selector "tr#so_#{other_subscription.id}"
+
+          # Using the Quick Search: no result
+          fill_in 'query', with: 'blah blah blah'
+          expect(page).to have_no_selector "tr#so_#{subscription.id}"
+          expect(page).to have_no_selector "tr#so_#{other_subscription.id}"
+
+          # Using the Quick Search: filter by email
+          fill_in 'query', with: other_subscription.customer.email
+          expect(page).to have_selector "tr#so_#{other_subscription.id}"
+          expect(page).to have_no_selector "tr#so_#{subscription.id}"
+
+          # Using the Quick Search: filter by first_name
+          fill_in 'query', with: other_subscription.customer.first_name
+          expect(page).to have_selector "tr#so_#{other_subscription.id}"
+          expect(page).to have_no_selector "tr#so_#{subscription.id}"
+
+          # Using the Quick Search: filter by last_name
+          fill_in 'query', with: other_subscription.customer.last_name
+          expect(page).to have_selector "tr#so_#{other_subscription.id}"
+          expect(page).to have_no_selector "tr#so_#{subscription.id}"
+
+          # Using the Quick Search: reset filter
+          fill_in 'query', with: ''
+          expect(page).to have_selector "tr#so_#{subscription.id}"
+          expect(page).to have_selector "tr#so_#{other_subscription.id}"
+
+          # Toggling columns
+          expect(page).to have_selector "th.customer"
+          expect(page).to have_content subscription.customer.email
+          toggle_columns "Customer"
+          expect(page).to have_no_selector "th.customer"
+          expect(page).to have_no_content subscription.customer.email
+
+          # Viewing Products
+          open_subscription_products_panel
+
+          within "#subscription-line-items" do
+            expect(page).to have_selector "span#order_subtotal", text: "$15.00" # 3 x $5 items
+            expect(page).to have_selector "span#order_fees", text: "$3.50" # $3.5 shipping
+            # 3 x $5 items + $3.5 shipping
+            expect(page).to have_selector "span#order_form_total", text: "$18.50"
+          end
+
+          # Viewing Orders
+          within "tr#so_#{subscription.id}" do
+            expect(page).to have_selector "td.orders.panel-toggle", text: 1
+            page.find("td.orders.panel-toggle").click
+          end
+
+          within ".subscription-orders" do
+            expect(page).to have_selector "tr.proxy_order", count: 1
+            expect(page).to have_content "$18.50" # 3 x $5 items + $3.5 shipping
+
+            proxy_order = subscription.proxy_orders.first
+            within "tr#po_#{proxy_order.id}" do
+              expect(page).to have_no_content 'CANCELLED'
+              accept_alert 'Are you sure?' do
+                find("a.cancel-order").click
+              end
+              expect(page).to have_content 'CANCELLED'
+              expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+
+              # Resuming an order
+              accept_alert 'Are you sure?' do
+                find("a.resume-order").click
+              end
+              # Note: the order itself was not complete when 'cancelled', so state remained as cart
+              expect(page).to have_content 'PENDING'
+              expect(proxy_order.reload.canceled_at).to be nil
+            end
+          end
+
+          # Pausing a subscription
+          within "tr#so_#{subscription.id}" do
+            find("a.pause-subscription").click
+          end
+          click_button "Yes, I'm sure"
+          within "tr#so_#{subscription.id}" do
+            expect(page).to have_selector ".state.paused", text: "PAUSED"
+            expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
+          end
+
+          # Unpausing a subscription
+          within "tr#so_#{subscription.id}" do
+            find("a.unpause-subscription").click
+          end
+          click_button "Yes, I'm sure"
+          within "tr#so_#{subscription.id}" do
+            expect(page).to have_selector ".state.active", text: "ACTIVE"
+            expect(subscription.reload.paused_at).to be nil
+          end
+
+          # Cancelling a subscription
+          within "tr#so_#{subscription.id}" do
+            find("a.cancel-subscription").click
+          end
+          click_button "Yes, I'm sure"
+          within "tr#so_#{subscription.id}" do
+            expect(page).to have_selector ".state.canceled", text: "CANCELLED"
+            expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
+          end
         end
       end
 
       context "editing subscription products quantity" do
         it "updates quantity" do
-          visit admin_subscriptions_path
           select2_select shop.name, from: "shop_id"
           open_subscription_products_panel
 
