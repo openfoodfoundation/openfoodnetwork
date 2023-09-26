@@ -15,12 +15,29 @@ describe CheckoutHelper, type: :helper do
     helper.validated_input("test", "foo", type: :email)
   end
 
-  describe "displaying the tax total for an order" do
-    let(:order) { double(:order, total_tax: 123.45, currency: 'AUD') }
+  describe "#display_checkout_tax_total" do
+    subject(:display_checkout_tax_total) { helper.display_checkout_tax_total(order) }
+
+    let(:order) { instance_double(Spree::Order, total_tax: 123.45, currency: 'AUD') }
+    let(:service) do
+      instance_double(VoucherAdjustmentsService, voucher_included_tax: voucher_included_tax)
+    end
+    let(:voucher_included_tax) { 0.0 }
+
+    before do
+      allow(VoucherAdjustmentsService).to receive(:new).and_return(service)
+    end
 
     it "retrieves the total tax on the order" do
-      expect(helper.display_checkout_tax_total(order)).to eq(Spree::Money.new(123.45,
-                                                                              currency: 'AUD'))
+      expect(display_checkout_tax_total).to eq(Spree::Money.new(123.45, currency: 'AUD'))
+    end
+
+    context "with a voucher" do
+      let(:voucher_included_tax) { -0.45 }
+
+      it "displays the discounted total tax" do
+        expect(display_checkout_tax_total).to eq(Spree::Money.new(123.00, currency: 'AUD'))
+      end
     end
   end
 

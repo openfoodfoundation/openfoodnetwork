@@ -53,7 +53,9 @@ module CheckoutHelper
   end
 
   def display_checkout_tax_total(order)
-    Spree::Money.new order.total_tax, currency: order.currency
+    total_tax = order.total_tax + VoucherAdjustmentsService.new(order).voucher_included_tax
+
+    Spree::Money.new(total_tax, currency: order.currency)
   end
 
   def display_checkout_taxes_hash(order)
