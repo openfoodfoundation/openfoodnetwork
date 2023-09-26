@@ -196,15 +196,17 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
         item = [[state_tax_rate.id, order.id], order]
         summary_row = rules.third[:summary_row].call(nil, [item], nil)
 
-        expect(summary_row).to eq({
-          total_excl_tax: 110.00,
-          tax: 3.3,
-          total_incl_tax: 113.30,
-          first_name: "cfname",
-          last_name: "clname",
-          code: "ABC123",
-          email: "order1@example.com"
-        })
+        expect(summary_row).to eq(
+          {
+            total_excl_tax: 110.00,
+            tax: 3.3,
+            total_incl_tax: 113.30,
+            first_name: "cfname",
+            last_name: "clname",
+            code: "ABC123",
+            email: "order1@example.com"
+          }
+        )
       end
 
       context "with a voucher" do
