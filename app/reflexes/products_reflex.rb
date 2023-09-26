@@ -37,7 +37,7 @@ class ProductsReflex < ApplicationReflex
     product_set.collection.each { |p| authorize! :update, p }
     @products = product_set.collection # use instance variable mainly for testing
 
-    if product_set.save
+    if product_set.save.positive?
       # flash[:success] = with_locale { I18n.t('.success') }
       # morph_admin_flashes  # ERROR: selector morph type has already been set
     elsif product_set.errors.present?

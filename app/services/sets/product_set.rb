@@ -16,7 +16,7 @@ module Sets
       # Attempt to save all records, collecting model errors.
       @collection_hash.each_value.map do |product_attributes|
         update_product_attributes(product_attributes)
-      end.all?
+      end.count(true)
     end
 
     def collection_attributes=(attributes)
@@ -75,7 +75,7 @@ module Sets
 
       validate_presence_of_unit_value_in_product(product)
 
-      product.errors.empty? && product.save
+      product.errors.empty? && product.changed? && product.save
     end
 
     def validate_presence_of_unit_value_in_product(product)

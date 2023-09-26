@@ -71,7 +71,7 @@ module Spree
 
         product_set.collection.each { |p| authorize! :update, p }
 
-        if product_set.save
+        if product_set.save.positive?
           redirect_to main_app.bulk_products_api_v0_products_path(bulk_index_query)
         elsif product_set.errors.present?
           render json: { errors: product_set.errors }, status: :bad_request

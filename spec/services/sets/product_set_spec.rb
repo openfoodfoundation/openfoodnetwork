@@ -57,7 +57,7 @@ describe Sets::ProductSet do
           end
 
           it 'updates the product without error' do
-            expect(product_set.save).to eq true
+            expect(product_set.save).to eq 1
 
             expect(product.reload.attributes).to include(
               'variant_unit' => 'weight'
@@ -193,7 +193,7 @@ describe Sets::ProductSet do
 
                 it 'does not create variant and notifies bugsnag still raising the exception' do
                   number_of_variants = Spree::Variant.all.size
-                  expect(product_set.save).to eq(false)
+                  expect(product_set.save).to eq 0
                   expect(Spree::Variant.all.size).to eq number_of_variants
                   expect(Spree::Variant.last.sku).not_to eq('321')
                 end
@@ -204,6 +204,7 @@ describe Sets::ProductSet do
       end
 
       context 'when there are multiple products' do
+        let(:product_c) { create(:simple_product, name: "Carrots") }
         let!(:product_b) { create(:simple_product, name: "Bananas") }
         let!(:product_a) { create(:simple_product, name: "Apples") }
 
@@ -217,21 +218,29 @@ describe Sets::ProductSet do
               id: product_b.id,
               name: "Bananes",
             },
+            2 => {
+              id: product_c.id,
+              name: "Carrots",
+            },
           }
         end
 
-        it 'updates the products' do
-          product_set.save
+        it 'updates the changed products' do
+          result = product_set.save
+          expect(result).to eq 2 # only 2 were changed
 
           expect(product_a.reload.name).to eq "Pommes"
           expect(product_b.reload.name).to eq "Bananes"
+          expect(product_c.reload.name).to eq "Carrots" # no change
         end
 
         it 'retains the order of products' do
+          # even though the first product is now alphabetically last
           product_set.save
 
           expect(product_set.collection[0]).to eq product_a.reload
           expect(product_set.collection[1]).to eq product_b.reload
+          expect(product_set.collection[2]).to eq product_c.reload
         end
 
         context 'first product has an error' do
