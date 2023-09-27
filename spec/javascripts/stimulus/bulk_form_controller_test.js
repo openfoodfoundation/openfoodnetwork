@@ -11,42 +11,39 @@ describe("BulkFormController", () => {
     application.register("bulk-form", bulk_form_controller);
   });
 
-  // Mock I18n. TODO: moved to a shared helper
-  beforeAll(() => {
-    const mockedT = jest.fn();
-    mockedT.mockImplementation((string, opts) => (string + ', ' + JSON.stringify(opts)));
-
-    global.I18n =  {
-      t: mockedT
-    };
-  })
-
-  // (jest still doesn't have aroundEach https://github.com/jestjs/jest/issues/4543 )
-  afterAll(() => {
-    delete global.I18n;
-  })
-
-  beforeEach(() => {
-    document.body.innerHTML = `
-      <div id="disable1"></div>
-      <div id="disable2"></div>
-      <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
-        <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
-        <div id="modified_summary" data-bulk-form-target="modifiedSummary" data-translation-key="modified_summary"></div>
-        <div data-record-id="1">
-          <input id="input1a" type="text" value="initial1a">
-          <input id="input1b" type="text" value="initial1b">
-        </div>
-        <div data-record-id="2">
-          <input id="input2" type="text" value="initial2">
-        </div>
-        <input type="submit">
-      </form>
-    `;
-  });
-
   describe("Modifying input values", () => {
+    // Mock I18n. TODO: moved to a shared helper
+    beforeAll(() => {
+      const mockedT = jest.fn();
+      mockedT.mockImplementation((string, opts) => (string + ', ' + JSON.stringify(opts)));
+
+      global.I18n =  {
+        t: mockedT
+      };
+    })
+    // (jest still doesn't have aroundEach https://github.com/jestjs/jest/issues/4543 )
+    afterAll(() => {
+      delete global.I18n;
+    })
+
     beforeEach(() => {
+      document.body.innerHTML = `
+        <div id="disable1"></div>
+        <div id="disable2"></div>
+        <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
+          <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
+          <div id="modified_summary" data-bulk-form-target="modifiedSummary" data-translation-key="modified_summary"></div>
+          <div data-record-id="1">
+            <input id="input1a" type="text" value="initial1a">
+            <input id="input1b" type="text" value="initial1b">
+          </div>
+          <div data-record-id="2">
+            <input id="input2" type="text" value="initial2">
+          </div>
+          <input type="submit">
+        </form>
+      `;
+
       const disable1 = document.getElementById("disable1");
       const disable2 = document.getElementById("disable2");
       const actions = document.getElementById("actions");
@@ -159,6 +156,43 @@ describe("BulkFormController", () => {
         expect(disable1.classList).not.toContain('disabled-section');
         expect(disable2.classList).not.toContain('disabled-section');
       });
+    });
+  });
+
+  describe("When there are errors", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <form data-controller="bulk-form" data-bulk-form-error-value="true">
+          <div id="actions" data-bulk-form-target="actions">
+            An error occurred.
+            <input type="submit">
+          </div>
+          <div data-record-id="1">
+            <input id="input1a" type="text" value="initial1a">
+          </div>
+        </form>
+      `;
+
+      const actions = document.getElementById("actions");
+      const modified_summary = document.getElementById("modified_summary");
+      const input1a = document.getElementById("input1a");
+    });
+
+    it("form actions section remains visible", () => {
+      // Expect actions to remain visible
+      expect(actions.classList).not.toContain('hidden');
+
+      // Record 1: First field changed
+      input1a.value = 'updated1a';
+      input1a.dispatchEvent(new Event("change"));
+      // Expect actions to remain visible
+      expect(actions.classList).not.toContain('hidden');
+
+      // Change back to original value
+      input1a.value = 'initial1a';
+      input1a.dispatchEvent(new Event("change"));
+      // Expect actions to remain visible
+      expect(actions.classList).not.toContain('hidden');
     });
   });
 

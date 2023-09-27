@@ -5,6 +5,7 @@ export default class BulkFormController extends Controller {
   static targets = ["actions", "modifiedSummary"];
   static values = {
     disableSelector: String,
+    error: Boolean,
   };
   recordElements = {};
 
@@ -25,6 +26,8 @@ export default class BulkFormController extends Controller {
         this.recordElements[recordId].push(element);
       }
     }
+
+    this.toggleFormModified();
   }
 
   disconnect() {
@@ -45,7 +48,7 @@ export default class BulkFormController extends Controller {
     const modifiedRecordCount = Object.values(this.recordElements).filter((elements) =>
       elements.some(this.#isModified)
     ).length;
-    const formModified = modifiedRecordCount > 0;
+    const formModified = modifiedRecordCount > 0 || this.errorValue;
 
     // Show actions
     this.actionsTarget.classList.toggle("hidden", !formModified);
@@ -54,6 +57,7 @@ export default class BulkFormController extends Controller {
     // Display number of records modified
     const key = this.hasModifiedSummaryTarget && this.modifiedSummaryTarget.dataset.translationKey;
     if (key) {
+      // TODO: save processing and only run if modifiedRecordCount has changed.
       this.modifiedSummaryTarget.textContent = I18n.t(key, { count: modifiedRecordCount });
     }
 

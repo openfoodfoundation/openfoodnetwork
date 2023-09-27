@@ -1,6 +1,8 @@
 = form_with url: bulk_update_admin_products_v3_index_path, method: :patch, id: "products-form",
             html: {'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#bulk_update',
-                   'data-controller': "bulk-form", 'data-bulk-form-disable-selector-value': "#sort,#filters" } do |form|
+                   'data-controller': "bulk-form", 'data-bulk-form-disable-selector-value': "#sort,#filters",
+                   'data-bulk-form-error-value': defined?(error_counts),
+                  } do |form|
   %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
     .container
       .status.eleven.columns
