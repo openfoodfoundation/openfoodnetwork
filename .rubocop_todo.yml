@@ -98,6 +98,12 @@ Lint/NoReturnInBeginEndBlocks:
   Exclude:
     - 'app/controllers/payment_gateways/stripe_controller.rb'
 
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+Lint/RedundantCopDisableDirective:
+  Exclude:
+    - 'lib/reporting/reports/list.rb'
+
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Lint/RedundantDirGlobSort:
@@ -121,7 +127,7 @@ Lint/UselessMethodDefinition:
   Exclude:
     - 'app/models/spree/gateway.rb'
 
-# Offense count: 26
+# Offense count: 27
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
@@ -147,7 +153,7 @@ Metrics/AbcSize:
     - 'lib/tasks/enterprises.rake'
     - 'spec/services/order_checkout_restart_spec.rb'
 
-# Offense count: 46
+# Offense count: 45
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 # AllowedMethods: refine
 Metrics/BlockLength:
@@ -170,7 +176,6 @@ Metrics/BlockLength:
     - 'spec/factories/subscription_factory.rb'
     - 'spec/factories/user_factory.rb'
     - 'spec/factories/variant_factory.rb'
-    - 'spec/requests/api/orders_spec.rb'
     - 'spec/requests/checkout/failed_checkout_spec.rb'
     - 'spec/requests/checkout/stripe_sca_spec.rb'
     - 'spec/support/cancan_helper.rb'
@@ -428,7 +433,7 @@ Rails/FindEach:
     - 'spec/system/admin/bulk_order_management_spec.rb'
     - 'spec/system/admin/enterprise_relationships_spec.rb'
 
-# Offense count: 47
+# Offense count: 46
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/HasManyOrHasOneDependent:
@@ -711,7 +716,7 @@ Rails/UnusedRenderContent:
     - 'app/controllers/api/v0/taxons_controller.rb'
     - 'app/controllers/api/v0/variants_controller.rb'
 
-# Offense count: 56
+# Offense count: 55
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/WhereEquals:
   Exclude:
@@ -738,7 +743,6 @@ Rails/WhereEquals:
     - 'app/serializers/api/order_serializer.rb'
     - 'lib/open_food_network/enterprise_fee_calculator.rb'
     - 'lib/open_food_network/order_cycle_permissions.rb'
-    - 'lib/reporting/reports/customers/base.rb'
     - 'lib/reporting/reports/products_and_inventory/base.rb'
     - 'lib/tasks/data.rake'
     - 'lib/tasks/data/anonymize_data.rake'
@@ -868,7 +872,7 @@ Style/HashLikeCase:
   Exclude:
     - 'app/models/enterprise.rb'
 
-# Offense count: 1043
+# Offense count: 356
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
@@ -915,6 +919,8 @@ Style/HashSyntax:
     - 'spec/system/consumer/account/payments_spec.rb'
     - 'spec/system/consumer/account_spec.rb'
     - 'spec/system/consumer/authentication_spec.rb'
+    - 'spec/system/consumer/checkout/tax_incl_spec.rb'
+    - 'spec/system/consumer/checkout/tax_not_incl_spec.rb'
     - 'spec/system/consumer/multilingual_spec.rb'
     - 'spec/system/consumer/shopping/cart_spec.rb'
     - 'spec/system/consumer/shopping/checkout_auth_spec.rb'
@@ -926,9 +932,6 @@ Style/HashSyntax:
     - 'spec/system/consumer/shopping/shopping_spec.rb'
     - 'spec/system/consumer/shopping/unit_price_spec.rb'
     - 'spec/system/consumer/shopping/variant_overrides_spec.rb'
-    - 'spec/system/consumer/split_checkout_spec.rb'
-    - 'spec/system/consumer/split_checkout_tax_incl_spec.rb'
-    - 'spec/system/consumer/split_checkout_tax_not_incl_spec.rb'
     - 'spec/system/consumer/user_password_spec.rb'
     - 'spec/system/consumer/white_label_spec.rb'
     - 'spec/system/support/cuprite_setup.rb'
