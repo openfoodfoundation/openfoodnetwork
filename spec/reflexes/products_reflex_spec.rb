@@ -13,7 +13,7 @@ describe ProductsReflex, type: :reflex do
     Flipper.enable(:admin_style_v3)
   end
 
-  describe 'fetch' do
+  describe '#fetch' do
     subject{ build_reflex(method_name: :fetch, **context) }
 
     describe "sorting" do
@@ -41,6 +41,7 @@ describe ProductsReflex, type: :reflex do
              sku: "APL-01",
              price: 5.25)
     }
+    let!(:product_c) { create(:simple_product, name: "Carrots", sku: "CAR-00") }
     let!(:product_b) { create(:simple_product, name: "Bananas", sku: "BAN-00") }
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
 
@@ -123,17 +124,22 @@ describe ProductsReflex, type: :reflex do
           "products" => [
             {
               "id" => product_a.id.to_s,
-              "name" => "",
+              "name" => "Pommes",
             },
             {
               "id" => product_b.id.to_s,
-              "name" => "",
+              "name" => "", # Name can't be blank
+            },
+            {
+              "id" => product_c.id.to_s,
+              "name" => "", # Name can't be blank
             },
           ]
         }
 
         reflex = run_reflex(:bulk_update, params:)
-        expect(reflex.get(:error_msg)).to include "2 products have errors"
+        pending
+        expect(reflex.get(:error_counts)).to eq({ saved: 1, invalid: 2 })
 
         # # WTF
         # expect{ reflex(:bulk_update, params:) }.to broadcast(
