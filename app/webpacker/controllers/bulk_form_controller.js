@@ -52,7 +52,7 @@ export default class BulkFormController extends Controller {
     this.#disableOtherElements(formChanged); // like filters and sorting
 
     // Display number of records changed
-    const key = this.changedSummaryTarget && this.changedSummaryTarget.dataset.translationKey;
+    const key = this.hasChangedSummaryTarget && this.changedSummaryTarget.dataset.translationKey;
     if (key) {
       this.changedSummaryTarget.textContent = I18n.t(key, { count: changedRecordCount });
     }
@@ -76,13 +76,15 @@ export default class BulkFormController extends Controller {
   // private
 
   #disableOtherElements(disable) {
+    if (!this.hasDisableSelectorValue) return;
+
     this.disableElements ||= document.querySelectorAll(this.disableSelectorValue);
 
-    if (this.disableElements) {
-      this.disableElements.forEach((element) => {
-        element.classList.toggle("disabled-section", disable);
-      });
-    }
+    if (!this.disableElements) return;
+
+    this.disableElements.forEach((element) => {
+      element.classList.toggle("disabled-section", disable);
+    });
   }
 
   #isChanged(element) {
