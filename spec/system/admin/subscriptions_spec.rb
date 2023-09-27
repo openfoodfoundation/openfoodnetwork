@@ -15,6 +15,49 @@ describe 'Subscriptions' do
 
     before { login_as user }
 
+    describe "with subscriptions" do
+      context "enabled" do
+        before do
+          visit spree.admin_dashboard_path
+          click_link 'Orders'
+        end
+        it "the subscriptions tab is visible" do
+          within "#sub_nav" do
+            expect(page).to have_link "Subscriptions", href: "/admin/subscriptions"
+          end
+
+          # if conditions are not met, instructions are displayed
+          click_link 'Subscriptions'
+          expect(page).to have_content "Just a few more steps before you can begin"
+
+          # subscriptions are enabled, instructions are not displayed
+          expect(page).to_not have_content 'Under "Shop Preferences", /
+          enable the Subscriptions option'
+
+          # other relevant instructions are displayed
+          expect(page).to have_content "Set up Shipping and Payment methods"
+          expect(page).to have_content "Note that only Cash and Stripe payment methods may"
+          expect(page).to have_content "be used with subscriptions"
+          expect(page).to have_content "Ensure that at least one Customer exists"
+          expect(page).to have_content "Create at least one Schedule"
+          expect(page).to have_content "1. Go to the on the Order Cycles page"
+          expect(page).to have_content "Once you are done, you can reload this page"
+        end
+      end
+      context "disabled" do
+        before do
+          shop.update!(enable_subscriptions: false)
+          shop2.update!(enable_subscriptions: false)
+          visit spree.admin_dashboard_path
+          click_link 'Orders'
+        end
+        it "the subscriptions tab is not visible" do
+          expect(page).to have_current_path "/admin/orders"
+          expect(page).to_not have_link "Subscriptions", href: "/admin/subscriptions"
+        end
+      end
+    end
+
     context 'listing subscriptions' do
       let!(:subscription) {
         create(:subscription, shop: shop, with_items: true, with_proxy_orders: true)
