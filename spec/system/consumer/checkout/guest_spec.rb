@@ -57,10 +57,7 @@ describe "As a consumer, I want to checkout my order" do
                             name: "Payment with Fee", description: "Payment with fee",
                             calculator: Calculator::FlatRate.new(preferred_amount: 1.23))
   }
-  let(:shipping_backoffice_only) {
-    create(:shipping_method, require_ship_address: true, name: "Shipping Backoffice Only",
-                             display_on: "back_end")
-  }
+
   let(:shipping_methods) {
     [free_shipping_with_required_address, free_shipping, shipping_with_fee,
      free_shipping_without_required_address, tagged_shipping]
