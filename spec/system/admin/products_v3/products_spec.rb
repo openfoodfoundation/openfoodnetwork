@@ -203,7 +203,6 @@ describe 'As an admin, I can see the new product page' do
              price: 5.25)
     }
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
-
     before do
       visit admin_products_url
     end
@@ -317,6 +316,23 @@ describe 'As an admin, I can see the new product page' do
           expect(page).to have_content "is too long"
           expect(page).to have_field "Price", with: "10.25" # other updated value is retained
         end
+      end
+
+      it "saves changes after fixing errors" do
+        within row_containing_name("Apples") do
+          fill_in "Name", with: "Pommes"
+          fill_in "SKU", with: "POM-00"
+        end
+
+        expect {
+          click_button "Save changes"
+          product_a.reload
+          variant_a1.reload
+        }.to change { product_a.name }.to("Pommes")
+          .and change{ product_a.sku }.to("POM-00")
+
+        pending
+        expect(page).to have_content "Changes saved"
       end
     end
   end
