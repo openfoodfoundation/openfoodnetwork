@@ -52,9 +52,7 @@ describe "As a consumer, I want to checkout my order" do
     create(:shipping_method, require_ship_address: false,
                              name: "Z Free Shipping without required address")
   }
-  let(:tagged_shipping) {
-    create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local")
-  }
+
   let!(:payment_with_fee) {
     create(:payment_method, distributors: [distributor],
                             name: "Payment with Fee", description: "Payment with fee",
@@ -66,7 +64,7 @@ describe "As a consumer, I want to checkout my order" do
   }
   let(:shipping_methods) {
     [free_shipping_with_required_address, free_shipping, shipping_with_fee,
-     free_shipping_without_required_address, tagged_shipping]
+     free_shipping_without_required_address]
   }
 
   before do
