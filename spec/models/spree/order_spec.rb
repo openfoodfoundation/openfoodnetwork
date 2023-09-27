@@ -157,6 +157,70 @@ describe Spree::Order do
     end
   end
 
+  context '#changes_allowed?' do
+    let(:order) { create(:order_ready_for_details) }
+    let(:complete) { true }
+    let(:shipped) { false }
+    let(:distributor_allow_changes) { true }
+    let(:order_cycle_open) { true }
+
+    subject { order.changes_allowed? }
+
+    before do
+      allow(order).to receive(:complete?).and_return(complete)
+      allow(order).to receive(:shipped?).and_return(shipped)
+      allow_any_instance_of(Enterprise).to receive(:allow_order_changes?).and_return(
+        distributor_allow_changes
+      )
+      allow_any_instance_of(OrderCycle).to receive(:open?).and_return(order_cycle_open)
+    end
+
+    context 'valid conditions' do
+      let(:complete) { true }
+      let(:shipped) { false }
+      let(:distributor_allow_changes) { true }
+      let(:order_cycle_open) { true }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context 'already shipped' do
+      let(:shipped) { true }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'not complete' do
+      let(:complete) { false }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'distributor changes not allowed' do
+      let(:distributor_allow_changes) { false }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'order does not have distributor' do
+      let(:order) { build(:order, distributor: nil, order_cycle: build(:order_cycle)) }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'order cycle not open' do
+      let(:order_cycle_open) { false }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'order does not have order cycle' do
+      let(:order) { build(:order, distributor: build(:distributor_enterprise), order_cycle: nil) }
+
+      it { is_expected.to eq(false) }
+    end
+  end
+
   context "checking if order is paid" do
     context "payment_state is paid" do
       before { allow(order).to receive_messages payment_state: 'paid' }
