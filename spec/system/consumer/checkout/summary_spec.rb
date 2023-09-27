@@ -27,7 +27,6 @@ describe "As a consumer, I want to checkout my order" do
                    ship_address_id: nil, state: "cart",
                    line_items: [create(:line_item, variant:)])
   }
-
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone:, included_in_price: true) }
   let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
@@ -36,44 +35,12 @@ describe "As a consumer, I want to checkout my order" do
     create(:shipping_method, require_ship_address: true,
                              name: "A Free Shipping with required address")
   }
-  let(:free_shipping) {
-    create(:shipping_method, require_ship_address: false, name: "free Shipping",
-                             description: "yellow",
-                             calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
-  }
-  let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, zone:, included_in_price: true) }
-  let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
-  let(:shipping_with_fee) {
-    create(:shipping_method, require_ship_address: true, tax_category: shipping_tax_category,
-                             name: "Shipping with Fee", description: "blue",
-                             calculator: Calculator::FlatRate.new(preferred_amount: 4.56))
-  }
-  let(:free_shipping_without_required_address) {
-    create(:shipping_method, require_ship_address: false,
-                             name: "Z Free Shipping without required address")
-  }
-  let(:tagged_shipping) {
-    create(:shipping_method, require_ship_address: false, name: "Local", tag_list: "local")
-  }
-  let!(:payment_with_fee) {
-    create(:payment_method, distributors: [distributor],
-                            name: "Payment with Fee", description: "Payment with fee",
-                            calculator: Calculator::FlatRate.new(preferred_amount: 1.23))
-  }
-  let(:shipping_backoffice_only) {
-    create(:shipping_method, require_ship_address: true, name: "Shipping Backoffice Only",
-                             display_on: "back_end")
-  }
-  let(:shipping_methods) {
-    [free_shipping_with_required_address, free_shipping, shipping_with_fee,
-     free_shipping_without_required_address, tagged_shipping]
-  }
 
   before do
     add_enterprise_fee enterprise_fee
     set_order order
 
-    distributor.shipping_methods.push(shipping_methods)
+    distributor.shipping_methods.push(free_shipping_with_required_address)
   end
 
   context "as a logged in user" do
