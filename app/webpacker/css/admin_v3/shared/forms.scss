@@ -282,6 +282,20 @@ fieldset {
   text-align: center;
 }
 
+.modified_summary {
+  font-size: inherit;
+}
+
+.error_summary {
+  font-size: inherit;
+
+  @extend .icon-remove-sign;
+  &:before {
+    font-family: FontAwesome;
+    color: $color-error;
+  }
+}
+
 select {
   @extend input, [type="text"];
   background-color: white;
