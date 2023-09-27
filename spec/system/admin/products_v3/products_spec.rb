@@ -270,37 +270,54 @@ describe 'As an admin, I can see the new product page' do
       end
     end
 
-    it "shows errors for both product and variant fields" do
-      within row_containing_name("Apples") do
-        fill_in "Name", with: ""
-        fill_in "SKU", with: "A" * 256
-      end
-      within row_containing_name("Medium box") do
-        fill_in "Name", with: "L" * 256
-        fill_in "SKU", with: "1" * 256
+    context "with invalid data" do
+      let!(:product_b) { create(:simple_product, name: "Bananas") }
+
+      before do
+        within row_containing_name("Apples") do
+          fill_in "Name", with: ""
+          fill_in "SKU", with: "A" * 256
+        end
+        within row_containing_name("Medium box") do
+          fill_in "Name", with: "L" * 256
+          fill_in "SKU", with: "1" * 256
+          fill_in "Price", with: "10.25"
+        end
       end
 
-      expect {
-        click_button "Save changes"
-        product_a.reload
-      }.to_not change { product_a.name }
+      it "shows errors for both product and variant fields" do
+        # Also update another product with valid data
+        within row_containing_name("Bananas") do
+          fill_in "Name", with: "Bananes"
+        end
 
-      # (there's no identifier displayed, so the user must remember which product it is..)
-      within row_containing_name("") do
-        expect(page).to have_field "Name", with: ""
-        expect(page).to have_content "can't be blank"
-        expect(page).to have_field "SKU", with: "A" * 256
-        expect(page).to have_content "is too long"
-      end
-      pending
-      within row_containing_name("L" * 256) do
-        expect(page).to have_field "Name", with: "L" * 256
-        expect(page).to have_field "SKU", with: "1" * 256
-        expect(page).to have_content "is too long"
-        expect(page).to have_field "Price", with: "10.25"
-      end
+        expect {
+          click_button "Save changes"
+          product_a.reload
+        }.to_not change { product_a.name }
 
-      expect(page).to have_content "Please review the errors and try again"
+        # pending("unchanged rows are being saved") # TODO: don't report unchanged rows
+        # expect(page).to_not have_content("rows were saved correctly")
+        # Both the product and variant couldn't be saved.
+        expect(page).to have_content("1 product could not be saved")
+        expect(page).to have_content "Please review the errors and try again"
+
+        # (there's no identifier displayed, so the user must remember which product it is..)
+        within row_containing_name("") do
+          expect(page).to have_field "Name", with: ""
+          expect(page).to have_content "can't be blank"
+          expect(page).to have_field "SKU", with: "A" * 256
+          expect(page).to have_content "is too long"
+        end
+
+        pending "bug #11748"
+        within row_containing_name("L" * 256) do
+          expect(page).to have_field "Name", with: "L" * 256
+          expect(page).to have_field "SKU", with: "1" * 256
+          expect(page).to have_content "is too long"
+          expect(page).to have_field "Price", with: "10.25" # other updated value is retained
+        end
+      end
     end
   end
 

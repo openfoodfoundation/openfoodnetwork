@@ -41,8 +41,7 @@ class ProductsReflex < ApplicationReflex
       # flash[:success] = with_locale { I18n.t('.success') }
       # morph_admin_flashes  # ERROR: selector morph type has already been set
     elsif product_set.errors.present?
-      # @error_msg = with_locale{ I18n.t('.products_have_error', count: product_set.invalid.count) }
-      @error_msg = "#{product_set.invalid.count} products have errors."
+      @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
     end
 
     render_products_form
@@ -87,10 +86,12 @@ class ProductsReflex < ApplicationReflex
   end
 
   def render_products_form
+    locals = { products: @products }
+    locals[:error_counts] = @error_counts if @error_counts.present?
+
     cable_ready.replace(
       selector: "#products-form",
-      html: render(partial: "admin/products_v3/table",
-                   locals: { products: @products, error_msg: @error_msg })
+      html: render(partial: "admin/products_v3/table", locals:)
     ).broadcast
     morph :nothing
 
