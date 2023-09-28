@@ -19,9 +19,7 @@ describe CheckoutHelper, type: :helper do
     subject(:display_checkout_tax_total) { helper.display_checkout_tax_total(order) }
 
     let(:order) { instance_double(Spree::Order, total_tax: 123.45, currency: 'AUD') }
-    let(:service) do
-      instance_double(VoucherAdjustmentsService, voucher_included_tax: voucher_included_tax)
-    end
+    let(:service) { instance_double(VoucherAdjustmentsService, voucher_included_tax: ) }
     let(:voucher_included_tax) { 0.0 }
 
     before do

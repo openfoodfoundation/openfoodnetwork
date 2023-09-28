@@ -5,9 +5,7 @@ require "spec_helper"
 describe Admin::OrdersHelper, type: :helper do
   describe "#order_adjustments_for_display" do
     let(:order) { create(:order) }
-    let(:service) do
-      instance_double(VoucherAdjustmentsService, voucher_included_tax: voucher_included_tax)
-    end
+    let(:service) { instance_double(VoucherAdjustmentsService, voucher_included_tax:) }
     let(:voucher_included_tax) { 0.0 }
 
     before do
@@ -44,7 +42,7 @@ describe Admin::OrdersHelper, type: :helper do
     context "with a voucher with tax included in price" do
       let(:enterprise) { build(:enterprise) }
       let(:voucher) do
-        create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+        create(:voucher_flat_rate, code: 'new_code', enterprise:, amount: 10)
       end
       let(:voucher_included_tax) { -0.5 }
 
