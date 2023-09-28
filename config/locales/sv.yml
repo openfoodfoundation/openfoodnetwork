@@ -146,6 +146,7 @@ sv:
         on_demand: "På begäran"
         tax_category: "Skattekategori"
         inherits_properties: "Ärva egenskaper?"
+        actions: Handlingar
       columns_selector:
         unit: Enhet
         price: Pris
@@ -156,6 +157,8 @@ sv:
         on_demand: "På begäran"
         tax_category: "Skattekategori"
         inherits_properties: "Ärva egenskaper?"
+      actions:
+        edit: Redigera
     date: Datum
     email: epost
     name: Namn
@@ -703,8 +706,6 @@ sv:
       all_products: Alla produkter
       inventory: Lagersaldo (tillgänglig)
       lettuce_share: LettuceShare
-      mailing_list: Mailinglista
-      addresses: Adresser
       payment_methods: 'Rapport för betalningsmetoder '
       delivery: Leveransrapport
       tax_types: Skatteformer
@@ -1568,6 +1569,7 @@ sv:
   hub_sidebar_blue: "blå"
   hub_sidebar_red: "röd"
   report_customers_distributor: "Distributör"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Leverantör"
   report_customers_cycle: "Ordercykel"
   report_customers_type: "Rapporttyp"

@@ -507,6 +507,7 @@ de_DE:
         tax_category: "Steuerkategorie"
         inherits_properties: "Übernimmt Eigenschaften des Ladens?"
         import_date: "Importdatum"
+        actions: Aktionen
       columns_selector:
         unit: Einheit
         price: Preis
@@ -518,6 +519,8 @@ de_DE:
         tax_category: "Steuerkategorie"
         inherits_properties: "Übernimmt Eigenschaften des Ladens?"
         import_date: "Importdatum"
+      actions:
+        edit: Bearbeiten
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -1454,8 +1457,6 @@ de_DE:
       all_products: Alle Produkte
       inventory: Lagerbestand
       lettuce_share: LettuceShare
-      mailing_list: Mailingliste
-      addresses: Adressen
       payment_methods: Zahlungsarten
       delivery: Lieferungen
       sales_tax_totals_by_producer: Umsatzsteuer nach Produzenten
@@ -2759,6 +2760,7 @@ de_DE:
   hub_sidebar_red: "rot"
   order_cycles_closed_for_hub: "Der Bestellzyklus des von Ihnen ausgewählten Ladens ist derzeit geschlossen. Bitte versuchen Sie es später noch einmal."
   report_customers_distributor: "Verteilstelle"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Lieferant"
   report_customers_cycle: "Bestellzyklus"
   report_customers_type: "Berichtsart"

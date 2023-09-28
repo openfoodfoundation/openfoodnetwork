@@ -388,6 +388,7 @@ pt_BR:
         tax_category: "Categoria de taxa"
         inherits_properties: "Herdar Propriedades?"
         import_date: "Data de importação"
+        actions: Ações
       columns_selector:
         unit: Unidade
         price: Preço
@@ -399,6 +400,8 @@ pt_BR:
         tax_category: "Categoria de taxa"
         inherits_properties: "Herdar Propriedades?"
         import_date: "Data de importação"
+      actions:
+        edit: Editar
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
     begins_at: Começa em
@@ -1237,8 +1240,6 @@ pt_BR:
       all_products: Todos os produtos
       inventory: Inventário (disponível)
       lettuce_share: LettuceShare
-      mailing_list: Lista de e-mails
-      addresses: Endereços
       payment_methods: Relatório de métodos de pagamento
       delivery: Relatório de entrega
       tax_types: Tipos de taxas
@@ -2426,6 +2427,7 @@ pt_BR:
   hub_sidebar_red: "vermelho"
   order_cycles_closed_for_hub: "A Central selecionada está temporariamente fechada para pedidos. Por favor tente mais tarde. "
   report_customers_distributor: "Distribuidor"
+  report_customers_hub: "Central"
   report_customers_supplier: "Fornecedor"
   report_customers_cycle: "Ciclo de pedidos"
   report_customers_type: "Relatar tipo"

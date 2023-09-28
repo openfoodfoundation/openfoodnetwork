@@ -360,6 +360,7 @@ pt:
         tax_category: "Categoria de Imposto"
         inherits_properties: "Herda Propriedades?"
         import_date: "Data de Importação"
+        actions: Acções
       columns_selector:
         unit: Unidade
         price: Preço
@@ -371,6 +372,8 @@ pt:
         tax_category: "Categoria de Imposto"
         inherits_properties: "Herda Propriedades?"
         import_date: "Data de Importação"
+      actions:
+        edit: Editar
     begins_at: Começa às
     begins_on: Começa em
     customer: Consumidor/a
@@ -1189,8 +1192,6 @@ pt:
       all_products: Todos os produtos
       inventory: Inventário (disponível)
       lettuce_share: LettuceShare
-      mailing_list: Listas de Email
-      addresses: Moradas
       payment_methods: Relatório de Métodos de Pagamento
       delivery: Relatório de Entregas
       tax_types: Tipos de Imposto
@@ -2313,6 +2314,7 @@ pt:
   hub_sidebar_blue: "azul"
   hub_sidebar_red: "vermelho"
   report_customers_distributor: "Distribuidor"
+  report_customers_hub: "Central"
   report_customers_supplier: "Fornecedor"
   report_customers_cycle: "Ciclo de Encomendas"
   report_customers_type: "Tipo de Relatório"

@@ -328,6 +328,7 @@ en_AU:
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
+        actions: Actions
       columns_selector:
         unit: Unit
         price: Price
@@ -339,6 +340,8 @@ en_AU:
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
+      actions:
+        edit: Edit
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
@@ -1177,8 +1180,6 @@ en_AU:
       all_products: All products
       inventory: Inventory (on hand)
       lettuce_share: LettuceShare
-      mailing_list: Mailing List
-      addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       tax_types: Tax Types
@@ -2341,6 +2342,7 @@ en_AU:
   hub_sidebar_red: "red"
   order_cycles_closed_for_hub: "The hub you have selected is temporarily closed for orders. Please try again later."
   report_customers_distributor: "Distributor"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"

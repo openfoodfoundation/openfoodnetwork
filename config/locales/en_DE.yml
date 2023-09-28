@@ -307,6 +307,7 @@ en_DE:
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
+        actions: Actions
       columns_selector:
         unit: Unit
         price: Price
@@ -318,6 +319,8 @@ en_DE:
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
+      actions:
+        edit: Edit
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
@@ -1100,8 +1103,6 @@ en_DE:
       all_products: All products
       inventory: Inventory (on hand)
       lettuce_share: LettuceShare
-      mailing_list: Mailing List
-      addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       tax_types: Tax Types
@@ -2211,6 +2212,7 @@ en_DE:
   hub_sidebar_blue: "blue"
   hub_sidebar_red: "red"
   report_customers_distributor: "Distributor"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"

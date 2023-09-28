@@ -501,6 +501,7 @@ cy:
         tax_category: "Categori Treth"
         inherits_properties: "Yn etifeddu manylion cynnyrch?"
         import_date: "Dyddiad Mewnforio"
+        actions: Camau gweithredu
       columns_selector:
         unit: Uned
         price: Pris
@@ -512,6 +513,8 @@ cy:
         tax_category: "Categori Treth"
         inherits_properties: "Yn etifeddu manylion cynnyrch?"
         import_date: "Dyddiad Mewnforio"
+      actions:
+        edit: Golygu
     adjustments:
       skipped_changing_canceled_order: "Nid yw'n bosib newid archeb a ganslwyd"
     begins_at: Yn dechrau am
@@ -1430,8 +1433,6 @@ cy:
       all_products: Pob cynnyrch
       inventory: Stocrestr (Mewn llaw)
       lettuce_share: LetysShare
-      mailing_list: Rhestr Bostio
-      addresses: Cyfeiriadau
       payment_methods: Adroddiad Dulliau Talu
       delivery: Adroddiad Cyflenwi
       sales_tax_totals_by_producer: Cyfanswm Trethi Gwerthu fesul Cynhyrchwr
@@ -2725,6 +2726,7 @@ cy:
   hub_sidebar_red: "coch"
   order_cycles_closed_for_hub: "Mae'r hwb a ddewiswyd ar gau dros dro ar gyfer archebion. Rhowch gynnig arall nes ymlaen."
   report_customers_distributor: "Dosbarthwr"
+  report_customers_hub: "Hwb"
   report_customers_supplier: "Cyflenwr"
   report_customers_cycle: "Cylch archebu "
   report_customers_type: "Math o Adroddiad"

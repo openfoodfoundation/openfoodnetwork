@@ -450,6 +450,7 @@ ko:
         tax_category: "세금 목록"
         inherits_properties: "속성을 상속하시겠습니까?"
         import_date: "수입 날짜"
+        actions: 사용자 응용
       columns_selector:
         unit: 단위
         price: 가격
@@ -461,6 +462,8 @@ ko:
         tax_category: "세금 목록"
         inherits_properties: "속성을 상속하시겠습니까?"
         import_date: "수입 날짜"
+      actions:
+        edit: 편집
     adjustments:
       skipped_changing_canceled_order: "취소된 명령을 바꿀 수 없습니다."
     begins_at: 시작 시간
@@ -1329,8 +1332,6 @@ ko:
       all_products: 모든 상품
       inventory: 인벤토리 (수중)
       lettuce_share: 읽기 공유
-      mailing_list: 메일링 리스트
-      addresses: 주소
       payment_methods: 결제 방법 보고서
       delivery: 배달 보고서
       tax_types: 조세 유형
@@ -2575,6 +2576,7 @@ ko:
   hub_sidebar_red: "빨강"
   order_cycles_closed_for_hub: "선택한 허브는 주문 때문에 일시적으로 폐쇄되었습니다. 나중에 다시 시도해 주십시오."
   report_customers_distributor: "유통업체"
+  report_customers_hub: "물류"
   report_customers_supplier: "공급업체"
   report_customers_cycle: "주문 주기"
   report_customers_type: "유형 기록하기"

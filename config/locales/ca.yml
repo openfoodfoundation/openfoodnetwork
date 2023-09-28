@@ -440,6 +440,7 @@ ca:
         tax_category: "Categoria d'impostos"
         inherits_properties: "Hereda propietats?"
         import_date: "Data d'importació"
+        actions: Accions
       columns_selector:
         unit: Unitat
         price: Preu
@@ -451,6 +452,8 @@ ca:
         tax_category: "Categoria d'impostos"
         inherits_properties: "Hereda propietats?"
         import_date: "Data d'importació"
+      actions:
+        edit: Editar
     adjustments:
       skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
     begins_at: Comença a
@@ -1337,8 +1340,6 @@ ca:
       all_products: Tots els productes
       inventory: Inventari (disponible)
       lettuce_share: LettuceShare
-      mailing_list: Llista de correus electrònics
-      addresses: Adreces
       payment_methods: Informe de Mètodes de pagament
       delivery: Informe de lliurament
       tax_types: Tipus d'impostos
@@ -2538,6 +2539,7 @@ ca:
   hub_sidebar_red: "vermell"
   order_cycles_closed_for_hub: "La botiga que has triat està temporalment tancada per a fer comandes. Sisplau, prova una mica més tard"
   report_customers_distributor: "Distribuïdora"
+  report_customers_hub: "Grup"
   report_customers_supplier: "Proveïdora"
   report_customers_cycle: "Cicle de Comanda"
   report_customers_type: "Tipus d'informe"

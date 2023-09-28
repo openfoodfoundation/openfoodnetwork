@@ -323,6 +323,7 @@ nl_BE:
         tax_category: "Belastingcategorie"
         inherits_properties: "Erft Eigenschappen?"
         import_date: "Importdatum"
+        actions: Acties
       columns_selector:
         unit: Unit
         price: Prijs
@@ -334,6 +335,8 @@ nl_BE:
         tax_category: "Belastingcategorie"
         inherits_properties: "Erft Eigenschappen?"
         import_date: "Importdatum"
+      actions:
+        edit: bewerking
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant
@@ -1156,8 +1159,6 @@ nl_BE:
       all_products: Alle producten
       inventory: Inventaris (bij de hand)
       lettuce_share: Bestelcyclus klantentotalen
-      mailing_list: Mailinglijst
-      addresses: Adressen
       payment_methods: Rapport over de betalingsmethoden
       delivery: Leveringsrapport
       tax_types: Soorten belastingen
@@ -1383,6 +1384,7 @@ nl_BE:
         login: "login"
         contact: "contact"
         require_customer_login: "Alleen goedgekeurde klanten hebben toegang tot deze winkel. "
+        require_login_link_html: "Als u al een goedgekeurde klant bent, %{login} om door te gaan."
         require_login_2_html: "WIlt u hier beginnen winkelen?  Vraag dan %{contact}%{enterprise}om lid te worden."
         require_customer_html: "Als u hier wilt beginnen met winkelen, kunt u vragen of %{contact}%{enterprise}u lid wilt worden."
       select_oc:
@@ -2306,6 +2308,7 @@ nl_BE:
   hub_sidebar_red: "rood"
   order_cycles_closed_for_hub: "De hub die u hebt geselecteerd is tijdelijk gesloten. Probeer gerust later terug."
   report_customers_distributor: "Distributeur"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Leverancier"
   report_customers_cycle: "Bestelcyclus"
   report_customers_type: "Vermeld Type"

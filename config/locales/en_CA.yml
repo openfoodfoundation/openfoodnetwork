@@ -97,7 +97,9 @@ en_CA:
             on_demand_but_count_on_hand_set: "must be blank if 'on demand' is used"
             limited_stock_but_no_count_on_hand: "must be specified because you are forcing limited stock"
       messages:
+        confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
+        too_short: "is too short (minimum is %{count} characters)"
   errors:
     messages:
       content_type_invalid: "has an invalid content type"
@@ -379,7 +381,10 @@ en_CA:
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "%{enterprise_name} must have a Business Number before invoices can be sent."
   invoice: "Invoice"
+  invoices: "Invoices"
+  file: "File"
   active: "Active"
+  download: "Download"
   cancelled: "Cancelled"
   more: "More"
   say_no: "No"
@@ -502,6 +507,7 @@ en_CA:
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
+        actions: Actions
       columns_selector:
         unit: Unit
         price: Price
@@ -513,6 +519,8 @@ en_CA:
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
+      actions:
+        edit: Edit
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -732,8 +740,15 @@ en_CA:
         loading: Loading your products
       sort:
         pagination:
+          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
+          per_page:
+            show: Show
+            per_page: "%{num} per page"
           clear_search: Clear search
       filters:
+        search_products: Search for products
+        all_producers: All producers
+        all_categories: All categories
         producers:
           label: Producers
         categories:
@@ -742,6 +757,18 @@ en_CA:
       no_products:
         no_products_found: No products found
         import_products: Import multiple products
+        no_products_found_for_search: No products found for your search criteria
+      table:
+        modified_summary:
+          one: "%{count} product modified."
+          other: "%{count} products modified."
+        save: Save changes
+        reset: Discard changes
+      bulk_update:
+        success: "Products successfully updated"
+        products_have_error:
+          one: "%{count} product has an error."
+          other: "%{count} products have an error"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1425,6 +1452,7 @@ en_CA:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
+      deprecated: "This report is deprecated and will be removed in a future release."
       hidden: HIDDEN
       unitsize: UNITSIZE
       total: TOTAL
@@ -1439,8 +1467,6 @@ en_CA:
       all_products: All products
       inventory: Inventory (on hand)
       lettuce_share: LettuceShare
-      mailing_list: Mailing List
-      addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       sales_tax_totals_by_producer: Sales Tax Totals by Producer
@@ -1493,6 +1519,7 @@ en_CA:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
       enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
+      enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
@@ -1636,6 +1663,9 @@ en_CA:
         save: Save
         voucher_code: Voucher Code
         voucher_amount: Amount
+        voucher_type: Voucher Type
+        flat_rate: Flat
+        percentage_rate: Percentage (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
@@ -1763,6 +1793,7 @@ en_CA:
   abn: "Business Number:"
   acn: "Business Number:"
   invoice_issued_on: "Invoice issued on:"
+  order_number: "Order number:"
   date_of_transaction: "Date of transaction:"
   menu_1_title: "Shops"
   menu_1_url: "/shops"
@@ -2742,6 +2773,7 @@ en_CA:
   hub_sidebar_red: "red"
   order_cycles_closed_for_hub: "The hub you have selected is temporarily closed for orders. Please try again later."
   report_customers_distributor: "Distributor"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"
@@ -2934,6 +2966,9 @@ en_CA:
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_line_cost_of_produce: Cost of produce
+  report_line_line_items: line items
+  report_header_last_completed_order_date: Last completed order date
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
@@ -3020,9 +3055,12 @@ en_CA:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
   invoice_number: "Invoice Number"
+  invoice_file: "File"
+  invalid_url: "'%{url}' is an invalid URL"
   state_names:
     ready: Ready
     pending: Pending
@@ -3188,6 +3226,8 @@ en_CA:
           select_all_variants: "Select All  %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants}  Variants Loaded"
           loading_variants: "Loading Variants"
+          no_variants: "No variant available for this product (hidden via inventory settings)."
+          some_variants_hidden: "(Some variants might be hidden via inventory settings)"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
@@ -3551,6 +3591,7 @@ en_CA:
       success: Webhook endpoint successfully deleted
       error: Webhood endpoint failed to delete
   spree:
+    order_updated: "Order Updated"
     add_country: "Add country"
     add_state: "Add Province"
     adjustment: "Adjustment"
@@ -3930,10 +3971,12 @@ en_CA:
           from: "From"
           to: "Bill to"
           shipping: "Delivery/Pick-up"
+          order_number: "Order Number"
           invoice_number: "Invoice Number"
           payments_list:
             date_time: "Date/time"
             payment_method: "Payment Method"
+            payment_state: "Payment state"
             amount: "Amount"
         note:
           note_label: "Note:"
@@ -4135,6 +4178,7 @@ en_CA:
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"
+          locale: "Language"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:

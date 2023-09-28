@@ -427,6 +427,7 @@ it_CH:
         tax_category: "Categoria di imposta"
         inherits_properties: "Eredita proprietà?"
         import_date: "Data di importazione"
+        actions: Azioni
       columns_selector:
         unit: Unità
         price: Prezzo
@@ -438,6 +439,8 @@ it_CH:
         tax_category: "Categoria di imposta"
         inherits_properties: "Eredita proprietà?"
         import_date: "Data di importazione"
+      actions:
+        edit: Modifica
     adjustments:
       skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
     begins_at: Inizia a
@@ -1307,8 +1310,6 @@ it_CH:
       all_products: Tutti i prodotti
       inventory: Inventario (in mano)
       lettuce_share: LettuceShare
-      mailing_list: Mailing List
-      addresses: Indirizzi
       payment_methods: Rapporto Metodi di pagamento
       delivery: Rapporto Consegne
       tax_types: Tipologia tariffe
@@ -2545,6 +2546,7 @@ it_CH:
   hub_sidebar_red: "rosso"
   order_cycles_closed_for_hub: "L'hub che hai selezionato è temporaneamente chiuso. Riprova più tardi."
   report_customers_distributor: "Distributore"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Fornitore"
   report_customers_cycle: "Ciclo di richieste"
   report_customers_type: "Tipo di rapporto"

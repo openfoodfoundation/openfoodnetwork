@@ -58,8 +58,23 @@ fr_CA:
         orders_close_at: Date de fermeture
       variant_override:
         count_on_hand: "En stock"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Pourcentage net"
+        preferred_amount: "Montant"
+        preferred_first_item: "Premier article"
+        preferred_additional_item: "coût additionnel de l'article"
+        preferred_max_items: "Maximum articles"
+        preferred_minimal_amount: "Montant minimum"
+        preferred_normal_amount: "Montant normal"
+        preferred_discount_amount: "Montant du rabais"
+        preferred_unit_from_list: "A l'unité depuis la liste"
+        preferred_per_unit: "A l'unité"
+      enterprise:
+        white_label_logo_link: "Lien vers le logo utilisé pour la boutique"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Déterminer la catégorie de taxe requiert l'utilisation du calculateur par article"
         spree/user:
           attributes:
             email:
@@ -82,7 +97,9 @@ fr_CA:
             on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
       messages:
+        confirmation: "ne correspond pas %{attribute}"
         blank: "Champ obligatoire"
+        too_short: "est trop court (minimum %{count} caractère)"
   errors:
     messages:
       content_type_invalid: "a un contenu invalide"
@@ -293,6 +310,13 @@ fr_CA:
     order_cycle:
       subject: "Rapport de cycle de vente pour %{producer}"
   provider_settings: "Paramètres fournisseur"
+  report_mailer:
+    report_ready:
+      subject: "Rapport prêt"
+      heading: "Rapport prêt à télécharger"
+      intro: |
+          Le lien ci-dessous sera expiré dans une semaine.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Cher Acheteur,"
@@ -358,7 +382,10 @@ fr_CA:
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
   must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
   invoice: "Facture"
+  invoices: "Factures"
+  file: "fichier"
   active: "Actif"
+  download: "Télécharger"
   cancelled: "Annulée"
   more: "Plus"
   say_no: "Non"
@@ -416,6 +443,7 @@ fr_CA:
   none: Aucun
   notes: Commentaires
   error: Erreur
+  voucher: Bon de réduction
   processing_payment: "Paiement en cours..."
   no_pending_payments: "Aucun paiement en attente."
   invalid_payment_state: "Statut de paiement invalide : %{state}"
@@ -480,6 +508,7 @@ fr_CA:
         tax_category: "Type de taxe"
         inherits_properties: "Hériter des propriétés ?"
         import_date: "Date d'import"
+        actions: Actions
       columns_selector:
         unit: Unité
         price: Prix
@@ -491,6 +520,8 @@ fr_CA:
         tax_category: "Type de taxe"
         inherits_properties: "Hériter des propriétés ?"
         import_date: "Date d'import"
+      actions:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence à
@@ -707,15 +738,39 @@ fr_CA:
       index:
         header:
           title: Gestion du catalogue produits
+        loading: Vos produits sont en cours de chargement
       sort:
         pagination:
+          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
+          per_page:
+            show: Montrer
+            per_page: "%{num} par page"
           clear_search: Annuler la recherche
       filters:
+        search_products: Chercher des produits
+        all_producers: Tous les producteurs
+        all_categories: Toutes les catégories
         producers:
           label: Producteurs
         categories:
           label: Conditions de transport
         search: Chercher
+      no_products:
+        no_products_found: Pas de produits trouvés
+        import_products: Importer plusieurs produits
+        no_products_found_for_search: Aucun produit trouvé avec vos critères de recherche
+      table:
+        modified_summary:
+          one: "%{count} produits modifiés"
+          other: "%{count} produits modifiés"
+        save: Sauvegarder les changements
+        reset: Annuler les changements
+      bulk_update:
+        success: "Produits mis à jour"
+        products_have_error:
+          one: "%{count} produits ont une erreur."
+          many: "%{count} produits ont une erreur."
+          other: "%{count} produits ont une erreur."
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -905,6 +960,7 @@ fr_CA:
           legend: "Adresse"
         business_details:
           legend: "Informations juridiques"
+          upload: 'Téléverser'
           abn: SIRET
           abn_placeholder: 'ex: 404 833 048 00022'
           acn: n° TVA intracommunautaire
@@ -1120,9 +1176,30 @@ fr_CA:
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
         vouchers:
+          legend: Bon de réduction
+          voucher_code: Code promo
           rate: Taux
+          label: Nom
+          purpose: Raison
+          expiry: Date d'expiration
+          use_limit: Date limite
           customers: Acheteur
+          net_value: Valeur nette
           active: Active ?
+          add_new: Ajouter nouveau
+          no_voucher_yet: Pas encore de bons de réduction
+        white_label:
+          legend: "Marque blanche"
+          hide_ofn_navigation: "Masquer la navigation du site"
+          upload_logo: "logo utilisé pour la boutique"
+          remove_logo: "Supprimer le logo"
+          remove_logo_confirm: "Etes-vous certain.e de vouloir supprimer le logo?"
+          remove_logo_success: "logo supprimé"
+          white_label_logo_link_label: "Lien vers le logo utilisé pour la boutique"
+          hide_groups_tab: "Cacher l'onglet groupes dans la boutique"
+          create_custom_tab: "Créer un onglet personnalisé dans la boutique"
+          custom_tab_title: "Titre de l'onglet personnalisé"
+          custom_tab_content: "Contenu de l'onglet personnalisé"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1333,6 +1410,10 @@ fr_CA:
         could_not_cancel_the_order: La commande n'a pas pu être supprimée
       resume:
         could_not_resume_the_order: La commande n'a pas pu être reprise
+    select2:
+      minimal_search_length: Entrez %{count} ou caractères
+      searching: Recherche...
+      no_matches: Pas de correspondance trouvée
     shared:
       user_guide_link:
         user_guide: Guide utilisateur
@@ -1358,6 +1439,8 @@ fr_CA:
           tag_rules: "Règles de tag"
           shop_preferences: "Préférences boutique"
           users: "Utilisateurs"
+          vouchers: Bon de réduction
+          white_label: "Marque blanche"
         enterprise_group:
           primary_details: "Informations de base"
           users: "Utilisateurs"
@@ -1373,6 +1456,7 @@ fr_CA:
       email_confirmation: "L'adresse e-mail doit être confirmée. Nous avons envoyé un lien de confirmation à %{email}."
       not_visible: "%{enterprise} n'est pas visible et ne peut être trouvé sur la carte ou dans les recherches sur le site."
     reports:
+      deprecated: "Ce rapport est obsolète et ne sera bientôt plus disponible (sera supprimé dans une prochaine mise à jour)."
       hidden: Masqué
       unitsize: Unité de mesure
       total: Total
@@ -1387,8 +1471,6 @@ fr_CA:
       all_products: Tous les produits
       inventory: Catalogue boutique (en stock)
       lettuce_share: LettuceShare
-      mailing_list: Liste de mails
-      addresses: Adresses
       payment_methods: Rapport Méthodes de Paiement
       delivery: Rapport de Livraison
       sales_tax_totals_by_producer: Détail des montants de taxes par producteur
@@ -1398,6 +1480,19 @@ fr_CA:
       pack_by_customer: Préparation des commandes par Acheteur
       pack_by_supplier: Préparation des commandes par Producteur
       pack_by_product: Préparation des commandes par Produit
+      download:
+        button: "Télécharger le rapport"
+      show:
+        report_taking_longer: >
+            Désolée, ce rapport met trop de temps à se charger, probablement parce
+            qu'il contient une grande quantité de données ou que d'autres rapports
+            sont en cours de téléchargement. Merci de réessayer plus tard.
+        report_taking_longer_html: >
+            Désolée, ce rapport met trop de temps à se charger, probablement parce
+            qu'il contient une grande quantité de données ou que d'autres rapports
+            sont en cours de téléchargement. Une fois que le téléchargement précédent
+            sera terminé, vous recevrez une notification par mail.
+        report_link_label: Télécharger le rapport (quand disponible)
       revenues_by_hub:
         name: CA par boutique
         description: CA par boutique
@@ -1429,6 +1524,8 @@ fr_CA:
       enterprise_fee_summary:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
+      enterprise_fees_with_tax_report_by_order: "Détail des montants de taxe par commande"
+      enterprise_fees_with_tax_report_by_producer: "Détail des montants de taxe par producteur"
       errors:
         no_report_type: "Merci de sélectionner un type de rapport"
         report_not_found: "Le rapport n'a pas été trouvé"
@@ -1566,9 +1663,14 @@ fr_CA:
         associated_subscriptions_error: Ce rythme d'abonnement ne peut pas être supprimé car il est associé à des abonnements.
     vouchers:
       new:
+        legend: Nouveau bon de réduction
         back: Retour
         save: Enregistrer
+        voucher_code: Code promo
         voucher_amount: Montant
+        voucher_type: Type de promo
+        flat_rate: fixe
+        percentage_rate: Pourcentage (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
@@ -1579,6 +1681,10 @@ fr_CA:
     resend_confirmation_emails_feedback:
       one: "Emails envoyés pour 1 commande."
       many: "Emails envoyés pour %{count} commandes"
+      other: "Emails envoyés pour %{count} commandes."
+    send_invoice_feedback:
+      one: "Emails envoyés pour 1 commande."
+      many: "Emails envoyés pour %{count} commandes."
       other: "Emails envoyés pour %{count} commandes."
   api:
     unknown_error: "Quelque chose n'a pas fonctionné. Notre équipe a été notifiée."
@@ -1596,6 +1702,10 @@ fr_CA:
       destroy_attachment_does_not_exist: "Aucun fichier"
     orders:
       failed_to_update: "La mise à jour de la commande échoué"
+    query_param:
+      error:
+        title: Paramètre de la requête invalide
+        extra_fields: "Champs invalides: %{fields}"
   checkout:
     already_ordered:
       cart: "panier"
@@ -1690,6 +1800,7 @@ fr_CA:
   abn: "SIRET"
   acn: "n° TVA intracommunautaire"
   invoice_issued_on: "Date de facture :"
+  order_number: "Numéro de commande:"
   date_of_transaction: "Date de la transaction :"
   menu_1_title: "Boutiques"
   menu_1_url: "/shops"
@@ -1938,6 +2049,14 @@ fr_CA:
       explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
+      voucher:
+        voucher: "%{voucher_amount} Réduction"
+        apply_voucher: Code de réduction
+        apply: Appliquer
+        placeholder: Entrer code de réduction
+        remove_code: Supprimer code de réduction
+        confirm_delete: Êtes-vous sûr de vouloir supprimer la réduction?
+        warning_forfeit_remaining_amount: "Note : Si le total de votre commande est inférieur à votre réduction, vous êtes susceptible de ne pas pouvoir utiliser l'intégralité de votre réduction. "
     step3:
       delivery_details:
         title: Détails de livraison
@@ -1971,10 +2090,12 @@ fr_CA:
       select_a_payment_method: Sélectionner une méthode de paiement
       no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
       voucher_not_found: Non trouvé
+      add_voucher_error: Il y a eu une erreur lors de l'ajout de votre réduction.
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
   order_payment: "Payer via:"
+  no_payment_required: "Pas de paiement requis"
   order_billing_address: Adresse de facturation
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison
@@ -2469,6 +2590,7 @@ fr_CA:
   shipping_method_destroy_error: "Cette méthode de livraison ne peut pas être supprimée car elle est référencée dans une commande : %{number}."
   fees: "Frais"
   fee_name: "Nom de la marge/commission"
+  fee_owner: "Propriétaire des droits"
   item_cost: "Coût du produit"
   bulk: "Vrac"
   shop_variant_quantity_min: "min"
@@ -2658,6 +2780,7 @@ fr_CA:
   hub_sidebar_red: "rouge"
   order_cycles_closed_for_hub: "La boutique sélectionnée a fermé temporairement ses commandes. Veuillez essayez à nouveau ultérieurement."
   report_customers_distributor: "Distributeur"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Fournisseurs"
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
@@ -2850,6 +2973,9 @@ fr_CA:
   report_header_transaction_fee: Frais de Transaction (Taxes non incluses)
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis aux taxes (taxes incluses)
+  report_line_cost_of_produce: 'Coût des produits hors '
+  report_line_line_items: produits
+  report_header_last_completed_order_date: Date dernière commande
   report_xero_configuration: Configuration Xero
   initial_invoice_number: "N° de facture initial:"
   invoice_date: "Date de facture:"
@@ -2938,8 +3064,12 @@ fr_CA:
   no_orders_found: "Aucune commande trouvée"
   order_information: "Info commande"
   new_payment: "Nouveau paiement"
+  create_or_update_invoice: "Créer ou mettre à jour la facture"
   date_completed: "Date d'opération"
   amount: "Montant"
+  invoice_number: "Numéro de facture"
+  invoice_file: "fichier"
+  invalid_url: "'%{url}' est une URL non valide"
   state_names:
     ready: Prêt
     pending: En attente
@@ -3114,6 +3244,8 @@ fr_CA:
           select_all_variants: "Sélectionnez toutes les %{total_number_of_variants} variantes"
           variants_loaded: "%{num_of_variants_loaded} sur %{total_number_of_variants} variantes"
           loading_variants: "Chargement des variantes"
+          no_variants: "Pas de variante disponible pour ce produit (caché via les paramètres du catalogue boutique). "
+          some_variants_hidden: "(Certaines variantes sont susceptibles d'être cachées via les paramètres du catalogue boutique)"
       tag_rules:
         shipping_method_tagged_top: "Les méthodes de livraison taggées"
         shipping_method_tagged_bottom: "sont:"
@@ -3176,6 +3308,10 @@ fr_CA:
         cancel_the_order_send_cancelation_email: "Envoyer un email d'annulation à l'acheteur"
         restock_item: "Recharger le stock de ce produit"
         restock_items: "Recharger le stock de tous les produits"
+        delete_line_items_html:
+          one: "Cette action va annuler la commande. <br />  Etes-vous sûr de vouloir continuer?"
+          many: "Cette action va annuler la commande. <br /> Etes-vous sûr de vouloir continuer?"
+          other: "Cette action va annuler la commande.  <br /> Etes-vous sûr de vouloir continuer?"
       resend_user_email_confirmation:
         resend: "Renvoyer"
         sending: "Renvoyer"
@@ -3491,7 +3627,15 @@ fr_CA:
   first: "Début"
   previous: "Précédent"
   last: "Fin"
+  webhook_endpoints:
+    create:
+      success: Le webhook a bien été créé.
+      error: Le webhook n'a pas pu être créé.
+    destroy:
+      success: Le webhook a bien été supprimé.
+      error: Le webhook n'a pas pu être supprimé.
   spree:
+    order_updated: "La commande a été mise à jour"
     add_country: "Ajouter un pays"
     add_state: "Ajouter un département"
     adjustment: "Ajustement"
@@ -3663,6 +3807,7 @@ fr_CA:
     shipping_categories: "Condition de transport"
     new_shipping_category: "Créer nouvelle méthode de livraison"
     back_to_shipping_categories: "Retour aux catégories d'expédition"
+    editing_shipping_category: "Modifier condition de transport"
     name: "Nom"
     description: "Description"
     type: "Catégorie"
@@ -3850,6 +3995,8 @@ fr_CA:
           cancel_orders: "Annuler les commandes"
           resend_confirmation: "Renvoyer la confirmation"
           resend_confirmation_confirm_html: "Cette action va renvoyer l'email de confirmation de commande. Etes-vous sûr de vouloir continuer ?"
+          send_invoice: "Envoyer les factures"
+          send_invoice_confirm_html: "Vous allez envoyer les factures clients pour toutes les commandes sélectionnées. <br> ouhaitez-vous continuer?"
           selected:
             zero: "Aucune commande sélectionnée"
             one: "1 commande sélectionnée"
@@ -3868,9 +4015,12 @@ fr_CA:
           from: "De"
           to: "Facturer à"
           shipping: "Envoi"
+          order_number: "Numéro de commande"
+          invoice_number: "Numéro de facture"
           payments_list:
             date_time: "Date/heure"
             payment_method: "Méthode de paiement"
+            payment_state: "Statut du paiement"
             amount: "Montant"
         note:
           note_label: "Note :"
@@ -3907,6 +4057,8 @@ fr_CA:
             many: "Vous avez %{count} cycles de vente actifs."
             other: "Vous avez %{count} cycles de vente actifs."
           manage_order_cycles: "GERER LES CYCLES DE VENTE"
+        version:
+          view_all_releases: Voir toutes les mises à jour
       shipping_methods:
         index:
           shipping_methods: "Méthodes de livraison"
@@ -3998,6 +4150,7 @@ fr_CA:
             no_payment_via_admin_backend: 'Il n''est pas encore possible de payer avec Paypal via l''administration. '
       products:
         image_upload_error: "Veuillez utiliser une image au format JPG, PNG, GIF, SVG ou WEBP format."
+        image_not_processable: "L'image n'est pas valide"
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -4069,6 +4222,7 @@ fr_CA:
           enterprise_limit: "Nombre max d'entreprises"
           confirm_password: "Confirmez votre mot de passe"
           password: "Mot de passe"
+          locale: "Pourcentage net"
         email_confirmation:
           confirmation_pending: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{address}."
       variants:
@@ -4270,6 +4424,16 @@ fr_CA:
       api_keys:
         regenerate_key: "Regénérer la clé"
         title: Clé API
+      webhook_endpoints:
+        title: 'Webhook '
+        description: Les événements dans le système peuvent déclencher des webhooks vers des systèmes externes.
+        event_types:
+          order_cycle_opened: Cycle de vente ouvert
+        event_type:
+          header: Type d'évènement
+        url:
+          header: URL du point de terminaison
+          create_placeholder: Entrez l'URL du point de terminaison du webhook
       developer_settings:
         title: Paramètres développeurs
       form:

@@ -449,6 +449,7 @@ fr_CH:
         tax_category: "TVA applicable"
         inherits_properties: "Hériter des propriétés?"
         import_date: "Date d'import (si import)"
+        actions: Actions
       columns_selector:
         unit: Unité
         price: Prix
@@ -460,6 +461,8 @@ fr_CH:
         tax_category: "TVA applicable"
         inherits_properties: "Hériter des propriétés?"
         import_date: "Date d'import (si import)"
+      actions:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -1335,8 +1338,6 @@ fr_CH:
       all_products: Tous les produits
       inventory: Produits disponibles (stock positif)
       lettuce_share: LettuceShare
-      mailing_list: Liste de mails
-      addresses: Adresses
       payment_methods: Rapport Méthodes de Paiement
       delivery: Rapport de Livraison
       tax_types: Par type de taxe
@@ -2581,6 +2582,7 @@ fr_CH:
   hub_sidebar_red: "rouge"
   order_cycles_closed_for_hub: "La boutique sélectionnée a fermé temporairement ses commandes. Veuillez essayez à nouveau ultérieurement."
   report_customers_distributor: "Distributeur"
+  report_customers_hub: "Boutique"
   report_customers_supplier: "Fournisseur"
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"

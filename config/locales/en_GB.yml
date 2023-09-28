@@ -507,6 +507,7 @@ en_GB:
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
+        actions: Actions
       columns_selector:
         unit: Unit
         price: Price
@@ -518,6 +519,8 @@ en_GB:
         tax_category: "Tax Category"
         inherits_properties: "Inherits Properties?"
         import_date: "Import Date"
+      actions:
+        edit: Edit
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -1452,8 +1455,6 @@ en_GB:
       all_products: All products
       inventory: Inventory (on hand)
       lettuce_share: LettuceShare
-      mailing_list: Mailing List
-      addresses: Addresses
       payment_methods: Payment Methods Report
       delivery: Delivery Report
       sales_tax_totals_by_producer: Sales Tax Totals By Producer
@@ -2759,6 +2760,7 @@ en_GB:
   hub_sidebar_red: "red"
   order_cycles_closed_for_hub: "The hub you have selected is temporarily closed for orders. Please try again later."
   report_customers_distributor: "Distributor"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "Order Cycle"
   report_customers_type: "Report Type"

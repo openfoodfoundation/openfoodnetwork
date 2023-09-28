@@ -367,6 +367,7 @@ el:
         on_demand: "Κατά παραγγελία"
         tax_category: "Φορολογική Κατηγορία"
         inherits_properties: "Διατήρηση Ιδιοτήτων"
+        actions: Δράση
       columns_selector:
         unit: Μονάδα
         price: Τιμή
@@ -377,6 +378,8 @@ el:
         on_demand: "Κατά παραγγελία"
         tax_category: "Φορολογική Κατηγορία"
         inherits_properties: "Διατήρηση Ιδιοτήτων"
+      actions:
+        edit: Επεξεργασία
     adjustments:
       skipped_changing_canceled_order: "Δεν μπορείτε να κάνετε αλλαγή ακυρωμένης παραγγελίας."
     begins_at: Ξεκινάει από
@@ -1173,8 +1176,6 @@ el:
       all_products: Ολα τα προϊόντα
       inventory: Απογραφή (στο χέρι)
       lettuce_share: Μαρούλι
-      mailing_list: Λίστα
-      addresses: Διευθύνσεις
       payment_methods: Αναφορά μεθόδων πληρωμής
       delivery: Αναφορά παράδοσης
       tax_types: Φορολογικοί τύποι

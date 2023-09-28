@@ -320,6 +320,7 @@ pl:
         on_demand: "Na żądanie"
         tax_category: "Kategoria podatku"
         inherits_properties: "Dziedziczy właściwości?"
+        actions: Akcje
       columns_selector:
         unit: Jednostka
         price: Cena
@@ -330,6 +331,8 @@ pl:
         on_demand: "Na żądanie"
         tax_category: "Kategoria podatku"
         inherits_properties: "Dziedziczy właściwości?"
+      actions:
+        edit: Edytuj
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient
@@ -1091,8 +1094,6 @@ pl:
       all_products: Wszystkie produkty
       inventory: Zapasy (dostępne)
       lettuce_share: LettuceShare
-      mailing_list: Lista mailingowa
-      addresses: Adresy
       payment_methods: Raport metod płatności
       delivery: Raport dostaw
       tax_types: Rodzaje podatków
@@ -2199,6 +2200,7 @@ pl:
   hub_sidebar_red: "czerwony"
   order_cycles_closed_for_hub: "Wybrany hub jest tymczasowo zamknięty dla zamówień. Spróbuj ponownie później."
   report_customers_distributor: "Dystrybutor"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Dostawca"
   report_customers_cycle: "Cykl zamówień"
   report_customers_type: "Typ raportu"

@@ -368,6 +368,7 @@ tr:
         tax_category: "Vergi Kategorisi"
         inherits_properties: "Özellikler devralınsın mı?"
         import_date: "İçe Aktarım Tarihi"
+        actions: İşlemler
       columns_selector:
         unit: Birim
         price: Fiyat
@@ -379,6 +380,8 @@ tr:
         tax_category: "Vergi Kategorisi"
         inherits_properties: "Özellikler devralınsın mı?"
         import_date: "İçe Aktarım Tarihi"
+      actions:
+        edit: Düzenle
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
@@ -1225,8 +1228,6 @@ tr:
       all_products: Tüm ürünler
       inventory: Stok (mevcut)
       lettuce_share: Hasat Ortaklığı
-      mailing_list: E-posta listesi
-      addresses: Adresler
       payment_methods: Ödeme Yöntemleri Raporu
       delivery: Teslimat raporu
       tax_types: Vergi Türleri
@@ -2436,6 +2437,7 @@ tr:
   hub_sidebar_red: "kırmızı"
   order_cycles_closed_for_hub: "Seçtiğiniz pazar geçici olarak siparişlere kapalı durumdadır. Lütfen daha sonra tekrar deneyiniz."
   report_customers_distributor: "Dağıtımcı"
+  report_customers_hub: "Pazar"
   report_customers_supplier: "Tedarikçi"
   report_customers_cycle: "Sipariş Dönemi"
   report_customers_type: "Rapor türü"

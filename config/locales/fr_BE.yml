@@ -415,6 +415,7 @@ fr_BE:
         tax_category: "TVA applicable"
         inherits_properties: "Hériter des propriétés?"
         import_date: "Date d'import (si import)"
+        actions: Actions
       columns_selector:
         unit: Unité
         price: Prix
@@ -426,6 +427,8 @@ fr_BE:
         tax_category: "TVA applicable"
         inherits_properties: "Hériter des propriétés?"
         import_date: "Date d'import (si import)"
+      actions:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -1318,8 +1321,6 @@ fr_BE:
       all_products: Tous les produits
       inventory: Catalogue comptoir (en stock)
       lettuce_share: LettuceShare
-      mailing_list: Liste de mails
-      addresses: Adresses
       payment_methods: Rapport Méthodes de Paiement
       delivery: Rapport de Livraison
       sales_tax_totals_by_producer: Totaux des taxes de vente par producteur
@@ -1580,7 +1581,7 @@ fr_BE:
         login: "Se connecter"
         contact: "contacter"
         require_customer_login: "Seuls les clients approuvés peuvent accéder à ce comptoir."
-        require_login_link_html: "Si vous êtes déjà un client approuvé, %{login} ou %{signup} pour continuer."
+        require_login_link_html: "Si vous êtes déjà un client approuvé, %{login}pour continuer."
         require_login_2_html: "Vous voulez commencer à faire vos achats ici? Veuillez %{contact} %{enterprise} et demandez à vous inscrire."
         require_customer_html: "Si vous souhaitez commencer à faire vos achats ici, veuillez %{contact}%{enterprise} et demandez pour vous inscrire."
       select_oc:
@@ -2554,6 +2555,7 @@ fr_BE:
   hub_sidebar_red: "rouge"
   order_cycles_closed_for_hub: "Le hub que vous avez choisi ets temporairement fermer pour commande. Essayer plus tard."
   report_customers_distributor: "Distributeur"
+  report_customers_hub: "Comptoir"
   report_customers_supplier: "Fournisseurs"
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"

@@ -507,6 +507,7 @@ fr:
         tax_category: "TVA applicable"
         inherits_properties: "Hériter des propriétés?"
         import_date: "Date d'import (si import)"
+        actions: Actions
       columns_selector:
         unit: Unité
         price: Prix
@@ -518,6 +519,8 @@ fr:
         tax_category: "TVA applicable"
         inherits_properties: "Hériter des propriétés?"
         import_date: "Date d'import (si import)"
+      actions:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -1466,8 +1469,6 @@ fr:
       all_products: Tous les produits
       inventory: Produits disponibles (stock positif)
       lettuce_share: LettuceShare
-      mailing_list: Liste de mails
-      addresses: Adresses
       payment_methods: Rapport Méthodes de Paiement
       delivery: Rapport de Livraison
       sales_tax_totals_by_producer: Détail des montants de taxes par producteur
@@ -2049,7 +2050,7 @@ fr:
       cancel: Retour à vos coordonnées
       voucher:
         voucher: "1%{montant de la réduction} Réduction"
-        apply_voucher: Appliquer réduction
+        apply_voucher: Code de réduction
         apply: Appliquer
         placeholder: Entrer code de réduction
         remove_code: Supprimer code de réduction
@@ -2778,6 +2779,7 @@ fr:
   hub_sidebar_red: "rouge"
   order_cycles_closed_for_hub: "Cette boutique n'a pas de ventes en cours. Veuillez essayez à nouveau ultérieurement."
   report_customers_distributor: "Distributeur"
+  report_customers_hub: "Boutique"
   report_customers_supplier: "Fournisseur"
   report_customers_cycle: "Cycle de vente"
   report_customers_type: "Type de rapport"
@@ -2972,6 +2974,7 @@ fr:
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
   report_line_cost_of_produce: 'Coût des produits hors '
   report_line_line_items: produits
+  report_header_last_completed_order_date: Date dernière commande
   report_xero_configuration: Configuration Xero
   initial_invoice_number: "N° de facture initial :"
   invoice_date: "Date de facture :"

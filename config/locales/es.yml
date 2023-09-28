@@ -459,6 +459,7 @@ es:
         tax_category: "Categoría de impuestos"
         inherits_properties: "¿Hereda propiedades?"
         import_date: "Fecha de importación"
+        actions: Acciones
       columns_selector:
         unit: Unidad
         price: Precio
@@ -470,6 +471,8 @@ es:
         tax_category: "Categoría de impuestos"
         inherits_properties: "¿Hereda propiedades?"
         import_date: "Fecha de importación"
+      actions:
+        edit: Editar
     adjustments:
       skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
     begins_at: Empieza en
@@ -1372,8 +1375,6 @@ es:
       all_products: Todos los productos
       inventory: Inventario (disponible)
       lettuce_share: LettuceShare
-      mailing_list: Lista de correo
-      addresses: Direcciones
       payment_methods: Informe de los métodos de pago
       delivery: Informe de entrega
       tax_types: Tipos de impuestos
@@ -2633,6 +2634,7 @@ es:
   hub_sidebar_red: "rojo"
   order_cycles_closed_for_hub: "El grupo que ha seleccionado está temporalmente cerrado para pedidos. Por favor, inténtelo de nuevo más tarde."
   report_customers_distributor: "Distribuidor"
+  report_customers_hub: "Grupo"
   report_customers_supplier: "Proveedora"
   report_customers_cycle: "Ciclo de Pedido"
   report_customers_type: "Tipo de Informe"

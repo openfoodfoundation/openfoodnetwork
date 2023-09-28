@@ -506,6 +506,7 @@ ru:
         tax_category: "Налоговая Категория"
         inherits_properties: "Наследовать Свойства?"
         import_date: "Дата Импорта"
+        actions: Действия
       columns_selector:
         unit: Единица измерения
         price: Цена
@@ -517,6 +518,8 @@ ru:
         tax_category: "Налоговая Категория"
         inherits_properties: "Наследовать Свойства?"
         import_date: "Дата Импорта"
+      actions:
+        edit: Изменить
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С
@@ -1445,8 +1448,6 @@ ru:
       all_products: Все товары
       inventory: Товарная Номенклатура (в наличии)
       lettuce_share: Доля Салата
-      mailing_list: Список Рассылки
-      addresses: Адреса
       payment_methods: Отчет О Способах Оплаты
       delivery: Отчет О Доставке
       sales_tax_totals_by_producer: Итоговые Суммы Налога с Продаж по Производителям
@@ -2754,6 +2755,7 @@ ru:
   hub_sidebar_red: "красный"
   order_cycles_closed_for_hub: "Выбранный вами центр временно закрыт для приема заказов. Пожалуйста, попробуйте позже."
   report_customers_distributor: "Дистрибьютор"
+  report_customers_hub: "Центр"
   report_customers_supplier: "Поставщик"
   report_customers_cycle: "Цикл Заказа"
   report_customers_type: "Тип Отчета"

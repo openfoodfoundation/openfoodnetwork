@@ -314,6 +314,7 @@ fil_PH:
         tax_category: "kategorya ng tax"
         inherits_properties: "gayahin ang mga katangian?"
         import_date: "petsa ng pag-import"
+        actions: mga  kilos
       columns_selector:
         unit: yunit
         price: Presyo
@@ -325,6 +326,8 @@ fil_PH:
         tax_category: "kategorya ng tax"
         inherits_properties: "gayahin ang mga katangian?"
         import_date: "petsa ng pag-import"
+      actions:
+        edit: i-edit
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
     customer: Customer
@@ -1131,8 +1134,6 @@ fil_PH:
       all_products: lahat ng produkto
       inventory: Imbentaryo (on hand)
       lettuce_share: LettuceShare
-      mailing_list: Listahan ng mga pagpapadalahan
-      addresses: Mga address
       payment_methods: ulat ng mga paraan ng pagbabayad
       delivery: ulat ukol sa pagdeliver
       tax_types: uri ng tax
@@ -2255,6 +2256,7 @@ fil_PH:
   hub_sidebar_blue: "bughaw"
   hub_sidebar_red: "pula"
   report_customers_distributor: "Distributor"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Supplier"
   report_customers_cycle: "order cycle"
   report_customers_type: "uri ng ulat"

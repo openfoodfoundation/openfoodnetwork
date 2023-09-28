@@ -507,6 +507,7 @@ nb:
         tax_category: "Avgiftskategori"
         inherits_properties: "Arver egenskaper?"
         import_date: "Importdato"
+        actions: Handlinger
       columns_selector:
         unit: Enhet
         price: Pris
@@ -518,6 +519,8 @@ nb:
         tax_category: "Avgiftskategori"
         inherits_properties: "Arver egenskaper?"
         import_date: "Importdato"
+      actions:
+        edit: Rediger
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på
@@ -1462,8 +1465,6 @@ nb:
       all_products: Alle produkter
       inventory: Inventar (tilgjengelig)
       lettuce_share: LettuceShare
-      mailing_list: Mailingliste
-      addresses: Adresser
       payment_methods: Betalingsmetoder rapport
       delivery: Leveringsrapport
       tax_types: Avgiftstyper
@@ -2716,6 +2717,7 @@ nb:
   hub_sidebar_red: "rød"
   order_cycles_closed_for_hub: "Huben du har valgt er midlertidig lukket for bestillinger. Vennligst prøv igjen senere."
   report_customers_distributor: "Distributør"
+  report_customers_hub: "Hub"
   report_customers_supplier: "Leverandør"
   report_customers_cycle: "Bestillingsrunde"
   report_customers_type: "Rapporttype"

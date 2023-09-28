@@ -450,6 +450,7 @@ uk:
         tax_category: "Категорія податку"
         inherits_properties: "Успадковує властивості?"
         import_date: "Дата імпорту"
+        actions: Дії
       columns_selector:
         unit: Одиниця
         price: Ціна
@@ -461,6 +462,8 @@ uk:
         tax_category: "Категорія податку"
         inherits_properties: "Успадковує властивості?"
         import_date: "Дата імпорту"
+      actions:
+        edit: Редагувати
     adjustments:
       skipped_changing_canceled_order: "Ви не можете змінити скасоване замовлення."
     begins_at: Починається о
@@ -1347,8 +1350,6 @@ uk:
       all_products: Всі продукти
       inventory: Інвентар (на руках)
       lettuce_share: Салат Поділитися
-      mailing_list: Список адресатів
-      addresses: Адреси
       payment_methods: Звіт про способи оплати
       delivery: Звіт про доставку
       tax_types: Види податків
@@ -2596,6 +2597,7 @@ uk:
   hub_sidebar_red: "червоний"
   order_cycles_closed_for_hub: "Вибраний вами хаб тимчасово закритий для замовлень. Будь-ласка спробуйте пізніше."
   report_customers_distributor: "Дистрибютор"
+  report_customers_hub: "Хаб"
   report_customers_supplier: "Постачальник"
   report_customers_cycle: "Цикл замовлення"
   report_customers_type: "Тип звіту"

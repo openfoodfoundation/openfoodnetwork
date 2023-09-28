@@ -458,6 +458,7 @@ ar:
         tax_category: "الفئة الضريبية"
         inherits_properties: "الخصائص الموروثة؟"
         import_date: "تاريخ الاستيراد"
+        actions: أجراءات
       columns_selector:
         unit: وحدة
         price: السعر
@@ -469,6 +470,8 @@ ar:
         tax_category: "الفئة الضريبية"
         inherits_properties: "الخصائص الموروثة؟"
         import_date: "تاريخ الاستيراد"
+      actions:
+        edit: تعديل
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند
@@ -1373,8 +1376,6 @@ ar:
       all_products: جميع المنتجات
       inventory: مخزون (المتوفر)
       lettuce_share: LettuceShare
-      mailing_list: القائمة البريدية
-      addresses: عناوين
       payment_methods: تقرير طرق الدفع
       delivery: إشعار بالإستلام
       sales_tax_totals_by_producer: إجمالي ضريبة المبيعات حسب المنتج
@@ -2661,6 +2662,7 @@ ar:
   hub_sidebar_red: "أحمر"
   order_cycles_closed_for_hub: "المحور الذي حددته مغلق مؤقتًا للطلبات. الرجاء معاودة المحاولة في وقت لاحق."
   report_customers_distributor: "الموزع"
+  report_customers_hub: "مركز بيع"
   report_customers_supplier: "المورد"
   report_customers_cycle: "ترتيب الدورة"
   report_customers_type: "نوع التقرير"
