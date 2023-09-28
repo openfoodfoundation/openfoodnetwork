@@ -140,11 +140,5 @@ module Sets
         report.add_metadata(:variant_error, variant.errors.first) unless variant.valid?
       end
     end
-
-    def find_model(collection, model_id)
-      collection.find do |model|
-        model.id.to_s == model_id.to_s && model.persisted?
-      end
-    end
   end
 end
