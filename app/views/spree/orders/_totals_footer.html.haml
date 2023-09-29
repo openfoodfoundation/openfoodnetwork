@@ -30,6 +30,7 @@
       %td.text-right.total
         %h5
           = order.payment_total
+  - if order.outstanding_balance?
     %tr.total
       %td.text-right{colspan: "3"}
         %h5.not-paid
