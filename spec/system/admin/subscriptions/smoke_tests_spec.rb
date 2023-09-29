@@ -9,9 +9,10 @@ describe 'Subscriptions' do
 
   context "as an enterprise user" do
     let!(:user) { create(:user) }
-    let!(:shop) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
-    let!(:shop2) { create(:distributor_enterprise, owner: user, enable_subscriptions: true) }
-    let!(:shop_unmanaged) { create(:distributor_enterprise, enable_subscriptions: true) }
+    let!(:shop) { create(:distributor_enterprise, owner: user, enable_subscriptions:) }
+    let!(:shop2) { create(:distributor_enterprise, owner: user, enable_subscriptions:) }
+    let!(:shop_unmanaged) { create(:distributor_enterprise, enable_subscriptions:) }
+    let(:enable_subscriptions) { true }
 
     before { login_as user }
 
@@ -45,9 +46,8 @@ describe 'Subscriptions' do
         end
       end
       context "disabled" do
+        let(:enable_subscriptions) { false }
         before do
-          shop.update!(enable_subscriptions: false)
-          shop2.update!(enable_subscriptions: false)
           visit spree.admin_dashboard_path
           click_link 'Orders'
         end
