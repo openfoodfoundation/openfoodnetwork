@@ -1797,7 +1797,7 @@ es:
       cookies_policy_link_desc: "Si desea obtener más información, consulte nuestro"
       cookies_policy_link: "política de cookies"
       cookies_accept_button: "Aceptar cookies"
-  home_shop: Comprar ahora
+  home_shop: Encuentra una Tienda
   brandstory_headline: "Consume con valores."
   brandstory_intro: "A veces la mejor forma de arreglar el sistema es empezar uno nuevo…"
   brandstory_part1: "Nosotros empezamos desde abajo. Con granjeros y productoras listas para contar sus historias con orgullo y autenticidad. Con distribuidoras listas para conectar gente con productos de forma justa y honesta. Con compradores que creen que mejores decisiones de compras semanales pueden seriamente cambiar el mundo."
@@ -1812,7 +1812,7 @@ es:
   system_step2: "2. Comprar"
   system_step2_text: "Transforma tu consumo con comida local y asequible de diversas productoras ¡Conoce las historias detrás de tu comida y la gente que la hace!"
   system_step3: "3. Recogida"
-  system_step3_text: "Visita tu Grupo de Consumo para un vínculo más directo con las productoras y tus vecinos, también puedes comprar directamente a algunas productoras o centrales de compras. Compra tu comida de una manera tan diversa como la naturaleza."
+  system_step3_text: "Visita tu Grupo de Consumo para un vínculo más directo con las productoras, también puedes comprar directamente a algunas productoras o centrales de compras. Compra tu comida de una manera tan diversa como la naturaleza."
   cta_headline: "Compras que hacen el mundo un mejor lugar."
   cta_label: "Estoy lista"
   stats_headline: "Entre todas creamos un nuevo sistema de producción, distribución y consumo."
@@ -4328,59 +4328,317 @@ es:
       previous: Anterior
 
 
-  contact_us_title: "Contact Us"
-  contact_us_headline: "Get in Touch with La Belle Orange - Your Fruit Network"
+  contact_us_title: "Contáctenos"
+  contact_us_headline: "Manténgase en contacto con su Fruity Network"
 
-  contact_us_description: "Whether you have a question, a suggestion, or just want to share your love for fruits, we'd love to hear from you!"
-  contact_second_title: "Whether you have a question, a suggestion, or just want to share your love for fruits, we'd love to hear from you!"
+  contact_us_description: "Si tienes alguna pregunta, sugerencia o simplemente quieres compartir con nosotros tu amor por la buena fruta, ¡siempre estaremos encantados de recibir tus mensajes!"
+  contact_second_title: "Si tienes alguna pregunta, sugerencia o simplemente quieres compartir con nosotros tu amor por la buena fruta, ¡siempre estaremos encantados de recibir tus mensajes!"
 
   about_hero_text_first: " "
-  about_hero_text: "Welcome to La Belle Orange – Where Nature's Finest Thrives!"
-  about_secondhead: "What we do"
-  about_third_section_hero: "The La Belle Orange is a global network of people and organisations working together to build a new food system."
-  about_secondhead_description: "In the heart of La Belle Orange, a profound sense of pride envelops us, for we have assumed the role of masterful orchestrators conducting a symphony of nature's finest offerings. Just as a conductor wields a baton to guide the musicians in perfect harmony, we, too, guide the intricate dance between the hands that lovingly sow and nurture, the vibrant markets that artfully showcase, and the passionate enthusiasts who wholeheartedly relish in the sumptuous richness bestowed by the earth."
-  about_secondhead_title: "What we do"
-  about_history_title: "Our History"
-  about_history_description: "La Belle Orange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, La Belle Orange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
-
-At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
-
- To use the software platform for selling food, it needs to be operating in your area. "
-  about_secondhead: "What we do"
+  about_hero_text: "¡Bienvenidos a donde se cultivan frutas con Amor!"
+  about_secondhead: "Nuestro negocio principal"
+  about_third_section_hero: "La Belle Orange es un pequeño grupo de amigos y personas que deciden trabajar juntos para ofrecer las frutas y productos más naturales del árbol, al plato del consumidor."
+  about_secondhead_description: "Nosotros cuidamos a nuestros clientes. <br>Y para eso, todo comienza con las frutas, o nuestros productos, que se cultivan mediante prácticas respetuosas con el medio ambiente. Trabajamos con agricultores que desarrollan prácticas únicas, a veces sorprendentes, para desarrollar y preservar mejor las cualidades y sabores naturales de las frutas."
+  about_secondhead_title: "Nuestro trabajo"
+  about_history_title: "Nuestra historia"
+  about_history_description: "Somos tres amigos, Julien, Chiara y Pablo, que vivimos allí y trabajamos con varios agricultores andaluces produciendo frutas de temporada. Reservamos los frutos en el árbol, los recogemos y envasamos, prestando mucha atención a elegir frutos maduros, sabrosos y de gran calidad. La Belle Orange apoya a pequeños productores comprometidos con prácticas ecológicas avanzadas. Sus empleados están declarados y trabajan en buenas condiciones. Establecemos una remuneración justa y fija para los productores, garantizando un precio fijo para el actor consumidor."
+  
   legal_notice: "Aviso Legal"
   legal_notice_title: "Aviso Legal"
-  legal_notice_description: "La Belle Orange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, La Belle Orange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+  legal_notice_description: "<b>LA BELLE ORANGE SL Sociedad de Responsabilidad Limitada inscrita en el Registro Mercantil de Málaga, con CIF B93619815</b>
+   <br>
+Sede social: Calle Hipólito, 14 – 29560 Pizarra (España)
+<br>Email de contacto: frutas(arroba)labelleorange.es
+<br>Director de publicación: Julien BRANTENER
+<br>Hospedador del sitio: El Sitio está alojado en la infraestructura de la empresa Contabo en la Unión Europea.
+<br>Código fuente: el código fuente del sitio es proporcionado por OpenFood Network y adaptado según las necesidades de La Belle Orange SL
+<br><br>
+Puede darse de baja en cualquier momento haciendo clic en el enlace en todos los boletines
+<br>
+La empresa La Belle Orange SL, responsable del tratamiento, realiza el tratamiento de datos personales con la finalidad de comprar productos alimentarios directamente a productores y artesanos. Puede expresar su acuerdo o negativa al registrarse o en cualquier otro momento.
+<br>
+Los datos personales recogidos están destinados únicamente a La Belle Orange SL, a transportistas y puntos de distribución en caso de problema en el momento de la entrega.
+<br><br>
+De acuerdo con el Reglamento (UE) 2016/679 (GDPR/RGPD), usted tiene derecho a acceder, rectificar, oponerse, suprimir, limitar, portabilidad de sus datos y a no hacerlo sujeto a una decisión individual automatizada, incluida la elaboración de perfiles. . Sólo usted podrá ejercer estos derechos sobre sus propios datos dirigiéndose a LA BELLE ORANGE SL, Calle Porvenir – 3 Nave 8 – 29560 Pizarra (España), o a fruit(arroba)labelleorange.es especificando en el asunto de la letra “Derecho personal” y adjuntando copia de su documento de identidad. También puede enviarnos sus instrucciones relativas a la conservación, supresión y comunicación de sus datos personales después de su fallecimiento. En caso de una respuesta insatisfactoria, tiene la opción de ponerse en contacto con la CNIL o cualquier autoridad competente relacionada con su jurisdicción."
 
-At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
+  confidentiality_title: "Confidencialidad"
+  confidentiality_description: "<b>Definiciones</b>
+<br>“Responsable del tratamiento” Se refiere a la persona que determina los fines y medios del tratamiento de los datos personales.
+<br>“Datos personales” (en adelante “datos personales”) Información que le permite ser reconocido como persona. Su apellido son datos personales. Su número de teléfono, su correo electrónico, su dirección IP son datos personales.
+<br>“Tratamiento de datos personales” Operación o conjunto de operaciones aplicadas a datos personales (recogida, registro, conservación, consulta, etc.)
+<br><br>
+<b>¿Quién recopila datos personales?</b>
+<br>La Belle Orange SL, con domicilio en Calle Hipólito, 14 – 29560 Pizarra (España), es el responsable de todos los tratamientos de datos personales realizados en el sitio www.labelleorange.es.
+<br><br>
+<b>¿Qué datos personales se recogen?</b>
+<br>Los datos recogidos son:
+<br>• Dirección de correo electrónico
+<br>• Nombre
+<br>• Nombre
+<br>• Dirección postal
+<br>• Código postal
+<br>• Ciudad
+<br>• Número de teléfono
+<br><br>
+<b>¿Cuáles son las finalidades de la recogida de sus datos personales?</b>
+<br>La Belle Orange SL se compromete a recoger, tratar o almacenar sus datos personales para finalidades determinadas, legítimas y pertinentes. Sus datos son tratados con las siguientes finalidades:
+<br>• Gestión de cuenta de cliente, carrito de compra y pedidos.
+<br>• Gestión de entregas, seguimiento de pedidos y servicio postventa
+<br>• Prestación de servicio de atención al cliente accesible vía telefónica o mediante mensajería instantánea tipo chat
+<br>• Provisión de herramientas para compartir en redes sociales
+<br>• Envío de ofertas comerciales dirigidas por correo electrónico, mediante notificaciones al móvil, en redes sociales o cualquier otro medio
+<br>• Gestión de sus suscripciones a nuestras newsletters, notificación por correo electrónico
+<br>• Recopilación de opiniones de clientes sobre productos comercializados
+<br>• Notificación cuando un producto está en stock
+<br><br>Con excepción de las operaciones de prospección comercial, La Belle Orange considera que todos los tratamientos anteriores son necesarios para la ejecución del contrato celebrado entre un Comprador y La Belle Orange (interés legítimo). Las operaciones de prospección comercial se basan en su consentimiento al tratamiento de sus datos. Por lo tanto, al crear su cuenta en el sitio, se le solicita expresamente su consentimiento para recibir ofertas de La Belle Orange. Tiene la opción de retirar este consentimiento en cualquier momento directamente haciendo clic en el enlace para cancelar la suscripción presente en cada correo electrónico recibido o contactándonos. Además, podemos utilizar y recopilar datos con fines de elaboración de perfiles. La elaboración de perfiles es el procesamiento automatizado de sus datos personales. Estos datos se utilizan para evaluar, analizar y predecir sus preferencias, intereses y comportamiento. La base legal para utilizar datos con fines de elaboración de perfiles es el consentimiento (consentimiento de cookies).
+<br><br>
+<b>¿Cuáles son tus derechos y cómo puedes ejercerlos ante La Belle Orange?</b>
+<br>De acuerdo con el RGPD, usted tiene derecho a acceder, rectificar, suprimir y oponerse a los datos que le conciernen. Puede ejercitar estos derechos mediante correo electrónico o correo postal a la siguiente dirección:
+<p>
+La Bella Naranja SL
+Calle Hipólito, 14
+29560 Pizarra (España)<br>
+Correo electrónico: frutas(arroba)lableorange.es
+</p>
+La Belle Orange enviará una respuesta en el plazo de 1 mes tras la recepción de la solicitud. También puede ejercer su derecho a la limitación del tratamiento, a la supresión de sus datos, a la portabilidad de los datos y a no estar sujeto a la toma de decisiones individuales automatizadas, incluida la elaboración de perfiles. En aras de la confidencialidad y protección de los datos personales, se deberá incluir en la solicitud copia de un documento de identidad firmado. En caso de una respuesta insatisfactoria, tiene la opción de ponerse en contacto con la CNIL o cualquier organización dentro de su jurisdicción.
+<br><br>
+<b>¿Cuánto tiempo se conservan tus datos?</b>
+<br>La Belle Orange ha determinado normas precisas relativas al período de conservación de los datos personales de los usuarios. Para calcular la vida útil más relevante, La Belle Orange distingue entre clientes potenciales que nunca han realizado una compra a La Belle Orange y sus socios, y clientes que ya han realizado una compra. En cuanto a los prospectos, el punto de partida del período de retención constituye el último envío de prospección por el cual el prospecto probablemente esté interesado, es decir, que hizo clic en el enlace para ver lo que está disponible para él. En el caso de los clientes, el punto de partida de la vida útil constituye su última compra.
+<br><br>
+<b>¿Qué pasa con tus datos después de tu muerte?</b>
+<br>De conformidad con el Artículo 40-1 de la Ley de Protección de Datos del 6 de enero de 1978, puede enviarnos sus instrucciones relativas a la conservación, supresión y comunicación de sus datos personales después de su muerte. Estas pautas pueden ser generales o específicas. Para enviarnos sus instrucciones, contáctenos por correo electrónico.
+<br><br>
+<b>¿Quiénes son los destinatarios de sus datos?</b>
+<br>Sus datos se transmiten a La Belle Orange, que puede tratarlos por su cuenta (este es el destinatario). Excepcionalmente, sus datos podrán ser transmitidos a un transportista o responsable de un punto de distribución para gestionar las entregas.
+<br><br>
+Los destinatarios de los datos son por tanto:
+<br>• La hermosa naranja
+<br>• Transportistas y responsables de los puntos de distribución de forma excepcional
+<br>• Las autoridades policiales en el contexto de las requisiciones legales relativas a la lucha contra el fraude
+<br><br>La Belle Orange también utiliza subcontratistas para las siguientes operaciones:
+<br>• Pago seguro en el sitio
+<br>• La lucha contra el fraude a través de intermediarios bancarios
+<br>• Envío de sus pedidos
+<br>• Realización de operaciones técnicas de mantenimiento y desarrollo del sitio web
 
- To use the software platform for selling food, it needs to be operating in your area. "
+<br><br>
+<b>¿Tiene La Belle Orange un delegado de protección de datos?</b>
+<br>El responsable de la protección de datos es Julien Brantener. También es responsable del tratamiento de datos de conformidad con la normativa europea. Para todas las cuestiones relativas a la protección de datos personales, le facilitamos una dirección de contacto: frutas(arroba)labelleorange.es
+<br><br>
+<b>¿Tus datos se envían fuera de la Unión Europea?</b>
+<br>Para cumplir con los derechos y requisitos de la Unión Europea, La Belle Orange aloja todos los datos de sus clientes en suelo europeo. Por lo tanto, los datos del cliente, tal como están, no se envían fuera de la Unión Europea. Además, La Belle Orange toma diversas medidas para garantizar la seguridad de sus datos contra pérdida, mal uso, acceso no autorizado, divulgación, modificación o destrucción. En particular :
+<br>• El acceso a las bases de datos está estrictamente reservado a personas autorizadas a leerlas como parte de sus misiones.
+<br>• De conformidad con la Ley de Protección de Datos del 6 de enero de 1978 y el Reglamento Europeo, La Belle Orange ha garantizado que los subcontratistas se comprometen a respetar la seguridad y la confidencialidad de los datos.
+<br>• Todos los empleados de La Belle Orange son conscientes de la protección de datos personales a través de formación, boletines informativos y reuniones de equipo.
+<br><br>
+<b>Editar</b>
+<br>La Belle Orange se reserva el derecho de modificar esta Política de Protección de Datos en cualquier momento. En caso de modificación sustancial, como por ejemplo la introducción de una nueva finalidad, La Belle Orange le informará previamente sobre esta otra finalidad. Esto es para garantizar que tenga un período de tiempo razonable para ejercer sus derechos según la Ley de Protección de Datos del 6 de enero de 1978 y el Reglamento Europeo. No obstante, le recomendamos que consulte periódicamente la Política para conocer las condiciones de protección de su información personal proporcionada por La Belle Orange. Esta Política se actualizó por última vez el 1 de septiembre de 2023.
+<br><br>
+<b>Contacto</b><br>
+Para cualquier duda, puedes contactar con nosotros directamente contactando:<br>
+frutas(arroba)lableorange.es<br>
+o por correo<br>
+La Belle Orange – Calle Porvenir – 3 Nave 8 – 29560 Pizarra (España)."
 
-  confidentiality_title: "Confidentiality"
-  confidentiality_description: "Confidentiality  Des "
 
-  shipping_and_return_title: "Shipping and Return"
-  shipping_and_return_description: "La Belle Orange's history unfurls as a tapestry woven with threads of passion and purpose, tracing our path from a simple seed of inspiration to a vibrant network that bridges the gap between nature's bounty and eager hearts. From our inception, we united with visionary farmers who shared our commitment to quality and sustainability, nurturing a community where dedication and authenticity thrived. As technology advanced, so did our reach, enabling streamlined connections between growers, markets, and consumers. Today, with a global footprint, La Belle Orange remains a symphony of taste and integrity, dedicated to composing a future where each bite echoes the legacy of our past and the promise of a more flavorful tomorrow.
+  shipping_and_return_title: "Envío y devolución"
+  shipping_and_return_description: "<p>¡La entrega de nuestras frutas y productos es gratuita para todos los compradores privados!</p>
 
-At the core of everything we do is a belief that creating a new food system requires a new way of operating. This is why we create open source solutions, communicate with transparency, and hold everything we create as part of the Commons – it doesn’t belong to a single entity, but instead to a community.
+<p>A menos que se acuerde explícitamente con un comprador profesional, los gastos de envío son gratuitos.</p>
 
- To use the software platform for selling food, it needs to be operating in your area. "
+<p>Las fechas de entrega se indican en la página del(los) punto(s) de distribución en el(los) que estés interesado. También recibirás correos electrónicos periódicamente que te permitirán mantenerte informado de las fechas de entrega en los puntos de distribución indicados.</p>
 
-  vision_title: "Our Vision"
-  vision_description: "Our vision at La Belle Orange transcends mere commerce."
+<p>Tenga en cuenta que La Belle Orange es una red pequeña, esencialmente organizada en torno al voluntariado de confianza. Cuando realizas un pedido de productos, te comprometes a acudir al punto de distribución en la fecha y horario indicados para pagar y recoger tus productos.</p>
 
-  whatwedo_title: "What We Do"
-  whatwedo_description: "At La Belle Orange, we don't just move fruit we curate experiences."
+<p>Como nuestros productos son esencialmente productos frescos, no organizamos devoluciones de pedidos. Pero si la fruta te llegara dañada (porque como sabes, nuestros productos están libres de cualquier producto o proceso de conservación artificial), nos comprometemos a abonarte la cantidad perdida, o a reembolsarte mediante transferencia bancaria, o para enviarte las frutas en el siguiente ciclo de pedido, según tus preferencias.</p>
 
-  ourpromise_title: "Our Promise"
-  ourpromise_description: "Our promise isn't just about fruits it's about cultivating trust."
+<p>En caso de problemas, siempre puedes contactar con nosotros en frutas(arroba)labelleorange.es, te responderemos lo antes posible.</p>"
 
-  terms_of_service_title: "Terms Of Service"
-  terms_of_service_description: "Terms of Service Content."
+  vision_title: "Nuestra visión"
+  vision_description: "Nuestra visión es hacer del mundo un lugar mejor. Y todo lo que necesitas es un poco de amor y agua fresca."
+  whatwedo_title: "Nuestra Especialidad"
+  whatwedo_description: "Nuestro trabajo es acercar a productores y consumidores que optan por una agricultura y un consumo éticos."
+  ourpromise_title: "Nuestra promesa"
+  ourpromise_description: "Nuestro compromiso es ofrecerte frutas y productos tan saludables como deliciosos."
 
   your_name: "Su nombre"
   subject: "Sujeta"
-  email_address_contact: "Su dirección de correo electrónico"
+  email_address_contact: "Su correo electrónico"
   contact_message: "Mensaje"
   send_message_contact: "Enviar mensaje"
-  terms_of_service_title: "<b>Terms Of Service<b>"
-  terms_of_service_description: "Terms of Service Content."
+
+
+  terms_of_service_title: "<b>Condiciones Generales</b>"
+  terms_of_service_description: "<b>1 – General</b><br>
+La empresa La Belle Orange SL publica y explota un sitio web en la dirección labelleorange.es (en adelante el “Sitio”) con el fin de ofrecer productos alimentarios frescos o secos (en adelante los “Productos”) a precio firme.
+El servicio ofrecido en el Sitio de La Belle Orange (en adelante “el Servicio”) permite a los consumidores (en adelante “Compradores”) y/o puntos de distribución (en adelante “Puntos de Distribución”) obtener, comprar o vender productos de La Belle Orange SA (en adelante "el vendedor").
+Las presentes Condiciones Generales de Venta (en adelante, las “CGV”) se aplican cuando un Comprador realiza un pedido en el sitio web labelleorange.es. En este contexto, la empresa La Belle Orange SA actúa únicamente como editora del Sitio y como Vendedor.
+Las Condiciones Generales de Venta son oponibles al Comprador que reconoce, marcando una casilla habilitada al efecto, haberlas conocido y haberlas aceptado antes de realizar el pedido. Los Términos y Condiciones Generales están disponibles directamente en el Sitio.
+Pueden estar sujetos a modificación en cualquier momento. Los Términos y Condiciones Generales aplicables al Comprador siguen siendo los vigentes en la fecha del pedido.<br><br><br>
+
+<b>2 – Condiciones y precios del pedido</b><br>
+2.1 Registro en el Sitio<br>
+Para realizar un pedido, el Comprador debe crear una cuenta de cliente utilizando una dirección de correo electrónico válida y una contraseña.
+Al crear esta cuenta, el Comprador deberá completar un formulario que contiene los datos personales que deberá proporcionar.
+El Comprador deberá ser mayor de edad y tener capacidad legal para contratar. Cualquier pedido de Productos por importe inferior a 200 euros, realizado por un menor de edad, será considerado como un acto de la vida cotidiana y se considerará realizado con el acuerdo de sus representantes legales.
+El Comprador declara, bajo su exclusiva responsabilidad, ser mayor de 18 años en la fecha de realización del pedido.
+Al abrir esta cuenta, el nombre de usuario y la contraseña son definidos por el Comprador, quien se compromete a mantenerlos en secreto y a no revelarlos a ningún tercero. Por tanto, el Comprador soportará por sí solo todas las consecuencias que pudieran derivarse de su utilización por terceros que tengan conocimiento de los mismos.<br><br>
+2.2 Conformidad de productos y/o servicios<br>
+Descripción de productos<br>
+Cualquier Producto ofrecido a la venta en el Servicio por el Vendedor está sujeto a una descripción de sus características esenciales. El Vendedor se compromete a ofrecer únicamente Productos disponibles en el Sitio y a eliminar inmediatamente del Sitio cualquier oferta que ya no esté disponible. En caso de indisponibilidad excepcional del Producto después de realizar el pedido del Comprador, el Vendedor informará al Comprador. Entonces se realizará un crédito o un reembolso.
+La Ficha de Información del Producto incluye al menos los siguientes elementos:<br>
+• La identidad del Vendedor,<br>
+• La descripción y fotografía del Producto,<br>
+• El precio de los Productos se indica con todos los impuestos incluidos para Compradores individuales y excluyendo impuestos para Compradores profesionales. <br>
+• Las características esenciales (tamaño, cantidad, unidad, peso, características y lista de ingredientes o su composición, etc.).<br><br>
+Se permitirá una tolerancia máxima de desviación de peso del 5% sobre la cantidad de producto entregado.
+La información mencionada en cada Ficha de Información del Producto es la comunicada por los Vendedores. Se informa al Comprador que las fotografías no son contractuales y que debe consultar las descripciones de los Productos antes de realizar su pedido.<br><br>
+Pasos del pedido<br>
+Para realizar un pedido a través del Servicio, el Comprador debe seguir el procedimiento de pedido en línea respetando los siguientes pasos:<br>
+1. seleccione los Productos sujetos al pedido y las cantidades deseadas,<br>
+2. consultar el resumen del pedido con los gastos de envío asociados (envío gratuito),<br>
+3. identifícate,<br>
+4. proporcionar información relativa a la entrega y consultar plazos y fechas de entrega, que sólo comienzan con la confirmación de la aceptación del pedido por parte del Vendedor,<br>
+5. confirmar el pedido y declarar que las presentes Condiciones Generales se han puesto a su disposición y aceptarlas íntegramente y sin reservas haciendo clic en validación,<br>
+6. ingresa el método de pago y, en su caso, tus datos bancarios,<br>
+7. El Comprador recibe entonces un correo electrónico confirmando el registro de su pedido.<br>
+8. El pedido se transmite al Vendedor, quien puede en cualquier momento confirmar o negar el cumplimiento total o parcial del pedido (sucede que los productos finalmente no estén disponibles debido a cosechas inciertas), pero que, en general, se compromete a entregar el pedido. pedido completo.<br>
+9. Este paso formaliza la celebración del contrato(s) de venta a distancia con el Vendedor.<br><br>
+ 
+2.3 Precios de los productos<br>
+Los precios de los Productos puestos a la venta e a través del Servicio fueron establecidos libremente por el Vendedor, de conformidad con las leyes y regulaciones aplicables.
+El precio de los Productos se indica en euros, con todos los impuestos incluidos, para los Compradores individuales, y sin impuestos, para los Compradores profesionales.
+El precio indicado en la Ficha de Información del Producto no es negociable por el Comprador.
+El precio de venta de los Productos es el vigente el día del pedido.
+En caso de precio promocional, el Vendedor se compromete a aplicar el precio promocional a cualquier pedido realizado durante la duración de la promoción.
+El Vendedor se reserva el derecho de modificar sus precios en cualquier momento, garantizando al Comprador la aplicación del precio vigente en el momento de su pedido.<br><br>
+
+2.4 Gastos de envío<br>
+A menos que se acuerde explícitamente con un Comprador profesional, los gastos de envío son gratuitos.<br><br>
+
+2.5 Pago <br>
+El precio se pagará en efectivo, en su totalidad, en el momento de la validación del pedido mediante uno de los métodos de pago.
+Los pagos son posibles mediante transferencia bancaria en el momento de realizar el pedido, por defecto.
+En determinados puntos de distribución donde así se especifique, también es posible realizar el pago mediante cheque en el momento de la entrega.
+En caso de impago, La Belle Orange SL se reserva el derecho de interrumpir temporal o definitivamente el acceso al Servicio al Comprador afectado.<br><br>
+
+2.6 Seguridad<br>
+El Sitio está sujeto a un sistema de seguridad que utiliza el proceso de encriptación SSL.<br><br>
+
+
+<b>3 – Derecho de desistimiento</b><br>
+El Comprador dispone de un plazo de desistimiento de 3 días naturales a partir de la fecha de compra de los productos alimenticios secos que no sean propensos a deteriorarse o caducar rápidamente; el Comprador puede ejercer su derecho de desistimiento, sin tener que indicar los motivos ni pagar penalizaciones.<br>
+De conformidad con el artículo L 121-21-8 del Código del Consumo, el Comprador no puede desistir cuando el Producto sea un bien susceptible de deteriorarse o caducar rápidamente, como los productos alimenticios frescos (frutas y verduras, queso, etc.). Tenga en cuenta que este artículo del Código del Consumo es un ejemplo relativo a la ley francesa, y que estas Condiciones Generales de Venta y las operaciones resultantes de ellas también se rigen y están sujetas a la ley francesa, suiza, alemana, italiana, española y europea. <br>
+El Comprador ejerce su derecho de desistimiento directamente ante el Vendedor enviando un correo electrónico a frutas(arroba)labelleorange.es o por cualquier medio proporcionado a través de la interfaz del Sitio.<br>
+Si se ejerce el derecho de desistimiento, el Vendedor únicamente reembolsará el precio del Producto(s) objeto de desistimiento, así como los gastos de envío. Los costos de envío no serán reembolsados ​​si un Comprador conserva parte de los Productos comprados al mismo Vendedor. Serán reembolsados ​​parcialmente en caso de desistimiento parcial del pedido.<br><br>
+
+<b>4 – Entrega</b><br>
+Los productos vendidos a través del Servicio solo pueden enviarse a las direcciones de entrega correspondientes a los Puntos de Distribución indicados en el Sitio.<br>
+El Comprador deberá estar presente para la entrega en mano de su pedido.<br>
+Si el Comprador se encuentra ausente en el momento de la entrega, el Comprador deberá concertar con el Punto de Distribución para intentar recoger su pedido fuera de las franjas horarias y fechas inicialmente acordadas. El Punto de Distribución no puede comprometerse a estar disponible, ya que los Puntos de Distribución ofrecen su espacio de forma gratuita para entregar los productos La Belle Orange, pero generalmente se encuentran soluciones en caso de ausencia del Comprador por motivos excepcionales. En todos los casos, el Comprador será responsable de su pedido, ya que La Belle Orange no puede organizar devoluciones de sus productos.<br>
+En caso de ausencia o retraso del Vendedor en el momento de la entrega, el Vendedor se compromete a ponerse en contacto con los Compradores lo antes posible para notificarles el retraso.<br>
+Debido a la especificidad de los productos frescos que son productos perecederos, no se puede incurrir en responsabilidad del transportista ni de La Belle Orange SL en caso de ausencia del Comprador durante los horarios y días de entrega y/o nueva entrega.< br>
+Se informa especialmente al Comprador que, dado el carácter perecedero de los productos frescos, si el Comprador no recibe su pedido o no lo recoge, no se realizará ningún reembolso.<br><br>
+
+<b>5 - Responsabilidad</b><br>
+El Vendedor asume toda la responsabilidad relacionada con los Productos puestos a la venta en el Sitio y las quejas relacionadas. La Belle Orange SL tiene como objetivo vender productos frescos de una calidad excepcional, y se compromete a atender, en la medida de sus posibilidades, cualquier reclamación de un Comprador.<br>
+Sin embargo, el Vendedor no se hace responsable en caso de incumplimiento o mal desempeño.
+ejecución del contrato de venta debido ya sea al acto del Comprador, en particular, pero no limitado a, en caso de uso indebido del Sitio por parte del Comprador o culpa de este último, o al acto imprevisible e insuperable de un tercero contrato o un caso de fuerza mayor tal como lo define la jurisprudencia francesa.<br>
+La Belle Orange SL no se hace responsable del contenido o los comentarios que los Compradores realicen en el Sitio.<br><br>
+
+<b>6 - Quejas</b><br>
+En cualquier momento, el Comprador tiene la posibilidad de ponerse en contacto con el Vendedor, de enviar cualquier solicitud o queja relacionada con los Productos pedidos utilizando la herramienta de mensajería disponible como parte del Servicio, o simplemente por correo electrónico, en particular para hacer valer sus garantías cuando están en progreso.
+Además de la herramienta de mensajería, se pone a disposición un botón específico que permite a cualquier Comprador informar en su cuenta, dentro de los 30 días siguientes a la fecha en que se cargan en su cuenta las compras realizadas a un Vendedor, cualquier reclamación relativa a los Productos solicitados.
+En caso de una queja de un Comprador sobre un Producto, incluso cuando el Vendedor es informado de dicha queja a través de la herramienta de información puesta a su disposición en el Servicio, el Vendedor es personalmente responsable de resolver la disputa entre este y el Comprador. . Los conflictos se resuelven directamente entre el Comprador y el Vendedor, si es necesario utilizando la herramienta de mensajería puesta a su disposición en el Servicio. El Vendedor hará sus mejores esfuerzos para resolver la disputa entre él y el Comprador de manera amistosa.
+Si la disputa del Comprador resulta estar bien fundada, el Vendedor devolverá el Producto solicitado en el siguiente ciclo de pedido o proporcionará un crédito o un reembolso.
+Cualquier pregunta o solicitud de aclaración sobre un retraso o falta de entrega debe enviarse a la Belle Orange, por correo electrónico o a través del Sitio.
+El consumidor reclamante tiene la posibilidad, si la respuesta de La Belle Orange SL no le satisface o si no ha recibido respuesta transcurridos 2 meses desde la presentación de su reclamación, de ponerse en contacto con un mediador competente para cualquier litigio relativo a todos los servicios cubiertos por estas normas generales. condiciones de venta. El procedimiento de mediación es gratuito. Los consumidores pueden contactar a un mediador directamente o a través de un intermediario (asociación de consumidores, abogado, funcionario electo, otro mediador, etc.).<br><br>
+
+<b>7 - Garantías del producto</b><br>
+Los Productos vendidos en el Sitio cumplen con la normativa vigente en los países donde La Belle Orange SL desarrolla sus actividades operativas y comerciales.
+En virtud de estas garantías, el Vendedor se compromete, a elección del Comprador, a concederle un crédito, reembolsarle o cambiarle productos defectuosos o que no correspondan a su pedido.
+Los reembolsos por Productos considerados no conformes o defectuosos se realizarán lo antes posible después de que el Vendedor descubra la falta de conformidad o el defecto oculto. El reembolso se realizará mediante transferencia a la cuenta bancaria del Comprador. También se puede emitir una nota de crédito (generalmente es la solución más sencilla utilizada).
+Independientemente de la garantía comercial que el Vendedor pueda otorgar al Comprador según sus Condiciones de Venta, el Vendedor es responsable de las faltas de conformidad y defectos ocultos del producto. <br><br>
+ 
+<b>8 – Ley aplicable</b><br>
+Las presentes Condiciones Generales de Venta y las operaciones que de ellas resultan se rigen y están sujetas a los derechos franceses, suizos, alemanes, italianos, españoles y europeos.
+A continuación se detalla una lista de las leyes y normativas más relevantes que cumple La Belle Orange SL:
+En términos generales:<br>
+• Códigos del Consumidor: estos códigos regulan la protección del consumidor en términos de derechos, contratos, garantías y otros. Cualquier empresa que venda productos en un país debe asegurarse de que sus prácticas cumplan con este código.<br>
+• Normas de calidad para frutas y hortalizas: Cada país cuenta con normas específicas para la calidad, clasificación, envasado y etiquetado de frutas y hortalizas frescas. Estos estándares a menudo se basan en estándares de la Unión Europea, pero también pueden tener especificidades nacionales.<br>
+• Reglamento Sanitario: Este reglamento define las normas sanitarias para la comercialización de alimentos. Esto incluye especificaciones sobre higiene, manipulación, almacenamiento, etc.<br>
+• Normas de etiquetado e información al consumidor: Los productos vendidos deben cumplir con normas de etiquetado específicas. Esto incluye, entre otros, indicación de origen, información nutricional, fechas de vencimiento, etc.<br>
+• Normas fitosanitarias: Estas normas se refieren a requisitos para prevenir la introducción y propagación de plagas y enfermedades de las plantas.
+su. Para la exportación, ciertos productos deben ir acompañados de un certificado fitosanitario.<br>
+• Aduanas y Monopolios: Generalmente no existen derechos de aduana para las transacciones dentro de la UE, pero es esencial garantizar que todos los documentos necesarios estén en su lugar y que se sigan todas las formalidades aduaneras.<br ><br><br>
+
+Normativa europea:<br>
+• Reglamento (CE) nº 178/2002: Establece los principios y requisitos generales de la legislación alimentaria.<br>
+• Reglamento (CE) nº 852/2004: En materia de higiene de los productos alimenticios, define los procedimientos que los productores de alimentos deben implementar para garantizar la seguridad alimentaria.<br>
+• Reglamento (UE) nº 1169/2011: Sobre información al consumidor sobre productos alimenticios. Se refiere al etiquetado, presentación y publicidad de los alimentos.<br>
+• Reglamento (UE) 2017/625: Relativo a los controles oficiales realizados para verificar el cumplimiento de la legislación alimentaria.<br>
+• Reglamento (UE) 2016/679 (GDPR/GDPR): Si la empresa recopila o procesa datos personales como parte de sus operaciones.<br>
+• Regulaciones fitosanitarias: Estas regulaciones se refieren a la importación y exportación de productos vegetales para prevenir la propagación de enfermedades.<br><br>
+
+Regulaciones y agencias nacionales por país:<br><br>
+España:<br>
+• Ley 17/2011, de 5 de julio, de seguridad alimentaria y nutrición: Es la principal ley en materia de seguridad alimentaria en España.<br>
+• Real Decreto 1/2010: Es el texto refundido de la Ley de Sociedades de Capital, que regula los distintos tipos de sociedades en España.<br>
+• Ley 12/2013: De medidas para mejorar el funcionamiento de la cadena alimentaria.<br>
+• Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD): Es la ley que adapta el marco jurídico español al Reglamento General de Protección de Datos (RGPD) de la UE. <br><br>
+
+Francia:<br>
+• Código del Consumidor: Es el principal conjunto de leyes destinadas a proteger a los consumidores. Cubre temas como derechos del consumidor, garantías, publicidad y muchos más.<br>
+• Código Aduanero: Regula la importación y exportación de mercancías, incluyendo impuestos, aranceles y otros requisitos.<br>
+• Reglamento (CE) nº 178/2002 (ley general alimentaria): Establece los principios generales y requisitos generales de la legislación alimentaria.<br>
+• Decreto N° 2002-1465 del 17 de diciembre de 2002 relativo a frutas y hortalizas frescas: Este decreto detalla las especificaciones relativas a la comercialización y calidad de frutas y hortalizas.<br>
+• Orden de 26 de julio de 2010 relativa a frutas y hortalizas y productos hortícolas frescos: Se proporciona una lista de frutas y hortalizas frescas y productos hortícolas frescos afectados por una norma de comercialización.<br>
+• Reglamento (CE) nº 852/2004 relativo a la higiene de los productos alimenticios: Establece las normas generales de higiene aplicables a todas las etapas de producción, transformación y distribución.<br>
+• Reglamento (UE) nº 1169/2011 sobre información al consumidor sobre productos alimenticios: Se refiere al etiquetado, presentación y publicidad de los productos alimenticios.<br>
+• Ley N° 78-17 del 6 de enero de 1978, conocida como “Informatique et Libertés”: Es la ley francesa sobre protección de datos. Ha sido modificado varias veces para adaptarse a los cambios en el panorama digital y cumplir con el GDPR.<br>
+• Ley para una República Digital (2016): Incluye disposiciones relativas al acceso digital, la circulación de datos y la protección de la privacidad.<br>
+• Agencia Nacional de Seguridad Alimentaria, Ambiental y de Salud Ocupacional (ANSES): Desempeña un papel en la evaluación de los riesgos asociados a los alimentos.<br>
+• Dirección General de Alimentación (DGAL): Es el órgano ejecutivo responsable de la seguridad alimentaria en Francia. Desarrolla e implementa políticas gubernamentales sobre seguridad alimentaria.<br><br>
+
+
+Suiza:<br>
+• Ley de Alimentos (LDAl): Regula la producción, procesamiento, tratamiento y comercialización de productos alimenticios. Dado que las frutas son alimentos, se ven directamente afectadas por esta ley.<br>
+• Ordenanza sobre productos alimenticios y objetos cotidianos (ODAlOUs): Contiene disposiciones detalladas sobre la LDAl, en particular sobre etiquetado, publicidad y declaración de productos alimenticios.<br>
+• Ley Federal de Seguridad de Productos (LPrS): Tiene como objetivo garantizar que los productos, incluidos los alimentos, no presenten riesgos para la salud o seguridad de los consumidores.<br>
+• Ordenanza sobre residuos de pesticidas en productos alimenticios de origen vegetale (ORPV): Establece los límites máximos admisibles de residuos de plaguicidas en productos alimenticios de origen vegetal. ¡No muy aplicable en el contexto de La Belle Orange que felizmente prescinde de pesticidas!<br>
+• Ordenanza sobre la importación, el tránsito y la exportación de plantas y productos vegetales (OITEV): Define las normas para la importación en Suiza de plantas y productos vegetales, en particular para evitar la introducción de organismos nocivos.<br>
+• Ley Federal de Aduanas (LD): Regula la importación, exportación y tránsito de mercancías a través de la frontera suiza, lo cual es particularmente relevante para una empresa extranjera que exporta a Suiza.<br>
+• Ley federal de protección de datos (LPD): aunque Suiza no es miembro de la UE, tiene su propia ley de protección de datos, que tiene muchas similitudes con el RGPD.<br>< br>
+
+Alemania:<br>
+• Gesetz gegen den lauteren Wettbewerb (UWG - Ley contra la Competencia Desleal): Regula las prácticas comerciales, incluida la publicidad y la promoción, con el fin de garantizar una competencia leal.<br>
+• Lebensmittel-, Bedarfsgegenstände- und Futtermittelgesetzbuch (LFGB - Código alimentario alemán): Este es el principal conjunto de leyes que rigen la producción, comercialización y etiquetado de alimentos en Alemania.<br>
+• Verordnung (EG) Nr. 178/2002 (Reglamento General de Alimentos): Aunque es un reglamento de la UE, se aplica directamente en Alemania. Define los principios generales de la legislación alimentaria.<br>
+• Obst- und Gemüseverordnung (Verordnung über bestimmte Obst- und Gemüsesorten - Reglamento sobre frutas y hortalizas): Detalla las especificaciones relativas a la comercialización de frutas y hortalizas.<br>
+• Verordnung (UE) Nr. 1169/2011 (Reglamento de Información al Consumidor): Establece las bases para el etiquetado y suministro de información sobre productos alimenticios.<br>
+• Gesetz über den Verkehr mit Lebensmitteln, Tabakerzeugnissen, kosmetischen Mitteln und sonstigen Bedarfsgegenständen (Lebensmittel- und Futtermittelgesetzbuch – LFGB): Establece reglas específicas para la manipulación, procesamiento, producción y etiquetado de productos alimenticios.<br>
+• Lebensmittelhygiene-Verordnung (LMHV - Ordenanza sobre higiene de los alimentos): esta ordenanza se basa en el Reglamento (CE) nº 852/2004 y regula la higiene de los alimentos, incluida la manipulación, producción y distribución. <br>
+• Bundesamt für Verbraucherschutz und Lebensmittelsicherheit (BVL - Oficina Federal de Protección al Consumidor y Seguridad Alimentaria): Es la agencia responsable de la seguridad alimentaria en Alemania. Desempeña un papel en la evaluación de los riesgos asociados con los alimentos.<br>
+• Zollkodex der Union (UCC - Código Aduanero de la Unión): Aunque es un reglamento de la UE, se aplica directamente en Alemania y regula la importación y exportación de bienes, incluidos impuestos y aranceles.<br>
+• Pflanzenschutzgesetz (Ley de Protección Vegetal): Regula la comercialización y uso de productos fitosanitarios.<br>
+• Pflanzengesundheitsgesetz (Ley de Sanidad Vegetal): Tiene como objetivo proteger las plantas contra organismos nocivos.<br>
+• Bundesdatenschutzgesetz (BDSG): Ley Federal de Protección de Datos. Ha sido revisado para cumplir con el GDPR y complementa lo establecido en el reglamento europeo.<br>
+• Landesdatenschutzgesetze (LDSG): Cada Land (estado federal) en Alemania también tiene su propia ley de protección de datos para regular los asuntos que caen dentro de su jurisdicción.<br><br>
+
+Italia:<br>
+• Códice del Consumo – D.lgs. 206/2005: Este es el principal marco regulatorio para la protección del consumidor. Cubre temas como derechos del consumidor, garantías, publicidad y más.<br>
+• Normativa sulla comercializzazione delle sostanze alimentari (Reglamento sobre la comercialización de productos alimenticios) – D.lgs. 109/1992: Este decreto legislativo establece las normas relativas al etiquetado, presentación y publicidad de los productos alimenticios.<br>
+• Regolamento sulla qualità dei prodotti ortofrutticoli (Reglamento sobre la calidad de los productos hortícolas) – D.M. 13/03/1992: Este decreto ministerial establece las normas de calidad para las frutas y verduras vendidas en Italia.<br>
+• Normativa sulla sicurezza dei prodotti (Normas de seguridad de los productos) – D.lgs. 206/2005, Titolo II: Es el principal reglamento que se ocupa de la seguridad de los productos, incluidos los alimentos, comercializados en el mercado italiano.<br>
+• D.lgs. 116/92 (sobre protección fitosanitaria): Este decreto regula la protección de las plantas contra organismos nocivos y por tanto se aplica sobre la importación de frutas.<br>
+• D.lgs. 29/2017 (implementación del Reglamento (UE) n.º 1169/2011): Este decreto se ocupa del suministro de información sobre alimentos a los consumidores, en lo que respecta al etiquetado, presentación y publicidad.<br >
+• D.lgs. 30/2017 (implementación del Reglamento (CE) nº 852/2004): Este decreto se refiere a la higiene de los productos alimenticios.<br>
+• Codice in materia di protezione dei dati personali (Código de protección de datos personales): Esta es la principal ley nacional de protección de datos en Italia. Se ha adaptado para alinearse con las directivas de protección de datos de la UE y ha sufrido varios cambios a lo largo de los años.<br>
+• Decreto Legislativo N° 101/2018: Adoptado en 2018, este decreto modificó el Código en materia de protección de datos personales para hacerlo compatible con el RGPD. Aborda cómo se debe aplicar el RGPD en Italia e integra las disposiciones del RGPD en la legislación nacional.<br>
+• Garante per la proteccion dei personali: Esta es la autoridad de protección de datos en Italia, que supervisa el cumplimiento de la legislación de protección de datos y emite directrices y recomendaciones para ayudar a las empresas y consumidores a cumplir con la ley.<br><br>
+
+Cualquier litigio relacionado con las presentes Condiciones Generales o con las transacciones de venta concluidas en aplicación de las mismas estará sujeto a la jurisdicción del tribunal del lugar de residencia del demandado o, a elección del demandante, del lugar de entrega efectiva del producto. Si el Comprador es el demandante, también podrá someter el asunto al tribunal competente del lugar donde residía en el momento de la celebración del contrato o del lugar donde se produjo el hecho dañoso.<br><br>
+
+Tenga en cuenta que estas condiciones se especifican aquí principalmente por motivos legales. Siempre encontramos soluciones con nuestros clientes cuando surge un problema, ¡ésta es la ventaja de trabajar con alegría y buen humor! :)
+"
+
