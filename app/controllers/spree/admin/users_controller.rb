@@ -33,8 +33,8 @@ module Spree
             @user.spree_roles = roles.compact_blank.collect{ |r| Spree::Role.find(r) }
           end
 
-          flash.now[:success] = Spree.t(:created_successfully)
-          render :edit
+          flash[:success] = Spree.t(:created_successfully)
+          redirect_to edit_admin_user_path(@user)
         else
           render :new
         end
@@ -50,9 +50,11 @@ module Spree
             @user.spree_roles = roles.compact_blank.collect{ |r| Spree::Role.find(r) }
           end
 
-          flash.now[:success] = update_message
+          flash[:success] = update_message
+          redirect_to edit_admin_user_path(@user)
+        else
+          render :edit
         end
-        render :edit
       end
 
       protected
