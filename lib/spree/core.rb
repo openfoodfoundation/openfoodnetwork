@@ -31,7 +31,6 @@ require 'spree/core/engine'
 require 'spree/i18n'
 require 'spree/money'
 
-require 'spree/core/delegate_belongs_to'
 require 'spree/core/permalinks'
 require 'spree/core/token_resource'
 require 'spree/core/product_duplicator'
