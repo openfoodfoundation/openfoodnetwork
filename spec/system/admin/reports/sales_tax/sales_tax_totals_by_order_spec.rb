@@ -104,6 +104,8 @@ describe "Sales Tax Totals By order" do
     end
 
     it "generates the report" do
+      # Check we can access the report as user would do.
+      # For speed sake we'll use `visit_sales_tax_totals_by_order` helper for the rest of the spec
       login_as admin
       visit admin_reports_path
       click_on "Sales Tax Totals By Order"
@@ -161,14 +163,13 @@ describe "Sales Tax Totals By order" do
     before do
       state_tax_rate.update!({ included_in_price: true })
       country_tax_rate.update!({ included_in_price: true })
+    end
 
+    it "generates the report" do
       order.recreate_all_fees!
       OrderWorkflow.new(order).complete!
-    end
-    it "generates the report" do
-      login_as admin
-      visit admin_reports_path
-      click_on "Sales Tax Totals By Order"
+
+      visit_sales_tax_totals_by_order
 
       expect(page).to have_button("Go")
       click_on "Go"
@@ -334,9 +335,7 @@ describe "Sales Tax Totals By order" do
       order2.recreate_all_fees!
       OrderWorkflow.new(order2).complete!
 
-      login_as admin
-      visit admin_reports_path
-      click_on "Sales Tax Totals By Order"
+      visit_sales_tax_totals_by_order
     end
 
     it "should load all the orders" do
@@ -465,6 +464,14 @@ describe "Sales Tax Totals By order" do
       it_behaves_like "reports generated as", "Spreadsheet", "xlsx", true
       it_behaves_like "reports generated as", "PDF", "pdf", true
     end
+  end
+
+  def visit_sales_tax_totals_by_order
+    login_as admin
+    visit admin_report_path(
+      report_type: :sales_tax,
+      report_subtype: :sales_tax_totals_by_order
+    )
   end
 
   def generate_report

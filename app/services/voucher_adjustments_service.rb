@@ -5,6 +5,10 @@ class VoucherAdjustmentsService
     @order = order
   end
 
+  # The tax part of the voucher is stored as explained below:
+  # * tax included in price: included_tax field of the voucher adjustment
+  # * tax exckuded from price: as an extra voucher adjustment, with label starting by "Tax "
+  #
   def update
     return if @order.nil?
 
@@ -31,6 +35,21 @@ class VoucherAdjustmentsService
       adjustment.save
     end
   end
+
+  def voucher_included_tax
+    return 0.0 if @order.voucher_adjustments.empty?
+
+    # We only support one voucher per order for now
+    @order.voucher_adjustments.first.included_tax
+  end
+
+  def voucher_excluded_tax
+    return 0.0 if @order.voucher_adjustments.voucher_tax.empty?
+
+    @order.voucher_adjustments.voucher_tax.first.amount
+  end
+
+  private
 
   def handle_tax_excluded_from_price(voucher)
     voucher_rate = voucher.rate(@order)
@@ -64,6 +83,14 @@ class VoucherAdjustmentsService
     # Update the amount if tax adjustment already exist, create if not
     tax_adjustment = @order.adjustments.find_or_initialize_by(adjustment_attributes)
     tax_adjustment.amount = tax_amount
+
+    # Add metada so we know which voucher adjustment is Tax related
+    tax_adjustment.metadata ||= AdjustmentMetadata.new(
+      enterprise: adjustment.originator.enterprise,
+      fee_name: "Tax",
+      fee_type: "Voucher"
+    )
+
     tax_adjustment.save
   end
 

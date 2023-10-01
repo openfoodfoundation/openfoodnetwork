@@ -70,6 +70,9 @@ module Spree
     scope :credit, -> { where('amount < 0') }
     scope :return_authorization, -> { where(originator_type: "Spree::ReturnAuthorization") }
     scope :voucher, -> { where(originator_type: "Voucher") }
+    scope :voucher_tax, -> {
+      voucher.joins(:metadata).where(metadata: { fee_name: "Tax", fee_type: "Voucher" })
+    }
     scope :non_voucher, -> { where.not(originator_type: "Voucher") }
     scope :inclusive, -> { where(included: true) }
     scope :additional, -> { where(included: false) }
