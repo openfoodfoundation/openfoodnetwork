@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
+ActiveRecord::Schema[7.0].define(version: 20231002000137116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -1132,6 +1132,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   add_foreign_key "exchanges", "enterprises", column: "receiver_id", name: "exchanges_receiver_id_fk"
   add_foreign_key "exchanges", "enterprises", column: "sender_id", name: "exchanges_sender_id_fk"
   add_foreign_key "exchanges", "order_cycles", name: "exchanges_order_cycle_id_fk"
+  add_foreign_key "inventory_items", "enterprises"
+  add_foreign_key "inventory_items", "spree_variants", column: "variant_id"
   add_foreign_key "invoices", "spree_orders", column: "order_id"
   add_foreign_key "order_cycle_schedules", "order_cycles", name: "oc_schedules_order_cycle_id_fk"
   add_foreign_key "order_cycle_schedules", "schedules", name: "oc_schedules_schedule_id_fk"
@@ -1141,6 +1143,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   add_foreign_key "proxy_orders", "order_cycles", name: "proxy_orders_order_cycle_id_fk"
   add_foreign_key "proxy_orders", "spree_orders", column: "order_id", name: "order_id_fk"
   add_foreign_key "proxy_orders", "subscriptions", name: "proxy_orders_subscription_id_fk"
+  add_foreign_key "report_rendering_options", "spree_users", column: "user_id"
   add_foreign_key "spree_addresses", "spree_countries", column: "country_id", name: "spree_addresses_country_id_fk"
   add_foreign_key "spree_addresses", "spree_states", column: "state_id", name: "spree_addresses_state_id_fk"
   add_foreign_key "spree_inventory_units", "spree_orders", column: "order_id", name: "spree_inventory_units_order_id_fk", on_delete: :cascade
@@ -1169,8 +1172,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   add_foreign_key "spree_roles_users", "spree_users", column: "user_id", name: "spree_roles_users_user_id_fk"
   add_foreign_key "spree_shipments", "spree_addresses", column: "address_id", name: "spree_shipments_address_id_fk"
   add_foreign_key "spree_shipments", "spree_orders", column: "order_id", name: "spree_shipments_order_id_fk", on_delete: :cascade
+  add_foreign_key "spree_shipments", "spree_stock_locations", column: "stock_location_id"
+  add_foreign_key "spree_shipping_method_categories", "spree_shipping_categories", column: "shipping_category_id"
+  add_foreign_key "spree_shipping_method_categories", "spree_shipping_methods", column: "shipping_method_id"
   add_foreign_key "spree_state_changes", "spree_users", column: "user_id", name: "spree_state_changes_user_id_fk"
   add_foreign_key "spree_states", "spree_countries", column: "country_id", name: "spree_states_country_id_fk"
+  add_foreign_key "spree_stock_items", "spree_stock_locations", column: "stock_location_id"
+  add_foreign_key "spree_stock_items", "spree_variants", column: "variant_id"
+  add_foreign_key "spree_stock_locations", "spree_countries", column: "country_id"
+  add_foreign_key "spree_stock_locations", "spree_states", column: "state_id"
+  add_foreign_key "spree_stock_movements", "spree_stock_items", column: "stock_item_id"
   add_foreign_key "spree_tax_rates", "spree_tax_categories", column: "tax_category_id", name: "spree_tax_rates_tax_category_id_fk"
   add_foreign_key "spree_tax_rates", "spree_zones", column: "zone_id", name: "spree_tax_rates_zone_id_fk"
   add_foreign_key "spree_taxons", "spree_taxonomies", column: "taxonomy_id", name: "spree_taxons_taxonomy_id_fk"
@@ -1190,6 +1201,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_201542) do
   add_foreign_key "subscriptions", "spree_addresses", column: "ship_address_id", name: "subscriptions_ship_address_id_fk"
   add_foreign_key "subscriptions", "spree_payment_methods", column: "payment_method_id", name: "subscriptions_payment_method_id_fk"
   add_foreign_key "subscriptions", "spree_shipping_methods", column: "shipping_method_id", name: "subscriptions_shipping_method_id_fk"
+  add_foreign_key "tag_rules", "enterprises"
   add_foreign_key "variant_overrides", "enterprises", column: "hub_id", name: "variant_overrides_hub_id_fk"
   add_foreign_key "variant_overrides", "spree_variants", column: "variant_id", name: "variant_overrides_variant_id_fk"
   add_foreign_key "vouchers", "enterprises"
