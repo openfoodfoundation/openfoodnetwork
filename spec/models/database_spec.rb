@@ -60,6 +60,11 @@ RSpec.describe "Database" do
     puts migrations.join("\n")
     puts "\nTo disable this warning, add the class name(s) of the model(s) to models_todo " \
          "in #{__FILE__}"
+
+    return if ENV.fetch("OFN_WRITE_FOREIGN_KEY_MIGRATIONS", false)
+
+    puts "Migrations have not been written to disk. To write migrations to disk, please " \
+         "add OFN_WRITE_FOREIGN_KEY_MIGRATIONS=true to the file .env.test.local"
   end
 
   def process_association(model_class, association, previous_models)
@@ -114,8 +119,10 @@ RSpec.describe "Database" do
       end
     MIGRATION
 
-    File.open(migration_file_name, 'w') do |file|
-      file.puts migration
+    if ENV.fetch("OFN_WRITE_FOREIGN_KEY_MIGRATIONS", false)
+      File.open(migration_file_name, 'w') do |file|
+        file.puts migration
+      end
     end
     migration
   end
