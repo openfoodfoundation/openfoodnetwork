@@ -3,10 +3,13 @@
 require 'spec_helper'
 
 RSpec.describe "Database" do
-  excluded_models = ["Gateway", "PayPalExpress", "Bogus", "BogusSimple"].freeze
-
+  let(:models_todo) {
+    ["Spree::CreditCard", "Spree::Adjustment",
+     "StripeAccount", "ColumnPreference",
+     "Spree::LineItem", "Spree::ShippingMethod",
+     "Spree::ShippingRate"].freeze
+  }
   it "should have foreign keys for models with a belongs_to relationship" do
-    pending "Consider adding foreign keys"
     Rails.application.eager_load!
     model_classes = filter_model_classes
 
@@ -18,12 +21,14 @@ RSpec.describe "Database" do
   def filter_model_classes
     Dir.glob(Rails.root.join('app/models/**/*.rb').to_s)
       .map { |file| File.basename(file, '.rb').camelize }
-      .reject { |model| excluded_models.include?(model) }
   end
 
   def generate_migrations(model_classes)
     migrations = []
     previous_models = {}
+    filter = lambda { |model| models_todo.include?(model) }
+    pending_models = model_classes.select(&filter)
+    model_classes.reject!(&filter)
 
     ActiveRecord::Base.descendants.each do |model_class|
       next unless model_classes.include?(model_class.name.demodulize)
@@ -38,9 +43,12 @@ RSpec.describe "Database" do
       puts "Foreign key(s) appear to be absent from the database. " \
            "You can add it/them using the following migration(s):"
       puts migrations.join("\n")
-      puts "To disable this warning, add the class name(s) of the model(s) to EXCLUDED_MODELS " \
-           "in /spec/models/missing_foreign_keys_spec.rb"
+      puts "\nTo disable this warning, add the class name(s) of the model(s) to models_todo " \
+           "in #{__FILE__}"
     end
+
+    puts "The following models are marked as todo in #{__FILE__}:"
+    puts pending_models.join(", ")
 
     migrations
   end
