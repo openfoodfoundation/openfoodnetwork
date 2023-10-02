@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require './spec/system/admin/subscriptions/helper'
+require 'system_helper'
 
 describe 'Subscriptions' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
+  include SubscriptionHelper
 
   context "as an enterprise user" do
     let!(:user) { create(:user) }
