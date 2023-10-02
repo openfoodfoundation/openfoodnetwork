@@ -18,8 +18,8 @@ describe '
   end
 
   let(:order) do
-    create(:order_with_totals_and_distribution, user: user, distributor: distributor,
-                                                order_cycle: order_cycle, state: 'complete',
+    create(:order_with_totals_and_distribution, user:, distributor:,
+                                                order_cycle:, state: 'complete',
                                                 payment_state: 'balance_due')
   end
   let(:customer) { order.customer }
@@ -28,7 +28,7 @@ describe '
     # ensure order has a payment to capture
     order.finalize!
 
-    create :check_payment, order: order, amount: order.total
+    create :check_payment, order:, amount: order.total
   end
 
   def new_order_with_distribution(distributor, order_cycle)
@@ -113,7 +113,7 @@ describe '
   end
 
   context "when creating an order with a customer-only" do
-    let!(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+    let!(:order) { create(:order, distributor:, order_cycle:) }
     let(:customer2) { create(:customer, enterprise: distributor) }
     let(:customer3) { create(:customer, enterprise: distributor) }
 
@@ -922,8 +922,8 @@ describe '
 
       context "when an incomplete order has some line items with insufficient stock" do
         let(:incomplete_order) do
-          create(:order_with_line_items, user: user, distributor: distributor,
-                                         order_cycle: order_cycle)
+          create(:order_with_line_items, user:, distributor:,
+                                         order_cycle:)
         end
 
         it "displays the out of stock line items and they can be deleted from the order" do
@@ -1034,8 +1034,8 @@ describe '
     describe "for order states" do
       context "complete" do
         let!(:order1) {
-          create(:order_with_totals_and_distribution, user: user, distributor:,
-                                                      order_cycle: order_cycle, state: 'complete',
+          create(:order_with_totals_and_distribution, user:, distributor:,
+                                                      order_cycle:, state: 'complete',
                                                       payment_state: 'balance_due',
                                                       customer_id: customer.id)
         }
@@ -1104,8 +1104,8 @@ describe '
 
       context "resumed" do
         let!(:order2) {
-          create(:order_with_totals_and_distribution, user: user, distributor:,
-                                                      order_cycle: order_cycle, state: 'resumed',
+          create(:order_with_totals_and_distribution, user:, distributor:,
+                                                      order_cycle:, state: 'resumed',
                                                       payment_state: 'balance_due')
         }
         before do
@@ -1120,8 +1120,8 @@ describe '
 
       context "canceled" do
         let!(:order3) {
-          create(:order_with_totals_and_distribution, user: user, distributor:,
-                                                      order_cycle: order_cycle, state: 'canceled',
+          create(:order_with_totals_and_distribution, user:, distributor:,
+                                                      order_cycle:, state: 'canceled',
                                                       payment_state: 'balance_due')
         }
         before do
@@ -1136,7 +1136,7 @@ describe '
 
       context "cart" do
         let!(:order_empty) {
-          create(:order_with_line_items, user: user, distributor:, order_cycle: order_cycle,
+          create(:order_with_line_items, user:, distributor:, order_cycle:,
                                          line_items_count: 0)
         }
         before do
@@ -1151,8 +1151,8 @@ describe '
 
       context "payment" do
         let!(:order4) do
-          create(:order_ready_for_payment, user: user, distributor: distributor,
-                                           order_cycle: order_cycle,
+          create(:order_ready_for_payment, user:, distributor:,
+                                           order_cycle:,
                                            payment_state: 'balance_due')
         end
         before do

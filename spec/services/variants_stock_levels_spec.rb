@@ -6,7 +6,7 @@ describe VariantsStockLevels do
   let(:order) { create(:order) }
 
   let!(:line_item) do
-    create(:line_item, order: order, variant: variant_in_the_order, quantity: 2, max_quantity: 3)
+    create(:line_item, order:, variant: variant_in_the_order, quantity: 2, max_quantity: 3)
   end
   let!(:variant_in_the_order) { create(:variant) }
   let!(:variant_not_in_the_order) { create(:variant) }

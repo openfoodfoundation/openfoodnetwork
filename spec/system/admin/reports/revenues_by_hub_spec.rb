@@ -9,17 +9,17 @@ describe "Revenues By Hub Reports" do
     create(
       :completed_order_with_totals,
       completed_at: 2.days.ago,
-      order_cycle: order_cycle,
+      order_cycle:,
       distributor: create(:enterprise, name: "Hub 1",
                                        owner: create(:user, email: "email@email.com")),
     )
   end
   let(:order_cycle) { create(:simple_order_cycle) }
-  let(:product) { create(:product, supplier: supplier) }
+  let(:product) { create(:product, supplier:) }
   let(:supplier) { create(:supplier_enterprise) }
 
   before do
-    create(:line_item_with_shipment, order: order, product: product)
+    create(:line_item_with_shipment, order:, product:)
 
     login_as_admin
     visit main_app.admin_report_path(report_type: 'revenues_by_hub')

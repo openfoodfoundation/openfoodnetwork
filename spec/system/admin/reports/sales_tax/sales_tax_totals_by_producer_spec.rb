@@ -27,8 +27,8 @@ describe "Sales Tax Totals By Producer" do
   let!(:state_zone){ create(:zone_with_state_member) }
   let!(:country_zone){ create(:zone_with_member) }
   let!(:tax_category){ create(:tax_category) }
-  let!(:state_tax_rate){ create(:tax_rate, zone: state_zone, tax_category: tax_category) }
-  let!(:country_tax_rate){ create(:tax_rate, zone: country_zone, tax_category: tax_category) }
+  let!(:state_tax_rate){ create(:tax_rate, zone: state_zone, tax_category:) }
+  let!(:country_tax_rate){ create(:tax_rate, zone: country_zone, tax_category:) }
   let!(:ship_address){ create(:ship_address) }
 
   let!(:variant){ create(:variant) }
@@ -38,7 +38,7 @@ describe "Sales Tax Totals By Producer" do
   let!(:payment_method){ create(:payment_method, :flat_rate) }
   let!(:shipping_method){ create(:shipping_method, :flat_rate) }
 
-  let!(:order){ create(:order_with_distributor, distributor: distributor) }
+  let!(:order){ create(:order_with_distributor, distributor:) }
   let!(:order_cycle){
     create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
                                 variants: [variant])
@@ -63,7 +63,7 @@ describe "Sales Tax Totals By Producer" do
 
   context 'added tax' do
     before do
-      order.line_items.create({ variant: variant, quantity: 1, price: 100 })
+      order.line_items.create({ variant:, quantity: 1, price: 100 })
       order.update!({
                       order_cycle_id: order_cycle.id,
                       ship_address_id: ship_address.id
@@ -125,7 +125,7 @@ describe "Sales Tax Totals By Producer" do
       state_tax_rate.update!({ included_in_price: true })
       country_tax_rate.update!({ included_in_price: true })
 
-      order.line_items.create({ variant: variant, quantity: 1, price: 100 })
+      order.line_items.create({ variant:, quantity: 1, price: 100 })
       order.update!({
                       order_cycle_id: order_cycle.id,
                       ship_address_id: ship_address.id
@@ -182,7 +182,7 @@ describe "Sales Tax Totals By Producer" do
   end
 
   context 'should filter by customer' do
-    let!(:order2){ create(:order_with_distributor, distributor: distributor) }
+    let!(:order2){ create(:order_with_distributor, distributor:) }
     let!(:customer1){ create(:customer, enterprise: create(:enterprise), user: create(:user)) }
     let!(:customer2){ create(:customer, enterprise: create(:enterprise), user: create(:user)) }
     let!(:customer_email_dropdown_selector){ "#s2id_q_customer_id_in" }
@@ -304,7 +304,7 @@ describe "Sales Tax Totals By Producer" do
     }
 
     before do
-      order.line_items.create({ variant: variant, quantity: 1, price: 100 })
+      order.line_items.create({ variant:, quantity: 1, price: 100 })
       order.update!({
                       order_cycle_id: order_cycle.id,
                       ship_address_id: customer1.bill_address_id,
@@ -314,7 +314,7 @@ describe "Sales Tax Totals By Producer" do
         break unless order.next!
       end
 
-      order2.line_items.create({ variant: variant, quantity: 1, price: 200 })
+      order2.line_items.create({ variant:, quantity: 1, price: 200 })
       order2.update!({
                        order_cycle_id: order_cycle.id,
                        ship_address_id: customer2.bill_address_id,

@@ -7,10 +7,10 @@ module WebHelper
 
     visible = opts.key?(:visible) ? opts[:visible] : true
 
-    element = page.all(selector, visible: visible).first
+    element = page.all(selector, visible:).first
     expect(element.value).to eq(opts[:with]) if element && opts.key?(:with)
 
-    have_selector selector, visible: visible
+    have_selector selector, visible:
   end
 
   def select_by_value(value, options = {})

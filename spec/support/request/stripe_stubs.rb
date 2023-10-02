@@ -32,7 +32,7 @@ module StripeStubs
   def stub_payment_method_attach_request(payment_method: "pm_123", customer: "cus_A123")
     stub_request(:post,
                  "https://api.stripe.com/v1/payment_methods/#{payment_method}/attach")
-      .with(body: { customer: customer })
+      .with(body: { customer: })
       .to_return(hub_payment_method_response_mock({ pm_id: payment_method }))
   end
 
@@ -44,7 +44,7 @@ module StripeStubs
   # Stubs the customers call to both the main stripe account and the connected account
   def stub_customers_post_request(email:, response: {}, stripe_account_header: false)
     stub = stub_request(:post, "https://api.stripe.com/v1/customers")
-      .with(body: { email: email })
+      .with(body: { email: })
     stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
     stub.to_return(customers_response_mock(response))
   end
@@ -174,7 +174,7 @@ module StripeStubs
       body: JSON.generate(
         object: "list",
         has_more: false,
-        data: [{ id: payment_method, card: { fingerprint: fingerprint } }],
+        data: [{ id: payment_method, card: { fingerprint: } }],
       ),
     }
   end

@@ -171,7 +171,7 @@ describe '
       let!(:product) { create(:product) }
       let(:variant) { product.variants.first }
       let(:hub) { create(:distributor_enterprise) }
-      let!(:override) { create(:variant_override, variant: variant, hub: hub ) }
+      let!(:override) { create(:variant_override, variant:, hub: ) }
       let(:variant_overrides_tip) {
         "This variant has %d override(s)" % 1
       }
@@ -269,8 +269,8 @@ describe '
     end
 
     context "handle the 'on_demand' variant case creation" do
-      let(:v1) { create(:variant, product: product, on_hand: 4) }
-      let(:v2) { create(:variant, product: product, on_demand: true) }
+      let(:v1) { create(:variant, product:, on_hand: 4) }
+      let(:v2) { create(:variant, product:, on_demand: true) }
 
       before do
         product.variants << v1

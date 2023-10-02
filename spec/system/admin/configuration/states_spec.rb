@@ -30,7 +30,7 @@ describe "States" do
   end
 
   context "admin visiting states listing" do
-    let!(:state) { Spree::State.create(name: 'Alabama', country: country) }
+    let!(:state) { Spree::State.create(name: 'Alabama', country:) }
 
     it "should correctly display the states" do
       visit spree.admin_country_states_path(country)

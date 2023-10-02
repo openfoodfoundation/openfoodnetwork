@@ -14,14 +14,14 @@ describe '
   let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
 
   let!(:order) {
-    create(:order_with_totals_and_distribution, user: user, distributor: distributor,
-                                                order_cycle: order_cycle, state: 'complete',
+    create(:order_with_totals_and_distribution, user:, distributor:,
+                                                order_cycle:, state: 'complete',
                                                 payment_state: 'balance_due')
   }
   let!(:tax_category) { create(:tax_category, name: 'GST') }
   let!(:tax_rate) {
     create(:tax_rate, name: 'GST', calculator: build(:calculator, preferred_amount: 10),
-                      zone: create(:zone_with_member), tax_category: tax_category)
+                      zone: create(:zone_with_member), tax_category:)
   }
 
   let!(:tax_category_included) { create(:tax_category, name: 'TVA 20%', is_default: true) }
@@ -33,7 +33,7 @@ describe '
 
   before do
     order.finalize!
-    create(:check_payment, order: order, amount: order.total)
+    create(:check_payment, order:, amount: order.total)
     login_as_admin
     visit spree.admin_orders_path
   end
@@ -124,7 +124,7 @@ describe '
   it "modifying taxed adjustments on an order" do
     # Given a taxed adjustment
     adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order,
-                                     amount: 110, tax_category: tax_category, order: order)
+                                     amount: 110, tax_category:, order:)
 
     # When I go to the adjustments page for the order
     page.find('td.actions a.icon-edit').click
@@ -145,7 +145,7 @@ describe '
   it "modifying an untaxed adjustment on an order" do
     # Given an untaxed adjustment
     adjustment = create(:adjustment, label: "Extra Adjustment", adjustable: order,
-                                     amount: 110, tax_category: nil, order: order)
+                                     amount: 110, tax_category: nil, order:)
 
     # When I go to the adjustments page for the order
     page.find('td.actions a.icon-edit').click
@@ -167,7 +167,7 @@ describe '
     # Given a taxed adjustment
     let!(:adjustment) {
       create(:adjustment, label: "Extra Adjustment", adjustable: order,
-                          amount: 110, tax_category: tax_category, order: order)
+                          amount: 110, tax_category:, order:)
     }
     before do
       order.cancel!

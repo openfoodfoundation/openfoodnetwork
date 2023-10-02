@@ -801,7 +801,7 @@ describe '
             }
 
             before do
-              distributor1.update(custom_tab: custom_tab)
+              distributor1.update(custom_tab:)
               visit edit_admin_enterprise_path(distributor1)
               within(".side_menu") do
                 click_link "White Label"
@@ -842,7 +842,7 @@ describe '
 
   context "changing package" do
     let!(:owner) { create(:user) }
-    let!(:enterprise) { create(:distributor_enterprise, owner: owner, is_primary_producer: true) }
+    let!(:enterprise) { create(:distributor_enterprise, owner:, is_primary_producer: true) }
     before do
       login_as owner
     end

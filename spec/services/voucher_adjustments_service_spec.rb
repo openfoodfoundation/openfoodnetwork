@@ -8,7 +8,7 @@ describe VoucherAdjustmentsService do
 
     context 'with a flat rate voucher' do
       let(:voucher) do
-        create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+        create(:voucher_flat_rate, code: 'new_code', enterprise:, amount: 10)
       end
 
       context 'when voucher covers the order total' do
@@ -168,7 +168,7 @@ describe VoucherAdjustmentsService do
 
     context 'with a percentage rate voucher' do
       let(:voucher) do
-        create(:voucher_percentage_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+        create(:voucher_percentage_rate, code: 'new_code', enterprise:, amount: 10)
       end
       let(:adjustment) { order.voucher_adjustments.first }
       let(:tax_adjustment) { order.voucher_adjustments.second }
@@ -177,7 +177,7 @@ describe VoucherAdjustmentsService do
         subject { order.voucher_adjustments.first }
 
         let(:voucher) do
-          create(:voucher_percentage_rate, code: 'new_code', enterprise: enterprise, amount: 100)
+          create(:voucher_percentage_rate, code: 'new_code', enterprise:, amount: 100)
         end
         let(:order) { create(:order_with_totals) }
 
