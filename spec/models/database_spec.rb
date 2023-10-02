@@ -88,14 +88,38 @@ RSpec.describe "Database" do
   def generate_migration(model_class, _association, foreign_key_table_name, foreign_key_column)
     migration_name = "add_foreign_key_to_#{model_class.table_name}_#{foreign_key_table_name}"
     migration_class_name = migration_name.camelize
+    migration_file_name = "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S%L')}_" \
+                          "#{migration_name}.rb"
+    orphaned_records_query = generate_orphaned_records_query(model_class, foreign_key_table_name,
+                                                             foreign_key_column)
 
-    <<~MIGRATION
+    migration = <<~MIGRATION
+      # Orphaned records can be found before running this migration with the following SQL:
+
+      #{orphaned_records_query}
+
       class #{migration_class_name} < ActiveRecord::Migration[6.0]
         def change
           add_foreign_key :#{model_class.table_name}, :#{foreign_key_table_name}, column: :#{foreign_key_column}
         end
       end
     MIGRATION
+
+    File.open(migration_file_name, 'w') do |file|
+      file.puts migration
+    end
+    migration
+  end
+
+  def generate_orphaned_records_query(model_class, foreign_key_table_name, foreign_key_column)
+    <<~SQL # rubocop:disable Rails/SquishedSQLHeredocs # Using squish deletes the newlines
+      # SELECT COUNT(*)
+      # FROM #{model_class.table_name}
+      # LEFT JOIN #{foreign_key_table_name}
+      #   ON #{model_class.table_name}.#{foreign_key_column} = #{foreign_key_table_name}.id
+      # WHERE #{foreign_key_table_name}.id IS NULL
+      #   AND #{model_class.table_name}.#{foreign_key_column} IS NOT NULL
+    SQL
   end
 
   def duplicate_migration?(model_class, foreign_key_table_name, previous_models)
