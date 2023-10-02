@@ -20,7 +20,12 @@ RSpec.describe "Database" do
 
   def filter_model_classes
     Dir.glob(Rails.root.join('app/models/**/*.rb').to_s)
-      .map { |file| File.basename(file, '.rb').camelize }
+      .map do |file|
+        relative_path = Pathname.new(file).relative_path_from(Rails.root.join('app/models')).to_s
+        subdirectory = File.dirname(relative_path)
+        base_name = File.basename(file, '.rb').camelize
+        subdirectory == "." ? base_name : "#{subdirectory.camelize}::#{base_name}"
+      end
   end
 
   def generate_migrations(model_classes)
@@ -31,7 +36,7 @@ RSpec.describe "Database" do
     model_classes.reject!(&filter)
 
     ActiveRecord::Base.descendants.each do |model_class|
-      next unless model_classes.include?(model_class.name.demodulize)
+      next unless model_classes.include?(model_class.name)
 
       model_class.reflect_on_all_associations(:belongs_to).each do |association|
         migration = process_association(model_class, association, previous_models)
