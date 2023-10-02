@@ -277,6 +277,29 @@ module Reporting
               allow(subject).to receive(:params).and_return(order_cycle_id: oc1.id)
               expect(subject.filter(orders)).to eq([order1])
             end
+
+            it "filters by date range using client's time zone" do
+              time_zone = ActiveSupport::TimeZone["Berlin"].formatted_offset
+              completed_at1 = DateTime.parse("2023/10/03 18:30")
+              completed_at2 = DateTime.parse("2023/10/03 19:30")
+
+              completed_at1 = completed_at1.change(offset: time_zone)
+              completed_at2 = completed_at2.change(offset: time_zone)
+
+              o1 = create(:order, completed_at: completed_at1)
+              o2 = create(:order, completed_at: completed_at2)
+
+              allow(subject).to receive(:params).and_return(
+                {
+                  q: {
+                    completed_at_gt: "2023/10/03 18:00",
+                    completed_at_lt: "2023/10/03 19:00"
+                  },
+                  time_zone: "Berlin"
+                }
+              )
+              expect(subject.filter(orders)).to eq([o1])
+            end
           end
         end
       end

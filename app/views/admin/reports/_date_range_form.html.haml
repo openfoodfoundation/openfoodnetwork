@@ -8,3 +8,7 @@
     %span.range-divider
       %i.icon-arrow-right
     = f.text_field "#{field}_lt", :class => 'datetimepicker datepicker-to', :placeholder => t(:stop), data: { controller: "flatpickr", "flatpickr-enable-time-value": true, "flatpickr-default-date-value": "endOfDay" }
+= hidden_field_tag "time_zone"
+:javascript
+  document.querySelector("input[name='time_zone']").value = Intl.DateTimeFormat().resolvedOptions().timeZone
+    

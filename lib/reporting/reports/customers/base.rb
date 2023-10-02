@@ -55,6 +55,10 @@ module Reporting
 
           return orders if min.blank? || max.blank?
 
+          if client_time_zone.present?
+            min = convert_to_client_time_zone(min)
+            max = convert_to_client_time_zone(max)
+          end
           orders.where(completed_at: [min..max])
         end
 
@@ -80,6 +84,18 @@ module Reporting
 
         def last_completed_order_date(orders)
           last_completed_order(orders).completed_at&.to_date
+        end
+
+        def convert_to_client_time_zone(datetime)
+          DateTime.parse(datetime).change(offset: utc_offset)
+        end
+
+        def client_time_zone
+          ActiveSupport::TimeZone[params[:time_zone] || ""]
+        end
+
+        def utc_offset
+          ActiveSupport::TimeZone[client_time_zone].formatted_offset
         end
       end
     end
