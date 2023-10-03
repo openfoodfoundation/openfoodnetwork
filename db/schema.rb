@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20231002000137116) do
+ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -1157,6 +1157,7 @@ ActiveRecord::Schema[7.0].define(version: 20231002000137116) do
   add_foreign_key "spree_orders", "order_cycles", name: "spree_orders_order_cycle_id_fk"
   add_foreign_key "spree_orders", "spree_addresses", column: "bill_address_id", name: "spree_orders_bill_address_id_fk"
   add_foreign_key "spree_orders", "spree_addresses", column: "ship_address_id", name: "spree_orders_ship_address_id_fk"
+  add_foreign_key "spree_orders", "spree_users", column: "created_by_id"
   add_foreign_key "spree_orders", "spree_users", column: "user_id", name: "spree_orders_user_id_fk"
   add_foreign_key "spree_payments", "spree_orders", column: "order_id", name: "spree_payments_order_id_fk"
   add_foreign_key "spree_payments", "spree_payment_methods", column: "payment_method_id", name: "spree_payments_payment_method_id_fk"
