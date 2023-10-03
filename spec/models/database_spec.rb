@@ -68,7 +68,7 @@ RSpec.describe "Database" do
   end
 
   def process_association(model_class, association)
-    return if association.options[:polymorphic]
+    return if association.options[:polymorphic] || association.options[:optional]
 
     foreign_key_table_name = determine_foreign_key_table_name(model_class, association)
     foreign_key_column = association.options[:foreign_key] || "#{association.name}_id"
