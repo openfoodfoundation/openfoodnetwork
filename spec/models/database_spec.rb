@@ -9,6 +9,7 @@ RSpec.describe "Database" do
      "Spree::LineItem", "Spree::ShippingMethod",
      "Spree::ShippingRate"].freeze
   }
+
   it "should have foreign keys for models with a belongs_to relationship" do
     Rails.application.eager_load!
     model_classes = filter_model_classes
@@ -70,7 +71,7 @@ RSpec.describe "Database" do
     return if association.options[:polymorphic]
 
     foreign_key_table_name = determine_foreign_key_table_name(model_class, association)
-    foreign_key_column = "#{association.options[:foreign_key] || association.name}_id"
+    foreign_key_column = association.options[:foreign_key] || "#{association.name}_id"
     foreign_keys = model_class.connection.foreign_keys(model_class.table_name)
 
     # Check if there is a foreign key that already exists for the column
@@ -79,7 +80,7 @@ RSpec.describe "Database" do
                 fk.to_table == foreign_key_table_name
               }
 
-    generate_migration(model_class, association, foreign_key_table_name, foreign_key_column)
+    generate_migration(model_class, foreign_key_table_name, foreign_key_column)
   end
 
   def determine_foreign_key_table_name(model_class, association)
@@ -99,7 +100,7 @@ RSpec.describe "Database" do
     foreign_key_table_name
   end
 
-  def generate_migration(model_class, _association, foreign_key_table_name, foreign_key_column)
+  def generate_migration(model_class, foreign_key_table_name, foreign_key_column)
     migration_name = "add_foreign_key_to_#{model_class.table_name}_" \
                      "#{foreign_key_table_name}_#{foreign_key_column}"
     migration_class_name = migration_name.camelize
