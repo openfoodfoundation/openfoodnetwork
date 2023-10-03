@@ -254,7 +254,7 @@ module Reporting
                   q: {
                     completed_at_gt: 1.day.before(o2.completed_at),
                     completed_at_lt: 1.day.after(o2.completed_at)
-                 }
+                  }
                 )
                 expect(subject.filter(orders)).to eq([o2])
               end
