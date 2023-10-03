@@ -103,7 +103,12 @@ RSpec.describe "Database" do
     migration_name = "add_foreign_key_to_#{model_class.table_name}_" \
                      "#{foreign_key_table_name}_#{foreign_key_column}"
     migration_class_name = migration_name.camelize
-    migration_file_name = "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S%L')}_" \
+    millisecond_timestamp = Time.now.utc.strftime('%Y%m%d%H%M%S%L')
+    if millisecond_timestamp == @last_timestamp
+      millisecond_timestamp.to_i += 1
+    end
+    @last_timestamp = millisecond_timestamp
+    migration_file_name = "db/migrate/#{millisecond_timestamp}_" \
                           "#{migration_name}.rb"
     orphaned_records_query = generate_orphaned_records_query(model_class, foreign_key_table_name,
                                                              foreign_key_column)
