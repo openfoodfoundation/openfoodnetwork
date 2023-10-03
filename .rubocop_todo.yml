@@ -12,7 +12,7 @@
 # URISchemes: http, https
 Layout/LineLength:
   Exclude:
-    - 'spec/controllers/admin/reports_controller_spec.rb'
+    - 'app/models/spree/payment.rb'
     - 'spec/system/admin/tag_rules_spec.rb'
 
 # Offense count: 17
@@ -419,7 +419,33 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
+# Offense count: 11
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: AllowedMethods, AllowedPatterns.
+# AllowedMethods: order, limit, select, lock
+Rails/FindEach:
+  Exclude:
+    - 'app/controllers/admin/order_cycles_controller.rb'
+    - 'app/jobs/subscription_confirm_job.rb'
+    - 'app/services/orders_bulk_cancel_service.rb'
+    - 'app/services/products_renderer.rb'
+    - 'lib/tasks/data.rake'
+    - 'lib/tasks/subscriptions/debug.rake'
+    - 'spec/system/admin/bulk_order_management_spec.rb'
+    - 'spec/system/admin/enterprise_relationships_spec.rb'
 
+# Offense count: 11
+# Configuration parameters: Include.
+# Include: app/models/**/*.rb
+Rails/HasManyOrHasOneDependent:
+  Exclude:
+    - 'app/models/enterprise.rb'
+    - 'app/models/spree/address.rb'
+    - 'app/models/spree/stock_item.rb'
+    - 'app/models/spree/tax_rate.rb'
+    - 'app/models/spree/variant.rb'
+
+# Offense count: 25
 # Configuration parameters: Include.
 # Include: app/helpers/**/*.rb
 Rails/HelperInstanceVariable:
@@ -724,12 +750,6 @@ Rails/WhereExists:
     - 'lib/tasks/sample_data/order_cycle_factory.rb'
     - 'lib/tasks/sample_data/taxon_factory.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-Rails/WhereNot:
-  Exclude:
-    - 'lib/reporting/reports/users_and_enterprises/base.rb'
-
 # Offense count: 1
 Security/Open:
   Exclude:
@@ -785,11 +805,6 @@ Style/ClassAndModuleChildren:
     - 'spec/controllers/spree/admin/base_controller_spec.rb'
     - 'spec/models/spree/payment_method_spec.rb'
 
-# Offense count: 1
-Style/ClassVars:
-  Exclude:
-    - 'lib/spree/core/delegate_belongs_to.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: MaxUnannotatedPlaceholdersAllowed, AllowedMethods, AllowedPatterns.
@@ -838,13 +853,14 @@ Style/HashLikeCase:
   Exclude:
     - 'app/models/enterprise.rb'
 
-# Offense count: 356
+# Offense count: 184
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
 # SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
 # SupportedShorthandSyntax: always, never, either, consistent
 Style/HashSyntax:
   Exclude:
+    - 'spec/services/voucher_adjustments_service_spec.rb'
     - 'spec/system/admin/reports_spec.rb'
     - 'spec/system/admin/tag_rules_spec.rb'
     - 'spec/system/admin/variant_overrides_spec.rb'
@@ -924,7 +940,7 @@ Style/OpenStructUse:
     - 'spec/lib/reports/users_and_enterprises_report_spec.rb'
     - 'spec/serializers/api/enterprise_serializer_spec.rb'
 
-# Offense count: 16
+# Offense count: 15
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: respond_to_missing?
 Style/OptionalBooleanParameter:
@@ -938,7 +954,6 @@ Style/OptionalBooleanParameter:
     - 'app/models/spree/shipment.rb'
     - 'engines/order_management/app/services/order_management/stock/estimator.rb'
     - 'lib/spree/core/controller_helpers/order.rb'
-    - 'lib/spree/core/delegate_belongs_to.rb'
     - 'spec/support/request/web_helper.rb'
 
 # Offense count: 1
