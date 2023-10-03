@@ -2,7 +2,7 @@
 
 module Reporting
   module Reports
-    class List # rubocop:disable Metrics/ClassLength # Because it's a simple class
+    class List
       def self.all
         new.all
       end
