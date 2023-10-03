@@ -50,10 +50,10 @@ module Reporting
         private
 
         def filter_to_completed_at(orders)
-          min = params.dig(:q, :completed_at_gt)
-          max = params.dig(:q, :completed_at_lt)
+          min = params.dig(:q, :completed_at_gt).presence
+          max = params.dig(:q, :completed_at_lt).presence
 
-          return orders if min.blank? || max.blank?
+          return orders if min.nil? && max.nil?
 
           orders.where(completed_at: [min..max])
         end
