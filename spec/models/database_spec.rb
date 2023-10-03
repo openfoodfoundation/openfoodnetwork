@@ -30,7 +30,6 @@ RSpec.describe "Database" do
 
   def generate_migrations(model_classes)
     migrations = []
-    previous_models = {}
     filter = lambda { |model| models_todo.include?(model) }
     pending_models = model_classes.select(&filter)
     model_classes.reject!(&filter)
@@ -39,7 +38,7 @@ RSpec.describe "Database" do
       next unless model_classes.include?(model_class.name)
 
       model_class.reflect_on_all_associations(:belongs_to).each do |association|
-        migration = process_association(model_class, association, previous_models)
+        migration = process_association(model_class, association)
         migrations << migration unless migration.nil?
       end
     end
@@ -67,17 +66,18 @@ RSpec.describe "Database" do
          "add OFN_WRITE_FOREIGN_KEY_MIGRATIONS=true to the file .env.test.local"
   end
 
-  def process_association(model_class, association, previous_models)
+  def process_association(model_class, association)
     return if association.options[:polymorphic]
 
     foreign_key_table_name = determine_foreign_key_table_name(model_class, association)
     foreign_key_column = "#{association.options[:foreign_key] || association.name}_id"
+    foreign_keys = model_class.connection.foreign_keys(model_class.table_name)
 
-    # Filter out duplicate migrations
-    return if duplicate_migration?(model_class, foreign_key_table_name, previous_models)
-
-    previous_models[model_class.table_name] ||= []
-    previous_models[model_class.table_name] << foreign_key_table_name
+    # Check if there is a foreign key that already exists for the column
+    return if foreign_keys.any? { |fk|
+                fk.column == foreign_key_column &&
+                fk.to_table == foreign_key_table_name
+              }
 
     generate_migration(model_class, association, foreign_key_table_name, foreign_key_column)
   end
@@ -100,7 +100,8 @@ RSpec.describe "Database" do
   end
 
   def generate_migration(model_class, _association, foreign_key_table_name, foreign_key_column)
-    migration_name = "add_foreign_key_to_#{model_class.table_name}_#{foreign_key_table_name}"
+    migration_name = "add_foreign_key_to_#{model_class.table_name}_" \
+                     "#{foreign_key_table_name}_#{foreign_key_column}"
     migration_class_name = migration_name.camelize
     migration_file_name = "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S%L')}_" \
                           "#{migration_name}.rb"
@@ -136,10 +137,5 @@ RSpec.describe "Database" do
       # WHERE #{foreign_key_table_name}.id IS NULL
       #   AND #{model_class.table_name}.#{foreign_key_column} IS NOT NULL
     SQL
-  end
-
-  def duplicate_migration?(model_class, foreign_key_table_name, previous_models)
-    model_class.connection.foreign_key_exists?(model_class.table_name, foreign_key_table_name) ||
-      previous_models[model_class.table_name]&.include?(foreign_key_table_name)
   end
 end
