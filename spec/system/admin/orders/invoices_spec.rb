@@ -11,7 +11,9 @@ describe '
 
   let(:user) { create(:user) }
   let(:product) { create(:simple_product) }
-  let(:distributor) { create(:distributor_enterprise, owner: user, charges_sales_tax: true) }
+  let(:distributor) {
+    create(:distributor_enterprise, owner: user, charges_sales_tax: true, abn: "123456")
+  }
   let(:order_cycle) do
     create(:simple_order_cycle, name: 'One', distributors: [distributor],
                                 variants: [product.variants.first])
@@ -99,6 +101,67 @@ describe '
             expect(new_invoice.number).to eq 2
             expect(new_invoice.presenter.sorted_line_items.first.quantity).to eq 2
           end
+        end
+      end
+    end
+  end
+
+  describe 'printing invoices' do
+    context 'when the order has no invoices' do
+      it 'creates an invoice for the order' do
+        expect(order.invoices.count).to eq 0
+        page.find("#links-dropdown", text: "ACTIONS").click
+        click_link "Print Invoice"
+        new_window = windows.last
+        page.within_window new_window do
+          expect(order.invoices.count).to eq 1
+        end
+        invoice = order.invoices.first
+        expect(invoice.cancelled).to eq false
+        expect(invoice.number).to eq 1
+      end
+    end
+
+    context 'when the order has an invoice' do
+      let!(:latest_invoice){ create(:invoice, order:, number: 1, cancelled: false) }
+      context 'changes require regenerating' do
+        let(:new_note){ 'new note' }
+        before do
+          order.update!(note: new_note)
+        end
+
+        it 'updates the lastest invoice for the order' do
+          expect(order.invoices.count).to eq 1
+          page.find("#links-dropdown", text: "ACTIONS").click
+          click_link "Print Invoice"
+          new_window = windows.last
+          page.within_window new_window do
+            expect(order.invoices.count).to eq 1
+          end
+          expect(latest_invoice.reload.presenter.note).to eq new_note
+          expect(latest_invoice.reload.cancelled).to eq false
+        end
+      end
+      context 'changes require generating a new invoice' do
+        before do
+          order.line_items.first.update!(quantity: 2)
+        end
+
+        it 'creates a new invoice for the order' do
+          expect(order.invoices.count).to eq 1
+          page.find("#links-dropdown", text: "ACTIONS").click
+          click_link "Print Invoice"
+          new_window = windows.last
+          page.within_window new_window do
+            expect(order.invoices.count).to eq 2
+          end
+          expect(latest_invoice.reload.cancelled).to eq true
+          expect(latest_invoice.presenter.sorted_line_items.first.quantity).to eq 1
+
+          new_invoice = order.invoices.first # first invoice is the latest
+          expect(new_invoice.cancelled).to eq false
+          expect(new_invoice.number).to eq 2
+          expect(new_invoice.presenter.sorted_line_items.first.quantity).to eq 2
         end
       end
     end
