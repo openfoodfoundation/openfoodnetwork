@@ -171,7 +171,7 @@ GEM
     aws-sigv4 (1.6.0)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.1.1)
-    bcrypt (3.1.18)
+    bcrypt (3.1.19)
     bigdecimal (3.0.2)
     bindata (2.4.15)
     bindex (0.8.1)
@@ -249,7 +249,7 @@ GEM
       warden (~> 1.2.3)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
-    devise-i18n (1.11.0)
+    devise-i18n (1.11.1)
       devise (>= 4.9.0)
     devise-token_authenticatable (1.1.0)
       devise (>= 4.0.0, < 5.0.0)
@@ -778,7 +778,7 @@ GEM
     xml-simple (1.1.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.11)
+    zeitwerk (2.6.12)
 
 PLATFORMS
   ruby
