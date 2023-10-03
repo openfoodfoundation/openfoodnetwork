@@ -9,7 +9,7 @@ module Spree
     belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations
 
     has_many :inventory_units, inverse_of: :return_authorization, dependent: :nullify
-    has_one :stock_location, dependent: :nullify
+    has_one :stock_location, dependent: nil
     before_save :force_positive_amount
     before_create :generate_number
 
