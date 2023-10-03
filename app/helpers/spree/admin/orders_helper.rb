@@ -31,7 +31,6 @@ module Spree
       end
 
       def invoice_links
-        return [] if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
         return [] unless Spree::Config[:enable_invoices?]
 
         [send_invoice_link, print_invoice_link]
