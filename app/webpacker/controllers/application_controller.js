@@ -43,7 +43,11 @@ export default class extends Controller {
   }
 
   reflexError(element, reflex, error, reflexId) {
+    // Log to console (it normally only gets logged in dev mode)
+    console.error(reflex + ":\n " + error);
+
     // show error message
+    alert(I18n.t("errors.stimulus_reflex_error"));
   }
 
   reflexForbidden(element, reflex, noop, reflexId) {

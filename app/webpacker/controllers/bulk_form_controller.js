@@ -35,19 +35,16 @@ export default class BulkFormController extends Controller {
 
   toggleModified(e) {
     const element = e.target;
-    const modified = element.value != element.defaultValue;
-    element.classList.toggle("modified", modified);
+    element.classList.toggle("modified", this.#isModified(element));
 
     this.toggleFormModified();
   }
 
   toggleFormModified() {
     // For each record, check if any fields are modified
-    const modifiedRecordCount = Object.keys(this.recordElements).filter((recordId) => {
-      return this.recordElements[recordId].some((element) => {
-        return element.value != element.defaultValue;
-      });
-    }).length;
+    const modifiedRecordCount = Object.values(this.recordElements).filter((elements) =>
+      elements.some(this.#isModified)
+    ).length;
     const formModified = modifiedRecordCount > 0;
 
     // Show actions
@@ -86,5 +83,9 @@ export default class BulkFormController extends Controller {
         element.classList.toggle("disabled-section", disable);
       });
     }
+  }
+
+  #isModified(element) {
+    return element.value != element.defaultValue;
   }
 }
