@@ -188,6 +188,9 @@ module Spree
       Spree::Money.new(total, currency: currency)
     end
 
+    def display_payment_total
+       Spree::Money.new(self.payment_total, currency: currency)
+    end
     def to_param
       number.to_s.parameterize.upcase
     end

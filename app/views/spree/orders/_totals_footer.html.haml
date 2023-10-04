@@ -25,18 +25,18 @@
         %h5#order_total= order.display_total.to_html
     %tr.total
       %td.text-right{colspan: "3"}
-        %h5
+        %strong
           = t :order_amount_paid
       %td.text-right.total
-        %h5
-          = order.payment_total
+        %strong
+          = order.display_payment_total.to_html
   - if order.outstanding_balance?
     %tr.total
       %td.text-right{colspan: "3"}
         %h5.not-paid
           = t :order_balance_due
       %td.text-right.total.not-paid
-        %h5.not-paid#balance_due
+        %h5.not-paid
           = order.display_outstanding_balance.to_html
 
 
