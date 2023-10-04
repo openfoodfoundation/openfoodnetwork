@@ -880,7 +880,6 @@ Style/HashLikeCase:
 Style/HashSyntax:
   Exclude:
     - 'spec/system/admin/reports_spec.rb'
-    - 'spec/system/admin/subscriptions_spec.rb'
     - 'spec/system/admin/tag_rules_spec.rb'
     - 'spec/system/admin/variant_overrides_spec.rb'
     - 'spec/system/admin/vouchers_spec.rb'
@@ -923,12 +922,6 @@ Style/MissingRespondToMissing:
     - 'app/helpers/application_helper.rb'
     - 'app/models/spree/gateway.rb'
     - 'app/models/spree/preferences/configuration.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/MultilineTernaryOperator:
-  Exclude:
-    - 'spec/system/admin/subscriptions_spec.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
