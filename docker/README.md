@@ -117,7 +117,7 @@ To solve this, we need to hack Dockerfile a bit.
 
 Steps to follow:
 - Comment out line 7 `RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" >> /etc/apt/sources.list`
-- Comment out line 33 (`ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so`) and remove `RUBY_CONFIGURE_OPTS=--with-jemalloc` from the start of line 42
+- Comment out line 33 (`ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so`) and remove `RUBY_CONFIGURE_OPTS=--with-jemalloc` from the start of line 48
 
 You may also need to comment out stuff related to Chromedriver and Chrome. Chrome setup may work with `[arch=amd64]` removed.
 
