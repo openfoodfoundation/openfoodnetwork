@@ -50,6 +50,7 @@ DESC
           owner: users["Freddy Shop Farmer"],
           is_primary_producer: true,
           sells: "own",
+          visible: "public",
           address: address("72 Lake Road, Blackburn, 3130"),
           long_description: <<DESC
           This enterprise is a producer which also sells directly to consumers.
@@ -61,6 +62,7 @@ DESC
           owner: users["Fredo Hub Farmer"],
           is_primary_producer: true,
           sells: "any",
+          visible: "public",
           address: address("7 Verbena Street, Mordialloc, 3195"),
           long_description: <<DESC
           This enterprise is a producer selling its own and other produce to
@@ -72,6 +74,7 @@ DESC
           owner: users["Mary Retailer"],
           is_primary_producer: false,
           sells: "any",
+          visible: "public",
           address: address("20 Galvin Street, Altona, 3018"),
           long_description: <<DESC
           This enterprise sells the products of producers, but doesn't have any
@@ -83,6 +86,7 @@ DESC
           owner: users["Maryse Private"],
           is_primary_producer: false,
           sells: "any",
+          visible: "public",
           address: address("6 Martin Street, Belgrave, 3160"),
           require_login: true,
           long_description: <<DESC
