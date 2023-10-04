@@ -112,6 +112,7 @@ describe '
         expect(order.invoices.count).to eq 0
         page.find("#links-dropdown", text: "ACTIONS").click
         click_link "Print Invoice"
+        # wait for PDF to open in new window
         new_window = windows.last
         page.within_window new_window do
           expect(order.invoices.count).to eq 1
