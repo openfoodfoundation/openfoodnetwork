@@ -424,7 +424,7 @@ GEM
       net-protocol
     net-protocol (0.2.1)
       timeout
-    net-smtp (0.3.3)
+    net-smtp (0.4.0)
       net-protocol
     newrelic_rpm (9.5.0)
     nio4r (2.5.9)
@@ -727,7 +727,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
     uniform_notifier (1.16.0)
-    valid_email2 (5.0.3)
+    valid_email2 (5.0.5)
       activemodel (>= 3.2)
       mail (~> 2.5)
     validate_email (0.1.6)
