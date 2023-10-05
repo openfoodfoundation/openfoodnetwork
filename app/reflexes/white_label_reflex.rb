@@ -11,15 +11,11 @@ class WhiteLabelReflex < ApplicationReflex
 
     f = ActionView::Helpers::FormBuilder.new(:enterprise, @enterprise, view_context, {})
 
-    html = with_locale {
-      render(partial: "admin/enterprises/form/white_label",
+    html = render(partial: "admin/enterprises/form/white_label",
              locals: { f:, enterprise: @enterprise })
-    }
     morph "#white_label_panel", html
 
-    flash[:success] = with_locale {
-      I18n.t("admin.enterprises.form.white_label.remove_logo_success")
-    }
+    flash[:success] = I18n.t("admin.enterprises.form.white_label.remove_logo_success")
     cable_ready.dispatch_event(name: "modal:close")
     morph_admin_flashes
   end

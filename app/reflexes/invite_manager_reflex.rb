@@ -35,8 +35,6 @@ class InviteManagerReflex < ApplicationReflex
 
   def return_morph(locals)
     morph "#add_manager_modal",
-          with_locale {
-            render(partial: "admin/enterprises/form/add_new_unregistered_manager", locals:)
-          }
+          render(partial: "admin/enterprises/form/add_new_unregistered_manager", locals:)
   end
 end
