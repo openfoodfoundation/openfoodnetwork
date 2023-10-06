@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+# Bump the patch version for the next release and create the tag.
+#
+# This supports only patch releases at the moment but can be developed
+# further.
+
+# Fetch current tags first:
+`git fetch upstream --tags`
+
+# Last tag without a newline:
+latest_tag = `git tag --list 'v*' --sort v:refname | tail -1`.chomp
+
+# Parse version without the "v" at the start:
+latest_version = Gem::Version.new(latest_tag[1..-1])
+
+# Bump the patch version:
+major, minor, patch = latest_version.segments
+next_tag = "v#{major}.#{minor}.#{patch.succ}"
+
+puts `git push upstream 'HEAD:refs/tags/#{next_tag}'`
