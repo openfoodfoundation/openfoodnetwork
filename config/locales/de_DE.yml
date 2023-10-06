@@ -740,6 +740,7 @@ de_DE:
         loading: Produkte werden geladen...
       sort:
         pagination:
+          total_html: "<strong>%{total} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
             per_page: "%{num} pro Seite"
@@ -757,6 +758,17 @@ de_DE:
         no_products_found: Keine Produkte gefunden.
         import_products: Produkte importieren
         no_products_found_for_search: Keine Produkte für Ihre Suchkriterien gefunden.
+      table:
+        modified_summary:
+          one: "%{count} Produkt geändert."
+          other: "%{count} Produkte geändert."
+        save: Änderungen speichern
+        reset: Änderungen verwerfen
+      bulk_update:
+        success: "Produkte erfolgreich aktualisiert"
+        products_have_error:
+          one: "%{count} Produkt weist einen Fehler auf."
+          other: "%{count} Produkte weisen Fehler auf."
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -1296,7 +1308,7 @@ de_DE:
         back_to_list: "Zurück zur Liste"
       checkout_options:
         back_end: "Nur im Backoffice"
-        cancel: "Stornieren"
+        cancel: "Abbrechen"
         checkout_options: "Zahlungsarten & Lieferoptionen"
         distributor: "Verteilstelle"
         no_payment_methods: Jede Verteilstelle dieses Bestellzyklus benötigt mindestens eine aktivierte Zahlungsart.
@@ -1509,7 +1521,8 @@ de_DE:
       enterprise_fee_summary:
         name: "Unternehmensgebühren"
         description: "Bericht der erhobenen Gebühren"
-      enterprise_fees_with_tax_report_by_order: "Unternehmensgebühren mit Steuern nach Bestellung"
+      enterprise_fees_with_tax_report_by_order: "Unternehmensgebühren mit Steuern nach Bestellungen"
+      enterprise_fees_with_tax_report_by_producer: "Unternehmensgebühren mit Steuern nach Produzenten"
       errors:
         no_report_type: "Bitte wählen Sie eine Berichtsart aus."
         report_not_found: "Bericht wurde nicht gefunden."
@@ -1653,6 +1666,9 @@ de_DE:
         save: Speichern
         voucher_code: Gutschein-Code
         voucher_amount: Summe
+        voucher_type: Gutscheintyp
+        flat_rate: Festbetrag
+        percentage_rate: Prozentsatz (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "Die Verbindung zu Stripe wurde abgebrochen."
@@ -2841,7 +2857,7 @@ de_DE:
   report_header_tags: Stichwörter
   report_header_items: Produkte
   report_header_items_total: "Summe Produkte (%{currency_symbol})"
-  report_header_taxable_items_total: "Steuerpflichtige Posten insgesamt (%{currency_symbol})"
+  report_header_taxable_items_total: "Summe Steuerpflichtige Artikel (%{currency_symbol})"
   report_header_sales_tax: "Umsatzsteuer (%{currency_symbol})"
   report_header_delivery_charge: "Liefergebühr (%{currency_symbol})"
   report_header_tax: "Steuern"
@@ -2953,6 +2969,9 @@ de_DE:
   report_header_transaction_fee: Transaktionsgebühr (keine Steuern)
   report_header_total_untaxable_admin: Summe nicht steuerpflichtiger Admin-Anpassungen (keine Steuern)
   report_header_total_taxable_admin: Summe steuerpflichtiger Admin-Anpassungen (inkl. Steuern)
+  report_line_cost_of_produce: Produktkosten
+  report_line_line_items: Einzelposten
+  report_header_last_completed_order_date: Letzte Bestellung
   report_xero_configuration: Xero-Konfiguration
   initial_invoice_number: "Ursprüngliche Rechnungsnummer"
   invoice_date: "Rechnungsdatum"
@@ -3044,6 +3063,7 @@ de_DE:
   amount: "Summe"
   invoice_number: "Rechnungsnummer"
   invoice_file: "Datei"
+  invalid_url: "„ %{url} “ ist eine ungültige URL"
   state_names:
     ready: bereit
     pending: ausstehend
@@ -3081,7 +3101,7 @@ de_DE:
         confirm: "Bestätigen"
         close: "Schließen"
         continue: "Weiter"
-        cancel: "Stornieren"
+        cancel: "Abbrechen"
         invite: "Einladen"
         invite_title: "Geben Sie die E-Mail-Adresse eines nicht registrierten Benutzers ein, um dieses Unternehmen zu verwalten."
         tag_rule_help:
@@ -3218,6 +3238,8 @@ de_DE:
           select_all_variants: "Wählen Sie alle %{total_number_of_variants} Produktvarianten aus"
           variants_loaded: "%{num_of_variants_loaded} von %{total_number_of_variants} Produktvarianten geladen"
           loading_variants: "Produktvarianten werden geladen ..."
+          no_variants: "Für dieses Produkt ist keine Variante verfügbar (über die Katalogeinstellungen ausgeblendet)."
+          some_variants_hidden: "(Einige Varianten könnten über die Katalogeinstellungen ausgeblendet sein.)"
       tag_rules:
         shipping_method_tagged_top: "Lieferoptionen markiert mit"
         shipping_method_tagged_bottom: "sind:"
@@ -4167,6 +4189,7 @@ de_DE:
           enterprise_limit: "Maximale Anzahl der Unternehmen"
           confirm_password: "Passwort erneut eingeben"
           password: "Passwort"
+          locale: "Sprache"
         email_confirmation:
           confirmation_pending: "E-Mail-Bestätigung steht aus. Wir haben eine E-Mail an %{address} gesendet."
       variants:

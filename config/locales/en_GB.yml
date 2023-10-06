@@ -131,6 +131,7 @@ en_GB:
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"
+    stimulus_reflex_error: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all errors and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -740,6 +741,7 @@ en_GB:
         loading: Loading your products
       sort:
         pagination:
+          total_html: "<strong>%{total}products</strong>found for your search criteria. Showing %{from}to%{to}."
           per_page:
             show: Show
             per_page: "%{num}per page"
@@ -757,6 +759,14 @@ en_GB:
         no_products_found: No products found
         import_products: Import multiple products
         no_products_found_for_search: No products found for your search criteria
+      table:
+        modified_summary:
+          one: "%{count}product modified."
+          other: "%{count}products modified."
+        save: Save changes
+        reset: Discard changes
+      bulk_update:
+        success: "Products successfully updated"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1507,6 +1517,7 @@ en_GB:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
       enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
+      enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
@@ -2243,7 +2254,7 @@ en_GB:
   products_changes_saved: "Changes saved."
   products_no_results_html: "Sorry, no results found for %{query}"
   products_clear_search: "Clear search"
-  search_no_results_html: "Sorry, no results found for %{query}. Try another search?"
+  search_no_results_html: "No open shops found for %{query}. Click the 'Show Closed Shops' button to see shops opening at a later date."
   components_profiles_popover: "Profiles do not have a shopfront on the Open Food Network, but may have their own physical or online shop elsewhere"
   components_profiles_show: "Show profiles"
   components_filters_nofilters: "No filters"
@@ -2953,6 +2964,9 @@ en_GB:
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_line_cost_of_produce: Cost of produce
+  report_line_line_items: line items
+  report_header_last_completed_order_date: Last completed order date
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
@@ -3044,6 +3058,7 @@ en_GB:
   amount: "Amount"
   invoice_number: "Invoice Number"
   invoice_file: "File"
+  invalid_url: "'%{url}' is an invalid URL"
   state_names:
     ready: Ready
     pending: Pending
@@ -3216,6 +3231,8 @@ en_GB:
           select_all_variants: "Select All %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
           loading_variants: "Loading Variants"
+          no_variants: "No variant available for this product (hidden via inventory settings)."
+          some_variants_hidden: "(Some variants might be hidden via inventory settings)"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
@@ -4166,6 +4183,7 @@ en_GB:
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"
+          locale: "Language"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:
