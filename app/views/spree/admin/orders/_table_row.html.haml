@@ -1,9 +1,9 @@
 %tr{ id: dom_id(order), class: "state-#{order.state}" }
-  %td.align-center
+  %td.align-left
     %input{type: 'checkbox', value: order.id, name: 'bulk_ids[]', "data-checked-target": "checkbox", "data-action": "change->checked#toggleCheckbox" }
-  %td.align-center
+  %td.align-left
     = order.distributor.name
-  %td.align-center
+  %td.align-left
     = I18n.l(order.completed_at, format: '%B %d, %Y') if order.completed_at
   %td
     %a{ href: edit_admin_order_path(order) }
@@ -14,10 +14,10 @@
         %div{ "data-controller": "tooltip", "data-tooltip-tip-value": order.special_instructions.to_s }
           %span.icon-warning-sign{ "data-tooltip-target": "element" }
             = t('spree.admin.orders.index.note')
-  %td.align-center
+  %td.align-left
     %span.state{ class: order.state.to_s }
       = t('js.admin.orders.order_state.' + order.state.to_s)
-  %td.align-center
+  %td.align-left
     - if order.payment_state
       %span.state{class: 'order.payment_state'}
         %a{href: spree.admin_order_payments_path(order) }
@@ -25,7 +25,7 @@
           - if order.display_outstanding_balance
             %span
               = "(#{order.display_outstanding_balance})"
-  %td.align-center
+  %td.align-left
     - if order.shipment_state
       %span.state{class: order.shipment_state.to_s}
         = t('js.admin.orders.shipment_states.' + order.shipment_state.to_s)
@@ -34,7 +34,7 @@
       = order.email
   %td
     = order&.bill_address&.full_name_for_sorting
-  %td.align-center
+  %td.align-left
     %span
       = order.display_total
   %td.actions
