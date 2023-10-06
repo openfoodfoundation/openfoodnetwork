@@ -736,6 +736,8 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
+    validates_lengths_from_database (0.8.0)
+      activerecord (>= 4)
     vcr (6.2.0)
     view_component (3.6.0)
       activesupport (>= 5.2.0, < 8.0)
@@ -909,6 +911,7 @@ DEPENDENCIES
   stripe
   timecop
   valid_email2
+  validates_lengths_from_database
   vcr
   view_component
   view_component_reflex (= 3.1.14.pre9)

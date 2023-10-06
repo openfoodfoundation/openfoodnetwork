@@ -54,6 +54,7 @@ module Spree
     has_many :variant_images, -> { order(:position) }, source: :images,
                                                        through: :variants
 
+    validates_lengths_from_database
     validates :name, presence: true
 
     validates :variant_unit, presence: true

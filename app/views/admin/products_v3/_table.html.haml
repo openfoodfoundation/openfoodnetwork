@@ -38,13 +38,15 @@
       = form.fields_for("products", product, index: nil) do |product_form|
         %tbody.relaxed{ 'data-record-id': product_form.object.id }
           %tr
-            %td.align-left.header
+            %td.field.align-left.header
               = product_form.hidden_field :id
               = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
-            %td.align-right
+              = error_message_on product, :name
+            %td.field
               = product_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
+              = error_message_on product, :sku
             %td.align-right
-              .line-clamp-1
+              .content
                 = product.variant_unit.upcase_first
                 / TODO: properly handle custom unit names
                 = WeightsAndMeasures::UNITS[product.variant_unit] && "(" + WeightsAndMeasures::UNITS[product.variant_unit][product.variant_unit_scale]["name"] + ")"
@@ -52,36 +54,39 @@
               -# empty
             %td.align-right
               -# TODO: new requirement "DISPLAY ON DEMAND IF ALL VARIANTS ARE ON DEMAND". And translate value
-              .line-clamp-1= if product.variants.all?(&:on_demand) then "On demand" else product.on_hand || 0 end
+              .content= if product.variants.all?(&:on_demand) then "On demand" else product.on_hand || 0 end
             %td.align-left
-              .line-clamp-1= product.supplier.name
+              .content= product.supplier.name
             %td.align-left
-              .line-clamp-1= product.primary_taxon.name
+              .content= product.primary_taxon.name
             %td.align-left
             %td.align-left
-              .line-clamp-1= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
+              .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
             %td.align-right
               = render partial: 'admin/products_v3/components/product_actions', locals: { product: product }
           - product.variants.each do |variant|
             = form.fields_for("products][][variants_attributes][", variant, index: nil) do |variant_form|
               %tr.condensed
-                %td.align-left
+                %td.field
                   = variant_form.hidden_field :id
                   = variant_form.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name
-                %td.align-right
+                  = error_message_on variant, :display_name
+                %td.field
                   = variant_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
+                  = error_message_on variant, :sku
                 %td.align-right
-                  .line-clamp-1= variant.unit_to_display
-                %td.align-right
+                  .content= variant.unit_to_display
+                %td.field
                   = variant_form.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
+                  = error_message_on variant, :price
                 %td.align-right
-                  .line-clamp-1= variant.on_hand || 0 #TODO: spec for this according to requirements.
+                  .content= variant.on_hand || 0 #TODO: spec for this according to requirements.
                 %td.align-left
-                  .line-clamp-1= variant.product.supplier.name # same as product
+                  .content= variant.product.supplier.name # same as product
                 %td.align-left
                   -# empty
                 %td.align-left
-                  .line-clamp-1= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
+                  .content= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
                 %td.align-left
                   -# empty
                 %td.align-right

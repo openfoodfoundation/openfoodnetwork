@@ -32,6 +32,7 @@ gem "db2fog", github: "openfoodfoundation/db2fog", branch: "rails-7"
 gem "fog-aws", "~> 2.0" # db2fog does not support v3
 gem "mime-types" # required by fog
 
+gem "validates_lengths_from_database"
 gem "valid_email2"
 
 gem "catalog", path: "./engines/catalog"

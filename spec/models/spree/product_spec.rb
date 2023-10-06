@@ -163,6 +163,10 @@ module Spree
         expect(build(:product)).to be_valid
       end
 
+      it { is_expected.to validate_presence_of :name }
+      it { is_expected.to validate_length_of(:name).is_at_most(255) }
+      it { is_expected.to validate_length_of(:sku).is_at_most(255) }
+
       it "requires a primary taxon" do
         expect(build(:simple_product, primary_taxon: nil)).not_to be_valid
       end
