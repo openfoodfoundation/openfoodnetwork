@@ -64,6 +64,17 @@ describe ReportJob do
     }.to_not enqueue_mail
   end
 
+  it "rescues errors" do
+    expect(report_class).to receive(:new).and_raise
+    expect(Bugsnag).to receive(:notify)
+
+    job = ReportJob.perform_later(**report_args)
+
+    expect {
+      perform_enqueued_jobs(only: ReportJob)
+    }.to_not raise_error
+  end
+
   def expect_csv_report
     blob.reload
     expect(blob.filename.to_s).to eq "report.csv"
