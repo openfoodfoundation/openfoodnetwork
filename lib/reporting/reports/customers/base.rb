@@ -50,8 +50,8 @@ module Reporting
         private
 
         def filter_to_completed_at(orders)
-          min = params.dig(:q, :completed_at_gt).presence
-          max = params.dig(:q, :completed_at_lt).presence
+          min = params.dig(:q, :completed_at_gt).presence&.in_time_zone
+          max = params.dig(:q, :completed_at_lt).presence&.in_time_zone
 
           return orders if min.nil? && max.nil?
 
