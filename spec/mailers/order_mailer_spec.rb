@@ -238,7 +238,7 @@ describe Spree::OrderMailer do
       it "should call the invoice render with order as argument" do
         expect(generator).not_to receive(:generate_or_update_latest_invoice)
         expect(order).not_to receive(:invoices)
-        expect(renderer).to receive(:render_to_string).with(order).and_return("invoice")
+        expect(renderer).to receive(:render_to_string).with(order, nil).and_return("invoice")
         expect {
           email.deliver_now
         }.to_not raise_error
@@ -255,7 +255,7 @@ describe Spree::OrderMailer do
       it "should call the invoice renderer with invoice's presenter as argument" do
         expect(generator).to receive(:generate_or_update_latest_invoice)
         expect(order).to receive(:invoices).and_return([invoice])
-        expect(renderer).to receive(:render_to_string).with(invoice.presenter)
+        expect(renderer).to receive(:render_to_string).with(invoice.presenter, nil)
         email.deliver_now
       end
     end

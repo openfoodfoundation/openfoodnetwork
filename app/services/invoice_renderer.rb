@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 class InvoiceRenderer
-  def initialize(renderer = ApplicationController.new)
+  def initialize(renderer = ApplicationController.new, user = nil)
     @renderer = renderer
+    @user = user
   end
 
-  def render_to_string(order)
+  def render_to_string(order, user = @user)
     renderer.instance_variable_set(:@order, order)
-    renderer.render_to_string_with_wicked_pdf(args(order))
+    renderer.render_to_string_with_wicked_pdf(args(order, user))
   end
 
-  def args(order)
+  def args(order, user = @user)
+    @user = user
     {
       pdf: "invoice-#{order.number}.pdf",
       template: invoice_template,
@@ -24,7 +26,7 @@ class InvoiceRenderer
   attr_reader :renderer
 
   def invoice_template
-    if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+    if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, @user)
       invoice_presenter_template
     elsif Spree::Config.invoice_style2?
       "spree/admin/orders/invoice2"

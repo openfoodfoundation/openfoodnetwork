@@ -3,10 +3,13 @@
 class BulkInvoiceJob < ApplicationJob
   include CableReady::Broadcaster
   delegate :render, to: ActionController::Base
+  attr_reader :options
 
   def perform(order_ids, filepath, options = {})
+    @options = options
     orders = sorted_orders(order_ids)
-    orders.filter!(&:invoiceable?) if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+    orders.filter!(&:invoiceable?) if OpenFoodNetwork::FeatureToggle.enabled?(:invoices,
+                                                                              current_user)
     orders.each(&method(:generate_invoice))
 
     ensure_directory_exists filepath
@@ -29,13 +32,13 @@ class BulkInvoiceJob < ApplicationJob
   end
 
   def generate_invoice(order)
-    renderer_data = if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+    renderer_data = if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, current_user)
                       OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
                       order.invoices.first.presenter
                     else
                       order
                     end
-    invoice = renderer.render_to_string(renderer_data)
+    invoice = renderer.render_to_string(renderer_data, current_user)
     pdf << CombinePDF.parse(invoice)
   end
 
@@ -57,5 +60,11 @@ class BulkInvoiceJob < ApplicationJob
 
   def pdf
     @pdf ||= CombinePDF.new
+  end
+
+  def current_user
+    return unless options[:current_user_id]
+
+    @current_user ||= Spree::User.find(options[:current_user_id])
   end
 end

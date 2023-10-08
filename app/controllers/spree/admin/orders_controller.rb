@@ -90,7 +90,8 @@ module Spree
       end
 
       def invoice
-        Spree::OrderMailer.invoice_email(@order.id).deliver_later
+        Spree::OrderMailer.invoice_email(@order.id,
+                                         current_user_id: spree_current_user.id ).deliver_later
         flash[:success] = t('admin.orders.invoice_email_sent')
 
         respond_with(@order) { |format|
@@ -99,11 +100,16 @@ module Spree
       end
 
       def print
-        if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
-          @order = @order.invoices.find(params[:invoice_id]).presenter
+        if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, spree_current_user)
+          @order = if params[:invoice_id].present?
+                     @order.invoices.find(params[:invoice_id]).presenter
+                   else
+                     OrderInvoiceGenerator.new(@order).generate_or_update_latest_invoice
+                     @order.invoices.first.presenter
+                   end
         end
 
-        render_with_wicked_pdf InvoiceRenderer.new.args(@order)
+        render_with_wicked_pdf InvoiceRenderer.new.args(@order, spree_current_user)
       end
 
       private

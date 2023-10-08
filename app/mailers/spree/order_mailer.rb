@@ -46,16 +46,19 @@ module Spree
       end
     end
 
-    def invoice_email(order_or_order_id)
+    def invoice_email(order_or_order_id, options = {})
       @order = find_order(order_or_order_id)
-      renderer_data = if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+      current_user = if options[:current_user_id].present?
+                       find_user(options[:current_user_id])
+                     end
+      renderer_data = if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, current_user)
                         OrderInvoiceGenerator.new(@order).generate_or_update_latest_invoice
                         @order.invoices.first.presenter
                       else
                         @order
                       end
 
-      pdf = InvoiceRenderer.new.render_to_string(renderer_data)
+      pdf = InvoiceRenderer.new.render_to_string(renderer_data, current_user)
 
       attach_file("invoice-#{@order.number}.pdf", pdf)
       I18n.with_locale valid_locale(@order.user) do
@@ -79,6 +82,10 @@ module Spree
 
     def attach_file(filename, file)
       attachments[filename] = file if file.present?
+    end
+
+    def find_user(current_user_id)
+      Spree::User.find(current_user_id)
     end
   end
 end

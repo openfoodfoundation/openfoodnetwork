@@ -37,7 +37,8 @@ module Admin
       BulkInvoiceJob.perform_later(
         params[:bulk_ids],
         "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
-        channel: SessionChannel.for_request(request)
+        channel: SessionChannel.for_request(request),
+        current_user_id: current_user.id
       )
 
       morph :nothing
@@ -74,7 +75,7 @@ module Admin
       editable_orders.where(id: params[:bulk_ids]).find_each do |o|
         next unless o.distributor.can_invoice? && o.invoiceable?
 
-        Spree::OrderMailer.invoice_email(o.id).deliver_later
+        Spree::OrderMailer.invoice_email(o.id, current_user_id: current_user.id).deliver_later
         count += 1
       end
 
