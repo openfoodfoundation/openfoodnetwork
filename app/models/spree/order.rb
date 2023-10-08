@@ -225,7 +225,10 @@ module Spree
     end
 
     def changes_allowed?
-      complete? && distributor&.allow_order_changes? && order_cycle&.open?
+      !!(complete? &&
+         !shipped? &&
+         distributor&.allow_order_changes? &&
+         order_cycle&.open?)
     end
 
     # Is this a free order in which case the payment step should be skipped
