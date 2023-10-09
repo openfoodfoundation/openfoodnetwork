@@ -27,11 +27,7 @@ module Spree
     end
 
     def set_permalink
-      if parent.present?
-        self.permalink = [parent.permalink, permalink_end].join('/')
-      elsif permalink.blank?
-        self.permalink = UrlGenerator.to_url(name)
-      end
+      self.permalink = UrlGenerator.to_url(name) if permalink.blank?
     end
 
     # For #2759
