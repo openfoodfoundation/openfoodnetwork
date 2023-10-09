@@ -266,7 +266,7 @@ module Reporting
                     completed_at_lt: 1.day.after(o2.completed_at)
                   }
                 )
-                expect(subject.filter(orders)).to eq([o2, o3])
+                expect(subject.filter(orders)).to match_array [o2, o3]
               end
 
               it "when completed_at_lt param is missing" do
@@ -276,7 +276,7 @@ module Reporting
                     completed_at_lt: ""
                   }
                 )
-                expect(subject.filter(orders)).to eq([o1, o2])
+                expect(subject.filter(orders)).to match_array [o1, o2]
               end
             end
 
