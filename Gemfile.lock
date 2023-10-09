@@ -152,8 +152,6 @@ GEM
       activerecord (>= 3.1.0, < 8)
     ast (2.4.2)
     attr_required (1.0.1)
-    awesome_nested_set (3.5.0)
-      activerecord (>= 4.0.0, < 7.1)
     aws-eventstream (1.2.0)
     aws-partitions (1.828.0)
     aws-sdk-core (3.183.1)
@@ -800,7 +798,6 @@ DEPENDENCIES
   angularjs-file-upload-rails (~> 2.4.1)
   angularjs-rails (= 1.8.0)
   arel-helpers (~> 2.12)
-  awesome_nested_set
   aws-sdk-s3
   bigdecimal (= 3.0.2)
   bootsnap
