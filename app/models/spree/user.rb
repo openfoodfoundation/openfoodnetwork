@@ -14,7 +14,7 @@ module Spree
            encryptor: 'authlogic_sha512', reconfirmable: true,
            omniauth_providers: [:openid_connect]
 
-    has_many :orders
+    has_many :orders, dependent: nil
     belongs_to :ship_address, class_name: 'Spree::Address'
     belongs_to :bill_address, class_name: 'Spree::Address'
 
@@ -33,11 +33,13 @@ module Spree
     has_many :enterprise_roles, dependent: :destroy
     has_many :enterprises, through: :enterprise_roles
     has_many :owned_enterprises, class_name: 'Enterprise',
-                                 foreign_key: :owner_id, inverse_of: :owner
+                                 foreign_key: :owner_id, inverse_of: :owner,
+                                 dependent: :restrict_with_exception
     has_many :owned_groups, class_name: 'EnterpriseGroup',
-                            foreign_key: :owner_id, inverse_of: :owner
-    has_many :customers
-    has_many :credit_cards
+                            foreign_key: :owner_id, inverse_of: :owner,
+                            dependent: :restrict_with_exception
+    has_many :customers, dependent: :destroy
+    has_many :credit_cards, dependent: :destroy
     has_many :report_rendering_options, class_name: "::ReportRenderingOptions", dependent: :destroy
     has_many :webhook_endpoints, dependent: :destroy
 

@@ -37,7 +37,7 @@ class Enterprise < ApplicationRecord
                                     dependent: :destroy
   has_and_belongs_to_many :groups, join_table: 'enterprise_groups_enterprises',
                                    class_name: 'EnterpriseGroup'
-  has_many :producer_properties, foreign_key: 'producer_id'
+  has_many :producer_properties, foreign_key: 'producer_id', dependent: :destroy
   has_many :properties, through: :producer_properties
   has_many :supplied_products, class_name: 'Spree::Product',
                                foreign_key: 'supplier_id',
@@ -57,9 +57,9 @@ class Enterprise < ApplicationRecord
            inverse_of: :distributor, foreign_key: :distributor_id
   has_many :payment_methods, through: :distributor_payment_methods
   has_many :shipping_methods, through: :distributor_shipping_methods
-  has_many :customers
-  has_many :inventory_items
-  has_many :tag_rules
+  has_many :customers, dependent: :destroy
+  has_many :inventory_items, dependent: :destroy
+  has_many :tag_rules, dependent: :destroy
   has_one :stripe_account, dependent: :destroy
   has_many :vouchers
   has_one :custom_tab, dependent: :destroy

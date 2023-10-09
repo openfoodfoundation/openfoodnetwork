@@ -16,7 +16,7 @@ class Customer < ApplicationRecord
 
   belongs_to :enterprise
   belongs_to :user, class_name: "Spree::User", optional: true
-  has_many :orders, class_name: "Spree::Order"
+  has_many :orders, class_name: "Spree::Order", dependent: :nullify
   before_validation :downcase_email
   before_validation :empty_code
   before_create :associate_user
@@ -70,6 +70,5 @@ class Customer < ApplicationRecord
       throw :abort
     end
     Subscription.where(customer_id: id).destroy_all
-    orders.update_all(customer_id: nil)
   end
 end

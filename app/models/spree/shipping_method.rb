@@ -13,11 +13,11 @@ module Spree
 
     default_scope -> { where(deleted_at: nil) }
 
-    has_many :shipping_rates, inverse_of: :shipping_method
+    has_many :shipping_rates, inverse_of: :shipping_method, dependent: :destroy
     has_many :shipments, through: :shipping_rates
-    has_many :shipping_method_categories
+    has_many :shipping_method_categories, dependent: :destroy
     has_many :shipping_categories, through: :shipping_method_categories
-    has_many :distributor_shipping_methods
+    has_many :distributor_shipping_methods, dependent: :destroy
     has_many :distributors, through: :distributor_shipping_methods,
                             class_name: 'Enterprise',
                             foreign_key: 'distributor_id'
