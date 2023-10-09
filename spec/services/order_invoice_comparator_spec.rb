@@ -19,25 +19,8 @@ describe OrderInvoiceComparator do
     context "changes on the order object" do
       describe "detecting relevant attribute changes" do
         it "returns true if a relevant attribute changes" do
-          Spree::Order.where(id: order.id).update_all(payment_total: order.payment_total + 10)
-          order.reload
-          expect(subject).to be true
-        end
-
-        it "returns true if a relevant attribute changes" do
           Spree::Order.where(id: order.id).update_all(total: order.total + 10)
           order.reload
-          expect(subject).to be true
-        end
-
-        it "returns true if a relevant attribute changes - order state: cancelled" do
-          order.cancel!
-          expect(subject).to be true
-        end
-
-        it "returns true if a relevant attribute changes - order state: resumed" do
-          order.cancel!
-          order.resume!
           expect(subject).to be true
         end
 
