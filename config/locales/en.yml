@@ -21,6 +21,9 @@
 en:
   # Overridden here due to a bug in spree i18n (Issue #870, and issue #1800)
   language_name: "English" # Localised name of this language
+  time:
+    formats:
+      long: "%B %d, %Y%l:%M %p" # %l adds a single space to the left
   activerecord:
     models:
       spree/product: Product
