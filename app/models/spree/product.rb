@@ -300,7 +300,7 @@ module Spree
     end
 
     def validate_image
-      return if image.blank? || image.valid?
+      return if image.blank? || !image.changed? || image.valid?
 
       errors.add(:base, I18n.t('spree.admin.products.image_not_processable'))
     end
