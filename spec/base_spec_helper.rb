@@ -47,6 +47,9 @@ Capybara.configure do |config|
   config.ignore_hidden_elements = true
 end
 
+# activate feature toggle admin_style_v3 to use new admin interface and run the build
+Flipper.enable(:admin_style_v3)
+
 FactoryBot.use_parent_strategy = false
 FactoryBot::SyntaxRunner.include FileHelper
 
