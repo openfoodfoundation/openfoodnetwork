@@ -30,7 +30,7 @@
       %td.text-right.total
         %strong
           = order.display_payment_total.to_html
-  - if order.outstanding_balance?
+  - if order.outstanding_balance? && order.outstanding_balance > 0
     %tr.total
       %td.text-right{colspan: "3"}
         %h5.not-paid
@@ -38,6 +38,15 @@
       %td.text-right.total.not-paid
         %h5.not-paid
           = order.display_outstanding_balance.to_html
+  - else
+    %tr.total
+      %td.text-right{colspan: "3"}
+        %h5
+          = t :credit_owed
+      %td.text-right.total.not-paid
+        %h5
+          = order.display_outstanding_balance.to_html
+
 
 
   - if order.total_tax > 0
