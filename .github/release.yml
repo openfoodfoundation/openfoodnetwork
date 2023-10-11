@@ -1,5 +1,7 @@
 changelog:
+  # Categorise according to what an instance manager needs to know
   categories:
+    # Posted in advance for #instance-managers
     - title: "User-facing changes 👀"
       labels:
         - '*'
@@ -9,15 +11,20 @@ changelog:
           - dependencies
           - feature toggled
           - technical changes only
+
     - title: "API changes ⚠️"
       labels:
         - api changes
-    - title: "Features under construction 🚧"
+
+    - title: "Experimental features for testing 🚧" # may be tested by instance managers
       labels:
         - feature toggled
+
+    # Instance managers ignore below
     - title: "Technical changes 🛠️"
       labels:
         - technical changes only
+
     - title: "Dependencies 📦"
       labels:
         - dependencies
