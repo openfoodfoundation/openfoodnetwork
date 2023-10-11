@@ -131,14 +131,18 @@ describe "
             toggle_columns "Hide"
             expect(page).to have_selector "tr#v_#{variant.id}"
             expect(page).to have_selector "tr#v_#{variant_related.id}"
-            within "tr#v_#{variant.id}" do click_button 'Hide' end
+            within "tr#v_#{variant.id}" do
+              click_button 'Hide'
+            end
             expect(page).to have_no_selector "tr#v_#{variant.id}"
             expect(page).to have_selector "tr#v_#{variant_related.id}"
             first("div#views-dropdown").click
             first("div#views-dropdown div.menu div.menu_item", text: "Hidden Products").click
             expect(page).to have_selector "tr#v_#{variant.id}"
             expect(page).to have_no_selector "tr#v_#{variant_related.id}"
-            within "tr#v_#{variant.id}" do click_button 'Add' end
+            within "tr#v_#{variant.id}" do
+              click_button 'Add'
+            end
             expect(page).to have_no_selector "tr#v_#{variant.id}"
             expect(page).to have_no_selector "tr#v_#{variant_related.id}"
             first("div#views-dropdown").click
@@ -492,8 +496,12 @@ describe "
           expect(page).to have_table_row ['PRODUCER', 'PRODUCT', 'VARIANT', 'ADD', 'HIDE']
           expect(page).to have_selector "table#new-products tr#v_#{variant1.id}"
           expect(page).to have_selector "table#new-products tr#v_#{variant2.id}"
-          within "table#new-products tr#v_#{variant1.id}" do click_button 'Add' end
-          within "table#new-products tr#v_#{variant2.id}" do click_button 'Hide' end
+          within "table#new-products tr#v_#{variant1.id}" do
+            click_button 'Add'
+          end
+          within "table#new-products tr#v_#{variant2.id}" do
+            click_button 'Hide'
+          end
           expect(page).to have_no_selector "table#new-products tr#v_#{variant1.id}"
           expect(page).to have_no_selector "table#new-products tr#v_#{variant2.id}"
           click_button "Back to my inventory"

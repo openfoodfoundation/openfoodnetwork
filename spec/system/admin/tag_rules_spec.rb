@@ -158,14 +158,18 @@ describe 'Tag Rules' do
 
       # DEFAULT FilterShippingMethods rule
       within ".default_rules #tr_0" do
-        within "li.tag-item", text: "local ✖" do find("a.remove-button").click end
+        within "li.tag-item", text: "local ✖" do
+          find("a.remove-button").click
+        end
         fill_in_tag "volunteers-only"
         expect(page).to have_content "not visible"
       end
 
       # FilterProducts rule
       within ".customer_tag #tr_1" do
-        within "li.tag-item", text: "member ✖" do find("a.remove-button").click end
+        within "li.tag-item", text: "member ✖" do
+          find("a.remove-button").click
+        end
         fill_in_tag "volunteers-only1"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_1_preferred_matched_" \
                                      "variants_visibility", selected: 'VISIBLE'
@@ -176,7 +180,9 @@ describe 'Tag Rules' do
 
       # FilterPaymentMethods rule
       within ".customer_tag #tr_2" do
-        within "li.tag-item", text: "trusted ✖" do find("a.remove-button").click end
+        within "li.tag-item", text: "trusted ✖" do
+          find("a.remove-button").click
+        end
         fill_in_tag "volunteers-only2"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_2_preferred_matched_" \
                                      "payment_methods_visibility", selected: 'NOT VISIBLE'
@@ -187,7 +193,9 @@ describe 'Tag Rules' do
 
       # FilterOrderCycles rule
       within ".customer_tag #tr_3" do
-        within "li.tag-item", text: "wholesale ✖" do find("a.remove-button").click end
+        within "li.tag-item", text: "wholesale ✖" do
+          find("a.remove-button").click
+        end
         fill_in_tag "volunteers-only3"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_3_preferred_matched_" \
                                      "order_cycles_visibility", selected: 'VISIBLE'
@@ -198,7 +206,9 @@ describe 'Tag Rules' do
 
       # FilterShippingMethods rule
       within ".customer_tag #tr_4" do
-        within "li.tag-item", text: "local ✖" do find("a.remove-button").click end
+        within "li.tag-item", text: "local ✖" do
+          find("a.remove-button").click
+        end
         fill_in_tag "volunteers-only4"
         expect(page).to have_select2 "enterprise_tag_rules_attributes_4_preferred_matched_" \
                                      "shipping_methods_visibility", selected: 'NOT VISIBLE'
@@ -257,11 +267,15 @@ describe 'Tag Rules' do
     it "deletes both default and customer rules from the database" do
       expect do
         accept_alert do
-          within "#tr_1" do first("a.delete-tag-rule").click end
+          within "#tr_1" do
+            first("a.delete-tag-rule").click
+          end
         end
         expect(page).to have_no_selector "#tr_1"
         accept_alert do
-          within "#tr_0" do first("a.delete-tag-rule").click end
+          within "#tr_0" do
+            first("a.delete-tag-rule").click
+          end
         end
         expect(page).to have_no_selector "#tr_0"
       end.to change{ TagRule.count }.by(-2)
