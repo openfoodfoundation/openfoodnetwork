@@ -83,10 +83,6 @@ class Invoice
       I18n.l(invoice_date.to_date, format: :long)
     end
 
-    def all_tax_adjustments
-      all_eligible_adjustments.select { |a| a.originator.type == 'Spree::TaxRate' }
-    end
-
     def tax_adjustment_totals
       all_tax_adjustments.each_with_object(Hash.new(0)) do |adjustment, totals|
         totals[adjustment.originator.id] += adjustment.amount
@@ -100,7 +96,7 @@ class Invoice
     end
 
     def all_tax_adjustments
-      all_eligible_adjustments.select { |a| a.originator_type == 'Spree::TaxRate' }
+      all_eligible_adjustments.select { |a| a.originator.type == 'Spree::TaxRate' }
     end
 
     def paid?
