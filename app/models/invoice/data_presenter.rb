@@ -72,7 +72,7 @@ class Invoice
       tax_adjustment_totals.map do |tax_rate_id, tax_amount|
         tax_rate = tax_rate_by_id[tax_rate_id]
         {
-          amount: Spree::Money.new(tax_amount, currency: currency),
+          amount: Spree::Money.new(tax_amount, currency:),
           percentage: number_to_percentage(tax_rate.amount * 100, precision: 1),
           rate_amount: tax_rate.amount,
         }

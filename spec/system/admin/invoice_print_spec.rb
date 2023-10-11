@@ -85,7 +85,7 @@ describe '
         order.payments << create(:payment, :completed, order:,
                                                        payment_method: payment_method1,
                                                        created_at: 1.day.ago)
-        order.payments << create(:payment, order: order, state: 'failed',
+        order.payments << create(:payment, order:, state: 'failed',
                                            payment_method: payment_method2,
                                            created_at: 2.days.ago)
         order.save!
