@@ -11,11 +11,20 @@ class ReportBlob < ActiveStorage::Blob
       filename:,
       content_type: content_type(filename),
       identify: false,
+      service_name:,
     )
   end
 
   def self.content_type(filename)
     MIME::Types.of(filename).first&.to_s || "application/octet-stream"
+  end
+
+  def self.service_name
+    if Rails.env.test?
+      :test
+    else
+      :local
+    end
   end
 
   def result
