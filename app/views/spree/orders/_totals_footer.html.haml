@@ -43,11 +43,9 @@
       %td.text-right{colspan: "3"}
         %h5
           = t :credit_owed
-      %td.text-right.total.not-paid
+      %td.text-right.total
         %h5
           = order.display_outstanding_balance.to_html
-
-
 
   - if order.total_tax > 0
     #tax
