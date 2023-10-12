@@ -289,21 +289,33 @@ module Spree
       end
 
       describe "#validate_image" do
-        let(:product) { create(:product_with_image) }
+        subject(:product) { create(:product_with_image) }
 
         context "when the image is invalid" do
-          before { expect(product.image).to receive(:valid?).and_return(false) }
+          before { allow(product.image).to receive(:valid?).and_return(false) }
 
-          it "adds an error message to the base object" do
-            expect(product).not_to be_valid
-            expect(product.errors[:base]).to include('Image attachment is not a valid image.')
+          context "and has been changed" do
+            before { expect(product.image).to receive(:changed?).and_return(true) }
+
+            it "adds an error message to the base object" do
+              expect(product).not_to be_valid
+              expect(product.errors[:base]).to include('Image attachment is not a valid image.')
+            end
+          end
+
+          it "ignores if unchanged" do
+            expect(product).to be_valid
           end
         end
 
-        context "when master variant is valid" do
-          it "returns true" do
-            expect(product).to be_valid
-          end
+        context "when image is valid" do
+          it { is_expected.to be_valid }
+        end
+
+        context "when image is blank" do
+          subject { create(:product) }
+
+          it { is_expected.to be_valid }
         end
       end
     end
