@@ -56,6 +56,4 @@ Openfoodnetwork::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.active_job.queue_adapter = :test
-
-  config.active_storage.service = :test
 end
