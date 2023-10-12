@@ -30,7 +30,7 @@ RSpec.describe '
       .to eq(oc.orders_open_at.strftime("%Y-%m-%d %H:%M"))
     expect(page.find('#order_cycle_orders_close_at').value)
       .to eq(oc.orders_close_at.strftime("%Y-%m-%d %H:%M"))
-    expect(page).to have_content "COORDINATOR #{oc.coordinator.name}"
+    expect(page).to have_content "Coordinator #{oc.coordinator.name}"
 
     click_button 'Next'
 

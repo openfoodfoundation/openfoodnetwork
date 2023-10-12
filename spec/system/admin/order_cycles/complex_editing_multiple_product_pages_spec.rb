@@ -47,7 +47,7 @@ RSpec.describe '
     end
 
     def expect_all_products_loaded
-      expect(page).to have_content new_product.name.upcase
+      expect(page).to have_content new_product.name
       expect(page).to have_content "2 of 2 Variants Loaded"
     end
   end

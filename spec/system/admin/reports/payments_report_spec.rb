@@ -46,7 +46,7 @@ RSpec.describe "Payments Reports" do
         "Shipping Total ($)",
         "Outstanding Balance ($)",
         "Total ($)"
-      ].join(" ").upcase)
+      ].join(" "))
 
       expect(page.find("table.report__table tbody tr").text).to have_content([
         order.payment_state,
@@ -83,7 +83,7 @@ RSpec.describe "Payments Reports" do
         "EFT ($)",
         "PayPal ($)",
         "Outstanding Balance ($)"
-      ].join(" ").upcase)
+      ].join(" "))
 
       expect(page.find("table.report__table tbody tr").text).to have_content([
         "credit owed",

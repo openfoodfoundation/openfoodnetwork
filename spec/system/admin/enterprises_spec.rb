@@ -92,7 +92,7 @@ RSpec.describe '
 
     # Require login to view shopfront or for checkout
     accept_alert do
-      within(".side_menu") { click_link "Shop Preferences" }
+      within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
     end
     expect(page).to have_checked_field "enterprise_require_login_false"
     expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
@@ -100,6 +100,7 @@ RSpec.describe '
     expect(page).not_to have_checked_field "enterprise_require_login_false"
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
+    scroll_to(:bottom)
     accept_alert do
       scroll_to(:bottom)
       within(".side_menu") { click_link "Users" }
@@ -199,7 +200,7 @@ RSpec.describe '
     page.find(".option", text: "Victoria").click
 
     accept_alert do
-      click_link "Shop Preferences"
+      within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
     end
     shop_message_input =
       page.find("text-angular#enterprise_preferred_shopfront_message div[id^='taTextElement']")
@@ -241,7 +242,7 @@ RSpec.describe '
     click_link "About"
     expect(page).to have_content 'This is an interesting long description'
 
-    click_link "Shop Preferences"
+    within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
     expect(page).to have_content 'This is my shopfront message.'
     expect(page).to have_checked_field(
       "enterprise_preferred_shopfront_order_cycle_order_orders_open_at"
@@ -525,7 +526,7 @@ RSpec.describe '
           visit edit_admin_enterprise_path(distributor1)
 
           within(".side_menu") do
-            click_link "Shop Preferences"
+            find(:link, "Shop Preferences").trigger("click")
           end
 
           choose "enterprise_preferred_shopfront_product_sorting_method_by_category"
@@ -547,10 +548,11 @@ RSpec.describe '
           visit edit_admin_enterprise_path(distributor1)
 
           within(".side_menu") do
-            click_link "Shop Preferences"
+            find(:link, "Shop Preferences").trigger("click")
           end
 
           choose "enterprise_preferred_shopfront_product_sorting_method_by_producer"
+          scroll_to(:bottom)
           find("#s2id_enterprise_preferred_shopfront_producer_order").click
           find(".select2-result-label", text: "First Supplier").click
           click_button 'Update'
@@ -571,7 +573,7 @@ RSpec.describe '
         visit edit_admin_enterprise_path(distributor1)
         scroll_to(:bottom)
         within ".side_menu" do
-          click_link 'Users'
+          find(:link, "Users").trigger("click")
         end
       end
 
@@ -623,7 +625,6 @@ RSpec.describe '
     context "white label settings" do
       before do
         visit edit_admin_enterprise_path(distributor1)
-
         select_white_label
       end
 
@@ -644,7 +645,7 @@ RSpec.describe '
       end
 
       it "set the hide_ofn_navigation preference for the current shop" do
-        expect(page).not_to have_content "LOGO USED IN SHOPFRONT"
+        expect(page).not_to have_content "Logo used in shopfront"
         check "Hide OFN navigation"
         click_button 'Update'
         expect(flash_message)
@@ -654,7 +655,7 @@ RSpec.describe '
         visit edit_admin_enterprise_path(distributor1)
         select_white_label
 
-        expect(page).to have_content "LOGO USED IN SHOPFRONT"
+        expect(page).to have_content "Logo used in shopfront"
         uncheck "Hide OFN navigation"
         click_button 'Update'
         expect(flash_message)
@@ -849,14 +850,14 @@ RSpec.describe '
         click_button "Change Package"
 
         # checks options for producer profile
-        expect(page).to have_content "PRODUCER PROFILE"
-        expect(page).to have_content "PRODUCER SHOP"
-        expect(page).to have_content "PRODUCER HUB"
-        expect(page).not_to have_content "PROFILE ONLY"
-        expect(page).not_to have_content "HUB SHOP"
+        expect(page).to have_content "Producer Profile"
+        expect(page).to have_content "Producer Shop"
+        expect(page).to have_content "Producer Hub"
+        expect(page).not_to have_content "Profile Only"
+        expect(page).not_to have_content "Hub Shop"
 
         # Producer hub option is selected
-        page.find('a', class: 'selected', text: "PRODUCER HUB")
+        page.find('a', class: 'selected', text: "Producer Hub")
         expect(enterprise.reload.is_primary_producer).to eq true
         expect(enterprise.reload.sells).to eq('any')
 
@@ -865,14 +866,14 @@ RSpec.describe '
         assert_hub_content
 
         # Changes to producer shop
-        page.find('a', text: "PRODUCER SHOP").click
+        page.find('a', text: "Producer Shop").click
         click_button "Change now"
         expect(page).to have_content update_message
 
         # Checks changes are persistent
         click_button "Change Package"
 
-        page.find('a', class: 'selected', text: "PRODUCER SHOP")
+        page.find('a', class: 'selected', text: "Producer Shop")
         expect(enterprise.reload.is_primary_producer).to eq true
         expect(enterprise.reload.sells).to eq('own')
 
@@ -881,14 +882,14 @@ RSpec.describe '
         assert_hub_content
 
         # Changes to producer profile
-        page.find('a', text: "PRODUCER PROFILE").click
+        page.find('a', text: "Producer Profile").click
         click_button "Change now"
         expect(page).to have_content update_message
 
         # Checks changes are persistent
         click_button "Change Package"
 
-        page.find('a', class: 'selected', text: "PRODUCER PROFILE")
+        page.find('a', class: 'selected', text: "Producer Profile")
 
         # a primary producer:
         expect(enterprise.reload.is_primary_producer).to eq true
@@ -917,14 +918,14 @@ RSpec.describe '
         click_button "Change Package"
 
         # checks options for non-producer profile
-        expect(page).not_to have_content "PRODUCER PROFILE"
-        expect(page).not_to have_content "PRODUCER SHOP"
-        expect(page).not_to have_content "PRODUCER HUB"
-        expect(page).to have_content "PROFILE ONLY"
-        expect(page).to have_content "HUB SHOP"
+        expect(page).not_to have_content "Producer Profile"
+        expect(page).not_to have_content "Producer Shop"
+        expect(page).not_to have_content "Producer Hub"
+        expect(page).to have_content "Profile Only"
+        expect(page).to have_content "Hub Shop"
 
         # Producer hub option is selected
-        page.find('a', class: 'selected', text: "HUB SHOP")
+        page.find('a', class: 'selected', text: "Hub Shop")
         expect(enterprise.reload.is_primary_producer).to eq false
         expect(enterprise.reload.producer_profile_only).to eq false
 
@@ -933,14 +934,14 @@ RSpec.describe '
         assert_hub_content
 
         # Changes to producer shop
-        page.find('a', text: "PROFILE ONLY").click
+        page.find('a', text: "Profile Only").click
         click_button "Change now"
         expect(page).to have_content update_message
 
         # Checks changes are persistent
         click_button "Change Package"
 
-        page.find('a', class: 'selected', text: "PROFILE ONLY")
+        page.find('a', class: 'selected', text: "Profile Only")
         expect(enterprise.reload.is_primary_producer).to eq false
         expect(enterprise.reload.producer_profile_only).to eq false
 
@@ -958,13 +959,15 @@ RSpec.describe '
         page.find("td.package").click
 
         # checks options for producer profile
-        expect(page).to have_content "PROFILE ONLY"
-        expect(page).to have_content "PRODUCER SHOP"
-        expect(page).to have_content "PRODUCER HUB"
-        expect(page).not_to have_content "HUB SHOP"
+        within ".enterprise_package_panel" do
+          expect(page).to have_content "Profile Only"
+          expect(page).to have_content "Producer Shop"
+          expect(page).to have_content "Producer Hub"
+          expect(page).not_to have_content "Hub Shop"
+        end
 
         # Producer hub option is selected
-        page.find('a', class: 'selected', text: "PRODUCER HUB")
+        page.find('a', class: 'selected', text: "Producer Hub")
         expect(enterprise.is_primary_producer).to eq true
         expect(enterprise.reload.sells).to eq('any')
 
@@ -972,11 +975,11 @@ RSpec.describe '
         assert_hub_menu
 
         # Changes to producer shop
-        page.find('a', text: "PRODUCER SHOP").click
+        page.find('a', text: "Producer Shop").click
         page.find('a', text: "SAVE").click
 
         # Checks changes are persistent
-        page.find('a', class: 'selected', text: "PRODUCER SHOP")
+        page.find('a', class: 'selected', text: "Producer Shop")
 
         # updates page
         page.refresh
@@ -988,11 +991,11 @@ RSpec.describe '
 
         # Changes to producer profile
         page.find("td.package").click
-        page.find('a', text: "PROFILE ONLY").click
+        page.find('a', text: "Profile Only").click
         page.find('a', text: "SAVE").click
 
         # Checks changes are persistent
-        page.find('a', class: 'selected', text: "PROFILE ONLY")
+        page.find('a', class: 'selected', text: "Profile Only")
 
         # updates page
         page.refresh
@@ -1023,16 +1026,16 @@ RSpec.describe '
         page.find("td.producer").click
 
         # checks options for producer profile
-        expect(page).to have_content "PRODUCER"
-        expect(page).to have_content "NON-PRODUCER"
+        expect(page).to have_content "Producer"
+        expect(page).to have_content "Non-producer"
 
         # Producer hub option is selected
-        page.find('a', class: 'selected', text: "PRODUCER")
+        page.find('a', class: 'selected', text: "Producer")
         expect(enterprise.is_primary_producer).to eq true
         expect(enterprise.reload.sells).to eq('any')
 
         # Changes to non-producer
-        page.find('a', text: "NON-PRODUCER").click
+        page.find('a', text: "Non-producer").click
         page.find('a', text: "SAVE").click
 
         # updates page
@@ -1044,19 +1047,21 @@ RSpec.describe '
         page.find("td.package").click
 
         # checks options for non-producer profile
-        expect(page).not_to have_content "PRODUCER PROFILE"
-        expect(page).not_to have_content "PRODUCER SHOP"
-        expect(page).not_to have_content "PRODUCER HUB"
-        expect(page).to have_content "PROFILE ONLY"
-        expect(page).to have_content "HUB SHOP"
+        within ".enterprise_package_panel" do
+          expect(page).not_to have_content "Producer Profile"
+          expect(page).not_to have_content "Producer Shop"
+          expect(page).not_to have_content "Producer Hub"
+          expect(page).to have_content "Profile Only"
+          expect(page).to have_content "Hub Shop"
+        end
 
         # Producer hub option is selected
-        page.find('a', class: 'selected', text: "HUB SHOP")
+        page.find('a', class: 'selected', text: "Hub Shop")
         expect(enterprise.reload.is_primary_producer).to eq false
         expect(enterprise.reload.sells).to eq('any')
 
         # Changes to producer shop
-        page.find('a', text: "PROFILE ONLY").click
+        page.find('a', text: "Profile Only").click
         page.find('a', text: "SAVE").click
 
         # updates page
@@ -1064,12 +1069,12 @@ RSpec.describe '
 
         # Checks changes are persistent
         page.find("td.package").click
-        page.find('a', class: 'selected', text: "PROFILE ONLY")
+        page.find('a', class: 'selected', text: "Profile Only")
 
         # Displays the correct dashboard sections
         within "#admin-menu" do
-          expect(page).to have_content "DASHBOARD"
-          expect(page).to have_content "ENTERPRISES"
+          expect(page).to have_content "Dashboard"
+          expect(page).to have_content "Enterprises"
         end
 
         expect(enterprise.reload.is_primary_producer).to eq false
@@ -1093,13 +1098,13 @@ end
 
 def assert_hub_menu
   within "#admin-menu" do
-    expect(page).to have_content "DASHBOARD"
-    expect(page).to have_content "PRODUCTS"
-    expect(page).to have_content "ORDER CYCLES"
-    expect(page).to have_content "ORDERS"
-    expect(page).to have_content "REPORTS"
-    expect(page).to have_content "ENTERPRISES"
-    expect(page).to have_content "CUSTOMERS"
+    expect(page).to have_content "Dashboard"
+    expect(page).to have_content "Products"
+    expect(page).to have_content "Order cycles"
+    expect(page).to have_content "Orders"
+    expect(page).to have_content "Reports"
+    expect(page).to have_content "Enterprises"
+    expect(page).to have_content "Customers"
   end
 end
 
@@ -1114,13 +1119,13 @@ end
 
 def assert_supplier_menu
   within "#admin-menu" do
-    expect(page).to have_content "DASHBOARD"
-    expect(page).to have_content "PRODUCTS"
-    expect(page).not_to have_content "ORDER CYCLES"
-    expect(page).not_to have_content "ORDERS"
-    expect(page).to have_content "REPORTS"
-    expect(page).to have_content "ENTERPRISES"
-    expect(page).not_to have_content "CUSTOMERS"
+    expect(page).to have_content "Dashboard"
+    expect(page).to have_content "Products"
+    expect(page).not_to have_content "Order cycles"
+    expect(page).not_to have_content "Orders"
+    expect(page).to have_content "Reports"
+    expect(page).to have_content "Enterprises"
+    expect(page).not_to have_content "Customers"
   end
 end
 
@@ -1135,12 +1140,18 @@ end
 
 def assert_profile
   within "#admin-menu" do
-    expect(page).to have_content "DASHBOARD"
-    expect(page).to have_content "ENTERPRISES"
+    expect(page).to have_content "Dashboard"
+    expect(page).to have_content "Enterprises"
   end
 
   within "#content" do
     expect(page).to have_content "Your profile live"
     expect(page).to have_content "Edit profile details"
+  end
+end
+
+def select_white_label
+  within(".side_menu") do
+    find(:link, "White Label").trigger("click")
   end
 end

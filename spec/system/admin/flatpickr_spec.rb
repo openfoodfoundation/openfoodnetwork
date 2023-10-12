@@ -7,14 +7,14 @@ RSpec.describe "Test Flatpickr" do
   include WebHelper
 
   context "orders" do
-    it "opens the datepicker and closes it using the 'CLOSE' button" do
+    it "opens the datepicker and closes it using the 'Close' button" do
       login_as_admin
       visit 'admin/orders'
       open_datepicker('.datepicker')
       # Looks for the close button and click it
       within(".flatpickr-calendar.open") do
         expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-        find("button", text: "CLOSE").click
+        find("button", text: "Close").click
       end
       # Should no more have opened flatpickr
       expect(page).not_to have_selector '.flatpickr-calendar.open'

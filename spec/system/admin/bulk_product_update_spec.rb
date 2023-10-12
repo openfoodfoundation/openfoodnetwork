@@ -201,8 +201,8 @@ RSpec.describe '
     login_as_admin
     visit spree.admin_products_path
 
-    find("a", text: "NEW PRODUCT").click
-    expect(page).to have_content 'NEW PRODUCT'
+    find("a", text: "New Product").click
+    expect(page).to have_content 'New Product'
 
     fill_in 'product_name', with: 'Big Bag Of Apples'
     select supplier.name, from: 'product_supplier_id'
@@ -311,8 +311,10 @@ RSpec.describe '
       end
 
       it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
+        scroll_to(:bottom)
+
         within "tr#v_#{v2.id}" do
-          page.find(".add-variant").trigger("click")
+          page.find(".add-variant").click
         end
 
         within "tr#v_-1" do
@@ -698,17 +700,17 @@ RSpec.describe '
         login_as_admin
         visit spree.admin_products_path
 
-        expect(page).to have_selector "th", text: "NAME"
-        expect(page).to have_selector "th", text: "PRODUCER"
-        expect(page).to have_selector "th", text: "PRICE"
-        expect(page).to have_selector "th", text: "ON HAND"
+        expect(page).to have_selector "th", text: "Name"
+        expect(page).to have_selector "th", text: "Producer"
+        expect(page).to have_selector "th", text: "Price"
+        expect(page).to have_selector "th", text: "On Hand"
 
         toggle_columns /^.{0,1}Producer$/i
 
-        expect(page).not_to have_selector "th", text: "PRODUCER"
-        expect(page).to have_selector "th", text: "NAME"
-        expect(page).to have_selector "th", text: "PRICE"
-        expect(page).to have_selector "th", text: "ON HAND"
+        expect(page).not_to have_selector "th", text: "Producer"
+        expect(page).to have_selector "th", text: "Name"
+        expect(page).to have_selector "th", text: "Price"
+        expect(page).to have_selector "th", text: "On Hand"
       end
     end
 
@@ -813,8 +815,8 @@ RSpec.describe '
 
       visit spree.admin_products_path
 
-      find("a", text: "NEW PRODUCT").click
-      expect(page).to have_content 'NEW PRODUCT'
+      find("a", text: "New Product").click
+      expect(page).to have_content 'New Product'
       expect(page).to have_select 'product_supplier_id',
                                   with_options: [supplier_managed1.name, supplier_managed2.name,
                                                  supplier_permitted.name]

@@ -177,7 +177,7 @@ RSpec.describe '
         within(".flatpickr-calendar.open") do
           expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
           select_datetime_from_datepicker test_value
-          find("button", text: "CLOSE").click
+          find("button", text: "Close").click
         end
 
         # Should no more have opened flatpickr

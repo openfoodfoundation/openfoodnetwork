@@ -15,18 +15,18 @@ RSpec.describe "Sales Tax Totals By order" do
     [
       "Distributor",
       "Order Cycle",
-      "Order Number",
+      "Order number",
       "Tax Category",
       "Tax Rate Name",
       "Tax Rate",
-      "Total excl. Tax ($)",
+      "Total excl. tax ($)",
       "Tax",
-      "Total incl. Tax ($)",
+      "Total incl. tax ($)",
       "First Name",
       "Last Name",
       "Code",
       "Email"
-    ].join(" ").upcase
+    ].join(" ")
   }
   let!(:state_zone){ create(:zone_with_state_member) }
   let!(:country_zone){ create(:zone_with_member) }

@@ -16,7 +16,7 @@ RSpec.describe "Enterprise Summary Fee with Tax Report By Producer" do
   let!(:table_header){
     ["Distributor", "Producer", "Producer Tax Status", "Order Cycle", "Name", "Type", "Owner",
      "Tax Category", "Tax Rate Name", "Tax Rate", "Total excl. tax ($)", "Tax",
-     "Total incl. tax ($)"].join(" ").upcase
+     "Total incl. tax ($)"].join(" ")
   }
 
   let!(:state_zone){ create(:zone_with_state_member) }

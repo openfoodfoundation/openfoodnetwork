@@ -192,7 +192,7 @@ RSpec.describe 'Subscriptions' do
         # Fill in other details
         fill_in_subscription_basic_details
         click_button "Next"
-        expect(page).to have_content "BILLING ADDRESS"
+        expect(page).to have_content "Billing Address"
         click_button "Next"
 
         # Add products

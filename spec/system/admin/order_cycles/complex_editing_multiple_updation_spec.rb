@@ -16,7 +16,7 @@ RSpec.describe '
 
     # Expect correct values
     expect(page).to have_field('order_cycle_name', with: oc.name)
-    expect(page).to have_content "COORDINATOR #{oc.coordinator.name}"
+    expect(page).to have_content "Coordinator #{oc.coordinator.name}"
     expect(page).to have_button('Save', disabled: true)
     expect(page).to have_button('Save and Next', disabled: true)
 

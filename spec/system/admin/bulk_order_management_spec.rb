@@ -69,11 +69,11 @@ RSpec.describe '
       end
 
       it "orders by completion date" do
-        find("a", text: 'COMPLETED AT').click # sets ascending ordering
+        find("a", text: 'Completed at').click # sets ascending ordering
         expect(page).to have_content(
           /#{li2.product.name}.*#{li1.product.name}.*#{li22.product.name}.*#{li21.product.name}/m
         )
-        find("a", text: 'COMPLETED AT').click # sets descending ordering
+        find("a", text: 'Completed at').click # sets descending ordering
         expect(page).to have_content(
           /#{li21.product.name}.*#{li22.product.name}.*#{li1.product.name}.*#{li2.product.name}/m
         )
@@ -155,9 +155,9 @@ RSpec.describe '
           expect(page).to have_content "Little Fish", count: 15
           expect(page).not_to have_content "Big Fish"
         end
-        find("a", text: "Clear").click # closes BOM box
-        expect(page).to have_content "Little Fish", count: 10
+        click_link "Clear" # closes BOM box
         expect(page).to have_content "Big Fish", count: 5
+        expect(page).to have_content "Little Fish", count: 10
       end
     end
 
@@ -311,7 +311,7 @@ RSpec.describe '
       end
 
       it "displays a column for user's full name" do
-        expect(page).to have_selector "th.full_name", text: "NAME"
+        expect(page).to have_selector "th.full_name", text: "Name"
         expect(page)
           .to have_selector "td.full_name",
                             text: "#{o1.bill_address.last_name}, #{o1.bill_address.first_name}"
@@ -320,33 +320,33 @@ RSpec.describe '
 
       it "displays a column for order date" do
         expect(page).to have_selector "th.date",
-                                      text: 'Completed at'.upcase
+                                      text: 'Completed at'
         expect(page).to have_selector "td.date", text: o1.completed_at.strftime('%B %d, %Y')
         expect(page).to have_selector "td.date", text: o2.completed_at.strftime('%B %d, %Y')
       end
 
       it "displays a column for producer" do
-        expect(page).to have_selector "th.producer", text: "PRODUCER"
+        expect(page).to have_selector "th.producer", text: "Producer"
         expect(page).to have_selector "td.producer", text: li1.product.supplier.name
         expect(page).to have_selector "td.producer", text: li2.product.supplier.name
       end
 
       it "displays a column for variant description, which shows only product name " \
          "when options text is blank" do
-        expect(page).to have_selector "th.variant", text: "PRODUCT: UNIT"
+        expect(page).to have_selector "th.variant", text: "Product: Unit"
         expect(page).to have_selector "td.variant", text: li1.product.name
         expect(page).to have_selector "td.variant",
                                       text: "#{li2.product.name}: #{li2.variant.options_text}"
       end
 
       it "displays a field for quantity" do
-        expect(page).to have_selector "th.quantity", text: "QUANTITY"
+        expect(page).to have_selector "th.quantity", text: "Quantity"
         expect(page).to have_field "quantity", with: li1.quantity.to_s
         expect(page).to have_field "quantity", with: li2.quantity.to_s
       end
 
       it "displays a column for max quantity" do
-        expect(page).to have_selector "th.max", text: "MAX"
+        expect(page).to have_selector "th.max", text: "Max"
         expect(page).to have_selector "td.max", text: li1.max_quantity.to_s
         expect(page).to have_selector "td.max", text: li2.max_quantity.to_s
       end
@@ -550,13 +550,13 @@ RSpec.describe '
 
     context "using column display toggle" do
       it "displays the default selected columns" do
-        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "Name"
         expect(page).to have_selector "th",
-                                      text: 'Completed at'.upcase
-        expect(page).to have_selector "th", text: "PRODUCER"
-        expect(page).to have_selector "th", text: "PRODUCT: UNIT"
-        expect(page).to have_selector "th", text: "QUANTITY"
-        expect(page).to have_selector "th", text: "MAX"
+                                      text: 'Completed at'
+        expect(page).to have_selector "th", text: "Producer"
+        expect(page).to have_selector "th", text: "Product: Unit"
+        expect(page).to have_selector "th", text: "Quantity"
+        expect(page).to have_selector "th", text: "Max"
       end
 
       context "hiding a column, by de-selecting it from the drop-down" do
@@ -565,13 +565,13 @@ RSpec.describe '
         end
 
         it "shows all default columns, except the de-selected column" do
-          expect(page).not_to have_selector "th", text: "PRODUCER"
-          expect(page).to have_selector "th", text: "NAME"
+          expect(page).not_to have_selector "th", text: "Producer"
+          expect(page).to have_selector "th", text: "Name"
           expect(page).to have_selector "th",
-                                        text: 'Completed at'.upcase
-          expect(page).to have_selector "th", text: "PRODUCT: UNIT"
-          expect(page).to have_selector "th", text: "QUANTITY"
-          expect(page).to have_selector "th", text: "MAX"
+                                        text: 'Completed at'
+          expect(page).to have_selector "th", text: "Product: Unit"
+          expect(page).to have_selector "th", text: "Quantity"
+          expect(page).to have_selector "th", text: "Max"
         end
       end
     end
@@ -1209,7 +1209,7 @@ RSpec.describe '
 
       context "clicking 'Clear' in group buy box" do
         before :each do
-          find("a", text: "Clear").click
+          click_link "Clear" # closes BOM box
         end
 
         it "shows all products and clears group buy box" do

@@ -32,7 +32,7 @@ RSpec.describe 'Schedules' do
         visit spree.admin_dashboard_path
         click_link 'Order cycles'
         expect(page).to have_selector ".order-cycle-#{oc1.id}"
-        find('a', text: 'NEW SCHEDULE').click
+        find('a', text: 'New Schedule').click
 
         within "#schedule-dialog" do
           # Only order cycles coordinated by managed enterprises are available to select

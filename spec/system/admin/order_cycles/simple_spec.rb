@@ -334,7 +334,7 @@ RSpec.describe '
 
           visit edit_admin_order_cycle_path(oc)
 
-          expect(page).to have_content 'Re notify producers'.upcase
+          expect(page).to have_content "Re notify producers"
         end
 
         it "allows removing exchanges" do
@@ -781,7 +781,7 @@ RSpec.describe '
       uncheck "order_cycle_incoming_exchange_0_variants_#{v3.id}"
 
       # Add tags
-      expect(page).to have_content "TAGS"
+      expect(page).to have_content "Tags"
 
       within "tags-with-translation" do
         find(:css, "tags-input .tags input").set "wholesale\n"
