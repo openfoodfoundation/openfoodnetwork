@@ -73,7 +73,7 @@ describe '
     expect(order.line_items.count).to be_zero
 
     click_link "Order Details"
-    expect(page).to have_content 'ADD PRODUCT'
+    expect(page).to have_content 'Add Product'
     select2_select product.name, from: 'add_variant_id', search: true
     find('button.add_variant').click
     # Wait for JS
@@ -105,10 +105,10 @@ describe '
     end
 
     it "doesn't show links to other steps" do
-      expect(page).not_to have_content "CUSTOMER DETAILS"
-      expect(page).not_to have_content "ORDER DETAILS"
-      expect(page).not_to have_content "PAYMENTS"
-      expect(page).not_to have_content "ADJUSTMENTS"
+      expect(page).not_to have_content "Customer Details"
+      expect(page).not_to have_content "Order Details"
+      expect(page).not_to have_content "Payments"
+      expect(page).not_to have_content "Adjustments"
     end
   end
 
@@ -421,7 +421,7 @@ describe '
       expect(page).to have_content "Customer Details updated"
       click_link "Order Details"
 
-      expect(page).to have_content 'Add Product'.upcase
+      expect(page).to have_content 'Add Product'
       select2_select product.name, from: 'add_variant_id', search: true
 
       within("table.stock-levels") do
@@ -592,7 +592,7 @@ describe '
         expect(page).to have_selector "fieldset#order-total", text: order.display_total
 
         # shows the order tax adjustments
-        within('fieldset', text: 'Line Item Adjustments'.upcase) do
+        within('fieldset', text: 'Line Item Adjustments') do
           expect(page).to have_selector "td", match: :first, text: "Tax 1"
           expect(page).to have_selector "td.total", text: Spree::Money.new(10)
         end
@@ -1028,7 +1028,7 @@ describe '
 
           visit spree.edit_admin_order_path(incomplete_order)
 
-          expect(page).to have_content "Out of Stock".upcase
+          expect(page).to have_content "Out of Stock"
 
           within ".insufficient-stock-items" do
             expect(page).to have_content incomplete_order.products.first.name
@@ -1040,7 +1040,7 @@ describe '
 
           # updates the order and verifies the warning disappears
           click_button 'Update And Recalculate Fees'
-          expect(page).to_not have_content "Out of Stock".upcase
+          expect(page).to_not have_content "Out of Stock"
         end
       end
     end
@@ -1050,7 +1050,7 @@ describe '
       expect(page).to have_selector 'h1', text: 'Customer Details'
       click_link "Order Details"
 
-      expect(page).to have_content 'ADD PRODUCT'
+      expect(page).to have_content 'Add Product'
       select2_select product.name, from: 'add_variant_id', search: true
 
       find('button.add_variant').click
@@ -1152,9 +1152,9 @@ describe '
               "Date/Time",
               "Invoice Number",
               "Amount",
-              "Status",
+              "status",
               "File",
-            ].join(" ").upcase
+            ].join(" ")
           }
 
           let(:invoice_number){ "#{order.distributor_id}-1" }

@@ -95,7 +95,6 @@ describe "Orders And Fulfillment" do
                                "Billing State",
                                "Order number",
                                "Date"]
-                               .map(&:upcase)
                             ])
       end
 
@@ -276,7 +275,6 @@ describe "Orders And Fulfillment" do
                                      "Total Units",
                                      "Curr. Cost per Unit",
                                      "Total Cost"]
-                                     .map(&:upcase)
                                   ])
 
               # displays the producer name in the respective column
@@ -330,7 +328,6 @@ describe "Orders And Fulfillment" do
                                      "Total Units",
                                      "Curr. Cost per Unit",
                                      "Total Cost"]
-                                     .map(&:upcase)
                                   ])
 
               # displays the producer name in own row
@@ -366,7 +363,6 @@ describe "Orders And Fulfillment" do
                                      "Curr. Cost per Unit",
                                      "Total Cost",
                                      "Shipping Method"]
-                                     .map(&:upcase)
                                   ])
 
               # displays the producer name in the respective column
@@ -414,7 +410,6 @@ describe "Orders And Fulfillment" do
                                      "Curr. Cost per Unit",
                                      "Total Cost",
                                      "Shipping Method"]
-                                     .map(&:upcase)
                                   ])
 
               # displays the producer name in own row
@@ -466,7 +461,6 @@ describe "Orders And Fulfillment" do
                                    "Total Cost",
                                    "Total Shipping Cost",
                                    "Shipping Method"]
-                                   .map(&:upcase)
                                 ])
 
             # displays the Distributor name in the respective column
@@ -518,7 +512,6 @@ describe "Orders And Fulfillment" do
                                    "Total Cost",
                                    "Total Shipping Cost",
                                    "Shipping Method"]
-                                   .map(&:upcase)
                                 ])
 
             # displays the Distributor name in own row

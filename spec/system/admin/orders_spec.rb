@@ -279,7 +279,7 @@ describe '
         expect(page).to have_content order_not_empty_no_address.number
 
         # And the same orders are displayed when sorting by name:
-        find("th a", text: "NAME").click
+        find("th a", text: "Name").click
 
         expect(page).not_to have_content order_empty.number
         expect(page).to have_content order_not_empty.number
@@ -298,11 +298,11 @@ describe '
           visit spree.admin_orders_path
         end
         it "orders by completion date" do
-          find("a", text: 'COMPLETED AT').click # sets ascending ordering
+          find("a", text: 'Completed At').click # sets ascending ordering
           expect(page).to have_content(
             /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
           )
-          find("a", text: 'COMPLETED AT').click # sets descending ordering
+          find("a", text: 'Completed At').click # sets descending ordering
           expect(page).to have_content(
             /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
           )
@@ -320,11 +320,11 @@ describe '
         end
 
         it "orders by order number" do
-          find("a", text: 'NUMBER').click # sets ascending ordering
+          find("a", text: 'Number').click # sets ascending ordering
           expect(page).to have_content(
             /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
           )
-          find("a", text: 'NUMBER').click # sets descending ordering
+          find("a", text: 'Number').click # sets descending ordering
           expect(page).to have_content(
             /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
           )
@@ -344,11 +344,11 @@ describe '
         end
 
         it "orders by order state" do
-          find("a", text: 'STATE').click # sets ascending ordering
+          find("a", text: 'State').click # sets ascending ordering
           expect(page).to have_content(
             /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
           )
-          find("a", text: 'STATE').click # sets descending ordering
+          find("a", text: 'State').click # sets descending ordering
           expect(page).to have_content(
             /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
           )
@@ -365,9 +365,9 @@ describe '
         end
 
         it "orders by payment state" do
-          find("a", text: 'PAYMENT STATE').click # sets ascending ordering
+          find("a", text: 'Payment State').click # sets ascending ordering
           expect(page).to have_content(/#{order4.number}.*#{order3.number}.*#{order2.number}/m)
-          find("a", text: 'PAYMENT STATE').click # sets descending ordering
+          find("a", text: 'Payment State').click # sets descending ordering
           expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
         end
       end
@@ -383,9 +383,9 @@ describe '
         end
 
         it "orders by shipment state" do
-          find("a", text: 'SHIPMENT STATE').click # sets ascending ordering
+          find("a", text: 'Shipment State').click # sets ascending ordering
           expect(page).to have_content(/#{order4.number}.*#{order3.number}.*#{order2.number}/m)
-          find("a", text: 'SHIPMENT STATE').click # sets descending ordering
+          find("a", text: 'Shipment State').click # sets descending ordering
           expect(page).to have_content(/#{order2.number}.*#{order3.number}.*#{order4.number}/m)
         end
       end
@@ -401,11 +401,11 @@ describe '
         end
 
         it "orders by customer email" do
-          find("a", text: 'EMAIL').click # sets ascending ordering
+          find("a", text: 'Email').click # sets ascending ordering
           expect(page).to have_content(
             /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
           )
-          find("a", text: 'EMAIL').click # sets descending ordering
+          find("a", text: 'Email').click # sets descending ordering
           expect(page).to have_content(
             /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
           )
@@ -423,11 +423,11 @@ describe '
         end
 
         it "orders by last name then first name" do
-          find("a", text: 'NAME').click # sets ascending ordering
+          find("a", text: 'Name').click # sets ascending ordering
           expect(page).to have_content(
             /#{order4.number}.*#{order2.number}.*#{order3.number}.*#{order5.number}/m
           )
-          find("a", text: 'NAME').click # sets descending ordering
+          find("a", text: 'Name').click # sets descending ordering
           expect(page).to have_content(
             /#{order5.number}.*#{order3.number}.*#{order2.number}.*#{order4.number}/m
           )
@@ -465,11 +465,11 @@ describe '
         end
 
         it "orders by order total" do
-          find("a", text: 'TOTAL').click # sets ascending ordering
+          find("a", text: 'Total').click # sets ascending ordering
           expect(page).to have_content(
             /#{order5.number}.*#{order4.number}.*#{order3.number}.*#{order2.number}/m
           )
-          find("a", text: 'TOTAL').click # sets descending ordering
+          find("a", text: 'Total').click # sets descending ordering
           expect(page).to have_content(
             /#{order2.number}.*#{order3.number}.*#{order4.number}.*#{order5.number}/m
           )
@@ -576,7 +576,7 @@ describe '
         context "can bulk print invoices" do
           def extract_pdf_content
             # Extract last part of invoice URL
-            link = page.find(class: "button", text: "VIEW FILE")
+            link = page.find(class: "button", text: "View File")
             filename = link[:href].match %r{/invoices/.*}
 
             # Load invoice temp file directly instead of downloading
@@ -623,7 +623,7 @@ describe '
           end
 
           it_behaves_like "can bulk print invoices from 2 orders"
-
+          
           context "with legal invoices feature", feature: :invoices do
             it_behaves_like "can bulk print invoices from 2 orders"
           end
