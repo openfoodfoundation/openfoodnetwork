@@ -4,7 +4,7 @@ class Invoice
   class DataPresenter
     class LineItem < Invoice::DataPresenter::Base
       attributes :added_tax, :currency, :included_tax, :price_with_adjustments, :quantity,
-                 :variant_id
+                 :variant_id, :unit_price_price_and_unit
       attributes_with_presenter :variant
       invoice_generation_attributes :added_tax, :included_tax, :price_with_adjustments,
                                     :quantity, :variant_id

@@ -3,7 +3,7 @@
 class Invoice
   class LineItemSerializer < ActiveModel::Serializer
     attributes :id, :added_tax, :currency, :included_tax, :price_with_adjustments, :quantity,
-               :variant_id
+               :variant_id, :unit_price_price_and_unit
     has_one :variant, serializer: Invoice::VariantSerializer
   end
 end
