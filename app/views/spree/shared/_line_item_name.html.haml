@@ -2,5 +2,4 @@
   = "#{raw(line_item.product.name)}"
   - unless line_item.product.name.include? line_item.name_to_display
     %span= "- #{raw(line_item.name_to_display)}"
-- if line_item.options_text
-  = "(#{raw(line_item.options_text)})"
+= raw("(#{line_item.unit_price_price_and_unit})")
