@@ -51,7 +51,7 @@ describe Admin::OrdersHelper, type: :helper do
         voucher_adjustment.update(included_tax: voucher_included_tax)
 
         fake_adjustment = helper.order_adjustments_for_display(order).last
-        expect(fake_adjustment.label).to eq("new_code (tax included in price)")
+        expect(fake_adjustment.label).to eq("new_code (tax included in voucher)")
         expect(fake_adjustment.amount).to eq(-0.5)
       end
     end
