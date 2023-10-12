@@ -2,6 +2,8 @@
 
 module Admin
   module OrdersHelper
+    AdjustmentData = Struct.new(:label, :amount)
+
     # Adjustments to display under "Order adjustments".
     #
     # We exclude shipping method adjustments because they are displayed in a
@@ -18,10 +20,10 @@ module Admin
       adjustment = order.voucher_adjustments.first
 
       [
-        Spree::Adjustment.new(
-          label: I18n.t("admin.orders.edit.voucher_tax_included_in_price",
-                        label: adjustment.label),
-          amount: adjustment.included_tax
+        AdjustmentData.new(
+          I18n.t("admin.orders.edit.voucher_tax_included_in_price",
+                 label: adjustment.label),
+          adjustment.included_tax
         )
       ]
     end
