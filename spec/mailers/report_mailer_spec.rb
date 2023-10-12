@@ -10,7 +10,7 @@ describe ReportMailer do
         blob:,
       ).report_ready
     }
-    let(:blob) { ReportBlob.create_for_upload_later!("customers.csv") }
+    let(:blob) { ReportBlob.create!("customers.csv", "report content") }
 
     it "notifies about a report" do
       expect(email.subject).to eq "Report ready"
