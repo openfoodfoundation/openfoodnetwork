@@ -27,6 +27,8 @@ class ReportJob < ApplicationJob
         report_class:, user:, params:, format:
       }
     end
+
+    broadcast_error(channel)
   end
 
   def email_result(user, blob)
@@ -40,6 +42,13 @@ class ReportJob < ApplicationJob
     cable_ready[channel].inner_html(
       selector: "#report-table",
       html: actioncable_content(format, blob)
+    ).broadcast
+  end
+
+  def broadcast_error(channel)
+    cable_ready[channel].inner_html(
+      selector: "#report-table",
+      html: I18n.t("report_job.report_failed")
     ).broadcast
   end
 
