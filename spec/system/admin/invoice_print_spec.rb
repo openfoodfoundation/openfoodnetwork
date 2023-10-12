@@ -35,7 +35,15 @@ describe '
     Capybara.use_default_driver
   end
 
-  describe "that contains right Payment Description at Checkout information" do
+  shared_examples "contains right Payment Description at Checkout information" do
+    let(:url_params) {
+      if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+        { invoice_id: order.invoices.first.id }
+      else
+        {}
+      end
+    }
+
     let!(:payment_method1) do
       create(:stripe_sca_payment_method, distributors: [distributor], description: "description1")
     end
@@ -45,8 +53,9 @@ describe '
 
     context "with no payment" do
       it "do not display the payment description information" do
+        order.invoices.create!
         login_as_admin
-        visit spree.print_admin_order_path(order)
+        visit spree.print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
         expect(page).to have_no_content 'Payment Description at Checkout'
       end
@@ -58,11 +67,12 @@ describe '
       end
       before do
         order.save!
+        order.invoices.create!
       end
 
       it "display the payment description section" do
         login_as_admin
-        visit spree.print_admin_order_path(order)
+        visit spree.print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
         expect(page).to have_content 'description1'
@@ -76,13 +86,15 @@ describe '
                                                        payment_method: payment_method1,
                                                        created_at: 1.day.ago)
         order.payments << create(:payment, order:, state: 'failed',
-                                           payment_method: payment_method2, created_at: 2.days.ago)
+                                           payment_method: payment_method2,
+                                           created_at: 2.days.ago)
         order.save!
+        order.invoices.create!
       end
 
       it "display the payment description section and use the one from the completed payment" do
         login_as_admin
-        visit spree.print_admin_order_path(order)
+        visit spree.print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
         expect(page).to have_content 'description1'
@@ -99,29 +111,37 @@ describe '
                                                        payment_method: payment_method2,
                                                        created_at: 1.day.ago)
         order.save!
+        order.invoices.create!
       end
 
       it "display the payment description section and use the one from the last payment" do
         login_as_admin
-        visit spree.print_admin_order_path(order)
+        visit spree.print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
         expect(page).to have_content 'Payment Description at Checkout'
         expect(page).to have_content 'description2'
       end
     end
   end
-
   shared_examples "Check display on each invoice: legacy and alternative" do |alternative_invoice|
     let!(:completed_order) do
       create(:completed_order_with_fees, distributor:, order_cycle:,
                                          user: create(:user, email: "xxxxxx@example.com"),
                                          bill_address: create(:address, phone: '1234567890'))
     end
+    let(:url_params) {
+      if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+        { invoice_id: completed_order.invoices.first.id }
+      else
+        {}
+      end
+    }
 
     before do
+      completed_order.invoices.create!
       allow(Spree::Config).to receive(:invoice_style2?).and_return(alternative_invoice)
       login_as_admin
-      visit spree.print_admin_order_path(completed_order)
+      visit spree.print_admin_order_path(completed_order, params: url_params)
       convert_pdf_to_page
     end
 
@@ -131,10 +151,7 @@ describe '
     end
   end
 
-  it_behaves_like "Check display on each invoice: legacy and alternative", false
-  it_behaves_like "Check display on each invoice: legacy and alternative", true
-
-  describe "an order with taxes" do
+  shared_examples "order with tax" do
     let(:user1) { create(:user, enterprises: [distributor]) }
     let!(:zone) { create(:zone_with_member) }
     let(:address) { create(:address) }
@@ -146,8 +163,12 @@ describe '
       let(:enterprise_fee_rate_included) {
         create(:tax_rate, amount: 0.15, included_in_price: true, zone:)
       }
-      let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate_included]) }
-      let(:fee_tax_category) { create(:tax_category, tax_rates: [enterprise_fee_rate_included]) }
+      let(:shipping_tax_category) {
+        create(:tax_category, tax_rates: [shipping_tax_rate_included])
+      }
+      let(:fee_tax_category) {
+        create(:tax_category, tax_rates: [enterprise_fee_rate_included])
+      }
       let!(:shipping_method) {
         create(:shipping_method_with, :expensive_name, distributors: [distributor],
                                                        tax_category: shipping_tax_category)
@@ -158,9 +179,11 @@ describe '
                                 calculator: Calculator::FlatRate.new(preferred_amount: 120.0))
       }
       let!(:order_cycle) {
-        create(:simple_order_cycle, coordinator: distributor,
-                                    coordinator_fees: [enterprise_fee], distributors: [distributor],
-                                    variants: [product1.variants.first, product2.variants.first])
+        create(:simple_order_cycle,
+               coordinator: distributor,
+               coordinator_fees: [enterprise_fee],
+               distributors: [distributor],
+               variants: [product1.variants.first, product2.variants.first])
       }
 
       let!(:order1) {
@@ -185,6 +208,14 @@ describe '
                            order: order1)
       }
 
+      let(:url_params) {
+        if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
+          { invoice_id: order1.invoices.first.id }
+        else
+          {}
+        end
+      }
+
       before do
         order1.reload
         while !order1.delivery?
@@ -201,13 +232,14 @@ describe '
         while !order1.complete?
           break if !order1.next!
         end
+        order1.invoices.create!
       end
 
       context "legacy invoice" do
         before do
           allow(Spree::Config).to receive(:invoice_style2?).and_return(false)
           login_as_admin
-          visit spree.print_admin_order_path(order1)
+          visit spree.print_admin_order_path(order1, params: url_params)
           convert_pdf_to_page
         end
 
@@ -225,8 +257,12 @@ describe '
           expect(page).to have_content "(1g)" # display as
           expect(page).to have_content "3 $250.08 $1,500.45"
           # Enterprise fee
-          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
-                                       "#{user1.enterprises.first.name} 1 $15.65 (included) $120.00"
+          expect(page).to have_content "Whole order - #{
+                                        enterprise_fee.name
+                                      } fee by coordinator " \
+                                       "#{
+                                        user1.enterprises.first.name
+                                      } 1 $15.65 (included) $120.00"
           # Shipping
           expect(page).to have_content "Shipping 1 $9.14 (included) $100.55"
           # Order Totals
@@ -240,7 +276,7 @@ describe '
         before do
           allow(Spree::Config).to receive(:invoice_style2?).and_return(true)
           login_as_admin
-          visit spree.print_admin_order_path(order1)
+          visit spree.print_admin_order_path(order1, params: url_params)
           convert_pdf_to_page
         end
 
@@ -280,7 +316,9 @@ describe '
       let(:enterprise_fee_rate_added) {
         create(:tax_rate, amount: 0.15, included_in_price: false, zone:)
       }
-      let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate_added]) }
+      let(:shipping_tax_category) {
+        create(:tax_category, tax_rates: [shipping_tax_rate_added])
+      }
       let(:fee_tax_category) { create(:tax_category, tax_rates: [enterprise_fee_rate_added]) }
       let!(:shipping_method) {
         create(:shipping_method_with, :expensive_name, distributors: [distributor],
@@ -293,7 +331,8 @@ describe '
       }
       let(:order_cycle2) {
         create(:simple_order_cycle, coordinator: distributor,
-                                    coordinator_fees: [enterprise_fee], distributors: [distributor],
+                                    coordinator_fees: [enterprise_fee],
+                                    distributors: [distributor],
                                     variants: [product3.variants.first, product4.variants.first])
       }
 
@@ -360,8 +399,12 @@ describe '
           # header
           expect(page).to have_content "Item Qty GST Price"
           # Enterprise fee
-          expect(page).to have_content "Whole order - #{enterprise_fee.name} fee by coordinator " \
-                                       "#{user1.enterprises.first.name} 1 $18.00 $120.00"
+          expect(page).to have_content "Whole order - #{
+                                        enterprise_fee.name
+                                      } fee by coordinator " \
+                                       "#{
+                                        user1.enterprises.first.name
+                                      } 1 $18.00 $120.00"
           # Shipping
           expect(page).to have_content "Shipping 1 $10.06 $100.55"
           # Order Totals
@@ -406,6 +449,25 @@ describe '
         end
       end
     end
+  end
+
+  context "when invoice feature is not enabled" do
+    before do
+      Flipper.disable(:invoices)
+    end
+    it_behaves_like "contains right Payment Description at Checkout information"
+    it_behaves_like "Check display on each invoice: legacy and alternative", false
+    it_behaves_like "Check display on each invoice: legacy and alternative", true
+    it_behaves_like "order with tax"
+  end
+  context "when invoice feature is enabled" do
+    before do
+      Flipper.enable(:invoice)
+    end
+    it_behaves_like "contains right Payment Description at Checkout information"
+    it_behaves_like "Check display on each invoice: legacy and alternative", false
+    it_behaves_like "Check display on each invoice: legacy and alternative", true
+    it_behaves_like "order with tax"
   end
 end
 

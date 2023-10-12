@@ -2,6 +2,7 @@
 
 class Invoice
   class DataPresenter
+    include ::ActionView::Helpers::NumberHelper
     attr_reader :invoice
 
     delegate :data, to: :invoice
@@ -50,9 +51,9 @@ class Invoice
     end
 
     def checkout_adjustments(exclude: [], reject_zero_amount: true)
-      adjustments = all_eligible_adjustments
+      adjustments = all_eligible_adjustments.map(&:clone)
 
-      adjustments.reject! { |a| a.originator_type == 'Spree::TaxRate' }
+      adjustments.reject! { |a| a.originator.type == 'Spree::TaxRate' }
 
       if exclude.include? :line_item
         adjustments.reject! { |a|
@@ -68,11 +69,10 @@ class Invoice
     end
 
     def display_checkout_taxes_hash
-      totals = OrderTaxAdjustmentsFetcher.new(nil).totals(all_tax_adjustments)
-
-      totals.map do |tax_rate, tax_amount|
+      tax_adjustment_totals.map do |tax_rate_id, tax_amount|
+        tax_rate = tax_rate_by_id[tax_rate_id]
         {
-          amount: Spree::Money.new(tax_amount, currency: order.currency),
+          amount: Spree::Money.new(tax_amount, currency:),
           percentage: number_to_percentage(tax_rate.amount * 100, precision: 1),
           rate_amount: tax_rate.amount,
         }
@@ -83,8 +83,20 @@ class Invoice
       I18n.l(invoice_date.to_date, format: :long)
     end
 
+    def tax_adjustment_totals
+      all_tax_adjustments.each_with_object(Hash.new(0)) do |adjustment, totals|
+        totals[adjustment.originator.id] += adjustment.amount
+      end
+    end
+
+    def tax_rate_by_id
+      all_tax_adjustments.each_with_object({}) do |adjustment, tax_rates|
+        tax_rates[adjustment.originator.id] = adjustment.originator
+      end
+    end
+
     def all_tax_adjustments
-      all_eligible_adjustments.select { |a| a.originator_type == 'Spree::TaxRate' }
+      all_eligible_adjustments.select { |a| a.originator.type == 'Spree::TaxRate' }
     end
 
     def paid?

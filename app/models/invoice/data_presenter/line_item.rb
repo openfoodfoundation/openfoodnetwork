@@ -6,6 +6,7 @@ class Invoice
       attributes :added_tax, :currency, :included_tax, :price_with_adjustments, :quantity,
                  :variant_id
       attributes_with_presenter :variant
+      array_attribute :tax_rates, class_name: 'TaxRate'
       invoice_generation_attributes :added_tax, :included_tax, :price_with_adjustments,
                                     :quantity, :variant_id
 
@@ -27,6 +28,10 @@ class Invoice
         elsif display_zero
           Spree::Money.new(0.00, currency:)
         end
+      end
+
+      def display_line_item_tax_rates
+        tax_rates.map { |tr| number_to_percentage(tr.amount * 100, precision: 1) }.join(", ")
       end
     end
   end
