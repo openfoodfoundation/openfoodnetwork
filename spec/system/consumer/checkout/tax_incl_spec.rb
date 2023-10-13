@@ -131,7 +131,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
           # UI checks
           expect(page).to have_content("Confirmed")
           expect(page).to have_selector('#order_total', text: with_currency(0.00))
-          expect(page).to have_selector('#tax-row', text: with_currency(1.15))
+          expect(page).to have_selector('#tax-row', text: with_currency(0.00))
 
           # Voucher
           within "#line-items" do
