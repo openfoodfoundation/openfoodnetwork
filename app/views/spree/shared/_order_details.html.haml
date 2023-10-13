@@ -1,10 +1,11 @@
 .row
   .columns.large-6
     .order-summary.text-small
-      .right
-        - if order.paid?
+      - if order.paid?
+        .right
           = t :order_paid
-        - else
+      - else
+        .right.not-paid
           = t :order_not_paid
       %span
         = t :order_total
