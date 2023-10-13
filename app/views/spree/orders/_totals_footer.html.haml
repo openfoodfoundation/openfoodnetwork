@@ -40,7 +40,7 @@
       %td.text-right.total.not-paid
         %h5.not-paid
           = order.display_outstanding_balance.to_html
-  - else
+  - if order.outstanding_balance? && order.outstanding_balance < 0
     %tr.total
       %td.text-right{colspan: "3"}
         %h5
