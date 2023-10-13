@@ -19,7 +19,7 @@
       = t('js.admin.orders.order_state.' + order.state.to_s)
   %td.align-left
     - if order.payment_state
-      %span.state{class: 'order.payment_state'}
+      %span.state{ class: order.payment_state.to_s }
         %a{href: spree.admin_order_payments_path(order) }
           = t('js.admin.orders.payment_states.' + order.payment_state.to_s)
           - if order.display_outstanding_balance
@@ -27,7 +27,7 @@
               = "(#{order.display_outstanding_balance})"
   %td.align-left
     - if order.shipment_state
-      %span.state{class: order.shipment_state.to_s}
+      %span.state{ class: order.shipment_state.to_s}
         = t('js.admin.orders.shipment_states.' + order.shipment_state.to_s)
   %td
     %a{ href: "mailto:#{order.email}", target: "_blank" }
