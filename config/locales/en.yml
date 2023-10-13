@@ -23,7 +23,7 @@ en:
   language_name: "English" # Localised name of this language
   time:
     formats:
-      long: "%B %d, %Y%l:%M %p" # %l adds a single space to the left
+      long: "%B %d, %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Product
