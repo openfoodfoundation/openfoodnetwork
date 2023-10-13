@@ -22,11 +22,13 @@ assignees: ''
     </code>
     </pre>
   </details>
-- [ ] Create a tag: `git push upstream HEAD:refs/tags/vX.Y.Z`
+- [ ] Create a tag:
+    - `script/tag_release` will auto increment patch version, otherwise
+    - `git push upstream HEAD:refs/tags/vX.Y.Z`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
     - Select new release tag
     - _Generate release notes_ and check to ensure all items are arranged in the right category.
-- [ ] Notify [#instance-managers] of both user-facing :eyes: and :warning: API changes.
+- [ ] Notify [#instance-managers] of user-facing :eyes:, API :warning: and experimental :construction: changes.
 
 ## 2. Testing
 
