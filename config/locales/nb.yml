@@ -131,6 +131,7 @@ nb:
     unprocessable_entity:
       title: "Endringen du ønsket ble avvist (422)"
       message_html: "<p>Endringen du ønsket ble avvist. Kanskje du prøvde å endre noe du ikke har tilgang til.<br><h3> <a href='/' >Vend hjem</a></h3></p>"
+    stimulus_reflex_error: "Vi beklager, men noe gikk galt.\n\nDette kan være et midlertidig problem, så prøv igjen eller last inn siden på nytt.\nVi registrerer alle feil og jobber kanskje med å fikse.\nHvis problemet vedvarer eller haster, vennligst kontakt oss."
   stripe:
     error_code:
       incorrect_number: "Kortnummeret er feil."
@@ -1452,6 +1453,7 @@ nb:
       email_confirmation: "E-postbekreftelse venter. Vi har sendt en bekreftelses-epost til %{email}."
       not_visible: "%{enterprise} er ikke synlig og kan derfor ikke finnes på kartet eller i søk"
     reports:
+      deprecated: "Denne rapporten er avviklet og vil bli fjernet i en fremtidig utgivelse."
       hidden: SKJULTE
       unitsize: ENHETSSTØRRELSE
       total: SUM
@@ -1459,6 +1461,7 @@ nb:
       total_by_customer: Totalt etter kunde
       total_by_supplier: Totalt etter Leverandør
       supplier_totals: Bestillingsrunde Leverandør Sum
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Bestillingsrunde Leverandør Totaler etter Distributør
       totals_by_supplier: Bestillingsrunde Distributør Totaler etter Leverandør
       customer_totals: Bestillingsrunde Kunde Totaler
@@ -1467,11 +1470,24 @@ nb:
       lettuce_share: LettuceShare
       payment_methods: Betalingsmetoder rapport
       delivery: Leveringsrapport
+      sales_tax_totals_by_producer: Omsetningsavgift totalt etter Produsent
+      sales_tax_totals_by_order: Omsetningsavgift totalt etter Ordre
       tax_types: Avgiftstyper
       tax_rates: Avgiftsrater
       pack_by_customer: Pakk etter Kunde
       pack_by_supplier: Pakk etter Leverandør
       pack_by_product: Pakke etter Produkt
+      download:
+        button: "Last ned rapport"
+      show:
+        report_taking_longer: >
+            Beklager, denne rapporten tok for lang tid å behandle. Det kan inneholde
+            mye data eller vi er opptatt med andre rapporter. Du kan prøve igjen senere.
+        report_taking_longer_html: >
+            Denne rapporten tar lengre tid å behandle. Det kan inneholde mye data
+            eller vi er opptatt med andre rapporter. Når den er ferdig, vil vi varsle
+            deg via e-post.
+        report_link_label: Last ned rapport (når tilgjengelig)
       revenues_by_hub:
         name: Inntekter etter Hub
         description: Inntekter etter Hun
@@ -1503,6 +1519,8 @@ nb:
       enterprise_fee_summary:
         name: "Sammendrag Bedriftsavgift"
         description: "Sammendrag av bedriftsavgifter innsamlet"
+      enterprise_fees_with_tax_report_by_order: "Rapport for bedriftsavgifter med skatt (av Ordre)"
+      enterprise_fees_with_tax_report_by_producer: "Rapport for bedriftsavgifter med skatt (av Produsent)"
       errors:
         no_report_type: "Vennligst spesifiser en rapporttype"
         report_not_found: "Rapporten ble ikke funnet"
@@ -1535,6 +1553,15 @@ nb:
         formatted_data: Formaterte data
       packing:
         name: "Pakkerapporter"
+    oidc_settings:
+      index:
+        title: "OIDC-innstillinger"
+        connect: "Koble til kontoen din"
+        already_connected: "Kontoen din er allerede knyttet til denne DFC-autorisasjonskontoen:"
+        les_communs_link: "Les Communs Open ID server"
+        link_your_account: "Du må først koble kontoen din til autorisasjonsleverandøren som brukes av DFC (Les Communs Open ID Connect)."
+        link_account_button: "Koble til Les Communs OIDC-kontoen din"
+        view_account: "For å se kontoen din, se:"
     subscriptions:
       index:
         title: "Abonnement"
@@ -1632,10 +1659,14 @@ nb:
         associated_subscriptions_error: Denne tidsplanen kan ikke slettes fordi den har tilknyttede abonnementer
     vouchers:
       new:
+        legend: Ny Kupong
         back: Tilbake
         save: Lagre
         voucher_code: Kupongkode
         voucher_amount: Antall
+        voucher_type: Kupongtype
+        flat_rate: Flat
+        percentage_rate: Prosent (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "Tilkobling til Stripe har blitt avbrutt"
@@ -1643,6 +1674,12 @@ nb:
         stripe_connect_fail: Beklager, forbindelsen til Stripe-kontoen din mislyktes
       stripe_connect_settings:
         resource: Stripe Connect-konfigurasjon
+    resend_confirmation_emails_feedback:
+      one: "Epostbekreftelse sendt for 1 ordre."
+      other: "Epostbekreftelse sendt for %{count} ordrer."
+    send_invoice_feedback:
+      one: "Epostfaktura sendt for 1 ordre."
+      other: "Epostfaktura sendt for %{count} ordrer."
   api:
     unknown_error: "Noe gikk galt. Teamet vårt har blitt varslet."
     invalid_api_key: "Ugyldig API-nøkkel (%{key}) spesifisert."
@@ -1659,6 +1696,10 @@ nb:
       destroy_attachment_does_not_exist: "Vilkår og Betingelser-filen eksisterer ikke"
     orders:
       failed_to_update: "Kunne ikke oppdatere bestillingen"
+    query_param:
+      error:
+        title: Ugyldig søkeparameter
+        extra_fields: "Ustøttede felt: %{fields}"
   checkout:
     already_ordered:
       cart: "handlekurv"
@@ -1753,6 +1794,7 @@ nb:
   abn: "Org. nr.:"
   acn: "MVA nr:"
   invoice_issued_on: "Fakturadato:"
+  order_number: "Ordrenummer:"
   date_of_transaction: "Transaksjonsdato:"
   menu_1_title: "Butikker"
   menu_1_url: "/shops"
@@ -1952,6 +1994,7 @@ nb:
       message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
     step1:
       contact_information:
+        title: Kontaktinformasjon
         email:
           label: Epost
         phone:
@@ -2000,15 +2043,26 @@ nb:
       explaination: Du kan gå gjennom og bekrefte bestillingen din i neste trinn som inkluderer de endelige kostnadene.
       submit: Neste - Bestillingssammendrag
       cancel: Tilbake til dine detaljer
+      voucher:
+        voucher: "%{voucher_amount} Kupong"
+        apply_voucher: Bruk Kupong
+        apply: Bruk
+        placeholder: Skriv inn kupongkode
+        remove_code: Fjern kode
+        confirm_delete: Er du sikker på at du vil fjerne kupongen?
+        warning_forfeit_remaining_amount: "Merk: hvis ordretotal er mindre enn kupongen din, kan det hende du ikke kan bruke den gjenværende verdien."
     step3:
       delivery_details:
         title: Leveringsdetaljer
         edit: Rediger
         address: Leveringsadresse
+        instructions: Anvisning
       payment_method:
         title: Betalingsmetode
         edit: Rediger
+        instructions: Anvisning
       order:
+        title: Ordredetaljer
         edit: Rediger
       terms_and_conditions:
         message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
@@ -2030,10 +2084,12 @@ nb:
       select_a_payment_method: Velg en betalingsmetode
       no_shipping_methods_available: Kasse er ikke mulig på grunn av manglende leveringsalternativer. Ta kontakt med butikkeieren.
       voucher_not_found: Ikke funnet
+      add_voucher_error: Det oppsto en feil under innlegging av kupongen
   order_paid: BETALT
   order_not_paid: IKKE BETALT
   order_total: Sum bestilling
   order_payment: "Betaler via:"
+  no_payment_required: "Ingen betaling påkrevd"
   order_billing_address: Fakturaadresse
   order_delivery_on: Levering på
   order_delivery_address: Leveringsadresse
@@ -2528,6 +2584,7 @@ nb:
   shipping_method_destroy_error: "Den fraktmetoden kan ikke slettes fordi den er referert til av en bestilling: %{number}."
   fees: "Gebyrer"
   fee_name: "Avgiftsnavn"
+  fee_owner: "Eier av gebyr"
   item_cost: "Varepris"
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
@@ -2761,7 +2818,17 @@ nb:
   report_header_to_hub: Til Hub
   report_header_hub_code: Hubkode
   report_header_hub_id: Hub ID
+  report_header_hub_business_number: "Hub Firmanummer"
+  report_header_hub_legal_name: "Hub Juridisk navn"
+  report_header_hub_contact_name: "Hub Kontaktnavn"
+  report_header_hub_email: "Hub Offentlig epost"
   report_header_hub_owner_email: Hub-eier epost
+  report_header_hub_phone: "Hub Telefonnummer"
+  report_header_hub_address_line1: "Hub Adresselinje 1"
+  report_header_hub_address_line2: "Hub Adresselinje 2"
+  report_header_hub_address_city: "Hub Suburb"
+  report_header_hub_address_zipcode: "Hub Postnummer"
+  report_header_hub_address_state_name: "Hub Fylke"
   report_header_code: Kode
   report_header_paid: Betalt?
   report_header_delivery: Levert?
@@ -2795,10 +2862,12 @@ nb:
   report_header_tax_on_delivery: "Leveringsavgift (%{currency_symbol})"
   report_header_tax_on_fees: "Avgiftsavgift (%{currency_symbol})"
   report_header_tax_category: "Avgiftskategori"
+  report_header_tax_rate_name: "Avgiftsrate Navn"
   report_header_tax_rate: "Avgiftsrate"
   report_header_total_tax: "Sum avgifter (%{currency_symbol})"
   report_header_total_excl_tax: "Sum eks. avgift (%{currency_symbol})"
   report_header_total_incl_tax: "Sum inkl. avgift (%{currency_symbol})"
+  report_header_total_orders: "Totalt Antall ordre"
   report_header_enterprise: Bedrift
   report_header_enterprise_fee_name: Navn
   report_header_enterprise_fee_type: Type
@@ -2809,6 +2878,7 @@ nb:
   report_header_customer_code: Kundekode
   report_header_product: Produkt
   report_header_product_properties: Produktegenskaper
+  report_header_product_tax_category: Product Avgiftskategori
   report_header_quantity: Mengde
   report_header_max_quantity: Maks antall
   report_header_variant: Variant
@@ -3772,6 +3842,7 @@ nb:
         enterprise_relationships: "Tillatelser"
         customers: "Kunder"
         groups: "Grupper"
+        oidc_settings: "OIDC-innstillinger"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Arve egenskaper fra %{supplier}? (med mindre overstyrt over)"

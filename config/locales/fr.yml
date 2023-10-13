@@ -311,11 +311,11 @@ fr:
   provider_settings: "Paramètres fournisseur"
   report_mailer:
     report_ready:
-      subject: "Rapport prêt"
+      subject: "Votre rapport est disponible pour téléchargement"
       heading: "Rapport prêt à télécharger"
       intro: |
           Le lien ci-dessous sera expiré dans une semaine.
-      link_label: "1%"
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Cher Acheteur,"
