@@ -56,7 +56,7 @@ describe Spree::BaseHelper do
     end
 
     it "prints in a format with double digit time" do
-      expect(pretty_time(DateTime.new(2012, 5, 6, 12, 00))).to eq "May 06, 2012 12:00 PM"
+      expect(pretty_time(DateTime.new(2012, 5, 6, 12, 33))).to eq "May 06, 2012 12:33 PM"
     end
   end
 end
