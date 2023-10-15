@@ -19,3 +19,6 @@ major, minor, patch = latest_version.segments
 next_tag = "v#{major}.#{minor}.#{patch.succ}"
 
 puts `git push upstream 'HEAD:refs/tags/#{next_tag}'`
+
+puts "Draft a new release with this tag:
+    https://github.com/openfoodfoundation/openfoodnetwork/releases/new?tag=#{next_tag}&title=#{next_tag}+Code+Name"
