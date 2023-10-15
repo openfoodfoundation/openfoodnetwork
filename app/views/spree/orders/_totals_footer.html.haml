@@ -32,7 +32,7 @@
       %td.text-right.total
         %strong
           = order.display_payment_total.to_html
-  - if order.outstanding_balance? && order.outstanding_balance > 0
+  - if order.outstanding_balance.positive?
     %tr.total
       %td.text-right{colspan: "3"}
         %h5.not-paid
@@ -40,7 +40,7 @@
       %td.text-right.total.not-paid
         %h5.not-paid
           = order.display_outstanding_balance.to_html
-  - if order.outstanding_balance? && order.outstanding_balance < 0
+  - if order.outstanding_balance.negative?
     %tr.total
       %td.text-right{colspan: "3"}
         %h5
@@ -49,7 +49,7 @@
         %h5
           = order.display_outstanding_balance.to_html
 
-  - if order.total_tax > 0
+  - if order.total_tax.positive?
     #tax
       %tr#tax-row.total
         %td.text-right{colspan: "3"}
