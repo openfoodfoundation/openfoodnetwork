@@ -11,9 +11,7 @@ module Admin
         morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
                                      locals: { order: @order.reload, success: true })
       else
-        flash[:error] = with_locale{
-          payment_capture.gateway_error || I18n.t(:payment_processing_failed)
-        }
+        flash[:error] = payment_capture.gateway_error || I18n.t(:payment_processing_failed)
         morph_admin_flashes
       end
     end
@@ -23,7 +21,7 @@ module Admin
         morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
                                      locals: { order: @order.reload, success: true })
       else
-        flash[:error] = with_locale{ I18n.t("api.orders.failed_to_update") }
+        flash[:error] = I18n.t("api.orders.failed_to_update")
         morph_admin_flashes
       end
     end
@@ -90,7 +88,7 @@ module Admin
     end
 
     def success(i18n_key, count)
-      flash[:success] = with_locale { I18n.t(i18n_key, count:) }
+      flash[:success] = I18n.t(i18n_key, count:)
       cable_ready.dispatch_event(name: "modal:close")
       morph_admin_flashes
     end
