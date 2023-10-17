@@ -195,10 +195,6 @@ describe "filtering products for submission to database", ->
       producer_id: 5
       group_buy: null
       group_buy_unit_size: null
-      master:
-        id: 2
-        unit_value: 250
-        unit_description: "foo"
       variants: [
         id: 1
         on_hand: 2
@@ -221,10 +217,6 @@ describe "filtering products for submission to database", ->
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
-      master_attributes:
-        id: 2
-        unit_value: 250
-        unit_description: "foo"
       variants_attributes: [
         id: 1
         on_hand: 2
@@ -557,17 +549,6 @@ describe "AdminProductEditCtrl", ->
           variant_unit: 'items'
           variant_unit_scale: null
           variant_unit_with_scale: 'items'
-
-      it "packs the master variant", ->
-        spyOn $scope, "packVariant"
-        testVariant = {id: 1}
-        testProduct =
-          id: 1
-          master: testVariant
-
-        $scope.packProduct(testProduct)
-
-        expect($scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
 
       it "packs each variant", ->
         spyOn $scope, "packVariant"
@@ -986,10 +967,6 @@ describe "AdminProductEditCtrl", ->
         producer_id: 5
         group_buy: null
         group_buy_unit_size: null
-        master:
-          id: 2
-          unit_value: 250
-          unit_description: "foo"
 
     describe 'product has variant', ->
       it 'should load the edit product variant page', ->

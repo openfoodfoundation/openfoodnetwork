@@ -59,12 +59,11 @@ module Sets
 
       ExchangeVariantDeleter.new.delete(product) if product.saved_change_to_supplier_id?
 
-      update_product_variants(product, attributes) &&
-        update_product_master(product, attributes)
+      update_product_variants(product, attributes)
     end
 
     def update_product_only_attributes(product, attributes)
-      variant_related_attrs = [:id, :variants_attributes, :master_attributes]
+      variant_related_attrs = [:id, :variants_attributes]
       product_related_attrs = attributes.except(*variant_related_attrs)
       return true if product_related_attrs.blank?
 
@@ -92,12 +91,6 @@ module Sets
       return true unless attributes[:variants_attributes]
 
       update_variants_attributes(product, attributes[:variants_attributes])
-    end
-
-    def update_product_master(product, attributes)
-      return true unless attributes[:master_attributes]
-
-      create_or_update_variant(product, attributes[:master_attributes])
     end
 
     def update_variants_attributes(product, variants_attributes)

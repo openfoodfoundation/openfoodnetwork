@@ -138,55 +138,6 @@ describe Sets::ProductSet do
               end
             end
           end
-
-          context 'when :master_attributes is passed' do
-            let(:master_attributes) { { sku: '123' } }
-
-            before do
-              collection_hash[0][:master_attributes] = master_attributes
-            end
-
-            context 'and the variant does exist' do
-              let!(:variant) { create(:variant, product:) }
-
-              before { master_attributes[:id] = variant.id }
-
-              it 'updates the attributes of the master variant' do
-                product_set.save
-                expect(variant.reload.sku).to eq('123')
-              end
-            end
-
-            context 'and the variant does not exist' do
-              context 'and attributes provided are valid' do
-                let(:master_attributes) do
-                  attributes_for(:variant).merge(sku: '123')
-                end
-
-                it 'creates it with the specified attributes' do
-                  number_of_variants = Spree::Variant.all.size
-                  product_set.save
-                  expect(Spree::Variant.last.sku).to eq('123')
-                  expect(Spree::Variant.all.size).to eq number_of_variants + 1
-                end
-              end
-
-              context 'and attributes provided are not valid' do
-                let(:master_attributes) do
-                  # unit_value nil makes the variant invalid
-                  # on_hand with a value would make on_hand be updated and fail with exception
-                  attributes_for(:variant).merge(unit_value: nil, on_hand: 1, sku: '321')
-                end
-
-                it 'does not create variant and notifies bugsnag still raising the exception' do
-                  number_of_variants = Spree::Variant.all.size
-                  expect(product_set.save).to eq(false)
-                  expect(Spree::Variant.all.size).to eq number_of_variants
-                  expect(Spree::Variant.last.sku).not_to eq('321')
-                end
-              end
-            end
-          end
         end
       end
 
