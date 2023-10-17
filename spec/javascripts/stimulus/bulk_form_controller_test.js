@@ -28,8 +28,8 @@ describe("BulkFormController", () => {
 
     beforeEach(() => {
       document.body.innerHTML = `
-        <div id="disable1"></div>
-        <div id="disable2"></div>
+        <form id="disable1"><input id="disable1_element"></form>
+        <div id="disable2"><form><input id="disable2_element"></form></div>
         <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
           <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
           <div id="changed_summary" data-bulk-form-target="changedSummary" data-translation-key="changed_summary"></div>
@@ -45,7 +45,9 @@ describe("BulkFormController", () => {
       `;
 
       const disable1 = document.getElementById("disable1");
+      const disable1_element = document.getElementById("disable1_element");
       const disable2 = document.getElementById("disable2");
+      const disable2_element = document.getElementById("disable2_element");
       const actions = document.getElementById("actions");
       const changed_summary = document.getElementById("changed_summary");
       const input1a = document.getElementById("input1a");
@@ -112,7 +114,9 @@ describe("BulkFormController", () => {
         expect(actions.classList).not.toContain('hidden');
         expect(changed_summary.textContent).toBe('changed_summary, {"count":1}');
         expect(disable1.classList).toContain('disabled-section');
+        expect(disable1_element.disabled).toBe(true);
         expect(disable2.classList).toContain('disabled-section');
+        expect(disable2_element.disabled).toBe(true);
 
         // Record 1: Second field changed
         input1b.value = 'updated1b';
@@ -145,7 +149,9 @@ describe("BulkFormController", () => {
         expect(actions.classList).not.toContain('hidden');
         expect(changed_summary.textContent).toBe('changed_summary, {"count":1}');
         expect(disable1.classList).toContain('disabled-section');
+        expect(disable1_element.disabled).toBe(true);
         expect(disable2.classList).toContain('disabled-section');
+        expect(disable2_element.disabled).toBe(true);
 
         // Record 2: Change back to original value
         input2.value = 'initial2';
@@ -154,7 +160,9 @@ describe("BulkFormController", () => {
         expect(actions.classList).toContain('hidden');
         expect(changed_summary.textContent).toBe('changed_summary, {"count":0}');
         expect(disable1.classList).not.toContain('disabled-section');
+        expect(disable1_element.disabled).toBe(false);
         expect(disable2.classList).not.toContain('disabled-section');
+        expect(disable2_element.disabled).toBe(false);
       });
     });
   });
