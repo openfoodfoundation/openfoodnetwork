@@ -67,6 +67,42 @@ describe SplitCheckoutController, type: :controller do
           expect(response).to redirect_to checkout_step_path(:payment)
         end
       end
+
+      context "when order state is 'confirmation'" do
+        before do
+          order.update!(state: "confirmation")
+        end
+
+        context "when loading payment step" do
+          it "updates the order state to payment" do
+            get :edit, params: { step: "payment" }
+
+            expect(order.reload.state).to eq("payment")
+          end
+        end
+
+        context "when loading address step" do
+          it "updates the order state to address" do
+            get :edit, params: { step: "details" }
+
+            expect(order.reload.state).to eq("address")
+          end
+        end
+      end
+
+      context "when order state is 'payment'" do
+        context "when loading address step" do
+          before do
+            order.update!(state: "payment")
+          end
+
+          it "updates the order state to address" do
+            get :edit, params: { step: "details" }
+
+            expect(order.reload.state).to eq("address")
+          end
+        end
+      end
     end
   end
 

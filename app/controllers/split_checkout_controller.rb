@@ -24,6 +24,8 @@ class SplitCheckoutController < ::BaseController
 
   def edit
     redirect_to_step_based_on_order unless params[:step]
+
+    update_order_state if params[:step]
     check_step if params[:step]
 
     return if available_shipping_methods.any?

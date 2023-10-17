@@ -13,6 +13,10 @@ module CheckoutSteps
     params[:step] == "payment"
   end
 
+  def details_step?
+    params[:step] == "details"
+  end
+
   def redirect_to_step_based_on_order
     case @order.state
     when "cart", "address", "delivery"
@@ -39,9 +43,19 @@ module CheckoutSteps
   def check_step
     case @order.state
     when "cart", "address", "delivery"
-      redirect_to checkout_step_path(:details) unless params[:step] == "details"
+      redirect_to checkout_step_path(:details) unless details_step?
     when "payment"
-      redirect_to checkout_step_path(:payment) if params[:step] == "summary"
+      redirect_to checkout_step_path(:payment) if summary_step?
     end
+  end
+
+  def update_order_state
+    if @order.state == "confirmation" && payment_step?
+      @order.back_to_payment
+    end
+
+    return unless @order.state.in?(["payment", "confirmation"]) && details_step?
+
+    @order.back_to_address
   end
 end
