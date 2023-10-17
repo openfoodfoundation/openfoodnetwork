@@ -71,6 +71,14 @@ module Spree
                 transition to: :complete, from: :confirmation
               end
 
+              event :back_to_payment do
+                transition to: :payment, from: :confirmation
+              end
+
+              event :back_to_address do
+                transition to: :address, from: [:payment, :confirmation]
+              end
+
               before_transition from: :cart, do: :ensure_line_items_present
 
               before_transition to: :delivery, do: :create_proposed_shipments
