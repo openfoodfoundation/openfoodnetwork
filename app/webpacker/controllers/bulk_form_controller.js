@@ -88,6 +88,14 @@ export default class BulkFormController extends Controller {
 
     this.disableElements.forEach((element) => {
       element.classList.toggle("disabled-section", disable);
+
+      // Also disable any form elements
+      let forms = element.tagName == "FORM" ? [element] : element.querySelectorAll("form");
+
+      forms &&
+        forms.forEach((form) =>
+          Array.from(form.elements).forEach((formElement) => (formElement.disabled = disable))
+        );
     });
   }
 
