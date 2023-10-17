@@ -5,7 +5,7 @@ require "reflex_helper"
 describe ProductsReflex, type: :reflex do
   let(:current_user) { create(:admin_user) } # todo: set up an enterprise user to test permissions
   let(:context) {
-    { url: admin_products_v3_index_url, connection: { current_user: } }
+    { url: admin_products_url, connection: { current_user: } }
   }
 
   before do
