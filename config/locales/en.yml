@@ -335,6 +335,10 @@ en:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
 
+  report_job:
+    report_failed: |
+      This report failed. It may be too big to process.
+      We will look into it but please let us know if the problem persists.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
