@@ -355,6 +355,62 @@ describe "As a consumer, I want to checkout my order" do
         expect(page).to_not have_content("You have an order for this order cycle already.")
       end
     end
+
+    describe "order confirmation page" do
+      let(:completed_order) {
+        create(:order_ready_to_ship, distributor:,
+                                     order_cycle:, user_id: user.id)
+      }
+      let(:payment) { completed_order.payments.first }
+
+      context "an order with balance due" do
+        before do
+          payment.update!(amount: payment.amount - 10)
+          completed_order.reload
+          expect(completed_order.payment_state).to eq "balance_due"
+          visit "/orders/#{completed_order.number}"
+        end
+
+        it "displays the relevant information" do
+          expect(page).to have_content "NOT PAID"
+          expect(page).to have_selector('strong', text: "Amount Paid")
+          expect(page).to have_selector('strong', text: with_currency(40))
+          expect(page).to have_selector('h5', text: "Balance Due")
+          expect(page).to have_selector('h5', text: with_currency(10))
+        end
+      end
+
+      context "an order with credit owed" do
+        before do
+          payment.update!(amount: payment.amount + 10)
+          completed_order.reload
+          expect(completed_order.payment_state).to eq "credit_owed"
+          visit "/orders/#{completed_order.number}"
+        end
+
+        it "displays the relevant information" do
+          expect(page).to have_content "PAID"
+          expect(page).to have_selector('strong', text: "Amount Paid")
+          expect(page).to have_selector('strong', text: with_currency(60))
+          expect(page).to have_selector('h5', text: "Credit Owed")
+          expect(page).to have_selector('h5', text: with_currency(-10))
+        end
+      end
+
+      context "an order with no outstanding balance" do
+        before do
+          expect(completed_order.payment_state).to eq "paid"
+          visit "/orders/#{completed_order.number}"
+        end
+
+        it "displays the relevant information" do
+          expect(page).to have_content "PAID"
+          expect(page).to have_selector('strong', text: "Amount Paid")
+          expect(page).to have_selector('strong', text: with_currency(50))
+          expect(page).to_not have_selector('h5', text: "Credit Owed")
+        end
+      end
+    end
   end
 
   def add_voucher_to_order(voucher, order)
