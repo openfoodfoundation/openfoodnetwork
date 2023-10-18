@@ -1880,6 +1880,7 @@ en:
   invoice_column_unit_price_without_taxes: "Unit price (Excl. tax)"
   invoice_column_price_with_taxes: "Total price (Incl. tax)"
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
+  invoice_column_price_per_unit_without_taxes: "Price Per unit (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
   invoice_tax_total: "GST Total:"
   tax_invoice: "TAX INVOICE"
