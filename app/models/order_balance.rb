@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class OrderBalance
-  delegate :zero?, :abs, :to_s, :to_f, :to_d, :<, :>, to: :amount
+  delegate :negative?, :positive?, :zero?, :abs, :to_s, :to_f, :to_d, :<, :>, to: :amount
 
   def initialize(order)
     @order = order
