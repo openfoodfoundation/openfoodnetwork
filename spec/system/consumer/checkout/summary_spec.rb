@@ -363,40 +363,44 @@ describe "As a consumer, I want to checkout my order" do
       }
       let(:payment) { completed_order.payments.first }
 
+      shared_examples "order confirmation page" do |paid_state, paid_amount|
+        it "displays the relevant information" do
+          expect(page).to have_content paid_state.to_s
+          expect(page).to have_selector('strong', text: "Amount Paid")
+          expect(page).to have_selector('strong', text: with_currency(paid_amount))
+        end
+      end
+
       context "an order with balance due" do
         before { set_up_order(-10, "balance_due") }
 
-        it "displays the relevant information" do
-          expect(page).to have_content "NOT PAID"
-          expect(page).to have_selector('strong', text: "Amount Paid")
-          expect(page).to have_selector('strong', text: with_currency(40))
-          expect(page).to have_selector('h5', text: "Balance Due")
-          expect(page).to have_selector('h5', text: with_currency(10))
+        it_behaves_like "order confirmation page", "NOT PAID", "40" do
+          before do
+            expect(page).to have_selector('h5', text: "Balance Due")
+            expect(page).to have_selector('h5', text: with_currency(10))
+          end
         end
       end
 
       context "an order with credit owed" do
         before { set_up_order(10, "credit_owed") }
 
-        it "displays the relevant information" do
-          expect(page).to have_content "PAID"
-          expect(page).to have_selector('strong', text: "Amount Paid")
-          expect(page).to have_selector('strong', text: with_currency(60))
-          expect(page).to have_selector('h5', text: "Credit Owed")
-          expect(page).to have_selector('h5', text: with_currency(-10))
-          expect(page).to_not have_selector('h5', text: "Balance Due")
+        it_behaves_like "order confirmation page", "PAID", "60" do
+          before do
+            expect(page).to have_selector('h5', text: "Credit Owed")
+            expect(page).to have_selector('h5', text: with_currency(-10))
+          end
         end
       end
 
       context "an order with no outstanding balance" do
         before { set_up_order(0, "paid") }
 
-        it "displays the relevant information" do
-          expect(page).to have_content "PAID"
-          expect(page).to have_selector('strong', text: "Amount Paid")
-          expect(page).to have_selector('strong', text: with_currency(50))
-          expect(page).to_not have_selector('h5', text: "Credit Owed")
-          expect(page).to_not have_selector('h5', text: "Balance Due")
+        it_behaves_like "order confirmation page", "PAID", "50" do
+          before do
+            expect(page).to_not have_selector('h5', text: "Credit Owed")
+            expect(page).to_not have_selector('h5', text: "Balance Due")
+          end
         end
       end
     end
