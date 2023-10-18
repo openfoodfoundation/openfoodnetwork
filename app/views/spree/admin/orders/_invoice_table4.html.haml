@@ -6,6 +6,8 @@
       %th{:align => "right", :width => "15%"}
         %h5= t(:invoice_column_qty)
       %th{:align => "right", :width => "15%"}
+        %h5= t(:invoice_column_weight_volume)
+      %th{:align => "right", :width => "15%"}
         %h5= @order.has_taxes_included ? t(:invoice_column_unit_price_with_taxes) : t(:invoice_column_unit_price_without_taxes)
       - if @order.total_tax > 0
         %th{:align => "right", :width => "15%"}
@@ -22,6 +24,8 @@
             %em= raw(item.variant.product.supplier.name)
         %td{:align => "right"}
           = item.quantity
+        %td{:align => "right"}
+          = item.unit_presentation
         %td{:align => "right"}
           = item.single_display_amount_with_adjustments
         - if @order.total_tax > 0

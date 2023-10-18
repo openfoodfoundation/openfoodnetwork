@@ -1875,6 +1875,7 @@ en:
   invoice_column_price: "Price"
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
+  invoice_column_weight_volume: "Weight / VOL."
   invoice_column_unit_price_with_taxes: "Unit price (Incl. tax)"
   invoice_column_unit_price_without_taxes: "Unit price (Excl. tax)"
   invoice_column_price_with_taxes: "Total price (Incl. tax)"
