@@ -364,12 +364,7 @@ describe "As a consumer, I want to checkout my order" do
       let(:payment) { completed_order.payments.first }
 
       context "an order with balance due" do
-        before do
-          payment.update!(amount: payment.amount - 10)
-          completed_order.reload
-          expect(completed_order.payment_state).to eq "balance_due"
-          visit "/orders/#{completed_order.number}"
-        end
+        before { set_up_order(-10, "balance_due") }
 
         it "displays the relevant information" do
           expect(page).to have_content "NOT PAID"
@@ -381,12 +376,7 @@ describe "As a consumer, I want to checkout my order" do
       end
 
       context "an order with credit owed" do
-        before do
-          payment.update!(amount: payment.amount + 10)
-          completed_order.reload
-          expect(completed_order.payment_state).to eq "credit_owed"
-          visit "/orders/#{completed_order.number}"
-        end
+        before { set_up_order(10, "credit_owed") }
 
         it "displays the relevant information" do
           expect(page).to have_content "PAID"
@@ -394,20 +384,19 @@ describe "As a consumer, I want to checkout my order" do
           expect(page).to have_selector('strong', text: with_currency(60))
           expect(page).to have_selector('h5', text: "Credit Owed")
           expect(page).to have_selector('h5', text: with_currency(-10))
+          expect(page).to_not have_selector('h5', text: "Balance Due")
         end
       end
 
       context "an order with no outstanding balance" do
-        before do
-          expect(completed_order.payment_state).to eq "paid"
-          visit "/orders/#{completed_order.number}"
-        end
+        before { set_up_order(0, "paid") }
 
         it "displays the relevant information" do
           expect(page).to have_content "PAID"
           expect(page).to have_selector('strong', text: "Amount Paid")
           expect(page).to have_selector('strong', text: with_currency(50))
           expect(page).to_not have_selector('h5', text: "Credit Owed")
+          expect(page).to_not have_selector('h5', text: "Balance Due")
         end
       end
     end
@@ -417,5 +406,12 @@ describe "As a consumer, I want to checkout my order" do
     voucher.create_adjustment(voucher.code, order)
     VoucherAdjustmentsService.new(order).update
     order.update_totals_and_states
+  end
+
+  def set_up_order(balance, state)
+    payment.update!(amount: payment.amount + balance)
+    completed_order.reload
+    expect(completed_order.payment_state).to eq state.to_s
+    visit "/orders/#{completed_order.number}"
   end
 end
