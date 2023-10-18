@@ -329,7 +329,6 @@ describe OrderInvoiceComparator do
 
     context "changes on the order object" do
       describe "detecting relevant" do
-        it_behaves_like "attribute changes - payment total", true, "relevant"
         it_behaves_like "attribute changes - order total", true, "relevant"
         it_behaves_like "attribute changes - tax total changes", true, "relevant", false
         it_behaves_like "attribute changes - tax total changes", true, "relevant", true
@@ -342,6 +341,9 @@ describe OrderInvoiceComparator do
       end
 
       describe "detecting non-relevant" do
+        it_behaves_like "attribute changes - payment total", false, "relevant" do
+          before { pending("a payment capture shouldn't trigger a new invoice - issue #11350") }
+        end
         it_behaves_like "attribute changes - order state: cancelled", false, "non-relevant" do
           before { pending }
         end
@@ -371,6 +373,9 @@ describe OrderInvoiceComparator do
 
     context "changes on the order object" do
       describe "detecting relevant" do
+        it_behaves_like "attribute changes - payment total", true, "relevant" do
+          before { pending("a payment capture shouldn't trigger a new invoice - issue #11350") }
+        end
         it_behaves_like "attribute changes - order state: cancelled", true, "relevant"
         it_behaves_like "attribute changes - special insctructions", true, "relevant"
         it_behaves_like "attribute changes - note", true, "relevant"
@@ -379,7 +384,6 @@ describe OrderInvoiceComparator do
       end
 
       describe "detecting non-relevant" do
-        it_behaves_like "attribute changes - payment total", false, "non-relevant"
         it_behaves_like "attribute changes - order total", false, "non-relevant"
         it_behaves_like "attribute changes - tax total changes", false, "non-relevant", false
         it_behaves_like "attribute changes - tax total changes", false, "non-relevant", true
