@@ -19,7 +19,7 @@ describe 'As an admin, I can see the new product page' do
   end
 
   it "can see the new product page" do
-    visit admin_products_v3_index_url
+    visit admin_products_url
     expect(page).to have_content "Bulk Edit Products"
   end
 
@@ -28,7 +28,7 @@ describe 'As an admin, I can see the new product page' do
     let!(:product_a) { create(:simple_product, name: "Apples") }
 
     before do
-      visit admin_products_v3_index_url
+      visit admin_products_url
     end
 
     it "Should sort products alphabetically by default" do
@@ -44,7 +44,7 @@ describe 'As an admin, I can see the new product page' do
 
   describe "pagination" do
     before do
-      visit admin_products_v3_index_url
+      visit admin_products_url
     end
 
     it "has a pagination, has 15 products per page by default and can change the page" do
@@ -76,7 +76,7 @@ describe 'As an admin, I can see the new product page' do
       let!(:product_by_name) { create(:simple_product, name: "searchable product") }
 
       before do
-        visit admin_products_v3_index_url
+        visit admin_products_url
       end
 
       it "can search for a product" do
@@ -128,7 +128,7 @@ describe 'As an admin, I can see the new product page' do
       let!(:product_by_supplier) { create(:simple_product, supplier: producer) }
 
       it "can search for a product" do
-        visit admin_products_v3_index_url
+        visit admin_products_url
 
         search_by_producer "Producer 1"
 
@@ -145,7 +145,7 @@ describe 'As an admin, I can see the new product page' do
       }
 
       it "can search for a product" do
-        visit admin_products_v3_index_url
+        visit admin_products_url
 
         search_by_category "Category 1"
 
@@ -168,7 +168,7 @@ describe 'As an admin, I can see the new product page' do
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
 
     before do
-      visit admin_products_v3_index_url
+      visit admin_products_url
     end
 
     it "shows an actions memu with an edit link when clicking on icon for product" do
@@ -198,7 +198,7 @@ describe 'As an admin, I can see the new product page' do
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
 
     before do
-      visit admin_products_v3_index_url
+      visit admin_products_url
     end
 
     it "updates product and variant fields" do

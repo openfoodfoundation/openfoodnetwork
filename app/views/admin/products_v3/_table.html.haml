@@ -1,4 +1,4 @@
-= form_with url: bulk_update_admin_products_v3_index_path, method: :patch, id: "products-form",
+= form_with url: bulk_update_admin_products_path, method: :patch, id: "products-form",
             html: {'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#bulk_update',
                    'data-controller': "bulk-form", 'data-bulk-form-disable-selector-value': "#sort,#filters"} do |form|
   %fieldset.form-actions.hidden{ 'data-bulk-form-target': "actions" }
@@ -56,9 +56,9 @@
               -# TODO: new requirement "DISPLAY ON DEMAND IF ALL VARIANTS ARE ON DEMAND". And translate value
               .content= if product.variants.all?(&:on_demand) then "On demand" else product.on_hand || 0 end
             %td.align-left
-              .content= product.supplier.name
+              .content= product.supplier&.name
             %td.align-left
-              .content= product.primary_taxon.name
+              .content= product.primary_taxon&.name
             %td.align-left
             %td.align-left
               .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
@@ -82,7 +82,7 @@
                 %td.align-right
                   .content= variant.on_hand || 0 #TODO: spec for this according to requirements.
                 %td.align-left
-                  .content= variant.product.supplier.name # same as product
+                  .content= variant.product.supplier&.name # same as product
                 %td.align-left
                   -# empty
                 %td.align-left
