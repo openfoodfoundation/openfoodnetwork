@@ -30,6 +30,7 @@ describe BulkInvoiceJob do
       let(:order_ids) { [order1.id, order2.id, order3.id] }
       let(:path){ "/tmp/file/path.pdf" }
       before do
+        allow(TermsOfServiceFile).to receive(:current_url).and_return("http://example.com/terms.pdf")
         order3.cancel
         order3.resume
       end

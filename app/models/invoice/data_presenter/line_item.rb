@@ -29,7 +29,7 @@ class Invoice
       end
 
       def single_display_amount_with_adjustments
-        Spree::Money.new(price_with_adjustments - (included_tax/quantity), currency:)
+        Spree::Money.new(price_with_adjustments - (included_tax / quantity), currency:)
       end
 
       def display_line_items_taxes(display_zero: true)
