@@ -27,7 +27,7 @@ class InvoiceRenderer
 
   def invoice_template
     if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, @user)
-      invoice_presenter_template
+      invoice_template_v3
     elsif Spree::Config.invoice_style2?
       "spree/admin/orders/invoice2"
     else
@@ -35,11 +35,7 @@ class InvoiceRenderer
     end
   end
 
-  def invoice_presenter_template
-    if Spree::Config.invoice_style2?
-      "spree/admin/orders/invoice4"
-    else
-      "spree/admin/orders/invoice3"
-    end
+  def invoice_template_v3
+    "spree/admin/orders/invoice4"
   end
 end
