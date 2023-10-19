@@ -43,10 +43,12 @@
         %td{:align => "right"}
         %td{:align => "right"}
         %td{:align => "right"}
-          = adjustment.display_amount
-        - if @order.total_tax > 0
-          %td{:align => "right"}
-            = adjustment.display_adjustment_tax_rates
+        %td{:align => "right"}
+          = adjustment.display_amount_without_taxes
+        %td{:align => "right"}
+          = adjustment.display_adjustment_tax_rates
+        %td{:align => "right"}
+          = adjustment.display_amount_with_taxes
   %tfoot
     %tr
       %td{:align => "right", :colspan => "5"}

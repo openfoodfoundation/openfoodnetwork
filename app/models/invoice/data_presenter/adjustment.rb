@@ -12,8 +12,12 @@ class Invoice
                                     :included_tax_total
       invoice_update_attributes :label
 
-      def display_amount
-        Spree::Money.new(amount, currency:)
+      def display_amount_with_taxes
+        Spree::Money.new(amount + additional_tax_total, currency:)
+      end
+
+      def display_amount_without_taxes
+        Spree::Money.new(amount - included_tax_total, currency:)
       end
 
       def display_taxes(display_zero: false)
