@@ -45,7 +45,7 @@ shared_examples "attribute changes - tax total changes" do |boolean, type, inclu
     end
   end
 
-  context "if included is #{included_boolean}" do
+  context "if included_in_price is #{included_boolean}" do
     before do
       Spree::TaxRate.first.update!(amount: 0.15)
       order.create_tax_charge!
@@ -96,29 +96,26 @@ shared_examples "attribute changes - note" do |boolean, type|
 end
 
 shared_examples "associated attribute changes - adjustments (create)" do |boolean, type|
-  before { create(:adjustment, order_id: order.id) }
+  before { order.adjustments << create(:adjustment, order:) }
   context "creating an adjustment" do
     it "returns #{boolean} if a #{type} attribute changes" do
-      order.reload
       expect(subject).to be boolean
     end
   end
 
   context "with an existing adjustment" do
-    let!(:adjustment) { create(:adjustment, order_id: order.id) }
+    before { order.adjustments << create(:adjustment, order:) }
 
     context "editing the amount" do
-      before { adjustment.update!(amount: 123) }
+      before { order.adjustments.first.update!(amount: 123) }
       it "returns #{boolean} if a #{type} attribute changes" do
-        order.reload
         expect(subject).to be boolean
       end
     end
 
     context "changing the adjustment type" do
-      before { adjustment.update!(adjustable_type: "Spree::Payment") }
+      before { order.adjustments.first.update!(adjustable_type: "Spree::Payment") }
       it "returns #{boolean} if a #{type} attribute changes" do
-        order.reload
         expect(subject).to be boolean
       end
     end
@@ -314,15 +311,16 @@ shared_examples "attribute changes - payment state" do |boolean, type|
 end
 
 describe OrderInvoiceComparator do
+  let!(:invoice){
+    create(:invoice,
+           order:,
+           data: invoice_data_generator.serialize_for_invoice)
+  }
+
   describe '#can_generate_new_invoice?' do
     # this passes 'order' as argument to the invoice comparator
     let(:order) { create(:completed_order_with_fees) }
     let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
-    let!(:invoice){
-      create(:invoice,
-             order:,
-             data: invoice_data_generator.serialize_for_invoice)
-    }
     let(:subject) {
       OrderInvoiceComparator.new(order).can_generate_new_invoice?
     }
@@ -362,11 +360,6 @@ describe OrderInvoiceComparator do
   describe '#can_update_latest_invoice?' do
     let!(:order) { create(:completed_order_with_fees) }
     let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }
-    let!(:invoice){
-      create(:invoice,
-             order:,
-             data: invoice_data_generator.serialize_for_invoice)
-    }
     let(:subject) {
       OrderInvoiceComparator.new(order).can_update_latest_invoice?
     }
