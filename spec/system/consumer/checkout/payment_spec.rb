@@ -187,14 +187,14 @@ describe "As a consumer, I want to checkout my order" do
               accept_confirm "Are you sure you want to remove the voucher?" do
                 click_on "Remove code"
               end
-            end
 
-            it "removes voucher" do
               within '#voucher-section' do
                 expect(page).to have_button("Apply", disabled: true)
                 expect(page).to have_field "Enter voucher code" # Currently no confirmation msg
               end
+            end
 
+            it "removes voucher" do
               expect(page).not_to have_content "No payment required"
               expect(order.voucher_adjustments.length).to eq(0)
             end
