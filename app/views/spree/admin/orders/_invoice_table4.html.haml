@@ -11,9 +11,8 @@
         %h5= @order.has_taxes_included ? t(:invoice_column_unit_price_with_taxes) : t(:invoice_column_unit_price_without_taxes)
       %th{:align => "right", :width => "15%"}
         %h5= t(:invoice_column_price_without_taxes)
-      - if @order.total_tax > 0
-        %th{:align => "right", :width => "15%"}
-          %h5= t(:invoice_column_tax_rate)
+      %th{:align => "right", :width => "15%"}
+        %h5= t(:invoice_column_tax_rate)
       %th{:align => "right", :width => "15%"}
         %h5= t(:invoice_column_price_with_taxes)
   %tbody
@@ -32,9 +31,8 @@
           = item.single_display_amount_with_adjustments
         %td{:align => "right"}
           = item.display_amount_with_adjustments_without_taxes
-        - if @order.total_tax > 0
-          %td{:align => "right"}
-            = item.display_line_item_tax_rates
+        %td{:align => "right"}
+          = item.display_line_item_tax_rates
         %td{:align => "right"}
           = item.display_amount_with_adjustments_and_with_taxes
 
