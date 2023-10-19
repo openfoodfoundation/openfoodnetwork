@@ -355,11 +355,67 @@ describe "As a consumer, I want to checkout my order" do
         expect(page).to_not have_content("You have an order for this order cycle already.")
       end
     end
+
+    describe "order confirmation page" do
+      let(:completed_order) {
+        create(:order_ready_to_ship, distributor:,
+                                     order_cycle:, user_id: user.id)
+      }
+      let(:payment) { completed_order.payments.first }
+
+      shared_examples "order confirmation page" do |paid_state, paid_amount|
+        it "displays the relevant information" do
+          expect(page).to have_content paid_state.to_s
+          expect(page).to have_selector('strong', text: "Amount Paid")
+          expect(page).to have_selector('strong', text: with_currency(paid_amount))
+        end
+      end
+
+      context "an order with balance due" do
+        before { set_up_order(-10, "balance_due") }
+
+        it_behaves_like "order confirmation page", "NOT PAID", "40" do
+          before do
+            expect(page).to have_selector('h5', text: "Balance Due")
+            expect(page).to have_selector('h5', text: with_currency(10))
+          end
+        end
+      end
+
+      context "an order with credit owed" do
+        before { set_up_order(10, "credit_owed") }
+
+        it_behaves_like "order confirmation page", "PAID", "60" do
+          before do
+            expect(page).to have_selector('h5', text: "Credit Owed")
+            expect(page).to have_selector('h5', text: with_currency(-10))
+          end
+        end
+      end
+
+      context "an order with no outstanding balance" do
+        before { set_up_order(0, "paid") }
+
+        it_behaves_like "order confirmation page", "PAID", "50" do
+          before do
+            expect(page).to_not have_selector('h5', text: "Credit Owed")
+            expect(page).to_not have_selector('h5', text: "Balance Due")
+          end
+        end
+      end
+    end
   end
 
   def add_voucher_to_order(voucher, order)
     voucher.create_adjustment(voucher.code, order)
     VoucherAdjustmentsService.new(order).update
     order.update_totals_and_states
+  end
+
+  def set_up_order(balance, state)
+    payment.update!(amount: payment.amount + balance)
+    completed_order.reload
+    expect(completed_order.payment_state).to eq state.to_s
+    visit "/orders/#{completed_order.number}"
   end
 end
