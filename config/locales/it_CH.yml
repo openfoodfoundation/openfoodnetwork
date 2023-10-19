@@ -3365,7 +3365,6 @@ it_CH:
     gateway_error: "Pagamento fallito"
     more: "Di più"
     new_adjustment: "Nuovo aggiustamento"
-    new_order_completed: "Nuova richiesta completata"
     new_tax_category: "Nuova Categoria imposta"
     new_taxon: "Nuova tassonomia"
     new_user: "Nuovo utente"

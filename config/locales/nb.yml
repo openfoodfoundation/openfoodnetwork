@@ -3591,7 +3591,6 @@ nb:
     gateway_error: "Betalingen feilet"
     more: "Mer"
     new_adjustment: "Ny justering"
-    new_order_completed: "Ny bestilling fullført"
     new_tax_category: "Ny avgiftskategori"
     new_taxon: "Ny kategori"
     new_user: "Ny bruker"

@@ -3222,7 +3222,6 @@ tr:
     gateway_error: "Ödeme başarısız"
     more: "Daha Fazla"
     new_adjustment: "Yeni düzenleme"
-    new_order_completed: "Yeni sipariş tamamlandı"
     new_tax_category: "Yeni Vergi Kategorisi"
     new_taxon: "Yeni kategori"
     new_user: "Yeni kullanıcı"
