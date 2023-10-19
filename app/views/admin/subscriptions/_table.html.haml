@@ -38,19 +38,19 @@
         &nbsp;
   %tbody.panel-ctrl{ object: 'subscription', ng: { repeat: "subscription in subscriptions | filter:query as filteredSubscriptions track by subscription.id" } }
     %tr.subscription{ :id => "so_{{subscription.id}}", ng: { class: { even: "'even'", odd: "'odd'" } } }
-      %td.customer.text-center{ ng: { show: 'columns.customer.visible'}}
+      %td.customer{ ng: { show: 'columns.customer.visible'}}
         %span{ "ng-bind": '::subscription.customer_email' }
         %br
         %span{ "ng-bind": '::subscription.customer_full_name' }
-      %td.schedule.text-center{ ng: { show: 'columns.schedule.visible', bind: '::subscription.schedule_name' } }
-      %td.items.panel-toggle.text-center{ name: 'products', ng: { show: 'columns.items.visible' } }
+      %td.schedule{ ng: { show: 'columns.schedule.visible', bind: '::subscription.schedule_name' } }
+      %td.items.panel-toggle{ name: 'products', ng: { show: 'columns.items.visible' } }
         %h5{ ng: { bind: 'itemCount(subscription)' } }
-      %td.orders.panel-toggle.text-center{ name: 'orders', ng: { show: 'columns.orders.visible' } }
+      %td.orders.panel-toggle{ name: 'orders', ng: { show: 'columns.orders.visible' } }
         %h5{ ng: { bind: 'subscription.not_closed_proxy_orders.length' } }
-      %td.status.text-center{ ng: { show: 'columns.state.visible' } }
+      %td.status{ ng: { show: 'columns.state.visible' } }
         %span.state{ ng: { class: "subscription.state", bind: "'spree.subscription_state.' + subscription.state | t" } }
-      %td.begins_on.text-center{ ng: { show: 'columns.begins_on.visible', bind: '::subscription.begins_at' } }
-      %td.ends_on.text-center{ ng: { show: 'columns.ends_on.visible', bind: '::subscription.ends_at' } }
+      %td.begins_on{ ng: { show: 'columns.begins_on.visible', bind: '::subscription.begins_at' } }
+      %td.ends_on{ ng: { show: 'columns.ends_on.visible', bind: '::subscription.ends_at' } }
       %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::paymentMethodsByID[subscription.payment_method_id].name' } }
       %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::shippingMethodsByID[subscription.shipping_method_id].name' } }
       %td.actions
