@@ -138,7 +138,7 @@ module Reporting
             filtered_line_items(order)
               .filter do |line_item|
                 item[:enterprise_fee_id].in?(
-                  enterprise_fees_per_variant[line_item.variant]
+                  enterprise_fees_per_variant.fetch(line_item.variant, [])
                 )
               end
               .map do |line_item|

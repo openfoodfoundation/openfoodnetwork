@@ -50,13 +50,12 @@ describe Reporting::Reports::EnterpriseFeeSummary::EnterpriseFeesWithTaxReportBy
   end
 
   it "handles products removed from the order cycle" do
-    pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/11530"
-
     order
     order_cycle.exchanges.incoming.first.exchange_variants.first.destroy!
 
     report = described_class.new(current_user)
 
+    pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/11529"
     expect(report.query_result.values).to eq [[order]]
   end
 end
