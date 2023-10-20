@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe ReportJob do
+  include CableReady::Broadcaster
+
   let(:report_args) {
     { report_class:, user:, params:, format:, filename: }
   }
@@ -30,6 +32,19 @@ describe ReportJob do
     }.to change { ActiveStorage::Blob.count }
 
     expect_csv_report
+  end
+
+  it "notifies Cable Ready when the report is done" do
+    channel = ScopedChannel.for_id("123")
+    with_channel = report_args.merge(channel:)
+
+    ReportJob.perform_later(**with_channel)
+
+    expect(cable_ready[channel]).to receive(:broadcast).and_call_original
+
+    expect {
+      perform_enqueued_jobs(only: ReportJob)
+    }.to change { ActiveStorage::Blob.count }
   end
 
   it "triggers an email when the report is done" do
