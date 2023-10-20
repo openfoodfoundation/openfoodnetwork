@@ -8,10 +8,7 @@ describe SplitCheckoutController, type: :controller do
   let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
   let(:exchange) { order_cycle.exchanges.outgoing.first }
-  let(:order) {
-    create(:order_with_line_items, line_items_count: 1, distributor:,
-                                   order_cycle:)
-  }
+  let(:order) { create(:order_with_line_items, line_items_count: 1, distributor:, order_cycle:) }
   let(:payment_method) { distributor.payment_methods.first }
   let(:shipping_method) { distributor.shipping_methods.first }
 
@@ -211,7 +208,7 @@ describe SplitCheckoutController, type: :controller do
           }
         end
 
-        it "updates and redirects to payment step" do
+        it "updates and redirects to summary step" do
           put(:update, params:)
 
           expect(response).to redirect_to checkout_step_path(:summary)
