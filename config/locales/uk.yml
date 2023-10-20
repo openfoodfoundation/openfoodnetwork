@@ -1922,7 +1922,9 @@ uk:
   order_pickup_time: Готовий до збору
   order_pickup_instructions: Інструкція по збору
   order_produce: Виробити
+  order_amount_paid: Виплачувана сума
   order_total_price: Всього
+  order_balance_due: Баланс через
   order_includes_tax: (включає податок)
   order_payment_paypal_successful: Ваш платіж через PayPal успішно оброблено.
   order_hub_info: Інформація про хаб

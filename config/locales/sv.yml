@@ -999,6 +999,7 @@ sv:
   order_pickup_time: Redo för upphämtning
   order_pickup_instructions: Upphämtningsinstruktioner
   order_produce: Producera
+  order_amount_paid: Betalt
   order_total_price: 'Summa '
   order_includes_tax: (inkluderar skatter)
   order_payment_paypal_successful: Din betalning via PayPal har gått bra.

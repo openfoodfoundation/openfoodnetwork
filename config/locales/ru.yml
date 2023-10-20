@@ -2079,7 +2079,9 @@ ru:
   order_pickup_time: Готов к вывозу
   order_pickup_instructions: Инструкции по вывозу
   order_produce: Продукция
+  order_amount_paid: Выплаченная Сумма
   order_total_price: Всего
+  order_balance_due: Задолжность
   order_includes_tax: (включает налог)
   order_payment_paypal_successful: Ваш платеж через PayPal успешно выполнен.
   order_hub_info: Информация о Центре

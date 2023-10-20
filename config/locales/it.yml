@@ -1976,7 +1976,9 @@ it:
   order_pickup_time: Pronto per il ritiro
   order_pickup_instructions: 'Dove ritirare la tua spesa:'
   order_produce: Subtotale
+  order_amount_paid: Importo pagato
   order_total_price: Totale
+  order_balance_due: Da pagare
   order_includes_tax: (importo IVA incluso nel totale)
   order_payment_paypal_successful: Il tuo pagamento con PayPal è stato elaborato con successo.
   order_hub_info: Info Hub

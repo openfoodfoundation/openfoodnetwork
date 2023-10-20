@@ -8,13 +8,13 @@
   .row
     .three.columns.alpha
       = f.label :group_ids, t('.groups')
-      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.groups_tip')}
+      = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.groups_tip')}
     .eight.columns.omega
       = f.collection_select :group_ids, @groups, :id, :name, {}, data: { controller: "tom-select", "tom-select-options-value": { plugins: ['remove_button'], maxItems: nil } }, class: "full-width", multiple: true, placeholder: t('.groups_placeholder')
 .row
   .three.columns.alpha
     %label= t('.primary_producer')
-    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.primary_producer_tip')}
+    = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.primary_producer_tip')}
   .five.columns.omega
     = f.check_box :is_primary_producer, data: { action: "change->primary-details#primaryProducerChanged" } 
     = f.label :is_primary_producer, t('.producer')
@@ -22,7 +22,7 @@
   .row
     .three.columns.alpha
       = f.label :sells, t('.sells')
-      = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.sells_tip')}
+      = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.sells_tip')}
     .two.columns
       = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"} 
       = f.label :sells, t('.none'), value: "none"
@@ -37,7 +37,7 @@
 .row
   .three.columns.alpha
     %label= t('.visible_in_search')
-    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.visible_in_search_tip')}
+    = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.visible_in_search_tip')}
   .two.columns
     = f.radio_button :visible, "public", 'ng-model' => 'Enterprise.visible'
     = f.label :visible, t('.visible'), value: 'public'

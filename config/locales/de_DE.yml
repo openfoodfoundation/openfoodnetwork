@@ -298,7 +298,7 @@ de_DE:
       subject: "%{enterprise} ist jetzt Teil des Open Food Network"
       email_welcome: "Willkommen"
       email_registered: "ist jetzt Teil des"
-      email_userguide_html: "Das Benutzerhandbuch mit detaillierter Unterstützung für die Einrichtung Ihres Profils, Produzentenladens oder Hubs finden Sie hier: %{link}"
+      email_userguide_html: "Das Benutzerhandbuch mit detaillierter Unterstützung für die Einrichtung Ihres Profils, Produzentenladens oder Ladens finden Sie hier: %{link}"
       userguide: "Open Food Network Benutzerhandbuch"
       email_admin_html: "Sie können Ihr Konto verwalten, indem Sie direkt den Link %{link} verwenden oder indem Sie sich auf der Startseite einloggen und im Menü \"Verwaltung\" auswählen."
       admin_panel: "Verwaltung"
@@ -911,6 +911,7 @@ de_DE:
     orders:
       edit:
         order_sure_want_to: Sind Sie sicher, dass Sie diese Bestellung %{event} möchten?
+        voucher_tax_included_in_price: "%{label} (im Gutschein enthaltene Steuern)"
       invoice_email_sent: 'Rechnung wurde gesendet per E-Mail gesendet.'
       order_email_resent: 'Bestellbestätigung wurde erneut per E-Mail gesendet.'
       bulk_management:
@@ -1223,14 +1224,14 @@ de_DE:
         producer_shop: Produzentenladen
         sell_your_produce: Verkaufen Sie Ihre eigenen Produkte
         producer_shop_description_text: Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren eigenen Produzentenladen im Open Food Network.
-        producer_shop_description_text2: Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie Produkte anderer verkaufen möchten, wählen Sie "Hub".
-        producer_hub: Hub
+        producer_shop_description_text2: Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie nur oder auch Produkte anderer verkaufen möchten, wählen Sie "Laden".
+        producer_hub: Produzentenladen
         producer_hub_text: Verkaufen Sie eigene Produkte und Produkte anderer
         producer_hub_description_text: Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
         profile: Profil
         get_listing: Erstellen Sie ein Profil
         profile_description_text: Stellen Sie sich im Open Food Network vor und vernetzen Sie sich mit anderen Produzenten und Läden. Sie können im Open Food Network gefunden und kontaktiert werden. Ihr Unternehmen wird auf der Karte und in Suchergebnissen angezeigt.
-        hub_shop: Hub
+        hub_shop: Laden
         hub_shop_text: Verkaufen Sie Produkte anderer
         hub_shop_description_text: Verkaufen Sie Produkte anderer Produzenten oder Läden im Open Food Network. Sie führen die Produkte zusammen und sind mit Ihrem Laden ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
         choose_option: Bitte wählen Sie eine der oben aufgeführten Optionen.
@@ -1493,7 +1494,7 @@ de_DE:
         report_link_label: Bericht herunterladen (sobald verfügbar)
       revenues_by_hub:
         name: Umsätze
-        description: Umsätze nach Läden/Händlern/Hubs
+        description: Umsätze nach Läden
       orders_and_distributors:
         name: Bestellungen und Verteilstellen
         description: Bestellungen mit Verteilstellendetails
@@ -1534,7 +1535,7 @@ de_DE:
       table:
         select_and_search: "Treffen Sie Ihre Auswahl und klicken Sie auf %{option}, um den Bericht zu erstellen."
         headings:
-          hub: "Hub"
+          hub: "Laden"
           customer_code: "Code"
           first_name: "Vorname"
           last_name: "Nachname"
@@ -2101,7 +2102,9 @@ de_DE:
   order_pickup_time: 'Bereit zu Abholung am:'
   order_pickup_instructions: Informationen zur Abholung
   order_produce: Produkte
+  order_amount_paid: Bezahlter Betrag
   order_total_price: Summe
+  order_balance_due: Offener Betrag
   order_includes_tax: (enthaltene Steuern)
   order_payment_paypal_successful: Ihre Zahlung mit PayPal wurde erfolgreich abgewickelt.
   order_hub_info: Informationen über den Laden
@@ -2267,7 +2270,7 @@ de_DE:
   components_filters_clearfilters: "Filter zurücksetzen"
   groups_title: Gruppen
   groups_headline: Gruppen/Regionen
-  groups_text: "Jeder Produzent ist einzigartig. Jedes Unternehmen hat etwas anderes zu bieten. Unsere Gruppen fassen Produzenten, Hubs und Verteilstellen zusammen, die etwas gemeinsam haben, wie z. B. ihren Standort, ihre Philosophie oder den gemeinsamen Bauernmarkt. So erleichtern Gruppen Ihr Einkaufserlebnis."
+  groups_text: "Jeder Produzent ist einzigartig. Jedes Unternehmen hat etwas anderes zu bieten. Unsere Gruppen fassen Produzenten, Läden und Verteilstellen zusammen, die etwas gemeinsam haben, wie z. B. ihren Standort, ihre Philosophie oder den gemeinsamen Bauernmarkt. So erleichtern Gruppen Ihr Einkaufserlebnis."
   groups_search: "Suchen Sie nach Name oder Stichwort ..."
   groups_no_groups: "Keine Gruppen gefunden."
   groups_about: "Über uns"
@@ -2287,7 +2290,7 @@ de_DE:
   groups_signup_motivation2: Deshalb sind wir jeden Tag aufgestanden. Wir sind eine globale Non-Profit-Organisation, die auf Open-Source-Code basiert. Wir spielen fair. Sie können uns immer vertrauen.
   groups_signup_motivation3: Wir wissen, dass Sie große Ideen haben und wir helfen wollen. Wir teilen unser Wissen, Netzwerke und Ressourcen. Wir wissen, dass Isolation keine Veränderung verursacht, also werden wir mit Ihnen zusammenarbeiten.
   groups_signup_motivation4: Wir treffen Sie, wo Sie sind.
-  groups_signup_motivation5: Sie könnten ein Zusammenschluss von Hubs, Produzenten oder Verteilstellen sein, eine Industrieorganisation oder eine Lokalbehörde.
+  groups_signup_motivation5: Sie könnten ein Zusammenschluss von Läden, Produzenten oder Verteilstellen sein, eine Industrieorganisation oder eine lokale Behörde.
   groups_signup_motivation6: Was auch immer Ihre Rolle in Ihrer lokalen Nahrungsmittelbewegung ist, wir sind bereit zu helfen. Wie auch immer Sie sich fragen, wie Open Food Network in Ihrem Teil der Welt aussehen würde oder wird, lassen Sie uns das Gespräch beginnen.
   groups_signup_motivation7: Wir unterstützen Initiative dabei, den Trend zur Regionalität und Nachhaltigkeit zu stärken.
   groups_signup_motivation8: Sie müssen Ihre Netzwerke aktivieren und aktivieren, wir bieten eine Plattform für Konversation und Aktion. Sie brauchen echtes Engagement. Wir helfen, alle Akteure, alle Beteiligten, alle Sektoren zu erreichen.
@@ -2332,7 +2335,7 @@ de_DE:
   sell_headline: "Werden Sie Teil des Open Food Network!"
   sell_motivation: "Stellen Sie Ihre tollen Produkte vor."
   sell_producers: "Produzenten"
-  sell_hubs: "Hubs"
+  sell_hubs: "Läden"
   sell_groups: "Gruppen"
   sell_producers_detail: "Richten Sie in wenigen Minuten für Ihr Unternehmen ein Profil im Open Food Network ein. Sie können Ihr Profil jederzeit auf einen Laden erweitern und Ihre Produkte direkt an Kunden verkaufen."
   sell_hubs_detail: "Richten Sie im Open Food Network ein Profil für Ihr Lebensmittelunternehmen oder Ihre Organisation ein. Sie können Ihr Profil jederzeit erweitern und Produkte von anderen Produzenten und Läden direkt an Kunden verkaufen."
@@ -2349,7 +2352,7 @@ de_DE:
   shops_signup_motivation: Was auch immer Ihr Modell ist, wir unterstützen Sie. Wie auch immer Sie sich ändern, wir sind bei Ihnen. Wir sind gemeinnützig, unabhängig und Open-Source. Wir sind die Software-Partner, von denen Sie schon immer geträumt haben.
   shops_signup_action: Jetzt beitreten
   shops_signup_pricing: Unternehmenskonten
-  shops_signup_stories: Geschichten unserer Hubs
+  shops_signup_stories: Geschichten unserer Läden
   shops_signup_help: Wir sind bereit zu helfen.
   shops_signup_help_text: Du brauchst eine bessere Rendite. Sie brauchen neue Käufer und Logistikpartner. Sie müssen Ihre Geschichte über den Großhandel, den Einzelhandel und den Küchentisch erzählen.
   shops_signup_detail: Weitere Details folgen.
@@ -2695,11 +2698,11 @@ de_DE:
   queued: "In der Warteschlange"
   scheduled_for: "Vorgemerkt für"
   customers: "Kunden"
-  please_select_hub: "Bitte wählen Sie einen Hub"
+  please_select_hub: "Bitte wählen Sie einen Laden"
   loading_customers: "Kunden werden geladen ..."
   no_customers_found: "Keine Kunden gefunden."
   go: "Suche"
-  hub: "Hub"
+  hub: "Laden"
   product: "Produkt"
   price: "Preis"
   review: "Überprüfung"
@@ -2714,7 +2717,7 @@ de_DE:
   spree_admin_enterprises_fees: "Gebühren"
   spree_admin_enterprises_none_create_a_new_enterprise: "ERSTELLEN SIE EIN NEUES UNTERNEHMEN"
   spree_admin_enterprises_none_text: "Sie haben noch keine Unternehmen."
-  spree_admin_enterprises_tabs_hubs: "HUBS"
+  spree_admin_enterprises_tabs_hubs: "LÄDEN"
   spree_admin_enterprises_producers_manage_products: "PRODUKTE VERWALTEN"
   spree_admin_enterprises_create_new_product: "NEUES PRODUKT"
   spree_admin_single_enterprise_alert_mail_confirmation: "Bitte bestätigen Sie die E-Mail-Adresse für"
@@ -2738,7 +2741,7 @@ de_DE:
   spree_order_populator_error: "Diese Verteilstelle oder dieser Bestellzyklus kann nicht alle Produkte aus Ihrem Warenkorb liefern. Bitte ändern Sie Ihre Auswahl."
   spree_order_cycle_error: "Bitte wählen Sie einen Bestellzyklus für diese Bestellung aus."
   spree_order_populator_availability_error: "Dieses Produkt ist bei der ausgewählten Verteilstelle oder im ausgewählten Bestellzyklus nicht verfügbar."
-  spree_distributors_error: "Mindestens ein Hub muss ausgewählt sein."
+  spree_distributors_error: "Mindestens ein Laden muss ausgewählt sein."
   spree_user_enterprise_limit_error: "^ %{email} darf keine weiteren Unternehmen besitzen (maximale Anzahl ist %{enterprise_limit})."
   spree_variant_product_error: muss mindestens eine Produktvariante haben
   your_profil_live: "Ihr öffentlicher Auftritt im Open Food Network"
@@ -2769,15 +2772,15 @@ de_DE:
   admin_share_zipcode: "Postleitzahl"
   admin_share_country: "Land"
   admin_share_state: "Bundesland"
-  hub_sidebar_hubs: "Hubs"
+  hub_sidebar_hubs: "Läden"
   hub_sidebar_none_available: "Keine verfügbar"
   hub_sidebar_manage: "Verwalten"
-  hub_sidebar_at_least: "Mindestens ein Hub muss ausgewählt sein."
+  hub_sidebar_at_least: "Mindestens ein Laden muss ausgewählt sein."
   hub_sidebar_blue: "blau"
   hub_sidebar_red: "rot"
   order_cycles_closed_for_hub: "Der Bestellzyklus des von Ihnen ausgewählten Ladens ist derzeit geschlossen. Bitte versuchen Sie es später noch einmal."
   report_customers_distributor: "Verteilstelle"
-  report_customers_hub: "Hub"
+  report_customers_hub: "Laden"
   report_customers_supplier: "Lieferant"
   report_customers_cycle: "Bestellzyklus"
   report_customers_type: "Berichtsart"
@@ -2785,7 +2788,7 @@ de_DE:
   report_customers: Kunde
   report_producers: "Unsere Produzenten"
   report_type: "Berichtsart"
-  report_hubs: "Hubs"
+  report_hubs: "Läden"
   report_payment: "Zahlungsarten"
   report_distributor: "Verteilstelle"
   report_payment_by: 'Zahlungen nach Art'
@@ -2816,10 +2819,10 @@ de_DE:
   report_header_address: Adresse
   report_header_billing_address: Rechnungsadresse
   report_header_relationship: Beziehung
-  report_header_hub: Hub
-  report_header_hub_address: Hubadresse
-  report_header_to_hub: An den Hub
-  report_header_hub_code: Hub-Code
+  report_header_hub: Laden
+  report_header_hub_address: Ladenadresse
+  report_header_to_hub: An den Laden
+  report_header_hub_code: Laden-Code
   report_header_hub_id: Laden-ID
   report_header_hub_business_number: "USt-IdNr."
   report_header_hub_legal_name: "Unternehmensname"
@@ -3013,7 +3016,7 @@ de_DE:
   enterprise_fee_whole_order: Gesamte Bestellung
   enterprise_fee_by_name: "%{name} (%{enterprise_name})"
   validation_msg_relationship_already_established: "^ Diese Beziehung besteht bereits."
-  validation_msg_at_least_one_hub: "^ Mindestens ein Hub muss ausgewählt sein."
+  validation_msg_at_least_one_hub: "^ Mindestens ein Laden muss ausgewählt sein."
   validation_msg_tax_category_cant_be_blank: "^ Steuerkategorie darf nicht leer sein."
   validation_msg_is_associated_with_an_exising_customer: "ist mit einem bestehenden Kunden verbunden"
   content_configuration_pricing_table: "(TODO: Preistabelle)"
@@ -3029,17 +3032,17 @@ de_DE:
   product_importer_products_save_error: Keine Produkte gespeichert.
   product_import_file_not_found_notice: 'Datei konnte nicht gefunden oder nicht geöffnet werden.'
   product_import_no_data_in_spreadsheet_notice: 'Keine Daten in der Tabelle gefunden.'
-  order_choosing_hub_notice: Ihr Hub wurde ausgewählt.
+  order_choosing_hub_notice: Ihr Laden wurde ausgewählt.
   order_cycle_selecting_notice: Ihr Bestellzyklus wurde ausgewählt.
   adjustments_tax_rate_error: "^ Bitte überprüfen Sie, ob der Steuersatz für diese Anpassung korrekt ist."
   active_distributors_not_ready_for_checkout_message_singular: >-
-      Der Hub %{distributor_names} ist in einem aktiven Bestellzyklus aufgeführt,
+      Der Laden %{distributor_names} ist in einem aktiven Bestellzyklus aufgeführt,
       hat jedoch keine gültigen Liefer- und Zahlungsarten. Bis Sie diese einrichten,
-      können Kunden nicht bei diesem Hub einkaufen.
+      können Kunden nicht bei diesem Laden einkaufen.
   active_distributors_not_ready_for_checkout_message_plural: >-
-      Die Hubs %{distributor_names} sind in einem aktiven Bestellzyklus aufgeführt,
+      Die Läden %{distributor_names} sind in einem aktiven Bestellzyklus aufgeführt,
       haben jedoch keine gültigen Liefer- und Zahlungsarten. Bis Sie diese einrichten,
-      können Kunden nicht bei diesen Hubs einkaufen.
+      können Kunden nicht bei diesen Läden einkaufen.
   enterprise_fees_update_notice: Ihre Gebühren wurden aktualisiert.
   enterprise_register_package_error: "Bitte wählen Sie ein Paket."
   enterprise_register_error: "Die Registrierung für %{enterprise} konnte nicht abgeschlossen werden."
@@ -3082,7 +3085,7 @@ de_DE:
     error: Fehler
     unavailable: Nicht verfügbar
     profile: Profil
-    hub: Hub
+    hub: Laden
     shop: Laden
     choose: Bitte Auswählen ...
     resolve_errors: Bitte beheben Sie die folgenden Fehler
@@ -3148,13 +3151,13 @@ de_DE:
           hub_profile_text2: >
               Ein Profil zu haben und Verbindungen innerhalb Ihres lokalen Lebensmittelsystems
               über das Open Food Network zu pflegen, wird immer kostenlos sein.
-          hub_shop: Hub
+          hub_shop: Laden
           hub_shop_text1: >
               Verkaufen Sie Produkte anderer Produzenten oder Läden im Open Food Network.
               Sie führen die Produkte zusammen und sind mit Ihrem Laden ein zentraler
               Bestandteil Ihres lokalen Lebensmittelsystems.
           hub_shop_text2: >
-              Hubs können viele Formen annehmen, sei es ein Bauernmarkt, eine Lebensmittelkooperative,
+              Läden können viele Formen annehmen, sei es ein Bauernmarkt, eine Lebensmittelkooperative,
               eine Einkaufsgemeinschaft, ein Gemüsekistenabo oder ein lokales Lebensmittelgeschäft.
           hub_shop_text3: >
               Wenn Sie auch Ihre eigenen Produkte verkaufen möchten, wählen Sie zunächst
@@ -3187,20 +3190,21 @@ de_DE:
               eigenen Produzentenladen im Open Food Network.
           producer_shop_text2: >
               Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn
-              Sie Produkte anderer verkaufen möchten, wählen Sie "Hub".
-          producer_hub: Hub
+              Sie Produkte anderer verkaufen möchten, wählen Sie "Laden".
+          producer_hub: Produzentenladen
           producer_hub_text1: >
               Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder
               Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil
               Ihres lokalen Lebensmittelsystems.
           producer_hub_text2: >
-              Hubs können viele Formen annehmen, sei es ein Bauernmarkt, eine Lebensmittelkooperative,
+              Läden können viele Formen annehmen, sei es ein Bauernmarkt, eine Lebensmittelkooperative,
               eine Einkaufsgemeinschaft, ein Gemüsekistenabo oder ein lokales Lebensmittelgeschäft.
           producer_hub_text3: >
-              Das Open Food Network möchte mittels Hubs so viele Vertriebswege wie
-              möglich unterstützen. Auch Ihnen versuchen wir, unabhängig von Ihrer
-              individuellen Situation, die Tools zur Verfügung zu stellen, die Sie
-              für Ihre Organisation oder Ihr lokales Lebensmittelgeschäft benötigen.
+              Das Open Food Network möchte mittels Hubs (Läden/Verkaufsstellen) so
+              viele Vertriebswege wie möglich unterstützen. Auch Ihnen versuchen wir,
+              unabhängig von Ihrer individuellen Situation, die Tools zur Verfügung
+              zu stellen, die Sie für Ihre Organisation oder Ihr lokales Lebensmittelgeschäft
+              benötigen.
           get_listing: Stellen Sie sich und Ihre Produkte vor
           always_free: IMMER KOSTENLOS
           sell_produce_others: Verkaufen Sie Produkte anderer
@@ -4003,7 +4007,7 @@ de_DE:
           order_total: "Bestellung insgesamt"
       overview:
         enterprises_header:
-          ofn_with_tip: Unternehmen sind Produzenten und/oder Hubs und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.
+          ofn_with_tip: Unternehmen sind Produzenten und/oder Läden und sind die grundlegende Organisationseinheit innerhalb des Open Food Network.
         enterprise_row:
           has_no_enterprise_fees: "erhebt keine Unternehmensgebühren"
           has_no_payment_methods: "hat keine Zahlungsarten"

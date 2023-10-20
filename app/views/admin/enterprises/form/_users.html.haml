@@ -6,7 +6,7 @@
     =f.label :owner_id, t('.owner')
     - if full_permissions
       %span.required *
-    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.owner_tip')}
+    = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.owner_tip')}
   .eight.columns.omega
     - if full_permissions
       = f.hidden_field :owner_id, class: "select2 fullwidth", 'user-select' => 'Enterprise.owner', 'ng-model' => 'Enterprise.owner'
@@ -18,7 +18,7 @@
     =f.label :user_ids, t('.notifications')
     - if full_permissions
       %span.required *
-    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.contact_tip')}
+    = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.contact_tip')}
   .eight.columns.omega
     - if full_permissions
       %select.select2.fullwidth{id: 'receives_notifications_dropdown', name: 'receives_notifications', ng: {model: 'receivesNotifications', init: "receivesNotifications = '#{@enterprise.contact.id}'"}}
@@ -32,7 +32,7 @@
     =f.label :user_ids, t('.managers')
     - if full_permissions
       %span.required *
-    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.managers_tip')}
+    = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.managers_tip')}
   .eight.columns.omega
     - if full_permissions
       %table.managers
@@ -63,7 +63,7 @@
       .three.columns.alpha
         %label
           = t('.invite_manager')
-        = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.invite_manager_tip')}
+        = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.invite_manager_tip')}
       .eight.columns.omega
         .row
           %a.button{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "invite-manager-modal" }

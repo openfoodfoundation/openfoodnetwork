@@ -1910,7 +1910,9 @@ de_CH:
   order_pickup_time: 'Bereit zu Abholung am:'
   order_pickup_instructions: Informationen zur Abholung
   order_produce: Produkte
+  order_amount_paid: Bezahlter Betrag
   order_total_price: Summe
+  order_balance_due: Offener Betrag
   order_includes_tax: (enthaltene Steuern)
   order_payment_paypal_successful: Ihre Zahlung mit PayPal wurde erfolgreich abgewickelt.
   order_hub_info: Informationen über den Laden

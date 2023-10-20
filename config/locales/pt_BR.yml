@@ -1761,7 +1761,9 @@ pt_BR:
   order_pickup_time: Pronto para retirada
   order_pickup_instructions: Instruções para retirada
   order_produce: Produtos
+  order_amount_paid: Quantia paga
   order_total_price: Total
+  order_balance_due: Saldo Devedor
   order_includes_tax: (inclui taxas)
   order_payment_paypal_successful: Seu pagamento via Paypal foi processado com sucesso.
   order_hub_info: Informações da central

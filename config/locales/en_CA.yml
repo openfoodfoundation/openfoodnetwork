@@ -2097,7 +2097,9 @@ en_CA:
   order_pickup_time: 'Order for:'
   order_pickup_instructions: Collection Instructions
   order_produce: Subtotal
+  order_amount_paid: Amount Paid
   order_total_price: Total
+  order_balance_due: Balance Due
   order_includes_tax: (includes tax)
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
   order_hub_info: Hub Info

@@ -1614,6 +1614,7 @@ fil_PH:
   order_pickup_time: handa na para sa koleksyon
   order_pickup_instructions: tagubilin sa pagkolekta
   order_produce: produkto
+  order_amount_paid: Halagang Nabayaran
   order_total_price: kabuuan
   order_includes_tax: (kasama ang tax)
   order_payment_paypal_successful: ang iyong bayad gamit ang PayPal ay matagumpay na naproseso.

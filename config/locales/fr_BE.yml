@@ -1890,6 +1890,7 @@ fr_BE:
   order_pickup_time: Prêt à être retiré
   order_pickup_instructions: Instructions de retrait
   order_produce: Produit
+  order_amount_paid: Montant payé
   order_total_price: Total
   order_includes_tax: (dont TVA)
   order_payment_paypal_successful: Votre paiement via PayPal a été réalisé avec succès.

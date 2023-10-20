@@ -1674,7 +1674,9 @@ pt:
   order_pickup_time: Pronto para levantamento
   order_pickup_instructions: Instruções para levantamento
   order_produce: Produtos
+  order_amount_paid: Quantia Paga
   order_total_price: Total
+  order_balance_due: Saldo Pendente
   order_includes_tax: (inclui impostos)
   order_payment_paypal_successful: O seu pagamento via Paypal foi processado com sucesso.
   order_hub_info: Informações da Central
