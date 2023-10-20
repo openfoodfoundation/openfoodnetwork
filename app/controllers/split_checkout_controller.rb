@@ -23,10 +23,12 @@ class SplitCheckoutController < ::BaseController
   before_action :hide_ofn_navigation, only: [:edit, :update]
 
   def edit
-    redirect_to_step_based_on_order unless params[:step]
-
-    update_order_state if params[:step]
-    check_step if params[:step]
+    if params[:step].blank?
+      redirect_to_step_based_on_order
+    else
+      update_order_state
+      check_step
+    end
 
     return if available_shipping_methods.any?
 
@@ -127,5 +129,16 @@ class SplitCheckoutController < ::BaseController
 
   def order_params
     @order_params ||= Checkout::Params.new(@order, params, spree_current_user).call
+  end
+
+  # Update order state based on the step we are loading to avoid discrepancy between step and order
+  # state. We need to do this when moving back to a previous checkout step, the update action takes
+  # care of moving the order state forward.
+  def update_order_state
+    return @order.back_to_payment if @order.confirmation? && payment_step?
+
+    return unless @order.after_delivery_state? && details_step?
+
+    @order.back_to_address
   end
 end

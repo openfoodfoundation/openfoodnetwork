@@ -616,6 +616,10 @@ module Spree
       state.in?(["cart", "address", "delivery"])
     end
 
+    def after_delivery_state?
+      state.in?(["payment", "confirmation"])
+    end
+
     private
 
     def reapply_tax_on_changed_address

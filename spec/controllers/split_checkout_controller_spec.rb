@@ -74,6 +74,7 @@ describe SplitCheckoutController, type: :controller do
           it "updates the order state to payment" do
             get :edit, params: { step: "payment" }
 
+            expect(response.status).to eq 200
             expect(order.reload.state).to eq("payment")
           end
         end
@@ -82,6 +83,7 @@ describe SplitCheckoutController, type: :controller do
           it "updates the order state to address" do
             get :edit, params: { step: "details" }
 
+            expect(response.status).to eq 200
             expect(order.reload.state).to eq("address")
           end
         end
@@ -96,6 +98,7 @@ describe SplitCheckoutController, type: :controller do
           it "updates the order state to address" do
             get :edit, params: { step: "details" }
 
+            expect(response.status).to eq 200
             expect(order.reload.state).to eq("address")
           end
         end
