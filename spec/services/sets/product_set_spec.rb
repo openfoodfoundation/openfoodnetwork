@@ -109,32 +109,32 @@ describe Sets::ProductSet do
           end
         end
       end
+    end
 
-      context 'when attributes of the variants are passed' do
-        let!(:product) { create(:simple_product) }
-        let(:collection_hash) { { 0 => { id: product.id } } }
+    describe "updating variants" do
+      let!(:product) { create(:simple_product) }
+      let(:collection_hash) { { 0 => { id: product.id } } }
 
-        context 'when :variants_attributes are passed' do
-          let(:variants_attributes) { [{ sku: '123', id: product.variants.first.id.to_s }] }
+      context 'when :variants_attributes are passed' do
+        let(:variants_attributes) { [{ sku: '123', id: product.variants.first.id.to_s }] }
 
-          before { collection_hash[0][:variants_attributes] = variants_attributes }
+        before { collection_hash[0][:variants_attributes] = variants_attributes }
 
-          it 'updates the attributes of the variant' do
-            product_set.save
+        it 'updates the attributes of the variant' do
+          product_set.save
 
-            expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
-          end
+          expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
+        end
 
-          context 'and when product attributes are also passed' do
-            it 'updates product and variant attributes' do
-              collection_hash[0][:sku] = "test_sku"
+        context 'and when product attributes are also passed' do
+          it 'updates product and variant attributes' do
+            collection_hash[0][:sku] = "test_sku"
 
-              expect {
-                product_set.save
-                product.reload
-              }.to change { product.sku }.to("test_sku")
-                .and change { product.variants.first.sku }.to("123")
-            end
+            expect {
+              product_set.save
+              product.reload
+            }.to change { product.sku }.to("test_sku")
+              .and change { product.variants.first.sku }.to("123")
           end
         end
       end
