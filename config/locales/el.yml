@@ -1698,6 +1698,7 @@ el:
   order_pickup_instructions: Οδηγίες συλλογής
   order_produce: Παράγω
   order_total_price: Σύνολο
+  order_balance_due: Οφειλόμενο υπόλοιπο
   order_includes_tax: (περιλαμβάνει φόρο)
   order_payment_paypal_successful: Η πληρωμή σας μέσω PayPal υποβλήθηκε σε επεξεργασία με επιτυχία.
   order_hub_info: Πληροφορίες διανομέα

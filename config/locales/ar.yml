@@ -1987,7 +1987,9 @@ ar:
   order_pickup_time: جاهز للتحصيل
   order_pickup_instructions: مجموعة تعليمات
   order_produce: إنتاج
+  order_amount_paid: المبلغ المدفوع
   order_total_price: مجموع
+  order_balance_due: الرصيد المستحق
   order_includes_tax: (يشمل الضريبة)
   order_payment_paypal_successful: تمت معالجة دفعتك عبر PayPal بنجاح.
   order_hub_info: معلومات مركز البيع

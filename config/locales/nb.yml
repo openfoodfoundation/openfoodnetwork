@@ -2098,7 +2098,9 @@ nb:
   order_pickup_time: Klar for henting
   order_pickup_instructions: Henteinstruksjoner
   order_produce: Varer
+  order_amount_paid: Beløp Betalt
   order_total_price: Sum
+  order_balance_due: Til Forfall
   order_includes_tax: (inkludert avgift)
   order_payment_paypal_successful: Din betaling via PayPal har blitt godkjent.
   order_hub_info: Hub info

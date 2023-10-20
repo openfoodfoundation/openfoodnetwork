@@ -1915,7 +1915,9 @@ hu:
   order_pickup_time: Átvétel időpontja
   order_pickup_instructions: Átvételi információk
   order_produce: Összesen
+  order_amount_paid: Kifizetett összeg
   order_total_price: Összesen
+  order_balance_due: Fizetendő összeg
   order_includes_tax: (adót tartalmaz)
   order_payment_paypal_successful: PayPal-on keresztüli fizetését sikeresen feldolgoztuk.
   order_hub_info: Átvételi pont Info

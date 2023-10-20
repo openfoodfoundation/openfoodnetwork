@@ -1904,7 +1904,9 @@ ko:
   order_pickup_time: 수집 준비 완료
   order_pickup_instructions: 수집 지침
   order_produce: 제공
+  order_amount_paid: 지급액
   order_total_price: 총합
+  order_balance_due: 잔액 만기
   order_includes_tax: (세금 포함)
   order_payment_paypal_successful: PayPal을 통한 결제가 성공적으로 처리되었습니다.
   order_hub_info: 허브 정보

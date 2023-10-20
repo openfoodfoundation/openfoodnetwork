@@ -6,9 +6,22 @@ ca:
       spree/shipping_method: Mètode d'enviament
     attributes:
       spree/order/ship_address:
+        address1: "Adreça d'enviament (Carrer i número)"
+        address2: "2a línia adreça d'enviament "
+        city: "Ciutat adreça d'enviament "
+        country: "Estat de l'adreça d'enviament"
         phone: "Número de telèfon "
         firstname: "Nom"
         lastname: "Cognom"
+        zipcode: "Codi postal adreça enviament"
+      spree/order/bill_address:
+        address1: "Adreça de facturació (Carrer i número)"
+        zipcode: "Codi postal adreça de facturació"
+        city: "Ciutat adreça de facturació"
+        country: "Estat adreça de facturació"
+        firstname: "Nom adreça de facturació"
+        lastname: "Cognoms adreça de facturació"
+        phone: Telèfon client
       spree/user:
         password: "Contrasenya"
         password_confirmation: "confirmació de la contrasenya"
@@ -75,9 +88,18 @@ ca:
       file_size_out_of_range: "la mida %{file_size} no és entre el rang necessari"
       limit_out_of_range: "el total està fora del marge"
       image_metadata_missing: "no és una imatge vàlida"
+      aspect_ratio_not_square: "ha de ser una imatge quadrada"
+      aspect_ratio_not_portrait: "ha de ser una imatge vertical"
+      aspect_ratio_not_landscape: "ha de ser una imatge horitzontal"
+      aspect_ratio_is_not: "ha de tenir una relació d'aspecte de %{aspect_ratio} "
+      aspect_ratio_unknown: "té una relació d'aspecte desconeguda"
       image_not_processable: "no és una imatge vàlida"
     not_found:
+      title: "La pàgina que esteu cridant no existeix (404)"
       message_html: "<b>Si us plau torna-ho a provar</b> Això podria ser un problema temporal. Feu clic al botó Enrere per tornar a la pantalla anterior o torneu a <a href='/'>Inici</a> i torneu-ho a provar. <b>Contacteu amb suport</b><p> Si el problema persisteix o és urgent, si us plau, digueu-nos-ho. Esn pots enviar un correua a <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>suport<p>katuma.org </a>.</p><p> Ens ajuda molt si pots donar tants detalls com sigui possible sobre de què estaves fent quan va aparèixer l'error.</p>"
+    internal_server_error:
+      title: "Ens sap greu, però alguna cosa no ha funcionat (505)"
+      message_html: "<b>Si us plau, torna a provar</b> <p>Pot ser un problema temporal. Si us plau, clica al botó de tornar enrere per a tornar a la pantalla anterior o torna a l'<a href='/''>Inici</a> i prova una altra vegada.</p> <b>Ho estem intentant</b> <p>Si has vist aquest problema abans, probablement ja estem assabentats i estem treballant per a solucionar-lo. Registrem tots els errors que apareixen.</p> <b>Contacte de suport</b> <p>Si el problema persisteix o és urgent, si us plau informa'ns. Busca com fer-ho a la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>pàgina Open Food Network Local</a>.</p> <p>Ens ajuda molt que ens proporcionis tants detalls com sigui possible de què estaves fent quan es va aparèixer aquest error.</p>"
   stripe:
     error_code:
       incorrect_number: "El número de la targeta és incorrecte."
@@ -321,7 +343,10 @@ ca:
   confirm_resend_order_confirmation: "Segur que vol reenviar el correu de confirmació de la comanda?"
   must_have_valid_business_number: "%{enterprise_name} ha de tenir un NIF vàlid abans de poder enviar les factures."
   invoice: "Factura"
+  invoices: "Factures"
+  file: "Arxiu"
   active: "Actiu"
+  download: "Descàrrega"
   cancelled: "Cancel·lada"
   more: "Més"
   say_no: "No"
@@ -674,11 +699,24 @@ ca:
         pagination:
           clear_search: Esborra la cerca
       filters:
+        search_products: Cerca de productes
+        all_producers: Tots els productors
+        all_categories: Totes les categories
         producers:
           label: Productors
         categories:
           label: Categories
         search: Cerca
+      no_products:
+        no_products_found: No hem trobat productes
+      table:
+        save: Guardar canvis
+        reset: Descartar canvis
+      bulk_update:
+        success: "Els productes s'han actualitzat amb èxit"
+        products_have_error:
+          one: "%{count} producte te un error."
+          other: "%{count} productes tenen errors"
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir
@@ -691,7 +729,9 @@ ca:
         conditional_blank: no es pot deixar en blanc si el tipus d'unitat està en blanc
         no_product: no s'ha trobat cap producte a la base de dades
         not_found: no es troba a la base de dades
+        category_not_found: no encaixen en les categories disponibles. Comprova les categories disponibles a la pàgina d'importació de productes o assegurat que estan ben escrites.
         not_updatable: No es poden actualitzar els productes existents mitjançant la importació de productes
+        values_must_be_same: ha de ser el mateix per a productes amb el mateix nom
         blank: no es pot deixar en blanc
         products_no_permission: no tens el permís per gestionar els productes d'aquesta organització
         inventory_no_permission: no tens el permís per crear inventari per a aquesta productora
@@ -1082,6 +1122,8 @@ ca:
           rate: Taxa
           customers: Consumidora
           active: Actiu?
+        white_label:
+          legend: "Marca blanca"
       actions:
         edit_profile: Configuració
         properties: Propietats
@@ -1312,6 +1354,7 @@ ca:
           tag_rules: "Regles d'etiqueta"
           shop_preferences: "Preferències de la botiga"
           users: "Usuàries"
+          white_label: "Marc blanca"
         enterprise_group:
           primary_details: "Detalls principals"
           users: "Usuàries"
@@ -1785,7 +1828,7 @@ ca:
   checkout_expand: Expandeix
   checkout_headline: "Estàs preparada per validar la compra?"
   checkout_as_guest: "Realitzar comanda com a convidat"
-  checkout_details: "Els teus detalls"
+  checkout_details: "Les teves dades"
   checkout_billing: "Informació de facturació"
   checkout_default_bill_address: "Desa per defecte com a adreça de facturació "
   checkout_shipping: Informació d'enviament
@@ -1804,11 +1847,14 @@ ca:
   cost_currency: "Moneda del cost"
   split_checkout:
     your_details_without_number: Els teus detalls
+    payment_method_without_number: Mètode de pagament
+    order_summary_without_number: Resum de la comanda
     already_ordered:
       cart: "cistella"
       message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
     step1:
       contact_information:
+        title: Informació de contacte
         email:
           label: Correu electrònic
         phone:
@@ -1820,6 +1866,10 @@ ca:
         last_name:
           label: Cognoms
       address:
+        address1:
+          label: Adreça (carrer i número)
+        address2:
+          label: 'Informació addicional de l''adreça (opcional) '
         city:
           label: Municipi
         state_id:
@@ -1830,20 +1880,36 @@ ca:
           label: País
       shipping_info:
         title: Informació d'enviament
+      submit: Següent - Mètode de pagament
+      cancel: Tornar a editar la cistella
     step2:
+      payment_method:
+        title: Mètode de pagament
       form:
         card_number:
           label: Número de targeta
+          placeholder: P. e.  4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
         card_month:
           label: Mes
         card_year:
           label: Any
+        stripe:
+          use_saved_card: Feu servir la targeta guardada
+          use_new_card: Introduïu les credencials de la vostra targeta
+          save_card: Guardeu la targeta per a fer-la servir en el futur
+          create_new_card: o introduïu les dades d'una nova targeta
+      explaination: Podreu revisar i confirmar la vostra comanda en el següent pas, on s'informarà dels costos totals
+      submit: Següent - Resum de la comanda
+      cancel: Tornar a Les teves dades
     step3:
       delivery_details:
         title: Detalls de lliurament
         edit: Editar
         address: Adreça de lliurament
       payment_method:
+        title: Mètode de pagament
         edit: Editar
       order:
         edit: Editar
@@ -1870,7 +1936,9 @@ ca:
   order_pickup_time: Llest per a la recollida
   order_pickup_instructions: Instruccions de recollida
   order_produce: Productes
+  order_amount_paid: Import pagat
   order_total_price: Total
+  order_balance_due: A pagar
   order_includes_tax: (inclou impostos)
   order_payment_paypal_successful: El teu pagament mitjançant PayPal s'ha processat correctament.
   order_hub_info: Informació del grup
@@ -1898,7 +1966,7 @@ ca:
   email_confirm_customer_greeting: "Hola %{name},"
   email_confirm_customer_intro_html: "Gràcies per comprar a <strong> %{distributor}</strong>."
   email_confirm_customer_number_html: "Confirmació de la comanda <strong> # %{number} </strong>"
-  email_confirm_customer_details_html: "Aquests són els detalls de la teva comanda de<strong>%{distributor}</strong>:"
+  email_confirm_customer_details_html: "Aquestes són les dades de la teva comanda de<strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Salutacions cordials,"
   email_confirm_shop_greeting: "Hola %{name},"
   email_confirm_shop_order_html: "Que bé! Tens una nova comanda per <strong> %{distributor}</strong>! "
@@ -1916,7 +1984,7 @@ ca:
   email_payment_summary: Resum del pagament
   email_payment_method: "Pagament a través de:"
   email_so_placement_intro_html: "Tens una nova comanda amb <strong> %{distributor}</strong>"
-  email_so_placement_details_html: "Aquests són els detalls de la comanda de <strong>%{distributor}</strong> :"
+  email_so_placement_details_html: "Aquestes són les dades de la comanda de <strong>%{distributor}</strong> :"
   email_so_placement_changes: "Malauradament, no tots els productes que has demanat estaven disponibles. Les quantitats originals que has sol·licitat apareixen ratllades a sota."
   email_so_payment_success_intro_html: "S'ha processat un pagament automàtic per a la vostra comanda des de <strong> %{distributor}</strong>."
   email_so_placement_explainer_html: "Aquesta comanda s'ha creat automàticament per tu."
@@ -2792,6 +2860,8 @@ ca:
   new_payment: "Nou pagament"
   date_completed: "Data finalitzada"
   amount: "Import"
+  invoice_number: "Número de factura"
+  invoice_file: "Arxiu"
   state_names:
     ready: Llest
     pending: Pendents
@@ -2994,6 +3064,7 @@ ca:
           pending: "pendents"
           resumed: "reprès"
           returned: "retornat"
+          confirmation: "confirmació"
         shipment_states:
           backorder: "per tornar"
           partial: "parcial"
@@ -3667,8 +3738,12 @@ ca:
           from: "De"
           to: "Facturar a"
           shipping: "Enviament"
+          order_number: "Número de comanda"
+          invoice_number: "Número de factura"
           payments_list:
             date_time: "Data i hora"
+            payment_method: "Mètode de pagament"
+            payment_state: "Estat de pagament"
             amount: "Quantitat"
         note:
           note_label: "Nota:"
@@ -3795,10 +3870,13 @@ ca:
           paypal:
             no_payment_via_admin_backend: Els pagaments amb Paypal no es poden marcar com pagats des de l'administració
       products:
+        image_upload_error: "Si us plau, pugeu les imatges en el format JPG, PNG, GIF, SVG o WEBP."
+        image_not_processable: "La imatge adjunta no és una imatge vàlida"
         new:
           title: "Nou producte"
           new_product: "Nou producte"
           supplier: "Proveïdora"
+          supplier_select_placeholder: "Trieu un proveïdor"
           product_name: "Nom del producte"
           units: "Mida d'unitat"
           value: "Valor"
@@ -3843,6 +3921,9 @@ ca:
           select_and_search: "Seleccioneu els filtres i feu clic a %{option} per accedir a les vostres dades."
         customer_names_message:
           customer_names_tip: "Si els noms de les consumidores per a les comandes que heu subministrat apareixen amagats, podeu contactar amb la distribuïdora i preguntar-los si poden actualitzar les seves preferències de la botiga per permetre als seus proveïdors visualitzar els noms de les consumidores."
+        products_and_inventory:
+          all_products:
+            message: "Pareu atenció al fet que els nivells d'estoc informats són només els de la llista de productes del proveïdor. Si feu servir l'inventari per a gestionar les vostres quantitats, aquests valors seran ignorats. "
       users:
         index:
           listing_users: "Llistat d'usuàries"
@@ -3856,11 +3937,13 @@ ca:
           back_to_users_list: "Torna a la llista d'usuàries"
           general_settings: "Configuració general"
         form:
+          disabled: "Deshabilitat?"
           email: "E-mail"
           roles: "Rols"
           enterprise_limit: "Límit d'organitzacions"
           confirm_password: "Confirma la contrassenya"
           password: "Contrasenya"
+          locale: "Idioma"
         email_confirmation:
           confirmation_pending: "La confirmació de correu electrònic està pendent. Hem enviat un correu electrònic de confirmació a %{address}."
       variants:
@@ -4011,6 +4094,8 @@ ca:
         thanks: "Gràcies per la teva compra."
         track_information: "Informació del seguiment: %{tracking}"
         track_link: "Enllaç del seguiment: %{url}"
+        picked_up_instructions: "La vostra comanda des de %{distributor} ha estat entregada"
+        picked_up_subject: "Notificació d'entrega"
     test_mailer:
       test_email:
         greeting: "Enhorabona!"
@@ -4022,6 +4107,7 @@ ca:
       awaiting_return: esperant el retorn
       canceled: cancel·lat
       cart: cistella
+      confirmation: "confirmació"
       complete: completa
       confirm: confirma
       delivery: lliurament
@@ -4057,6 +4143,11 @@ ca:
     users:
       api_keys:
         regenerate_key: "Regenerar la clau"
+        title: Clau API
+      webhook_endpoints:
+        title: Webhook Endpoints
+        event_types:
+          order_cycle_opened: Cicle de comanda obert
       form:
         account_settings: Configuració del compte
       show:

@@ -97,7 +97,9 @@ cy:
             on_demand_but_count_on_hand_set: "rhaid iddo fod yn wag os ar alw"
             limited_stock_but_no_count_on_hand: "rhaid nodi hyn oherwydd gorfodi stoc gyfyngedig"
       messages:
+        confirmation: "Nid yw’n cyfateb %{attribute}"
         blank: "ni chaniateir ei adael yn wag"
+        too_short: "rhy fyr (o leiaf %{count} cymeriad)"
   errors:
     messages:
       content_type_invalid: "math o gynnwys annilys"
@@ -129,6 +131,7 @@ cy:
     unprocessable_entity:
       title: "Gwrthodwyd y newid roeddech chi am ei wneud (422)"
       message_html: "<p>Gwrthodwyd y newid roeddech chi am ei wneud. Hwyrach ichi geisio newid rhywbeth nad oes gennych fynediad ato.<br><h3><a href='/' >Ewch yn ôl i’r Hafan.</a></h3></p>"
+    stimulus_reflex_error: "Mae’n ddrwg gennym, ond aeth rhywbeth o’i le. \n\nGall fod yn broblem dros dro, felly gofynnir ichi roi cynnig arall neu ail-lwytho’r dudalen.\n Byddwn yn cofnodi pob gwall, a hwyrach ein bod yn gweithio i’w datrys. \nOs bydd y broblem yn parhau, neu os taw mater brys yw, cysylltwch â ni."
   stripe:
     error_code:
       incorrect_number: "Mae rhif y cerdyn yn anghywir"
@@ -379,7 +382,10 @@ cy:
   confirm_resend_order_confirmation: "Ydych chi'n siŵr eich bod chi eisiau ail-anfon e-bost cadarnhau archeb?"
   must_have_valid_business_number: "Noder rhif eich cwmni yma."
   invoice: "Anfoneb"
+  invoices: "Anfonebau"
+  file: "Ffeil"
   active: "Gweithredol"
+  download: "Lawrlwytho"
   cancelled: "Canslwyd"
   more: "Mwy"
   say_no: "Na"
@@ -437,6 +443,7 @@ cy:
   none: Dim
   notes: Nodiadau
   error: Gwall
+  voucher: Taleb
   processing_payment: "Prosesu taliad ..."
   no_pending_payments: "Dim taliadau yn yr arfaeth"
   invalid_payment_state: "Cyflwr taliad annilys: %{state}"
@@ -731,15 +738,35 @@ cy:
       index:
         header:
           title: Cynhyrchion Golygu Swmp
+        loading: Yn llwytho eich cynnyrch
       sort:
         pagination:
+          total_html: "<strong>%{total}Cafwyd hyd i </strong> cynnyrch ar gyfer eich meini prawf chwilio. Yn dangos %{from} i %{to}."
+          per_page:
+            show: Dangos
+            per_page: "%{num} fesul tudalen"
           clear_search: Clirio'r chwiliad
       filters:
+        search_products: Chwilio am gynnyrch
+        all_producers: Pob cynhyrchydd
+        all_categories: Pob categori
         producers:
           label: Prynu bwyd
         categories:
           label: Categorïau
         search: Chwilio
+      no_products:
+        no_products_found: Ni chafwyd hyd i gynnyrch
+        import_products: Mewnforio cynnyrch lluosog
+        no_products_found_for_search: Ni chafwyd hyd i gynnyrch ar gyfer eich meini prawf chwilio
+      table:
+        modified_summary:
+          one: "Addaswyd %{count} cynnyrch"
+          other: "Addaswyd %{count} cynnyrch"
+        save: Cadw’r newidiadau
+        reset: Hepgor y newidiadau
+      bulk_update:
+        success: "Llwyddwyd i ddiweddaru’r cynnyrch"
     product_import:
       title: Mewnforio Cynnyrch
       file_not_found: Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor
@@ -1377,6 +1404,10 @@ cy:
         could_not_cancel_the_order: Methu canslo'r archeb
       resume:
         could_not_resume_the_order: Methu ailddechrau'r archeb
+    select2:
+      minimal_search_length: Noder %{count} neu fwy o gymeriadau
+      searching: Yn chwilio…
+      no_matches: Ni chafwyd hyd i eitem gyfatebol
     shared:
       user_guide_link:
         user_guide: Canllaw Defnyddiwr
@@ -1419,6 +1450,7 @@ cy:
       email_confirmation: "Mae cadarnhad e-bost yn yr arfaeth. Rydym wedi anfon e-bost cadarnhad at %{email}."
       not_visible: "nid yw %{enterprise} yn weladwy ac felly ni ellir ei ddarganfod ar y map nac mewn chwiliadau"
     reports:
+      deprecated: "Anghymeradwywyd yr adroddiad hwn a chaiff ei ddileu mewn datganiad yn y dyfodol"
       hidden: CUDD
       unitsize: MAINT UNEDAU
       total: CYFANSWM
@@ -1485,6 +1517,8 @@ cy:
       enterprise_fee_summary:
         name: "Crynodeb Ffioedd y Fenter"
         description: "Crynodeb o Ffioedd y Fenter a gasglwyd"
+      enterprise_fees_with_tax_report_by_order: "Ffioedd Menter gydag Adroddiad Treth Fesul Archeb"
+      enterprise_fees_with_tax_report_by_producer: "Ffioedd Menter gydag Adroddiad Treth Fesul Cynhyrchydd"
       errors:
         no_report_type: "Noder math o adroddiad"
         report_not_found: "Ni chafwyd hyd i'r adroddiad"
@@ -1628,6 +1662,9 @@ cy:
         save: Cadw
         voucher_code: Cod taleb(au)
         voucher_amount: Nifer
+        voucher_type: Math o Daleb
+        flat_rate: Gwastad
+        percentage_rate: Canran (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "Canslwyd y cysylltiad â Stripe"
@@ -1749,6 +1786,7 @@ cy:
   abn: "Rhif y Cwmni:"
   acn: "Rhif yr Elusen"
   invoice_issued_on: "Cyhoeddwyd yr anfoneb ar:"
+  order_number: "Rhif archeb:"
   date_of_transaction: "Dyddiad y trafodiad:"
   menu_1_title: "Hafan"
   menu_1_url: "/"
@@ -2043,6 +2081,7 @@ cy:
   order_not_paid: HEB EI DALU
   order_total: Cyfanswm archeb
   order_payment: "Talu trwy:"
+  no_payment_required: "Nid oes angen unrhyw daliad"
   order_billing_address: Cyfeiriad bilio
   order_delivery_on: Dosbarthu ar
   order_delivery_address: Cyfeiriad dosbarthu
@@ -2051,7 +2090,9 @@ cy:
   order_pickup_time: Yn barod i'w gasglu
   order_pickup_instructions: Cyfarwyddiadau Casglu
   order_produce: Cynnyrch
+  order_amount_paid: Swm a Dalwyd
   order_total_price: Cyfanswm
+  order_balance_due: Balans sy'n ddyledus
   order_includes_tax: (yn cynnwys treth)
   order_payment_paypal_successful: Proseswyd eich taliad trwy PayPal yn llwyddiannus.
   order_hub_info: Gwybodaeth Hwb
@@ -2537,6 +2578,7 @@ cy:
   shipping_method_destroy_error: "Ni ellir dileu'r dull anfon hwnnw oherwydd mae archeb yn cyfeirio ato: %{number}."
   fees: "Ffioedd"
   fee_name: "Enw Ffi"
+  fee_owner: "Perchennog y Ffi"
   item_cost: "Cost yr eitem"
   bulk: "Swmp"
   shop_variant_quantity_min: "isafswm"
@@ -2919,6 +2961,9 @@ cy:
   report_header_transaction_fee: Ffi Trafodiad (dim treth)
   report_header_total_untaxable_admin: Cyfanswm addasiadau gweinyddol na ellir eu  trethu (dim treth)
   report_header_total_taxable_admin: Cyfanswm addasiadau gweinyddol trethadwy (sy'n cynnwys treth)
+  report_line_cost_of_produce: Cost y cynnyrch
+  report_line_line_items: eitemau llinell
+  report_header_last_completed_order_date: Dyddiad yr archeb ddiweddaraf a gwblhawyd
   report_xero_configuration: Dim ffurfweddiad
   initial_invoice_number: "Rhif anfoneb cychwynnol"
   invoice_date: "Dyddiad yr anfoneb"
@@ -3005,9 +3050,12 @@ cy:
   no_orders_found: "Ni ddaethpwyd o hyd i archebion"
   order_information: "Gwybodaeth Archebu"
   new_payment: "Taliad Newydd"
+  create_or_update_invoice: "Creu neu Ddiweddaru Anfoneb"
   date_completed: "Dyddiad Cwblhau"
   amount: "Swm"
   invoice_number: "Rhif anfoneb"
+  invoice_file: "Ffeil"
+  invalid_url: "Mae '%{url}' yn URL annilys"
   state_names:
     ready: Yn barod
     pending: Yn yr arfaeth
@@ -3176,6 +3224,8 @@ cy:
           select_all_variants: "Dewis Pob Amrywiolyn %{total_number_of_variants}"
           variants_loaded: "Llwythwyd %{num_of_variants_loaded} o %{total_number_of_variants} Amrywiolyn"
           loading_variants: "Yn llwytho Amrywolion"
+          no_variants: "Nid oes amrywiolyn ar gael ar gyfer y cynnyrch yma (cuddiwyd trwy osodiadau’r stocrestr )"
+          some_variants_hidden: "(Hwyrach y cuddiwyd amrywiolion trwy osodiadau’r stocrestr)"
       tag_rules:
         shipping_method_tagged_top: "Tagiwyd dulliau anfon"
         shipping_method_tagged_bottom: "yw:"
@@ -3584,6 +3634,7 @@ cy:
       success: Webhook endpoint successfully deleted
       error: Webhook endpoint failed to delete
   spree:
+    order_updated: "Diweddarwyd yr archeb"
     add_country: "Ychwanegu gwlad"
     add_state: "Ychwanegu sir"
     adjustment: "Addasiad"
@@ -3967,6 +4018,7 @@ cy:
           payments_list:
             date_time: "Dyddiad / amser"
             payment_method: "Dull talu"
+            payment_state: "Cyflwr Talu"
             amount: "Nifer"
         note:
           note_label: "Noder:"
@@ -4003,6 +4055,8 @@ cy:
             many: "Mae gennych %{count}cylch archebu gweithredol."
             other: "Mae gennych %{count} cylch archebu gweithredol."
           manage_order_cycles: "RHEOLI CYLCHOEDD ARCHEBU"
+        version:
+          view_all_releases: Gweld pob eitem a ryddhawyd
       shipping_methods:
         index:
           shipping_methods: "Dulliau Anfon"
@@ -4166,6 +4220,7 @@ cy:
           enterprise_limit: "Uchafswm Mentrau"
           confirm_password: "Cadarnhau Cyfrinair"
           password: "Cyfrinair"
+          locale: "Iaith"
         email_confirmation:
           confirmation_pending: "Mae cadarnhad e-bost yn yr arfaeth. Anfonwyd e-bost cadarnhad at %{address}."
       variants:

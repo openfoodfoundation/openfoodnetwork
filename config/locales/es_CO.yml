@@ -1661,6 +1661,7 @@ es_CO:
   order_pickup_time: Listo para la recolección
   order_pickup_instructions: Instrucciones de recolección
   order_produce: Productos
+  order_amount_paid: Cantidad pagada
   order_total_price: Total
   order_includes_tax: (incluye impuesto)
   order_payment_paypal_successful: Su pago a través de PayPal ha sido procesado con éxito.

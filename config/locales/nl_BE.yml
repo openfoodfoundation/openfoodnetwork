@@ -1654,6 +1654,7 @@ nl_BE:
   order_pickup_time: Klaar voor ophalen
   order_pickup_instructions: Ophaal Instructies
   order_produce: Product(en)
+  order_amount_paid: Betaald bedrag
   order_total_price: Totaal
   order_includes_tax: (belastingen inbegrepen)
   order_payment_paypal_successful: Je betalingen via PayPal is goed verwerkt

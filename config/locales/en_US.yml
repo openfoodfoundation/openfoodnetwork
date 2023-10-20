@@ -1867,7 +1867,9 @@ en_US:
   order_pickup_time: Ready for collection
   order_pickup_instructions: Collection instructions
   order_produce: Produce
+  order_amount_paid: Amount Paid
   order_total_price: Total
+  order_balance_due: Balance Due
   order_includes_tax: (includes tax)
   order_payment_paypal_successful: Your payment via PayPal has been processed successfully.
   order_hub_info: Hub info

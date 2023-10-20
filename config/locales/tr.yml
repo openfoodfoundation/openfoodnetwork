@@ -1769,7 +1769,9 @@ tr:
   order_pickup_time: Teslimat için hazır
   order_pickup_instructions: Teslim Alma Talimatları
   order_produce: Ürün
+  order_amount_paid: Ödenen Miktar
   order_total_price: Toplam
+  order_balance_due: Ödenmesi Gereken Bakiye
   order_includes_tax: (vergi)
   order_payment_paypal_successful: PayPal ile ödemeniz başarıyla işlendi.
   order_hub_info: Pazar Bilgisi
