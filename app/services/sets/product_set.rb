@@ -82,7 +82,7 @@ module Sets
     end
 
     def assign_variant_attributes(product, variants_attributes)
-      variants_attributes&.each do |attributes|
+      @variants = variants_attributes&.map do |attributes|
         new_or_assign_variant(product, attributes)
       end
       product.errors.empty?
@@ -95,11 +95,17 @@ module Sets
         variant.assign_attributes(variant_attributes.except(:id))
       else
         # 'You need to save the variant to create a stock item before you can set stock levels.'
-        # we need to keep a refernence to newly created variants, so we know which ones to .save later.
-        variant = product.variants.new(variant_attributes.except(:on_hand, :on_demand))
+        stock_level_attributes = variant_attributes.delete(:on_hand, :on_demand)
+        variant = product.variants.new(variant_attributes)
+
+        # TODO:  we need to keep a refernence to newly created variants, so we know which ones to .save later.
+        if stock_level_attributes.present?
+          @deferred_variant_attributes << [variant, stock_level_attributes]
+        end
       end
 
       product.errors.merge!(variant.errors) unless variant.valid?
+      variant
     end
 
     def validate_presence_of_unit_value_in_product(product)
@@ -118,13 +124,11 @@ module Sets
 
     ## 2. Save records
     def save_variants(product, variants_attributes)
-      #todo
-        variant = find_model(product.variants, attributes[:id])
-
-      variants = existing_Variants + new_Variants
-
-      variants&.all? do |attributes|
+      @variants&.all? do |variant|
         variant.save
+      end
+       #todo: we gotta know the on_demand/on_hand values to set for each new variatns
+      @deferred_variant_attributes&.all? do |variant, attributes|
         set_stock_levels(variant, attributes)
       end
     end
@@ -133,6 +137,7 @@ module Sets
       begin
         variant.on_demand = on_demand if attributes[:on_demand].present?
         variant.on_hand = on_hand.to_i if attributes[:on_hand].present?
+        variant.save
       rescue StandardError => e
         notify_bugsnag(e, product, variant, attributes)
         raise e
