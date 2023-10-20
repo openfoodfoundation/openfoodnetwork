@@ -112,6 +112,7 @@ module Sets
     def create_variant(product, variant_attributes)
       return if variant_attributes.blank?
 
+      # 'You need to save the variant to create a stock item before you can set stock levels.'
       on_hand = variant_attributes.delete(:on_hand)
       on_demand = variant_attributes.delete(:on_demand)
 
