@@ -98,9 +98,21 @@ class SplitCheckoutController < ::BaseController
 
     @order.select_shipping_method(params[:shipping_method_id])
     @order.update(order_params)
+    # We need to update voucher to take into account:
+    #  * when moving away from "details" step : potential change in shipping method fees
+    #  * when moving away from "payment" step : payment fees
+    recalculate_voucher if details_step? || payment_step?
     @order.update_totals_and_states
 
     validate_current_step
+  end
+
+  def recalculate_voucher
+    return if @order.voucher_adjustments.empty?
+
+    return if @order.shipment.shipping_method.id == params[:shipping_method_id].to_i
+
+    VoucherAdjustmentsService.new(@order).update
   end
 
   def validate_current_step
