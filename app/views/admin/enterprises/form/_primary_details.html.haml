@@ -3,7 +3,7 @@
     = f.label :name, t('.name')
     %span.required *
   .eight.columns.omega
-    = f.text_field :name, { placeholder: t('.name_placeholder') }
+    = f.text_field :name, { oninput: "angular.element(enterprise_form).scope().setFormDirty()", placeholder: t('.name_placeholder') }
 - if @groups.present?
   .row
     .three.columns.alpha
