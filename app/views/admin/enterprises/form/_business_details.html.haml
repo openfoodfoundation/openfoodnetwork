@@ -80,7 +80,7 @@
     %legend= t('.invoice_item_sorting_legend')
   .three.columns.alpha
     %label= t('.sort_items_by_supplier?')
-    = render partial: 'admin/shared/tooltip', locals: {tooltip_text: t('.sort_items_by_supplier_tip')}
+    = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.sort_items_by_supplier_tip')}
   .three.columns
     = f.radio_button :preferred_invoice_order_by_supplier, true
     = f.label :preffered_invoice_order_by_supplier, t('.enabled'), value: :true
