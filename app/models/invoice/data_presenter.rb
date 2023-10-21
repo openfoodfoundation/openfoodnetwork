@@ -5,8 +5,8 @@ class Invoice
     include ::ActionView::Helpers::NumberHelper
     attr_reader :invoice
 
-    delegate :data, to: :invoice
-    delegate :number, :date, to: :invoice, prefix: true
+    delegate :display_number, :data, to: :invoice
+    delegate :date, to: :invoice, prefix: true
 
     FINALIZED_NON_SUCCESSFUL_STATES = %w(canceled returned).freeze
 
