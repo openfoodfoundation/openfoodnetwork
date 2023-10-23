@@ -223,6 +223,20 @@ describe SplitCheckoutController, type: :controller do
 
               expect(response).to redirect_to checkout_step_path(:payment)
             end
+
+            context "when no shipments available" do
+              before do
+                order.shipments.destroy_all
+              end
+
+              it "recalculates the voucher adjustment" do
+                expect(service).to receive(:update)
+
+                put(:update, params:)
+
+                expect(response).to redirect_to checkout_step_path(:payment)
+              end
+            end
           end
         end
       end

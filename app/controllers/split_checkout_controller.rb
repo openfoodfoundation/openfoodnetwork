@@ -112,7 +112,7 @@ class SplitCheckoutController < ::BaseController
   def recalculate_voucher
     return if @order.voucher_adjustments.empty?
 
-    return if @order.shipment.shipping_method.id == params[:shipping_method_id].to_i
+    return if @order.shipping_method&.id == params[:shipping_method_id].to_i
 
     VoucherAdjustmentsService.new(@order).update
   end
