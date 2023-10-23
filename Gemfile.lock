@@ -571,7 +571,8 @@ GEM
     rdoc (6.6.2)
       psych (>= 4.0.0)
     redcarpet (3.6.0)
-    redis (4.8.1)
+    redis (5.0.8)
+      redis-client (>= 0.17.0)
     redis-client (0.19.1)
       connection_pool
     regexp_parser (2.8.3)
