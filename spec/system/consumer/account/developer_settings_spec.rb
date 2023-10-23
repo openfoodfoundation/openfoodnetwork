@@ -14,7 +14,7 @@ describe "Developer Settings" do
 
     context "when show_api_key_view is true" do
       let(:spree_api_key) { SecureRandom.hex(24) }
-      let(:user) { create(:user, show_api_key_view: true, spree_api_key: spree_api_key) }
+      let(:user) { create(:user, show_api_key_view: true, spree_api_key:) }
 
       it "shows the developer settings tab" do
         find("a", text: "DEVELOPER SETTINGS").click

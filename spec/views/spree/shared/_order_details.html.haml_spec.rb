@@ -13,7 +13,7 @@ describe "spree/shared/_order_details.html.haml" do
   before do
     assign(:order, order)
     allow(view).to receive_messages(
-      order: order,
+      order:,
       current_order: order
     )
   end
@@ -38,12 +38,12 @@ describe "spree/shared/_order_details.html.haml" do
     first_payment = order.payments.first
     second_payment = create(
       :payment,
-      order: order,
+      order:,
       payment_method: create(:payment_method, name: "Cash")
     )
     third_payment = create(
       :payment,
-      order: order,
+      order:,
       payment_method: create(:payment_method, name: "Credit")
     )
     first_payment.update_column(:created_at, 3.days.ago)

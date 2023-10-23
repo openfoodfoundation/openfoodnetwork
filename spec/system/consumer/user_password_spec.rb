@@ -6,7 +6,7 @@ describe "User password confirm/reset page" do
   include UIComponentHelper
 
   let(:email) { "test@example.org" }
-  let(:user) { Spree::User.create(email: email, unconfirmed_email: email, password: "secret") }
+  let(:user) { Spree::User.create(email:, unconfirmed_email: email, password: "secret") }
 
   describe "can set a password" do
     before do
@@ -48,7 +48,7 @@ describe "User password confirm/reset page" do
     let(:reset_password_token) { user.regenerate_reset_password_token }
 
     it "has the right error when password aren't the same" do
-      visit spree.edit_spree_user_password_path(reset_password_token: reset_password_token)
+      visit spree.edit_spree_user_password_path(reset_password_token:)
 
       expect(page).to have_text "Change my password"
 
@@ -74,7 +74,7 @@ describe "User password confirm/reset page" do
       user.reset_password_sent_at = 2.days.ago
       user.save!
 
-      visit spree.edit_spree_user_password_path(reset_password_token: reset_password_token)
+      visit spree.edit_spree_user_password_path(reset_password_token:)
 
       fill_in "Password", with: "my secret"
       fill_in "Password Confirmation", with: "my secret"
@@ -84,7 +84,7 @@ describe "User password confirm/reset page" do
     end
 
     it "can actually reset its own password" do
-      visit spree.edit_spree_user_password_path(reset_password_token: reset_password_token)
+      visit spree.edit_spree_user_password_path(reset_password_token:)
 
       fill_in "Password", with: "my secret"
       fill_in "Password Confirmation", with: "my secret"

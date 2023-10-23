@@ -205,7 +205,7 @@ module Spree
     end
 
     def display_payment_total
-       Spree::Money.new(self.payment_total, currency: currency)
+       Spree::Money.new(self.payment_total, currency:)
     end
     def to_param
       number.to_s.parameterize.upcase
