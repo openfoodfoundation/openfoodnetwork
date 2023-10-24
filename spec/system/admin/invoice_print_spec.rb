@@ -462,7 +462,7 @@ describe '
   end
   context "when invoice feature is enabled" do
     before do
-      Flipper.enable(:invoice)
+      Flipper.enable(:invoices)
     end
     it_behaves_like "contains right Payment Description at Checkout information"
     it_behaves_like "Check display on each invoice: legacy and alternative", false
