@@ -23,7 +23,6 @@ module SampleData
 
       log "- #{enterprise.name}"
       create_cash_method(enterprise)
-      create_card_method(enterprise)
     end
 
     def create_cash_method(enterprise)
@@ -33,16 +32,6 @@ module SampleData
         "Cash on collection",
         "Pay on collection!",
         ::Calculator::FlatRate.new
-      )
-    end
-
-    def create_card_method(enterprise)
-      create_payment_method(
-        Spree::Gateway::Bogus,
-        enterprise,
-        "Credit card (fake)",
-        "We charge 1%, but won't ask for your details. ;-)",
-        ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 1)
       )
     end
 
