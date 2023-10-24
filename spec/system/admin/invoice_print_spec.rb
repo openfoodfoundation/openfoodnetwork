@@ -37,13 +37,7 @@ describe '
   end
 
   shared_examples "contains right Payment Description at Checkout information" do
-    let(:url_params) {
-      if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
-        { invoice_id: order.invoices.first.id }
-      else
-        {}
-      end
-    }
+    let(:url_params) {{}}
 
     let!(:payment_method1) do
       create(:stripe_sca_payment_method, distributors: [distributor], description: "description1")
@@ -54,7 +48,6 @@ describe '
 
     context "with no payment" do
       it "do not display the payment description information" do
-        order.invoices.create!
         login_as_admin
         visit spree.print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
@@ -68,7 +61,6 @@ describe '
       end
       before do
         order.save!
-        order.invoices.create!
       end
 
       it "display the payment description section" do
@@ -90,7 +82,6 @@ describe '
                                            payment_method: payment_method2,
                                            created_at: 2.days.ago)
         order.save!
-        order.invoices.create!
       end
 
       it "display the payment description section and use the one from the completed payment" do
@@ -112,7 +103,6 @@ describe '
                                                        payment_method: payment_method2,
                                                        created_at: 1.day.ago)
         order.save!
-        order.invoices.create!
       end
 
       it "display the payment description section and use the one from the last payment" do
