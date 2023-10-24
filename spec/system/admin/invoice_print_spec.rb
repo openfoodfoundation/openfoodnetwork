@@ -120,16 +120,9 @@ describe '
                                          user: create(:user, email: "xxxxxx@example.com"),
                                          bill_address: create(:address, phone: '1234567890'))
     end
-    let(:url_params) {
-      if OpenFoodNetwork::FeatureToggle.enabled?(:invoices)
-        { invoice_id: completed_order.invoices.first.id }
-      else
-        {}
-      end
-    }
+    let(:url_params) {{}}
 
     before do
-      completed_order.invoices.create!
       allow(Spree::Config).to receive(:invoice_style2?).and_return(alternative_invoice)
       login_as_admin
       visit spree.print_admin_order_path(completed_order, params: url_params)
