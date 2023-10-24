@@ -68,7 +68,7 @@
 
       .content {
         // Plain content fields need help to align with text in inputs (due to vertical-align)
-        margin: $vpadding-txt+1px 0;
+        margin: $vpadding-txt + 1px 0;
 
         @extend .line-clamp-1;
       }
