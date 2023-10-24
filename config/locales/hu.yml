@@ -3884,8 +3884,6 @@ hu:
           paypalexpress: "PayPal Express"
           stripeconnect: "Csík"
           stripesca: "Stripe SCA"
-          bogus: "Hamis"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:

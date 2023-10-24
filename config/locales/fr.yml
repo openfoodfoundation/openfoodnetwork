@@ -4158,8 +4158,7 @@ fr:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe (ancienne version)"
           stripesca: "Stripe"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
+
       payments:
         source_forms:
           stripe:
