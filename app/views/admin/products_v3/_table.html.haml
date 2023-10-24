@@ -4,7 +4,7 @@
   %fieldset.form-actions.hidden{ 'data-bulk-form-target': "actions" }
     .container
       .status.ten.columns
-        .modified_summary{ 'data-bulk-form-target': "modifiedSummary", 'data-translation-key': 'admin.products_v3.table.modified_summary'}
+        .changed_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
         - if defined?(error_msg) && error_msg.present?
           .error
             = error_msg
