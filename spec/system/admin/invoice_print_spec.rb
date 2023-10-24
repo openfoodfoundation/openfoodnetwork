@@ -22,6 +22,7 @@ describe '
 
   let(:order) do
     create(:order_with_totals_and_distribution, user:, distributor:,
+                                                completed_at: 1.day.ago,
                                                 order_cycle:, state: 'complete',
                                                 payment_state: 'balance_due')
   end
