@@ -20,8 +20,6 @@ module Spree
         providers = assigns(:providers).map(&:to_s)
 
         expect(providers).to eq %w[
-          Spree::Gateway::Bogus
-          Spree::Gateway::BogusSimple
           Spree::Gateway::PayPalExpress
           Spree::PaymentMethod::Check
         ]
@@ -85,7 +83,7 @@ module Spree
       context "tries to save invalid payment" do
         it "doesn't break, responds nicely" do
           expect {
-            spree_post :create, payment_method: { name: "", type: "Spree::Gateway::Bogus" }
+            spree_post :create, payment_method: { name: "", type: "Spree::Gateway::PayPalExpress" }
           }.not_to raise_error
         end
       end
@@ -93,7 +91,7 @@ module Spree
       it "can create a payment method of a valid type" do
         expect {
           spree_post :create,
-                     payment_method: { name: "Test Method", type: "Spree::Gateway::Bogus",
+                     payment_method: { name: "Test Method", type: "Spree::Gateway::PayPalExpress",
                                        distributor_ids: [enterprise.id] }
         }.to change(Spree::PaymentMethod, :count).by(1)
 
@@ -148,7 +146,7 @@ module Spree
             {
               id: payment_method.id,
               payment_method: {
-                type: "Spree::Gateway::Bogus"
+                type: "Spree::Gateway::PayPalExpress"
               }
             }
           }
@@ -156,7 +154,7 @@ module Spree
           it "updates the payment method type" do
             spree_post :update, params
 
-            expect(PaymentMethod.find(payment_method.id).type).to eq "Spree::Gateway::Bogus"
+            expect(PaymentMethod.find(payment_method.id).type).to eq "Spree::Gateway::PayPalExpress"
           end
         end
       end
@@ -270,7 +268,7 @@ module Spree
             it "renders provider settings with a different payment method" do
               spree_get :show_provider_preferences,
                         pm_id: payment_method.id,
-                        provider_type: "Spree::Gateway::Bogus"
+                        provider_type: "Spree::Gateway::PayPalExpress"
               expect(assigns(:payment_method)).not_to eq payment_method
               expect(response).to render_template partial: '_provider_settings'
             end
@@ -296,8 +294,8 @@ module Spree
         it "renders provider settings with a new payment method of type" do
           spree_get :show_provider_preferences,
                     pm_id: "",
-                    provider_type: "Spree::Gateway::Bogus"
-          expect(assigns(:payment_method)).to be_a_new Spree::Gateway::Bogus
+                    provider_type: "Spree::Gateway::PayPalExpress"
+          expect(assigns(:payment_method)).to be_a_new Spree::Gateway::PayPalExpress
           expect(response).to render_template partial: '_provider_settings'
         end
       end
