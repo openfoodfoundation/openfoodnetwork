@@ -24,6 +24,10 @@ module Spree
       amount
     end
 
+    def price_changed?
+      amount_changed?
+    end
+
     def price=(price)
       self[:amount] = parse_price(price)
     end
