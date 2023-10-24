@@ -1,4 +1,5 @@
 = form_with url: bulk_update_admin_products_path, method: :patch, id: "products-form",
+            builder: BulkFormBuilder,
             html: {'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#bulk_update',
                    'data-controller': "bulk-form", 'data-bulk-form-disable-selector-value': "#sort,#filters"} do |form|
   %fieldset.form-actions.hidden{ 'data-bulk-form-target': "actions" }
@@ -40,10 +41,10 @@
           %tr
             %td.field.align-left.header
               = product_form.hidden_field :id
-              = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name'), class: (product_form.object.name_changed? ? 'changed' : nil)
+              = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
               = error_message_on product, :name
             %td.field
-              = product_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku'), class: (product_form.object.sku_changed? ? 'changed' : nil)
+              = product_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
               = error_message_on product, :sku
             %td.align-right
               .content
@@ -69,15 +70,15 @@
               %tr.condensed
                 %td.field
                   = variant_form.hidden_field :id
-                  = variant_form.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name, class: (variant_form.object.display_name_changed? ? 'changed' : nil)
+                  = variant_form.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name
                   = error_message_on variant, :display_name
                 %td.field
-                  = variant_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku'), class: (variant_form.object.sku_changed? ? 'changed' : nil)
+                  = variant_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
                   = error_message_on variant, :sku
                 %td.align-right
                   .content= variant.unit_to_display
                 %td.field
-                  = variant_form.text_field :price, 'aria-label': t('admin.products_page.columns.price'),  class: (variant_form.object.price_changed? ? 'changed' : nil), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
+                  = variant_form.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
                   = error_message_on variant, :price
                 %td.align-right
                   .content= variant.on_hand || 0 #TODO: spec for this according to requirements.
