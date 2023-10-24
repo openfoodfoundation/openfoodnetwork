@@ -30,4 +30,8 @@ class Invoice < ApplicationRecord
   def display_number
     "#{order.distributor.id}-#{number}"
   end
+
+  def previous_invoice
+    order.invoices.where("id < ?", id).first
+  end
 end
