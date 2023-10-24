@@ -18,7 +18,7 @@ describe "spree/orders/edit.html.haml" do
     assign(:order, order)
     assign(:insufficient_stock_lines, [])
     allow(view).to receive_messages(
-      order: order,
+      order:,
       current_order: order,
       pickup_time: 'time',
       spree_current_user: create(:user),

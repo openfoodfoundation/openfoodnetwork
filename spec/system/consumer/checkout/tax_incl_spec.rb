@@ -29,7 +29,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
   let!(:product_with_tax) {
-    create(:simple_product, supplier: supplier, price: 10, tax_category_id: tax_category.id)
+    create(:simple_product, supplier:, price: 10, tax_category_id: tax_category.id)
   }
   let!(:variant_with_tax) { product_with_tax.variants.first }
   let!(:order_cycle) {
@@ -49,13 +49,13 @@ describe "As a consumer, I want to see adjustment breakdown" do
   let!(:order_within_zone) {
     create(
       :order,
-      order_cycle: order_cycle, distributor: distributor, user: user_within_zone,
+      order_cycle:, distributor:, user: user_within_zone,
       bill_address: address_within_zone, ship_address: address_within_zone,
       state: "cart", line_items: [create(:line_item, variant: variant_with_tax, quantity: 1)]
     )
   }
   let!(:order_outside_zone) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, user: user_outside_zone,
+    create(:order, order_cycle:, distributor:, user: user_outside_zone,
                    bill_address: address_outside_zone, ship_address: address_outside_zone,
                    state: "cart", line_items: [create(:line_item, variant: variant_with_tax)])
   }

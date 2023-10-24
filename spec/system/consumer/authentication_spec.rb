@@ -146,7 +146,7 @@ describe "Authentication" do
           context "user with unconfirmed email" do
             let(:email) { "test@example.org" }
             let!(:user) {
-              Spree::User.create(email: email, unconfirmed_email: email, password: "secret")
+              Spree::User.create(email:, unconfirmed_email: email, password: "secret")
             }
 
             it "cannot reset password before confirming email" do

@@ -25,17 +25,17 @@ describe "As a consumer I want to view products" do
                                   orders_close_at: 2.days.from_now)
     }
     let(:product) {
-      create(:simple_product, supplier: supplier, primary_taxon: taxon, properties: [property],
+      create(:simple_product, supplier:, primary_taxon: taxon, properties: [property],
                               name: "Beans")
     }
     let(:product2) {
-      create(:product, supplier: supplier, primary_taxon: taxon2, properties: [property2],
+      create(:product, supplier:, primary_taxon: taxon2, properties: [property2],
                        name: "Chickpeas")
     }
     let(:variant) { product.variants.first }
     let(:variant2) { product2.variants.first }
     let(:exchange1) { oc1.exchanges.to_enterprises(distributor).outgoing.first }
-    let(:order) { create(:order, distributor: distributor) }
+    let(:order) { create(:order, distributor:) }
 
     before do
       set_order order

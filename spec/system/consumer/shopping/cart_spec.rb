@@ -24,13 +24,13 @@ describe "full-page cart" do
       create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category)
     }
     let(:product_with_tax) {
-      create(:taxed_product, supplier: supplier, zone: zone, price: 110.00, tax_rate_amount: 0.1,
+      create(:taxed_product, supplier:, zone:, price: 110.00, tax_rate_amount: 0.1,
                              included_in_price: true)
     }
     let(:product_with_fee) {
-      create(:simple_product, supplier: supplier, price: 0.86, on_hand: 100)
+      create(:simple_product, supplier:, price: 0.86, on_hand: 100)
     }
-    let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
+    let(:order) { create(:order, order_cycle:, distributor:) }
 
     before do
       set_order order
@@ -271,12 +271,12 @@ describe "full-page cart" do
       let(:address) { create(:address) }
       let(:user) { create(:user, bill_address: address, ship_address: address) }
       let!(:prev_order1) {
-        create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor,
-                                             user: user)
+        create(:completed_order_with_totals, order_cycle:, distributor:,
+                                             user:)
       }
       let!(:prev_order2) {
-        create(:completed_order_with_totals, order_cycle: order_cycle, distributor: distributor,
-                                             user: user)
+        create(:completed_order_with_totals, order_cycle:, distributor:,
+                                             user:)
       }
 
       before do

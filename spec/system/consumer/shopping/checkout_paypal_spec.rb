@@ -10,7 +10,7 @@ describe "Check out with Paypal" do
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
-  let(:product) { create(:simple_product, supplier: supplier) }
+  let(:product) { create(:simple_product, supplier:) }
   let(:variant) { product.variants.first }
   let(:order_cycle) {
     create(
@@ -24,8 +24,8 @@ describe "Check out with Paypal" do
   let(:order) {
     create(
       :order,
-      order_cycle: order_cycle,
-      distributor: distributor,
+      order_cycle:,
+      distributor:,
       bill_address_id: nil,
       ship_address_id: nil
     )

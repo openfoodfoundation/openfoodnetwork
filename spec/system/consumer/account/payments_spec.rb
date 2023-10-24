@@ -7,7 +7,7 @@ describe "Payments requiring action" do
 
   describe "as a logged in user" do
     let(:user) { create(:user) }
-    let(:order) { create(:order, user: user) }
+    let(:order) { create(:order, user:) }
 
     before do
       login_as user
@@ -16,7 +16,7 @@ describe "Payments requiring action" do
     context "there is a payment requiring authorization" do
       let!(:payment) do
         create(:payment,
-               order: order,
+               order:,
                cvv_response_message: "https://stripe.com/redirect",
                state: "requires_authorization")
       end
@@ -31,7 +31,7 @@ describe "Payments requiring action" do
 
     context "there are no payments requiring authorization" do
       let!(:payment) do
-        create(:payment, order: order, cvv_response_message: nil)
+        create(:payment, order:, cvv_response_message: nil)
       end
 
       it "does not show the table of payments requiring authorization" do

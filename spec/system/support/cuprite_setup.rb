@@ -12,13 +12,13 @@ Capybara.register_driver(:cuprite) do |app|
     app,
     **{
       window_size: [1280, 800],
-      browser_options: browser_options,
+      browser_options:,
       process_timeout: 60,
       timeout: 60,
       # Don't load scripts from external sources, like google maps or stripe
       url_whitelist: ["http://localhost", "http://0.0.0.0", "http://127.0.0.1"],
       inspector: true,
-      headless: headless,
+      headless:,
       js_errors: true,
     }
   )

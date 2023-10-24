@@ -33,28 +33,28 @@ describe "shopping with variant overrides defined" do
   }
   let(:product4_variant1) { create(:variant, product: product4, price: 77.77, unit_value: 7) }
   let!(:product1_variant1_override) {
-    create(:variant_override, :use_producer_stock_settings, hub: hub, variant: product1_variant1,
+    create(:variant_override, :use_producer_stock_settings, hub:, variant: product1_variant1,
                                                             price: 55.55, count_on_hand: nil,
                                                             default_stock: nil, resettable: false)
   }
   let!(:product1_variant2_override) {
-    create(:variant_override, hub: hub, variant: product1_variant2, count_on_hand: 0,
+    create(:variant_override, hub:, variant: product1_variant2, count_on_hand: 0,
                               default_stock: nil, resettable: false)
   }
   let!(:product2_variant1_override) {
-    create(:variant_override, hub: hub, variant: product2_variant1, count_on_hand: 0,
+    create(:variant_override, hub:, variant: product2_variant1, count_on_hand: 0,
                               default_stock: nil, resettable: false)
   }
   let!(:product1_variant3_override) {
-    create(:variant_override, hub: hub, variant: product1_variant3, count_on_hand: 3,
+    create(:variant_override, hub:, variant: product1_variant3, count_on_hand: 3,
                               default_stock: nil, resettable: false)
   }
   let!(:product3_variant1_override) {
-    create(:variant_override, hub: hub, variant: product3_variant1, count_on_hand: 0,
+    create(:variant_override, hub:, variant: product3_variant1, count_on_hand: 0,
                               default_stock: nil, resettable: false)
   }
   let!(:product3_variant2_override) {
-    create(:variant_override, hub: hub, variant: product3_variant2, count_on_hand: 6,
+    create(:variant_override, hub:, variant: product3_variant2, count_on_hand: 6,
                               default_stock: nil, resettable: false)
   }
   let(:enterprise_fee) {
@@ -63,7 +63,7 @@ describe "shopping with variant overrides defined" do
                             Calculator::FlatPercentPerItem.new(preferred_flat_percent: 10))
   }
   let!(:product4_variant1_override) {
-    create(:variant_override, hub: hub, variant: product4_variant1, count_on_hand: nil,
+    create(:variant_override, hub:, variant: product4_variant1, count_on_hand: nil,
                               on_demand: true, default_stock: nil, resettable: false)
   }
 

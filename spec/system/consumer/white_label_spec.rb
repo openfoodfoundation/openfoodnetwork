@@ -19,13 +19,13 @@ describe 'White label setting' do
                                 coordinator: create(:distributor_enterprise),
                                 variants: [product.variants.first])
   }
-  let!(:order) { create(:order, distributor: distributor, order_cycle: order_cycle) }
+  let!(:order) { create(:order, distributor:, order_cycle:) }
   let(:complete_order) {
     create(:order_with_credit_payment,
            user: nil,
            email: "guest@user.com",
-           distributor: distributor,
-           order_cycle: order_cycle)
+           distributor:,
+           order_cycle:)
   }
 
   let(:ofn_navigation) { 'ul.nav-main-menu' }
@@ -435,7 +435,7 @@ describe 'White label setting' do
       let(:custom_tab) { create(:custom_tab) }
 
       before do
-        distributor.update(custom_tab: custom_tab)
+        distributor.update(custom_tab:)
         visit main_app.enterprise_shop_path(distributor)
       end
 

@@ -270,7 +270,7 @@ describe '
     }
     let(:user1) { create(:user, enterprises: [distributor1]) }
     let(:user2) { create(:user, enterprises: [distributor2]) }
-    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.20, included_in_price: true, zone: zone) }
+    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.20, included_in_price: true, zone:) }
     let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
     let!(:shipping_method) {
       create(:shipping_method_with, :expensive_name, distributors: [distributor1],
@@ -290,14 +290,14 @@ describe '
     let!(:zone) { create(:zone_with_member) }
     let(:address) { create(:address) }
     let(:order1) {
-      create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first,
+      create(:order, order_cycle:, distributor: user1.enterprises.first,
                      ship_address: address, bill_address: address)
     }
     let(:product1) {
-      create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, included_in_price: true)
+      create(:taxed_product, zone:, price: 12.54, tax_rate_amount: 0, included_in_price: true)
     }
     let(:product2) {
-      create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2,
+      create(:taxed_product, zone:, price: 500.15, tax_rate_amount: 0.2,
                              included_in_price: true)
     }
 
@@ -371,12 +371,12 @@ describe '
     let(:supplier) { create(:supplier_enterprise, name: 'Supplier Name') }
     let(:taxon)    { create(:taxon, name: 'Taxon Name') }
     let(:product1) {
-      create(:simple_product, name: "Product Name", price: 100, supplier: supplier,
+      create(:simple_product, name: "Product Name", price: 100, supplier:,
                               primary_taxon: taxon)
     }
     let(:product2) {
       create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight',
-                              variant_unit_scale: 1, unit_value: '100', supplier: supplier,
+                              variant_unit_scale: 1, unit_value: '100', supplier:,
                               primary_taxon: taxon, sku: "product_sku")
     }
     let(:variant1) { product1.variants.first }
@@ -566,7 +566,7 @@ describe '
     let(:user1) { create(:user, enterprises: [distributor1]) }
     let(:user2) { create(:user, enterprises: [distributor2]) }
     let(:shipping_method) { create(:shipping_method_with, :expensive_name) }
-    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method: shipping_method) }
+    let(:shipment) { create(:shipment_with, :shipping_method, shipping_method:) }
 
     let(:enterprise_fee1) {
       create(:enterprise_fee, enterprise: user1.enterprises.first,
@@ -590,14 +590,14 @@ describe '
                        address2: '', city: 'customer city', zipcode: 1234)
     }
     let(:order1) {
-      create(:order, order_cycle: order_cycle, distributor: user1.enterprises.first,
-                     shipments: [shipment], bill_address: bill_address, state: 'payment')
+      create(:order, order_cycle:, distributor: user1.enterprises.first,
+                     shipments: [shipment], bill_address:, state: 'payment')
     }
     let(:product1) {
-      create(:taxed_product, zone: zone, price: 12.54, tax_rate_amount: 0, sku: 'sku1')
+      create(:taxed_product, zone:, price: 12.54, tax_rate_amount: 0, sku: 'sku1')
     }
     let(:product2) {
-      create(:taxed_product, zone: zone, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2')
+      create(:taxed_product, zone:, price: 500.15, tax_rate_amount: 0.2, sku: 'sku2')
     }
 
     describe "with adjustments" do
@@ -611,7 +611,7 @@ describe '
       }
 
       let!(:tax_category) { create(:tax_category) }
-      let!(:tax_rate) { create(:tax_rate, tax_category: tax_category) }
+      let!(:tax_rate) { create(:tax_rate, tax_category:) }
       let!(:adj_shipping) {
         create(:adjustment, order: order1, adjustable: order1, label: "Shipping",
                             originator: shipping_method, amount: 100.55)
@@ -622,7 +622,7 @@ describe '
       }
       let!(:adj_fee2) {
         create(:adjustment, order: order1, adjustable: order1, originator: enterprise_fee2,
-                            label: "Enterprise fee taxed", amount: 20, tax_category: tax_category)
+                            label: "Enterprise fee taxed", amount: 20, tax_category:)
       }
       let!(:adj_fee2_tax) {
         create(:adjustment, order: order1, adjustable: adj_fee2, originator: tax_rate, amount: 3,
@@ -634,7 +634,7 @@ describe '
       }
       let!(:adj_admin2) {
         create(:adjustment, order: order1, adjustable: order1, originator: nil,
-                            label: "Manual adjustment", amount: 40, tax_category: tax_category)
+                            label: "Manual adjustment", amount: 40, tax_category:)
       }
 
       before do
