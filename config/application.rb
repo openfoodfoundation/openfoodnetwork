@@ -59,8 +59,6 @@ module Openfoodnetwork
     initializer "spree.register.payment_methods" do |app|
       Rails.application.reloader.to_prepare do
         app.config.spree.payment_methods = [
-          Spree::Gateway::Bogus,
-          Spree::Gateway::BogusSimple,
           Spree::PaymentMethod::Check
         ]
       end
