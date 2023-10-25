@@ -10,6 +10,11 @@ RSpec.describe '
   include AuthenticationHelper
   include WebHelper
 
+  around do |example|
+    Flipper.disable(:admin_style_v3)
+    example.run
+  end
+
   describe "listing products" do
     before do
       login_as_admin
@@ -18,7 +23,6 @@ RSpec.describe '
     it "displays a list of products" do
       p1 = FactoryBot.create(:product)
       p2 = FactoryBot.create(:product)
-
       visit spree.admin_products_path
 
       expect(page).to have_field "product_name", with: p1.name
@@ -201,8 +205,8 @@ RSpec.describe '
     login_as_admin
     visit spree.admin_products_path
 
-    find("a", text: "New Product").click
-    expect(page).to have_content 'New Product'
+    find("a", text: "NEW PRODUCT").click
+    expect(page).to have_content "NEW PRODUCT"
 
     fill_in 'product_name', with: 'Big Bag Of Apples'
     select supplier.name, from: 'product_supplier_id'
@@ -700,14 +704,14 @@ RSpec.describe '
         login_as_admin
         visit spree.admin_products_path
 
-        expect(page).to have_selector "th", text: "Name"
-        expect(page).to have_selector "th", text: "Producer"
-        expect(page).to have_selector "th", text: "Price"
-        expect(page).to have_selector "th", text: "On Hand"
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
 
         toggle_columns /^.{0,1}Producer$/i
 
-        expect(page).not_to have_selector "th", text: "Producer"
+        expect(page).to have_no_selector "th", text: "Producer"
         expect(page).to have_selector "th", text: "Name"
         expect(page).to have_selector "th", text: "Price"
         expect(page).to have_selector "th", text: "On Hand"
@@ -815,8 +819,8 @@ RSpec.describe '
 
       visit spree.admin_products_path
 
-      find("a", text: "New Product").click
-      expect(page).to have_content 'New Product'
+      find("a", text: "NEW PRODUCT").click
+      expect(page).to have_content 'NEW PRODUCT'
       expect(page).to have_select 'product_supplier_id',
                                   with_options: [supplier_managed1.name, supplier_managed2.name,
                                                  supplier_permitted.name]

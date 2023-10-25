@@ -8,6 +8,11 @@ RSpec.describe "Product Import" do
   include AuthenticationHelper
   include WebHelper
 
+  around do |example|
+    Flipper.disable(:admin_style_v3)
+    example.run
+  end
+
   let!(:admin) { create(:admin_user) }
   let!(:user) { create(:user) }
   let!(:user2) { create(:user) }
@@ -706,7 +711,8 @@ RSpec.describe "Product Import" do
       save_data
 
       expect(page).to have_selector '.created-count', text: '1'
-      expect(page).not_to have_selector '.updated-count'
+
+      expect(page).to have_no_selector '.updated-count'
       expect(page).to have_content "Go To Products Page"
       expect(page).to have_content "Upload Another File"
 

@@ -128,7 +128,7 @@ RSpec.describe 'Subscriptions' do
               accept_alert 'Are you sure?' do
                 find("a.cancel-order").click
               end
-              expect(page).to have_content 'CANCELLED'.upcase
+              expect(page).to have_content 'CANCELLED'
               expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
 
               # Resuming an order

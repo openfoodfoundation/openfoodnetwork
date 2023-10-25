@@ -237,12 +237,14 @@ RSpec.describe 'Subscriptions' do
         expect(page).to have_selector "#subscription-line-items .item", count: 4
 
         # Delete an existing product
+        Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
         login_as_admin
         visit spree.admin_products_path
         within "#p_#{shop_product2.id}" do
           accept_alert { page.find("[data-powertip=Remove]").click }
         end
 
+        Flipper.enable(:admin_style_v3) # re-enabling it for the rest of the spec
         visit edit_admin_subscription_path(subscription)
 
         # Remove deleted shop_variant from the subscription
