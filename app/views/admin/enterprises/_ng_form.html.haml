@@ -2,7 +2,7 @@
 -# ng-change is only valid for inputs, not for a form.
 -# So we use onchange and have to get the scope to access the ng controller
 = form_for [main_app, :admin, @enterprise], html: { name: "enterprise_form",
-  onchange: "angular.element(enterprise_form).scope().setFormDirty()",
+  oninput: "angular.element(enterprise_form).scope().setFormDirty()",
   "ng-controller" => 'enterpriseCtrl',
   "ng-cloak" => true } do |f|
 
