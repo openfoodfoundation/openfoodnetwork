@@ -134,6 +134,8 @@ gem 'flipper-ui'
 gem "view_component"
 gem 'view_component_reflex', '3.1.14.pre9'
 
+# mini_portile2 is needed when installing with Vargant
+# https://openfoodnetwork.slack.com/archives/CEBMTRCNS/p1668439152992899
 gem 'mini_portile2', '~> 2.8'
 
 gem "faraday"
