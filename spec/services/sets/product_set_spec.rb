@@ -7,6 +7,7 @@ describe Sets::ProductSet do
     let(:product_set) do
       described_class.new(collection_attributes: collection_hash)
     end
+    subject{ product_set.save }
 
     context 'when the product does not exist yet' do
       let!(:stock_location) { create(:stock_location, backorderable_default: false) }
@@ -33,6 +34,24 @@ describe Sets::ProductSet do
     end
 
     context 'when the product does exist' do
+      let(:product) { create(:simple_product, name: "product name") }
+
+      context "with valid name" do
+        let(:collection_hash) {
+          { 0 => { id: product.id, name: "New season product" } }
+        }
+
+        it { is_expected.to eq true }
+      end
+
+      context "with invalid name" do
+        let(:collection_hash) {
+          { 0 => { id: product.id, name: "" } } # Product Name can't be blank
+        }
+
+        it { is_expected.to eq false }
+      end
+
       context 'when a different variant_unit is passed' do
         let!(:product) do
           create(
@@ -68,7 +87,6 @@ describe Sets::ProductSet do
 
       context "when the product is in an order cycle" do
         let(:producer) { create(:enterprise) }
-        let(:product) { create(:simple_product) }
 
         let(:distributor) { create(:distributor_enterprise) }
         let!(:order_cycle) {
