@@ -98,9 +98,9 @@ gem 'rack-rewrite'
 gem 'rack-timeout'
 gem 'roadie-rails'
 
-gem 'hiredis'
+gem 'hiredis-client'
 gem 'puma'
-gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
+gem 'redis', '>= 5.0', require: 'hiredis-client'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
