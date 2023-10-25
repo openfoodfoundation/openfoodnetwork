@@ -408,7 +408,7 @@ GEM
       rake
     mini_magick (4.11.0)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.4)
+    mini_portile2 (2.8.5)
     minitest (5.20.0)
     monetize (1.12.0)
       money (~> 6.12)
