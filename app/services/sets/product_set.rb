@@ -54,12 +54,13 @@ module Sets
       attributes[:taxon_ids] = attributes[:taxon_ids].split(',') if attributes[:taxon_ids].present?
     end
 
+    # Update product and any variants
     def update_product(product, attributes)
-      return false unless update_product_only_attributes(product, attributes)
+      product_saved = update_product_only_attributes(product, attributes)
 
       ExchangeVariantDeleter.new.delete(product) if product.saved_change_to_supplier_id?
 
-      update_product_variants(product, attributes)
+      update_product_variants(product, attributes) && product_saved
     end
 
     def update_product_only_attributes(product, attributes)

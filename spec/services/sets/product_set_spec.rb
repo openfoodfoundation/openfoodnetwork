@@ -155,6 +155,16 @@ describe Sets::ProductSet do
               .and change { product.variants.first.sku }.to("123")
           end
         end
+
+        context 'and when product has error' do
+          it 'still updates variant attributes' do
+            collection_hash[0][:name] = ""
+
+            expect {
+              product_set.save
+            }.to change { product.variants.first.sku }.to("123")
+          end
+        end
       end
     end
 
