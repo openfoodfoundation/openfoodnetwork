@@ -8,11 +8,15 @@ module Sets
   # }
   #
   class ProductSet < ModelSet
+    attr_reader :saved_count, :invalid_count
+
     def initialize(attributes = {})
       super(Spree::Product, [], attributes)
     end
 
     def save
+      @saved_count, @invalid_count = 0, 0
+
       # Attempt to save all records, collecting model errors.
       @collection_hash.each_value.map do |product_attributes|
         update_product_attributes(product_attributes)
@@ -72,7 +76,7 @@ module Sets
 
       validate_presence_of_unit_value_in_product(product)
 
-      product.errors.empty? && product.save
+      count_result(product.errors.empty? && product.save)
     end
 
     def validate_presence_of_unit_value_in_product(product)
@@ -96,7 +100,7 @@ module Sets
 
     def update_variants_attributes(product, variants_attributes)
       variants_attributes.each do |attributes|
-        create_or_update_variant(product, attributes)
+        count_result(create_or_update_variant(product, attributes))
       end
       product.errors.empty?
     end
@@ -131,6 +135,15 @@ module Sets
         notify_bugsnag(e, product, variant, variant_attributes)
         raise e
       end
+    end
+
+    def count_result(saved)
+      if saved
+        @saved_count += 1
+      else
+        @invalid_count += 1
+      end
+      saved
     end
 
     def notify_bugsnag(error, product, variant, variant_attributes)

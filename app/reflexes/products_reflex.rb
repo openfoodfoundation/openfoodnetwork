@@ -40,9 +40,9 @@ class ProductsReflex < ApplicationReflex
     if product_set.save
       # flash[:success] = with_locale { I18n.t('.success') }
       # morph_admin_flashes  # ERROR: selector morph type has already been set
-    elsif product_set.errors.present?
+    elsif product_set.invalid_count.positive?
       # @error_msg = with_locale{ I18n.t('.products_have_error', count: product_set.invalid.count) }
-      @error_msg = "#{product_set.invalid.count} products have errors."
+      @error_msg = "#{product_set.invalid_count} products have errors."
     end
 
     render_products_form

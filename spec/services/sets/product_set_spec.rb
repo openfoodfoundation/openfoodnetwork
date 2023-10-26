@@ -41,7 +41,11 @@ describe Sets::ProductSet do
           { 0 => { id: product.id, name: "New season product" } }
         }
 
-        it { is_expected.to eq true }
+        it "returns true and counts results" do
+          is_expected.to eq true
+          expect(product_set.saved_count).to eq 1
+          expect(product_set.invalid_count).to eq 0
+        end
       end
 
       context "with invalid name" do
@@ -49,7 +53,11 @@ describe Sets::ProductSet do
           { 0 => { id: product.id, name: "" } } # Product Name can't be blank
         }
 
-        it { is_expected.to eq false }
+        it "returns false and counts results" do
+          is_expected.to eq false
+          expect(product_set.saved_count).to eq 0
+          expect(product_set.invalid_count).to eq 1
+        end
       end
 
       context 'when a different variant_unit is passed' do
@@ -75,7 +83,7 @@ describe Sets::ProductSet do
         end
 
         it 'updates the product without error' do
-          expect(product_set.save).to eq true
+          expect(product_set.save).to be true
 
           expect(product.reload.attributes).to include(
             'variant_unit' => 'weight'
@@ -139,7 +147,9 @@ describe Sets::ProductSet do
         before { collection_hash[0][:variants_attributes] = variants_attributes }
 
         it 'updates the attributes of the variant' do
-          product_set.save
+          expect(product_set.save).to eq true
+          expect(product_set.saved_count).to eq 1
+          expect(product_set.invalid_count).to eq 0
 
           expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
         end
@@ -153,6 +163,9 @@ describe Sets::ProductSet do
               product.reload
             }.to change { product.sku }.to("test_sku")
               .and change { product.variants.first.sku }.to("123")
+
+            expect(product_set.saved_count).to eq 2
+            expect(product_set.invalid_count).to eq 0
           end
         end
 
@@ -163,12 +176,16 @@ describe Sets::ProductSet do
             expect {
               product_set.save
             }.to change { product.variants.first.sku }.to("123")
+
+            expect(product_set.saved_count).to eq 1
+            expect(product_set.invalid_count).to eq 1
           end
         end
       end
     end
 
     context 'when there are multiple products' do
+      let(:product_c) { create(:simple_product, name: "Carrots") }
       let!(:product_b) { create(:simple_product, name: "Bananas") }
       let!(:product_a) { create(:simple_product, name: "Apples") }
 
@@ -182,39 +199,41 @@ describe Sets::ProductSet do
             id: product_b.id,
             name: "Bananes",
           },
+          2 => {
+            id: product_c.id,
+            name: "Carrots",
+          },
         }
       end
 
       it 'updates the products' do
-        product_set.save
+        expect(product_set.save).to eq true
+        expect(product_set.saved_count).to eq 3 # three products were submitted
+        expect(product_set.invalid_count).to eq 0
 
         expect(product_a.reload.name).to eq "Pommes"
         expect(product_b.reload.name).to eq "Bananes"
+        expect(product_c.reload.name).to eq "Carrots" # no change
       end
 
       it 'retains the order of products' do
         product_set.save
+        expect(product_set.saved_count).to eq 3
+        expect(product_set.invalid_count).to eq 0
 
+        # even though the first product is now alphabetically last
         expect(product_set.collection[0]).to eq product_a.reload
         expect(product_set.collection[1]).to eq product_b.reload
+        expect(product_set.collection[2]).to eq product_c.reload
       end
 
       context 'first product has an error' do
-        let(:collection_hash) do
-          {
-            0 => {
-              id: product_a.id,
-              name: "", # Product Name can't be blank
-            },
-            1 => {
-              id: product_b.id,
-              name: "Bananes",
-            },
-          }
-        end
+        before { collection_hash[0][:name] = "" } # product.name can't be blank
 
         it 'continues to update subsequent products' do
           product_set.save
+          expect(product_set.saved_count).to eq 2
+          expect(product_set.invalid_count).to eq 1
 
           # Errors are logged on the model
           first_item = product_set.collection[0]
