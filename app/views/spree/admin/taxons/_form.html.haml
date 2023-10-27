@@ -24,6 +24,10 @@
       = f.label :meta_keywords, t(".meta_keywords")
       %br/
       = f.text_field :meta_keywords, class: 'fullwidth', rows: 6
+    = f.field_container :dfc_name do
+      = f.label :dfc_name, t(".dfc_name")
+      %br/
+      = f.text_field :dfc_name, class: 'fullwidth', rows: 6
   .omega.seven.columns
     = f.field_container :description do
       = f.label :description, t(".description")

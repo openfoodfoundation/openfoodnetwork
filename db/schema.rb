@@ -881,6 +881,7 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
     t.string "meta_title", limit: 255
     t.string "meta_description", limit: 255
     t.string "meta_keywords", limit: 255
+    t.string "dfc_name"
     t.index ["parent_id"], name: "index_taxons_on_parent_id"
     t.index ["permalink"], name: "index_taxons_on_permalink"
     t.index ["taxonomy_id"], name: "index_taxons_on_taxonomy_id"
