@@ -209,7 +209,7 @@ describe Sets::ProductSet do
 
       it 'updates the products' do
         expect(product_set.save).to eq true
-        expect(product_set.saved_count).to eq 3 # three products were submitted
+        expect(product_set.saved_count).to eq 2 # only two were changed
         expect(product_set.invalid_count).to eq 0
 
         expect(product_a.reload.name).to eq "Pommes"
@@ -219,7 +219,7 @@ describe Sets::ProductSet do
 
       it 'retains the order of products' do
         product_set.save
-        expect(product_set.saved_count).to eq 3
+        expect(product_set.saved_count).to eq 2
         expect(product_set.invalid_count).to eq 0
 
         # even though the first product is now alphabetically last
@@ -233,7 +233,7 @@ describe Sets::ProductSet do
 
         it 'continues to update subsequent products' do
           product_set.save
-          expect(product_set.saved_count).to eq 2
+          expect(product_set.saved_count).to eq 1
           expect(product_set.invalid_count).to eq 1
 
           # Errors are logged on the model

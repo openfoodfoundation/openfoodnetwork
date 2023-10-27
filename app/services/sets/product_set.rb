@@ -73,10 +73,9 @@ module Sets
       return true if product_related_attrs.blank?
 
       product.assign_attributes(product_related_attrs)
-
       validate_presence_of_unit_value_in_product(product)
 
-      count_result(product.errors.empty? && product.save)
+      count_result(product.changed?, product.errors.empty? && product.save)
     end
 
     def validate_presence_of_unit_value_in_product(product)
@@ -100,7 +99,7 @@ module Sets
 
     def update_variants_attributes(product, variants_attributes)
       variants_attributes.each do |attributes|
-        count_result(create_or_update_variant(product, attributes))
+        create_or_update_variant(product, attributes)
       end
       product.errors.empty?
     end
@@ -108,9 +107,10 @@ module Sets
     def create_or_update_variant(product, variant_attributes)
       variant = find_model(product.variants, variant_attributes[:id])
       if variant.present?
-        variant.update(variant_attributes.except(:id))
+        variant.assign_attributes(variant_attributes.except(:id))
+        count_result(variant.changed?, variant.save)
       else
-        create_variant(product, variant_attributes)
+        count_result(true, create_variant(product, variant_attributes))
       end
     end
 
@@ -137,9 +137,9 @@ module Sets
       end
     end
 
-    def count_result(saved)
+    def count_result(changed, saved)
       if saved
-        @saved_count += 1
+        @saved_count += 1 if changed
       else
         @invalid_count += 1
       end
