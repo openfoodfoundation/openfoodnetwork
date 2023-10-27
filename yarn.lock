@@ -8806,10 +8806,10 @@ toidentifier@1.0.1:
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.1.tgz#3be34321a88a820ed1bd80dfaa33e479fbb8dd35"
   integrity sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==
 
-tom-select@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.2.3.tgz#858acca2dcec1dbe1a94a3f4c944384e166a4f40"
-  integrity sha512-VMhRdFlugLGdnNZsP5r8sHKtyvWekIbtr53uoKONMzM+JSBWgy5pV9F+iZ2LTEbzIQI0efIwZ7I6h+wzZoM/zQ==
+tom-select@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.3.0.tgz#1be3a783a5b8b64408b0b60a2b0647d4a9fc1214"
+  integrity sha512-MGcdkXRbzBtEc913I2RWXhQ5JPEti9ZoTjSKLahg2ncvOOOzDRiaj+9A46Y4AVcjmYn/QqPz+U+XJ0uDvak3PQ==
   dependencies:
     "@orchidjs/sifter" "^1.0.3"
     "@orchidjs/unicode-variants" "^1.0.4"

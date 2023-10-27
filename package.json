@@ -35,7 +35,7 @@
     "stimulus": "^3.2.2",
     "stimulus-flatpickr": "^1.4.0",
     "stimulus_reflex": "3.5.0-rc3",
-    "tom-select": "^2.2.3",
+    "tom-select": "^2.3.0",
     "trix": "^2.0.7",
     "webpack": "~4"
   },
