@@ -216,6 +216,13 @@ describe SplitCheckoutController, type: :controller do
             end
             let(:new_shipping_method) { create(:shipping_method, distributors: [distributor]) }
 
+            before do
+              # Add a shipping rates for the new shipping method to prevent
+              # order.select_shipping_method from failing
+              order.shipment.shipping_rates <<
+                Spree::ShippingRate.create(shipping_method: new_shipping_method, selected: true)
+            end
+
             it "recalculates the voucher adjustment" do
               expect(service).to receive(:update)
 

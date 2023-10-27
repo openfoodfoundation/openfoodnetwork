@@ -98,21 +98,25 @@ class SplitCheckoutController < ::BaseController
   def update_order
     return if params[:confirm_order] || @order.errors.any?
 
+    # Checking if shipping method updated before @order get updated. We can't use this guard
+    # clause in recalculate_voucher as by then the @order.shipping method would be the new one
+    shipping_method_updated = @order.shipping_method&.id != params[:shipping_method_id].to_i
+
     @order.select_shipping_method(params[:shipping_method_id])
     @order.update(order_params)
     # We need to update voucher to take into account:
     #  * when moving away from "details" step : potential change in shipping method fees
     #  * when moving away from "payment" step : payment fees
-    recalculate_voucher if details_step? || payment_step?
+    recalculate_voucher(shipping_method_updated) if details_step? || payment_step?
     @order.update_totals_and_states
 
     validate_current_step
   end
 
-  def recalculate_voucher
+  def recalculate_voucher(shipping_method_updated)
     return if @order.voucher_adjustments.empty?
 
-    return if @order.shipping_method&.id == params[:shipping_method_id].to_i
+    return unless shipping_method_updated
 
     VoucherAdjustmentsService.new(@order).update
   end
