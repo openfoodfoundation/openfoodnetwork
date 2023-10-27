@@ -139,9 +139,11 @@ describe Sets::ProductSet do
         before { collection_hash[0][:variants_attributes] = variants_attributes }
 
         it 'updates the attributes of the variant' do
-          product_set.save
+          expect {
+            expect(product_set.save).to eq true
+          }.to change { product.variants.first.sku }.to("123")
 
-          expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
+          expect(product_set.invalid.count).to eq 0
         end
 
         context 'and when product attributes are also passed' do
