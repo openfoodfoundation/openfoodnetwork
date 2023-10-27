@@ -417,7 +417,7 @@ GEM
     msgpack (1.7.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
-    net-imap (0.3.7)
+    net-imap (0.4.2)
       date
       net-protocol
     net-pop (0.1.2)
@@ -727,7 +727,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
-    valid_email2 (5.1.0)
+    valid_email2 (5.1.1)
       activemodel (>= 3.2)
       mail (~> 2.5)
     validate_email (0.1.6)
