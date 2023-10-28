@@ -1,10 +1,13 @@
 -# Field used for ransack search. This date range is mostly used for Spree::Order
 -# so default field is 'completed_at'
 - field ||= 'completed_at'
+- start_date ||= params[:q].try(:[], :completed_at_gt)
+- end_date ||= params[:q].try(:[], :completed_at_lt)
+
 .row.date-range-filter
   .alpha.two.columns= label_tag nil, t(:date_range)
   .omega.fourteen.columns
-    = f.text_field "#{field}_gt", :class => 'datetimepicker datepicker-from', :placeholder => t(:start), data: { controller: "flatpickr", "flatpickr-enable-time-value": true, "flatpickr-default-date-value": "startOfDay" }
+    = f.text_field "#{field}_gt", :class => 'datetimepicker datepicker-from', :placeholder => t(:start), data: { controller: "flatpickr", "flatpickr-enable-time-value": true, "flatpickr-default-date-value": "startOfDay" }, value: start_date 
     %span.range-divider
       %i.icon-arrow-right
-    = f.text_field "#{field}_lt", :class => 'datetimepicker datepicker-to', :placeholder => t(:stop), data: { controller: "flatpickr", "flatpickr-enable-time-value": true, "flatpickr-default-date-value": "endOfDay" }
+    = f.text_field "#{field}_lt", :class => 'datetimepicker datepicker-to', :placeholder => t(:stop), data: { controller: "flatpickr", "flatpickr-enable-time-value": true, "flatpickr-default-date-value": "endOfDay" }, value: end_date 
