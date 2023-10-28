@@ -90,6 +90,7 @@ class Exchange < ApplicationRecord
     exchange = dup
     exchange.order_cycle = new_order_cycle
     exchange.enterprise_fee_ids = enterprise_fee_ids
+    exchange.tag_list = tag_list
     exchange.save!
     clone_all_exchange_variants(exchange.id)
     exchange
