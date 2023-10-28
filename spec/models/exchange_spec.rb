@@ -275,7 +275,7 @@ describe Exchange do
 
     ex1 = oc.exchanges.last
     ex1.update_attribute(:tag_list, "wholesale")
-    ex2 = ex1.clone! new_oc
+    ex2 = ex1.reload.clone! new_oc
 
     expect(ex1.sender_id).to eq ex2.sender_id
     expect(ex1.receiver_id).to eq ex2.receiver_id
