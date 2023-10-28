@@ -22,9 +22,9 @@ describe "As a consumer I want to shop with a distributor" do
                                   coordinator: create(:distributor_enterprise),
                                   orders_close_at: 3.days.from_now)
     }
-    let(:product) { create(:simple_product, supplier: supplier, meta_keywords: "Domestic") }
+    let(:product) { create(:simple_product, supplier:, meta_keywords: "Domestic") }
     let(:variant) { product.variants.first }
-    let(:order) { create(:order, distributor: distributor) }
+    let(:order) { create(:order, distributor:) }
 
     before do
       set_order order
@@ -91,7 +91,7 @@ describe "As a consumer I want to shop with a distributor" do
         let(:custom_tab) { create(:custom_tab, title: "Custom") }
 
         before do
-          distributor.update(custom_tab: custom_tab)
+          distributor.update(custom_tab:)
           visit shop_path
         end
 
@@ -259,7 +259,7 @@ describe "As a consumer I want to shop with a distributor" do
           context "one having 20 products" do
             before do
               20.times do
-                product = create(:simple_product, supplier: supplier)
+                product = create(:simple_product, supplier:)
                 add_variant_to_order_cycle(exchange1, product.variants.first)
               end
             end
@@ -274,7 +274,7 @@ describe "As a consumer I want to shop with a distributor" do
           context "another having 5 products" do
             before do
               5.times do
-                product = create(:simple_product, supplier: supplier)
+                product = create(:simple_product, supplier:)
                 add_variant_to_order_cycle(exchange2, product.variants.first)
               end
             end
@@ -289,10 +289,10 @@ describe "As a consumer I want to shop with a distributor" do
     end
 
     describe "after selecting an order cycle with products visible" do
-      let(:variant1) { create(:variant, product: product, price: 20) }
-      let(:variant2) { create(:variant, product: product, price: 30, display_name: "Badgers") }
+      let(:variant1) { create(:variant, product:, price: 20) }
+      let(:variant2) { create(:variant, product:, price: 30, display_name: "Badgers") }
       let(:product2) {
-        create(:simple_product, supplier: supplier, name: "Meercats", meta_keywords: "Wild")
+        create(:simple_product, supplier:, name: "Meercats", meta_keywords: "Wild")
       }
       let(:variant3) { create(:variant, product: product2, price: 40, display_name: "Ferrets") }
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
@@ -350,7 +350,7 @@ describe "As a consumer I want to shop with a distributor" do
       end
 
       context "when supplier uses property" do
-        let(:product3) { create(:simple_product, supplier: supplier, inherits_properties: false) }
+        let(:product3) { create(:simple_product, supplier:, inherits_properties: false) }
 
         before do
           add_variant_to_order_cycle(exchange, product3.variants.first)
@@ -416,7 +416,7 @@ describe "As a consumer I want to shop with a distributor" do
       let(:product2) { create(:simple_product, group_buy: false) }
 
       describe "with variants on the product" do
-        let(:variant) { create(:variant, product: product, on_hand: 10 ) }
+        let(:variant) { create(:variant, product:, on_hand: 10 ) }
         before do
           add_variant_to_order_cycle(exchange, variant)
           set_order_cycle(order, oc1)
@@ -452,8 +452,8 @@ describe "As a consumer I want to shop with a distributor" do
     describe "adding and removing products from cart" do
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
       let(:product) { create(:simple_product) }
-      let(:variant) { create(:variant, product: product) }
-      let(:variant2) { create(:variant, product: product) }
+      let(:variant) { create(:variant, product:) }
+      let(:variant2) { create(:variant, product:) }
 
       before do
         add_variant_to_order_cycle(exchange, variant)
@@ -645,7 +645,7 @@ describe "As a consumer I want to shop with a distributor" do
         context "when the soft-deleted variant has an associated override" do
           describe "adding the soft-deleted variant to the cart" do
             let!(:variant_override) {
-              create(:variant_override, variant: variant, hub: distributor, count_on_hand: 100)
+              create(:variant_override, variant:, hub: distributor, count_on_hand: 100)
             }
 
             it "handles it as if the variant has gone out of stock" do
@@ -687,7 +687,7 @@ describe "As a consumer I want to shop with a distributor" do
     context "when shopping requires a customer" do
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
       let(:product) { create(:simple_product) }
-      let(:variant) { create(:variant, product: product) }
+      let(:variant) { create(:variant, product:) }
       let(:unregistered_customer) { create(:customer, user: nil, enterprise: distributor) }
 
       before do
@@ -726,7 +726,7 @@ describe "As a consumer I want to shop with a distributor" do
         end
 
         context "as customer" do
-          let!(:customer) { create(:customer, user: user, enterprise: distributor) }
+          let!(:customer) { create(:customer, user:, enterprise: distributor) }
 
           it "shows just products" do
             visit shop_path
@@ -735,7 +735,7 @@ describe "As a consumer I want to shop with a distributor" do
         end
 
         context "as a manager" do
-          let!(:role) { create(:enterprise_role, user: user, enterprise: distributor) }
+          let!(:role) { create(:enterprise_role, user:, enterprise: distributor) }
 
           it "shows just products" do
             visit shop_path

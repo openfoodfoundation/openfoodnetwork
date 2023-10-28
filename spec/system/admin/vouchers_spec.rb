@@ -17,13 +17,13 @@ describe '
   before do
     Flipper.enable(:vouchers, enterprise)
 
-    enterprise_user.enterprise_roles.build(enterprise: enterprise).save
+    enterprise_user.enterprise_roles.build(enterprise:).save
     login_as enterprise_user
   end
 
   it 'lists enterprise vouchers' do
     # Given an enterprise with vouchers
-    create(:voucher_flat_rate, enterprise: enterprise, code: voucher_code, amount: amount)
+    create(:voucher_flat_rate, enterprise:, code: voucher_code, amount:)
 
     # When I go to the enterprise voucher tab
     visit edit_admin_enterprise_path(enterprise)
@@ -87,7 +87,7 @@ describe '
         # Then I should see an error flash message
         expect(page).to have_selector '.error', text: "Code can't be blank"
 
-        vouchers = Voucher.where(enterprise: enterprise)
+        vouchers = Voucher.where(enterprise:)
 
         expect(vouchers).to be_empty
       end
@@ -101,7 +101,7 @@ describe '
   end
 
   def expect_voucher_to_be_created(enterprise, voucher_code)
-    voucher = Voucher.where(enterprise: enterprise, code: voucher_code).first
+    voucher = Voucher.where(enterprise:, code: voucher_code).first
     expect(voucher).not_to be(nil)
   end
 end

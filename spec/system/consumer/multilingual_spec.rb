@@ -48,7 +48,7 @@ describe 'Multilingual' do
         create(:simple_order_cycle, distributors: [distributor], variants: [product.variants.first])
       }
       let(:product) { create(:simple_product) }
-      let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
+      let(:order) { create(:order, order_cycle:, distributor:) }
 
       before do
         set_order order

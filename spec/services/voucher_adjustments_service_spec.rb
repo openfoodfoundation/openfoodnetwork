@@ -283,7 +283,7 @@ describe VoucherAdjustmentsService do
     let(:order) { create(:order_with_totals) }
     let(:enterprise) { build(:enterprise) }
     let(:voucher) do
-      create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+      create(:voucher_flat_rate, code: 'new_code', enterprise:, amount: 10)
     end
 
     it "returns included tax from voucher adjusment" do
@@ -317,7 +317,7 @@ describe VoucherAdjustmentsService do
     end
     let(:enterprise) { build(:enterprise) }
     let(:voucher) do
-      create(:voucher_flat_rate, code: 'new_code', enterprise: enterprise, amount: 10)
+      create(:voucher_flat_rate, code: 'new_code', enterprise:, amount: 10)
     end
 
     it "returns the amount from the tax voucher adjustment" do

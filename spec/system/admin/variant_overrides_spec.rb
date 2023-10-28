@@ -50,8 +50,8 @@ describe "
       let!(:product) {
         create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1)
       }
-      let!(:variant) { create(:variant, product: product, unit_value: 1, price: 1.23, on_hand: 12) }
-      let!(:inventory_item) { create(:inventory_item, enterprise: hub, variant: variant ) }
+      let!(:variant) { create(:variant, product:, unit_value: 1, price: 1.23, on_hand: 12) }
+      let!(:inventory_item) { create(:inventory_item, enterprise: hub, variant: ) }
 
       let!(:product_managed) {
         create(:simple_product, supplier: producer_managed, variant_unit: 'weight',
@@ -245,12 +245,12 @@ describe "
 
         context "with overrides" do
           let!(:vo) {
-            create(:variant_override, :on_demand, variant: variant, hub: hub, price: 77.77,
+            create(:variant_override, :on_demand, variant:, hub:, price: 77.77,
                                                   default_stock: 1000, resettable: true,
                                                   tag_list: ["tag1", "tag2", "tag3"])
           }
           let!(:vo_no_auth) {
-            create(:variant_override, variant: variant, hub: hub2, price: 1, count_on_hand: 2)
+            create(:variant_override, variant:, hub: hub2, price: 1, count_on_hand: 2)
           }
           let!(:product2) {
             create(:simple_product, supplier: producer, variant_unit: 'weight',
@@ -261,14 +261,14 @@ describe "
           }
           let!(:inventory_item2) { create(:inventory_item, enterprise: hub, variant: variant2) }
           let!(:vo_no_reset) {
-            create(:variant_override, variant: variant2, hub: hub, price: 3.99, count_on_hand: 40,
+            create(:variant_override, variant: variant2, hub:, price: 3.99, count_on_hand: 40,
                                       default_stock: 100, resettable: false)
           }
           let!(:variant3) {
-            create(:variant, product: product, unit_value: 2, price: 5.00, on_hand: 6)
+            create(:variant, product:, unit_value: 2, price: 5.00, on_hand: 6)
           }
           let!(:vo3) {
-            create(:variant_override, variant: variant3, hub: hub, price: 6, count_on_hand: 7,
+            create(:variant_override, variant: variant3, hub:, price: 6, count_on_hand: 7,
                                       sku: "SOMESKU", default_stock: 100, resettable: false)
           }
           let!(:inventory_item3) { create(:inventory_item, enterprise: hub, variant: variant3) }
@@ -473,9 +473,9 @@ describe "
         create(:simple_product, supplier: producer, variant_unit: 'weight', variant_unit_scale: 1)
       }
       let!(:variant1) {
-        create(:variant, product: product, unit_value: 1, price: 1.23, on_hand: 12)
+        create(:variant, product:, unit_value: 1, price: 1.23, on_hand: 12)
       }
-      let!(:variant2) { create(:variant, product: product, unit_value: 2, price: 4.56, on_hand: 3) }
+      let!(:variant2) { create(:variant, product:, unit_value: 2, price: 4.56, on_hand: 3) }
 
       context "when a hub is selected" do
         before do
@@ -523,7 +523,7 @@ describe "
     it "shows more than 100 products in my inventory" do
       supplier = create(:supplier_enterprise, sells: "own")
       inventory_items = (1..101).map do
-        product = create(:simple_product, supplier: supplier)
+        product = create(:simple_product, supplier:)
         InventoryItem.create!(
           enterprise: supplier,
           variant: product.variants.first

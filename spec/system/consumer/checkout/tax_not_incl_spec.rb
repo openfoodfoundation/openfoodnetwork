@@ -12,7 +12,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
 
   let!(:state) { create(:state, name: "Victoria") }
   let!(:zone) { create(:zone_with_state_member, default_tax: false, member: state) }
-  let!(:address_within_zone) { create(:address, state: state) }
+  let!(:address_within_zone) { create(:address, state:) }
   let!(:address_outside_zone) {
     create(:address, state: create(:state, name: "Timbuktu", country: state.country))
   }
@@ -27,12 +27,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
   let!(:tax_category) { create(:tax_category, name: "Veggies", is_default: false) }
   let!(:tax_rate) {
     create(:tax_rate, name: "Tax rate - included or not", amount: 0.13,
-                      zone: zone, tax_category: tax_category, included_in_price: false)
+                      zone:, tax_category:, included_in_price: false)
   }
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
   let(:product_with_tax) {
-    create(:product, supplier: supplier, price: 10, tax_category_id: tax_category.id)
+    create(:product, supplier:, price: 10, tax_category_id: tax_category.id)
   }
   let(:variant_with_tax) { product_with_tax.variants.first }
   let(:order_cycle) {
@@ -50,12 +50,12 @@ describe "As a consumer, I want to see adjustment breakdown" do
                             calculator: Calculator::FlatRate.new(preferred_amount: 0.00))
   }
   let(:order_within_zone) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, user: user_within_zone,
+    create(:order, order_cycle:, distributor:, user: user_within_zone,
                    bill_address: address_within_zone, ship_address: address_within_zone,
                    state: "cart", line_items: [create(:line_item, variant: variant_with_tax)])
   }
   let(:order_outside_zone) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, user: user_outside_zone,
+    create(:order, order_cycle:, distributor:, user: user_outside_zone,
                    bill_address: address_outside_zone, ship_address: address_outside_zone,
                    state: "cart", line_items: [create(:line_item, variant: variant_with_tax)])
   }

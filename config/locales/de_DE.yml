@@ -291,6 +291,10 @@ de_DE:
     integer_array_validator:
       not_array_error: "muss ein Array sein"
       invalid_element_error: "darf nur ganze Zahlen enthalten"
+  report_job:
+    report_failed: |
+        Die Erstellung des Berichts ist fehlgeschlagen. Möglicherweise ist er zu groß für die Verarbeitung.
+        Wir werden der Sache nachgehen, teilen Sie uns aber bitte mit, wenn das Problem weiterhin besteht.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Bitte bestätigen Sie die E-Mail-Adresse von %{enterprise} im Open Food Network"

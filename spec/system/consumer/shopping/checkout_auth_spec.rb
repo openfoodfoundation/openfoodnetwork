@@ -17,8 +17,8 @@ describe "As a consumer I want to check out my cart" do
                                   coordinator: create(:distributor_enterprise),
                                   variants: [product.variants.first])
     }
-    let(:product) { create(:simple_product, supplier: supplier) }
-    let(:order) { create(:order, order_cycle: order_cycle, distributor: distributor) }
+    let(:product) { create(:simple_product, supplier:) }
+    let(:order) { create(:order, order_cycle:, distributor:) }
     let(:address) { create(:address, firstname: "Foo", lastname: "Bar") }
     let(:user) { create(:user, bill_address: address, ship_address: address) }
 

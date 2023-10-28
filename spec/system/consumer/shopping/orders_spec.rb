@@ -7,7 +7,7 @@ describe "Order Management" do
 
   describe "viewing a completed order" do
     let!(:distributor) { create(:distributor_enterprise) }
-    let!(:customer) { create(:customer, user: user, enterprise: distributor) }
+    let!(:customer) { create(:customer, user:, enterprise: distributor) }
     let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
 
     let!(:bill_address) { create(:address) }
@@ -16,18 +16,18 @@ describe "Order Management" do
 
     let!(:order) do
       create(:order_with_credit_payment,
-             customer: customer,
-             user: user,
-             distributor: distributor,
-             order_cycle: order_cycle)
+             customer:,
+             user:,
+             distributor:,
+             order_cycle:)
     end
 
     before do
       # For some reason, both bill_address and ship_address are not set
       # automatically.
       order.update!(
-        bill_address: bill_address,
-        ship_address: ship_address
+        bill_address:,
+        ship_address:
       )
     end
 
@@ -37,8 +37,8 @@ describe "Order Management" do
         create(:order_with_credit_payment,
                user: nil,
                email: "guest@user.com",
-               distributor: distributor,
-               order_cycle: order_cycle)
+               distributor:,
+               order_cycle:)
       end
 
       it "allows the user to see the details" do
@@ -107,16 +107,16 @@ describe "Order Management" do
     let(:order) do
       create(
         :completed_order_with_totals,
-        order_cycle: order_cycle,
-        distributor: distributor,
-        user: user,
+        order_cycle:,
+        distributor:,
+        user:,
         bill_address: address,
         ship_address: address
       )
     end
     let!(:item1) { order.reload.line_items.first }
-    let!(:item2) { create(:line_item, order: order) }
-    let!(:item3) { create(:line_item, order: order) }
+    let!(:item2) { create(:line_item, order:) }
+    let!(:item3) { create(:line_item, order:) }
 
     before do
       order.shipment.shipping_method.calculator.update(preferred_amount: 5.0)

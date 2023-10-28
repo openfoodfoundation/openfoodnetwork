@@ -16,7 +16,7 @@ describe "Check out with Stripe" do
   let(:product) { create(:product, price: 10) }
   let(:variant) { product.variants.first }
   let(:order) {
-    create(:order, order_cycle: order_cycle, distributor: distributor, bill_address_id: nil,
+    create(:order, order_cycle:, distributor:, bill_address_id: nil,
                    ship_address_id: nil)
   }
 
@@ -63,8 +63,8 @@ describe "Check out with Stripe" do
 
       context "when the card is accepted" do
         before do
-          stub_payment_intents_post_request order: order
-          stub_successful_capture_request order: order
+          stub_payment_intents_post_request(order:)
+          stub_successful_capture_request order:
         end
 
         it "completes checkout successfully" do
@@ -78,8 +78,8 @@ describe "Check out with Stripe" do
 
       context "when the card is rejected" do
         before do
-          stub_payment_intents_post_request order: order
-          stub_failed_capture_request order: order, response: { message: error_message }
+          stub_payment_intents_post_request(order:)
+          stub_failed_capture_request order:, response: { message: error_message }
         end
 
         it "shows an error message from the Stripe response" do
@@ -94,13 +94,13 @@ describe "Check out with Stripe" do
       context "when the card needs extra SCA authorization" do
         before do
           stripe_redirect_url = checkout_path(payment_intent: "pi_123")
-          stub_payment_intents_post_request_with_redirect order: order,
+          stub_payment_intents_post_request_with_redirect order:,
                                                           redirect_url: stripe_redirect_url
         end
 
         describe "and the authorization succeeds" do
           before do
-            stub_successful_capture_request order: order
+            stub_successful_capture_request order:
           end
 
           it "completes checkout successfully" do
@@ -119,7 +119,7 @@ describe "Check out with Stripe" do
 
         describe "and the authorization fails" do
           before do
-            stub_failed_capture_request order: order, response: { message: error_message }
+            stub_failed_capture_request order:, response: { message: error_message }
           end
 
           it "shows an error message from the Stripe response" do
@@ -137,12 +137,12 @@ describe "Check out with Stripe" do
 
       context "with multiple payment attempts; one failed and one succeeded" do
         before do
-          stub_payment_intents_post_request order: order
+          stub_payment_intents_post_request order:
         end
 
         it "records failed payment attempt and allows order completion" do
           # First payment attempt is rejected
-          stub_failed_capture_request(order: order, response: { message: error_message })
+          stub_failed_capture_request(order:, response: { message: error_message })
           checkout_with_stripe
           expect(page).to have_content error_message
 
@@ -151,7 +151,7 @@ describe "Check out with Stripe" do
           expect(order.payments.first.state).to eq "failed"
 
           # Second payment attempt is accepted
-          stub_successful_capture_request order: order
+          stub_successful_capture_request(order:)
           place_order
           expect(page).to have_content "Confirmed"
 
@@ -180,8 +180,8 @@ describe "Check out with Stripe" do
             response: { pm_id: "pm_123" }
           )
           stub_add_metadata_request(payment_method: "pm_123", response: {})
-          stub_payment_intents_post_request order: order
-          stub_successful_capture_request order: order
+          stub_payment_intents_post_request(order:)
+          stub_successful_capture_request(order:)
           stub_customers_post_request email: "test@test.com" # First checkout with default details
           stub_customers_post_request email: user.email # Second checkout with saved user details
           stub_payment_method_attach_request
@@ -200,8 +200,8 @@ describe "Check out with Stripe" do
           expect(user_credit_card.gateway_customer_profile_id).to eq "cus_A123"
 
           # Prepare a second order
-          new_order = create(:order, user: user, order_cycle: order_cycle,
-                                     distributor: distributor, bill_address_id: nil,
+          new_order = create(:order, user:, order_cycle:,
+                                     distributor:, bill_address_id: nil,
                                      ship_address_id: nil)
           set_order(new_order)
           add_product_to_cart(new_order, product, quantity: 10)

@@ -44,7 +44,7 @@ assignees: ''
   <pre>
   cd ofn-install
   git pull
-  ansible-playbook --limit all-prod --extra-vars "git_version=vX.Y.Z" playbooks/deploy.yml
+  ansible-playbook --limit all_prod --extra-vars "git_version=vX.Y.Z" playbooks/deploy.yml
   </pre>
   </details>
 - [ ] Notify [#instance-managers]:
