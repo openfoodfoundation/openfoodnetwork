@@ -9,6 +9,7 @@ describe '
   include AuthenticationHelper
 
   let(:order) { create(:completed_order_with_fees) }
+  let(:confirmed_order) { create(:order_ready_for_confirmation) }
 
   describe "payments/new" do
     it "displays the order balance as the default payment amount" do
@@ -65,6 +66,16 @@ describe '
       expect(order.state).to eq "complete"
       expect(order.payment_state).to eq "balance_due"
       expect(order.shipment_state).to eq "pending"
+    end
+  end
+
+  describe 'Capture & complete order' do
+    it 'completes order when capturing payment' do
+      login_as_admin
+      visit spree.admin_order_payments_path confirmed_order
+      expect(page).to have_content "CHECKOUT"
+      page.find('a.icon-capture_and_complete_order').click
+      expect(confirmed_order.reload.state).to eq 'complete'
     end
   end
 end

@@ -812,7 +812,7 @@ describe Spree::Payment do
         let(:payment) { build_stubbed(:payment, source: build_stubbed(:credit_card)) }
 
         it "can capture and void" do
-          expect(payment.actions).to match_array %w(capture void)
+          expect(payment.actions).to match_array %w(capture_and_complete_order void)
         end
 
         describe "when a payment has been taken" do
