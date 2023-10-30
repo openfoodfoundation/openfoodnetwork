@@ -100,7 +100,7 @@ gem 'roadie-rails'
 
 gem 'hiredis-client'
 gem 'puma'
-gem 'redis', '>= 5.0', require: 'hiredis-client'
+gem 'redis'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 

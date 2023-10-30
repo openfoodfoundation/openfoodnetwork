@@ -885,7 +885,7 @@ DEPENDENCIES
   rails_safe_tasks (~> 1.0)
   ransack (~> 2.6.0)
   redcarpet
-  redis (>= 5.0)
+  redis
   responders
   rexml
   roadie-rails
