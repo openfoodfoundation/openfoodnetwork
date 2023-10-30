@@ -331,7 +331,6 @@ GEM
     hashery (2.1.2)
     hashie (5.0.0)
     highline (2.0.3)
-    hiredis (0.6.3)
     htmlentities (4.3.4)
     httpclient (2.8.3)
     i18n (1.14.1)
@@ -853,7 +852,6 @@ DEPENDENCIES
   good_migrations
   haml
   highline (= 2.0.3)
-  hiredis
   i18n
   i18n-js (~> 3.9.0)
   image_processing
@@ -897,7 +895,7 @@ DEPENDENCIES
   rails_safe_tasks (~> 1.0)
   ransack (~> 4.1.0)
   redcarpet
-  redis (>= 4.0)
+  redis
   responders
   rexml
   roadie-rails

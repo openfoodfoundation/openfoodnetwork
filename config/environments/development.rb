@@ -16,7 +16,6 @@ Openfoodnetwork::Application.configure do
   # :file_store is used by default when no cache store is specifically configured.
   if !!ENV["PROFILE"] || !!ENV["DEV_CACHING"]
     config.cache_store = :redis_cache_store, {
-      driver: :hiredis,
       url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/1"),
       expires_in: 90.minutes
     }
