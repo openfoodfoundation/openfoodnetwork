@@ -72,7 +72,15 @@ class Invoice
 
     # contains limited information about the shipment
     def shipment
-      shipment_adjustment.adjustable
+      shipment_adjustment&.adjustable || null_shipment
+    end
+
+    def null_shipment
+      Struct.new(
+        :amount,
+        :included_tax_total,
+        :additional_tax_total,
+      ).new(0, 0, 0)
     end
 
     def display_shipment_amount_without_taxes
