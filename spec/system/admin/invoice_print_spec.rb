@@ -469,7 +469,8 @@ describe '
         }
         let!(:shipping_method_name) { "SM1" }
         let!(:shipping_method) {
-          create(:shipping_method_with, :expensive_name, name: shipping_method_name, distributors: [distributor],
+          create(:shipping_method_with, :expensive_name, name: shipping_method_name,
+                                                         distributors: [distributor],
                                                          tax_category: shipping_tax_category)
         }
         let!(:enterprise_fee) {
@@ -556,6 +557,7 @@ describe '
           # Tax totals
           expect(page).to have_content "Total tax (10.0%): $9.14 " \
                                        "Total tax (15.0%): $15.65 Total tax (20.0%): $250.08"
+          expect(page).to have_content "Total tax: $274.87"
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $1,733.54"
           expect(page).to have_content "Total (Excl. tax): $1,458.67"
@@ -575,7 +577,8 @@ describe '
         let(:fee_tax_category) { create(:tax_category, tax_rates: [enterprise_fee_rate_added]) }
         let!(:shipping_method_name) { "SM2" }
         let!(:shipping_method) {
-          create(:shipping_method_with, :expensive_name, name: shipping_method_name, distributors: [distributor],
+          create(:shipping_method_with, :expensive_name, name: shipping_method_name,
+                                                         distributors: [distributor],
                                                          tax_category: shipping_tax_category)
         }
         let(:enterprise_fee) {
@@ -658,6 +661,7 @@ describe '
           # Tax totals
           expect(page).to have_content "Total tax (10.0%): $10.06 " \
                                        "Total tax (15.0%): $18.00 Total tax (20.0%): $300.09"
+          expect(page).to have_content "Total tax: $328.15"
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $2,061.69"
           expect(page).to have_content "Total (Excl. tax): $1,733.54"
