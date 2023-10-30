@@ -1888,6 +1888,7 @@ en:
   invoice_shipping_type: "Type:"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
+  total_all_tax: "Total tax:"
   abn: "ABN:"
   acn: "ACN:"
   invoice_issued_on: "Invoice issued on:"

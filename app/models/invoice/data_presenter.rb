@@ -105,6 +105,10 @@ class Invoice
       I18n.l(invoice_date.to_date, format: :long)
     end
 
+    def display_tax_adjustment_total
+      Spree::Money.new(all_tax_adjustments.map(&:amount).sum, currency:)
+    end
+
     def tax_adjustment_totals
       all_tax_adjustments.each_with_object(Hash.new(0)) do |adjustment, totals|
         totals[adjustment.originator.id] += adjustment.amount

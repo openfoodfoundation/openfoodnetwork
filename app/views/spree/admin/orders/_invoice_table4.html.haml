@@ -75,6 +75,12 @@
           = tax[:amount]
     %tr
       %td{:align => "right", :colspan => "5"}
+        = t(:total_all_tax)
+      %td{:align => "right", :colspan => "2"}
+        =  @order.display_tax_adjustment_total
+      
+    %tr
+      %td{:align => "right", :colspan => "5"}
         %strong= t(:total_incl_tax)
       %td{:align => "right", :colspan => "2"}
         %strong=  @order.display_total
