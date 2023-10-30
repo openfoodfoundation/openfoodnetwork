@@ -50,27 +50,19 @@ class Invoice
       Time.zone.parse(data[:completed_at])
     end
 
-    def checkout_adjustments(exclude: [], reject_zero_amount: true)
-      adjustments = all_eligible_adjustments.map(&:clone)
+    def checkout_adjustments(exclude: [])
+      adjustments = all_eligible_adjustments
+        .reject { |a| a.originator.type == 'Spree::TaxRate' }
+        .map(&:clone)
 
-      adjustments.reject! { |a| a.originator.type == 'Spree::TaxRate' }
+      adjustments.reject! { |a| a.amount == 0 }
+      [:line_item, :shipment].each do |type|
+        next unless exclude.include? type
 
-      if exclude.include? :line_item
         adjustments.reject! { |a|
-          a.adjustable_type == 'Spree::LineItem'
+          a.adjustable_type == "Spree::#{type.to_s.classify}"
         }
       end
-
-      if exclude.include? :shipment
-        adjustments.reject! { |a|
-          a.adjustable_type == 'Spree::Shipment'
-        }
-      end
-
-      if reject_zero_amount
-        adjustments.reject! { |a| a.amount == 0 }
-      end
-
       adjustments
     end
 
