@@ -35,8 +35,20 @@
           = item.display_line_item_tax_rates
         %td{:align => "right"}
           = item.display_amount_with_adjustments_and_with_taxes
-
-    - @order.checkout_adjustments(exclude: [:line_item]).reverse_each do |adjustment|
+    %tr
+      %td
+        %strong= "#{t(:shipping)} "
+        = "( #{t(:invoice_shipping_type)} #{raw(@order.shipping_method.name)} )"
+      %td{:align => "right"}
+      %td{:align => "right"}
+      %td{:align => "right"}
+      %td{:align => "right"}
+        = @order.display_shipment_amount_without_taxes
+      %td{:align => "right"}
+        = @order.display_shipment_tax_rates
+      %td{:align => "right"}
+        = @order.display_shipment_amount_with_taxes
+    - @order.checkout_adjustments(exclude: [:line_item, :shipment]).reverse_each do |adjustment|
       %tr
         %td
           %strong= "#{raw(adjustment.label)}"

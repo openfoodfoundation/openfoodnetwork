@@ -1885,6 +1885,7 @@ en:
   invoice_tax_total: "GST Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
+  invoice_shipping_type: "Type:"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
   abn: "ABN:"

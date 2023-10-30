@@ -61,11 +61,41 @@ class Invoice
         }
       end
 
+      if exclude.include? :shipment
+        adjustments.reject! { |a|
+          a.adjustable_type == 'Spree::Shipment'
+        }
+      end
+
       if reject_zero_amount
         adjustments.reject! { |a| a.amount == 0 }
       end
 
       adjustments
+    end
+
+    def shipment_adjustment
+      all_eligible_adjustments.find { |a| a.originator.type == 'Spree::ShippingMethod' }
+    end
+
+    # contains limited information about the shipment
+    def shipment
+      shipment_adjustment.adjustable
+    end
+
+    def display_shipment_amount_without_taxes
+      Spree::Money.new(shipment.amount - shipment.included_tax_total, currency:)
+    end
+
+    def display_shipment_amount_with_taxes
+      Spree::Money.new(shipment.amount + shipment.additional_tax_total, currency:)
+    end
+
+    def display_shipment_tax_rates
+      all_eligible_adjustments.select { |a|
+        a.originator.type == 'Spree::TaxRate' && a.adjustable_type == 'Spree::Shipment'
+      }.map(&:originator)
+        .map { |tr| number_to_percentage(tr.amount * 100, precision: 1) }.join(", ")
     end
 
     def display_checkout_taxes_hash
