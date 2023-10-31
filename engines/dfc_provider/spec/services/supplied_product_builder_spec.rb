@@ -7,8 +7,12 @@ describe SuppliedProductBuilder do
 
   subject(:builder) { described_class }
   let(:variant) {
-    build(:variant, id: 5).tap { |v| v.product.supplier_id = 7 }
+    build(:variant, id: 5).tap do |v|
+      v.product.supplier_id = 7
+      v.product.primary_taxon = taxon
+    end
   }
+  let(:taxon) { build(:taxon, name: "Drink", dfc_name: "drink") }
 
   describe ".supplied_product" do
     it "assigns a semantic id" do
@@ -41,11 +45,33 @@ describe SuppliedProductBuilder do
       expect(product.name).to eq "Apple - Granny Smith"
     end
 
-    it "assigns a product type" do
-      product = builder.supplied_product(variant)
-      vegetable = DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
+    context "product_type mapping" do
+      it "assigns a product type" do
+        product = builder.supplied_product(variant)
+        drink = DfcLoader.connector.PRODUCT_TYPES.DRINK
 
-      expect(product.productType).to eq vegetable
+        expect(product.productType).to eq drink
+      end
+
+      context "with non existing product type" do
+        let(:taxon) { build(:taxon, name: "other", dfc_name: "other") }
+
+        it "returns nil" do
+          product = builder.supplied_product(variant)
+
+          expect(product.productType).to be_nil
+        end
+      end
+
+      context "when no taxon set" do
+        let(:taxon) { nil }
+
+        it "returns nil" do
+          product = builder.supplied_product(variant)
+
+          expect(product.productType).to be_nil
+        end
+      end
     end
 
     it "assigns an image_url type" do

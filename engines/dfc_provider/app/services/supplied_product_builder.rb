@@ -11,17 +11,11 @@ class SuppliedProductBuilder < DfcBuilder
       id,
       name: variant.product_and_full_name,
       description: variant.description,
-      productType: product_type,
+      productType: product_type(variant),
       quantity: QuantitativeValueBuilder.quantity(variant),
       spree_product_id: variant.product.id,
       image_url: variant.product&.image&.url(:product)
     )
-  end
-
-  # OFN product categories (taxons) are currently not standardised.
-  # This is just a dummy value for demos.
-  def self.product_type
-    DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
   end
 
   def self.import_variant(supplied_product)
@@ -42,6 +36,7 @@ class SuppliedProductBuilder < DfcBuilder
     end
   end
 
+  # TODO fix the taxon here
   def self.import_product(supplied_product)
     Spree::Product.new(
       name: supplied_product.name,
@@ -61,5 +56,18 @@ class SuppliedProductBuilder < DfcBuilder
     variant.display_name = supplied_product.name
     QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
     variant.unit_value = variant.product.unit_value
+  end
+
+  def self.product_type(variant)
+    taxon_name = variant.product.primary_taxon&.dfc_name
+
+    return nil if taxon_name.nil?
+
+    root_product_types = DfcLoader.connector.PRODUCT_TYPES.methods(false).sort
+    search = root_product_types.index(taxon_name.upcase.to_sym)
+
+    return nil if search.nil?
+
+    DfcLoader.connector.PRODUCT_TYPES.public_send(root_product_types[search])
   end
 end
