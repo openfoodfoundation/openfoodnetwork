@@ -4,7 +4,12 @@ module Spree
   module Admin
     module GeneralSettingsHelper
       def all_units
-        ["g", "oz", "lb", "kg", "T", "mL", "L", "kL"]
+        [
+          "mg", "g", "kg", "T",
+          "oz", "lb",
+          "mL", "cL", "dL", "L", "kL",
+          "gal"
+        ]
       end
     end
   end
