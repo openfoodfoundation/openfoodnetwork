@@ -46,7 +46,9 @@ class WeightsAndMeasures
   }.freeze
 
   def scales_for_variant_unit
-    @units[@variant.product.variant_unit]
+    @scales_for_variant_unit ||= @units[@variant.product.variant_unit].reject { |_scale, unit_info|
+      available_units.exclude?(unit_info['name'])
+    }
   end
 
   # Find the largest available and compatible unit where unit_value comes
@@ -62,5 +64,9 @@ class WeightsAndMeasures
     return scales.first if largest_unit.nil?
 
     largest_unit
+  end
+
+  def available_units
+    Spree::Config.preferences[:available_units].split(",")
   end
 end
