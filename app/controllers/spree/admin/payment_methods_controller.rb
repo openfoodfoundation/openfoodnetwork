@@ -197,8 +197,14 @@ module Spree
 
       def clear_preference_cache
         @payment_method.calculator.preferences.each_key do |key|
-          Rails.cache.delete(@payment_method.calculator.preference_cache_key(key))
+          delete_from_cache @payment_method.calculator.preference_cache_key(key)
         end
+      end
+
+      def delete_from_cache(cache_key)
+        return unless cache_key.class.in? [String, Integer, Float, Symbol]
+
+        Rails.cache.delete(cache_key)
       end
 
       def add_type_to_calculator_attributes(hash)
