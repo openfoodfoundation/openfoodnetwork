@@ -5,29 +5,57 @@ require 'stripe/payment_intent_validator'
 
 module Stripe
   describe PaymentIntentValidator do
-    describe "#call" do
+    let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
+
+    let(:payment_method) {
+      create(:stripe_sca_payment_method, distributor_ids: [create(:distributor_enterprise).id],
+                                         preferred_enterprise_id: create(:enterprise).id)
+    }
+    let(:source) {
+      create(:credit_card)
+    }
+
+    before do
+      Stripe.api_key = secret
+    end
+
+    describe "#call", :vcr do
+      let(:payment) {
+        create(:payment, amount: payment_intent.amount, payment_method:,
+                         response_code: payment_intent.id, source:)
+      }
       let(:validator) { Stripe::PaymentIntentValidator.new(payment) }
-      let(:payment) { build(:payment, response_code: payment_intent_id) }
-      let(:payment_intent_id) { "pi_123" }
-      let(:stripe_account_id) { "abc123" }
-      let(:stripe_account_mock) { double(stripe_user_id: stripe_account_id) }
-      let(:payment_intent_response_mock) { { status: 200, body: payment_intent_response_body } }
-
-      before do
-        Stripe.api_key = "sk_test_12345"
-
-        allow(payment).to receive_message_chain(:payment_method, :preferred_enterprise_id) { 1 }
-        allow(StripeAccount).to receive(:find_by) { stripe_account_mock }
-
-        stub_request(:get, "https://api.stripe.com/v1/payment_intents/#{payment_intent_id}")
-          .with(headers: { 'Stripe-Account' => stripe_account_id })
-          .to_return(payment_intent_response_mock)
-      end
 
       context "when payment intent is valid" do
+        let!(:pm_card) do
+          Stripe::PaymentMethod.create({
+                                         type: 'card',
+                                         card: {
+                                           number: '4242424242424242',
+                                           exp_month: 12,
+                                           exp_year: 2034,
+                                           cvc: '314',
+                                         },
+                                       })
+        end
+
+        let!(:payment_intent) do
+          Stripe::PaymentIntent.create({
+                                         amount: 100,
+                                         currency: 'eur',
+                                         payment_method: pm_card,
+                                         payment_method_types: ['card'],
+                                         capture_method: 'manual',
+                                       })
+        end
+
         let(:payment_intent_response_body) {
-          JSON.generate(id: payment_intent_id, status: "requires_capture")
+          [id: payment_intent.id, status: payment_intent.status]
         }
+
+        before do
+          Stripe::PaymentIntent.confirm(payment_intent.id)
+        end
 
         it "returns payment intent id and does not raise" do
           expect {
@@ -38,14 +66,41 @@ module Stripe
       end
 
       context "when payment intent contains an error" do
+        let!(:pm_card) do
+          Stripe::PaymentMethod.create({
+                                         type: 'card',
+                                         card: {
+                                           # decline code: insufficient_funds
+                                           number: '4000000000009995',
+                                           exp_month: 12,
+                                           exp_year: 2034,
+                                           cvc: '314',
+                                         },
+                                       })
+        end
+
+        let!(:payment_intent) do
+          Stripe::PaymentIntent.create({
+                                         amount: 100,
+                                         currency: 'eur',
+                                         payment_method: pm_card,
+                                         payment_method_types: ['card'],
+                                         capture_method: 'manual',
+                                       })
+        end
+
         let(:payment_intent_response_body) {
           JSON.generate(id: payment_intent_id, last_payment_error: { message: "No money" })
         }
 
         it "raises Stripe error with payment intent last_payment_error as message" do
           expect {
+            Stripe::PaymentIntent.confirm(payment_intent.id)
+          }.to raise_error Stripe::StripeError, "Your card has insufficient funds."
+
+          expect {
             validator.call
-          }.to raise_error Stripe::StripeError, "No money"
+          }.to raise_error Stripe::StripeError, "Your card has insufficient funds."
         end
       end
     end
