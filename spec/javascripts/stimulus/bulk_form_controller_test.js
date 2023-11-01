@@ -32,7 +32,7 @@ describe("BulkFormController", () => {
       <div id="disable2"></div>
       <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
         <div id="actions" data-bulk-form-target="actions" class="hidden"></div>
-        <div id="modified_summary" data-bulk-form-target="modifiedSummary" data-translation-key="modified_summary"></div>
+        <div id="changed_summary" data-bulk-form-target="changedSummary" data-translation-key="changed_summary"></div>
         <div data-record-id="1">
           <input id="input1a" type="text" value="initial1a">
           <input id="input1b" type="text" value="initial1b">
@@ -50,7 +50,7 @@ describe("BulkFormController", () => {
       const disable1 = document.getElementById("disable1");
       const disable2 = document.getElementById("disable2");
       const actions = document.getElementById("actions");
-      const modified_summary = document.getElementById("modified_summary");
+      const changed_summary = document.getElementById("changed_summary");
       const input1a = document.getElementById("input1a");
       const input1b = document.getElementById("input1b");
       const input2 = document.getElementById("input2");
@@ -60,30 +60,30 @@ describe("BulkFormController", () => {
       it("onChange", () => {
         input1a.value = 'updated1a';
         input1a.dispatchEvent(new Event("change"));
-        // Expect only first field to show modified
-        expect(input1a.classList).toContain('modified');
-        expect(input1b.classList).not.toContain('modified');
-        expect(input2.classList).not.toContain('modified');
+        // Expect only first field to show changed
+        expect(input1a.classList).toContain('changed');
+        expect(input1b.classList).not.toContain('changed');
+        expect(input2.classList).not.toContain('changed');
 
         // Change back to original value
         input1a.value = 'initial1a';
         input1a.dispatchEvent(new Event("change"));
-        expect(input1a.classList).not.toContain('modified');
+        expect(input1a.classList).not.toContain('changed');
 
       });
 
       it("onKeyup", () => {
         input1a.value = 'u1a';
         input1a.dispatchEvent(new Event("keyup"));
-        // Expect only first field to show modified
-        expect(input1a.classList).toContain('modified');
-        expect(input1b.classList).not.toContain('modified');
-        expect(input2.classList).not.toContain('modified');
+        // Expect only first field to show changed
+        expect(input1a.classList).toContain('changed');
+        expect(input1b.classList).not.toContain('changed');
+        expect(input2.classList).not.toContain('changed');
 
         // Change back to original value
         input1a.value = 'initial1a';
         input1a.dispatchEvent(new Event("keyup"));
-        expect(input1a.classList).not.toContain('modified');
+        expect(input1a.classList).not.toContain('changed');
       });
 
       it("multiple fields", () => {
@@ -91,29 +91,29 @@ describe("BulkFormController", () => {
         input1a.dispatchEvent(new Event("change"));
         input2.value = 'updated2';
         input2.dispatchEvent(new Event("change"));
-        // Expect only first field to show modified
-        expect(input1a.classList).toContain('modified');
-        expect(input1b.classList).not.toContain('modified');
-        expect(input2.classList).toContain('modified');
+        // Expect only first field to show changed
+        expect(input1a.classList).toContain('changed');
+        expect(input1b.classList).not.toContain('changed');
+        expect(input2.classList).toContain('changed');
 
         // Change only one back to original value
         input1a.value = 'initial1a';
         input1a.dispatchEvent(new Event("change"));
-        expect(input1a.classList).not.toContain('modified');
-        expect(input1b.classList).not.toContain('modified');
-        expect(input2.classList).toContain('modified');
+        expect(input1a.classList).not.toContain('changed');
+        expect(input1b.classList).not.toContain('changed');
+        expect(input2.classList).toContain('changed');
       });
     })
 
     describe("activating sections, and showing a summary", () => {
       // This scenario should probably be broken up into smaller units.
-      it("counts modified records ", () => {
+      it("counts changed records ", () => {
         // Record 1: First field changed
         input1a.value = 'updated1a';
         input1a.dispatchEvent(new Event("change"));
-        // Actions and modified summary are shown, with other sections disabled
+        // Actions and changed summary are shown, with other sections disabled
         expect(actions.classList).not.toContain('hidden');
-        expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
+        expect(changed_summary.textContent).toBe('changed_summary, {"count":1}');
         expect(disable1.classList).toContain('disabled-section');
         expect(disable2.classList).toContain('disabled-section');
 
@@ -122,31 +122,31 @@ describe("BulkFormController", () => {
         input1b.dispatchEvent(new Event("change"));
         // Expect to show same summary translation
         expect(actions.classList).not.toContain('hidden');
-        expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
+        expect(changed_summary.textContent).toBe('changed_summary, {"count":1}');
 
         // Record 2: has been changed
         input2.value = 'updated2';
         input2.dispatchEvent(new Event("change"));
         // Expect summary to count both records
         expect(actions.classList).not.toContain('hidden');
-        expect(modified_summary.textContent).toBe('modified_summary, {"count":2}');
+        expect(changed_summary.textContent).toBe('changed_summary, {"count":2}');
 
         // Record 1: Change first field back to original value
         input1a.value = 'initial1a';
         input1a.dispatchEvent(new Event("change"));
-        // Both records are still modified.
-        expect(input1a.classList).not.toContain('modified');
-        expect(input1b.classList).toContain('modified');
-        expect(input2.classList).toContain('modified');
+        // Both records are still changed.
+        expect(input1a.classList).not.toContain('changed');
+        expect(input1b.classList).toContain('changed');
+        expect(input2.classList).toContain('changed');
         expect(actions.classList).not.toContain('hidden');
-        expect(modified_summary.textContent).toBe('modified_summary, {"count":2}');
+        expect(changed_summary.textContent).toBe('changed_summary, {"count":2}');
 
         // Record 1: Change second field back to original value
         input1b.value = 'initial1b';
         input1b.dispatchEvent(new Event("change"));
-        // Both fields for record 1 show unmodified, but second record is still modified
+        // Both fields for record 1 show unchanged, but second record is still changed
         expect(actions.classList).not.toContain('hidden');
-        expect(modified_summary.textContent).toBe('modified_summary, {"count":1}');
+        expect(changed_summary.textContent).toBe('changed_summary, {"count":1}');
         expect(disable1.classList).toContain('disabled-section');
         expect(disable2.classList).toContain('disabled-section');
 
@@ -155,7 +155,7 @@ describe("BulkFormController", () => {
         input2.dispatchEvent(new Event("change"));
         // Actions are hidden and other sections are now re-enabled
         expect(actions.classList).toContain('hidden');
-        expect(modified_summary.textContent).toBe('modified_summary, {"count":0}');
+        expect(changed_summary.textContent).toBe('changed_summary, {"count":0}');
         expect(disable1.classList).not.toContain('disabled-section');
         expect(disable2.classList).not.toContain('disabled-section');
       });
@@ -170,7 +170,7 @@ describe("BulkFormController", () => {
   //     const controller = document.querySelector('[data-controller="bulk-form"]');
   //     const form = document.querySelector('[data-controller="bulk-form"]');
 
-  //     // Form is modified and other sections are disabled
+  //     // Form is changed and other sections are disabled
   //     input1a.value = 'updated1a';
   //     input1a.dispatchEvent(new Event("change"));
   //     expect(disable1.classList).toContain('disabled-section');

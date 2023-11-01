@@ -1,8 +1,8 @@
 import { Controller } from "stimulus";
 
-// Manages "modified" state for a form with multiple records
+// Manages "changed" state for a form with multiple records
 export default class BulkFormController extends Controller {
-  static targets = ["actions", "modifiedSummary"];
+  static targets = ["actions", "changedSummary"];
   static values = {
     disableSelector: String,
   };
@@ -12,10 +12,10 @@ export default class BulkFormController extends Controller {
     this.form = this.element;
 
     // Start listening for any changes within the form
-    // this.element.addEventListener('change', this.toggleModified.bind(this)); // dunno why this doesn't work
+    // this.element.addEventListener('change', this.toggleChanged.bind(this)); // dunno why this doesn't work
     for (const element of this.form.elements) {
-      element.addEventListener("keyup", this.toggleModified.bind(this)); // instant response
-      element.addEventListener("change", this.toggleModified.bind(this)); // just in case (eg right-click paste)
+      element.addEventListener("keyup", this.toggleChanged.bind(this)); // instant response
+      element.addEventListener("change", this.toggleChanged.bind(this)); // just in case (eg right-click paste)
 
       // Set up a tree of fields according to their associated record
       const recordContainer = element.closest("[data-record-id]"); // The JS could be more efficient if this data was added to each element. But I didn't want to pollute the HTML too much.
@@ -33,32 +33,32 @@ export default class BulkFormController extends Controller {
     window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
   }
 
-  toggleModified(e) {
+  toggleChanged(e) {
     const element = e.target;
-    element.classList.toggle("modified", this.#isModified(element));
+    element.classList.toggle("changed", this.#isChanged(element));
 
-    this.toggleFormModified();
+    this.toggleFormChanged();
   }
 
-  toggleFormModified() {
-    // For each record, check if any fields are modified
-    const modifiedRecordCount = Object.values(this.recordElements).filter((elements) =>
-      elements.some(this.#isModified)
+  toggleFormChanged() {
+    // For each record, check if any fields are changed
+    const changedRecordCount = Object.values(this.recordElements).filter((elements) =>
+      elements.some(this.#isChanged)
     ).length;
-    const formModified = modifiedRecordCount > 0;
+    const formChanged = changedRecordCount > 0;
 
     // Show actions
-    this.actionsTarget.classList.toggle("hidden", !formModified);
-    this.#disableOtherElements(formModified); // like filters and sorting
+    this.actionsTarget.classList.toggle("hidden", !formChanged);
+    this.#disableOtherElements(formChanged); // like filters and sorting
 
-    // Display number of records modified
-    const key = this.modifiedSummaryTarget && this.modifiedSummaryTarget.dataset.translationKey;
+    // Display number of records changed
+    const key = this.changedSummaryTarget && this.changedSummaryTarget.dataset.translationKey;
     if (key) {
-      this.modifiedSummaryTarget.textContent = I18n.t(key, { count: modifiedRecordCount });
+      this.changedSummaryTarget.textContent = I18n.t(key, { count: changedRecordCount });
     }
 
     // Prevent accidental data loss
-    if (formModified) {
+    if (formChanged) {
       window.addEventListener("beforeunload", this.preventLeavingBulkForm);
     } else {
       window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
@@ -85,7 +85,7 @@ export default class BulkFormController extends Controller {
     }
   }
 
-  #isModified(element) {
+  #isChanged(element) {
     return element.value != element.defaultValue;
   }
 }

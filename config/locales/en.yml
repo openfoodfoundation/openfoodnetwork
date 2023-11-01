@@ -833,7 +833,7 @@ en:
         import_products: Import multiple products
         no_products_found_for_search: No products found for your search criteria
       table:
-        modified_summary:
+        changed_summary:
           zero: ""
           one: "%{count} product modified."
           other: "%{count} products modified."
