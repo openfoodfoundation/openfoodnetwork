@@ -46,7 +46,7 @@ class WeightsAndMeasures
   }.freeze
 
   def scales_for_variant_unit
-    @scales_for_variant_unit ||= @units[@variant.product.variant_unit].reject { |_scale, unit_info|
+    @scales_for_variant_unit ||= @units[@variant.product.variant_unit]&.reject { |_scale, unit_info|
       available_units.exclude?(unit_info['name'])
     }
   end

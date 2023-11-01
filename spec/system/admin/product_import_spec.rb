@@ -53,6 +53,14 @@ describe "Product Import" do
 
   let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
 
+  let(:available_units) {
+    ["mg", "g", "kg", "T", "oz", "lb", "mL", "cL", "dL", "L", "kL", "gal"].join(",")
+  }
+
+  before do
+    Spree::Config.set_preference(:available_units, available_units)
+  end
+
   describe "when importing products from uploaded file" do
     before do
       allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")

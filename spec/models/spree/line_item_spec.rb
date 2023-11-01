@@ -695,6 +695,13 @@ module Spree
         let(:p2) { create(:product, name: 'Clear United States Honey', variant_unit_scale: 453.6) }
         let(:v2) { create(:variant, product: p2, unit_value: 453.6) }
         let(:li2) { create(:line_item, order: o, product: p2, variant: v2) }
+        let(:available_units) {
+          ["mg", "g", "kg", "T", "oz", "lb", "mL", "cL", "dL", "L", "kL", "gal"].join(",")
+        }
+
+        before do
+          Spree::Config.set_preference(:available_units, available_units)
+        end
 
         it "returns options_text" do
           li = build_stubbed(:line_item)
