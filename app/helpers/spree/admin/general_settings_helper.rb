@@ -5,11 +5,9 @@ module Spree
     module GeneralSettingsHelper
       def all_units
         [
-          "mg", "g", "kg", "T",
-          "oz", "lb",
-          "mL", "cL", "dL", "L", "kL",
-          "gal"
-        ]
+          WeightsAndMeasures::UNITS['weight'].values.pluck('name'),
+          WeightsAndMeasures::UNITS['volume'].values.pluck('name')
+        ].flatten.uniq
       end
     end
   end

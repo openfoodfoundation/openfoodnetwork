@@ -90,12 +90,4 @@ describe WeightsAndMeasures do
       end
     end
   end
-
-  describe "UNITS" do
-    include Spree::Admin::GeneralSettingsHelper
-    it "should include all the available untis" do
-      units = WeightsAndMeasures::UNITS.values.flat_map(&:values).pluck("name").sort.uniq
-      expect(units).to eq(all_units.sort.uniq)
-    end
-  end
 end
