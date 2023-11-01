@@ -2,6 +2,9 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
   class VariantUnitManager
     @units:
       'weight':
+        0.001:
+          name: 'mg'
+          system: 'metric'
         1.0:
           name: 'g'
           system: 'metric'
@@ -21,11 +24,20 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
         0.001:
           name: 'mL'
           system: 'metric'
+        0.01:
+          name: 'cL'
+          system: 'metric'
+        0.1:
+          name: 'dL'
+          system: 'metric'
         1.0:
           name: 'L'
           system: 'metric'
         1000.0:
           name: 'kL'
+          system: 'metric'
+        4.54609:
+          name: 'gal'
           system: 'metric'
       'items':
         1:
