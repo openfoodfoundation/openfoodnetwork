@@ -51,8 +51,43 @@ $ docker/build
 ```sh
 $ docker/server
 ```
-* The default admin user is 'ofn@example.com' with the password 'ofn123'.
-* View the app in the browser at `http://localhost:3000`.
+* Open a new terminal and access the Rails console in the container:
+```sh
+$ sudo docker-compose exec web bundle exec rails console
+```
+* In the Rails console, create a new user account:
+```sh
+$ > user = Spree::user.new(email: 'ofn@gmail.com', password: 'ofn123')
+```
+```sh
+$ > user.save!
+```
+* Confirm the user account:
+```sh
+$ > user.confirmed?
+```
+```sh
+$ > user.confirm
+```
+* Access the OFN application in your browser at `http://localhost:3000`. Log in with your confirmed user account.
+* To login as an admin user, use the following credentials:
+* In the Rails console, fetch all user accounts:
+```sh
+$ > all_user = Spree::User.all
+```
+* Find the user account you want to make an admin:
+```sh
+$ > admin = all_user.find_by(email: 'ofn@gmail.com')
+```
+* Create the "admin" role or get it if it already exists:
+```sh
+$ > role = Spree::Role.find_or_create_by(name: 'admin')
+```
+* Assign the "admin" role to the admin user:
+```sh
+$ > admin.spree_roles << role
+```
+* Access the OFN application in your browser at `http://localhost:3000`. Log in with your admin user account.
 * You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
 * You can find some useful tips and commands [here](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Docker:-useful-tips-and-commands).
 
