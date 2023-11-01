@@ -72,8 +72,13 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
 
     @compatibleUnitScales: (scale, unitType) ->
       scaleSystem = @units[unitType][scale]['system']
-      (parseFloat(scale) for scale, scaleInfo of @units[unitType] when scaleInfo['system'] == scaleSystem).sort (a, b) ->
-         a - b
+      if availableUnits
+        available = availableUnits.split(",")
+        (parseFloat(scale) for scale, scaleInfo of @units[unitType] when scaleInfo['system'] == scaleSystem and available.includes(scaleInfo['name'])).sort (a, b) ->
+          a - b
+      else
+        (parseFloat(scale) for scale, scaleInfo of @units[unitType] when scaleInfo['system'] == scaleSystem).sort (a, b) ->
+          a - b
 
     @systemOfMeasurement: (scale, unitType) ->
       if @units[unitType][scale]

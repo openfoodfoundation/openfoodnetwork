@@ -33,6 +33,18 @@ describe "VariantUnitManager", ->
       expect(VariantUnitManager.compatibleUnitScales(1, "weight")).toEqual [1.0, 1000.0, 1000000.0]
       expect(VariantUnitManager.compatibleUnitScales(453.6, "weight")).toEqual [28.35, 453.6]
 
+    pending "should load only available unit", ->
+      beforeEach ->
+        module "admin.products"
+        module ($provide)->
+          $provide.value "availableUnits", "g,T,mL,L,kL,lb"
+          null
+        inject (_VariantUnitManager_) ->
+          VariantUnitManager1 = _VariantUnitManager_
+      it "returns a sorted set of compatible scales based on the scale and unit type provided", ->
+        expect(VariantUnitManager1.compatibleUnitScales(1, "weight")).toEqual [1.0, 1000000.0]
+        expect(VariantUnitManager1.compatibleUnitScales(453.6, "weight")).toEqual [453.6]
+
   describe "variantUnitOptions", ->
     it "returns an array of options", ->
       expect(VariantUnitManager.variantUnitOptions()).toEqual [
