@@ -307,7 +307,7 @@ describe '
 
         click_button 'Save Changes', match: :first
         expect(page.find("#status-message"))
-          .to have_content "Unit value can't be blank Unit value is not a number"
+          .to have_content "Variant unit value can't be blank Variant unit value is not a number"
       end
 
       it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
@@ -323,7 +323,7 @@ describe '
 
         click_button 'Save Changes', match: :first
         expect(page.find("#status-message"))
-          .to have_content "Unit value can't be blank Unit value is not a number"
+          .to have_content "Variant unit value can't be blank Variant unit value is not a number"
       end
     end
   end

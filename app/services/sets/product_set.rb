@@ -105,8 +105,15 @@ module Sets
       if variant.present?
         variant.update(variant_attributes.except(:id))
       else
-        create_variant(product, variant_attributes)
+        variant = create_variant(product, variant_attributes)
       end
+
+      # Copy any variant errors to product
+      variant&.errors&.each do |error|
+        # The name is namespaced to avoid confusion with product attrs of same name.
+        product.errors.add("variant_#{error.attribute}".to_sym, error.message)
+      end
+      variant&.errors.blank?
     end
 
     def create_variant(product, variant_attributes)
@@ -117,11 +124,7 @@ module Sets
       on_demand = variant_attributes.delete(:on_demand)
 
       variant = product.variants.create(variant_attributes)
-
-      if variant.errors.present?
-        product.errors.merge!(variant.errors)
-        return false
-      end
+      return variant if variant.errors.present?
 
       begin
         variant.on_demand = on_demand if on_demand.present?
@@ -130,6 +133,8 @@ module Sets
         notify_bugsnag(e, product, variant, variant_attributes)
         raise e
       end
+
+      variant
     end
 
     def notify_bugsnag(error, product, variant, variant_attributes)

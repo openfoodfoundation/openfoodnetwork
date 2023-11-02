@@ -154,6 +154,8 @@ describe Sets::ProductSet do
             product_set.save
             product.reload
           }.to_not change { product.sku }
+
+          expect(product_set.invalid.count).to be_positive
         end
 
         it "doesn't update variant" do
@@ -171,7 +173,7 @@ describe Sets::ProductSet do
         end
       end
 
-      xcontext "variant has error" do
+      context "variant has error" do
         let(:variant_attributes) { { sku: "var_sku", display_name: "A" * 256 } } # maximum length
 
         include_examples "nothing saved"
