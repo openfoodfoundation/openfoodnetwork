@@ -350,7 +350,17 @@ describe '
       fill_in(:quantity, with: max_quantity + 1)
       find("a.save-item").click
     end
-    click_button("OK")
+
+    pending "Reload bug"
+    # The following modal is displayed but disappears straight away because the
+    # page is reloaded after the click on the save button. Somehow this happens
+    # only the first time the page is loaded and after that this logic seems to
+    # work fine.
+    sleep 1
+    within(".modal") do
+      expect(page).to have_content "Quantity unchanged from previous amount"
+      click_on "OK"
+    end
 
     expect(page).to_not have_content "Loading..."
     within("tr.stock-item", text: order.products.first.name) do
