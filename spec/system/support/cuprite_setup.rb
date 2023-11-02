@@ -7,7 +7,7 @@ headless = ActiveModel::Type::Boolean.new.cast(ENV.fetch("HEADLESS", true))
 browser_options = {}
 browser_options["no-sandbox"] = nil if ENV['CI']
 
-Capybara.register_driver(:cuprite) do |app|
+Capybara.register_driver(:cuprite_ofn) do |app|
   Capybara::Cuprite::Driver.new(
     app,
     **{
@@ -24,14 +24,14 @@ Capybara.register_driver(:cuprite) do |app|
   )
 end
 
-# Configure Capybara to use :cuprite driver by default
-Capybara.default_driver = Capybara.javascript_driver = :cuprite
+# Configure Capybara to use :cuprite_ofn driver by default
+Capybara.default_driver = Capybara.javascript_driver = :cuprite_ofn
 
 RSpec.configure do |config|
   config.include CupriteHelpers, type: :system
   config.include Devise::Test::IntegrationHelpers, type: :system
 
-  config.prepend_before(:each, type: :system) { driven_by :cuprite }
+  config.prepend_before(:each, type: :system) { driven_by :cuprite_ofn }
 
   # Make sure url helpers in mailers use the Capybara server host.
   config.around(:each, type: :system) do |example|
