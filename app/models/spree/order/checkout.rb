@@ -71,6 +71,14 @@ module Spree
                 transition to: :complete, from: :confirmation
               end
 
+              event :back_to_payment do
+                transition to: :payment, from: :confirmation
+              end
+
+              event :back_to_address do
+                transition to: :address, from: [:payment, :confirmation]
+              end
+
               before_transition from: :cart, do: :ensure_line_items_present
 
               before_transition to: :delivery, do: :create_proposed_shipments
@@ -79,11 +87,6 @@ module Spree
 
               after_transition to: :payment do |order|
                 order.create_tax_charge!
-                order.update_totals_and_states
-              end
-
-              after_transition to: :confirmation do |order|
-                VoucherAdjustmentsService.new(order).update
                 order.update_totals_and_states
               end
 

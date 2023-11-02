@@ -23,8 +23,12 @@ class SplitCheckoutController < ::BaseController
   before_action :hide_ofn_navigation, only: [:edit, :update]
 
   def edit
-    redirect_to_step_based_on_order unless params[:step]
-    check_step if params[:step]
+    if params[:step].blank?
+      redirect_to_step_based_on_order
+    else
+      update_order_state
+      check_step
+    end
 
     return if available_shipping_methods.any?
 
@@ -94,11 +98,27 @@ class SplitCheckoutController < ::BaseController
   def update_order
     return if params[:confirm_order] || @order.errors.any?
 
+    # Checking if shipping method updated before @order get updated. We can't use this guard
+    # clause in recalculate_voucher as by then the @order.shipping method would be the new one
+    shipping_method_updated = @order.shipping_method&.id != params[:shipping_method_id].to_i
+
     @order.select_shipping_method(params[:shipping_method_id])
     @order.update(order_params)
+    # We need to update voucher to take into account:
+    #  * when moving away from "details" step : potential change in shipping method fees
+    #  * when moving away from "payment" step : payment fees
+    recalculate_voucher(shipping_method_updated) if details_step? || payment_step?
     @order.update_totals_and_states
 
     validate_current_step
+  end
+
+  def recalculate_voucher(shipping_method_updated)
+    return if @order.voucher_adjustments.empty?
+
+    return unless shipping_method_updated
+
+    VoucherAdjustmentsService.new(@order).update
   end
 
   def validate_current_step
@@ -113,5 +133,16 @@ class SplitCheckoutController < ::BaseController
 
   def order_params
     @order_params ||= Checkout::Params.new(@order, params, spree_current_user).call
+  end
+
+  # Update order state based on the step we are loading to avoid discrepancy between step and order
+  # state. We need to do this when moving back to a previous checkout step, the update action takes
+  # care of moving the order state forward.
+  def update_order_state
+    return @order.back_to_payment if @order.confirmation? && payment_step?
+
+    return unless @order.after_delivery_state? && details_step?
+
+    @order.back_to_address
   end
 end

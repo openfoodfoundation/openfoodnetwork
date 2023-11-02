@@ -8,10 +8,7 @@ describe SplitCheckoutController, type: :controller do
   let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
   let(:exchange) { order_cycle.exchanges.outgoing.first }
-  let(:order) {
-    create(:order_with_line_items, line_items_count: 1, distributor:,
-                                   order_cycle:)
-  }
+  let(:order) { create(:order_with_line_items, line_items_count: 1, distributor:, order_cycle:) }
   let(:payment_method) { distributor.payment_methods.first }
   let(:shipping_method) { distributor.shipping_methods.first }
 
@@ -65,6 +62,45 @@ describe SplitCheckoutController, type: :controller do
         it "redirects to the valid step if params is `summary`" do
           get :edit, params: { step: "summary" }
           expect(response).to redirect_to checkout_step_path(:payment)
+        end
+      end
+
+      context "when order state is 'confirmation'" do
+        before do
+          order.update!(state: "confirmation")
+        end
+
+        context "when loading payment step" do
+          it "updates the order state to payment" do
+            get :edit, params: { step: "payment" }
+
+            expect(response.status).to eq 200
+            expect(order.reload.state).to eq("payment")
+          end
+        end
+
+        context "when loading address step" do
+          it "updates the order state to address" do
+            get :edit, params: { step: "details" }
+
+            expect(response.status).to eq 200
+            expect(order.reload.state).to eq("address")
+          end
+        end
+      end
+
+      context "when order state is 'payment'" do
+        context "when loading address step" do
+          before do
+            order.update!(state: "payment")
+          end
+
+          it "updates the order state to address" do
+            get :edit, params: { step: "details" }
+
+            expect(response.status).to eq 200
+            expect(order.reload.state).to eq("address")
+          end
         end
       end
     end
@@ -139,6 +175,77 @@ describe SplitCheckoutController, type: :controller do
             expect(order.user.ship_address).to eq(order.ship_address)
           end
         end
+
+        describe "with a voucher" do
+          let(:checkout_params) do
+            {
+              order: {
+                email: user.email,
+                bill_address_attributes: address.to_param,
+                ship_address_attributes: address.to_param
+              },
+              shipping_method_id: order.shipment.shipping_method.id.to_s
+            }
+          end
+
+          let(:voucher) { create(:voucher_flat_rate, enterprise: distributor) }
+          let(:service) { mock_voucher_adjustment_service }
+
+          before do
+            voucher.create_adjustment(voucher.code, order)
+          end
+
+          it "doesn't recalculate the voucher adjustment" do
+            expect(service).to_not receive(:update)
+
+            put(:update, params:)
+
+            expect(response).to redirect_to checkout_step_path(:payment)
+          end
+
+          context "when updating shipping method" do
+            let(:checkout_params) do
+              {
+                order: {
+                  email: user.email,
+                  bill_address_attributes: address.to_param,
+                  ship_address_attributes: address.to_param
+                },
+                shipping_method_id: new_shipping_method.id.to_s
+              }
+            end
+            let(:new_shipping_method) { create(:shipping_method, distributors: [distributor]) }
+
+            before do
+              # Add a shipping rates for the new shipping method to prevent
+              # order.select_shipping_method from failing
+              order.shipment.shipping_rates <<
+                Spree::ShippingRate.create(shipping_method: new_shipping_method, selected: true)
+            end
+
+            it "recalculates the voucher adjustment" do
+              expect(service).to receive(:update)
+
+              put(:update, params:)
+
+              expect(response).to redirect_to checkout_step_path(:payment)
+            end
+
+            context "when no shipments available" do
+              before do
+                order.shipments.destroy_all
+              end
+
+              it "recalculates the voucher adjustment" do
+                expect(service).to receive(:update)
+
+                put(:update, params:)
+
+                expect(response).to redirect_to checkout_step_path(:payment)
+              end
+            end
+          end
+        end
       end
     end
 
@@ -175,11 +282,29 @@ describe SplitCheckoutController, type: :controller do
           }
         end
 
-        it "updates and redirects to payment step" do
+        it "updates and redirects to summary step" do
           put(:update, params:)
 
           expect(response).to redirect_to checkout_step_path(:summary)
           expect(order.reload.state).to eq "confirmation"
+        end
+
+        describe "with a voucher" do
+          let(:voucher) { create(:voucher_flat_rate, enterprise: distributor) }
+
+          before do
+            voucher.create_adjustment(voucher.code, order)
+          end
+
+          # so we need to recalculate voucher to account for payment fees
+          it "recalculates the voucher adjustment" do
+            service = mock_voucher_adjustment_service
+            expect(service).to receive(:update)
+
+            put(:update, params:)
+
+            expect(response).to redirect_to checkout_step_path(:summary)
+          end
         end
       end
 
@@ -365,5 +490,12 @@ describe SplitCheckoutController, type: :controller do
     it_behaves_like "handling stock issues", "details"
     it_behaves_like "handling stock issues", "payment"
     it_behaves_like "handling stock issues", "summary"
+  end
+
+  def mock_voucher_adjustment_service
+    voucher_adjustment_service = instance_double(VoucherAdjustmentsService)
+    allow(VoucherAdjustmentsService).to receive(:new).and_return(voucher_adjustment_service)
+
+    voucher_adjustment_service
   end
 end
