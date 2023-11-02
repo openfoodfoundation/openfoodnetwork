@@ -248,7 +248,6 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     else
       product.variant_unit = product.variant_unit_scale = null
 
-    $scope.packVariant product, product.master if product.master
 
     if product.variants
       for id, variant of product.variants
@@ -299,7 +298,6 @@ filterSubmitProducts = (productsToFilter) ->
       if product.hasOwnProperty("id")
         filteredProduct = {id: product.id}
         filteredVariants = []
-        filteredMaster = null
         hasUpdatableProperty = false
 
         if product.hasOwnProperty("variants")
@@ -308,16 +306,6 @@ filterSubmitProducts = (productsToFilter) ->
             filteredVariant = result.filteredVariant
             variantHasUpdatableProperty = result.hasUpdatableProperty
             filteredVariants.push filteredVariant  if variantHasUpdatableProperty
-
-        if product.master?.hasOwnProperty("unit_value")
-          filteredMaster ?= { id: product.master.id }
-          filteredMaster.unit_value = product.master.unit_value
-        if product.master?.hasOwnProperty("unit_description")
-          filteredMaster ?= { id: product.master.id }
-          filteredMaster.unit_description = product.master.unit_description
-        if product.master?.hasOwnProperty("display_as")
-          filteredMaster ?= { id: product.master.id }
-          filteredMaster.display_as = product.master.display_as
 
         if product.hasOwnProperty("sku")
           filteredProduct.sku = product.sku
@@ -349,9 +337,6 @@ filterSubmitProducts = (productsToFilter) ->
           hasUpdatableProperty = true
         if product.hasOwnProperty("inherits_properties")
           filteredProduct.inherits_properties = product.inherits_properties
-          hasUpdatableProperty = true
-        if filteredMaster?
-          filteredProduct.master_attributes = filteredMaster
           hasUpdatableProperty = true
         if filteredVariants.length > 0 # Note that the name of the property changes to enable mass assignment of variants attributes with rails
           filteredProduct.variants_attributes = filteredVariants

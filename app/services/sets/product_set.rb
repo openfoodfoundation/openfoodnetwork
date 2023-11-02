@@ -59,12 +59,11 @@ module Sets
 
       ExchangeVariantDeleter.new.delete(product) if product.saved_change_to_supplier_id?
 
-      update_product_variants(product, attributes) &&
-        update_product_master(product, attributes)
+      update_product_variants(product, attributes)
     end
 
     def update_product_only_attributes(product, attributes)
-      variant_related_attrs = [:id, :variants_attributes, :master_attributes]
+      variant_related_attrs = [:id, :variants_attributes]
       product_related_attrs = attributes.except(*variant_related_attrs)
       return true if product_related_attrs.blank?
 
@@ -94,12 +93,6 @@ module Sets
       update_variants_attributes(product, attributes[:variants_attributes])
     end
 
-    def update_product_master(product, attributes)
-      return true unless attributes[:master_attributes]
-
-      create_or_update_variant(product, attributes[:master_attributes])
-    end
-
     def update_variants_attributes(product, variants_attributes)
       variants_attributes.each do |attributes|
         create_or_update_variant(product, attributes)
@@ -119,6 +112,7 @@ module Sets
     def create_variant(product, variant_attributes)
       return if variant_attributes.blank?
 
+      # 'You need to save the variant to create a stock item before you can set stock levels.'
       on_hand = variant_attributes.delete(:on_hand)
       on_demand = variant_attributes.delete(:on_demand)
 
@@ -145,12 +139,6 @@ module Sets
         report.add_metadata(:variant_attributes, variant_attributes)
         report.add_metadata(:variant, variant.attributes)
         report.add_metadata(:variant_error, variant.errors.first) unless variant.valid?
-      end
-    end
-
-    def find_model(collection, model_id)
-      collection.find do |model|
-        model.id.to_s == model_id.to_s && model.persisted?
       end
     end
   end

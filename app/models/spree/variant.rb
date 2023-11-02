@@ -50,7 +50,8 @@ module Spree
     has_many :prices,
              class_name: 'Spree::Price',
              dependent: :destroy
-    delegate :display_price, :display_amount, :price, :price=, :currency, :currency=,
+    delegate :display_price, :display_amount, :price, :price_changed?, :price=,
+             :currency, :currency=,
              to: :find_or_build_default_price
 
     has_many :exchange_variants

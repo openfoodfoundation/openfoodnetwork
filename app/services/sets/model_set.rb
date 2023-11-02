@@ -79,5 +79,11 @@ module Sets
     def persisted?
       false
     end
+
+    def find_model(collection, model_id)
+      collection.find do |model|
+        model.id.to_s == model_id.to_s && model.persisted?
+      end
+    end
   end
 end

@@ -7,11 +7,6 @@ describe 'As an admin, I can see the new product page' do
   include AuthenticationHelper
   include FileHelper
 
-  # create lot of products
-  70.times do |i|
-    let!("product_#{i}".to_sym) { create(:simple_product, name: "product #{i}") }
-  end
-
   before do
     # activate feature toggle admin_style_v3 to use new admin interface
     Flipper.enable(:admin_style_v3)
@@ -43,24 +38,26 @@ describe 'As an admin, I can see the new product page' do
   end
 
   describe "pagination" do
-    before do
-      visit admin_products_url
-    end
-
     it "has a pagination, has 15 products per page by default and can change the page" do
+      create_products 16
+      visit admin_products_url
+
       expect(page).to have_selector ".pagination"
       expect_products_count_to_be 15
       within ".pagination" do
         click_link "2"
       end
 
-      expect(page).to have_content "Showing 16 to 30"
+      expect(page).to have_content "Showing 16 to 16" # todo: remove unnecessary duplication
       expect_page_to_be 2
       expect_per_page_to_be 15
-      expect_products_count_to_be 15
+      expect_products_count_to_be 1
     end
 
     it "can change the number of products per page" do
+      create_products 51
+      visit admin_products_url
+
       select "50", from: "per_page"
 
       expect(page).to have_content "Showing 1 to 50"
@@ -75,11 +72,10 @@ describe 'As an admin, I can see the new product page' do
       # create a product with a name that can be searched
       let!(:product_by_name) { create(:simple_product, name: "searchable product") }
 
-      before do
-        visit admin_products_url
-      end
-
       it "can search for a product" do
+        create_products 1
+        visit admin_products_url
+
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
@@ -88,20 +84,26 @@ describe 'As an admin, I can see the new product page' do
       end
 
       it "reset the page when searching" do
+        create_products 15
+        visit admin_products_url
+
         within ".pagination" do
           click_link "2"
         end
 
-        expect(page).to have_content "Showing 16 to 30"
+        expect(page).to have_content "Showing 16 to 16"
         expect_page_to_be 2
         expect_per_page_to_be 15
-        expect_products_count_to_be 15
+        expect_products_count_to_be 1
         search_for "searchable product"
         # expect(page).to have_content "1 product found for your search criteria."
         expect_products_count_to_be 1
       end
 
       it "can clear filters" do
+        create_products 1
+        visit admin_products_url
+
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
         # expect(page).to have_content "1 product found for your search criteria."
@@ -110,12 +112,13 @@ describe 'As an admin, I can see the new product page' do
 
         click_link "Clear search"
         expect(page).to have_field "search_term", with: ""
-        expect(page).to have_content "Showing 1 to 15"
-        expect_page_to_be 1
-        expect_products_count_to_be 15
+        expect(page).to have_content "Showing 1 to 2"
+        expect_products_count_to_be 2
       end
 
       it "shows a message when there are no results" do
+        visit admin_products_url
+
         search_for "no results"
         expect(page).to have_content "No products found for your search criteria"
         expect(page).to have_link "Clear search"
@@ -123,7 +126,9 @@ describe 'As an admin, I can see the new product page' do
     end
 
     context "product has producer" do
-      # create a product with a supplier that can be searched
+      before { create_products 1 }
+
+      # create a product with a different supplier
       let!(:producer) { create(:supplier_enterprise, name: "Producer 1") }
       let!(:product_by_supplier) { create(:simple_product, supplier: producer) }
 
@@ -139,7 +144,9 @@ describe 'As an admin, I can see the new product page' do
     end
 
     context "product has category" do
-      # create a product with a category that can be searched
+      before { create_products 1 }
+
+      # create a product with a different category
       let!(:product_by_category) {
         create(:simple_product, primary_taxon: create(:taxon, name: "Category 1"))
       }
@@ -294,6 +301,12 @@ describe 'As an admin, I can see the new product page' do
       end
 
       expect(page).to have_content "Please review the errors and try again"
+    end
+  end
+
+  def create_products(amount)
+    amount.times do |i|
+      create(:simple_product, name: "product #{i}")
     end
   end
 
