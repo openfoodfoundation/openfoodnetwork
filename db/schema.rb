@@ -932,6 +932,7 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
     t.boolean "show_api_key_view", default: false, null: false
     t.string "provider"
     t.string "uid"
+    t.datetime "terms_of_service_accepted_at"
     t.index ["confirmation_token"], name: "index_spree_users_on_confirmation_token", unique: true
     t.index ["email"], name: "email_idx_unique", unique: true
     t.index ["persistence_token"], name: "index_users_on_persistence_token"
