@@ -760,7 +760,7 @@ nb:
         import_products: Importer flere produkter
         no_products_found_for_search: Ingen produkter funnet for søkekriteriene dine
       table:
-        modified_summary:
+        changed_summary:
           one: "%{count} produkt endret."
           other: "%{count} produkter endret."
         save: Lagre endringer

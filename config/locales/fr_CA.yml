@@ -760,7 +760,7 @@ fr_CA:
         import_products: Importer plusieurs produits
         no_products_found_for_search: Aucun produit trouvé avec vos critères de recherche
       table:
-        modified_summary:
+        changed_summary:
           one: "%{count} produits modifiés"
           other: "%{count} produits modifiés"
         save: Sauvegarder les changements
