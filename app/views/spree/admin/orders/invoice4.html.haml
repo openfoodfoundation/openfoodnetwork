@@ -55,6 +55,9 @@
         %br
         = t :order_number
         = @order.number
+        %br
+        = "#{t :order_cycle} :"
+        = @order.order_cycle.name
       %td{ :align => "right" }
         = t :invoice_billing_address
         %br
@@ -95,3 +98,6 @@
 
 - if @order.note.present?
   = render partial: 'spree/admin/orders/_invoice/order_note'
+
+%div.text-center
+  = link_to_platform_terms
