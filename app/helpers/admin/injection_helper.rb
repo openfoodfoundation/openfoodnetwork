@@ -117,15 +117,6 @@ module Admin
                             Api::CurrencyConfigSerializer
     end
 
-    def admin_inject_enterprise_permissions(enterprise)
-      permissions =
-        { can_manage_shipping_methods: can?(:manage_shipping_methods, enterprise),
-          can_manage_payment_methods: can?(:manage_payment_methods, enterprise),
-          can_manage_enterprise_fees: can?(:manage_enterprise_fees, enterprise) }
-
-      admin_inject_json "admin.enterprises", "enterprisePermissions", permissions
-    end
-
     def admin_inject_hub_permissions(hub_permissions)
       render partial: "admin/json/injection_ams", locals: { ngModule: "admin.variantOverrides",
                                                             name: "hubPermissions",
