@@ -51,10 +51,10 @@ $(document).ready(function() {
         quantity = maxQuantity;
         save.parents('tr').find('input.line_item_quantity').val(maxQuantity);
         ofnAlert(t("js.admin.orders.quantity_adjusted"));
+      } else {
+        adjustItems(shipment_number, variant_id, quantity, true);
       }
-      toggleItemEdit();
 
-      adjustItems(shipment_number, variant_id, quantity, true);
       return false;
     }
     $('a.save-item').click(handle_save_click);

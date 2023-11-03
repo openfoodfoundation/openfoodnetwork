@@ -339,34 +339,27 @@ describe '
     login_as_admin
     visit spree.edit_admin_order_path(order)
 
-    quantity = order.line_items.first.quantity
-    max_quantity = 0
+    item = order.line_items.first
+    quantity = item.quantity
+    max_quantity = quantity + item.variant.on_hand
     total = order.display_total
 
     within("tr.stock-item", text: order.products.first.name) do
       find("a.edit-item").click
       expect(page).to have_input(:quantity)
-      max_quantity = find("input[name='quantity']")["max"].to_i
       fill_in(:quantity, with: max_quantity + 1)
       find("a.save-item").click
     end
 
-    pending "Reload bug"
-    # The following modal is displayed but disappears straight away because the
-    # page is reloaded after the click on the save button. Somehow this happens
-    # only the first time the page is loaded and after that this logic seems to
-    # work fine.
-    sleep 1
     within(".modal") do
-      expect(page).to have_content "Quantity unchanged from previous amount"
+      expect(page).to have_content "Insufficient stock available"
       click_on "OK"
     end
 
-    expect(page).to_not have_content "Loading..."
     within("tr.stock-item", text: order.products.first.name) do
-      expect(page).to have_text(max_quantity.to_s)
+      expect(page).to have_field :quantity, with: max_quantity.to_s
     end
-    expect(order.reload.line_items.first.quantity).to eq(max_quantity)
+    expect { item.reload }.to_not change { item.quantity }
   end
 
   it "there are infinite items available (variant is on demand)" do
