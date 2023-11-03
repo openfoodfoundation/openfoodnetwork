@@ -7,6 +7,7 @@ describe Sets::ProductSet do
     let(:product_set) do
       described_class.new(collection_attributes: collection_hash)
     end
+    subject{ product_set.save }
 
     context 'when the product does not exist yet' do
       let!(:stock_location) { create(:stock_location, backorderable_default: false) }
@@ -33,6 +34,30 @@ describe Sets::ProductSet do
     end
 
     context 'when the product does exist' do
+      let(:product) { create(:simple_product, name: "product name") }
+
+      context "with valid name" do
+        let(:collection_hash) {
+          { 0 => { id: product.id, name: "New season product" } }
+        }
+
+        it "returns true and counts results" do
+          is_expected.to eq true
+          expect(product_set.saved_count).to eq 1
+        end
+      end
+
+      context "with invalid name" do
+        let(:collection_hash) {
+          { 0 => { id: product.id, name: "" } } # Product Name can't be blank
+        }
+
+        it "returns false and counts results" do
+          is_expected.to eq false
+          expect(product_set.saved_count).to eq 0
+        end
+      end
+
       context 'when a different variant_unit is passed' do
         let!(:product) do
           create(
@@ -57,6 +82,7 @@ describe Sets::ProductSet do
 
         it 'updates the product without error' do
           expect(product_set.save).to eq true
+          expect(product_set.saved_count).to eq 1
 
           expect(product.reload.attributes).to include(
             'variant_unit' => 'weight'
@@ -68,7 +94,6 @@ describe Sets::ProductSet do
 
       context "when the product is in an order cycle" do
         let(:producer) { create(:enterprise) }
-        let(:product) { create(:simple_product) }
 
         let(:distributor) { create(:distributor_enterprise) }
         let!(:order_cycle) {
@@ -111,36 +136,117 @@ describe Sets::ProductSet do
       end
     end
 
-    describe "updating variants" do
-      let!(:product) { create(:simple_product) }
-      let(:collection_hash) { { 0 => { id: product.id } } }
+    describe "updating a product's variants" do
+      let(:product) { create(:simple_product) }
+      let(:variant) { product.variants.first }
+      let(:product_attributes) { {} }
+      let(:variant_attributes) { { sku: "var_sku" } }
+      let(:variants_attributes) { [{ **variant_attributes, id: product.variants.first.id.to_s }] }
+      let(:collection_hash) {
+        {
+          0 => { id: product.id, **product_attributes, variants_attributes: }
+        }
+      }
 
-      context 'when :variants_attributes are passed' do
-        let(:variants_attributes) { [{ sku: '123', id: product.variants.first.id.to_s }] }
-
-        before { collection_hash[0][:variants_attributes] = variants_attributes }
-
-        it 'updates the attributes of the variant' do
+      it "updates the variant" do
+        expect {
           product_set.save
+          variant.reload
+        }.to change { variant.sku }.to("var_sku")
 
-          expect(product.reload.variants.first[:sku]).to eq variants_attributes.first[:sku]
+        pending
+        expect(product_set.saved_count).to eq 1
+      end
+
+      shared_examples "nothing saved" do
+        it "doesn't update product" do
+          expect {
+            product_set.save
+            product.reload
+          }.to_not change { product.sku }
+
+          expect(product_set.saved_count).to be_zero
+          expect(product_set.invalid.count).to be_positive
         end
 
-        context 'and when product attributes are also passed' do
-          it 'updates product and variant attributes' do
-            collection_hash[0][:sku] = "test_sku"
+        it "doesn't update variant" do
+          expect {
+            product_set.save
+            variant.reload
+          }.to_not change { variant.sku }
+        end
 
-            expect {
-              product_set.save
-              product.reload
-            }.to change { product.sku }.to("test_sku")
-              .and change { product.variants.first.sku }.to("123")
+        it 'assigns the in-memory attributes of the variant' do
+          pending
+          expect {
+            product_set.save
+          }.to change { variant.sku }.to("123")
+        end
+      end
+
+      context "variant has error" do
+        let(:variant_attributes) { { sku: "var_sku", display_name: "A" * 256 } } # maximum length
+
+        include_examples "nothing saved"
+      end
+
+      context "when products attributes are also updated" do
+        let(:product_attributes) {
+          { sku: "prod_sku" }
+        }
+
+        it "updates product and variant" do
+          expect {
+            product_set.save
+            product.reload
+          }.to change { product.sku }.to("prod_sku")
+            .and change { product.variants.first.sku }.to("var_sku")
+
+          expect(product_set.saved_count).to eq 1
+        end
+
+        xcontext "variant has error" do
+          let(:variant_attributes) { { sku: "var_sku", display_name: "A" * 256 } } # maximum length
+
+          include_examples "nothing saved"
+        end
+
+        context "product has error" do
+          before { collection_hash[0][:name] = "" } # product.name can't be blank
+
+          include_examples "nothing saved"
+        end
+      end
+
+      context "when multiple variants are updated" do
+        let(:variant2) { create(:variant, product:) }
+        let(:variants_attributes) {
+          [
+            { **variant_attributes, id: product.variants.first.id.to_s },
+            { sku: "var_sku2", id: variant2.id.to_s },
+          ]
+        }
+
+        it "updates each variant" do
+          expect {
+            product_set.save
+            variant2.reload
+          }.to change { product.variants.first.sku }.to("var_sku")
+            .and change { variant2.sku }.to("var_sku2")
+        end
+
+        xcontext "variant has error" do
+          let(:variant_attributes) { { sku: "var_sku", display_name: "A" * 256 } } # maximum length
+
+          include_examples "nothing saved" do
+            after { expect(variant2.reload.sku).to_not eq "var_sku2" }
           end
         end
       end
     end
 
     context 'when there are multiple products' do
+      let(:product_c) { create(:simple_product, name: "Carrots") }
       let!(:product_b) { create(:simple_product, name: "Bananas") }
       let!(:product_a) { create(:simple_product, name: "Apples") }
 
@@ -154,39 +260,37 @@ describe Sets::ProductSet do
             id: product_b.id,
             name: "Bananes",
           },
+          2 => {
+            id: product_c.id,
+            name: "Carrots",
+          },
         }
       end
 
       it 'updates the products' do
-        product_set.save
+        expect(product_set.save).to eq true
+        expect(product_set.saved_count).to eq 2 # only two were changed
 
         expect(product_a.reload.name).to eq "Pommes"
         expect(product_b.reload.name).to eq "Bananes"
+        expect(product_c.reload.name).to eq "Carrots" # no change
       end
 
       it 'retains the order of products' do
         product_set.save
 
+        # even though the first product is now alphabetically last
         expect(product_set.collection[0]).to eq product_a.reload
         expect(product_set.collection[1]).to eq product_b.reload
+        expect(product_set.collection[2]).to eq product_c.reload
       end
 
       context 'first product has an error' do
-        let(:collection_hash) do
-          {
-            0 => {
-              id: product_a.id,
-              name: "", # Product Name can't be blank
-            },
-            1 => {
-              id: product_b.id,
-              name: "Bananes",
-            },
-          }
-        end
+        before { collection_hash[0][:name] = "" } # product.name can't be blank
 
         it 'continues to update subsequent products' do
           product_set.save
+          expect(product_set.saved_count).to eq 1
 
           # Errors are logged on the model
           first_item = product_set.collection[0]

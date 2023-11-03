@@ -837,13 +837,18 @@ en:
           zero: ""
           one: "%{count} product modified."
           other: "%{count} products modified."
+        error_summary:
+          saved:
+            zero: ""
+            one: "%{count} product was saved correctly, but "
+            other: "%{count} products were saved correctly, but "
+          invalid:
+            one: "%{count} product could not be saved. Please review the errors and try again."
+            other: "%{count} products could not be saved. Please review the errors and try again."
         save: Save changes
         reset: Discard changes
       bulk_update: # TODO: fix these
         success: "Products successfully updated" #TODO: add count
-        products_have_error:
-          one: "%{count} product has an error."
-          other: "%{count} products have an error."
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

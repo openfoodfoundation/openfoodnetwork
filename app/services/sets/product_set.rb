@@ -8,11 +8,15 @@ module Sets
   # }
   #
   class ProductSet < ModelSet
+    attr_reader :saved_count
+
     def initialize(attributes = {})
       super(Spree::Product, [], attributes)
     end
 
     def save
+      @saved_count = 0
+
       # Attempt to save all records, collecting model errors.
       @collection_hash.each_value.map do |product_attributes|
         update_product_attributes(product_attributes)
@@ -71,7 +75,10 @@ module Sets
 
       validate_presence_of_unit_value_in_product(product)
 
-      product.errors.empty? && product.save
+      changed = product.changed?
+      success = product.errors.empty? && product.save
+      count_result(success && changed)
+      success
     end
 
     def validate_presence_of_unit_value_in_product(product)
@@ -105,8 +112,15 @@ module Sets
       if variant.present?
         variant.update(variant_attributes.except(:id))
       else
-        create_variant(product, variant_attributes)
+        variant = create_variant(product, variant_attributes)
       end
+
+      # Copy any variant errors to product
+      variant&.errors&.each do |error|
+        # The name is namespaced to avoid confusion with product attrs of same name.
+        product.errors.add("variant_#{error.attribute}".to_sym, error.message)
+      end
+      variant&.errors.blank?
     end
 
     def create_variant(product, variant_attributes)
@@ -117,11 +131,7 @@ module Sets
       on_demand = variant_attributes.delete(:on_demand)
 
       variant = product.variants.create(variant_attributes)
-
-      if variant.errors.present?
-        product.errors.merge!(variant.errors)
-        return false
-      end
+      return variant if variant.errors.present?
 
       begin
         variant.on_demand = on_demand if on_demand.present?
@@ -130,6 +140,12 @@ module Sets
         notify_bugsnag(e, product, variant, variant_attributes)
         raise e
       end
+
+      variant
+    end
+
+    def count_result(saved)
+      @saved_count += 1 if saved
     end
 
     def notify_bugsnag(error, product, variant, variant_attributes)

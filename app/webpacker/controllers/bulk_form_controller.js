@@ -5,6 +5,7 @@ export default class BulkFormController extends Controller {
   static targets = ["actions", "changedSummary"];
   static values = {
     disableSelector: String,
+    error: Boolean,
   };
   recordElements = {};
 
@@ -25,6 +26,8 @@ export default class BulkFormController extends Controller {
         this.recordElements[recordId].push(element);
       }
     }
+
+    this.toggleFormChanged();
   }
 
   disconnect() {
@@ -45,15 +48,16 @@ export default class BulkFormController extends Controller {
     const changedRecordCount = Object.values(this.recordElements).filter((elements) =>
       elements.some(this.#isChanged)
     ).length;
-    const formChanged = changedRecordCount > 0;
+    const formChanged = changedRecordCount > 0 || this.errorValue;
 
     // Show actions
     this.actionsTarget.classList.toggle("hidden", !formChanged);
     this.#disableOtherElements(formChanged); // like filters and sorting
 
     // Display number of records changed
-    const key = this.changedSummaryTarget && this.changedSummaryTarget.dataset.translationKey;
+    const key = this.hasChangedSummaryTarget && this.changedSummaryTarget.dataset.translationKey;
     if (key) {
+      // TODO: save processing and only run if changedRecordCount has changed.
       this.changedSummaryTarget.textContent = I18n.t(key, { count: changedRecordCount });
     }
 
@@ -76,13 +80,23 @@ export default class BulkFormController extends Controller {
   // private
 
   #disableOtherElements(disable) {
+    if (!this.hasDisableSelectorValue) return;
+
     this.disableElements ||= document.querySelectorAll(this.disableSelectorValue);
 
-    if (this.disableElements) {
-      this.disableElements.forEach((element) => {
-        element.classList.toggle("disabled-section", disable);
-      });
-    }
+    if (!this.disableElements) return;
+
+    this.disableElements.forEach((element) => {
+      element.classList.toggle("disabled-section", disable);
+
+      // Also disable any form elements
+      let forms = element.tagName == "FORM" ? [element] : element.querySelectorAll("form");
+
+      forms &&
+        forms.forEach((form) =>
+          Array.from(form.elements).forEach((formElement) => (formElement.disabled = disable))
+        );
+    });
   }
 
   #isChanged(element) {
