@@ -2,8 +2,7 @@
 
 module DfcProvider
   class SuppliedProduct < DataFoodConsortium::Connector::SuppliedProduct
-    attr_accessor :spree_product_id
-    attr_accessor :image
+    attr_accessor :spree_product_id, :image
 
     def initialize(semantic_id, spree_product_id: nil, image_url: nil, **properties)
       super(semantic_id, **properties)
@@ -16,7 +15,7 @@ module DfcProvider
       end
       # Temporary solution, will be replaced by "dfc_b:image" in future version of the DFC connector
       registerSemanticProperty("ofn:image") do
-        self.image
+        image
       end
     end
   end

@@ -49,7 +49,7 @@ describe SuppliedProductBuilder do
     end
 
     it "assigns an image_url type" do
-      image = Spree::Image.create!(
+      Spree::Image.create!(
         attachment: white_logo_file,
         viewable_id: variant.product.id,
         viewable_type: 'Spree::Product'
