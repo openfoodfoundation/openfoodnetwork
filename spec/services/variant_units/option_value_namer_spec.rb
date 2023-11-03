@@ -4,13 +4,6 @@ require 'spec_helper'
 
 module VariantUnits
   describe OptionValueNamer do
-    let(:available_units) {
-      ["mg", "g", "kg", "T", "oz", "lb", "mL", "cL", "dL", "L", "kL", "gal"].join(",")
-    }
-
-    before do
-      Spree::Config.set_preference(:available_units, available_units)
-    end
     describe "generating option value name" do
       let(:v) { Spree::Variant.new }
       let(:p) { Spree::Product.new }
@@ -68,6 +61,10 @@ module VariantUnits
     describe "generating option value's value and unit" do
       let(:v) { Spree::Variant.new }
       let(:subject) { OptionValueNamer.new v }
+
+      before do
+        allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
+      end
 
       it "generates simple values" do
         p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)

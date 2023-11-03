@@ -12,7 +12,7 @@ describe WeightsAndMeasures do
 
   before do
     allow(variant).to receive(:product) { product }
-    Spree::Config.set_preference(:available_units, available_units)
+    allow(Spree::Config).to receive(:available_units).and_return(available_units)
   end
 
   describe "#system" do

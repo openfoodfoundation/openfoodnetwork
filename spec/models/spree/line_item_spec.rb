@@ -695,12 +695,9 @@ module Spree
         let(:p2) { create(:product, name: 'Clear United States Honey', variant_unit_scale: 453.6) }
         let(:v2) { create(:variant, product: p2, unit_value: 453.6) }
         let(:li2) { create(:line_item, order: o, product: p2, variant: v2) }
-        let(:available_units) {
-          ["mg", "g", "kg", "T", "oz", "lb", "mL", "cL", "dL", "L", "kL", "gal"].join(",")
-        }
 
         before do
-          Spree::Config.set_preference(:available_units, available_units)
+          allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
         end
 
         it "returns options_text" do
@@ -709,7 +706,7 @@ module Spree
           expect(li.unit_to_display).to eq("ponies")
         end
 
-        it "returns options_text based on units" do
+        it "returns options_text based on configured units" do
           expect(li1.options_text).to eq("500g")
           expect(li2.options_text).to eq("1lb")
         end

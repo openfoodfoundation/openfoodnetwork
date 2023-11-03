@@ -6,13 +6,10 @@ describe UnitPrice do
   subject { UnitPrice.new(variant) }
   let(:variant) { Spree::Variant.new }
   let(:product) { instance_double(Spree::Product) }
-  let(:available_units) {
-    ["mg", "g", "kg", "T", "oz", "lb", "mL", "cL", "dL", "L", "kL", "gal"].join(",")
-  }
 
   before do
     allow(variant).to receive(:product) { product }
-    Spree::Config.set_preference(:available_units, available_units)
+    allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
   end
 
   describe "#unit" do

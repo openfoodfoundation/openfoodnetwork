@@ -67,6 +67,6 @@ class WeightsAndMeasures
   end
 
   def available_units
-    Spree::Config.preferences[:available_units].split(",")
+    Spree::Config.available_units.split(",")
   end
 end
