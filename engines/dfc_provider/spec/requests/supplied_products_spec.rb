@@ -2,13 +2,12 @@
 
 require_relative "../swagger_helper"
 
-describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
-                             rswag_autodoc: true do
+describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true do
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) { create(:distributor_enterprise, id: 10_000, owner: user) }
   let!(:product) {
     create(
-      :base_product,
+      :product_with_image,
       id: 90_000,
       supplier: enterprise, name: "Pesto", description: "Basil Pesto",
       variants: [variant],
@@ -146,6 +145,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml",
         run_test! do
           expect(response.body).to include variant.name
           expect(json_response["ofn:spree_product_id"]).to eq 90_000
+          expect(json_response["ofn:image"]).to include("logo-white.png")
         end
       end
 

@@ -21,7 +21,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
   end
   let!(:product) {
     create(
-      :base_product,
+      :product_with_image,
       id: 90_000, supplier: enterprise, name: "Apple", description: "Round",
       variants: [variant],
     )
