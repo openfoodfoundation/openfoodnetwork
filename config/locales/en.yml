@@ -3440,7 +3440,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           processing: "processing"
           void: "void"
           invalid: "invalid"
-        quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
+        quantity_unavailable: "Insufficient stock available. Line item unsaved!"
         quantity_unchanged: "Quantity unchanged from previous amount."
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"

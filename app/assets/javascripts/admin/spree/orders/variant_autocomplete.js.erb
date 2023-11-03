@@ -50,7 +50,7 @@ $(document).ready(function() {
       if (quantity > maxQuantity) {
         quantity = maxQuantity;
         save.parents('tr').find('input.line_item_quantity').val(maxQuantity);
-        ofnAlert(t("js.admin.orders.quantity_adjusted"));
+        ofnAlert(t("js.admin.orders.quantity_unavailable"));
       } else {
         adjustItems(shipment_number, variant_id, quantity, true);
       }
