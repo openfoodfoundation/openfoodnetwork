@@ -119,6 +119,15 @@ describe '
     accept_alert do
       click_link "Primary Details"
     end
+
+    # Back navigation loads the tab content
+    page.execute_script('window.history.back()')
+    expect(page).to have_selector '#enterprise_description'
+
+    accept_alert do
+      click_link "Primary Details"
+    end
+
     # Unchecking hides the Properties tab
     uncheck 'enterprise_is_primary_producer'
     choose 'None'
