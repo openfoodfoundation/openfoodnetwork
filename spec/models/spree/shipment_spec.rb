@@ -353,7 +353,8 @@ describe Spree::Shipment do
       expect(shipment.shipped_at).to_not be_nil
     end
 
-    it "should send a shipment email" do
+    it "should send a shipment email if order.send_shipment_email is true" do
+      shipment.order.send_shipment_email = true
       mail_message = double 'Mail::Message'
       shipment_id = nil
       expect(Spree::ShipmentMailer).to receive(:shipped_email) { |*args|

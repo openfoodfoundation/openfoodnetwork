@@ -27,7 +27,8 @@ module Spree
       go_to_state :complete
     end
 
-    attr_accessor :use_billing, :checkout_processing, :save_bill_address, :save_ship_address
+    attr_accessor :use_billing, :checkout_processing, :save_bill_address,
+                  :save_ship_address, :send_shipment_email
 
     token_resource
 

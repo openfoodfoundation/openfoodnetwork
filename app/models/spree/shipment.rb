@@ -346,7 +346,7 @@ module Spree
     def after_ship
       inventory_units.each(&:ship!)
       fee_adjustment.finalize!
-      send_shipped_email
+      send_shipped_email if order.send_shipment_email
       touch :shipped_at
       update_order_shipment_state
     end

@@ -746,13 +746,36 @@ describe '
         expect(page).to have_current_path spree.admin_orders_path
       end
 
-      it "ship order from the orders index page" do
+      it "ship order from the orders index page and send email" do
         order.payments.first.capture!
         login_as_admin
         visit spree.admin_orders_path
 
         page.find("button.icon-road").click
 
+        within ".reveal-modal" do
+          check 'Send email confirmation to customer'
+          expect {
+            find_button("Confirm").click
+          }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
+        end
+        expect(page).to have_css "i.success"
+        expect(order.reload.shipments.any?(&:shipped?)).to be true
+        expect(order.shipment_state).to eq("shipped")
+      end
+
+      it "ship order from the orders index page and do not send email" do
+        order.payments.first.capture!
+        login_as_admin
+        visit spree.admin_orders_path
+
+        page.find("button.icon-road").click
+
+        within ".reveal-modal" do
+          expect {
+            find_button("Confirm").click
+          }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
+        end
         expect(page).to have_css "i.success"
         expect(order.reload.shipments.any?(&:shipped?)).to be true
         expect(order.shipment_state).to eq("shipped")

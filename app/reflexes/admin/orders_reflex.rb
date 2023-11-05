@@ -17,6 +17,7 @@ module Admin
     end
 
     def ship
+      @order.send_shipment_email = true if params[:send_shipment_email]
       if @order.ship
         morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
                                      locals: { order: @order.reload, success: true })
@@ -83,7 +84,8 @@ module Admin
     private
 
     def authorize_order
-      @order = Spree::Order.find_by(id: element.dataset[:id])
+      id = element.dataset[:id] || params[:id]
+      @order = Spree::Order.find_by(id:)
       authorize! :admin, @order
     end
 
