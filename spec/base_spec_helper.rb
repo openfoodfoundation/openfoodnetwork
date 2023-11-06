@@ -131,6 +131,21 @@ RSpec.configure do |config|
     end
   end
 
+  # Appends Stripe gem version to VCR cassette directory with ':stripe_version' flag
+  #
+  # When the Stripe gem is updated, we should re-record these cassettes:
+  #
+  #     rm spec/fixtures/vcr_cassettes/Stripe-v* -r
+  #     ./bin/rspec --tag stripe_version
+  config.around(:each, :stripe_version) do |example|
+    stripe_version = "Stripe-v#{Stripe::VERSION}"
+    VCR.configure do |vcr_config|
+      vcr_config.cassette_library_dir = "spec/fixtures/vcr_cassettes/#{stripe_version}"
+      vcr_config.default_cassette_options = { record: :none } if ENV["CI"]
+    end
+    example.run
+  end
+
   # Geocoding
   config.before(:each) {
     allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1, 1])
