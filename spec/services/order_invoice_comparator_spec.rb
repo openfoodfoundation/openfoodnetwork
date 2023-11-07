@@ -96,25 +96,23 @@ shared_examples "attribute changes - note" do |boolean, type|
 end
 
 shared_examples "associated attribute changes - adjustments (create)" do |boolean, type|
-  before { order.adjustments << create(:adjustment, order:) }
   context "creating an adjustment" do
+    before { order.adjustments << create(:adjustment, order:) }
     it "returns #{boolean} if a #{type} attribute changes" do
       expect(subject).to be boolean
     end
   end
 
-  context "with an existing adjustment" do
-    before { order.adjustments << create(:adjustment, order:) }
-
+  context "with an existing adjustments" do
     context "editing the amount" do
-      before { order.adjustments.first.update!(amount: 123) }
+      before { Spree::Adjustment.first.update!(amount: 123) }
       it "returns #{boolean} if a #{type} attribute changes" do
         expect(subject).to be boolean
       end
     end
 
     context "changing the adjustment type" do
-      before { order.adjustments.first.update!(adjustable_type: "Spree::Payment") }
+      before { Spree::Adjustment.first.update!(adjustable_type: "Spree::Shipment") }
       it "returns #{boolean} if a #{type} attribute changes" do
         expect(subject).to be boolean
       end
@@ -123,7 +121,6 @@ shared_examples "associated attribute changes - adjustments (create)" do |boolea
     context "deleting an adjustment" do
       before { order.all_adjustments.destroy_all }
       it "returns #{boolean} if a #{type} attribute changes" do
-        order.reload
         expect(subject).to be boolean
       end
     end
@@ -379,14 +376,12 @@ describe OrderInvoiceComparator do
         it_behaves_like "attribute changes - shipping method", false, "non-relevant"
         it_behaves_like "no attribute changes"
         it_behaves_like "associated attribute changes - adjustments (create)", false,
-                        "non-relevant" do
-          before { pending }
-        end
+                        "non-relevant"
         it_behaves_like "associated attribute changes - line items", false, "non-relevant"
         it_behaves_like "associated attribute changes - bill address", false, "non-relevant"
         it_behaves_like "associated attribute changes - ship address", false, "non-relevant"
         it_behaves_like "associated attribute changes - payments", false,
-                        "non-relevant" do |_variable|
+                        "non-relevant" do
           before { pending }
         end
       end
