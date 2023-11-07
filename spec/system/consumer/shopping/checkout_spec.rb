@@ -558,44 +558,42 @@ describe "As a consumer I want to check out my cart" do
         end
 
         describe "credit card payments" do
-          ["Spree::Gateway::Bogus", "Spree::Gateway::BogusSimple"].each do |gateway_type|
-            context "with a credit card payment method using #{gateway_type}" do
-              let!(:check_without_fee) {
-                create(:payment_method, distributors: [distributor], name: "Roger rabbit",
-                                        type: gateway_type)
-              }
+          context "with a credit card payment method using Stripe" do
+            let!(:check_without_fee) {
+              create(:payment_method, distributors: [distributor], name: "Roger Rabbit",
+                                      type: "Spree::Gateway::StripeSCA")
+            }
 
-              it "takes us to the order confirmation page when submitted " \
-                 "with a valid credit card" do
-                fill_in 'Card Number', with: "4111111111111111"
-                select 'February', from: 'secrets.card_month'
-                select (Date.current.year + 1).to_s, from: 'secrets.card_year'
-                fill_in 'Security Code', with: '123'
+            it "takes us to the order confirmation page when submitted " \
+               "with a valid credit card" do
+              fill_in 'Card Number', with: "4111111111111111"
+              select 'February', from: 'secrets.card_month'
+              select (Date.current.year + 1).to_s, from: 'secrets.card_year'
+              fill_in 'Security Code', with: '123'
 
-                place_order
-                expect(page).to have_content "Your order has been processed successfully"
+              place_order
+              expect(page).to have_content "Your order has been processed successfully"
 
-                # Order should have a payment with the correct amount
-                order = Spree::Order.complete.last
-                expect(order.payments.first.amount).to eq(11.23)
-                expect(order.payment_state).to eq "paid"
-                expect(order.shipment_state).to eq "ready"
-              end
+              # Order should have a payment with the correct amount
+              order = Spree::Order.complete.last
+              expect(order.payments.first.amount).to eq(11.23)
+              expect(order.payment_state).to eq "paid"
+              expect(order.shipment_state).to eq "ready"
+            end
 
-              it "shows the payment processing failed message when submitted " \
-                 "with an invalid credit card" do
-                fill_in 'Card Number', with: "9999999988887777"
-                select 'February', from: 'secrets.card_month'
-                select (Date.current.year + 1).to_s, from: 'secrets.card_year'
-                fill_in 'Security Code', with: '123'
+            it "shows the payment processing failed message when submitted " \
+               "with an invalid credit card" do
+              fill_in 'Card Number', with: "9999999988887777"
+              select 'February', from: 'secrets.card_month'
+              select (Date.current.year + 1).to_s, from: 'secrets.card_year'
+              fill_in 'Security Code', with: '123'
 
-                place_order
-                expect(page).to have_content 'Bogus Gateway: Forced failure'
+              place_order
+              expect(page).to have_content 'Bogus Gateway: Forced failure'
 
-                # Does not show duplicate shipping fee
-                visit checkout_path
-                expect(page).to have_selector "th", text: "Shipping", count: 1
-              end
+              # Does not show duplicate shipping fee
+              visit checkout_path
+              expect(page).to have_selector "th", text: "Shipping", count: 1
             end
           end
         end

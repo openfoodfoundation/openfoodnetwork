@@ -3506,8 +3506,6 @@ el:
           paypalexpress: "PayPal Express"
           stripeconnect: "Ταινία"
           stripesca: "Stripe SCA"
-          bogus: "Ψευδής"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:

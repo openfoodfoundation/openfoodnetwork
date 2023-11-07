@@ -3675,8 +3675,6 @@ pt_BR:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
-          bogus: "Para Teste"
-          bogussimple: "Para Teste Simples"
       payments:
         source_forms:
           stripe:
