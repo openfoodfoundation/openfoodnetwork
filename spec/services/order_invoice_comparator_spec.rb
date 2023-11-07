@@ -132,10 +132,8 @@ end
 
 shared_examples "associated attribute changes - adjustments (update)" do |boolean, type|
   context "adjustment changes" do
-    let!(:adjustment) { create(:adjustment, order_id: order.id) }
-
     context "with an existing adjustment" do
-      before { adjustment.update!(label: "It's a new label") }
+      before { Spree::Adjustment.first.update!(label: "It's a new label") }
       it "returns #{boolean} if a #{type} attribute changes" do
         order.reload
         expect(subject).to be boolean
@@ -349,9 +347,7 @@ describe OrderInvoiceComparator do
         it_behaves_like "attribute changes - special insctructions", false, "non-relevant"
         it_behaves_like "attribute changes - note", false, "non-relevant"
         it_behaves_like "associated attribute changes - adjustments (update)", false,
-                        "non-relevant" do
-          before { pending }
-        end
+                        "non-relevant"
         it_behaves_like "attribute changes - payment state", false, "non-relevant"
       end
     end
