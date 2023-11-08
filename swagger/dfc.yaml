@@ -343,11 +343,12 @@ paths:
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
                       ofn:spree_product_id: 90000
+                      ofn:image: http://test.host/rails/active_storage/url/logo-white.png
                     - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       "@type": dfc-b:CatalogItem
                       dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       dfc-b:sku: APP
-                      dfc-b:stockLimitation: 0
+                      dfc-b:stockLimitation: 5
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
         '404':
           description: not found
@@ -406,7 +407,7 @@ paths:
                     dfc-b:hasQuantity:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
-                      dfc-b:value: 3.0
+                      dfc-b:value: 6.0
                     dfc-b:alcoholPercentage: 0.0
                     dfc-b:lifetime: ''
                     dfc-b:usageOrStorageCondition: ''
@@ -431,11 +432,12 @@ paths:
                 dfc-b:hasQuantity:
                   "@type": dfc-b:QuantitativeValue
                   dfc-b:hasUnit: dfc-m:Gram
-                  dfc-b:value: 3.0
+                  dfc-b:value: 6
                 dfc-b:alcoholPercentage: 0.0
                 dfc-b:lifetime: ''
                 dfc-b:usageOrStorageCondition: ''
                 dfc-b:totalTheoreticalStock: 0.0
+                ofn:spree_product_id: 90000
   "/api/dfc/enterprises/{enterprise_id}/supplied_products/{id}":
     parameters:
     - name: enterprise_id
@@ -475,6 +477,7 @@ paths:
                     dfc-b:usageOrStorageCondition: ''
                     dfc-b:totalTheoreticalStock: 0.0
                     ofn:spree_product_id: 90000
+                    ofn:image: http://test.host/rails/active_storage/url/logo-white.png
         '404':
           description: not found
     put:
