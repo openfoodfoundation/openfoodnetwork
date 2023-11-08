@@ -4137,8 +4137,6 @@ cy:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
-          bogus: "Ffug"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:

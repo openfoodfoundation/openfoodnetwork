@@ -184,6 +184,7 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
   config.include Spree::UrlHelpers
   config.include Spree::MoneyHelper
+  config.include Spree::PaymentHelper
   config.include PreferencesHelper
   config.include OpenFoodNetwork::FiltersHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper

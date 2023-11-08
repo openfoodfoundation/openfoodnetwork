@@ -3787,8 +3787,6 @@ en_US:
           paypalexpress: "PayPal Express"
           stripeconnect: "retired, please use Stripe SCA"
           stripesca: "Stripe SCA"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:

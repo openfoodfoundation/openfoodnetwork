@@ -4,18 +4,46 @@ require 'spec_helper'
 
 module Spree
   describe Spree::Order do
+    before { Stripe.api_key = "sk_test_12345" }
     let(:order) { build(:order) }
     let(:updater) { OrderManagement::Order::Updater.new(order) }
-    let(:bogus) { create(:bogus_payment_method, distributors: [create(:enterprise)]) }
+    let(:payment_method) {
+      create(:stripe_sca_payment_method, distributor_ids: [create(:distributor_enterprise).id],
+                                         preferred_enterprise_id: create(:enterprise).id)
+    }
+    let(:source) {
+      create(:credit_card)
+    }
+    let(:payment1) {
+      create(:payment, amount: 50, payment_method:, source:, response_code: "12345")
+    }
+    let(:payment2) {
+      create(:payment, amount: 50, payment_method:, source:, response_code: "12345")
+    }
+    let(:payment3) {
+      create(:payment, amount: 50, payment_method:, source:, response_code: "12345")
+    }
+    let(:failed_payment) {
+      create(:payment, amount: 50, state: 'failed', payment_method:, source:,
+                       response_code: "12345")
+    }
+    let(:payment_authorised) {
+      payment_intent(50, "requires_capture")
+    }
+    let(:capture_successful) {
+      payment_intent(50, "succeeded")
+    }
 
     before do
       allow(order).to receive_message_chain(:line_items, :empty?).and_return(false)
       allow(order).to receive_messages total: 100
+      stub_request(:get, "https://api.stripe.com/v1/payment_intents/12345").
+        to_return(status: 200, body: payment_authorised)
+      stub_request(:post, "https://api.stripe.com/v1/payment_intents/12345/capture").
+        to_return(status: 200, body: capture_successful)
     end
 
     it 'processes all payments' do
-      payment1 = create(:payment, amount: 50, payment_method: bogus)
-      payment2 = create(:payment, amount: 50, payment_method: bogus)
       allow(order).to receive(:pending_payments).and_return([payment1, payment2])
 
       order.process_payments!
@@ -27,9 +55,6 @@ module Spree
     end
 
     it 'does not go over total for order' do
-      payment1 = create(:payment, amount: 50, payment_method: bogus)
-      payment2 = create(:payment, amount: 50, payment_method: bogus)
-      payment3 = create(:payment, amount: 50, payment_method: bogus)
       allow(order).to receive(:pending_payments).and_return([payment1, payment2, payment3])
 
       order.process_payments!
@@ -42,8 +67,6 @@ module Spree
     end
 
     it "does not use failed payments" do
-      payment1 = create(:payment, amount: 50, payment_method: bogus)
-      payment2 = create(:payment, amount: 50, state: 'failed', payment_method: bogus)
       allow(order).to receive(:pending_payments).and_return([payment1])
 
       expect(payment2).not_to receive(:process!)
@@ -66,6 +89,19 @@ module Spree
         expect(zero_payment.reload.state).to eq "completed"
         expect(zero_payment.captured_at).to_not be_nil
       end
+    end
+
+    private
+
+    def payment_intent(amount, status)
+      JSON.generate(
+        object: "payment_intent",
+        amount:,
+        status:,
+        charges: { data: [{ id: "ch_1234", amount: }] },
+        id: "12345",
+        livemode: false
+      )
     end
   end
 end

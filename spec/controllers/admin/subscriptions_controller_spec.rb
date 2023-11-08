@@ -767,12 +767,11 @@ describe Admin::SubscriptionsController, type: :controller do
       let!(:paypal) {
         Spree::Gateway::PayPalExpress.create!(name: "PayPalExpress", distributor_ids: [shop.id])
       }
-      let!(:bogus) { create(:bogus_payment_method, distributors: [shop]) }
 
       it "only loads Stripe and Cash payment methods" do
         controller.send(:load_form_data)
         expect(assigns(:payment_methods)).to include payment_method, stripe
-        expect(assigns(:payment_methods)).to_not include paypal, bogus
+        expect(assigns(:payment_methods)).to_not include paypal
       end
     end
   end

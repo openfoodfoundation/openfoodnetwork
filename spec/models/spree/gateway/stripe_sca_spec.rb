@@ -95,15 +95,4 @@ describe Spree::Gateway::StripeSCA, type: :model do
       expect(subject.external_payment_url(order:)).to eq "http://stripe-test.org"
     end
   end
-
-  private
-
-  def payment_intent(amount, status)
-    JSON.generate(
-      object: "payment_intent",
-      amount:,
-      status:,
-      charges: { data: [{ id: "ch_1234", amount: }] }
-    )
-  end
 end
