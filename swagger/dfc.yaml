@@ -343,7 +343,7 @@ paths:
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
                       ofn:spree_product_id: 90000
-                      ofn:image: http://test.host/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBZzBCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--cec5b9e04720cada9134f6757e3dd8156aeccbf0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RkhKbGMybDZaVjkwYjE5c2FXMXBkRnNIYVFId2FRSHciLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--a8632e6a563a139dfae774530b275266f6aef5f5/logo-white.png
+                      ofn:image: http://test.host/rails/active_storage/url/logo-white.png
                     - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       "@type": dfc-b:CatalogItem
                       dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
@@ -437,7 +437,7 @@ paths:
                 dfc-b:lifetime: ''
                 dfc-b:usageOrStorageCondition: ''
                 dfc-b:totalTheoreticalStock: 0.0
-                ofn:spree_product_id: 33774
+                ofn:spree_product_id: 90000
   "/api/dfc/enterprises/{enterprise_id}/supplied_products/{id}":
     parameters:
     - name: enterprise_id
@@ -477,7 +477,7 @@ paths:
                     dfc-b:usageOrStorageCondition: ''
                     dfc-b:totalTheoreticalStock: 0.0
                     ofn:spree_product_id: 90000
-                    ofn:image: http://test.host/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaElCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--f578e58da95a3e1f6a4774dfeef31ac7cb039f0f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RkhKbGMybDZaVjkwYjE5c2FXMXBkRnNIYVFId2FRSHciLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--a8632e6a563a139dfae774530b275266f6aef5f5/logo-white.png
+                    ofn:image: http://test.host/rails/active_storage/url/logo-white.png
         '404':
           description: not found
     put:
