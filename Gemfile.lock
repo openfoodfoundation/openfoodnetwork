@@ -711,7 +711,7 @@ GEM
     stimulus_reflex_testing (0.3.0)
       stimulus_reflex (>= 3.3.0)
     stringex (2.8.6)
-    stripe (10.0.0)
+    stripe (10.1.0)
     swd (1.3.0)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
