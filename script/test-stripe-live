@@ -2,5 +2,5 @@
 #
 # Test Stripe API integration and record new cassettes.
 
-rm spec/fixtures/vcr_cassettes/Stripe-v* -r
+git rm spec/fixtures/vcr_cassettes/Stripe-v* -r
 ./bin/rspec --tag stripe_version
