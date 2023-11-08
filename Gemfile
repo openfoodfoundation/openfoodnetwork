@@ -77,7 +77,6 @@ gem 'omniauth-rails_csrf_protection'
 gem 'openid_connect', '~> 1.3'
 
 gem 'angularjs-rails', '1.8.0'
-gem 'bugsnag'
 gem 'haml'
 gem 'redcarpet'
 
@@ -142,6 +141,8 @@ gem "faraday"
 gem "private_address_check"
 
 gem 'newrelic_rpm'
+
+gem 'bugsnag', group: [:test, :staging, :production]
 
 group :production, :staging do
   gem 'sd_notify' # For better Systemd process management. Used by Puma.
