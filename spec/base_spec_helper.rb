@@ -135,8 +135,8 @@ RSpec.configure do |config|
   #
   # When the Stripe gem is updated, we should re-record these cassettes:
   #
-  #     rm spec/fixtures/vcr_cassettes/Stripe-v* -r
-  #     ./bin/rspec --tag stripe_version
+  #     ./script/test-stripe-live
+  #
   config.around(:each, :stripe_version) do |example|
     stripe_version = "Stripe-v#{Stripe::VERSION}"
     VCR.configure do |vcr_config|
