@@ -21,7 +21,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
   end
   let!(:product) {
     create(
-      :base_product,
+      :product_with_image,
       id: 90_000, supplier: enterprise, name: "Apple", description: "Round",
       variants: [variant],
     )
@@ -58,6 +58,12 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
 
             expect(json_response["@graph"][0]).to include(
               "dfc-b:affiliates" => "http://test.host/api/dfc/enterprise_groups/60000",
+            )
+
+            # Insert static value to keep documentation deterministic:
+            response.body.gsub!(
+              %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
+              "active_storage/url/logo-white.png",
             )
           end
         end

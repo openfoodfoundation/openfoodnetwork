@@ -771,9 +771,6 @@ de_DE:
         reset: Änderungen verwerfen
       bulk_update:
         success: "Produkte erfolgreich aktualisiert"
-        products_have_error:
-          one: "%{count} Produkt weist einen Fehler auf."
-          other: "%{count} Produkte weisen Fehler auf."
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.

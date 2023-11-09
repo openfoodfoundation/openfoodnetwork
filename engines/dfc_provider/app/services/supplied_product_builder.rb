@@ -14,6 +14,7 @@ class SuppliedProductBuilder < DfcBuilder
       productType: product_type,
       quantity: QuantitativeValueBuilder.quantity(variant),
       spree_product_id: variant.product.id,
+      image_url: variant.product&.image&.url(:product)
     )
   end
 

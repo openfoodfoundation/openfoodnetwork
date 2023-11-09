@@ -3787,7 +3787,6 @@ fr_CM:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe (ancienne version)"
           stripesca: "Stripe"
-
       payments:
         source_forms:
           stripe:

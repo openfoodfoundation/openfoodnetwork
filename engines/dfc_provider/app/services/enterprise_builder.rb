@@ -13,10 +13,9 @@ class EnterpriseBuilder < DfcBuilder
       description: enterprise.description,
       vatNumber: enterprise.abn,
       suppliedProducts: supplied_products,
-      catalogItems: catalog_items
-    ).tap do |e|
-      e.addLocalization(address)
-    end
+      catalogItems: catalog_items,
+      localizations: [address],
+    )
   end
 
   def self.enterprise_group(group)
