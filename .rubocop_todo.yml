@@ -915,19 +915,6 @@ Style/PreferredHashMethods:
   Exclude:
     - 'app/controllers/api/v0/shipments_controller.rb'
 
-# Offense count: 16
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: same_as_string_literals, single_quotes, double_quotes
-Style/QuotedSymbols:
-  Exclude:
-    - 'app/services/exchange_products_renderer.rb'
-    - 'lib/stripe/credit_card_cloner.rb'
-    - 'spec/controllers/api/v0/exchange_products_controller_spec.rb'
-    - 'spec/requests/api/orders_spec.rb'
-    - 'spec/requests/api/v1/customers_spec.rb'
-    - 'spec/support/request/stripe_stubs.rb'
-
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Methods.

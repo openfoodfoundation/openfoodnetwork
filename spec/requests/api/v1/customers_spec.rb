@@ -36,7 +36,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
       response "200", "Customers list" do
         param(:enterprise_id) { enterprise1.id }
         param("extra_fields[customer]") { :balance }
-        schema "$ref": "#/components/schemas/customers_collection"
+        schema '$ref': "#/components/schemas/customers_collection"
 
         run_test!
       end
@@ -183,7 +183,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
             enterprise_id: enterprise1.id.to_s
           }
         end
-        schema "$ref": "#/components/schemas/customer"
+        schema '$ref': "#/components/schemas/customer"
 
         run_test! do
           expect(json_response[:data][:attributes]).to include(
@@ -204,7 +204,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
             enterprise_id: enterprise1.id,
           )
         end
-        schema "$ref": "#/components/schemas/customer"
+        schema '$ref': "#/components/schemas/customer"
 
         run_test! do
           expect(json_response[:data][:attributes]).to include(
@@ -227,7 +227,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
             allow_charges: true,
           }
         end
-        schema "$ref": "#/components/schemas/error_response"
+        schema '$ref': "#/components/schemas/error_response"
 
         run_test! do
           expect(json_error_detail).to eq "Parameters not allowed in this request: allow_charges"
@@ -236,7 +236,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
 
       response "422", "Unprocessable entity" do
         param(:customer) { {} }
-        schema "$ref": "#/components/schemas/error_response"
+        schema '$ref': "#/components/schemas/error_response"
 
         run_test! do
           expect(json_error_detail).to eq "A required parameter is missing or empty: customer"
@@ -271,7 +271,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
 
       response "404", "Not found" do
         param(:id) { 0 }
-        schema "$ref": "#/components/schemas/error_response"
+        schema '$ref': "#/components/schemas/error_response"
 
         run_test! do
           expect(json_error_detail).to eq "The resource you were looking for could not be found."
@@ -283,7 +283,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
 
         response "401", "Unauthorized" do
           param(:id) { customer1.id }
-          schema "$ref": "#/components/schemas/error_response"
+          schema '$ref': "#/components/schemas/error_response"
 
           run_test! do
             expect(json_error_detail).to eq "You are not authorized to perform that action."
@@ -358,7 +358,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
             enterprise_id: enterprise1.id.to_s
           }
         end
-        schema "$ref": "#/components/schemas/customer"
+        schema '$ref': "#/components/schemas/customer"
 
         run_test! do
           # Tags should not be overridden when the param is missing:
@@ -424,7 +424,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
       response "422", "Unprocessable entity" do
         param(:id) { customer1.id }
         param(:customer) { {} }
-        schema "$ref": "#/components/schemas/error_response"
+        schema '$ref': "#/components/schemas/error_response"
 
         run_test!
       end
@@ -437,7 +437,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
 
       response "200", "Customer deleted" do
         param(:id) { customer1.id }
-        schema "$ref": "#/components/schemas/customer"
+        schema '$ref': "#/components/schemas/customer"
 
         run_test!
       end
@@ -452,7 +452,7 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
 
       response "200", "Customers list" do
         param(:enterprise_id) { enterprise1.id }
-        schema "$ref": "#/components/schemas/customers_collection"
+        schema '$ref': "#/components/schemas/customers_collection"
 
         run_test!
       end

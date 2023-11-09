@@ -69,7 +69,7 @@ module StripeStubs
 
   def stub_add_metadata_request(payment_method: "pm_456", response: {})
     stub = stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{payment_method}")
-    stub = stub.with(body: { metadata: { "ofn-clone": true } })
+    stub = stub.with(body: { metadata: { 'ofn-clone': true } })
     stub = stub.with(
       headers: { 'Stripe-Account' => 'abc123' }
     )
