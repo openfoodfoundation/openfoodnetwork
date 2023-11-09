@@ -6,38 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_argument, with_fixed_indentation
-Layout/ArgumentAlignment:
-  Exclude:
-    - 'app/reflexes/white_label_reflex.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EmptyLineBetweenMethodDefs, EmptyLineBetweenClassDefs, EmptyLineBetweenModuleDefs, DefLikeMacros, AllowAdjacentOneLineDefs, NumberOfEmptyLines.
-Layout/EmptyLineBetweenDefs:
-  Exclude:
-    - 'app/models/spree/order.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowMultipleStyles, EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
-# SupportedHashRocketStyles: key, separator, table
-# SupportedColonStyles: key, separator, table
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/HashAlignment:
-  Exclude:
-    - 'app/reflexes/white_label_reflex.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Width, AllowedPatterns.
-Layout/IndentationWidth:
-  Exclude:
-    - 'app/models/spree/order.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Max, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns.
@@ -894,13 +862,6 @@ Style/MissingRespondToMissing:
     - 'app/helpers/application_helper.rb'
     - 'app/models/spree/gateway.rb'
     - 'app/models/spree/preferences/configuration.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Style/NegatedIfElseCondition:
-  Exclude:
-    - 'app/mailers/spree/shipment_mailer.rb'
-    - 'spec/support/matchers/table_matchers.rb'
 
 # Offense count: 22
 # This cop supports safe autocorrection (--autocorrect).
