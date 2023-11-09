@@ -924,12 +924,6 @@ Style/RedundantArgument:
     - 'spec/support/query_counter.rb'
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantDoubleSplatHashBraces:
-  Exclude:
-    - 'spec/system/support/cuprite_setup.rb'
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowComments.
 Style/RedundantInitialize:
