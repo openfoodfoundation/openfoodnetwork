@@ -13,8 +13,7 @@ module DataFoodConsortium
       protected
 
       def createSKOSConcept(element) # rubocop:disable Naming/MethodName
-        concept = DataFoodConsortium::Connector::SKOSConcept.new
-        concept.semanticId = element.id
+        concept = DataFoodConsortium::Connector::SKOSConcept.new(element.id)
         concept.semanticType = element.type
         self.class.concepts[element.id] = concept
         concept

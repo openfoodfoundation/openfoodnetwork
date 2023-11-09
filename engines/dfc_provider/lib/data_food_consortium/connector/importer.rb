@@ -30,13 +30,22 @@ module DataFoodConsortium
         args = Array.new(number_of_required_args)
         type_uri = clazz.new(*args).semanticType
         type_map[type_uri] = clazz
+      end
 
-        # Add support for the old DFC v1.7 URLs:
-        new_type_uri = type_uri.gsub(
+      def self.prefixed_name(uri)
+        # When we skip backwards compatibility, we can just do this:
+        #
+        #     key = RDF::URI.new(uri).pname(prefixes: Context::VERSION_1_8)
+        #
+        # But for now we do it manually.
+        uri.gsub(
           "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
-          "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#"
+          "dfc-b:"
+        ).gsub(
+          # legacy URI
+          "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
+          "dfc-b:"
         )
-        type_map[new_type_uri] = clazz
       end
 
       def import(json_string_or_io)
@@ -71,7 +80,8 @@ module DataFoodConsortium
         # Not all subjects have an id, some are anonymous.
         id = type_statement.subject.try(:value)
         type = type_statement.object.value
-        clazz = self.class.type_map[type]
+        key = self.class.prefixed_name(type)
+        clazz = self.class.type_map[key]
 
         clazz.new(*[id].compact)
       end
@@ -84,16 +94,11 @@ module DataFoodConsortium
 
       def apply_statement(statement)
         subject = subject_of(statement)
-        property_id = statement.predicate.value
+        property_uri = statement.predicate.value
         value = resolve_object(statement.object)
 
-        # Backwards-compatibility with old DFC v1.7 ids:
-        unless subject.hasSemanticProperty?(property_id)
-          property_id = property_id.gsub(
-            "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
-            "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#"
-          )
-        end
+        property_id = self.class.prefixed_name(property_uri)
+
         return unless subject.hasSemanticProperty?(property_id)
 
         property = subject.semanticProperty(property_id)
