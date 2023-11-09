@@ -908,13 +908,6 @@ Style/OptionalBooleanParameter:
     - 'spec/support/request/web_helper.rb'
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowSafeAssignment, AllowInMultilineConditions.
-Style/ParenthesesAroundCondition:
-  Exclude:
-    - 'spec/system/support/precompile_assets.rb'
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: short, verbose
