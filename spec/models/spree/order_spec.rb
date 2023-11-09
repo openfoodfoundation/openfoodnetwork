@@ -616,7 +616,7 @@ describe Spree::Order do
 
   describe "applying enterprise fees" do
     subject { create(:order) }
-    let(:fee_handler) { ::OrderFeesHandler.new(subject) }
+    let(:fee_handler) { OrderFeesHandler.new(subject) }
 
     before do
       allow(subject).to receive(:fee_handler) { fee_handler }

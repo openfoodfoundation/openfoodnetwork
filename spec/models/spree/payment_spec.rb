@@ -426,7 +426,7 @@ describe Spree::Payment do
         context "if payment has any adjustment" do
           let!(:order) { create(:order) }
           let!(:payment_method) {
-            create(:payment_method, calculator: ::Calculator::FlatRate.new(preferred_amount: 10))
+            create(:payment_method, calculator: Calculator::FlatRate.new(preferred_amount: 10))
           }
 
           it "should create another adjustment and revoke the previous one" do
@@ -999,7 +999,7 @@ describe Spree::Payment do
         let!(:shop) { create(:enterprise) }
         let!(:payment_method) { create(:payment_method, calculator:) }
         let!(:calculator) do
-          ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
+          Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
         end
 
         context "when order complete" do
@@ -1036,7 +1036,7 @@ describe Spree::Payment do
         let(:payment) {
           create(:payment, order:, payment_method:, amount: order.total)
         }
-        let(:calculator) { ::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+        let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
         before do
           payment_method.calculator = calculator

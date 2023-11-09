@@ -9,7 +9,7 @@ describe CompleteVisibleOrders do
   describe '#query' do
     let(:user) { create(:user) }
     let(:enterprise) { create(:enterprise) }
-    let(:order_permissions) { ::Permissions::Order.new(user, filter_canceled) }
+    let(:order_permissions) { Permissions::Order.new(user, filter_canceled) }
 
     before do
       user.enterprises << enterprise

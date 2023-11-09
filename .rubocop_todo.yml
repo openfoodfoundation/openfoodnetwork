@@ -923,20 +923,6 @@ Style/RedundantArgument:
     - 'engines/dfc_provider/app/services/authorization_control.rb'
     - 'spec/support/query_counter.rb'
 
-# Offense count: 13
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantConstantBase:
-  Exclude:
-    - 'app/controllers/split_checkout_controller.rb'
-    - 'app/controllers/webhook_endpoints_controller.rb'
-    - 'config.ru'
-    - 'spec/helpers/checkout_helper_spec.rb'
-    - 'spec/models/spree/order_spec.rb'
-    - 'spec/models/spree/payment_method_spec.rb'
-    - 'spec/models/spree/payment_spec.rb'
-    - 'spec/queries/complete_visible_orders_spec.rb'
-    - 'spec/services/paypal_items_builder_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantDoubleSplatHashBraces:

@@ -31,11 +31,11 @@ describe PaypalItemsBuilder do
     let!(:zone) { create(:zone_with_member) }
     let!(:included_tax_rate) {
       create(:tax_rate, amount: 12, included_in_price: true, zone:,
-                        calculator: ::Calculator::DefaultTax.new)
+                        calculator: Calculator::DefaultTax.new)
     }
     let!(:additional_tax_rate) {
       create(:tax_rate, amount: 34, included_in_price: false, zone:,
-                        calculator: ::Calculator::DefaultTax.new)
+                        calculator: Calculator::DefaultTax.new)
     }
     let!(:included_tax_adjustment) {
       create(:adjustment, label: "Included Tax Adjustment", order:,
