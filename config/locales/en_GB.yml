@@ -4102,7 +4102,6 @@ en_GB:
           paypalexpress: "PayPal Express"
           stripeconnect: "depreciated card payment method (no longer in use in UK)"
           stripesca: "Stripe SCA "
-
       payments:
         source_forms:
           stripe:

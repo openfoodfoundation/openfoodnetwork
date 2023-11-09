@@ -291,6 +291,9 @@ fr:
     integer_array_validator:
       not_array_error: "doit être une séquence"
       invalid_element_error: "doit contenir uniquement des nombres entiers"
+  report_job:
+    report_failed: |
+        L'édition de ce rapport a échoué. Il est probablement trop volumineux. Nous allons examiner cela, mais faites-nous signe si le problème persiste.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -763,14 +766,14 @@ fr:
         changed_summary:
           one: "%{count} produits modifiés"
           other: "%{count} produits modifiés"
+        error_summary:
+          saved:
+            one: "%{count} le produit a été sauvegardé correctement, mais "
+            other: "%{count} les produits ont été sauvegardés correctement, mais"
         save: Sauvegarder les changements
         reset: Annuler les changements
       bulk_update:
         success: "Produits mis à jour"
-        products_have_error:
-          one: "%{count} produits ont une erreur."
-          many: "%{count} produits ont une erreur."
-          other: "%{count} produits ont une erreur."
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -2051,7 +2054,7 @@ fr:
       submit: Etape suivante - Récapitulatif de commande
       cancel: Retour à vos coordonnées
       voucher:
-        voucher: "1%{montant de la réduction} Réduction"
+        voucher: "%{voucher_amount} "
         apply_voucher: Code de réduction
         apply: Appliquer
         placeholder: Entrer code de réduction
@@ -4158,7 +4161,6 @@ fr:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe (ancienne version)"
           stripesca: "Stripe"
-
       payments:
         source_forms:
           stripe:
