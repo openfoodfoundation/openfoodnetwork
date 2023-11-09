@@ -19,7 +19,7 @@ module Stripe
       Stripe.api_key = secret
     end
 
-    describe "#call", :vcr do
+    describe "#call", :vcr, :stripe_version do
       let(:payment) {
         create(:payment, amount: payment_intent.amount, payment_method:,
                          response_code: payment_intent.id, source:)

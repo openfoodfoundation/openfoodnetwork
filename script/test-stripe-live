@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+#
+# Test Stripe API integration and record new cassettes.
+
+git rm spec/fixtures/vcr_cassettes/Stripe-v* -r
+./bin/rspec --tag stripe_version
