@@ -76,7 +76,7 @@ describe "As a consumer I want to view products" do
         product.description = '<p><b>Formatted</b> product description: Lorem ipsum dolor sit amet,
                               consectetur adipiscing elit. Morbi venenatis metus diam,
                                eget scelerisque nibh auctor non. </p> Link to an ' \
-                              '<a href="http://google.fr" target="_blank">external site</a>' \
+                              '<a href="http://google.fr">external site</a>' \
                               '<img src="https://www.openfoodnetwork.org/wp-content/uploads/2019/' \
                               '05/logo-ofn-global-web@2x.png" alt="open food network logo" />'
         product.save!
@@ -84,7 +84,7 @@ describe "As a consumer I want to view products" do
         visit shop_path
         expect(page).to have_content product.name
         expect_product_description_html_to_be_displayed(product, product.description, nil,
-                                                        truncate: true)
+                                                        truncate: true, href: true)
       end
 
       it "does not show unsecure HTML" do
@@ -144,7 +144,7 @@ describe "As a consumer I want to view products" do
   end
 
   def expect_product_description_html_to_be_displayed(product, html, not_include = nil,
-                                                      truncate: false)
+                                                      truncate: false, href: false)
     # check inside list of products
     within "#product-#{product.id} .product-description" do
       expect(html).to include(html)
@@ -157,6 +157,7 @@ describe "As a consumer I want to view products" do
     expect(page).to have_selector '.reveal-modal'
     modal_should_be_open_for product
     within(".reveal-modal") do
+      expect(find_link('external site')[:target]).to eq('_blank') if href
       expect(html).to include(html)
       expect(html).not_to include(not_include) if not_include
     end
