@@ -31,7 +31,7 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
   describe '#bulk_update' do
     let!(:variant_a1) {
       create(:variant, product: product_a, display_name: "Medium box", sku: "APL-01", price: 5.25,
-                       on_hand: 5)
+                       on_hand: 5, on_demand: false)
     }
     let!(:product_c) { create(:simple_product, name: "Carrots", sku: "CAR-00") }
     let!(:product_b) { create(:simple_product, name: "Bananas", sku: "BAN-00") }

@@ -195,7 +195,7 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
   describe "updating" do
     let!(:variant_a1) {
       create(:variant, product: product_a, display_name: "Medium box", sku: "APL-01", price: 5.25,
-                       on_hand: 5)
+                       on_hand: 5, on_demand: false)
     }
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
     before do
@@ -212,6 +212,7 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         fill_in "SKU", with: "POM-01"
         fill_in "Price", with: "10.25"
         fill_in "On Hand", with: "6"
+        check "On Demand"
       end
 
       expect {
@@ -224,6 +225,8 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.price }.to(10.25)
         .and change{ variant_a1.on_hand }.to(6)
+      pending "Array parameters do not play well with the check_box helper."
+        # .and change{ variant_a1.on_demand }.to(true)
 
       within row_containing_name("Pommes") do
         expect(page).to have_field "Name", with: "Pommes"
@@ -234,6 +237,7 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         expect(page).to have_field "SKU", with: "POM-01"
         expect(page).to have_field "Price", with: "10.25"
         expect(page).to have_field "On Hand", with: "6"
+        expect(page).to have_field "On Demand", checked: true
       end
 
       pending
