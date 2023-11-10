@@ -10,21 +10,11 @@ assignees: ''
 ## 1. Preparation on Thursday
 
 - [ ] Merge pull requests in the [Ready To Go] column
-- [ ] Include translations
-  <details><summary>Command line instructions:</summary>
-    <pre>
-    <code>
-    git checkout master
-    git pull upstream master
-    tx pull --force
-    git commit -a -m "Update all locales with the latest Transifex translations"
-    git push upstream master
-    </code>
-    </pre>
-  </details>
-- [ ] Create a tag:
-    - `script/tag_release` will auto increment patch version, otherwise
-    - `git push upstream HEAD:refs/tags/vX.Y.Z`
+- [ ] Include translations: `script/release/udpate_locales`
+- [ ] Increment version number: `git push upstream HEAD:refs/tags/vX.Y.Z`
+    - Major: if server changes are required (eg. provision with ofn-install)
+    - Minor: larger change that is irreversible (eg. migration deleting data)
+    - Patch: all others. Shortcut: `script/release/tag`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
     - Select new release tag
     - _Generate release notes_ and check to ensure all items are arranged in the right category.

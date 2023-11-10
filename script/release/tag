@@ -5,6 +5,8 @@
 # This supports only patch releases at the moment but can be developed
 # further.
 
+puts "\n*** Fetching latest release tag... ***\n"
+
 # Fetch current tags first:
 `git fetch upstream --tags`
 
@@ -18,7 +20,10 @@ latest_version = Gem::Version.new(latest_tag[1..-1])
 major, minor, patch = latest_version.segments
 next_tag = "v#{major}.#{minor}.#{patch.succ}"
 
+# Push the new tag
+puts "\n*** Pushing new release tag #{next_tag}... ***\n"
 puts `git push upstream 'HEAD:refs/tags/#{next_tag}'`
 
+# Shortcuts
 puts "Draft a new release with this tag:
     https://github.com/openfoodfoundation/openfoodnetwork/releases/new?tag=#{next_tag}&title=#{next_tag}+Code+Name"
