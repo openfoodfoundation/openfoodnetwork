@@ -20,8 +20,9 @@
       %tr
         %th
           = t :sku
-        %th
-          = t :supplier
+        - if @distributors_pickup_times.many?
+          %th
+            = t :supplier
         %th
           = t :product
         %th.text-right
@@ -37,8 +38,9 @@
         %tr
           %td
             #{line_items.first.variant.sku}
-          %td
-            #{raw(line_items.first.product.supplier.name)}
+          - if @distributors_pickup_times.many?
+            %td
+              #{raw(line_items.first.product.supplier.name)}
           %td
             #{raw(product_and_full_name)}
           %td.text-right
