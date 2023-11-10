@@ -11,9 +11,10 @@ assignees: ''
 
 - [ ] Merge pull requests in the [Ready To Go] column
 - [ ] Include translations: `script/release/udpate_locales`
-- [ ] Create a tag:
-    - `script/release/tag` will auto increment patch version, otherwise
-    - `git push upstream HEAD:refs/tags/vX.Y.Z`
+- [ ] Increment version number: `git push upstream HEAD:refs/tags/vX.Y.Z`
+    - Major: if server changes are required (eg. provision with ofn-install)
+    - Minor: larger change that is irreversible (eg. migration deleting data)
+    - Patch: all others. Shortcut: `script/release/tag`
 - [ ] [Draft new release]. Look at previous [releases] for inspiration.
     - Select new release tag
     - _Generate release notes_ and check to ensure all items are arranged in the right category.
