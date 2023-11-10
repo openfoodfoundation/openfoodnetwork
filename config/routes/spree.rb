@@ -48,8 +48,11 @@ Spree::Core::Engine.routes.draw do
     get '/search/known_users' => "search#known_users", :as => :search_known_users
     get '/search/customers' => 'search#customers', :as => :search_customers
 
-    resources :users
-
+    resources :users do
+      member do
+        post :accept_terms_of_services
+      end
+    end
 
     constraints FeatureToggleConstraint.new(:admin_style_v3, negate: true) do
       # Show old bulk products screen
