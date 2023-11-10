@@ -19,6 +19,7 @@ module Spree
       before_action :authorize_admin
       before_action :set_locale
       before_action :warn_invalid_order_cycles, if: :html_request?
+      before_action :check_updated_tos_accepted, if: :html_request?
 
       # Warn the user when they have an active order cycle with hubs that are not ready
       # for checkout (ie. does not have valid shipping and payment methods).
@@ -109,6 +110,24 @@ module Spree
         prefix = ams_prefix&.classify || ""
         name = controller_name.classify
         "::Api::Admin::#{prefix}#{name}Serializer".constantize
+      end
+
+      def check_updated_tos_accepted
+        @terms_of_service_banner = false
+
+        return unless spree_user_signed_in?
+
+        return if accepted_tos?
+
+        @terms_of_service_banner = true
+      end
+
+      def accepted_tos?
+        file_uploaded_at = TermsOfServiceFile.updated_at
+
+        current_spree_user.terms_of_service_accepted_at.present? &&
+          current_spree_user.terms_of_service_accepted_at > file_uploaded_at &&
+          current_spree_user.terms_of_service_accepted_at < DateTime.now
       end
     end
   end
