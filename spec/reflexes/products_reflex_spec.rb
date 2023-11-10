@@ -30,11 +30,8 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
 
   describe '#bulk_update' do
     let!(:variant_a1) {
-      create(:variant,
-             product: product_a,
-             display_name: "Medium box",
-             sku: "APL-01",
-             price: 5.25)
+      create(:variant, product: product_a, display_name: "Medium box", sku: "APL-01", price: 5.25,
+                       on_hand: 5)
     }
     let!(:product_c) { create(:simple_product, name: "Carrots", sku: "CAR-00") }
     let!(:product_b) { create(:simple_product, name: "Bananas", sku: "BAN-00") }
@@ -73,6 +70,7 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
                 "display_name" => "Large box",
                 "sku" => "POM-01",
                 "price" => "10.25",
+                "on_hand" => "6",
               }
             ],
           }
@@ -87,6 +85,7 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.price }.to(10.25)
+        .and change{ variant_a1.on_hand }.to(6)
     end
 
     describe "sorting" do
