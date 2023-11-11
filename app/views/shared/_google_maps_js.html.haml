@@ -1,2 +1,2 @@
 - if !ContentConfig.open_street_map_enabled
-  %script{src: "https://maps.googleapis.com/maps/api/js?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'] ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''}#{ ENV['GOOGLE_MAPS_REGION'] ? '&region=' + ENV['GOOGLE_MAPS_REGION'] : ''} "}
+  %script{src: "https://maps.googleapis.com/maps/api/js?libraries=places,geometry#{ ENV['GOOGLE_MAPS_API_KEY'].present? ? '&key=' + ENV['GOOGLE_MAPS_API_KEY'] : ''}#{ ENV['GOOGLE_MAPS_REGION'].present? ? '&region=' + ENV['GOOGLE_MAPS_REGION'] : ''} "}

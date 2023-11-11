@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Execute preparation tasks for a regular patch release. Requires admin permission on the repo.
+#
+set -e
+
+# todo: ask to confirm, and remind to check the ready to go column.
+
+# Download translations and push to master
+$(dirname "$0")/update_locales
+
+# Bump the patch version and push the tag
+$(dirname "$0")/tag
