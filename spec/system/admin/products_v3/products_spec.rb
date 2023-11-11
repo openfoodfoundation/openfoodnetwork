@@ -367,7 +367,7 @@ describe 'As an admin, I can see the new product page' do
       end
     end
 
-    describe "Cloning product"do
+    describe "Cloning product" do
       it "shows the cloned product on page when clicked on the cloned option" do
         within "table.products" do
           # Gather input values, because page.content doesn't include them.
