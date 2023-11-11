@@ -700,6 +700,11 @@ es:
       no_products:
         no_products_found: No se encontraron productos
         import_products: Importar varios productos
+      table:
+        save: Guardar Cambios
+        reset: Desechar Cambios
+      bulk_update:
+        success: "Los productos se actualizaron correctamente"
     product_import:
       title: Importación de productos
       file_not_found: Archivo no encontrado o no se pudo abrir
@@ -1102,12 +1107,14 @@ es:
           legend: Bonos
           voucher_code: Código promocional
           rate: Impuesto
+          label: Etiqueta
           customers: Consumidora
           net_value: Valor neto
           active: ¿Activo?
           add_new: Añadir nuevo
         white_label:
           hide_ofn_navigation: "Ocultar la navegación de OFN"
+          upload_logo: "Logo que se utilizará en el escaparate"
           remove_logo: "Eliminar el logo"
           remove_logo_confirm: "¿Está seguro de que desea eliminar este logo?"
           remove_logo_success: "Logo eliminado"
@@ -2902,6 +2909,7 @@ es:
   new_payment: "Nuevo pago"
   date_completed: "Fecha de finalización"
   amount: "Cantidad"
+  invoice_number: "Número de Factura"
   state_names:
     ready: Listo
     pending: Pendiente
@@ -3441,6 +3449,7 @@ es:
   previous: "Anterior"
   last: "Último"
   spree:
+    order_updated: "Pedido actualizado"
     add_country: "Agregar pais"
     add_state: "Agregar estado"
     adjustment: "Ajuste"
@@ -3810,9 +3819,12 @@ es:
           from: "De"
           to: "Facturar a"
           shipping: "envío"
+          order_number: "Número de pedido"
+          invoice_number: "Número de Factura"
           payments_list:
             date_time: "Fecha y hora"
             payment_method: "Método de pago"
+            payment_state: "Estado del pago"
             amount: "Cantidad"
         note:
           note_label: "Nota:"
@@ -3929,8 +3941,6 @@ es:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -4242,6 +4252,7 @@ es:
         total: Total
         paid?: ¿Pagado?
         status: Estado
+        completed: completado
         cancelled: Cancelado
       saved_cards:
         default?: ¿Por defecto?

@@ -3958,8 +3958,6 @@ en_IE:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe (Obsolete version)"
           stripesca: "Stripe"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:

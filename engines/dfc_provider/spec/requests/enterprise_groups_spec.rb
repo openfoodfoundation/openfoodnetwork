@@ -33,7 +33,7 @@ describe "EnterpriseGroups", type: :request, swagger_doc: "dfc.yaml", rswag_auto
 
           expect(graph[1]["@type"]).to eq "dfc-b:Enterprise"
           expect(graph[1]).to include(
-            "dfc-b:hasName" => "Sustainable Farmers",
+            "dfc-b:name" => "Sustainable Farmers",
             "dfc-b:affiliatedBy" => "http://test.host/api/dfc/enterprises/10000",
           )
         end
@@ -54,7 +54,7 @@ describe "EnterpriseGroups", type: :request, swagger_doc: "dfc.yaml", rswag_auto
 
           expect(graph[0]).to include(
             "@type" => "dfc-b:Enterprise",
-            "dfc-b:hasName" => "Sustainable Farmers",
+            "dfc-b:name" => "Sustainable Farmers",
             "dfc-b:hasAddress" => "http://test.host/api/dfc/addresses/40000",
             "dfc-b:affiliatedBy" => "http://test.host/api/dfc/enterprises/10000",
           )

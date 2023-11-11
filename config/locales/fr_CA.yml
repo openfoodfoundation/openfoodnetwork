@@ -767,10 +767,6 @@ fr_CA:
         reset: Annuler les changements
       bulk_update:
         success: "Produits mis à jour"
-        products_have_error:
-          one: "%{count} produits ont une erreur."
-          many: "%{count} produits ont une erreur."
-          other: "%{count} produits ont une erreur."
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -4141,8 +4137,6 @@ fr_CA:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe (ancienne version)"
           stripesca: "Stripe SCA"
-          bogus: "Bogus"
-          bogussimple: "Bogus Simple"
       payments:
         source_forms:
           stripe:

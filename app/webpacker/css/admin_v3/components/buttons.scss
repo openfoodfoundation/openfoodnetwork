@@ -1,3 +1,13 @@
+@mixin disabled-button() {
+  &:disabled,
+  &:disabled:hover {
+    cursor: initial;
+    color: $color-btn-disabled-text;
+    background-color: $color-btn-disabled-bg;
+    border-color: transparent;
+  }
+}
+
 input[type="submit"],
 input[type="reset"],
 input[type="button"]:not(.trix-button),
@@ -15,6 +25,7 @@ button:not(.plain):not(.trix-button),
   line-height: $btn-regular-height - 2px; // remove 2px to compensate for border
   height: $btn-regular-height;
   font-weight: bold;
+  @include disabled-button();
 
   &:before {
     font-weight: normal !important;
@@ -100,6 +111,7 @@ button:not(.plain):not(.trix-button),
   &.red {
     background-color: $color-btn-red-bg;
     border-color: $color-btn-red-bg;
+    @include disabled-button(); // required for specifity
 
     &:hover {
       background-color: $color-btn-red-hover-bg;

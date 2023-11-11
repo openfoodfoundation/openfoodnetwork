@@ -771,9 +771,6 @@ en_CA:
         reset: Discard changes
       bulk_update:
         success: "Products successfully updated"
-        products_have_error:
-          one: "%{count} product has an error."
-          other: "%{count} products have an error"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -4103,8 +4100,6 @@ en_CA:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe For Deletion"
           stripesca: "Stripe SCA"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:

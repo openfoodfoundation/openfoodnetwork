@@ -17,7 +17,7 @@ module DfcProvider
       group = EnterpriseGroup.find(params[:id])
       address = AddressBuilder.address(group.address)
       enterprise = EnterpriseBuilder.enterprise_group(group)
-      enterprise.addLocalization(address)
+      enterprise.localizations = [address]
       render json: DfcIo.export(enterprise, address)
     end
   end

@@ -13,7 +13,7 @@ describe 'checkout endpoints', type: :request do
   }
   let!(:line_item) { create(:line_item, order:, quantity: 3, price: 5.00) }
   let!(:payment_method) {
-    create(:bogus_payment_method, distributor_ids: [shop.id], environment: Rails.env)
+    create(:stripe_sca_payment_method, distributor_ids: [shop.id], environment: Rails.env)
   }
   let!(:check_payment_method) {
     create(:payment_method, distributor_ids: [shop.id], environment: Rails.env)

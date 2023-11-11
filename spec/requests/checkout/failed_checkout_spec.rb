@@ -14,7 +14,7 @@ describe "checking out an order that initially fails", type: :request do
   let!(:address) { create(:address) }
   let!(:line_item) { create(:line_item, order:, quantity: 3, price: 5.00) }
   let!(:payment_method) {
-    create(:bogus_payment_method, distributor_ids: [shop.id], environment: Rails.env)
+    create(:stripe_sca_payment_method, distributor_ids: [shop.id], environment: Rails.env)
   }
   let!(:check_payment_method) {
     create(:payment_method, distributor_ids: [shop.id], environment: Rails.env)
@@ -63,7 +63,7 @@ describe "checking out an order that initially fails", type: :request do
     it "clears shipments and payments before rendering the checkout" do
       put update_checkout_path, params:, as: :json
 
-      # Checking out a BogusGateway without a source fails at :payment
+      # Checking out a bogus Stripe Gateway without a source fails at :payment
       # Shipments and payments should then be cleared before rendering checkout
       expect(response.status).to be 400
       expect(flash[:error])

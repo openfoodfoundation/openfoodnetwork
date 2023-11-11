@@ -291,6 +291,10 @@ en_FR:
     integer_array_validator:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
+  report_job:
+    report_failed: |
+        This report failed. It may be too big to process.
+        We will look into it but please let us know if the problem persists.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -763,13 +767,14 @@ en_FR:
         changed_summary:
           one: "%{count} product modified."
           other: "%{count} products modified."
+        error_summary:
+          saved:
+            one: "%{count} product was saved correctly, but "
+            other: "%{count} products were saved correctly, but "
         save: Save changes
         reset: Discard changes
       bulk_update:
         success: "Products successfully updated"
-        products_have_error:
-          one: "%{count} product has an error."
-          other: "%{count} products have an error. "
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -4100,8 +4105,6 @@ en_FR:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe (old version)"
           stripesca: "Stripe"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:

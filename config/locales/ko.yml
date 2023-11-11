@@ -3788,8 +3788,6 @@ ko:
           paypalexpress: "페이팔 익스프레스"
           stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
-          bogus: "보거스"
-          bogussimple: "보거스심플"
       payments:
         source_forms:
           stripe:

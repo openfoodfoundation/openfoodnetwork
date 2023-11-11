@@ -1534,7 +1534,7 @@ hu:
       failed_to_update: "Nem sikerült frissíteni a rendelést"
   checkout:
     already_ordered:
-      cart: "szekér"
+      cart: "kosár"
       message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
     terms_and_conditions:
       message_html: "Elfogadom az eladó %{terms_and_conditions_link} feltételeit."
@@ -1821,7 +1821,7 @@ hu:
     payment_method_without_number: Fizetési mód
     order_summary_without_number: Megrendelés-összesítő
     already_ordered:
-      cart: "szekér"
+      cart: "kosár"
       message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
     step1:
       contact_information:
@@ -3074,7 +3074,7 @@ hu:
           adjustments: "kiigazításokat"
           awaiting_return: "visszatérésre vár"
           canceled: "törölve"
-          cart: "szekér"
+          cart: "kosár"
           complete: "kész"
           confirm: "megerősít"
           delivery: "szállítás"
@@ -3884,8 +3884,6 @@ hu:
           paypalexpress: "PayPal Express"
           stripeconnect: "Csík"
           stripesca: "Stripe SCA"
-          bogus: "Hamis"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
@@ -4121,7 +4119,7 @@ hu:
       adjustments: kiigazításokat
       awaiting_return: visszatérésre vár
       canceled: törölve
-      cart: szekér
+      cart: kosár
       confirmation: "megerősítés"
       complete: kész
       confirm: megerősít

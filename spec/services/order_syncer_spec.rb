@@ -88,7 +88,6 @@ describe OrderSyncer do
     let(:payment_method) { subscription.payment_method }
     let(:new_payment_method) { create(:payment_method, distributors: [subscription.shop]) }
     let(:invalid_payment_method) { create(:payment_method, distributors: [create(:enterprise)]) }
-    let(:bogus_payment_method) { create(:bogus_payment_method, distributors: [subscription.shop]) }
     let(:syncer) { OrderSyncer.new(subscription) }
 
     context "when the payment method on an order is the same as the subscription" do

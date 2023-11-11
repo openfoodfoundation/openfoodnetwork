@@ -3,6 +3,8 @@
 require_relative "../spec_helper"
 
 describe SuppliedProductBuilder do
+  include FileHelper
+
   subject(:builder) { described_class }
   let(:variant) {
     build(:variant, id: 5).tap { |v| v.product.supplier_id = 7 }
@@ -44,6 +46,17 @@ describe SuppliedProductBuilder do
       vegetable = DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
 
       expect(product.productType).to eq vegetable
+    end
+
+    it "assigns an image_url type" do
+      Spree::Image.create!(
+        attachment: white_logo_file,
+        viewable_id: variant.product.id,
+        viewable_type: 'Spree::Product'
+      )
+      product = builder.supplied_product(variant)
+
+      expect(product.image).to eq variant.product.image.url(:product)
     end
   end
 end

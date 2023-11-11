@@ -128,10 +128,6 @@ module Spree
       def load_providers
         providers = Gateway.providers.sort_by(&:name)
 
-        unless Rails.env.development? || Rails.env.test?
-          providers.reject! { |provider| provider.name.include? "Bogus" }
-        end
-
         unless show_stripe?
           providers.reject! { |provider| stripe_provider?(provider) }
         end

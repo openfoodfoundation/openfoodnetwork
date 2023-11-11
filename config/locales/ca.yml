@@ -714,9 +714,6 @@ ca:
         reset: Descartar canvis
       bulk_update:
         success: "Els productes s'han actualitzat amb èxit"
-        products_have_error:
-          one: "%{count} producte te un error."
-          other: "%{count} productes tenen errors"
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir
@@ -3860,8 +3857,6 @@ ca:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe (obsolet)"
           stripesca: "Stripe SCA"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:

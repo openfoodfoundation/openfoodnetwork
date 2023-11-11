@@ -4289,8 +4289,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:

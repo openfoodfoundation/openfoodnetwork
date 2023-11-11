@@ -767,9 +767,6 @@ nb:
         reset: Forkaste endringer
       bulk_update:
         success: "Produktene er oppdatert"
-        products_have_error:
-          one: "%{count} produkt har en feil."
-          other: "%{count} produkter har en feil."
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes
@@ -4057,8 +4054,6 @@ nb:
           paypalexpress: "PayPal Express"
           stripeconnect: "Stripe"
           stripesca: "Stripe SCA"
-          bogus: "Bogus"
-          bogussimple: "BogusSimple"
       payments:
         source_forms:
           stripe:
