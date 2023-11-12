@@ -56,7 +56,7 @@ module Api
       describe "pagination" do
         let(:exchange) { order_cycle.exchanges.outgoing.first }
         let(:products_relation) {
-          Spree::Product.includes(:variants).where("spree_variants.id": exchange.variants.map(&:id))
+          Spree::Product.includes(:variants).where('spree_variants.id': exchange.variants.map(&:id))
         }
 
         before do

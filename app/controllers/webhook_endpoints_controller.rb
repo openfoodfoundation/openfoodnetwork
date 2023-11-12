@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class WebhookEndpointsController < ::BaseController
+class WebhookEndpointsController < BaseController
   before_action :load_resource, only: :destroy
 
   def create

@@ -47,7 +47,7 @@ class ExchangeProductsRenderer
   def products_for_outgoing_exchange
     supplied_products(enterprises_for_outgoing_exchange.select(:id)).
       includes(:variants).
-      where("spree_variants.id": incoming_exchanges_variants)
+      where('spree_variants.id': incoming_exchanges_variants)
   end
 
   def incoming_exchanges_variants
