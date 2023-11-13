@@ -95,7 +95,7 @@ shared_examples "attribute changes - note" do |boolean, type|
   end
 end
 
-shared_examples "associated attribute changes - adjustments (create)" do |boolean, type|
+shared_examples "associated attribute changes - adjustments (create/delete)" do |boolean, type|
   context "creating an adjustment" do
     before { order.adjustments << create(:adjustment, order:) }
     it "returns #{boolean} if a #{type} attribute changes" do
@@ -103,6 +103,15 @@ shared_examples "associated attribute changes - adjustments (create)" do |boolea
     end
   end
 
+  context "deleting an adjustment" do
+    before { order.all_adjustments.destroy_all }
+    it "returns #{boolean} if a #{type} attribute changes" do
+      expect(subject).to be boolean
+    end
+  end
+end
+
+shared_examples "associated attribute changes - adjustments (edit)" do |boolean, type|
   context "with an existing adjustments" do
     context "editing the amount" do
       before { Spree::Adjustment.first.update!(amount: 123) }
@@ -113,13 +122,6 @@ shared_examples "associated attribute changes - adjustments (create)" do |boolea
 
     context "changing the adjustment type" do
       before { Spree::Adjustment.first.update!(adjustable_type: "Spree::Shipment") }
-      it "returns #{boolean} if a #{type} attribute changes" do
-        expect(subject).to be boolean
-      end
-    end
-
-    context "deleting an adjustment" do
-      before { order.all_adjustments.destroy_all }
       it "returns #{boolean} if a #{type} attribute changes" do
         expect(subject).to be boolean
       end
@@ -326,19 +328,21 @@ describe OrderInvoiceComparator do
         it_behaves_like "attribute changes - tax total changes", true, "relevant", false
         it_behaves_like "attribute changes - tax total changes", true, "relevant", true
         it_behaves_like "attribute changes - shipping method", true, "relevant"
-        it_behaves_like "associated attribute changes - adjustments (create)", true, "relevant"
+        # creating and deleting adjustments is relevant both for generate and update comparator
+        it_behaves_like "associated attribute changes - adjustments (create/delete)",
+                        true, "relevant"
         it_behaves_like "associated attribute changes - bill address", true, "relevant"
         it_behaves_like "associated attribute changes - ship address", true, "relevant"
         it_behaves_like "associated attribute changes - line items", true, "relevant"
         it_behaves_like "associated attribute changes - payments", true, "relevant"
+        # order-state change is relevant both for generate and update comparator
+        it_behaves_like "attribute changes - order state: cancelled", true, "relevant"
       end
 
       describe "detecting non-relevant" do
         it_behaves_like "attribute changes - payment total", false, "relevant" do
           before { pending("a payment capture shouldn't trigger a new invoice - issue #11350") }
         end
-        # order-state change is relevant both for generate and update comparator
-        it_behaves_like "attribute changes - order state: cancelled", true, "relevant"
         it_behaves_like "no attribute changes"
         it_behaves_like "attribute changes - special insctructions", false, "non-relevant"
         it_behaves_like "attribute changes - note", false, "non-relevant"
@@ -367,6 +371,9 @@ describe OrderInvoiceComparator do
         it_behaves_like "attribute changes - note", true, "relevant"
         it_behaves_like "associated attribute changes - adjustments (update)", true, "relevant"
         it_behaves_like "attribute changes - payment state", true, "relevant"
+        # creating and deleting adjustments is relevant both for generate and update comparator
+        it_behaves_like "associated attribute changes - adjustments (create/delete)", true,
+                        "relevant"
       end
 
       describe "detecting non-relevant" do
@@ -375,8 +382,6 @@ describe OrderInvoiceComparator do
         it_behaves_like "attribute changes - tax total changes", false, "non-relevant", true
         it_behaves_like "attribute changes - shipping method", false, "non-relevant"
         it_behaves_like "no attribute changes"
-        it_behaves_like "associated attribute changes - adjustments (create)", false,
-                        "non-relevant"
         it_behaves_like "associated attribute changes - line items", false, "non-relevant"
         it_behaves_like "associated attribute changes - bill address", false, "non-relevant"
         it_behaves_like "associated attribute changes - ship address", false, "non-relevant"
