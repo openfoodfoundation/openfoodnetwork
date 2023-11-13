@@ -37,8 +37,8 @@
           = item.display_amount_with_adjustments_and_with_taxes
     %tr
       %td
-        %strong= "#{t(:shipping)} "
-        = "( #{t(:invoice_shipping_type)} #{raw(@order.shipping_method.name)} )"
+        %strong= "#{@order.shipping_method.category} : "
+        = "(#{raw(@order.shipping_method.name)})"
       %td{:align => "right"}
       %td{:align => "right"}
       %td{:align => "right"}
