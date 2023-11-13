@@ -337,9 +337,8 @@ describe OrderInvoiceComparator do
         it_behaves_like "attribute changes - payment total", false, "relevant" do
           before { pending("a payment capture shouldn't trigger a new invoice - issue #11350") }
         end
-        it_behaves_like "attribute changes - order state: cancelled", false, "non-relevant" do
-          before { pending }
-        end
+        # order-state change is relevant both for generate and update comparator
+        it_behaves_like "attribute changes - order state: cancelled", true, "relevant"
         it_behaves_like "no attribute changes"
         it_behaves_like "attribute changes - special insctructions", false, "non-relevant"
         it_behaves_like "attribute changes - note", false, "non-relevant"
@@ -362,6 +361,7 @@ describe OrderInvoiceComparator do
         it_behaves_like "attribute changes - payment total", true, "relevant" do
           before { pending("a payment capture shouldn't trigger a new invoice - issue #11350") }
         end
+        # order-state change is relevant both for generate and update comparator
         it_behaves_like "attribute changes - order state: cancelled", true, "relevant"
         it_behaves_like "attribute changes - special insctructions", true, "relevant"
         it_behaves_like "attribute changes - note", true, "relevant"
