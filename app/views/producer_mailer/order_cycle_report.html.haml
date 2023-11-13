@@ -40,9 +40,9 @@
             #{line_items.first.variant.sku}
           - if @distributors_pickup_times.many?
             %td
-              #{raw(line_items.first.product.supplier.name)}
+              #{line_items.first.product.supplier.name}
           %td
-            #{raw(product_and_full_name)}
+            #{product_and_full_name}
           %td.text-right
             #{line_items.sum(&:quantity)}
           %td.text-right
@@ -88,15 +88,15 @@
             #{line_item[:sku]}
           - if @distributors_pickup_times.many?
             %td
-              #{raw(line_item[:supplier_name])}
+              #{(line_item[:supplier_name]}
           %td
-            #{raw(line_item[:product_and_full_name])}
+            #{line_item[:product_and_full_name]}
           %td.text-right
             #{line_item[:quantity]}
           %td
-            #{raw(line_item[:first_name])}
+            #{line_item[:first_name]}
           %td
-            #{raw(line_item[:last_name])}
+            #{line_item[:last_name]}
 %p
   = t :producer_mail_text_after
 %p
