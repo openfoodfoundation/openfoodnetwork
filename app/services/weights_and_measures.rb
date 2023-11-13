@@ -14,7 +14,7 @@ class WeightsAndMeasures
   end
 
   def system
-    return "custom" unless scales = scales_for_variant_unit
+    return "custom" unless scales = scales_for_variant_unit(ignore_available_units: true)
     return "custom" unless product_scale = @variant.product.variant_unit_scale
 
     scales[product_scale.to_f]['system']
@@ -45,8 +45,10 @@ class WeightsAndMeasures
     }
   }.freeze
 
-  def scales_for_variant_unit
-    @scales_for_variant_unit ||= @units[@variant.product.variant_unit]&.reject { |_scale, unit_info|
+  def scales_for_variant_unit(ignore_available_units: false)
+    return @units[@variant.product.variant_unit] if ignore_available_units
+
+    @units[@variant.product.variant_unit]&.reject { |_scale, unit_info|
       available_units.exclude?(unit_info['name'])
     }
   end
