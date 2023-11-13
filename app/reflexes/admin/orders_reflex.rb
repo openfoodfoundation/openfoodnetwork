@@ -19,6 +19,8 @@ module Admin
     def ship
       @order.send_shipment_email = true if params[:send_shipment_email]
       if @order.ship
+        return set_param_for_controller if request.url.match?('edit')
+
         morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
                                      locals: { order: @order.reload, success: true })
       else
@@ -97,6 +99,10 @@ module Admin
 
     def editable_orders
       Permissions::Order.new(current_user).editable_orders
+    end
+
+    def set_param_for_controller
+      params[:id] = @order.number
     end
   end
 end
