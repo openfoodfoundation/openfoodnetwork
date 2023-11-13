@@ -37,6 +37,9 @@ describe "Uploading Terms and Conditions PDF" do
         Timecop.freeze(run_time = time) do
           click_button "Update"
           expect(distributor.reload.terms_and_conditions_blob.created_at).to eq run_time
+          # Timecop interfere with our fake TermsOfServiceFile (see spec/system_helper.rb),
+          # so we accept the terms of service so that the banner doesn't hide the update button
+          click_button "Accept terms of service"
         end
         expect(page).
           to have_content "Enterprise \"#{distributor.name}\" has been successfully updated!"
