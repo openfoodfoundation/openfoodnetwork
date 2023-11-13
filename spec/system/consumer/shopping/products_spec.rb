@@ -147,14 +147,12 @@ describe "As a consumer I want to view products" do
                                                       truncate: false, href: false)
     # check inside list of products
     within "#product-#{product.id} .product-description" do
-      expect(html).to include(html)
       expect(html).not_to include(not_include) if not_include
       expect(page).to have_content "..." if truncate # it truncates a long product description
     end
 
     # check in product description modal
     click_link product.name
-    expect(page).to have_selector '.reveal-modal'
     modal_should_be_open_for product
     within(".reveal-modal") do
       expect(find_link('external site')[:target]).to eq('_blank') if href
