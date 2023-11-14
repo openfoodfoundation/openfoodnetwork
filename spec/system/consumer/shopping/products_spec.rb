@@ -83,8 +83,14 @@ describe "As a consumer I want to view products" do
 
         visit shop_path
         expect(page).to have_content product.name
+
+        # It truncates a long product description.
+        within_product_description(product) do
+          expect(html).to include product.description
+          expect(page).to have_content "..."
+        end
         expect_product_description_html_to_be_displayed(product, product.description, nil,
-                                                        truncate: true, href: true)
+                                                        href: true)
       end
 
       it "does not show unsecure HTML" do
@@ -94,8 +100,12 @@ describe "As a consumer I want to view products" do
         visit shop_path
         expect(page).to have_content product.name
 
+        within_product_description(product) do
+          expect(html).to include "<p>Safe</p>"
+          expect(html).not_to include "<script>alert('Dangerous!');</script>"
+        end
         expect_product_description_html_to_be_displayed(
-          product, "<p>Safe</p>", "<script>alert('Dangerous!');</script>", truncate: false
+          product, "<p>Safe</p>", "<script>alert('Dangerous!');</script>"
         )
       end
     end
@@ -144,13 +154,7 @@ describe "As a consumer I want to view products" do
   end
 
   def expect_product_description_html_to_be_displayed(product, html, not_include = nil,
-                                                      truncate: false, href: false)
-    # check inside list of products
-    within "#product-#{product.id} .product-description" do
-      expect(html).not_to include(not_include) if not_include
-      expect(page).to have_content "..." if truncate # it truncates a long product description
-    end
-
+                                                      href: false)
     # check in product description modal
     click_link product.name
     modal_should_be_open_for product
@@ -159,5 +163,9 @@ describe "As a consumer I want to view products" do
       expect(html).to include(html)
       expect(html).not_to include(not_include) if not_include
     end
+  end
+
+  def within_product_description(product, &)
+    within("#product-#{product.id} .product-description", &)
   end
 end
