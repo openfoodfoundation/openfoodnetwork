@@ -1,12 +1,12 @@
 - if (@order&.distributor || current_distributor) == current_distributor
 
-  #shop-tabs{"data-controller": "tabs-and-panels shop-tabs", "data-tabs-and-panels-class-name-value": "selected"}
+  #shop-tabs{"data-controller": "tabs-and-panels", "data-action": "orderCycleSelected@window->tabs-and-panels#activateDefaultPanel", "data-tabs-and-panels-class-name-value": "selected"}
     .tab-buttons
       .flex.row
         .columns.small-12.large-8
           - shop_tabs.each do |tab|
             .page
-              %a{ id: tab[:name], href: "##{tab[:name]}_panel", data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: ("selected" if tab[:default]) }=tab[:title]
+              %a{ href: "##{tab[:name]}_panel", data: { action: "tabs-and-panels#activate", "tabs-and-panels-target": "tab" }, class: ("selected" if tab[:default]) }=tab[:title]
         .columns.large-4.show-for-large-up
           = render partial: "shopping_shared/order_cycles"
     - shop_tabs.each do |tab|

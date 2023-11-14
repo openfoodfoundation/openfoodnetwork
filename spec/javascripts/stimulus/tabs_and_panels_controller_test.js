@@ -11,122 +11,143 @@ describe('TabsAndPanelsController', () => {
     application.register('tabs-and-panels', tabs_and_panels_controller);
   });
 
-  describe('#tabs-and-panels', () => {
-    const checkDefaultPanel = () => {
-      const peekPanel = document.getElementById('peek_panel');
-      const kaPanel = document.getElementById('ka_panel');
-      const booPanel = document.getElementById('boo_panel');
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <div data-controller="tabs-and-panels" data-tabs-and-panels-class-name-value="selected" data-action="orderCycleSelected@window->tabs-and-panels#activateDefaultPanel">
+        <a id="peek_tab" href="#peek_panel" data-action="tabs-and-panels#activate" class="selected" data-tabs-and-panels-target="tab">Peek</a>
+        <a id="ka_tab" href="#ka_panel" data-action="tabs-and-panels#activate" data-tabs-and-panels-target="tab">Ka</a>
+        <a id="boo_tab" href="#boo_panel" data-action="tabs-and-panels#activate" data-tabs-and-panels-target="tab">Boo</a>
 
-      expect(peekPanel.style.display).toBe('block');
-      expect(kaPanel.style.display).toBe('none');
-      expect(booPanel.style.display).toBe('none');
-    }
+        <div id="peek_panel" data-tabs-and-panels-target="panel default">Peek me</div>
+        <div id="ka_panel" data-tabs-and-panels-target="panel">Ka you</div>
+        <div id="boo_panel" data-tabs-and-panels-target="panel">Boo three</div>
+      </div>`
+  })
 
-    beforeEach(() => {
-      document.body.innerHTML = `
-        <div data-controller="tabs-and-panels" data-tabs-and-panels-class-name-value="selected">
-          <a id="peek" href="#" data-action="tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab" class="selected" data-tabs-and-panels-target="tab">Peek</a>
-          <a id="ka" href="#" data-action="tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab" data-tabs-and-panels-target="tab">Ka</a>
-          <a id="boo" href="#" data-action="tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab" data-tabs-and-panels-target="tab">Boo</a>
+  it("#activate by clicking on tab", () => {
+    const peakTab = document.getElementById("peek_tab")
+    const kaTab = document.getElementById("ka_tab")
+    const booTab = document.getElementById("boo_tab")
+    const peakPanel = document.getElementById("peek_panel")
+    const kaPanel = document.getElementById("ka_panel")
+    const booPanel = document.getElementById("boo_panel")
 
+    expect(peakTab.classList.contains("selected")).toBe(true)
+    expect(kaTab.classList.contains("selected")).toBe(false)
+    expect(booTab.classList.contains("selected")).toBe(false)
 
-          <div id="peek_panel" data-tabs-and-panels-target="panel default">Peek me</div>
-          <div id="ka_panel" data-tabs-and-panels-target="panel">Ka you</div>
-          <div id="boo_panel" data-tabs-and-panels-target="panel">Boo three</div>
-        </div>`;
-    });
+    expect(peakPanel.style.display).toBe("block")
+    expect(kaPanel.style.display).toBe("none")
+    expect(booPanel.style.display).toBe("none")
 
-    it('displays only the default panel', () => {
-      checkDefaultPanel()
-    });
+    kaTab.click()
 
-    describe('when tab is clicked', () => {
-      let ka;
+    expect(peakTab.classList.contains("selected")).toBe(false)
+    expect(kaTab.classList.contains("selected")).toBe(true)
+    expect(booTab.classList.contains("selected")).toBe(false)
 
-      beforeEach(() => {
-        ka = document.getElementById('ka');
-      })
+    expect(peakPanel.style.display).toBe("none")
+    expect(kaPanel.style.display).toBe("block")
+    expect(booPanel.style.display).toBe("none")
+  })
 
-      it('displays appropriate panel', () => {
-        const kaPanel = document.getElementById('ka_panel');
+  it("#activateDefaultPanel on orderCycleSelected event", () => {
+    const peakTab = document.getElementById("peek_tab")
+    const kaTab = document.getElementById("ka_tab")
+    const booTab = document.getElementById("boo_tab")
+    const peakPanel = document.getElementById("peek_panel")
+    const kaPanel = document.getElementById("ka_panel")
+    const booPanel = document.getElementById("boo_panel")
 
-        expect(kaPanel.style.display).toBe('none');
-        ka.click();
-        expect(kaPanel.style.display).toBe('block');
-      });
+    expect(peakTab.classList.contains("selected")).toBe(true)
+    expect(kaTab.classList.contains("selected")).toBe(false)
+    expect(booTab.classList.contains("selected")).toBe(false)
 
-      it('selects the clicked tab', () => {
-        ka.click();
-        expect(ka.classList.contains('selected')).toBe(true);
-      });
+    expect(peakPanel.style.display).toBe("block")
+    expect(kaPanel.style.display).toBe("none")
+    expect(booPanel.style.display).toBe("none")
 
-      describe("when panel doesn't exist", () => {
-        beforeEach(() => {
-          document.body.innerHTML = `
-            <div data-controller="tabs-and-panels" data-tabs-and-panels-class-name-value="selected">
-              <a id="peek" href="#" data-action="tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab" class="selected" data-tabs-and-panels-target="tab">Peek</a>
-              <a id="ka" href="#" data-action="tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab" data-tabs-and-panels-target="tab">Ka</a>
-              <a id="boo" href="#" data-action="tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab" data-tabs-and-panels-target="tab">Boo</a>
+    kaTab.click()
 
+    expect(peakTab.classList.contains("selected")).toBe(false)
+    expect(kaTab.classList.contains("selected")).toBe(true)
+    expect(booTab.classList.contains("selected")).toBe(false)
 
-              <div id="peek_panel" data-tabs-and-panels-target="panel default">Peek me</div>
-              <div id="boo_panel" data-tabs-and-panels-target="panel">Boo three</div>
-            </div>`;
-        });
+    expect(peakPanel.style.display).toBe("none")
+    expect(kaPanel.style.display).toBe("block")
+    expect(booPanel.style.display).toBe("none")
 
-        it('displays the current panel', () => {
-          const peekPanel = document.getElementById('peek_panel');
+    const event = new Event("orderCycleSelected")
+    window.dispatchEvent(event);
 
-          ka.click();
-          expect(peekPanel.style.display).toBe('block');
-        })
-      })
-    })
+    expect(peakTab.classList.contains("selected")).toBe(true)
+    expect(kaTab.classList.contains("selected")).toBe(false)
+    expect(booTab.classList.contains("selected")).toBe(false)
 
-    describe('when anchor is specified in the url', () => {
-      const { location } = window;
-      const mockLocationToString = (panel) => {
-        // Mocking window.location.toString() 
-        const url = `http://localhost:3000/admin/enterprises/great-shop/edit#/${panel}`
-        const mockedToString = jest.fn()
-        mockedToString.mockImplementation(() => (url))
+    expect(peakPanel.style.display).toBe("block")
+    expect(kaPanel.style.display).toBe("none")
+    expect(booPanel.style.display).toBe("none")
+  })
 
-        delete window.location 
-        window.location = {
-          toString: mockedToString
-        } 
-      }
-
-      beforeAll(() => {
-        mockLocationToString('ka_panel')
-      })
-
-      afterAll(() => {
-        // cleaning up
-        window.location = location
-      })
-
-      it('displays the panel associated with the anchor', () => {
-        const kaPanel = document.getElementById('ka_panel');
-
-        expect(kaPanel.style.display).toBe('block');
-      })
-
-      it('selects the tab entry associated with the anchor', () => {
-        const ka = document.getElementById('ka');
-
-        expect(ka.classList.contains('selected')).toBe(true);
-      })
-
-      describe("when anchor doesn't macht any panel", () => {
-        beforeAll(() => {
-          mockLocationToString('random_panel')
-        })
-
-        it('displays the default panel', () => {
-          checkDefaultPanel()
-        })
+  describe("when valid anchor is specified in the url", () => {
+    const oldWindowLocation = window.location
+    beforeAll(() => {
+      Object.defineProperty(window, "location", {
+        value: new URL("http://example.com/#boo_panel"),
+        configurable: true,
       })
     })
-  });
-});
+    afterAll(() => {
+      delete window.location
+      window.location = oldWindowLocation
+    })
+
+    it("#activateFromWindowLocationOrDefaultPanelTarget show panel based on anchor", () => {
+      const peakTab = document.getElementById("peek_tab")
+      const kaTab = document.getElementById("ka_tab")
+      const booTab = document.getElementById("boo_tab")
+      const peakPanel = document.getElementById("peek_panel")
+      const kaPanel = document.getElementById("ka_panel")
+      const booPanel = document.getElementById("boo_panel")
+
+      expect(peakTab.classList.contains("selected")).toBe(false)
+      expect(kaTab.classList.contains("selected")).toBe(false)
+      expect(booTab.classList.contains("selected")).toBe(true)
+
+      expect(peakPanel.style.display).toBe("none")
+      expect(kaPanel.style.display).toBe("none")
+      expect(booPanel.style.display).toBe("block")
+    })
+  })
+
+  describe("when non valid anchor is specified in the url", () => {
+    const oldWindowLocation = window.location
+    beforeAll(() => {
+      Object.defineProperty(window, "location", {
+        value: new URL("http://example.com/#non_valid_panel"),
+        configurable: true,
+      })
+    })
+    afterAll(() => {
+      delete window.location
+      window.location = oldWindowLocation
+    })
+
+    it("#activateFromWindowLocationOrDefaultPanelTarget show default panel", () => {
+      const peakTab = document.getElementById("peek_tab")
+      const kaTab = document.getElementById("ka_tab")
+      const booTab = document.getElementById("boo_tab")
+      const peakPanel = document.getElementById("peek_panel")
+      const kaPanel = document.getElementById("ka_panel")
+      const booPanel = document.getElementById("boo_panel")
+
+      expect(peakTab.classList.contains("selected")).toBe(true)
+      expect(kaTab.classList.contains("selected")).toBe(false)
+      expect(booTab.classList.contains("selected")).toBe(false)
+
+      expect(peakPanel.style.display).toBe("block")
+      expect(kaPanel.style.display).toBe("none")
+      expect(booPanel.style.display).toBe("none")
+    })
+  })
+})

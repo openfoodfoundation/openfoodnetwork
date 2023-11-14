@@ -131,25 +131,25 @@ describe '
     # Unchecking hides the Properties tab
     uncheck 'enterprise_is_primary_producer'
     choose 'None'
-    expect(page).not_to have_selector "#enterprise_fees"
-    expect(page).not_to have_selector "#payment_methods"
-    expect(page).not_to have_selector "#shipping_methods"
-    expect(page).not_to have_selector "#properties"
+    expect(page).not_to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
+    expect(page).not_to have_selector "[data-test=link_for_properties]"
     # Checking displays the Properties tab
     check 'enterprise_is_primary_producer'
-    expect(page).to have_selector "#enterprise_fees"
-    expect(page).not_to have_selector "#payment_methods"
-    expect(page).not_to have_selector "#shipping_methods"
-    expect(page).to have_selector "#properties"
+    expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
+    expect(page).to have_selector "[data-test=link_for_properties]"
     uncheck 'enterprise_is_primary_producer'
     choose 'Own'
-    expect(page).to have_selector "#enterprise_fees"
-    expect(page).to have_selector "#payment_methods"
-    expect(page).to have_selector "#shipping_methods"
+    expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).to have_selector "[data-test=link_for_shipping_methods]"
     choose 'Any'
-    expect(page).to have_selector "#enterprise_fees"
-    expect(page).to have_selector "#payment_methods"
-    expect(page).to have_selector "#shipping_methods"
+    expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).to have_selector "[data-test=link_for_shipping_methods]"
 
     page.find("#enterprise_group_ids-ts-control").set(eg1.name)
     page.find("#enterprise_group_ids-ts-dropdown .option.active").click
