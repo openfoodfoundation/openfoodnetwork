@@ -89,8 +89,10 @@ describe "As a consumer I want to view products" do
           expect(html).to include product.description
           expect(page).to have_content "..."
         end
-        expect_product_description_html_to_be_displayed(product, product.description, nil,
-                                                        href: true)
+        within_product_modal(product) do
+          expect(html).to include product.description
+          expect(find_link('external site')[:target]).to eq('_blank')
+        end
       end
 
       it "does not show unsecure HTML" do
@@ -104,9 +106,10 @@ describe "As a consumer I want to view products" do
           expect(html).to include "<p>Safe</p>"
           expect(html).not_to include "<script>alert('Dangerous!');</script>"
         end
-        expect_product_description_html_to_be_displayed(
-          product, "<p>Safe</p>", "<script>alert('Dangerous!');</script>"
-        )
+        within_product_modal(product) do
+          expect(html).to include "<p>Safe</p>"
+          expect(html).not_to include "<script>alert('Dangerous!');</script>"
+        end
       end
     end
 
@@ -153,16 +156,10 @@ describe "As a consumer I want to view products" do
     end
   end
 
-  def expect_product_description_html_to_be_displayed(product, html, not_include = nil,
-                                                      href: false)
-    # check in product description modal
+  def within_product_modal(product, &)
     click_link product.name
     modal_should_be_open_for product
-    within(".reveal-modal") do
-      expect(find_link('external site')[:target]).to eq('_blank') if href
-      expect(html).to include(html)
-      expect(html).not_to include(not_include) if not_include
-    end
+    within(".reveal-modal", &)
   end
 
   def within_product_description(product, &)
