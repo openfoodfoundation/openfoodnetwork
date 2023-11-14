@@ -86,7 +86,7 @@ describe "As a consumer I want to view products" do
 
         # It truncates a long product description.
         within_product_description(product) do
-          expect(html).to include product.description
+          expect(html).to include "<b>Formatted</b> product description: Lorem ipsum"
           expect(page).to have_content "..."
         end
         within_product_modal(product) do
@@ -105,10 +105,12 @@ describe "As a consumer I want to view products" do
         within_product_description(product) do
           expect(html).to include "<p>Safe</p>"
           expect(html).not_to include "<script>alert('Dangerous!');</script>"
+          expect(page).to have_content "alert('Dangerous!'); Safe"
         end
         within_product_modal(product) do
           expect(html).to include "<p>Safe</p>"
           expect(html).not_to include "<script>alert('Dangerous!');</script>"
+          expect(page).to have_content "alert('Dangerous!'); Safe"
         end
       end
     end
