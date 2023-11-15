@@ -79,6 +79,10 @@ $color-txt-changed-brd:         $bright-orange !default;
 $vpadding-txt:                   5px;
 $hpadding-txt:                   8px;
 
+// Checkboxes
+$color-checkbox-brd:            $near-black !default;
+$color-checkbox-fill:           $teal !default;
+
 // Modal colors
 $color-modal-close-btn:          $color-5 !default;
 $color-modal-close-btn-hover:    darken($color-5, 5%) !default;

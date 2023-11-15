@@ -36,6 +36,18 @@ fieldset {
   }
 }
 
+input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+  margin-right: 3px;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"] {
+  accent-color: $color-checkbox-fill;
+}
+
 textarea {
   line-height: 19px;
 }
@@ -76,14 +88,11 @@ span.info {
   padding: 10px 0;
 
   &.checkbox {
-    input[type="checkbox"] {
-      display: inline-block;
-      width: auto;
-    }
-
     label {
       cursor: pointer;
       display: block;
+      font-size: inherit;
+      font-weight: normal;
     }
   }
 
