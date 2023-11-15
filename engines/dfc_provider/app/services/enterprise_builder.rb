@@ -16,6 +16,7 @@ class EnterpriseBuilder < DfcBuilder
       catalogItems: catalog_items,
       localizations: [address],
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
+      websites: [enterprise.website].compact,
     ).tap do |e|
       e.registerSemanticProperty("ofn:long_description") do
         enterprise.long_description
