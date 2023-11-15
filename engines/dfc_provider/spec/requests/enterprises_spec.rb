@@ -10,6 +10,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
       id: 10_000, owner: user, abn: "123 456", name: "Fred's Farm",
       description: "This is an awesome enterprise",
       facebook: "https://facebook.com/user",
+      phone: "0404 444 000 200",
       website: "https://openfoodnetwork.org",
       address: build(:address, id: 40_000, address1: "42 Doveton Street"),
     )

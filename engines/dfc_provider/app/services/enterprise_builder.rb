@@ -15,6 +15,7 @@ class EnterpriseBuilder < DfcBuilder
       suppliedProducts: supplied_products,
       catalogItems: catalog_items,
       localizations: [address],
+      phoneNumbers: [enterprise.phone].compact,
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
       websites: [enterprise.website].compact,
     ).tap do |e|
