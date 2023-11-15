@@ -1,3 +1,10 @@
+.admin-orders-index-search {
+  .inline-checkbox {
+    // Ensure it lines up with other fields
+    min-height: 5.4em;
+  }
+}
+
 input,
 div {
   &.update-pending {
