@@ -60,7 +60,7 @@ module Stripe
           }.to_not raise_error Stripe::StripeError
         end
       end
-      context "when payment intent is invalid" do 
+      context "when payment intent is invalid" do
         shared_examples "payments intents" do |card_type, card_number, error_message|
           context "from #{card_type}" do
             let!(:pm_card) do
@@ -107,7 +107,7 @@ module Stripe
                           "An error occurred while processing your card. Try again in a little bit."
           it_behaves_like "payments intents", "Exceeding velocity limit decline",
                           4_000_000_000_006_975,
-            %(Your card was declined for making repeated attempts too frequently 
+                          %(Your card was declined for making repeated attempts too frequently
             or exceeding its amount limit.).squish
         end
       end
