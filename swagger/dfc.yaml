@@ -99,6 +99,7 @@ paths:
                       dfc-b:hasDescription: Beautiful
                       dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
                     - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       "@type": dfc-b:CatalogItem
                       dfc-b:references: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
@@ -322,6 +323,7 @@ paths:
                       dfc-b:VATnumber: 123 456
                       dfc-b:manages: http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
+                      ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
                       dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
                     - "@id": http://test.host/api/dfc/addresses/40000
                       "@type": dfc-b:Address

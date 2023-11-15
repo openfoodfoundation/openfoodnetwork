@@ -15,7 +15,11 @@ class EnterpriseBuilder < DfcBuilder
       suppliedProducts: supplied_products,
       catalogItems: catalog_items,
       localizations: [address],
-    )
+    ).tap do |e|
+      e.registerSemanticProperty("ofn:long_description") do
+        enterprise.long_description
+      end
+    end
   end
 
   def self.enterprise_group(group)
