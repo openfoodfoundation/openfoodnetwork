@@ -44,11 +44,12 @@ describe "Taxonomies" do
   end
 
   context "edit" do
-    it "should allow an admin to update an existing taxonomy", retry: 3 do
+    it "should allow an admin to update an existing taxonomy" do
       create(:taxonomy)
       click_link "Taxonomies"
       within_row(1) { find(".icon-edit").click }
       fill_in "taxonomy_name", with: "sports 99"
+      sleep 1
       click_button "Update"
       expect(page).to have_current_path spree.admin_taxonomies_path
       expect(page).to have_content("successfully updated!")
