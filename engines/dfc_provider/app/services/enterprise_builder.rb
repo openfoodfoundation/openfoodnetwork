@@ -20,18 +20,18 @@ class EnterpriseBuilder < DfcBuilder
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
       websites: [enterprise.website].compact,
     ).tap do |e|
-      e.registerSemanticProperty("ofn:long_description") do
-        enterprise.long_description
-      end
-      e.registerSemanticProperty("ofn:contact_name") do
-        # This could be expressed as dfc-b:hasMainContact Person with name.
-        # But that would require a new endpoint for a single string.
-        enterprise.contact_name
-      end
-      e.registerSemanticProperty("ofn:logo_url") do
-        enterprise.logo.url
-      end
+      add_ofn_property(e, "ofn:long_description", enterprise.long_description)
+
+      # This could be expressed as dfc-b:hasMainContact Person with name.
+      # But that would require a new endpoint for a single string.
+      add_ofn_property(e, "ofn:contact_name", enterprise.contact_name)
+
+      add_ofn_property(e, "ofn:logo_url", enterprise.logo.url)
     end
+  end
+
+  def self.add_ofn_property(dfc_enterprise, property_name, value)
+    dfc_enterprise.registerSemanticProperty(property_name) { value }
   end
 
   def self.enterprise_group(group)
