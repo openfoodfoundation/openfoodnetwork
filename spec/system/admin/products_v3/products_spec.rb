@@ -225,8 +225,7 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.price }.to(10.25)
         .and change{ variant_a1.on_hand }.to(6)
-      pending "Array parameters do not play well with the check_box helper."
-        # .and change{ variant_a1.on_demand }.to(true)
+        .and change{ variant_a1.on_demand }.to(true)
 
       within row_containing_name("Pommes") do
         expect(page).to have_field "Name", with: "Pommes"

@@ -38,8 +38,8 @@
         %th.align-left= t('admin.products_page.columns.tax_category')
         %th.align-left= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
-    - products.each do |product|
-      = form.fields_for("products", product, index: nil) do |product_form|
+    - products.each_with_index do |product, product_index|
+      = form.fields_for("products", product, index: product_index) do |product_form|
         %tbody.relaxed{ 'data-record-id': product_form.object.id }
           %tr
             %td.field.align-left.header
@@ -70,8 +70,8 @@
                 = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product)
                 = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product)
 
-          - product.variants.each do |variant|
-            = form.fields_for("products][][variants_attributes][", variant, index: nil) do |variant_form|
+          - product.variants.each_with_index do |variant, variant_index|
+            = form.fields_for("products][#{product_index}][variants_attributes][", variant, variant_index:) do |variant_form|
               %tr.condensed
                 %td.field
                   = variant_form.hidden_field :id
