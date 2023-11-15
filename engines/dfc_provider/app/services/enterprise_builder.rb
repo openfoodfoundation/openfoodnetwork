@@ -14,6 +14,7 @@ class EnterpriseBuilder < DfcBuilder
       vatNumber: enterprise.abn,
       suppliedProducts: supplied_products,
       catalogItems: catalog_items,
+      emails: [enterprise.email_address].compact,
       localizations: [address],
       phoneNumbers: [enterprise.phone].compact,
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
