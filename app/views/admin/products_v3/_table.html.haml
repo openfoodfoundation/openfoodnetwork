@@ -85,8 +85,8 @@
                 %td.field
                   = variant_form.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
                   = error_message_on variant, :price
-                %td.field
-                  %div.on-hand__wrapper
+                %td.field.on-hand__wrapper
+                  %div.on-hand__popout
                     .field
                       = variant_form.number_field :on_hand, 'aria-label': t('admin.products_page.columns.on_hand')
                       = error_message_on variant, :on_hand

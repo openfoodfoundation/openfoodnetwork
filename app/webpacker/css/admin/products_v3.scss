@@ -114,8 +114,17 @@
       }
     }
 
+    .field {
+      padding: 0;
+      margin-bottom: 0.75em;
+    }
+
+    label {
+      margin: 0;
+    }
+
     // "Naked" inputs. Row hover helps reveal them.
-    input {
+    input:not([type="checkbox"]) {
       border-color: transparent;
       background-color: $color-tbl-cell-bg;
       height: auto;
@@ -263,6 +272,30 @@
       bottom: -$disabled-blur;
       right: -$disabled-blur;
       z-index: 1; // Ensure tom-select is covered
+    }
+  }
+
+  // Stock popout widget
+  .on-hand {
+    &__wrapper {
+      position: relative;
+    }
+    &__popout {
+      position: absolute;
+      top: -1em;
+      left: -1em;
+      z-index: 1; // Cover below row when hover
+      width: 9em;
+
+      padding: $padding-tbl-cell;
+
+      background: $color-tbl-cell-bg;
+      border-radius: 3px; //todo: check
+      box-shadow: 0px 0px 8px 0px rgba($near-black, 0.25);
+
+      .field:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 }
