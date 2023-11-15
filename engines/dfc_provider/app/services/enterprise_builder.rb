@@ -23,6 +23,11 @@ class EnterpriseBuilder < DfcBuilder
       e.registerSemanticProperty("ofn:long_description") do
         enterprise.long_description
       end
+      e.registerSemanticProperty("ofn:contact_name") do
+        # This could be expressed as dfc-b:hasMainContact Person with name.
+        # But that would require a new endpoint for a single string.
+        enterprise.contact_name
+      end
       e.registerSemanticProperty("ofn:logo_url") do
         enterprise.logo.url
       end

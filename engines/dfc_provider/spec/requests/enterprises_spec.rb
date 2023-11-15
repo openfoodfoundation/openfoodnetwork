@@ -9,6 +9,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
       :distributor_enterprise, :with_logo_image,
       id: 10_000, owner: user, abn: "123 456", name: "Fred's Farm",
       description: "This is an awesome enterprise",
+      contact_name: "Fred Farmer",
       facebook: "https://facebook.com/user",
       email_address: "hello@example.org",
       phone: "0404 444 000 200",
