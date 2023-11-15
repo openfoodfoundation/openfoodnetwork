@@ -9,6 +9,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
       :distributor_enterprise, :with_logo_image,
       id: 10_000, owner: user, abn: "123 456", name: "Fred's Farm",
       description: "This is an awesome enterprise",
+      facebook: "https://facebook.com/user",
       address: build(:address, id: 40_000, address1: "42 Doveton Street"),
     )
   end
