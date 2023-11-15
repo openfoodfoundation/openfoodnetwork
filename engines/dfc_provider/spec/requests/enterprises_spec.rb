@@ -6,7 +6,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) do
     create(
-      :distributor_enterprise,
+      :distributor_enterprise, :with_logo_image,
       id: 10_000, owner: user, abn: "123 456", name: "Fred's Farm",
       description: "This is an awesome enterprise",
       address: build(:address, id: 40_000, address1: "42 Doveton Street"),
@@ -64,6 +64,9 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
             response.body.gsub!(
               %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
               "active_storage/url/logo-white.png",
+            ).gsub!(
+              %r{active_storage/[0-9A-Za-z/=-]*/logo.png},
+              "active_storage/url/logo.png",
             )
           end
         end

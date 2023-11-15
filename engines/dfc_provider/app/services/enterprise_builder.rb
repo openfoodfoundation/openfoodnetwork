@@ -19,6 +19,9 @@ class EnterpriseBuilder < DfcBuilder
       e.registerSemanticProperty("ofn:long_description") do
         enterprise.long_description
       end
+      e.registerSemanticProperty("ofn:logo_url") do
+        enterprise.logo.url
+      end
     end
   end
 

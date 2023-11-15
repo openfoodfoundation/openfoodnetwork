@@ -3,6 +3,8 @@
 # Controller used to provide the API products for the DFC application
 module DfcProvider
   class ApplicationController < ActionController::Base
+    include ActiveStorage::SetCurrent
+
     protect_from_forgery with: :null_session
 
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
