@@ -1,5 +1,10 @@
 pt_BR:
   language_name: "Português do Brasil"
+  date:
+    day_names: [domingo, segunda, terça, quarta, quinta, sexta, sábado]
+    abbr_day_names: [dom, seg, ter, qua, qui, sex, sáb]
+    month_names: [~, janeiro, fevereiro, março, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro]
+    abbr_month_names: [~, jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez]
   activerecord:
     models:
       spree/product: Produto

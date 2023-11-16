@@ -1,5 +1,10 @@
 fil_PH:
   language_name: "Filipino"
+  date:
+    day_names: [Linggo, Lunes, Martes, Miyerkoles, Huwebes, Biyernes, Sabado]
+    abbr_day_names: [Lin, Lun, Mar, Miy, Huw, Biy, Sab]
+    month_names: [~, Enero, Pebrero, Marso, Abril, Mayo, Hunyo, Hulyo, Agosto, Setyembre, Oktubre, Nobyembre, Disyembre]
+    abbr_month_names: [~, Ene, Peb, Mar, Abr, May, Hun, Hul, Ago, Set, Okt, Nob, Dis]
   activerecord:
     models:
       spree/product: Produkto
