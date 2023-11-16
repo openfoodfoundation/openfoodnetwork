@@ -144,7 +144,7 @@ GEM
       sprockets (>= 3.0, < 5)
       sprockets-rails
       tilt
-    angular_rails_csrf (5.0.0)
+    angular_rails_csrf (6.0.0)
       railties (>= 3, < 8)
     angularjs-file-upload-rails (2.4.1)
     angularjs-rails (1.8.0)
@@ -390,7 +390,7 @@ GEM
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.21.4)
+    loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
