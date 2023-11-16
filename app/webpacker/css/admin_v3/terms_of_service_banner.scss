@@ -1,0 +1,31 @@
+.banner-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 0 1.5%;
+
+  .terms-of-service-banner {
+    background-color: $fair-pink;
+    border: none;
+    border-left: 4px solid $red;
+    border-radius: 4px;
+    margin: 0.5em 0;
+    padding: 0;
+    display: flex;
+
+    .column-left {
+      width: 70%;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 0.75em 1em;
+    }
+
+    .column-right {
+      width: 30%;
+      padding: 0.5em 1em;
+      text-align: right;
+    }
+  }
+}
