@@ -48,7 +48,9 @@ describe Spree::Admin::UsersController do
     end
 
     it "updates terms_of_service_accepted_at" do
-      spree_post :accept_terms_of_services, id: user.id
+      expect do
+        spree_post :accept_terms_of_services, id: user.id
+      end.to change { user.reload.terms_of_service_accepted_at }
 
       expect(response).to have_http_status(:ok)
     end
