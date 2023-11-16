@@ -280,7 +280,54 @@
     &__wrapper {
       position: relative;
     }
+
+    &__button {
+      // override button styles
+      &.on-hand__button {
+        background: $color-tbl-cell-bg;
+        color: $color-txt-text;
+        white-space: nowrap;
+        border-color: transparent;
+        font-weight: normal;
+        padding-left: $border-radius; // Super compact
+        padding-right: 1rem; // Retain space for arrow
+        height: auto;
+
+        &:hover,
+        &:active,
+        &:focus {
+          background: $color-tbl-cell-bg;
+          color: $color-txt-text;
+          position: relative;
+        }
+      }
+
+      &:hover:not(:active):not(:focus) {
+        border-color: transparent;
+      }
+
+      &:hover,
+      &:active,
+      &:focus {
+        // for some reason, sass ignores &:active, &:focus here. we could make this a mixin and include it in multiple rules instead
+        &:before {
+          // for some reason, sass seems to extends the selector to include every other :before selector in the app! probably causing the above, and potentially breaking other styles.
+          // extending .icon-chevron-down causes infinite loop in compilation. does @include work for classes?
+          font-family: FontAwesome;
+          text-decoration: inherit;
+          display: inline-block;
+          speak: none;
+          content: "\f078";
+
+          position: absolute;
+          right: $border-radius;
+          font-size: 0.67em;
+        }
+      }
+    }
+
     &__popout {
+      display: none;
       position: absolute;
       top: -1em;
       left: -1em;

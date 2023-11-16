@@ -36,6 +36,7 @@ describe("BulkFormController", () => {
           <div data-record-id="1">
             <input id="input1a" type="text" value="initial1a">
             <input id="input1b" type="text" value="initial1b">
+            <button>a button is an element, but never changed</button>
           </div>
           <div data-record-id="2">
             <input id="input2" type="text" value="initial2">

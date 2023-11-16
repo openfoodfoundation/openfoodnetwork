@@ -100,6 +100,6 @@ export default class BulkFormController extends Controller {
   }
 
   #isChanged(element) {
-    return element.value != element.defaultValue;
+    return element.defaultValue !== undefined && element.value != element.defaultValue;
   }
 }
