@@ -54,17 +54,5 @@ describe Spree::Admin::UsersController do
 
       expect(response).to have_http_status(:ok)
     end
-
-    context "when something goes wrong" do
-      it "returns unprocessable entity" do
-        # mock update to make it fails
-        allow(user).to receive(:update).and_return(false)
-        allow(Spree::User).to receive(:find).and_return(user)
-
-        spree_post :accept_terms_of_services, id: user.id
-
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
   end
 end

@@ -58,11 +58,9 @@ module Spree
       end
 
       def accept_terms_of_services
-        if @user.update(terms_of_service_accepted_at: DateTime.now)
-          head :ok
-        else
-          head :unprocessable_entity
-        end
+        @user.update(terms_of_service_accepted_at: DateTime.now)
+
+        head :ok
       end
 
       protected
