@@ -357,9 +357,7 @@ describe 'As an admin, I can see the new product page' do
           page.find(".vertical-ellipsis-menu").click
           expect(page).to have_link "Clone", href: spree.clone_admin_product_path(product_a)
         end
-      end
 
-      it "does not show actions menu with a clone link when clicking on icon for variant" do
         within row_containing_name("Medium box") do
           page.find(".vertical-ellipsis-menu").click
           expect(page).to_not have_link "Clone", href: spree.clone_admin_product_path(product_a)
