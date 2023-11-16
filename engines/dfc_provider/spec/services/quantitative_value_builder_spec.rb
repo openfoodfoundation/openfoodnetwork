@@ -45,7 +45,7 @@ describe QuantitativeValueBuilder do
   end
 
   describe ".apply" do
-    let(:quantity_unit) { DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT }
+    let(:quantity_unit) { DfcLoader.connector.MEASURES }
     let(:product) { Spree::Product.new }
 
     it "uses items for anything unknown" do
