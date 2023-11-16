@@ -80,14 +80,13 @@ describe '
       email = ActionMailer::Base.deliveries.last
       expect(email.body).to have_link(
         "customers",
-        href: %r"^http://test\.host/rails/active_storage/disk/.*/customers_[0-9]+\.html$"
+        href: %r"^http://.*/rails/active_storage/disk/.*/customers_[0-9]+\.html$"
       )
 
       # ActiveStorage links usually expire after 5 minutes.
       # But we want a longer expiry in emailed links.
       parsed_email = Capybara::Node::Simple.new(email.body.to_s)
-      email_link_href = parsed_email.find(:link, "customers")[:href]
-      report_link = email_link_href.sub("test.host", Rails.application.default_url_options[:host])
+      report_link = parsed_email.find(:link, "customers")[:href]
       content = URI.parse(report_link).read
       expect(content).to match "<th>\nFirst Name\n</th>"
 
