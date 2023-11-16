@@ -34,9 +34,11 @@ button[class*="icon-"] {
   @extend .icon-remove, :before;
 }
 
-.icon-capture {
+.icon-capture,
+.icon-capture_and_complete_order {
   @extend .icon-ok;
 }
+
 .icon-credit:before {
   @extend .icon-ok, :before;
 }
