@@ -14,7 +14,7 @@ class WeightsAndMeasures
   end
 
   def system
-    return "custom" unless scales = scales_for_variant_unit
+    return "custom" unless scales = scales_for_variant_unit(ignore_available_units: true)
     return "custom" unless product_scale = @variant.product.variant_unit_scale
 
     scales[product_scale.to_f]['system']
@@ -45,8 +45,12 @@ class WeightsAndMeasures
     }
   }.freeze
 
-  def scales_for_variant_unit
-    @units[@variant.product.variant_unit]
+  def scales_for_variant_unit(ignore_available_units: false)
+    return @units[@variant.product.variant_unit] if ignore_available_units
+
+    @units[@variant.product.variant_unit]&.reject { |_scale, unit_info|
+      available_units.exclude?(unit_info['name'])
+    }
   end
 
   # Find the largest available and compatible unit where unit_value comes
@@ -62,5 +66,9 @@ class WeightsAndMeasures
     return scales.first if largest_unit.nil?
 
     largest_unit
+  end
+
+  def available_units
+    Spree::Config.available_units.split(",")
   end
 end

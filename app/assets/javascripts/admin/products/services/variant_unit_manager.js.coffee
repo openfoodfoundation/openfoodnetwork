@@ -2,6 +2,9 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
   class VariantUnitManager
     @units:
       'weight':
+        0.001:
+          name: 'mg'
+          system: 'metric'
         1.0:
           name: 'g'
           system: 'metric'
@@ -21,11 +24,20 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
         0.001:
           name: 'mL'
           system: 'metric'
+        0.01:
+          name: 'cL'
+          system: 'metric'
+        0.1:
+          name: 'dL'
+          system: 'metric'
         1.0:
           name: 'L'
           system: 'metric'
         1000.0:
           name: 'kL'
+          system: 'metric'
+        4.54609:
+          name: 'gal'
           system: 'metric'
       'items':
         1:
@@ -60,8 +72,13 @@ angular.module("admin.products").factory "VariantUnitManager", (availableUnits) 
 
     @compatibleUnitScales: (scale, unitType) ->
       scaleSystem = @units[unitType][scale]['system']
-      (parseFloat(scale) for scale, scaleInfo of @units[unitType] when scaleInfo['system'] == scaleSystem).sort (a, b) ->
-         a - b
+      if availableUnits
+        available = availableUnits.split(",")
+        (parseFloat(scale) for scale, scaleInfo of @units[unitType] when scaleInfo['system'] == scaleSystem and available.includes(scaleInfo['name'])).sort (a, b) ->
+          a - b
+      else
+        (parseFloat(scale) for scale, scaleInfo of @units[unitType] when scaleInfo['system'] == scaleSystem).sort (a, b) ->
+          a - b
 
     @systemOfMeasurement: (scale, unitType) ->
       if @units[unitType][scale]

@@ -38,6 +38,18 @@ module Api
         expect(product_ids).to include product1.id, product2.id, product3.id
       end
 
+      context "when product's variant unit scale is not in the available units list" do
+        before do
+          allow(Spree::Config).to receive(:available_units).and_return("lb,oz,kg,T,mL,L,kL")
+        end
+
+        it "loads products for distributed products in the order cycle" do
+          api_get :products, id: order_cycle.id, distributor: distributor.id
+
+          expect(product_ids).to include product1.id, product2.id, product3.id
+        end
+      end
+
       it "returns products that were searched for" do
         ransack_param = "name_or_meta_keywords_or_variants_display_as_or_" \
                         "variants_display_name_or_supplier_name_cont"

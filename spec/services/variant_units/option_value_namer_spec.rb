@@ -62,6 +62,10 @@ module VariantUnits
       let(:v) { Spree::Variant.new }
       let(:subject) { OptionValueNamer.new v }
 
+      before do
+        allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
+      end
+
       it "generates simple values" do
         p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
         allow(v).to receive(:product) { p }
