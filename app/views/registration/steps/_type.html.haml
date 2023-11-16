@@ -26,7 +26,7 @@
 
           .row
             .small-12.columns
-              %input.chunky{ id: 'enterprise_is_primary_producer', name: 'is_primary_producer', hidden: true, required: true, ng: { model: 'enterprise.is_primary_producer' } }
+              %input.chunky{ id: 'enterprise_is_primary_producer', name: 'is_primary_producer', type: "hidden", required: true, ng: { model: 'enterprise.is_primary_producer' } }
               %span.error{ ng: { show: "type.is_primary_producer.$error.required && submitted" } }
                 = t(".producer_field_error")
           .row
