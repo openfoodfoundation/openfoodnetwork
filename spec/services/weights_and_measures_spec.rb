@@ -6,9 +6,13 @@ describe WeightsAndMeasures do
   subject { WeightsAndMeasures.new(variant) }
   let(:variant) { Spree::Variant.new }
   let(:product) { instance_double(Spree::Product) }
+  let(:available_units) {
+    ["mg", "g", "kg", "T", "oz", "lb", "mL", "cL", "dL", "L", "kL", "gal"].join(",")
+  }
 
   before do
     allow(variant).to receive(:product) { product }
+    allow(Spree::Config).to receive(:available_units).and_return(available_units)
   end
 
   describe "#system" do
@@ -69,15 +73,42 @@ describe WeightsAndMeasures do
           allow(variant).to receive(:unit_value) { 1500 }
           expect(subject.scale_for_unit_value).to eq([1000.0, "kg"])
         end
+
+        describe "should not display in kg if this unit is not selected" do
+          let(:available_units) { ["mg", "g", "T"].join(",") }
+
+          it "should display in g" do
+            allow(product).to receive(:variant_unit_scale) { 1.0 }
+            allow(variant).to receive(:unit_value) { 1500 }
+            expect(subject.scale_for_unit_value).to eq([1.0, "g"])
+          end
+        end
       end
     end
 
     context "volume" do
-      it "for a unit value that should display in L" do
+      it "for a unit value that should display in kL" do
         allow(product).to receive(:variant_unit) { "volume" }
         allow(product).to receive(:variant_unit_scale) { 1.0 }
         allow(variant).to receive(:unit_value) { 1500 }
         expect(subject.scale_for_unit_value).to eq([1000, "kL"])
+      end
+
+      it "for a unit value that should display in dL" do
+        allow(product).to receive(:variant_unit) { "volume" }
+        allow(product).to receive(:variant_unit_scale) { 1.0 }
+        allow(variant).to receive(:unit_value) { 0.5 }
+        expect(subject.scale_for_unit_value).to eq([0.1, "dL"])
+      end
+
+      context "should not display in dL/cL if those units are not selected" do
+        let(:available_units){ ["mL", "L", "kL", "gal"].join(",") }
+        it "for a unit value that should display in mL" do
+          allow(product).to receive(:variant_unit) { "volume" }
+          allow(product).to receive(:variant_unit_scale) { 1.0 }
+          allow(variant).to receive(:unit_value) { 0.5 }
+          expect(subject.scale_for_unit_value).to eq([0.001, "mL"])
+        end
       end
     end
 

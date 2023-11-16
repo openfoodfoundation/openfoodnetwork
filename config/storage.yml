@@ -1,10 +1,6 @@
 local:
   service: Disk
-  root: <%= Rails.root.join("storage") %>
-
-test:
-  service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+  root: <%= Rails.root.join(Rails.env.test? ? "tmp/storage" : "storage") %>
 
 test_amazon:
   service: S3

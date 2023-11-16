@@ -28,14 +28,14 @@ module Spree
         it "should be true if payment is pending" do
           payment = build_stubbed(:payment, created_at: Time.zone.now)
           allow(payment).to receive(:pending?) { true }
-          expect(credit_card.can_capture?(payment)).to be_truthy
+          expect(credit_card.can_capture_and_complete_order?(payment)).to be_truthy
         end
 
         it "should be true if payment is checkout" do
           payment = build_stubbed(:payment, created_at: Time.zone.now)
           allow(payment).to receive_messages pending?: false,
                                              checkout?: true
-          expect(credit_card.can_capture?(payment)).to be_truthy
+          expect(credit_card.can_capture_and_complete_order?(payment)).to be_truthy
         end
       end
 

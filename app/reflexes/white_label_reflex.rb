@@ -12,7 +12,7 @@ class WhiteLabelReflex < ApplicationReflex
     f = ActionView::Helpers::FormBuilder.new(:enterprise, @enterprise, view_context, {})
 
     html = render(partial: "admin/enterprises/form/white_label",
-             locals: { f:, enterprise: @enterprise })
+                  locals: { f:, enterprise: @enterprise })
     morph "#white_label_panel", html
 
     flash[:success] = I18n.t("admin.enterprises.form.white_label.remove_logo_success")

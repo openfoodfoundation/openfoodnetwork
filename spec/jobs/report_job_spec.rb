@@ -3,16 +3,17 @@
 require 'spec_helper'
 
 describe ReportJob do
+  include CableReady::Broadcaster
+
   let(:report_args) {
-    { report_class:, user:, params:, format:,
-      blob: }
+    { report_class:, user:, params:, format:, filename: }
   }
   let(:report_class) { Reporting::Reports::UsersAndEnterprises::Base }
   let(:user) { enterprise.owner }
   let(:enterprise) { create(:enterprise) }
   let(:params) { {} }
   let(:format) { :csv }
-  let(:blob) { ReportBlob.create_for_upload_later!("report.csv") }
+  let(:filename) { "report.csv" }
 
   it "generates a report" do
     job = perform_enqueued_jobs(only: ReportJob) do
@@ -22,13 +23,28 @@ describe ReportJob do
   end
 
   it "enqueues a job for async processing" do
-    job = ReportJob.perform_later(**report_args)
-    expect(blob.content_stored?).to eq false
+    expect {
+      ReportJob.perform_later(**report_args)
+    }.to_not change { ActiveStorage::Blob.count }
 
-    perform_enqueued_jobs(only: ReportJob)
+    expect {
+      perform_enqueued_jobs(only: ReportJob)
+    }.to change { ActiveStorage::Blob.count }
 
-    expect(blob.content_stored?).to eq true
     expect_csv_report
+  end
+
+  it "notifies Cable Ready when the report is done" do
+    channel = ScopedChannel.for_id("123")
+    with_channel = report_args.merge(channel:)
+
+    ReportJob.perform_later(**with_channel)
+
+    expect(cable_ready[channel]).to receive(:broadcast).and_call_original
+
+    expect {
+      perform_enqueued_jobs(only: ReportJob)
+    }.to change { ActiveStorage::Blob.count }
   end
 
   it "triggers an email when the report is done" do
@@ -44,10 +60,9 @@ describe ReportJob do
       ReportJob.perform_later(**report_args)
       perform_enqueued_jobs(only: ReportJob)
     }.to enqueue_mail(ReportMailer, :report_ready).with(
-      params: {
+      params: hash_including(
         to: user.email,
-        blob:,
-      },
+      ),
       args: [],
     )
   end
@@ -76,7 +91,7 @@ describe ReportJob do
   end
 
   def expect_csv_report
-    blob.reload
+    blob = ReportBlob.last
     expect(blob.filename.to_s).to eq "report.csv"
     expect(blob.content_type).to eq "text/csv"
 

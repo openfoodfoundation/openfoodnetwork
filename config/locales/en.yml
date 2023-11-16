@@ -21,6 +21,9 @@
 en:
   # Overridden here due to a bug in spree i18n (Issue #870, and issue #1800)
   language_name: "English" # Localised name of this language
+  time:
+    formats:
+      long: "%B %d, %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Product
@@ -3866,6 +3869,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     credit_card: "Credit Card"
     new_payment: "New Payment"
     capture: "Capture"
+    capture_and_complete_order: "Capture and complete order"
     void: "Void"
     login: "Login"
     password: "Password"

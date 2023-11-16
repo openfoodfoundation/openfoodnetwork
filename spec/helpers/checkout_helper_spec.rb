@@ -165,7 +165,7 @@ describe CheckoutHelper, type: :helper do
     end
 
     context "tax rate adjustments" do
-      let!(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: ::Calculator::DefaultTax.new) }
+      let!(:tax_rate) { create(:tax_rate, amount: 0.1, calculator: Calculator::DefaultTax.new) }
       let!(:line_item_fee_adjustment) {
         create(:adjustment, originator: enterprise_fee, adjustable: order.line_items.first,
                             order:)

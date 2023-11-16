@@ -37,6 +37,16 @@ export default class extends Controller {
     window.addEventListener("tabs-and-panels:click", (event) => {
       this.simulateClick(event.detail.tab, event.detail.panel);
     });
+
+    window.addEventListener("popstate", (event) => {
+      const newPanelId = event.target.location.hash.replace("#/", "");
+      const currentPanelId = this.currentActivePanel.id;
+
+      if (newPanelId !== currentPanelId) {
+        const newTabId = newPanelId.split("_panel").shift();
+        this.simulateClick(newTabId, newPanelId);
+      }
+    });
   }
 
   simulateClick(tab, panel) {

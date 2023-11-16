@@ -9,6 +9,7 @@ describe UnitPrice do
 
   before do
     allow(variant).to receive(:product) { product }
+    allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
   end
 
   describe "#unit" do

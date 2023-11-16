@@ -47,6 +47,11 @@ module Spree
         end
       end
 
+      def capture_and_complete_order!
+        OrderWorkflow.new(order).complete!
+        capture!
+      end
+
       def void_transaction!
         return true if void?
 

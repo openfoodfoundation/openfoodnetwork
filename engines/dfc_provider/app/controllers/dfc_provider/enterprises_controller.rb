@@ -18,6 +18,7 @@ module DfcProvider
         *enterprise.localizations,
         *enterprise.suppliedProducts,
         *enterprise.catalogItems,
+        *enterprise.socialMedias,
       )
     end
 
