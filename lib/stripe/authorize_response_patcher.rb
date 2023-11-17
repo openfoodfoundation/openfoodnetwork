@@ -28,7 +28,7 @@ module Stripe
       return unless %w(authorize_with_url redirect_to_url).include?(next_action_type)
 
       url = next_action[next_action_type]["url"]
-      return url if url.match(%r{https?://\S+}) && url.include?("stripe.com")
+      url if url.match(%r{https?://\S+}) && url.include?("stripe.com")
     end
 
     # This field is used because the Spree code recognizes and stores it

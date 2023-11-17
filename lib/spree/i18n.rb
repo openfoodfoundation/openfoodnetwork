@@ -33,7 +33,7 @@ module Spree
 
       return unless path
 
-      path.gsub(/spree/, '')
+      path.gsub("spree", '')
     end
   end
 end

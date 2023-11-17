@@ -96,7 +96,7 @@ namespace :ofn do
     end
 
     def is_integer?(value)
-      return true if Integer(value)
+      true if Integer(value)
     rescue StandardError
       false
     end

@@ -66,7 +66,7 @@ module Spree
     end
 
     def build_tracking_url(tracking)
-      tracking_url.gsub(/:tracking/, tracking) unless tracking.blank? || tracking_url.blank?
+      tracking_url.gsub(":tracking", tracking) unless tracking.blank? || tracking_url.blank?
     end
 
     # Some shipping methods are only meant to be set via backend

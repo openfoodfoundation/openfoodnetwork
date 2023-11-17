@@ -79,7 +79,7 @@ describe '
     expect(page).to have_selector "input[value='Hello!']"
 
     # When I fill in the calculator fields and click update
-    fill_in("#{prefix}_calculator_attributes_preferred_flat_percent", with: "\'20.0'")
+    fill_in("#{prefix}_calculator_attributes_preferred_flat_percent", with: "'20.0'")
     click_button 'Update'
 
     # Then I should see the flash error message
@@ -137,7 +137,7 @@ describe '
       # When I fill in the calculator fields and click update
       fill_in(
         "#{prefix}_calculator_attributes_" \
-        'preferred_flat_percent', with: "\'20.0'"
+        'preferred_flat_percent', with: "'20.0'"
       )
       click_button 'Update'
 
