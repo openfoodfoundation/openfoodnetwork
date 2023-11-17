@@ -3793,7 +3793,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     gateway_error: "Payment failed"
     more: "More"
     new_adjustment: "New adjustment"
-    new_order_completed: "New order completed"
     new_tax_category: "New Tax Category"
     new_taxon: "New taxon"
     new_user: "New user"

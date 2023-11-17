@@ -3331,7 +3331,6 @@ ko:
     gateway_error: "결제 실패"
     more: "추가 정보"
     new_adjustment: "새 조정"
-    new_order_completed: "신규 주문 완료"
     new_tax_category: "신규 세금 카테고리"
     new_taxon: "새 분류군"
     new_user: "신규 사용자"

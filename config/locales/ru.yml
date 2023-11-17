@@ -3647,7 +3647,6 @@ ru:
     gateway_error: "Платеж не прошел"
     more: "Ещё"
     new_adjustment: "Новая корректировка"
-    new_order_completed: "Новый заказ выполнен"
     new_tax_category: "Новая Налоговая Категория"
     new_taxon: "Новая таксономия"
     new_user: "Новый пользователь"

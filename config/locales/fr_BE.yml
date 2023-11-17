@@ -3296,7 +3296,6 @@ fr_BE:
     gateway_error: "Paiement échoué"
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
-    new_order_completed: "Nouvelle commande terminée"
     new_tax_category: "Nouvelle catégorie de taxe"
     no_pending_payments: "Aucun paiement en attente"
     none: "Aucun"

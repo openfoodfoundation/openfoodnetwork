@@ -3232,7 +3232,6 @@ pt_BR:
     gateway_error: "Falha no pagamento"
     more: "Mais"
     new_adjustment: "Novo ajuste"
-    new_order_completed: "Novo pedido realizado"
     new_tax_category: "Nova Categoria de Taxa"
     new_taxon: "Nova taxonomia"
     new_user: "Novo usuário"

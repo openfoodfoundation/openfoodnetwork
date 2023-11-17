@@ -3397,7 +3397,6 @@ de_CH:
     gateway_error: "Zahlung fehlgeschlagen"
     more: "Mehr"
     new_adjustment: "Neue Anpassung"
-    new_order_completed: "Neue Bestellung abgeschlossen"
     new_tax_category: "Neue Steuerkategorie"
     new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"

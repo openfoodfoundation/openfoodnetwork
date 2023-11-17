@@ -3434,7 +3434,6 @@ es_CR:
     gateway_error: "Pago fallido"
     more: "Más"
     new_adjustment: "Nuevo ajuste"
-    new_order_completed: "Nuevo pedido completado"
     new_tax_category: "Nueva categoría de impuestos"
     new_taxon: "Nuevo taxon"
     new_user: "Nuevo usuari"

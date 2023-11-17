@@ -3335,7 +3335,6 @@ fr_CM:
     gateway_error: "Le paiement a échoué"
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
-    new_order_completed: "Nouvelle commande finalisée"
     new_tax_category: "Nouvelle catégorie de taxe"
     new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"

@@ -57,7 +57,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           it "redirects to new payment page with flash error" do
             spree_post :create, payment: params, order_id: order.number
 
-            redirects_to_new_payment_page_with_flash_error("Stripe Authorization Failure")
+            redirects_to_payments_list_page_with_flash_error("Stripe Authorization Failure")
             expect(order.reload.payments.last.state).to eq "checkout"
           end
         end
@@ -70,7 +70,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           it "redirects to new payment page with flash error" do
             spree_post :create, payment: params, order_id: order.number
 
-            redirects_to_new_payment_page_with_flash_error("Authorization Failure")
+            redirects_to_payments_list_page_with_flash_error("Authorization Failure")
             expect(order.reload.payments.last.state).to eq "checkout"
           end
         end
@@ -85,7 +85,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
           it "redirects to new payment page with flash error" do
             spree_post :create, payment: params, order_id: order.number
 
-            redirects_to_new_payment_page_with_flash_error('Action required')
+            redirects_to_payments_list_page_with_flash_error('Action required')
           end
         end
 
@@ -127,8 +127,8 @@ describe Spree::Admin::PaymentsController, type: :controller do
         expect(flash[:success]).to eq "Payment has been successfully created!"
       end
 
-      def redirects_to_new_payment_page_with_flash_error(flash_error)
-        expect_redirect_to spree.new_admin_order_payment_url(order)
+      def redirects_to_payments_list_page_with_flash_error(flash_error)
+        expect_redirect_to spree.admin_order_payments_url(order)
         expect(flash[:error]).to eq flash_error
       end
 

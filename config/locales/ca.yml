@@ -3395,7 +3395,6 @@ ca:
     gateway_error: "El pagament ha fallat"
     more: "Més"
     new_adjustment: "Nou ajustament"
-    new_order_completed: "S'ha completat la nova comanda"
     new_tax_category: "Nova categoria fiscal"
     new_taxon: "Nou tàxon"
     new_user: "Nou usuari"

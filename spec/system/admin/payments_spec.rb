@@ -61,6 +61,7 @@ describe '
 
       click_button "Update"
       expect(page).to have_content "Payments"
+      expect(page).to have_content "Payment has been successfully created!"
 
       order.reload
       expect(order.state).to eq "complete"
