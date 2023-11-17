@@ -117,6 +117,8 @@ module Spree
 
         return unless spree_user_signed_in?
 
+        return if Spree::Config.enterprises_require_tos == false
+
         return if accepted_tos?
 
         @terms_of_service_banner = true

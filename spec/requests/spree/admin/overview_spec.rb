@@ -25,6 +25,8 @@ describe "/admin", type: :request do
     # The banner will show on all admin page, we are just testing it here
     describe "terms of service updated banner" do
       context "when terms of service has been updated" do
+        before { Spree::Config.enterprises_require_tos = true }
+
         it "shows accept new ToS banner" do
           enterprise_user.update(terms_of_service_accepted_at: nil)
 
@@ -51,6 +53,19 @@ describe "/admin", type: :request do
             get "/admin"
 
             expect(response.body).to include("Terms of Service have been updated")
+          end
+        end
+
+        context "when enterprises don't need to accept ToS" do
+          before do
+            Spree::Config.enterprises_require_tos = false
+            enterprise_user.update(terms_of_service_accepted_at: nil)
+          end
+
+          it "doesn't show accept new ToS banner" do
+            get "/admin"
+
+            expect(response.body).to_not include("Terms of Service have been updated")
           end
         end
       end
