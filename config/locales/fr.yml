@@ -770,6 +770,10 @@ fr:
           saved:
             one: "%{count} le produit a été sauvegardé correctement, mais "
             other: "%{count} les produits ont été sauvegardés correctement, mais"
+          invalid:
+            one: "Le produit %{count} n'a pas pu être enregistré. Veuillez examiner les erreurs et réessayer."
+            many: "Les produits %{count} n'ont pas pu être enregistrés. Veuillez examiner les erreurs et réessayer."
+            other: "Les produits %{count} n'ont pas pu être enregistrés. Veuillez examiner les erreurs et réessayer."
         save: Sauvegarder les changements
         reset: Annuler les changements
       bulk_update:
@@ -1791,16 +1795,20 @@ fr:
   invoice_column_price: "Prix"
   invoice_column_item: "Produit"
   invoice_column_qty: "Qté"
+  invoice_column_weight_volume: "Poids / volume"
   invoice_column_unit_price_with_taxes: "Prix unitaire TTC"
   invoice_column_unit_price_without_taxes: "Prix unitaire HT"
   invoice_column_price_with_taxes: "Prix total TTC"
   invoice_column_price_without_taxes: "Prix total HT"
+  invoice_column_price_per_unit_without_taxes: "Prix par unité (hors taxe)"
   invoice_column_tax_rate: "TVA applicable"
   invoice_tax_total: "Total TVA :"
   tax_invoice: "FACTURE"
   tax_total: "Total taxe (%{rate}) :"
+  invoice_shipping_type: "Type :"
   total_excl_tax: "Total HT :"
   total_incl_tax: "Total TTC :"
+  total_all_tax: "total taxe"
   abn: "SIRET"
   acn: "n° TVA intracommunautaire"
   invoice_issued_on: "Date de facture :"
@@ -3324,7 +3332,6 @@ fr:
           processing: "en traitement"
           void: "Annulé"
           invalid: "invalide"
-        quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
         cancel_the_order_html: "Cette action va annuler la commande. <br /> Etes-vous sûr de vouloir continuer ?"
         cancel_the_order_send_cancelation_email: "Envoyer un email d'annulation à l'acheteur"
@@ -3681,6 +3688,7 @@ fr:
     gateway_error: "Le paiement a échoué"
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
+    new_order_completed: "Nouvelle commande finalisée"
     new_tax_category: "Nouvelle catégorie de taxe"
     new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"

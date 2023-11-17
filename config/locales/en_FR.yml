@@ -771,6 +771,9 @@ en_FR:
           saved:
             one: "%{count} product was saved correctly, but "
             other: "%{count} products were saved correctly, but "
+          invalid:
+            one: "%{count} product could not be saved. Please review the errors and try again."
+            other: "%{count} products could not be saved. Please review the errors and try again."
         save: Save changes
         reset: Discard changes
       bulk_update:
@@ -1787,16 +1790,20 @@ en_FR:
   invoice_column_price: "Price"
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
+  invoice_column_weight_volume: "Weight / VOL."
   invoice_column_unit_price_with_taxes: "Unit price (Incl. tax)"
   invoice_column_unit_price_without_taxes: "Unit price (Excl. tax)"
   invoice_column_price_with_taxes: "Total price (Incl. tax)"
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
+  invoice_column_price_per_unit_without_taxes: "Price Per unit (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
   invoice_tax_total: "GST Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
+  invoice_shipping_type: "Type:"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
+  total_all_tax: "Total tax:"
   abn: "ABN:"
   acn: "ACN:"
   invoice_issued_on: "Invoice issued on:"
@@ -3294,7 +3301,6 @@ en_FR:
           processing: "processing"
           void: "void"
           invalid: "invalid"
-        quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
         cancel_the_order_html: "This will cancel the current order. <br /> Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
@@ -3625,6 +3631,7 @@ en_FR:
     gateway_error: "Payment failed"
     more: "More"
     new_adjustment: "New adjustment"
+    new_order_completed: "New order completed"
     new_tax_category: "New Tax Category"
     new_taxon: "New taxon"
     new_user: "New user"

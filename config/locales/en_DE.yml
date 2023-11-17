@@ -3095,6 +3095,7 @@ en_DE:
           tax_invoice: "TAX INVOICE"
           code: "Code"
           from: "From"
+          shipping: "Shipping"
           payments_list:
             amount: "Amount"
         form:

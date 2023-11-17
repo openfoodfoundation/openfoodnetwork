@@ -1,10 +1,5 @@
 de_DE:
   language_name: "Deutsch"
-  date:
-    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
-    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
-    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
-    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
   activerecord:
     models:
       spree/product: Produkt
@@ -772,6 +767,13 @@ de_DE:
         changed_summary:
           one: "%{count} Produkt geändert."
           other: "%{count} Produkte geändert."
+        error_summary:
+          saved:
+            one: "%{count} Produkt wurde erfolgreich gespeichert, aber"
+            other: "%{count} Produkte wurden erfolgreich gespeichert, aber"
+          invalid:
+            one: "%{count} Produkt konnte nicht gespeichert werden. Bitte überprüfen Sie die Fehler und versuchen Sie es erneut."
+            other: "%{count} Produkte konnten nicht gespeichert werden. Bitte überprüfen Sie die Fehler und versuchen Sie es erneut."
         save: Änderungen speichern
         reset: Änderungen verwerfen
       bulk_update:
@@ -867,8 +869,8 @@ de_DE:
         inventory_updated: Katalogeinträge aktualisiert
         products_reset: Bei Produkten wurde der Lagerbestand auf Null zurückgesetzt.
         inventory_reset: Bei Katalogeinträgen wurde der Bestand auf Null zurückgesetzt.
-        all_saved: "Alle Artikel wurden erfolgreich gespeichert."
-        some_saved: "Artikel wurden erfolgreich gespeichert."
+        all_saved: "Alle Produkte wurden erfolgreich gespeichert."
+        some_saved: "Produkte wurden erfolgreich gespeichert."
         save_errors: Fehler beim Speichern
         import_again: Eine andere Datei hochladen
         view_products: Zur Produktseite
@@ -1791,16 +1793,20 @@ de_DE:
   invoice_column_price: "Preis"
   invoice_column_item: "Artikel"
   invoice_column_qty: "Menge"
+  invoice_column_weight_volume: "Einheit"
   invoice_column_unit_price_with_taxes: "Stückpreis (inkl. Steuern)"
   invoice_column_unit_price_without_taxes: "Stückpreis (zzgl. Steuern)"
   invoice_column_price_with_taxes: "Gesamtpreis (inkl. Steuern)"
   invoice_column_price_without_taxes: "Gesamtpreis (zzgl. Steuern)"
+  invoice_column_price_per_unit_without_taxes: "Einzelpreis (zzgl. Steuern)"
   invoice_column_tax_rate: "Steuersatz"
   invoice_tax_total: "Umsatzsteuersumme:"
   tax_invoice: "RECHNUNG"
   tax_total: "davon Steuern (%{rate}):"
+  invoice_shipping_type: "Lieferoption:"
   total_excl_tax: "Netto (zzgl. Steuern):"
   total_incl_tax: "GESAMT (inkl. Steuern):"
+  total_all_tax: "Steuern gesamt:"
   abn: "USt-IdNr.:"
   acn: "St.-Nr.:"
   invoice_issued_on: "Rechnungsdatum:"
@@ -2877,7 +2883,7 @@ de_DE:
   report_header_tax_rate_name: "Steuersatzname"
   report_header_tax_rate: "Steuersatz"
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
-  report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
+  report_header_total_excl_tax: "Summe zzgl. Steuern (%{currency_symbol})"
   report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
   report_header_total_orders: "Anzahl der Bestellungen"
   report_header_enterprise: Unternehmen
@@ -2964,7 +2970,7 @@ de_DE:
   report_header_total_max: Gesamt max
   report_header_total_units: Gesamteinheiten
   report_header_sum_max_total: "Summe Max. Summe"
-  report_header_total_excl_vat: "Summe exkl. Steuern (%{currency_symbol})"
+  report_header_total_excl_vat: "Summe zzgl. Steuern (%{currency_symbol})"
   report_header_total_incl_vat: "Summe inkl. Steuern (%{currency_symbol})"
   report_header_temp_controlled: Temperaturüberwachte Artikel?
   report_header_is_producer: Produzent?
@@ -3307,7 +3313,7 @@ de_DE:
           processing: "in Verarbeitung"
           void: "keine Angabe"
           invalid: "ungültig"
-        quantity_adjusted: "Kein ausreichender Lagerbestand vorhanden. Die Position wurde auf die maximal verfügbare Menge aktualisiert."
+        quantity_unavailable: "Nicht genügend Lagerbestand vorhanden. Der Posten wurde nicht gespeichert!"
         quantity_unchanged: "Menge wurde nicht geändert."
         cancel_the_order_html: "Wenn Sie fortfahren, wird die aktuelle Bestellung storniert.<br /> Sind Sie sicher, dass Sie fortfahren möchten?"
         cancel_the_order_send_cancelation_email: "Bestätigung der Stornierung per E-Mail an den Kunden senden"
@@ -3637,6 +3643,7 @@ de_DE:
     gateway_error: "Zahlung fehlgeschlagen"
     more: "Mehr"
     new_adjustment: "Neue Anpassung"
+    new_order_completed: "Neue Bestellung abgeschlossen"
     new_tax_category: "Neue Steuerkategorie"
     new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"

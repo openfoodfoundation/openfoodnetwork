@@ -3135,7 +3135,6 @@ es:
           processing: "procesando"
           void: "pendiente"
           invalid: "inválido"
-        quantity_adjusted: "Stock insuficiente disponible. El artículo se ha actualizada a la cantidad máxima disponible."
         quantity_unchanged: "Cantidad sin cambios respecto a la cantidad anterior."
       resend_user_email_confirmation:
         resend: "Reenviar"
@@ -3473,6 +3472,7 @@ es:
     gateway_error: "Pago fallido"
     more: "Más"
     new_adjustment: "Nuevo ajuste"
+    new_order_completed: "Nuevo pedido completado"
     new_tax_category: "Nueva categoría de impuestos"
     new_taxon: "Nuevo taxón"
     new_user: "Nuevo usuario"

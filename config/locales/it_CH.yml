@@ -1,10 +1,5 @@
 it_CH:
   language_name: "Italiano"
-  date:
-    day_names: [domenica, lunedì, martedì, mercoledì, giovedì, venerdì, sabato]
-    abbr_day_names: [dom, lun, mar, mer, gio, ven, sab]
-    month_names: [~, gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre]
-    abbr_month_names: [~, gen, feb, mar, apr, mag, giu, lug, ago, set, ott, nov, dic]
   activerecord:
     models:
       spree/product: Prodotto
@@ -3028,7 +3023,6 @@ it_CH:
           processing: "in elaborazione"
           void: "vuoto"
           invalid: "invalido"
-        quantity_adjusted: "Disponibilità insufficiente.  Quantità aggiornata alla massima quantità disponibile."
         quantity_unchanged: "Quantità non modificata rispetto a quantità precedente."
         cancel_the_order_html: "Questo eliminerà la gentile richiesta corrente.<br />Sei sicuro di voler procedere?"
         cancel_the_order_send_cancelation_email: "Invia una mail di cancellazione al cliente"
@@ -3370,6 +3364,7 @@ it_CH:
     gateway_error: "Pagamento fallito"
     more: "Di più"
     new_adjustment: "Nuovo aggiustamento"
+    new_order_completed: "Nuova richiesta completata"
     new_tax_category: "Nuova Categoria imposta"
     new_taxon: "Nuova tassonomia"
     new_user: "Nuovo utente"

@@ -3696,6 +3696,7 @@ en_IN:
       shipment:
         cannot_ready: "Cannot ready shipment."
       invalid_taxonomy_id: "Invalid taxonomy id."
+    unit: unit
   components:
     search_input:
       placeholder: Search

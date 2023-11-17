@@ -291,6 +291,10 @@ nb:
     integer_array_validator:
       not_array_error: "må være en tabell"
       invalid_element_error: "må kun inneholde gyldige heltall"
+  report_job:
+    report_failed: |
+        Denne rapporten mislyktes. Det kan være for stort å behandle.
+        Vi vil se nærmere på det, men gi oss beskjed hvis problemet vedvarer.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vennligst bekreft epostadressen til %{enterprise}"
@@ -763,6 +767,13 @@ nb:
         changed_summary:
           one: "%{count} produkt endret."
           other: "%{count} produkter endret."
+        error_summary:
+          saved:
+            one: "%{count} produkt ble lagret riktig, men"
+            other: "%{count} produkter ble lagret riktig, men"
+          invalid:
+            one: "%{count} produkt kunne ikke lagres. Se gjennom feilene og prøv igjen."
+            other: "%{count} produkter kunne ikke lagres. Se gjennom feilene og prøv igjen."
         save: Lagre endringer
         reset: Forkaste endringer
       bulk_update:
@@ -904,10 +915,11 @@ nb:
         hidden_powertip: Disse produktene har blitt skjult fra ditt varelager og vil ikke være tilgjengelig for å legge til din butikk. Du kan klikke "Legg til" for å legge et produkt til ditt varelager.
         new_powertip: Disse produktene er tilgjengelige for å bli lagt til ditt varelager. Klikk "Legg til" for å legge et produkt til lageret ditt, eller "Skjul" for å skjule det fra visning. Du kan alltids ombestemme deg senere!
       controls:
-        back_to_my_inventory: Tilbake til min varelager
+        back_to_my_inventory: Tilbake til mitt varelager
     orders:
       edit:
         order_sure_want_to: Er du sikker på at du vil %{event} denne bestillingen?
+        voucher_tax_included_in_price: "%{label} (avgift inkludert i kupongen)"
       invoice_email_sent: 'Faktura-e-post er sendt'
       order_email_resent: 'Bestillings-e-post har blitt angitt'
       bulk_management:
@@ -1778,16 +1790,20 @@ nb:
   invoice_column_price: "Pris"
   invoice_column_item: "Vare"
   invoice_column_qty: "Mengde"
+  invoice_column_weight_volume: "Vekt / VOL."
   invoice_column_unit_price_with_taxes: "Enhetspris (Inkl. avgift)"
   invoice_column_unit_price_without_taxes: "Enhetspris (Eks. avgift)"
   invoice_column_price_with_taxes: "Totalpris (Inkl. avgift)"
   invoice_column_price_without_taxes: "Totalpris (Eks. avgift)"
+  invoice_column_price_per_unit_without_taxes: "Pris per enhet (ekskl. mva)"
   invoice_column_tax_rate: "Avgiftsrate"
   invoice_tax_total: "MVA Totalt:"
   tax_invoice: "AVGIFTSFAKTURA"
   tax_total: "Totalavgift (%{rate}):"
+  invoice_shipping_type: "Type:"
   total_excl_tax: "Sum (Eks. avgift):"
   total_incl_tax: "Sum (Inkl. avgift):"
+  total_all_tax: "Total skatt:"
   abn: "Org. nr.:"
   acn: "MVA nr:"
   invoice_issued_on: "Fakturadato:"
@@ -2890,6 +2906,8 @@ nb:
   report_header_supplier: Leverandør
   report_header_producer: Produsent
   report_header_producer_suburb: Produsent Forstad
+  report_header_producer_tax_status: Avgiftsstatus for produsent
+  report_header_producer_charges_sales_tax?: MVA Registrert
   report_header_unit: Enhet
   report_header_group_buy_unit_quantity: Gruppekjøp Enhet Antall
   report_header_cost: Kostnad
@@ -2905,10 +2923,12 @@ nb:
   report_header_distributor_address: Distributøradresse
   report_header_distributor_city: By Distributør
   report_header_distributor_postcode: Postnummer Distributør
+  report_header_distributor_tax_status: Distributør Avgiftsstatus
   report_header_delivery_address: Leveringsadresse
   report_header_delivery_postcode: Postnummer Levering
   report_header_bulk_unit_size: Bulk Enhetsstørrelse
   report_header_weight: Vekt
+  report_header_final_weight_volume: Endelig (Vekt/Volum)
   report_header_height: Høyde
   report_header_width: Bredde
   report_header_depth: Dybde
@@ -2962,6 +2982,9 @@ nb:
   report_header_transaction_fee: Transaksjonsgebyr (ingen skatt)
   report_header_total_untaxable_admin: Samlede avgiftsfrie administreringsjusteringer (ingen skatt)
   report_header_total_taxable_admin: Sum skattepliktige adminintreringsjusteringer (inklusive skatt)
+  report_line_cost_of_produce: Produktkostnad
+  report_line_line_items: linjeelementer
+  report_header_last_completed_order_date: Siste fullførte bestillingsdato
   report_xero_configuration: Xero-konfigurasjon
   initial_invoice_number: "Opprinnelig fakturanummer"
   invoice_date: "Fakturadato"
@@ -3000,6 +3023,7 @@ nb:
   action_required: "Handling kreves"
   tag_rules: "Regler merkelapper"
   enterprise_fee_whole_order: Hele bestillingen
+  enterprise_fee_by_name: "%{name} gebyr av %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Den relasjonen er allerede etablert."
   validation_msg_at_least_one_hub: "^Minst én hub må være valgt"
   validation_msg_tax_category_cant_be_blank: "^Avgiftskategori kan ikke være blank"
@@ -3047,9 +3071,12 @@ nb:
   no_orders_found: "Ingen bestillinger funnet"
   order_information: "Bestillingsinformasjon"
   new_payment: "Ny betaling"
+  create_or_update_invoice: "Opprett eller Oppdater Faktura"
   date_completed: "Dato Fullført"
   amount: "Beløp"
+  invoice_number: "Fakturanummer"
   invoice_file: "Fil"
+  invalid_url: "'%{url}' er en ugyldig URL"
   state_names:
     ready: Klar
     pending: Venter
@@ -3084,6 +3111,7 @@ nb:
       deleting_item_will_cancel_order: "Denne operasjonen vil resultere i en eller flere tomme bestillinger, som vil bli kansellert. Ønsker du å fortsette?"
       modals:
         got_it: "Jeg forstår"
+        confirm: "Bekreft"
         close: "Lukk"
         continue: "Fortsett"
         cancel: "Avbryt"
@@ -3215,6 +3243,8 @@ nb:
           select_all_variants: "Velg alle %{total_number_of_variants} varianter"
           variants_loaded: "%{num_of_variants_loaded} av %{total_number_of_variants} Varianter lastet"
           loading_variants: "Laster varianter"
+          no_variants: "Ingen variant tilgjengelig for dette produktet (skjult via lagerinnstillinger)."
+          some_variants_hidden: "(Noen varianter kan være skjult via beholdningsinnstillinger)"
       tag_rules:
         shipping_method_tagged_top: "Leveringsmetoder merket"
         shipping_method_tagged_bottom: "er:"
@@ -3271,12 +3301,15 @@ nb:
           processing: "behandler"
           void: "ugyldig"
           invalid: "ugyldig"
-        quantity_adjusted: "Utilstrekkelig lager tilgjengelig. Ordrelinje oppdatert til maksimalt tilgjengelig antall."
+        quantity_unavailable: "Ikke nok beholdning tilgjengelig. Ordrelinjen ble ikke lagret!"
         quantity_unchanged: "Antall uendret fra forrige mengde."
         cancel_the_order_html: "Dette vil kansellere gjeldende bestilling.<br /> Er du sikker på at du vil fortsette?"
         cancel_the_order_send_cancelation_email: "Send en kanselleringsmail til kunden"
         restock_item: "Flytt til Varelager: returner denne varen til lager"
         restock_items: "Flytt til Varelager: returner alle varer til lager"
+        delete_line_items_html:
+          one: "Dette vil slette ett linjeelement fra bestillingen.<br /> Er du sikker på at du vil fortsette?"
+          other: "Dette vil slette %{count} linjeelementer fra bestillingen.<br /> Er du sikker på at du vil fortsette?"
       resend_user_email_confirmation:
         resend: "Send på nytt"
         sending: "Send på nytt ..."
@@ -3564,7 +3597,15 @@ nb:
   first: "Først"
   previous: "Tidligere"
   last: "Siste"
+  webhook_endpoints:
+    create:
+      success: Webhook-endepunkt ble opprettet
+      error: Webhook-endepunkt kunne ikke opprettes
+    destroy:
+      success: Webhook-endepunkt ble slettet
+      error: Webhook-endepunkt kunne ikke slettes
   spree:
+    order_updated: "Bestilling oppdatert"
     add_country: "Legg til land"
     add_state: "Legg til fylke"
     adjustment: "Justering"
@@ -3588,6 +3629,7 @@ nb:
     gateway_error: "Betalingen feilet"
     more: "Mer"
     new_adjustment: "Ny justering"
+    new_order_completed: "Ny bestilling fullført"
     new_tax_category: "Ny avgiftskategori"
     new_taxon: "Ny kategori"
     new_user: "Ny bruker"
@@ -3603,6 +3645,8 @@ nb:
     server_error: "Serverfeil"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Henting på gården"
+      delivery: "Signert, forseglet, levert"
     start_date: "Startdato"
     successfully_removed: "Fjernet OK"
     taxonomy_edit: "Rediger kategori"
@@ -3686,6 +3730,7 @@ nb:
     display_currency: "Vis valuta"
     choose_currency: "Velg Valuta"
     mail_method_settings: "Innstillinger for epost-metode"
+    mail_settings_notice_html: "<b>Endringer som gjøres her vil være midlertidige</b> kun for feilsøking, og kan bli tilbakestilt i fremtiden.<br> Permanente endringer kan gjøres ved å oppdatere instansens hemmeligheter og klargjøre dem ved å bruke <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Ta kontakt med OFNs globale team for mer informasjon."
     general: "Generelt"
     enable_mail_delivery: "Aktiver epost-levering"
     send_mails_as: "Send Eposter Som"
@@ -3732,6 +3777,7 @@ nb:
     shipping_categories: "Fraktkategorier"
     new_shipping_category: "Ny Fraktkategori"
     back_to_shipping_categories: "Tilbake til Leveringskategorier"
+    editing_shipping_category: "Redigere fraktkategori"
     name: "Navn"
     description: "Beskrivelse"
     type: "Type"
@@ -3806,6 +3852,7 @@ nb:
       messages:
         included_price_validation: "kan ikke velges med mindre du har angitt en standard Avgiftssone"
         blank: "kan ikke være tomt"
+        invalid_instagram_url: "Må kun være brukernavn, f.eks. the_prof"
     layouts:
       admin:
         login_nav:
@@ -3915,7 +3962,11 @@ nb:
           results_found: "%{number} Resultater funnet."
           viewing: "Ser %{start} til %{end}."
           print_invoices: "Skriv ut fakturaer"
+          cancel_orders: "Avbryt bestillinger"
           resend_confirmation: "Send Bekreftelse på nytt"
+          resend_confirmation_confirm_html: "Dette vil sende e-postbekreftelsen til kunden på nytt.<br /> Er du sikker på at du vil fortsette?"
+          send_invoice: "Send Fakturaer"
+          send_invoice_confirm_html: "Dette vil sende kundefakturaer på e-post for alle valgte komplette bestillinger.<br> Er du sikker på at du vil fortsette?"
           selected:
             zero: "Ingen ordre valgt"
             one: "1 ordre valgt"
@@ -3934,9 +3985,12 @@ nb:
           from: "Fra"
           to: "Fakturér til"
           shipping: "Levering"
+          order_number: "Bestillingsnummer"
+          invoice_number: "Fakturanummer"
           payments_list:
             date_time: "Dato/tid"
             payment_method: "Betalingsmetode"
+            payment_state: "Betalingstilstand"
             amount: "Antall"
         note:
           note_label: "Merk:"
@@ -3973,6 +4027,8 @@ nb:
             many: "Du har %{count} aktive bestillingssykluser."
             other: "Du har %{count} aktive bestillingssykluser."
           manage_order_cycles: "BEHANDLE BESTILLINGSRUNDER"
+        version:
+          view_all_releases: Se alle utgivelser
       shipping_methods:
         index:
           shipping_methods: "Leveringsmetoder"
@@ -4062,10 +4118,12 @@ nb:
             no_payment_via_admin_backend: Paypal-betalinger kan ikke behandles i Backoffice
       products:
         image_upload_error: "Last opp bildet i JPG-, PNG-, GIF-, SVG- eller WEBP-format."
+        image_not_processable: "Bildevedlegg er ikke et gyldig bilde."
         new:
           title: "Nytt produkt"
           new_product: "Nytt produkt"
           supplier: "Leverandør"
+          supplier_select_placeholder: "Velg en leverandør"
           product_name: "Produktnavn"
           units: "Enhetsstørrelse"
           value: "Verdi"
@@ -4110,6 +4168,9 @@ nb:
           select_and_search: "Velg filtre og klikk på %{option} for å få tilgang til dine data."
         customer_names_message:
           customer_names_tip: "Hvis kundenavnene er skjult for bestillinger du har levert, kan du kontakte distributøren og spørre om de kan oppdatere sine butikkinnstillinger slik at leverandørene kan se kundenavn."
+        products_and_inventory:
+          all_products:
+            message: "Vær oppmerksom på at rapporterte lagernivåer kun er fra leverandørens produktlister. Hvis du bruker Inventar til å administrere lagerbeholdningen, vil disse verdiene bli ignorert i denne rapporten."
       users:
         index:
           listing_users: "Lister opp brukere"
@@ -4129,6 +4190,7 @@ nb:
           enterprise_limit: "Bedriftsgrense"
           confirm_password: "Bekreft Passord"
           password: "Passord"
+          locale: "Språk"
         email_confirmation:
           confirmation_pending: "Epostbekreftelse venter. Vi har sendt en bekreftelses-epost til %{address}."
       variants:
@@ -4279,6 +4341,8 @@ nb:
         thanks: "Takk for handelen."
         track_information: "Sporingsinformasjon: %{tracking}"
         track_link: "Sporingslink: %{url}"
+        picked_up_instructions: "Din bestilling fra %{distributor} har blitt hentet"
+        picked_up_subject: "Varsel ved Henting"
     test_mailer:
       test_email:
         greeting: "Gratulerer!"
@@ -4327,6 +4391,16 @@ nb:
       api_keys:
         regenerate_key: "Regenerer Nøkkel"
         title: API-nøkkel
+      webhook_endpoints:
+        title: Webhook-endepunkter
+        description: Hendelser i systemet kan utløse webhooks til eksterne systemer.
+        event_types:
+          order_cycle_opened: Bestillingsrunde åpnet
+        event_type:
+          header: Hendelsestype
+        url:
+          header: Endepunkt URL
+          create_placeholder: Skriv inn URL-en til det eksterne webhook-endepunktet
       developer_settings:
         title: Utviklerinnstillinger
       form:
@@ -4443,9 +4517,12 @@ nb:
         one: "1 år"
         other: "%{count} år"
   components:
+    multiple_checked_select:
+      filter_placeholder: "Filteralternativer"
     search_input:
       placeholder: Søk
     selector_with_filter:
+      selected_items: "%{count} valgt"
       search_placeholder: Søk
     pagination:
       next: Neste

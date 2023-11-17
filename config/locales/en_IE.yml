@@ -58,8 +58,23 @@ en_IE:
         orders_close_at: Close date
       variant_override:
         count_on_hand: "In Stock"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Calculator Flat Percent:"
+        preferred_amount: "Calculator Amount:"
+        preferred_first_item: "Calculator First Item:"
+        preferred_additional_item: "Calculator Additional Item Cost:"
+        preferred_max_items: "Calculator Max Items:"
+        preferred_minimal_amount: "Calculator Minimal Amount:"
+        preferred_normal_amount: "Calculator Normal Amount:"
+        preferred_discount_amount: "Calculator Discount Amount:"
+        preferred_unit_from_list: "Calculator Unit From List:"
+        preferred_per_unit: "Calculator Per Unit:"
+      enterprise:
+        white_label_logo_link: "Link for the logo used in shopfront"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax categeory requires a per-item calculator."
         spree/user:
           attributes:
             email:
@@ -82,8 +97,31 @@ en_IE:
             on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
       messages:
+        confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
+        too_short: "is too short (minimum is %{count} characters)"
   errors:
+    messages:
+      content_type_invalid: "has an invalid content type"
+      file_size_out_of_range: "size %{file_size} is not between required range"
+      limit_out_of_range: "total number is out of range"
+      image_metadata_missing: "is not a valid image"
+      dimension_min_inclusion: "must be greater than or equal to %{width} x %{height} pixel."
+      dimension_max_inclusion: "must be less than or equal to %{width} x %{height} pixel."
+      dimension_width_inclusion: "width is not included between %{min} and %{max} pixel."
+      dimension_height_inclusion: "height is not included between %{min} and %{max} pixel."
+      dimension_width_greater_than_or_equal_to: "width must be greater than or equal to %{length} pixel."
+      dimension_height_greater_than_or_equal_to: "height must be greater than or equal to %{length} pixel."
+      dimension_width_less_than_or_equal_to: "width must be less than or equal to %{length} pixel."
+      dimension_height_less_than_or_equal_to: "height must be less than or equal to %{length} pixel."
+      dimension_width_equal_to: "width must be equal to %{length} pixel."
+      dimension_height_equal_to: "height must be equal to %{length} pixel."
+      aspect_ratio_not_square: "must be a square image"
+      aspect_ratio_not_portrait: "must be a portrait image"
+      aspect_ratio_not_landscape: "must be a landscape image"
+      aspect_ratio_is_not: "must have an aspect ratio of %{aspect_ratio}"
+      aspect_ratio_unknown: "has an unknown aspect ratio"
+      image_not_processable: "is not a valid image"
     not_found:
       title: "The page you were looking for doesn't exist (404)"
       message_html: "<b>Please try again</b> <p>This might be a temporary problem. Please click the back button to return to the previous screen or go back to <a href='/'>Home</a> and try again.</p> <b>Contact support</b> <p>If the problem persists or is urgent, please tell us about it. Find our contact details from the global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>It really helps us if you can give as much detail as possible about what the missing page is about.</p>"
@@ -93,6 +131,7 @@ en_IE:
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"
+    stimulus_reflex_error: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all errors and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -252,6 +291,10 @@ en_IE:
     integer_array_validator:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
+  report_job:
+    report_failed: |
+        This report failed. It may be too big to process.
+        We will look into it but please let us know if the problem persists.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -271,6 +314,13 @@ en_IE:
     order_cycle:
       subject: "Order cycle report for %{producer}"
   provider_settings: "Provider settings"
+  report_mailer:
+    report_ready:
+      subject: "Report ready"
+      heading: "Report ready for download"
+      intro: |
+          The link below will expire after one week.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Dear Customer,"
@@ -336,7 +386,10 @@ en_IE:
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
   must_have_valid_business_number: "Please enter your company number."
   invoice: "Invoice"
+  invoices: "Invoices"
+  file: "File"
   active: "Active"
+  download: "Download"
   cancelled: "Cancelled"
   more: "More"
   say_no: "No"
@@ -394,6 +447,7 @@ en_IE:
   none: None
   notes: Notes
   error: Error
+  voucher: Voucher
   processing_payment: "Processing payment..."
   no_pending_payments: "No pending payments"
   invalid_payment_state: "Invalid payment state: %{state}"
@@ -688,15 +742,42 @@ en_IE:
       index:
         header:
           title: Bulk Edit Products
+        loading: Loading your products
       sort:
         pagination:
+          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
+          per_page:
+            show: Show
+            per_page: "%{num} per page"
           clear_search: Clear search
       filters:
+        search_products: Search for products
+        all_producers: All producers
+        all_categories: All categories
         producers:
           label: Producers
         categories:
           label: Categories
         search: Search
+      no_products:
+        no_products_found: No products found
+        import_products: Import multiple products
+        no_products_found_for_search: No products found for your search criteria
+      table:
+        changed_summary:
+          one: "%{count} product modified."
+          other: "%{count} products modified."
+        error_summary:
+          saved:
+            one: "%{count} product was saved correctly, but "
+            other: "%{count} products were saved correctly, but "
+          invalid:
+            one: "%{count} product could not be saved. Please review the errors and try again."
+            other: "%{count} products could not be saved. Please review the errors and try again."
+        save: Save changes
+        reset: Discard changes
+      bulk_update:
+        success: "Products successfully updated"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -838,6 +919,7 @@ en_IE:
     orders:
       edit:
         order_sure_want_to: Are you sure you want to %{event} this order?
+        voucher_tax_included_in_price: "%{label} (tax included in voucher)"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -1100,9 +1182,30 @@ en_IE:
           email_confirmed: "Email confirmed"
           email_not_confirmed: "Email not confirmed"
         vouchers:
+          legend: Vouchers
+          voucher_code: Voucher Code
           rate: Rate
+          label: Label
+          purpose: Purpose
+          expiry: Expiry
+          use_limit: Use/Limit
           customers: Customer
+          net_value: Net Value
           active: Active?
+          add_new: Add New
+          no_voucher_yet: No Vouchers yet
+        white_label:
+          legend: "White Label"
+          hide_ofn_navigation: "Hide OFN navigation"
+          upload_logo: "Logo used in shopfront"
+          remove_logo: "Remove logo"
+          remove_logo_confirm: "Are you sure you want to remove this logo?"
+          remove_logo_success: "Logo removed"
+          white_label_logo_link_label: "Link for the logo used in shopfront"
+          hide_groups_tab: "Hide groups tab in shopfront"
+          create_custom_tab: "Create custom tab in shopfront"
+          custom_tab_title: "Title for custom tab"
+          custom_tab_content: "Content for custom tab"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1313,6 +1416,10 @@ en_IE:
         could_not_cancel_the_order: Could not cancel the order
       resume:
         could_not_resume_the_order: Could not resume the order
+    select2:
+      minimal_search_length: Please enter %{count} or more characters
+      searching: Searching...
+      no_matches: No matches found
     shared:
       user_guide_link:
         user_guide: User Guide
@@ -1338,6 +1445,8 @@ en_IE:
           tag_rules: "Tag Rules"
           shop_preferences: "Shop Preferences"
           users: "Users"
+          vouchers: Vouchers
+          white_label: "White Label"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
@@ -1353,6 +1462,7 @@ en_IE:
       email_confirmation: "Email confirmation is pending. We've sent a confirmation email to %{email}."
       not_visible: "%{enterprise} is not visible and so cannot be found on the map or in searches"
     reports:
+      deprecated: "This report is deprecated and will be removed in a future release."
       hidden: HIDDEN
       unitsize: UNITSIZE
       total: TOTAL
@@ -1376,6 +1486,17 @@ en_IE:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      download:
+        button: "Download Report"
+      show:
+        report_taking_longer: >
+            Sorry, this report took too long to process. It may contain a lot of data
+            or we are busy with other reports. You can try again later.
+        report_taking_longer_html: >
+            This report is taking longer to process. It may contain a lot of data
+            or we are busy with other reports. Once it's finished, we'll notify you
+            via email.
+        report_link_label: Download report (when available)
       revenues_by_hub:
         name: Revenues By Hub
         description: Revenues by hub
@@ -1407,6 +1528,8 @@ en_IE:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
+      enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
         no_report_type: "Please specify a report type"
         report_not_found: "Report not found"
@@ -1545,9 +1668,14 @@ en_IE:
         associated_subscriptions_error: This schedule cannot be deleted because it has associated subscriptions
     vouchers:
       new:
+        legend: New Voucher
         back: Back
         save: Save
+        voucher_code: Voucher Code
         voucher_amount: Amount
+        voucher_type: Voucher Type
+        flat_rate: Flat
+        percentage_rate: Percentage (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "Connection to Stripe has been cancelled"
@@ -1662,19 +1790,24 @@ en_IE:
   invoice_column_price: "Price"
   invoice_column_item: "Item"
   invoice_column_qty: "Qty"
+  invoice_column_weight_volume: "Weight / VOL."
   invoice_column_unit_price_with_taxes: "Unit price (Incl. tax)"
   invoice_column_unit_price_without_taxes: "Unit price (Excl. tax)"
   invoice_column_price_with_taxes: "Total price (Incl. tax)"
   invoice_column_price_without_taxes: "Total price (Excl. tax)"
+  invoice_column_price_per_unit_without_taxes: "Price Per unit (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
   invoice_tax_total: "VAT Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
+  invoice_shipping_type: "Type:"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
+  total_all_tax: "Total tax:"
   abn: "Company Number:"
   acn: "Charity Number:"
   invoice_issued_on: "Invoice issued on:"
+  order_number: "Order number:"
   date_of_transaction: "Date of transaction:"
   menu_1_title: "Shops"
   menu_1_url: "/shops"
@@ -1923,6 +2056,14 @@ en_IE:
       explaination: You can review and confirm your order in the next step which includes the final costs.
       submit: Next - Order summary
       cancel: Back to Your details
+      voucher:
+        voucher: "%{voucher_amount} Voucher"
+        apply_voucher: Apply voucher
+        apply: Apply
+        placeholder: Enter voucher code
+        remove_code: Remove code
+        confirm_delete: Are you sure you want to remove the voucher?
+        warning_forfeit_remaining_amount: "Note: if your order total is less than your voucher you may not be able to spend the remaining value."
     step3:
       delivery_details:
         title: Delivery details
@@ -1956,10 +2097,12 @@ en_IE:
       select_a_payment_method: Select a payment method
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
       voucher_not_found: Not found
+      add_voucher_error: There was an error while adding the voucher
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
   order_payment: "Paying via:"
+  no_payment_required: "No payment required"
   order_billing_address: Billing address
   order_delivery_on: Delivery on
   order_delivery_address: Delivery address
@@ -2456,6 +2599,7 @@ en_IE:
   shipping_method_destroy_error: "That shipping method cannot be deleted as it is referenced by an order: %{number}."
   fees: "Fees"
   fee_name: "Fee Name"
+  fee_owner: "Fee Owner"
   item_cost: "Item cost"
   bulk: "Bulk"
   shop_variant_quantity_min: "min"
@@ -2838,6 +2982,9 @@ en_IE:
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_line_cost_of_produce: Cost of produce
+  report_line_line_items: line items
+  report_header_last_completed_order_date: Last completed order date
   report_xero_configuration: Xero Configuration
   initial_invoice_number: "Initial invoice number"
   invoice_date: "Invoice date"
@@ -2924,8 +3071,12 @@ en_IE:
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
+  create_or_update_invoice: "Create or Update Invoice"
   date_completed: "Date Completed"
   amount: "Amount"
+  invoice_number: "Invoice Number"
+  invoice_file: "File"
+  invalid_url: "'%{url}' is an invalid URL"
   state_names:
     ready: Ready
     pending: Pending
@@ -3098,6 +3249,8 @@ en_IE:
           select_all_variants: "Select All %{total_number_of_variants} Variants"
           variants_loaded: "%{num_of_variants_loaded} of %{total_number_of_variants} Variants Loaded"
           loading_variants: "Loading Variants"
+          no_variants: "No variant available for this product (hidden via inventory settings)."
+          some_variants_hidden: "(Some variants might be hidden via inventory settings)"
       tag_rules:
         shipping_method_tagged_top: "Shipping methods tagged"
         shipping_method_tagged_bottom: "are:"
@@ -3154,7 +3307,6 @@ en_IE:
           processing: "processing"
           void: "void"
           invalid: "invalid"
-        quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
         cancel_the_order_html: "This will cancel the current order.<br />Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
@@ -3461,6 +3613,7 @@ en_IE:
       success: Webhook endpoint successfully deleted
       error: Webhook endpoint failed to delete
   spree:
+    order_updated: "Order Updated"
     add_country: "Add country"
     add_state: "Add state"
     adjustment: "Adjustment"
@@ -3484,6 +3637,7 @@ en_IE:
     gateway_error: "Payment failed"
     more: "More"
     new_adjustment: "New adjustment"
+    new_order_completed: "New order completed"
     new_tax_category: "New Tax Category"
     new_taxon: "New taxon"
     new_user: "New user"
@@ -3631,6 +3785,7 @@ en_IE:
     shipping_categories: "Shipping Categories"
     new_shipping_category: "New Shipping Category"
     back_to_shipping_categories: "Back To Shipping Categories"
+    editing_shipping_category: "Editing Shipping Category"
     name: "Name"
     description: "Description"
     type: "Type"
@@ -3838,9 +3993,12 @@ en_IE:
           from: "From"
           to: "Bill to"
           shipping: "Shipping"
+          order_number: "Order Number"
+          invoice_number: "Invoice Number"
           payments_list:
             date_time: "Date/time"
             payment_method: "Payment method"
+            payment_state: "Payment state"
             amount: "Amount"
         note:
           note_label: "Note:"
@@ -3877,6 +4035,8 @@ en_IE:
             many: "You have %{count} active order cycles."
             other: "You have %{count} active order cycles."
           manage_order_cycles: "MANAGE ORDER CYCLES"
+        version:
+          view_all_releases: View all releases
       shipping_methods:
         index:
           shipping_methods: "Shipping Methods"
@@ -3966,6 +4126,7 @@ en_IE:
             no_payment_via_admin_backend: Paypal payments cannot be captured in the Backoffice
       products:
         image_upload_error: "Please upload the image in JPG, PNG, GIF, SVG or WEBP format."
+        image_not_processable: "Image attachment is not a valid image."
         new:
           title: "New Product"
           new_product: "New Product"
@@ -4037,6 +4198,7 @@ en_IE:
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"
+          locale: "Language"
         email_confirmation:
           confirmation_pending: "Email confirmation is pending. We've sent a confirmation email to %{address}."
       variants:

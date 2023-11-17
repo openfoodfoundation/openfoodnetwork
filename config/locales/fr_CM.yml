@@ -1,10 +1,5 @@
 fr_CM:
   language_name: "Français"
-  date:
-    day_names: [dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi]
-    abbr_day_names: [dim, lun, mar, mer, jeu, ven, sam]
-    month_names: [~, janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
-    abbr_month_names: [~, jan, fév, mar, avr, mai, jun, jui, aoû, sep, oct, nov, déc]
   activerecord:
     models:
       spree/product: Produit
@@ -2995,7 +2990,6 @@ fr_CM:
           processing: "en traitement"
           void: "faire un avoir"
           invalid: "invalide"
-        quantity_adjusted: "Le stock disponible est insuffisant. La quantité a été mise à jour en fonction du stock restant."
         quantity_unchanged: "La quantité n'a pas été modifiée."
       resend_user_email_confirmation:
         resend: "Renvoyer"
@@ -3335,6 +3329,7 @@ fr_CM:
     gateway_error: "Le paiement a échoué"
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
+    new_order_completed: "Nouvelle commande finalisée"
     new_tax_category: "Nouvelle catégorie de taxe"
     new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"
@@ -4132,6 +4127,7 @@ fr_CM:
           one: Paiement
           many: Paiements
           other: Paiements
+    unit: unité
   datetime:
     distance_in_words:
       about_x_hours:

@@ -1,10 +1,5 @@
 de_CH:
   language_name: "Deutsch"
-  date:
-    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
-    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
-    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
-    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
   activerecord:
     models:
       spree/product: Produkt
@@ -3078,7 +3073,6 @@ de_CH:
           processing: "in Verarbeitung"
           void: "keine Angabe"
           invalid: "ungültig"
-        quantity_adjusted: "Kein ausreichender Lagerbestand vorhanden. Die Position wurde auf die maximal verfügbare Menge aktualisiert."
         quantity_unchanged: "Menge wurde nicht geändert."
         cancel_the_order_html: "Wenn Sie fortfahren, wird die aktuelle Bestellung storniert.<br /> Sind Sie sicher, dass Sie fortfahren möchten?"
         cancel_the_order_send_cancelation_email: "Bestätigung der Stornierung per E-Mail an den Kunden senden"
@@ -3397,6 +3391,7 @@ de_CH:
     gateway_error: "Zahlung fehlgeschlagen"
     more: "Mehr"
     new_adjustment: "Neue Anpassung"
+    new_order_completed: "Neue Bestellung abgeschlossen"
     new_tax_category: "Neue Steuerkategorie"
     new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"

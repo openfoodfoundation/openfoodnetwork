@@ -16,6 +16,7 @@ sv:
         shipment_state: Leveransstatus
         state: Region
       spree/payment:
+        amount: Belopp
         state: Region
       spree/product:
         price: "Pris"
@@ -33,6 +34,8 @@ sv:
         blank: "kan inte vara blank"
   customer_instructions: "Kundinstruktioner"
   devise:
+    confirmations:
+      not_confirmed: "Din e-postadress kunde inte bekräftas. Du kanske redan har genomfört det här steget?"
     failure:
       invalid: |
           Ogiltig e-post eller lösenord.
@@ -53,6 +56,11 @@ sv:
   producer_mailer:
     order_cycle:
       subject: "Sammanställning över beställningsperiod för %{producer}"
+  subscription_mailer:
+    placement_summary_email:
+      greeting: "Hej %{name},"
+    confirmation_summary_email:
+      greeting: "Hej %{name},"
   home: "OFN"
   title: "Open Food Network"
   site_meta_description: "Vi börjar från grunden. Med bönder och odlare redo att berätta sina berättelser stolt och verkligt. Med distributörer redo att ansluta människor med produkter rättvist och ärligt. Med köpare som tror att bättre veckovisa köpbeslut kan ..."
@@ -75,6 +83,8 @@ sv:
   cancelled: "Avbokad"
   say_no: "Nej"
   say_yes: "Ja"
+  bill_address: Fakturerirngsadress
+  ship_address: Leveransadress
   sort_order_cycles_on_shopfront_by: "Sortera butikens beställningsomgångar efter"
   required_fields: Obligatoriska fält är märkta med en asterisk
   select_continue: Markera och fortsätt
@@ -107,6 +117,7 @@ sv:
   supplier_only: 'Endast leverantör '
   weight: Vikt
   volume: Volym
+  items: Artiklar
   summary: Sammanfattning
   detailed: Detaljerad
   updated: Uppdaterad
@@ -118,6 +129,8 @@ sv:
   blocked_cookies_alert: "Din webbläsare kan blockera cookies som behövs för att använda den här butiken. Klicka nedan för att tillåta cookies och ladda om sidan."
   allow_cookies: "Tillåt cookies"
   none: Ingen
+  error: Fel
+  quantity: Antal
   ok: OK
   on_hand: "På lager"
   on hand: "På lager"
@@ -159,6 +172,7 @@ sv:
         inherits_properties: "Ärva egenskaper?"
       actions:
         edit: Redigera
+    customer: Kund
     date: Datum
     email: epost
     name: Namn
@@ -168,13 +182,18 @@ sv:
     on_demand: På begäran
     on_demand?: På begäran?
     order_cycle: Beställningsomgång
+    payment: 'Betalning '
+    payment_method: Betalningsmetod
     phone: Telefon
     price: Pris
     producer: Producent
     product: Produkt
     quantity: Kvantitet
+    shipping: Frakt
+    shipping_method: Fraktmetod
     shop: Butik
     sku: SKU
+    status_state: Region
     tags: Taggar
     variant: Variant
     weight: Vikt
@@ -191,6 +210,7 @@ sv:
     clear: Rensa
     cancel: Avbryt
     back: Backa
+    show_more: Visa mer
     columns: Kolumner
     actions: Handlingar
     viewing: "Tittar på: %{current_view_name}"
@@ -208,6 +228,10 @@ sv:
       edit:
         title: "Fakturainställningar"
         invoice_style2?: "Använd den alternativa faktureringsmodellen som inkluderar totala skattefördelning per beräkning och skatt per artikel (ännu inte passande för länder som visar priser exklusive skatt)"
+    stripe_connect_settings:
+      edit:
+        settings: "Inställningar"
+        status: Status
     customers:
       index:
         new_customer: "Ny kund"
@@ -494,6 +518,9 @@ sv:
           legend: "Social"
           twitter_placeholder: "t.ex. @the_prof"
           facebook_placeholder: "eg. www.facebook.com/PageNameHere"
+        stripe_connect:
+          confirm_modal:
+            cancel: Avbryt
         tag_rules:
           legend: "Regler för etiketter"
           default_rules:
@@ -611,7 +638,9 @@ sv:
         select_all: "Markera alla"
         shipping_methods: "Transportsätt"
       exchange_form:
+        pickup_time_tip: När beställningar från denna Beställningsomgång kommer att vara redo för kunden
         pickup_instructions_placeholder: "Instruktioner för upphämtning"
+        pickup_instructions_tip: Dessa instruktioner visas för kunderna efter att de har slutfört en beställning
         pickup_time_placeholder: "Klar för (dvs. Datum/Tid)"
         receival_instructions_placeholder: "Instruktioner för mottagning"
         remove: 'Ta bort'
@@ -651,6 +680,8 @@ sv:
         products: Produkter
         fees: Avgifter
         tags: Taggar
+      destroy_errors:
+        orders_present: Denna beställningsomgång har valts av en kund och kan inte raderas. För att förhindra att kunder får tillgång till det, stäng det istället.
       date_warning:
         cancel: Avbryt
     producer_properties:
@@ -877,8 +908,10 @@ sv:
   no_shipping_or_payment: inga frakt- eller betalningsmetoder
   unconfirmed: obekräftad
   description: "Beskrivning"
+  label_shop: "Butik "
   label_shops: "Butiker"
   label_map: "Karta"
+  label_producer: "Producent"
   label_producers: "Producenter "
   label_groups: "Grupper"
   label_about: "Om oss"
@@ -1052,6 +1085,8 @@ sv:
   email_signup_welcome: "Välkommen till %{sitename}!"
   email_signup_text: "Tack för att du anslutit dig till vårt nätverk. Om du är kund, vi vill introducera dig för många utmärkta odlare och ett stort urval av god mat. Om du är producent eller matföretag är vi glada att ha dig som en del av vårt nätverk.\n."
   email_signup_help_html: "Vi uppskattar alla frågor och synpunkter; du kan använda  <em>Send Feedback</em> knappen på sidan eller skicka e-post till %{email}"
+  invite_email:
+    greeting: "Hallå!"
   producer_mail_greeting: "Kära"
   producer_mail_order_text: "Detta är en summering av order för dina produkter:"
   producer_mail_delivery_instructions: "Upphämtnings- / leveransinstruktioner:"
@@ -1475,6 +1510,7 @@ sv:
   create: "Skapa"
   search: "Sök"
   supplier: "Leverantör"
+  units: "Enhetsstorlek"
   coordinator: "Koordinator"
   distributor: "Distributör"
   enterprise_fees: "Företagsavgifter"
@@ -1528,6 +1564,7 @@ sv:
   spree_admin_unit_description: Enhetsbeskrivning
   spree_admin_variant_unit: Variant enhet
   spree_admin_variant_unit_scale: Variant enhetsskala
+  spree_admin_supplier: Leverantör
   spree_admin_variant_unit_name: 'Variant enhetsnamn '
   change_package: "Ändra förpackning"
   spree_admin_single_enterprise_hint: "Tips: För att folk skall hitta dig lättare, slå på din reklam under"
@@ -1754,6 +1791,7 @@ sv:
   web: "Webb"
   primary_details: "Viktiga detaljer"
   social: "Social"
+  shipping: "Frakt"
   shipping_methods: "Transportmetoder"
   payment_methods: "Betalningsmetoder"
   payment_method_fee: "Transaktionsvgift"
@@ -1798,6 +1836,9 @@ sv:
   order_cycles_email_to_producers_notice: 'E-postmeddelanden till producenter har blivit placerade i kön för att skickas.'
   order_cycles_no_permission_to_coordinate_error: "Ingen av dina företag har tillstånd att samordna en beställningsomgång"
   order_cycles_no_permission_to_create_error: "Du har inte behörighet att skapa en beställningsomgång som samordnas av företaget"
+  amount: "Belopp"
+  state_names:
+    ready: Klar
   js:
     saving: 'Sparar...'
     changes_saved: 'Ändringar sparade.'
@@ -1818,6 +1859,7 @@ sv:
     admin:
       modals:
         got_it: "Förstått"
+        close: "Stängd"
         continue: "Fortsätt"
         cancel: "Avbryt"
         tag_rule_help:
@@ -2113,6 +2155,8 @@ sv:
     calculator: "Beräkning"
     create: "Skapa"
     amount: "Belopp"
+    email: E-post
+    date: "Datum"
     inventory: Lager
     zipcode: Postkod
     payment_method: "Betalningsmetod"
@@ -2176,6 +2220,7 @@ sv:
           tax_invoice: "FAKTURA"
           code: "Kod"
           from: "Från"
+          shipping: "Frakt"
           payments_list:
             amount: "Belopp"
         form:
@@ -2214,6 +2259,8 @@ sv:
           products_distributor: "Distributör"
           active_yes: "Ja"
           active_no: "Nej"
+        stripe_connect:
+          status: Status
         form:
           name: "Namn"
           description: "Beskrivning"
@@ -2229,6 +2276,7 @@ sv:
           unit_price: "Styckpris"
           on_hand: "På lager"
           on_demand: "På begäran"
+        unit_name_placeholder: 't.ex. klasar'
         index:
           header:
             title: 'Redigera Omfång av Produkter '
@@ -2244,6 +2292,8 @@ sv:
             tax_category: Skattekategori
             inherits_properties?: Ärva egenskaper?
             av_on: "Md. På"
+        display_as:
+          display_as: Visa som
       users:
         index:
           user: "Användare"
@@ -2327,11 +2377,18 @@ sv:
       confirm: bekräfta
       delivery: leverans
       payment: betalning
+      pending: oavslutad
       resumed: återupptagen
       returned: returnerad
+    subscription_state:
+      pending: oavslutad
     paypal:
       refund_amount: "Belopp"
     users:
+      orders:
+        open_orders: Öppna beställningar
+      transactions:
+        transaction_history: Transaktionshistorik
       open_orders:
         order: Beställningar
         shop: 'Butik '
@@ -2343,6 +2400,11 @@ sv:
         closed: Stängd
         until: Fram tills
       past_orders:
+        order: Beställningar
+        shop: 'Butik '
+        items: Artiklar
+        total: Summa
+        paid?: Betald?
         status: Status
         cancelled: Avbokad
   components:

@@ -3103,7 +3103,6 @@ hu:
           processing: "feldolgozás"
           void: "üres"
           invalid: "érvénytelen"
-        quantity_adjusted: "Nem áll rendelkezésre elegendő készlet. A sor frissítve a maximális elérhető mennyiségre."
         quantity_unchanged: "A mennyiség nem változott az előző mennyiséghez képest."
         cancel_the_order_html: "Ez megszakítja a vásárlási folyamatot. Biztosan folytatja?"
         cancel_the_order_send_cancelation_email: "A törlés elküldése a vásárlónak, emailben."
@@ -3424,6 +3423,7 @@ hu:
     gateway_error: "Fizetés meghiúsult"
     more: "Több"
     new_adjustment: "Új beállítás"
+    new_order_completed: "Új megrendelés elkészült"
     new_tax_category: "Új adókategória"
     new_taxon: "Új taxon"
     new_user: "Új felhasználó"
@@ -4223,6 +4223,7 @@ hu:
         spree/payment:
           one: Fizetés
           other: Kifizetések
+    unit: Mértékegység
   datetime:
     distance_in_words:
       about_x_hours:

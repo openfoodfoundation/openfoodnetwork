@@ -1,10 +1,5 @@
 fr_BE:
   language_name: "Français"
-  date:
-    day_names: [dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi]
-    abbr_day_names: [dim, lun, mar, mer, jeu, ven, sam]
-    month_names: [~, janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
-    abbr_month_names: [~, jan, fév, mar, avr, mai, jun, jui, aoû, sep, oct, nov, déc]
   activerecord:
     models:
       spree/product: Produit
@@ -65,6 +60,10 @@ fr_BE:
         count_on_hand: "En stock"
       spree/payment_method/calculator:
         preferred_flat_percent: "Calculateur à pourcentage fixe"
+        preferred_amount: "Montant du calculateur :"
+        preferred_first_item: "Premier élément de la calculatrice :"
+        preferred_additional_item: "Coût supplémentaire de l'article :"
+        preferred_max_items: "Nombre maximum d'éléments de la calculatrice :"
       enterprise:
         white_label_logo_link: "Lien pour le logo utilisé en vitrine"
     errors:
@@ -96,8 +95,36 @@ fr_BE:
         blank: "Champ obligatoire"
   errors:
     messages:
+      content_type_invalid: "a un type de contenu non valide"
+      file_size_out_of_range: "la taille %{file_size} n'est pas comprise dans la plage requise"
+      limit_out_of_range: "le nombre total est hors plage"
       image_metadata_missing: "n'est pas une image valide"
+      dimension_min_inclusion: "doit être supérieur ou égal à %{width} x %{height} pixel."
+      dimension_max_inclusion: "doit être inférieur ou égal à %{width} x %{height} pixel."
+      dimension_width_inclusion: "la largeur n'est pas incluse entre les pixels %{min} et %{max} ."
+      dimension_height_inclusion: "la hauteur n'est pas incluse entre %{min} et %{max} pixel."
+      dimension_width_greater_than_or_equal_to: "la largeur doit être supérieure ou égale au pixel %{length} ."
+      dimension_height_greater_than_or_equal_to: "la hauteur doit être supérieure ou égale au pixel %{length} ."
+      dimension_width_less_than_or_equal_to: "la largeur doit être inférieure ou égale au pixel %{length} ."
+      dimension_height_less_than_or_equal_to: "la hauteur doit être inférieure ou égale au pixel %{length} ."
+      dimension_width_equal_to: "la largeur doit être égale au pixel %{length} ."
+      dimension_height_equal_to: "la hauteur doit être égale au pixel %{length} ."
+      aspect_ratio_not_square: "doit être une image carrée"
+      aspect_ratio_not_portrait: "doit être une image de portrait"
+      aspect_ratio_not_landscape: "doit être une image de paysage"
+      aspect_ratio_is_not: "doit avoir un rapport hauteur / largeur de %{aspect_ratio}"
+      aspect_ratio_unknown: "a un rapport hauteur/largeur inconnu"
       image_not_processable: "n'est pas une image valide"
+    not_found:
+      title: "La page que vous cherchiez n'existe pas (404)"
+      message_html: "<b>Veuillez réessayer</b><p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton Précédent pour revenir à l'écran précédent ou revenir à <a href='/'>l'accueil</a> et réessayer.</p> <b>Contactez le support</b><p> Si le problème persiste ou est urgent, veuillez nous en informer. Retrouvez nos coordonnées sur la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>page locale mondiale d’Open Food Network</a> .</p><p> Cela nous aide vraiment si vous pouvez donner autant de détails que possible sur le sujet de la page manquante.</p>"
+    internal_server_error:
+      title: "Nous sommes désolés, mais quelque chose s'est mal passé (500)"
+      message_html: "<b>Veuillez réessayer</b><p> Il s&#39;agit peut-être d&#39;un problème temporaire. Veuillez cliquer sur le bouton Précédent pour revenir à l&#39;écran précédent ou revenir à <a href='/''>l&#39;accueil</a> et réessayer.</p> <b>Nous nous en occupons</b><p> Si vous avez déjà rencontré ce problème, nous le connaissons probablement déjà et travaillons sur un correctif. Nous enregistrons toutes les erreurs qui surviennent.</p> <b>Contactez le support</b><p> Si le problème persiste ou est urgent, veuillez nous en informer. Retrouvez nos coordonnées sur la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>page locale mondiale d’Open Food Network</a> .</p><p> Cela nous aide vraiment si vous pouvez donner autant de détails que possible sur ce que vous faisiez lorsque cette erreur s&#39;est produite.</p>"
+    unprocessable_entity:
+      title: "Le changement que vous souhaitiez a été rejeté (422)"
+      message_html: "<p>Le changement que vous souhaitiez a été rejeté. Peut-être avez-vous essayé de modifier quelque chose auquel vous n'avez pas accès.<br><h3> <a href='/' >Retour au précédent</a></h3></p>"
+    stimulus_reflex_error: "Nous sommes désolés, une erreur s'est produite. Il s'agit peut-être d'un problème temporaire, veuillez donc réessayer ou recharger la page. Nous enregistrons toutes les erreurs et travaillons peut-être sur un correctif. Si le problème persiste ou est urgent, veuillez nous contacter."
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
@@ -360,6 +387,7 @@ fr_BE:
   none: Aucun
   notes: Commentaires
   error: Erreur
+  voucher: Bon d'achat
   processing_payment: "Paiement en cours..."
   no_pending_payments: "Aucun paiement en attente"
   filter_results: Filtrer les résultats
@@ -796,6 +824,7 @@ fr_BE:
     orders:
       edit:
         order_sure_want_to: Êtes-vous sûr de vouloir %{event} cette commande ?
+        voucher_tax_included_in_price: "%{label} (taxes incluses dans le bon)"
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
       bulk_management:
@@ -1049,9 +1078,14 @@ fr_BE:
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
         vouchers:
+          legend: Bons d'achat
+          voucher_code: Code du bon d'achat
           rate: 'Taux '
+          label: Étiquette
           customers: Acheteur·euse
           active: Actif?
+          add_new: Ajouter un nouveau
+          no_voucher_yet: Pas encore de bons d'achat
         white_label:
           legend: "Marque blanche"
           hide_ofn_navigation: "Masquer la navigation du site OFN"
@@ -1297,6 +1331,7 @@ fr_BE:
           tag_rules: "Règles de tag"
           shop_preferences: "Préférences comptoir"
           users: "gestionnaire"
+          vouchers: Bons d'achat
           white_label: "Marque blanche"
         enterprise_group:
           primary_details: "Informations de base"
@@ -1498,9 +1533,12 @@ fr_BE:
         associated_subscriptions_error: Ce rythme d'abonnement ne peut pas être supprimé car il est associé à des abonnements.
     vouchers:
       new:
+        legend: Nouveau bon d'achat
         back: Retour
         save: Sauvergarder
+        voucher_code: Code du bon d'achat
         voucher_amount: Quantité
+        voucher_type: Type de bon d'achat
     controllers:
       enterprises:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
@@ -1854,6 +1892,12 @@ fr_BE:
       explaination: Vous pouvez vérifier et confirmer votre commande à l'étape suivante qui comprend les coûts finaux.
       submit: Suivant - Récapitulatif de la commande
       cancel: Retour à Vos coordonnées
+      voucher:
+        voucher: "%{voucher_amount} Bon d'achat"
+        apply_voucher: Appliquer le bon d'achat
+        placeholder: Entrer le code du bon d'achat
+        confirm_delete: Êtes-vous sûr de vouloir supprimer le bon ?
+        warning_forfeit_remaining_amount: "Remarque : si le total de votre commande est inférieur à votre bon, vous ne pourrez peut-être pas dépenser la valeur restante."
     step3:
       delivery_details:
         title: Détails de livraison
@@ -1883,6 +1927,7 @@ fr_BE:
       select_a_shipping_method: Sélectionnez une méthode d'expédition ou de retrait
       select_a_payment_method: Choisissez une méthode de paiement
       no_shipping_methods_available: Le paiement n'est pas possible en raison de l'absence d'options d'expédition. Veuillez contacter le propriétaire du magasin.
+      add_voucher_error: Une erreur s'est produite lors de l'ajout du bon
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
@@ -3057,7 +3102,6 @@ fr_BE:
           processing: "en traitement"
           void: "faire un avoir"
           invalid: "invalide"
-        quantity_adjusted: "Stock disponible insuffisant. Élément de campagne mis à jour avec la quantité maximale disponible."
         quantity_unchanged: "Quantité inchangée par rapport au montant précédent."
         cancel_the_order_html: "Cela annulera la commande en cours.<br /> Êtes-vous sur de vouloir continuer?"
         cancel_the_order_send_cancelation_email: "Envoyer un e-mail d'annulation au client"
@@ -3296,6 +3340,7 @@ fr_BE:
     gateway_error: "Paiement échoué"
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
+    new_order_completed: "Nouvelle commande terminée"
     new_tax_category: "Nouvelle catégorie de taxe"
     no_pending_payments: "Aucun paiement en attente"
     none: "Aucun"

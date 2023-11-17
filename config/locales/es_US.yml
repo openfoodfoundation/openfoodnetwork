@@ -1,10 +1,5 @@
 es_US:
   language_name: "Español"
-  date:
-    day_names: [domingo, lunes, martes, miércoles, jueves, viernes, sábado]
-    abbr_day_names: [dom, lun, mar, mié, jue, vie, sáb]
-    month_names: [~, enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
-    abbr_month_names: [~, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic]
   activerecord:
     models:
       spree/product: Producto
@@ -2961,7 +2956,6 @@ es_US:
           processing: "procesando"
           void: "pendiente"
           invalid: "inválido"
-        quantity_adjusted: "Stock insuficiente disponible. El artículo se ha actualizada a la cantidad máxima disponible."
         quantity_unchanged: "Cantidad sin cambios respecto a la cantidad anterior."
       resend_user_email_confirmation:
         resend: "Reenviar"
@@ -3290,6 +3284,7 @@ es_US:
     gateway_error: "Pago fallido"
     more: "Más"
     new_adjustment: "Nuevo ajuste"
+    new_order_completed: "Nuevo pedido completado"
     new_tax_category: "Nueva categoría de impuestos"
     new_user: "Nuevo usuario"
     no_pending_payments: "No tiene pagos pendientes"
@@ -4071,6 +4066,7 @@ es_US:
           one: Pago
           many: Pagos
           other: Pagos
+    unit: unidad
   datetime:
     distance_in_words:
       half_a_minute: medio minuto

@@ -2908,7 +2908,6 @@ tr:
           processing: "işleniyor"
           void: "geçersiz"
           invalid: "geçersiz"
-        quantity_adjusted: "Yetersiz stok. Satır kullanılabilir maksimum miktara güncellendi."
         quantity_unchanged: "Miktar değişmedi."
       resend_user_email_confirmation:
         resend: "Yeniden gönder"
@@ -3222,6 +3221,7 @@ tr:
     gateway_error: "Ödeme başarısız"
     more: "Daha Fazla"
     new_adjustment: "Yeni düzenleme"
+    new_order_completed: "Yeni sipariş tamamlandı"
     new_tax_category: "Yeni Vergi Kategorisi"
     new_taxon: "Yeni kategori"
     new_user: "Yeni kullanıcı"
@@ -4014,6 +4014,7 @@ tr:
         spree/payment:
           one: Ödemeler
           other: 'Ödemeler '
+    unit: birim
   datetime:
     distance_in_words:
       about_x_hours:

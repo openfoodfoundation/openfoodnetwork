@@ -1,10 +1,5 @@
 es_CR:
   language_name: "Español"
-  date:
-    day_names: [domingo, lunes, martes, miércoles, jueves, viernes, sábado]
-    abbr_day_names: [dom, lun, mar, mié, jue, vie, sáb]
-    month_names: [~, enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
-    abbr_month_names: [~, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic]
   activerecord:
     models:
       spree/product: Producto
@@ -3090,7 +3085,6 @@ es_CR:
           processing: "procesando"
           void: "vacío"
           invalid: "inválido"
-        quantity_adjusted: "Stock insuficiente disponible. Elemento de línea actualizado a la cantidad máxima disponible."
         quantity_unchanged: "Cantidad sin cambios desde la cantidad anterior."
         cancel_the_order_html: "Esto cancelará el pedido actual. <br />¿Está seguro de que desea continuar?"
         cancel_the_order_send_cancelation_email: "Enviar un correo electrónico de cancelación al cliente"
@@ -3434,6 +3428,7 @@ es_CR:
     gateway_error: "Pago fallido"
     more: "Más"
     new_adjustment: "Nuevo ajuste"
+    new_order_completed: "Nuevo pedido completado"
     new_tax_category: "Nueva categoría de impuestos"
     new_taxon: "Nuevo taxon"
     new_user: "Nuevo usuari"
@@ -4098,6 +4093,7 @@ es_CR:
       shipment:
         cannot_ready: "No se puede completar envío"
       invalid_taxonomy_id: "El identificador de taxonomía es inválido."
+    unit: unidad
   components:
     search_input:
       placeholder: Buscar

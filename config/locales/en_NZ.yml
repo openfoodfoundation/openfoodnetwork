@@ -3050,7 +3050,6 @@ en_NZ:
           processing: "processing"
           void: "void"
           invalid: "invalid"
-        quantity_adjusted: "Insufficient stock available. Line item updated to maximum available quantity."
         quantity_unchanged: "Quantity unchanged from previous amount."
       resend_user_email_confirmation:
         resend: "Resend"
@@ -4100,6 +4099,7 @@ en_NZ:
         spree/payment:
           one: Payment
           other: Payments
+    unit: unit
   components:
     search_input:
       placeholder: Search

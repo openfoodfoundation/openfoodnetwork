@@ -2752,7 +2752,6 @@ el:
           processing: "επεξεργασία"
           void: "κενός"
           invalid: "Μη έγκυρο"
-        quantity_adjusted: "Ανεπαρκές διαθέσιμο απόθεμα. Το στοιχείο γραμμής ενημερώθηκε στη μέγιστη διαθέσιμη ποσότητα."
         quantity_unchanged: "Ποσότητα αμετάβλητη από το προηγούμενο ποσό."
       resend_user_email_confirmation:
         resend: "Ξαναστείλε"
@@ -3055,6 +3054,7 @@ el:
     gateway_error: "Η πληρωμή απέτυχε"
     more: "Περισσότερα"
     new_adjustment: "Νέα προσαρμογή"
+    new_order_completed: "Η νέα παραγγελία ολοκληρώθηκε"
     new_tax_category: "Νέα Φορολογική Κατηγορία"
     new_taxon: "Νέο ταξί"
     new_user: "Νέος χρήστης"
