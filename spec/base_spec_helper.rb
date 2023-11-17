@@ -91,6 +91,10 @@ RSpec.configure do |config|
     expectations.syntax = :expect
   end
 
+  config.before(:each, :feature) do |example|
+    Flipper.enable(example.metadata[:feature])
+  end
+
   # Enable caching in any specs tagged with `caching: true`.
   config.around(:each, :caching) do |example|
     caching = ActionController::Base.perform_caching

@@ -2,13 +2,11 @@
 
 require "spec_helper"
 
-describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
+describe "/admin/enterprises/:enterprise_id/vouchers", type: :request, feature: :vouchers do
   let(:enterprise) { create(:supplier_enterprise, name: "Feedme") }
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }
 
   before do
-    Flipper.enable(:vouchers)
-
     enterprise_user.enterprise_roles.build(enterprise:).save
     sign_in enterprise_user
   end
