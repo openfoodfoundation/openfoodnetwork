@@ -937,20 +937,6 @@ Style/RedundantInterpolation:
     - 'lib/tasks/karma.rake'
     - 'spec/base_spec_helper.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantSelf:
-  Exclude:
-    - 'app/models/spree/order.rb'
-
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantStringEscape:
-  Exclude:
-    - 'app/models/spree/calculator.rb'
-    - 'spec/controllers/spree/admin/shipping_methods_controller_spec.rb'
-    - 'spec/system/admin/enterprise_fees_spec.rb'
-
 # Offense count: 19
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedMethods, AllowedPatterns.
