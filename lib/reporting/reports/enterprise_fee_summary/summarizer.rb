@@ -39,7 +39,8 @@ module Reporting
           return DataRepresentations::ExchangeOrderFee if for_order_adjustment_source?
           return unless for_line_item_adjustment_source?
           return DataRepresentations::IncomingExchangeLineItemFee if for_incoming_exchange?
-          return DataRepresentations::OutgoingExchangeLineItemFee if for_outgoing_exchange?
+
+          DataRepresentations::OutgoingExchangeLineItemFee if for_outgoing_exchange?
         end
 
         def for_payment_method?

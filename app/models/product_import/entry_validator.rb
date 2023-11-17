@@ -197,7 +197,7 @@ module ProductImport
     end
 
     def is_numeric(value)
-      return true unless Float(value, exception: false).nil?
+      true unless Float(value, exception: false).nil?
     end
 
     def price_validation(entry)
