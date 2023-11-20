@@ -108,7 +108,7 @@ GEM
     activerecord (7.0.8)
       activemodel (= 7.0.8)
       activesupport (= 7.0.8)
-    activerecord-import (1.5.0)
+    activerecord-import (1.5.1)
       activerecord (>= 4.2)
     activerecord-postgresql-adapter (0.0.1)
       pg
