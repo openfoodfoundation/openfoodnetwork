@@ -592,7 +592,18 @@ describe '
           perform_enqueued_jobs(only: BulkInvoiceJob)
 
           expect(page).to have_content "Bulk Invoice created"
-          expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
+
+          within ".modal-content" do
+            expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
+
+            extract_pdf_content # extracts content do variable invoice_content
+
+            expect(@invoice_content).to have_content("TAX INVOICE", count: 2)
+            expect(@invoice_content).to have_content("TAX INVOICE: #{order4.number}")
+            expect(@invoice_content).to have_content("TAX INVOICE: #{order5.number}")
+            expect(@invoice_content).to have_content("From: #{distributor4.name}")
+            expect(@invoice_content).to have_content("From: #{distributor5.name}")
+          end
         end
 
         it "can bulk cancel 2 orders" do
@@ -921,4 +932,13 @@ describe '
       expect(find("input.datepicker").value).to be_empty
     end
   end
+end
+
+def extract_pdf_content
+  pdf_href = page.all('a').pluck('href')
+  page.find(class: "button", text: "VIEW FILE").click
+  invoice_file_number = pdf_href[0][45..59]
+  invoice_path = "tmp/invoices/#{invoice_file_number}.pdf"
+  reader = PDF::Reader.new(invoice_path)
+  @invoice_content = reader.pages.map(&:text)
 end
