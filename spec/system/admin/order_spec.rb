@@ -520,7 +520,7 @@ describe '
       visit spree.edit_admin_order_path(order)
 
       click_link "Payments"
-      expect(page).to have_content "NEW PAYMENT"
+      expect(page).to have_content "New Payment"
     end
   end
 
