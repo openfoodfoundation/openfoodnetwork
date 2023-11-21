@@ -65,6 +65,9 @@ describe "Packing Reports" do
                                "Quantity", "TempControlled?"].map(&:upcase)
                             ])
         expect(page).to have_selector 'table.report__table tbody tr', count: 5 # Totals row/order
+
+        # date range is kept after form submission
+        check_prefilled_dates
       end
 
       it "sorts alphabetically" do
@@ -84,6 +87,9 @@ describe "Packing Reports" do
                               order2.bill_address.lastname,
                               ""
                             ])
+
+        # date range is kept after form submission
+        check_prefilled_dates
       end
     end
 
@@ -106,6 +112,9 @@ describe "Packing Reports" do
                             ])
 
         expect(all('table.report__table tbody tr').count).to eq(3) # Totals row per supplier
+
+        # date range is kept after form submission
+        check_prefilled_dates
       end
     end
   end
@@ -144,6 +153,9 @@ describe "Packing Reports" do
           find("button[type='submit']").click
           expect(page).to have_content li1.product.name
           expect(page).to have_content li2.product.name
+
+          # date range is kept after form submission
+          check_prefilled_dates
         end
       end
     end
