@@ -579,7 +579,8 @@ describe '
             invoice_file_number = pdf_href[0][45..59]
             invoice_path = "tmp/invoices/#{invoice_file_number}.pdf"
             reader = PDF::Reader.new(invoice_path)
-            invoice_content = reader.pages.map(&:text)
+
+            reader.pages.map(&:text)
           end
 
           it "bulk prints invoices in pdf format" do
@@ -606,7 +607,7 @@ describe '
             within ".modal-content" do
               expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
 
-              invoice_content = extract_pdf_content # extracts content do variable invoice_content
+              invoice_content = extract_pdf_content
 
               expect(invoice_content).to have_content("TAX INVOICE", count: 2)
               expect(invoice_content).to have_content("TAX INVOICE: #{order4.number}")
