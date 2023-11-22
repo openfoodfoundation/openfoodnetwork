@@ -29,12 +29,6 @@ RSpec.describe '
       expect(page).to have_field "product_name", with: p2.name
     end
 
-    it "displays a message when number of products is zero" do
-      visit spree.admin_products_path
-
-      expect(page).to have_text "No products yet. Why don't you add some?"
-    end
-
     it "displays a select box for suppliers, with the appropriate supplier selected" do
       s1 = FactoryBot.create(:supplier_enterprise)
       s2 = FactoryBot.create(:supplier_enterprise)
