@@ -17,7 +17,7 @@ describe("PopoutController", () => {
         <button id="button" data-popout-target="button">On demand</button>
         <div id="dialog" data-popout-target="dialog" style="display: none;">
           <input id="input1">
-          <input id="input2">
+          <input id="input2" type="checkbox" data-action="change->popout#closeIfChecked">
         </div>
       </div>
       <input id="input3">
@@ -70,6 +70,21 @@ describe("PopoutController", () => {
     it("doesn't close the dialog when focusing internal field", () => {
       input2.focus();
 
+      expect(dialog.style.display).toBe("block"); // visible
+    });
+
+    it("closes the dialog when checkbox is checked", () => {
+      input2.click();
+
+      expect(dialog.style.display).toBe("none"); // not visible
+    });
+
+    it("doesn't close the dialog when checkbox is unchecked", () => {
+      input2.click();
+      button.dispatchEvent(new Event("click")); // Dialog is opened again
+      input2.click();
+
+      expect(input2.checked).toBe(false);
       expect(dialog.style.display).toBe("block"); // visible
     });
   });

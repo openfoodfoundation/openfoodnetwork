@@ -38,9 +38,24 @@ export default class PopoutController extends Controller {
     }
   }
 
+  close() {
+    this.dialogTarget.style.display = "none";
+  }
+
   closeIfOutside(e) {
     if (!this.dialogTarget.contains(e.target)) {
-      this.dialogTarget.style.display = "none";
+      this.close();
+    }
+  }
+
+  // Close if checked
+  // But the `change` or `input` events are fired before the mouseup, therefore the user never sees the item has been successfully checked, making it feel like it wasn't
+  // We could try listening to the mouseup on the label and check for e.target.controls.checked, but that doesn't support use of keybaord, and the value is inverted for some reason..
+  // but maybe we don't need to. User will get enough feedback when the button text is updated..
+  closeIfChecked(e) {
+    if (e.target.checked) {
+      this.close();
+      this.buttonTarget.focus();
     }
   }
 }

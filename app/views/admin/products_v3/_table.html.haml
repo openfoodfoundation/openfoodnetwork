@@ -94,7 +94,7 @@
                       = error_message_on variant, :on_hand
                     .field.checkbox
                       = variant_form.label :on_demand do
-                        = variant_form.check_box :on_demand
+                        = variant_form.check_box :on_demand, 'data-action': 'change->popout#closeIfChecked'
                         = t('admin.products_page.columns.on_demand')
                 %td.align-left
                   .content= variant.product.supplier&.name # same as product
