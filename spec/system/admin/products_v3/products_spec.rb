@@ -335,6 +335,60 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
     end
   end
 
+  describe "Cloning Feature" do
+    let!(:variant_a1) {
+      create(:variant,
+             product: product_a,
+             display_name: "Medium box",
+             sku: "APL-01",
+             price: 5.25)
+    }
+    let(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
+
+    before do
+      visit admin_products_url
+    end
+
+    describe "Actions columns (clone)" do
+      it "shows an actions menu with a clone link when clicking on icon for product" do
+        within row_containing_name("Apples") do
+          page.find(".vertical-ellipsis-menu").click
+          expect(page).to have_link "Clone", href: spree.clone_admin_product_path(product_a)
+        end
+
+        within row_containing_name("Medium box") do
+          page.find(".vertical-ellipsis-menu").click
+          expect(page).to_not have_link "Clone", href: spree.clone_admin_product_path(product_a)
+        end
+      end
+    end
+
+    describe "Cloning product" do
+      it "shows the cloned product on page when clicked on the cloned option" do
+        within "table.products" do
+          # Gather input values, because page.content doesn't include them.
+          input_content = page.find_all('input[type=text]').map(&:value).join
+
+          # Products does not include the cloned product.
+          expect(input_content).to_not match /COPY OF Apples/
+        end
+
+        within row_containing_name("Apples") do
+          page.find(".vertical-ellipsis-menu").click
+          click_link('Clone')
+        end
+
+        within "table.products" do
+          # Gather input values, because page.content doesn't include them.
+          input_content = page.find_all('input[type=text]').map(&:value).join
+
+          # Products include the cloned product.
+          expect(input_content).to match /COPY OF Apples/
+        end
+      end
+    end
+  end
+
   def create_products(amount)
     amount.times do |i|
       create(:simple_product, name: "product #{i}")
