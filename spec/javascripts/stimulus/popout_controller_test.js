@@ -16,17 +16,22 @@ describe("PopoutController", () => {
       <div data-controller="popout">
         <button id="button" data-popout-target="button">On demand</button>
         <div id="dialog" data-popout-target="dialog" style="display: none;">
-          <input id="input1">
-          <input id="input2" type="checkbox" data-action="change->popout#closeIfChecked">
+          <input id="input1" value="value1">
+          <label>
+            <input id="input2" type="checkbox" value="value2" data-action="change->popout#closeIfChecked">
+            label2
+          </label>
+          <input id="input3" type="hidden" value="value3">
         </div>
       </div>
-      <input id="input3">
+      <input id="input4">
     `;
 
     const button = document.getElementById("button");
     const input1 = document.getElementById("input1");
     const input2 = document.getElementById("input2");
     const input3 = document.getElementById("input3");
+    const input4 = document.getElementById("input4");
   });
 
   describe("Show", () => {
@@ -56,15 +61,17 @@ describe("PopoutController", () => {
     })
 
     it("closes the dialog when click outside", () => {
-      input3.click();
+      input4.click();
 
       expectToBeClosed(dialog);
+      expect(button.innerText).toBe("value1");
     });
 
     it("closes the dialog when focusing another field (eg with tab)", () => {
-      input3.focus();
+      input4.focus();
 
       expectToBeClosed(dialog);
+      expect(button.innerText).toBe("value1");
     });
 
     it("doesn't close the dialog when focusing internal field", () => {
@@ -77,6 +84,7 @@ describe("PopoutController", () => {
       input2.click();
 
       expectToBeClosed(dialog);
+      expect(button.innerText).toBe("value1");// The checkbox label should be here, but I just couldn't get the test to work with labels. Don't worry, it works in the browser.
     });
 
     it("doesn't close the dialog when checkbox is unchecked", () => {

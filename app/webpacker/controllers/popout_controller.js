@@ -6,6 +6,7 @@ export default class PopoutController extends Controller {
 
   connect() {
     this.first_input = this.dialogTarget.querySelector("input");
+    this.displayElements = Array.from(this.element.querySelectorAll('input:not([type="hidden"]'));
 
     // Show when click or down-arrow on button
     this.buttonTarget.addEventListener("click", this.show.bind(this));
@@ -39,7 +40,11 @@ export default class PopoutController extends Controller {
   }
 
   close() {
-    this.dialogTarget.style.display = "none";
+    // Close if not already closed
+    if (this.dialogTarget.style.display != "none") {
+      this.buttonTarget.innerText = this.#displayValue();
+      this.dialogTarget.style.display = "none";
+    }
   }
 
   closeIfOutside(e) {
@@ -49,13 +54,31 @@ export default class PopoutController extends Controller {
   }
 
   // Close if checked
-  // But the `change` or `input` events are fired before the mouseup, therefore the user never sees the item has been successfully checked, making it feel like it wasn't
-  // We could try listening to the mouseup on the label and check for e.target.controls.checked, but that doesn't support use of keybaord, and the value is inverted for some reason..
-  // but maybe we don't need to. User will get enough feedback when the button text is updated..
   closeIfChecked(e) {
     if (e.target.checked) {
       this.close();
       this.buttonTarget.focus();
     }
+  }
+
+  // private
+
+  // Summarise the active field(s)
+  #displayValue() {
+    let values = this.#enabledDisplayElements().map((element) => {
+      if (element.type == "checkbox") {
+        if (element.checked && element.labels[0]) {
+          return element.labels[0].innerText;
+        }
+      } else {
+        return element.value;
+      }
+    });
+    // Filter empty values and convert to string
+    return values.filter(Boolean).join();
+  }
+
+  #enabledDisplayElements() {
+    return this.displayElements.filter((element) => !element.disabled);
   }
 }
