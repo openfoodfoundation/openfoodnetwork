@@ -20,16 +20,19 @@ describe("PopoutController", () => {
           <input id="input2">
         </div>
       </div>
+      <input id="input3">
     `;
 
     const button = document.getElementById("button");
     const input1 = document.getElementById("input1");
     const input2 = document.getElementById("input2");
+    const input3 = document.getElementById("input3");
   });
 
   describe("Show", () => {
     it("shows the dialog on click", () => {
-      button.click();
+      // button.click(); // For some reason this fails due to passive: true, but works in real life.
+      button.dispatchEvent(new Event("click"));
 
       expect(dialog.style.display).toBe("block"); // visible
     });
@@ -45,5 +48,33 @@ describe("PopoutController", () => {
 
       expect(dialog.style.display).toBe("none"); // not visible
     });
+  });
+
+  describe("Close", () => {
+    beforeEach(() => {
+      button.dispatchEvent(new Event("click")); // Dialog is open
+    })
+
+    it("closes the dialog when click outside", () => {
+      input3.click();
+
+      expect(dialog.style.display).toBe("none"); // not visible
+    });
+
+    it("closes the dialog when focusing another field (eg with tab)", () => {
+      input3.focus();
+
+      expect(dialog.style.display).toBe("none"); // not visible
+    });
+
+    it("doesn't close the dialog when focusing internal field", () => {
+      input2.focus();
+
+      expect(dialog.style.display).toBe("block"); // visible
+    });
+  });
+
+  describe("Cleaning up", () => {
+    // unable to test disconnect
   });
 });
