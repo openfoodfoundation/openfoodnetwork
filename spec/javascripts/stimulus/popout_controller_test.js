@@ -34,19 +34,19 @@ describe("PopoutController", () => {
       // button.click(); // For some reason this fails due to passive: true, but works in real life.
       button.dispatchEvent(new Event("click"));
 
-      expect(dialog.style.display).toBe("block"); // visible
+      expectToBeShown(dialog);
     });
 
     it("shows the dialog on keyboard down arrow", () => {
       button.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 40 }));
 
-      expect(dialog.style.display).toBe("block"); // visible
+      expectToBeShown(dialog);
     });
 
     it("doesn't show the dialog on other key press (tab)", () => {
       button.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 9 }));
 
-      expect(dialog.style.display).toBe("none"); // not visible
+      expectToBeClosed(dialog);
     });
   });
 
@@ -58,25 +58,25 @@ describe("PopoutController", () => {
     it("closes the dialog when click outside", () => {
       input3.click();
 
-      expect(dialog.style.display).toBe("none"); // not visible
+      expectToBeClosed(dialog);
     });
 
     it("closes the dialog when focusing another field (eg with tab)", () => {
       input3.focus();
 
-      expect(dialog.style.display).toBe("none"); // not visible
+      expectToBeClosed(dialog);
     });
 
     it("doesn't close the dialog when focusing internal field", () => {
       input2.focus();
 
-      expect(dialog.style.display).toBe("block"); // visible
+      expectToBeShown(dialog);
     });
 
     it("closes the dialog when checkbox is checked", () => {
       input2.click();
 
-      expect(dialog.style.display).toBe("none"); // not visible
+      expectToBeClosed(dialog);
     });
 
     it("doesn't close the dialog when checkbox is unchecked", () => {
@@ -85,7 +85,7 @@ describe("PopoutController", () => {
       input2.click();
 
       expect(input2.checked).toBe(false);
-      expect(dialog.style.display).toBe("block"); // visible
+      expectToBeShown(dialog);
     });
   });
 
@@ -93,3 +93,10 @@ describe("PopoutController", () => {
     // unable to test disconnect
   });
 });
+
+function expectToBeShown(element) {
+  expect(element.style.display).toBe("block");
+}
+function expectToBeClosed(element) {
+  expect(element.style.display).toBe("none");
+}
