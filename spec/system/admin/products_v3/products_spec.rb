@@ -11,9 +11,16 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     login_as_admin
   end
 
-  it "can see the new product page" do
-    visit admin_products_url
-    expect(page).to have_content "Bulk Edit Products"
+  describe "with no products" do
+    before { visit admin_products_url }
+    it "can see the new product page" do
+      expect(page).to have_content "Bulk Edit Products"
+      expect(page).to have_text "No products found"
+      # displays buttons to add products with the correct links
+      expect(page).to have_link(class: "button", text: "New Product", href: "/admin/products/new")
+      expect(page).to have_link(class: "button", text: "Import multiple products",
+                                href: "/admin/products/import")
+    end
   end
 
   describe "sorting" do
