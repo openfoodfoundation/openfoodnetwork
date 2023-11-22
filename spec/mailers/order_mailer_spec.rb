@@ -248,10 +248,7 @@ describe Spree::OrderMailer do
       end
     end
 
-    context "When invoices feature is enabled" do
-      before do
-        Flipper.enable(:invoices)
-      end
+    context "When invoices feature is enabled", feature: :invoices do
       it "should call the invoice renderer with invoice's presenter as argument" do
         expect(generator).to receive(:generate_or_update_latest_invoice)
         expect(order).to receive(:invoices).and_return([invoice])

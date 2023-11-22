@@ -215,7 +215,7 @@ describe OrderAvailableShippingMethods do
     end
   end
 
-  context "when certain shipping categories are required" do
+  context "when certain shipping categories are required", feature: :match_shipping_categories do
     subject { OrderAvailableShippingMethods.new(order) }
     let(:order) { build(:order, distributor:, order_cycle: oc) }
     let(:oc) { create(:order_cycle) }
@@ -232,8 +232,6 @@ describe OrderAvailableShippingMethods do
     before {
       standard_shipping
       cooled_shipping
-
-      Flipper.enable(:match_shipping_categories)
     }
 
     it "provides all shipping methods for an empty order" do

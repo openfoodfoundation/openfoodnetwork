@@ -1042,9 +1042,8 @@ describe '
     end
   end
 
-  describe "Legal Invoices" do
+  describe "Legal Invoices", feature: :invoices do
     before do
-      Flipper.enable(:invoices)
       login_as user
     end
 

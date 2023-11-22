@@ -5,7 +5,7 @@ require 'system_helper'
 describe '
  As an administrator
  I want to manage invoices for an order
-' do
+', feature: :invoices do
   include WebHelper
   include AuthenticationHelper
 
@@ -28,7 +28,6 @@ describe '
   let(:customer) { order.customer }
 
   before do
-    Flipper.enable(:invoices)
     order.finalize!
     login_as_admin
     visit spree.edit_admin_order_path(order)

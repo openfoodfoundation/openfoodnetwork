@@ -91,6 +91,16 @@ RSpec.configure do |config|
     expectations.syntax = :expect
   end
 
+  config.before(:each, :feature) do |example|
+    feature = example.metadata[:feature].to_s
+
+    unless OpenFoodNetwork::FeatureToggle::CURRENT_FEATURES.key?(feature)
+      raise "Unkown feature: #{feature}"
+    end
+
+    Flipper.enable(feature)
+  end
+
   # Enable caching in any specs tagged with `caching: true`.
   config.around(:each, :caching) do |example|
     caching = ActionController::Base.perform_caching

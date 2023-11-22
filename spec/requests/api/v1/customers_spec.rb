@@ -2,7 +2,7 @@
 
 require "swagger_helper"
 
-describe "Customers", type: :request, swagger_doc: "v1.yaml" do
+describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :api_v1 do
   let!(:enterprise1) { create(:enterprise, name: "The Farm") }
   let!(:enterprise2) { create(:enterprise) }
   let!(:enterprise3) { create(:enterprise) }
@@ -21,7 +21,6 @@ describe "Customers", type: :request, swagger_doc: "v1.yaml" do
   let!(:customer3) { create(:customer, enterprise: enterprise2, created_manually: true,) }
 
   before do
-    Flipper.enable(:api_v1)
     login_as enterprise1.owner
   end
 

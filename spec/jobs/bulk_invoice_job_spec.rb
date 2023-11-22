@@ -18,11 +18,7 @@ describe BulkInvoiceJob do
     end
   end
 
-  context "when invoices are enabled" do
-    before do
-      Flipper.enable(:invoices)
-    end
-
+  context "when invoices are enabled", feature: :invoices do
     describe "#perform" do
       let!(:order1) { create(:shipped_order) }
       let!(:order2) { create(:order_with_line_items) }

@@ -31,11 +31,7 @@ describe '
     end
   end
 
-  describe "Background processing" do
-    before do
-      Flipper.enable(:background_reports)
-    end
-
+  describe "Background processing", feature: :background_reports do
     it "can run the customers report" do
       login_as_admin
       visit admin_report_path(report_type: :customers)

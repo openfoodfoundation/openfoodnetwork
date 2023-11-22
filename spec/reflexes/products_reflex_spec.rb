@@ -2,16 +2,11 @@
 
 require "reflex_helper"
 
-describe ProductsReflex, type: :reflex do
+describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
   let(:current_user) { create(:admin_user) } # todo: set up an enterprise user to test permissions
   let(:context) {
     { url: admin_products_url, connection: { current_user: } }
   }
-
-  before do
-    # activate feature toggle admin_style_v3 to use new admin interface
-    Flipper.enable(:admin_style_v3)
-  end
 
   describe '#fetch' do
     subject{ build_reflex(method_name: :fetch, **context) }

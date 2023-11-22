@@ -2,14 +2,12 @@
 
 require "system_helper"
 
-describe 'As an admin, I can see the new product page' do
+describe 'As an admin, I can see the new product page', feature: :admin_style_v3 do
   include WebHelper
   include AuthenticationHelper
   include FileHelper
 
   before do
-    # activate feature toggle admin_style_v3 to use new admin interface
-    Flipper.enable(:admin_style_v3)
     login_as_admin
   end
 
