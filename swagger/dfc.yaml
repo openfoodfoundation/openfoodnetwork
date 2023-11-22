@@ -110,7 +110,7 @@ paths:
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple
                       dfc-b:description: Red
-                      dfc-b:hasType: http://static.datafoodconsortium.org/data/productTypes.rdf#non-local-vegetable
+                      dfc-b:hasType: dfc-pt:non-local-vegetable
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
@@ -341,7 +341,7 @@ paths:
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple
                       dfc-b:description: Round
-                      dfc-b:hasType: http://static.datafoodconsortium.org/data/productTypes.rdf#non-local-vegetable
+                      dfc-b:hasType: dfc-pt:non-local-vegetable
                       dfc-b:hasQuantity:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
@@ -446,7 +446,7 @@ paths:
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Apple
                     dfc-b:description: A delicious heritage apple
-                    dfc-b:hasType: http://static.datafoodconsortium.org/data/productTypes.rdf#non-local-vegetable
+                    dfc-b:hasType: dfc-pt:non-local-vegetable
                     dfc-b:hasQuantity:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
@@ -510,7 +510,7 @@ paths:
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Pesto
                     dfc-b:description: Basil Pesto
-                    dfc-b:hasType: http://static.datafoodconsortium.org/data/productTypes.rdf#non-local-vegetable
+                    dfc-b:hasType: dfc-pt:non-local-vegetable
                     dfc-b:hasQuantity:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram

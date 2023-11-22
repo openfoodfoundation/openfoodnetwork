@@ -94,7 +94,7 @@ describe DataFoodConsortium::Connector::Importer do
     unless connector.MEASURES.respond_to?(:UNIT)
       connector.loadMeasures(read_file("measures"))
     end
-    connector.MEASURES.UNIT.QUANTITYUNIT.PIECE
+    connector.MEASURES.PIECE
   end
 
   it "imports a single object with simple properties" do

@@ -19,11 +19,11 @@ class QuantitativeValueBuilder < DfcBuilder
   def self.unit(variant)
     case variant.product.variant_unit
     when "volume"
-      DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT.LITRE
+      DfcLoader.connector.MEASURES.LITRE
     when "weight"
-      DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT.GRAM
+      DfcLoader.connector.MEASURES.GRAM
     else
-      DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT.PIECE
+      DfcLoader.connector.MEASURES.PIECE
     end
   end
 
@@ -67,7 +67,7 @@ class QuantitativeValueBuilder < DfcBuilder
   #
   # Until then, we can ignore Rubocop metrics, IMO.
   def self.map_unit(unit) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
-    quantity_unit = DfcLoader.connector.MEASURES.UNIT.QUANTITYUNIT
+    quantity_unit = DfcLoader.connector.MEASURES
 
     # The unit name is only set for items. The name is implied for weight and
     # volume and filled in by `WeightsAndMeasures`.
@@ -110,7 +110,8 @@ class QuantitativeValueBuilder < DfcBuilder
     else
       # Labels may be provided one day:
       # https://github.com/datafoodconsortium/connector-ruby/issues/18
-      label = unit.try(:semanticId)&.split("#")&.last || "items"
+      unit_id = unit.try(:semanticId)&.split("#")&.last&.split(":")&.last
+      label = unit_id || "items"
       ["items", label, 1]
     end
   end
