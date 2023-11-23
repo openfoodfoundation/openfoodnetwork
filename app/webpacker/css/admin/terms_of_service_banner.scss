@@ -1,9 +1,9 @@
-.banner-container {
+#banner-container {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: $tos-banner-z-index;
 
   .terms-of-service-banner {
     padding: 18px;

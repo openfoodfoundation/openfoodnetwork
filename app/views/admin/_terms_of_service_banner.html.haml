@@ -1,5 +1,5 @@
-.banner-container#banner-container
-  .terms-of-service-banner
+#banner-container
+  .terms-of-service-banner.form-actions
     .column-left
       %p= t("admin.terms_of_service_have_been_updated_html", tos_link: link_to(t("admin.terms_of_service"), TermsOfServiceFile.current_url, target: "_blank"))
     .column-right

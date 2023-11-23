@@ -1,18 +1,13 @@
-.banner-container {
+#banner-container {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: $tos-banner-z-index;
   padding: 0 1.5%;
+  min-height: 50px;
 
   .terms-of-service-banner {
-    background-color: $fair-pink;
-    border: none;
-    border-left: 4px solid $red;
-    border-radius: 4px;
-    margin: 0.5em 0;
-    padding: 0;
     display: flex;
 
     .column-left {
