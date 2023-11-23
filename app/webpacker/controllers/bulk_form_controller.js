@@ -100,6 +100,10 @@ export default class BulkFormController extends Controller {
   }
 
   #isChanged(element) {
-    return element.defaultValue !== undefined && element.value != element.defaultValue;
+    if (element.type == "checkbox") {
+      return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
+    } else {
+      return element.defaultValue !== undefined && element.value != element.defaultValue;
+    }
   }
 }
