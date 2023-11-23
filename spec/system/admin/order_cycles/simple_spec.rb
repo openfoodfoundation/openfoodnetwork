@@ -395,7 +395,7 @@ describe '
           ex_out.save!
 
           # hide via inventory settings variant v1
-          supplier_managed.update preferred_product_selection_from_inventory_only: true
+          distributor_managed.update preferred_product_selection_from_inventory_only: true
           oc.update prefers_product_selection_from_coordinator_inventory_only: false
         end
 
