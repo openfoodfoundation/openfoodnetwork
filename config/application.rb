@@ -248,5 +248,7 @@ module Openfoodnetwork
     config.active_storage.url_options = config.action_controller.default_url_options
 
     config.exceptions_app = self.routes
+
+    config.view_component.generate.sidecar = true # Always generate components in subfolders
   end
 end
