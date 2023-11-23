@@ -1,9 +1,8 @@
 .banner-container#banner-container
-  - if @terms_of_service_banner == true
-    .terms-of-service-banner
-      .column-left
-        %p= t("admin.terms_of_service_have_been_updated_html", tos_link: link_to(t("admin.terms_of_service"), TermsOfServiceFile.current_url, target: "_blank"))
-      .column-right
-        %button{ data: { reflex: "click->Enterprise::User#accept_terms_of_services", id: current_spree_user&.id } }
-          = t("admin.accept_terms_of_service")
+  .terms-of-service-banner
+    .column-left
+      %p= t("admin.terms_of_service_have_been_updated_html", tos_link: link_to(t("admin.terms_of_service"), TermsOfServiceFile.current_url, target: "_blank"))
+    .column-right
+      %button{ data: { reflex: "click->Enterprise::User#accept_terms_of_services", id: current_spree_user&.id } }
+        = t("admin.accept_terms_of_service")
       

@@ -59,7 +59,7 @@
                 %span= yield :sidebar_title
             = yield :sidebar
 
-  = render partial: "admin/terms_of_service_banner"
+  = render "admin/terms_of_service_banner" if tos_need_accepting?
     
 %script
   = raw "Spree.api_key = \"#{spree_current_user.try(:spree_api_key).to_s}\";"
