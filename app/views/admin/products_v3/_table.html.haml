@@ -88,13 +88,13 @@
                 %td.field.on-hand__wrapper{'data-controller': "popout"}
                   %button.on-hand__button{'data-popout-target': "button"}
                     = variant.on_demand ? t(:on_demand) : variant.on_hand
-                  %div.on-hand__popout{ style: 'display: none;', 'data-popout-target': "dialog"}
+                  %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
                     .field
-                      = variant_form.number_field :on_hand, 'aria-label': t('admin.products_page.columns.on_hand')
+                      = variant_form.number_field :on_hand, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: variant_form.object.on_demand
                       = error_message_on variant, :on_hand
                     .field.checkbox
                       = variant_form.label :on_demand do
-                        = variant_form.check_box :on_demand, 'data-action': 'change->popout#closeIfChecked'
+                        = variant_form.check_box :on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
                         = t('admin.products_page.columns.on_demand')
                 %td.align-left
                   .content= variant.product.supplier&.name # same as product
