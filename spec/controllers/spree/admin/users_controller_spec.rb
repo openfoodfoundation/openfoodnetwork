@@ -38,21 +38,4 @@ describe Spree::Admin::UsersController do
       expect(response).to redirect_to('/unauthorized')
     end
   end
-
-  describe "#accept_terms_of_services" do
-    let(:user) { create(:user) }
-
-    before do
-      allow(controller).to receive_messages spree_current_user: user
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
-    end
-
-    it "updates terms_of_service_accepted_at" do
-      expect do
-        spree_post :accept_terms_of_services, id: user.id
-      end.to change { user.reload.terms_of_service_accepted_at }
-
-      expect(response).to have_http_status(:ok)
-    end
-  end
 end

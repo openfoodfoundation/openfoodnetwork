@@ -1,9 +1,9 @@
-.banner-container 
+.banner-container#banner-container
   - if @terms_of_service_banner == true
-    %div{ class: "terms-of-service-banner", data: { controller: "terms-of-service-banner", "terms-of-service-banner-url-value": accept_terms_of_services_admin_user_path(current_spree_user&.id) }}
+    .terms-of-service-banner
       .column-left
         %p= t("admin.terms_of_service_have_been_updated_html", tos_link: link_to(t("admin.terms_of_service"), TermsOfServiceFile.current_url, target: "_blank"))
       .column-right
-        %button{ data: { action: "click->terms-of-service-banner#accept click->terms-of-service-banner#close_banner" } }
+        %button{ data: { reflex: "click->Enterprise::User#accept_terms_of_services", id: current_spree_user&.id } }
           = t("admin.accept_terms_of_service")
       

@@ -57,12 +57,6 @@ module Spree
         end
       end
 
-      def accept_terms_of_services
-        @user.update(terms_of_service_accepted_at: DateTime.now)
-
-        head :ok
-      end
-
       protected
 
       def collection
