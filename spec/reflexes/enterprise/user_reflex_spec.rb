@@ -7,14 +7,10 @@ describe Enterprise::UserReflex, type: :reflex do
   let(:context) { { url: spree.admin_dashboard_url, connection: { current_user: } } }
 
   describe "#accept_terms_of_services" do
-    subject(:reflex) do
-      build_reflex(
-        method_name: :accept_terms_of_services, **context, params: { id: current_user.id }
-      )
-    end
+    subject(:reflex) { build_reflex(method_name: :accept_terms_of_services, **context) }
 
     it "updates terms_of_service_accepted_at" do
-      expect{
+      expect {
         reflex.run(:accept_terms_of_services)
         current_user.reload
       }.to change{ current_user.terms_of_service_accepted_at }
