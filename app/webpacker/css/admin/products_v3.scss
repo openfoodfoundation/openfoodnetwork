@@ -300,9 +300,13 @@
           color: $color-txt-text;
           position: relative;
         }
+
+        &.changed {
+          border-color: $color-txt-changed-brd;
+        }
       }
 
-      &:hover:not(:active):not(:focus) {
+      &:hover:not(:active):not(:focus):not(.changed) {
         border-color: transparent;
       }
 

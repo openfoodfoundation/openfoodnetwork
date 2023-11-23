@@ -42,7 +42,10 @@ export default class PopoutController extends Controller {
   close() {
     // Close if not already closed
     if (this.dialogTarget.style.display != "none") {
+      // Update button to represent any changes
       this.buttonTarget.innerText = this.#displayValue();
+      this.buttonTarget.classList.toggle("changed", this.#isChanged());
+
       this.dialogTarget.style.display = "none";
     }
   }
@@ -76,6 +79,10 @@ export default class PopoutController extends Controller {
     });
     // Filter empty values and convert to string
     return values.filter(Boolean).join();
+  }
+
+  #isChanged() {
+    return this.#enabledDisplayElements().some((element) => element.classList.contains("changed"));
   }
 
   #enabledDisplayElements() {
