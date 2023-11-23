@@ -211,8 +211,8 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         fill_in "Name", with: "Large box"
         fill_in "SKU", with: "POM-01"
         fill_in "Price", with: "10.25"
+        click_on "On Hand" # activate stock popout
         fill_in "On Hand", with: "6"
-        check "On Demand"
       end
 
       expect {
@@ -225,7 +225,6 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.price }.to(10.25)
         .and change{ variant_a1.on_hand }.to(6)
-        .and change{ variant_a1.on_demand }.to(true)
 
       within row_containing_name("Pommes") do
         expect(page).to have_field "Name", with: "Pommes"
@@ -235,8 +234,29 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         expect(page).to have_field "Name", with: "Large box"
         expect(page).to have_field "SKU", with: "POM-01"
         expect(page).to have_field "Price", with: "10.25"
-        expect(page).to have_field "On Hand", with: "6"
-        expect(page).to have_field "On Demand", checked: true
+        expect(page).to have_css "button[aria-label='On Hand']", text: "6"
+      end
+
+      pending
+      expect(page).to have_content "Changes saved"
+    end
+
+    it "switches stock to on-demand" do
+      within row_containing_name("Medium box") do
+        click_on "On Hand" # activate stock popout
+        check "On Demand"
+
+        expect(page).to have_css "button[aria-label='On Hand']", text: "On Demand"
+      end
+
+      expect {
+        click_button "Save changes"
+        product_a.reload
+        variant_a1.reload
+      }.to change{ variant_a1.on_demand }.to(true)
+
+      within row_containing_name("Medium box") do
+        expect(page).to have_css "button[aria-label='On Hand']", text: "On Demand"
       end
 
       pending
