@@ -574,12 +574,12 @@ describe '
 
         context "can bulk print invoices" do
           def extract_pdf_content
-            pdf_href = page.all('a').pluck('href')
-            page.find(class: "button", text: "VIEW FILE").click
-            invoice_file_number = pdf_href[0][45..59]
-            invoice_path = "tmp/invoices/#{invoice_file_number}.pdf"
-            reader = PDF::Reader.new(invoice_path)
+            # Extract last part of invoice URL
+            link = page.find(class: "button", text: "VIEW FILE")
+            filename = link[:href].match %r{/invoices/.*}
 
+            # Load invoice temp file directly instead of downloading
+            reader = PDF::Reader.new("tmp/#{filename}.pdf")
             reader.pages.map(&:text)
           end
 
