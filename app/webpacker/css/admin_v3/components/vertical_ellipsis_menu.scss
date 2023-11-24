@@ -30,7 +30,7 @@
       display: block;
     }
 
-    .vertical-ellipsis-menu-content-item {
+    & > a {
       display: block;
       padding: 5px 10px;
       cursor: pointer;
