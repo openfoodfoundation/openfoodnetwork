@@ -479,6 +479,7 @@ ca:
         import_date: "Data d'importació"
       actions:
         edit: Editar
+        clone: Clonar
     adjustments:
       skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
     begins_at: Comença a
@@ -2626,7 +2627,9 @@ ca:
   report_users: "Usuàries"
   report_tax_rates: Taxes d'impostos
   report_tax_types: Tipus d'impostos
+  report_filters: Filtres d'informe
   report_print: Imprimir informe
+  report_render_options: Opcions de visualització
   report_header_ofn_uid: UID d'OFN
   report_header_order_cycle: Cicle de comanda
   report_header_user: Usuàries
@@ -3394,7 +3397,6 @@ ca:
     gateway_error: "El pagament ha fallat"
     more: "Més"
     new_adjustment: "Nou ajustament"
-    new_order_completed: "S'ha completat la nova comanda"
     new_tax_category: "Nova categoria fiscal"
     new_taxon: "Nou tàxon"
     new_user: "Nou usuari"

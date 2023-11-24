@@ -328,6 +328,7 @@ fil_PH:
         import_date: "petsa ng pag-import"
       actions:
         edit: i-edit
+        clone: Gayahin
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
     customer: Customer

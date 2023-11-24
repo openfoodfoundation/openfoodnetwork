@@ -464,6 +464,7 @@ es_CR:
         import_date: "Fecha de importación"
       actions:
         edit: Editar
+        clone: Duplicar
     adjustments:
       skipped_changing_canceled_order: "No se puede cambiar una orden cancelada"
     begins_at: Empieza en
@@ -3428,7 +3429,6 @@ es_CR:
     gateway_error: "Pago fallido"
     more: "Más"
     new_adjustment: "Nuevo ajuste"
-    new_order_completed: "Nuevo pedido completado"
     new_tax_category: "Nueva categoría de impuestos"
     new_taxon: "Nuevo taxon"
     new_user: "Nuevo usuari"

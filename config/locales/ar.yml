@@ -472,6 +472,7 @@ ar:
         import_date: "تاريخ الاستيراد"
       actions:
         edit: تعديل
+        clone: استنساخ
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند
@@ -3589,7 +3590,6 @@ ar:
     gateway_error: "عملية الدفع فشلت"
     more: "أكثر"
     new_adjustment: "تعديل جديد"
-    new_order_completed: "طلب جديد مكتمل"
     new_tax_category: "فئة ضريبية جديدة"
     new_taxon: "اصنوفة جديدة"
     new_user: "مستخدم جديد"

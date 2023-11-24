@@ -526,6 +526,7 @@ en_IE:
         import_date: "Import Date"
       actions:
         edit: Edit
+        clone: Clone
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -3637,7 +3638,6 @@ en_IE:
     gateway_error: "Payment failed"
     more: "More"
     new_adjustment: "New adjustment"
-    new_order_completed: "New order completed"
     new_tax_category: "New Tax Category"
     new_taxon: "New taxon"
     new_user: "New user"

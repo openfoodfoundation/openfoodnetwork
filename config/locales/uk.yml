@@ -464,6 +464,7 @@ uk:
         import_date: "Дата імпорту"
       actions:
         edit: Редагувати
+        clone: Клонувати
     adjustments:
       skipped_changing_canceled_order: "Ви не можете змінити скасоване замовлення."
     begins_at: Починається о
@@ -3445,7 +3446,6 @@ uk:
     gateway_error: "Платіж не вдався"
     more: "Більше"
     new_adjustment: "Нове коригування"
-    new_order_completed: "Нове замовлення виконано"
     new_tax_category: "Нова податкова категорія"
     new_taxon: "Новий таксон"
     new_user: "Новий користувач"

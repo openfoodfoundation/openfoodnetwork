@@ -352,6 +352,7 @@ es_CO:
         import_date: "Fecha de importación"
       actions:
         edit: Editar
+        clone: Duplicar
     begins_at: Empieza en
     begins_on: Comienza en
     customer: Cliente

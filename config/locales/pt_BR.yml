@@ -402,6 +402,7 @@ pt_BR:
         import_date: "Data de importação"
       actions:
         edit: Editar
+        clone: Cópia
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
     begins_at: Começa em
@@ -3226,7 +3227,6 @@ pt_BR:
     gateway_error: "Falha no pagamento"
     more: "Mais"
     new_adjustment: "Novo ajuste"
-    new_order_completed: "Novo pedido realizado"
     new_tax_category: "Nova Categoria de Taxa"
     new_taxon: "Nova taxonomia"
     new_user: "Novo usuário"

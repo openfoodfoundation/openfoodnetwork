@@ -463,6 +463,7 @@ de_CH:
         import_date: "Importdatum"
       actions:
         edit: Bearbeiten
+        clone: Duplizieren
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -588,7 +589,7 @@ de_CH:
         edit_ship_address: "Lieferadresse bearbeiten"
         required_fileds: "Pflichtangaben sind mit * markiert"
         select_country: "Land wählen"
-        select_state: "Bundesland wählen"
+        select_state: "Kanton wählen"
         edit: "Bearbeiten"
         update_address: "Adresse aktualisieren"
         confirm_delete: "Wirklich löschen?"
@@ -892,7 +893,7 @@ de_CH:
           legal_phone_number: Telefonnummer
           phone_placeholder: "z. B. +49 40 123 456"
           select_country: "Land wählen"
-          select_state: "Bundesland wählen"
+          select_state: "Kanton wählen"
         contact:
           legend: "Kontakt"
           name: Name
@@ -1670,7 +1671,7 @@ de_CH:
   longitude: Längengrad
   longitude_placeholder: z. B. 10.33109
   use_geocoder: Breiten- und Längengrad automatisch aus der Adresse bestimmen
-  state: Bundesland
+  state: Kanton
   postcode: Postleitzahl
   postcode_placeholder: z. B. 30701
   suburb: Vorort
@@ -1839,7 +1840,7 @@ de_CH:
         city:
           label: Ort
         state_id:
-          label: Bundesland
+          label: Kanton
         zipcode:
           label: Postleitzahl
         country_id:
@@ -2298,8 +2299,8 @@ de_CH:
         postcode_field: "Postleitzahl:"
         postcode_field_placeholder: "z. B. 30701"
         postcode_field_error: "Bitte geben Sie eine Postleitzahl ein."
-        state_field: "Bundesland:"
-        state_field_error: "Bitte wählen Sie das Bundesland aus."
+        state_field: "Kanton:"
+        state_field_error: "Bitte wählen Sie den Kanton aus."
         country_field: "Land:"
         country_field_error: "Bitte wählen Sie das Land aus."
         map_location: "Position auf der Karte"
@@ -2452,7 +2453,7 @@ de_CH:
   admin_enterprise_groups_contact_city_placeholder: "z. B. Nordwestheim"
   admin_enterprise_groups_contact_zipcode: "Postleitzahl"
   admin_enterprise_groups_contact_zipcode_placeholder: "z. B. 30701"
-  admin_enterprise_groups_contact_state_id: "Bundesland"
+  admin_enterprise_groups_contact_state_id: "Kanton"
   admin_enterprise_groups_contact_country_id: "Land"
   admin_enterprise_groups_web_twitter: "z. B. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "z. B. www.truffles.com"
@@ -2575,7 +2576,7 @@ de_CH:
   admin_share_city: "Ort"
   admin_share_zipcode: "Postleitzahl"
   admin_share_country: "Land"
-  admin_share_state: "Bundesland"
+  admin_share_state: "Kanton"
   hub_sidebar_hubs: "Hubs"
   hub_sidebar_none_available: "Keine verfügbar"
   hub_sidebar_manage: "Verwalten"
@@ -2637,14 +2638,14 @@ de_CH:
   report_header_ship_street_2: Lieferadresszusatz
   report_header_ship_city: Lieferstadt
   report_header_ship_postcode: Lieferpostleitzahl
-  report_header_ship_state: Lieferbundesland
+  report_header_ship_state: Lieferkanton
   report_header_billing_street: Rechnungsstrasse
   report_header_billing_street_2: Rechnungsadresszusatz
   report_header_billing_street_3: Rechnungsstrasse 3
   report_header_billing_street_4: Rechnungsstrasse 4
   report_header_billing_city: Rechnungsstadt
   report_header_billing_postcode: Rechnungspostleitzahl
-  report_header_billing_state: Rechnungsbundesland
+  report_header_billing_state: Rechnungskanton
   report_header_incoming_transport: Eingehender Transport
   report_header_special_instructions: Besondere Hinweise
   report_header_order_number: Bestell-Nummer
@@ -3369,7 +3370,7 @@ de_CH:
   last: "Letzte"
   spree:
     add_country: "Neues Land"
-    add_state: "Neues Bundesland"
+    add_state: "Neuer Kanton"
     adjustment: "Anpassung"
     all: "Alle"
     associated_adjustment_closed: "Zugehörige Anpassung geschlossen"
@@ -3391,7 +3392,6 @@ de_CH:
     gateway_error: "Zahlung fehlgeschlagen"
     more: "Mehr"
     new_adjustment: "Neue Anpassung"
-    new_order_completed: "Neue Bestellung abgeschlossen"
     new_tax_category: "Neue Steuerkategorie"
     new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"
@@ -3454,7 +3454,7 @@ de_CH:
     city: "Ort"
     zip: "Postleitzahl"
     country: "Land"
-    state: "Bundesland"
+    state: "Kanton"
     phone: "Telefonnummer"
     update: "Speichern"
     use_billing_address: "Rechnungsadresse verwenden"
@@ -3514,7 +3514,7 @@ de_CH:
     default_tax: "Standardsteuer"
     default_tax_zone: "Standardsteuerzone"
     country_based: "Land basiert"
-    state_based: "Bundesland basiert"
+    state_based: "Kanton basiert"
     countries: "Länder"
     listing_countries: "Länder"
     iso_name: "ISO-Name"
@@ -3523,7 +3523,7 @@ de_CH:
     back_to_countries_list: "Zurück zur Länderliste"
     states: "Bundesländer"
     abbreviation: "Abkürzung"
-    new_state: "Neues Bundesland"
+    new_state: "Neuer Kanton"
     payment_methods: "Zahlungsarten"
     taxonomies: "Kategorien"
     new_taxonomy: "Neue Kategorie"

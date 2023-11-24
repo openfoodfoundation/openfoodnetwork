@@ -337,6 +337,7 @@ nl_BE:
         import_date: "Importdatum"
       actions:
         edit: bewerking
+        clone: Kloon
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant

@@ -520,6 +520,7 @@ ru:
         import_date: "Дата Импорта"
       actions:
         edit: Изменить
+        clone: Клонировать
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С
@@ -3646,7 +3647,6 @@ ru:
     gateway_error: "Платеж не прошел"
     more: "Ещё"
     new_adjustment: "Новая корректировка"
-    new_order_completed: "Новый заказ выполнен"
     new_tax_category: "Новая Налоговая Категория"
     new_taxon: "Новая таксономия"
     new_user: "Новый пользователь"

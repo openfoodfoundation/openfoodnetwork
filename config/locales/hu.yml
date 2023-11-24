@@ -451,6 +451,7 @@ hu:
         import_date: "Importálás dátuma"
       actions:
         edit: Szerkesztés
+        clone: Klón
     adjustments:
       skipped_changing_canceled_order: "A törölt rendelést nem módosíthatja."
     begins_at: 'Kezdete:'
@@ -3423,7 +3424,6 @@ hu:
     gateway_error: "Fizetés meghiúsult"
     more: "Több"
     new_adjustment: "Új beállítás"
-    new_order_completed: "Új megrendelés elkészült"
     new_tax_category: "Új adókategória"
     new_taxon: "Új taxon"
     new_user: "Új felhasználó"

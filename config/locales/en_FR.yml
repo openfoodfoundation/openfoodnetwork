@@ -526,6 +526,7 @@ en_FR:
         import_date: "Import Date"
       actions:
         edit: Edit
+        clone: Clone
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -3301,6 +3302,7 @@ en_FR:
           processing: "processing"
           void: "void"
           invalid: "invalid"
+        quantity_unavailable: "Insufficient stock available. Line item unsaved!"
         quantity_unchanged: "Quantity unchanged from previous amount."
         cancel_the_order_html: "This will cancel the current order. <br /> Are you sure you want to proceed?"
         cancel_the_order_send_cancelation_email: "Send a cancellation email to the customer"
@@ -3631,7 +3633,6 @@ en_FR:
     gateway_error: "Payment failed"
     more: "More"
     new_adjustment: "New adjustment"
-    new_order_completed: "New order completed"
     new_tax_category: "New Tax Category"
     new_taxon: "New taxon"
     new_user: "New user"
@@ -3706,6 +3707,7 @@ en_FR:
     credit_card: "Credit Card"
     new_payment: "New Payment"
     capture: "Capture"
+    capture_and_complete_order: "Capture and complete order"
     void: "Void"
     login: "Login"
     password: "Password"

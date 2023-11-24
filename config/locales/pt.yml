@@ -374,6 +374,7 @@ pt:
         import_date: "Data de Importação"
       actions:
         edit: Editar
+        clone: Clonar
     begins_at: Começa às
     begins_on: Começa em
     customer: Consumidor/a

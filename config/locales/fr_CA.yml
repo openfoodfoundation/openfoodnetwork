@@ -522,6 +522,7 @@ fr_CA:
         import_date: "Date d'import"
       actions:
         edit: Modifier
+        clone: Dupliquer
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence à
@@ -3656,7 +3657,6 @@ fr_CA:
     gateway_error: "Le paiement a échoué"
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
-    new_order_completed: "Nouvelle commande finalisée"
     new_tax_category: "Nouvelle catégorie de taxe"
     new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"

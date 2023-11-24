@@ -526,6 +526,7 @@ nb:
         import_date: "Importdato"
       actions:
         edit: Rediger
+        clone: Klon
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på
@@ -3629,7 +3630,6 @@ nb:
     gateway_error: "Betalingen feilet"
     more: "Mer"
     new_adjustment: "Ny justering"
-    new_order_completed: "Ny bestilling fullført"
     new_tax_category: "Ny avgiftskategori"
     new_taxon: "Ny kategori"
     new_user: "Ny bruker"

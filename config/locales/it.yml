@@ -493,6 +493,7 @@ it:
         import_date: "Data di importazione"
       actions:
         edit: Modifica
+        clone: Duplica
     adjustments:
       skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
     begins_at: Inizia a
@@ -3502,7 +3503,6 @@ it:
     gateway_error: "Pagamento fallito"
     more: "Di più"
     new_adjustment: "Nuovo aggiustamento"
-    new_order_completed: "Nuova richiesta completata"
     new_tax_category: "Nuova Categoria imposta"
     new_taxon: "Nuova tassonomia"
     new_user: "Nuovo utente"

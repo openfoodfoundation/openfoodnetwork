@@ -380,6 +380,7 @@ el:
         inherits_properties: "Διατήρηση Ιδιοτήτων"
       actions:
         edit: Επεξεργασία
+        clone: Κλώνος
     adjustments:
       skipped_changing_canceled_order: "Δεν μπορείτε να κάνετε αλλαγή ακυρωμένης παραγγελίας."
     begins_at: Ξεκινάει από
@@ -3054,7 +3055,6 @@ el:
     gateway_error: "Η πληρωμή απέτυχε"
     more: "Περισσότερα"
     new_adjustment: "Νέα προσαρμογή"
-    new_order_completed: "Η νέα παραγγελία ολοκληρώθηκε"
     new_tax_category: "Νέα Φορολογική Κατηγορία"
     new_taxon: "Νέο ταξί"
     new_user: "Νέος χρήστης"

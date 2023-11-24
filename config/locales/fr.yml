@@ -525,6 +525,7 @@ fr:
         import_date: "Date d'import (si import)"
       actions:
         edit: Modifier
+        clone: Dupliquer
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -3332,6 +3333,7 @@ fr:
           processing: "en traitement"
           void: "Annulé"
           invalid: "invalide"
+        quantity_unavailable: "Stock disponible insuffisant. La ligne produit ne peut pas être sauvegardée."
         quantity_unchanged: "La quantité n'a pas été modifiée."
         cancel_the_order_html: "Cette action va annuler la commande. <br /> Etes-vous sûr de vouloir continuer ?"
         cancel_the_order_send_cancelation_email: "Envoyer un email d'annulation à l'acheteur"
@@ -3688,7 +3690,6 @@ fr:
     gateway_error: "Le paiement a échoué"
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
-    new_order_completed: "Nouvelle commande finalisée"
     new_tax_category: "Nouvelle catégorie de taxe"
     new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"
@@ -3763,6 +3764,7 @@ fr:
     credit_card: "Carte de crédit"
     new_payment: "Nouveau paiement"
     capture: "Payée"
+    capture_and_complete_order: "Capturer et terminer la commande"
     void: "Annulé"
     login: "Se connecter"
     password: "Mot de passe"

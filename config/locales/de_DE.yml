@@ -1,5 +1,8 @@
 de_DE:
   language_name: "Deutsch"
+  time:
+    formats:
+      long: "%e. %b. %Y, %-k:%M Uhr"
   activerecord:
     models:
       spree/product: Produkt
@@ -526,6 +529,7 @@ de_DE:
         import_date: "Importdatum"
       actions:
         edit: Bearbeiten
+        clone: Duplizieren
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -3643,7 +3647,6 @@ de_DE:
     gateway_error: "Zahlung fehlgeschlagen"
     more: "Mehr"
     new_adjustment: "Neue Anpassung"
-    new_order_completed: "Neue Bestellung abgeschlossen"
     new_tax_category: "Neue Steuerkategorie"
     new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"
@@ -3718,6 +3721,7 @@ de_DE:
     credit_card: "Kreditkarte"
     new_payment: "Neue Zahlung"
     capture: "Verbuchen"
+    capture_and_complete_order: " Verbuchen und Bestellung abschließen"
     void: "keine Angabe"
     login: "Benutzername"
     password: "Passwort"

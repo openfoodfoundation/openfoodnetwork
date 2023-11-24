@@ -522,6 +522,7 @@ cy:
         import_date: "Dyddiad Mewnforio"
       actions:
         edit: Golygu
+        clone: Clôn
     adjustments:
       skipped_changing_canceled_order: "Nid yw'n bosib newid archeb a ganslwyd"
     begins_at: Yn dechrau am
@@ -3657,7 +3658,6 @@ cy:
     gateway_error: "Taliad wedi methu"
     more: "Mwy"
     new_adjustment: "Addasiad newydd"
-    new_order_completed: "Cwblhawyd archeb newydd"
     new_tax_category: "Categori treth newydd"
     new_taxon: "Tacson newydd"
     new_user: "Defnyddiwr newydd"

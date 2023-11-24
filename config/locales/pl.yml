@@ -333,6 +333,7 @@ pl:
         inherits_properties: "Dziedziczy właściwości?"
       actions:
         edit: Edytuj
+        clone: Kopiuj
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient

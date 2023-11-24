@@ -382,6 +382,7 @@ tr:
         import_date: "İçe Aktarım Tarihi"
       actions:
         edit: Düzenle
+        clone: Kopyala
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
@@ -3221,7 +3222,6 @@ tr:
     gateway_error: "Ödeme başarısız"
     more: "Daha Fazla"
     new_adjustment: "Yeni düzenleme"
-    new_order_completed: "Yeni sipariş tamamlandı"
     new_tax_category: "Yeni Vergi Kategorisi"
     new_taxon: "Yeni kategori"
     new_user: "Yeni kullanıcı"

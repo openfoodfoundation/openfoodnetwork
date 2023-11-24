@@ -328,6 +328,7 @@ en_ZA:
         import_date: "Import Date"
       actions:
         edit: Edit
+        clone: Clone
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
