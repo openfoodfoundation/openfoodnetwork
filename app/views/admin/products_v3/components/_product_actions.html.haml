@@ -1,6 +1,0 @@
-= render(VerticalEllipsisMenuComponent.new) do
-  - if defined?(variant)
-    = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(product, variant)
-  - else
-    = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product)
-    = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product)
