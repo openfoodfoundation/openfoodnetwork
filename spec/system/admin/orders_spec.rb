@@ -510,7 +510,7 @@ describe '
           visit spree.admin_orders_path
         end
 
-        context "bulk print invoices" do
+        context "can bulk send invoices per email" do
           before do
             Spree::Config[:enable_invoices?] = true
             Spree::Config[:enterprise_number_required_on_invoices?] = false
@@ -524,7 +524,7 @@ describe '
               order5.update(state: "payment")
             end
 
-            it "can bulk print invoices but only for the 'complete' or 'resumed' ones" do
+            it "can bulk send invoices per email, but only for the 'complete' or 'resumed' ones" do
               within "#listing_orders" do
                 page.find("input[name='bulk_ids[]'][value='#{order2.id}']").click
                 page.find("input[name='bulk_ids[]'][value='#{order3.id}']").click
@@ -572,27 +572,50 @@ describe '
           expect(page).to have_content "Confirmation emails sent for 2 orders."
         end
 
-        it "can bulk print invoices from 2 orders" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
+        context "can bulk print invoices" do
+          def extract_pdf_content
+            pdf_href = page.all('a').pluck('href')
+            page.find(class: "button", text: "VIEW FILE").click
+            invoice_file_number = pdf_href[0][45..59]
+            invoice_path = "tmp/invoices/#{invoice_file_number}.pdf"
+            reader = PDF::Reader.new(invoice_path)
 
-          page.find("span.icon-reorder", text: "ACTIONS").click
-          within ".ofn-drop-down .menu" do
-            expect {
-              page.find("span", text: "Print Invoices").click # Prints invoices in bulk
-            }.to enqueue_job(BulkInvoiceJob).exactly(:once)
+            reader.pages.map(&:text)
           end
 
-          expect(page).to have_content "Compiling Invoices"
-          expect(page).to have_content "Please wait until the PDF is ready " \
-                                       "before closing this modal."
+          it "bulk prints invoices in pdf format" do
+            page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+            page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
-          # we don't run Sidekiq in test environment, so we need to manually run enqueued jobs
-          # to generate PDF files, and change the modal accordingly
-          perform_enqueued_jobs(only: BulkInvoiceJob)
+            page.find("span.icon-reorder", text: "ACTIONS").click
+            within ".ofn-drop-down .menu" do
+              expect {
+                page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+              }.to enqueue_job(BulkInvoiceJob).exactly(:once)
+            end
 
-          expect(page).to have_content "Bulk Invoice created"
-          expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
+            expect(page).to have_content "Compiling Invoices"
+            expect(page).to have_content "Please wait until the PDF is ready " \
+                                         "before closing this modal."
+
+            # we don't run Sidekiq in test environment, so we need to manually run enqueued jobs
+            # to generate PDF files, and change the modal accordingly
+            perform_enqueued_jobs(only: BulkInvoiceJob)
+
+            expect(page).to have_content "Bulk Invoice created"
+
+            within ".modal-content" do
+              expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
+
+              invoice_content = extract_pdf_content
+
+              expect(invoice_content).to have_content("TAX INVOICE", count: 2)
+              expect(invoice_content).to have_content("TAX INVOICE: #{order4.number}")
+              expect(invoice_content).to have_content("TAX INVOICE: #{order5.number}")
+              expect(invoice_content).to have_content("From: #{distributor4.name}")
+              expect(invoice_content).to have_content("From: #{distributor5.name}")
+            end
+          end
         end
 
         it "can bulk cancel 2 orders" do
