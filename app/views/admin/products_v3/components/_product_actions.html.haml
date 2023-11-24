@@ -3,6 +3,8 @@
   .vertical-ellipsis-menu-content{ "data-vertical-ellipsis-menu-target": "content" }
     - if defined?(variant)
       = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(product, variant), class: "vertical-ellipsis-menu-content-item"
+      - if product.variants.size > 1
+        = link_to t('admin.products_page.actions.delete'), admin_product_variant_path(product, variant), method: :delete, class: "vertical-ellipsis-menu-content-item"
     - else
       = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product), class: "vertical-ellipsis-menu-content-item"
       = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product), class: "vertical-ellipsis-menu-content-item"
