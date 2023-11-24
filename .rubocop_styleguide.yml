@@ -70,6 +70,10 @@ Rails/SkipsModelValidations:
     - "update_column"
     - "update_columns"
 
+Rails/OutputSafety:
+  Exclude:
+    - 'spec/**/*'
+
 Style/Documentation:
   Enabled: false
 
