@@ -95,7 +95,7 @@
                     .field.checkbox
                       = variant_form.label :on_demand do
                         = variant_form.check_box :on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
-                        = t('admin.products_page.columns.on_demand')
+                        = t(:on_demand)
                 %td.align-left
                   .content= variant.product.supplier&.name # same as product
                 %td.align-left

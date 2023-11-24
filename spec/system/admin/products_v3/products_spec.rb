@@ -244,9 +244,9 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
     it "switches stock to on-demand" do
       within row_containing_name("Medium box") do
         click_on "On Hand" # activate stock popout
-        check "On Demand"
+        check "On demand"
 
-        expect(page).to have_css "button[aria-label='On Hand']", text: "On Demand"
+        expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
       end
 
       expect {
@@ -256,7 +256,7 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
       }.to change{ variant_a1.on_demand }.to(true)
 
       within row_containing_name("Medium box") do
-        expect(page).to have_css "button[aria-label='On Hand']", text: "On Demand"
+        expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
       end
 
       pending
