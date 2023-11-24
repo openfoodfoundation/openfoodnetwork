@@ -18,9 +18,6 @@ describe("ToggleControlController", () => {
           <input id="checkbox" type="checkbox" value="1" data-action="change->toggle-control#disableIfPresent" />
           <input id="control" data-toggle-control-target="control">
         </div>`;
-
-        const checkbox = document.getElementById("checkbox");
-        const control = document.getElementById("control");
       });
 
       it("Disables when checkbox is checked", () => {
@@ -44,9 +41,6 @@ describe("ToggleControlController", () => {
           <input id="input" value="" data-action="input->toggle-control#disableIfPresent" />
           <input id="control" data-toggle-control-target="control">
         </div>`;
-
-        const input = document.getElementById("input");
-        const control = document.getElementById("control");
       });
 
       it("Disables when input is filled", () => {

@@ -26,12 +26,6 @@ describe("PopoutController", () => {
       </div>
       <input id="input4">
     `;
-
-    const button = document.getElementById("button");
-    const input1 = document.getElementById("input1");
-    const input2 = document.getElementById("input2");
-    const input3 = document.getElementById("input3");
-    const input4 = document.getElementById("input4");
   });
 
   describe("Show", () => {

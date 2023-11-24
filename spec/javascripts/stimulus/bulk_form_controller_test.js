@@ -36,7 +36,7 @@ describe("BulkFormController", () => {
           <div data-record-id="1">
             <input id="input1a" type="text" value="initial1a">
             <input id="input1b" type="text" value="initial1b">
-            <button>a button is an element, but never changed</button>
+            <button>a button is counted as a form element, but value is undefined</button>
           </div>
           <div data-record-id="2">
             <input id="input2" type="text" value="initial2">
@@ -44,16 +44,6 @@ describe("BulkFormController", () => {
           <input type="submit">
         </form>
       `;
-
-      const disable1 = document.getElementById("disable1");
-      const disable1_element = document.getElementById("disable1_element");
-      const disable2 = document.getElementById("disable2");
-      const disable2_element = document.getElementById("disable2_element");
-      const actions = document.getElementById("actions");
-      const changed_summary = document.getElementById("changed_summary");
-      const input1a = document.getElementById("input1a");
-      const input1b = document.getElementById("input1b");
-      const input2 = document.getElementById("input2");
     });
 
     describe("marking changed fields", () => {
