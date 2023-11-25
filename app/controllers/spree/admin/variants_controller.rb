@@ -67,7 +67,7 @@ module Spree
         @variant = Spree::Variant.find(params[:id])
         flash[:success] = delete_variant
 
-        redirect_to spree.admin_products_url
+        redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
       end
 
       protected
