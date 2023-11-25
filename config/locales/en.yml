@@ -816,6 +816,14 @@ en:
         header:
           title: Bulk Edit Products
         loading: Loading your products
+        delete_product_modal:
+          prompt_html: "<h2 style='color: black'>Delete product</h2> <br>This will permanently remove it from your list."
+          confirmation_text: "Delete product"
+          cancellation_text: "Keep product"
+        delete_variant_modal:
+          prompt_html: "<h2 style='color: black'>Delete variant</h2> <br>This will permanently remove it from your list."
+          confirmation_text: "Delete variant"
+          cancellation_text: "Keep variant"
       sort:
         pagination:
           total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
