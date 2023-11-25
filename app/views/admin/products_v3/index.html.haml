@@ -21,7 +21,10 @@
 - delete_product_modal = ConfirmModalComponent.new(id: "delete_product",
     confirm_button_text: t('.delete_product_modal.confirmation_text'),
     cancel_button_text: t('.delete_product_modal.cancellation_text'),
-    confirm_button_color: :red)
+    confirm_button_color: :red,
+    controller: "product-actions",
+    confirm_actions: "click->product-actions#delete",
+    confirm_reflexes: nil)
 = render delete_product_modal do
   .margin-bottom-30
     = t('.delete_product_modal.prompt_html')
