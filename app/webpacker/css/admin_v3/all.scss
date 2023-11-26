@@ -113,7 +113,6 @@
 @import "../admin/reports";
 @import "components/select2"; // admin_v3
 @import "components/sidebar-item"; // admin_v3
-@import "components/vertical_ellipsis_menu"; // admin_v3 and only V3
 @import "../admin/side_menu";
 @import "../admin/tables";
 @import "../admin/tag_rules";
@@ -130,4 +129,5 @@
 
 @import "app/components/help_modal_component/help_modal_component";
 @import "app/components/confirm_modal_component/confirm_modal_component";
+@import "app/components/vertical_ellipsis_menu_component/vertical_ellipsis_menu_component"; // admin_v3 and only V3
 @import "app/webpacker/css/admin/trix.scss";
