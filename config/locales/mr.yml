@@ -1,0 +1,4104 @@
+mr:
+  language_name: "उत्पादन"
+  time:
+    formats:
+      long: "%B %d , %Y %-l:%M %p"
+  activerecord:
+    models:
+      spree/product: उत्पादन
+      spree/shipping_method: शिपिंग पद्धत
+    attributes:
+      spree/order/ship_address:
+        address1: "शिपिंग पत्ता (रस्ता + घर क्रमांक )"
+        address2: "शिपिंग पत्ता लाईन 2 "
+        city: "शिपिंग पत्ता शहर "
+        country: "शिपिंग पत्ता देश "
+        phone: "फोन क्रमांक"
+        firstname: "नाव "
+        lastname: "आडनाव"
+        zipcode: "शिपिंग पत्ता पिनकोड"
+      spree/order/bill_address:
+        address1: "बिलिंग पत्ता (रस्ता + घर क्रमांक)"
+        zipcode: "बिलिंग पत्ता पिनकोड"
+        city: "बिलिंग पत्ता शहर"
+        country: "बिलिंग पत्ता देश"
+        firstname: "बिलिंग पत्ता नाव"
+        lastname: "बिलिंग पत्ता आडनाव"
+        phone: ग्राहक फोन
+      spree/user:
+        password: "पासवर्ड"
+        password_confirmation: "पासवर्डची पुष्टि"
+        reset_password_token: पासवर्ड टोकन रीसेट करा
+      enterprise_fee:
+        fee_type: शुल्क प्रकार
+      spree/order:
+        payment_state: पेमेंट स्थिती
+        shipment_state: शिपमेंट स्थिती
+        completed_at: येथे पूर्ण झाले
+        number: क्रमांक
+        state: राज्य
+        email: ग्राहक ई-मेल
+      spree/payment:
+        amount: रक्कम
+        state: राज्य
+        source: सोर्स
+      spree/product:
+        name: "उत्पादनाचे नांव"
+        price: "किंमत"
+        primary_taxon: "उत्पादन श्रेणी"
+        supplier: "पुरवठादार"
+        shipping_category_id: "शिपिंग श्रेणी"
+        variant_unit: "व्हेरिएंट युनिट"
+        variant_unit_name: "वेरिएंट युनिटचे नाव"
+        unit_value: "युनिट मूल्य"
+      spree/credit_card:
+        base: "क्रेडीट कार्ड"
+        number: "क्रमांक"
+        month: "महिना"
+        verification_value: "पडताळणी मूल्य"
+        year: "वर्ष"
+      order_cycle:
+        orders_close_at: तारीख बंद करा
+      variant_override:
+        count_on_hand: "हातावर"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "कॅल्क्युलेटर सपाट टक्के:"
+        preferred_amount: "कॅल्क्युलेटर रक्कम:"
+        preferred_first_item: "प्रथम वस्तू कॅल्क्युलेटर :"
+        preferred_additional_item: "कॅल्क्युलेटर अतिरिक्त आयटम किंमत:"
+        preferred_max_items: "कमाल वस्तू कॅल्क्युलेटर:"
+        preferred_minimal_amount: "किमान रक्कम कॅल्क्युलेटर:"
+        preferred_normal_amount: "साधारण रक्कम कॅल्क्युलेटर:"
+        preferred_discount_amount: "सवलत रक्कम कॅल्क्युलेटर:"
+        preferred_unit_from_list: "सूचीमधून कॅल्क्युलेटर युनिट:"
+        preferred_per_unit: "प्रति युनिट कॅल्क्युलेटर:"
+      enterprise:
+        white_label_logo_link: "शॉपफ्रंटमध्ये वापरलेल्या लोगोची लिंक"
+    errors:
+      models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "कर श्रेणीचा वारसा मिळवण्यासाठी प्रति-आयटम कॅल्क्युलेटर आवश्यक आहे."
+        spree/user:
+          attributes:
+            email:
+              taken: "या ईमेलसाठी खाते आधीपासून आहे. कृपया लॉग इन करा किंवा तुमचा पासवर्ड रीसेट करा."
+            reset_password_token:
+              invalid: अवैध आहे
+        spree/order:
+          no_card: शुल्क आकारण्यासाठी कोणतेही अधिकृत क्रेडिट कार्ड उपलब्ध नाही
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: "मुदत संपली आहे"
+        order_cycle:
+          attributes:
+            orders_close_at:
+              after_orders_open_at: खुले होण्याच्या तारखेनंतर असावे
+        variant_override:
+          count_on_hand:
+            using_producer_stock_settings_but_count_on_hand_set: "निर्माते स्टॉक सेटिंग्ज वापरल्याने रिक्त असणे आवश्यक आहे"
+            on_demand_but_count_on_hand_set: "मागणी केली असल्यास रिक्त असणे आवश्यक आहे"
+            limited_stock_but_no_count_on_hand: "मर्यादित स्टॉकची सक्ती केल्यामुळे निर्दिष्ट करणे आवश्यक आहे"
+      messages:
+        confirmation: "%{attribute} जुळत नाही"
+        blank: "रिक्त असू शकत नाही"
+        too_short: "खूप छोटा आहे (किमान %{count} अक्षरे )"
+  errors:
+    messages:
+      content_type_invalid: "अवैध सामग्री प्रकार आहे"
+      file_size_out_of_range: "आकार %{file_size} आवश्यक रेंज मध्ये नाही"
+      limit_out_of_range: "एकूण संख्या श्रेणीबाहेर आहे"
+      image_metadata_missing: "वैध इमेज़ नाही"
+      dimension_min_inclusion: "%{width} x %{height} पिक्सेल पेक्षा मोठे किंवा समान असणे आवश्यक आहे."
+      dimension_max_inclusion: "%{width} x %{height} पिक्सेल पेक्षा कमी किंवा समान असणे आवश्यक आहे."
+      dimension_width_inclusion: "रुंदी %{min} आणि %{max} पिक्सेल दरम्यान समाविष्ट केलेली नाही."
+      dimension_height_inclusion: "उंची %{min} आणि %{max} पिक्सेल च्या दरम्यान नाही आहे."
+      dimension_width_greater_than_or_equal_to: "रुंदी %{length} पिक्सेलपेक्षा जास्त किंवा समान असणे आवश्यक आहे."
+      dimension_height_greater_than_or_equal_to: "उंची %{length} पिक्सेल पेक्षा जास्त किंवा समान असणे आवश्यक आहे."
+      dimension_width_less_than_or_equal_to: "रुंदी %{length} पिक्सेल पेक्षा कमी किंवा समान असणे आवश्यक आहे."
+      dimension_height_less_than_or_equal_to: "उंची %{length} पिक्सेल पेक्षा कमी किंवा समान असणे आवश्यक आहे."
+      dimension_width_equal_to: "रुंदी %{length} पिक्सेल इतकी असणे आवश्यक आहे."
+      dimension_height_equal_to: "उंची %{length} पिक्सेल इतकी असणे आवश्यक आहे."
+      aspect_ratio_not_square: "इमेज़ चौरसाकृती असावी"
+      aspect_ratio_not_portrait: "पोर्ट्रेट इमेज़ असणे आवश्यक आहे"
+      aspect_ratio_not_landscape: "लँडस्केप इमेज़ असणे आवश्यक आहे"
+      aspect_ratio_is_not: "%{aspect_ratio}  चा ॲस्पेक्ट रेशो आवश्यक आहे"
+      aspect_ratio_unknown: "ॲस्पेक्ट रेशो अज्ञात आहे"
+      image_not_processable: "वैध इमेज़ नाही"
+    not_found:
+      title: "आपण शोधत असलेले पृष्ठ अस्तित्वात नाही (404)"
+      message_html: "<b>कृपया पुन्हा प्रयत्न करा</b><p> ही तात्पुरती समस्या असू शकते. कृपया मागील स्क्रीनवर परत जाण्यासाठी बॅक बटणावर क्लिक करा किंवा <a href='/'>होम</a> वर परत जा आणि पुन्हा प्रयत्न करा.</p> <b>ग्राहकसेवेशी संपर्क साधा</b><p> समस्या कायम राहिल्यास किंवा तातडीची असल्यास, कृपया आम्हाला त्याबद्दल सांगा. ग्लोबल <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>ओपन फूड नेटवर्क लोकल पेजवरून</a> आमचे संपर्क तपशील शोधा.</p><p> गहाळ पृष्ठ कशाबद्दल आहे याबद्दल आपण शक्य तितके तपशील देऊ शकत असल्यास आम्हाला खूप मदत होईल.</p>"
+    internal_server_error:
+      title: "क्षमस्व, पण काहीतरी चूक झाली. (500)"
+      message_html: "<b>कृपया पुन्हा प्रयत्न करा</b><p> ही तात्पुरती समस्या असू शकते. कृपया मागील स्क्रीनवर परत जाण्यासाठी बॅक बटणावर क्लिक करा किंवा <a href='/''>होम</a> वर परत जा आणि पुन्हा प्रयत्न करा.</p> <b>आम्ही त्यावर आहोत</b><p> जर तुम्ही ही समस्या आधी पाहिली असेल, तर आम्हाला कदाचित त्याबद्दल आधीच माहिती आहे आणि आम्ही निराकरण करण्यासाठी काम करत आहोत. समोर आलेल्या सर्व चुका आम्ही रेकॉर्ड करतो.</p> <b>सपोर्टशी संपर्क साधा</b><p> समस्या कायम राहिल्यास किंवा तातडीची असल्यास, कृपया आम्हाला त्याबद्दल सांगा. ग्लोबल <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>ओपन फूड नेटवर्क लोकल पेजवरून</a> आमचे संपर्क तपशील शोधा.</p><p> ही एरर आली तेव्हा तुम्ही काय करत होता याबद्दल तुम्ही शक्य तितके तपशील देऊ शकल्यास ते आम्हाला खरोखर मदत करते.</p>"
+    unprocessable_entity:
+      title: "तुम्हाला हवा असलेला बदल नाकारण्यात आला (422)"
+      message_html: "<p>तुम्हाला हवा असलेला बदल नाकारण्यात आला. कदाचित तुम्ही असे काहीतरी बदलण्याचा प्रयत्न केला आहे ज्यामध्ये तुम्हाला प्रवेश नाही.<br><h3> <a href='/' >घरी परतणे</a></h3></p>"
+    stimulus_reflex_error: "आम्हाला क्षमा करा पण काहीतरी चुकले आहे.\n\n ही एक तात्पुरती समस्या असू शकते, म्हणून कृपया पुन्हा प्रयत्न करा किंवा पृष्ठ रीलोड करा.\n आम्ही सर्व त्रुटी रेकॉर्ड करतो आणि कदाचित निराकरण करण्यासाठी कार्य करत आहोत.\n समस्या कायम राहिल्यास किंवा तातडीची असल्यास, कृपया आमच्याशी संपर्क साधा."
+  stripe:
+    error_code:
+      incorrect_number: "कार्ड क्रमांक चुकीचा आहे."
+      invalid_number: "कार्ड क्रमांक वैध क्रेडिट कार्ड क्रमांक नाही."
+      invalid_expiry_month: "कार्डचा कालबाह्यता महिना अवैध आहे."
+      invalid_expiry_year: "कार्डची कालबाह्यता वर्ष अवैध आहे."
+      invalid_cvc: "कार्डचा सुरक्षा कोड अवैध आहे."
+      expired_card: "कार्डची मुदत संपली आहे."
+      incorrect_cvc: "कार्डचा सुरक्षा कोड चुकीचा आहे."
+      incorrect_zip: "कार्डच्या पिन कोडचे प्रमाणीकरण अयशस्वी झाले."
+      card_declined: "कार्ड नाकारण्यात आले."
+      missing: "शुल्क आकारले जात असलेल्या ग्राहकावर कोणतेही कार्ड नाही."
+      processing_error: "कार्डवर प्रक्रिया करताना एक त्रुटी आली."
+      rate_limit: "एपीआयला रिक्वेस्टस् खूप लवकर मिळाल्यामुळे एरर आली. तुम्‍हाला ही एरर सतत येत असल्‍यास कृपया आम्‍हाला कळवा."
+      authentication_required: "व्यवहाराला प्रमाणीकरण आवश्यक असल्याने कार्ड नाकारण्यात आले."
+      approve_with_id: "पेमेंट अधिकृत केले जाऊ शकत नाही."
+      call_issuer: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      card_not_supported: "कार्ड या प्रकारच्या खरेदीला समर्थन देत नाही."
+      card_velocity_exceeded: "ग्राहकाने त्यांच्या कार्डवर उपलब्ध शिल्लक किंवा क्रेडिट मर्यादा ओलांडली आहे."
+      currency_not_supported: "कार्ड निर्दिष्ट चलनास समर्थन देत नाही."
+      do_not_honor: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      do_not_try_again: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      duplicate_transaction: "समान रक्कम आणि क्रेडिट कार्ड माहितीसह एक व्यवहार अलीकडेच सबमिट केला गेला."
+      fraudulent: "स्ट्राइपला फसवणुकीचा संशय असल्याने पेमेंट नाकारण्यात आले आहे."
+      generic_decline: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      incorrect_pin: "प्रविष्ट केलेला पिन चुकीचा आहे. हा नकार कोड फक्त कार्ड रीडरने केलेल्या पेमेंटवर लागू होतो.  "
+      insufficient_funds: "खरेदी पूर्ण करण्यासाठी कार्डमध्ये पुरेसे पैसे नाहीत. "
+      invalid_account: "कार्ड किंवा ज्या खात्याचे कार्ड आहे ते अवैध आहे."
+      invalid_amount: "देय रक्कम अवैध आहे किंवा मर्यादेपेक्षा जास्त आहे."
+      invalid_pin: "प्रविष्ट केलेला पिन चुकीचा आहे. हा नकार कोड फक्त कार्ड रीडरने केलेल्या पेमेंटवर लागू होतो."
+      issuer_not_available: "कार्ड जारीकर्त्यापर्यंत पोहोचता आले नाही, त्यामुळे पेमेंट अधिकृत करता आले नाही."
+      lost_card: "कार्ड हरवल्याची तक्रार केल्यामुळे पेमेंट नाकारण्यात आले आहे."
+      merchant_blacklist: "पेमेंट नाकारले गेले आहे कारण ते स्ट्राइप वापरकर्त्याच्या ब्लॉक सूचीतील मूल्याशी जुळते."
+      new_account_information_available: "कार्ड किंवा ज्या खात्याचे कार्ड आहे ते अवैध आहे."
+      no_action_taken: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      not_permitted: "पैसे भरण्याची परवानगी नाही."
+      offline_pin_required: "कार्डला पिन आवश्यक असल्याने ते नाकारण्यात आले आहे."
+      online_or_offline_pin_required: "कार्डला पिन आवश्यक असल्याने ते नाकारण्यात आले आहे."
+      pickup_card: "हे पेमेंट करण्यासाठी कार्ड वापरले जाऊ शकत नाही (ते हरवले किंवा चोरीला गेल्याची शक्यता आहे)."
+      pin_try_exceeded: "पिन प्रयत्नांची अनुमत संख्या ओलांडली आहे."
+      reenter_transaction: "अज्ञात कारणास्तव जारीकर्त्याद्वारे पेमेंटवर प्रक्रिया करणे शक्य झाले नाही."
+      restricted_card: "हे पेमेंट करण्यासाठी कार्ड वापरले जाऊ शकत नाही (ते हरवले किंवा चोरीला गेल्याची शक्यता आहे)."
+      revocation_of_all_authorizations: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      revocation_of_authorization: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      security_violation: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      service_not_allowed: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      stolen_card: "कार्ड चोरीला गेल्याची तक्रार असल्याने पेमेंट नाकारण्यात आले आहे."
+      stop_payment_order: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      testmode_decline: "स्ट्रीप टेस्ट कार्ड नंबर वापरला होता."
+      transaction_not_allowed: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      try_again_later: "अज्ञात कारणास्तव कार्ड नाकारले गेले आहे."
+      withdrawal_count_limit_exceeded: "ग्राहकाने त्यांच्या कार्डवर उपलब्ध शिल्लक किंवा क्रेडिट मर्यादा ओलांडली आहे."
+  activemodel:
+    errors:
+      messages:
+        inclusion: "यादीत समाविष्ट नाही"
+      models:
+        order_management/subscriptions/validator:
+          attributes:
+            subscription_line_items:
+              at_least_one_product: "^कृपया किमान एक उत्पादन जोडा"
+              not_available: "^ %{name} निवडलेल्या शेड्यूलमधून उपलब्ध नाही"
+            ends_at:
+              after_begins_at: "वाजता सुरू झाल्यानंतर असणे आवश्यक आहे"
+            customer:
+              does_not_belong_to_shop: "%{shop} च्या मालकीचे नाही"
+            schedule:
+              not_coordinated_by_shop: "%{shop} द्वारे समन्वयित नाही"
+            payment_method:
+              not_available_to_shop: "%{shop} वर उपलब्ध नाही"
+              invalid_type: "रोख किंवा पट्टी पद्धत असणे आवश्यक आहे"
+              charges_not_allowed: "^या ग्राहकाला क्रेडिट कार्ड शुल्काची परवानगी नाही"
+              no_default_card: "^या ग्राहकासाठी कोणतेही डीफॉल्ट कार्ड उपलब्ध नाही"
+            shipping_method:
+              not_available_to_shop: "%{shop} वर उपलब्ध नाही"
+  card_details: "कार्ड तपशील"
+  card_type: "कार्ड प्रकार"
+  cardholder_name: "कार्डधारकाचे नाव"
+  community_forum_url: "समुदाय मंच URL"
+  customer_instructions: "ग्राहक सूचना"
+  additional_information: "अतिरिक्त माहिती"
+  devise:
+    passwords:
+      spree_user:
+        cannot_be_blank: "वापरकर्ता संकेतशब्द रिक्त असू शकत नाही. कृपया पासवर्ड टाका."
+    confirmations:
+      send_instructions: "तुम्हाला काही मिनिटांत तुमच्या खात्याची पुष्टी कशी करावी याबद्दल सूचनांसह ईमेल प्राप्त होईल."
+      failed_to_send: "तुमचा पुष्टीकरण ईमेल पाठवताना एक त्रुटी आली."
+      resend_confirmation_email: "पुष्टीकरण ईमेल पुन्हा पाठवा."
+      confirmed: "तुमच्या ईमेलची पुष्टी केल्याबद्दल धन्यवाद! तुम्ही आता लॉग इन करू शकता."
+      not_confirmed: "तुमच्या ईमेल पत्त्याची पुष्टी होऊ शकली नाही. कदाचित तुम्ही ही पायरी आधीच पूर्ण केली असेल?"
+    user_confirmations:
+      spree_user:
+        send_instructions: "तुम्हाला काही मिनिटांत तुमच्या खात्याची पुष्टी कशी करावी याबद्दल सूचनांसह ईमेल प्राप्त होईल."
+        confirmation_sent: "ईमेल पुष्टीकरण पाठवले"
+        confirmation_not_sent: "पुष्टीकरण ईमेल पाठवताना त्रुटी"
+    user_registrations:
+      spree_user:
+        signed_up_but_unconfirmed: "पुष्टीकरण दुव्यासह एक संदेश तुमच्या ईमेल पत्त्यावर पाठविला गेला आहे. तुमचे खाते सक्रिय करण्यासाठी कृपया लिंक उघडा."
+        unknown_error: "तुमचे खाते तयार करताना काहीतरी चूक झाली. तुमचा ईमेल पत्ता तपासा आणि पुन्हा प्रयत्न करा."
+    failure:
+      disabled: "तुमचे खाते अक्षम केले गेले आहे. या समस्येचे निराकरण करण्यासाठी कृपया प्रशासकाशी संपर्क साधा."
+      invalid: |
+          चुकीचा इमेल किंवा सांकेतीक शब्द.
+          तुम्ही मागच्या वेळी पाहुणे होता का? कदाचित तुम्हाला एखादे खाते तयार करावे लागेल किंवा तुमचा पासवर्ड रीसेट करावा लागेल.
+      unconfirmed: "सुरू ठेवण्यापूर्वी तुम्हाला तुमच्या खात्याची पुष्टी करावी लागेल."
+      already_registered: "हा ईमेल पत्ता आधीच नोंदणीकृत आहे. कृपया सुरू ठेवण्यासाठी लॉग इन करा किंवा परत जा आणि दुसरा ईमेल पत्ता वापरा."
+    success:
+      logged_in_succesfully: "यशस्वीरित्या लॉग इन केले"
+    sessions:
+      signed_out: "यशस्वीरित्या साइन आउट केले."
+      already_signed_out: "यशस्वीरित्या साइन आउट केले."
+    user_passwords:
+      spree_user:
+        updated_not_active: "तुमचा पासवर्ड रीसेट केला गेला आहे, परंतु तुमच्या ईमेलची अद्याप पुष्टी झालेली नाही."
+        updated: "तुमचा पासवर्ड यशस्वीरित्या बदलला. तुम्ही आता साइन इन केले आहे."
+        send_instructions: "तुम्हाला काही मिनिटांत तुमच्या खात्याची पुष्टी कशी करावी याबद्दल सूचनांसह ईमेल प्राप्त होईल."
+    oidc:
+      failure: "साइन इन करू शकलो नाही: %{error}"
+  home_page_alert_html: "होम पेज अलर्ट HTML"
+  hub_signup_case_studies_html: "हब साइनअप केस स्टडी HTML"
+  hub_signup_detail_html: "हब साइनअप तपशील HTML"
+  hub_signup_pricing_table_html: "हब साइनअप किंमत सारणी HTML"
+  group_signup_case_studies_html: "ग्रुप साइनअप केस स्टडीज HTML"
+  group_signup_detail_html: "गट साइनअप तपशील HTML"
+  group_signup_pricing_table_html: "गट साइनअप किंमत सारणी HTML"
+  item_description: "आयटम वर्णन"
+  menu_1_icon_name: "मेनू 1 चिन्हाचे नाव"
+  menu_2_icon_name: "मेनू 2 चिन्हाचे नाव"
+  menu_3_icon_name: "मेनू 3 चिन्हाचे नाव"
+  menu_4_icon_name: "मेनू 4 चिन्हाचे नाव"
+  menu_5_icon_name: "मेनू 5 चिन्हाचे नाव"
+  menu_6_icon_name: "मेनू 6 चिन्हाचे नाव"
+  menu_7_icon_name: "मेनू 7 चिन्हाचे नाव"
+  models:
+    order_cycle:
+      cloned_order_cycle_name: "%{order_cycle} ची प्रत"
+    tax_rate:
+      included_in_price: "किंमतीमध्ये समाविष्ट आहे"
+  open_street_map_enabled: "उघडा मार्ग नकाशा सक्षम"
+  open_street_map_default_latitude: "मार्ग नकाशा डीफॉल्ट अक्षांश उघडा"
+  open_street_map_default_longitude: "मार्ग नकाशा डीफॉल्ट रेखांश उघडा"
+  open_street_map_provider_name: "मार्ग नकाशा प्रदात्याचे नाव उघडा"
+  open_street_map_provider_options: "मार्ग नकाशा प्रदाता पर्याय उघडा"
+  producer_signup_case_studies_html: "निर्माता साइनअप केस स्टडी HTML"
+  producer_signup_detail_html: "निर्माता साइनअप तपशील HTML"
+  producer_signup_pricing_table_html: "उत्पादक साइनअप किंमत सारणी HTML"
+  producers_social: "उत्पादक सामाजिक"
+  resume_order: "ऑर्डर पुन्हा सुरू करा"
+  sku: "SKU"
+  subtotal: "बेरजे"
+  tax_rate: "कर दर"
+  validators:
+    date_time_string_validator:
+      not_string_error: "स्ट्रिंग असणे आवश्यक आहे"
+      invalid_format_error: "वैध असणे आवश्यक आहे"
+    integer_array_validator:
+      not_array_error: "अॅरे असणे आवश्यक आहे"
+      invalid_element_error: "फक्त वैध पूर्णांक असणे आवश्यक आहे"
+  report_job:
+    report_failed: |
+        हा अहवाल अयशस्वी झाला. प्रक्रिया करण्यासाठी ते खूप मोठे असू शकते.
+        आम्ही त्याकडे लक्ष देऊ पण समस्या कायम राहिल्यास कृपया आम्हाला कळवा.
+  enterprise_mailer:
+    confirmation_instructions:
+      subject: "कृपया %{enterprise} साठी ईमेल पत्त्याची पुष्टी करा"
+    welcome:
+      subject: "%{enterprise} आता %{sitename} वर आहे"
+      email_welcome: "स्वागत आहे"
+      email_registered: "चा भाग आहे"
+      email_userguide_html: "तुमचा निर्माता किंवा हब सेट करण्यासाठी तपशीलवार समर्थनासह वापरकर्ता मार्गदर्शक येथे आहे: %{link}"
+      userguide: "फूड नेटवर्क वापरकर्ता मार्गदर्शक उघडा"
+      email_admin_html: "तुम्ही %{link} मध्ये लॉग इन करून किंवा मुख्यपृष्ठाच्या वरच्या उजव्या बाजूला असलेल्या cog वर क्लिक करून आणि Administration निवडून तुमचे खाते व्यवस्थापित करू शकता."
+      admin_panel: "प्रशासन पॅनेल"
+      email_community_html: "आमच्याकडे OFN सॉफ्टवेअरशी संबंधित आणि फूड एंटरप्राइझ चालवण्याच्या अद्वितीय आव्हानांच्या सामुदायिक चर्चेसाठी एक ऑनलाइन मंच देखील आहे ज्यात तुम्‍हाला सामील होऊ शकता. आम्‍ही सतत प्रगती करत आहोत आणि पुढील विकास तुम्ही या मंचामध्ये मांडलेले मुद्द्यांना विचारात घेऊन होईल. %{link}"
+      join_community: "समुदायात सामील व्हा"
+    invite_manager:
+      subject: "%{enterprise} ने तुम्हाला व्यवस्थापक होण्यासाठी आमंत्रित केले आहे"
+  producer_mailer:
+    order_cycle:
+      subject: "%{producer} साठी सायकल अहवाल ऑर्डर करा"
+  provider_settings: "प्रदाता सेटिंग्ज"
+  report_mailer:
+    report_ready:
+      subject: "अहवाल तयार"
+      heading: "डाउनलोडसाठी अहवाल तयार आहे"
+      intro: |
+          खालील लिंक एका आठवड्यानंतर कालबाह्य होईल.
+      link_label: "%{name}"
+  shipment_mailer:
+    shipped_email:
+      dear_customer: "प्रिय ग्राहक,"
+      instructions: "आपली ऑर्डर रवाना करण्यात आले आहे"
+      shipment_summary: "शिपमेंट सारांश"
+      subject: "शिपमेंट सूचना"
+      thanks: "तुमच्या व्यवसायाबद्दल धन्यवाद."
+      track_information: "ट्रॅकिंग माहिती: %{tracking}"
+      track_link: "ट्रॅकिंग लिंक: %{url}"
+  subscription_mailer:
+    placement_summary_email:
+      subject: अलीकडे ठेवलेल्या सदस्यता ऑर्डरचा सारांश
+      greeting: "हाय %{name} ,"
+      intro: "खाली %{shop} साठी नुकत्याच दिलेल्या सदस्यता ऑर्डरचा सारांश आहे."
+    confirmation_summary_email:
+      subject: अलीकडे पुष्टी केलेल्या सदस्यता ऑर्डरचा सारांश
+      greeting: "हाय %{name} ,"
+      intro: "खाली %{shop} साठी नुकत्याच अंतिम केलेल्या सदस्यता ऑर्डरचा सारांश आहे."
+    summary_overview:
+      total: एकूण %{count} सदस्यता स्वयंचलित प्रक्रियेसाठी चिन्हांकित केल्या गेल्या.
+      success_zero: यापैकी एकावरही यशस्वीपणे प्रक्रिया झाली नाही.
+      success_some: यापैकी, %{count} यशस्वीरित्या प्रक्रिया केली गेली.
+      success_all: सर्व यशस्वीरित्या प्रक्रिया केली गेली.
+      issues: समोर आलेल्या समस्यांचे तपशील खाली दिले आहेत.
+    summary_detail:
+      no_message_provided: कोणताही त्रुटी संदेश दिलेला नाही
+      changes:
+        title: अपुरा स्टॉक ( %{count} ऑर्डर)
+        explainer: या ऑर्डरवर प्रक्रिया करण्यात आली परंतु काही विनंती केलेल्या वस्तूंसाठी अपुरा साठा उपलब्ध होता
+      empty:
+        title: कोणताही स्टॉक नाही ( %{count} ऑर्डर)
+        explainer: या ऑर्डरवर प्रक्रिया करता आली नाही कारण कोणत्याही विनंती केलेल्या आयटमसाठी कोणताही स्टॉक उपलब्ध नव्हता
+      complete:
+        title: आधीच प्रक्रिया केली आहे ( %{count} ऑर्डर)
+        explainer: या ऑर्डर आधीच पूर्ण म्हणून चिन्हांकित केल्या गेल्या होत्या, आणि म्हणून ते अस्पर्शित राहिले होते
+      processing:
+        title: त्रुटी आली ( %{count} ऑर्डर)
+        explainer: त्रुटीमुळे या ऑर्डरची स्वयंचलित प्रक्रिया अयशस्वी झाली. त्रुटी शक्य तेथे सूचीबद्ध केली आहे.
+      failed_payment:
+        title: अयशस्वी पेमेंट ( %{count} ऑर्डर)
+        explainer: त्रुटीमुळे या ऑर्डरसाठी पेमेंटची स्वयंचलित प्रक्रिया अयशस्वी झाली. त्रुटी शक्य तेथे सूचीबद्ध केली आहे.
+      other:
+        title: इतर अपयश ( %{count} ऑर्डर)
+        explainer: अज्ञात कारणास्तव या ऑर्डरची स्वयंचलित प्रक्रिया अयशस्वी झाली. हे घडू नये, कृपया आपण हे पाहत असल्यास आमच्याशी संपर्क साधा.
+  home: "OFN"
+  title: "अन्न नेटवर्क उघडा"
+  welcome_to: "आपले स्वागत आहे"
+  site_meta_description: "आम्ही तळापासून सुरुवात करतो. शेतकरी आणि उत्पादक त्यांच्या कथा अभिमानाने आणि खऱ्या अर्थाने सांगण्यास तयार आहेत. लोकांना उत्पादनांशी प्रामाणिकपणे आणि प्रामाणिकपणे जोडण्यासाठी वितरक तयार आहेत. चांगले साप्ताहिक खरेदी निर्णय घेऊ शकतात असा विश्वास असलेल्या खरेदीदारांसह…"
+  search_by_name: नाव किंवा उपनगरानुसार शोधा...
+  producers_join: ओपन फूड नेटवर्कमध्ये सामील होण्यासाठी ऑस्ट्रेलियन उत्पादकांचे आता स्वागत आहे.
+  charges_sales_tax: जीएसटी आकारणार?
+  business_address: "व्यवसायाचा पत्ता"
+  print_invoice: "चलन छापा"
+  print_ticket: "तिकीट प्रिंट करा"
+  select_ticket_printer: "तिकिटांसाठी प्रिंटर निवडा"
+  send_invoice: "बीजक पाठवा"
+  resend_confirmation: "पुष्टी पुन्हा पाठवा"
+  view_order: "ऑर्डर पहा"
+  edit_order: "ऑर्डर संपादित करा"
+  ship_order: "शिप ऑर्डर"
+  cancel_order: "ऑर्डर रद्द करा"
+  confirm_send_invoice: "या ऑर्डरचे बीजक ग्राहकाला पाठवले जाईल. तुम्हाला खात्री आहे की तुम्ही पुढे सुरू ठेवू इच्छिता?"
+  confirm_resend_order_confirmation: "तुम्हाला खात्री आहे की तुम्ही ऑर्डर पुष्टीकरण ईमेल पुन्हा पाठवू इच्छिता?"
+  must_have_valid_business_number: "बीजक पाठवण्यापूर्वी %{enterprise_name} कडे वैध ABN असणे आवश्यक आहे."
+  invoice: "चलन"
+  invoices: "पावत्या"
+  file: "फाईल"
+  active: "सक्रिय"
+  download: "डाउनलोड करा"
+  cancelled: "रद्द केले"
+  more: "अधिक"
+  say_no: "नाही"
+  say_yes: "होय"
+  ongoing: चालू आहे
+  bill_address: बिलाचा पत्ता
+  ship_address: शिपिंग पत्ता
+  sort_order_cycles_on_shopfront_by: "यानुसार शॉपफ्रंटवर ऑर्डर सायकल क्रमवारी लावा"
+  required_fields: आवश्यक फील्ड तारकाने दर्शविले जातात
+  select_continue: निवडा आणि सुरू ठेवा
+  remove: काढा
+  collapse_all: सर्व संकुचित करा
+  expand_all: सर्व विस्तारित
+  loading: लोड करत आहे...
+  show_more: अजून दाखवा
+  show_all: सगळं दाखवा
+  show_all_with_more: "सर्व दाखवा ( %{num} अधिक)"
+  cancel: रद्द करा
+  edit: सुधारणे
+  clone: क्लोन
+  distributors: वितरक
+  distribution: वितरण
+  order_cycles: ऑर्डर सायकल
+  bulk_order_management: मोठ्या प्रमाणात ऑर्डर व्यवस्थापन
+  enterprises: उपक्रम
+  enterprise_groups: गट
+  reports: अहवाल
+  listing_reports: सूची अहवाल
+  variant_overrides: इन्व्हेंटरी
+  import: आयात करा
+  spree_products: स्प्री उत्पादने
+  all: सर्व
+  current: चालू
+  available: उपलब्ध
+  dashboard: डॅशबोर्ड
+  undefined: अपरिभाषित
+  unused: न वापरलेले
+  admin_and_handling: प्रशासन आणि हाताळणी
+  profile: प्रोफाइल
+  supplier_only: फक्त पुरवठादार
+  has_shopfront: शॉपफ्रंट आहे
+  weight: वजन
+  volume: खंड
+  items: वस्तू
+  summary: सारांश
+  detailed: तपशीलवार
+  updated: अपडेट केले
+  'yes': "होय"
+  'no': "नाही"
+  y: 'वाय'
+  n: 'एन'
+  powered_by: यांनी केले
+  blocked_cookies_alert: "कदाचित तुमचा ब्राउझर हे शॉपफ्रंट वापरण्यासाठी आवश्यक असलेल्या कुकीज ब्लॉक करत असेल. कुकीजला अनुमती देण्यासाठी आणि पृष्ठ रीलोड करण्यासाठी खाली क्लिक करा."
+  allow_cookies: "कुकीजला परवानगी द्या"
+  none: काहीही नाही
+  notes: नोट्स
+  error: त्रुटी
+  voucher: व्हाउचर
+  processing_payment: "पेमेंटवर प्रक्रिया करत आहे..."
+  no_pending_payments: "कोणतीही प्रलंबित देयके नाहीत"
+  invalid_payment_state: "अवैध पेमेंट स्थिती: %{state}"
+  filter_results: फिल्टर परिणाम
+  clear_filters: फिल्टर साफ करा
+  quantity: प्रमाण
+  pick_up: उचला
+  ok: ठीक आहे
+  copy: कॉपी करा
+  change_my_password: "माझा पासवर्ड बदला"
+  update_password: "पासवर्ड अपडेट करा"
+  password_confirmation: पासवर्ड पुष्टीकरण
+  reset_password_token: पासवर्ड टोकन रीसेट करा
+  expired: कालबाह्य झाले आहे, कृपया नवीन विनंती करा
+  back_to_payments_list: "पेमेंट सूचीकडे परत"
+  maestro_or_solo_cards: "मेस्ट्रो/सोलो कार्ड"
+  backordered: "बॅकऑर्डर केलेले"
+  on_hand: "हातावर"
+  on hand: "हातावर"
+  ship: "जहाज"
+  shipping_category: "शिपिंग श्रेणी"
+  height: "उंची"
+  width: "रुंदी"
+  depth: "खोली"
+  payment_could_not_process: "पेमेंटवर प्रक्रिया करता आली नाही"
+  payment_could_not_complete: "पेमेंट पूर्ण होऊ शकले नाही"
+  actions:
+    create_and_add_another: "तयार करा आणि दुसरे जोडा"
+    create: "तयार करा"
+    cancel: "रद्द करा"
+    resume: "पुन्हा सुरू करा"
+    save: "जतन करा"
+    edit: "सुधारणे"
+    update: "अपडेट करा"
+    delete: "हटवा"
+    add: "अॅड"
+    cut: "कट"
+    paste: "पेस्ट करा"
+    destroy: "नष्ट करा"
+    rename: "नाव बदला"
+  admin:
+    products_page:
+      title: उत्पादने
+      filters:
+        categories:
+          title: श्रेण्या
+          selected_categories: "%{count} वर्गवारी निवडल्या"
+        producers:
+          title: निर्माते
+          selected_producers: "%{count} उत्पादक निवडले"
+        per_page: "प्रति पृष्ठ %{count} आयटम"
+        colums: स्तंभ
+      columns:
+        name: नाव
+        unit: युनिट
+        price: किंमत
+        producer: निर्माता
+        category: श्रेणी
+        sku: SKU
+        on_hand: "हातावर"
+        on_demand: "मागणीनुसार"
+        tax_category: "कर श्रेणी"
+        inherits_properties: "गुणधर्म वारसा?"
+        import_date: "आयात तारीख"
+        actions: क्रिया
+      columns_selector:
+        unit: युनिट
+        price: किंमत
+        producer: निर्माता
+        category: श्रेणी
+        sku: SKU
+        on_hand: "हातावर"
+        on_demand: "मागणीनुसार"
+        tax_category: "कर श्रेणी"
+        inherits_properties: "गुणधर्म वारसा?"
+        import_date: "आयात तारीख"
+      actions:
+        edit: सुधारणे
+        clone: क्लोन
+    adjustments:
+      skipped_changing_canceled_order: "तुम्ही रद्द केलेली ऑर्डर बदलू शकत नाही."
+    begins_at: वाजता सुरू होते
+    begins_on: रोजी सुरू होते
+    bill_address: "बिल पत्ता"
+    ship_address: "जहाजाचा पत्ता"
+    customer: ग्राहक
+    date: तारीख
+    email: ईमेल
+    ends_at: वाजता संपेल
+    ends_on: रोजी संपेल
+    name: नाव
+    first_name: पहिले नाव
+    last_name: आडनाव
+    on_hand: हातावर
+    on_demand: मागणीनुसार
+    on_demand?: मागणीनुसार?
+    order_cycle: ऑर्डर सायकल
+    payment: पेमेंट
+    payment_method: पेमेंट पद्धत
+    phone: फोन
+    price: किंमत
+    producer: निर्माता
+    image: प्रतिमा
+    product: उत्पादन
+    quantity: प्रमाण
+    schedule: वेळापत्रक
+    shipping: शिपिंग
+    shipping_method: 'शिपिंग पद्धत '
+    shop: दुकान
+    sku: SKU
+    status_state: राज्य
+    tags: टॅग्ज
+    variant: प्रकार
+    weight: वजन
+    volume: खंड
+    items: वस्तू
+    select_all: सर्व निवडा
+    quick_search: द्रुत शोध
+    clear_all: सर्व साफ करा
+    start_date: "प्रारंभ तारीख"
+    end_date: "शेवटची तारीख"
+    unsaved_changes: "तुमच्याकडे जतन न केलेले बदल आहेत"
+    form_invalid: "फॉर्ममध्ये गहाळ किंवा अवैध फील्ड आहेत"
+    clear_filters: फिल्टर साफ करा
+    clear: साफ
+    save: जतन करा
+    cancel: रद्द करा
+    back: मागे
+    show_more: अजून दाखवा
+    show_n_more: अधिक %{num} दर्शवा
+    choose: "निवडा..."
+    please_select: कृपया निवडा...
+    column_save_as_default: डीफॉल्ट म्हणून सेव्ह करा
+    columns: स्तंभ
+    actions: क्रिया
+    viewing: "पहात आहे: %{current_view_name}"
+    description: वर्णन
+    whats_this: हे काय आहे?
+    tag_has_rules: "या टॅगसाठी विद्यमान नियम: %{num}"
+    has_one_rule: "एक नियम आहे"
+    has_n_rules: "%{num} नियम आहेत"
+    unsaved_confirm_leave: "या पृष्ठावर जतन न केलेले बदल आहेत. सेव्ह न करता सुरू ठेवायचे?"
+    available_units: "उपलब्ध युनिट्स"
+    shopfront_settings:
+      embedded_shopfront_settings: "एम्बेडेड शॉपफ्रंट सेटिंग्ज"
+      enable_embedded_shopfronts: "एम्बेडेड शॉपफ्रंट सक्षम करा"
+      embedded_shopfronts_whitelist: "बाह्य डोमेन व्हाइटलिस्ट"
+    terms_of_service_files:
+      create:
+        select_file: "कृपया प्रथम एक फाइल निवडा."
+      show:
+        title: "सेवा अटी फाइल्स"
+        no_files: "सेवांच्या कोणत्याही अटी अद्याप अपलोड केलेल्या नाहीत."
+        current_terms_html: "वर्तमान %{tos_link} पहा. अपलोड वेळ: %{datetime} ."
+        terms_of_service: "सेवा अटी"
+        delete: "फाईल काढून टाका"
+        confirm_delete: "तुमची खात्री आहे की तुम्ही वर्तमान सेवा अटी फाइल हटवू इच्छिता?"
+        attachment: "संलग्नक"
+        create_terms_of_service: "सेवा अटी फाइल तयार करा"
+    number_localization:
+      number_localization_settings: "संख्या स्थानिकीकरण सेटिंग्ज"
+      enable_localized_number: "आंतरराष्ट्रीय हजार/दशांश विभाजक तर्क वापरा"
+    invoice_settings:
+      edit:
+        title: "बीजक सेटिंग्ज"
+        enable_invoices?: "चलन सक्षम करायचे?"
+        invoice_style2?: "पर्यायी इनवॉइस मॉडेल वापरा ज्यामध्ये प्रति दर आणि प्रति आयटम कर दर माहिती समाविष्ट आहे ( कर वगळता किमती दर्शवणाऱ्या देशांसाठी हे मॉडेल अजून योग्य नाही)"
+        enterprise_number_required_on_invoices?: "बीजक व्युत्पन्न करण्यासाठी ABN आवश्यक आहे का?"
+    stripe_connect_settings:
+      edit:
+        title: "स्ट्राइप कनेक्ट"
+        settings: "सेटिंग्ज"
+        stripe_connect_enabled: स्ट्राइप कनेक्ट वापरून पेमेंट स्वीकारण्यासाठी दुकाने सक्षम करायची?
+        no_api_key_msg: या एंटरप्राइझसाठी कोणतेही स्ट्राइप खाते अस्तित्वात नाही.
+        configuration_explanation_html: स्ट्राइप कनेक्ट एकत्रीकरण कॉन्फिगर करण्याच्या तपशीलवार सूचनांसाठी, कृपया <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>या मार्गदर्शकाचा सल्ला घ्या</a> .
+        status: स्थिती
+        ok: ठीक आहे
+        instance_secret_key: उदाहरण गुप्त की
+        account_id: खाते आयडी
+        business_name: व्यवसायाचे नाव
+        charges_enabled: शुल्क सक्षम
+        charges_enabled_warning: "चेतावणी: तुमच्या खात्यासाठी शुल्क सक्षम केलेले नाही"
+        auth_fail_error: तुम्ही प्रदान केलेली API की अवैध आहे
+        empty_api_key_error_html: कोणतीही स्ट्राइप API की प्रदान केलेली नाही. तुमची API की सेट करण्यासाठी, कृपया <a href="https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance" target="_blank">या सूचनांचे</a> अनुसरण करा
+    matomo_settings:
+      edit:
+        title: "Matomo सेटिंग्ज"
+        matomo_url: "Matomo URL"
+        matomo_site_id: "Matomo साइट आयडी"
+        matomo_tag_manager_url: "Matomo टॅग व्यवस्थापक URL"
+        info_html: "Matomo हे वेब आणि मोबाइल ॲनालिटिक्स ॲप्लिकेशन आहे. तुम्ही एकतर Matomo ऑन-प्रिमाइसेस होस्ट करू शकता किंवा क्लाउड-होस्टेड सेवा वापरू शकता. अधिक माहितीसाठी <a href='http://matomo.org' target='_blank'>matomo.org</a> पहा."
+    customers:
+      index:
+        new_customer: "नवीन ग्राहक"
+        code: कोड
+        duplicate_code: "हा कोड आधीच वापरला आहे."
+        bill_address: "बिलाचा पत्ता"
+        ship_address: "शिपिंग पत्ता"
+        balance: "शिल्लक"
+        update_address_success: "पत्ता यशस्वीरित्या अपडेट केला."
+        update_address_error: "क्षमस्व! कृपया सर्व आवश्यक फील्ड इनपुट करा!"
+        edit_bill_address: "बिलिंग पत्ता संपादित करा"
+        edit_ship_address: "शिपिंग पत्ता संपादित करा"
+        required_fileds: "आवश्यक फील्ड तारकाने दर्शविले जातात"
+        select_country: "देश निवडा"
+        select_state: "राज्य निवडा"
+        edit: "सुधारणे"
+        update_address: "पत्ता अद्ययावत करा"
+        confirm_delete: "नक्की हटवायचे?"
+        search_by_email: "ईमेल/कोड द्वारे शोधा..."
+        guest_label: "अतिथी चेकआउट"
+        credit_owed: "कर्ज थकीत"
+        balance_due: "शिल्लक देय"
+      destroy:
+        has_associated_subscriptions: "डिलीट अयशस्वी: या ग्राहकाकडे सक्रिय सदस्यत्वे आहेत. त्यांना आधी रद्द करा."
+    contents:
+      edit:
+        title: सामग्री
+        header: शीर्षलेख
+        home_page: मुखपृष्ठ
+        producer_signup_page: निर्माता साइनअप पृष्ठ
+        hub_signup_page: हब साइनअप पृष्ठ
+        group_signup_page: गट साइनअप पृष्ठ
+        main_links: मुख्य मेनू दुवे
+        footer_and_external_links: तळटीप आणि बाह्य दुवे
+        your_content: तुमची सामग्री
+        user_guide: वापरकर्ता मार्गदर्शक
+        map: नकाशा
+    enterprise_fees:
+      index:
+        title: "एंटरप्राइझ फी"
+        enterprise: "उपक्रम"
+        fee_type: "शुल्क प्रकार"
+        name: "नाव"
+        tax_category: "कर श्रेणी"
+        calculator: "कॅल्क्युलेटर"
+        calculator_values: "कॅल्क्युलेटर मूल्ये"
+        search: "शोधा"
+        name_placeholder: "उदा. पॅकिंग फी"
+    enterprise_groups:
+      index:
+        new_button: नवीन एंटरप्राइज ग्रुप
+      form_primary_details:
+        primary_details: "प्राथमिक तपशील"
+      form_users:
+        users: "वापरकर्ते"
+      form_about:
+        about: "बद्दल"
+      form_images:
+        images: "प्रतिमा"
+      form_address:
+        contact: "संपर्क करा"
+      form_web:
+        web: "वेब संसाधने"
+    enterprise_roles:
+      form:
+        manages: व्यवस्थापित करते
+      enterprise_role:
+        manages: व्यवस्थापित करते
+    products:
+      unit_name_placeholder: 'उदा. गुच्छे'
+      index:
+        unit: युनिट
+        display_as: म्हणून प्रदर्शित करा
+        category: श्रेणी
+        tax_category: कर श्रेणी
+        inherits_properties?: गुणधर्म वारसा?
+        av_on: "ए.व्ही. चालू"
+        import_date: आयात केले
+        upload_an_image: एक प्रतिमा अपलोड करा
+      seo:
+        product_search_keywords: "उत्पादन शोध कीवर्ड"
+        product_search_tip: "दुकानांमध्ये तुमची उत्पादने शोधण्यात मदत करण्यासाठी शब्द टाइप करा. प्रत्येक कीवर्ड वेगळा करण्यासाठी स्पेस वापरा."
+        seo_tip: "वेबवर तुमची उत्पादने शोधण्यात मदत करण्यासाठी शब्द टाइप करा. प्रत्येक कीवर्ड वेगळा करण्यासाठी स्पेस वापरा."
+      search: "शोधा"
+      properties:
+        property_name: "मालमत्तेचे नाव"
+        inherited_property: "वारसा मिळालेली मालमत्ता"
+      variants:
+        infinity: "अनंत"
+        to_order_tip: "ऑर्डरप्रमाणे बनवलेल्या वस्तूंची स्टॉक लेव्हल नसते, जसे की ऑर्डरप्रमाणे बनवलेले ताजे ब्रेडस्. "
+      back_to_products_list: "उत्पादनांच्या सूचीकडे परत"
+      editing_product: "उत्पादन संपादन"
+      tabs:
+        product_details: "उत्पादन तपशील"
+        group_buy_options: "गट खरेदी पर्याय"
+        images: "प्रतिमा"
+        variants: "रूपे"
+        product_properties: "उत्पादन गुणधर्म"
+    products_v3:
+      index:
+        header:
+          title: मोठ्या प्रमाणात उत्पादने संपादित करा
+        loading: तुमची उत्पादने लोड करत आहे
+      sort:
+        pagination:
+          total_html: "तुमच्या शोध निकषांसाठी <strong>%{total} उत्पादने</strong> आढळली. %{from} ते %{to} दाखवत आहे."
+          per_page:
+            show: दाखवा
+            per_page: "%{num} प्रति पृष्ठ"
+          clear_search: शोध साफ करा
+      filters:
+        search_products: उत्पादने शोधा
+        all_producers: सर्व उत्पादक
+        all_categories: सर्व श्रेणी
+        producers:
+          label: निर्माते
+        categories:
+          label: श्रेण्या
+        search: शोधा
+      no_products:
+        no_products_found: कोणतीही उत्पादने आढळली नाहीत
+        import_products: एकाधिक उत्पादने आयात करा
+        no_products_found_for_search: तुमच्या शोध निकषांसाठी कोणतीही उत्पादने आढळली नाहीत
+      table:
+        changed_summary:
+          one: "%{count} उत्पादन सुधारित."
+          other: "%{count} उत्पादने सुधारित."
+        error_summary:
+          saved:
+            one: "%{count} उत्पादन योग्यरित्या जतन केले गेले, परंतु"
+            other: "%{count} उत्पादने योग्यरित्या जतन केली गेली, परंतु"
+          invalid:
+            one: "%{count} उत्पादन जतन करणे शक्य नाही. कृपया एरर्सचे पुनरावलोकन करा आणि पुन्हा प्रयत्न करा."
+            other: "%{count} उत्पादने जतन करणे शक्य नाही. कृपया त्रुटींचे पुनरावलोकन करा आणि पुन्हा प्रयत्न करा."
+        save: बदल जतन करा
+        reset: बदल जतन करू नका
+      bulk_update:
+        success: "उत्पादने यशस्वीरित्या अद्यतनित केली"
+    product_import:
+      title: उत्पादन आयात
+      file_not_found: फाइल सापडली नाही किंवा उघडता आली नाही
+      no_data: स्प्रेडशीटमध्ये कोणताही डेटा आढळला नाही
+      model:
+        no_file: "त्रुटी: कोणतीही फाइल अपलोड केलेली नाही"
+        could_not_process: "फाइल प्रक्रिया करू शकत नाही: अवैध फाइल प्रकार"
+        incorrect_value: चुकीचे मूल्य
+        conditional_blank: युनिट_प्रकार रिक्त असल्यास रिक्त असू शकत नाही
+        no_product: डेटाबेसमधील कोणत्याही उत्पादनांशी जुळत नाही
+        not_found: डेटाबेसमध्ये आढळले नाही
+        category_not_found: अनुमत श्रेणीशी जुळत नाही. उत्पादन आयात पृष्ठावर योग्य श्रेणी निवडा किंवा कोणताही शब्द चुकीचा लिहिला गेला नसल्याचे तपासा.
+        not_updatable: उत्पादन आयात द्वारे विद्यमान उत्पादनांवर अद्यतनित केले जाऊ शकत नाही
+        values_must_be_same: समान नाव असलेल्या उत्पादनांसाठी समान असणे आवश्यक आहे
+        blank: रिक्त असू शकत नाही
+        products_no_permission: तुम्हाला या एंटरप्राइझसाठी उत्पादने व्यवस्थापित करण्याची परवानगी नाही
+        inventory_no_permission: तुम्हाला या निर्मात्यासाठी इन्व्हेंटरी तयार करण्याची परवानगी नाही
+        none_saved: कोणतीही उत्पादने यशस्वीरित्या जतन केली नाहीत
+        line_number: "रेखा %{number} :"
+        encoding_error: "कृपया तुमच्या मूळ फाइलची भाषा सेटिंग तपासा आणि ती UTF-8 एन्कोडिंगसह सेव्ह केली असल्याची खात्री करा"
+        unexpected_error: "फाईल उघडत असताना उत्पादन आयात मध्ये अनपेक्षित एरर आला. %{error_message}"
+        malformed_csv: "उत्पादन आयात करताना एक विकृत CSV आला: %{error_message}"
+      index:
+        notice: "लक्ष द्या"
+        beta_notice: "हे वैशिष्ट्य अद्याप बीटामध्ये आहे: ते वापरताना तुम्हाला काही एरर्स येऊ शकतात. कृपया ग्राहक सेवेशी संपर्क साधण्यास अजिबात संकोच करू नका."
+        select_file: अपलोड करण्यासाठी स्प्रेडशीट निवडा
+        spreadsheet: स्प्रेडशीट
+        choose_import_type: आयात प्रकार निवडा
+        import_into: आयात प्रकार
+        product_list: उत्पादनांची यादी
+        inventories: इन्व्हेंटरीज
+        import: आयात करा
+        upload: अपलोड करा
+        csv_templates: CSV टेम्पलेट्स
+        product_list_template: उत्पादन सूची टेम्पलेट डाउनलोड करा
+        inventory_template: इन्व्हेंटरी टेम्पलेट डाउनलोड करा
+        category_values: उपलब्ध श्रेणी मूल्ये
+        product_categories: उत्पादन श्रेणी
+        tax_categories: कर श्रेणी
+        shipping_categories: शिपिंग श्रेण्या
+      import:
+        review: पुनरावलोकन करा
+        import: आयात करा
+        save: जतन करा
+        results: परिणाम
+        save_imported: आयात उत्पादने जतन करा
+        no_valid_entries: कोणत्याही वैध नोंदी आढळल्या नाहीत
+        none_to_save: जतन केल्या जाऊ शकतील अशा कोणत्याही नोंदी नाहीत
+        some_invalid_entries: आयात केलेल्या फाइलमध्ये अवैध नोंदी आहेत
+        fix_before_import: कृपया या त्रुटींचे निराकरण करा आणि फाइल पुन्हा आयात करण्याचा प्रयत्न करा
+        save_valid?: आतासाठी वैध नोंदी जतन करायच्या आणि इतर टाकून द्यायच्या?
+        no_errors: कोणत्याही त्रुटी आढळल्या नाहीत!
+        save_all_imported?: सर्व आयात उत्पादने जतन करा?
+        options_and_defaults: आयात पर्याय आणि डीफॉल्ट
+        no_permission: तुम्हाला हा उपक्रम व्यवस्थापित करण्याची परवानगी नाही
+        not_found: डेटाबेसमध्ये एंटरप्राइझ आढळू शकले नाही
+        no_name: नाव नाही
+        blank_enterprise: काही उत्पादनांमध्ये एंटरप्राइझ परिभाषित नाही
+        reset_absent?: अनुपस्थित उत्पादने रीसेट करा
+        reset_absent_tip: फाइलमध्ये उपस्थित नसलेल्या सर्व बाहेर पडणाऱ्या उत्पादनांसाठी स्टॉक शून्यावर सेट करा
+        overwrite_all: सर्व अधिलिखित करा
+        overwrite_empty: रिक्त असल्यास अधिलिखित करा
+        default_stock: स्टॉक पातळी सेट करा
+        default_tax_cat: कर श्रेणी सेट करा
+        default_shipping_cat: शिपिंग श्रेणी सेट करा
+        default_available_date: उपलब्ध तारीख सेट करा
+        validation_overview: आयात प्रमाणीकरण विहंगावलोकन
+        entries_found: आयात केलेल्या फाइलमध्ये नोंदी आढळल्या
+        entries_with_errors: आयटममध्ये त्रुटी आहेत आणि ते आयात केले जाणार नाहीत
+        products_to_create: उत्पादने तयार केली जातील
+        products_to_update: उत्पादने अद्यतनित केली जातील
+        inventory_to_create: इन्व्हेंटरी आयटम तयार केले जातील
+        inventory_to_update: इन्व्हेंटरी आयटम अद्यतनित केले जातील
+        products_to_reset: विद्यमान उत्पादनांचा स्टॉक शून्यावर रीसेट केला जाईल
+        inventory_to_reset: विद्यमान इन्व्हेंटरी आयटमचा स्टॉक शून्यावर रीसेट केला जाईल
+        line: ओळ
+        item_line: आयटम लाइन
+      import_review:
+        not_updatable_tip: "विद्यमान उत्पादनांसाठी मोठ्या प्रमाणात आयात करून खालील फील्ड अद्यतनित केली जाऊ शकत नाहीत:"
+        fields_ignored: जेव्हा आयात केलेली उत्पादने जतन केली जातात तेव्हा या फील्डकडे दुर्लक्ष केले जाईल.
+      entries_table:
+        not_updatable: विद्यमान उत्पादनांवर मोठ्या प्रमाणात आयात करून हे फील्ड अपडेट करण्यायोग्य नाही
+      save_results:
+        final_results: अंतिम परिणाम आयात करा
+        products_created: उत्पादने तयार केली
+        products_updated: उत्पादने अद्यतनित केली
+        inventory_created: इन्व्हेंटरी आयटम तयार केले
+        inventory_updated: इन्व्हेंटरी आयटम अपडेट केले
+        products_reset: उत्पादनांची स्टॉक पातळी शून्यावर रीसेट केली होती
+        inventory_reset: इन्व्हेंटरी आयटमची स्टॉक पातळी शून्यावर रीसेट केली होती
+        all_saved: "सर्व आयटम यशस्वीरित्या जतन केले"
+        some_saved: "आयटम यशस्वीरित्या जतन केले"
+        save_errors: त्रुटी जतन करा
+        import_again: दुसरी फाईल अपलोड करा
+        view_products: उत्पादन पृष्ठावर जा
+        view_inventory: इन्व्हेंटरी पृष्ठावर जा
+      product_headings:
+        producer: निर्माता
+        sku: SKU
+        name: नाव
+        display_name: डिस्प्ले नाव
+        category: श्रेणी
+        description: वर्णन
+        units: युनिट्स
+        unit_type: युनिट प्रकार
+        variant_unit_name: वेरिएंट युनिटचे नाव
+        price: किंमत
+        on_hand: हातावर
+        on_demand: मागणीनुसार
+        shipping_category: शिपिंग श्रेणी
+        tax_category: कर श्रेणी
+    variant_overrides:
+      loading_flash:
+        loading_inventory: इन्व्हेंटरी लोड करत आहे
+      index:
+        title: इन्व्हेंटरी
+        enable_reset?: स्टॉक रीसेट सक्षम करायचे?
+        default_stock: "डीफॉल्ट स्टॉक"
+        inherit?: वारसा?
+        add: अॅड
+        hide: लपवा
+        import_date: आयात केले
+        select_a_shop: एक दुकान निवडा
+        review_now: आता पुनरावलोकन करा
+        new_products_alert_message: तुमच्या इन्व्हेंटरीमध्ये जोडण्यासाठी %{new_product_count} नवीन उत्पादने उपलब्ध आहेत.
+        currently_empty: तुमची इन्व्हेंटरी सध्या रिकामी आहे
+        no_matching_products: तुमच्या इन्व्हेंटरीमध्ये कोणतीही जुळणारी उत्पादने आढळली नाहीत
+        no_hidden_products: या यादीतून कोणतीही उत्पादने लपवलेली नाहीत
+        no_matching_hidden_products: कोणतीही लपवलेली उत्पादने तुमच्या शोध निकषांशी जुळत नाहीत
+        no_new_products: या यादीमध्ये जोडण्यासाठी कोणतीही नवीन उत्पादने उपलब्ध नाहीत
+        no_matching_new_products: कोणतीही नवीन उत्पादने तुमच्या शोध निकषांशी जुळत नाहीत
+        new_powertip: '1
+
+          votes
+
+          ही उत्पादने तुमच्या इन्व्हेंटरीमध्ये जमा करण्यासाठी उपलब्ध आहेत. तुमच्या इन्व्हेंटरीमध्ये उत्पादन जमा करण्यासाठी ''Add'' वर क्लिक करा किंवा ते काढून टाकण्यासाठी ''Hide'' वर क्लिक करा. तुम्ही नंतर कधीही तुमचा विचार बदलू शकता!'
+      controls:
+        back_to_my_inventory: माझ्या यादीकडे परत
+    orders:
+      edit:
+        order_sure_want_to: तुमची खात्री आहे की तुम्ही ही ऑर्डर %{event} करू इच्छिता?
+        voucher_tax_included_in_price: "%{label} (व्हाउचरमध्ये कर समाविष्ट)"
+      invoice_email_sent: 'इन्व्हॉइस ईमेल पाठवला आहे'
+      order_email_resent: 'ऑर्डर ईमेल पुन्हा पाठवला गेला आहे'
+      bulk_management:
+        tip: "एकाहून अधिक ऑर्डर्सवर उत्पादनाचे प्रमाण बदलण्यासाठी हे पृष्ठ वापरा. आवश्यक असल्यास, उत्पादने ऑर्डरमधून पूर्णपणे काढून टाकली जाऊ शकतात."
+        shared: "शेअर केलेले संसाधन?"
+        order_no: "ऑर्डर क्र."
+        order_date: "येथे पूर्ण झाले"
+        max: "कमाल"
+        product_unit: "उत्पादन: युनिट"
+        weight_volume: "वजन/आवाज (ग्रॅम)"
+        ask: "विचारू?"
+        page_title: "मोठ्या प्रमाणात ऑर्डर व्यवस्थापन"
+        actions_delete: "निवडलेले हटवा"
+        loading: "ऑर्डर लोड करत आहे"
+        no_results: "ऑर्डर आढळल्या नाहीत."
+        group_buy_unit_size: "घाऊक खरेदी युनिट आकार"
+        total_qtt_ordered: "ऑर्डर केलेले एकूण प्रमाण"
+        max_qtt_ordered: "ऑर्डर केलेले कमाल प्रमाण "
+        current_fulfilled_units: "सध्याचे पूर्ण झालेले युनिट्स"
+        max_fulfilled_units: "कमाल पूर्ण युनिट्स"
+        order_error: "तुम्ही ऑर्डर अपडेट करण्यापूर्वी काही एरर्सचे निराकरण करणे आवश्यक आहे.\n लाल बॉर्डर्स असलेल्या कोणत्याही फील्डस् एररयुक्त आहेत. "
+        variants_without_unit_value: "सूचना : काही प्रकारांमध्ये युनिट मूल्य नाही"
+        all: "सर्व "
+      select_variant: "प्रकार निवडा"
+      note:
+        note_label: "टीप:"
+        no_note_present: "कोणतीही सूचना दिली गेलेली नाही. "
+    enterprise:
+      select_outgoing_oc_products_from: यातून आउटगोइंग ओसी उत्पादने निवडा
+    enterprises:
+      index:
+        title: एंटरप्राइज
+        new_enterprise: नवे एंटरप्राइज
+        producer?: "निर्माता ?"
+        package: पॅकेज
+        status: स्थिती
+        manage: मॅनेज
+      form:
+        about_us:
+          legend: "बद्दल"
+          desc_short: संक्षिप्त वर्णन
+          desc_short_placeholder: 'आम्हाला तुमच्या एंटरप्राइजबद्दल एक ते दोन वाक्यांत माहिती सांगा. '
+          desc_long: आमच्याबद्दल
+          desc_long_placeholder: ग्राहकांना तुमच्याबद्दल सांगा. ही माहिती तुमच्या सार्वजनिक प्रोफाइलवर दिसते.
+        address:
+          legend: "पत्ता"
+        business_details:
+          legend: "व्यवसाय तपशील"
+          upload: 'अपलोड'
+          abn: ABN
+          abn_placeholder: 'उदा. 99123456789 '
+          acn: ACN
+          acn_placeholder: 'उदा. 123 456 789 '
+          display_invoice_logo: इनव्हॉइसमध्ये लोगो दर्शवा
+          invoice_text: इनव्हॉइसच्या शेवटी कस्टमाइज्ड मजकूर जोडा
+          terms_and_conditions: "अटी आणि शर्ती"
+          remove_terms_and_conditions: "फाइल काढून टाका"
+          uploaded_on: "या दिवशी अपलोड केले"
+          reset_form: "फॉर्म रीसेट करा"
+          business_address_legend: "व्यावसायिक पत्ता"
+          invoice_item_sorting_legend: "इनवॉइस वस्तू वर्गीकरण"
+          sort_items_by_supplier?: पुरवठादारानुसार वस्तूंचे वर्गीकरण करायचे?
+          sort_items_by_supplier_tip: "सक्षम केल्यावर, पुरवठादाराच्या नावानुसार वस्तूंचे वर्गीकरण केले जाईल."
+          enabled: सक्रिय करा
+          disabled: निष्क्रिय करा
+        business_address:
+          company_legal_name: कंपनीचे कायदेशीर नाव
+          company_placeholder: उदाहरण इंक.
+          address1: कायदेशीर पत्ता
+          address1_placeholder: 123 हाय  स्ट्रीट
+          address2: पत्ता ( क्रमशः)
+          legal_phone_number: कायदेशीर फोन नंबर
+          phone_placeholder: "98 123 4565"
+          select_country: "देश निवडा"
+          select_state: "राज्य निवडा"
+        contact:
+          legend: "संपर्क"
+          name: नाव
+          name_placeholder: उदा. गुस्ताव प्लम
+          email_address: सार्वजनिक ईमेल पत्ता
+          email_address_placeholder: उदा. inquiries@fresh-food.com
+          email_address_tip: "हा ईमेल पत्ता तुमच्या सार्वजनिक प्रोफाइलमध्ये दर्शवला जाईल"
+          phone: फोन
+          phone_placeholder: उदा. 98 7654 3210
+          whatsapp_phone: व्हॉट्सॲप फोन नंबर
+          whatsapp_phone_placeholder: उदा. +61 4 9876 5432
+          whatsapp_phone_tip: "हा नंबर तुमच्या सार्वजनिक प्रोफाइलमध्ये WhatsApp लिंक म्हणून उघडला जाईल."
+          website: वेबसाइट
+          website_placeholder: उदा. www.truffles.com
+        enterprise_fees:
+          legend: "एंटरप्राइझ फी"
+          name: नाव
+          fee_type: शुल्क प्रकार
+          manage_fees: एंटरप्राइझ फी मॅनेज करा
+          no_fees_yet: तुमच्याकडे अद्याप कोणतीही एंटरप्राइझ फी नाही.
+          create_button: आता एक तयार करा
+        enterprise_permissions:
+          legend: "एंटरप्राइझ परवानग्या"
+          enterprise_relationships: एंटरप्राइझ रिलेशनशिप्स
+        images:
+          legend: "इमेजेस्"
+          logo: लोगो
+          promo_image_placeholder: 'ही इमेज &quot;आमच्याबद्दल&quot; मध्ये प्रदर्शित केली आहे'
+          promo_image_note1: 'कृपया नोंद घ्या:'
+          promo_image_note2: येथे अपलोड केलेली कोणतीही प्रोमो इमेज 1200 x 260 मध्ये क्रॉप केली जाईल.
+          promo_image_note3: प्रोमो इमेज एंटरप्राइझच्या प्रोफाइल पेज आणि पॉप-अपच्या शीर्षस्थानी प्रदर्शित केली जाते.
+          remove_logo: "इमेज काढून टाका"
+          remove_promo_image: "इमेज काढून टाका"
+        inventory_settings:
+          legend: "इन्व्हेंटरी सेटिंग्ज"
+          text1: तुम्ही तुमच्या द्वारे स्टॉक पातळी आणि किमती व्यवस्थापित करण्याचा पर्याय निवडू शकता
+          inventory: इन्व्हेंटरी
+          preferred_product_selection_from_inventory_only_yes: नवीन उत्पादने माझ्या शॉपफ्रंटमध्ये ठेवली जाऊ शकतात (शिफारस केलेले)
+          preferred_product_selection_from_inventory_only_no: नवीन उत्पादने माझ्या शॉपफ्रंटमध्ये ठेवण्यापूर्वी माझ्या इन्व्हेंटरीमध्ये जमा करणे आवश्यक आहे
+        payment_methods:
+          legend: "पेमेंट पद्धती"
+          name: नाव
+          applies: लागू होते का?
+          manage: पेमेंट पद्धती मॅनेज करा
+          no_method_yet: तुमच्याकडे अद्याप कोणत्याही पेमेंट पद्धती नाहीत.
+          create_button: नवीन पेमेंट पद्धत तयार करा
+          create_one_button: आता एक तयार करा
+        primary_details:
+          legend: "प्राथमिक तपशील"
+          name: नाव
+          name_placeholder: उदा. प्रोफेसर प्लमचे बायोडायनामिक ट्रफल्स
+          groups: गट
+          groups_tip: तुम्ही सदस्य आहात असे कोणतेही गट किंवा प्रदेश निवडा. ग्राहकांना तुमची एंटरप्राइज शोधण्यात मदत होईल.
+          groups_placeholder: उपलब्ध गट शोधण्यासाठी टाइप करा...
+          primary_producer: प्राथमिक उत्पादक ?
+          primary_producer_tip: तुम्ही अन्नाचे प्राथमिक उत्पादक असाल तर &#39; उत्पादक &#39; निवडा.
+          producer: उत्पादक
+          any: कोणतेही
+          none: कोणतेही नाही
+          own: स्वतःचे
+          sells: विकतो
+          sells_tip: "काहीही नाही - एंटरप्राइझ थेट ग्राहकांना विकत नाही.<br /> स्वतःचे - एंटरप्राइझ ग्राहकांना स्वतःची उत्पादने विकते.<br /> कोणतीही - एंटरप्राइझ स्वतःची किंवा इतर एंटरप्राइझची उत्पादने विकू शकते.<br />"
+          visible_in_search: शोधात दृश्यमान?
+          visible_in_search_tip: "शॉप्स <br /> 1. सार्वजनिकरित्या दृश्यमान, OFN मॅप आणि सूचीवर दिसणारे.<br /> 2. मॅप आणि सूचीवर लपवलेले परंतु इतर दुकानांद्वारे संदर्भित आणि त्यांच्या प्रोफाइलमध्ये लिंक केलेले.<br /> 3. पूर्णपणे लपलेले असू शकतात"
+          visible: सार्वजनिक
+          not_visible: लपलेले
+          hidden: सर्व संदर्भ लपवा
+        properties:
+          legend: "प्रॉपर्टीज्"
+        permalink:
+          permalink: पर्मलिंक (स्पेस नाही)
+          permalink_tip: "ही परमलिंक तुमच्या दुकानाची url तयार करण्यासाठी वापरली जाते: %{link} your- shop-name /shop"
+          link_to_front: शॉप फ्रंटची लिंक
+          link_to_front_tip: ओपन फूड नेटवर्कवरील तुमच्या शॉपफ्रंटची थेट लिंक.
+          ofn_uid: OFN UID
+          ofn_uid_tip: ओपन फूड नेटवर्कवर एंटरप्राइझ ओळखण्यासाठी युनिक आयडी वापरला जातो.
+        shipping_methods:
+          legend: "शिपिंग पद्धती"
+          name: "नाव"
+          applies: "सक्रिय?"
+          manage: "शिपिंग पद्धती मॅनेज करा"
+          create_button: "नवीन शिपिंग पद्धत तयार करा"
+          create_one_button: "आता एक तयार करा"
+          no_method_yet: "तुमच्याकडे अद्याप कोणत्याही शिपिंग पद्धती नाहीत."
+        shop_preferences:
+          legend: "शॉप प्राधान्ये"
+          shopfront_requires_login: "शॉपफ्रंट सार्वजनिकरित्या दिसावी?"
+          shopfront_requires_login_tip: "ग्राहकांनी शॉपफ्रंट पाहण्यासाठी लॉग इन करणे आवश्यक आहे की ते प्रत्येकासाठी दृश्यमान असेल ते निवडा."
+          shopfront_requires_login_false: "सार्वजनिक"
+          shopfront_requires_login_true: "केवळ नोंदणीकृत ग्राहकांसाठी दृश्यमान"
+          recommend_require_login: "जेव्हा ऑर्डर्स बदलल्या जाऊ शकतात तेव्हा वापरकर्त्यांनी लॉग इन करण्याची आम्ही शिफारस करतो."
+          allow_guest_orders: "गेस्ट ऑर्डर्स"
+          allow_guest_orders_tip: "गेस्ट म्हणून चेकआउटला अनुमती द्यावी किंवा नोंदणीकृत वापरकर्ता बंधनकारक करावा. "
+          allow_guest_orders_false: "ऑर्डर करण्यासाठी लॉगिन बंधनकारक करावे"
+          allow_guest_orders_true: "गेस्ट चेकआऊटला अनुमति द्यावी"
+          allow_order_changes: "ऑर्डर्स बदलण्यात याव्यात"
+          allow_order_changes_tip: "जोपर्यंत ऑर्डर सायकल खुली आहे तोपर्यंत ग्राहकांना त्यांची ऑर्डर बदलण्याची परवानगी द्यावी."
+          allow_order_changes_false: "दिलेल्या ऑर्डर्स बदलल्या / रद्द केल्या जाऊ शकत नाहीत"
+          allow_order_changes_true: "ऑर्डर सायकल चालू असताना ग्राहक ऑर्डर बदलू/रद्द करू शकतात"
+          enable_subscriptions: "सदस्यता"
+          enable_subscriptions_tip: "सदस्यता सक्षम करायची?"
+          enable_subscriptions_false: "निष्क्रिय केले"
+          enable_subscriptions_true: "सक्रिय केले"
+          customer_names_in_reports: "रिपोर्टस् मधील ग्राहकांची नावे"
+          customer_names_tip: "रिपोर्टस् मध्ये तुमच्या ग्राहकांची नावे पाहण्यासाठी तुमच्या पुरवठादारांना सक्षम करा"
+          customer_names_false: "निष्क्रिय केले"
+          customer_names_true: "सक्रिय केले"
+          shopfront_message: "शॉपफ्रंट संदेश"
+          shopfront_message_placeholder: >
+              ग्राहकांसाठी स्वागतपर तसेच तुमच्याकडे खरेदी कशी करावी हे स्पष्ट करणारा
+              पर्यायी संदेश. येथे मजकूर लिहिल्यास, जेव्हा ग्राहक प्रथम तुमच्या शॉपफ्रंटवर
+              येतील तेव्हा तो होम टॅबमध्ये दर्शवला जाईल.
+          shopfront_message_link_tooltip: "लिंक जोडा / संपादित करा"
+          shopfront_message_link_prompt: "कृपया URL प्रविष्ट करा"
+          shopfront_closed_message: "शॉपफ्रंट बंद संदेश"
+          shopfront_closed_message_placeholder: >
+              तुमचे शॉप का बंद आहे आणि/किंवा ते पुन्हा कधी उघडेल याबद्दल अधिक तपशीलवार
+              स्पष्टीकरण देणारा संदेश. हे तुमच्या दुकानावर फक्त तेव्हाच दाखवले जाते
+              जेव्हा तुमच्याकडे कोणतीही सक्रिय ऑर्डर सायकल नसते (म्हणजे दुकान बंद
+              असते).
+          shopfront_category_ordering: "शॉपफ्रंट श्रेणी ऑर्डरिंग"
+          shopfront_category_ordering_note: "(वरपासून खालपर्यंत)"
+          open_date: "उघडण्याची तारीख"
+          close_date: "बंद करण्याची तारीख"
+          display_ordering_in_shopfront: "शॉपफ्रंटमध्ये ऑर्डरिंग दर्शवा. "
+          shopfront_sort_by_category: "श्रेणीनुसार"
+          shopfront_sort_by_producer: "उत्पादकानुसार"
+          shopfront_sort_by_category_placeholder: "श्रेणी"
+          shopfront_sort_by_producer_placeholder: "उत्पादक"
+          display_remaining_stock: "साठा कमी असल्यास उरलेला साठा दुकानात प्रदर्शित करा"
+          display_remaining_stock_tip: "फक्त 3 किंवा त्यापेक्षा कमी वस्तू शिल्लक असल्यास खरेदीदारांना सूचित करा. "
+          enabled: "सक्रिय केले"
+          disabled: "अक्षम"
+        social:
+          legend: "सामाजिक"
+          twitter_placeholder: "उदा. @the_prof"
+          instagram_placeholder: "उदा. the_prof"
+          facebook_placeholder: "उदा. www.facebook.com/PageNameHere"
+          linkedin_placeholder: "उदा. www.linkedin.com/in/YourNameHere"
+        stripe_connect:
+          connect_with_stripe: "स्ट्राइपसह कनेक्ट करा"
+          stripe_connect_intro: "क्रेडिट कार्ड वापरून पेमेंट स्वीकारण्यासाठी, तुम्हाला तुमचे स्ट्राइप खाते ओपन फूड नेटवर्कशी जोडावे लागेल. सुरू करण्यासाठी उजवीकडील बटण वापरा."
+          stripe_account_connected: "स्ट्राइप खाते जोडले."
+          disconnect: "खाते डिस्कनेक्ट करा"
+          confirm_modal:
+            title: स्ट्राइपसह कनेक्ट करा
+            part1: स्ट्राइप ही पेमेंट प्रोसेसिंग सेवा आहे जी OFN वरील शॉप्सना ग्राहकांकडून क्रेडिट कार्ड पेमेंट स्वीकारण्याची परवानगी देते.
+            part2: ही सुविधा वापरण्यासाठी, तुम्ही तुमचे स्ट्राइप खाते OFN शी जोडणे आवश्यक आहे. खाली &#39;मी सहमत आहे&#39; वर क्लिक केल्याने तुम्हाला स्ट्राइप वेबसाइट रीडायरेक्ट होईल जिथे तुम्ही विद्यमान स्ट्राइप खाते कनेक्ट करू शकता किंवा तुमच्याकडे  खाते आधीपासून नसेल तर नवीन तयार करू शकता.
+            part3: हे ओपन फूड नेटवर्कला तुमच्या वतीने ग्राहकांकडून क्रेडिट कार्ड पेमेंट स्वीकारण्यास अनुमती देईल. कृपया लक्षात घ्या की तुम्हाला तुमचे स्वतःचे स्ट्राइप खाते सांभाळावे लागेल, स्ट्राइप शुल्क भरावे लागेल आणि कोणतीही चार्जबॅक आणि ग्राहक सेवा स्वतः हाताळावी लागेल.
+            i_agree: मी सहमत आहे
+            cancel: रद्द करा
+        tag_rules:
+          legend: "टॅग नियम"
+          default_rules:
+            by_default: मुलभूतरित्या
+            no_rules_yet: अजून कोणतेही डीफॉल्ट नियम लागू नाहीत
+            add_new_button: '+ नवीन डीफॉल्ट नियम जोडा'
+          no_tags_yet: या एंटरप्राइझ कोणतेही टॅग लागू अजून
+          no_rules_yet: या टॅगवर अद्याप कोणतेही नियम लागू नाहीत
+          for_customers_tagged: 'टॅग केलेल्या ग्राहकांसाठी:'
+          add_new_rule: '+ एक नवीन नियम जोडा'
+          add_new_tag: '+ एक नवीन टॅग जोडा'
+        users:
+          legend: "वापरकर्ते"
+          resend: पुन्हा पाठवा
+          owner: 'मालक'
+          contact: "संपर्क"
+          contact_tip: "ज्या मॅनेजरला ऑर्डर आणि सूचनांचे एंटरप्राइझ ईमेल प्राप्त होतील त्याचा पुष्टी केलेला ईमेल पत्ता असणे आवश्यक आहे."
+          owner_tip: या एंटरप्राइझसाठी जबाबदार प्राथमिक वापरकर्ता.
+          notifications: सूचना
+          notifications_tip: ऑर्डरबद्दल सूचना या ईमेल पत्त्यावर पाठवल्या जातील.
+          notifications_placeholder: उदा. gustav@tuffles.com
+          notifications_note: 'टीप: वापरण्यापूर्वी नवीन ईमेल पत्त्याची पुष्टी करणे आवश्यक असू शकते'
+          managers: मॅनेजर्स
+          managers_tip: हे एंटरप्राइझ मॅनेज करण्याची परवानगी असलेले इतर वापरकर्ते.
+          invite_manager: "मॅनेजरला आमंत्रित करा"
+          invite_manager_tip: "नोंदणी न केलेल्या वापरकर्त्यास साइन अप करण्यासाठी आणि या एंटरप्राइझचे मॅनेजर होण्यासाठी आमंत्रित करा."
+          add_unregistered_user: "नोंदणीकृत नसलेला वापरकर्ता जोडा"
+          email_confirmed: "ईमेल पुष्टी झाली"
+          email_not_confirmed: "ईमेलची पुष्टी झाली नाही"
+        vouchers:
+          legend: व्हाउचर्स
+          voucher_code: व्हाउचर कोड
+          rate: दर
+          label: लेबल
+          purpose: उद्देश
+          expiry: कालबाह्य
+          use_limit: वापर/मर्यादा
+          customers: ग्राहक
+          net_value: निव्वळ मूल्य
+          active: सक्रिय?
+          add_new: नवीन जोडा
+          no_voucher_yet: कोणतेही व्हाउचर अजून नाहीत
+        white_label:
+          legend: "पांढरी खूणचिठ्ठी"
+          hide_ofn_navigation: "OFN नेव्हिगेशन लपवा"
+          upload_logo: "दुकानासमोर लोगो वापरला"
+          remove_logo: "लोगो काढा"
+          remove_logo_confirm: "तुमची खात्री आहे की तुम्ही हा लोगो काढू इच्छिता?"
+          remove_logo_success: "लोगो काढला"
+          white_label_logo_link_label: "शॉपफ्रंटमध्ये वापरलेल्या लोगोची लिंक"
+          hide_groups_tab: "शॉपफ्रंटमध्ये गट टॅब लपवा"
+          create_custom_tab: "शॉपफ्रंटमध्ये सानुकूल टॅब तयार करा"
+          custom_tab_title: "सानुकूल टॅबसाठी शीर्षक"
+          custom_tab_content: "सानुकूल टॅबसाठी सामग्री"
+      actions:
+        edit_profile: सेटिंग्ज
+        properties: प्रॉपर्टीज्
+        payment_methods: पेमेंट पद्धती
+        payment_methods_tip: या एंटरप्राइझ पेमेंट पद्धती नाहीत
+        shipping_methods: शिपिंग पद्धती
+        shipping_methods_tip: या एंटरप्राइझ शिपिंग पद्धती आहेत
+        enterprise_fees: एंटरप्राइझ फी
+        enterprise_fees_tip: या एंटरप्राइझ कोणतेही शुल्क नाही
+      admin_index:
+        name: नाव
+        role: भूमिका
+        sells: विकतो
+        visible: दृश्यमान?
+        owner: मालक
+        producer: उत्पादक
+      change_type_form:
+        producer_profile: उत्पादक प्रोफाइल
+        connect_ofn: OFN द्वारे कनेक्ट करा
+        always_free: नेहमी मोफत
+        producer_description_text: 'तुमची उत्पादने ओपन फूड नेटवर्कमध्ये जोडून हब्सना ती उत्पादने त्यांच्या स्टोअरमध्ये स्टॉक करण्याची परवानगी द्या. '
+        producer_shop: उत्पादक शॉप
+        sell_your_produce: तुमचे स्वतःचे उत्पादन विका
+        producer_shop_description_text: तुमच्या स्वतःच्या ओपन फूड नेटवर्क शॉपफ्रंटद्वारे थेट ग्राहकांना तुमच्या उत्पादनांची विक्री करा.
+        producer_hub: उत्पादक केंद्र
+        producer_hub_text: स्वतःचे व इतरांचे उत्पादन विकावे
+        producer_hub_description_text: तुमचा एंटरप्राइझ हा तुमच्या स्थानिक अन्न प्रणालीचा कणा आहे. ओपन फूड नेटवर्कवर तुमच्या शॉपफ्रंटद्वारे तुम्ही तुमची स्वतःची उत्पादने तसेच इतर उद्योगांची उत्पादने एकत्र विकू शकता.
+        profile: केवळ प्रोफाइल
+        get_listing: एक सूची मिळवा
+        profile_description_text: 'ओपन फूड नेटवर्कवर लोक तुम्हाला शोधून तुमच्याशी संपर्क साधू शकतात. तुमची एंटरप्राइझ नकाशावर दृश्यमान असेल, आणि सूचीमध्ये शोधता येईल. '
+        hub_shop: हब शॉप
+        hub_shop_text: इतरांच्या उत्पादनांची विक्री करा
+        hub_shop_description_text: तुमचा एंटरप्राइझ हा तुमच्या स्थानिक अन्न प्रणालीचा कणा आहे. तुम्ही इतर एंटरप्राइझचे उत्पादन एकत्र  करून ते तुमच्या दुकानातून ओपन फूड नेटवर्कवर विकू शकता.
+        choose_option: कृपया वरील पर्यायांपैकी एक निवडा.
+        change_now: आता बदला
+      enterprise_user_index:
+        loading_enterprises: एंटरप्राइज लोड करत आहे
+        no_enterprises_found: कोणतेही उपक्रम आढळले नाहीत.
+        search_placeholder: नाव शोधा
+        manage: मॅनेज
+        manage_link: सेटिंग्ज
+        producer?: "निर्माता ?"
+        package: "पॅकेज"
+        status: "स्थिती"
+      new_form:
+        owner: मालक
+        owner_tip: या एंटरप्राइझसाठी जबाबदार प्राथमिक वापरकर्ता.
+        i_am_producer: मी एक उत्पादक आहे
+        contact_name: संपर्क नाव
+      edit:
+        editing: 'सेटिंग्ज:'
+        back_link: उपक्रमांच्या सूचीकडे परत
+      new:
+        title: नवे एंटरप्राइज
+        back_link: उपक्रमांच्या सूचीकडे परत
+      welcome:
+        welcome_title: ओपन फूड नेटवर्कमध्ये आपले स्वागत आहे!
+        welcome_text: आपण यशस्वीरित्या ए तयार केले आहे
+        next_step: पुढचे पाऊल
+        choose_starting_point: 'तुमचे पॅकेज निवडा:'
+        profile: 'प्रोफाइल'
+        producer_profile: 'उत्पादक प्रोफाइल'
+      invite_manager:
+        user_already_exists: "वापरकर्ता आधीपासून अस्तित्वात आहे"
+        error: "काहीतरी चूक झाली"
+    order_cycles:
+      loading_flash:
+        loading_order_cycles: ऑर्डर सायकल लोड करत आहे
+        loading: लोड करत आहे...
+      new:
+        create: "तयार करा"
+        cancel: "रद्द करा"
+        back_to_list: "सूचीकडे परत"
+      edit:
+        save: "जतन करा"
+        save_and_next: "जतन करा आणि पुढील"
+        next: "पुढे"
+        cancel: "रद्द करा"
+        back_to_list: "सूचीकडे परत"
+        save_and_back_to_list: "जतन करा आणि सूचीवर परत जा"
+        choose_products_from: "यामधून उत्पादने निवडा:"
+        re_notify_producers: उत्पादकांना पुन्हा सूचित करा
+        notify_producers_tip: हे प्रत्येक उत्पादकाला त्यांच्या ऑर्डरच्या सूचीचे ईमेल पाठवेल.
+      incoming:
+        incoming: "येणारे"
+        supplier: "पुरवठादार"
+        products: "उत्पादने"
+        receival_details: "प्राप्तीचा तपशील"
+        fees: "फी"
+        save: "जतन करा"
+        save_and_next: "जतन करा आणि पुढील"
+        next: "पुढे"
+        cancel: "रद्द करा"
+        back_to_list: "सूचीकडे परत"
+      outgoing:
+        outgoing: "आउटगोइंग"
+        distributor: "वितरक"
+        products: "उत्पादने"
+        tags: "टॅग्ज"
+        delivery_details: "वितरण तपशील"
+        fees: "फी"
+        next: "पुढे"
+        previous: "मागील"
+        save: "जतन करा"
+        save_and_next: "जतन करा आणि पुढील"
+        cancel: "रद्द करा"
+        back_to_list: "सूचीकडे परत"
+      checkout_options:
+        back_end: "फक्त बॅक ऑफिस"
+        cancel: "रद्द करा"
+        checkout_options: "चेकआउट पर्याय"
+        distributor: "वितरक"
+        no_payment_methods: या ऑर्डर सायकलवरील प्रत्येक वितरकाला किमान एक पेमेंट पद्धत आवश्यक आहे.
+        payment_methods: "पेमेंट पद्धती"
+        save: "जतन करा"
+        save_and_back_to_list: "जतन करा आणि सूचीवर परत जा"
+        select_all: "सर्व निवडा"
+        shipping_methods: "शिपिंग पद्धती"
+      wizard_progress:
+        edit: "1. सामान्य सेटिंग्ज"
+        incoming: "2. येणारी उत्पादने"
+        outgoing: "3. आउटगोइंग उत्पादने"
+        checkout_options: "4. चेकआउट पर्याय"
+      exchange_form:
+        pickup_time_tip: जेव्हा या ओसीकडून ऑर्डर ग्राहकांसाठी तयार होतील
+        pickup_instructions_placeholder: "पिकअप सूचना"
+        pickup_instructions_tip: ग्राहकांनी ऑर्डर पूर्ण केल्यानंतर या सूचना त्यांना दाखवल्या जातात
+        pickup_time_placeholder: "साठी तयार (उदा. तारीख / वेळ)"
+        receival_instructions_placeholder: "प्राप्त सूचना"
+        add_fee: 'फी जोडा'
+        remove: 'काढा'
+        selected: 'निवडले'
+      add_exchange_form:
+        add_supplier: 'पुरवठादार जोडा'
+        add_distributor: 'वितरक जोडा'
+      advanced_settings:
+        automatic_notifications: स्वयंचलित सूचना
+        automatic_notifications_tip: ऑर्डर सायकल बंद झाल्यावर उत्पादकांना त्यांच्या ऑर्डरबद्दल ईमेलद्वारे स्वयंचलितपणे सूचित करा
+        title: प्रगत सेटिंग्ज
+        choose_product_tip: तुम्ही फक्त %{inventory} च्या इन्व्हेंटरीमधील उत्पादनाची आवक व जावक  प्रतिबंधित करू शकता.
+        preferred_product_selection_from_coordinator_inventory_only_here: केवळ को-ऑर्डिनेटरची इन्व्हेंटरी
+        preferred_product_selection_from_coordinator_inventory_only_all: सर्व उपलब्ध उत्पादने
+        save_reload: जतन करा आणि पृष्ठ रीलोड करा
+      order_cycle_top_buttons:
+        advanced_settings: "ॲडव्हान्स्ड  सेटिंग्ज"
+      coordinator_fees:
+        add: को-ऑर्डिनेटर फी जोडा
+      filters:
+        search_by_order_cycle_name: "ऑर्डर सायकल नाव शोधा..."
+        involving: "सहभाग"
+        any_enterprise: "कोणतेही एंटरप्राइझ"
+        any_schedule: "कोणतेही वेळापत्रक"
+      form:
+        general_settings: "सामान्य सेटिंग्ज"
+        incoming: येणारे
+        supplier: पुरवठादार
+        products: उत्पादने
+        receival_details: प्राप्तीचा तपशील
+        fees: फी
+        outgoing: आउटगोइंग
+        distributor: वितरक
+        tags: टॅग्ज
+        add_a_tag: टॅग जोडा
+        delivery_details: पिकअप / डिलिव्हरी तपशील
+      index:
+        schedule: वेळापत्रक
+        schedules: वेळापत्रक
+        new_schedule: नवीन वेळापत्रक
+        new_schedule_tooltip: ज्या फ्रीक्वेन्सीने सदस्यता ऑर्डर केली जाते
+      name_and_timing_form:
+        name: नाव
+        orders_open: ऑर्डर येथे उघडतात
+        coordinator: समन्वयक
+        orders_close: ऑर्डर बंद
+      row:
+        suppliers: पुरवठादार
+        distributors: वितरक
+        variants: रूपे
+      simple_form:
+        ready_for: तयार
+        ready_for_placeholder: तारीख वेळ
+        customer_instructions: ग्राहक सूचना
+        customer_instructions_placeholder: पिक-अप किंवा वितरण नोट्स
+        products: उत्पादने
+        fees: फी
+        tags: टॅग्ज
+      destroy_errors:
+        orders_present: ती ऑर्डर सायकल ग्राहकाने निवडली आहे आणि ती हटवली जाऊ शकत नाही. ग्राहकांना त्यात प्रवेश करण्यापासून रोखण्यासाठी, ती डिलीट करण्याऐवजी कृपया बंद करा.
+        schedule_present: 'ती ऑर्डर सायकल शेड्यूलशी जोडलेली असून डिलीट केली जाऊ शकत नाही. कृपया आधी शेड्यूल अनलिंक किंवा डिलीट करा. '
+      bulk_update:
+        no_data: हम्म, काहीतरी चूक झाली. ऑर्डर सायकल डेटा आढळला नाही.
+      date_warning:
+        msg: ही ऑर्डर सायकल %{n} ओपन सबस्क्रिप्शन ऑर्डरशी लिंक केलेली आहे. आता ही तारीख बदलल्याने आधी दिलेल्या कोणत्याही ऑर्डरवर परिणाम होणार नाही, परंतु शक्य असल्यास टाळावे. तुम्हाला नक्की पुढे जायचे आहे का?
+        cancel: रद्द करा
+        proceed: पुढे जा
+      status:
+        undated: कालबाह्य
+        upcoming: आगामी
+        open: उघडा
+        closed: बंद
+    producer_properties:
+      index:
+        title: उत्पादक गुणधर्म
+    proxy_orders:
+      cancel:
+        could_not_cancel_the_order: ऑर्डर रद्द करू शकलो नाही
+      resume:
+        could_not_resume_the_order: ऑर्डर पुन्हा सुरू करू शकलो नाही
+    select2:
+      minimal_search_length: कृपया %{count} किंवा अधिक वर्ण प्रविष्ट करा
+      searching: शोधत आहे...
+      no_matches: कोणतेही जुळले नाहीत
+    shared:
+      user_guide_link:
+        user_guide: वापरकर्ता मार्गदर्शक
+      enterprises_hubs_tabs:
+        has_no_payment_methods: "%{enterprise} मध्ये पेमेंट पद्धती नाहीत"
+        has_no_shipping_methods: "%{enterprise} मध्ये कोणत्याही शिपिंग पद्धती नाहीत"
+        has_no_enterprise_fees: "%{enterprise} चे कोणतेही एंटरप्राइझ शुल्क नाही"
+      side_menu:
+        enterprise:
+          primary_details: "प्राथमिक तपशील"
+          address: "पत्ता"
+          contact: "संपर्क"
+          social: "सामाजिक"
+          about: "बद्दल"
+          business_details: "व्यवसाय माहिती"
+          images: "इमेजेस्"
+          properties: "प्रॉपर्टीज्"
+          shipping_methods: "शिपिंग पद्धती"
+          payment_methods: "पेमेंट पद्धती"
+          enterprise_fees: "एंटरप्राइझ फी"
+          enterprise_permissions: "एंटरप्राइझ परवानग्या"
+          inventory_settings: "इन्व्हेंटरी सेटिंग्ज"
+          tag_rules: "टॅग नियम"
+          shop_preferences: "शॉप प्राधान्ये"
+          users: "वापरकर्ते"
+          vouchers: व्हाउचर्स
+          white_label: "पांढरे लेबल"
+        enterprise_group:
+          primary_details: "प्राथमिक तपशील"
+          users: "वापरकर्ते"
+          about: "बद्दल"
+          images: "इमेजेस्"
+          contact: "संपर्क"
+          web: "वेब संसाधने"
+    enterprise_issues:
+      create_new: नवीन तयार करा
+      resend_email: ईमेल पुन्हा पाठवा
+      has_no_payment_methods: "%{enterprise} मध्ये सध्या कोणत्याही पेमेंट पद्धती नाहीत"
+    reports:
+      hidden: लपलेले
+      unitsize: युनिटिसाइज करा
+      total: एकूण
+      total_items: एकूण वस्तू
+      total_by_customer: ग्राहकानुसार एकूण
+      total_by_supplier: पुरवठादाराद्वारे एकूण
+      supplier_totals: ऑर्डर सायकल पुरवठादार एकूण
+      percentage: "%{value} %"
+      supplier_totals_by_distributor: वितरकाद्वारे सायकल पुरवठादार एकूण ऑर्डर करा
+      totals_by_supplier: पुरवठादाराद्वारे सायकल वितरक एकूण ऑर्डर करा
+      customer_totals: ऑर्डर सायकल ग्राहक एकूण
+      all_products: सर्व उत्पादने
+      inventory: 'साठा (शिल्लक) '
+      lettuce_share: लेट्युसशेअर
+      payment_methods: पेमेंट पद्धती रिपोर्टस्
+      delivery: डिलिव्हरी रिपोर्टस्
+      sales_tax_totals_by_producer: उत्पादक विक्री कर एकूण
+      sales_tax_totals_by_order: ऑर्डरनुसार विक्री कर एकूण
+      tax_types: कर प्रकार
+      tax_rates: कर दर
+      pack_by_customer: ग्राहकाद्वारे पॅक
+      pack_by_supplier: पुरवठादाराद्वारे पॅक
+      pack_by_product: उत्पादनानुसार पॅक
+      download:
+        button: "रिपोर्टस् डाउनलोड करा"
+      show:
+        report_link_label: डाउनलोड रिपोर्टस् (जेव्हा उपलब्ध असेल)
+      revenues_by_hub:
+        name: हब द्वारे महसूल
+        description: हबद्वारे महसूल
+      orders_and_distributors:
+        name: ऑर्डर आणि वितरक
+        description: वितरक तपशीलांसह ऑर्डर
+      bulk_coop:
+        name: बल्क को-ऑप
+        description: बल्क को-ऑप ऑर्डरसाठी रिपोर्टस्
+      payments:
+        name: पेमेंट रिपोर्टस्
+        description: पेमेंटसाठी रिपोर्टस्
+      orders_and_fulfillment:
+        name: ऑर्डर आणि पूर्तता रिपोर्टस्
+      customers:
+        name: ग्राहक
+      products_and_inventory:
+        name: उत्पादने आणि इन्व्हेंटरी
+      users_and_enterprises:
+        name: वापरकर्ते आणि उपक्रम
+        description: एंटरप्राइझ मालकी आणि स्थिती
+      order_cycle_management:
+        name: ऑर्डर सायकल व्यवस्थापन
+      sales_tax:
+        name: विक्री कर
+      xero_invoices:
+        name: झीरो पावत्या
+        description: Xero मध्ये आयात करण्यासाठी पावत्या
+      enterprise_fee_summary:
+        name: "एंटरप्राइझ फी सारांश"
+        description: "गोळा केलेल्या एंटरप्राइझ फीचा सारांश"
+      enterprise_fees_with_tax_report_by_order: "टॅक्स रिपोर्टस् एंटरप्राइझ फी ऑर्डरनुसार"
+      enterprise_fees_with_tax_report_by_producer: "कर रिपोर्टस् एंटरप्राइझ फी उत्पादक"
+      errors:
+        no_report_type: "कृपया रिपोर्टस् प्रकार निर्दिष्ट करा"
+        report_not_found: "रिपोर्टस् सापडला नाही"
+        missing_ransack_params: "कृपया विनंतीमध्ये रॅनसॅक शोध पॅराम द्या"
+      hidden_field: "&lt; लपलेले &gt;"
+      summary_row:
+        total: "एकूण"
+      table:
+        select_and_search: "फिल्टर निवडा आणि तुमचा डेटा ऍक्सेस करण्यासाठी %{option} वर क्लिक करा."
+        headings:
+          hub: "हब"
+          customer_code: "कोड"
+          first_name: "पहिले नाव"
+          last_name: "शेवटचे नाव"
+          supplier: "पुरवठादार"
+          product: "उत्पादन"
+          variant: "प्रकार"
+          quantity: "प्रमाण"
+          is_temperature_controlled: "Tempcontrolled?"
+          temp_controlled: "Tempcontrolled?"
+          price: "किंमत"
+      rendering_options:
+        generate_report: "रिपोर्टस् तयार करा"
+        on_screen: "पडद्यावर"
+        spreadsheet: "स्प्रेडशीट (एक्सेल, ओपनऑफिस..)"
+        display: डिस्प्ले
+        summary_row: सारांश पंक्ती
+        header_row: शीर्षलेख पंक्ती
+        raw_data: कच्ची माहिती
+        formatted_data: स्वरूपित डेटा
+      packing:
+        name: "पॅकिंग रिपोर्टस्"
+    oidc_settings:
+      index:
+        title: "OIDC सेटिंग्ज"
+        connect: "तुमचे खाते कनेक्ट करा"
+        already_connected: "तुमचे खाते आधीपासून या DFC अधिकृतता खात्याशी जोडलेले आहे:"
+        les_communs_link: "लेस कम्युन्स ओपन आयडी सर्व्हर"
+        link_your_account: "DFC (Les Communs Open ID Connect) द्वारे वापरल्या जाणार्‍या अधिकृतता प्रदात्याशी तुम्ही प्रथम तुमचे खाते लिंक करणे आवश्यक आहे."
+        link_account_button: "तुमचे Les Communs OIDC खाते लिंक करा"
+        view_account: "तुमचे खाते पाहण्यासाठी, पहा:"
+    subscriptions:
+      index:
+        title: "सदस्यता"
+        new: "नवीन सदस्यता"
+      issue: "इश्यू"
+      new:
+        title: "नवीन सदस्यता"
+      edit:
+        title: "सदस्यता संपादित करा"
+      table:
+        edit_subscription: सदस्यता संपादित करा
+        pause_subscription: सदस्यता विराम द्या
+        unpause_subscription: सदस्यता रद्द करा
+        cancel_subscription: सदस्यता रद्द करा
+      filters:
+        query_placeholder: "ईमेलद्वारे शोधा..."
+      setup_explanation:
+        title: "सदस्यता"
+        just_a_few_more_steps: 'तुम्ही सुरू करण्यापूर्वी आणखी काही पावले:'
+        enable_subscriptions: "तुमच्या किमान एका दुकानासाठी सदस्यता सक्षम करा"
+        enable_subscriptions_step_1_html: 1. %{enterprises_link} पृष्ठावर जा, तुमचे दुकान शोधा आणि &quot;व्यवस्थापित करा&quot; वर क्लिक करा
+        enable_subscriptions_step_2: 2. &quot;शॉप प्राधान्ये&quot; अंतर्गत, सदस्यता पर्याय सक्षम करा
+        set_up_shipping_and_payment_methods_html: '%{shipping_link} आणि %{payment_link} पद्धती सेट करा'
+        set_up_shipping_and_payment_methods_note_html: लक्षात ठेवा की फक्त रोख आणि स्ट्राइप पेमेंट पद्धती असू शकतात<br /> सदस्यत्वांसह वापरले जाऊ शकते
+        ensure_at_least_one_customer_html: किमान एक %{customer_link} अस्तित्वात असल्याची खात्री करा
+        create_at_least_one_schedule: किमान एक वेळापत्रक तयार करा
+        create_at_least_one_schedule_step_1_html: 1. %{order_cycles_link} पृष्ठावर जा
+        create_at_least_one_schedule_step_2: 2. जर तुम्ही आधीच असे केले नसेल तर ऑर्डर सायकल तयार करा
+        create_at_least_one_schedule_step_3: 3. &#39;+ नवीन वेळापत्रक&#39; वर क्लिक करा आणि फॉर्म भरा
+        once_you_are_done_you_can_html: एकदा आपण पूर्ण केल्यावर, आपण %{reload_this_page_link} करू शकता
+        reload_this_page: हे पृष्ठ रीलोड करा
+      form:
+        create: "सदस्यता तयार करा"
+      steps:
+        details: 1. मूलभूत तपशील
+        address: 2. पत्ता
+        products: 3. उत्पादने जोडा
+        review: 4. पुनरावलोकन करा आणि जतन करा
+      subscription_line_items:
+        not_in_open_and_upcoming_order_cycles_warning: "या उत्पादनासाठी कोणतेही खुले किंवा आगामी ऑर्डर सायकल नाहीत."
+      autocomplete:
+        name_or_sku: "नाव किंवा SKU"
+        quantity: "प्रमाण"
+        add: "अॅड"
+      details:
+        details: तपशील
+        invalid_error: अरेरे! कृपया सर्व आवश्यक फील्ड भरा...
+        allowed_payment_method_types_tip: याक्षणी फक्त रोख आणि स्ट्राइप पेमेंट पद्धती वापरल्या जाऊ शकतात
+        credit_card: क्रेडीट कार्ड
+        charges_not_allowed: या ग्राहकाकडून शुल्क आकारण्याची परवानगी नाही
+        no_default_card: ग्राहकाकडे शुल्क आकारण्यासाठी कोणतेही कार्ड उपलब्ध नाहीत
+        card_ok: ग्राहकाला चार्ज करण्यासाठी कार्ड उपलब्ध आहे
+        begins_at_placeholder: "एक तारीख निवडा"
+        ends_at_placeholder: "ऐच्छिक"
+      loading_flash:
+        loading: सदस्यता लोड करत आहे
+      review:
+        details: तपशील
+        address: पत्ता
+        products: उत्पादने
+        no_open_or_upcoming_order_cycle: "कोणतीही आगामी ऑर्डर सायकल नाही"
+      products_panel:
+        save: "जतन करा"
+        saving: "बचत"
+        saved: "जतन केले"
+      product_already_in_order: हे उत्पादन आधीच ऑर्डरमध्ये जोडले गेले आहे. कृपया प्रमाण थेट संपादित करा.
+      stock:
+        insufficient_stock: "अपुरा साठा उपलब्ध आहे"
+        out_of_stock: "स्टॉक संपला"
+      orders:
+        number: क्रमांक
+      confirm_cancel_msg: "तुमची खात्री आहे की तुम्ही ही सदस्यता रद्द करू इच्छिता? ही क्रिया पूर्ववत केली जाऊ शकत नाही."
+      cancel_failure_msg: "क्षमस्व, रद्द करणे अयशस्वी!"
+      confirm_pause_msg: "तुमची खात्री आहे की तुम्ही या सदस्यतेला विराम देऊ इच्छिता?"
+      pause_failure_msg: "क्षमस्व, विराम देणे अयशस्वी!"
+      unpause_failure_msg: "क्षमस्व, विराम रद्द करणे अयशस्वी!"
+      yes_cancel_them: त्यांना रद्द करा
+      no_keep_them: त्यांना ठेवा
+      yes_i_am_sure: हो मला खात्री आहे
+      number: "क्रमांक"
+      no_results:
+        no_subscriptions: अजून सदस्यता नाहीत...
+        why_dont_you_add_one: तुम्ही एक का जोडत नाही? :)
+        no_matching_subscriptions: कोणतीही जुळणारी सदस्यता आढळली नाही
+    schedules:
+      destroy:
+        associated_subscriptions_error: हे शेड्यूल हटवले जाऊ शकत नाही कारण त्यात संबंधित सदस्यत्वे आहेत
+    vouchers:
+      new:
+        legend: नवीन व्हाउचर
+        back: मागे
+        save: जतन करा
+        voucher_code: व्हाउचर कोड
+        voucher_amount: रक्कम
+        voucher_type: व्हाउचर प्रकार
+        flat_rate: फ्लॅट
+        percentage_rate: टक्केवारी (%)
+    controllers:
+      enterprises:
+        stripe_connect_cancelled: "स्ट्राइपचे कनेक्शन रद्द केले गेले आहे"
+        stripe_connect_success: "स्ट्राइप खाते यशस्वीरित्या कनेक्ट झाले"
+        stripe_connect_fail: क्षमस्व, तुमच्या स्ट्राइप खात्याचे कनेक्शन अयशस्वी झाले
+      stripe_connect_settings:
+        resource: स्ट्राइप कनेक्ट कॉन्फिगरेशन
+    resend_confirmation_emails_feedback:
+      one: "1 ऑर्डरसाठी पुष्टीकरण ईमेल पाठवला."
+      other: "%{count} ऑर्डरसाठी पुष्टीकरण ईमेल पाठवले."
+    send_invoice_feedback:
+      one: "1 ऑर्डरसाठी बीजक ईमेल पाठवला."
+      other: "%{count} ऑर्डरसाठी बीजक ईमेल पाठवले."
+  api:
+    unknown_error: "काहीतरी चूक झाली. आमच्या टीमला सूचित करण्यात आले आहे."
+    invalid_api_key: "अवैध API की ( %{key} ) निर्दिष्ट केली आहे."
+    unauthorized: "ती क्रिया करण्यासाठी तुम्ही अधिकृत नाही."
+    unpermitted_parameters: "या विनंतीमध्ये पॅरामीटर्सना अनुमती नाही: %{params}"
+    missing_parameter: "आवश्यक पॅरामीटर गहाळ किंवा रिक्त आहे: %{param}"
+    invalid_resource: "अवैध संसाधन. कृपया त्रुटी दूर करा आणि पुन्हा प्रयत्न करा."
+    resource_not_found: "तुम्ही शोधत असलेले संसाधन सापडले नाही."
+    enterprise_logo:
+      destroy_attachment_does_not_exist: "लोगो अस्तित्वात नाही"
+    enterprise_promo_image:
+      destroy_attachment_does_not_exist: "प्रोमो इमेज अस्तित्वात नाही"
+    enterprise_terms_and_conditions:
+      destroy_attachment_does_not_exist: "नियम आणि अटी फाइल अस्तित्वात नाही"
+    orders:
+      failed_to_update: "ऑर्डर अपडेट करण्यात अयशस्वी"
+    query_param:
+      error:
+        title: अवैध क्वेरी पॅरामीटर
+        extra_fields: "असमर्थित फील्ड: %{fields}"
+  checkout:
+    already_ordered:
+      cart: "कार्ट"
+    terms_and_conditions:
+      message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} शी सहमत आहे."
+      link_text: "अटी आणि शर्ती"
+    platform_terms_of_service:
+      message_html: "मी %{tos_link} प्लॅटफॉर्मशी सहमत आहे."
+    all_terms_and_conditions:
+      message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} आणि %{tos_link} प्लॅटफॉर्मशी सहमत आहे."
+      terms_and_conditions: "अटी आणि शर्ती"
+    failed: "चेकआउट अयशस्वी झाले. कृपया आम्हाला कळवा जेणेकरून आम्ही तुमच्या ऑर्डरवर प्रक्रिया करू शकू."
+    payment_cancelled_due_to_stock: "पेमेंट रद्द केले: स्टॉक समस्यांमुळे चेकआउट पूर्ण होऊ शकले नाही."
+    order_not_loaded: "चेकआउट प्रक्रियेसाठी कोणतीही वैध ऑर्डर आढळली नाही"
+  shops:
+    hubs:
+      show_closed_shops: "बंद दुकाने दाखवा"
+      hide_closed_shops: "बंद दुकाने लपवा"
+      show_on_map: "नकाशावर सर्व दर्शवा"
+  shared:
+    mailers:
+      powered_by:
+        open_food_network: "अन्न नेटवर्क उघडा"
+        powered_html: "तुमचा खरेदीचा अनुभव %{open_food_network} द्वारे समर्थित आहे."
+    menu:
+      cart:
+        cart: "कार्ट"
+      cart_sidebar:
+        checkout: "तपासा"
+        edit_cart: "कार्ट संपादित करा"
+        items_in_cart_singular: "%{num} तुमच्या वस्तू"
+        items_in_cart_plural: "%{num} तुमच्या वस्तू"
+        close: "बंद"
+        cart_empty: "तुमची कार्ट रिकामी आहे"
+        take_me_shopping: "मला खरेदीला घेऊन जा!"
+      signed_in:
+        profile: "प्रोफाइल"
+      mobile_menu:
+        cart: "कार्ट"
+    register_call:
+      selling_on_ofn: "ओपन फूड नेटवर्कवर जाण्यात स्वारस्य आहे?"
+      register: "येथे नोंदणी करा"
+    footer:
+      footer_secure: "सुरक्षित आणि विश्वासार्ह."
+      footer_contact_headline: "संपर्कात रहा"
+      footer_contact_email: "आम्हाला ईमेल करा"
+      footer_nav_headline: "नेव्हिगेट करा"
+      footer_join_headline: "आमच्यात सामील व्हा"
+      footer_join_cta: "मला अधिक सांगा!"
+      footer_legal_call: "आमचे वाचा"
+      footer_legal_visit: "आम्हाला शोधा"
+      footer_data_text_with_privacy_policy_html: "आम्ही तुमच्या डेटाची चांगली काळजी घेतो. आमचे %{privacy_policy} आणि %{cookies_policy} पहा"
+      footer_data_text_without_privacy_policy_html: "आम्ही तुमच्या डेटाची चांगली काळजी घेतो. आमचे %{cookies_policy} पहा"
+      footer_data_privacy_policy: "गोपनीयता धोरण"
+      footer_data_cookies_policy: "कुकीज धोरण"
+  shop:
+    messages:
+      customer_required:
+        login: "लॉगिन"
+        contact: "संपर्क"
+        require_customer_login: "केवळ मान्यताप्राप्त ग्राहकच या दुकानात प्रवेश करू शकतात."
+        require_login_link_html: "तुम्ही आधीच मान्यताप्राप्त ग्राहक असल्यास, पुढे जाण्यासाठी %{login} ."
+        require_login_2_html: "येथे खरेदी सुरू करू इच्छिता? कृपया %{contact} %{enterprise} आणि सामील होण्याबद्दल विचारा."
+        require_customer_html: "तुम्ही येथे खरेदी सुरू करू इच्छित असल्यास, कृपया सामील होण्याबद्दल विचारण्यासाठी %{contact} %{enterprise} ."
+    products:
+      summary:
+        bulk: "मोठ्या प्रमाणात"
+  card_could_not_be_updated: कार्ड अपडेट करता आले नाही
+  card_could_not_be_saved: कार्ड जतन करता आले नाही
+  spree_gateway_error_flash_for_checkout: "तुमच्या पेमेंट माहितीमध्ये समस्या होती: %{error}"
+  invoice_billing_address: "बिलाचा पत्ता:"
+  invoice_column_tax: "जीएसटी"
+  invoice_column_price: "किंमत"
+  invoice_column_item: "वस्तू"
+  invoice_column_qty: "प्रमाण"
+  invoice_column_weight_volume: "वजन / व्हॉल."
+  invoice_column_unit_price_with_taxes: "युनिट किंमत (करासह)"
+  invoice_column_unit_price_without_taxes: "युनिट किंमत (कर वगळून)"
+  invoice_column_price_with_taxes: "एकूण किंमत (करासह)"
+  invoice_column_price_without_taxes: "एकूण किंमत (कर वगळून)"
+  invoice_column_price_per_unit_without_taxes: "प्रति युनिट किंमत (कर वगळून)"
+  invoice_column_tax_rate: "कर दर"
+  invoice_tax_total: "GST एकूण:"
+  tax_invoice: "टॅक्स इन्व्हॉइस"
+  tax_total: "एकूण कर ( %{rate} ):"
+  invoice_shipping_type: "प्रकार:"
+  total_excl_tax: "एकूण (कर वगळून):"
+  total_incl_tax: "एकूण (करासह):"
+  total_all_tax: "एकूण कर:"
+  abn: "ABN:"
+  acn: "ACN:"
+  invoice_issued_on: "चलन जारी केले:"
+  order_number: "ऑर्डर क्रमांक:"
+  date_of_transaction: "व्यवहाराची तारीख:"
+  menu_1_title: "दुकाने"
+  menu_1_url: "/दुकाने"
+  menu_2_title: "नकाशा"
+  menu_2_url: "/नकाशा"
+  menu_3_title: "निर्माते"
+  menu_3_url: "/निर्माते"
+  menu_4_title: "गट"
+  menu_4_url: "/गट"
+  menu_5_title: "बद्दल"
+  menu_5_url: "https://about.openfoodnetwork.org.au/"
+  menu_6_title: "कनेक्ट करा"
+  menu_6_url: "https://openfoodnetwork.org/au/connect/"
+  menu_7_title: "शिका"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  logo: "लोगो (640x130)"
+  logo_mobile: "मोबाइल लोगो (७५x२६)"
+  logo_mobile_svg: "मोबाइल लोगो (SVG)"
+  home_hero: "हिरो इमेज"
+  home_show_stats: "आकडेवारी दाखवा"
+  footer_logo: "लोगो (220x76)"
+  footer_facebook_url: "फेसबुक URL"
+  footer_twitter_url: "Twitter URL"
+  footer_instagram_url: "इंस्टाग्राम URL"
+  footer_linkedin_url: "लिंक्डइन URL"
+  footer_googleplus_url: "Google Plus URL"
+  footer_pinterest_url: "Pinterest URL"
+  footer_email: "ईमेल"
+  footer_links_md: "दुवे"
+  footer_about_url: "URL बद्दल"
+  user_guide_link: "वापरकर्ता मार्गदर्शक लिंक"
+  name: नाव
+  first_name: पहिले नाव
+  last_name: शेवटचे नाव
+  email: ईमेल
+  phone: फोन
+  next: पुढे
+  address: पत्ता
+  address_placeholder: उदा. 123 हाय स्ट्रीट
+  address2: पत्ता ( पुढे चालू.)
+  city: शहर
+  city_placeholder: उदा. नॉर्थकोट
+  latitude: अक्षांश
+  latitude_placeholder: उदा. -३७.४७१३०७७
+  latitude_longitude_tip: तुमचा एंटरप्राइझ नकाशावर प्रदर्शित करण्यासाठी अक्षांश आणि रेखांश आवश्यक आहेत.
+  longitude: रेखांश
+  longitude_placeholder: उदा. १४४.७८५१५३१
+  use_geocoder: पत्त्यावरून आपोआप अक्षांश आणि रेखांश मोजायचे?
+  state: राज्य
+  postcode: पिनकोड
+  postcode_placeholder: उदा. 3070
+  suburb: उपनगर
+  country: देश
+  unauthorized: अनाधिकृत
+  terms_of_service: "सेवा अटी"
+  on_demand: मागणीनुसार
+  not_allowed: परवानगी नाही
+  no_shipping: शिपिंग पद्धती नाहीत
+  no_payment: पेमेंट पद्धती नाहीत
+  no_shipping_or_payment: शिपिंग किंवा पेमेंट पद्धती नाहीत
+  unconfirmed: अपुष्ट
+  days: दिवस
+  authorization_failure: "अधिकृतता अयशस्वी"
+  description: "वर्णन"
+  label_shop: "दुकान"
+  label_shops: "दुकाने"
+  label_map: "नकाशा"
+  label_producer: "उत्पादक"
+  label_producers: "निर्माते"
+  label_groups: "गट"
+  label_about: "बद्दल"
+  label_blog: "ब्लॉग"
+  label_support: "सपोर्ट"
+  label_shopping: "खरेदी"
+  label_login: "लॉगिन करा"
+  label_logout: "बाहेर पडणे"
+  label_signup: "साइन अप करा"
+  label_administration: "प्रशासन"
+  label_admin: "अॅडमिन"
+  label_account: "खाते"
+  label_more: "अजून दाखवा"
+  label_less: "कमी दाखवा"
+  label_notices: "नोटीस"
+  cart_items: "वस्तू"
+  cart_headline: "तुमची शॉपिंग कार्ट"
+  total: "एकूण"
+  cart_updating: "कार्ट अपडेट करत आहे..."
+  cart_empty: "कार्ट रिकामी"
+  cart_edit: "तुमची कार्ट संपादित करा"
+  item: "वस्तू"
+  qty: "प्रमाण"
+  card_number: कार्ड क्रमांक
+  card_securitycode: "सुरक्षा कोड"
+  card_expiry_date: कालबाह्यता तारीख
+  card_masked_digit: "एक्स"
+  card_expiry_abbreviation: "कालबाह्य"
+  new_credit_card: "नवीन क्रेडिट कार्ड"
+  my_credit_cards: माझी क्रेडिट कार्डे
+  add_new_credit_card: नवीन क्रेडिट कार्ड जोडा
+  saved_cards: जतन केलेली कार्डे
+  add_a_card: एक कार्ड जोडा
+  add_card: कार्ड जोडा
+  you_have_no_saved_cards: तुम्ही अजून एकही कार्ड सेव्ह केलेले नाहीये
+  saving_credit_card: क्रेडिट कार्ड सेव्ह करत आहे...
+  card_has_been_removed: "तुमचे कार्ड काढले गेले आहे (क्रमांक: %{number} )"
+  card_could_not_be_removed: क्षमस्व, कार्ड काढता आले नाही
+  invalid_credit_card: "अवैध क्रेडिट कार्ड"
+  legal:
+    cookies_policy:
+      header: "आम्ही कुकीज कसे वापरतो"
+      essential_cookies: "आवश्यक कुकीज"
+      cookie_domain: "द्वारे सेट करा:"
+      cookie_consent_desc: "कुकीज संचयित करण्यासाठी वापरकर्त्याच्या संमतीची स्थिती राखण्यासाठी वापरला जातो"
+      statistics_cookies: "सांख्यिकी कुकीज"
+      cookie_matomo_basics_desc: "आकडेवारी गोळा करण्यासाठी Matomo प्रथम पक्ष कुकीज."
+      cookie_matomo_heatmap_desc: "Matomo हीटमॅप आणि सत्र रेकॉर्डिंग कुकी."
+      cookie_matomo_ignore_desc: "वापरकर्त्याचा मागोवा घेण्यापासून वगळण्यासाठी कुकी वापरली जाते."
+      disabling_cookies_header: "कुकीज अक्षम करण्याबाबत चेतावणी"
+    cookies_banner:
+      cookies_policy_link_desc: "तुम्हाला अधिक जाणून घ्यायचे असल्यास, आमचे तपासा"
+      cookies_policy_link: "कुकीज धोरण"
+      cookies_accept_button: "कुकीज स्वीकारा"
+  home_shop: आता खरेदी करा
+  brandstory_headline: "अन्न, असंघटित."
+  brandstory_intro: "काहीवेळा सिस्टमचे निराकरण करण्याचा सर्वोत्तम मार्ग म्हणजे नवीन सुरू करणे…"
+  brandstory_part4: "हे सर्वत्र कार्य करते. ते सर्व काही बदलते."
+  brandstory_part5_strong: "आम्ही त्याला ओपन फूड नेटवर्क म्हणतो."
+  brandstory_part6: "आपल्या सर्वांना अन्न आवडते. आता आपण आपल्या अन्नप्रणालीवरही प्रेम करू शकतो."
+  system_headline: "खरेदी - ते कसे कार्य करते ते येथे आहे."
+  system_step1: "1. शोधा"
+  system_step1_text: "हंगामी स्थानिक खाद्यपदार्थांसाठी आमची वैविध्यपूर्ण, स्वतंत्र दुकाने शोधा. अतिपरिचित क्षेत्र आणि खाद्य श्रेणीनुसार शोधा किंवा तुम्ही डिलिव्हरी किंवा पिकअपला प्राधान्य देता का."
+  system_step2: "2. दुकान"
+  system_step3: "3. पिक-अप / डिलिव्हरी"
+  cta_headline: "खरेदी जे जगाला एक चांगले ठिकाण बनवते."
+  cta_label: "मी तयार आहे"
+  stats_headline: "आम्ही एक नवीन अन्न प्रणाली तयार करत आहोत."
+  stats_producers: "अन्न उत्पादक"
+  stats_shops: "खाद्यपदार्थांची दुकाने"
+  stats_shoppers: "अन्न दुकानदार"
+  stats_orders: "अन्न ऑर्डर"
+  checkout_title: तपासा
+  checkout_now: आता चेकआउट करा
+  checkout_order_ready: साठी ऑर्डर तयार आहे
+  checkout_hide: लपवा
+  checkout_expand: विस्तृत करा
+  checkout_headline: "ठीक आहे, चेकआउट करण्यासाठी तयार आहात?"
+  checkout_as_guest: "अतिथी म्हणून चेकआउट करा"
+  checkout_details: "तुमचा तपशील"
+  checkout_billing: "देयकाची माहिती"
+  checkout_default_bill_address: "डीफॉल्ट बिलिंग पत्ता म्हणून जतन करा"
+  checkout_shipping: शिपिंग माहिती
+  checkout_default_ship_address: "डीफॉल्ट शिपिंग पत्ता म्हणून जतन करा"
+  checkout_method_free: फुकट
+  checkout_address_same: शिपिंग पत्ता बिलिंग पत्त्यासारखाच आहे?
+  checkout_ready_for: "तयार:"
+  checkout_instructions: "काही टिप्पण्या किंवा विशेष सूचना?"
+  checkout_payment: पेमेंट
+  checkout_send: आत्ताच ऑर्डर द्या
+  checkout_your_order: तुझा आदेश
+  checkout_cart_total: कार्ट एकूण
+  checkout_shipping_price: शिपिंग
+  checkout_total_price: एकूण
+  checkout_back_to_cart: "कार्ट कडे परत"
+  cost_currency: "किंमत चलन"
+  split_checkout:
+    your_details_without_number: तुमचा तपशील
+    payment_method_without_number: पेमेंट पद्धत
+    order_summary_without_number: ऑर्डर सारांश
+    already_ordered:
+      cart: "कार्ट"
+    step1:
+      contact_information:
+        title: संपर्क माहिती
+        email:
+          label: ईमेल
+        phone:
+          label: फोन क्रमांक
+      billing_address:
+        title: बिलाचा पत्ता
+        first_name:
+          label: पहिले नाव
+        last_name:
+          label: शेवटचे नाव
+      address:
+        address1:
+          label: पत्ता (रस्ता + घर क्रमांक)
+        address2:
+          label: अतिरिक्त पत्त्याची माहिती (पर्यायी)
+        city:
+          label: शहर
+        state_id:
+          label: राज्य
+        zipcode:
+          label: पिनकोड
+        country_id:
+          label: देश
+      shipping_info:
+        title: शिपिंग माहिती
+      submit: पुढील - पेमेंट पद्धत
+      cancel: बास्केट संपादन कडे परत जा
+    step2:
+      payment_method:
+        title: पेमेंट पद्धत
+      form:
+        card_number:
+          label: कार्ड क्रमांक
+          placeholder: उदा ४२४२ ४२४२ ४२४२ ४२४२
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: महिना
+        card_year:
+          label: वर्ष
+        stripe:
+          use_saved_card: जतन केलेले कार्ड वापरा
+          use_new_card: तुमचे कार्ड आयडेंटिफायर एंटर करा
+          save_card: भविष्यातील वापरासाठी कार्ड जतन करा
+          create_new_card: किंवा खाली नवीन कार्ड तपशील प्रविष्ट करा
+      submit: पुढील - ऑर्डर सारांश
+      cancel: तुमच्या तपशीलांकडे परत
+      voucher:
+        voucher: "%{voucher_amount} व्हाउचर"
+        apply_voucher: व्हाउचर लागू करा
+        apply: अर्ज करा
+        placeholder: व्हाउचर कोड एंटर करा
+        remove_code: कोड काढा
+    step3:
+      delivery_details:
+        title: वितरण तपशील
+        edit: सुधारणे
+        address: वितरण पत्ता
+        instructions: सूचना
+      payment_method:
+        title: पेमेंट पद्धत
+        edit: सुधारणे
+        instructions: सूचना
+      order:
+        title: ऑर्डर तपशील
+        edit: सुधारणे
+      terms_and_conditions:
+        message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} शी सहमत आहे."
+        link_text: "अटी आणि शर्ती"
+      platform_terms_of_service:
+        message_html: "मी %{tos_link} प्लॅटफॉर्मशी सहमत आहे."
+      all_terms_and_conditions:
+        terms_and_conditions: "अटी आणि शर्ती"
+      submit: ऑर्डर पूर्ण करा
+      cancel: पेमेंट पद्धतीकडे परत जा
+    errors:
+      saving_failed: "जतन करणे अयशस्वी, कृपया हायलाइट केलेले फील्ड अद्यतनित करा."
+      terms_not_accepted: कृपया अटी व शर्ती स्वीकारा
+      required: फील्ड रिक्त असू शकत नाही
+      invalid_number: "कृपया वैध दूरध्वनी क्रमांक टाका"
+      invalid_email: "कृपया वैध ईमेल पत्ता प्रविष्ट करा"
+      select_a_shipping_method: शिपिंग पद्धत निवडा
+      select_a_payment_method: पेमेंट पद्धत निवडा
+      voucher_not_found: सापडले नाही
+      add_voucher_error: व्हाउचर जोडताना एरर आली
+  order_paid: पेड
+  order_not_paid: पैसे दिले नाहीत
+  order_total: एकूण ऑर्डर
+  order_payment: "याद्वारे पैसे देणे:"
+  no_payment_required: "पेमेंट आवश्यक नाही"
+  order_billing_address: बिलाचा पत्ता
+  order_delivery_on: वितरण सुरू
+  order_delivery_address: वितरण पत्ता
+  order_delivery_time: वितरण वेळ
+  order_special_instructions: "तुमच्या नोट्स:"
+  order_pickup_time: संकलनासाठी सज्ज
+  order_pickup_instructions: संकलन सूचना
+  order_produce: उत्पादन करा
+  order_amount_paid: देय रक्कम
+  order_total_price: एकूण
+  order_balance_due: शिल्लक देय
+  order_includes_tax: (कराचा समावेश आहे)
+  order_hub_info: हब माहिती
+  order_back_to_store: स्टोअरकडे परत
+  order_back_to_cart: कार्टकडे परत
+  order_back_to_website: वेबसाइटवर परत
+  bom_tip: "एकाहून अधिक ऑर्डर्सवर उत्पादनाचे प्रमाण बदलण्यासाठी हे पृष्ठ वापरा. आवश्यक असल्यास, उत्पादने ऑर्डरमधून पूर्णपणे काढून टाकली जाऊ शकतात."
+  unsaved_changes_error: "लाल किनारी असलेल्या फील्डमध्ये त्रुटी आहेत."
+  products: "उत्पादने"
+  products_in: "%{oc} मध्ये"
+  products_at: "%{distributor} वर"
+  products_elsewhere: "इतरत्र आढळणारी उत्पादने"
+  email_confirmed: "तुमच्या ईमेल पत्त्याची पुष्टी केल्याबद्दल धन्यवाद."
+  email_confirmation_greeting: "हाय, %{contact} !"
+  email_confirmation_link_label: "या ईमेल पत्त्याची पुष्टी करा »"
+  email_social: "आमच्याशी कनेक्ट व्हा:"
+  email_contact: "आम्हाला ईमेल करा:"
+  email_signoff: "चिअर्स,"
+  email_signature: "%{sitename} टीम"
+  email_confirm_customer_greeting: "हाय %{name} ,"
+  email_confirm_customer_intro_html: "<strong>%{distributor}</strong> वर खरेदी केल्याबद्दल धन्यवाद!"
+  email_confirm_customer_number_html: "ऑर्डर पुष्टीकरण <strong># %{number}</strong>"
+  email_confirm_customer_details_html: "<strong>%{distributor}</strong> वरील तुमच्या ऑर्डरचे तपशील येथे आहेत:"
+  email_confirm_customer_signoff: "आपला आभारी,"
+  email_confirm_shop_greeting: "हाय %{name} ,"
+  email_confirm_shop_order_html: "शाब्बास! तुमच्याकडे <strong>%{distributor}</strong> साठी नवीन ऑर्डर आहे!"
+  email_confirm_shop_number_html: "ऑर्डर पुष्टीकरण <strong># %{number}</strong>"
+  email_order_summary_item: "वस्तू"
+  email_order_summary_quantity: "प्रमाण"
+  email_order_summary_sku: "SKU"
+  email_order_summary_price: "किंमत"
+  email_order_summary_subtotal: "उपएकूण:"
+  email_order_summary_total: "एकूण:"
+  email_order_summary_includes_tax: "(कर समावेश):"
+  email_payment_paid: पेड
+  email_payment_not_paid: पैसे दिले नाहीत
+  email_payment_description: चेकआउटवर पेमेंट वर्णन
+  email_payment_summary: पेमेंट सारांश
+  email_payment_method: "याद्वारे पैसे देणे:"
+  email_so_placement_intro_html: "तुमच्याकडे <strong>%{distributor}</strong> सह नवीन ऑर्डर आहे"
+  email_so_placement_details_html: "<strong>%{distributor}</strong> साठी तुमच्या ऑर्डरचे तपशील येथे आहेत:"
+  email_so_confirmation_details_html: "<strong>%{distributor}</strong> वरील तुमच्या ऑर्डरबद्दल तुम्हाला जे काही माहित असणे आवश्यक आहे ते येथे आहे:"
+  email_so_empty_details_html: "येथे <strong>%{distributor}</strong> साठी न ठेवलेल्या ऑर्डरचे तपशील आहेत:"
+  email_so_failed_payment_intro_html: "आम्ही पेमेंटवर प्रक्रिया करण्याचा प्रयत्न केला, परंतु काही समस्या आल्या..."
+  email_shipping_delivery_details: वितरण तपशील
+  email_shipping_delivery_time: "वितरण यावर:"
+  email_shipping_delivery_address: "वितरण पत्ता:"
+  email_shipping_collection_details: संकलन तपशील
+  email_shipping_collection_time: "संकलनासाठी तयार:"
+  email_shipping_collection_instructions: "संकलन सूचना:"
+  email_special_instructions: "तुमच्या नोट्स:"
+  email_signup_greeting: नमस्कार!
+  email_signup_welcome: "%{sitename} मध्ये आपले स्वागत आहे!"
+  email_signup_confirmed_email: "तुमच्या ईमेलची पुष्टी केल्याबद्दल धन्यवाद."
+  email_signup_shop_html: "तुम्ही आता %{link} वर लॉग इन करू शकता."
+  invite_email:
+    greeting: "नमस्कार!"
+    invited_to_manage: "तुम्हाला %{instance} वर %{enterprise} व्यवस्थापित करण्यासाठी आमंत्रित केले आहे."
+  producer_mail_greeting: "प्रिय"
+  producer_mail_text_before: "कृपया यासाठी तयार असलेल्या ऑर्डर सायकलबद्दलचे अपडेट खाली शोधा:"
+  producer_mail_order_text: "तुमच्या उत्पादनांच्या ऑर्डरचा सारांश येथे आहे:"
+  producer_mail_delivery_instructions: "स्टॉक पिकअप/वितरण सूचना:"
+  producer_mail_signoff: "धन्यवाद आणि शुभेच्छा"
+  producer_mail_order_customer_text: "येथे ग्राहकांद्वारे गटबद्ध केलेल्या ऑर्डरचा सारांश आहे"
+  shopping_oc_closed: ऑर्डर बंद आहेत
+  shopping_oc_last_closed: "शेवटचे सायकल %{distance_of_time} पूर्वी बंद झाले"
+  shopping_oc_next_open: "पुढील सायकल %{distance_of_time} मध्ये उघडते"
+  shopping_oc_select: "निवडा..."
+  shopping_tabs_home: "मुख्यपृष्ठ"
+  shopping_tabs_shop: "दुकान"
+  shopping_tabs_about: "बद्दल"
+  shopping_tabs_producers: "निर्माते"
+  shopping_tabs_contact: "संपर्क"
+  shopping_tabs_groups: "गट"
+  shopping_contact_address: "पत्ता"
+  shopping_contact_web: "संपर्क"
+  shopping_contact_social: "अनुसरण करा"
+  shopping_groups_part_of: "याचा भाग आहे:"
+  shopping_producers_of_hub: "%{hub} चे उत्पादक:"
+  enterprises_next_closing: "पुढील ऑर्डर बंद"
+  enterprises_currently_open: "ऑर्डर सध्या खुल्या आहेत"
+  enterprises_ready_for: "तयार"
+  enterprises_choose: "तुम्हाला तुमची ऑर्डर हवी तेव्हा निवडा:"
+  maps_open: "उघडा"
+  maps_closed: "बंद"
+  map_title: "नकाशा"
+  hubs_buy: "यासाठी खरेदी करा:"
+  hubs_shopping_here: "येथे खरेदी"
+  hubs_orders_closed: "ऑर्डर्स बंद"
+  hubs_profile_only: "फक्त प्रोफाइल"
+  hubs_delivery_options: "वितरण पर्याय"
+  hubs_pickup: "पिकअप"
+  hubs_delivery: "डिलिव्हरी"
+  hubs_producers: "आमचे उत्पादक"
+  hubs_filter_by: "द्वारे फिल्टर करा"
+  hubs_filter_type: "प्रकार"
+  hubs_filter_delivery: "डिलिव्हरी"
+  hubs_filter_property: "मालमत्ता"
+  hubs_matches: "तुम्हाला म्हणायचे आहे का?"
+  hubs_intro: तुमच्या स्थानिक भागात खरेदी करा
+  hubs_distance: सर्वात जवळ
+  hubs_distance_filter: "मला %{location} जवळील दुकाने दाखवा"
+  products_clear: साफ
+  products_showing: "दाखवत आहे:"
+  products_results_for: "साठी परिणाम"
+  products_or: "किंवा"
+  products_and: "आणि"
+  products_filters_in: "मध्ये"
+  products_with: सह
+  products_search: "शोधा..."
+  products_filter_by: "द्वारे फिल्टर करा"
+  products_filter_selected: "निवडले"
+  products_filter_heading: "फिल्टर"
+  products_filter_clear: "साफ"
+  products_filter_done: "झाले"
+  products_loading: "उत्पादने लोड करत आहे..."
+  products_updating_cart: "कार्ट अपडेट करत आहे..."
+  products_cart_empty: "कार्ट रिकामी"
+  products_edit_cart: "तुमची कार्ट संपादित करा"
+  products_from: पासून
+  products_change: "जतन करण्यासाठी कोणतेही बदल नाहीत."
+  products_update_error: "खालील त्रुटींसह जतन करणे अयशस्वी झाले:"
+  products_update_error_msg: "जतन करणे अयशस्वी झाले."
+  products_update_error_data: "अवैध डेटामुळे सेव्ह अयशस्वी:"
+  products_changes_saved: "बदल जतन केले."
+  products_no_results_html: "सॉरी, %{query} साठी आम्हाला कोणतेही परिणाम आढळले नाहीत"
+  products_clear_search: "शोध साफ करा"
+  components_profiles_show: "प्रोफाइल दाखवा"
+  components_filters_nofilters: "कोणतेही फिल्टर नाहीत"
+  components_filters_clearfilters: "सर्व फिल्टर साफ करा"
+  groups_title: गट
+  groups_headline: गट / प्रदेश
+  groups_search: "शोध नाव किंवा कीवर्ड"
+  groups_no_groups: "कोणतेही गट आढळले नाहीत"
+  groups_about: "आमच्याबद्दल"
+  groups_producers: "आमचे उत्पादक"
+  groups_hubs: "आमचे केंद्र"
+  groups_contact_web: संपर्क
+  groups_contact_social: अनुसरण करा
+  groups_contact_address: पत्ता
+  groups_contact_email: आम्हाला ईमेल करा
+  groups_contact_website: आमच्या वेबसाइटला भेट द्या
+  groups_contact_facebook: आम्हाला Facebook वर फॉलो करा
+  groups_signup_title: गट म्हणून साइन अप करा
+  groups_signup_headline: गट साइन अप करा
+  groups_signup_email: आम्हाला ईमेल करा
+  groups_signup_motivation1: आम्ही अन्नप्रणालीमध्ये प्रामाणिकपणे परिवर्तन करतो.
+  groups_signup_motivation4: तुम्ही जिथे आहात तिथे आम्ही तुम्हाला भेटतो.
+  groups_signup_motivation7: आम्ही अन्न हालचाली अधिक अर्थपूर्ण बनवतो.
+  groups_signup_pricing: गट खाते
+  groups_signup_studies: घटनेचा अभ्यास
+  groups_signup_contact: चर्चा करण्यास तयार आहात?
+  groups_signup_contact_text: "OFN तुमच्यासाठी काय करू शकते हे शोधण्यासाठी संपर्कात रहा:"
+  groups_signup_detail: "येथे तपशील आहे."
+  login_invalid: "चुकीचा इमेल किंवा सांकेतीक शब्द"
+  producers_about: आमच्याबद्दल
+  producers_buy: साठी खरेदी करा
+  producers_contact: संपर्क
+  producers_contact_phone: कॉल करा
+  producers_contact_social: अनुसरण करा
+  producers_buy_at_html: "%{enterprise} उत्पादनांसाठी येथे खरेदी करा:"
+  producers_filter: द्वारे फिल्टर करा
+  producers_filter_type: प्रकार
+  producers_filter_property: मालमत्ता
+  producers_title: निर्माते
+  producers_headline: स्थानिक उत्पादक शोधा
+  producers_signup_title: उत्पादक म्हणून साइन अप करा
+  producers_signup_headline: अन्न उत्पादक, सशक्त.
+  producers_signup_send: आता सामील व्हा
+  producers_signup_enterprise: एंटरप्राइझ खाती
+  producers_signup_studies: आमच्या निर्मात्यांकडील कथा.
+  producers_signup_cta_headline: आता सामील व्हा!
+  producers_signup_cta_action: आता सामील व्हा
+  producers_signup_detail: येथे तपशील आहे.
+  producer: उत्पादक
+  products_item: वस्तू
+  products_description: वर्णन
+  products_variant: प्रकार
+  products_quantity: प्रमाण
+  products_available: उपलब्ध आहे का?
+  products_producer: "उत्पादक"
+  products_price: "किंमत"
+  name_or_sku: "नाव किंवा SKU"
+  register_title: नोंदणी करा
+  sell_title: "नोंदणी करा"
+  sell_headline: "ओपन फूड नेटवर्कवर जा!"
+  sell_motivation: "तुमचे सुंदर अन्न दाखवा."
+  sell_producers: "निर्माते"
+  sell_hubs: "हब"
+  sell_groups: "गट"
+  sell_user_guide: "आमच्या वापरकर्ता मार्गदर्शकामध्ये अधिक शोधा."
+  sell_ask_services: "OFN सेवांबद्दल आम्हाला विचारा."
+  shops_title: दुकाने
+  shops_headline: खरेदी, बदललेले.
+  shops_signup_title: हब म्हणून साइन अप करा
+  shops_signup_headline: फूड हब, अमर्यादित.
+  shops_signup_action: आता सामील व्हा
+  shops_signup_pricing: एंटरप्राइझ खाती
+  shops_signup_stories: आमच्या हबमधील कथा.
+  shops_signup_help: आम्ही मदत करण्यास तयार आहोत.
+  shops_signup_detail: येथे तपशील आहे.
+  orders: "आदेश"
+  orders_fees: "फी..."
+  orders_edit_title: "शॉपिंग कार्ट"
+  orders_edit_headline: "तुमची शॉपिंग कार्ट"
+  orders_edit_time: "साठी ऑर्डर तयार आहे"
+  orders_edit_continue: "खरेदी चालू ठेवा"
+  orders_edit_checkout: "तपासा"
+  orders_form_empty_cart: "रिकामी टोपली"
+  orders_form_update_cart: "अपडेट करा"
+  orders_form_subtotal: "उपएकूण तयार करा"
+  orders_form_total: "एकूण"
+  orders_oc_expired_headline: "या ऑर्डर सायकलसाठी ऑर्डर बंद झाल्या आहेत"
+  orders_oc_expired_text_link: "किंवा या हबवर उपलब्ध इतर ऑर्डर सायकल पहा"
+  orders_oc_expired_email: "ईमेल:"
+  orders_oc_expired_phone: "फोन:"
+  orders_show_title: "ऑर्डर पुष्टीकरण"
+  orders_show_time: "ऑर्डर तयार आहे"
+  orders_show_order_number: "ऑर्डर # %{number}"
+  orders_show_cancelled: "रद्द केले"
+  orders_show_confirmed: "पुष्टी केली"
+  orders_your_order_has_been_cancelled: "तुमची ऑर्डर रद्द करण्यात आली आहे"
+  orders_could_not_cancel: "क्षमस्व, ऑर्डर रद्द करणे शक्य नाही"
+  orders_cannot_remove_the_final_item: "ऑर्डरमधून अंतिम वस्तू काढू शकत नाही, कृपया त्याऐवजी ऑर्डर रद्द करा."
+  orders_bought_edit_button: "पुष्टी केलेले वस्तू संपादित करा"
+  orders_bought_already_confirmed: "* आधीच पुष्टी"
+  orders_confirm_cancel: "तुमची खात्री आहे की तुम्ही ही ऑर्डर रद्द करू इच्छिता?"
+  order_processed_successfully: "तुमच्या ऑर्डरवर यशस्वीरित्या प्रक्रिया केली गेली आहे"
+  products_cart_distributor_choice: "तुमच्या ऑर्डरसाठी वितरक:"
+  products_cart_distributor_is: "या ऑर्डरसाठी तुमचा वितरक %{name} आहे."
+  products_oc: "तुमच्या ऑर्डरसाठी ऑर्डर सायकल:"
+  products_oc_current: "तुमचे सध्याचे ऑर्डर सायकल"
+  products_max_quantity: कमाल प्रमाण
+  products_distributor: वितरक
+  password: पासवर्ड
+  remember_me: माझी आठवण ठेवा
+  are_you_sure: "तुला खात्री आहे?"
+  orders_open: "ऑर्डर उघडल्या"
+  closing: "बंद होत आहे"
+  going_back_to_home_page: "तुम्हाला परत मुख्यपृष्ठावर घेऊन जात आहे"
+  creating: निर्माण करणे
+  updating: अपडेट करत आहे
+  failed_to_create_enterprise: "तुमचे एंटरप्राइझ तयार करण्यात अयशस्वी."
+  filter_by: "द्वारे फिल्टर करा"
+  hide_filters: "फिल्टर लपवा"
+  one_filter_applied: "1 फिल्टर लागू केले"
+  x_filters_applied: "फिल्टर लागू केले"
+  submitting_order: "तुमची ऑर्डर सबमिट करत आहे: कृपया प्रतीक्षा करा"
+  location_placeholder: "स्थान टाइप करा..."
+  error_required: "रिक्त असू शकत नाही"
+  error_number: "संख्या असणे आवश्यक आहे"
+  error_email: "ईमेल पत्ता असणे आवश्यक आहे"
+  error_not_found_in_database: "%{name} डेटाबेसमध्ये आढळले नाही"
+  error_not_primary_producer: "%{name} उत्पादक म्हणून सक्षम नाही"
+  item_handling_fees: "वस्तू हाताळणी शुल्क ( वस्तू एकूण मध्ये समाविष्ट)"
+  january: "जानेवारी"
+  february: "फेब्रुवारी"
+  march: "मार्च"
+  april: "एप्रिल"
+  may: "मे"
+  june: "जून"
+  july: "जुलै"
+  august: "ऑगस्ट"
+  september: "सप्टेंबर"
+  october: "ऑक्टोबर"
+  november: "नोव्हेंबर"
+  december: "डिसेंबर"
+  email_not_found: "ईमेल पत्ता सापडला नाही"
+  email_required: "आपण ईमेल पत्ता प्रदान करणे आवश्यक आहे"
+  logging_in: "थोडा वेळ थांबा, आम्ही तुम्हाला लॉग इन करत आहोत"
+  signup_email: "आपला ई - मेल"
+  choose_password: "पासवर्ड निवडा"
+  confirm_password: "पासवर्डची पुष्टी करा"
+  action_signup: "आत्ताच नोंदणी करा"
+  forgot_password: "पासवर्ड विसरलात?"
+  password_reset_sent: "तुमचा पासवर्ड रीसेट करण्याच्या सूचनांसह ईमेल पाठवण्यात आला आहे!"
+  reset_password: "पासवर्ड रीसेट करा"
+  update_and_recalculate_fees: "फी अद्यतनित करा आणि पुनर्गणना करा"
+  registration:
+    steps:
+      introduction:
+        registration_greeting: "नमस्कार!"
+        registration_intro: "तुम्ही आता तुमच्या उत्पादक किंवा हबसाठी प्रोफाइल तयार करू शकता"
+        registration_checklist: "मला काय हवे आहे?"
+        registration_time: "5-10 मिनिटे"
+        registration_enterprise_address: "एंटरप्राइझ पत्ता"
+        registration_contact_details: "प्राथमिक संपर्क तपशील"
+        registration_logo: "तुमचा लोगो इमेज"
+        registration_promo_image: "तुमच्या प्रोफाइलसाठी लँडस्केप इमेज"
+        registration_about_us: "&#39;आमच्याबद्दल&#39; मजकूर"
+        registration_outcome_headline: "मला काय मिळेल?"
+        registration_action: "चला सुरू करुया!"
+      details:
+        title: "तपशील"
+        headline: "चला सुरू करुया"
+        enterprise_name_field: "एंटरप्राइझ नाव :"
+        producer_name_field: "शेताचे नाव :"
+        producer_name_field_placeholder: "उदा. चार्लीचे अप्रतिम फार्म"
+        address1_field: "पत्ता ओळ 1:"
+        address1_field_placeholder: "उदा 123 क्रॅनबेरी ड्राइव्ह"
+        address1_field_error: "कृपया पत्ता प्रविष्ट करा"
+        address2_field: "पत्ता ओळ 2:"
+        suburb_field: "उपनगर:"
+        suburb_field_placeholder: "उदा. नॉर्थकोट"
+        suburb_field_error: "कृपया उपनगर प्रविष्ट करा"
+        postcode_field: "पिनकोड:"
+        postcode_field_placeholder: "उदा. ३०७०"
+        postcode_field_error: "पोस्टकोड आवश्यक आहे"
+        state_field: "राज्य:"
+        state_field_error: "राज्य आवश्यक"
+        country_field: "देश:"
+        country_field_error: "कृपया एक देश निवडा"
+        map_location: "नकाशा स्थान"
+        locate_address: "नकाशावर पत्ता शोधा"
+      contact:
+        title: "संपर्क"
+        contact_field: "प्राथमिक संपर्क"
+        contact_field_placeholder: "संपर्क नाव"
+        contact_field_required: "तुम्हाला प्राथमिक संपर्क प्रविष्ट करणे आवश्यक आहे."
+        phone_field: "फोन क्रमांक"
+        whatsapp_phone_field: "व्हॉट्सॲप फोन नंबर"
+        whatsapp_phone_tooltip: "हा नंबर तुमच्या सार्वजनिक प्रोफाइलमध्ये WhatsApp लिंक म्हणून उघडला जाईल."
+        phone_field_placeholder: "उदा. (०३) १२३४ ५६७८"
+        whatsapp_phone_field_placeholder: "उदा. +६१ ४ १२३४ ५६७८"
+      type:
+        title: "प्रकार"
+        headline: "%{enterprise} जोडण्यासाठी शेवटची पायरी!"
+        question: "तुम्ही उत्पादक आहात का ?"
+        yes_producer: "होय, मी एक उत्पादक आहे"
+        no_producer: "नाही, मी उत्पादक नाही"
+        producer_field_error: "कृपया एक निवडा. तुम्ही उत्पादक आहात का ?"
+        create_profile: "प्रोफाइल तयार करा"
+      about:
+        title: "बद्दल"
+        headline: "छान आहे!"
+        message: "आता बद्दल तपशील बाहेर देह द्या"
+        enterprise_description: "संक्षिप्त वर्णन"
+        enterprise_long_desc: "लांब वर्णन"
+        enterprise_abn: "ABN"
+        enterprise_abn_placeholder: "उदा. ९९१२३४५६७८९ "
+        enterprise_acn: "ACN"
+        enterprise_acn_placeholder: "उदा. 123 456 789 "
+        enterprise_tax_required: "आपण एक निवड करणे आवश्यक आहे."
+      images:
+        title: "इमेजेस्"
+        headline: "धन्यवाद!"
+        uploading: "अपलोड करत आहे..."
+        continue: "कंटिन्यू करा"
+        back: "मागे"
+      logo:
+        select_logo: "पायरी 1. लोगो इमेज निवडा"
+        logo_label: "एक लोगो इमेज निवडा"
+        logo_drag: "तुमचा लोगो येथे ड्रॅग आणि ड्रॉप करा"
+        review_logo: "पायरी 2. तुमच्या लोगोचे पुनरावलोकन करा"
+      promo:
+        promo_image_label: "प्रोमो इमेज निवडा"
+        promo_image_drag: "तुमचा प्रोमो येथे ड्रॅग आणि ड्रॉप करा"
+        review_promo_image: "पायरी 4. तुमच्या प्रोमो बॅनरचे पुनरावलोकन करा"
+      social:
+        title: "सामाजिक"
+        enterprise_final_step: "अंतिम टप्पा!"
+        enterprise_social_text: "लोक %{enterprise} ऑनलाइन कसे शोधू शकतात?"
+        website: "वेबसाइट"
+        website_placeholder: "उदा. openfoodnetwork.org.au"
+        facebook: "फेसबुक"
+        facebook_placeholder: "उदा. www.facebook.com/PageNameHere"
+        linkedin: "लिंक्डइन"
+        linkedin_placeholder: "उदा. www.linkedin.com/YourNameHere"
+        twitter: "ट्विटर"
+        twitter_placeholder: "उदा. @twitter_handle"
+        instagram: "इंस्टाग्राम"
+        instagram_placeholder: "उदा. @instagram_handle"
+      limit_reached:
+        headline: "अरे नाही!"
+        message: "तुम्ही मर्यादा गाठली आहे!"
+        action: "मुख्यपृष्ठावर परत या"
+      finished:
+        headline: "संपले!"
+        thanks: "%{enterprise} साठी तपशील भरल्याबद्दल धन्यवाद."
+        action: "एंटरप्राइझ डॅशबोर्ड वर जा"
+  back: "मागे"
+  continue: "कंटिन्यू करा"
+  action_or: "किंवा"
+  enterprise_limit: एंटरप्राइझ मर्यादा
+  fees: "फी"
+  fee_name: "फी नाव"
+  fee_owner: "फी मालक"
+  item_cost: "वस्तू"
+  bulk: "मोठ्या प्रमाणात"
+  shop_variant_quantity_min: "मि"
+  shop_variant_quantity_max: "कमाल"
+  contact: "संपर्क"
+  follow: "अनुसरण करा"
+  shop_for_products_html: "<span class=\"turquoise\">%{enterprise}</span> उत्पादनांसाठी येथे खरेदी करा:"
+  change_shop: "दुकान यात बदला:"
+  shop_at: "आता येथे खरेदी करा:"
+  admin_fee: "प्रशासन शुल्क"
+  sales_fee: "विक्री शुल्क"
+  packing_fee: "पॅकिंग फी"
+  transport_fee: "वाहतूक शुल्क"
+  fundraising_fee: "निधी उभारणी शुल्क"
+  price_graph: "किंमत आलेख"
+  included_tax: "कर समाविष्ट"
+  tax: "कर"
+  tax_amount_included: "%{amount} (समाविष्ट)"
+  remove_tax: "कर काढून टाका"
+  balance: "शिल्लक"
+  transaction: "व्यवहार"
+  transaction_date: "तारीख"
+  payment_state: "पैसे भरल्याची स्थिती"
+  shipping_state: "शिपिंग स्थिती"
+  value: "मूल्य"
+  balance_due: "शिल्लक देय"
+  credit: "पत"
+  Paid: "पैसे दिले"
+  Ready: "तयार"
+  not_visible: अदृश्य
+  you_have_no_orders_yet: "तुला अजून ऑर्डर नाहीत"
+  show_only_complete_orders: "फक्त पूर्ण ऑर्डर दाखवा"
+  successfully_created: '%{resource} यशस्वीरित्या तयार केले गेले आहे!'
+  successfully_removed: '%{resource} यशस्वीरित्या काढले गेले आहे!'
+  successfully_updated: '%{resource} यशस्वीरित्या अद्यतनित केले गेले आहे!'
+  running_balance: "चालू शिल्लक"
+  outstanding_balance: "थकबाकी"
+  admin_enterprise_relationships: "एंटरप्राइझ परवानग्या"
+  admin_enterprise_relationships_everything: "सर्व काही"
+  admin_enterprise_relationships_permits: "परवानगी"
+  admin_enterprise_relationships_seach_placeholder: "शोधा"
+  admin_enterprise_relationships_button_create: "तयार करा"
+  admin_enterprise_relationships_to: "करण्यासाठी"
+  admin_enterprise_groups: "एंटरप्राइझ गट"
+  admin_enterprise_groups_name: "नाव"
+  admin_enterprise_groups_owner: "मालक"
+  admin_enterprise_groups_on_front_page: "पहिल्या पानावर?"
+  admin_enterprise_groups_enterprise: "एंटरप्राइज"
+  admin_enterprise_groups_data_powertip_logo: "हा समूहाचा लोगो आहे"
+  admin_enterprise_groups_contact_phone_placeholder: "उदा. 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "उदा. 123 हाय स्ट्रीट"
+  admin_enterprise_groups_contact_city: "उपनगर"
+  admin_enterprise_groups_contact_city_placeholder: "उदा. नॉर्थकोट"
+  admin_enterprise_groups_contact_zipcode: "पिनकोड"
+  admin_enterprise_groups_contact_zipcode_placeholder: "उदा. 3070"
+  admin_enterprise_groups_contact_state_id: "राज्य"
+  admin_enterprise_groups_contact_country_id: "देश"
+  admin_enterprise_groups_web_twitter: "उदा. @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "उदा. www.truffles.com"
+  admin_order_cycles: "प्रशासन ऑर्डर सायकल"
+  open: "उघडा"
+  close: "बंद"
+  create: "तयार करा"
+  search: "शोधा"
+  supplier: "पुरवठादार"
+  product_name: "उत्पादनाचे नांव"
+  product_description: "उत्पादन वर्णन"
+  permalink: "परमालिंक"
+  shipping_categories: "शिपिंग श्रेण्या"
+  units: "युनिट आकार"
+  coordinator: "को-ऑर्डिनेटर"
+  distributor: "वितरक"
+  enterprise_fees: "एंटरप्राइझ फी"
+  process_my_order: "माझ्या ऑर्डरवर प्रक्रिया करा"
+  delivery_instructions: वितरण सूचना
+  delivery_method: वितरण पद्धत
+  fee_type: "शुल्क प्रकार"
+  tax_category: "कर श्रेणी"
+  display: "डिस्प्ले"
+  tags: "टॅग्ज"
+  calculator: "कॅल्क्युलेटर"
+  calculator_values: "कॅल्क्युलेटर मूल्ये"
+  calculator_preferred_unit_error: "किलो किंवा पौंड असणे आवश्यक आहे"
+  flat_percent_per_item: "सपाट टक्के (प्रति वस्तू )"
+  flat_rate_per_item: "सपाट दर (प्रति वस्तू )"
+  flat_rate_per_order: "सपाट दर (प्रति ऑर्डर)"
+  flexible_rate: "लवचिक दर"
+  price_sack: "किंमत सॅक"
+  new_order_cycles: "नवीन ऑर्डर सायकल"
+  new_order_cycle: "नवीन ऑर्डर सायकल"
+  new_order_cycle_tooltip: "ठराविक कालावधीसाठी दुकान उघडा"
+  select_a_coordinator_for_your_order_cycle: "तुमच्या ऑर्डर सायकलसाठी को-ऑर्डिनेटर निवडा"
+  notify_producers: 'उत्पादकांना सूचित करा'
+  edit_order_cycle: "ऑर्डर सायकल संपादित करा"
+  roles: "भूमिका"
+  update: "अपडेट करा"
+  delete: हटवा
+  add_producer_property: "उत्पादक मालमत्ता जोडा"
+  in_progress: "प्रगतीपथावर आहे"
+  started_at: "वाजता सुरू झाले"
+  queued: "रांगेत"
+  scheduled_for: "साठी अनुसूचित"
+  customers: "ग्राहक"
+  please_select_hub: "कृपया हब निवडा"
+  loading_customers: "ग्राहक लोड करत आहे"
+  no_customers_found: "कोणतेही ग्राहक सापडले नाहीत"
+  go: "जा"
+  hub: "हब"
+  product: "उत्पादन"
+  price: "किंमत"
+  review: "पुनरावलोकन करा"
+  save_changes: "बदल जतन करा"
+  order_saved: "ऑर्डर जतन केली"
+  no_products: कोणतीही उत्पादने नाहीत
+  spree_admin_overview_enterprises_header: "माझे उपक्रम"
+  spree_admin_overview_enterprises_footer: "माझे उपक्रम व्यवस्थापित करा"
+  spree_admin_enterprises_hubs_name: "नाव"
+  spree_admin_enterprises_create_new: "नवीन तयार करा"
+  spree_admin_enterprises_shipping_methods: "शिपिंग पद्धती"
+  spree_admin_enterprises_fees: "एंटरप्राइझ फी"
+  spree_admin_enterprises_none_create_a_new_enterprise: "नवीन एंटरप्राइझ तयार करा"
+  spree_admin_enterprises_none_text: "तुमच्याकडे अजून कोणतेही उद्योग नाहीत"
+  spree_admin_enterprises_tabs_hubs: "हब"
+  spree_admin_enterprises_producers_manage_products: "उत्पादने व्यवस्थापित करा"
+  spree_admin_enterprises_create_new_product: "नवीन उत्पादन तयार करा"
+  spree_admin_single_enterprise_alert_mail_confirmation: "कृपया ईमेल पत्त्याची पुष्टी करा"
+  spree_admin_single_enterprise_alert_mail_sent: "आम्ही यांना ईमेल पाठवला आहे"
+  spree_admin_overview_action_required: "कृती आवश्यक"
+  spree_admin_unit_value: युनिट मूल्य
+  spree_admin_unit_description: युनिटचे वर्णन
+  spree_admin_variant_unit: व्हेरिएंट युनिट
+  spree_admin_variant_unit_scale: व्हेरिएंट युनिट स्केल
+  spree_admin_supplier: पुरवठादार
+  spree_admin_product_category: उत्पादन वर्ग
+  spree_admin_variant_unit_name: व्हेरिएंट युनिट नाव
+  unit_name: "युनिट नाव"
+  change_package: "पॅकेज बदला"
+  your_profil_live: "तुमचे प्रोफाइल थेट"
+  see: "पहा"
+  live: "राहतात"
+  manage: "मॅनेज"
+  resend: "पुन्हा पाठवा"
+  add_and_manage_products: "उत्पादने जोडा आणि व्यवस्थापित करा"
+  add_and_manage_order_cycles: "ऑर्डर सायकल जोडा आणि व्यवस्थापित करा"
+  manage_order_cycles: "ऑर्डर सायकल व्यवस्थापित करा"
+  manage_products: "उत्पादने व्यवस्थापित करा"
+  edit_profile_details: "प्रोफाइल तपशील संपादित करा"
+  order_cycle: "ऑर्डर सायकल"
+  enterprise_relationships: "एंटरप्राइझ परवानग्या"
+  first_name_begins_with: "पहिले नाव ने सुरु होते"
+  last_name_begins_with: "शेवटचे नाव ने सुरु होते"
+  shipping_method: "शिपिंग पद्धत"
+  new_order: "नवीन ऑर्डर"
+  enterprise_tos_link: "एंटरप्राइझ सेवा अटी लिंक"
+  tax_settings: "कर सेटिंग्ज"
+  products_require_tax_category: "उत्पादनांना कर श्रेणी आवश्यक आहे"
+  admin_shared_address_1: "पत्ता"
+  admin_shared_address_2: "पत्ता (चालू.)"
+  admin_share_city: "शहर"
+  admin_share_zipcode: "पिनकोड"
+  admin_share_country: "देश"
+  admin_share_state: "राज्य"
+  hub_sidebar_hubs: "हब"
+  hub_sidebar_none_available: "काहीही उपलब्ध नाही"
+  hub_sidebar_manage: "मॅनेज"
+  hub_sidebar_at_least: "किमान एक हब निवडणे आवश्यक आहे"
+  hub_sidebar_blue: "निळा"
+  hub_sidebar_red: "लाल"
+  report_customers_distributor: "वितरक"
+  report_customers_hub: "हब"
+  report_customers_supplier: "पुरवठादार"
+  report_customers_cycle: "ऑर्डर सायकल"
+  report_customers_type: "रिपोर्टस् टाइप करा"
+  report_customers_csv: "csv म्हणून डाउनलोड करा"
+  report_customers: ग्राहक
+  report_producers: "निर्माते"
+  report_type: "रिपोर्टस् टाइप करा"
+  report_hubs: "हब"
+  report_payment: "पेमेंट पद्धती"
+  report_distributor: "वितरक"
+  report_payment_by: 'प्रकारानुसार देयके'
+  report_itemised_payment: 'आयटमाइज्ड पेमेंट बेरीज'
+  report_payment_totals: 'पेमेंट बेरीज'
+  report_all: 'सर्व'
+  report_order_cycle: "ऑर्डर सायकल"
+  report_hide_columns: लपविण्यासाठी स्तंभ
+  report_columns: स्तंभ
+  report_enterprises: "एंटरप्राइज"
+  report_enterprise_fee: "फी नावे"
+  report_users: "वापरकर्ते"
+  report_tax_rates: कर दर
+  report_tax_types: कर प्रकार
+  report_filters: रिपोर्टस्
+  report_print: छापा रिपोर्टस्
+  report_render_options: रेंडरिंग पर्याय
+  report_header_ofn_uid: OFN UID
+  report_header_order_cycle: ऑर्डर सायकल
+  report_header_user: वापरकर्ता
+  report_header_email: ईमेल
+  report_header_status: स्थिती
+  report_header_comments: टिप्पण्या
+  report_header_first_name: पहिले नाव
+  report_header_last_name: शेवटचे नाव
+  report_header_suburb: उपनगर
+  report_header_phone: फोन
+  report_header_address: पत्ता
+  report_header_billing_address: बिलाचा पत्ता
+  report_header_relationship: नाते
+  report_header_hub: हब
+  report_header_hub_address: हब पत्ता
+  report_header_to_hub: हबला
+  report_header_hub_code: हब कोड
+  report_header_hub_id: हब आयडी
+  report_header_hub_business_number: "हब व्यवसाय क्रमांक"
+  report_header_hub_legal_name: "हब कायदेशीर नाव"
+  report_header_hub_contact_name: "हब संपर्क नाव"
+  report_header_hub_email: "हब सार्वजनिक ईमेल"
+  report_header_hub_owner_email: हब मालक ईमेल
+  report_header_hub_phone: "हब फोन नंबर"
+  report_header_hub_address_line1: "हब अॅड्रेस लाइन 1"
+  report_header_hub_address_line2: "हब अॅड्रेस लाइन 2"
+  report_header_hub_address_city: "हब उपनगर"
+  report_header_hub_address_zipcode: "हब पोस्टकोड"
+  report_header_hub_address_state_name: "हब राज्य"
+  report_header_code: कोड
+  report_header_paid: पैसे दिले?
+  report_header_delivery: डिलिव्हरी?
+  report_header_shipping: शिपिंग
+  report_header_shipping_method: 'शिपिंग पद्धत '
+  report_header_shipping_instructions: शिपिंग सूचना
+  report_header_ship_street: शिप स्ट्रीट
+  report_header_ship_street_2: शिप स्ट्रीट 2
+  report_header_ship_city: शिप सिटी
+  report_header_ship_postcode: शिप पोस्टकोड
+  report_header_ship_state: जहाज राज्य
+  report_header_billing_street: बिलिंग स्ट्रीट
+  report_header_billing_street_2: बिलिंग स्ट्रीट 2
+  report_header_billing_street_3: बिलिंग स्ट्रीट 3
+  report_header_billing_street_4: बिलिंग स्ट्रीट 4
+  report_header_billing_city: बिलिंग शहर
+  report_header_billing_postcode: बिलिंग पोस्टकोड
+  report_header_billing_state: बिलिंग स्थिती
+  report_header_incoming_transport: येणारी वाहतूक
+  report_header_special_instructions: विशेष सूचना
+  report_header_order_number: ऑर्डर क्रमांक
+  report_header_date: तारीख
+  report_header_confirmation_date: पुष्टीकरण तारीख
+  report_header_tags: टॅग्ज
+  report_header_items: वस्तू
+  report_header_items_total: "वस्तू %{currency_symbol}"
+  report_header_taxable_items_total: "करपात्र वस्तू एकूण ( %{currency_symbol} )"
+  report_header_sales_tax: "विक्रीकर ( %{currency_symbol} )"
+  report_header_delivery_charge: "वितरण शुल्क ( %{currency_symbol} )"
+  report_header_tax: "कर"
+  report_header_tax_on_delivery: "वितरणावर कर ( %{currency_symbol} )"
+  report_header_tax_on_fees: "शुल्कावरील कर ( %{currency_symbol} )"
+  report_header_tax_category: "कर श्रेणी"
+  report_header_tax_rate_name: "कर नाव ="
+  report_header_tax_rate: "कर दर"
+  report_header_total_tax: "एकूण कर ( %{currency_symbol} )"
+  report_header_total_excl_tax: "एकूण वगळ कर ( %{currency_symbol} )"
+  report_header_total_incl_tax: "एकूण समावेश. कर ( %{currency_symbol} )"
+  report_header_total_orders: "ऑर्डरची एकूण संख्या"
+  report_header_enterprise: एंटरप्राइझ
+  report_header_enterprise_fee_name: नाव
+  report_header_enterprise_fee_type: प्रकार
+  report_header_enterprise_fee_owner: मालक
+  report_header_customer: ग्राहक
+  report_header_customer_first_name: पहिले नाव
+  report_header_customer_last_name: शेवटचे नाव
+  report_header_customer_code: ग्राहक कोड
+  report_header_product: उत्पादन
+  report_header_product_properties: उत्पादन गुणधर्म
+  report_header_product_tax_category: उत्पादन कर श्रेणी
+  report_header_quantity: प्रमाण
+  report_header_max_quantity: कमाल प्रमाण
+  report_header_variant: प्रकार
+  report_header_variant_value: भिन्न मूल्य
+  report_header_variant_unit: व्हेरिएंट युनिट
+  report_header_total_available: एकूण उपलब्ध
+  report_header_unallocated: वाटप न केलेले
+  report_header_max_quantity_excess: कमाल प्रमाण जादा
+  report_header_taxons: टॅक्सन
+  report_header_supplier: पुरवठादार
+  report_header_producer: उत्पादक
+  report_header_producer_suburb: उत्पादक उपनगर
+  report_header_producer_tax_status: उत्पादक कर स्थिती
+  report_header_producer_charges_sales_tax?: GST/VAT नोंदणीकृत
+  report_header_unit: युनिट
+  report_header_group_buy_unit_quantity: गट खरेदी युनिट प्रमाण
+  report_header_cost: खर्च
+  report_header_shipping_cost: वाहतूक खर्च
+  report_header_curr_cost_per_unit: कर्र. प्रति युनिट किंमत
+  report_header_total_shipping_cost: एकूण शिपिंग खर्च
+  report_header_payment_method: पेमेंट पद्धत
+  report_header_sells: विकतो
+  report_header_visible: दृश्यमान
+  report_header_price: किंमत
+  report_header_unit_size: युनिट आकार
+  report_header_distributor: वितरक
+  report_header_distributor_address: वितरकाचा पत्ता
+  report_header_distributor_city: वितरक शहर
+  report_header_distributor_postcode: वितरक पोस्टकोड
+  report_header_distributor_tax_status: वितरक कर स्थिती
+  report_header_delivery_address: वितरण पत्ता
+  report_header_delivery_postcode: वितरण पोस्टकोड
+  report_header_bulk_unit_size: मोठ्या प्रमाणात युनिट आकार
+  report_header_weight: वजन
+  report_header_final_weight_volume: अंतिम (वजन/खंड)
+  report_header_height: उंची
+  report_header_width: रुंदी
+  report_header_depth: खोली
+  report_header_sum_total: एकूण बेरीज
+  report_header_date_of_order: ऑर्डरची तारीख
+  report_header_amount_owing: देय रक्कम
+  report_header_amount_paid: देय रक्कम
+  report_header_units_required: युनिट्स आवश्यक
+  report_header_remainder: बाकी
+  report_header_order_date: मागणीची तारीख
+  report_header_order_id: ऑर्डर आयडी
+  report_header_item_name: वस्तू नाव
+  report_header_temp_controlled_items: तापमान नियंत्रित वस्तू ?
+  report_header_customer_name: ग्राहक नाव
+  report_header_customer_email: ग्राहक ईमेल
+  report_header_customer_phone: ग्राहक फोन
+  report_header_customer_city: ग्राहक शहर
+  report_header_payment_state: पेमेंट स्थिती
+  report_header_payment_type: पैसे भरण्याची पध्दत
+  report_header_item_price: "वस्तू ( %{currency} )"
+  report_header_item_fees_price: "वस्तू + शुल्क ( %{currency} )"
+  report_header_admin_handling_fees: "प्रशासन आणि हाताळणी ( %{currency} )"
+  report_header_ship_price: "जहाज ( %{currency} )"
+  report_header_pay_fee_price: "फी भरा ( %{currency} )"
+  report_header_total_price: "एकूण ( %{currency} )"
+  report_header_product_total_price: "एकूण उत्पादन ( %{currency} )"
+  report_header_shipping_total_price: "एकूण शिपिंग ( %{currency} )"
+  report_header_outstanding_balance_price: "थकबाकी शिल्लक ( %{currency} )"
+  report_header_eft_price: "EFT ( %{currency} )"
+  report_header_paypal_price: "PayPal ( %{currency} )"
+  report_header_sku: SKU
+  report_header_amount: रक्कम
+  report_header_balance: शिल्लक
+  report_header_total_cost: "एकूण किंमत"
+  report_header_total_ordered: एकूण ऑर्डर
+  report_header_total_max: एकूण कमाल
+  report_header_total_units: एकूण एकके
+  report_header_sum_max_total: "कमाल एकूण बेरीज"
+  report_header_total_excl_vat: "एकूण वगळ कर ( %{currency_symbol} )"
+  report_header_total_incl_vat: "एकूण समावेश. कर ( %{currency_symbol} )"
+  report_header_temp_controlled: Tempcontrolled?
+  report_header_is_producer: निर्माता ?
+  report_header_not_confirmed: पुष्टी नाही
+  report_header_gst_on_income: उत्पन्नावर जीएसटी
+  report_header_gst_free_income: जीएसटी मुक्त उत्पन्न
+  report_header_total_untaxable_produce: एकूण अटॅक्स उत्पादन (कर नाही)
+  report_header_total_taxable_produce: एकूण करपात्र उत्पादन (करासह)
+  report_header_total_untaxable_fees: एकूण अटॅक्स शुल्क (कर नाही)
+  report_header_total_taxable_fees: एकूण करपात्र शुल्क (करासह)
+  report_header_delivery_shipping_cost: डिलिव्हरी शिपिंग खर्च (करासह)
+  report_header_transaction_fee: व्यवहार शुल्क (कर नाही)
+  report_line_cost_of_produce: उत्पादनाची किंमत
+  report_line_line_items: ओळ वस्तू
+  report_header_last_completed_order_date: ऑर्डरची शेवटची पूर्ण तारीख
+  report_xero_configuration: झिरो कॉन्फिगरेशन
+  initial_invoice_number: "प्रारंभिक बीजक क्रमांक"
+  invoice_date: "चलन तारीख"
+  due_date: "देय तारीख"
+  account_code: "खाते कोड"
+  equals: "बरोबरी"
+  contains: "समाविष्टीत आहे"
+  discount: "सवलत"
+  filter_products: "उत्पादने फिल्टर करा"
+  delete_product_variant: "शेवटचा प्रकार हटवला जाऊ शकत नाही!"
+  progress: "प्रगती"
+  saving: "बचत.."
+  success: "यश"
+  failure: "अपयश"
+  is_already_manager: "आधीच व्यवस्थापक आहे!"
+  no_change_to_save: "जतन करण्यासाठी कोणताही बदल नाही"
+  add_manager: "विद्यमान वापरकर्ता जोडा"
+  users: "वापरकर्ते"
+  about: "बद्दल"
+  images: "इमेजेस्"
+  web: "वेब"
+  primary_details: "प्राथमिक तपशील"
+  social: "सामाजिक"
+  shipping: "शिपिंग"
+  shipping_methods: "शिपिंग पद्धती"
+  payment_methods: "पेमेंट पद्धती"
+  payment_method_fee: "व्यवहार शुल्क"
+  tag_rules: "टॅग नियम"
+  enterprise_fee_whole_order: संपूर्ण ऑर्डर
+  enterprise_fee_by_name: "%{name} फी %{role} %{enterprise_name} द्वारे"
+  validation_msg_relationship_already_established: "^तो संबंध आधीच प्रस्थापित झाला आहे."
+  validation_msg_at_least_one_hub: "^किमान एक हब निवडणे आवश्यक आहे"
+  validation_msg_tax_category_cant_be_blank: "^कर श्रेणी रिक्त असू शकत नाही"
+  validation_msg_is_associated_with_an_exising_customer: "विद्यमान ग्राहकाशी संबंधित आहे"
+  content_configuration_pricing_table: "(TODO: किंमत सारणी)"
+  content_configuration_case_studies: "(TODO: केस स्टडी)"
+  content_configuration_detail: "(TODO: तपशील)"
+  enterprise_role_uniqueness_error: "^ती भूमिका आधीच अस्तित्वात आहे."
+  enterprise_terms_and_conditions_type_error: "फक्त PDF ला अनुमती आहे"
+  inventory_item_visibility_error: खरे किंवा खोटे असणे आवश्यक आहे
+  product_importer_file_error: "त्रुटी: कोणतीही फाइल अपलोड केलेली नाही"
+  product_importer_spreadsheet_error: "फाइल प्रक्रिया करू शकत नाही: अवैध फाइल प्रकार"
+  product_importer_products_save_error: कोणतीही उत्पादने यशस्वीरित्या जतन केली नाहीत
+  product_import_file_not_found_notice: 'फाइल सापडली नाही किंवा उघडता आली नाही'
+  product_import_no_data_in_spreadsheet_notice: 'स्प्रेडशीटमध्ये कोणताही डेटा आढळला नाही'
+  order_choosing_hub_notice: तुमचे हब निवडले गेले आहे.
+  order_cycle_selecting_notice: तुमची ऑर्डर सायकल निवडली गेली आहे.
+  enterprise_fees_update_notice: तुमची एंटरप्राइझ फी अद्यतनित केली गेली आहे.
+  enterprise_register_package_error: "कृपया पॅकेज निवडा"
+  enterprise_register_error: "%{enterprise} साठी नोंदणी पूर्ण करू शकलो नाही"
+  enterprise_bulk_update_success_notice: "उपक्रम यशस्वीरित्या अद्यतनित केले"
+  enterprise_bulk_update_error: 'अद्यतन अयशस्वी'
+  order_cycles_create_notice: 'तुमची ऑर्डर सायकल तयार झाली आहे.'
+  order_cycles_update_notice: 'तुमची ऑर्डर सायकल अपडेट केली गेली आहे.'
+  order_cycles_bulk_update_notice: 'ऑर्डर सायकल अद्यतनित केली गेली आहेत.'
+  order_cycles_clone_notice: "तुमची ऑर्डर सायकल %{name} क्लोन केली गेली आहे."
+  back_to_orders_list: "ऑर्डर सूचीकडे परत"
+  no_orders_found: "कोणत्याही ऑर्डर आढळल्या नाहीत"
+  order_information: "ऑर्डर माहिती"
+  new_payment: "नवीन पेमेंट"
+  create_or_update_invoice: "बीजक तयार करा किंवा अपडेट करा"
+  date_completed: "पूर्ण झाल्याची तारीख"
+  amount: "रक्कम"
+  invoice_number: "बील क्रमांक"
+  invoice_file: "फाईल"
+  invalid_url: "&#39; %{url} &#39; ही अवैध URL आहे"
+  state_names:
+    ready: तयार
+    pending: प्रलंबित
+    shipped: पाठवले
+  js:
+    saving: 'बचत...'
+    changes_saved: 'बदल जतन केले.'
+    authorising: "अधिकृत करत आहे..."
+    save_changes_first: प्रथम बदल जतन करा.
+    all_changes_saved: सर्व बदल जतन केले
+    unsaved_changes: तुमच्याकडे जतन न केलेले बदल आहेत
+    all_changes_saved_successfully: सर्व बदल यशस्वीरित्या जतन झाले
+    error: त्रुटी
+    unavailable: अनुपलब्ध
+    profile: प्रोफाइल
+    hub: हब
+    shop: दुकान
+    choose: निवडा
+    resolve_errors: कृपया खालील त्रुटींचे निराकरण करा
+    more_items: "+ %{count} अधिक"
+    default_card_updated: डीफॉल्ट कार्ड अपडेट केले
+    admin:
+      modals:
+        got_it: "समजले"
+        confirm: "पुष्टी"
+        close: "बंद"
+        continue: "कंटिन्यू करा"
+        cancel: "रद्द करा"
+        invite: "आमंत्रित करा"
+        invite_title: "नोंदणी नसलेल्या वापरकर्त्याला आमंत्रित करा"
+        tag_rule_help:
+          title: टॅग नियम
+          overview: आढावा
+          by_default_rules: "&#39;बाय डिफॉल्ट...&#39; नियम"
+          customer_tagged_rules: "&#39;ग्राहक टॅग केलेले...&#39; नियम"
+        terms_and_conditions_info:
+          title: "अटी आणि शर्ती अपलोड करत आहे"
+        terms_and_conditions_warning:
+          title: "अटी आणि शर्ती अपलोड करत आहे"
+      panels:
+        save: जतन करा
+        saved: जतन केले
+        saving: बचत
+        enterprise_package:
+          hub_profile: हब प्रोफाइल
+          hub_profile_cost: "खर्च: नेहमी विनामूल्य"
+          hub_shop: हब शॉप
+          choose_package: कृपया एक पॅकेज निवडा
+          profile_only: केवळ प्रोफाइल
+          profile_only_cost: "खर्च: नेहमी मोफत"
+          producer_shop: उत्पादक शॉप
+          producer_hub: उत्पादक केंद्र
+          get_listing: एक सूची मिळवा
+          always_free: नेहमी मोफत
+          sell_produce_others: इतरांच्या उत्पादनांची विक्री करा
+          sell_own_produce: तुमचे स्वतःचे उत्पादन विका
+          sell_both: स्वतःचे व इतरांचे उत्पादन विकावे
+        enterprise_producer:
+          producer: उत्पादक
+          non_producer: नॉन- उत्पादक
+          producer_desc: अन्न उत्पादक
+          producer_example: उदा. उत्पादक, बेकर्स, ब्रूअर्स, मेकर्स
+          non_producer_desc: इतर सर्व अन्न उपक्रम
+          non_producer_example: उदा. किराणा दुकान, अन्न सहकारी, खरेदी गट
+        enterprise_status:
+          status_title: "%{name} सेट केले आहे आणि जाण्यासाठी तयार आहे!"
+          severity: तीव्रता
+          description: वर्णन
+          resolve: निराकरण करा
+        exchange_products:
+          load_more_variants: "अधिक रूपे लोड करा"
+          load_all_variants: "सर्व प्रकार लोड करा"
+          select_all_variants: "सर्व %{total_number_of_variants} प्रकार निवडा"
+          variants_loaded: "%{total_number_of_variants} चे %{num_of_variants_loaded} रूपे लोड केले"
+          loading_variants: "रूपे लोड करत आहे"
+      tag_rules:
+        shipping_method_tagged_top: "शिपिंग पद्धती टॅग केल्या आहेत"
+        shipping_method_tagged_bottom: "आहेत:"
+        payment_method_tagged_top: "पेमेंट पद्धती टॅग केल्या आहेत"
+        payment_method_tagged_bottom: "आहेत:"
+        order_cycle_tagged_top: "ऑर्डर सायकल टॅग केली"
+        order_cycle_tagged_bottom: "आहेत:"
+        inventory_tagged_top: "इन्व्हेंटरी प्रकार टॅग केले"
+        inventory_tagged_bottom: "आहेत:"
+      new_tag_rule_dialog:
+        select_rule_type: "नियम प्रकार निवडा:"
+        add_rule: "नियम जोडा"
+      enterprise_fees:
+        inherit_from_product: "उत्पादनातून वारसा"
+      orders:
+        index:
+          per_page: "%{results} प्रति पृष्ठ"
+          view_file: "फाइल पहा"
+          compiling_invoices: "पावत्या संकलित करणे"
+          bulk_invoice_created: "बल्क बीजक तयार केले"
+          bulk_invoice_failed: "बल्क बीजक तयार करण्यात अयशस्वी"
+        order_state:
+          address: "पत्ता"
+          adjustments: "समायोजन"
+          awaiting_return: "परतीची वाट पाहत आहे"
+          canceled: "रद्द केले"
+          cart: "कार्ट"
+          complete: "पूर्ण"
+          confirm: "पुष्टी"
+          delivery: "वितरण"
+          paused: "विराम दिला"
+          payment: "पेमेंट"
+          pending: "प्रलंबित"
+          resumed: "पुन्हा सुरू केले"
+          returned: "परत आले"
+          confirmation: "पुष्टीकरण"
+        shipment_states:
+          backorder: "बॅकऑर्डर"
+          partial: "आंशिक"
+          pending: "प्रलंबित"
+          ready: "तयार"
+          shipped: "पाठवले"
+          canceled: "रद्द केले"
+        payment_states:
+          balance_due: "शिल्लक शिल्लक"
+          completed: "पूर्ण"
+          checkout: "तपासा"
+          credit_owed: "कर्ज देणे"
+          failed: "अयशस्वी"
+          paid: "दिले"
+          pending: "प्रलंबित"
+          requires_authorization: "अधिकृतता आवश्यक"
+          processing: "प्रक्रिया करत आहे"
+          void: "शून्य"
+          invalid: "अवैध"
+        quantity_unavailable: "अपुरा साठा उपलब्ध. वस्तू जतन केलेली नाही!"
+        quantity_unchanged: "मागील रकमेपेक्षा अपरिवर्तित रक्कम."
+        restock_item: "वस्तू करा: हा वस्तू स्टॉकमध्ये परत करा"
+        restock_items: "वस्तू करा: सर्व वस्तू स्टॉकमध्ये परत करा"
+      resend_user_email_confirmation:
+        resend: "पुन्हा पाठवा"
+        sending: "पुन्हा पाठवा..."
+        done: "पुन्हा पाठवणे पूर्ण झाले ✓"
+        failed: "पुन्हा पाठवणे अयशस्वी ✗"
+      order_cycles:
+        schedules:
+          adding_a_new_schedule: "नवीन वेळापत्रक जोडत आहे"
+          updating_a_schedule: "शेड्यूल अपडेट करत आहे"
+          create_schedule: "वेळापत्रक तयार करा"
+          update_schedule: "वेळापत्रक अपडेट करा"
+          delete_schedule: "शेड्यूल हटवा"
+          schedule_name_placeholder: "वेळापत्रक नाव"
+          created_schedule: "वेळापत्रक तयार केले"
+          updated_schedule: "अद्यतनित वेळापत्रक"
+          deleted_schedule: "वेळापत्रक हटवले"
+          name_required_error: "कृपया या वेळापत्रकासाठी नाव प्रविष्ट करा"
+          no_order_cycles_error: "कृपया किमान एक ऑर्डर सायकल निवडा (ड्रॅग आणि ड्रॉप)"
+          available: "उपलब्ध"
+          selected: "निवडले"
+      customers:
+        index:
+          add_customer: "ग्राहक जोडा"
+          add_a_new_customer_for: "%{shop_name} साठी नवीन ग्राहक जोडा"
+          customer_placeholder: "customer@example.org"
+          valid_email_error: "कृपया वैध ईमेल पत्ता प्रविष्ट करा"
+      subscriptions:
+        error_saving: "सदस्यता जतन करताना त्रुटी"
+        new:
+          please_select_a_shop: "कृपया दुकान निवडा"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "लोगो यशस्वीरित्या काढला"
+            removed_promo_image_successfully: "प्रोमो इमेज यशस्वीरित्या काढली"
+    out_of_stock:
+      reduced_stock_available: कमी स्टॉक उपलब्ध
+      now_out_of_stock: आता स्टॉक संपला आहे.
+      only_n_remainging: "आता फक्त %{num} शिल्लक आहे."
+    shopfront:
+      variant:
+        add_to_cart: "अॅड"
+        in_cart: "कार्ट मध्ये"
+        quantity_in_cart: "%{quantity} कार्टमध्ये"
+        remaining_in_stock: "फक्त %{quantity} बाकी"
+      bulk_buy_modal:
+        min_quantity: "किमान प्रमाण"
+        max_quantity: "कमाल प्रमाण"
+      price_breakdown: "किंमत ब्रेकडाउन"
+    variants:
+      on_demand:
+        'yes': "मागणीनुसार"
+    variant_overrides:
+      on_demand:
+        use_producer_settings: "उत्पादक स्टॉक सेटिंग्ज वापरा"
+        'yes': "होय"
+        'no': "नाही"
+      inventory_products: "इन्व्हेंटरी उत्पादने"
+      hidden_products: "लपलेली उत्पादने"
+      new_products: "नवीन उत्पादन"
+      reset_stock_levels: स्टॉक पातळी डीफॉल्टवर रीसेट करा
+      changes_to: मध्ये बदल
+      one_override: एक ओव्हरराइड
+      overrides: अधिलिखित करते
+      remain_unsaved: जतन न केलेले राहा.
+      no_changes_to_save: जतन करण्यासाठी कोणतेही बदल नाहीत.&#39;
+      some_trouble: "मला जतन करण्यात काही अडचण आली: %{errors}"
+      changing_on_hand_stock: हँड स्टॉक लेव्हल बदलत आहे...
+      stock_reset: स्टॉक डीफॉल्टवर रीसेट केले.
+    tag_rules:
+      show_hide_variants: 'माझ्या शॉपफ्रंटमध्ये रूपे दाखवा किंवा लपवा'
+      visible: दृश्यमान
+      not_visible: अदृश्य
+    services:
+      save: जतन करा
+      ignore: दुर्लक्ष करा
+      add_to_order_cycle: "ऑर्डर सायकलमध्ये जोडा"
+      manage_products: "उत्पादने व्यवस्थापित करा"
+      edit_profile: "प्रोफाईल संपादित करा"
+      add_products_to_inventory: "इन्व्हेंटरी मध्ये उत्पादने जोडा"
+    resources:
+      could_not_delete_customer: 'ग्राहक हटवू शकलो नाही'
+    order_cycles:
+      create_failure: "ऑर्डर सायकल तयार करण्यात अयशस्वी"
+      update_success: 'तुमची ऑर्डर सायकल अपडेट केली गेली आहे.'
+      update_failure: "ऑर्डर सायकल अपडेट करण्यात अयशस्वी"
+    enterprises:
+      producer: "उत्पादक"
+      non_producer: "नॉन- उत्पादक"
+    customers:
+      select_shop: 'कृपया प्रथम एक दुकान निवडा'
+      could_not_create: क्षमस्व! तयार करू शकलो नाही
+    subscriptions:
+      closes: बंद होते
+      closed: बंद
+      close_date_not_set: बंद करण्याची तारीख सेट केलेली नाही
+    spree:
+      users:
+        order: "ऑर्डर करा"
+    registration:
+      welcome_to_ofn: "ओपन फूड नेटवर्कमध्ये आपले स्वागत आहे!"
+      signup_or_login: "साइन अप करून प्रारंभ करा (किंवा लॉग इन करून)"
+      have_an_account: "आधीपासूनच एक खाते आहे?"
+      action_login: "आता लॉग इन करा."
+  inflections:
+    each:
+      one: "प्रत्येक"
+      other: "प्रत्येक"
+    bunch:
+      one: "घड"
+      other: "गुच्छे"
+    pack:
+      one: "पॅक"
+      other: "पॅक"
+    box:
+      one: "बॉक्स"
+      other: "बॉक्स"
+    bottle:
+      one: "बाटली"
+      other: "बाटल्या"
+    jar:
+      one: "जर"
+      other: "जार"
+    head:
+      one: "डोके"
+      other: "डोके"
+    bag:
+      one: "पिशवी"
+      other: "पिशव्या"
+    loaf:
+      one: "वडी"
+      other: "भाकरी"
+    single:
+      one: "अविवाहित"
+      other: "एकेरी"
+    tub:
+      one: "टब"
+      other: "टब"
+    punnet:
+      one: "punnet"
+      other: "punnets"
+    packet:
+      one: "पॅकेट"
+      other: "पॅकेट"
+    item:
+      one: "वस्तू"
+      other: "वस्तू"
+    dozen:
+      one: "डझन"
+      other: "डझनभर"
+    unit:
+      one: "युनिट"
+      other: "युनिट्स"
+    serve:
+      one: "सर्व्ह करणे"
+      other: "सेवा देते"
+    tray:
+      one: "ट्रे"
+      other: "ट्रे"
+    piece:
+      one: "तुकडा"
+      other: "तुकडे"
+    pot:
+      one: "भांडे"
+      other: "भांडी"
+    bundle:
+      one: "मोळी"
+      other: "बंडल"
+    flask:
+      one: "फ्लास्क"
+      other: "फ्लास्क"
+    basket:
+      one: "टोपली"
+      other: "टोपल्या"
+    sack:
+      one: "गोणी"
+      other: "पोत्या"
+  order_management:
+    reports:
+      bulk_coop:
+        filters:
+          bulk_coop_customer_payments: "मोठ्या प्रमाणात सहकारी ग्राहक देयके"
+          bulk_coop_packing_sheets: "बल्क को-ऑप पॅकिंग शीट्स"
+          bulk_coop_supplier_report: "बल्क को-ऑप सप्लायर रिपोर्टस्"
+      enterprise_fee_summaries:
+        filters:
+          date_range: "तारीख श्रेणी"
+          report_format_csv: "CSV म्हणून डाउनलोड करा"
+          generate_report: "रिपोर्टस् तयार करा"
+        report:
+          none: "कोणतेही नाही"
+      enterprise_fee_summary:
+        date_end_before_start_error: "प्रारंभ केल्यानंतर असणे आवश्यक आहे"
+        fee_calculated_on_transfer_through_all: "सर्व "
+        fee_calculated_on_transfer_through_entire_orders: "%{distributor} द्वारे संपूर्ण ऑर्डर"
+        tax_category_various: "विविध"
+        fee_type:
+          payment_method: "पेमेंट व्यवहार"
+          shipping_method: "शिपमेंट"
+        fee_placements:
+          supplier: "येणारे"
+          distributor: "आउटगोइंग"
+          coordinator: "को-ऑर्डिनेटर"
+        tax_category_name:
+          shipping_instance_rate: "प्लॅटफॉर्म दर"
+        formats:
+          csv:
+            header:
+              fee_type: "शुल्क प्रकार"
+              enterprise_name: "एंटरप्राइझ मालक"
+              fee_name: "फी नाव"
+              customer_name: "ग्राहक"
+              fee_placement: "फी प्लेसमेंट"
+              fee_calculated_on_transfer_through_name: "द्वारे हस्तांतरणावर फी कॅल्क"
+              tax_category_name: "कर श्रेणी"
+              total_amount: "$$ SUM"
+          html:
+            header:
+              fee_type: "शुल्क प्रकार"
+              enterprise_name: "एंटरप्राइझ मालक"
+              fee_name: "फी नाव"
+              customer_name: "ग्राहक"
+              fee_placement: "फी प्लेसमेंट"
+              fee_calculated_on_transfer_through_name: "द्वारे हस्तांतरणावर फी कॅल्क"
+              tax_category_name: "कर श्रेणी"
+              total_amount: "$$ SUM"
+        invalid_filter_parameters: "तुम्ही या रिपोर्टस् निवडलेले फिल्टर अवैध आहेत."
+      report:
+        none: "कोणतेही नाही"
+  order: "ऑर्डर करा"
+  order_details: "ऑर्डर तपशील"
+  customer_details: "ग्राहक तपशील"
+  adjustments: "समायोजन"
+  payments: "देयके"
+  return_authorizations: "अधिकृतता परत करा"
+  credit_owed: "कर्ज थकीत"
+  new_adjustment: "नवीन समायोजन"
+  payment: "पेमेंट"
+  payment_method: "पेमेंट पद्धत"
+  shipment: "शिपमेंट"
+  shipment_inc_vat: "व्हॅटसह शिपमेंट"
+  shipping_tax_rate: "शिपिंग कर दर"
+  category: "श्रेणी"
+  import_date: "आयात तारीख"
+  delivery: "डिलिव्हरी"
+  temperature_controlled: "तापमान नियंत्रित"
+  new_product: "नवीन उत्पादन"
+  administration: "प्रशासन"
+  logged_in_as: "म्हणून लॉग इन केले"
+  account: "खाते"
+  logout: "बाहेर पडणे"
+  date_range: "तारीख श्रेणी"
+  status: "स्थिती"
+  new: "नवीन"
+  start: "सुरू करा"
+  end: "शेवट"
+  stop: "थांबा"
+  first: "पहिला"
+  previous: "मागील"
+  last: "शेवटचा"
+  webhook_endpoints:
+    create:
+      success: वेबहुक एंडपॉइंट यशस्वीरित्या तयार केला
+      error: वेबहुक एंडपॉइंट तयार करण्यात अयशस्वी
+    destroy:
+      success: वेबहुक एंडपॉइंट यशस्वीरित्या हटवला
+      error: वेबहुक एंडपॉइंट हटवण्यात अयशस्वी
+  spree:
+    order_updated: "ऑर्डर अपडेट केली"
+    add_country: "देश जोडा"
+    add_state: "राज्य जोडा"
+    adjustment: "समायोजन"
+    all: "सर्व "
+    associated_adjustment_closed: "संबद्ध समायोजन बंद"
+    back_to_adjustments_list: "समायोजनाकडे परत"
+    back_to_users_list: "वापरकर्त्यांकडे परत"
+    back_to_zones_list: "झोनकडे परत जा"
+    card_code: "कार्ड कोड"
+    card_number: "कार्ड क्रमांक"
+    category: "श्रेणी"
+    created_successfully: "यशस्वीरित्या तयार केले"
+    credit: "पत"
+    editing_tax_category: "कर श्रेणी संपादित करणे"
+    editing_tax_rate: "कर दर संपादित करणे"
+    editing_zone: "संपादन झोन"
+    expiration: "कालबाह्यता"
+    invalid_payment_provider: "अवैध पेमेंट प्रदाता"
+    items_cannot_be_shipped: "वस्तू पाठवता येत नाही"
+    gateway_config_unavailable: "गेटवे कॉन्फिगरेशन अनुपलब्ध"
+    gateway_error: "पेमेंट अयशस्वी"
+    more: "अधिक"
+    new_adjustment: "नवीन समायोजन"
+    new_tax_category: "नवीन कर श्रेणी"
+    new_taxon: "नवीन टॅक्सन"
+    new_user: "नवीन वापरकर्ता"
+    no_pending_payments: "कोणतीही प्रलंबित देयके नाहीत"
+    none: "कोणतेही नाही"
+    not_found: "सापडले नाही"
+    notice_messages:
+      variant_deleted: "प्रकार हटवला"
+    payment_method_not_supported: "पेमेंट पद्धत समर्थित नाही"
+    resend_authorization_email: "अधिकृतता ईमेल पुन्हा पाठवा"
+    rma_credit: "RMA क्रेडिट"
+    refund: "परतावा"
+    server_error: "सर्व्हर त्रुटी"
+    shipping_method_names:
+      UPS Ground: "यूपीएस ग्राउंड"
+      pick_up: "शेतात पिक-अप"
+      delivery: "स्वाक्षरी, सीलबंद, वितरित"
+    start_date: "प्रारंभ तारीख"
+    successfully_removed: "यशस्वीरित्या काढले"
+    taxonomy_edit: "वर्गीकरण संपादन"
+    taxonomy_tree_error: "वर्गीकरण वृक्ष त्रुटी"
+    taxonomy_tree_instruction: "वर्गीकरण वृक्ष सूचना"
+    tree: "झाड"
+    updating: "अपडेट करत आहे"
+    add_product: "उत्पादन जोडा"
+    resend: "पुन्हा पाठवा"
+    back_to_orders_list: "ऑर्डर सूचीकडे परत"
+    back_to_payments_list: "पेमेंट सूचीकडे परत"
+    return_authorizations: "अधिकृतता परत करा"
+    select_stock: "स्टॉक निवडा"
+    location: "स्थान"
+    count_on_hand: "हातावर मोजा"
+    quantity: "प्रमाण"
+    on_demand: "मागणीनुसार"
+    on_hand: "हातावर"
+    package_from: "पासून पॅकेज"
+    item_description: "वस्तू वर्णन"
+    price: "किंमत"
+    total: "एकूण"
+    edit: "सुधारणे"
+    split: "स्प्लिट"
+    delete: "हटवा"
+    tracking: "ट्रॅकिंग"
+    tracking_number: "ट्रॅकिंग क्रमांक"
+    order_total: "ऑर्डर एकूण"
+    customer_details: "ग्राहक तपशील"
+    customer_details_updated: "ग्राहक तपशील अद्यतनित"
+    customer_search: "ग्राहक शोध"
+    choose_a_customer: "एक ग्राहक निवडा"
+    account: "खाते"
+    billing_address: "बिलाचा पत्ता"
+    shipping_address: "शिपिंग पत्ता"
+    first_name: "नाव "
+    last_name: "आडनाव"
+    street_address: "रस्त्याचा पत्ता"
+    street_address_2: "रस्त्याचा पत्ता (चालू)"
+    city: "शहर"
+    zip: "पिन कोड"
+    country: "देश"
+    state: "राज्य"
+    phone: "फोन"
+    update: "अपडेट करा"
+    use_billing_address: "बिलिंग पत्ता वापरा"
+    adjustments: "समायोजन"
+    continue: "कंटिन्यू करा"
+    fill_in_customer_info: "कृपया ग्राहक माहिती भरा"
+    credit_card: "क्रेडीट कार्ड"
+    new_payment: "नवीन पेमेंट"
+    capture: "कॅप्चर करा"
+    capture_and_complete_order: "कॅप्चर करा आणि ऑर्डर पूर्ण करा"
+    void: "शून्य"
+    login: "लॉगिन करा"
+    password: "पासवर्ड"
+    signature: "स्वाक्षरी"
+    solution: "उपाय"
+    landing_page: "लँडिंग पृष्ठ"
+    server: "सर्व्हर"
+    test_mode: "चाचणी मोड"
+    logourl: "Logourl"
+    confirm_delete: "हटविण्याची पुष्टी करा"
+    configurations: "कॉन्फिगरेशन"
+    general_settings: "सामान्य सेटिंग्ज"
+    site_name: "साइट नाव"
+    site_url: "साइट URL"
+    default_seo_title: "डीफॉल्ट एसईओ शीर्षक"
+    default_meta_description: "डीफॉल्ट मेटा वर्णन"
+    default_meta_keywords: "डीफॉल्ट मेटा कीवर्ड"
+    currency_decimal_mark: "चलन दशांश चिन्ह"
+    currency_settings: "चलन सेटिंग्ज"
+    currency_thousands_separator: "चलन हजारो विभाजक"
+    hide_cents: "सुट्टे पैसे दाखवू नका"
+    display_currency: "चलन प्रदर्शित करा"
+    choose_currency: "चलन निवडा"
+    mail_method_settings: "मेल पद्धत सेटिंग्ज"
+    general: "सामान्य"
+    enable_mail_delivery: "मेल वितरण सक्षम करा"
+    send_mails_as: "म्हणून मेल पाठवा"
+    smtp_send_all_emails_as_from_following_address: "खालील पत्त्यावर सर्व मेल पाठवा."
+    send_copy_of_all_mails_to: "यांना सर्व मेल्सची प्रत पाठवा"
+    tax_categories: "कर श्रेणी"
+    listing_tax_categories: "सूची कर श्रेणी"
+    back_to_tax_categories_list: "कर श्रेणी सूचीकडे परत"
+    tax rate: "कर दर"
+    new_tax_rate: "नवीन कर दर"
+    tax_category: "कर श्रेणी"
+    tax_rates: "कर दर"
+    rate: "दर"
+    included_in_price: "किंमतीमध्ये समाविष्ट आहे"
+    show_rate_in_label: "लेबलमध्ये दर दर्शवा"
+    back_to_tax_rates_list: "कर दर सूचीकडे परत"
+    tax_settings: "कर सेटिंग्ज"
+    zones: "झोन"
+    new_zone: "नवीन झोन"
+    default_tax: "डीफॉल्ट कर"
+    default_tax_zone: "डीफॉल्ट कर क्षेत्र"
+    country_based: "देश आधारित"
+    state_based: "राज्य आधारित"
+    countries: "देश"
+    listing_countries: "सूचीबद्ध देश"
+    iso_name: "आयएसओ नाव"
+    states_required: "राज्ये आवश्यक"
+    editing_country: "संपादन देश"
+    back_to_countries_list: "देशांच्या यादीकडे परत"
+    states: "राज्ये"
+    abbreviation: "संक्षेप"
+    new_state: "नवीन राज्य"
+    payment_methods: "पेमेंट पद्धती"
+    taxonomies: "वर्गीकरण"
+    new_taxonomy: "नवीन वर्गीकरण"
+    back_to_taxonomies_list: "वर्गीकरण सूचीकडे परत जा"
+    shipping_methods: "शिपिंग पद्धती"
+    shipping_method: "शिपिंग पद्धत "
+    shipment: "शिपमेंट"
+    payment: "पेमेंट"
+    status: "स्थिती"
+    shipping_categories: "शिपिंग श्रेण्या"
+    new_shipping_category: "नवीन शिपिंग श्रेणी"
+    back_to_shipping_categories: "शिपिंग श्रेण्यांकडे परत"
+    editing_shipping_category: "शिपिंग श्रेणी संपादित करणे"
+    name: "नाव"
+    description: "वर्णन"
+    type: "प्रकार"
+    default: "डीफॉल्ट"
+    calculator: "कॅल्क्युलेटर"
+    zone: "झोन"
+    display: "डिस्प्ले"
+    environment: "पर्यावरण"
+    active: "सक्रिय"
+    nore: "अधिक"
+    no_results: "कोणतेही परिणाम नाहीत"
+    create: "तयार करा"
+    loading: "लोड करत आहे"
+    flat_percent: "सपाट टक्के"
+    per_kg: "प्रति किलो"
+    amount: "रक्कम"
+    currency: "चलन"
+    first_item: "प्रथम वस्तू खर्च"
+    additional_item: "अतिरिक्त वस्तू खर्च"
+    max_items: "कमाल वस्तू"
+    minimal_amount: "किमान रक्कम"
+    normal_amount: "सामान्य रक्कम"
+    discount_amount: "सवलत रक्कम"
+    no_images_found: "कोणतीही प्रतिमा आढळली नाही"
+    new_image: "नवीन इमेज"
+    filename: "फाईलचे नाव"
+    alt_text: "पर्यायी मजकूर"
+    thumbnail: "लघुप्रतिमा"
+    back_to_images_list: "प्रतिमा सूचीकडे परत"
+    email: ईमेल
+    account_updated: "खाते अपडेट केले!"
+    my_account: "माझे खाते"
+    date: "तारीख"
+    time: "वेळ"
+    inventory: इन्व्हेंटरी
+    zipcode: पिनकोड
+    weight: वजन (प्रति किलो किंवा पौंड)
+    options: "पर्याय"
+    has_no_shipped_units: "कोणतेही शिप केलेले युनिट नाहीत"
+    successfully_created: '%{resource} यशस्वीरित्या तयार केले गेले आहे!'
+    successfully_updated: '%{resource} यशस्वीरित्या अद्यतनित केले गेले आहे!'
+    payment_method: "पेमेंट पद्धत"
+    not_available: "N/A"
+    sku: "SKU"
+    there_are_no_items_for_this_order: "या ऑर्डरसाठी कोणतेही वस्तू नाहीत."
+    order_populator:
+      out_of_stock: '%{item} स्टॉक नाही.'
+    actions:
+      update: "अपडेट करा"
+      cancel: "रद्द करा"
+    shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 त्रुटीने हे रेकॉर्ड जतन करण्यास प्रतिबंधित केले:"
+      payments_list:
+        date_time: "तारीख वेळ"
+        amount: "रक्कम"
+        payment_method: "पेमेंट पद्धत"
+        payment_state: "पेमेंट स्थिती"
+    errors:
+      messages:
+        blank: "रिक्त असू शकत नाही"
+    layouts:
+      admin:
+        login_nav:
+          header:
+            store: स्टोअर
+    validation:
+      must_be_int: "पूर्णांक असणे आवश्यक आहे"
+    admin:
+      mail_methods:
+        send_testmail: "चाचणी ईमेल पाठवा"
+        testmail:
+          delivery_success: "चाचणी ईमेल पाठवला."
+          error: "चाचणी ईमेल पाठवण्याचा प्रयत्न करताना त्रुटी आली."
+      subscriptions:
+        number: "क्रमांक"
+      tab:
+        dashboard: "डॅशबोर्ड"
+        orders: "आदेश"
+        bulk_order_management: "मोठ्या प्रमाणात ऑर्डर व्यवस्थापन"
+        subscriptions: "सदस्यता"
+        products: "उत्पादने"
+        option_types: "पर्यायाचे प्रकार"
+        properties: "प्रॉपर्टीज्"
+        variant_overrides: "इन्व्हेंटरी"
+        reports: "रिपोर्टस्"
+        configuration: "कॉन्फिगरेशन"
+        users: "वापरकर्ते"
+        roles: "भूमिका"
+        order_cycles: "ऑर्डर सायकल"
+        enterprises: "एंटरप्राइज"
+        enterprise_relationships: "परवानग्या"
+        customers: "ग्राहक"
+        groups: "गट"
+        oidc_settings: "OIDC सेटिंग्ज"
+      product_properties:
+        index:
+          add_product_properties: "उत्पादन गुणधर्म जोडा"
+      properties:
+        index:
+          properties: "प्रॉपर्टीज्"
+          new_property: "नवीन प्रॉपर्टी"
+          name: "नाव"
+          presentation: "सादरीकरण"
+        new:
+          new_property: "नवीन प्रॉपर्टी"
+        edit:
+          editing_property: "प्रॉपर्टी संपादन"
+          back_to_properties_list: "गुणधर्म सूचीकडे परत"
+        form:
+          name: "नाव"
+          presentation: "सादरीकरण"
+      return_authorizations:
+        index:
+          new_return_authorization: "नवीन परतावा अधिकृतता"
+          return_authorizations: "अधिकृतता परत करा"
+          back_to_orders_list: "ऑर्डर सूचीकडे परत"
+          rma_number: "RMA क्रमांक"
+          status: "स्थिती"
+          amount: "रक्कम"
+          cannot_create_returns: "या ऑर्डरमध्ये कोणतेही शिप केलेले युनिट नसल्यामुळे परतावा तयार करू शकत नाही."
+          continue: "कंटिन्यू करा"
+        new:
+          new_return_authorization: "नवीन परतावा अधिकृतता"
+          back_to_return_authorizations_list: "अधिकृतता सूचीकडे परत या"
+          continue: "कंटिन्यू करा"
+        edit:
+          receive: "प्राप्त"
+          are_you_sure: "तुम्हाला खात्री आहे?"
+          return_authorization: "परताव्याची अधिकृतता"
+        form:
+          product: "उत्पादन"
+          quantity_shipped: "क्वांटिटी पाठवली"
+          quantity_returned: "क्वांटिटी परत केली"
+          return_quantity: "क्वांटिटी परतावा"
+          amount: "रक्कम"
+          rma_value: "RMA मूल्य"
+          reason: "कारण"
+          stock_location: "स्टॉक चे स्थान"
+        states:
+          authorized: "अधिकृत"
+          received: "मिळाले"
+          canceled: "रद्द केले"
+      line_items:
+        index:
+          results_found: "%{number} रिझल्ट्स मिळाले."
+          viewing: "%{start} ते %{end} पहात आहे."
+      orders:
+        index:
+          listing_orders: "सूची ऑर्डर"
+          new_order: "नवीन ऑर्डर"
+          capture: "कॅप्चर करा"
+          ship: "शिप करा"
+          edit: "सुधारणे"
+          note: "नोंद"
+          first: "पहिला"
+          last: "शेवटचा"
+          previous: "मागील"
+          next: "पुढे"
+          loading: "लोड करत आहे"
+          no_orders_found: "कोणत्याही ऑर्डर आढळल्या नाहीत"
+          results_found: "%{number} रिझल्ट्स मिळाले."
+          viewing: "%{start} ते %{end} पहात आहे."
+          print_invoices: "पावत्या प्रिंट करा"
+          cancel_orders: "ऑर्डर रद्द करा"
+          resend_confirmation: "पुष्टी पुन्हा पाठवा"
+          send_invoice: "पावत्या पाठवा"
+          selected:
+            zero: "ऑर्डर निवडलेली नाही"
+            one: "1 ऑर्डर निवडली"
+            other: "%{count} ऑर्डर निवडल्या"
+        sortable_header:
+          payment_state: "पेमेंट स्थिती"
+          shipment_state: "शिपमेंट स्थिती"
+          completed_at: "येथे पूर्ण झाले"
+          number: "क्रमांक"
+          state: "राज्य"
+          email: "ग्राहक ई-मेल"
+        invoice:
+          issued_on: "रोजी जारी केले"
+          tax_invoice: "टॅक्स इन्व्हॉइस"
+          code: "कोड"
+          from: "पासून"
+          to: "ला बिल"
+          shipping: "शिपिंग"
+          order_number: "ऑर्डर क्रमांक"
+          invoice_number: "बील क्रमांक"
+          payments_list:
+            date_time: "तारीख वेळ"
+            payment_method: "पेमेंट पद्धत"
+            payment_state: "देयक स्थिती"
+            amount: "रक्कम"
+        note:
+          note_label: "टीप:"
+          no_note_present: "कोणतीही टीप नाही. "
+        form:
+          distribution_fields:
+            title: "वितरण"
+            distributor: "वितरक:"
+            order_cycle: "ऑर्डर चक्र:"
+          line_item_adjustments: "ओळ वस्तू समायोजन"
+          order_adjustments: "ऑर्डर ऍडजस्टमेंट"
+          order_total: "ऑर्डर एकूण"
+      overview:
+        enterprise_row:
+          has_no_enterprise_fees: "कोणतेही एंटरप्राइझ शुल्क नाही"
+          has_no_payment_methods: "पेमेंट पद्धती नाहीत"
+          has_no_shipping_methods: "कोणत्याही शिपिंग पद्धती नाहीत"
+        products:
+          active_products:
+            zero: "तुमच्याकडे कोणतीही सक्रिय उत्पादने नाहीत."
+            one: "तुमच्याकडे एक सक्रिय उत्पादन आहे"
+            few: "तुमच्याकडे %{count} सक्रिय उत्पादने आहेत"
+            many: "तुमच्याकडे %{count} सक्रिय उत्पादने आहेत"
+            other: "तुमच्याकडे %{count} सक्रिय उत्पादने आहेत"
+        order_cycles:
+          order_cycles: "ऑर्डर चक्र"
+          you_have_active:
+            one: "तुमच्याकडे एक सक्रिय ऑर्डर ऑर्डर चक्र आहे."
+            few: "तुमच्याकडे %{count} सक्रिय ऑर्डर सायकल आहेत."
+            many: "तुमच्याकडे %{count} सक्रिय ऑर्डर सायकल आहेत."
+            other: "तुमच्याकडे %{count} सक्रिय ऑर्डर सायकल आहेत."
+          manage_order_cycles: "ऑर्डर सायकल व्यवस्थापित करा"
+        version:
+          view_all_releases: सर्व प्रकाशन पहा
+      shipping_methods:
+        index:
+          shipping_methods: "शिपिंग पद्धती"
+          new_shipping_method: "नवीन शिपिंग पद्धत"
+          name: "नाव"
+          products_distributor: "वितरक"
+          zone: "झोन"
+          calculator: "कॅल्क्युलेटर"
+          display: "डिस्प्ले"
+          both: "चेकआउट आणि बॅक ऑफिस दोन्ही"
+          back_end: "फक्त बॅक ऑफिस"
+          no_shipping_methods_found: "कोणत्याही शिपिंग पद्धती आढळल्या नाहीत"
+        new:
+          new_shipping_method: "नवीन शिपिंग पद्धत"
+          back_to_shipping_methods_list: "शिपिंग पद्धतींच्या सूचीकडे परत"
+        edit:
+          editing_shipping_method: "शिपिंग पद्धत संपादित करणे"
+          new: "नवीन"
+          back_to_shipping_methods_list: "शिपिंग पद्धतींच्या सूचीकडे परत"
+        form:
+          categories: "श्रेण्या"
+          tax_category: "कर श्रेणी"
+          zones: "झोन"
+          both: "चेकआउट आणि बॅक ऑफिस दोन्ही"
+          back_end: "फक्त बॅक ऑफिस"
+      payment_methods:
+        index:
+          payment_methods: "पेमेंट पद्धती"
+          new_payment_method: "नवीन पेमेंट पद्धत"
+          name: "नाव"
+          products_distributor: "वितरक"
+          provider: "प्रदाता"
+          environment: "पर्यावरण"
+          display: "डिस्प्ले"
+          active: "सक्रिय"
+          both: "दोन्ही"
+          back_end: "फक्त बॅक ऑफिस"
+          active_yes: "होय"
+          active_no: "नाही"
+          no_payment_methods_found: "पेमेंट पद्धती आढळल्या नाहीत"
+        new:
+          new_payment_method: "नवीन पेमेंट पद्धत"
+          back_to_payment_methods_list: "पेमेंट पद्धतींच्या सूचीकडे परत"
+        edit:
+          new: "नवीन"
+          editing_payment_method: "पेमेंट पद्धत संपादित करणे"
+          back_to_payment_methods_list: "पेमेंट पद्धतींच्या सूचीकडे परत"
+        stripe_connect:
+          enterprise_select_placeholder: निवडा...
+          connect_one: एक कनेक्ट करा
+          status: स्थिती
+          connected: जोडलेले
+          account_id: खाते आयडी
+          business_name: व्यवसाय नाव
+          charges_enabled: शुल्क सक्षम
+        form:
+          name: "नाव"
+          description: "वर्णन"
+          environment: "पर्यावरण"
+          display: "डिस्प्ले"
+          active: "सक्रिय"
+          active_yes: "होय"
+          active_no: "नाही"
+          both: "चेकआउट आणि बॅक ऑफिस दोन्ही"
+          back_end: "फक्त बॅक ऑफिस"
+          tags: "टॅग्ज"
+        providers:
+          provider: "प्रदाता"
+          pin: "पेमेंट्स पिन करा"
+          paypalexpress: "पेपल एक्सप्रेस"
+          stripeconnect: "पट्टी"
+          stripesca: "पट्टी SCA"
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: पेमेंट जतन करताना त्रुटी
+            submitting_payment: पेमेंट सबमिट करत आहे...
+      products:
+        new:
+          title: "नवीन उत्पादन"
+          new_product: "नवीन उत्पादन"
+          supplier: "पुरवठादार"
+          supplier_select_placeholder: "एक पुरवठादार निवडा"
+          product_name: "उत्पादनाचे नांव"
+          units: "युनिट आकार"
+          value: "मूल्य"
+          unit_name: "युनिट नाव"
+          price: "किंमत"
+          unit_price: "युनिट किंमत"
+          on_hand: "हातावर"
+          on_demand: "मागणीनुसार"
+          product_description: "उत्पादन वर्णन"
+          image: "इमेज"
+        unit_name_placeholder: 'उदा. गुच्छे'
+        index:
+          header:
+            title: मोठ्या प्रमाणात उत्पादने संपादित करा
+          indicators:
+            title: उत्पादने लोड करत आहे
+            no_results: "क्षमस्व, कोणतेही जुळणारे रिझल्ट्स नाहीत"
+          products_head:
+            name: नाव
+            unit: युनिट
+            display_as: म्हणून प्रदर्शित करा
+            category: श्रेणी
+            tax_category: कर श्रेणी
+            inherits_properties?: गुणधर्म वारसा?
+            av_on: "ए.व्ही. चालू"
+            import_date: "आयात तारीख"
+          products_variant:
+            variant_has_n_overrides: "या प्रकारात %{n} ओव्हरराइड(चे) आहेत"
+            new_variant: "नवीन प्रकार"
+          product_name: उत्पादनाचे नांव
+        primary_taxon_form:
+          product_category: उत्पादन वर्ग
+        group_buy_form:
+          group_buy: "गट खरेदी?"
+          bulk_unit_size: मोठ्या प्रमाणात युनिट आकार
+        display_as:
+          display_as: म्हणून प्रदर्शित करा
+      reports:
+        table:
+          select_and_search: "फिल्टर निवडा आणि तुमचा डेटा ऍक्सेस करण्यासाठी %{option} वर क्लिक करा."
+      users:
+        index:
+          listing_users: "वापरकर्ते सूचीबद्ध करणे"
+          new_user: "नवीन वापरकर्ता"
+          user: "वापरकर्ता"
+          enterprise_limit: "एंटरप्राइझ मर्यादा"
+          search: "शोधा"
+          email: "ईमेल"
+        edit:
+          editing_user: "वापरकर्ता संपादन"
+          back_to_users_list: "वापरकर्त्यांच्या यादीकडे परत"
+          general_settings: "सामान्य सेटिंग्ज"
+        form:
+          disabled: "अक्षम?"
+          email: "ईमेल"
+          roles: "भूमिका"
+          enterprise_limit: "एंटरप्राइझ मर्यादा"
+          confirm_password: "पासवर्डची पुष्टी करा"
+          password: "पासवर्ड"
+          locale: "इंग्रजी"
+      variants:
+        index:
+          sku: "SKU"
+          price: "किंमत"
+          options: "पर्याय"
+          no_results: "कोणतेही रिझल्ट्स नाहीत"
+          option_types: "पर्यायाचे प्रकार"
+          option_values: "पर्याय मूल्ये"
+          and: "आणि"
+          new_variant: "नवीन प्रकार"
+          show_active: "सक्रिय दाखवा"
+          show_deleted: "हटवलेले दाखवा"
+        new:
+          new_variant: "नवीन प्रकार"
+        form:
+          sku: "SKU"
+          price: "किंमत"
+          unit_price: "युनिट किंमत"
+          display_as: "म्हणून प्रदर्शित करा"
+          display_name: "डिस्प्ले नाव"
+          display_as_placeholder: 'उदा. 2 किलो'
+          display_name_placeholder: 'उदा. टोमॅटो'
+        autocomplete:
+          out_of_stock: "स्टॉक संपला"
+          producer_name: "उत्पादक"
+          unit: "युनिट"
+      shared:
+        configuration_menu:
+          terms_of_service: "सेवा अटी"
+        sortable_header:
+          name: "नाव"
+          number: "क्रमांक"
+          completed_at: "येथे पूर्ण झाले"
+          state: "राज्य"
+          payment_state: "पेमेंट स्थिती"
+          shipment_state: "शिपमेंट स्थिती"
+          email: "ईमेल"
+          total: "एकूण"
+          billing_address_name: "नाव"
+      general_settings:
+        edit:
+          legal_settings: "कायद्यांचे सेटिंग्ज"
+          cookies_consent_banner_toggle: "कुकीज संमती बॅनर प्रदर्शित करा"
+          privacy_policy_url: "गोपनीयता धोरण URL"
+          shoppers_require_tos: "खरेदीदारांनी सेवा अटी स्वीकारल्या पाहिजेत"
+          footer_tos_url: "सेवा अटी URL"
+    checkout:
+      payment:
+        stripe:
+          choose_one: एक निवडा
+          enter_new_card: नवीन कार्डसाठी तपशील प्रविष्ट करा
+          used_saved_card: "जतन केलेले कार्ड वापरा:"
+          or_enter_new_card: "किंवा, नवीन कार्डसाठी तपशील प्रविष्ट करा:"
+          remember_this_card: हे कार्ड लक्षात आहे?
+        stripe_sca:
+          choose_one: एक निवडा
+          enter_new_card: नवीन कार्डसाठी तपशील प्रविष्ट करा
+          used_saved_card: "जतन केलेले कार्ड वापरा:"
+          or_enter_new_card: "किंवा, नवीन कार्डसाठी तपशील प्रविष्ट करा:"
+          remember_this_card: हे कार्ड लक्षात आहे?
+    date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "आज"
+      now: "आता"
+      close: "बंद"
+    orders:
+      edit:
+        login_to_view_order: "तुमची ऑर्डर पाहण्यासाठी कृपया लॉग इन करा."
+      bought:
+        item: "या ऑर्डर सायकलमध्ये आधीच ऑर्डर केले आहे"
+      line_item:
+        out_of_stock: "स्टॉक संपला"
+        unavailable_item: "सध्या अनुपलब्ध"
+    shipment_states:
+      backorder: बॅकऑर्डर
+      partial: आंशिक
+      pending: प्रलंबित
+      ready: तयार
+      shipped: पाठवले
+      canceled: रद्द केले
+    payment_states:
+      balance_due: शिल्लक देय
+      completed: पूर्ण
+      checkout: तपासा
+      credit_owed: क्रेडिट देणे
+      failed: अयशस्वी
+      paid: दिले
+      pending: प्रलंबित
+      processing: प्रक्रिया करत आहे
+      requires_authorization: "अधिकृतता आवश्यक"
+      void: शून्य
+      invalid: अवैध
+      authorise: अधिकृत करा
+    order_mailer:
+      cancel_email:
+        customer_greeting: "प्रिय %{name} ,"
+        details: "तुम्ही काय ऑर्डर केले याचे तपशील येथे आहेत:"
+        unpaid_order: "तुमची ऑर्डर न भरलेली होती त्यामुळे कोणताही परतावा केला गेला नाही"
+        subject: "ऑर्डर रद्द करणे"
+      cancel_email_for_shop:
+        greeting: "प्रिय %{name} ,"
+        subject: "ऑर्डर रद्द करणे"
+        intro: "एका ग्राहकाने त्यांची ऑर्डर # %{number} रद्द केली आहे."
+        view_cancelled_order: "रद्द केलेली ऑर्डर पहा"
+      confirm_email:
+        subject: "ऑर्डर पुष्टीकरण"
+      invoice_email:
+        hi: "हाय %{name}"
+    user_mailer:
+      reset_password_instructions:
+        subject: "पासवर्ड सूचना रीसेट करा"
+      confirmation_instructions:
+        subject: "कृपया तुमच्या OFN खात्याची पुष्टी करा"
+    payment_mailer:
+      authorize_payment:
+        subject: "कृपया तुमचे पेमेंट OFN वर %{distributor} वर अधिकृत करा"
+    shipment_mailer:
+      shipped_email:
+        dear_customer: "प्रिय ग्राहक,"
+        instructions: "तुमची %{distributor} ची ऑर्डर पाठवली गेली आहे"
+        shipment_summary: "शिपमेंट सारांश"
+        subject: "शिपमेंट सूचना"
+        thanks: "तुमच्या व्यवसायाबद्दल धन्यवाद."
+        track_information: "ट्रॅकिंग माहिती: %{tracking}"
+        track_link: "ट्रॅकिंग लिंक: %{url}"
+        picked_up_instructions: "तुमची %{distributor} ची ऑर्डर पिकअप झाली आहे"
+        picked_up_subject: "नोटिफिकेशन पिक अप करा"
+    test_mailer:
+      test_email:
+        greeting: "अभिनंदन!"
+        subject: "चाचणी मेल"
+    order_state:
+      address: पत्ता
+      adjustments: समायोजन
+      awaiting_return: परतीची वाट पाहत आहे
+      canceled: रद्द केले
+      cart: कार्ट
+      confirmation: "पुष्टीकरण"
+      complete: पूर्ण
+      confirm: पुष्टी
+      delivery: वितरण
+      paused: विराम दिला
+      payment: पेमेंट
+      pending: प्रलंबित
+      resumed: पुन्हा सुरू केले
+      returned: परत आले
+    subscription_state:
+      active: सक्रिय
+      pending: प्रलंबित
+      ended: संपले
+      paused: विराम दिला
+      canceled: रद्द केले
+    paypal:
+      transaction: "PayPal व्यवहार"
+      payer_id: "पेयर आयडी"
+      transaction_id: "व्यवहार आयडी"
+      token: "टोकन"
+      refund: "परतावा"
+      refund_amount: "रक्कम"
+      original_amount: "मूळ रक्कम: %{amount}"
+      refund_successful: "PayPal परतावा यशस्वी"
+      refund_unsuccessful: "PayPal परतावा अयशस्वी"
+      actions:
+        refund: "परतावा"
+      flash:
+        cancel: "PayPal वापरू इच्छित नाही? कोणतीही समस्या नाही."
+        connection_failed: "PayPal शी कनेक्ट करू शकलो नाही."
+        generic_error: "PayPal अयशस्वी. %{reasons}"
+    users:
+      api_keys:
+        regenerate_key: "Key पुन्हा generate करा"
+        title: API की
+      webhook_endpoints:
+        title: वेबहुक एंडपॉइंट्स
+        event_types:
+          order_cycle_opened: ऑर्डर सायकल उघडली
+        event_type:
+          header: कार्यक्रमाचा प्रकार
+        url:
+          header: एंडपॉइंट URL
+      developer_settings:
+        title: विकसक सेटिंग्ज
+      form:
+        account_settings: खाते सेटिंग्ज
+      show:
+        tabs:
+          developer_settings: विकसक सेटिंग्ज
+          orders: आदेश
+          cards: क्रेडिट कार्ड
+          transactions: व्यवहार
+          settings: खाते सेटिंग्ज
+      orders:
+        open_orders: ऑर्डर उघडा
+        past_orders: मागील ऑर्डर
+      transactions:
+        transaction_history: व्यवहार इतिहास
+        authorisation_required: अधिकृतता आवश्यक
+        authorise: अधिकृत करा
+      open_orders:
+        order: ऑर्डर करा
+        shop: दुकान
+        changes_allowed_until: पर्यंत बदलांना परवानगी आहे
+        items: वस्तू
+        total: एकूण
+        edit: सुधारणे
+        cancel: रद्द करा
+        closed: बंद
+        until: पर्यंत
+      past_orders:
+        order: ऑर्डर करा
+        shop: दुकान
+        completed_at: येथे पूर्ण झाले
+        items: वस्तू
+        total: एकूण
+        paid?: पैसे दिले?
+        status: स्थिती
+        completed: पूर्ण झाले
+        cancelled: रद्द केले
+      saved_cards:
+        default?: डीफॉल्ट?
+        delete?: हटवायचे?
+      cards:
+        authorised_shops: अधिकृत दुकाने
+      authorised_shops:
+        shop_name: "दुकान नाव"
+        allow_charges?: "डीफॉल्ट कार्डला चार्जेसची परवानगी द्यायची?"
+    localized_number:
+      invalid_format: अवैध स्वरूप आहे. कृपया नंबर टाका.
+    api:
+      invalid_api_key: "अवैध API की ( %{key} ) निर्दिष्ट केली आहे."
+      unauthorized: "तुम्ही ती क्रिया करण्यासाठी अधिकृत नाही."
+      invalid_resource: "अवैध संसाधन. कृपया त्रुटी दूर करा आणि पुन्हा प्रयत्न करा."
+      access: "API प्रवेश"
+      key: "की"
+      clear_key: "क्लिअर की"
+      regenerate_key: "पुन्हा निर्माण करा"
+      no_key: "कळ नाही"
+      generate_key: "API की व्युत्पन्न करा"
+      key_generated: "की व्युत्पन्न केली"
+      key_cleared: "की साफ केली"
+      shipment:
+        cannot_ready: "शिपमेंट तयार करू शकत नाही."
+      invalid_taxonomy_id: "अवैध वर्गीकरण आयडी."
+      toggle_api_key_view: "वापरकर्त्यासाठी API की दृश्य दर्शवा"
+    activerecord:
+      models:
+        spree/payment:
+          one: पेमेंट
+          other: देयके
+    unit: युनिट
+    per_unit: प्रति युनिट
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: सुमारे 1 तास
+        other: सुमारे %{count} तास
+      about_x_months:
+        one: सुमारे 1 महिना
+        other: सुमारे %{count} महिने
+      about_x_years:
+        one: सुमारे 1 वर्ष
+        other: सुमारे %{count} वर्षे
+      almost_x_years:
+        one: जवळजवळ 1 वर्ष
+        other: जवळजवळ %{count} वर्षे
+      half_a_minute: अर्धा मिनिट
+      less_than_x_seconds:
+        one: 1 सेकंदापेक्षा कमी
+        other: '%{count} सेकंदांपेक्षा कमी'
+      less_than_x_minutes:
+        one: एका मिनिटापेक्षा कमी
+        other: '%{count} मिनिटांपेक्षा कमी'
+      over_x_years:
+        one: 1 वर्षापेक्षा जास्त
+        other: '%{count} वर्षांपेक्षा जास्त'
+      x_seconds:
+        one: "1 सेकंद"
+        other: "%{count} सेकंद"
+      x_minutes:
+        one: "1 मिनिट"
+        other: "%{count} मिनिटे"
+      x_days:
+        one: "1 दिवस"
+        other: "%{count} दिवस"
+      x_months:
+        one: "1 महिना"
+        other: "%{count} महिने"
+      x_years:
+        one: "1 वर्ष"
+        other: "%{count} वर्षे"
+  components:
+    multiple_checked_select:
+      filter_placeholder: "फिल्टर पर्याय"
+    search_input:
+      placeholder: शोधा
+    selector_with_filter:
+      selected_items: "%{count} निवडले"
+      search_placeholder: शोधा
+    pagination:
+      next: पुढे
+      previous: मागील
