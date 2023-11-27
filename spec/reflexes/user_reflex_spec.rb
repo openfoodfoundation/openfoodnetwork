@@ -2,7 +2,7 @@
 
 require "reflex_helper"
 
-describe Enterprise::UserReflex, type: :reflex do
+describe UserReflex, type: :reflex do
   let(:current_user) { create(:user) }
   let(:context) { { url: spree.admin_dashboard_url, connection: { current_user: } } }
 
