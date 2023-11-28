@@ -47,9 +47,6 @@ Capybara.configure do |config|
   config.ignore_hidden_elements = true
 end
 
-# Override setting in Spree engine: Spree::Core::MailSettings
-ActionMailer::Base.default_url_options[:host] = ENV.fetch("SITE_URL", nil)
-
 FactoryBot.use_parent_strategy = false
 FactoryBot::SyntaxRunner.include FileHelper
 
