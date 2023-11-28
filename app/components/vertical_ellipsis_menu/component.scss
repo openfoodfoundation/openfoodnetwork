@@ -30,7 +30,8 @@
       display: block;
     }
 
-    & > a {
+    & > a,
+    p {
       display: block;
       padding: 5px 10px;
       cursor: pointer;
