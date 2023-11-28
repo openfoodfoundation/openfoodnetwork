@@ -4177,6 +4177,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
           include_out_of_stock_variants: "Include variants with no available stock"
+        shipment:
+          mark_as_shipped_message: "This will mark the order as Shipped"
+          mark_as_shipped_label_message: "Send email confirmation to customer"
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
