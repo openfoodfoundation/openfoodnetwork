@@ -417,7 +417,7 @@ describe '
 
             # we need this assertion here to assure there is enough time to
             # toggle the variant box and evaluate the following assertion
-            expect(page).to have_content product.name.upcase
+            expect(page).to have_content product.name
 
             # iterates between true / false, depending on the test case
             expectation = expect_message ? :to : :not_to

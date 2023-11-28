@@ -623,7 +623,7 @@ describe '
           end
 
           it_behaves_like "can bulk print invoices from 2 orders"
-          
+
           context "with legal invoices feature", feature: :invoices do
             it_behaves_like "can bulk print invoices from 2 orders"
           end
