@@ -113,6 +113,14 @@ describe "As a consumer I want to view products" do
           expect(page).to have_content "alert('Dangerous!'); Safe"
         end
       end
+
+      it "opens link in product description inside another window" do
+        product.description = "<a href='https://api.rubyonrails.org/'>external site</a>"
+        product.save!
+
+        visit shop_path
+        expect(find_link('external site')[:target]).to eq('_blank')
+      end
     end
 
     describe "filtering" do
