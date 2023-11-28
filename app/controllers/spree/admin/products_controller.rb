@@ -88,6 +88,8 @@ module Spree
         redirect_to spree.admin_products_url
       end
 
+      def destroy; end
+
       def group_buy_options
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
