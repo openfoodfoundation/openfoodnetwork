@@ -122,6 +122,86 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
   end
 
+  describe "listing" do
+    let!(:p1) { create(:product) }
+    let!(:p2) { create(:product) }
+
+    before do
+      visit admin_products_url
+    end
+
+    it "displays a list of products" do
+      within ".products" do
+        expect(page).to have_field("_products__name", with: p1.name.to_s)
+        expect(page).to have_field("_products__name", with: p2.name.to_s)
+      end
+    end
+
+    it "displays a select box for suppliers, with the appropriate supplier selected" do
+      pending( "[BUU] Change producer, unit type, category and tax category #11060" )
+      s1 = FactoryBot.create(:supplier_enterprise)
+      s2 = FactoryBot.create(:supplier_enterprise)
+      s3 = FactoryBot.create(:supplier_enterprise)
+      p1 = FactoryBot.create(:product, supplier: s2)
+      p2 = FactoryBot.create(:product, supplier: s3)
+
+      visit spree.admin_products_path
+
+      expect(page).to have_select "producer_id", with_options: [s1.name, s2.name, s3.name],
+                                                 selected: s2.name
+      expect(page).to have_select "producer_id", with_options: [s1.name, s2.name, s3.name],
+                                                 selected: s3.name
+    end
+
+    context "with several variants" do
+      let!(:variant1) { p1.variants.first }
+      let!(:variant2) { p2.variants.first }
+      let!(:variant3) { create(:variant, product: p2, on_demand: false, on_hand: 4) }
+
+      before do
+        variant1.update!(on_hand: 0, on_demand: true)
+        variant2.update!(on_hand: 16, on_demand: false)
+        visit spree.admin_products_path
+      end
+
+      it "displays an on hand count in a span for each product" do
+        within(:xpath, '//*[@id="products-form"]/table/tbody[1]/tr[1]/td[5]/div') do
+          expect(page).to have_content "On demand"
+        end
+        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[1]/td[5]/div') do
+          expect(page).to have_content "20" # displays the total stock
+        end
+        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[2]/td[5]/div') do
+          expect(page).to have_content "16" # displays the stock for variant_2
+        end
+        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[3]/td[5]/div') do
+          expect(page).to have_content "4"  # displays the stock for variant_3
+        end
+      end
+    end
+
+    it "displays a select box for the unit of measure for the product's variants" do
+      pending( "[BUU] Change producer, unit type, category and tax category #11060" )
+      p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1,
+                                      variant_unit_name: '')
+
+      visit spree.admin_products_path
+
+      expect(page).to have_select "variant_unit_with_scale", selected: "Weight (g)"
+    end
+
+    it "displays a text field for the item name when unit is set to 'Items'" do
+      pending( "[BUU] Change producer, unit type, category and tax category #11060" )
+      p = FactoryBot.create(:product, variant_unit: 'items', variant_unit_scale: nil,
+                                      variant_unit_name: 'packet')
+
+      visit spree.admin_products_path
+
+      expect(page).to have_select "variant_unit_with_scale", selected: "Items"
+      expect(page).to have_field "variant_unit_name", with: "packet"
+    end
+  end
+
   describe "sorting" do
     let!(:product_b) { create(:simple_product, name: "Bananas") }
     let!(:product_a) { create(:simple_product, name: "Apples") }

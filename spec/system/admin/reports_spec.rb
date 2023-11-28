@@ -131,14 +131,9 @@ RSpec.describe '
         breakpoint.synchronize { "continue after unlocked" }
       end
 
-<<<<<<< HEAD
       click_on "Go"
 
       expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
-=======
-      expect(page).to have_selector "#report-table table"
-      expect(page).to have_content "First Name Last Name Billing Address Email"
->>>>>>> 0a69712a7b (Fixes case on assertions, on failing specs)
 
       # Now that we see the report, we need to make sure that it's not replaced
       # by the "loading" spinner when the controller action finishes.
