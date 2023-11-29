@@ -11,7 +11,9 @@
 = render partial: 'spree/admin/shared/product_sub_menu'
 
 #products_v3_page{ "data-controller": "products" }
-  #loading-spinner.spinner-container{ "data-controller": "loading", "data-products-target": "loading" }
-    .spinner
-    = t('.loading')
+
+  .spinner-overlay{ "data-controller": "loading", "data-products-target": "loading" }
+    .spinner-container
+      .spinner
+      = t('.loading')
   #products-content

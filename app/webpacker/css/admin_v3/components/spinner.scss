@@ -1,16 +1,23 @@
-.spinner-container {
+.spinner-overlay {
   position: absolute;
-  width: 100%;
+  left: 0;
+  right: 0;
   height: 100%;
   min-height: 200px;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 2;
+}
+
+.spinner-container {
+  position: fixed;
+  left: 0;
+  right: 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 40px;
   font-size: 24px;
-  background: rgba(255, 255, 255, 0.8);
-  z-index: 2;
 
   &.hidden {
     display: none;
