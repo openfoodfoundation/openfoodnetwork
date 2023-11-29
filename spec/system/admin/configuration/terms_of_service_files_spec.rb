@@ -10,7 +10,7 @@ describe "Terms of Service files" do
 
     before { login_as_admin }
 
-    it "can be uploaded" do
+    it "can be uploaded and deleted" do
       visit spree.edit_admin_general_settings_path
       click_link "Terms of Service"
 
@@ -20,15 +20,6 @@ describe "Terms of Service files" do
       click_button "Create Terms of service file"
 
       expect(page).to have_link "Terms of Service"
-      expect(page).to have_link "Delete file"
-    end
-
-    it "can delete the current file" do
-      attachment = File.open(Rails.root.join(test_file_path))
-      file = Rack::Test::UploadedFile.new(attachment, "application/pdf")
-      TermsOfServiceFile.create!(attachment: file)
-
-      visit admin_terms_of_service_files_path
 
       accept_alert { click_link "Delete" }
 
