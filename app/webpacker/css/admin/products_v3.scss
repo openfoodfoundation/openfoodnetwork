@@ -335,7 +335,7 @@
       padding: $padding-tbl-cell;
 
       background: $color-tbl-cell-bg;
-      border-radius: 3px; //todo: check
+      border-radius: $border-radius;
       box-shadow: 0px 0px 8px 0px rgba($near-black, 0.25);
 
       .field:last-child {
