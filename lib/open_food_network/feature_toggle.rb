@@ -10,6 +10,17 @@ module OpenFoodNetwork
     # Please add your new feature here to appear in the Flipper UI.
     # We way move this to a YAML file when it becomes too awkward.
     # **WARNING:** Features not in this list will be removed.
+    #
+    # Once the feature is ready for general production use,
+    # copy the feature declaration to ACTIVE_BY_DEFAULT below and
+    # activate it for all instances with a migration:
+    #
+    #   ./bin/rails generate migration EnableFeatureDragonMode
+    #
+    # Replace the `change` method with an `up` method and add this line:
+    #
+    #   Flipper.enable("dragon_mode")
+    #
     CURRENT_FEATURES = {
       "admin_style_v3" => <<~DESC,
         Test the work-in-progress design updates.
@@ -38,10 +49,23 @@ module OpenFoodNetwork
       DESC
     }.freeze
 
+    # Features you would like to be enabled to start with.
+    #
+    # Copy features here that were activated in a migration so that new
+    # instances, development and test environments have the feature active.
+    ACTIVE_BY_DEFAULT = {
+      "background_reports" => <<~DESC,
+        Generate reports in a background process to limit memory consumption.
+      DESC
+    }.freeze
+
     def self.setup!
       CURRENT_FEATURES.each_key do |name|
         feature = Flipper.feature(name)
-        feature.add unless feature.exist?
+        unless feature.exist?
+          feature.add
+          feature.enable if ACTIVE_BY_DEFAULT[name]
+        end
       end
 
       Flipper.features.each do |feature|
