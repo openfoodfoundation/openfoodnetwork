@@ -126,10 +126,10 @@ describe "As a consumer, I want to checkout my order" do
         let(:system_terms_path) { Rails.public_path.join('Terms-of-service.pdf') }
         let(:shop_terms_path) { Rails.public_path.join('Terms-of-ServiceUK.pdf') }
         let(:system_terms) {
-          Rack::Test::UploadedFile.new(system_terms_path, "application/pdf")
+          fixture_file_upload(system_terms_path, "application/pdf")
         }
         let(:shop_terms) {
-          Rack::Test::UploadedFile.new(shop_terms_path, "application/pdf")
+          fixture_file_upload(shop_terms_path, "application/pdf")
         }
 
         context "when none are required" do

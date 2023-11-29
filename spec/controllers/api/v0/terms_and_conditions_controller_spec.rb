@@ -14,7 +14,7 @@ module Api
     describe "removing terms and conditions file" do
       let(:terms_file_path) { Rails.public_path.join('Terms-of-service.pdf') }
       let(:terms_and_conditions_file) {
-        Rack::Test::UploadedFile.new(terms_file_path, "application/pdf")
+        fixture_file_upload(terms_file_path, "application/pdf")
       }
       let(:enterprise) { create(:enterprise, owner: enterprise_owner) }
 

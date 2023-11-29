@@ -8,7 +8,7 @@ describe 'Terms of Service banner' do
   let(:admin_user) { create(:admin_user, terms_of_service_accepted_at: nil) }
   let(:test_file) { "Terms-of-service.pdf" }
   let(:pdf_upload) do
-    Rack::Test::UploadedFile.new(Rails.public_path.join(test_file), "application/pdf")
+    fixture_file_upload(Rails.public_path.join(test_file), "application/pdf")
   end
 
   before do

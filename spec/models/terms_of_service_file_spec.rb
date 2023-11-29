@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe TermsOfServiceFile do
   let(:pdf) { File.open(Rails.public_path.join('Terms-of-service.pdf')) }
-  let(:upload) { Rack::Test::UploadedFile.new(pdf, "application/pdf") }
+  let(:upload) { fixture_file_upload(pdf, "application/pdf") }
 
   describe ".current" do
     it "returns nil" do
