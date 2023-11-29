@@ -130,7 +130,7 @@
       font-size: inherit;
       font-weight: inherit;
 
-      &:not(:focus):not(.changed) {
+      &:not(:focus):not(.changed):not([disabled]) {
         border-color: transparent;
       }
     }
@@ -340,6 +340,10 @@
 
       .field:last-child {
         margin-bottom: 0;
+      }
+
+      input[disabled] {
+        color: transparent; // hide value completely
       }
     }
   }
