@@ -25,6 +25,12 @@ $color-success:                  $green !default;
 $color-notice:                   $yellow !default;
 $color-warning:                  $red !default;
 $color-error:                    $red !default;
+$color-flash-success-text:       $white !default;
+$color-flash-success-bg:         $near-black !default;
+$color-flash-notice-text:        $color-body-text !default;
+$color-flash-notice-bg:          $fair-pink !default;
+$color-flash-error-text:         $white !default;
+$color-flash-error-bg:           $color-error !default;
 
 // Table styles
 $color-tbl-bg:                   $light-grey !default;
