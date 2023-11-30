@@ -53,7 +53,8 @@
             #{Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency) }
       %tr.total-row
         %td
-        %td
+        - if @distributors_pickup_times.many?
+          %td
         %td
         %td
         %td
