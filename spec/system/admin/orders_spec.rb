@@ -583,56 +583,49 @@ describe '
             reader.pages.map(&:text)
           end
 
-          shared_examples "can bulk print invoices from 2 orders" do |legal_invoices_enabled|
-            context "with legal invoices feature #{legal_invoices_enabled}" do
-              before do
-                if legal_invoices_enabled == "enabled"
-                  Flipper.enable(:invoices)
-                else
-                  Flipper.disable(:invoices)
-                end
+          shared_examples "can bulk print invoices from 2 orders" do
+            it "bulk prints invoices in pdf format" do
+              page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+              page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
+
+              page.find("span.icon-reorder", text: "ACTIONS").click
+              within ".ofn-drop-down .menu" do
+                expect {
+                  page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+                }.to enqueue_job(BulkInvoiceJob).exactly(:once)
               end
 
-              it "bulk prints invoices in pdf format" do
-                page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
-                page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
+              expect(page).to have_content "Compiling Invoices"
+              expect(page).to have_content "Please wait until the PDF is ready " \
+                                           "before closing this modal."
 
-                page.find("span.icon-reorder", text: "ACTIONS").click
-                within ".ofn-drop-down .menu" do
-                  expect {
-                    page.find("span", text: "Print Invoices").click # Prints invoices in bulk
-                  }.to enqueue_job(BulkInvoiceJob).exactly(:once)
-                end
+              # we don't run Sidekiq in test environment, so we need to manually run enqueued jobs
+              # to generate PDF files, and change the modal accordingly
+              perform_enqueued_jobs(only: BulkInvoiceJob)
 
-                expect(page).to have_content "Compiling Invoices"
-                expect(page).to have_content "Please wait until the PDF is ready " \
-                                             "before closing this modal."
+              expect(page).to have_content "Bulk Invoice created"
 
-                # we don't run Sidekiq in test environment, so we need to manually run enqueued jobs
-                # to generate PDF files, and change the modal accordingly
-                perform_enqueued_jobs(only: BulkInvoiceJob)
+              within ".modal-content" do
+                expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
 
-                expect(page).to have_content "Bulk Invoice created"
+                invoice_content = extract_pdf_content
 
-                within ".modal-content" do
-                  expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
-
-                  invoice_content = extract_pdf_content
-
-                  expect(invoice_content).to have_content("TAX INVOICE", count: 2)
-                  expect(invoice_content).to have_content(order4.number.to_s)
-                  expect(invoice_content).to have_content(order5.number.to_s)
-                  expect(invoice_content).to have_content(distributor4.name.to_s)
-                  expect(invoice_content).to have_content(distributor5.name.to_s)
-                  expect(invoice_content).to have_content(order_cycle4.name.to_s)
-                  expect(invoice_content).to have_content(order_cycle5.name.to_s)
-                end
+                expect(invoice_content).to have_content("TAX INVOICE", count: 2)
+                expect(invoice_content).to have_content(order4.number.to_s)
+                expect(invoice_content).to have_content(order5.number.to_s)
+                expect(invoice_content).to have_content(distributor4.name.to_s)
+                expect(invoice_content).to have_content(distributor5.name.to_s)
+                expect(invoice_content).to have_content(order_cycle4.name.to_s)
+                expect(invoice_content).to have_content(order_cycle5.name.to_s)
               end
             end
           end
 
-          it_behaves_like "can bulk print invoices from 2 orders", "enabled"
-          it_behaves_like "can bulk print invoices from 2 orders", "disabled"
+          it_behaves_like "can bulk print invoices from 2 orders"
+
+          context "with legal invoices feature", feature: :invoices do
+            it_behaves_like "can bulk print invoices from 2 orders"
+          end
         end
 
         it "can bulk cancel 2 orders" do
