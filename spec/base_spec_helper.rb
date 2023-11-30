@@ -98,7 +98,6 @@ RSpec.configure do |config|
     Flipper.disable(:background_reports) if example.file_path.in?(
       [
         # rubocop:disable Layout/LineLength
-        "./spec/system/admin/reports/enterprise_summary_fees/enterprise_summary_fee_with_tax_report_by_order_spec.rb",
         "./spec/system/admin/reports/enterprise_summary_fees/enterprise_summary_fee_with_tax_report_by_producer_spec.rb",
         "./spec/system/admin/reports/orders_and_fulfillment_spec.rb",
         "./spec/system/admin/reports/packing_report_spec.rb",
@@ -255,4 +254,5 @@ RSpec.configure do |config|
   config.include Features::DatepickerHelper, type: :system
   config.include Features::TrixEditorHelper, type: :system
   config.include DownloadsHelper, type: :system
+  config.include ReportsHelper, type: :system
 end
