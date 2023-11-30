@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-class VerticalEllipsisMenu::Component < ViewComponent::Base
+module VerticalEllipsisMenu
+  class Component < ViewComponent::Base
+  end
 end
