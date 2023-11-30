@@ -67,7 +67,7 @@
             %td.align-left
               .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
             %td.align-right
-              = render(VerticalEllipsisMenuComponent.new) do
+              = render(VerticalEllipsisMenu::Component.new) do
                 = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product)
                 = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product)
 
@@ -97,5 +97,5 @@
                 %td.align-left
                   -# empty
                 %td.align-right
-                  = render(VerticalEllipsisMenuComponent.new) do
+                  = render(VerticalEllipsisMenu::Component.new) do
                     = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(product, variant)

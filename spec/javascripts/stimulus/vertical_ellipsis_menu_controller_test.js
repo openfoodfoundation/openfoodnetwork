@@ -3,7 +3,7 @@
  */
 
 import { Application } from "stimulus";
-import vertical_ellipsis_menu_controller from "../../../app/webpacker/controllers/vertical_ellipsis_menu_controller";
+import vertical_ellipsis_menu_controller from "../../../app/components/vertical_ellipsis_menu/component_controller";
 
 describe("VerticalEllipsisMenuController test", () => {
   beforeAll(() => {
