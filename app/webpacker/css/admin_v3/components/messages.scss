@@ -35,8 +35,10 @@
 
   .flash {
     position: relative;
+    display: flex;
+    align-items: center;
     bottom: 3.5rem;
-    padding: 1rem;
+    padding: 0.25rem;
     min-width: 24rem;
     max-width: 48.25em;
     font-weight: 600;
@@ -56,6 +58,11 @@
     &.error {
       color: $color-flash-error-text;
       background-color: $color-flash-error-bg;
+    }
+
+    .msg {
+      flex-grow: 1;
+      margin: 0.25rem 0.75rem;
     }
   }
 }

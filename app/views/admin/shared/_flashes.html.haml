@@ -3,4 +3,6 @@
     - flashes.each do |type, msg|
       .animate-show{"data-controller": "flash", "data-flash-auto-close-value": "true"}
         .flash{type: "#{type}", class: "#{type}"}
-          %span= msg
+          .msg= msg
+          .actions
+            %button.secondary{"data-action": "click->flash#close"}= t('.dismiss')
