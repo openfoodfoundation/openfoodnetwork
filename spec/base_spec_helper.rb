@@ -94,22 +94,6 @@ RSpec.configure do |config|
     OpenFoodNetwork::FeatureToggle.setup!
   end
 
-  config.before(:each) do |example|
-    Flipper.disable(:background_reports) if example.file_path.in?(
-      [
-        # rubocop:disable Layout/LineLength
-        "./spec/system/admin/reports/packing_report_spec.rb",
-        "./spec/system/admin/reports/payments_report_spec.rb",
-        "./spec/system/admin/reports/revenues_by_hub_spec.rb",
-        "./spec/system/admin/reports/sales_tax/sales_tax_totals_by_order_spec.rb",
-        "./spec/system/admin/reports/sales_tax/sales_tax_totals_by_producer_spec.rb",
-        "./spec/system/admin/reports/users_and_enterprises_spec.rb",
-        "./spec/system/admin/reports_spec.rb",
-        # rubocop:enable Layout/LineLength
-      ]
-    )
-  end
-
   config.before(:each, :feature) do |example|
     feature = example.metadata[:feature].to_s
 

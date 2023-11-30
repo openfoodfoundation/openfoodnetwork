@@ -55,7 +55,7 @@ describe "Packing Reports" do
         # pre-fills with dates
         check_prefilled_dates
 
-        click_button 'Go'
+        run_report
 
         rows = find("table.report__table").all("thead tr")
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
@@ -76,7 +76,7 @@ describe "Packing Reports" do
         # pre-fills with dates
         check_prefilled_dates
 
-        click_button 'Go'
+        run_report
         rows = find("table.report__table").all("tr")
         table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[3] }
         expect(table).to eq([
@@ -102,7 +102,7 @@ describe "Packing Reports" do
 
         find(:css, "#display_summary_row").set(false) # does not include summary rows
 
-        click_button 'Go'
+        run_report
 
         rows = find("table.report__table").all("thead tr")
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
@@ -150,7 +150,7 @@ describe "Packing Reports" do
           # pre-fills with dates
           check_prefilled_dates
 
-          find("button[type='submit']").click
+          run_report
           expect(page).to have_content li1.product.name
           expect(page).to have_content li2.product.name
 

@@ -110,8 +110,7 @@ describe "Sales Tax Totals By order" do
       visit admin_reports_path
       click_on "Sales Tax Totals By Order"
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 
       expect(page.find("table.report__table tbody").text).to have_content([
@@ -171,8 +170,7 @@ describe "Sales Tax Totals By order" do
 
       visit_sales_tax_totals_by_order
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 
       expect(page.find("table.report__table tbody").text).to have_content([
@@ -339,8 +337,7 @@ describe "Sales Tax Totals By order" do
     end
 
     it "should load all the orders" do
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -365,8 +362,7 @@ describe "Sales Tax Totals By order" do
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer1.email).click
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -384,8 +380,7 @@ describe "Sales Tax Totals By order" do
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer2.email).click
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -404,7 +399,7 @@ describe "Sales Tax Totals By order" do
       find('li', text: customer1.email).click
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer2.email).click
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -475,7 +470,8 @@ describe "Sales Tax Totals By order" do
   end
 
   def generate_report
-    click_on "Go"
+    run_report
+    click_on "Download Report"
     wait_for_download
   end
 

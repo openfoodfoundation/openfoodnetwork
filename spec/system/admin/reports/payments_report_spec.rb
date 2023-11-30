@@ -37,7 +37,7 @@ describe "Payments Reports" do
   context "when choosing itemised payments report type" do
     it "shows orders with payment state, their balance and totals" do
       click_link "Itemised Payment Totals"
-      find("[type='submit']").click
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content([
         "Payment State",
@@ -72,7 +72,7 @@ describe "Payments Reports" do
 
     it 'shows orders with payment state, their balance and and payment totals' do
       click_link "Payment Totals"
-      find("[type='submit']").click
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content([
         "Payment State",
