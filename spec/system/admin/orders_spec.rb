@@ -550,26 +550,26 @@ describe '
               expect(page).to have_content "Invoice emails sent for 2 orders."
             end
           end
-        end
 
-        it "can bulk send email to 2 orders" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
+          it "can bulk send confirmation email from 2 orders" do
+            page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+            page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
-          page.find("span.icon-reorder", text: "ACTIONS").click
-          within ".ofn-drop-down .menu" do
-            page.find("span", text: "Resend Confirmation").click
+            page.find("span.icon-reorder", text: "ACTIONS").click
+            within ".ofn-drop-down .menu" do
+              page.find("span", text: "Resend Confirmation").click
+            end
+
+            expect(page).to have_content "Are you sure you want to proceed?"
+
+            within ".reveal-modal" do
+              expect {
+                find_button("Confirm").click
+              }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+            end
+
+            expect(page).to have_content "Confirmation emails sent for 2 orders."
           end
-
-          expect(page).to have_content "Are you sure you want to proceed?"
-
-          within ".reveal-modal" do
-            expect {
-              find_button("Confirm").click
-            }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
-          end
-
-          expect(page).to have_content "Confirmation emails sent for 2 orders."
         end
 
         context "can bulk print invoices" do
@@ -583,38 +583,48 @@ describe '
             reader.pages.map(&:text)
           end
 
-          it "bulk prints invoices in pdf format" do
-            page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
-            page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
+          shared_examples "can bulk print invoices from 2 orders" do
+            it "bulk prints invoices in pdf format" do
+              page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
+              page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
-            page.find("span.icon-reorder", text: "ACTIONS").click
-            within ".ofn-drop-down .menu" do
-              expect {
-                page.find("span", text: "Print Invoices").click # Prints invoices in bulk
-              }.to enqueue_job(BulkInvoiceJob).exactly(:once)
+              page.find("span.icon-reorder", text: "ACTIONS").click
+              within ".ofn-drop-down .menu" do
+                expect {
+                  page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+                }.to enqueue_job(BulkInvoiceJob).exactly(:once)
+              end
+
+              expect(page).to have_content "Compiling Invoices"
+              expect(page).to have_content "Please wait until the PDF is ready " \
+                                           "before closing this modal."
+
+              # we don't run Sidekiq in test environment, so we need to manually run enqueued jobs
+              # to generate PDF files, and change the modal accordingly
+              perform_enqueued_jobs(only: BulkInvoiceJob)
+
+              expect(page).to have_content "Bulk Invoice created"
+
+              within ".modal-content" do
+                expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
+
+                invoice_content = extract_pdf_content
+
+                expect(invoice_content).to have_content("TAX INVOICE", count: 2)
+                expect(invoice_content).to have_content(order4.number.to_s)
+                expect(invoice_content).to have_content(order5.number.to_s)
+                expect(invoice_content).to have_content(distributor4.name.to_s)
+                expect(invoice_content).to have_content(distributor5.name.to_s)
+                expect(invoice_content).to have_content(order_cycle4.name.to_s)
+                expect(invoice_content).to have_content(order_cycle5.name.to_s)
+              end
             end
+          end
 
-            expect(page).to have_content "Compiling Invoices"
-            expect(page).to have_content "Please wait until the PDF is ready " \
-                                         "before closing this modal."
+          it_behaves_like "can bulk print invoices from 2 orders"
 
-            # we don't run Sidekiq in test environment, so we need to manually run enqueued jobs
-            # to generate PDF files, and change the modal accordingly
-            perform_enqueued_jobs(only: BulkInvoiceJob)
-
-            expect(page).to have_content "Bulk Invoice created"
-
-            within ".modal-content" do
-              expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
-
-              invoice_content = extract_pdf_content
-
-              expect(invoice_content).to have_content("TAX INVOICE", count: 2)
-              expect(invoice_content).to have_content("TAX INVOICE: #{order4.number}")
-              expect(invoice_content).to have_content("TAX INVOICE: #{order5.number}")
-              expect(invoice_content).to have_content("From: #{distributor4.name}")
-              expect(invoice_content).to have_content("From: #{distributor5.name}")
-            end
+          context "with legal invoices feature", feature: :invoices do
+            it_behaves_like "can bulk print invoices from 2 orders"
           end
         end
 
