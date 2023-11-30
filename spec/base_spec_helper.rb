@@ -98,7 +98,6 @@ RSpec.configure do |config|
     Flipper.disable(:background_reports) if example.file_path.in?(
       [
         # rubocop:disable Layout/LineLength
-        "./spec/system/admin/reports/orders_and_fulfillment_spec.rb",
         "./spec/system/admin/reports/packing_report_spec.rb",
         "./spec/system/admin/reports/payments_report_spec.rb",
         "./spec/system/admin/reports/revenues_by_hub_spec.rb",
