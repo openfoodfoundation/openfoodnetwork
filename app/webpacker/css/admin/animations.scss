@@ -11,13 +11,23 @@
 }
 
 @keyframes fade-out-hide {
-  0%   {opacity: 1; visibility: visible;}
-  99%  {opacity: 0; visibility: visible;}
-  100% {opacity: 0; visibility: hidden;}
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  99% {
+    opacity: 0;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .animate-hide-500 {
   animation: fade-out-hide 0.5s;
+  opacity: 0; // Stay invisible after animation
 }
 
 // @-webkit-keyframes slideOutDown
