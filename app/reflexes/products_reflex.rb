@@ -38,8 +38,8 @@ class ProductsReflex < ApplicationReflex
     @products = product_set.collection # use instance variable mainly for testing
 
     if product_set.save
-      # flash[:success] = with_locale { I18n.t('.success') }
-      # morph_admin_flashes  # ERROR: selector morph type has already been set
+      flash[:success] = I18n.t('admin.products_v3.bulk_update.success')
+      broadcast_admin_flashes
     elsif product_set.errors.present?
       @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
     end

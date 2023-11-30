@@ -851,8 +851,8 @@ en:
             other: "%{count} products could not be saved. Please review the errors and try again."
         save: Save changes
         reset: Discard changes
-      bulk_update: # TODO: fix these
-        success: "Products successfully updated" #TODO: add count
+      bulk_update:
+        success: Changes saved
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
