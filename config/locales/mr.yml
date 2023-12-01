@@ -1719,14 +1719,6 @@ mr:
         title: अवैध क्वेरी पॅरामीटर
         extra_fields: "असमर्थित फील्ड: %{fields}"
   checkout:
-    terms_and_conditions:
-      message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} शी सहमत आहे."
-      link_text: "अटी आणि शर्ती"
-    platform_terms_of_service:
-      message_html: "मी %{tos_link} प्लॅटफॉर्मशी सहमत आहे."
-    all_terms_and_conditions:
-      message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} आणि %{tos_link} प्लॅटफॉर्मशी सहमत आहे."
-      terms_and_conditions: "अटी आणि शर्ती"
     failed: "चेकआउट अयशस्वी झाले. कृपया आम्हाला कळवा जेणेकरून आम्ही तुमच्या ऑर्डरवर प्रक्रिया करू शकू."
     payment_cancelled_due_to_stock: "पेमेंट रद्द केले: स्टॉक समस्यांमुळे चेकआउट पूर्ण होऊ शकले नाही."
     order_not_loaded: "चेकआउट प्रक्रियेसाठी कोणतीही वैध ऑर्डर आढळली नाही"

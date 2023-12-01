@@ -1485,11 +1485,6 @@ es_US:
     orders:
       failed_to_update: "Error al actualizar pedido"
   checkout:
-    terms_and_conditions:
-      message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
-      link_text: "Términos y Condiciones"
-    all_terms_and_conditions:
-      terms_and_conditions: "Términos y Condiciones"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
     your_details_without_number: Sus detalles
     already_ordered:

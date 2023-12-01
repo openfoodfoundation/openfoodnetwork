@@ -1353,10 +1353,6 @@ pt:
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Imagem promocional não existe"
   checkout:
-    terms_and_conditions:
-      link_text: "Termos e Condições"
-    all_terms_and_conditions:
-      terms_and_conditions: "Termos e Condições"
     your_details_without_number: Os seus detalhes
     already_ordered:
       cart: "carrinho"

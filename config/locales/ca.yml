@@ -1562,14 +1562,6 @@ ca:
     orders:
       failed_to_update: "No s'ha pogut actualitzar la comanda"
   checkout:
-    terms_and_conditions:
-      message_html: "Accepto el %{terms_and_conditions_link} del venedor."
-      link_text: "Termes i condicions"
-    platform_terms_of_service:
-      message_html: "Accepto els %{tos_link} de la plataforma."
-    all_terms_and_conditions:
-      message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
-      terms_and_conditions: "Termes i condicions"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
     payment_cancelled_due_to_stock: "Pagament cancel·lat: el pagament no s’ha pogut completar a causa de problemes d’estoc."
     your_details_without_number: Els teus detalls

@@ -1339,14 +1339,6 @@ el:
     orders:
       failed_to_update: "Αποτυχία στην ενημέρωση παραγγελίας"
   checkout:
-    terms_and_conditions:
-      message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή."
-      link_text: "Οροι και Προϋποθέσεις"
-    platform_terms_of_service:
-      message_html: "Συμφωνώ με την πλατφόρμα %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή και την πλατφόρμα %{tos_link}."
-      terms_and_conditions: "Οροι και Προϋποθέσεις"
     failed: "Το checkout απέτυχε. Ενημερώστε μας για να μπορέσουμε να επεξεργαστούμε την παραγγελία σας."
     payment_cancelled_due_to_stock: "Η πληρωμή ακυρώθηκε: το ταμείο δεν μπορούσε να ολοκληρωθεί λόγω προβλημάτων αποθεμάτων."
     your_details_without_number: Τα στοιχεία σου
@@ -1404,7 +1396,10 @@ el:
       terms_and_conditions:
         message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή."
         link_text: "Οροι και Προϋποθέσεις"
+      platform_terms_of_service:
+        message_html: "Συμφωνώ με την πλατφόρμα %{tos_link}."
       all_terms_and_conditions:
+        message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή και την πλατφόρμα %{tos_link}."
         terms_and_conditions: "Οροι και Προϋποθέσεις"
       submit: Ολοκληρωμένη παραγγελία
       cancel: Επιστροφή στον τρόπο πληρωμής

@@ -1562,14 +1562,6 @@ fr_BE:
     orders:
       failed_to_update: "Annulation de la mise à jour la commande"
   checkout:
-    terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link} du vendeur."
-      link_text: "Termes et conditions"
-    platform_terms_of_service:
-      message_html: "J'accepte la plateforme %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link} du vendeur et la plateforme %{tos_link}."
-      terms_and_conditions: "Termes et conditions"
     failed: "La vente a échouée. Veuillez nous le faire savoir afin que nous puissions traiter votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas pu être finalisée en raison d'un problème de stock."
     order_not_loaded: "Aucune commande valide trouvée pour le traitement de la commande"

@@ -1404,14 +1404,6 @@ tr:
     orders:
       failed_to_update: "Sipariş güncellenemedi"
   checkout:
-    terms_and_conditions:
-      message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
-      link_text: "Şartlar ve Koşullar"
-    platform_terms_of_service:
-      message_html: "%{tos_link} platformunu onaylıyorum."
-    all_terms_and_conditions:
-      message_html: "Satıcıya ait %{terms_and_conditions_link} ve platforma ait %{tos_link} onaylıyorum."
-      terms_and_conditions: "Şartlar ve Koşullar"
     failed: "Ödeme başarısız oldu. Siparişinizi işleme koyabilmemiz için lütfen bizimle iletişime geçin."
     payment_cancelled_due_to_stock: "Ödeme iptal edildi: Stok sorunları nedeniyle ödeme tamamlanamadı."
     your_details_without_number: Bilgilerin

@@ -1536,14 +1536,6 @@ en_NZ:
     orders:
       failed_to_update: "Failed to update order"
   checkout:
-    terms_and_conditions:
-      message_html: "I agree to the seller's %{terms_and_conditions_link}."
-      link_text: "Terms and Conditions"
-    platform_terms_of_service:
-      message_html: "I agree to the platform %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
-      terms_and_conditions: "Terms and Conditions"
     failed: "The checkout failed. Please let us know so that we can process your order."
     payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
     order_not_loaded: "No valid order found for checkout processing"

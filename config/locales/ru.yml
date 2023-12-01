@@ -1684,14 +1684,6 @@ ru:
         title: Неверный параметр запроса
         extra_fields: "Не поддерживаемые поля: %{fields}"
   checkout:
-    terms_and_conditions:
-      message_html: "Согласен на %{terms_and_conditions_link} продавца."
-      link_text: "Условия и Положения"
-    platform_terms_of_service:
-      message_html: "Я согласен c условиями платформы %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "Я согласен с условиями %{terms_and_conditions_link} продавца и платформы %{tos_link}."
-      terms_and_conditions: "Условия и Положения"
     failed: "Оформить заказ не удалось. Сообщите нам, чтобы мы могли обработать ваш заказ."
     payment_cancelled_due_to_stock: "Платеж отменен: оформление заказа не может быть выполнено из-за проблем на складе."
     order_not_loaded: "Не найден действительный заказ для оформления"

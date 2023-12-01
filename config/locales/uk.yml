@@ -1542,14 +1542,6 @@ uk:
     orders:
       failed_to_update: "Не вдалося оновити замовлення"
   checkout:
-    terms_and_conditions:
-      message_html: "Я згоден з %{terms_and_conditions_link} продавця."
-      link_text: "Правила та умови"
-    platform_terms_of_service:
-      message_html: "Я згоден з платформою %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "Я погоджуюся з %{terms_and_conditions_link} продавця та платформою %{tos_link}."
-      terms_and_conditions: "Правила та умови"
     failed: "Оплата не вдалася. Будь ласка, повідомте нас, щоб ми могли обробити ваше замовлення."
     payment_cancelled_due_to_stock: "Платіж скасовано: перевірку не вдалося завершити через проблеми зі складом."
     order_not_loaded: "Не знайдено дійсного замовлення для обробки замовлення"

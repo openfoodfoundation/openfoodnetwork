@@ -1704,14 +1704,6 @@ fr_CA:
         title: Paramètre de la requête invalide
         extra_fields: "Champs invalides: %{fields}"
   checkout:
-    terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link}"
-      link_text: "CGU & CGV"
-    platform_terms_of_service:
-      message_html: "J'accepte les %{tos_link}"
-    all_terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de Open Food Network."
-      terms_and_conditions: "CGU & CGV"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas été finalisée car un ou plusieurs articles ne sont plus en stock."
     order_not_loaded: "Aucune commande n'a été trouvée pour poursuivre le parcours d'achat."

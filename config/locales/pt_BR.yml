@@ -1414,14 +1414,6 @@ pt_BR:
     orders:
       failed_to_update: "Falha ao atualizar o pedido"
   checkout:
-    terms_and_conditions:
-      message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
-      link_text: "Termos e Condições"
-    platform_terms_of_service:
-      message_html: "Eu concordo com os %{tos_link}da plataforma"
-    all_terms_and_conditions:
-      message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor e os%{tos_link}da plataforma"
-      terms_and_conditions: "Termos e Condições"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
     your_details_without_number: Seus detalhes
     already_ordered:

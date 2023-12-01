@@ -1530,14 +1530,6 @@ de_CH:
     orders:
       failed_to_update: "Bestellung konnte nicht aktualisiert werden."
   checkout:
-    terms_and_conditions:
-      message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
-      link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
-    platform_terms_of_service:
-      message_html: "Ich stimme den %{tos_link} des Open Food Network zu."
-    all_terms_and_conditions:
-      message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
-      terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
     failed: "Der Bestellabschluss ist fehlgeschlagen. Bitte geben Sie uns Bescheid, damit wir Ihre Bestellung dennoch bearbeiten können."
     payment_cancelled_due_to_stock: "Zahlung storniert: Der Bestellabschluss konnte aufgrund von Problemen mit dem Lagerbestand nicht abgeschlossen werden."
     order_not_loaded: "Keine gültige Bestellung für den Bestellabschluss gefunden."

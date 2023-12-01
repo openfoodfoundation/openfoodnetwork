@@ -1694,14 +1694,6 @@ cy:
         title: Invalid query parameter
         extra_fields: "Meysydd digefnogaeth: %{fields}"
   checkout:
-    terms_and_conditions:
-      message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
-      link_text: "Telerau ac Amodau"
-    platform_terms_of_service:
-      message_html: "Rwyf yn cytuno â'r platfform %{tos_link}"
-    all_terms_and_conditions:
-      message_html: "Rwyf yn cytuno â %{terms_and_conditions_link}y gwerthwr a'r platfform %{tos_link}"
-      terms_and_conditions: "Telerau ac Amodau"
     failed: "Methwyd â thalu. Gadewch inni wybod er mwyn inni allu prosesu eich archeb."
     payment_cancelled_due_to_stock: "Canslwyd y taliad: nid oedd yn bosib talu wrth y ddesg oherwydd problemau gyda stoc."
     order_not_loaded: "Ni chafwyd hyd i archeb dilys i brosesu tâl."

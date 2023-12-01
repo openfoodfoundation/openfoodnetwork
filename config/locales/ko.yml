@@ -1524,14 +1524,6 @@ ko:
     orders:
       failed_to_update: "주문을 업데이트하는데 실패했습니다."
   checkout:
-    terms_and_conditions:
-      message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
-      link_text: "조건"
-    platform_terms_of_service:
-      message_html: "플랫폼 %{tos_link}에 대하여 동의합니다."
-    all_terms_and_conditions:
-      message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
-      terms_and_conditions: "조건"
     failed: "체크아웃에 실패했습니다. 우리가 당신의 주문을 처리할 수 있도록 우리에게 알려주세요."
     payment_cancelled_due_to_stock: "결제 취소: 재고 문제로 인해 체크아웃을 완료할 수 없습니다."
     order_not_loaded: "체크아웃 처리에 대한 올바른 주문을 찾을 수 없습니다."

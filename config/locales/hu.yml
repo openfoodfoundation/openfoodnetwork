@@ -1534,14 +1534,6 @@ hu:
     orders:
       failed_to_update: "Nem sikerült frissíteni a rendelést"
   checkout:
-    terms_and_conditions:
-      message_html: "Elfogadom az eladó %{terms_and_conditions_link} feltételeit."
-      link_text: "Felhasználási feltételek"
-    platform_terms_of_service:
-      message_html: "Elfogadom a %{tos_link} platformot."
-    all_terms_and_conditions:
-      message_html: "Elfogadom az eladó %{terms_and_conditions_link} és a platform %{tos_link} feltételeit."
-      terms_and_conditions: "Felhasználási feltételek"
     failed: "A fizetés nem sikerült. Kérjük, jelezze felénk, hogy feldolgozhassuk megrendelését."
     payment_cancelled_due_to_stock: "Fizetés törölve: a pénztár készlethiba miatt nem fejezhető be."
     order_not_loaded: "Nem található érvényes rendelés a fizetés feldolgozásához"

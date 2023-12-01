@@ -1585,14 +1585,6 @@ es:
         title: Parámetro de consulta erróneo
         extra_fields: "Campos no soportados: %{fields}"
   checkout:
-    terms_and_conditions:
-      message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
-      link_text: "Términos y Condiciones"
-    platform_terms_of_service:
-      message_html: "Acepto los %{tos_link} de la plataforma."
-    all_terms_and_conditions:
-      message_html: "Acepto el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
-      terms_and_conditions: "Términos y Condiciones"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
     payment_cancelled_due_to_stock: "Pago cancelado: no se pudo completar el pago debido a problemas de stock."
     order_not_loaded: "No se encontró un pedido válido para procesar el pago"

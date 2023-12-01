@@ -1711,14 +1711,6 @@ nb:
         title: Ugyldig søkeparameter
         extra_fields: "Ustøttede felt: %{fields}"
   checkout:
-    terms_and_conditions:
-      message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
-      link_text: "Vilkår og Betingelser"
-    platform_terms_of_service:
-      message_html: "Jeg godtar plattformens %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "Jeg godtar selgerens %{terms_and_conditions_link} og plattformens %{tos_link}."
-      terms_and_conditions: "Vilkår og Betingelser"
     failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
     payment_cancelled_due_to_stock: "Betaling kansellert: utsjekk kunne ikke fullføres på grunn av lagerproblemer."
     order_not_loaded: "Fant ingen gyldig ordre for betalingsbehandling"

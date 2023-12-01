@@ -1716,14 +1716,6 @@ hi:
         title: अमान्य क्वेरी पैरामीटर
         extra_fields: "असमर्थित फ़ील्ड: %{fields}"
   checkout:
-    terms_and_conditions:
-      message_html: "मैं विक्रेता के %{terms_and_conditions_link} से सहमत हूँ।"
-      link_text: "नियम और शर्तें"
-    platform_terms_of_service:
-      message_html: "मैं प्लेटफॉर्म %{tos_link} से सहमत हूँ।"
-    all_terms_and_conditions:
-      message_html: "मैं विक्रेता के %{terms_and_conditions_link} और प्लेटफॉर्म %{tos_link} से सहमत हूँ।"
-      terms_and_conditions: "नियम और शर्तें"
     failed: "चेकआउट विफल हुआ। कृपया हमें बताएं ताकि हम आपके ऑर्डर को प्रॉसेस कर सकें।"
     payment_cancelled_due_to_stock: "भुगतान रद्द किया गया: स्टॉक समस्याओं के कारण चेकआउट पूरा नहीं किया जा सका।"
     order_not_loaded: "चेकआउट प्रॉसेसिंग के लिए कोई मान्य ऑर्डर नहीं मिला"

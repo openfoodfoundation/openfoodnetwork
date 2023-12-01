@@ -1495,14 +1495,6 @@ it_CH:
     orders:
       failed_to_update: "Aggiornamento ordine fallito"
   checkout:
-    terms_and_conditions:
-      message_html: "Accetto i %{terms_and_conditions_link} del venditore."
-      link_text: "Termini e Condizioni"
-    platform_terms_of_service:
-      message_html: "Acconsento ai %{tos_link} della piattaforma."
-    all_terms_and_conditions:
-      message_html: "Acconsento ai %{terms_and_conditions_link} del venditore ed ai %{tos_link} della piattaforma."
-      terms_and_conditions: "Termini e Condizioni"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
     payment_cancelled_due_to_stock: "Pagamento annullato: la transazione non può avvenire a causa di problemi di disponibilità."
     order_not_loaded: "Nessuna richiesta valida trovata per la conferma. "
