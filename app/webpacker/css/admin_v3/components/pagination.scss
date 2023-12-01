@@ -20,7 +20,7 @@
     display: inline-block;
     text-align: center;
     background-color: $color-1;
-    @include defaultBoxShadow;
+    box-shadow: $box-shadow;
     border-radius: 4px;
     border: none;
     color: $color-8;
@@ -77,7 +77,7 @@
 
     background-color: $white;
     color: $near-black;
-    box-shadow: $color-btn-shadow;
+    box-shadow: $box-shadow;
 
     &.active {
       color: $white;

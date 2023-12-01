@@ -61,7 +61,7 @@ nav.menu {
 }
 
 #admin-menu {
-  @include defaultBoxShadow;
+  box-shadow: $box-shadow;
 
   li {
     .dropdown {
