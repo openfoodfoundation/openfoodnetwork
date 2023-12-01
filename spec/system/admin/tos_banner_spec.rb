@@ -6,9 +6,14 @@ describe 'Terms of Service banner' do
   include AuthenticationHelper
 
   let(:admin_user) { create(:admin_user, terms_of_service_accepted_at: nil) }
+  let(:test_file) { "Terms-of-service.pdf" }
+  let(:pdf_upload) do
+    Rack::Test::UploadedFile.new(Rails.public_path.join(test_file), "application/pdf")
+  end
 
   before do
     Spree::Config.enterprises_require_tos = true
+    TermsOfServiceFile.create!(attachment: pdf_upload)
     login_as admin_user
   end
 
@@ -32,15 +37,13 @@ describe 'Terms of Service banner' do
   end
 
   context "when updating Terms of Service" do
-    let(:test_file_path) { "public/Terms-of-service.pdf" }
-
     it "shows the banner" do
       # ToS has been accepted
       admin_user.update!(terms_of_service_accepted_at: 2.days.ago)
 
       # Upload new ToS
       visit admin_terms_of_service_files_path
-      attach_file "Attachment", Rails.root.join(test_file_path)
+      attach_file "Attachment", Rails.public_path.join(test_file)
       click_button "Create Terms of service file"
 
       # check it has been uploaded
