@@ -1257,12 +1257,10 @@ pl:
     orders:
       failed_to_update: "Nie udało się zaktualizować zamówienia"
   checkout:
-    already_ordered:
-      cart: "Koszyk"
-      message_html: "Masz już zamówienie na ten cykl zamówień. Sprawdź %{cart}, aby zobaczyć przedmioty, które zamówiłeś wcześniej. Możesz również anulować pozycje, o ile cykl zamówienia jest otwarty."
     failed: "Płatność nie powiodła się. Daj nam znać, abyśmy mogli zrealizować Twoje zamówienie."
     already_ordered:
       cart: "koszyk"
+      message_html: "Masz już zamówienie na ten cykl zamówień. Sprawdź %{cart}, aby zobaczyć przedmioty, które zamówiłeś wcześniej. Możesz również anulować pozycje, o ile cykl zamówienia jest otwarty."
     step1:
       contact_information:
         email:

@@ -1307,9 +1307,6 @@ fil_PH:
     orders:
       failed_to_update: "hindi nagtagumpay na i-update ang order"
   checkout:
-    already_ordered:
-      cart: "cart"
-      message_html: "mayroon ka ng order para sa order cycle na ito. tingnan ang%{cart}para makita ang mga item na dating inorder. maaari  mo ring kanselahin ang mga item habang ang order cycle ay bukas pa."
     failed: "hindi matagumpay ang pag-check out. ipaalam sa amin upang maproseso ang inyong order."
     your_details_without_number: ang inyong detalye
     already_ordered:

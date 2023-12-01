@@ -801,9 +801,6 @@ sv:
         back: Backa
         voucher_amount: Belopp
   checkout:
-    already_ordered:
-      cart: "vagn"
-      message_html: "Du har redan en beställning för denna beställningsomgång. Kontrollera %{cart} för att se föremålen du beställde tidigare. Du kan också ta bort varor/artiklar så länge som beställningsomgången är öppen."
     your_details_without_number: Dina detaljer
     already_ordered:
       cart: "vagn"

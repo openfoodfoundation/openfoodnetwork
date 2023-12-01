@@ -1694,9 +1694,6 @@ cy:
         title: Invalid query parameter
         extra_fields: "Meysydd digefnogaeth: %{fields}"
   checkout:
-    already_ordered:
-      cart: "basged"
-      message_html: "Mae gennych chi archeb ar gyfer y cylch archebu hwn eisoes. Gwiriwch y %{cart} i weld yr eitemau a archebwyd o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
     terms_and_conditions:
       message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
       link_text: "Telerau ac Amodau"

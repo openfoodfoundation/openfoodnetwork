@@ -1340,9 +1340,6 @@ es_CO:
     orders:
       failed_to_update: "Error al actualizar pedido"
   checkout:
-    already_ordered:
-      cart: "carrito"
-      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
     your_details_without_number: Sus detalles
     already_ordered:

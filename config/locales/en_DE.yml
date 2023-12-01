@@ -1270,9 +1270,6 @@ en_DE:
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Promo image does not exist"
   checkout:
-    already_ordered:
-      cart: "cart"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     your_details_without_number: Your details
     already_ordered:
       cart: "cart"

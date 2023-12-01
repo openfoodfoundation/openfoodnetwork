@@ -1524,9 +1524,6 @@ ko:
     orders:
       failed_to_update: "주문을 업데이트하는데 실패했습니다."
   checkout:
-    already_ordered:
-      cart: "카트"
-      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 동안 항목을 취소할 수도 있습니다."
     terms_and_conditions:
       message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
       link_text: "조건"

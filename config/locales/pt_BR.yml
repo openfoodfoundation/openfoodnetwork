@@ -1414,9 +1414,6 @@ pt_BR:
     orders:
       failed_to_update: "Falha ao atualizar o pedido"
   checkout:
-    already_ordered:
-      cart: "Carrinho"
-      message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
     terms_and_conditions:
       message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
       link_text: "Termos e Condições"

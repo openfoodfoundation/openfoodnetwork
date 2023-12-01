@@ -1332,9 +1332,6 @@ nl_BE:
     orders:
       failed_to_update: "Bijwerking van de bestelcyclus is mislukt"
   checkout:
-    already_ordered:
-      cart: "winkelwagentje"
-      message_html: "Je hebt al een bestelling voor deze bestellingscyclus. Controleer de %{cart} om de artikels te zien die je voordien besteld hebt. Je kan ook artikels annuleren zolang de bestellingscyclus openstaat."
     failed: "De check-out is gefaald. Laat ons weten zodat we u besteling in orde kunnen maken."
     your_details_without_number: Jouw gegevens
     already_ordered:

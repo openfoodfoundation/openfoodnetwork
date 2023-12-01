@@ -1711,9 +1711,6 @@ nb:
         title: Ugyldig søkeparameter
         extra_fields: "Ustøttede felt: %{fields}"
   checkout:
-    already_ordered:
-      cart: "handlekurv"
-      message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
     terms_and_conditions:
       message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
       link_text: "Vilkår og Betingelser"

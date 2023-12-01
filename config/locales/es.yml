@@ -1585,9 +1585,6 @@ es:
         title: Parámetro de consulta erróneo
         extra_fields: "Campos no soportados: %{fields}"
   checkout:
-    already_ordered:
-      cart: "carrito"
-      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     terms_and_conditions:
       message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
       link_text: "Términos y Condiciones"

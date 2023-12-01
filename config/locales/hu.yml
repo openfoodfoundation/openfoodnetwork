@@ -1534,9 +1534,6 @@ hu:
     orders:
       failed_to_update: "Nem sikerült frissíteni a rendelést"
   checkout:
-    already_ordered:
-      cart: "kosár"
-      message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
     terms_and_conditions:
       message_html: "Elfogadom az eladó %{terms_and_conditions_link} feltételeit."
       link_text: "Felhasználási feltételek"

@@ -1542,9 +1542,6 @@ uk:
     orders:
       failed_to_update: "Не вдалося оновити замовлення"
   checkout:
-    already_ordered:
-      cart: "кошик"
-      message_html: "У вас уже є замовлення для цього циклу замовлень. Перевірте %{cart}, щоб побачити товари, які ви замовляли раніше. Ви також можете скасувати товари, доки цикл замовлення відкритий."
     terms_and_conditions:
       message_html: "Я згоден з %{terms_and_conditions_link} продавця."
       link_text: "Правила та умови"

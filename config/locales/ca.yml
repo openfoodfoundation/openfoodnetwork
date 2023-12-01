@@ -1562,9 +1562,6 @@ ca:
     orders:
       failed_to_update: "No s'ha pogut actualitzar la comanda"
   checkout:
-    already_ordered:
-      cart: "cistella"
-      message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
     terms_and_conditions:
       message_html: "Accepto el %{terms_and_conditions_link} del venedor."
       link_text: "Termes i condicions"

@@ -1719,9 +1719,6 @@ mr:
         title: अवैध क्वेरी पॅरामीटर
         extra_fields: "असमर्थित फील्ड: %{fields}"
   checkout:
-    already_ordered:
-      cart: "कार्ट"
-      message_html: "तुमच्याकडे या ऑर्डर सायकलसाठी आधीच एक ऑर्डर आहे. तुम्ही आधी ऑर्डर केलेली वस्तू पाहण्यासाठी %{cart} पहा. ऑर्डर सायकल चालू असेपर्यंत तुम्ही वस्तू रद्द करू शकता."
     terms_and_conditions:
       message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} शी सहमत आहे."
       link_text: "अटी आणि शर्ती"

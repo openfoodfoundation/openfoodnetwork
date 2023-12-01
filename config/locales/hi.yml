@@ -1716,9 +1716,6 @@ hi:
         title: अमान्य क्वेरी पैरामीटर
         extra_fields: "असमर्थित फ़ील्ड: %{fields}"
   checkout:
-    already_ordered:
-      cart: "कार्ट"
-      message_html: "आपके पास इस ऑर्डर साइकल के लिए पहले से ही एक ऑर्डर है। आपके द्वारा पहले ऑर्डर किए गए आइटम देखने के लिए %{cart} को चेक करें। जब तक ऑर्डर साइकल खुली रहती है, तब तक आप आइटम रद्द भी कर सकते हैं।"
     terms_and_conditions:
       message_html: "मैं विक्रेता के %{terms_and_conditions_link} से सहमत हूँ।"
       link_text: "नियम और शर्तें"

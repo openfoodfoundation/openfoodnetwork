@@ -1442,9 +1442,6 @@ fr_CM:
     orders:
       failed_to_update: "La mise à jour de la commande échoué"
   checkout:
-    already_ordered:
-      cart: "panier"
-      message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
     terms_and_conditions:
       message_html: "J'accepte les %{terms_and_conditions_link}."
       link_text: "CGU & CGV"

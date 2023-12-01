@@ -1530,9 +1530,6 @@ de_CH:
     orders:
       failed_to_update: "Bestellung konnte nicht aktualisiert werden."
   checkout:
-    already_ordered:
-      cart: "Warenkorb"
-      message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
     terms_and_conditions:
       message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
       link_text: "Allgemeinen Geschäftsbedingungen (AGB)"

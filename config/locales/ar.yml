@@ -1602,9 +1602,6 @@ ar:
         title: معامل طلب البحث غير صالح
         extra_fields: "حقول غير المدعومة: %{fields}"
   checkout:
-    already_ordered:
-      cart: "سلة التسوق"
-      message_html: "لديك طلب لدورة الطلب هذه بالفعل. تحقق من %{cart} لرؤية العناصر التي طلبتها من قبل. يمكنك أيضًا إلغاء العناصر طالما كانت دورة الطلب مفتوحة."
     terms_and_conditions:
       message_html: "أوافق على %{terms_and_conditions_link} للبائع."
       link_text: "الأحكام والشروط"

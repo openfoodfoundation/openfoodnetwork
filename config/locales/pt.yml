@@ -1353,9 +1353,6 @@ pt:
     enterprise_promo_image:
       destroy_attachment_does_not_exist: "Imagem promocional não existe"
   checkout:
-    already_ordered:
-      cart: "carrinho"
-      message_html: "Já tem uma encomenda para este ciclo de encomendas. Verifique o %{cart} para ver os itens já encomendados. Também pode cancelar itens enquanto o ciclo estiver aberto."
     terms_and_conditions:
       link_text: "Termos e Condições"
     all_terms_and_conditions:

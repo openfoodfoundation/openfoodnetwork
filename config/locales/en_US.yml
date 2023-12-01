@@ -1487,9 +1487,6 @@ en_US:
     orders:
       failed_to_update: "Failed to update order"
   checkout:
-    already_ordered:
-      cart: "cart"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     terms_and_conditions:
       message_html: "I agree to the seller's %{terms_and_conditions_link}."
       link_text: "Terms and Conditions"

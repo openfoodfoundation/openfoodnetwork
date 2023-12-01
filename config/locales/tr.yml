@@ -1404,9 +1404,6 @@ tr:
     orders:
       failed_to_update: "Sipariş güncellenemedi"
   checkout:
-    already_ordered:
-      cart: "Sepet"
-      message_html: "Bu sipariş dönemi için zaten bir siparişiniz var. Daha önce sipariş ettiğiniz ürünleri görmek için %{cart} adresini kontrol edin. Sipariş dönemi açık olduğu sürece siparişlerinizde değişiklik yapabilirsiniz."
     terms_and_conditions:
       message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
       link_text: "Şartlar ve Koşullar"

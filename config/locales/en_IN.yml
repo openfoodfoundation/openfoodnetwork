@@ -1318,9 +1318,6 @@ en_IN:
     orders:
       failed_to_update: "Failed to update order"
   checkout:
-    already_ordered:
-      cart: "cart"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     failed: "The checkout failed. Please let us know so that we can process your order."
     your_details_without_number: Your details
     already_ordered:

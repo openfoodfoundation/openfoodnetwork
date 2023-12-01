@@ -1684,9 +1684,6 @@ ru:
         title: Неверный параметр запроса
         extra_fields: "Не поддерживаемые поля: %{fields}"
   checkout:
-    already_ordered:
-      cart: "корзина"
-      message_html: "У вас уже есть заказ для этого цикла заказов. Проверьте %{cart}, чтобы увидеть товары, которые вы заказали ранее. Вы также можете отменять позиции, пока открыт цикл заказа."
     terms_and_conditions:
       message_html: "Согласен на %{terms_and_conditions_link} продавца."
       link_text: "Условия и Положения"
