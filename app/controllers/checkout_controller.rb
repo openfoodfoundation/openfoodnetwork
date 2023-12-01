@@ -2,7 +2,7 @@
 
 require 'open_food_network/address_finder'
 
-class SplitCheckoutController < BaseController
+class CheckoutController < BaseController
   layout 'darkswarm'
 
   include OrderStockCheck
