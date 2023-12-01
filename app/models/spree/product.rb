@@ -67,6 +67,7 @@ module Spree
     validates :variant_unit_name,
               presence: { if: ->(p) { p.variant_unit == 'items' } }
     validate :validate_image
+    validates :price, numericality: { greater_than_or_equal_to: 0, if: ->{ new_record? } }
 
     accepts_nested_attributes_for :variants, allow_destroy: true
     accepts_nested_attributes_for :image

@@ -50,9 +50,8 @@ module Spree
           flash[:success] = flash_message_for(@object, :successfully_updated)
           redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
         else
-          redirect_to spree.edit_admin_product_variant_url(params[:product_id],
-                                                           @object,
-                                                           @url_filters)
+          load_data
+          render :edit
         end
       end
 

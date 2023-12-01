@@ -72,6 +72,7 @@ module Spree
     }
 
     validates :unit_value, numericality: { greater_than: 0 }
+    validates :price, numericality: { greater_than_or_equal_to: 0 }
 
     validates :unit_description, presence: true, if: ->(variant) {
       variant.product&.variant_unit.present? && variant.unit_value.nil?
