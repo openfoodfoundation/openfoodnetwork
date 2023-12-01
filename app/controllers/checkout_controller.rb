@@ -58,7 +58,7 @@ class CheckoutController < BaseController
     flash.now[:error] ||= I18n.t('split_checkout.errors.saving_failed')
 
     render status: :unprocessable_entity, cable_ready: cable_car.
-      replace("#checkout", partial("split_checkout/checkout")).
+      replace("#checkout", partial("checkout/checkout")).
       replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
   end
 

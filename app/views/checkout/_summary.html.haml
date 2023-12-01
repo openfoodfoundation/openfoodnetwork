@@ -1,6 +1,6 @@
 = form_with url: checkout_update_path(checkout_step), model: @order, method: :put, data: { remote: "true" } do |f|
   .summary-main
-    = render partial: "split_checkout/already_ordered" if show_bought_items? && checkout_step?(:summary)
+    = render partial: "checkout/already_ordered" if show_bought_items? && checkout_step?(:summary)
     .checkout-substep
       .checkout-title
         = t("split_checkout.step3.delivery_details.title")

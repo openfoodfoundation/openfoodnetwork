@@ -1,7 +1,7 @@
 .medium-6#checkout-payment-methods
   - if feature?(:vouchers, spree_current_user, @order.distributor) && @order.distributor.vouchers.present?
     %div.checkout-substep
-      = render partial: "split_checkout/voucher_section", locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }
+      = render partial: "checkout/voucher_section", locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }
 
   = form_with url: checkout_update_path(local_assigns[:step] || checkout_step), model: @order, method: :put, data: { remote: "true" } do |f|
     %div.checkout-substep{"data-controller": "paymentmethod"}
@@ -31,7 +31,7 @@
               .paymentmethod-description.panel
                 #{payment_method.description}
             .paymentmethod-form
-              = render partial: "split_checkout/payment/#{payment_method.method_type}", locals: { payment_method: payment_method, f: f }
+              = render partial: "checkout/payment/#{payment_method.method_type}", locals: { payment_method: payment_method, f: f }
 
         = f.error_message_on :payment_method, standalone: true
 

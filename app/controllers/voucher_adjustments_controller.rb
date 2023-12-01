@@ -62,7 +62,7 @@ class VoucherAdjustmentsController < BaseController
   def update_payment_section
     render cable_ready: cable_car.replace(
       selector: "#checkout-payment-methods",
-      html: render_to_string(partial: "split_checkout/payment", locals: { step: "payment" })
+      html: render_to_string(partial: "checkout/payment", locals: { step: "payment" })
     )
   end
 
@@ -74,7 +74,7 @@ class VoucherAdjustmentsController < BaseController
       replace(
         "#voucher-section",
         partial(
-          "split_checkout/voucher_section",
+          "checkout/voucher_section",
           locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }
         )
       )

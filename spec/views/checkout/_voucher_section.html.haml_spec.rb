@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "split_checkout/_voucher_section.html.haml" do
+describe "checkout/_voucher_section.html.haml" do
   let(:order) { create(:order_with_distributor, total: 10) }
   let(:flat_voucher) {
     create(:voucher_flat_rate, code: "flat_code",
