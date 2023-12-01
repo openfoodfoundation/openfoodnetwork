@@ -4,7 +4,7 @@ require "system_helper"
 
 describe "As a consumer, I want to checkout my order" do
   include ShopWorkflow
-  include SplitCheckoutHelper
+  include CheckoutHelper
   include FileHelper
   include AuthenticationHelper
 
