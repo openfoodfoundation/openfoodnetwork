@@ -32,7 +32,7 @@ class CheckoutController < BaseController
 
     return if available_shipping_methods.any?
 
-    flash[:error] = I18n.t('split_checkout.errors.no_shipping_methods_available')
+    flash[:error] = I18n.t('checkout.errors.no_shipping_methods_available')
   end
 
   def update
@@ -55,7 +55,7 @@ class CheckoutController < BaseController
   private
 
   def render_error
-    flash.now[:error] ||= I18n.t('split_checkout.errors.saving_failed')
+    flash.now[:error] ||= I18n.t('checkout.errors.saving_failed')
 
     render status: :unprocessable_entity, cable_ready: cable_car.
       replace("#checkout", partial("checkout/checkout")).

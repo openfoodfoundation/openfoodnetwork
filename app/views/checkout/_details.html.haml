@@ -4,52 +4,52 @@
       %div.checkout-substep
         -# YOUR DETAILS
         %div.checkout-title
-          = t("split_checkout.step1.contact_information.title")
+          = t("checkout.step1.contact_information.title")
 
         .two-columns-inputs
           %div.checkout-input.with-floating-label{ "data-controller": "floating-label" }
-            = f.label :email, t("split_checkout.step1.contact_information.email.label")
+            = f.label :email, t("checkout.step1.contact_information.email.label")
             = f.text_field :email, { placeholder: " " }
             = f.error_message_on :email
 
           %div.checkout-input.with-floating-label{ "data-controller": "floating-label" }
-            = bill_address.label :phone, t("split_checkout.step1.contact_information.phone.label")
+            = bill_address.label :phone, t("checkout.step1.contact_information.phone.label")
             = bill_address.text_field :phone, { placeholder: " " }
             = f.error_message_on "bill_address.phone"
 
       %div.checkout-substep
         -# BILLING ADDRESS
         %div.checkout-title
-          = t("split_checkout.step1.billing_address.title")
+          = t("checkout.step1.billing_address.title")
 
         .two-columns-inputs
           %div.checkout-input.with-floating-label{ "data-controller": "floating-label" }
-            = bill_address.label :firstname, t("split_checkout.step1.billing_address.first_name.label")
+            = bill_address.label :firstname, t("checkout.step1.billing_address.first_name.label")
             = bill_address.text_field :firstname, { placeholder: " " }
             = f.error_message_on "bill_address.firstname"
 
           %div.checkout-input.with-floating-label{ "data-controller": "floating-label" }
-            = bill_address.label :lastname, t("split_checkout.step1.billing_address.last_name.label")
+            = bill_address.label :lastname, t("checkout.step1.billing_address.last_name.label")
             = bill_address.text_field :lastname, { placeholder: " " }
             = f.error_message_on "bill_address.lastname"
 
         %div.checkout-input.with-floating-label{ "data-controller": "floating-label"}
-          = bill_address.label :address1, t("split_checkout.step1.address.address1.label")
+          = bill_address.label :address1, t("checkout.step1.address.address1.label")
           = bill_address.text_field :address1, { placeholder: " " }
           = f.error_message_on "bill_address.address1"
 
         %div.checkout-input.with-floating-label{ "data-controller": "floating-label"}
-          = bill_address.label :address2, t("split_checkout.step1.address.address2.label")
+          = bill_address.label :address2, t("checkout.step1.address.address2.label")
           = bill_address.text_field :address2, { placeholder: " " }
           = f.error_message_on "bill_address.address2"
 
         %div.checkout-input.with-floating-label{ "data-controller": "floating-label"}
-          = bill_address.label :city, t("split_checkout.step1.address.city.label")
+          = bill_address.label :city, t("checkout.step1.address.city.label")
           = bill_address.text_field :city, { placeholder: " " }
           = f.error_message_on "bill_address.city"
 
         %div.checkout-input.with-floating-label{ "data-controller": "floating-label"}
-          = bill_address.label :zipcode, t("split_checkout.step1.address.zipcode.label")
+          = bill_address.label :zipcode, t("checkout.step1.address.zipcode.label")
           = bill_address.text_field :zipcode, { placeholder: " " }
           = f.error_message_on "bill_address.zipcode"
 
@@ -57,11 +57,11 @@
           - bill_address_country = @order.bill_address.country || DefaultCountry.country
 
           %div.checkout-input
-            = bill_address.label :country_id, t("split_checkout.step1.address.country_id.label")
+            = bill_address.label :country_id, t("checkout.step1.address.country_id.label")
             = bill_address.select :country_id, countries, { selected: bill_address_country.id }, { "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange" }
 
           %div.checkout-input
-            = bill_address.label :state_id, t("split_checkout.step1.address.state_id.label")
+            = bill_address.label :state_id, t("checkout.step1.address.state_id.label")
             = bill_address.select :state_id, states_for_country(bill_address_country), { selected: @order.bill_address&.state_id }, { "data-dependent-select-target": "select" }
 
         - if spree_current_user
@@ -72,7 +72,7 @@
     %div.checkout-substep{ "data-controller": "toggle shippingmethod" }
       - selected_shipping_method = @order.shipping_method&.id || params[:shipping_method_id]
       %div.checkout-title
-        = t("split_checkout.step1.shipping_info.title")
+        = t("checkout.step1.shipping_info.title")
 
       - display_ship_address = false
       - ship_method_description = nil
@@ -111,22 +111,22 @@
       %div{"data-shippingmethod-target": "shippingMethodAddress", style: "display: #{!display_ship_address || shipping_and_billing_match?(@order) ? 'none' : 'block'}" }
         = f.fields :ship_address, model: @order.ship_address do |ship_address|
           %div.checkout-input.with-floating-label{ "data-controller": "floating-label"}
-            = ship_address.label :address1, t("split_checkout.step1.address.address1.label")
+            = ship_address.label :address1, t("checkout.step1.address.address1.label")
             = ship_address.text_field :address1, { placeholder: " " }
             = f.error_message_on "ship_address.address1"
 
           %div.checkout-input.with-floating-label{ "data-controller": "floating-label"}
-            = ship_address.label :address2, t("split_checkout.step1.address.address2.label")
+            = ship_address.label :address2, t("checkout.step1.address.address2.label")
             = ship_address.text_field :address2, { placeholder: " " }
             = f.error_message_on "ship_address.address2"
 
           %div.checkout-input.with-floating-label{ "data-controller": "floating-label"}
-            = ship_address.label :city, t("split_checkout.step1.address.city.label")
+            = ship_address.label :city, t("checkout.step1.address.city.label")
             = ship_address.text_field :city, { placeholder: " " }
             = f.error_message_on "ship_address.city"
 
           %div.checkout-input.with-floating-label{ "data-controller": "floating-label"}
-            = ship_address.label :zipcode, t("split_checkout.step1.address.zipcode.label")
+            = ship_address.label :zipcode, t("checkout.step1.address.zipcode.label")
             = ship_address.text_field :zipcode, { placeholder: " " }
             = f.error_message_on "ship_address.zipcode"
 
@@ -134,11 +134,11 @@
             - ship_address_country = @order.ship_address.country || DefaultCountry.country
 
             %div.checkout-input
-              = ship_address.label :country_id, t("split_checkout.step1.address.country_id.label")
+              = ship_address.label :country_id, t("checkout.step1.address.country_id.label")
               = ship_address.select :country_id, countries, { selected: ship_address_country.id }, { "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange" }
 
             %div.checkout-input
-              = ship_address.label :state_id, t("split_checkout.step1.address.state_id.label")
+              = ship_address.label :state_id, t("checkout.step1.address.state_id.label")
               = ship_address.select :state_id, states_for_country(ship_address_country), { selected: @order.ship_address&.state_id }, { "data-dependent-select-target": "select" }
 
       - if spree_current_user
@@ -151,6 +151,6 @@
         = f.text_area :special_instructions, size: "60x4"
 
     %div.checkout-submit
-      = f.submit t("split_checkout.step1.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
+      = f.submit t("checkout.step1.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
       %a.button.cancel{href: main_app.cart_path}
-        = t("split_checkout.step1.cancel")
+        = t("checkout.step1.cancel")

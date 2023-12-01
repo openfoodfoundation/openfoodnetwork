@@ -32,21 +32,21 @@ class VoucherAdjustmentsController < BaseController
 
   def add_voucher
     if voucher_params[:voucher_code].blank?
-      @order.errors.add(:voucher_code, I18n.t('split_checkout.errors.voucher_not_found'))
+      @order.errors.add(:voucher_code, I18n.t('checkout.errors.voucher_not_found'))
       return false
     end
 
     voucher = Voucher.find_by(code: voucher_params[:voucher_code], enterprise: @order.distributor)
 
     if voucher.nil?
-      @order.errors.add(:voucher_code, I18n.t('split_checkout.errors.voucher_not_found'))
+      @order.errors.add(:voucher_code, I18n.t('checkout.errors.voucher_not_found'))
       return false
     end
 
     adjustment = voucher.create_adjustment(voucher.code, @order)
 
     unless adjustment.persisted?
-      @order.errors.add(:voucher_code, I18n.t('split_checkout.errors.add_voucher_error'))
+      @order.errors.add(:voucher_code, I18n.t('checkout.errors.add_voucher_error'))
       adjustment.errors.each { |error| @order.errors.import(error) }
       return false
     end

@@ -6,7 +6,7 @@
   = form_with url: checkout_update_path(local_assigns[:step] || checkout_step), model: @order, method: :put, data: { remote: "true" } do |f|
     %div.checkout-substep{"data-controller": "paymentmethod"}
       %div.checkout-title
-        = t("split_checkout.step2.payment_method.title")
+        = t("checkout.step2.payment_method.title")
 
       - if @order.zero_priced_order?
         %h3= t(:no_payment_required)
@@ -36,9 +36,9 @@
         = f.error_message_on :payment_method, standalone: true
 
     %div.checkout-substep
-      = t("split_checkout.step2.explaination")
+      = t("checkout.step2.explaination")
 
     %div.checkout-submit
-      = f.submit t("split_checkout.step2.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
+      = f.submit t("checkout.step2.submit"), class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
       %a.button.cancel{href: main_app.checkout_step_path(:details)}
-        = t("split_checkout.step2.cancel")
+        = t("checkout.step2.cancel")

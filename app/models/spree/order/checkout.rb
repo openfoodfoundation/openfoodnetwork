@@ -174,7 +174,7 @@ module Spree
             return unless checkout_processing
             return if payments.any?
 
-            errors.add :payment_method, I18n.t('split_checkout.errors.select_a_payment_method')
+            errors.add :payment_method, I18n.t('checkout.errors.select_a_payment_method')
             throw :halt
           end
         end
