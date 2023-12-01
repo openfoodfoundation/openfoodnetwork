@@ -1,5 +1,8 @@
 en_FR:
   language_name: "English"
+  time:
+    formats:
+      long: "%A %d %b %Y, %-k:%M"
   activerecord:
     models:
       spree/product: Product
