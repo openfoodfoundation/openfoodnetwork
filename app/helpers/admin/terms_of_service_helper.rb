@@ -7,6 +7,8 @@ module Admin
 
       return false if Spree::Config.enterprises_require_tos == false
 
+      return false if TermsOfServiceFile.current.nil?
+
       !accepted_tos?
     end
 

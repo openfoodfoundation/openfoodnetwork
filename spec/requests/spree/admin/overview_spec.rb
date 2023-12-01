@@ -13,7 +13,11 @@ describe "/admin", type: :request do
 
   describe "GET /admin" do
     before do
-      allow(TermsOfServiceFile).to receive(:updated_at).and_return(2.hours.ago)
+      mocked_tos = double(TermsOfServiceFile, updated_at: 2.hours.ago)
+      allow(TermsOfServiceFile).to receive(:current).and_return(mocked_tos)
+      # Mock current_url so we don't have to set up a complicated TermsOfServiceFile mock
+      # with attachement
+      allow(TermsOfServiceFile).to receive(:current_url).and_return("tmp/tos.pdf")
     end
 
     it "loads the dashboard page" do
@@ -53,6 +57,16 @@ describe "/admin", type: :request do
             get "/admin"
 
             expect(response.body).to include("Terms of Service have been updated")
+          end
+        end
+
+        context "when no ToS has been uploaded" do
+          it "doesn't show accept new ToS banner" do
+            allow(TermsOfServiceFile).to receive(:current).and_return(nil)
+
+            get "/admin"
+
+            expect(response.body).to_not include("Terms of Service have been updated")
           end
         end
 
