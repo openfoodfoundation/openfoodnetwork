@@ -39,12 +39,12 @@ class ProductsReflex < ApplicationReflex
 
     if product_set.save
       flash[:success] = I18n.t('admin.products_v3.bulk_update.success')
-      broadcast_admin_flashes
     elsif product_set.errors.present?
       @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
     end
 
     render_products_form
+    broadcast_admin_flashes if flash.any?
   end
 
   private
