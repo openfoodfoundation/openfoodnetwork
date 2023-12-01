@@ -1725,6 +1725,105 @@ nb:
     failed: "Utsjekk fra kassen mislyktes. Gi oss beskjed slik at vi kan behandle bestillingen din."
     payment_cancelled_due_to_stock: "Betaling kansellert: utsjekk kunne ikke fullføres på grunn av lagerproblemer."
     order_not_loaded: "Fant ingen gyldig ordre for betalingsbehandling"
+    your_details_without_number: Dine detaljer
+    payment_method_without_number: Betalingsmetode
+    order_summary_without_number: Sammendrag Bestilling
+    already_ordered:
+      cart: "handlekurv"
+      message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
+    step1:
+      contact_information:
+        title: Kontaktinformasjon
+        email:
+          label: Epost
+        phone:
+          label: Telefonnummer
+      billing_address:
+        title: Fakturaadresse
+        first_name:
+          label: Fornavn
+        last_name:
+          label: Etternavn
+      address:
+        address1:
+          label: Adresse (gate + husnummer)
+        address2:
+          label: Tilleggsinfo adresse (valgfritt)
+        city:
+          label: By
+        state_id:
+          label: Tilstand
+        zipcode:
+          label: Postnummer
+        country_id:
+          label: Land
+      shipping_info:
+        title: Leveringsinformasjon
+      submit: Neste - Betalingsmåte
+      cancel: Tilbake til Rediger kurv
+    step2:
+      payment_method:
+        title: Betalingsmetode
+      form:
+        card_number:
+          label: Kortnummer
+          placeholder: f.eks. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Måned
+        card_year:
+          label: År
+        stripe:
+          use_saved_card: Bruk lagret kort
+          use_new_card: Skriv inn kortdetaljene dine
+          save_card: Lagre kortet for fremtidig bruk
+          create_new_card: eller skriv inn nye kortdetaljer nedenfor
+      explaination: Du kan gå gjennom og bekrefte bestillingen din i neste trinn som inkluderer de endelige kostnadene.
+      submit: Neste - Bestillingssammendrag
+      cancel: Tilbake til dine detaljer
+      voucher:
+        voucher: "%{voucher_amount} Kupong"
+        apply_voucher: Bruk Kupong
+        apply: Bruk
+        placeholder: Skriv inn kupongkode
+        remove_code: Fjern kode
+        confirm_delete: Er du sikker på at du vil fjerne kupongen?
+        warning_forfeit_remaining_amount: "Merk: hvis ordretotal er mindre enn kupongen din, kan det hende du ikke kan bruke den gjenværende verdien."
+    step3:
+      delivery_details:
+        title: Leveringsdetaljer
+        edit: Rediger
+        address: Leveringsadresse
+        instructions: Anvisning
+      payment_method:
+        title: Betalingsmetode
+        edit: Rediger
+        instructions: Anvisning
+      order:
+        title: Ordredetaljer
+        edit: Rediger
+      terms_and_conditions:
+        message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
+        link_text: "Vilkår og Betingelser"
+      platform_terms_of_service:
+        message_html: "Jeg godtar plattformens %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "Jeg godtar selgerens %{terms_and_conditions_link} og plattformens %{tos_link}."
+        terms_and_conditions: "Vilkår og Betingelser"
+      submit: Fullfør bestillingen
+      cancel: Tilbake til Betalingsmåte
+    errors:
+      saving_failed: "Lagring mislyktes, vennligst oppdater de uthevede feltene."
+      terms_not_accepted: Vennligst godta vilkår og betingelser
+      required: Feltet kan ikke være tomt
+      invalid_number: "Vennligst oppgi et gyldig telefonnummer"
+      invalid_email: "Vennligst oppgi en gyldig epostadresse"
+      select_a_shipping_method: Velg en leveringsmetode
+      select_a_payment_method: Velg en betalingsmetode
+      no_shipping_methods_available: Kasse er ikke mulig på grunn av manglende leveringsalternativer. Ta kontakt med butikkeieren.
+      voucher_not_found: Ikke funnet
+      add_voucher_error: Det oppsto en feil under innlegging av kupongen
   shops:
     hubs:
       show_closed_shops: "Vis stengte butikker"
@@ -1999,106 +2098,6 @@ nb:
   checkout_total_price: Sum
   checkout_back_to_cart: "Tilbake til Handlekurv"
   cost_currency: "Kostnadsvaluta"
-  split_checkout:
-    your_details_without_number: Dine detaljer
-    payment_method_without_number: Betalingsmetode
-    order_summary_without_number: Sammendrag Bestilling
-    already_ordered:
-      cart: "handlekurv"
-      message_html: "Du har allerede en bestilling for denne bestillingsrunden. Sjekk %{cart}en for å se varene du bestilte før. Du kan også avbryte varer så lenge bestillingsrunden er åpen."
-    step1:
-      contact_information:
-        title: Kontaktinformasjon
-        email:
-          label: Epost
-        phone:
-          label: Telefonnummer
-      billing_address:
-        title: Fakturaadresse
-        first_name:
-          label: Fornavn
-        last_name:
-          label: Etternavn
-      address:
-        address1:
-          label: Adresse (gate + husnummer)
-        address2:
-          label: Tilleggsinfo adresse (valgfritt)
-        city:
-          label: By
-        state_id:
-          label: Tilstand
-        zipcode:
-          label: Postnummer
-        country_id:
-          label: Land
-      shipping_info:
-        title: Leveringsinformasjon
-      submit: Neste - Betalingsmåte
-      cancel: Tilbake til Rediger kurv
-    step2:
-      payment_method:
-        title: Betalingsmetode
-      form:
-        card_number:
-          label: Kortnummer
-          placeholder: f.eks. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: Måned
-        card_year:
-          label: År
-        stripe:
-          use_saved_card: Bruk lagret kort
-          use_new_card: Skriv inn kortdetaljene dine
-          save_card: Lagre kortet for fremtidig bruk
-          create_new_card: eller skriv inn nye kortdetaljer nedenfor
-      explaination: Du kan gå gjennom og bekrefte bestillingen din i neste trinn som inkluderer de endelige kostnadene.
-      submit: Neste - Bestillingssammendrag
-      cancel: Tilbake til dine detaljer
-      voucher:
-        voucher: "%{voucher_amount} Kupong"
-        apply_voucher: Bruk Kupong
-        apply: Bruk
-        placeholder: Skriv inn kupongkode
-        remove_code: Fjern kode
-        confirm_delete: Er du sikker på at du vil fjerne kupongen?
-        warning_forfeit_remaining_amount: "Merk: hvis ordretotal er mindre enn kupongen din, kan det hende du ikke kan bruke den gjenværende verdien."
-    step3:
-      delivery_details:
-        title: Leveringsdetaljer
-        edit: Rediger
-        address: Leveringsadresse
-        instructions: Anvisning
-      payment_method:
-        title: Betalingsmetode
-        edit: Rediger
-        instructions: Anvisning
-      order:
-        title: Ordredetaljer
-        edit: Rediger
-      terms_and_conditions:
-        message_html: "Jeg godtar selgers %{terms_and_conditions_link}."
-        link_text: "Vilkår og Betingelser"
-      platform_terms_of_service:
-        message_html: "Jeg godtar plattformens %{tos_link}."
-      all_terms_and_conditions:
-        message_html: "Jeg godtar selgerens %{terms_and_conditions_link} og plattformens %{tos_link}."
-        terms_and_conditions: "Vilkår og Betingelser"
-      submit: Fullfør bestillingen
-      cancel: Tilbake til Betalingsmåte
-    errors:
-      saving_failed: "Lagring mislyktes, vennligst oppdater de uthevede feltene."
-      terms_not_accepted: Vennligst godta vilkår og betingelser
-      required: Feltet kan ikke være tomt
-      invalid_number: "Vennligst oppgi et gyldig telefonnummer"
-      invalid_email: "Vennligst oppgi en gyldig epostadresse"
-      select_a_shipping_method: Velg en leveringsmetode
-      select_a_payment_method: Velg en betalingsmetode
-      no_shipping_methods_available: Kasse er ikke mulig på grunn av manglende leveringsalternativer. Ta kontakt med butikkeieren.
-      voucher_not_found: Ikke funnet
-      add_voucher_error: Det oppsto en feil under innlegging av kupongen
   order_paid: BETALT
   order_not_paid: IKKE BETALT
   order_total: Sum bestilling

@@ -1336,6 +1336,50 @@ nl_BE:
       cart: "winkelwagentje"
       message_html: "Je hebt al een bestelling voor deze bestellingscyclus. Controleer de %{cart} om de artikels te zien die je voordien besteld hebt. Je kan ook artikels annuleren zolang de bestellingscyclus openstaat."
     failed: "De check-out is gefaald. Laat ons weten zodat we u besteling in orde kunnen maken."
+    your_details_without_number: Jouw gegevens
+    already_ordered:
+      cart: "winkelwagentje"
+      message_html: "Je hebt al een bestelling voor deze bestellingscyclus. Controleer de %{cart} om de artikels te zien die je voordien besteld hebt. Je kan ook artikels annuleren zolang de bestellingscyclus openstaat."
+    step1:
+      contact_information:
+        email:
+          label: E-mail
+        phone:
+          label: Telefoonnummer
+      billing_address:
+        title: 'Facturatie-adres:'
+        first_name:
+          label: Voornaam
+        last_name:
+          label: Familienaam
+      address:
+        city:
+          label: Stad
+        state_id:
+          label: Staat
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Land
+      shipping_info:
+        title: Leveringsadres
+    step2:
+      form:
+        card_month:
+          label: Maand
+        card_year:
+          label: Jaar
+    step3:
+      delivery_details:
+        title: Leveringsdetails
+        edit: bewerking
+        address: Leveringsadres
+      payment_method:
+        edit: bewerking
+      order:
+        edit: bewerking
+    errors:
+      invalid_email: "Vul een geldig e-mailadres in"
   shops:
     hubs:
       show_closed_shops: "Toon de gesloten winkels"
@@ -1598,51 +1642,6 @@ nl_BE:
   checkout_total_price: Totaal
   checkout_back_to_cart: "Terug naar je Winkelwagentje"
   cost_currency: "Kosten in deviezen "
-  split_checkout:
-    your_details_without_number: Jouw gegevens
-    already_ordered:
-      cart: "winkelwagentje"
-      message_html: "Je hebt al een bestelling voor deze bestellingscyclus. Controleer de %{cart} om de artikels te zien die je voordien besteld hebt. Je kan ook artikels annuleren zolang de bestellingscyclus openstaat."
-    step1:
-      contact_information:
-        email:
-          label: E-mail
-        phone:
-          label: Telefoonnummer
-      billing_address:
-        title: 'Facturatie-adres:'
-        first_name:
-          label: Voornaam
-        last_name:
-          label: Familienaam
-      address:
-        city:
-          label: Stad
-        state_id:
-          label: Staat
-        zipcode:
-          label: Postcode
-        country_id:
-          label: Land
-      shipping_info:
-        title: Leveringsadres
-    step2:
-      form:
-        card_month:
-          label: Maand
-        card_year:
-          label: Jaar
-    step3:
-      delivery_details:
-        title: Leveringsdetails
-        edit: bewerking
-        address: Leveringsadres
-      payment_method:
-        edit: bewerking
-      order:
-        edit: bewerking
-    errors:
-      invalid_email: "Vul een geldig e-mailadres in"
   order_paid: BETAALD
   order_not_paid: NIET BETAALD
   order_total: Totale bestelling

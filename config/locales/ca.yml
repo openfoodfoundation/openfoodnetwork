@@ -1575,6 +1575,84 @@ ca:
       terms_and_conditions: "Termes i condicions"
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
     payment_cancelled_due_to_stock: "Pagament cancel·lat: el pagament no s’ha pogut completar a causa de problemes d’estoc."
+    your_details_without_number: Els teus detalls
+    payment_method_without_number: Mètode de pagament
+    order_summary_without_number: Resum de la comanda
+    already_ordered:
+      cart: "cistella"
+      message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
+    step1:
+      contact_information:
+        title: Informació de contacte
+        email:
+          label: Correu electrònic
+        phone:
+          label: 'Número de telèfon '
+      billing_address:
+        title: Adreça de facturació
+        first_name:
+          label: Nom
+        last_name:
+          label: Cognoms
+      address:
+        address1:
+          label: Adreça (carrer i número)
+        address2:
+          label: 'Informació addicional de l''adreça (opcional) '
+        city:
+          label: Municipi
+        state_id:
+          label: Estat
+        zipcode:
+          label: Codi postal
+        country_id:
+          label: País
+      shipping_info:
+        title: Informació d'enviament
+      submit: Següent - Mètode de pagament
+      cancel: Tornar a editar la cistella
+    step2:
+      payment_method:
+        title: Mètode de pagament
+      form:
+        card_number:
+          label: Número de targeta
+          placeholder: P. e.  4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mes
+        card_year:
+          label: Any
+        stripe:
+          use_saved_card: Feu servir la targeta guardada
+          use_new_card: Introduïu les credencials de la vostra targeta
+          save_card: Guardeu la targeta per a fer-la servir en el futur
+          create_new_card: o introduïu les dades d'una nova targeta
+      explaination: Podreu revisar i confirmar la vostra comanda en el següent pas, on s'informarà dels costos totals
+      submit: Següent - Resum de la comanda
+      cancel: Tornar a Les teves dades
+    step3:
+      delivery_details:
+        title: Detalls de lliurament
+        edit: Editar
+        address: Adreça de lliurament
+      payment_method:
+        title: Mètode de pagament
+        edit: Editar
+      order:
+        edit: Editar
+      terms_and_conditions:
+        message_html: "Accepto el %{terms_and_conditions_link} del venedor."
+        link_text: "Termes i condicions"
+      platform_terms_of_service:
+        message_html: "Accepto els %{tos_link} de la plataforma."
+      all_terms_and_conditions:
+        message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
+        terms_and_conditions: "Termes i condicions"
+    errors:
+      invalid_email: "siusplau, introduïu una adreça de correu electrònic vàlida"
+      voucher_not_found: No trobat
   shops:
     hubs:
       show_closed_shops: "Mostra les botigues tancades"
@@ -1843,85 +1921,6 @@ ca:
   checkout_total_price: Total
   checkout_back_to_cart: "Tornar a la cistella"
   cost_currency: "Moneda del cost"
-  split_checkout:
-    your_details_without_number: Els teus detalls
-    payment_method_without_number: Mètode de pagament
-    order_summary_without_number: Resum de la comanda
-    already_ordered:
-      cart: "cistella"
-      message_html: "Ja teniu una comanda per a aquest cicle de comanda. Consulteu %{cart} per veure els articles que heu demanat anteriorment. També podeu cancel·lar articles sempre que el cicle de comanda estigui obert."
-    step1:
-      contact_information:
-        title: Informació de contacte
-        email:
-          label: Correu electrònic
-        phone:
-          label: 'Número de telèfon '
-      billing_address:
-        title: Adreça de facturació
-        first_name:
-          label: Nom
-        last_name:
-          label: Cognoms
-      address:
-        address1:
-          label: Adreça (carrer i número)
-        address2:
-          label: 'Informació addicional de l''adreça (opcional) '
-        city:
-          label: Municipi
-        state_id:
-          label: Estat
-        zipcode:
-          label: Codi postal
-        country_id:
-          label: País
-      shipping_info:
-        title: Informació d'enviament
-      submit: Següent - Mètode de pagament
-      cancel: Tornar a editar la cistella
-    step2:
-      payment_method:
-        title: Mètode de pagament
-      form:
-        card_number:
-          label: Número de targeta
-          placeholder: P. e.  4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: Mes
-        card_year:
-          label: Any
-        stripe:
-          use_saved_card: Feu servir la targeta guardada
-          use_new_card: Introduïu les credencials de la vostra targeta
-          save_card: Guardeu la targeta per a fer-la servir en el futur
-          create_new_card: o introduïu les dades d'una nova targeta
-      explaination: Podreu revisar i confirmar la vostra comanda en el següent pas, on s'informarà dels costos totals
-      submit: Següent - Resum de la comanda
-      cancel: Tornar a Les teves dades
-    step3:
-      delivery_details:
-        title: Detalls de lliurament
-        edit: Editar
-        address: Adreça de lliurament
-      payment_method:
-        title: Mètode de pagament
-        edit: Editar
-      order:
-        edit: Editar
-      terms_and_conditions:
-        message_html: "Accepto el %{terms_and_conditions_link} del venedor."
-        link_text: "Termes i condicions"
-      platform_terms_of_service:
-        message_html: "Accepto els %{tos_link} de la plataforma."
-      all_terms_and_conditions:
-        message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
-        terms_and_conditions: "Termes i condicions"
-    errors:
-      invalid_email: "siusplau, introduïu una adreça de correu electrònic vàlida"
-      voucher_not_found: No trobat
   order_paid: PAGAT
   order_not_paid: NO PAGAT
   order_total: Total de la comanda

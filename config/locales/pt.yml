@@ -1360,6 +1360,54 @@ pt:
       link_text: "Termos e Condições"
     all_terms_and_conditions:
       terms_and_conditions: "Termos e Condições"
+    your_details_without_number: Os seus detalhes
+    already_ordered:
+      cart: "carrinho"
+      message_html: "Já tem uma encomenda para este ciclo de encomendas. Verifique o %{cart} para ver os itens já encomendados. Também pode cancelar itens enquanto o ciclo estiver aberto."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: Número de telefone
+      billing_address:
+        title: Morada de faturação
+        first_name:
+          label: Primeiro Nome
+        last_name:
+          label: Último Nome
+      address:
+        city:
+          label: Cidade
+        state_id:
+          label: Estado
+        zipcode:
+          label: Código postal
+        country_id:
+          label: País
+      shipping_info:
+        title: Informações para envio
+    step2:
+      form:
+        card_month:
+          label: Mês
+        card_year:
+          label: Ano
+    step3:
+      delivery_details:
+        title: Detalhes da entrega
+        edit: Editar
+        address: Morada de entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
+      terms_and_conditions:
+        link_text: "Termos e Condições"
+      all_terms_and_conditions:
+        terms_and_conditions: "Termos e Condições"
+    errors:
+      invalid_email: "Por favor usar um endereço de email válido"
   shops:
     hubs:
       show_closed_shops: "Mostrar lojas fechadas"
@@ -1614,55 +1662,6 @@ pt:
   checkout_total_price: Total
   checkout_back_to_cart: "Voltar ao Carrinho"
   cost_currency: "Moeda de Custo"
-  split_checkout:
-    your_details_without_number: Os seus detalhes
-    already_ordered:
-      cart: "carrinho"
-      message_html: "Já tem uma encomenda para este ciclo de encomendas. Verifique o %{cart} para ver os itens já encomendados. Também pode cancelar itens enquanto o ciclo estiver aberto."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: Número de telefone
-      billing_address:
-        title: Morada de faturação
-        first_name:
-          label: Primeiro Nome
-        last_name:
-          label: Último Nome
-      address:
-        city:
-          label: Cidade
-        state_id:
-          label: Estado
-        zipcode:
-          label: Código postal
-        country_id:
-          label: País
-      shipping_info:
-        title: Informações para envio
-    step2:
-      form:
-        card_month:
-          label: Mês
-        card_year:
-          label: Ano
-    step3:
-      delivery_details:
-        title: Detalhes da entrega
-        edit: Editar
-        address: Morada de entrega
-      payment_method:
-        edit: Editar
-      order:
-        edit: Editar
-      terms_and_conditions:
-        link_text: "Termos e Condições"
-      all_terms_and_conditions:
-        terms_and_conditions: "Termos e Condições"
-    errors:
-      invalid_email: "Por favor usar um endereço de email válido"
   order_paid: PAGO
   order_not_paid: NÃO PAGO
   order_total: Total da encomenda

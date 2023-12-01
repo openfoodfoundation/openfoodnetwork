@@ -1538,6 +1538,91 @@ ko:
     failed: "체크아웃에 실패했습니다. 우리가 당신의 주문을 처리할 수 있도록 우리에게 알려주세요."
     payment_cancelled_due_to_stock: "결제 취소: 재고 문제로 인해 체크아웃을 완료할 수 없습니다."
     order_not_loaded: "체크아웃 처리에 대한 올바른 주문을 찾을 수 없습니다."
+    your_details_without_number: 세부 사항
+    payment_method_without_number: 결제 방식
+    order_summary_without_number: 주문 요약
+    already_ordered:
+      cart: "카트"
+      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 한 항목을 취소할 수도 있습니다."
+    step1:
+      contact_information:
+        email:
+          label: 이메일
+        phone:
+          label: 전화번호
+      billing_address:
+        title: '청구서 발송지 :'
+        first_name:
+          label: 이름
+        last_name:
+          label: 성
+      address:
+        address1:
+          label: 주소 (도로명 + 집 번혼)
+        address2:
+          label: 추가 주소 정보(선택 사항)
+        city:
+          label: 시
+        state_id:
+          label: 상태
+        zipcode:
+          label: 우편번호
+        country_id:
+          label: 나라
+      shipping_info:
+        title: 배송 정보
+      submit: 다음 - 결제 방식
+      cancel: 장바구니 편집으로 돌아가기
+    step2:
+      payment_method:
+        title: 결제 방식
+      form:
+        card_number:
+          label: 카드 번호
+          placeholder: 예. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: 달
+        card_year:
+          label: Year
+        stripe:
+          use_saved_card: 저장된 카드 사용
+          use_new_card: 카드 식별자 입력
+          save_card: 나중에 사용할 수 있도록 카드 저장
+          create_new_card: 또는 아래에 새 카드 세부 정보를 입력
+      explaination: 최종 비용이 포함된 다음 단계에서 주문을 검토하고 확인할 수 있습니다.
+      submit: 다음 - 주문 요약
+      cancel: 세부 사항으로 돌아가기
+    step3:
+      delivery_details:
+        title: 배달 세부 사항
+        edit: 편집
+        address: 배달 주소
+      payment_method:
+        title: 결제 방식
+        edit: 편집
+      order:
+        edit: 편집
+      terms_and_conditions:
+        message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
+        link_text: "조건"
+      platform_terms_of_service:
+        message_html: "플랫폼 %{tos_link}에 대하여 동의합니다."
+      all_terms_and_conditions:
+        message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
+        terms_and_conditions: "조건"
+      submit: 주문 완료
+      cancel: 결제 방식으로 돌아가기
+    errors:
+      saving_failed: "저장하지 못했습니다. 강조 표시된 필드를 업데이트하세요."
+      terms_not_accepted: 약관에 동의하십시오.
+      required: 필드는 비워 둘 수 없습니다.
+      invalid_number: "올바른 전화 번호를 입력하십시오."
+      invalid_email: "올바른 이메일 주소를 입력하십시오."
+      select_a_shipping_method: 전송 방법을 선택하세요.
+      select_a_payment_method: 결제 방법을 선택하세요.
+      voucher_not_found: 찾을 수 없습니다
   shops:
     hubs:
       show_closed_shops: "휴무점 표시"
@@ -1807,92 +1892,6 @@ ko:
   checkout_total_price: 총합
   checkout_back_to_cart: "카트로 돌아가기"
   cost_currency: "가격 통화"
-  split_checkout:
-    your_details_without_number: 세부 사항
-    payment_method_without_number: 결제 방식
-    order_summary_without_number: 주문 요약
-    already_ordered:
-      cart: "카트"
-      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 한 항목을 취소할 수도 있습니다."
-    step1:
-      contact_information:
-        email:
-          label: 이메일
-        phone:
-          label: 전화번호
-      billing_address:
-        title: '청구서 발송지 :'
-        first_name:
-          label: 이름
-        last_name:
-          label: 성
-      address:
-        address1:
-          label: 주소 (도로명 + 집 번혼)
-        address2:
-          label: 추가 주소 정보(선택 사항)
-        city:
-          label: 시
-        state_id:
-          label: 상태
-        zipcode:
-          label: 우편번호
-        country_id:
-          label: 나라
-      shipping_info:
-        title: 배송 정보
-      submit: 다음 - 결제 방식
-      cancel: 장바구니 편집으로 돌아가기
-    step2:
-      payment_method:
-        title: 결제 방식
-      form:
-        card_number:
-          label: 카드 번호
-          placeholder: 예. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: 달
-        card_year:
-          label: Year
-        stripe:
-          use_saved_card: 저장된 카드 사용
-          use_new_card: 카드 식별자 입력
-          save_card: 나중에 사용할 수 있도록 카드 저장
-          create_new_card: 또는 아래에 새 카드 세부 정보를 입력
-      explaination: 최종 비용이 포함된 다음 단계에서 주문을 검토하고 확인할 수 있습니다.
-      submit: 다음 - 주문 요약
-      cancel: 세부 사항으로 돌아가기
-    step3:
-      delivery_details:
-        title: 배달 세부 사항
-        edit: 편집
-        address: 배달 주소
-      payment_method:
-        title: 결제 방식
-        edit: 편집
-      order:
-        edit: 편집
-      terms_and_conditions:
-        message_html: "판매자의 %{terms_and_conditions_link} 이용약관에 대하여 동의합니다."
-        link_text: "조건"
-      platform_terms_of_service:
-        message_html: "플랫폼 %{tos_link}에 대하여 동의합니다."
-      all_terms_and_conditions:
-        message_html: "판매자 %{terms_and_conditions_link} 이용약관과 플랫폼 %{tos_link}에 대하여 동의합니다."
-        terms_and_conditions: "조건"
-      submit: 주문 완료
-      cancel: 결제 방식으로 돌아가기
-    errors:
-      saving_failed: "저장하지 못했습니다. 강조 표시된 필드를 업데이트하세요."
-      terms_not_accepted: 약관에 동의하십시오.
-      required: 필드는 비워 둘 수 없습니다.
-      invalid_number: "올바른 전화 번호를 입력하십시오."
-      invalid_email: "올바른 이메일 주소를 입력하십시오."
-      select_a_shipping_method: 전송 방법을 선택하세요.
-      select_a_payment_method: 결제 방법을 선택하세요.
-      voucher_not_found: 찾을 수 없습니다
   order_paid: 유료
   order_not_paid: 무료
   order_total: 총 주문

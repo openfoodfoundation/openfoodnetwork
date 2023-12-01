@@ -1814,6 +1814,108 @@ en:
     failed: "The checkout failed. Please let us know so that we can process your order."
     payment_cancelled_due_to_stock: "Payment cancelled: the checkout could not be completed due to stock issues."
     order_not_loaded: "No valid order found for checkout processing"
+    your_details_without_number: Your details
+    payment_method_without_number: Payment method
+    order_summary_without_number: Order summary
+    already_ordered:
+      cart: "cart"
+      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    step1:
+      contact_information:
+        title: Contact information
+        email:
+          label: Email
+        phone:
+          label: Phone number
+      billing_address:
+        title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
+      address:
+        address1:
+          label: Address (Street + House Number)
+        address2:
+          label: Additional address info (optional)
+        city:
+          label: City
+        state_id:
+          label: State
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Country
+      shipping_info:
+          title: Shipping info
+      submit: Next - Payment method
+      cancel: Back to Edit basket
+    step2:
+      payment_method:
+        title: Payment method
+      form:
+        card_number:
+          label: Card number
+          placeholder: e.g. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+          placeholder: 123
+        card_month:
+          label: Month
+          placeholder: 01
+        card_year:
+          label: Year
+          placeholder: 2020
+        stripe:
+          use_saved_card: Use saved card
+          use_new_card: Enter your card identifiers
+          save_card: Save card for future use
+          create_new_card: or enter new card details below
+      explaination: You can review and confirm your order in the next step which includes the final costs.
+      submit: Next - Order summary
+      cancel: Back to Your details
+      voucher:
+        voucher: "%{voucher_amount} Voucher"
+        apply_voucher: Apply voucher
+        apply: Apply
+        placeholder: Enter voucher code
+        remove_code: Remove code
+        confirm_delete: Are you sure you want to remove the voucher?
+        warning_forfeit_remaining_amount: "Note: if your order total is less than your voucher you may not be able to spend the remaining value."
+    step3:
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+        instructions: Instructions
+      payment_method:
+        title: Payment method
+        edit: Edit
+        instructions: Instructions
+      order:
+        title: Order details
+        edit: Edit
+      terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link}."
+        link_text: "Terms and Conditions"
+      platform_terms_of_service:
+        message_html: "I agree to the platform %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
+        terms_and_conditions: "Terms and Conditions"
+      submit: Complete order
+      cancel: Back to Payment method
+    errors:
+      saving_failed: "Saving failed, please update the highlighted fields."
+      terms_not_accepted: Please accept Terms and Conditions
+      required: Field cannot be blank
+      invalid_number: "Please enter a valid phone number"
+      invalid_email: "Please enter a valid email address"
+      select_a_shipping_method: Select a shipping method
+      select_a_payment_method: Select a payment method
+      no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
+      voucher_not_found: Not found
+      add_voucher_error: There was an error while adding the voucher
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -2106,110 +2208,6 @@ en:
   checkout_total_price: Total
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
-
-  split_checkout:
-    your_details_without_number: Your details
-    payment_method_without_number: Payment method
-    order_summary_without_number: Order summary
-    already_ordered:
-      cart: "cart"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
-    step1:
-      contact_information:
-        title: Contact information
-        email:
-          label: Email
-        phone:
-          label: Phone number
-      billing_address:
-        title: Billing address
-        first_name:
-          label: First Name
-        last_name:
-          label: Last Name
-      address:
-        address1:
-          label: Address (Street + House Number)
-        address2:
-          label: Additional address info (optional)
-        city:
-          label: City
-        state_id:
-          label: State
-        zipcode:
-          label: Postcode
-        country_id:
-          label: Country
-      shipping_info:
-          title: Shipping info
-      submit: Next - Payment method
-      cancel: Back to Edit basket
-    step2:
-      payment_method:
-        title: Payment method
-      form:
-        card_number:
-          label: Card number
-          placeholder: e.g. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-          placeholder: 123
-        card_month:
-          label: Month
-          placeholder: 01
-        card_year:
-          label: Year
-          placeholder: 2020
-        stripe:
-          use_saved_card: Use saved card
-          use_new_card: Enter your card identifiers
-          save_card: Save card for future use
-          create_new_card: or enter new card details below
-      explaination: You can review and confirm your order in the next step which includes the final costs.
-      submit: Next - Order summary
-      cancel: Back to Your details
-      voucher:
-        voucher: "%{voucher_amount} Voucher"
-        apply_voucher: Apply voucher
-        apply: Apply
-        placeholder: Enter voucher code
-        remove_code: Remove code
-        confirm_delete: Are you sure you want to remove the voucher?
-        warning_forfeit_remaining_amount: "Note: if your order total is less than your voucher you may not be able to spend the remaining value."
-    step3:
-      delivery_details:
-        title: Delivery details
-        edit: Edit
-        address: Delivery address
-        instructions: Instructions
-      payment_method:
-        title: Payment method
-        edit: Edit
-        instructions: Instructions
-      order:
-        title: Order details
-        edit: Edit
-      terms_and_conditions:
-        message_html: "I agree to the seller's %{terms_and_conditions_link}."
-        link_text: "Terms and Conditions"
-      platform_terms_of_service:
-        message_html: "I agree to the platform %{tos_link}."
-      all_terms_and_conditions:
-        message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}."
-        terms_and_conditions: "Terms and Conditions"
-      submit: Complete order
-      cancel: Back to Payment method
-    errors:
-      saving_failed: "Saving failed, please update the highlighted fields."
-      terms_not_accepted: Please accept Terms and Conditions
-      required: Field cannot be blank
-      invalid_number: "Please enter a valid phone number"
-      invalid_email: "Please enter a valid email address"
-      select_a_shipping_method: Select a shipping method
-      select_a_payment_method: Select a payment method
-      no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
-      voucher_not_found: Not found
-      add_voucher_error: There was an error while adding the voucher
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order

@@ -1730,6 +1730,105 @@ hi:
     failed: "चेकआउट विफल हुआ। कृपया हमें बताएं ताकि हम आपके ऑर्डर को प्रॉसेस कर सकें।"
     payment_cancelled_due_to_stock: "भुगतान रद्द किया गया: स्टॉक समस्याओं के कारण चेकआउट पूरा नहीं किया जा सका।"
     order_not_loaded: "चेकआउट प्रॉसेसिंग के लिए कोई मान्य ऑर्डर नहीं मिला"
+    your_details_without_number: आपकी जानकारी
+    payment_method_without_number: भुगतान विधि
+    order_summary_without_number: ऑर्डर का सारांश
+    already_ordered:
+      cart: "कार्ट"
+      message_html: "आपकी इस ऑर्डर साइकल में पहले से ही एक ऑर्डर है। आपके द्वारा पहले ऑर्डर किए गए आइटम देखने के लिए %{cart} को चेक करें। जब तक ऑर्डर साइकल खुली रहती है, तब तक आप आइटम रद्द भी कर सकते हैं।"
+    step1:
+      contact_information:
+        title: संपर्क जानकारी
+        email:
+          label: ईमेल
+        phone:
+          label: फ़ोन नंबर
+      billing_address:
+        title: बिलिंग पता
+        first_name:
+          label: पहला नाम
+        last_name:
+          label: अंतिम नाम
+      address:
+        address1:
+          label: पता (गली + मकान नंबर)
+        address2:
+          label: पते की अतिरिक्त जानकारी (वैकल्पिक)
+        city:
+          label: शहर
+        state_id:
+          label: राज्य
+        zipcode:
+          label: पोस्टकोड
+        country_id:
+          label: देश
+      shipping_info:
+        title: शिपिंग की जानकारी
+      submit: अगला - भुगतान की विधि
+      cancel: बास्केट एडिट करने के लिए वापस जाएं
+    step2:
+      payment_method:
+        title: भुगतान विधि
+      form:
+        card_number:
+          label: कार्ड नंबर
+          placeholder: उदाहरण 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: महीना
+        card_year:
+          label: वर्ष
+        stripe:
+          use_saved_card: सेव किए गए कार्ड का इस्तेमाल करें
+          use_new_card: अपना कार्ड की पहचानकर्ता एंटर करें
+          save_card: भविष्य में उपयोग के लिए कार्ड सेव करें
+          create_new_card: या नीचे नए कार्ड का विवरण एंटर करें
+      explaination: आप अगले चरण में अपने ऑर्डर को रिव्यू और पुष्टि कर सकते हैं जिसमें अंतिम लागत शामिल है।
+      submit: अगला - ऑर्डर सारांश
+      cancel: अपने विवरण पर वापस जाएं
+      voucher:
+        voucher: "%{voucher_amount} वाउचर"
+        apply_voucher: वाउचर लागू करें
+        apply: लागू करें
+        placeholder: वाउचर कोड डालें
+        remove_code: कोड हटाएं
+        confirm_delete: क्या आप वाकई वाउचर हटाना चाहते हैं?
+        warning_forfeit_remaining_amount: "ध्यान दें: यदि आपके ऑर्डर का कुल योग आपके वाउचर से कम है, तो हो सकता है कि आप बाकी बची वैल्यू को खर्च न कर पाएं।"
+    step3:
+      delivery_details:
+        title: डिलीवरी का विवरण
+        edit: एडिट करें
+        address: डिलीवरी का पता
+        instructions: निर्देश
+      payment_method:
+        title: भुगतान विधि
+        edit: एडिट करें
+        instructions: निर्देश
+      order:
+        title: ऑर्डर का विवरण
+        edit: एडिट करें
+      terms_and_conditions:
+        message_html: "मैं विक्रेता के %{terms_and_conditions_link} से सहमत हूँ।"
+        link_text: "नियम और शर्तें"
+      platform_terms_of_service:
+        message_html: "मैं प्लेटफॉर्म %{tos_link} से सहमत हूँ।"
+      all_terms_and_conditions:
+        message_html: "मैं विक्रेता के %{terms_and_conditions_link} और प्लेटफॉर्म %{tos_link} से सहमत हूँ।"
+        terms_and_conditions: "नियम और शर्तें"
+      submit: ऑर्डर पूरा हुआ
+      cancel: भुगतान विधि पर वापस जाएं
+    errors:
+      saving_failed: "सेव करने में विफल हुआ, कृपया हाइलाइट किए गए फ़ील्ड अपडेट करें।"
+      terms_not_accepted: कृपया नियम और शर्तें स्वीकार करें
+      required: फ़ील्ड खाली नहीं हो सकता
+      invalid_number: "कृपया एक वैलिड फ़ोन नंबर एंटर करें"
+      invalid_email: "कृपया वैलिड ईमेल पता एंटर करें"
+      select_a_shipping_method: शिपिंग विधि चुनें
+      select_a_payment_method: भुगतान विधि चुनें
+      no_shipping_methods_available: शिपिंग विकल्पों की अनुपस्थिति के कारण चेकआउट संभव नहीं है। कृपया शॉप के मालिक से संपर्क करें।
+      voucher_not_found: नहीं मिला
+      add_voucher_error: वाउचर जोड़ते समय एक त्रुटि हुई
   shops:
     hubs:
       show_closed_shops: "बंद दुकानें दिखाएं"
@@ -2004,106 +2103,6 @@ hi:
   checkout_total_price: कुल
   checkout_back_to_cart: "कार्ट में वापस जाएं"
   cost_currency: "कॉस्ट करेंसी"
-  split_checkout:
-    your_details_without_number: आपकी जानकारी
-    payment_method_without_number: भुगतान विधि
-    order_summary_without_number: ऑर्डर का सारांश
-    already_ordered:
-      cart: "कार्ट"
-      message_html: "आपकी इस ऑर्डर साइकल में पहले से ही एक ऑर्डर है। आपके द्वारा पहले ऑर्डर किए गए आइटम देखने के लिए %{cart} को चेक करें। जब तक ऑर्डर साइकल खुली रहती है, तब तक आप आइटम रद्द भी कर सकते हैं।"
-    step1:
-      contact_information:
-        title: संपर्क जानकारी
-        email:
-          label: ईमेल
-        phone:
-          label: फ़ोन नंबर
-      billing_address:
-        title: बिलिंग पता
-        first_name:
-          label: पहला नाम
-        last_name:
-          label: अंतिम नाम
-      address:
-        address1:
-          label: पता (गली + मकान नंबर)
-        address2:
-          label: पते की अतिरिक्त जानकारी (वैकल्पिक)
-        city:
-          label: शहर
-        state_id:
-          label: राज्य
-        zipcode:
-          label: पोस्टकोड
-        country_id:
-          label: देश
-      shipping_info:
-        title: शिपिंग की जानकारी
-      submit: अगला - भुगतान की विधि
-      cancel: बास्केट एडिट करने के लिए वापस जाएं
-    step2:
-      payment_method:
-        title: भुगतान विधि
-      form:
-        card_number:
-          label: कार्ड नंबर
-          placeholder: उदाहरण 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: महीना
-        card_year:
-          label: वर्ष
-        stripe:
-          use_saved_card: सेव किए गए कार्ड का इस्तेमाल करें
-          use_new_card: अपना कार्ड की पहचानकर्ता एंटर करें
-          save_card: भविष्य में उपयोग के लिए कार्ड सेव करें
-          create_new_card: या नीचे नए कार्ड का विवरण एंटर करें
-      explaination: आप अगले चरण में अपने ऑर्डर को रिव्यू और पुष्टि कर सकते हैं जिसमें अंतिम लागत शामिल है।
-      submit: अगला - ऑर्डर सारांश
-      cancel: अपने विवरण पर वापस जाएं
-      voucher:
-        voucher: "%{voucher_amount} वाउचर"
-        apply_voucher: वाउचर लागू करें
-        apply: लागू करें
-        placeholder: वाउचर कोड डालें
-        remove_code: कोड हटाएं
-        confirm_delete: क्या आप वाकई वाउचर हटाना चाहते हैं?
-        warning_forfeit_remaining_amount: "ध्यान दें: यदि आपके ऑर्डर का कुल योग आपके वाउचर से कम है, तो हो सकता है कि आप बाकी बची वैल्यू को खर्च न कर पाएं।"
-    step3:
-      delivery_details:
-        title: डिलीवरी का विवरण
-        edit: एडिट करें
-        address: डिलीवरी का पता
-        instructions: निर्देश
-      payment_method:
-        title: भुगतान विधि
-        edit: एडिट करें
-        instructions: निर्देश
-      order:
-        title: ऑर्डर का विवरण
-        edit: एडिट करें
-      terms_and_conditions:
-        message_html: "मैं विक्रेता के %{terms_and_conditions_link} से सहमत हूँ।"
-        link_text: "नियम और शर्तें"
-      platform_terms_of_service:
-        message_html: "मैं प्लेटफॉर्म %{tos_link} से सहमत हूँ।"
-      all_terms_and_conditions:
-        message_html: "मैं विक्रेता के %{terms_and_conditions_link} और प्लेटफॉर्म %{tos_link} से सहमत हूँ।"
-        terms_and_conditions: "नियम और शर्तें"
-      submit: ऑर्डर पूरा हुआ
-      cancel: भुगतान विधि पर वापस जाएं
-    errors:
-      saving_failed: "सेव करने में विफल हुआ, कृपया हाइलाइट किए गए फ़ील्ड अपडेट करें।"
-      terms_not_accepted: कृपया नियम और शर्तें स्वीकार करें
-      required: फ़ील्ड खाली नहीं हो सकता
-      invalid_number: "कृपया एक वैलिड फ़ोन नंबर एंटर करें"
-      invalid_email: "कृपया वैलिड ईमेल पता एंटर करें"
-      select_a_shipping_method: शिपिंग विधि चुनें
-      select_a_payment_method: भुगतान विधि चुनें
-      no_shipping_methods_available: शिपिंग विकल्पों की अनुपस्थिति के कारण चेकआउट संभव नहीं है। कृपया शॉप के मालिक से संपर्क करें।
-      voucher_not_found: नहीं मिला
-      add_voucher_error: वाउचर जोड़ते समय एक त्रुटि हुई
   order_paid: भुगतान किया
   order_not_paid: भुगतान नहीं किया गया
   order_total: कुल ऑर्डर

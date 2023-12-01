@@ -1309,6 +1309,44 @@ en_PH:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
     failed: "The checkout failed. Please let us know so that we can process your order."
+    your_details_without_number: Your details
+    already_ordered:
+      cart: "cart"
+      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: Phone number
+      billing_address:
+        title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
+      address:
+        city:
+          label: City
+        state_id:
+          label: Province
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Country
+      shipping_info:
+        title: Shipping info
+    step3:
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+      payment_method:
+        edit: Edit
+      order:
+        edit: Edit
+    errors:
+      invalid_email: "Please enter a valid email address"
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1562,45 +1600,6 @@ en_PH:
   checkout_total_price: Total
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
-  split_checkout:
-    your_details_without_number: Your details
-    already_ordered:
-      cart: "cart"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: Phone number
-      billing_address:
-        title: Billing address
-        first_name:
-          label: First Name
-        last_name:
-          label: Last Name
-      address:
-        city:
-          label: City
-        state_id:
-          label: Province
-        zipcode:
-          label: Postcode
-        country_id:
-          label: Country
-      shipping_info:
-        title: Shipping info
-    step3:
-      delivery_details:
-        title: Delivery details
-        edit: Edit
-        address: Delivery address
-      payment_method:
-        edit: Edit
-      order:
-        edit: Edit
-    errors:
-      invalid_email: "Please enter a valid email address"
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order

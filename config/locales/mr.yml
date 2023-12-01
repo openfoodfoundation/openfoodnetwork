@@ -1733,6 +1733,105 @@ mr:
     failed: "चेकआउट अयशस्वी झाले. कृपया आम्हाला कळवा जेणेकरून आम्ही तुमच्या ऑर्डरवर प्रक्रिया करू शकू."
     payment_cancelled_due_to_stock: "पेमेंट रद्द केले: स्टॉक समस्यांमुळे चेकआउट पूर्ण होऊ शकले नाही."
     order_not_loaded: "चेकआउट प्रक्रियेसाठी कोणतीही वैध ऑर्डर आढळली नाही"
+    your_details_without_number: तुमचा तपशील
+    payment_method_without_number: पेमेंट पद्धत
+    order_summary_without_number: ऑर्डर सारांश
+    already_ordered:
+      cart: "कार्ट"
+      message_html: "तुमच्याकडे या ऑर्डर सायकलसाठी आधीच एक ऑर्डर आहे. तुम्ही आधी ऑर्डर केलेली वस्तू पाहण्यासाठी %{cart} पहा. ऑर्डर सायकल चालू असेपर्यंत तुम्ही वस्तू रद्द करू शकता."
+    step1:
+      contact_information:
+        title: संपर्क माहिती
+        email:
+          label: ईमेल
+        phone:
+          label: फोन क्रमांक
+      billing_address:
+        title: बिलाचा पत्ता
+        first_name:
+          label: पहिले नाव
+        last_name:
+          label: शेवटचे नाव
+      address:
+        address1:
+          label: पत्ता (रस्ता + घर क्रमांक)
+        address2:
+          label: अतिरिक्त पत्त्याची माहिती (पर्यायी)
+        city:
+          label: शहर
+        state_id:
+          label: राज्य
+        zipcode:
+          label: पिनकोड
+        country_id:
+          label: देश
+      shipping_info:
+        title: शिपिंग माहिती
+      submit: पुढील - पेमेंट पद्धत
+      cancel: बास्केट संपादन कडे परत जा
+    step2:
+      payment_method:
+        title: पेमेंट पद्धत
+      form:
+        card_number:
+          label: कार्ड क्रमांक
+          placeholder: उदा ४२४२ ४२४२ ४२४२ ४२४२
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: महिना
+        card_year:
+          label: वर्ष
+        stripe:
+          use_saved_card: जतन केलेले कार्ड वापरा
+          use_new_card: तुमचे कार्ड आयडेंटिफायर एंटर करा
+          save_card: भविष्यातील वापरासाठी कार्ड जतन करा
+          create_new_card: किंवा खाली नवीन कार्ड तपशील प्रविष्ट करा
+      explaination: 'तुम्ही तुमच्या ऑर्डरचे पुनरावलोकन करू शकता आणि पुढील चरणात अंतिम किमतीसह ऑर्डरची  पुष्टी करू शकता '
+      submit: पुढील - ऑर्डर सारांश
+      cancel: तुमच्या तपशीलांकडे परत
+      voucher:
+        voucher: "%{voucher_amount} व्हाउचर"
+        apply_voucher: व्हाउचर लागू करा
+        apply: अर्ज करा
+        placeholder: व्हाउचर कोड एंटर करा
+        remove_code: कोड काढा
+        confirm_delete: तुम्हाला खात्री आहे की तुम्ही व्हाउचर काढू इच्छिता?
+        warning_forfeit_remaining_amount: "टीप: तुमच्या ऑर्डरची एकूण रक्कम तुमच्या व्हाउचरपेक्षा कमी असल्यास तुम्ही उर्वरित मूल्य खर्च करू शकणार नाही."
+    step3:
+      delivery_details:
+        title: डिलिव्हरी तपशील
+        edit: सुधारणे
+        address: डिलिव्हरी पत्ता
+        instructions: सूचना
+      payment_method:
+        title: पेमेंट पद्धत
+        edit: सुधारणे
+        instructions: सूचना
+      order:
+        title: ऑर्डर तपशील
+        edit: सुधारणे
+      terms_and_conditions:
+        message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} शी सहमत आहे."
+        link_text: "अटी आणि शर्ती"
+      platform_terms_of_service:
+        message_html: "मी %{tos_link} प्लॅटफॉर्मशी सहमत आहे."
+      all_terms_and_conditions:
+        message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} आणि %{tos_link} प्लॅटफॉर्मशी सहमत आहे."
+        terms_and_conditions: "अटी आणि शर्ती"
+      submit: ऑर्डर पूर्ण करा
+      cancel: पेमेंट पद्धतीकडे परत जा
+    errors:
+      saving_failed: "जतन करणे अयशस्वी, कृपया हायलाइट केलेले फील्ड अद्यतनित करा."
+      terms_not_accepted: कृपया अटी व शर्ती स्वीकारा
+      required: फील्ड रिक्त असू शकत नाही
+      invalid_number: "कृपया वैध दूरध्वनी क्रमांक टाका"
+      invalid_email: "कृपया वैध ईमेल पत्ता प्रविष्ट करा"
+      select_a_shipping_method: शिपिंग पद्धत निवडा
+      select_a_payment_method: पेमेंट पद्धत निवडा
+      no_shipping_methods_available: शिपिंग पर्यायांच्या अनुपस्थितीमुळे चेकआउट शक्य नाही. कृपया शॉप मालकाशी संपर्क साधा.
+      voucher_not_found: सापडले नाही
+      add_voucher_error: व्हाउचर जोडताना एरर आली
   shops:
     hubs:
       show_closed_shops: "बंद दुकाने दाखवा"
@@ -2005,106 +2104,6 @@ mr:
   checkout_total_price: एकूण
   checkout_back_to_cart: "कार्ट कडे परत"
   cost_currency: "किंमत चलन"
-  split_checkout:
-    your_details_without_number: तुमचा तपशील
-    payment_method_without_number: पेमेंट पद्धत
-    order_summary_without_number: ऑर्डर सारांश
-    already_ordered:
-      cart: "कार्ट"
-      message_html: "तुमच्याकडे या ऑर्डर सायकलसाठी आधीच एक ऑर्डर आहे. तुम्ही आधी ऑर्डर केलेली वस्तू पाहण्यासाठी %{cart} पहा. ऑर्डर सायकल चालू असेपर्यंत तुम्ही वस्तू रद्द करू शकता."
-    step1:
-      contact_information:
-        title: संपर्क माहिती
-        email:
-          label: ईमेल
-        phone:
-          label: फोन क्रमांक
-      billing_address:
-        title: बिलाचा पत्ता
-        first_name:
-          label: पहिले नाव
-        last_name:
-          label: शेवटचे नाव
-      address:
-        address1:
-          label: पत्ता (रस्ता + घर क्रमांक)
-        address2:
-          label: अतिरिक्त पत्त्याची माहिती (पर्यायी)
-        city:
-          label: शहर
-        state_id:
-          label: राज्य
-        zipcode:
-          label: पिनकोड
-        country_id:
-          label: देश
-      shipping_info:
-        title: शिपिंग माहिती
-      submit: पुढील - पेमेंट पद्धत
-      cancel: बास्केट संपादन कडे परत जा
-    step2:
-      payment_method:
-        title: पेमेंट पद्धत
-      form:
-        card_number:
-          label: कार्ड क्रमांक
-          placeholder: उदा ४२४२ ४२४२ ४२४२ ४२४२
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: महिना
-        card_year:
-          label: वर्ष
-        stripe:
-          use_saved_card: जतन केलेले कार्ड वापरा
-          use_new_card: तुमचे कार्ड आयडेंटिफायर एंटर करा
-          save_card: भविष्यातील वापरासाठी कार्ड जतन करा
-          create_new_card: किंवा खाली नवीन कार्ड तपशील प्रविष्ट करा
-      explaination: 'तुम्ही तुमच्या ऑर्डरचे पुनरावलोकन करू शकता आणि पुढील चरणात अंतिम किमतीसह ऑर्डरची  पुष्टी करू शकता '
-      submit: पुढील - ऑर्डर सारांश
-      cancel: तुमच्या तपशीलांकडे परत
-      voucher:
-        voucher: "%{voucher_amount} व्हाउचर"
-        apply_voucher: व्हाउचर लागू करा
-        apply: अर्ज करा
-        placeholder: व्हाउचर कोड एंटर करा
-        remove_code: कोड काढा
-        confirm_delete: तुम्हाला खात्री आहे की तुम्ही व्हाउचर काढू इच्छिता?
-        warning_forfeit_remaining_amount: "टीप: तुमच्या ऑर्डरची एकूण रक्कम तुमच्या व्हाउचरपेक्षा कमी असल्यास तुम्ही उर्वरित मूल्य खर्च करू शकणार नाही."
-    step3:
-      delivery_details:
-        title: डिलिव्हरी तपशील
-        edit: सुधारणे
-        address: डिलिव्हरी पत्ता
-        instructions: सूचना
-      payment_method:
-        title: पेमेंट पद्धत
-        edit: सुधारणे
-        instructions: सूचना
-      order:
-        title: ऑर्डर तपशील
-        edit: सुधारणे
-      terms_and_conditions:
-        message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} शी सहमत आहे."
-        link_text: "अटी आणि शर्ती"
-      platform_terms_of_service:
-        message_html: "मी %{tos_link} प्लॅटफॉर्मशी सहमत आहे."
-      all_terms_and_conditions:
-        message_html: "मी विक्रेत्याच्या %{terms_and_conditions_link} आणि %{tos_link} प्लॅटफॉर्मशी सहमत आहे."
-        terms_and_conditions: "अटी आणि शर्ती"
-      submit: ऑर्डर पूर्ण करा
-      cancel: पेमेंट पद्धतीकडे परत जा
-    errors:
-      saving_failed: "जतन करणे अयशस्वी, कृपया हायलाइट केलेले फील्ड अद्यतनित करा."
-      terms_not_accepted: कृपया अटी व शर्ती स्वीकारा
-      required: फील्ड रिक्त असू शकत नाही
-      invalid_number: "कृपया वैध दूरध्वनी क्रमांक टाका"
-      invalid_email: "कृपया वैध ईमेल पत्ता प्रविष्ट करा"
-      select_a_shipping_method: शिपिंग पद्धत निवडा
-      select_a_payment_method: पेमेंट पद्धत निवडा
-      no_shipping_methods_available: शिपिंग पर्यायांच्या अनुपस्थितीमुळे चेकआउट शक्य नाही. कृपया शॉप मालकाशी संपर्क साधा.
-      voucher_not_found: सापडले नाही
-      add_voucher_error: व्हाउचर जोडताना एरर आली
   order_paid: पेड
   order_not_paid: पैसे दिले नाहीत
   order_total: एकूण ऑर्डर

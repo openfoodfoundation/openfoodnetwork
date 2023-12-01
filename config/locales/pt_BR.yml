@@ -1426,6 +1426,61 @@ pt_BR:
       message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor e os%{tos_link}da plataforma"
       terms_and_conditions: "Termos e Condições"
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
+    your_details_without_number: Seus detalhes
+    already_ordered:
+      cart: "carrinho"
+      message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
+    step1:
+      contact_information:
+        email:
+          label: E-mail
+        phone:
+          label: n
+      billing_address:
+        title: Endereço de fatura
+        first_name:
+          label: Nome
+        last_name:
+          label: Sobrenome
+      address:
+        city:
+          label: Cidade
+        state_id:
+          label: Estado
+        zipcode:
+          label: CEP
+        country_id:
+          label: País
+      shipping_info:
+        title: Informações para envio
+    step2:
+      form:
+        card_number:
+          label: Número do cartão
+        card_month:
+          label: Mês
+        card_year:
+          label: Ano
+    step3:
+      delivery_details:
+        title: Detalhes da entrega
+        edit: Editar
+        address: Endereço para entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
+      terms_and_conditions:
+        message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
+        link_text: "Termos e Condições"
+      platform_terms_of_service:
+        message_html: "Eu concordo com os %{tos_link}da plataforma"
+      all_terms_and_conditions:
+        message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor e os%{tos_link}da plataforma"
+        terms_and_conditions: "Termos e Condições"
+    errors:
+      invalid_email: "Por favor use um endereço de e-mail válido"
+      voucher_not_found: Não encontrado
   shops:
     hubs:
       show_closed_shops: "Mostrar lojas fechadas"
@@ -1694,62 +1749,6 @@ pt_BR:
   checkout_total_price: Total
   checkout_back_to_cart: "De volta para o Carrinho"
   cost_currency: "Custo"
-  split_checkout:
-    your_details_without_number: Seus detalhes
-    already_ordered:
-      cart: "carrinho"
-      message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
-    step1:
-      contact_information:
-        email:
-          label: E-mail
-        phone:
-          label: n
-      billing_address:
-        title: Endereço de fatura
-        first_name:
-          label: Nome
-        last_name:
-          label: Sobrenome
-      address:
-        city:
-          label: Cidade
-        state_id:
-          label: Estado
-        zipcode:
-          label: CEP
-        country_id:
-          label: País
-      shipping_info:
-        title: Informações para envio
-    step2:
-      form:
-        card_number:
-          label: Número do cartão
-        card_month:
-          label: Mês
-        card_year:
-          label: Ano
-    step3:
-      delivery_details:
-        title: Detalhes da entrega
-        edit: Editar
-        address: Endereço para entrega
-      payment_method:
-        edit: Editar
-      order:
-        edit: Editar
-      terms_and_conditions:
-        message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor"
-        link_text: "Termos e Condições"
-      platform_terms_of_service:
-        message_html: "Eu concordo com os %{tos_link}da plataforma"
-      all_terms_and_conditions:
-        message_html: "Eu concordo com os%{terms_and_conditions_link}do vendedor e os%{tos_link}da plataforma"
-        terms_and_conditions: "Termos e Condições"
-    errors:
-      invalid_email: "Por favor use um endereço de e-mail válido"
-      voucher_not_found: Não encontrado
   order_paid: PAGO
   order_not_paid: NÃO PAGO
   order_total: Total do pedido

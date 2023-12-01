@@ -1344,6 +1344,50 @@ es_CO:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
+    your_details_without_number: Sus detalles
+    already_ordered:
+      cart: "carrito"
+      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: Número de teléfono
+      billing_address:
+        title: Dirección de cobro
+        first_name:
+          label: Nombre
+        last_name:
+          label: Apellidos
+      address:
+        city:
+          label: Ciudad
+        state_id:
+          label: Departamento
+        zipcode:
+          label: Código postal
+        country_id:
+          label: País
+      shipping_info:
+        title: Información de envío
+    step2:
+      form:
+        card_month:
+          label: Mes
+        card_year:
+          label: Año
+    step3:
+      delivery_details:
+        title: Detalles de entrega
+        edit: Editar
+        address: Dirección de entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
+    errors:
+      invalid_email: "Introduce un correo electrónico válido"
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
@@ -1605,51 +1649,6 @@ es_CO:
   checkout_total_price: Total
   checkout_back_to_cart: "De vuelta al carrito"
   cost_currency: "Moneda"
-  split_checkout:
-    your_details_without_number: Sus detalles
-    already_ordered:
-      cart: "carrito"
-      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: Número de teléfono
-      billing_address:
-        title: Dirección de cobro
-        first_name:
-          label: Nombre
-        last_name:
-          label: Apellidos
-      address:
-        city:
-          label: Ciudad
-        state_id:
-          label: Departamento
-        zipcode:
-          label: Código postal
-        country_id:
-          label: País
-      shipping_info:
-        title: Información de envío
-    step2:
-      form:
-        card_month:
-          label: Mes
-        card_year:
-          label: Año
-    step3:
-      delivery_details:
-        title: Detalles de entrega
-        edit: Editar
-        address: Dirección de entrega
-      payment_method:
-        edit: Editar
-      order:
-        edit: Editar
-    errors:
-      invalid_email: "Introduce un correo electrónico válido"
   order_paid: PAGADO
   order_not_paid: NO PAGADO
   order_total: Pedido total

@@ -1616,6 +1616,96 @@ ar:
     failed: "فشل الخروج. يرجى إعلامنا حتى نتمكن من معالجة طلبك."
     payment_cancelled_due_to_stock: "تم إلغاء الدفع: لا يمكن إتمام عملية الدفع بسبب مشاكل في المخزون."
     order_not_loaded: "لم يتم العثور على أمر صالح لمعالجة اكمال الطلب"
+    your_details_without_number: تفاصيلك
+    payment_method_without_number: 'طريقة الدفع '
+    order_summary_without_number: ملخص الطلب
+    already_ordered:
+      cart: "سلة التسوق"
+      message_html: "لديك طلب لدورة الطلب هذه بالفعل. تحقق من %{cart} لرؤية العناصر التي طلبتها من قبل. يمكنك أيضًا إلغاء العناصر طالما كانت دورة الطلب مفتوحة."
+    step1:
+      contact_information:
+        title: معلومات للتواصل
+        email:
+          label: البريد الإلكتروني
+        phone:
+          label: رقم الهاتف
+      billing_address:
+        title: عنوان وصول الفواتير
+        first_name:
+          label: الاسم الاول
+        last_name:
+          label: الكنية
+      address:
+        address1:
+          label: العنوان (الشارع + رقم المنزل)
+        address2:
+          label: معلومات عنوان إضافية (اختياري)
+        city:
+          label: مدينة
+        state_id:
+          label: محافظة
+        zipcode:
+          label: الرمز البريدي
+        country_id:
+          label: بلد
+      shipping_info:
+        title: معلومات الشحن
+      submit: التالي - طريقة الدفع
+      cancel: رجوع إلى تعديل السلة
+    step2:
+      payment_method:
+        title: 'طريقة الدفع '
+      form:
+        card_number:
+          label: رقم البطاقة
+          placeholder: على سبيل المثال 4242 4242 4242 4242
+        card_verification_value:
+          label: رمز التحقق من البطاقة
+        card_month:
+          label: شهر
+        card_year:
+          label: عام
+        stripe:
+          use_saved_card: استخدم البطاقة المحفوظة
+          use_new_card: أدخل معرفات بطاقتك
+          save_card: حفظ البطاقة للاستخدام في المستقبل
+          create_new_card: أو أدخل تفاصيل البطاقة الجديدة أدناه
+      explaination: يمكنك مراجعة طلبك وتأكيده في الخطوة التالية والتي تتضمن التكاليف النهائية.
+      submit: التالي - ملخص الطلب
+      cancel: العودة إلى التفاصيل الخاصة بك
+    step3:
+      delivery_details:
+        title: تفاصيل التسليم
+        edit: تعديل
+        address: عنوان التسليم
+        instructions: التعليمات
+      payment_method:
+        title: 'طريقة الدفع '
+        edit: تعديل
+        instructions: التعليمات
+      order:
+        title: تفاصيل الطلب
+        edit: تعديل
+      terms_and_conditions:
+        message_html: "أوافق على %{terms_and_conditions_link} للبائع."
+        link_text: "الأحكام والشروط"
+      platform_terms_of_service:
+        message_html: "أوافق على المنصة %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
+        terms_and_conditions: "الأحكام والشروط"
+      submit: اكمل الطلب
+      cancel: العودة إلى طريقة الدفع
+    errors:
+      saving_failed: "فشل الحفظ ، يرجى تحديث الحقول المميزة."
+      terms_not_accepted: الرجاء قبول الشروط والأحكام
+      required: لا يمكن أن يكون الحقل فارغًا
+      invalid_number: "يرجى إدخال رقم هاتف صالح"
+      invalid_email: "من فضلك أدخل بريد أليكترونى صحيح"
+      select_a_shipping_method: حدد طريقة الشحن
+      select_a_payment_method: اختر طريقة الدفع
+      no_shipping_methods_available: الخروج غير ممكن بسبب عدم وجود خيارات الشحن. يرجى الاتصال بصاحب المحل.
+      voucher_not_found: غير موجود
   shops:
     hubs:
       show_closed_shops: "عرض المتاجر المغلقة"
@@ -1885,97 +1975,6 @@ ar:
   checkout_total_price: مجموع
   checkout_back_to_cart: "العودة إلى السلة"
   cost_currency: "تكلفة العملة"
-  split_checkout:
-    your_details_without_number: تفاصيلك
-    payment_method_without_number: 'طريقة الدفع '
-    order_summary_without_number: ملخص الطلب
-    already_ordered:
-      cart: "سلة التسوق"
-      message_html: "لديك طلب لدورة الطلب هذه بالفعل. تحقق من %{cart} لرؤية العناصر التي طلبتها من قبل. يمكنك أيضًا إلغاء العناصر طالما كانت دورة الطلب مفتوحة."
-    step1:
-      contact_information:
-        title: معلومات للتواصل
-        email:
-          label: البريد الإلكتروني
-        phone:
-          label: رقم الهاتف
-      billing_address:
-        title: عنوان وصول الفواتير
-        first_name:
-          label: الاسم الاول
-        last_name:
-          label: الكنية
-      address:
-        address1:
-          label: العنوان (الشارع + رقم المنزل)
-        address2:
-          label: معلومات عنوان إضافية (اختياري)
-        city:
-          label: مدينة
-        state_id:
-          label: محافظة
-        zipcode:
-          label: الرمز البريدي
-        country_id:
-          label: بلد
-      shipping_info:
-        title: معلومات الشحن
-      submit: التالي - طريقة الدفع
-      cancel: رجوع إلى تعديل السلة
-    step2:
-      payment_method:
-        title: 'طريقة الدفع '
-      form:
-        card_number:
-          label: رقم البطاقة
-          placeholder: على سبيل المثال 4242 4242 4242 4242
-        card_verification_value:
-          label: رمز التحقق من البطاقة
-        card_month:
-          label: شهر
-        card_year:
-          label: عام
-        stripe:
-          use_saved_card: استخدم البطاقة المحفوظة
-          use_new_card: أدخل معرفات بطاقتك
-          save_card: حفظ البطاقة للاستخدام في المستقبل
-          create_new_card: أو أدخل تفاصيل البطاقة الجديدة أدناه
-      explaination: يمكنك مراجعة طلبك وتأكيده في الخطوة التالية والتي تتضمن التكاليف النهائية.
-      submit: التالي - ملخص الطلب
-      cancel: العودة إلى التفاصيل الخاصة بك
-    step3:
-      delivery_details:
-        title: تفاصيل التسليم
-        edit: تعديل
-        address: عنوان التسليم
-        instructions: التعليمات
-      payment_method:
-        title: 'طريقة الدفع '
-        edit: تعديل
-        instructions: التعليمات
-      order:
-        title: تفاصيل الطلب
-        edit: تعديل
-      terms_and_conditions:
-        message_html: "أوافق على %{terms_and_conditions_link} للبائع."
-        link_text: "الأحكام والشروط"
-      platform_terms_of_service:
-        message_html: "أوافق على المنصة %{tos_link}."
-      all_terms_and_conditions:
-        message_html: "أوافق على %{terms_and_conditions_link} البائع والمنصة %{tos_link}."
-        terms_and_conditions: "الأحكام والشروط"
-      submit: اكمل الطلب
-      cancel: العودة إلى طريقة الدفع
-    errors:
-      saving_failed: "فشل الحفظ ، يرجى تحديث الحقول المميزة."
-      terms_not_accepted: الرجاء قبول الشروط والأحكام
-      required: لا يمكن أن يكون الحقل فارغًا
-      invalid_number: "يرجى إدخال رقم هاتف صالح"
-      invalid_email: "من فضلك أدخل بريد أليكترونى صحيح"
-      select_a_shipping_method: حدد طريقة الشحن
-      select_a_payment_method: اختر طريقة الدفع
-      no_shipping_methods_available: الخروج غير ممكن بسبب عدم وجود خيارات الشحن. يرجى الاتصال بصاحب المحل.
-      voucher_not_found: غير موجود
   order_paid: دفع
   order_not_paid: لم يتم الدفع
   order_total: اجمالي الطلب
