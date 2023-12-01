@@ -298,14 +298,15 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
           fill_in "Name", with: ""
           fill_in "SKU", with: "A" * 256
         end
+      end
+
+      it "shows errors for both product and variant fields" do
+        # Update variant with invalid data too
         within row_containing_name("Medium box") do
           fill_in "Name", with: "L" * 256
           fill_in "SKU", with: "1" * 256
           fill_in "Price", with: "10.25"
         end
-      end
-
-      it "shows errors for both product and variant fields" do
         # Also update another product with valid data
         within row_containing_name("Bananas") do
           fill_in "Name", with: "Bananes"
