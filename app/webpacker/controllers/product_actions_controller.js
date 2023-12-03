@@ -1,9 +1,13 @@
 import ApplicationController from "./application_controller";
 
 export default class extends ApplicationController {
-  static values = {currentId: Number, currentVariantId: Number};
+  static values = {currentId: Number};
 
-  delete() {
+  deleteProduct() {
+    debugger
+  }
 
+  deleteVariant(){
+    debugger
   }
 }

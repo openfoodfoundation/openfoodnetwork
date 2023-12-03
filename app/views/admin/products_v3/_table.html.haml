@@ -70,9 +70,8 @@
               = render(VerticalEllipsisMenu::Component.new) do
                 = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product)
                 = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product)
-                %p{"data-controller": "modal-link", "data-action": "click->modal-link#open",
-                  "data-modal-link-target-value": "delete_product", "class": "delete"
-                }
+                %p{ "data-controller": "modal-link", "data-action": "click->modal-link#open",
+                    "data-modal-link-target-value": "delete_product_#{product.id}", "class": "delete" }
                   = t('admin.products_page.actions.delete')
 
           - product.variants.each_with_index do |variant, variant_index|
@@ -112,7 +111,7 @@
                 %td.align-right
                   = render(VerticalEllipsisMenu::Component.new) do
                     = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(product, variant)
-                    %p{"data-controller": "modal-link", "data-action": "click->modal-link#open",
-                      "data-modal-link-target-value": "delete_variant", "class": "delete"
-                    }
-                      = t('admin.products_page.actions.delete')
+                    - if product.variants.size > 1
+                      %p{ "data-controller": "modal-link", "data-action": "click->modal-link#open",
+                          "data-modal-link-target-value": "delete_variant_#{variant.id}", "class": "delete" }
+                        = t('admin.products_page.actions.delete')
