@@ -1,0 +1,14 @@
+- object_ids.each do |object_id|
+  - delete_modal = ConfirmModalComponent.new(id: "delete_#{object_type}_#{object_id}",
+    confirm_button_text: t(".delete_#{object_type}_modal.confirmation_text"),
+    cancel_button_text: t(".delete_#{object_type}_modal.cancellation_text"),
+    confirm_button_color: :red,
+    controller: "product-actions",
+    confirm_actions: "click->product-actions#delete#{object_type.titleize}",
+    confirm_reflexes: nil,
+    controller_data_values: {"current-id": object_id},
+  )
+  = render delete_modal do
+    .margin-bottom-30
+    = t(".delete_#{object_type}_modal.prompt_html")
+    .margin-bottom-30
