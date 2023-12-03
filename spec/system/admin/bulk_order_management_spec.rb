@@ -240,6 +240,18 @@ describe '
 
         expect_line_items_results [li1], [li2, li3]
       end
+
+      it "by customer fullname with comma" do
+        fill_in "quick_filter", with: o1.bill_address.firstname + ', ' + o1.bill_address.lastname
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li1], [li2, li3]
+
+        fill_in "quick_filter", with: o2.bill_address.firstname + ', ' + o2.bill_address.lastname
+        page.find('.filter-actions .button.icon-search').click
+
+        expect_line_items_results [li2, li3], [li1]
+      end
     end
 
     context "displaying individual columns" do
