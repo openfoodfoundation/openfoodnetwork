@@ -7,7 +7,7 @@ module Spree
     self.belongs_to_required_by_default = false
 
     searchable_attributes :firstname, :lastname, :phone, :full_name, :full_name_with_comma,
-      :full_name_reversed
+                          :full_name_reversed
     searchable_associations :country, :state
 
     belongs_to :country, class_name: "Spree::Country"

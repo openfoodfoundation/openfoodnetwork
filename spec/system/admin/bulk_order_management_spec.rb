@@ -242,24 +242,24 @@ describe '
       end
 
       it "by customer fullname with comma" do
-        fill_in "quick_filter", with: o1.bill_address.firstname + ', ' + o1.bill_address.lastname
+        fill_in "quick_filter", with: "#{o1.bill_address.firstname}, #{o1.bill_address.lastname}"
         page.find('.filter-actions .button.icon-search').click
 
         expect_line_items_results [li1], [li2, li3]
 
-        fill_in "quick_filter", with: o2.bill_address.firstname + ', ' + o2.bill_address.lastname
+        fill_in "quick_filter", with: "#{o2.bill_address.firstname}, #{o2.bill_address.lastname}"
         page.find('.filter-actions .button.icon-search').click
 
         expect_line_items_results [li2, li3], [li1]
       end
 
       it "by customer fullname reversed" do
-        fill_in "quick_filter", with: o1.bill_address.lastname + ' ' + o1.bill_address.firstname
+        fill_in "quick_filter", with: "#{o1.bill_address.lastname} #{o1.bill_address.firstname}"
         page.find('.filter-actions .button.icon-search').click
 
         expect_line_items_results [li1], [li2, li3]
 
-        fill_in "quick_filter", with: o2.bill_address.lastname + ' ' + o2.bill_address.firstname
+        fill_in "quick_filter", with: "#{o2.bill_address.lastname} #{o2.bill_address.firstname}"
         page.find('.filter-actions .button.icon-search').click
 
         expect_line_items_results [li2, li3], [li1]
