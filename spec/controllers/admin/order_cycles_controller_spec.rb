@@ -445,7 +445,9 @@ module Admin
       it "redirects back to the order cycles path with a success message" do
         spree_post :notify_producers, id: order_cycle.id
         expect(response).to redirect_to admin_order_cycles_path
-        expect(flash[:success]).to eq('Emails to be sent to producers have been queued for sending.')
+        expect(flash[:success]).to eq(
+          'Emails to be sent to producers have been queued for sending.'
+        )
       end
     end
 
