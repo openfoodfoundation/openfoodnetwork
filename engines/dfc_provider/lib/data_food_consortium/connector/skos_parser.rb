@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+# patches :
+# - Maikel: Overriding the current implementation to store all parsed concepts for
+#           lookup later. Otherwise the importer can't associate these.
+#           This is just a workaround and needs to be solved upstream.
+
+# - Gaetan: Improve parsing of SKOS Concept. Will be fixed upstream
+
 require_relative 'skos_helper'
 
 module DataFoodConsortium
@@ -8,16 +15,14 @@ module DataFoodConsortium
       include DataFoodConsortium::Connector::SKOSHelper
 
       # Return a list of singelton methods, ie the list of Concept available
-      def topConcepts
-        self.methods(false).sort
+      def topConcepts # rubocop:disable Naming/MethodName
+        methods(false).sort
       end
     end
   end
 end
 
-# Overriding the current implementation to store all parsed concepts for
-# lookup later. Otherwise the importer can't associate these.
-# This is just a workaround and needs to be solved upstream.
+# rubocop:disable Naming/VariableName
 module DataFoodConsortium
   module Connector
     class SKOSParser
@@ -28,12 +33,13 @@ module DataFoodConsortium
         @skosConcepts = {}
         @rootElements = []
         @broaders = {}
-        # Flag used to tell the parser to use SkosConcept object when parsing data from Concept Scheme
+        # Flag used to tell the parser to use SkosConcept object when parsing data from
+        # Concept Scheme.
         # defined in CONCEPT_SCHEMES
         @useSkosConcept = false
       end
 
-      def parse(data)
+      def parse(data) # rubocop:disable Metrics/CyclomaticComplexity
         init
 
         data.each do |element|
@@ -41,35 +47,35 @@ module DataFoodConsortium
 
           setSkosConceptFlag(current)
 
-          if current.isConcept? || current.isCollection?
-            if !@skosConcepts.has_key?(current.id)
-              concept = createSKOSConcept(current)
-              @skosConcepts[current.id] = concept
-            end
+          next unless current.isConcept? || current.isCollection?
 
-            if current.hasBroader
-              current.broader.each do |broaderId|
-                if !@broaders.has_key?(broaderId)
-                  @broaders[broaderId] = []
-                end
+          if !@skosConcepts.key?(current.id)
+            concept = createSKOSConcept(current)
+            @skosConcepts[current.id] = concept
+          end
 
-                @broaders[broaderId].push(current.id)
+          if current.hasBroader
+            current.broader.each do |broader_id|
+              if !@broaders.key?(broader_id)
+                @broaders[broader_id] = []
               end
-            # No broader, save the concept to the root
-            else
-              @rootElements.push(current.id)
+
+              @broaders[broader_id].push(current.id)
             end
+          # No broader, save the concept to the root
+          else
+            @rootElements.push(current.id)
           end
         end
 
-        @rootElements.each do |rootElementId|
-          setResults(@results, rootElementId)
+        @rootElements.each do |root_element_id|
+          setResults(@results, root_element_id)
         end
 
         @results
       end
 
-      # TODO check if this is still needed
+      # Maikel's patch
       def self.concepts
         @concepts ||= {}
       end
@@ -84,10 +90,8 @@ module DataFoodConsortium
           prefLabels: element.label
         )
         skosConcept.semanticType = element.type
-        # TODO check if this is still needed
-        # original patch by Maikel
+        # Maikel's patch
         self.class.concepts[element.id] = skosConcept
-
         skosConcept
       end
 
@@ -101,11 +105,11 @@ module DataFoodConsortium
         @useSkosConcept = false
       end
 
-      def setResults(parent, id)
+      def setResults(parent, id) # rubocop:disable Naming/MethodName
         name = getValueWithoutPrefix(id)
 
         if !parent.hasAttribute(name)
-          if @useSkosConcept && !@skosConcepts[id].nil?
+          if @useSkosConcept && @skosConcepts[id]
             parent.addAttribute(name, @skosConcepts[id])
           else
             parent.addAttribute(name, DataFoodConsortium::Connector::SKOSInstance.new)
@@ -113,7 +117,7 @@ module DataFoodConsortium
         end
 
         # Leaf concepts, stop the process
-        if !@broaders.has_key?(id)
+        if !@broaders.key?(id)
           parent.instance_variable_set("@#{name}", @skosConcepts[id])
           return
         end
@@ -125,15 +129,16 @@ module DataFoodConsortium
         end
       end
 
-      def setSkosConceptFlag(current)
+      def setSkosConceptFlag(current) # rubocop:disable Naming/MethodName
         @useSkosConcept = true if current.isConceptScheme? && matchingConceptSchemes(current)
       end
 
-      def matchingConceptSchemes(current)
-        regex = /#{CONCEPT_SCHEMES.join("|")}/
+      def matchingConceptSchemes(current) # rubocop:disable Naming/MethodName
+        regex = /#{CONCEPT_SCHEMES.join('|')}/
 
         current.id =~ regex
       end
     end
   end
 end
+# rubocop:enable Naming/VariableName
