@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Patch: Improve parsing of SKOS Concept. Will be fixed upstream
 require_relative 'skos_helper'
 
 module DataFoodConsortium

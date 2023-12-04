@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Patch: Improve parsing of SKOS Concept. Will be fixed upstream
 module DataFoodConsortium
   module Connector
     class SKOSParserElement
