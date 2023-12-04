@@ -3,11 +3,12 @@
 module DataFoodConsortium
   module Connector
     class SKOSParserElement
-      attr_reader :narrower
+      attr_reader :narrower, :label
 
       def initialize(element)
         @broader = []
         @narrower = []
+        @label = {}
 
         if element
           @id = element["@id"]
@@ -30,6 +31,9 @@ module DataFoodConsortium
             element["http://www.w3.org/2004/02/skos/core#narrower"].each do |narrower|
               @narrower.push(narrower["@id"])
             end
+          end
+          element["http://www.w3.org/2004/02/skos/core#prefLabel"]&.each do |label|
+            @label[label["@language"].to_sym] = label["@value"]
           end
         else
           @id = ""
