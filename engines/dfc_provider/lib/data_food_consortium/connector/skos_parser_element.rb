@@ -5,7 +5,7 @@ module DataFoodConsortium
     class SKOSParserElement
       attr_reader :narrower, :label
 
-      def initialize(element)
+      def initialize(element) # rubocop:disable Metrics/CyclomaticComplexity
         @broader = []
         @narrower = []
         @label = {}
@@ -13,25 +13,22 @@ module DataFoodConsortium
         if element
           @id = element["@id"]
 
-          if element["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"]
-            @type = extractId(element["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"])
-          elsif element["@type"]
-            @type = extractId(element["@type"])
-          else
-            @type = "undefined"
+          @type = if element["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"]
+                    extractId(element["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"])
+                  elsif element["@type"]
+                    extractId(element["@type"])
+                  else
+                    "undefined"
+                  end
+
+          element["http://www.w3.org/2004/02/skos/core#broader"]&.each do |broader|
+            @broader.push(broader["@id"])
           end
 
-          if element["http://www.w3.org/2004/02/skos/core#broader"]
-            element["http://www.w3.org/2004/02/skos/core#broader"].each do |broader|
-              @broader.push(broader["@id"])
-            end
+          element["http://www.w3.org/2004/02/skos/core#narrower"]&.each do |narrower|
+            @narrower.push(narrower["@id"])
           end
 
-          if element["http://www.w3.org/2004/02/skos/core#narrower"]
-            element["http://www.w3.org/2004/02/skos/core#narrower"].each do |narrower|
-              @narrower.push(narrower["@id"])
-            end
-          end
           element["http://www.w3.org/2004/02/skos/core#prefLabel"]&.each do |label|
             @label[label["@language"].to_sym] = label["@value"]
           end
@@ -41,7 +38,7 @@ module DataFoodConsortium
         end
       end
 
-      def isConceptScheme?
+      def isConceptScheme? # rubocop:disable Naming/MethodName
         @type == "http://www.w3.org/2004/02/skos/core#ConceptScheme"
       end
     end
