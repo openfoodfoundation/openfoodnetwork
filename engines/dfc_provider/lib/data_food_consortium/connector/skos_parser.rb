@@ -78,7 +78,10 @@ module DataFoodConsortium
 
       def createSKOSConcept(element) # rubocop:disable Naming/MethodName
         skosConcept = DataFoodConsortium::Connector::SKOSConcept.new(
-          element.id, broaders: element.broader, narrowers: element.narrower
+          element.id,
+          broaders: element.broader,
+          narrowers: element.narrower,
+          prefLabels: element.label
         )
         skosConcept.semanticType = element.type
         # TODO check if this is still needed
