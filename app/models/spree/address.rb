@@ -6,8 +6,8 @@ module Spree
 
     self.belongs_to_required_by_default = false
 
-    searchable_attributes :firstname, :lastname, :phone, :full_name, :full_name_with_comma,
-                          :full_name_reversed
+    searchable_attributes :firstname, :lastname, :phone, :full_name, :full_name_reversed,
+                          :full_name_with_comma, :full_name_with_comma_reversed
     searchable_associations :country, :state
 
     belongs_to :country, class_name: "Spree::Country"
@@ -37,15 +37,21 @@ module Spree
       )
     end
 
+    ransacker :full_name_reversed, formatter: proc { |value| value.to_s } do |parent|
+      Arel::Nodes::SqlLiteral.new(
+        "CONCAT(#{parent.table_name}.lastname, ' ', #{parent.table_name}.firstname)"
+      )
+    end
+
     ransacker :full_name_with_comma, formatter: proc { |value| value.to_s } do |parent|
       Arel::Nodes::SqlLiteral.new(
         "CONCAT(#{parent.table_name}.firstname, ', ', #{parent.table_name}.lastname)"
       )
     end
 
-    ransacker :full_name_reversed, formatter: proc { |value| value.to_s } do |parent|
+    ransacker :full_name_with_comma_reversed, formatter: proc { |value| value.to_s } do |parent|
       Arel::Nodes::SqlLiteral.new(
-        "CONCAT(#{parent.table_name}.lastname, ' ', #{parent.table_name}.firstname)"
+        "CONCAT(#{parent.table_name}.lastname, ', ', #{parent.table_name}.firstname)"
       )
     end
 
