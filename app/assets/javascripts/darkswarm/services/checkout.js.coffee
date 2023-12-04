@@ -14,9 +14,11 @@ angular.module('Darkswarm').factory 'Checkout', ($injector, CurrentOrder, Shippi
 
     submit: =>
       Messages.loading(t 'submitting_order')
+      @orderPlaced = false  # For warning about leaving and not submitting
       $http.put('/checkout.json', {order: @preprocess()})
       .then (response) =>
         Navigation.go response.data.path
+        @orderPlaced = true
       .catch (response) =>
         try
           @handle_checkout_error_response(response)
@@ -122,3 +124,38 @@ angular.module('Darkswarm').factory 'Checkout', ($injector, CurrentOrder, Shippi
     terms_and_conditions_accepted: ->
       terms_and_conditions_checkbox = angular.element("#accept_terms")[0]
       terms_and_conditions_checkbox? && terms_and_conditions_checkbox.checked
+    confirmExit: ->
+      if not @orderPlaced()
+        @intendedPage = $location.url()  # Redirect here if chosen to
+        modalInstance = $uibModal.open(
+          animation: true
+          template: '''
+            <div class="modal-header">
+              <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to leave this page? Your order has not been placed.
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" ng-click="$close(true)">Yes</button>
+              <button class="btn btn-secondary" ng-click="$dismiss()">No</button>
+            </div>
+          '''
+        )
+
+        modalInstance.result.then(
+          (result) ->
+            # User clicked "Yes"
+            if result
+              # Close the modal before navigating to the desired page
+              modalInstance.close()
+              Navigation.go(@intendedPage)
+          ,
+          () ->
+            Navigation.go('/checkout')
+        )
+
+    init: ->
+      # Attach the exit event handler to the window beforeunload event
+      angular.element(window).on('beforeunload', @confirmExit)
+
