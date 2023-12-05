@@ -22,6 +22,8 @@
     @include border-radius($border-radius);
 
     input {
+      font-size: $body-font-size;
+
       &::placeholder {
         color: $near-black;
       }
