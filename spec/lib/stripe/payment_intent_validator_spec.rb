@@ -60,11 +60,22 @@ describe Stripe::PaymentIntentValidator do
               expect(result).to eq payment_intent_response_body
             }.to_not raise_error Stripe::StripeError
           end
+
+          it "captures the payment" do
+            expect(Stripe::PaymentIntent.retrieve(
+              payment_intent.id
+            ).status).to eq("requires_capture")
+
+            Stripe::PaymentIntent.capture(payment_intent.id)
+
+            expect(Stripe::PaymentIntent.retrieve(
+              payment_intent.id
+            ).status).to eq("succeeded")
+          end
         end
       end
 
-      context "valid credit cards are correctly handled" do
-        it_behaves_like "payments intents", "Authenticate unless set up", 4_000_002_500_003_155
+      context "valid non-3D credit cards are correctly handled" do
         it_behaves_like "payments intents", "Visa", 4_242_424_242_424_242
         it_behaves_like "payments intents", "Visa (debit)", 4_000_056_655_665_556
         it_behaves_like "payments intents", "Mastercard", 5_555_555_555_554_444
