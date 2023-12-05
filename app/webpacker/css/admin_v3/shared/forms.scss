@@ -28,12 +28,25 @@ fieldset {
   }
 
   &[disabled] {
-    opacity: 0.7;
+    color: $color-txt-disabled-text;
+    border-color: $color-txt-disabled-brd;
   }
 
   &.changed {
     border-color: $color-txt-changed-brd;
   }
+}
+
+input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+  margin-right: 3px;
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"] {
+  accent-color: $color-checkbox-fill;
 }
 
 textarea {
@@ -76,16 +89,11 @@ span.info {
   padding: 10px 0;
 
   &.checkbox {
-    min-height: 70px;
-
-    input[type="checkbox"] {
-      display: inline-block;
-      width: auto;
-    }
-
     label {
       cursor: pointer;
       display: block;
+      font-size: inherit;
+      font-weight: normal;
     }
   }
 

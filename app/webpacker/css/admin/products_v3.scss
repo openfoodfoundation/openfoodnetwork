@@ -114,20 +114,24 @@
       }
     }
 
+    .field {
+      padding: 0;
+      margin-bottom: 0.75em;
+    }
+
+    label {
+      margin: 0;
+    }
+
     // "Naked" inputs. Row hover helps reveal them.
-    input {
-      border-color: transparent;
+    input:not([type="checkbox"]) {
       background-color: $color-tbl-cell-bg;
       height: auto;
       font-size: inherit;
       font-weight: inherit;
 
-      &:focus {
-        border-color: $color-txt-hover-brd;
-      }
-
-      &.changed {
-        border-color: $color-txt-changed-brd;
+      &:not(:focus):not(.changed):not([disabled]) {
+        border-color: transparent;
       }
     }
 
@@ -263,6 +267,84 @@
       bottom: -$disabled-blur;
       right: -$disabled-blur;
       z-index: 1; // Ensure tom-select is covered
+    }
+  }
+
+  // Stock popout widget
+  .on-hand {
+    &__wrapper {
+      position: relative;
+    }
+
+    &__button {
+      // override button styles
+      &.on-hand__button {
+        background: $color-tbl-cell-bg;
+        color: $color-txt-text;
+        white-space: nowrap;
+        border-color: transparent;
+        font-weight: normal;
+        padding-left: $border-radius; // Super compact
+        padding-right: 1rem; // Retain space for arrow
+        height: auto;
+
+        &:hover,
+        &:active,
+        &:focus {
+          background: $color-tbl-cell-bg;
+          color: $color-txt-text;
+          position: relative;
+        }
+
+        &.changed {
+          border-color: $color-txt-changed-brd;
+        }
+      }
+
+      &:hover:not(:active):not(:focus):not(.changed) {
+        border-color: transparent;
+      }
+
+      &:hover,
+      &:active,
+      &:focus {
+        // for some reason, sass ignores &:active, &:focus here. we could make this a mixin and include it in multiple rules instead
+        &:before {
+          // for some reason, sass seems to extends the selector to include every other :before selector in the app! probably causing the above, and potentially breaking other styles.
+          // extending .icon-chevron-down causes infinite loop in compilation. does @include work for classes?
+          font-family: FontAwesome;
+          text-decoration: inherit;
+          display: inline-block;
+          speak: none;
+          content: "\f078";
+
+          position: absolute;
+          right: $border-radius;
+          font-size: 0.67em;
+        }
+      }
+    }
+
+    &__popout {
+      position: absolute;
+      top: -1em;
+      left: -1em;
+      z-index: 1; // Cover below row when hover
+      width: 9em;
+
+      padding: $padding-tbl-cell;
+
+      background: $color-tbl-cell-bg;
+      border-radius: $border-radius;
+      box-shadow: 0px 0px 8px 0px rgba($near-black, 0.25);
+
+      .field:last-child {
+        margin-bottom: 0;
+      }
+
+      input[disabled] {
+        color: transparent; // hide value completely
+      }
     }
   }
 }

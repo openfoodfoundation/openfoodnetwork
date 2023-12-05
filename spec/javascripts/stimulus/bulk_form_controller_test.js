@@ -36,6 +36,7 @@ describe("BulkFormController", () => {
           <div data-record-id="1">
             <input id="input1a" type="text" value="initial1a">
             <input id="input1b" type="text" value="initial1b">
+            <button>a button is counted as a form element, but value is undefined</button>
           </div>
           <div data-record-id="2">
             <input id="input2" type="text" value="initial2">
@@ -43,22 +44,12 @@ describe("BulkFormController", () => {
           <input type="submit">
         </form>
       `;
-
-      const disable1 = document.getElementById("disable1");
-      const disable1_element = document.getElementById("disable1_element");
-      const disable2 = document.getElementById("disable2");
-      const disable2_element = document.getElementById("disable2_element");
-      const actions = document.getElementById("actions");
-      const changed_summary = document.getElementById("changed_summary");
-      const input1a = document.getElementById("input1a");
-      const input1b = document.getElementById("input1b");
-      const input2 = document.getElementById("input2");
     });
 
     describe("marking changed fields", () => {
-      it("onChange", () => {
+      it("onInput", () => {
         input1a.value = 'updated1a';
-        input1a.dispatchEvent(new Event("change"));
+        input1a.dispatchEvent(new Event("input"));
         // Expect only first field to show changed
         expect(input1a.classList).toContain('changed');
         expect(input1b.classList).not.toContain('changed');
@@ -66,30 +57,16 @@ describe("BulkFormController", () => {
 
         // Change back to original value
         input1a.value = 'initial1a';
-        input1a.dispatchEvent(new Event("change"));
+        input1a.dispatchEvent(new Event("input"));
         expect(input1a.classList).not.toContain('changed');
 
-      });
-
-      it("onKeyup", () => {
-        input1a.value = 'u1a';
-        input1a.dispatchEvent(new Event("keyup"));
-        // Expect only first field to show changed
-        expect(input1a.classList).toContain('changed');
-        expect(input1b.classList).not.toContain('changed');
-        expect(input2.classList).not.toContain('changed');
-
-        // Change back to original value
-        input1a.value = 'initial1a';
-        input1a.dispatchEvent(new Event("keyup"));
-        expect(input1a.classList).not.toContain('changed');
       });
 
       it("multiple fields", () => {
         input1a.value = 'updated1a';
-        input1a.dispatchEvent(new Event("change"));
+        input1a.dispatchEvent(new Event("input"));
         input2.value = 'updated2';
-        input2.dispatchEvent(new Event("change"));
+        input2.dispatchEvent(new Event("input"));
         // Expect only first field to show changed
         expect(input1a.classList).toContain('changed');
         expect(input1b.classList).not.toContain('changed');
@@ -97,7 +74,7 @@ describe("BulkFormController", () => {
 
         // Change only one back to original value
         input1a.value = 'initial1a';
-        input1a.dispatchEvent(new Event("change"));
+        input1a.dispatchEvent(new Event("input"));
         expect(input1a.classList).not.toContain('changed');
         expect(input1b.classList).not.toContain('changed');
         expect(input2.classList).toContain('changed');
@@ -109,7 +86,7 @@ describe("BulkFormController", () => {
       it("counts changed records ", () => {
         // Record 1: First field changed
         input1a.value = 'updated1a';
-        input1a.dispatchEvent(new Event("change"));
+        input1a.dispatchEvent(new Event("input"));
         // Actions and changed summary are shown, with other sections disabled
         expect(actions.classList).not.toContain('hidden');
         expect(changed_summary.textContent).toBe('changed_summary, {"count":1}');
@@ -120,21 +97,21 @@ describe("BulkFormController", () => {
 
         // Record 1: Second field changed
         input1b.value = 'updated1b';
-        input1b.dispatchEvent(new Event("change"));
+        input1b.dispatchEvent(new Event("input"));
         // Expect to show same summary translation
         expect(actions.classList).not.toContain('hidden');
         expect(changed_summary.textContent).toBe('changed_summary, {"count":1}');
 
         // Record 2: has been changed
         input2.value = 'updated2';
-        input2.dispatchEvent(new Event("change"));
+        input2.dispatchEvent(new Event("input"));
         // Expect summary to count both records
         expect(actions.classList).not.toContain('hidden');
         expect(changed_summary.textContent).toBe('changed_summary, {"count":2}');
 
         // Record 1: Change first field back to original value
         input1a.value = 'initial1a';
-        input1a.dispatchEvent(new Event("change"));
+        input1a.dispatchEvent(new Event("input"));
         // Both records are still changed.
         expect(input1a.classList).not.toContain('changed');
         expect(input1b.classList).toContain('changed');
@@ -144,7 +121,7 @@ describe("BulkFormController", () => {
 
         // Record 1: Change second field back to original value
         input1b.value = 'initial1b';
-        input1b.dispatchEvent(new Event("change"));
+        input1b.dispatchEvent(new Event("input"));
         // Both fields for record 1 show unchanged, but second record is still changed
         expect(actions.classList).not.toContain('hidden');
         expect(changed_summary.textContent).toBe('changed_summary, {"count":1}');
@@ -155,7 +132,7 @@ describe("BulkFormController", () => {
 
         // Record 2: Change back to original value
         input2.value = 'initial2';
-        input2.dispatchEvent(new Event("change"));
+        input2.dispatchEvent(new Event("input"));
         // Actions are hidden and other sections are now re-enabled
         expect(actions.classList).toContain('hidden');
         expect(changed_summary.textContent).toBe('changed_summary, {"count":0}');
@@ -192,13 +169,13 @@ describe("BulkFormController", () => {
 
       // Record 1: First field changed
       input1a.value = 'updated1a';
-      input1a.dispatchEvent(new Event("change"));
+      input1a.dispatchEvent(new Event("input"));
       // Expect actions to remain visible
       expect(actions.classList).not.toContain('hidden');
 
       // Change back to original value
       input1a.value = 'initial1a';
-      input1a.dispatchEvent(new Event("change"));
+      input1a.dispatchEvent(new Event("input"));
       // Expect actions to remain visible
       expect(actions.classList).not.toContain('hidden');
     });

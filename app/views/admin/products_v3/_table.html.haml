@@ -38,8 +38,8 @@
         %th.align-left= t('admin.products_page.columns.tax_category')
         %th.align-left= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
-    - products.each do |product|
-      = form.fields_for("products", product, index: nil) do |product_form|
+    - products.each_with_index do |product, product_index|
+      = form.fields_for("products", product, index: product_index) do |product_form|
         %tbody.relaxed{ 'data-record-id': product_form.object.id }
           %tr
             %td.field.align-left.header
@@ -57,8 +57,7 @@
             %td.align-right
               -# empty
             %td.align-right
-              -# TODO: new requirement "DISPLAY ON DEMAND IF ALL VARIANTS ARE ON DEMAND". And translate value
-              .content= if product.variants.all?(&:on_demand) then "On demand" else product.on_hand || 0 end
+              -# empty
             %td.align-left
               .content= product.supplier&.name
             %td.align-left
@@ -71,8 +70,8 @@
                 = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product)
                 = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product)
 
-          - product.variants.each do |variant|
-            = form.fields_for("products][][variants_attributes][", variant, index: nil) do |variant_form|
+          - product.variants.each_with_index do |variant, variant_index|
+            = form.fields_for("products][#{product_index}][variants_attributes][", variant, variant_index:) do |variant_form|
               %tr.condensed
                 %td.field
                   = variant_form.hidden_field :id
@@ -86,8 +85,17 @@
                 %td.field
                   = variant_form.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
                   = error_message_on variant, :price
-                %td.align-right
-                  .content= variant.on_hand || 0 #TODO: spec for this according to requirements.
+                %td.field.on-hand__wrapper{'data-controller': "popout"}
+                  %button.on-hand__button{'data-popout-target': "button", 'aria-label': t('admin.products_page.columns.on_hand')}
+                    = variant.on_demand ? t(:on_demand) : variant.on_hand
+                  %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
+                    .field
+                      = variant_form.number_field :on_hand, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: variant_form.object.on_demand
+                      = error_message_on variant, :on_hand
+                    .field.checkbox
+                      = variant_form.label :on_demand do
+                        = variant_form.check_box :on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
+                        = t(:on_demand)
                 %td.align-left
                   .content= variant.product.supplier&.name # same as product
                 %td.align-left

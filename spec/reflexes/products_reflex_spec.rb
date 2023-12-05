@@ -30,11 +30,8 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
 
   describe '#bulk_update' do
     let!(:variant_a1) {
-      create(:variant,
-             product: product_a,
-             display_name: "Medium box",
-             sku: "APL-01",
-             price: 5.25)
+      create(:variant, product: product_a, display_name: "Medium box", sku: "APL-01", price: 5.25,
+                       on_hand: 5, on_demand: false)
     }
     let!(:product_c) { create(:simple_product, name: "Carrots", sku: "CAR-00") }
     let!(:product_b) { create(:simple_product, name: "Bananas", sku: "BAN-00") }
@@ -42,14 +39,14 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
 
     it "saves valid changes" do
       params = {
-        # '[products][][name]'
-        "products" => [
-          {
+        # '[products][0][name]'
+        "products" => {
+          "0" => {
             "id" => product_a.id.to_s,
             "name" => "Pommes",
             "sku" => "POM-00",
-          }
-        ]
+          },
+        },
       }
 
       expect{
@@ -60,23 +57,27 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
     end
 
     it "saves valid changes to products and nested variants" do
+      # Form field names:
+      #   '[products][0][id]' (hidden field)
+      #   '[products][0][name]'
+      #   '[products][0][variants_attributes][0][id]' (hidden field)
+      #   '[products][0][variants_attributes][0][display_name]'
       params = {
-        # '[products][][name]'
-        # '[products][][variants_attributes][][display_name]'
-        "products" => [
-          {
+        "products" => {
+          "0" => {
             "id" => product_a.id.to_s,
             "name" => "Pommes",
-            "variants_attributes" => [
-              {
+            "variants_attributes" => {
+              "0" => {
                 "id" => variant_a1.id.to_s,
                 "display_name" => "Large box",
                 "sku" => "POM-01",
                 "price" => "10.25",
-              }
-            ],
-          }
-        ]
+                "on_hand" => "6",
+              },
+            },
+          },
+        },
       }
 
       expect{
@@ -87,20 +88,21 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.price }.to(10.25)
+        .and change{ variant_a1.on_hand }.to(6)
     end
 
     describe "sorting" do
       let(:params) {
         {
-          "products" => [
-            {
+          "products" => {
+            "0" => {
               "id" => product_a.id.to_s,
               "name" => "Pommes",
             },
-            {
+            "1" => {
               "id" => product_b.id.to_s,
             },
-          ]
+          },
         }
       }
       subject{ run_reflex(:bulk_update, params:) }
@@ -116,20 +118,20 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
     describe "error messages" do
       it "summarises error messages" do
         params = {
-          "products" => [
-            {
+          "products" => {
+            "0" => {
               "id" => product_a.id.to_s,
               "name" => "Pommes",
             },
-            {
+            "1" => {
               "id" => product_b.id.to_s,
               "name" => "", # Name can't be blank
             },
-            {
+            "2" => {
               "id" => product_c.id.to_s,
               "name" => "", # Name can't be blank
             },
-          ]
+          },
         }
 
         reflex = run_reflex(:bulk_update, params:)
