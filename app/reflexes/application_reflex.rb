@@ -24,11 +24,4 @@ class ApplicationReflex < StimulusReflex::Reflex
   def morph_admin_flashes
     morph "#flashes", render(partial: "admin/shared/flashes", locals: { flashes: flash })
   end
-
-  def broadcast_admin_flashes
-    cable_ready.replace(
-      selector: "#flashes",
-      html: render(partial: "admin/shared/flashes", locals: { flashes: flash })
-    ).broadcast
-  end
 end

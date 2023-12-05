@@ -4,6 +4,7 @@
                    'data-controller': "bulk-form", 'data-bulk-form-disable-selector-value': "#sort,#filters",
                    'data-bulk-form-error-value': defined?(error_counts),
                   } do |form|
+  = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
   %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
     .container
       .status.eleven.columns

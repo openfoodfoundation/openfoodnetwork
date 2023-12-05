@@ -43,8 +43,7 @@ class ProductsReflex < ApplicationReflex
       @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
     end
 
-    render_products_form
-    broadcast_admin_flashes if flash.any?
+    render_products_form_with_flash
   end
 
   private
@@ -85,9 +84,10 @@ class ProductsReflex < ApplicationReflex
     morph :nothing
   end
 
-  def render_products_form
+  def render_products_form_with_flash
     locals = { products: @products }
     locals[:error_counts] = @error_counts if @error_counts.present?
+    locals[:flashes] = flash if flash.any?
 
     cable_ready.replace(
       selector: "#products-form",
