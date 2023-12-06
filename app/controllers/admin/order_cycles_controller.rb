@@ -48,7 +48,7 @@ module Admin
       @order_cycle_form = OrderCycleForm.new(@order_cycle, order_cycle_params, spree_current_user)
 
       if @order_cycle_form.save
-        flash[:notice] = I18n.t(:order_cycles_create_notice)
+        flash[:success] = t('.success')
         render json: { success: true,
                        edit_path: main_app.admin_order_cycle_incoming_path(@order_cycle) }
       else
@@ -66,7 +66,7 @@ module Admin
       if @order_cycle_form.save
         update_nil_subscription_line_items_price_estimate(@order_cycle)
         respond_to do |format|
-          flash[:notice] = I18n.t(:order_cycles_update_notice) if params[:reloading] == '1'
+          flash[:success] = t('.success') if params[:reloading] == '1'
           format.html { redirect_to_after_update_path }
           format.json { render json: { success: true } }
         end
@@ -118,7 +118,7 @@ module Admin
       @order_cycle = OrderCycle.find params[:id]
       @order_cycle.clone!
       redirect_to main_app.admin_order_cycles_path,
-                  notice: I18n.t(:order_cycles_clone_notice, name: @order_cycle.name)
+                  flash: { success: t('.success', name: @order_cycle.name) }
     end
 
     # Send notifications to all producers who are part of the order cycle
@@ -126,7 +126,7 @@ module Admin
       OrderCycleNotificationJob.perform_later params[:id].to_i
 
       redirect_to main_app.admin_order_cycles_path,
-                  notice: I18n.t(:order_cycles_email_to_producers_notice)
+                  flash: { success: t('.success') }
     end
 
     protected

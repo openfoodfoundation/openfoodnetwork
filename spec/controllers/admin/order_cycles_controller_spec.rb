@@ -252,14 +252,14 @@ module Admin
 
             it "sets flash message" do
               spree_put :update, params
-              expect(flash[:notice]).to eq('Your order cycle has been updated.')
+              expect(flash[:success]).to eq('Your order cycle has been updated.')
             end
           end
 
           context "when the page is not reloading" do
             it "does not set flash message" do
               spree_put :update, params
-              expect(flash[:notice]).to be nil
+              expect(flash[:success]).to be nil
             end
           end
         end
@@ -445,7 +445,9 @@ module Admin
       it "redirects back to the order cycles path with a success message" do
         spree_post :notify_producers, id: order_cycle.id
         expect(response).to redirect_to admin_order_cycles_path
-        expect(flash[:notice]).to eq('Emails to be sent to producers have been queued for sending.')
+        expect(flash[:success]).to eq(
+          'Emails to be sent to producers have been queued for sending.'
+        )
       end
     end
 
