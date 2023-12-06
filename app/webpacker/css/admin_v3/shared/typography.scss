@@ -51,14 +51,6 @@ a:not(.button) {
   text-decoration: none;
   line-height: inherit;
 
-  &,
-  &:hover,
-  &:active,
-  &:visited,
-  &:focus {
-    outline: none;
-  }
-
   &:visited {
     color: $color-link-visited;
   }
