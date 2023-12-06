@@ -1485,15 +1485,59 @@ es_US:
     orders:
       failed_to_update: "Error al actualizar pedido"
   checkout:
+    failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
+    your_details_without_number: Sus detalles
     already_ordered:
       cart: "carrito"
       message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
-    terms_and_conditions:
-      message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
-      link_text: "Términos y Condiciones"
-    all_terms_and_conditions:
-      terms_and_conditions: "Términos y Condiciones"
-    failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: Número de teléfono
+      billing_address:
+        title: Dirección de cobro
+        first_name:
+          label: Nombre
+        last_name:
+          label: Apellido
+      address:
+        city:
+          label: Ciudad
+        state_id:
+          label: Provincia
+        zipcode:
+          label: Código Postal
+        country_id:
+          label: País
+      shipping_info:
+        title: Información de envío
+    step2:
+      form:
+        card_number:
+          label: Número de tarjeta
+        card_month:
+          label: Mes
+        card_year:
+          label: Año
+    step3:
+      delivery_details:
+        title: Detalles de entrega
+        edit: Editar
+        address: Dirección de entrega
+      payment_method:
+        edit: Editar
+      order:
+        edit: Editar
+      terms_and_conditions:
+        message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
+        link_text: "Términos y Condiciones"
+      all_terms_and_conditions:
+        terms_and_conditions: "Términos y Condiciones"
+    errors:
+      invalid_email: "Introduce un email válido"
+      voucher_not_found: no encontrado
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
@@ -1758,59 +1802,6 @@ es_US:
   checkout_total_price: Total
   checkout_back_to_cart: "De vuelta al carrito"
   cost_currency: "Moneda"
-  split_checkout:
-    your_details_without_number: Sus detalles
-    already_ordered:
-      cart: "carrito"
-      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: Número de teléfono
-      billing_address:
-        title: Dirección de cobro
-        first_name:
-          label: Nombre
-        last_name:
-          label: Apellido
-      address:
-        city:
-          label: Ciudad
-        state_id:
-          label: Provincia
-        zipcode:
-          label: Código Postal
-        country_id:
-          label: País
-      shipping_info:
-        title: Información de envío
-    step2:
-      form:
-        card_number:
-          label: Número de tarjeta
-        card_month:
-          label: Mes
-        card_year:
-          label: Año
-    step3:
-      delivery_details:
-        title: Detalles de entrega
-        edit: Editar
-        address: Dirección de entrega
-      payment_method:
-        edit: Editar
-      order:
-        edit: Editar
-      terms_and_conditions:
-        message_html: "Acepto el %{terms_and_conditions_link} del vendedor."
-        link_text: "Términos y Condiciones"
-      all_terms_and_conditions:
-        terms_and_conditions: "Términos y Condiciones"
-    errors:
-      invalid_email: "Introduce un email válido"
-      voucher_not_found: no encontrado
   order_paid: PAGADO
   order_not_paid: NO PAGADO
   order_total: Pedido total

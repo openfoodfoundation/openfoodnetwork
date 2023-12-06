@@ -1684,20 +1684,108 @@ ru:
         title: Неверный параметр запроса
         extra_fields: "Не поддерживаемые поля: %{fields}"
   checkout:
-    already_ordered:
-      cart: "корзина"
-      message_html: "У вас уже есть заказ для этого цикла заказов. Проверьте %{cart}, чтобы увидеть товары, которые вы заказали ранее. Вы также можете отменять позиции, пока открыт цикл заказа."
-    terms_and_conditions:
-      message_html: "Согласен на %{terms_and_conditions_link} продавца."
-      link_text: "Условия и Положения"
-    platform_terms_of_service:
-      message_html: "Я согласен c условиями платформы %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "Я согласен с условиями %{terms_and_conditions_link} продавца и платформы %{tos_link}."
-      terms_and_conditions: "Условия и Положения"
     failed: "Оформить заказ не удалось. Сообщите нам, чтобы мы могли обработать ваш заказ."
     payment_cancelled_due_to_stock: "Платеж отменен: оформление заказа не может быть выполнено из-за проблем на складе."
     order_not_loaded: "Не найден действительный заказ для оформления"
+    your_details_without_number: Информация о Вас
+    payment_method_without_number: Способ оплаты
+    order_summary_without_number: Итог заказа
+    already_ordered:
+      cart: "корзина"
+      message_html: "У вас уже есть заказ для этого цикла заказов. Проверьте %{cart}, чтобы увидеть товары, которые вы заказали ранее. Вы также можете отменять позиции, пока открыт цикл заказа."
+    step1:
+      contact_information:
+        title: Контактная информация
+        email:
+          label: Email
+        phone:
+          label: Номер телефона
+      billing_address:
+        title: Платежный Адрес
+        first_name:
+          label: Имя
+        last_name:
+          label: Фамилия
+      address:
+        address1:
+          label: Адрес (Улица + Номер Дома)
+        address2:
+          label: Дополнительная адресная информация (необязательно)
+        city:
+          label: Город
+        state_id:
+          label: Статус
+        zipcode:
+          label: Почтовый индекс
+        country_id:
+          label: Страна
+      shipping_info:
+        title: Информация о доставке
+      submit: Далее - Способ оплаты
+      cancel: Назад Изменить корзину
+    step2:
+      payment_method:
+        title: Способ оплаты
+      form:
+        card_number:
+          label: Номер карты
+          placeholder: например, 4242 4242 4242 4242
+        card_verification_value:
+          label: CVV
+        card_month:
+          label: Месяц
+        card_year:
+          label: Год
+        stripe:
+          use_saved_card: Использовать сохраненную карту
+          use_new_card: Введите данные вашей карты
+          save_card: Сохранить карту для будущего использования
+          create_new_card: или введите данные новой карты ниже
+      explaination: Вы можете просмотреть и подтвердить свой заказ на следующем шаге, который включает окончательную стоимость.
+      submit: Далее - Сводка заказа
+      cancel: Назад к Вашим данным
+      voucher:
+        voucher: "<span class='notranslate'>%{voucher_amount}</span> Ваучер"
+        apply_voucher: Применить ваучер
+        apply: Применить
+        placeholder: Введите код ваучера
+        remove_code: Удалить код
+        confirm_delete: Вы уверены, что хотите удалить ваучер?
+        warning_forfeit_remaining_amount: "Примечание: если сумма вашего заказа меньше, чем ваш ваучер, вы не сможете потратить оставшуюся сумму."
+    step3:
+      delivery_details:
+        title: Подробности доставки
+        edit: Изменить
+        address: Адрес доставки
+        instructions: Инструкции
+      payment_method:
+        title: Способ оплаты
+        edit: Изменить
+        instructions: Инструкции
+      order:
+        title: Информация по заказу
+        edit: Изменить
+      terms_and_conditions:
+        message_html: "Согласен на %{terms_and_conditions_link} продавца."
+        link_text: "Условия и Положения"
+      platform_terms_of_service:
+        message_html: "Я согласен c условиями платформы %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "Я согласен с условиями %{terms_and_conditions_link} продавца и платформы %{tos_link}."
+        terms_and_conditions: "Условия и Положения"
+      submit: Завершить заказ
+      cancel: Вернуться к Способу оплаты
+    errors:
+      saving_failed: "Ошибка сохранения, обновите выделенные поля."
+      terms_not_accepted: Пожалуйста, примите Условия использования
+      required: Поле не может быть пустым
+      invalid_number: "Пожалуйста, введите действующий номер телефона"
+      invalid_email: "Пожалуйста, введите действительный адрес электронной почты"
+      select_a_shipping_method: Выберите способ доставки
+      select_a_payment_method: Выберите способ оплаты
+      no_shipping_methods_available: Оформить заказ невозможно из-за отсутствия возможности доставки. Пожалуйста, свяжитесь с владельцем магазина.
+      voucher_not_found: Не найден
+      add_voucher_error: При добавлении ваучера произошла ошибка
   shops:
     hubs:
       show_closed_shops: "Показать закрытые магазины"
@@ -1967,106 +2055,6 @@ ru:
   checkout_total_price: Всего
   checkout_back_to_cart: "Назад в корзину"
   cost_currency: "Стоимость валюты"
-  split_checkout:
-    your_details_without_number: Информация о Вас
-    payment_method_without_number: Способ оплаты
-    order_summary_without_number: Итог заказа
-    already_ordered:
-      cart: "корзина"
-      message_html: "У вас уже есть заказ для этого цикла заказов. Проверьте %{cart}, чтобы увидеть товары, которые вы заказали ранее. Вы также можете отменять позиции, пока открыт цикл заказа."
-    step1:
-      contact_information:
-        title: Контактная информация
-        email:
-          label: Email
-        phone:
-          label: Номер телефона
-      billing_address:
-        title: Платежный Адрес
-        first_name:
-          label: Имя
-        last_name:
-          label: Фамилия
-      address:
-        address1:
-          label: Адрес (Улица + Номер Дома)
-        address2:
-          label: Дополнительная адресная информация (необязательно)
-        city:
-          label: Город
-        state_id:
-          label: Статус
-        zipcode:
-          label: Почтовый индекс
-        country_id:
-          label: Страна
-      shipping_info:
-        title: Информация о доставке
-      submit: Далее - Способ оплаты
-      cancel: Назад Изменить корзину
-    step2:
-      payment_method:
-        title: Способ оплаты
-      form:
-        card_number:
-          label: Номер карты
-          placeholder: например, 4242 4242 4242 4242
-        card_verification_value:
-          label: CVV
-        card_month:
-          label: Месяц
-        card_year:
-          label: Год
-        stripe:
-          use_saved_card: Использовать сохраненную карту
-          use_new_card: Введите данные вашей карты
-          save_card: Сохранить карту для будущего использования
-          create_new_card: или введите данные новой карты ниже
-      explaination: Вы можете просмотреть и подтвердить свой заказ на следующем шаге, который включает окончательную стоимость.
-      submit: Далее - Сводка заказа
-      cancel: Назад к Вашим данным
-      voucher:
-        voucher: "<span class='notranslate'>%{voucher_amount}</span> Ваучер"
-        apply_voucher: Применить ваучер
-        apply: Применить
-        placeholder: Введите код ваучера
-        remove_code: Удалить код
-        confirm_delete: Вы уверены, что хотите удалить ваучер?
-        warning_forfeit_remaining_amount: "Примечание: если сумма вашего заказа меньше, чем ваш ваучер, вы не сможете потратить оставшуюся сумму."
-    step3:
-      delivery_details:
-        title: Подробности доставки
-        edit: Изменить
-        address: Адрес доставки
-        instructions: Инструкции
-      payment_method:
-        title: Способ оплаты
-        edit: Изменить
-        instructions: Инструкции
-      order:
-        title: Информация по заказу
-        edit: Изменить
-      terms_and_conditions:
-        message_html: "Согласен на %{terms_and_conditions_link} продавца."
-        link_text: "Условия и Положения"
-      platform_terms_of_service:
-        message_html: "Я согласен c условиями платформы %{tos_link}."
-      all_terms_and_conditions:
-        message_html: "Я согласен с условиями %{terms_and_conditions_link} продавца и платформы %{tos_link}."
-        terms_and_conditions: "Условия и Положения"
-      submit: Завершить заказ
-      cancel: Вернуться к Способу оплаты
-    errors:
-      saving_failed: "Ошибка сохранения, обновите выделенные поля."
-      terms_not_accepted: Пожалуйста, примите Условия использования
-      required: Поле не может быть пустым
-      invalid_number: "Пожалуйста, введите действующий номер телефона"
-      invalid_email: "Пожалуйста, введите действительный адрес электронной почты"
-      select_a_shipping_method: Выберите способ доставки
-      select_a_payment_method: Выберите способ оплаты
-      no_shipping_methods_available: Оформить заказ невозможно из-за отсутствия возможности доставки. Пожалуйста, свяжитесь с владельцем магазина.
-      voucher_not_found: Не найден
-      add_voucher_error: При добавлении ваучера произошла ошибка
   order_paid: ОПЛАЧЕН
   order_not_paid: НЕ ОПЛАЧЕН
   order_total: Весь заказ

@@ -1542,20 +1542,94 @@ uk:
     orders:
       failed_to_update: "Не вдалося оновити замовлення"
   checkout:
-    already_ordered:
-      cart: "кошик"
-      message_html: "У вас уже є замовлення для цього циклу замовлень. Перевірте %{cart}, щоб побачити товари, які ви замовляли раніше. Ви також можете скасувати товари, доки цикл замовлення відкритий."
-    terms_and_conditions:
-      message_html: "Я згоден з %{terms_and_conditions_link} продавця."
-      link_text: "Правила та умови"
-    platform_terms_of_service:
-      message_html: "Я згоден з платформою %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "Я погоджуюся з %{terms_and_conditions_link} продавця та платформою %{tos_link}."
-      terms_and_conditions: "Правила та умови"
     failed: "Оплата не вдалася. Будь ласка, повідомте нас, щоб ми могли обробити ваше замовлення."
     payment_cancelled_due_to_stock: "Платіж скасовано: перевірку не вдалося завершити через проблеми зі складом."
     order_not_loaded: "Не знайдено дійсного замовлення для обробки замовлення"
+    your_details_without_number: Ваші дані
+    payment_method_without_number: Спосіб оплати
+    order_summary_without_number: Підсумок Замовлення
+    already_ordered:
+      cart: "корзина"
+      message_html: "У вас уже є замовлення для цього циклу замовлень. Перевірте %{cart}, щоб побачити товари, які ви замовляли раніше. Ви також можете скасувати товари, доки цикл замовлення відкритий."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: Телефонний номер
+      billing_address:
+        title: Платіжна адреса
+        first_name:
+          label: Ім'я
+        last_name:
+          label: Прізвище
+      address:
+        address1:
+          label: Адреса (вулиця + номер будинку)
+        address2:
+          label: Додаткова інформація про адресу (необов'язково)
+        city:
+          label: Місто
+        state_id:
+          label: Регіон
+        zipcode:
+          label: Поштовий індекс
+        country_id:
+          label: Країна
+      shipping_info:
+        title: Інформація про доставку
+      submit: Далі - Спосіб оплати
+      cancel: Назад до корзини редагування
+    step2:
+      payment_method:
+        title: Спосіб оплати
+      form:
+        card_number:
+          label: Номер картки
+          placeholder: напр. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Місяць
+        card_year:
+          label: Рік
+        stripe:
+          use_saved_card: Використати збережену картку
+          use_new_card: Введіть ідентифікатори картки
+          save_card: Збережіть картку для подальшого використання
+          create_new_card: або введіть дані нової картки нижче
+      explaination: Ви можете переглянути та підтвердити своє замовлення на наступному кроці, який включає остаточну вартість.
+      submit: Далі - Підсумок замовлення
+      cancel: Повернутися до ваших даних
+    step3:
+      delivery_details:
+        title: Деталі доставки
+        edit: Редагувати
+        address: Адреса доставки
+      payment_method:
+        title: Спосіб оплати
+        edit: Редагувати
+      order:
+        edit: Редагувати
+      terms_and_conditions:
+        message_html: "Я згоден з %{terms_and_conditions_link} продавця."
+        link_text: "Правила та умови"
+      platform_terms_of_service:
+        message_html: "Я згоден з платформою %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "Я погоджуюся з %{terms_and_conditions_link} продавця та платформою %{tos_link}."
+        terms_and_conditions: "Правила та умови"
+      submit: Завершити замовлення
+      cancel: Назад до способу оплати
+    errors:
+      saving_failed: "Не вдалося зберегти. Оновіть виділені поля."
+      terms_not_accepted: Будь ласка, прийміть Загальні положення та умови
+      required: Поле не може бути порожнім
+      invalid_number: "Будь ласка введіть дійсний номер телефону"
+      invalid_email: "Будь ласка, введіть дійсну адресу електронної пошти"
+      select_a_shipping_method: Виберіть спосіб доставки
+      select_a_payment_method: Виберіть спосіб оплати
+      voucher_not_found: Не знайдено
   shops:
     hubs:
       show_closed_shops: "Показати закриті магазини"
@@ -1825,92 +1899,6 @@ uk:
   checkout_total_price: Всього
   checkout_back_to_cart: "Назад до кошика"
   cost_currency: "Валюта розрахунків"
-  split_checkout:
-    your_details_without_number: Ваші дані
-    payment_method_without_number: Спосіб оплати
-    order_summary_without_number: Підсумок Замовлення
-    already_ordered:
-      cart: "корзина"
-      message_html: "У вас уже є замовлення для цього циклу замовлень. Перевірте %{cart}, щоб побачити товари, які ви замовляли раніше. Ви також можете скасувати товари, доки цикл замовлення відкритий."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: Телефонний номер
-      billing_address:
-        title: Платіжна адреса
-        first_name:
-          label: Ім'я
-        last_name:
-          label: Прізвище
-      address:
-        address1:
-          label: Адреса (вулиця + номер будинку)
-        address2:
-          label: Додаткова інформація про адресу (необов'язково)
-        city:
-          label: Місто
-        state_id:
-          label: Регіон
-        zipcode:
-          label: Поштовий індекс
-        country_id:
-          label: Країна
-      shipping_info:
-        title: Інформація про доставку
-      submit: Далі - Спосіб оплати
-      cancel: Назад до корзини редагування
-    step2:
-      payment_method:
-        title: Спосіб оплати
-      form:
-        card_number:
-          label: Номер картки
-          placeholder: напр. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: Місяць
-        card_year:
-          label: Рік
-        stripe:
-          use_saved_card: Використати збережену картку
-          use_new_card: Введіть ідентифікатори картки
-          save_card: Збережіть картку для подальшого використання
-          create_new_card: або введіть дані нової картки нижче
-      explaination: Ви можете переглянути та підтвердити своє замовлення на наступному кроці, який включає остаточну вартість.
-      submit: Далі - Підсумок замовлення
-      cancel: Повернутися до ваших даних
-    step3:
-      delivery_details:
-        title: Деталі доставки
-        edit: Редагувати
-        address: Адреса доставки
-      payment_method:
-        title: Спосіб оплати
-        edit: Редагувати
-      order:
-        edit: Редагувати
-      terms_and_conditions:
-        message_html: "Я згоден з %{terms_and_conditions_link} продавця."
-        link_text: "Правила та умови"
-      platform_terms_of_service:
-        message_html: "Я згоден з платформою %{tos_link}."
-      all_terms_and_conditions:
-        message_html: "Я погоджуюся з %{terms_and_conditions_link} продавця та платформою %{tos_link}."
-        terms_and_conditions: "Правила та умови"
-      submit: Завершити замовлення
-      cancel: Назад до способу оплати
-    errors:
-      saving_failed: "Не вдалося зберегти. Оновіть виділені поля."
-      terms_not_accepted: Будь ласка, прийміть Загальні положення та умови
-      required: Поле не може бути порожнім
-      invalid_number: "Будь ласка введіть дійсний номер телефону"
-      invalid_email: "Будь ласка, введіть дійсну адресу електронної пошти"
-      select_a_shipping_method: Виберіть спосіб доставки
-      select_a_payment_method: Виберіть спосіб оплати
-      voucher_not_found: Не знайдено
   order_paid: ОПЛАЧЕНО
   order_not_paid: НЕ ОПЛАЧЕНО
   order_total: Замовлено всього

@@ -1534,20 +1534,95 @@ hu:
     orders:
       failed_to_update: "Nem sikerült frissíteni a rendelést"
   checkout:
-    already_ordered:
-      cart: "kosár"
-      message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
-    terms_and_conditions:
-      message_html: "Elfogadom az eladó %{terms_and_conditions_link} feltételeit."
-      link_text: "Felhasználási feltételek"
-    platform_terms_of_service:
-      message_html: "Elfogadom a %{tos_link} platformot."
-    all_terms_and_conditions:
-      message_html: "Elfogadom az eladó %{terms_and_conditions_link} és a platform %{tos_link} feltételeit."
-      terms_and_conditions: "Felhasználási feltételek"
     failed: "A fizetés nem sikerült. Kérjük, jelezze felénk, hogy feldolgozhassuk megrendelését."
     payment_cancelled_due_to_stock: "Fizetés törölve: a pénztár készlethiba miatt nem fejezhető be."
     order_not_loaded: "Nem található érvényes rendelés a fizetés feldolgozásához"
+    your_details_without_number: Személyes adatok
+    payment_method_without_number: Fizetési mód
+    order_summary_without_number: Megrendelés-összesítő
+    already_ordered:
+      cart: "kosár"
+      message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: Telefonszám
+      billing_address:
+        title: Számlázási cím
+        first_name:
+          label: Keresztnév
+        last_name:
+          label: Vezetéknév
+      address:
+        address1:
+          label: Cím (utca + házszám)
+        address2:
+          label: További címadatok (nem kötelező)
+        city:
+          label: Város
+        state_id:
+          label: Ország
+        zipcode:
+          label: Irányítószám
+        country_id:
+          label: Ország
+      shipping_info:
+        title: Szállítási információ
+      submit: Következő - Fizetési mód
+      cancel: Vissza a kosár szerkesztéséhez
+    step2:
+      payment_method:
+        title: Fizetési mód
+      form:
+        card_number:
+          label: Kártyaszám
+          placeholder: pl. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Hónap
+        card_year:
+          label: Év
+        stripe:
+          use_saved_card: Használd a mentett kártyát
+          use_new_card: Adja meg kártyaazonosítóit
+          save_card: Mentse el a kártyát későbbi használatra
+          create_new_card: vagy adja meg alább az új kártyaadatokat
+      explaination: Megrendelését a következő lépésben tekintheti át és erősítheti meg, amely tartalmazza a végső költségeket.
+      submit: Következő - Megrendelés összegzése
+      cancel: Vissza az Ön adataihoz
+    step3:
+      delivery_details:
+        title: Szállítás részletei
+        edit: Szerkesztés
+        address: Szállítási cím
+      payment_method:
+        title: Fizetési mód
+        edit: Szerkesztés
+      order:
+        edit: Szerkesztés
+      terms_and_conditions:
+        message_html: "Elfogadom az eladó %{terms_and_conditions_link} feltételeit."
+        link_text: "Felhasználási feltételek"
+      platform_terms_of_service:
+        message_html: "Elfogadom a %{tos_link} platformot."
+      all_terms_and_conditions:
+        message_html: "Elfogadom az eladó %{terms_and_conditions_link} és a platform %{tos_link} feltételeit."
+        terms_and_conditions: "Felhasználási feltételek"
+      submit: Teljes rendelés
+      cancel: Vissza a Fizetési módhoz
+    errors:
+      saving_failed: "A mentés nem sikerült, kérjük, frissítse a kiemelt mezőket."
+      terms_not_accepted: Kérjük, fogadja el az Általános Szerződési Feltételeket
+      required: A mező nem lehet üres
+      invalid_number: "Adjon meg egy érvényes telefonszámot"
+      invalid_email: "Kérjük valós e-mail címet adjon meg"
+      select_a_shipping_method: Válasszon szállítási módot
+      select_a_payment_method: Válassz fizetési módot
+      no_shipping_methods_available: Szállítási lehetőségek hiánya miatt a fizetés nem lehetséges. Kérjük, lépjen kapcsolatba az üzlet tulajdonosával.
+      voucher_not_found: Nem található
   shops:
     hubs:
       show_closed_shops: "Inaktív átadópontok megjelenítése"
@@ -1817,93 +1892,6 @@ hu:
   checkout_total_price: Összesen
   checkout_back_to_cart: "Vissza a kosárba"
   cost_currency: "Költség Pénznem"
-  split_checkout:
-    your_details_without_number: Személyes adatok
-    payment_method_without_number: Fizetési mód
-    order_summary_without_number: Megrendelés-összesítő
-    already_ordered:
-      cart: "kosár"
-      message_html: "Már van rendelése ehhez a rendelési ciklushoz. Tekintse meg a %{kosarat}, hogy megtekinthesse a korábban megrendelt tételeket. A tételeket törölheti is, amíg a rendelési ciklus nyitva van."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: Telefonszám
-      billing_address:
-        title: Számlázási cím
-        first_name:
-          label: Keresztnév
-        last_name:
-          label: Vezetéknév
-      address:
-        address1:
-          label: Cím (utca + házszám)
-        address2:
-          label: További címadatok (nem kötelező)
-        city:
-          label: Város
-        state_id:
-          label: Ország
-        zipcode:
-          label: Irányítószám
-        country_id:
-          label: Ország
-      shipping_info:
-        title: Szállítási információ
-      submit: Következő - Fizetési mód
-      cancel: Vissza a kosár szerkesztéséhez
-    step2:
-      payment_method:
-        title: Fizetési mód
-      form:
-        card_number:
-          label: Kártyaszám
-          placeholder: pl. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: Hónap
-        card_year:
-          label: Év
-        stripe:
-          use_saved_card: Használd a mentett kártyát
-          use_new_card: Adja meg kártyaazonosítóit
-          save_card: Mentse el a kártyát későbbi használatra
-          create_new_card: vagy adja meg alább az új kártyaadatokat
-      explaination: Megrendelését a következő lépésben tekintheti át és erősítheti meg, amely tartalmazza a végső költségeket.
-      submit: Következő - Megrendelés összegzése
-      cancel: Vissza az Ön adataihoz
-    step3:
-      delivery_details:
-        title: Szállítás részletei
-        edit: Szerkesztés
-        address: Szállítási cím
-      payment_method:
-        title: Fizetési mód
-        edit: Szerkesztés
-      order:
-        edit: Szerkesztés
-      terms_and_conditions:
-        message_html: "Elfogadom az eladó %{terms_and_conditions_link} feltételeit."
-        link_text: "Felhasználási feltételek"
-      platform_terms_of_service:
-        message_html: "Elfogadom a %{tos_link} platformot."
-      all_terms_and_conditions:
-        message_html: "Elfogadom az eladó %{terms_and_conditions_link} és a platform %{tos_link} feltételeit."
-        terms_and_conditions: "Felhasználási feltételek"
-      submit: Teljes rendelés
-      cancel: Vissza a Fizetési módhoz
-    errors:
-      saving_failed: "A mentés nem sikerült, kérjük, frissítse a kiemelt mezőket."
-      terms_not_accepted: Kérjük, fogadja el az Általános Szerződési Feltételeket
-      required: A mező nem lehet üres
-      invalid_number: "Adjon meg egy érvényes telefonszámot"
-      invalid_email: "Kérjük valós e-mail címet adjon meg"
-      select_a_shipping_method: Válasszon szállítási módot
-      select_a_payment_method: Válassz fizetési módot
-      no_shipping_methods_available: Szállítási lehetőségek hiánya miatt a fizetés nem lehetséges. Kérjük, lépjen kapcsolatba az üzlet tulajdonosával.
-      voucher_not_found: Nem található
   order_paid: FIZETETT
   order_not_paid: NEM FIZETETT
   order_total: Fizetendő összeg

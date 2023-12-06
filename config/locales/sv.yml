@@ -801,9 +801,44 @@ sv:
         back: Backa
         voucher_amount: Belopp
   checkout:
+    your_details_without_number: Dina detaljer
     already_ordered:
       cart: "vagn"
       message_html: "Du har redan en beställning för denna beställningsomgång. Kontrollera %{cart} för att se föremålen du beställde tidigare. Du kan också ta bort varor/artiklar så länge som beställningsomgången är öppen."
+    step1:
+      contact_information:
+        email:
+          label: E-post
+        phone:
+          label: Telefonnummer
+      billing_address:
+        title: 'Faktureringsadress '
+        first_name:
+          label: Förnamn
+        last_name:
+          label: Efternamn
+      address:
+        city:
+          label: Ort
+        state_id:
+          label: Region
+        zipcode:
+          label: Postkod
+        country_id:
+          label: Land
+      shipping_info:
+        title: 'Leveransadress '
+    step3:
+      delivery_details:
+        title: Leveransdetaljer
+        edit: Redigera
+        address: 'Leveransadress '
+      payment_method:
+        edit: Redigera
+      order:
+        edit: Redigera
+    errors:
+      invalid_email: "Var vänlig fyll i en giltig epostadress"
   shops:
     hubs:
       show_closed_shops: "Visa stängda butiker"
@@ -981,45 +1016,6 @@ sv:
   checkout_shipping_price: Frakt
   checkout_total_price: 'Summa '
   checkout_back_to_cart: "Tillbaka till Varukorg"
-  split_checkout:
-    your_details_without_number: Dina detaljer
-    already_ordered:
-      cart: "vagn"
-      message_html: "Du har redan en beställning för denna beställningsomgång. Kontrollera %{cart} för att se föremålen du beställde tidigare. Du kan också ta bort varor/artiklar så länge som beställningsomgången är öppen."
-    step1:
-      contact_information:
-        email:
-          label: E-post
-        phone:
-          label: Telefonnummer
-      billing_address:
-        title: 'Faktureringsadress '
-        first_name:
-          label: Förnamn
-        last_name:
-          label: Efternamn
-      address:
-        city:
-          label: Ort
-        state_id:
-          label: Region
-        zipcode:
-          label: Postkod
-        country_id:
-          label: Land
-      shipping_info:
-        title: 'Leveransadress '
-    step3:
-      delivery_details:
-        title: Leveransdetaljer
-        edit: Redigera
-        address: 'Leveransadress '
-      payment_method:
-        edit: Redigera
-      order:
-        edit: Redigera
-    errors:
-      invalid_email: "Var vänlig fyll i en giltig epostadress"
   order_paid: BETALD
   order_not_paid: INTE BETALD
   order_total: Total order

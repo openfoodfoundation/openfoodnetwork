@@ -1694,20 +1694,108 @@ cy:
         title: Invalid query parameter
         extra_fields: "Meysydd digefnogaeth: %{fields}"
   checkout:
-    already_ordered:
-      cart: "basged"
-      message_html: "Mae gennych chi archeb ar gyfer y cylch archebu hwn eisoes. Gwiriwch y %{cart} i weld yr eitemau a archebwyd o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
-    terms_and_conditions:
-      message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
-      link_text: "Telerau ac Amodau"
-    platform_terms_of_service:
-      message_html: "Rwyf yn cytuno â'r platfform %{tos_link}"
-    all_terms_and_conditions:
-      message_html: "Rwyf yn cytuno â %{terms_and_conditions_link}y gwerthwr a'r platfform %{tos_link}"
-      terms_and_conditions: "Telerau ac Amodau"
     failed: "Methwyd â thalu. Gadewch inni wybod er mwyn inni allu prosesu eich archeb."
     payment_cancelled_due_to_stock: "Canslwyd y taliad: nid oedd yn bosib talu wrth y ddesg oherwydd problemau gyda stoc."
     order_not_loaded: "Ni chafwyd hyd i archeb dilys i brosesu tâl."
+    your_details_without_number: Eich manylion
+    payment_method_without_number: Dull talu
+    order_summary_without_number: Crynodeb o'r archeb
+    already_ordered:
+      cart: "basged"
+      message_html: "Mae gennych chi archeb ar gyfer y cylch archebu hwn eisoes. Gwiriwch y %{cart} i weld yr eitemau a archebwyd o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
+    step1:
+      contact_information:
+        title: Manylion cyswllt
+        email:
+          label: E-bost
+        phone:
+          label: Rhif ffôn
+      billing_address:
+        title: Cyfeiriad bilio
+        first_name:
+          label: Enw cyntaf
+        last_name:
+          label: Enw olaf
+      address:
+        address1:
+          label: Cyfeiriad (Stryd a Rhif y Ty)
+        address2:
+          label: Manylion ychwanegol y Cyfeiriad (dewisol)
+        city:
+          label: Dinas
+        state_id:
+          label: Sir
+        zipcode:
+          label: Cod post
+        country_id:
+          label: Gwlad
+      shipping_info:
+        title: Gwybodaeth anfon
+      submit: Nesaf - Dull talu
+      cancel: Nôl i Olygu'r fasged
+    step2:
+      payment_method:
+        title: Dull talu
+      form:
+        card_number:
+          label: Rhif cerdyn
+          placeholder: e.e. 4242 4242 4242 4242
+        card_verification_value:
+          label: Rhif CVC
+        card_month:
+          label: Mis
+        card_year:
+          label: Blwyddyn
+        stripe:
+          use_saved_card: Defnyddio cerdyn a gadwyd.
+          use_new_card: Noder manylion adnabod y cerdyn.
+          save_card: Cadw'r cerdyn i'w ddefnyddio yn y dyfodol.
+          create_new_card: neu noder manylion cerdyn newydd isod.
+      explaination: Gallwch adolygu a chadarnhau eich archeb yn y cam nesaf sy'n cynnwys y costau terfynol.
+      submit: Nesaf - Crynodeb o'r Archeb
+      cancel: Nôl at Eich Manylion
+      voucher:
+        voucher: "%{voucher_amount}Taleb"
+        apply_voucher: Defnyddio Taleb
+        apply: Defnyddio
+        placeholder: Noder cod y daleb
+        remove_code: Dileu’r cod
+        confirm_delete: Ydych chi’n siŵr eich bod chi am ddileu’r daleb?
+        warning_forfeit_remaining_amount: "Noder: os bydd cyfanswm eich archeb yn llai na’ch taleb, hwyrach na fyddwch yn gallu gwario’r gwerth sy’n weddill."
+    step3:
+      delivery_details:
+        title: Manylion dosbarthu
+        edit: Golygu
+        address: Cyfeiriad dosbarthu
+        instructions: Cyfarwyddiadau
+      payment_method:
+        title: Dull talu
+        edit: Golygu
+        instructions: Cyfarwyddiadau
+      order:
+        title: Manylion yr archeb
+        edit: Golygu
+      terms_and_conditions:
+        message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
+        link_text: "Telerau ac Amodau"
+      platform_terms_of_service:
+        message_html: "Rwyf yn cytuno â'r platfform %{tos_link}"
+      all_terms_and_conditions:
+        message_html: "Rwyf yn cytuno â %{terms_and_conditions_link}y gwerthwr a'r platfform %{tos_link}"
+        terms_and_conditions: "Telerau ac Amodau"
+      submit: Cwblhau'r archeb
+      cancel: Nôl at y Dull Talu
+    errors:
+      saving_failed: "Wedi methu ei gadw, gofynnir ichi ddiweddaru'r meysydd a amlygwyd."
+      terms_not_accepted: Mae angen ichi dderbyn y Telerau ac Amodau
+      required: Ni chaniateir gadael maes yn wag
+      invalid_number: "Noder rhif ffôn dilys os gwelwch yn dda"
+      invalid_email: "Rhowch gyfeiriad e-bost dilys"
+      select_a_shipping_method: Dewiswch ddull cludo
+      select_a_payment_method: Dewiswch ddull talu
+      no_shipping_methods_available: Nid yw'n bosibl talu oherwydd diffyg opsiynau cludo. Cysylltwch â pherchennog y siop.
+      voucher_not_found: Heb ei ganfod
+      add_voucher_error: Roedd gwall wrth ychwanegu’r daleb
   shops:
     hubs:
       show_closed_shops: "Dangos siopau caeëdig"
@@ -1978,106 +2066,6 @@ cy:
   checkout_total_price: Cyfanswm
   checkout_back_to_cart: "Yn ôl i'r basged"
   cost_currency: "Cost Arian Cyfred"
-  split_checkout:
-    your_details_without_number: Eich manylion
-    payment_method_without_number: Dull talu
-    order_summary_without_number: Crynodeb o'r archeb
-    already_ordered:
-      cart: "basged"
-      message_html: "Mae gennych chi archeb ar gyfer y cylch archebu hwn eisoes. Gwiriwch y %{cart} i weld yr eitemau a archebwyd o'r blaen. Gallwch hefyd ganslo eitemau cyn belled â bod y cylch archebu ar agor."
-    step1:
-      contact_information:
-        title: Manylion cyswllt
-        email:
-          label: E-bost
-        phone:
-          label: Rhif ffôn
-      billing_address:
-        title: Cyfeiriad bilio
-        first_name:
-          label: Enw cyntaf
-        last_name:
-          label: Enw olaf
-      address:
-        address1:
-          label: Cyfeiriad (Stryd a Rhif y Ty)
-        address2:
-          label: Manylion ychwanegol y Cyfeiriad (dewisol)
-        city:
-          label: Dinas
-        state_id:
-          label: Sir
-        zipcode:
-          label: Cod post
-        country_id:
-          label: Gwlad
-      shipping_info:
-        title: Gwybodaeth anfon
-      submit: Nesaf - Dull talu
-      cancel: Nôl i Olygu'r fasged
-    step2:
-      payment_method:
-        title: Dull talu
-      form:
-        card_number:
-          label: Rhif cerdyn
-          placeholder: e.e. 4242 4242 4242 4242
-        card_verification_value:
-          label: Rhif CVC
-        card_month:
-          label: Mis
-        card_year:
-          label: Blwyddyn
-        stripe:
-          use_saved_card: Defnyddio cerdyn a gadwyd.
-          use_new_card: Noder manylion adnabod y cerdyn.
-          save_card: Cadw'r cerdyn i'w ddefnyddio yn y dyfodol.
-          create_new_card: neu noder manylion cerdyn newydd isod.
-      explaination: Gallwch adolygu a chadarnhau eich archeb yn y cam nesaf sy'n cynnwys y costau terfynol.
-      submit: Nesaf - Crynodeb o'r Archeb
-      cancel: Nôl at Eich Manylion
-      voucher:
-        voucher: "%{voucher_amount}Taleb"
-        apply_voucher: Defnyddio Taleb
-        apply: Defnyddio
-        placeholder: Noder cod y daleb
-        remove_code: Dileu’r cod
-        confirm_delete: Ydych chi’n siŵr eich bod chi am ddileu’r daleb?
-        warning_forfeit_remaining_amount: "Noder: os bydd cyfanswm eich archeb yn llai na’ch taleb, hwyrach na fyddwch yn gallu gwario’r gwerth sy’n weddill."
-    step3:
-      delivery_details:
-        title: Manylion dosbarthu
-        edit: Golygu
-        address: Cyfeiriad dosbarthu
-        instructions: Cyfarwyddiadau
-      payment_method:
-        title: Dull talu
-        edit: Golygu
-        instructions: Cyfarwyddiadau
-      order:
-        title: Manylion yr archeb
-        edit: Golygu
-      terms_and_conditions:
-        message_html: "Rwy'n cytuno i %{terms_and_conditions_link} y gwerthwr."
-        link_text: "Telerau ac Amodau"
-      platform_terms_of_service:
-        message_html: "Rwyf yn cytuno â'r platfform %{tos_link}"
-      all_terms_and_conditions:
-        message_html: "Rwyf yn cytuno â %{terms_and_conditions_link}y gwerthwr a'r platfform %{tos_link}"
-        terms_and_conditions: "Telerau ac Amodau"
-      submit: Cwblhau'r archeb
-      cancel: Nôl at y Dull Talu
-    errors:
-      saving_failed: "Wedi methu ei gadw, gofynnir ichi ddiweddaru'r meysydd a amlygwyd."
-      terms_not_accepted: Mae angen ichi dderbyn y Telerau ac Amodau
-      required: Ni chaniateir gadael maes yn wag
-      invalid_number: "Noder rhif ffôn dilys os gwelwch yn dda"
-      invalid_email: "Rhowch gyfeiriad e-bost dilys"
-      select_a_shipping_method: Dewiswch ddull cludo
-      select_a_payment_method: Dewiswch ddull talu
-      no_shipping_methods_available: Nid yw'n bosibl talu oherwydd diffyg opsiynau cludo. Cysylltwch â pherchennog y siop.
-      voucher_not_found: Heb ei ganfod
-      add_voucher_error: Roedd gwall wrth ychwanegu’r daleb
   order_paid: TALWYD
   order_not_paid: HEB EI DALU
   order_total: Cyfanswm archeb

@@ -1591,20 +1591,99 @@ it:
     orders:
       failed_to_update: "Aggiornamento ordine fallito"
   checkout:
-    already_ordered:
-      cart: "carrello"
-      message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
-    terms_and_conditions:
-      message_html: "Accetto i %{terms_and_conditions_link} del venditore."
-      link_text: "Termini e Condizioni"
-    platform_terms_of_service:
-      message_html: "Acconsento ai %{tos_link} della piattaforma."
-    all_terms_and_conditions:
-      message_html: "Acconsento ai %{terms_and_conditions_link} del venditore ed ai %{tos_link} della piattaforma."
-      terms_and_conditions: "Termini e Condizioni"
     failed: "Checkout fallito. Contattaci per poter processare il tuo ordine."
     payment_cancelled_due_to_stock: "Pagamento annullato: la transazione non può avvenire a causa di problemi di disponibilità."
     order_not_loaded: "Nessuna richiesta valida trovata per la conferma. "
+    your_details_without_number: I tuoi dettagli
+    payment_method_without_number: Metodo di pagamento
+    order_summary_without_number: Riepilogo ordine
+    already_ordered:
+      cart: "carrello"
+      message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
+    step1:
+      contact_information:
+        title: Informazioni contatto
+        email:
+          label: Email
+        phone:
+          label: Numero di telefono
+      billing_address:
+        title: Indirizzo di fatturazione
+        first_name:
+          label: Nome
+        last_name:
+          label: Cognome
+      address:
+        address1:
+          label: Indirizzo (Via/Piazza/Contrada + numero civico)
+        address2:
+          label: Indirizzo, informazioni aggiuntive (facoltativo)
+        city:
+          label: Comune
+        state_id:
+          label: Provincia
+        zipcode:
+          label: CAP
+        country_id:
+          label: Stato
+      shipping_info:
+        title: Informazioni sulla spedizione
+      submit: Prossimo - Metodo di pagamento
+      cancel: Indietro a Modifica carrello
+    step2:
+      payment_method:
+        title: Metodo di pagamento
+      form:
+        card_number:
+          label: Numero carta
+          placeholder: es. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mese
+        card_year:
+          label: Anno
+        stripe:
+          use_saved_card: Usa la carta salvata
+          use_new_card: Inserisci i dati della tua carta
+          save_card: Salva i dati di questa carta per il futuro
+          create_new_card: o inserisci qui sotto i dettagli della nuova carta
+      explaination: Puoi controllare e confermare la tua richiesta nei prossimi passi, che includono il prezzo finale
+      submit: Prossimo - riepilogo richiesta
+      cancel: Indietro a Tuoi dettagli
+    step3:
+      delivery_details:
+        title: Dettagli della consegna
+        edit: Modifica
+        address: Indirizzo di consegna
+        instructions: Istruzioni
+      payment_method:
+        title: Metodo di pagamento
+        edit: Modifica
+        instructions: Istruzioni
+      order:
+        title: Dettagli ordine
+        edit: Modifica
+      terms_and_conditions:
+        message_html: "Accetto i %{terms_and_conditions_link} del venditore."
+        link_text: "Termini e Condizioni"
+      platform_terms_of_service:
+        message_html: "Acconsento ai %{tos_link} della piattaforma."
+      all_terms_and_conditions:
+        message_html: "Acconsento ai %{terms_and_conditions_link} del venditore ed ai %{tos_link} della piattaforma."
+        terms_and_conditions: "Termini e Condizioni"
+      submit: Completa ordine
+      cancel: Torna al metodo di pagamento
+    errors:
+      saving_failed: "Salvataggio non riuscito. Per favore compila i campi evidenziati."
+      terms_not_accepted: Per favore accetta i Termini e Condizioni
+      required: Il campo non può essere lasciato vuoto
+      invalid_number: "Per favore inserisci un numero di telefono valido"
+      invalid_email: "Per favore inserisci un indirizzo email valido"
+      select_a_shipping_method: Seleziona un metodo di consegna
+      select_a_payment_method: Seleziona un metodo di pagamento
+      no_shipping_methods_available: La conferma ordine non è possibile perchè mancano le opzioni di consegna. Per favore contatta il gestore del negozio.
+      voucher_not_found: Non trovato
   shops:
     hubs:
       show_closed_shops: "Mostra i negozi chiusi"
@@ -1874,97 +1953,6 @@ it:
   checkout_total_price: Totale
   checkout_back_to_cart: "Torna al carrello"
   cost_currency: "Moneta"
-  split_checkout:
-    your_details_without_number: I tuoi dettagli
-    payment_method_without_number: Metodo di pagamento
-    order_summary_without_number: Riepilogo ordine
-    already_ordered:
-      cart: "carrello"
-      message_html: "Hai già un ordine per questo ciclo d'ordine. Controlla%{cart} per vedere gli articoli ordinati in precedenza. Puoi anche cancellare gli articoli finché il ciclo dell'ordine è aperto."
-    step1:
-      contact_information:
-        title: Informazioni contatto
-        email:
-          label: Email
-        phone:
-          label: Numero di telefono
-      billing_address:
-        title: Indirizzo di fatturazione
-        first_name:
-          label: Nome
-        last_name:
-          label: Cognome
-      address:
-        address1:
-          label: Indirizzo (Via/Piazza/Contrada + numero civico)
-        address2:
-          label: Indirizzo, informazioni aggiuntive (facoltativo)
-        city:
-          label: Comune
-        state_id:
-          label: Provincia
-        zipcode:
-          label: CAP
-        country_id:
-          label: Stato
-      shipping_info:
-        title: Informazioni sulla spedizione
-      submit: Prossimo - Metodo di pagamento
-      cancel: Indietro a Modifica carrello
-    step2:
-      payment_method:
-        title: Metodo di pagamento
-      form:
-        card_number:
-          label: Numero carta
-          placeholder: es. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: Mese
-        card_year:
-          label: Anno
-        stripe:
-          use_saved_card: Usa la carta salvata
-          use_new_card: Inserisci i dati della tua carta
-          save_card: Salva i dati di questa carta per il futuro
-          create_new_card: o inserisci qui sotto i dettagli della nuova carta
-      explaination: Puoi controllare e confermare la tua richiesta nei prossimi passi, che includono il prezzo finale
-      submit: Prossimo - riepilogo richiesta
-      cancel: Indietro a Tuoi dettagli
-    step3:
-      delivery_details:
-        title: Dettagli della consegna
-        edit: Modifica
-        address: Indirizzo di consegna
-        instructions: Istruzioni
-      payment_method:
-        title: Metodo di pagamento
-        edit: Modifica
-        instructions: Istruzioni
-      order:
-        title: Dettagli ordine
-        edit: Modifica
-      terms_and_conditions:
-        message_html: "Accetto i %{terms_and_conditions_link} del venditore."
-        link_text: "Termini e Condizioni"
-      platform_terms_of_service:
-        message_html: "Acconsento ai %{tos_link} della piattaforma."
-      all_terms_and_conditions:
-        message_html: "Acconsento ai %{terms_and_conditions_link} del venditore ed ai %{tos_link} della piattaforma."
-        terms_and_conditions: "Termini e Condizioni"
-      submit: Completa ordine
-      cancel: Torna al metodo di pagamento
-    errors:
-      saving_failed: "Salvataggio non riuscito. Per favore compila i campi evidenziati."
-      terms_not_accepted: Per favore accetta i Termini e Condizioni
-      required: Il campo non può essere lasciato vuoto
-      invalid_number: "Per favore inserisci un numero di telefono valido"
-      invalid_email: "Per favore inserisci un indirizzo email valido"
-      select_a_shipping_method: Seleziona un metodo di consegna
-      select_a_payment_method: Seleziona un metodo di pagamento
-      no_shipping_methods_available: La conferma ordine non è possibile perchè mancano le opzioni di consegna. Per favore contatta il gestore del negozio.
-      voucher_not_found: Non trovato
   order_paid: PAGATO
   order_not_paid: NON PAGATO
   order_total: Importo totale

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SplitCheckoutHelper
+module CheckoutHelper
   def have_checkout_details
     have_content "Your details"
   end

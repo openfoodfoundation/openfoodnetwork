@@ -145,34 +145,32 @@ describe 'White label setting' do
           set_order(order)
         end
 
-        context "when the split checkout is enabled" do
-          it_behaves_like "hides the OFN navigation when needed only"
+        it_behaves_like "hides the OFN navigation when needed only"
 
-          context "for cart path" do
-            before do
-              visit main_app.cart_path
-            end
-
-            it "hides the OFN navigation" do
-              expect(page).to have_no_selector ofn_navigation
-            end
-
-            it_behaves_like "hides the OFN navigation for mobile view as well"
+        context "for cart path" do
+          before do
+            visit main_app.cart_path
           end
 
-          context "for checkout path" do
-            before do
-              visit checkout_path
-            end
-
-            it "hides the OFN navigation" do
-              expect(page).to have_content "Checkout now"
-              expect(page).to have_content "Order ready for "
-              expect(page).to have_no_selector ofn_navigation
-            end
-
-            it_behaves_like "hides the OFN navigation for mobile view as well"
+          it "hides the OFN navigation" do
+            expect(page).to have_no_selector ofn_navigation
           end
+
+          it_behaves_like "hides the OFN navigation for mobile view as well"
+        end
+
+        context "for checkout path" do
+          before do
+            visit checkout_path
+          end
+
+          it "hides the OFN navigation" do
+            expect(page).to have_content "Checkout now"
+            expect(page).to have_content "Order ready for "
+            expect(page).to have_no_selector ofn_navigation
+          end
+
+          it_behaves_like "hides the OFN navigation for mobile view as well"
         end
       end
 

@@ -1717,20 +1717,108 @@ de_DE:
         title: Ungültiger Abfrageparameter
         extra_fields: "Nicht unterstützte Felder: %{fields}"
   checkout:
-    already_ordered:
-      cart: "Warenkorb"
-      message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
-    terms_and_conditions:
-      message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
-      link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
-    platform_terms_of_service:
-      message_html: "Ich stimme den %{tos_link} des Open Food Network zu."
-    all_terms_and_conditions:
-      message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
-      terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
     failed: "Der Bestellabschluss ist fehlgeschlagen. Bitte geben Sie uns Bescheid, damit wir Ihre Bestellung dennoch bearbeiten können."
     payment_cancelled_due_to_stock: "Zahlung storniert: Der Bestellabschluss konnte aufgrund von Problemen mit dem Lagerbestand nicht abgeschlossen werden."
     order_not_loaded: "Keine gültige Bestellung für den Bestellabschluss gefunden."
+    your_details_without_number: Ihre Daten
+    payment_method_without_number: Zahlungsart
+    order_summary_without_number: Bestellabschluss
+    already_ordered:
+      cart: "im Warenkorb"
+      message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
+    step1:
+      contact_information:
+        title: Kontaktdaten
+        email:
+          label: E-Mail-Adresse
+        phone:
+          label: Telefonnummer
+      billing_address:
+        title: Rechnungsadresse
+        first_name:
+          label: Vorname
+        last_name:
+          label: Nachname
+      address:
+        address1:
+          label: Straße + Hausnummer
+        address2:
+          label: Adresszusatz (optional)
+        city:
+          label: Ort
+        state_id:
+          label: Bundesland
+        zipcode:
+          label: Postleitzahl
+        country_id:
+          label: Land
+      shipping_info:
+        title: Lieferinformationen
+      submit: Weiter - Zahlungsart
+      cancel: Zurück - Warenkorb
+    step2:
+      payment_method:
+        title: Zahlungsart
+      form:
+        card_number:
+          label: Kreditkartennummer
+          placeholder: z. B. 4242 4242 4242 4242
+        card_verification_value:
+          label: Kartenprüfnummer (3-stellig)
+        card_month:
+          label: Monat
+        card_year:
+          label: Jahr
+        stripe:
+          use_saved_card: Gespeicherte Kreditkarte verwenden
+          use_new_card: Geben Sie Ihre Kreditkartendaten ein
+          save_card: Kreditkarte für zukünftige Verwendung speichern
+          create_new_card: oder geben Sie unten neue Kreditkartendetails ein
+      explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
+      submit: Weiter - Bestellabschluss
+      cancel: Zurück - Ihre Daten
+      voucher:
+        voucher: "%{voucher_amount} Gutschein"
+        apply_voucher: Gutschein anwenden
+        apply: Anwenden
+        placeholder: Gutschein-Code eingeben
+        remove_code: Gutschein-Code entfernen
+        confirm_delete: Möchten Sie den Gutschein wirklich entfernen?
+        warning_forfeit_remaining_amount: "Hinweis: Wenn die Gesamtsumme Ihrer Bestellung geringer ist als Ihr Gutschein, können Sie den Restwert möglicherweise nicht ausgeben."
+    step3:
+      delivery_details:
+        title: Lieferdetails
+        edit: Bearbeiten
+        address: Liefer-/Abholinformationen
+        instructions: Informationen
+      payment_method:
+        title: Zahlungsart
+        edit: Bearbeiten
+        instructions: Informationen
+      order:
+        title: Bestellübersicht
+        edit: Bearbeiten
+      terms_and_conditions:
+        message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
+        link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
+      platform_terms_of_service:
+        message_html: "Ich stimme den %{tos_link} des Open Food Network zu."
+      all_terms_and_conditions:
+        message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
+        terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
+      submit: Zahlungspflichtig bestellen
+      cancel: Zurück - Zahlungsart
+    errors:
+      saving_failed: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder."
+      terms_not_accepted: Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.
+      required: Feld darf nicht leer sein.
+      invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
+      invalid_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+      select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
+      select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
+      no_shipping_methods_available: 'Ein Bestellabschluss ist aufgrund fehlender Lieferoptionen nicht möglich. Bitte wenden Sie sich an den Betreiber des Ladens. '
+      voucher_not_found: Nicht gefunden
+      add_voucher_error: Beim Anwenden des Gutscheins ist ein Fehler aufgetreten.
   shops:
     hubs:
       show_closed_shops: "Geschlossene Läden anzeigen"
@@ -2005,106 +2093,6 @@ de_DE:
   checkout_total_price: Summe
   checkout_back_to_cart: "Zurück zum Warenkorb"
   cost_currency: "Währung"
-  split_checkout:
-    your_details_without_number: Ihre Daten
-    payment_method_without_number: Zahlungsart
-    order_summary_without_number: Bestellabschluss
-    already_ordered:
-      cart: "im Warenkorb"
-      message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
-    step1:
-      contact_information:
-        title: Kontaktdaten
-        email:
-          label: E-Mail-Adresse
-        phone:
-          label: Telefonnummer
-      billing_address:
-        title: Rechnungsadresse
-        first_name:
-          label: Vorname
-        last_name:
-          label: Nachname
-      address:
-        address1:
-          label: Straße + Hausnummer
-        address2:
-          label: Adresszusatz (optional)
-        city:
-          label: Ort
-        state_id:
-          label: Bundesland
-        zipcode:
-          label: Postleitzahl
-        country_id:
-          label: Land
-      shipping_info:
-        title: Lieferinformationen
-      submit: Weiter - Zahlungsart
-      cancel: Zurück - Warenkorb
-    step2:
-      payment_method:
-        title: Zahlungsart
-      form:
-        card_number:
-          label: Kreditkartennummer
-          placeholder: z. B. 4242 4242 4242 4242
-        card_verification_value:
-          label: Kartenprüfnummer (3-stellig)
-        card_month:
-          label: Monat
-        card_year:
-          label: Jahr
-        stripe:
-          use_saved_card: Gespeicherte Kreditkarte verwenden
-          use_new_card: Geben Sie Ihre Kreditkartendaten ein
-          save_card: Kreditkarte für zukünftige Verwendung speichern
-          create_new_card: oder geben Sie unten neue Kreditkartendetails ein
-      explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
-      submit: Weiter - Bestellabschluss
-      cancel: Zurück - Ihre Daten
-      voucher:
-        voucher: "%{voucher_amount} Gutschein"
-        apply_voucher: Gutschein anwenden
-        apply: Anwenden
-        placeholder: Gutschein-Code eingeben
-        remove_code: Gutschein-Code entfernen
-        confirm_delete: Möchten Sie den Gutschein wirklich entfernen?
-        warning_forfeit_remaining_amount: "Hinweis: Wenn die Gesamtsumme Ihrer Bestellung geringer ist als Ihr Gutschein, können Sie den Restwert möglicherweise nicht ausgeben."
-    step3:
-      delivery_details:
-        title: Lieferdetails
-        edit: Bearbeiten
-        address: Liefer-/Abholinformationen
-        instructions: Informationen
-      payment_method:
-        title: Zahlungsart
-        edit: Bearbeiten
-        instructions: Informationen
-      order:
-        title: Bestellübersicht
-        edit: Bearbeiten
-      terms_and_conditions:
-        message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers zu."
-        link_text: "Allgemeinen Geschäftsbedingungen (AGB)"
-      platform_terms_of_service:
-        message_html: "Ich stimme den %{tos_link} des Open Food Network zu."
-      all_terms_and_conditions:
-        message_html: "Ich stimme den %{terms_and_conditions_link} des Verkäufers und den %{tos_link} des Open Food Network zu."
-        terms_and_conditions: "Allgemeinen Geschäftsbedingungen (AGB)"
-      submit: Zahlungspflichtig bestellen
-      cancel: Zurück - Zahlungsart
-    errors:
-      saving_failed: "Speichern fehlgeschlagen. Bitte prüfen Sie die markierten Felder."
-      terms_not_accepted: Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen.
-      required: Feld darf nicht leer sein.
-      invalid_number: "Bitte geben Sie eine gültige Telefonnummer ein."
-      invalid_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein."
-      select_a_shipping_method: Bitte wählen Sie eine Lieferoption aus.
-      select_a_payment_method: Bitte wählen Sie eine Zahlungsart aus.
-      no_shipping_methods_available: 'Ein Bestellabschluss ist aufgrund fehlender Lieferoptionen nicht möglich. Bitte wenden Sie sich an den Betreiber des Ladens. '
-      voucher_not_found: Nicht gefunden
-      add_voucher_error: Beim Anwenden des Gutscheins ist ein Fehler aufgetreten.
   order_paid: BEZAHLT
   order_not_paid: NICHT BEZAHLT
   order_total: 'Gesamtsumme:'

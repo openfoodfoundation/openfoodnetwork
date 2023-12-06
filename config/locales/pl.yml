@@ -1257,10 +1257,30 @@ pl:
     orders:
       failed_to_update: "Nie udało się zaktualizować zamówienia"
   checkout:
-    already_ordered:
-      cart: "Koszyk"
-      message_html: "Masz już zamówienie na ten cykl zamówień. Sprawdź %{cart}, aby zobaczyć przedmioty, które zamówiłeś wcześniej. Możesz również anulować pozycje, o ile cykl zamówienia jest otwarty."
     failed: "Płatność nie powiodła się. Daj nam znać, abyśmy mogli zrealizować Twoje zamówienie."
+    already_ordered:
+      cart: "koszyk"
+      message_html: "Masz już zamówienie na ten cykl zamówień. Sprawdź %{cart}, aby zobaczyć przedmioty, które zamówiłeś wcześniej. Możesz również anulować pozycje, o ile cykl zamówienia jest otwarty."
+    step1:
+      contact_information:
+        email:
+          label: E-mail
+      address:
+        state_id:
+          label: Status
+    step2:
+      form:
+        card_month:
+          label: Miesiąc
+        card_year:
+          label: Rok
+    step3:
+      delivery_details:
+        edit: Edytuj
+      payment_method:
+        edit: Edytuj
+      order:
+        edit: Edytuj
   shops:
     hubs:
       show_closed_shops: "Pokaż zamknięte sklepy"
@@ -1519,29 +1539,6 @@ pl:
   checkout_total_price: Razem
   checkout_back_to_cart: "Powrót do koszyka"
   cost_currency: "Waluta kosztu"
-  split_checkout:
-    already_ordered:
-      cart: "koszyk"
-    step1:
-      contact_information:
-        email:
-          label: E-mail
-      address:
-        state_id:
-          label: Status
-    step2:
-      form:
-        card_month:
-          label: Miesiąc
-        card_year:
-          label: Rok
-    step3:
-      delivery_details:
-        edit: Edytuj
-      payment_method:
-        edit: Edytuj
-      order:
-        edit: Edytuj
   order_paid: OPŁACONY
   order_not_paid: NIEZAPŁACONE
   order_total: Całkowite zamówienie

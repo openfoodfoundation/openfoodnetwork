@@ -2,7 +2,7 @@
 
 require 'open_food_network/address_finder'
 
-class SplitCheckoutController < BaseController
+class CheckoutController < BaseController
   layout 'darkswarm'
 
   include OrderStockCheck
@@ -32,7 +32,7 @@ class SplitCheckoutController < BaseController
 
     return if available_shipping_methods.any?
 
-    flash[:error] = I18n.t('split_checkout.errors.no_shipping_methods_available')
+    flash[:error] = I18n.t('checkout.errors.no_shipping_methods_available')
   end
 
   def update
@@ -55,10 +55,10 @@ class SplitCheckoutController < BaseController
   private
 
   def render_error
-    flash.now[:error] ||= I18n.t('split_checkout.errors.saving_failed')
+    flash.now[:error] ||= I18n.t('checkout.errors.saving_failed')
 
     render status: :unprocessable_entity, cable_ready: cable_car.
-      replace("#checkout", partial("split_checkout/checkout")).
+      replace("#checkout", partial("checkout/checkout")).
       replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
   end
 

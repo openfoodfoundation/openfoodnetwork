@@ -22,21 +22,21 @@ module Checkout
     def validate_details
       return true if params[:shipping_method_id].present?
 
-      order.errors.add :shipping_method, I18n.t('split_checkout.errors.select_a_shipping_method')
+      order.errors.add :shipping_method, I18n.t('checkout.errors.select_a_shipping_method')
     end
 
     def validate_payment
       return true if params.dig(:order, :payments_attributes, 0, :payment_method_id).present?
       return true if order.zero_priced_order?
 
-      order.errors.add :payment_method, I18n.t('split_checkout.errors.select_a_payment_method')
+      order.errors.add :payment_method, I18n.t('checkout.errors.select_a_payment_method')
     end
 
     def validate_summary
       return true if params[:accept_terms]
       return true unless TermsOfService.required?(order.distributor)
 
-      order.errors.add(:terms_and_conditions, I18n.t("split_checkout.errors.terms_not_accepted"))
+      order.errors.add(:terms_and_conditions, I18n.t("checkout.errors.terms_not_accepted"))
     end
   end
 end

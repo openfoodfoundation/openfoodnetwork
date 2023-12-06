@@ -1704,20 +1704,108 @@ fr_CA:
         title: Paramètre de la requête invalide
         extra_fields: "Champs invalides: %{fields}"
   checkout:
-    already_ordered:
-      cart: "panier"
-      message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
-    terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link}"
-      link_text: "CGU & CGV"
-    platform_terms_of_service:
-      message_html: "J'accepte les %{tos_link}"
-    all_terms_and_conditions:
-      message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de Open Food Network."
-      terms_and_conditions: "CGU & CGV"
     failed: "La validation du paiement a échoué. Contactez-nous afin de finaliser votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas été finalisée car un ou plusieurs articles ne sont plus en stock."
     order_not_loaded: "Aucune commande n'a été trouvée pour poursuivre le parcours d'achat."
+    your_details_without_number: Vos informations
+    payment_method_without_number: Méthode de paiement
+    order_summary_without_number: Récapitulatif de la commande
+    already_ordered:
+      cart: "panier"
+      message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
+    step1:
+      contact_information:
+        title: Contact
+        email:
+          label: Email
+        phone:
+          label: Numéro de téléphone
+      billing_address:
+        title: Adresse de facturation
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom
+      address:
+        address1:
+          label: Adresse (Numéro et rue)
+        address2:
+          label: Complément d'adresse (optionnel)
+        city:
+          label: Ville
+        state_id:
+          label: 'Région:'
+        zipcode:
+          label: Code postal
+        country_id:
+          label: Pays
+      shipping_info:
+        title: Informations de livraison
+      submit: Etape suivante - Moyen de Paiement
+      cancel: Retour au panier
+    step2:
+      payment_method:
+        title: Méthode de paiement
+      form:
+        card_number:
+          label: Numéro de carte
+          placeholder: par ex. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mois
+        card_year:
+          label: Année
+        stripe:
+          use_saved_card: Utilisez une carte enregistrée
+          use_new_card: Entrez les informations de votre carte
+          save_card: Enregistrez votre carte pour vos prochains achats
+          create_new_card: ou entrez les détails de votre nouvelle carte ci-dessous
+      explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
+      submit: Etape suivante - Récapitulatif de commande
+      cancel: Retour à vos coordonnées
+      voucher:
+        voucher: "%{voucher_amount} Réduction"
+        apply_voucher: Code de réduction
+        apply: Appliquer
+        placeholder: Entrer code de réduction
+        remove_code: Supprimer code de réduction
+        confirm_delete: Êtes-vous sûr de vouloir supprimer la réduction?
+        warning_forfeit_remaining_amount: "Note : Si le total de votre commande est inférieur à votre réduction, vous êtes susceptible de ne pas pouvoir utiliser l'intégralité de votre réduction. "
+    step3:
+      delivery_details:
+        title: Détails de livraison
+        edit: Modifier
+        address: Adresse de livraison
+        instructions: Instructions
+      payment_method:
+        title: Méthode de paiement
+        edit: Modifier
+        instructions: Instructions
+      order:
+        title: Total commande
+        edit: Modifier
+      terms_and_conditions:
+        message_html: "J'accepte les %{terms_and_conditions_link}"
+        link_text: "CGU & CGV"
+      platform_terms_of_service:
+        message_html: "J'accepte les %{tos_link}"
+      all_terms_and_conditions:
+        message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de Open Food Network."
+        terms_and_conditions: "CGU & CGV"
+      submit: Valider ma commande
+      cancel: Retour à la méthode de paiement
+    errors:
+      saving_failed: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
+      terms_not_accepted: Merci d'accepter les CGU & CGV.
+      required: Ce champ ne peut pas être vide
+      invalid_number: "Merci de renseigner un numéro de téléphone valide"
+      invalid_email: "Veuillez entrer un email valide"
+      select_a_shipping_method: Sélectionner une méthode de livraison
+      select_a_payment_method: Sélectionner une méthode de paiement
+      no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
+      voucher_not_found: Non trouvé
+      add_voucher_error: Il y a eu une erreur lors de l'ajout de votre réduction.
   shops:
     hubs:
       show_closed_shops: "Afficher les boutiques fermées"
@@ -1988,106 +2076,6 @@ fr_CA:
   checkout_total_price: Total
   checkout_back_to_cart: "Retour au Panier"
   cost_currency: "Coût de la devise"
-  split_checkout:
-    your_details_without_number: Vos informations
-    payment_method_without_number: Méthode de paiement
-    order_summary_without_number: Récapitulatif de la commande
-    already_ordered:
-      cart: "panier"
-      message_html: "Vous avez déjà passé une commande pour ce cycle de vente. Vérifiez votre %{cart} pour voir les produits commandés. Vous pouvez annuler ou modifier votre commande jusqu'à la fermeture du cycle de vente."
-    step1:
-      contact_information:
-        title: Contact
-        email:
-          label: Email
-        phone:
-          label: Numéro de téléphone
-      billing_address:
-        title: Adresse de facturation
-        first_name:
-          label: Prénom
-        last_name:
-          label: Nom
-      address:
-        address1:
-          label: Adresse (Numéro et rue)
-        address2:
-          label: Complément d'adresse (optionnel)
-        city:
-          label: Ville
-        state_id:
-          label: 'Région:'
-        zipcode:
-          label: Code postal
-        country_id:
-          label: Pays
-      shipping_info:
-        title: Informations de livraison
-      submit: Etape suivante - Moyen de Paiement
-      cancel: Retour au panier
-    step2:
-      payment_method:
-        title: Méthode de paiement
-      form:
-        card_number:
-          label: Numéro de carte
-          placeholder: par ex. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: Mois
-        card_year:
-          label: Année
-        stripe:
-          use_saved_card: Utilisez une carte enregistrée
-          use_new_card: Entrez les informations de votre carte
-          save_card: Enregistrez votre carte pour vos prochains achats
-          create_new_card: ou entrez les détails de votre nouvelle carte ci-dessous
-      explaination: Vous pourrez vérifier et confirmer votre commande à l'étape suivante.
-      submit: Etape suivante - Récapitulatif de commande
-      cancel: Retour à vos coordonnées
-      voucher:
-        voucher: "%{voucher_amount} Réduction"
-        apply_voucher: Code de réduction
-        apply: Appliquer
-        placeholder: Entrer code de réduction
-        remove_code: Supprimer code de réduction
-        confirm_delete: Êtes-vous sûr de vouloir supprimer la réduction?
-        warning_forfeit_remaining_amount: "Note : Si le total de votre commande est inférieur à votre réduction, vous êtes susceptible de ne pas pouvoir utiliser l'intégralité de votre réduction. "
-    step3:
-      delivery_details:
-        title: Détails de livraison
-        edit: Modifier
-        address: Adresse de livraison
-        instructions: Instructions
-      payment_method:
-        title: Méthode de paiement
-        edit: Modifier
-        instructions: Instructions
-      order:
-        title: Total commande
-        edit: Modifier
-      terms_and_conditions:
-        message_html: "J'accepte les %{terms_and_conditions_link}"
-        link_text: "CGU & CGV"
-      platform_terms_of_service:
-        message_html: "J'accepte les %{tos_link}"
-      all_terms_and_conditions:
-        message_html: "J'accepte les %{terms_and_conditions_link} de la boutique et les %{tos_link} de Open Food Network."
-        terms_and_conditions: "CGU & CGV"
-      submit: Valider ma commande
-      cancel: Retour à la méthode de paiement
-    errors:
-      saving_failed: "La sauvegarde a échoué, merci de mettre à jour les champs mis en évidence."
-      terms_not_accepted: Merci d'accepter les CGU & CGV.
-      required: Ce champ ne peut pas être vide
-      invalid_number: "Merci de renseigner un numéro de téléphone valide"
-      invalid_email: "Veuillez entrer un email valide"
-      select_a_shipping_method: Sélectionner une méthode de livraison
-      select_a_payment_method: Sélectionner une méthode de paiement
-      no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
-      voucher_not_found: Non trouvé
-      add_voucher_error: Il y a eu une erreur lors de l'ajout de votre réduction.
   order_paid: RÉGLÉ
   order_not_paid: NON RÉGLÉ
   order_total: Total commande

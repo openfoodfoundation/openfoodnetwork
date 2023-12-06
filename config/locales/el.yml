@@ -1339,19 +1339,77 @@ el:
     orders:
       failed_to_update: "Αποτυχία στην ενημέρωση παραγγελίας"
   checkout:
+    failed: "Το checkout απέτυχε. Ενημερώστε μας για να μπορέσουμε να επεξεργαστούμε την παραγγελία σας."
+    payment_cancelled_due_to_stock: "Η πληρωμή ακυρώθηκε: το ταμείο δεν μπορούσε να ολοκληρωθεί λόγω προβλημάτων αποθεμάτων."
+    your_details_without_number: Τα στοιχεία σου
+    payment_method_without_number: Μέθοδος Πληρωμής
+    order_summary_without_number: Σύνοψη παραγγελίας
     already_ordered:
       cart: "Καλάθι"
       message_html: "Έχετε ήδη μια παραγγελία για αυτόν τον κύκλο παραγγελιών. Ελέγξτε το %{cart} για να δείτε τα είδη που παραγγείλατε πριν. Μπορείτε επίσης να ακυρώσετε στοιχεία εφόσον ο κύκλος παραγγελιών είναι ανοιχτός."
-    terms_and_conditions:
-      message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή."
-      link_text: "Οροι και Προϋποθέσεις"
-    platform_terms_of_service:
-      message_html: "Συμφωνώ με την πλατφόρμα %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή και την πλατφόρμα %{tos_link}."
-      terms_and_conditions: "Οροι και Προϋποθέσεις"
-    failed: "Το checkout απέτυχε. Ενημερώστε μας για να μπορέσουμε να επεξεργαστούμε την παραγγελία σας."
-    payment_cancelled_due_to_stock: "Η πληρωμή ακυρώθηκε: το ταμείο δεν μπορούσε να ολοκληρωθεί λόγω προβλημάτων αποθεμάτων."
+    step1:
+      contact_information:
+        email:
+          label: Email
+      billing_address:
+        title: Διεύθυνση χρέωσης
+        first_name:
+          label: Όνομα
+        last_name:
+          label: Επίθετο
+      address:
+        address1:
+          label: Διεύθυνση (οδός + αριθμός σπιτιού)
+        address2:
+          label: Πρόσθετες πληροφορίες διεύθυνσης (προαιρετικά)
+        city:
+          label: Πόλη
+        state_id:
+          label: Νομός
+        zipcode:
+          label: Ταχ. Κώδικας
+        country_id:
+          label: Χώρα
+      shipping_info:
+        title: Πληροφορίες αποστολής
+      submit: Επόμενο - Τρόπος πληρωμής
+      cancel: Επιστροφή στην Επεξεργασία καλαθιού
+    step2:
+      payment_method:
+        title: Μέθοδος πληρωμής
+      form:
+        card_month:
+          label: Μήνας
+        card_year:
+          label: Έτος
+      explaination: Μπορείτε να ελέγξετε και να επιβεβαιώσετε την παραγγελία σας στο επόμενο βήμα που περιλαμβάνει το τελικό κόστος.
+      submit: Επόμενο - Περίληψη παραγγελίας
+      cancel: Επιστροφή στα στοιχεία σου
+    step3:
+      delivery_details:
+        edit: Επεξεργασία
+      payment_method:
+        title: Μέθοδος πληρωμής
+        edit: Επεξεργασία
+      order:
+        edit: Επεξεργασία
+      terms_and_conditions:
+        message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή."
+        link_text: "Οροι και Προϋποθέσεις"
+      platform_terms_of_service:
+        message_html: "Συμφωνώ με την πλατφόρμα %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή και την πλατφόρμα %{tos_link}."
+        terms_and_conditions: "Οροι και Προϋποθέσεις"
+      submit: Ολοκληρωμένη παραγγελία
+      cancel: Επιστροφή στον τρόπο πληρωμής
+    errors:
+      terms_not_accepted: Παρακαλώ αποδεχτείτε τους Όρους και τις Προϋποθέσεις
+      required: Το πεδίο δεν μπορεί να είναι κενό
+      invalid_number: "Παρακαλώ εισάγετε έναν έγκυρο αριθμό τηλεφώνου"
+      invalid_email: "Παρακαλώ εισάγετε έγκυρο email"
+      select_a_shipping_method: Επιλέξτε έναν τρόπο αποστολής
+      select_a_payment_method: Επιλέξτε έναν τρόπο πληρωμής
   shops:
     hubs:
       show_closed_shops: "Εμφάνιση κλειστών καταστημάτων"
@@ -1620,72 +1678,6 @@ el:
   checkout_total_price: Σύνολο
   checkout_back_to_cart: "Επιστροφή στoκαλάθι"
   cost_currency: "Νόμισμα κόστους"
-  split_checkout:
-    your_details_without_number: Τα στοιχεία σου
-    payment_method_without_number: Μέθοδος Πληρωμής
-    order_summary_without_number: Σύνοψη παραγγελίας
-    already_ordered:
-      cart: "Καλάθι"
-    step1:
-      contact_information:
-        email:
-          label: Email
-      billing_address:
-        title: Διεύθυνση χρέωσης
-        first_name:
-          label: Όνομα
-        last_name:
-          label: Επίθετο
-      address:
-        address1:
-          label: Διεύθυνση (οδός + αριθμός σπιτιού)
-        address2:
-          label: Πρόσθετες πληροφορίες διεύθυνσης (προαιρετικά)
-        city:
-          label: Πόλη
-        state_id:
-          label: Νομός
-        zipcode:
-          label: Ταχ. Κώδικας
-        country_id:
-          label: Χώρα
-      shipping_info:
-        title: Πληροφορίες αποστολής
-      submit: Επόμενο - Τρόπος πληρωμής
-      cancel: Επιστροφή στην Επεξεργασία καλαθιού
-    step2:
-      payment_method:
-        title: Μέθοδος πληρωμής
-      form:
-        card_month:
-          label: Μήνας
-        card_year:
-          label: Έτος
-      explaination: Μπορείτε να ελέγξετε και να επιβεβαιώσετε την παραγγελία σας στο επόμενο βήμα που περιλαμβάνει το τελικό κόστος.
-      submit: Επόμενο - Περίληψη παραγγελίας
-      cancel: Επιστροφή στα στοιχεία σου
-    step3:
-      delivery_details:
-        edit: Επεξεργασία
-      payment_method:
-        title: Μέθοδος πληρωμής
-        edit: Επεξεργασία
-      order:
-        edit: Επεξεργασία
-      terms_and_conditions:
-        message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή."
-        link_text: "Οροι και Προϋποθέσεις"
-      all_terms_and_conditions:
-        terms_and_conditions: "Οροι και Προϋποθέσεις"
-      submit: Ολοκληρωμένη παραγγελία
-      cancel: Επιστροφή στον τρόπο πληρωμής
-    errors:
-      terms_not_accepted: Παρακαλώ αποδεχτείτε τους Όρους και τις Προϋποθέσεις
-      required: Το πεδίο δεν μπορεί να είναι κενό
-      invalid_number: "Παρακαλώ εισάγετε έναν έγκυρο αριθμό τηλεφώνου"
-      invalid_email: "Παρακαλώ εισάγετε έγκυρο email"
-      select_a_shipping_method: Επιλέξτε έναν τρόπο αποστολής
-      select_a_payment_method: Επιλέξτε έναν τρόπο πληρωμής
   order_paid: επι πληρώμη
   order_not_paid: ΑΠΛΗΡΩΤΟΣ
   order_total: Συνολική παραγγελία

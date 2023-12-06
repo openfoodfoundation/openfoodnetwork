@@ -1544,20 +1544,94 @@ es_CR:
     orders:
       failed_to_update: "Error al actualizar pedido"
   checkout:
-    already_ordered:
-      cart: "carrito"
-      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
-    terms_and_conditions:
-      message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor."
-      link_text: "Términos y condiciones"
-    platform_terms_of_service:
-      message_html: "Estoy de acuerdo con la plataforma %{tos_link}."
-    all_terms_and_conditions:
-      message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
-      terms_and_conditions: "Términos y condiciones"
     failed: "La finalización de compra falló, por favor comunicate con nosotros para procesar la orden."
     payment_cancelled_due_to_stock: "Pago cancelado: no se pudo completar el pago por problemas de stock."
     order_not_loaded: "No se encontró un pedido válido para procesar el pago"
+    your_details_without_number: Sus detalles
+    payment_method_without_number: Método de pago
+    order_summary_without_number: Resumen de compra
+    already_ordered:
+      cart: "carrito"
+      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
+    step1:
+      contact_information:
+        email:
+          label: Correo electrónico
+        phone:
+          label: Número de teléfono
+      billing_address:
+        title: Dirección de cobro
+        first_name:
+          label: Nombre
+        last_name:
+          label: Apellidos
+      address:
+        address1:
+          label: Dirección (Calle + Número de Casa)
+        address2:
+          label: Información de dirección adicional (opcional)
+        city:
+          label: Ciudad
+        state_id:
+          label: Provincia
+        zipcode:
+          label: Código postal
+        country_id:
+          label: País
+      shipping_info:
+        title: Información de envío
+      submit: Siguiente - Método de pago
+      cancel: Volver a Editar cesta
+    step2:
+      payment_method:
+        title: Método de pago
+      form:
+        card_number:
+          label: Número de tarjeta
+          placeholder: ej. 4242 4242 4242 4242
+        card_verification_value:
+          label: CVC
+        card_month:
+          label: Mes
+        card_year:
+          label: Año
+        stripe:
+          use_saved_card: Utilizar tarjeta guardada
+          use_new_card: Ingrese los identificadores de su tarjeta
+          save_card: Guardar tarjeta para uso futuro.
+          create_new_card: o ingrese los detalles de la nueva tarjeta a continuación
+      explaination: Puede revisar y confirmar su pedido en el siguiente paso que incluye los costos finales.
+      submit: Siguiente - Resumen del pedido
+      cancel: Volver a Tus datos
+    step3:
+      delivery_details:
+        title: Detalles de entrega
+        edit: Editar
+        address: Dirección de entrega
+      payment_method:
+        title: Método de pago
+        edit: Editar
+      order:
+        edit: Editar
+      terms_and_conditions:
+        message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor."
+        link_text: "Términos y condiciones"
+      platform_terms_of_service:
+        message_html: "Estoy de acuerdo con la plataforma %{tos_link}."
+      all_terms_and_conditions:
+        message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
+        terms_and_conditions: "Términos y condiciones"
+      submit: Orden completa
+      cancel: Volver a Método de pago
+    errors:
+      saving_failed: "Error al guardar, actualice los campos resaltados."
+      terms_not_accepted: Por favor acepte Términos y Condiciones
+      required: El campo no puede estar en blanco
+      invalid_number: "Por favor ingrese un número de teléfono válido"
+      invalid_email: "Introduce un correo electrónico válido"
+      select_a_shipping_method: Seleccione un método de envío
+      select_a_payment_method: Seleccione un método de pago
+      voucher_not_found: No encontrado
   shops:
     hubs:
       show_closed_shops: "Mostrar tiendas cerradas"
@@ -1827,92 +1901,6 @@ es_CR:
   checkout_total_price: Total
   checkout_back_to_cart: "De vuelta al carrito"
   cost_currency: "Moneda"
-  split_checkout:
-    your_details_without_number: Sus detalles
-    payment_method_without_number: Método de pago
-    order_summary_without_number: Resumen de compra
-    already_ordered:
-      cart: "carrito"
-      message_html: "Ya realizó un pedido para este ciclo de pedido. Compruebe el %{cart}para ver los artículos que pidió. También puede cancelar artículos mientras el ciclo de pedido siga abierto."
-    step1:
-      contact_information:
-        email:
-          label: Correo electrónico
-        phone:
-          label: Número de teléfono
-      billing_address:
-        title: Dirección de cobro
-        first_name:
-          label: Nombre
-        last_name:
-          label: Apellidos
-      address:
-        address1:
-          label: Dirección (Calle + Número de Casa)
-        address2:
-          label: Información de dirección adicional (opcional)
-        city:
-          label: Ciudad
-        state_id:
-          label: Provincia
-        zipcode:
-          label: Código postal
-        country_id:
-          label: País
-      shipping_info:
-        title: Información de envío
-      submit: Siguiente - Método de pago
-      cancel: Volver a Editar cesta
-    step2:
-      payment_method:
-        title: Método de pago
-      form:
-        card_number:
-          label: Número de tarjeta
-          placeholder: ej. 4242 4242 4242 4242
-        card_verification_value:
-          label: CVC
-        card_month:
-          label: Mes
-        card_year:
-          label: Año
-        stripe:
-          use_saved_card: Utilizar tarjeta guardada
-          use_new_card: Ingrese los identificadores de su tarjeta
-          save_card: Guardar tarjeta para uso futuro.
-          create_new_card: o ingrese los detalles de la nueva tarjeta a continuación
-      explaination: Puede revisar y confirmar su pedido en el siguiente paso que incluye los costos finales.
-      submit: Siguiente - Resumen del pedido
-      cancel: Volver a Tus datos
-    step3:
-      delivery_details:
-        title: Detalles de entrega
-        edit: Editar
-        address: Dirección de entrega
-      payment_method:
-        title: Método de pago
-        edit: Editar
-      order:
-        edit: Editar
-      terms_and_conditions:
-        message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor."
-        link_text: "Términos y condiciones"
-      platform_terms_of_service:
-        message_html: "Estoy de acuerdo con la plataforma %{tos_link}."
-      all_terms_and_conditions:
-        message_html: "Estoy de acuerdo con el %{terms_and_conditions_link} del vendedor y la plataforma %{tos_link}."
-        terms_and_conditions: "Términos y condiciones"
-      submit: Orden completa
-      cancel: Volver a Método de pago
-    errors:
-      saving_failed: "Error al guardar, actualice los campos resaltados."
-      terms_not_accepted: Por favor acepte Términos y Condiciones
-      required: El campo no puede estar en blanco
-      invalid_number: "Por favor ingrese un número de teléfono válido"
-      invalid_email: "Introduce un correo electrónico válido"
-      select_a_shipping_method: Seleccione un método de envío
-      select_a_payment_method: Seleccione un método de pago
-      voucher_not_found: No encontrado
   order_paid: PAGADO
   order_not_paid: NO PAGADO
   order_total: Pedido total

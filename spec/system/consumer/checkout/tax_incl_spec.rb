@@ -4,7 +4,7 @@ require "system_helper"
 
 describe "As a consumer, I want to see adjustment breakdown" do
   include ShopWorkflow
-  include SplitCheckoutHelper
+  include CheckoutHelper
   include CheckoutRequestsHelper
   include FileHelper
   include AuthenticationHelper

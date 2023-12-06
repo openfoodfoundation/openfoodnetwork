@@ -1355,15 +1355,56 @@ en_AU:
     orders:
       failed_to_update: "Failed to update order"
   checkout:
+    failed: "The checkout failed. Please let us know so that we can process your order."
+    your_details_without_number: Your details
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
-    terms_and_conditions:
-      message_html: "I agree to the seller's %{terms_and_conditions_link}."
-      link_text: "Terms and Conditions"
-    all_terms_and_conditions:
-      terms_and_conditions: "Terms and Conditions"
-    failed: "The checkout failed. Please let us know so that we can process your order."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: Phone number
+      billing_address:
+        title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
+      address:
+        city:
+          label: City
+        state_id:
+          label: State
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Country
+      shipping_info:
+        title: Shipping info
+    step2:
+      form:
+        card_month:
+          label: Month
+        card_year:
+          label: Year
+    step3:
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+      payment_method:
+        edit: Edit
+      order:
+        edit: Edit
+      terms_and_conditions:
+        message_html: "I agree to the seller's %{terms_and_conditions_link}."
+        link_text: "Terms and Conditions"
+      all_terms_and_conditions:
+        terms_and_conditions: "Terms and Conditions"
+    errors:
+      invalid_email: "Please enter a valid email address"
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1625,56 +1666,6 @@ en_AU:
   checkout_total_price: Total
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
-  split_checkout:
-    your_details_without_number: Your details
-    already_ordered:
-      cart: "cart"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: Phone number
-      billing_address:
-        title: Billing address
-        first_name:
-          label: First Name
-        last_name:
-          label: Last Name
-      address:
-        city:
-          label: City
-        state_id:
-          label: State
-        zipcode:
-          label: Postcode
-        country_id:
-          label: Country
-      shipping_info:
-        title: Shipping info
-    step2:
-      form:
-        card_month:
-          label: Month
-        card_year:
-          label: Year
-    step3:
-      delivery_details:
-        title: Delivery details
-        edit: Edit
-        address: Delivery address
-      payment_method:
-        edit: Edit
-      order:
-        edit: Edit
-      terms_and_conditions:
-        message_html: "I agree to the seller's %{terms_and_conditions_link}."
-        link_text: "Terms and Conditions"
-      all_terms_and_conditions:
-        terms_and_conditions: "Terms and Conditions"
-    errors:
-      invalid_email: "Please enter a valid email address"
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
