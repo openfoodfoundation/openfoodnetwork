@@ -237,7 +237,6 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         expect(page).to have_css "button[aria-label='On Hand']", text: "6"
       end
 
-      pending
       expect(page).to have_content "Changes saved"
     end
 
@@ -397,6 +396,8 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
           page.find(".vertical-ellipsis-menu").click
           click_link('Clone')
         end
+
+        expect(page).to have_content "Product cloned"
 
         within "table.products" do
           # Gather input values, because page.content doesn't include them.
