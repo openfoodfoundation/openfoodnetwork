@@ -202,6 +202,64 @@ describe '
       expect(current_path).to eq spree.admin_products_path
       expect(page).to have_content "Unit value is not a number"
     end
+
+    describe "localization settings" do
+      shared_examples "with different price values" do |localized_number, price|
+        context "when enable_localized_number is set to #{localized_number}" do
+          before do
+            allow(Spree::Config).to receive(:enable_localized_number?).and_return(localized_number)
+            login_as_admin
+            visit spree.admin_products_path
+            click_link 'New Product'
+          end
+
+          it "and price is #{price}" do
+            fill_in 'product_name', with: 'Priceless Mangoes'
+            select 'New supplier', from: 'product_supplier_id'
+            select "Weight (kg)", from: 'product_variant_unit_with_scale'
+            fill_in "product_unit_value", with: 1
+            select taxon.name, from: "product_primary_taxon_id"
+            fill_in 'product_price', with: price.to_s
+            fill_in 'product_on_hand', with: 0
+            check 'product_on_demand'
+            select 'Test Tax Category', from: 'product_tax_category_id'
+
+            click_button 'Create'
+
+            expect(current_path).to eq spree.admin_products_path
+
+            if price.eql?("0.0")
+              product = Spree::Product.find_by(name: 'Priceless Mangoes')
+              expect(product.variants.count).to eq(1)
+              variant = product.variants.first
+              expect(variant.on_demand).to be true
+              expect(variant.price).to eq 0.0 # a priceless variant gets a zero value by default
+            end
+
+            if price.eql?("")
+              within "#errorExplanation" do # the banner displays the relevant error
+                expect(page).to have_content "1 error prohibited this record from being saved:"
+                expect(page).to have_content "Price is not a number"
+              end
+              within "#product_price_field" do # the form highlights the price field
+                expect(page).to have_content "PRICE"
+                expect(page).to have_content "is not a number"
+              end
+            end
+          end
+        end
+      end
+
+      context "is 0.0" do
+        it_behaves_like "with different price values", false, "0.0"
+        it_behaves_like "with different price values", true, "0.0"
+      end
+
+      context "is empty" do
+        it_behaves_like "with different price values", false, ''
+        it_behaves_like "with different price values", true, ''
+      end
+    end
   end
 
   describe "deleting" do
