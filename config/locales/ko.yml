@@ -1151,6 +1151,14 @@ ko:
         create: "생성"
         cancel: "취소"
         back_to_list: "목록으로 돌아가기"
+      create:
+        success: '주문 주기가 생성되었습니다.'
+      update:
+        success: '주문 주기가 업데이트 되었습니다.'
+      clone:
+        success: "%{name} 주문 주기가 복사되었습니다."
+      notify_producers:
+        success: '생산자에게 보낼 이메일이 전송 대기열에 있습니다.'
       edit:
         save: "저장"
         save_and_next: "저장 후 다음"
@@ -1532,7 +1540,7 @@ ko:
     order_summary_without_number: 주문 요약
     already_ordered:
       cart: "카트"
-      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 한 항목을 취소할 수도 있습니다."
+      message_html: "이 주문 사이클에 대한 주문이 이미 있습니다. 이전에 주문하신 상품은 %{cart}에서 확인하시기 바랍니다. 주문 사이클가 열려 있는 동안 항목을 취소할 수도 있습니다."
     step1:
       contact_information:
         email:
@@ -1540,7 +1548,7 @@ ko:
         phone:
           label: 전화번호
       billing_address:
-        title: '청구서 발송지 :'
+        title: 청구서 발송지
         first_name:
           label: 이름
         last_name:
@@ -1553,7 +1561,7 @@ ko:
         city:
           label: 시
         state_id:
-          label: 상태
+          label: 주
         zipcode:
           label: 우편번호
         country_id:
@@ -1572,7 +1580,7 @@ ko:
         card_verification_value:
           label: CVC
         card_month:
-          label: 달
+          label: Month
         card_year:
           label: Year
         stripe:
@@ -2811,11 +2819,7 @@ ko:
   enterprise_bulk_update_success_notice: "기업이 성공적으로 업데이트됨"
   enterprise_bulk_update_error: '업데이트 실패됨'
   enterprise_shop_show_error: "찾고 있는 상점이 없거나 OFN에서 비활성 상태입니다. 다른 상점도 확인해주세요."
-  order_cycles_create_notice: '주문 주기가 생성되었습니다.'
-  order_cycles_update_notice: '주문 주기가 업데이트 되었습니다.'
   order_cycles_bulk_update_notice: '주문 주기가 업데이트 되었습니다.'
-  order_cycles_clone_notice: "%{name} 주문 주기가 복사되었습니다."
-  order_cycles_email_to_producers_notice: '생산자에게 보낼 이메일이 전송 대기열에 있습니다.'
   order_cycles_no_permission_to_coordinate_error: "주문 주기를 조정할 권한이 있는 기업이 없습니다."
   order_cycles_no_permission_to_create_error: "해당 기업에서 조정한 주문 주기를 생성할 권한이 없습니다."
   order_cycle_closed: "선택한 주문 주기가 방금 마감되었습니다. 다시 시도하십시오!"

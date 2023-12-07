@@ -944,6 +944,14 @@ en_DE:
       new:
         create: "Create"
         cancel: "Cancel"
+      create:
+        success: 'Your order cycle has been created.'
+      update:
+        success: 'Your order cycle has been updated.'
+      clone:
+        success: "Your order cycle %{name} has been cloned."
+      notify_producers:
+        success: 'Emails to be sent to producers have been queued for sending.'
       edit:
         save: "Save"
         next: "Next"
@@ -2439,11 +2447,7 @@ en_DE:
   enterprise_register_success_notice: "Congratulations! Registration for %{enterprise} is complete!"
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
-  order_cycles_create_notice: 'Your order cycle has been created.'
-  order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
-  order_cycles_clone_notice: "Your order cycle %{name} has been cloned."
-  order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
   back_to_orders_list: "Back to order list"

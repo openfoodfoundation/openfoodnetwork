@@ -941,6 +941,10 @@ pl:
         create: "Utwórz"
         cancel: "Anuluj"
         back_to_list: "Powrót do listy"
+      create:
+        success: 'Twój cykl zamówień został utworzony.'
+      update:
+        success: 'Twój cykl zamówień został zaktualizowany.'
       edit:
         save: "Zapisz"
         save_and_next: "Zapisz i Dalej"
@@ -1259,7 +1263,7 @@ pl:
   checkout:
     failed: "Płatność nie powiodła się. Daj nam znać, abyśmy mogli zrealizować Twoje zamówienie."
     already_ordered:
-      cart: "koszyk"
+      cart: "Koszyk"
       message_html: "Masz już zamówienie na ten cykl zamówień. Sprawdź %{cart}, aby zobaczyć przedmioty, które zamówiłeś wcześniej. Możesz również anulować pozycje, o ile cykl zamówienia jest otwarty."
     step1:
       contact_information:
@@ -2422,11 +2426,7 @@ pl:
   enterprise_bulk_update_success_notice: "Podmioty zostały pomyślnie zaktualizowane"
   enterprise_bulk_update_error: 'Aktualizacja nieudana'
   enterprise_shop_show_error: "Sklep, którego szukasz, nie istnieje lub jest nieaktywny w OFN. Sprawdź inne sklepy."
-  order_cycles_create_notice: 'Twój cykl zamówień został utworzony.'
-  order_cycles_update_notice: 'Twój cykl zamówień został zaktualizowany.'
   order_cycles_bulk_update_notice: 'Cykle zamówień zostały zaktualizowane.'
-  order_cycles_clone_notice: "Twój cykl zamówienia %{name} został sklonowany."
-  order_cycles_email_to_producers_notice: 'E-maile do wysłania do producentów zostały umieszczone w kolejce do wysłania.'
   order_cycles_no_permission_to_coordinate_error: "Żaden z Twoich podmiotów nie ma uprawnień do koordynowania cyklu zamówień"
   order_cycles_no_permission_to_create_error: "Nie masz uprawnień do tworzenia cyklu zamówień koordynowanego przez ten podmiot"
   order_cycle_closed: "Wybrany cykl zamówień właśnie się zakończył. Proszę spróbuj ponownie!"

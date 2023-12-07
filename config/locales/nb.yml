@@ -1,5 +1,8 @@
 nb:
   language_name: "Norsk"
+  time:
+    formats:
+      long: "%B %d , %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Produkt
@@ -1281,6 +1284,14 @@ nb:
         create: "Opprett"
         cancel: "Avbryt"
         back_to_list: "Tilbake til Listen"
+      create:
+        success: 'Din bestillingsrunde er opprettet.'
+      update:
+        success: 'Din bestillingsrunde har blitt oppdatert.'
+      clone:
+        success: "Din bestillingsrunde %{name} er blitt klonet."
+      notify_producers:
+        success: 'E-poster som skal sendes til produsentene har blitt satt i kø for sending.'
       edit:
         save: "Lagre"
         save_and_next: "Lagre og Neste"
@@ -3048,11 +3059,7 @@ nb:
   enterprise_bulk_update_success_notice: "Bedrifter oppdatert"
   enterprise_bulk_update_error: 'Oppdatering mislyktes'
   enterprise_shop_show_error: "Butikken du leter etter eksisterer ikke eller er inaktiv på OFN. Sjekk gjerne ut andre butikker."
-  order_cycles_create_notice: 'Din bestillingsrunde er opprettet.'
-  order_cycles_update_notice: 'Din bestillingsrunde har blitt oppdatert.'
   order_cycles_bulk_update_notice: 'Bestillingsrundene er oppdatert.'
-  order_cycles_clone_notice: "Din bestillingsrunde %{name} er blitt klonet."
-  order_cycles_email_to_producers_notice: 'E-poster som skal sendes til produsentene har blitt satt i kø for sending.'
   order_cycles_no_permission_to_coordinate_error: "Ingen av bedriftene dine har tillatelse til å koordinere en bestillingsrunde"
   order_cycles_no_permission_to_create_error: "Du har ikke rettigheter til å opprette en bestillingsrunde som er koordinert av den bedriften"
   order_cycle_closed: "Bestillingsrunden du har valgt har akkurat stengt. Vennligst prøv igjen!"
@@ -3692,6 +3699,7 @@ nb:
     credit_card: "Kredittkort"
     new_payment: "Ny betaling"
     capture: "Fang"
+    capture_and_complete_order: "Fang og fullfør ordre"
     void: "Ugyldig"
     login: "Logg inn"
     password: "Passord"

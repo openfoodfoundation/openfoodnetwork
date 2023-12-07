@@ -1269,6 +1269,14 @@ cy:
         create: "Creu"
         cancel: "Canslo"
         back_to_list: "Yn ôl i'r Rhestr"
+      create:
+        success: 'Crëwyd eich cylch archebu.'
+      update:
+        success: 'Diweddarwyd eich cylch archebu'
+      clone:
+        success: "Cloniwyd eich cylch archebu %{name}."
+      notify_producers:
+        success: 'Mae e-byst i''w hanfon at gynhyrchwyr mewn ciw i''w hanfon.'
       edit:
         save: "Cadw"
         save_and_next: "Cadw ac ymlaen i'r Nesaf"
@@ -1790,7 +1798,7 @@ cy:
       terms_not_accepted: Mae angen ichi dderbyn y Telerau ac Amodau
       required: Ni chaniateir gadael maes yn wag
       invalid_number: "Noder rhif ffôn dilys os gwelwch yn dda"
-      invalid_email: "Rhowch gyfeiriad e-bost dilys"
+      invalid_email: "Noder cyfeiriad e-bost dilys"
       select_a_shipping_method: Dewiswch ddull cludo
       select_a_payment_method: Dewiswch ddull talu
       no_shipping_methods_available: Nid yw'n bosibl talu oherwydd diffyg opsiynau cludo. Cysylltwch â pherchennog y siop.
@@ -3027,11 +3035,7 @@ cy:
   enterprise_bulk_update_success_notice: "Llwyddwyd i ddiweddaru'r mentrau "
   enterprise_bulk_update_error: 'Diweddariad wedi methu'
   enterprise_shop_show_error: "Nid yw'r siop rydych chi'n chwilio amdani'n bodoli neu nid yw'n weithredol ar y Open Food Network. Gwiriwch siopau eraill."
-  order_cycles_create_notice: 'Crëwyd eich cylch archebu.'
-  order_cycles_update_notice: 'Diweddarwyd eich cylch archebu.'
   order_cycles_bulk_update_notice: 'Diweddarwyd y cylchoedd archebu.'
-  order_cycles_clone_notice: "Cloniwyd eich cylch archebu %{name}."
-  order_cycles_email_to_producers_notice: 'Mae e-byst i''w hanfon at gynhyrchwyr mewn ciw i''w hanfon.'
   order_cycles_no_permission_to_coordinate_error: "Nid oes gan unrhyw un o'ch mentrau ganiatâd i gydlynu cylch archebu"
   order_cycles_no_permission_to_create_error: "Nid oes gennych ganiatâd i greu cylch archebu a gydlynwyd gan y fenter honno"
   order_cycle_closed: "Mae'r cylch archebu a ddewiswyd newydd gau.  Rhowch gynnig arall!"

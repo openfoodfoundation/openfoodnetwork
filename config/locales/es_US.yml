@@ -1124,6 +1124,14 @@ es_US:
         create: "Crear"
         cancel: "Cancelar"
         back_to_list: "Regresar a la lista"
+      create:
+        success: 'Se ha creado el ciclo de pedido.'
+      update:
+        success: 'Se ha actualizado su ciclo de pedido.'
+      clone:
+        success: "Su ciclo de pedido %{name} ha sido clonado."
+      notify_producers:
+        success: 'Los correos electrónicos que se enviarán a las productoras se han puesto en cola para enviarlos.'
       edit:
         save: "Guardar"
         save_and_next: "Salvar y continuar"
@@ -2715,11 +2723,7 @@ es_US:
   enterprise_bulk_update_success_notice: "Organizaciones actualizadas con éxito"
   enterprise_bulk_update_error: 'Error en la actualización'
   enterprise_shop_show_error: "La tienda que busca no existe o esta inactiva en OFN. por favor visita otras tiendas."
-  order_cycles_create_notice: 'Se ha creado el ciclo de pedido.'
-  order_cycles_update_notice: 'Se ha actualizado su ciclo de pedido.'
   order_cycles_bulk_update_notice: 'Los ciclos de pedido han sido actualizados.'
-  order_cycles_clone_notice: "Su ciclo de pedido %{name} ha sido clonado."
-  order_cycles_email_to_producers_notice: 'Los correos electrónicos que se enviarán a las productoras se han puesto en cola para enviarlos.'
   order_cycles_no_permission_to_coordinate_error: "Ninguna de tus organizaciones tiene permiso para coordinar un ciclo de pedido"
   order_cycles_no_permission_to_create_error: "No tienes permiso para crear un ciclo de pedido coordinado por esta empresa."
   order_cycle_closed: "El ciclo de pedido que ha seleccionado se acaba de cerrar. ¡Inténtalo de nuevo!"

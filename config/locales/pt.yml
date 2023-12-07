@@ -1025,6 +1025,14 @@ pt:
         create: "Criar"
         cancel: "Cancelar"
         back_to_list: "Voltar à Lista"
+      create:
+        success: 'O seu ciclo de encomendas foi criado.'
+      update:
+        success: 'O seu ciclo de encomendas foi actualizado.'
+      clone:
+        success: "O seu ciclo de encomendas %{name} foi clonado."
+      notify_producers:
+        success: 'Os email a enviar aos produtores foram postos na fila para envio.'
       edit:
         save: "Guardar"
         save_and_next: "Guardar e Continuar"
@@ -2541,11 +2549,7 @@ pt:
   enterprise_register_success_notice: "Parabéns! O registo de %{enterprise} está finalizado!"
   enterprise_bulk_update_success_notice: "Organizações actualizadas com sucesso"
   enterprise_bulk_update_error: 'A actualização falhou'
-  order_cycles_create_notice: 'O seu ciclo de encomendas foi criado.'
-  order_cycles_update_notice: 'O seu ciclo de encomendas foi actualizado.'
   order_cycles_bulk_update_notice: 'Os ciclos de encomendas foram actualizados.'
-  order_cycles_clone_notice: "O seu ciclo de encomendas %{name} foi clonado."
-  order_cycles_email_to_producers_notice: 'Os email a enviar aos produtores foram postos na fila para envio.'
   order_cycles_no_permission_to_coordinate_error: "Nenhuma das suas organizações tem permissão para coordenar um ciclo de encomendas."
   order_cycles_no_permission_to_create_error: "Não tem permissão para criar um ciclo de encomendas coordenado por essa organização."
   back_to_orders_list: "Voltar à lista de encomendas"

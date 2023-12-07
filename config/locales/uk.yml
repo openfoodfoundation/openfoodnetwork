@@ -1166,6 +1166,14 @@ uk:
         create: "Створюйте"
         cancel: "Скасувати"
         back_to_list: "Назад до списку"
+      create:
+        success: 'Ваш цикл замовлень створено.'
+      update:
+        success: 'Ваш цикл замовлення оновлено.'
+      clone:
+        success: "Ваш цикл замовлення %{name} клоновано."
+      notify_producers:
+        success: 'Електронні листи для надсилання виробникам поставлено в чергу на надсилання.'
       edit:
         save: "Зберегти"
         save_and_next: "Зберегти та Далі"
@@ -1549,7 +1557,7 @@ uk:
     payment_method_without_number: Спосіб оплати
     order_summary_without_number: Підсумок Замовлення
     already_ordered:
-      cart: "корзина"
+      cart: "кошик"
       message_html: "У вас уже є замовлення для цього циклу замовлень. Перевірте %{cart}, щоб побачити товари, які ви замовляли раніше. Ви також можете скасувати товари, доки цикл замовлення відкритий."
     step1:
       contact_information:
@@ -2834,11 +2842,7 @@ uk:
   enterprise_bulk_update_success_notice: "Підприємства успішно оновлено"
   enterprise_bulk_update_error: 'Помилка оновлення'
   enterprise_shop_show_error: "Магазин, який ви шукаєте, не існує або неактивний на OFN. Будь ласка, перевірте інші магазини."
-  order_cycles_create_notice: 'Ваш цикл замовлень створено.'
-  order_cycles_update_notice: 'Ваш цикл замовлення оновлено.'
   order_cycles_bulk_update_notice: 'Цикли замовлень оновлено.'
-  order_cycles_clone_notice: "Ваш цикл замовлення %{name} клоновано."
-  order_cycles_email_to_producers_notice: 'Електронні листи для надсилання виробникам поставлено в чергу на надсилання.'
   order_cycles_no_permission_to_coordinate_error: "Жодне з ваших підприємств не має дозволу на координацію циклу замовлення"
   order_cycles_no_permission_to_create_error: "У вас немає дозволу на створення циклу замовлення, який координує це підприємство"
   order_cycle_closed: "Вибраний вами цикл замовлення щойно закрито. Будь ласка спробуйте ще раз!"

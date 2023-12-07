@@ -1066,6 +1066,14 @@ pt_BR:
         create: "Criar"
         cancel: "Cancelar"
         back_to_list: "Voltar Para a Lista"
+      create:
+        success: 'Seu ciclo de pedidos foi criado.'
+      update:
+        success: 'Seu ciclo de pedidos foi atualizado.'
+      clone:
+        success: "Seu ciclo de pedidos %{name} foi clonado."
+      notify_producers:
+        success: 'E-mails a serem enviados aos produtores foram encaminhados para envio.'
       edit:
         save: "Salvar"
         save_and_next: "Salvar e Seguir"
@@ -1417,7 +1425,7 @@ pt_BR:
     failed: "O checkout falhou. Informe-nos para que possamos processar seu pedido."
     your_details_without_number: Seus detalhes
     already_ordered:
-      cart: "carrinho"
+      cart: "Carrinho"
       message_html: "Você já possui um pedido para esta compra. Verifique o %{cart} para ver os itens já encomendados. Você também pode cancelar itens enquanto o ciclo estiver aberto."
     step1:
       contact_information:
@@ -2652,11 +2660,7 @@ pt_BR:
   enterprise_bulk_update_success_notice: "Iniciativas atualizadas com sucesso"
   enterprise_bulk_update_error: 'Atualização falhou'
   enterprise_shop_show_error: "A loja que você está procurando não existe na OFN ou está inativa. Por favor, busque por outras lojas. "
-  order_cycles_create_notice: 'Seu ciclo de pedidos foi criado.'
-  order_cycles_update_notice: 'Seu ciclo de pedidos foi atualizado.'
   order_cycles_bulk_update_notice: 'Ciclos de pedidos foram atualizados.'
-  order_cycles_clone_notice: "Seu ciclo de pedidos %{name} foi clonado."
-  order_cycles_email_to_producers_notice: 'E-mails a serem enviados aos produtores foram encaminhados para envio.'
   order_cycles_no_permission_to_coordinate_error: "Nenhuma das suas iniciativas tem permissão para coordenar um ciclo de pedidos"
   order_cycles_no_permission_to_create_error: "Você não tem permissão para criar um ciclo de pedidos coordenado por esta iniciativa"
   order_cycle_closed: "O ciclo de pedidos selecionado acabou de fechar, por favor tente novamente depois!"

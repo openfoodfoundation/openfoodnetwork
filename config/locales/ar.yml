@@ -1186,6 +1186,14 @@ ar:
         create: "انشاء"
         cancel: "إلغاء"
         back_to_list: "العودة للقائمة"
+      create:
+        success: 'تم إنشاء دورة الطلب الخاصة بك.'
+      update:
+        success: 'تم تحديث دورة الطلب.'
+      clone:
+        success: "تم استنساخ دورة الطلب %{name}."
+      notify_producers:
+        success: 'رسائل البريد الإلكتروني المراد إرسالها إلى المنتجين تم وضعها في قائمة الانتظار للإرسال.'
       edit:
         save: "حفظ"
         save_and_next: "حفظ والتالي"
@@ -2918,11 +2926,7 @@ ar:
   enterprise_bulk_update_success_notice: "تم تحديث المؤسسات بنجاح"
   enterprise_bulk_update_error: 'فشل التحديث'
   enterprise_shop_show_error: "المتجر الذي تبحث عنه غير موجود أو غير نشط . يرجى التحقق من المحلات التجارية الأخرى."
-  order_cycles_create_notice: 'تم إنشاء دورة الطلب الخاصة بك.'
-  order_cycles_update_notice: 'تم تحديث دورة الطلب.'
   order_cycles_bulk_update_notice: 'تم تحديث دورات الطلب.'
-  order_cycles_clone_notice: "تم استنساخ دورة الطلب %{name}."
-  order_cycles_email_to_producers_notice: 'رسائل البريد الإلكتروني المراد إرسالها إلى المنتجين تم وضعها في قائمة الانتظار للإرسال.'
   order_cycles_no_permission_to_coordinate_error: "لا تملك أي من مؤسساتك إذنًا لتنسيق دورة الطلب"
   order_cycles_no_permission_to_create_error: "ليس لديك إذن لإنشاء دورة طلب تنسقها تلك المؤسسة"
   order_cycle_closed: "تم إغلاق دورة الطلب التي حددتها للتو. حاول مرة اخرى!"

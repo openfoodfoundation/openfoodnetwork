@@ -1352,16 +1352,11 @@ el:
         email:
           label: Email
       billing_address:
-        title: Διεύθυνση χρέωσης
         first_name:
           label: Όνομα
         last_name:
           label: Επίθετο
       address:
-        address1:
-          label: Διεύθυνση (οδός + αριθμός σπιτιού)
-        address2:
-          label: Πρόσθετες πληροφορίες διεύθυνσης (προαιρετικά)
         city:
           label: Πόλη
         state_id:
@@ -1372,44 +1367,29 @@ el:
           label: Χώρα
       shipping_info:
         title: Πληροφορίες αποστολής
-      submit: Επόμενο - Τρόπος πληρωμής
-      cancel: Επιστροφή στην Επεξεργασία καλαθιού
     step2:
       payment_method:
-        title: Μέθοδος πληρωμής
+        title: Μέθοδος Πληρωμής
       form:
         card_month:
           label: Μήνας
         card_year:
           label: Έτος
-      explaination: Μπορείτε να ελέγξετε και να επιβεβαιώσετε την παραγγελία σας στο επόμενο βήμα που περιλαμβάνει το τελικό κόστος.
-      submit: Επόμενο - Περίληψη παραγγελίας
       cancel: Επιστροφή στα στοιχεία σου
     step3:
       delivery_details:
         edit: Επεξεργασία
       payment_method:
-        title: Μέθοδος πληρωμής
+        title: Μέθοδος Πληρωμής
         edit: Επεξεργασία
       order:
         edit: Επεξεργασία
       terms_and_conditions:
-        message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή."
         link_text: "Οροι και Προϋποθέσεις"
-      platform_terms_of_service:
-        message_html: "Συμφωνώ με την πλατφόρμα %{tos_link}."
       all_terms_and_conditions:
-        message_html: "Συμφωνώ με το %{terms_and_conditions_link} του πωλητή και την πλατφόρμα %{tos_link}."
         terms_and_conditions: "Οροι και Προϋποθέσεις"
-      submit: Ολοκληρωμένη παραγγελία
-      cancel: Επιστροφή στον τρόπο πληρωμής
     errors:
-      terms_not_accepted: Παρακαλώ αποδεχτείτε τους Όρους και τις Προϋποθέσεις
-      required: Το πεδίο δεν μπορεί να είναι κενό
-      invalid_number: "Παρακαλώ εισάγετε έναν έγκυρο αριθμό τηλεφώνου"
       invalid_email: "Παρακαλώ εισάγετε έγκυρο email"
-      select_a_shipping_method: Επιλέξτε έναν τρόπο αποστολής
-      select_a_payment_method: Επιλέξτε έναν τρόπο πληρωμής
   shops:
     hubs:
       show_closed_shops: "Εμφάνιση κλειστών καταστημάτων"
@@ -2591,11 +2571,7 @@ el:
   enterprise_bulk_update_success_notice: "Οι επιχειρήσεις ενημερώθηκαν με επιτυχία"
   enterprise_bulk_update_error: 'Ενημέρωση απέτυχε'
   enterprise_shop_show_error: "Το κατάστημα που ψάχνετε δεν υπάρχει ή είναι ανενεργό στο OFN. Παρακαλώ ελέγξτε άλλα καταστήματα."
-  order_cycles_create_notice: 'Ο κύκλος παραγγελιών σας δημιουργήθηκε.'
-  order_cycles_update_notice: 'Ο κύκλος παραγγελιών σας ενημερώθηκε.'
   order_cycles_bulk_update_notice: 'Οι κύκλοι παραγγελιών ενημερώθηκαν.'
-  order_cycles_clone_notice: "Ο κύκλος παραγγελίας σας %{name} έχει κλωνοποιηθεί."
-  order_cycles_email_to_producers_notice: 'Τα μηνύματα ηλεκτρονικού ταχυδρομείου που θα σταλούν στους παραγωγούς έχουν τεθεί σε ουρά για αποστολή.'
   order_cycles_no_permission_to_coordinate_error: "Καμία από τις επιχειρήσεις σας δεν έχει άδεια να συντονίσει έναν κύκλο παραγγελιών"
   order_cycles_no_permission_to_create_error: "Δεν έχετε άδεια να δημιουργήσετε έναν κύκλο παραγγελιών που συντονίζεται από αυτήν την επιχείρηση"
   order_cycle_closed: "Ο κύκλος παραγγελιών που επιλέξατε μόλις έκλεισε. ΠΑΡΑΚΑΛΩ προσπαθησε ξανα!"

@@ -62,22 +62,22 @@ hi:
       variant_override:
         count_on_hand: "अभी उपलब्ध"
       spree/payment_method/calculator:
-        preferred_flat_percent: "कैलकुलेटर फ्लैट प्रतिशत:"
-        preferred_amount: "कैलकुलेटर राशि:"
-        preferred_first_item: "कैलकुलेटर पहला आइटम:"
-        preferred_additional_item: "कैलकुलेटर अतिरिक्त आइटम लागत:"
-        preferred_max_items: "कैलकुलेटर अधिकतम आइटम्स:"
-        preferred_minimal_amount: "कैलकुलेटर न्यूनतम राशि:"
-        preferred_normal_amount: "कैलकुलेटर सामान्य राशि:"
-        preferred_discount_amount: "कैलकुलेटर डिस्काउंट राशि:"
-        preferred_unit_from_list: "सूची से कैलकुलेटर यूनिट:"
-        preferred_per_unit: "कैलकुलेटर प्रति यूनिट:"
+        preferred_flat_percent: "कॅल्क्युलेटर फ्लैट प्रतिशत:"
+        preferred_amount: "कॅल्क्युलेटर राशि:"
+        preferred_first_item: "कॅल्क्युलेटर पहला आइटम:"
+        preferred_additional_item: "कॅल्क्युलेटर अतिरिक्त आइटम लागत:"
+        preferred_max_items: "कॅल्क्युलेटर अधिकतम आइटम्स:"
+        preferred_minimal_amount: "कॅल्क्युलेटर न्यूनतम राशि:"
+        preferred_normal_amount: "कॅल्क्युलेटर सामान्य राशि:"
+        preferred_discount_amount: "कॅल्क्युलेटर डिस्काउंट राशि:"
+        preferred_unit_from_list: "सूची से कॅल्क्युलेटर यूनिट:"
+        preferred_per_unit: "कॅल्क्युलेटर प्रति यूनिट:"
       enterprise:
         white_label_logo_link: "शॉपफ्रन्ट में इस्तेमाल किए गए लोगो के लिए लिंक"
     errors:
       models:
         enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "टैक्स की श्रेणी को इन्हेरिट करने के लिए प्रति-आइटम कैलकुलेटर की आवश्यकता है।"
+          inherit_tax_requires_per_item_calculator: "टैक्स की श्रेणी को इन्हेरिट करने के लिए प्रति-आइटम कॅल्क्युलेटर की आवश्यकता है।"
         spree/user:
           attributes:
             email:
@@ -253,7 +253,7 @@ hi:
         updated: "आपका पासवर्ड सफलतापूर्वक बदल दिया गया था। अब आप साइन इन हो गए हैं।"
         send_instructions: "अपने अकाउंट की पुष्टि कैसे करें, इन निर्देशों के साथ आपको कुछ ही मिनटों में एक ईमेल प्राप्त होगा।"
     oidc:
-      failure: "साइन इन नहीं कर सके: %{error} "
+      failure: "साइन इन नहीं कर सके: %{error}"
   home_page_alert_html: "होम पेज अलर्ट HTML"
   hub_signup_case_studies_html: "हब साइन अप केस अध्ययन HTML"
   hub_signup_detail_html: "हब साइनअप विवरण HTML"
@@ -274,11 +274,11 @@ hi:
       cloned_order_cycle_name: "%{order_cycle} की कॉपी"
     tax_rate:
       included_in_price: "कीमत में शामिल"
-  open_street_map_enabled: "स्ट्रीट मैप खोलें सक्षम "
-  open_street_map_default_latitude: "स्ट्रीट मैप खोलें डिफ़ॉल्ट लैटिट्यूड "
-  open_street_map_default_longitude: "स्ट्रीट मैप खोलें डिफ़ॉल्ट लान्जिटूड "
-  open_street_map_provider_name: "स्ट्रीट मैप खोलें प्रदाता का नाम"
-  open_street_map_provider_options: "स्ट्रीट मैप खोलें प्रदाता विकल्प"
+  open_street_map_enabled: "Open Street Map सक्षम"
+  open_street_map_default_latitude: "Open Street Map डिफ़ॉल्ट लैटिट्यूड"
+  open_street_map_default_longitude: "Open Street Map डिफ़ॉल्ट लान्जिटूड"
+  open_street_map_provider_name: "Open Street Map प्रदाता का नाम"
+  open_street_map_provider_options: "Open Street Map प्रदाता विकल्प"
   producer_signup_case_studies_html: "उत्पादक साइनअप केस अध्ययन HTML"
   producer_signup_detail_html: "उत्पादक साइनअप विवरण HTML"
   producer_signup_pricing_table_html: "उत्पादक साइनअप कीमत निर्धारण टेबल HTML"
@@ -323,7 +323,7 @@ hi:
       heading: "रिपोर्ट डाउनलोड के लिए तैयार"
       intro: |
           नीचे दिया गया लिंक एक सप्ताह के बाद समाप्त हो जाएगा।
-      link_label: "%{name} "
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "प्रिय ग्राहक,"
@@ -331,8 +331,8 @@ hi:
       shipment_summary: "शिपमेंट का सारांश"
       subject: "शिपमेंट नोटिफिकेशन"
       thanks: "आपके बिजनेस के लिए धन्यवाद।"
-      track_information: "ट्रैकिंग जानकारी: %{tracking} "
-      track_link: "ट्रैकिंग लिंक: %{url} "
+      track_information: "ट्रैकिंग जानकारी: %{tracking}"
+      track_link: "ट्रैकिंग लिंक: %{url}"
   subscription_mailer:
     placement_summary_email:
       subject: हाल ही में किए गए सब्सक्रिप्शन ऑर्डर्स का सारांश
@@ -371,7 +371,7 @@ hi:
   home: "OFN"
   title: "Open Food Network"
   welcome_to: "आपका स्वागत है"
-  site_meta_description: "हम बिल्कुल नीचे से शुरू करते हैं। उन किसानों और उत्पादकों के साथ जो अपनी कहानियों को गर्व और सत्यता के सतह बताने के लिए तैयार हैं। उन वितरकों के साथ जो लोगों को उत्पादों से निष्पक्ष और ईमानदारी से जोड़ने के लिए तैयार हैं। उन खरीदारों के साथ जो मानते हैं कि बेहतर साप्ताहिक खरीदारी के फैसले दुनिया को गंभीरता से बदल सकते हैं।"
+  site_meta_description: "ओपन फूड नेटवर्क इंडिया सॉफ्टवेयर प्लेटफॉर्म किसानों को लाभदायक कीमतों पर अपनी उपज ऑनलाइन बेचने की सुविधा देता है। यह सॉफ़्टवेयर खाद्यान्न बेचने के लिए डिज़ाइन किया गया है ताकि यह विभिन्न मापों या स्टॉक स्तरों को संभाल सके जो केवल कृषि उत्पादों में आम हैं। जैसे एक दर्जन अंडे, धनिया का एक गुच्छा, या एक पूरे चिकन का वजन जो अलग-अलग हो सकता है।"
   search_by_name: नाम या उपनगर के आधार पर खोजें...
   producers_join: भारतीय उत्पादकों का अब Open Food Network में शामिल होने के लिए स्वागत है।
   charges_sales_tax: GST शुल्क?
@@ -688,8 +688,8 @@ hi:
         fee_type: "फीस का प्रकार"
         name: "नाम"
         tax_category: "टैक्स श्रेणी"
-        calculator: "कैलकुलेटर"
-        calculator_values: "कैलकुलेटर वैल्यू"
+        calculator: "कॅल्क्युलेटर"
+        calculator_values: "कॅल्क्युलेटर वैल्यू"
         search: "सर्च"
         name_placeholder: "जैसे पैकिंग शुल्क"
     enterprise_groups:
@@ -1207,8 +1207,8 @@ hi:
           remove_logo_confirm: "क्या आप वाकई इस लोगो को हटाना चाहते हैं?"
           remove_logo_success: "लोगो हटा दिया गया"
           white_label_logo_link_label: "शॉपफ्रन्ट में इस्तेमाल किए गए लोगो के लिए लिंक"
-          hide_groups_tab: "Shopfront में ग्रुप टैब छुपाएं"
-          create_custom_tab: "Shopfront में कस्टम टैब बनाएं"
+          hide_groups_tab: "शॉपफ्रन्ट में ग्रुप टैब छुपाएं"
+          create_custom_tab: "शॉपफ्रन्ट में कस्टम टैब बनाएं"
           custom_tab_title: "कस्टम टैब के लिए शीर्षक"
           custom_tab_content: "कस्टम टैब के लिए सामग्री"
       actions:
@@ -1285,6 +1285,14 @@ hi:
         create: "बनाएं"
         cancel: "रद्द करें"
         back_to_list: "सूची में वापस जाएं"
+      create:
+        success: 'आपका ऑर्डर साइकल बनाया गया है।'
+      update:
+        success: 'आपका ऑर्डर साइकल अपडेट कर दिया गया है।'
+      clone:
+        success: "आपका ऑर्डर साइकल %{name} क्लोन कर दिया गया है।"
+      notify_producers:
+        success: 'उत्पादकों को भेजे जाने वाले ईमेल भेजने के लिए कतारबद्ध किए गए हैं।'
       edit:
         save: "सेव करें"
         save_and_next: "सेव करें और अगला"
@@ -1480,7 +1488,7 @@ hi:
       totals_by_supplier: आपूर्तिकर्ता द्वारा ऑर्डर साइकल डिस्ट्रीब्यूटर कुल करें
       customer_totals: ऑर्डर साइकल ग्राहक योग
       all_products: सभी उत्पाद
-      inventory: इन्वेंट्री (हाथ पर)
+      inventory: इन्वेंट्री (अभी उपलब्ध)
       lettuce_share: लेट्यूस शेयर
       payment_methods: भुगतान विधियों की रिपोर्ट
       delivery: डिलिवरी रिपोर्ट
@@ -1724,7 +1732,7 @@ hi:
     order_summary_without_number: ऑर्डर का सारांश
     already_ordered:
       cart: "कार्ट"
-      message_html: "आपकी इस ऑर्डर साइकल में पहले से ही एक ऑर्डर है। आपके द्वारा पहले ऑर्डर किए गए आइटम देखने के लिए %{cart} को चेक करें। जब तक ऑर्डर साइकल खुली रहती है, तब तक आप आइटम रद्द भी कर सकते हैं।"
+      message_html: "आपके पास इस ऑर्डर साइकल के लिए पहले से ही एक ऑर्डर है। आपके द्वारा पहले ऑर्डर किए गए आइटम देखने के लिए %{cart} को चेक करें। जब तक ऑर्डर साइकल खुली रहती है, तब तक आप आइटम रद्द भी कर सकते हैं।"
     step1:
       contact_information:
         title: संपर्क जानकारी
@@ -1912,11 +1920,11 @@ hi:
   menu_4_title: "ग्रुप्स"
   menu_4_url: "/groups"
   menu_5_title: "परिचय"
-  menu_5_url: "https://about.openfoodnetwork.in/"
-  menu_6_title: "कनेक्ट करें"
-  menu_6_url: "https://openfoodnetwork.org/au/connect/"
-  menu_7_title: "सीखें"
-  menu_7_url: "https://openfoodnetwork.org/au/learn/"
+  menu_5_url: "https://about.openfoodnetwork.in"
+  menu_6_title: "मूल्य निर्धारण"
+  menu_6_url: "https://about.openfoodnetwork.in/pricing/"
+  menu_7_title: "मदद"
+  menu_7_url: "https://about.openfoodnetwork.in/help/"
   logo: "लोगो (640x130)"
   logo_mobile: "मोबाइल लोगो (75x26)"
   logo_mobile_svg: "मोबाइल लोगो (SVG)"
@@ -1940,16 +1948,16 @@ hi:
   phone: फ़ोन
   next: अगला
   address: पता
-  address_placeholder: उदाहरण के लिए 123 हाई स्ट्रीट
+  address_placeholder: उदाहरण के लिए 123 सरदार वल्लभभाई पटेल रोड
   address2: पता (जारी)
   city: शहर
   city_placeholder: उदाहरण नॉर्थकोट
   latitude: अक्षांश
   latitude_placeholder: उदाहरण -37.4713077
-  latitude_longitude_tip: मैप पर आपके एंटरप्राइज़ को प्रदर्शित करने के लिए अक्षांश और देशांतर की जरूरत होती है।
-  longitude: देशान्तर
+  latitude_longitude_tip: मैप पर आपके एंटरप्राइज़ को प्रदर्शित करने के लिए अक्षांश और रेखांश की जरूरत होती है।
+  longitude: रेखांश
   longitude_placeholder: उदाहरण के लिए 144.7851531
-  use_geocoder: पते से ऑटोमैटिक्ली अक्षांश और देशांतर को कैलकुलेट करें?
+  use_geocoder: पते से अक्षांश और रेखांश को ऑटोमैटिक्ली कैलकुलेट करें?
   state: राज्य
   postcode: पोस्टकोड
   postcode_placeholder: उदाहरण 3070
@@ -2046,22 +2054,22 @@ hi:
       cookies_policy_link: "कुकीज़ नीति"
       cookies_accept_button: "कुकीज़ स्वीकार करें"
   home_shop: अभी खरीदें
-  brandstory_headline: "कृषि उत्पाद, स्थानीय और स्वस्थ!"
+  brandstory_headline: "कृषि उत्पाद, स्थानीय और ऑनलाईन!"
   brandstory_intro: "कभी-कभी सिस्टम को ठीक करने का सबसे अच्छा तरीका एक नया सिस्टम शुरू करना होता है…"
-  brandstory_part1: "हम बिल्कुल नीचे से शुरू करते हैं। उन किसानों और उत्पादकों के साथ जो अपनी कहानियों को गर्व और सत्यता के सतह बताने के लिए तैयार हैं। उन वितरकों के साथ जो लोगों को उत्पादों से निष्पक्ष और ईमानदारी से जोड़ने के लिए तैयार हैं। उन खरीदारों के साथ जो मानते हैं कि बेहतर साप्ताहिक खरीदारी के फैसले दुनिया को गंभीरता से बदल सकते हैं।"
-  brandstory_part2: "फिर हमें इसे वास्तविक बनाने का एक तरीका चाहिए। अनाज उगाने, बेचने और खरीदने वाले हर व्यक्ति को सशक्त बनाने का एक तरीका। सभी कहानियों को बताने का, सभी लॉजिस्टिक्स को संभालने का एक तरीका। हर दिन लेनदेन को परिवर्तन में बदलने का एक तरीका।"
-  brandstory_part3: "इसलिए, समान अवसर प्रदान करने के लिए, हम एक ऑनलाइन मार्केटप्लेस बनाते हैं। यह पारदर्शी होता है, इसलिए वास्तविक रिश्ते बनते हैं। चूँकि यह ओपन सोर्स है, इसका स्वामित्व हर किसी के पास है। यह खुद को विभिन्न क्षेत्रों और राष्ट्रों के अनुसार ढाल सकता है, इसलिए लोग पूरी दुनिया में इसके वर्जन्स शुरू करते हैं।"
-  brandstory_part4: "यह हर जगह काम करता है। यह सब कुछ बदल देता है।"
+  brandstory_part1: "ओपन फूड नेटवर्क इंडिया सॉफ्टवेयर प्लेटफॉर्म किसानों को लाभदायक कीमतों पर अपनी उपज ऑनलाइन बेचने की सुविधा देता है। यह सॉफ़्टवेयर खाद्यान्न बेचने के लिए डिज़ाइन किया गया है ताकि यह विभिन्न मापों या स्टॉक स्तरों को संभाल सके जो केवल कृषि उत्पादों में आम हैं। जैसे एक दर्जन अंडे, धनिया का एक गुच्छा, या एक पूरे चिकन का वजन जो अलग-अलग हो सकता है।"
+  brandstory_part2: "खाद्यान्न उत्पादक, Farmer Producer Organizations (FPO), या Farmer Producer Companies (FPC) अपनी खुद की ऑनलाइन दुकान बना सकते हैं, ऑनलाइन पेमेंट ले सकते है, या इसी वेबसाइट पर अन्य दुकानों के माध्यम से बेच भी सकते हैं।"
+  brandstory_part3: "थोक विक्रेता, Farmer Producer Organizations (FPO), या Farmer Producer Companies (FPC), OFN को अपने द्वारा उपयोग किए जाने वाले सॉफ़्टवेयर के साथ integrate कर सकते हैं और ऑनलाइन खाद्य केंद्रों और दुकानों के हमारे राष्ट्रीय नेटवर्क के माध्यम से ग्राहकों को अपने उत्पादों की आपूर्ति करने के लिए खरीद समूह बना सकते हैं।"
+  brandstory_part4: "Farmer Producer Organizations (FPO), या Farmer Producer Companies (FPC) एक ऑनलाइन किसान बाजार बनाने के लिए अपने स्थानीय क्षेत्र में उत्पादकों को एक साथ ला सकते हैं, जिससे एक मजबूत स्थानीय खाद्य अर्थव्यवस्था बन सकती है।"
   brandstory_part5_strong: "हम इसे Open Food Network कहते हैं।"
-  brandstory_part6: "हम सभी को अपना खाद्यान्न बहुत पसंद होता है। अब हम अपने खाद्यान्न व्यवस्था पर भी प्यार कर सकते हैं।"
-  system_headline: "खरीदारी - कैसे करेंगे वह यहां देखेंगे।"
-  system_step1: "1. सर्च करें"
-  system_step1_text: "मौसमी स्थानीय खाद्यान्न के लिए, हमारी विविध, स्वतंत्र दुकानें खोजें। आस-पड़ोस के आधार पर और खाद्यान्न के श्रेणी पर खोजें, या आप डिलीवरी पसंद करते हैं या पिकअप।"
-  system_step2: "2. दुकान"
-  system_step2_text: "विविध उत्पादकों और हब्स के किफायती स्थानीय खाद्यान्नों के साथ अपने व्यवहार को बदल दें। अपने खाद्यान्नों के पीछे की कहानियों और इसे बनाने वाले लोगों के बारे में जानें!"
+  brandstory_part6: "यदि आप अच्छा खाद्य बेचते हैं - एक किसान, किसान बाजार, खाद्य सहकारी समिति, या खाद्य केंद्र के रूप में - तो ऐसा सॉफ़्टवेयर चुनें जो लोगों और पृथ्वी के लिए खाद्य प्रणाली बनाने के आपके मूल्यों के अनुरूप हो, न कि लाभ के लिए। प्रतिस्पर्धात्मक रूप से बजाय सामूहिक रूप से काम करके, हम नए सॉफ़्टवेयर विकसित करने की लागत साझा करते हैं, और हम यह सुनिश्चित करते हैं कि हमारी परियोजना लचीली है!"
+  system_headline: "OFN पर कैसे बेचें - 3 आसान स्टेप्स।"
+  system_step1: "1. एक नया खाता बनाएं"
+  system_step1_text: "• अपने कृषि व्यवसाय या दुकान का नाम, विवरण और संपर्क विवरण दर्ज करें • फ़ोटो और सोशल मीडिया विवरण दर्ज करें"
+  system_step2: "2. अपने उत्पादों की सूची बनाएं"
+  system_step2_text: "अपनी दुकान में - अपने स्वयं के और/या अपने आस-पास के अन्य निर्माताओं के उत्पाद दर्ज करें। छवियाँ, विवरण, कीमतें, स्टॉक स्तर, वज़न और माप सेट करें।"
   system_step3: "3. पिक-अप/डिलीवरी"
-  system_step3_text: "अपनी डिलीवरी के लिए रुकें, या अपने खाद्यानों के साथ ज्यादा व्यक्तिगत संबंध के लिए अपने उत्पादक के पास या हब पर जाएं। खाने की खरीदारी उतनी ही विविध है जितनी प्रकृति की मंशा थी।"
-  cta_headline: "खरीदारी जो दुनिया को एक बेहतर जगह बनाती है।"
+  system_step3_text: "भुगतान विधियाँ सेट करें. एकल या एकाधिक पिक-अप पॉइंट और डिलीवरी विवरण बनाएं। आवर्ती ऑर्डर और नियमित डिलीवरी व्यवस्था बनाएं।"
+  cta_headline: "एक आधुनिक खाद्यान्न क्रय एवं विक्रय प्रणाली।"
   cta_label: "मैं तैयार हूँ"
   stats_headline: "हम एक नई खाद्यान्न व्यवस्था बना रहे हैं।"
   stats_producers: "खाद्यान्नों के उत्पादक"
@@ -2267,7 +2275,7 @@ hi:
   products_no_results_html: "माफ करें, %{query} के लिए कोई परिणाम नहीं मिला"
   products_clear_search: "सर्च साफ़ करें"
   search_no_results_html: "माफ करें, %{query} के लिए कोई परिणाम नहीं मिला। दूसरा सर्च करने की कोशिश करें?"
-  components_profiles_popover: "प्रोफाइल का ओपन फ़ूड नेटवर्क पर कोई शॉपफ्रन्ट नहीं है, लेकिन उनकी अपनी भौतिक या ऑनलाइन शॉप कहीं और हो सकती है"
+  components_profiles_popover: "प्रोफाइल्स का ओपन फ़ूड नेटवर्क पर कोई शॉपफ्रन्ट नहीं है, लेकिन उनकी अपनी भौतिक या ऑनलाइन शॉप कहीं और हो सकती है"
   components_profiles_show: "प्रोफ़ाइल दिखाएं"
   components_filters_nofilters: "कोई फ़िल्टर नहीं"
   components_filters_clearfilters: "सभी फ़िल्टर साफ़ करें"
@@ -2646,7 +2654,7 @@ hi:
   admin_enterprise_groups_data_powertip_logo: "यह लोगो ग्रुप के लिए है"
   admin_enterprise_groups_data_powertip_promo_image: "यह छवि ग्रुप प्रोफ़ाइल के शीर्ष पर प्रदर्शित होती है"
   admin_enterprise_groups_contact_phone_placeholder: "उदाहरण 98 7654 3210"
-  admin_enterprise_groups_contact_address1_placeholder: "उदाहरण के लिए 123 सरदार वल्लभ पटेल रोड"
+  admin_enterprise_groups_contact_address1_placeholder: "उदाहरण के लिए 123 सरदार वल्लभभाई पटेल रोड"
   admin_enterprise_groups_contact_city: "उपनगर"
   admin_enterprise_groups_contact_city_placeholder: "उदाहरण नॉर्थकोट"
   admin_enterprise_groups_contact_zipcode: "पोस्टकोड"
@@ -2676,9 +2684,9 @@ hi:
   tax_category: "टैक्स श्रेणी"
   display: "प्रदर्शित करें"
   tags: "टैग्स"
-  calculator: "कैलकुलेटर"
-  calculator_values: "कैलकुलेटर वैल्यू"
-  calculator_settings_warning: "यदि आप कैलकुलेटर प्रकार बदल रहे हैं, तो कैलकुलेटर सेटिंग्स को एडिट करने से पहले आपको उसे सेव करना होगा"
+  calculator: "कॅल्क्युलेटर"
+  calculator_values: "कॅल्क्युलेटर वैल्यू"
+  calculator_settings_warning: "यदि आप कॅल्क्युलेटर प्रकार बदल रहे हैं, तो कॅल्क्युलेटर सेटिंग्स को एडिट करने से पहले आपको उसे सेव करना होगा"
   calculator_preferred_unit_error: "किलो या पौंड होना चाहिए"
   calculator_preferred_value_error: "अमान्य इनपुट। कृपया केवल नंबर का उपयोग करें। उदाहरण के लिए: 10, 5.5, -20"
   flat_percent_per_item: "फ्लैट प्रतिशत (प्रति आइटम)"
@@ -2695,7 +2703,7 @@ hi:
   roles: "भूमिकाएँ"
   update: "अपडेट करें"
   delete: हटाएं
-  add_producer_property: "उत्पादक उत्पादक जोड़ें"
+  add_producer_property: "उत्पादक प्रॉपर्टी जोड़ें"
   in_progress: "प्रगति पर है"
   started_at: "से शुरू हुआ"
   queued: "पंक्तिबद्ध"
@@ -3053,11 +3061,7 @@ hi:
   enterprise_bulk_update_success_notice: "एंटरप्राइजिस सफलतापूर्वक अपडेट किए गए"
   enterprise_bulk_update_error: 'अपडेट विफल हुआ'
   enterprise_shop_show_error: "आप जिस शॉप की तलाश कर रहे हैं वह मौजूद नहीं है या OFN पर निष्क्रिय है। कृपया अन्य शॉपों को चेक करें।"
-  order_cycles_create_notice: 'आपका ऑर्डर साइकल बनाया गया है।'
-  order_cycles_update_notice: 'आपका ऑर्डर साइकल अपडेट कर दिया गया है।'
   order_cycles_bulk_update_notice: 'ऑर्डर साइकल अपडेट कर दिए गए हैं।'
-  order_cycles_clone_notice: "आपका ऑर्डर साइकल %{name} क्लोन कर दिया गया है।"
-  order_cycles_email_to_producers_notice: 'उत्पादकों को भेजे जाने वाले ईमेल भेजने के लिए कतारबद्ध किए गए हैं।'
   order_cycles_no_permission_to_coordinate_error: "आपके किसी भी एंटरप्राइजिस़ को ऑर्डर साइकल का समन्वय करने की अनुमति नहीं है"
   order_cycles_no_permission_to_create_error: "आपके पास उस एंटरप्राइजिस द्वारा समन्वित ऑर्डर साइकल बनाने की अनुमति नहीं है"
   order_cycle_closed: "आपके द्वारा चुना गया ऑर्डर साइकल अभी बंद हुआ है। कृपया फिर से कोशिश करें!"
@@ -3390,9 +3394,9 @@ hi:
       show_hide_payment: 'चेकआउट के समय भुगतान विधियाँ दिखाएं या छिपाएँ'
       show_hide_order_cycles: 'मेरे शॉपफ्रन्ट में ऑर्डर साइकल दिखाएं या छिपाएँ'
       visible: दृश्यमान
-      not_visible: सेव नहीं किए गए परिवर्तन वर्तमान में मौजूद हैं, अभी सेव करें या अनदेखा करें?
+      not_visible: अदृश्य है
     services:
-      unsaved_changes_message: दिखाई नहीं दे रहा है
+      unsaved_changes_message: सेव नहीं किए गए परिवर्तन वर्तमान में मौजूद हैं, अभी सेव करें या अनदेखा करें?
       save: सेव करें
       ignore: अनदेखा करें
       add_to_order_cycle: "ऑर्डर साइकल में जोड़ें"
@@ -3439,7 +3443,7 @@ hi:
       other: "हर एक"
     bunch:
       one: "बंच"
-      other: "बंच"
+      other: "बंचेस"
     pack:
       one: "पैक"
       other: "पैक्स"
@@ -3448,7 +3452,7 @@ hi:
       other: "बॉक्सिस"
     bottle:
       one: "बोतल"
-      other: "बोतल"
+      other: "बोतलें"
     jar:
       one: "जार"
       other: "जार"
@@ -3484,7 +3488,7 @@ hi:
       other: "यूनिट्स"
     serve:
       one: "सर्व"
-      other: "सर्व"
+      other: "serves"
     tray:
       one: "ट्रे"
       other: "ट्रे"
@@ -3550,7 +3554,7 @@ hi:
               fee_placement: "फीस प्लेसमेंट"
               fee_calculated_on_transfer_through_name: "के माध्यम से ट्रांसफर पर फीस कैलकुलेशन"
               tax_category_name: "टैक्स श्रेणी"
-              total_amount: "$$ योग"
+              total_amount: "₹₹ योग"
           html:
             header:
               fee_type: "फीस का प्रकार"
@@ -3560,7 +3564,7 @@ hi:
               fee_placement: "फीस प्लेसमेंट"
               fee_calculated_on_transfer_through_name: "के माध्यम से ट्रांसफर पर फीस कैलकुलेशन"
               tax_category_name: "टैक्स श्रेणी"
-              total_amount: "$$ योग"
+              total_amount: "₹₹ योग"
         invalid_filter_parameters: "इस रिपोर्ट के लिए आपके द्वारा चुने गए फ़िल्टर अमान्य हैं।"
       report:
         none: "कोई नहीं"
@@ -3661,15 +3665,15 @@ hi:
     cannot_create_returns: "रिटर्न नहीं बना सकता क्योंकि इस ऑर्डर में कोई शिप की गई यूनिट नहीं है।"
     select_stock: "स्टॉक चुनें"
     location: "लोकेशन"
-    count_on_hand: "हाथ में गिनें"
+    count_on_hand: "Count अभी उपलब्ध"
     quantity: "मात्रा"
-    on_demand: "अभी मांग में "
+    on_demand: "अभी मांग में"
     on_hand: "अभी उपलब्ध"
     package_from: "से पैकेज"
     item_description: "आइटम विवरण"
     price: "कीमत"
     total: "कुल"
-    edit: "एडिट करें "
+    edit: "एडिट करें"
     split: "स्प्लिट"
     delete: "हटाएं"
     cannot_set_shipping_method_without_address: "जब तक ग्राहक विवरण प्रदान नहीं किया जाता तब तक शिपिंग विधि सेट नहीं की जा सकती।"
@@ -3710,7 +3714,7 @@ hi:
     landing_page: "लैंडिंग पेज"
     server: "सर्वर"
     test_mode: "टेस्ट मोड"
-    logourl: "लॉग-आउट करें "
+    logourl: "लॉग-आउट करें"
     are_you_sure_delete: "क्या आप वाकई इस रिकॉर्ड को मिटाना चाहते हैं?"
     confirm_delete: "हटाने की पुष्टि करें"
     configurations: "कॉन्फ़िगरेशन करें"
@@ -3729,7 +3733,7 @@ hi:
     choose_currency: "करेंसी चुनें"
     mail_method_settings: "मेल विधि सेटिंग"
     mail_settings_notice_html: "<b>यहां किए गए परिवर्तन केवल डिबगिंग के लिए अस्थायी</b> होंगे, और भविष्य में वापस आ सकते हैं। <br>इंस्टेंस के रहस्यों को अपडेट करके और <a href='https://github.com/openfoodfoundation/ofn-install'>ऑफ़-इंस्टॉल</a>का उपयोग करके उन्हें प्रोविज़न करके स्थायी परिवर्तन किए जा सकते हैं। अधिक जानकारी के लिए OFN ग्लोबल टीम से संपर्क करें।"
-    general: "सामान्य "
+    general: "सामान्य"
     enable_mail_delivery: "मेल डिलीवरी अक्षम करें"
     send_mails_as: "इस रूप में मेल भेजें"
     smtp_send_all_emails_as_from_following_address: "निम्नलिखित पते से सभी मेल भेजें।"
@@ -3780,7 +3784,7 @@ hi:
     description: "विवरण"
     type: "प्रकार"
     default: "डिफ़ॉल्ट"
-    calculator: "कैलकुलेटर"
+    calculator: "कॅल्क्युलेटर"
     zone: "ज़ोन"
     display: "प्रदर्शित करें"
     environment: "पर्यावरण"
@@ -4034,7 +4038,7 @@ hi:
           name: "नाम"
           products_distributor: "वितरक"
           zone: "ज़ोन"
-          calculator: "कैलकुलेटर"
+          calculator: "कॅल्क्युलेटर"
           display: "प्रदर्शित करें"
           both: "चेकआउट और बैक ऑफिस दोनों"
           back_end: "केवल बैक ऑफ़िस"
@@ -4130,7 +4134,7 @@ hi:
           unit_price: "यूनिट की कीमत"
           unit_price_legend: "आइटम की कीमत के आधार पर कैलकुलेट किया गया"
           on_hand: "अभी उपलब्ध"
-          on_demand: "अभी मांग में "
+          on_demand: "अभी मांग में"
           product_description: "उत्पाद का विवरण"
           image: "छवि"
         unit_name_placeholder: 'उदाहरण के लिए गुच्छे'
@@ -4337,8 +4341,8 @@ hi:
         shipment_summary: "शिपमेंट का सारांश"
         subject: "शिपमेंट नोटिफिकेशन"
         thanks: "आपके बिजनेस के लिए धन्यवाद।"
-        track_information: "ट्रैकिंग जानकारी: %{tracking} "
-        track_link: "ट्रैकिंग लिंक: %{url} "
+        track_information: "ट्रैकिंग जानकारी: %{tracking}"
+        track_link: "ट्रैकिंग लिंक: %{url}"
         picked_up_instructions: "%{distributor} से आपका ऑर्डर पिक-अप कर लिया गया है"
         picked_up_subject: "पिक-अप नोटिफिकेशन"
     test_mailer:
@@ -4424,7 +4428,7 @@ hi:
         changes_allowed_until: जब तक परिवर्तन की अनुमति नहीं है
         items: आइटम्स
         total: कुल
-        edit: एडिट करें 
+        edit: एडिट करें
         cancel: रद्द करें
         closed: बंद किया गया
         until: जब तक

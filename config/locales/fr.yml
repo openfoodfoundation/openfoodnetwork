@@ -1282,6 +1282,14 @@ fr:
         create: "Créer"
         cancel: "Annuler"
         back_to_list: "Retour à la liste"
+      create:
+        success: 'Votre cycle de vente a été créé.'
+      update:
+        success: 'Votre cycle de vente a été mis à jour.'
+      clone:
+        success: "Votre cycle de vente %{name} a été dupliqué."
+      notify_producers:
+        success: 'Les emails à destination des producteurs ont été mis en file d''attente.'
       edit:
         save: "Sauvegarder"
         save_and_next: "Sauvegarder et suivant"
@@ -3055,11 +3063,7 @@ fr:
   enterprise_bulk_update_success_notice: "Entreprises mises à jour avec succès"
   enterprise_bulk_update_error: 'Echec dans la mise à jour'
   enterprise_shop_show_error: "La boutique que vous recherchez n'existe pas ou est inactive. Veuillez sélectionner une boutique depuis la liste ci-dessous."
-  order_cycles_create_notice: 'Votre cycle de vente a été créé.'
-  order_cycles_update_notice: 'Votre cycle de vente a été mis à jour.'
   order_cycles_bulk_update_notice: 'Des cycles de vente ont été mis à jour.'
-  order_cycles_clone_notice: "Votre cycle de vente %{name} a été dupliqué."
-  order_cycles_email_to_producers_notice: 'Les emails à destination des producteurs ont été mis en file d''attente.'
   order_cycles_no_permission_to_coordinate_error: "Aucune de vos entreprises n'a les droits requis pour coordonner un cycle de vente"
   order_cycles_no_permission_to_create_error: "Vous n'avez pas les droits requis pour créer un cycle de vente coordonné par cette entreprise"
   order_cycle_closed: "Le cycle de vente que vous avez sélectionné a fermé. "

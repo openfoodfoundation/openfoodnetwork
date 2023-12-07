@@ -1122,6 +1122,9 @@ ca:
           active: Actiu?
         white_label:
           legend: "Marca blanca"
+          remove_logo: "Eliminar el logo"
+          remove_logo_confirm: "Esteu segur de voler eliminar el logo?"
+          remove_logo_success: "Logo eliminat"
       actions:
         edit_profile: Configuració
         properties: Propietats
@@ -1196,6 +1199,14 @@ ca:
         create: "Crear"
         cancel: "Cancel·lar"
         back_to_list: "Tornar a la llista"
+      create:
+        success: 'S''ha creat el cicle de comanda.'
+      update:
+        success: 'S''ha actualitzat el cicle de comanda.'
+      clone:
+        success: "S'ha clonat el teu cicle de comanda %{name}."
+      notify_producers:
+        success: 'Els correus electrònics per enviar a les productores estan en cua.'
       edit:
         save: "Desa"
         save_and_next: "Desa i següent"
@@ -1318,6 +1329,7 @@ ca:
         cancel: Cancel·lar
         proceed: Procedeix
       status:
+        undated: sense data
         closed: tancat
     producer_properties:
       index:
@@ -1327,6 +1339,10 @@ ca:
         could_not_cancel_the_order: No s'ha pogut cancel·lar la comanda
       resume:
         could_not_resume_the_order: No es pot reprendre la comanda
+    select2:
+      minimal_search_length: Si us plau, entreu %{count} o més caràcters
+      searching: Buscant…
+      no_matches: No he trobat coincidències
     shared:
       user_guide_link:
         user_guide: Guia de l'usuari
@@ -1368,6 +1384,7 @@ ca:
       email_confirmation: "La confirmació de correu electrònic està pendent. Hem enviat un correu electrònic de confirmació a %{email}."
       not_visible: "%{enterprise} no és visible i, per tant, no es pot trobar al mapa ni a les cerques"
     reports:
+      deprecated: "Aquest informe és obsolet i serà eliminat en properes actualitzacions."
       hidden: OCULT
       unitsize: UNITAT DE MESURA
       total: TOTAL
@@ -1375,6 +1392,7 @@ ca:
       total_by_customer: Total per client
       total_by_supplier: Total per proveïdor
       supplier_totals: Total de de proveïdores del Cicle de Comanda
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Total de proveïdores del Cicle de Comanda - per distribuïdora
       totals_by_supplier: Totals de la distribuïdora del Cicle de Comanda - per proveïdora
       customer_totals: Totals de consumidores del Cicle de Comanda
@@ -1383,11 +1401,15 @@ ca:
       lettuce_share: LettuceShare
       payment_methods: Informe de Mètodes de pagament
       delivery: Informe de lliurament
+      sales_tax_totals_by_producer: Totals d'impostos de venda per productora
+      sales_tax_totals_by_order: Total d'impostos de vendes per comanda
       tax_types: Tipus d'impostos
       tax_rates: Tarifes fiscals
       pack_by_customer: Repartiment per consumidora
       pack_by_supplier: Repartiment per proveïdora
       pack_by_product: Repartiment per producte
+      download:
+        button: "Descarregar informe"
       revenues_by_hub:
         name: Ingressos per grup/empresa
         description: Ingressos per grup/empresa
@@ -1564,7 +1586,7 @@ ca:
   checkout:
     failed: "La comanda ha fallat. Informeu-nos perquè puguem processar la vostra comanda."
     payment_cancelled_due_to_stock: "Pagament cancel·lat: el pagament no s’ha pogut completar a causa de problemes d’estoc."
-    your_details_without_number: Els teus detalls
+    your_details_without_number: Les teves dades
     payment_method_without_number: Mètode de pagament
     order_summary_without_number: Resum de la comanda
     already_ordered:
@@ -1626,9 +1648,11 @@ ca:
         title: Detalls de lliurament
         edit: Editar
         address: Adreça de lliurament
+        instructions: Indicacions
       payment_method:
         title: Mètode de pagament
         edit: Editar
+        instructions: Indicacions
       order:
         edit: Editar
       terms_and_conditions:
@@ -1639,6 +1663,7 @@ ca:
       all_terms_and_conditions:
         message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
         terms_and_conditions: "Termes i condicions"
+      submit: Finalitzar comanda
     errors:
       invalid_email: "siusplau, introduïu una adreça de correu electrònic vàlida"
       voucher_not_found: No trobat
@@ -2765,7 +2790,9 @@ ca:
   report_header_transaction_fee: Comissió de transacció (sense impostos)
   report_header_total_untaxable_admin: Total d'ajustaments d'administració no imputables (sense impostos)
   report_header_total_taxable_admin: Total d'ajustaments administratius imposables (impostos inclosos)
+  report_line_cost_of_produce: Cost de producció
   invoice_date: "Data de factura"
+  due_date: "Data de venciment"
   equals: "És igual a"
   contains: "conté"
   discount: "Descompte"
@@ -2834,11 +2861,7 @@ ca:
   enterprise_bulk_update_success_notice: "Les organitzacions s'han actualitzat correctament"
   enterprise_bulk_update_error: 'No s''ha pogut actualitzar'
   enterprise_shop_show_error: "La botiga que busqueu no existeix o està inactiva a OFN. Consulteu altres botigues."
-  order_cycles_create_notice: 'S''ha creat el cicle de comanda.'
-  order_cycles_update_notice: 'S''ha actualitzat el cicle de comanda.'
   order_cycles_bulk_update_notice: 'S''han actualitzat els cicles de comanda.'
-  order_cycles_clone_notice: "S'ha clonat el teu cicle de comanda %{name}."
-  order_cycles_email_to_producers_notice: 'Els correus electrònics per enviar a les productores estan en cua.'
   order_cycles_no_permission_to_coordinate_error: "Cap de les vostres organitzacions té permís per coordinar un cicle de comanda"
   order_cycles_no_permission_to_create_error: "No teniu permís per crear un cicle de comandes coordinat per aquesta organització"
   order_cycle_closed: "El cicle de comandes que has triat acaba de tancar. Sisplau prova en un altre moment."
@@ -2882,6 +2905,7 @@ ca:
       enterprise_limit_reached: "Has assolit el límit estàndard d'organitzacions per compte. Escriu a %{contact_email} si necessites augmentar-lo."
       modals:
         got_it: "Ho tinc"
+        confirm: "Confirmar"
         close: "Tanca"
         continue: "Continua"
         cancel: "Cancel·lar"
@@ -3362,6 +3386,7 @@ ca:
   previous: "Anterior"
   last: "Últim"
   spree:
+    order_updated: "Comanda actualitzada"
     add_country: "Afegeix país"
     add_state: "Afegeix estat"
     adjustment: "Ajustament"
@@ -4166,6 +4191,7 @@ ca:
         total: Total
         paid?: Pagat?
         status: Estat
+        completed: Finalitzat
         cancelled: Cancel·lada
       saved_cards:
         default?: Per defecte?

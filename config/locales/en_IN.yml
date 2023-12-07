@@ -207,7 +207,7 @@ en_IN:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "Please enter your company number."
+  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
   invoice: "Invoice"
   active: "Active"
   cancelled: "Cancelled"
@@ -971,6 +971,14 @@ en_IN:
         create: "Create"
         cancel: "Cancel"
         back_to_list: "Back To List"
+      create:
+        success: 'Your order cycle has been created.'
+      update:
+        success: 'Your order cycle has been updated.'
+      clone:
+        success: "Your order cycle %{name} has been cloned."
+      notify_producers:
+        success: 'Emails to be sent to producers have been queued for sending.'
       edit:
         save: "Save"
         save_and_next: "Save and Next"
@@ -1439,16 +1447,16 @@ en_IN:
   menu_1_url: "/shops"
   menu_2_title: "Map"
   menu_2_url: "/map"
-  menu_3_title: "Pricing"
-  menu_3_url: "https://about.openfoodindia.org/pricing/"
+  menu_3_title: "Producers"
+  menu_3_url: "/producers"
   menu_4_title: "Groups"
   menu_4_url: "/groups"
   menu_5_title: "About"
-  menu_5_url: "https://about.openfoodindia.org"
-  menu_6_title: "Blog"
-  menu_6_url: "https://about.openfoodindia.org/blog"
+  menu_5_url: "https://about.openfoodnetwork.in"
+  menu_6_title: "Pricing"
+  menu_6_url: "https://about.openfoodnetwork.in/pricing/"
   menu_7_title: "Support"
-  menu_7_url: "https://about.openfoodindia.org/support"
+  menu_7_url: "https://about.openfoodnetwork.in/help/"
   logo: "Logo (640x130)"
   logo_mobile: "Mobile logo (75x26)"
   logo_mobile_svg: "Mobile logo (SVG)"
@@ -1575,13 +1583,13 @@ en_IN:
   brandstory_headline: "Growing Local Food Online"
   brandstory_intro: "THE online community helping you to build a successful food enterprise"
   brandstory_part1: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
-  brandstory_part2: "Food Producers can create an online shop, collect payments, sell through other shops on the platform and access reduced-rate courier services."
-  brandstory_part3: "Wholesalers can integrate OFN with their existing systems and manage buying groups to  supply customers with their produce through our national network of food hubs and shops."
-  brandstory_part4: "Communities can bring together producers in their local area to create virtual farmers’ markets, building a resilient local food economy."
+  brandstory_part2: "Food Producers, Farmer Producer Organizations (FPO), or Farmer Producer Companies (FPC) can create an online shop, collect payments, and sell through other shops on this platform."
+  brandstory_part3: "Wholesalers, Farmer Producer Organizations (FPO), or Farmer Producer Companies (FPC) can integrate OFN with their existing systems and manage buying groups to supply customers with their produce through our national network of food hubs and shops."
+  brandstory_part4: "Farmer Producer Organizations (FPO), or Farmer Producer Companies (FPC) can bring together producers in their local area to create virtual farmers’ markets, building a resilient local food economy."
   brandstory_part5_strong: "And what’s just as important as the software itself are the values which underpin it. "
   brandstory_part6: "If you sell good food - as a farmer, farmer’s market, food co-op, or food hub- then choose software that aligns with your values to build food systems for people and planet, not profit.  By working collectively rather than competitively, we share the costs of developing new software, and we ensure that our project is resilient!"
   system_headline: "Selling on OFN - 3 easy steps"
-  system_step1: "1. Create Your Enterprise"
+  system_step1: "1. Create new account"
   system_step1_text: "Set up your enterprise with a name, description, photos, contact details and social media links."
   system_step2: "2. Add Your Products"
   system_step2_text: "Add products to your shop - your own and/or from other producers around you. Set images, descriptions, prices, stock levels and flexible weights and measures."
@@ -2512,11 +2520,7 @@ en_IN:
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
   enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
-  order_cycles_create_notice: 'Your order cycle has been created.'
-  order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
-  order_cycles_clone_notice: "Your order cycle %{name} has been cloned."
-  order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
   order_cycle_closed: "The order cycle you've selected has just closed."

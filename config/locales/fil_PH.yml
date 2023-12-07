@@ -962,6 +962,14 @@ fil_PH:
         create: "gumawa"
         cancel: "kanselahin"
         back_to_list: "bumalik sa listahan"
+      create:
+        success: 'ang iyong order cycle ay nagawa na.'
+      update:
+        success: 'ang iyong order cycle ay na-update na'
+      clone:
+        success: "ang iyong order cyle %{name}ay nakopya na."
+      notify_producers:
+        success: 'ang mga email na ipapadala sa mga producer ay naghihintay na maipadala.'
       edit:
         save: "i-save"
         save_and_next: "i-save at sunod"
@@ -2486,11 +2494,7 @@ fil_PH:
   enterprise_bulk_update_success_notice: "ang mga enterprise ay matagumpay na na-update"
   enterprise_bulk_update_error: 'hindi matagumpay ang pag-update'
   enterprise_shop_show_error: "ang shop na hinahanap mo ay wala o hindi aktibo sa OFN. Maaaring tignan ang ibang mga shop."
-  order_cycles_create_notice: 'ang iyong order cycle ay nagawa na.'
-  order_cycles_update_notice: 'ang iyong order cycle ay na-update na'
   order_cycles_bulk_update_notice: 'ang mga order cycle ay na-update na'
-  order_cycles_clone_notice: "ang iyong order cyle %{name}ay nakopya na."
-  order_cycles_email_to_producers_notice: 'ang mga email na ipapadala sa mga producer ay naghihintay na maipadala.'
   order_cycles_no_permission_to_coordinate_error: "wala sa inyong mga enterprise ay may pahintulot na magsa-ayos ng order cycle"
   order_cycles_no_permission_to_create_error: "wala kang pahintulot na gumawa ng order cycle na isinaayos ng enterprise na iyon."
   back_to_orders_list: "bumalik sa listahan ng order"

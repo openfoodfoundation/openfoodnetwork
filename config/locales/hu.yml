@@ -1151,6 +1151,14 @@ hu:
         create: "Létrehozás"
         cancel: "Megszüntet"
         back_to_list: "Vissza a listához"
+      create:
+        success: 'Rendelési ciklusa létrejött.'''
+      update:
+        success: 'Megrendelési ciklusa frissült.'''
+      clone:
+        success: "Rendelési ciklusát %{name} klónozták."
+      notify_producers:
+        success: 'A termelőknek küldendő e-mailek sorba kerültek küldés céljából.'
       edit:
         save: "Mentés"
         save_and_next: "Mentés és Tovább"
@@ -2833,11 +2841,7 @@ hu:
   enterprise_bulk_update_success_notice: "A vállalkozások sikeresen frissítve"
   enterprise_bulk_update_error: 'Frissítés sikertelen'''
   enterprise_shop_show_error: "A keresett üzlet nem létezik, vagy inaktív az OFN-en. Kérjük, ellenőrizze a többi üzletet."
-  order_cycles_create_notice: 'Rendelési ciklusa létrejött.'''
-  order_cycles_update_notice: 'Megrendelési ciklusa frissült.'''
   order_cycles_bulk_update_notice: 'A rendelési ciklusok frissítve.'
-  order_cycles_clone_notice: "Rendelési ciklusát %{name} klónozták."
-  order_cycles_email_to_producers_notice: 'A termelőknek küldendő e-mailek sorba kerültek küldés céljából.'
   order_cycles_no_permission_to_coordinate_error: "Egyik vállalkozása sem rendelkezik engedéllyel egy rendelési ciklus koordinálására"
   order_cycles_no_permission_to_create_error: "Nincs engedélye az adott vállalkozás által koordinált rendelési ciklus létrehozására"
   order_cycle_closed: "A kiválasztott rendelési ciklus éppen most zárult le. Kérlek próbáld újra!"

@@ -612,6 +612,12 @@ sv:
       new:
         create: "Skapa"
         cancel: "Avbryt"
+      create:
+        success: 'Din beställningsomgång har skapats.'
+      clone:
+        success: "Din beställningscykel %{name} har klonats."
+      notify_producers:
+        success: 'E-postmeddelanden till producenter har blivit placerade i kön för att skickas.'
       edit:
         next: "Näst"
         cancel: "Avbryt"
@@ -1825,11 +1831,7 @@ sv:
   enterprise_register_success_notice: "Grattis! Registrering för %{enterprise} är klar!"
   enterprise_bulk_update_success_notice: "Företagen uppdateras framgångsrikt"
   enterprise_bulk_update_error: 'Uppdateringen misslyckades'
-  order_cycles_create_notice: 'Din beställningsomgång har skapats.'
-  order_cycles_update_notice: 'Din beställningsomgång har uppdaterats.'
   order_cycles_bulk_update_notice: 'Beställningsomgångarna har uppdaterats.'
-  order_cycles_clone_notice: "Din beställningscykel %{name} har klonats."
-  order_cycles_email_to_producers_notice: 'E-postmeddelanden till producenter har blivit placerade i kön för att skickas.'
   order_cycles_no_permission_to_coordinate_error: "Ingen av dina företag har tillstånd att samordna en beställningsomgång"
   order_cycles_no_permission_to_create_error: "Du har inte behörighet att skapa en beställningsomgång som samordnas av företaget"
   amount: "Belopp"

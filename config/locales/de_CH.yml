@@ -1157,6 +1157,14 @@ de_CH:
         create: "Neu"
         cancel: "Abbrechen"
         back_to_list: "Zurück zur Liste"
+      create:
+        success: 'Der Bestellzyklus wurde erstellt.'
+      update:
+        success: 'Ihr Bestellzyklus wurde aktualisiert.'
+      clone:
+        success: "Der Bestellzyklus %{name} wurde dupliziert."
+      notify_producers:
+        success: 'E-Mails, die an die Produzenten gesendet werden sollen, wurden in die Warteschlange gestellt.'
       edit:
         save: "Speichern"
         save_and_next: "Speichern und weiter"
@@ -1537,7 +1545,7 @@ de_CH:
     payment_method_without_number: Zahlungsart
     order_summary_without_number: Bestellübersicht
     already_ordered:
-      cart: "im Warenkorb"
+      cart: "Warenkorb"
       message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
     step1:
       contact_information:
@@ -2819,11 +2827,7 @@ de_CH:
   enterprise_bulk_update_success_notice: "Unternehmen wurden erfolgreich aktualisiert."
   enterprise_bulk_update_error: 'Das Speichern der Änderungen ist fehlgeschlagen.'
   enterprise_shop_show_error: "Der gesuchte Laden existiert nicht oder ist im Open Food Network inaktiv. Bitte schauen Sie nach anderen Läden!"
-  order_cycles_create_notice: 'Der Bestellzyklus wurde erstellt.'
-  order_cycles_update_notice: 'Der Bestellzyklus wurde aktualisiert.'
   order_cycles_bulk_update_notice: 'Die Bestellzyklen wurden aktualisiert.'
-  order_cycles_clone_notice: "Der Bestellzyklus %{name} wurde dupliziert."
-  order_cycles_email_to_producers_notice: 'E-Mails, die an die Produzenten gesendet werden sollen, wurden in die Warteschlange gestellt.'
   order_cycles_no_permission_to_coordinate_error: "Keines Ihrer Unternehmen ist berechtigt, einen Bestellzyklus zu koordinieren."
   order_cycles_no_permission_to_create_error: "Sie sind nicht berechtigt, einen von diesem Unternehmen koordinierten Bestellzyklus zu erstellen."
   order_cycle_closed: "Der von Ihnen ausgewählte Bestellzyklus wurde gerade geschlossen. Bitte versuchen Sie es später noch einmal!"

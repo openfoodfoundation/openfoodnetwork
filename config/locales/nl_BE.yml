@@ -985,6 +985,14 @@ nl_BE:
         create: "Maak"
         cancel: "Annuleren"
         back_to_list: "Terug naar lijst"
+      create:
+        success: 'Uw bestelcyclus is gemaakt'
+      update:
+        success: 'Uw bestelcyclus is bijgewerkt'
+      clone:
+        success: "Uw bestelcyclus 1 %{name}  is gedupliceerd"
+      notify_producers:
+        success: 'De e-mails ter bestemming van de producenten staan in de wachtrij '
       edit:
         save: "Save"
         save_and_next: "Opslaan en volgende"
@@ -2540,11 +2548,7 @@ nl_BE:
   enterprise_bulk_update_success_notice: "Bedrijven succesvol bijgewerkt"
   enterprise_bulk_update_error: 'Bijwerking is gefaald'
   enterprise_shop_show_error: "De winkel die uzoekt bestaat niet of is inactief op OFN. Kijk gerust naar andere winkels."
-  order_cycles_create_notice: 'Uw bestelcyclus is gemaakt'
-  order_cycles_update_notice: 'Uw bestelcyclus is bijgewerkt'
   order_cycles_bulk_update_notice: 'Bestelcycli zijn bijgewerkt '
-  order_cycles_clone_notice: "Uw bestelcyclus 1 %{name}  is gedupliceerd"
-  order_cycles_email_to_producers_notice: 'De e-mails ter bestemming van de producenten staan in de wachtrij '
   order_cycles_no_permission_to_coordinate_error: "Geen van uw bedrijven heeft de vereiste rechten om een verkoopcyclus te coördineren"
   order_cycles_no_permission_to_create_error: "U bezit de vereiste rechten niet om een bestelcyclus te maken die gecoördineerd wordt door dat bedrijf"
   order_cycle_closed: "De hub die u hebt geselecteerd is tijdelijk gesloten. Probeer gerust later terug."

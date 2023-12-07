@@ -1252,6 +1252,14 @@ ru:
         create: "Создать"
         cancel: "Отмена"
         back_to_list: "Назад К Списку"
+      create:
+        success: 'Ваш цикл заказа создан.'
+      update:
+        success: 'Ваш цикл заказа обновлен.'
+      clone:
+        success: "Ваш цикл заказа %{name} склонирован."
+      notify_producers:
+        success: 'Письма, отправляемые Производителям, поставлены в очередь для отправки.'
       edit:
         save: "Сохранить"
         save_and_next: "Сохранить И Далее"
@@ -3013,11 +3021,7 @@ ru:
   enterprise_bulk_update_success_notice: "Предприятия успешно обновлены"
   enterprise_bulk_update_error: 'Обновление не удалось'
   enterprise_shop_show_error: "Магазин, который вы ищете, не существует или не активен в ОСП. Пожалуйста, проверьте другие магазины."
-  order_cycles_create_notice: 'Ваш цикл заказа создан.'
-  order_cycles_update_notice: 'Ваш цикл заказа обновлен.'
   order_cycles_bulk_update_notice: 'Циклы заказа обновлены.'
-  order_cycles_clone_notice: "Ваш цикл заказа %{name} склонирован."
-  order_cycles_email_to_producers_notice: 'Письма, отправляемые Производителям, поставлены в очередь для отправки.'
   order_cycles_no_permission_to_coordinate_error: "Ни одно из ваших Предприятий не имеет разрешения координировать цикл заказа"
   order_cycles_no_permission_to_create_error: "У вас нет разрешения на создание цикла заказов, координируемого этим Предприятием"
   order_cycle_closed: "Выбранный вами цикл заказов закрылся. Пожалуйста, попробуйте еще раз!"
