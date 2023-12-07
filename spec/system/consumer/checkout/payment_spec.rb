@@ -334,7 +334,7 @@ describe "As a consumer, I want to checkout my order" do
 
       describe "show page title as Checkout Payment - Open Food Network" do
         it "should display title as Checkout Payment - Open Food Network" do
-          page.has_title? "Checkout Payment - Open Food Network"
+          expect(page).to have_title "Checkout Payment - Open Food Network"
         end
       end
     end
