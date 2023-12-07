@@ -389,17 +389,15 @@ describe "As a consumer, I want to checkout my order" do
         end
 
         it "pre-fills address details" do
+          # Check for the right title first. This is a random place here but
+          # we don't have a standard success checkout flow case to add this to.
+          expect(page).to have_title "Checkout Details - Open Food Network"
+
           visit checkout_path
           expect(page).to have_select(
             "order_bill_address_attributes_state_id", selected: "Testville"
           )
           expect(page).to have_field "order_bill_address_attributes_zipcode", with: "TST01"
-        end
-      end
-
-      describe "show page title as Checkout Details - Open Food Network" do
-        it "should display title as Checkout Details - Open Food Network" do
-          expect(page).to have_title "Checkout Details - Open Food Network"
         end
       end
     end
