@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/payment_methods
     body:
       encoding: UTF-8
-      string: type=card&card[number]=4000000000000002&card[exp_month]=12&card[exp_year]=2024&card[cvc]=314
+      string: type=card&card[number]=6011981111111113&card[exp_month]=12&card[exp_year]=2024&card[cvc]=314
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.2.0
@@ -14,7 +14,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_lwQRHFtJffzrsQ","request_duration_ms":391}}'
+      - '{"last_request_metrics":{"request_id":"req_FfiMS2b6qOmEQG","request_duration_ms":1}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -34,11 +34,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Dec 2023 18:29:18 GMT
+      - Thu, 07 Dec 2023 18:28:29 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '931'
+      - '938'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -59,11 +59,11 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - 669efd40-7f1b-47f6-83dd-fb79390a9d48
+      - 53b19a47-52d8-4f9a-ae07-3ea89e2e4cbe
       Original-Request:
-      - req_sMaXqJaA6gftRm
+      - req_99veUq6NVunpfC
       Request-Id:
-      - req_sMaXqJaA6gftRm
+      - req_99veUq6NVunpfC
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -78,7 +78,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OKmK2KuuB1fWySnMxyq4XDT",
+          "id": "pm_1OKmJFKuuB1fWySnG4RDCFdz",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -94,7 +94,7 @@ http_interactions:
             "phone": null
           },
           "card": {
-            "brand": "visa",
+            "brand": "discover",
             "checks": {
               "address_line1_check": null,
               "address_postal_code_check": null,
@@ -103,13 +103,13 @@ http_interactions:
             "country": "US",
             "exp_month": 12,
             "exp_year": 2024,
-            "fingerprint": "IKC2ubfpSLuZKsVs",
-            "funding": "credit",
+            "fingerprint": "Y3EGIoTEEuDsD8eJ",
+            "funding": "debit",
             "generated_from": null,
-            "last4": "0002",
+            "last4": "1113",
             "networks": {
               "available": [
-                "visa"
+                "discover"
               ],
               "preferred": null
             },
@@ -118,19 +118,19 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1701973758,
+          "created": 1701973709,
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Thu, 07 Dec 2023 18:29:18 GMT
+  recorded_at: Thu, 07 Dec 2023 18:28:29 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/payment_intents
     body:
       encoding: UTF-8
-      string: amount=100&currency=eur&payment_method=pm_1OKmK2KuuB1fWySnMxyq4XDT&payment_method_types[0]=card&capture_method=manual
+      string: amount=100&currency=eur&payment_method=pm_1OKmJFKuuB1fWySnG4RDCFdz&payment_method_types[0]=card&capture_method=manual
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.2.0
@@ -139,7 +139,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_sMaXqJaA6gftRm","request_duration_ms":486}}'
+      - '{"last_request_metrics":{"request_id":"req_99veUq6NVunpfC","request_duration_ms":648}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -159,7 +159,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Dec 2023 18:29:19 GMT
+      - Thu, 07 Dec 2023 18:28:30 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -184,11 +184,11 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - 69971d39-53eb-4925-b9ef-2e51c7b5d216
+      - 87f74119-992f-40c1-bea4-4b381dd4d469
       Original-Request:
-      - req_Edc2GpFOTEcEn6
+      - req_KsLxdPCr1krVpJ
       Request-Id:
-      - req_Edc2GpFOTEcEn6
+      - req_KsLxdPCr1krVpJ
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -203,7 +203,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pi_3OKmK2KuuB1fWySn2QCPpACr",
+          "id": "pi_3OKmJFKuuB1fWySn0RiXDALk",
           "object": "payment_intent",
           "amount": 100,
           "amount_capturable": 0,
@@ -217,9 +217,9 @@ http_interactions:
           "canceled_at": null,
           "cancellation_reason": null,
           "capture_method": "manual",
-          "client_secret": "pi_3OKmK2KuuB1fWySn2QCPpACr_secret_ZdjR06SfLSttDB3Px49KgUoQT",
+          "client_secret": "pi_3OKmJFKuuB1fWySn0RiXDALk_secret_b6vDZ7eHAGmjUfRNW1Qb68anu",
           "confirmation_method": "automatic",
-          "created": 1701973758,
+          "created": 1701973709,
           "currency": "eur",
           "customer": null,
           "description": null,
@@ -230,7 +230,7 @@ http_interactions:
           "metadata": {},
           "next_action": null,
           "on_behalf_of": null,
-          "payment_method": "pm_1OKmK2KuuB1fWySnMxyq4XDT",
+          "payment_method": "pm_1OKmJFKuuB1fWySnG4RDCFdz",
           "payment_method_configuration_details": null,
           "payment_method_options": {
             "card": {
@@ -255,10 +255,10 @@ http_interactions:
           "transfer_data": null,
           "transfer_group": null
         }
-  recorded_at: Thu, 07 Dec 2023 18:29:19 GMT
+  recorded_at: Thu, 07 Dec 2023 18:28:30 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/payment_intents/pi_3OKmK2KuuB1fWySn2QCPpACr/confirm
+    uri: https://api.stripe.com/v1/payment_intents/pi_3OKmJFKuuB1fWySn0RiXDALk/confirm
     body:
       encoding: US-ASCII
       string: ''
@@ -270,7 +270,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_Edc2GpFOTEcEn6","request_duration_ms":415}}'
+      - '{"last_request_metrics":{"request_id":"req_KsLxdPCr1krVpJ","request_duration_ms":397}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -284,17 +284,17 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 402
-      message: Payment Required
+      code: 200
+      message: OK
     headers:
       Server:
       - nginx
       Date:
-      - Thu, 07 Dec 2023 18:29:20 GMT
+      - Thu, 07 Dec 2023 18:28:31 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '4710'
+      - '1365'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -316,11 +316,11 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Idempotency-Key:
-      - dff1392e-3bdb-4d11-b761-0a232142a10a
+      - bfd90bfa-eff1-43ef-85c1-e22a24738449
       Original-Request:
-      - req_ZGyvH69YvR5Hsx
+      - req_OD7p5YtOsxltu9
       Request-Id:
-      - req_ZGyvH69YvR5Hsx
+      - req_OD7p5YtOsxltu9
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -333,175 +333,59 @@ http_interactions:
       - max-age=63072000; includeSubDomains; preload
     body:
       encoding: UTF-8
-      string: |
+      string: |-
         {
-          "error": {
-            "charge": "ch_3OKmK2KuuB1fWySn21v5pxgY",
-            "code": "card_declined",
-            "decline_code": "generic_decline",
-            "doc_url": "https://stripe.com/docs/error-codes/card-declined",
-            "message": "Your card was declined.",
-            "payment_intent": {
-              "id": "pi_3OKmK2KuuB1fWySn2QCPpACr",
-              "object": "payment_intent",
-              "amount": 100,
-              "amount_capturable": 0,
-              "amount_details": {
-                "tip": {
-                }
-              },
-              "amount_received": 0,
-              "application": null,
-              "application_fee_amount": null,
-              "automatic_payment_methods": null,
-              "canceled_at": null,
-              "cancellation_reason": null,
-              "capture_method": "manual",
-              "client_secret": "pi_3OKmK2KuuB1fWySn2QCPpACr_secret_ZdjR06SfLSttDB3Px49KgUoQT",
-              "confirmation_method": "automatic",
-              "created": 1701973758,
-              "currency": "eur",
-              "customer": null,
-              "description": null,
-              "invoice": null,
-              "last_payment_error": {
-                "charge": "ch_3OKmK2KuuB1fWySn21v5pxgY",
-                "code": "card_declined",
-                "decline_code": "generic_decline",
-                "doc_url": "https://stripe.com/docs/error-codes/card-declined",
-                "message": "Your card was declined.",
-                "payment_method": {
-                  "id": "pm_1OKmK2KuuB1fWySnMxyq4XDT",
-                  "object": "payment_method",
-                  "billing_details": {
-                    "address": {
-                      "city": null,
-                      "country": null,
-                      "line1": null,
-                      "line2": null,
-                      "postal_code": null,
-                      "state": null
-                    },
-                    "email": null,
-                    "name": null,
-                    "phone": null
-                  },
-                  "card": {
-                    "brand": "visa",
-                    "checks": {
-                      "address_line1_check": null,
-                      "address_postal_code_check": null,
-                      "cvc_check": "pass"
-                    },
-                    "country": "US",
-                    "exp_month": 12,
-                    "exp_year": 2024,
-                    "fingerprint": "IKC2ubfpSLuZKsVs",
-                    "funding": "credit",
-                    "generated_from": null,
-                    "last4": "0002",
-                    "networks": {
-                      "available": [
-                        "visa"
-                      ],
-                      "preferred": null
-                    },
-                    "three_d_secure_usage": {
-                      "supported": true
-                    },
-                    "wallet": null
-                  },
-                  "created": 1701973758,
-                  "customer": null,
-                  "livemode": false,
-                  "metadata": {
-                  },
-                  "type": "card"
-                },
-                "type": "card_error"
-              },
-              "latest_charge": "ch_3OKmK2KuuB1fWySn21v5pxgY",
-              "livemode": false,
-              "metadata": {
-              },
-              "next_action": null,
-              "on_behalf_of": null,
-              "payment_method": null,
-              "payment_method_configuration_details": null,
-              "payment_method_options": {
-                "card": {
-                  "installments": null,
-                  "mandate_options": null,
-                  "network": null,
-                  "request_three_d_secure": "automatic"
-                }
-              },
-              "payment_method_types": [
-                "card"
-              ],
-              "processing": null,
-              "receipt_email": null,
-              "review": null,
-              "setup_future_usage": null,
-              "shipping": null,
-              "source": null,
-              "statement_descriptor": null,
-              "statement_descriptor_suffix": null,
-              "status": "requires_payment_method",
-              "transfer_data": null,
-              "transfer_group": null
-            },
-            "payment_method": {
-              "id": "pm_1OKmK2KuuB1fWySnMxyq4XDT",
-              "object": "payment_method",
-              "billing_details": {
-                "address": {
-                  "city": null,
-                  "country": null,
-                  "line1": null,
-                  "line2": null,
-                  "postal_code": null,
-                  "state": null
-                },
-                "email": null,
-                "name": null,
-                "phone": null
-              },
-              "card": {
-                "brand": "visa",
-                "checks": {
-                  "address_line1_check": null,
-                  "address_postal_code_check": null,
-                  "cvc_check": "pass"
-                },
-                "country": "US",
-                "exp_month": 12,
-                "exp_year": 2024,
-                "fingerprint": "IKC2ubfpSLuZKsVs",
-                "funding": "credit",
-                "generated_from": null,
-                "last4": "0002",
-                "networks": {
-                  "available": [
-                    "visa"
-                  ],
-                  "preferred": null
-                },
-                "three_d_secure_usage": {
-                  "supported": true
-                },
-                "wallet": null
-              },
-              "created": 1701973758,
-              "customer": null,
-              "livemode": false,
-              "metadata": {
-              },
-              "type": "card"
-            },
-            "request_log_url": "https://dashboard.stripe.com/test/logs/req_ZGyvH69YvR5Hsx?t=1701973759",
-            "type": "card_error"
-          }
+          "id": "pi_3OKmJFKuuB1fWySn0RiXDALk",
+          "object": "payment_intent",
+          "amount": 100,
+          "amount_capturable": 100,
+          "amount_details": {
+            "tip": {}
+          },
+          "amount_received": 0,
+          "application": null,
+          "application_fee_amount": null,
+          "automatic_payment_methods": null,
+          "canceled_at": null,
+          "cancellation_reason": null,
+          "capture_method": "manual",
+          "client_secret": "pi_3OKmJFKuuB1fWySn0RiXDALk_secret_b6vDZ7eHAGmjUfRNW1Qb68anu",
+          "confirmation_method": "automatic",
+          "created": 1701973709,
+          "currency": "eur",
+          "customer": null,
+          "description": null,
+          "invoice": null,
+          "last_payment_error": null,
+          "latest_charge": "ch_3OKmJFKuuB1fWySn048wVScN",
+          "livemode": false,
+          "metadata": {},
+          "next_action": null,
+          "on_behalf_of": null,
+          "payment_method": "pm_1OKmJFKuuB1fWySnG4RDCFdz",
+          "payment_method_configuration_details": null,
+          "payment_method_options": {
+            "card": {
+              "installments": null,
+              "mandate_options": null,
+              "network": null,
+              "request_three_d_secure": "automatic"
+            }
+          },
+          "payment_method_types": [
+            "card"
+          ],
+          "processing": null,
+          "receipt_email": null,
+          "review": null,
+          "setup_future_usage": null,
+          "shipping": null,
+          "source": null,
+          "statement_descriptor": null,
+          "statement_descriptor_suffix": null,
+          "status": "requires_capture",
+          "transfer_data": null,
+          "transfer_group": null
         }
-  recorded_at: Thu, 07 Dec 2023 18:29:20 GMT
+  recorded_at: Thu, 07 Dec 2023 18:28:31 GMT
 recorded_with: VCR 6.2.0
