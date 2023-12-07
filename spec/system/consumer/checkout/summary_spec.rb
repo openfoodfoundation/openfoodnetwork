@@ -404,6 +404,12 @@ describe "As a consumer, I want to checkout my order" do
         end
       end
     end
+
+    describe "show page title as Checkout Summary - Open Food Network" do
+      it "should display title as Checkout Summary - Open Food Network" do
+        page.has_title? "Checkout Summary - Open Food Network"
+      end
+    end
   end
 
   def add_voucher_to_order(voucher, order)

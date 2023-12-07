@@ -396,6 +396,12 @@ describe "As a consumer, I want to checkout my order" do
           expect(page).to have_field "order_bill_address_attributes_zipcode", with: "TST01"
         end
       end
+
+      describe "show page title as Checkout Details - Open Food Network" do
+        it "should display title as Checkout Details - Open Food Network" do
+          page.has_title? "Checkout Details - Open Food Network"
+        end
+      end
     end
   end
 end
