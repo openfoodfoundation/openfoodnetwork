@@ -10,7 +10,7 @@ describe Stripe::PaymentIntentValidator do
     create(:stripe_sca_payment_method, distributor_ids: [create(:distributor_enterprise).id],
                                        preferred_enterprise_id: create(:enterprise).id)
   }
-  let(:source) { create(:credit_card) }
+
   let(:year_valid) { Time.zone.now.year.next }
 
   before {
@@ -20,7 +20,7 @@ describe Stripe::PaymentIntentValidator do
   describe "#call", :vcr, :stripe_version do
     let(:payment) {
       create(:payment, amount: payment_intent.amount, payment_method:,
-                       response_code: payment_intent.id, source:)
+                       response_code: payment_intent.id, source: pm_card)
     }
     let(:validator) { Stripe::PaymentIntentValidator.new(payment) }
 
