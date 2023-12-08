@@ -10,7 +10,8 @@
 
   &.input-active {
     .ts-control {
-      border-color: $lighter-grey;
+      border-color: $orient;
+      background-color: $lighter-grey;
 
       input {
         &::placeholder {
@@ -29,20 +30,32 @@
 
     input {
       font-size: $body-font-size;
+      height: auto;
 
       &::placeholder {
         color: $near-black;
       }
     }
+
+    .item {
+      margin-top: 2px; // Ensure it lines up with the input. I have no idea why it's necessary.
+    }
   }
 
   .ts-dropdown {
+    margin-top: 4px;
+    color: $near-black;
     @include border-radius($border-radius);
     border: none;
-    box-shadow: none;
-    color: $near-black;
+    box-shadow: $shadow-dropdown;
+
+    .ts-dropdown-content {
+      padding: $border-radius 0;
+    }
 
     .option {
+      padding: 8px;
+
       &.selected {
         border-left: 2px solid $orient;
       }
@@ -93,5 +106,6 @@
   .ts-dropdown {
     position: absolute;
     top: 0; // we don't need to see the currently selected option, because it's visible in the dropdown
+    margin-top: 0;
   }
 }
