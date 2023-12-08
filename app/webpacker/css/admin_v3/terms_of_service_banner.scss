@@ -1,11 +1,10 @@
 #banner-container {
   position: fixed;
-  bottom: 0;
+  bottom: 50px;
   left: 0;
   width: 100%;
   z-index: $tos-banner-z-index;
   padding: 0 1.5%;
-  min-height: 50px;
 
   .terms-of-service-banner {
     display: flex;
