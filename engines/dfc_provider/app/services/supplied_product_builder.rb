@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SuppliedProductBuilder < DfcBuilder
+  PRODUCT_TYPES = {} # rubocop:disable Style/MutableConstant
+
   def self.supplied_product(variant)
     id = urls.enterprise_supplied_product_url(
       enterprise_id: variant.product.supplier_id,
@@ -63,11 +65,48 @@ class SuppliedProductBuilder < DfcBuilder
 
     return nil if taxon_name.nil?
 
-    root_product_types = DfcLoader.connector.PRODUCT_TYPES.methods(false).sort
-    search = root_product_types.index(taxon_name.upcase.to_sym)
+    populate_product_types if PRODUCT_TYPES.empty?
 
-    return nil if search.nil?
+    return nil if PRODUCT_TYPES[taxon_name.to_sym].nil?
 
-    DfcLoader.connector.PRODUCT_TYPES.public_send(root_product_types[search])
+    call_dfc_product_type(PRODUCT_TYPES[taxon_name.to_sym])
   end
+
+  def self.populate_product_types
+    DfcLoader.connector.PRODUCT_TYPES.topConcepts.each do |product_type|
+      stack = []
+      record_type(stack, product_type.to_s)
+    end
+  end
+
+  def self.record_type(stack, product_type)
+    name = product_type.to_s
+    current_stack = stack.dup.push(name)
+    PRODUCT_TYPES[name.downcase.to_sym] = current_stack
+
+    type = call_dfc_product_type(current_stack)
+
+    # Narrower product types are defined as class method on the current product type object
+    narrowers = type.methods(false).sort
+
+    # Leaf node
+    return if narrowers.empty?
+
+    narrowers.each do |narrower|
+      # recursive call
+      record_type(current_stack, narrower)
+    end
+  end
+
+  # Callproduct type method ie: DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK
+  def self.call_dfc_product_type(product_type_path)
+    type = DfcLoader.connector.PRODUCT_TYPES
+    product_type_path.each do |pt|
+      type = type.public_send(pt)
+    end
+
+    type
+  end
+
+  private_class_method :product_type, :populate_product_types, :record_type
 end

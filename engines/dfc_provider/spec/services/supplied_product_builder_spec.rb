@@ -46,19 +46,38 @@ describe SuppliedProductBuilder do
     end
 
     context "product_type mapping" do
-      it "assigns a product type" do
-        product = builder.supplied_product(variant)
+      subject(:product) { builder.supplied_product(variant) }
+
+      it "assigns a top level product type" do
         drink = DfcLoader.connector.PRODUCT_TYPES.DRINK
 
         expect(product.productType).to eq drink
+      end
+
+      context "with second level product type" do
+        let(:taxon) { build(:taxon, name: "Soft Drink", dfc_name: "soft_drink") }
+
+        it "assigns a second level product type" do
+          soft_drink = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK
+
+          expect(product.productType).to eq soft_drink
+        end
+      end
+
+      context "with leaf level product type" do
+        let(:taxon) { build(:taxon, name: "Lemonade", dfc_name: "lemonade") }
+
+        it "assigns a leaf level product type" do
+          lemonade = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK.LEMONADE
+
+          expect(product.productType).to eq lemonade
+        end
       end
 
       context "with non existing product type" do
         let(:taxon) { build(:taxon, name: "other", dfc_name: "other") }
 
         it "returns nil" do
-          product = builder.supplied_product(variant)
-
           expect(product.productType).to be_nil
         end
       end
@@ -67,8 +86,6 @@ describe SuppliedProductBuilder do
         let(:taxon) { nil }
 
         it "returns nil" do
-          product = builder.supplied_product(variant)
-
           expect(product.productType).to be_nil
         end
       end
