@@ -95,10 +95,9 @@ module Spree
 
       def ship_order_link
         { name: t(:ship_order),
-          url: spree.fire_admin_order_path(@order, e: 'ship'),
-          method: 'put',
+          url: '#',
           icon: 'icon-truck',
-          confirm: t(:are_you_sure) }
+        }
       end
 
       def cancel_order_link
