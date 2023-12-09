@@ -960,6 +960,14 @@ en_PH:
         create: "Create"
         cancel: "Cancel"
         back_to_list: "Back To List"
+      create:
+        success: 'Your order cycle has been created.'
+      update:
+        success: 'Your order cycle has been updated.'
+      clone:
+        success: "Your order cycle %{name} has been cloned."
+      notify_producers:
+        success: 'Emails to be sent to producers have been queued for sending.'
       edit:
         save: "Save"
         save_and_next: "Save and Next"
@@ -1305,10 +1313,45 @@ en_PH:
     orders:
       failed_to_update: "Failed to update order"
   checkout:
+    failed: "The checkout failed. Please let us know so that we can process your order."
+    your_details_without_number: Your details
     already_ordered:
       cart: "cart"
       message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
-    failed: "The checkout failed. Please let us know so that we can process your order."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: Phone number
+      billing_address:
+        title: Billing address
+        first_name:
+          label: First Name
+        last_name:
+          label: Last Name
+      address:
+        city:
+          label: City
+        state_id:
+          label: Province
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Country
+      shipping_info:
+        title: Shipping info
+    step3:
+      delivery_details:
+        title: Delivery details
+        edit: Edit
+        address: Delivery address
+      payment_method:
+        edit: Edit
+      order:
+        edit: Edit
+    errors:
+      invalid_email: "Please enter a valid email address"
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -1562,45 +1605,6 @@ en_PH:
   checkout_total_price: Total
   checkout_back_to_cart: "Back to Cart"
   cost_currency: "Cost Currency"
-  split_checkout:
-    your_details_without_number: Your details
-    already_ordered:
-      cart: "cart"
-      message_html: "You have an order for this order cycle already. Check the %{cart} to see the items you ordered before. You can also cancel items as long as the order cycle is open."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: Phone number
-      billing_address:
-        title: Billing address
-        first_name:
-          label: First Name
-        last_name:
-          label: Last Name
-      address:
-        city:
-          label: City
-        state_id:
-          label: Province
-        zipcode:
-          label: Postcode
-        country_id:
-          label: Country
-      shipping_info:
-        title: Shipping info
-    step3:
-      delivery_details:
-        title: Delivery details
-        edit: Edit
-        address: Delivery address
-      payment_method:
-        edit: Edit
-      order:
-        edit: Edit
-    errors:
-      invalid_email: "Please enter a valid email address"
   order_paid: PAID
   order_not_paid: NOT PAID
   order_total: Total order
@@ -2485,11 +2489,7 @@ en_PH:
   enterprise_bulk_update_success_notice: "Enterprises updated successfully"
   enterprise_bulk_update_error: 'Update failed'
   enterprise_shop_show_error: "The shop you are looking for doesn't exist or is inactive on OFN. Please check other shops."
-  order_cycles_create_notice: 'Your order cycle has been created.'
-  order_cycles_update_notice: 'Your order cycle has been updated.'
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
-  order_cycles_clone_notice: "Your order cycle %{name} has been cloned."
-  order_cycles_email_to_producers_notice: 'Emails to be sent to producers have been queued for sending.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
   back_to_orders_list: "Back to order list"

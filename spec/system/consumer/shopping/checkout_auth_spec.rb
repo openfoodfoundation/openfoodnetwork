@@ -29,7 +29,7 @@ describe "As a consumer I want to check out my cart" do
       add_product_to_cart order, product
     end
 
-    context "on split_checkout" do
+    context "on checkout" do
       it "does not render the login form when logged in" do
         login_as user
         visit checkout_path
@@ -58,7 +58,7 @@ describe "As a consumer I want to check out my cart" do
           within(".login-modal") { click_button 'Login' }
         end
 
-        context "and populating user details on (split_checkout)" do
+        context "and populating user details" do
           it "should allow proceeding to the next step" do
             expect(page).to have_content("Logged in successfully")
             click_button "Next - Payment method"

@@ -37,7 +37,7 @@ describe 'checkout endpoints', type: :request do
   context "when getting the cart `/checkout/cart`" do
     let(:path) { "/checkout/cart" }
 
-    it "redirect to the split checkout" do
+    it "redirect to the checkout" do
       get path
       expect(response.status).to redirect_to("/checkout")
 

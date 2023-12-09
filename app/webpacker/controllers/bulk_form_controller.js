@@ -15,8 +15,7 @@ export default class BulkFormController extends Controller {
     // Start listening for any changes within the form
     // this.element.addEventListener('change', this.toggleChanged.bind(this)); // dunno why this doesn't work
     for (const element of this.form.elements) {
-      element.addEventListener("keyup", this.toggleChanged.bind(this)); // instant response
-      element.addEventListener("change", this.toggleChanged.bind(this)); // just in case (eg right-click paste)
+      element.addEventListener("input", this.toggleChanged.bind(this)); // immediately respond to any change
 
       // Set up a tree of fields according to their associated record
       const recordContainer = element.closest("[data-record-id]"); // The JS could be more efficient if this data was added to each element. But I didn't want to pollute the HTML too much.
@@ -100,6 +99,10 @@ export default class BulkFormController extends Controller {
   }
 
   #isChanged(element) {
-    return element.value != element.defaultValue;
+    if (element.type == "checkbox") {
+      return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
+    } else {
+      return element.defaultValue !== undefined && element.value != element.defaultValue;
+    }
   }
 }

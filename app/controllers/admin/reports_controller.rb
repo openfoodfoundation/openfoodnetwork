@@ -26,6 +26,8 @@ module Admin
         .enabled?(:background_reports, spree_current_user)
 
       if @background_reports && request.post?
+        rendering_options # stores user preferences
+
         return background(report_format)
       end
 

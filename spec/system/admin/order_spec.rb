@@ -1078,10 +1078,11 @@ describe '
             ].join(" ").upcase
           }
 
+          let(:invoice_number){ "#{order.distributor_id}-1" }
           let(:table_contents) {
             [
               Invoice.first.created_at.strftime('%B %d, %Y').to_s,
-              "1",
+              invoice_number,
               "0.0",
               "Active",
               "Download"

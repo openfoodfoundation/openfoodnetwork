@@ -1,0 +1,111 @@
+= form_with url: checkout_update_path(checkout_step), model: @order, method: :put, data: { remote: "true" } do |f|
+  .summary-main
+    = render partial: "checkout/already_ordered" if show_bought_items? && checkout_step?(:summary)
+    .checkout-substep
+      .checkout-title
+        = t("checkout.step3.delivery_details.title")
+        %a.summary-edit{href: main_app.checkout_step_path(:details)}
+          = t("checkout.step3.delivery_details.edit")
+
+      .summary-subtitle
+        = @order.shipping_method.name
+        %em.fees= payment_or_shipping_price(@order.shipping_method, @order)
+      .two-columns
+        %div
+          .summary-subtitle
+            = t("checkout.step3.delivery_details.address")
+          %span
+            = @order.ship_address.firstname
+            = @order.ship_address.lastname
+          %div
+            = @order.ship_address.phone
+          %div
+            = @order.user.email if @order.user
+          %br
+          %div
+            = @order.ship_address.address1
+          - unless @order.ship_address.address2.blank?
+            %div
+              = @order.ship_address.address2
+          %div
+            = @order.ship_address.city
+          %div
+            = @order.ship_address.state
+          %div
+            = @order.ship_address.zipcode
+          %div
+            = @order.ship_address.country
+          - if @order.special_instructions.present?
+            %br
+            %em
+              = @order.special_instructions
+        - if @order.shipping_method.description.present?
+          %div
+            .summary-subtitle
+              = t("checkout.step3.delivery_details.instructions")
+            %div
+              = @order.shipping_method.description
+
+    %hr
+
+    .checkout-substep
+      .checkout-title
+        = t("checkout.step3.payment_method.title")
+        %a.summary-edit{href: main_app.checkout_step_path(:payment)}
+          = t("checkout.step3.payment_method.edit")
+      .two-columns
+        - payment_method = last_payment_method(@order)
+        %div
+          - if payment_method
+            = payment_method.name
+            %em.fees
+              = payment_or_shipping_price(payment_method, @order)
+          - elsif @order.zero_priced_order?
+            %h4= t(:no_payment_required)
+
+        - if payment_method&.description.present?
+          %div
+            .summary-subtitle
+              = t("checkout.step3.payment_method.instructions")
+            %div
+              = payment_method&.description
+
+
+    %div.checkout-substep
+      %div.checkout-title
+        = t("checkout.step3.order.title")
+        %a.summary-edit{href: main_app.cart_path}
+          = t("checkout.step3.order.edit")
+
+      = render 'spree/orders/summary', order: @order, display_footer: false
+
+
+  .summary-right{ "data-controller": "sticky", "data-sticky-target": "container" }
+    .summary-right-line.total
+      .summary-right-line-label= t :order_total_price
+      .summary-right-line-value#order_total= @order.display_total.to_html
+
+    .summary-right-line
+      .summary-right-line-label= t :order_produce
+      .summary-right-line-value= display_checkout_subtotal(@order)
+
+    - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
+      .summary-right-line
+        - if adjustment.originator_type == 'Voucher'
+          .summary-right-line-label.voucher
+            = "#{t(:voucher)}:"
+            = adjustment.label
+          .summary-right-line-value.voucher= adjustment.display_amount.to_html
+        - else
+          .summary-right-line-label= adjustment.label
+          .summary-right-line-value= adjustment.display_amount.to_html
+
+    - if @order.total_tax > 0
+      .summary-right-line
+        .summary-right-line-label= t :order_includes_tax
+        .summary-right-line-value#tax-row= display_checkout_tax_total(@order)
+
+    .checkout-submit
+      - if any_terms_required?(@order.distributor)
+        = render partial: "terms_and_conditions", locals: { f: f }
+      = f.submit t("checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false

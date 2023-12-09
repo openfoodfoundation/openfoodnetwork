@@ -203,4 +203,49 @@ describe Spree::Address do
       expect(result2).not_to include(address1)
     end
   end
+
+  describe "ransacker :full_name_with_comma" do
+    it "searches for records with matching full names with comma" do
+      address1 = create(:address, firstname: 'John', lastname: 'Doe')
+      address2 = create(:address, firstname: 'Jane', lastname: 'Smith')
+
+      result1 = described_class.ransack(full_name_with_comma_cont: 'John, Doe').result
+      expect(result1).to include(address1)
+      expect(result1).not_to include(address2)
+
+      result2 = described_class.ransack(full_name_with_comma_cont: 'Jane, Smith').result
+      expect(result2).to include(address2)
+      expect(result2).not_to include(address1)
+    end
+  end
+
+  describe "ransacker :full_name_reversed" do
+    it "searches for records with matching reversed full names" do
+      address1 = create(:address, firstname: 'John', lastname: 'Doe')
+      address2 = create(:address, firstname: 'Jane', lastname: 'Smith')
+
+      result1 = described_class.ransack(full_name_reversed_cont: 'Doe John').result
+      expect(result1).to include(address1)
+      expect(result1).not_to include(address2)
+
+      result2 = described_class.ransack(full_name_reversed_cont: 'Smith Jane').result
+      expect(result2).to include(address2)
+      expect(result2).not_to include(address1)
+    end
+  end
+
+  describe "ransacker :full_name_with_comma_reversed" do
+    it "searches for records with matching reversed full names" do
+      address1 = create(:address, firstname: 'John', lastname: 'Doe')
+      address2 = create(:address, firstname: 'Jane', lastname: 'Smith')
+
+      result1 = described_class.ransack(full_name_with_comma_reversed_cont: 'Doe, John').result
+      expect(result1).to include(address1)
+      expect(result1).not_to include(address2)
+
+      result2 = described_class.ransack(full_name_with_comma_reversed_cont: 'Smith, Jane').result
+      expect(result2).to include(address2)
+      expect(result2).not_to include(address1)
+    end
+  end
 end

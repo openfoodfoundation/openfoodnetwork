@@ -1,5 +1,0 @@
-- content_for :injection_data do
-  = inject_saved_credit_cards
-
-%div.checkout-step{ class: "#{'checkout-summary' if checkout_step?(:summary)}" }
-  = render "split_checkout/#{checkout_step}"

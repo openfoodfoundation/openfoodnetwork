@@ -6,6 +6,9 @@ require "datafoodconsortium/connector"
 # Then our tools for monky-patching:
 require_relative "importer"
 require_relative "context"
+require_relative "skos_parser_element"
+require_relative "skos_concept"
+require_relative "skos_parser"
 
 module DataFoodConsortium
   module Connector

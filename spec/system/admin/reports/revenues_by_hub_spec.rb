@@ -72,7 +72,7 @@ describe "Revenues By Hub Reports" do
 
   context "testing report", aggregate_failures: true do
     it "show the right values" do
-      find("[type='submit']").click
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content([
         "HUB",

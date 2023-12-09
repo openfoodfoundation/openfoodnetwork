@@ -962,6 +962,14 @@ fil_PH:
         create: "gumawa"
         cancel: "kanselahin"
         back_to_list: "bumalik sa listahan"
+      create:
+        success: 'ang iyong order cycle ay nagawa na.'
+      update:
+        success: 'ang iyong order cycle ay na-update na'
+      clone:
+        success: "ang iyong order cyle %{name}ay nakopya na."
+      notify_producers:
+        success: 'ang mga email na ipapadala sa mga producer ay naghihintay na maipadala.'
       edit:
         save: "i-save"
         save_and_next: "i-save at sunod"
@@ -1307,10 +1315,45 @@ fil_PH:
     orders:
       failed_to_update: "hindi nagtagumpay na i-update ang order"
   checkout:
+    failed: "hindi matagumpay ang pag-check out. ipaalam sa amin upang maproseso ang inyong order."
+    your_details_without_number: ang inyong detalye
     already_ordered:
       cart: "cart"
       message_html: "mayroon ka ng order para sa order cycle na ito. tingnan ang%{cart}para makita ang mga item na dating inorder. maaari  mo ring kanselahin ang mga item habang ang order cycle ay bukas pa."
-    failed: "hindi matagumpay ang pag-check out. ipaalam sa amin upang maproseso ang inyong order."
+    step1:
+      contact_information:
+        email:
+          label: Email
+        phone:
+          label: telepono
+      billing_address:
+        title: Billing address
+        first_name:
+          label: Pangalan
+        last_name:
+          label: Apelyido
+      address:
+        city:
+          label: Lungsod
+        state_id:
+          label: province
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Bansa
+      shipping_info:
+        title: impormasyon sa pagpapadala
+    step3:
+      delivery_details:
+        title: detalye ng pag-deliver
+        edit: i-edit
+        address: address kung saan ide-deliver
+      payment_method:
+        edit: i-edit
+      order:
+        edit: i-edit
+    errors:
+      invalid_email: "maglagay ng valid na email address"
   shops:
     hubs:
       show_closed_shops: "Ipakita ang mga saradong shop"
@@ -1564,45 +1607,6 @@ fil_PH:
   checkout_total_price: kabuuan
   checkout_back_to_cart: "bumalik sa cart"
   cost_currency: "halaga ng pera"
-  split_checkout:
-    your_details_without_number: ang inyong detalye
-    already_ordered:
-      cart: "cart"
-      message_html: "mayroon ka ng order para sa order cycle na ito. tingnan ang%{cart}para makita ang mga item na dating inorder. maaari  mo ring kanselahin ang mga item habang ang order cycle ay bukas pa."
-    step1:
-      contact_information:
-        email:
-          label: Email
-        phone:
-          label: telepono
-      billing_address:
-        title: Billing address
-        first_name:
-          label: Pangalan
-        last_name:
-          label: Apelyido
-      address:
-        city:
-          label: Lungsod
-        state_id:
-          label: province
-        zipcode:
-          label: Postcode
-        country_id:
-          label: Bansa
-      shipping_info:
-        title: impormasyon sa pagpapadala
-    step3:
-      delivery_details:
-        title: detalye ng pag-deliver
-        edit: i-edit
-        address: address kung saan ide-deliver
-      payment_method:
-        edit: i-edit
-      order:
-        edit: i-edit
-    errors:
-      invalid_email: "maglagay ng valid na email address"
   order_paid: BAYAD NA
   order_not_paid: HINDI PA BAYAD
   order_total: kabuuang order
@@ -2490,11 +2494,7 @@ fil_PH:
   enterprise_bulk_update_success_notice: "ang mga enterprise ay matagumpay na na-update"
   enterprise_bulk_update_error: 'hindi matagumpay ang pag-update'
   enterprise_shop_show_error: "ang shop na hinahanap mo ay wala o hindi aktibo sa OFN. Maaaring tignan ang ibang mga shop."
-  order_cycles_create_notice: 'ang iyong order cycle ay nagawa na.'
-  order_cycles_update_notice: 'ang iyong order cycle ay na-update na'
   order_cycles_bulk_update_notice: 'ang mga order cycle ay na-update na'
-  order_cycles_clone_notice: "ang iyong order cyle %{name}ay nakopya na."
-  order_cycles_email_to_producers_notice: 'ang mga email na ipapadala sa mga producer ay naghihintay na maipadala.'
   order_cycles_no_permission_to_coordinate_error: "wala sa inyong mga enterprise ay may pahintulot na magsa-ayos ng order cycle"
   order_cycles_no_permission_to_create_error: "wala kang pahintulot na gumawa ng order cycle na isinaayos ng enterprise na iyon."
   back_to_orders_list: "bumalik sa listahan ng order"

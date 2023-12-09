@@ -163,8 +163,7 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
       visit admin_reports_path
       click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_order")
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 
@@ -242,8 +241,7 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
       visit admin_reports_path
       click_on I18n.t("admin.reports.enterprise_fees_with_tax_report_by_order")
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 

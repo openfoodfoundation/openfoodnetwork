@@ -13,7 +13,7 @@ describe "Users & Enterprises reports" do
   it "displays the report" do
     enterprise = create(:supplier_enterprise)
 
-    click_button 'Go'
+    run_report
 
     expect(page.find("table.report__table thead tr").text).to have_content([
       "USER",

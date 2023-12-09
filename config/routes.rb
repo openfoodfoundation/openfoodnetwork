@@ -84,11 +84,11 @@ Openfoodnetwork::Application.routes.draw do
     get "/stripe/authorize/:order_number", to: "stripe#authorize", as: :authorize_stripe
   end
 
-  get '/checkout', to: 'split_checkout#edit'
+  get '/checkout', to: 'checkout#edit'
 
   constraints step: /(details|payment|summary)/ do
-    get '/checkout/:step', to: 'split_checkout#edit', as: :checkout_step
-    put '/checkout/:step', to: 'split_checkout#update', as: :checkout_update
+    get '/checkout/:step', to: 'checkout#edit', as: :checkout_step
+    put '/checkout/:step', to: 'checkout#update', as: :checkout_update
   end
 
   # Redirects to the new checkout for any other 'step' (ie. /checkout/cart from the legacy checkout)

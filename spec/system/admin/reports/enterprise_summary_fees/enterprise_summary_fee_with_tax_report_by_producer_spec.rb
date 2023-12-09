@@ -277,7 +277,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       context "with line items from a single supplier" do
         it 'generates the report and displays fees for the respective suppliers' do
           visit_report
-          click_on "Go"
+          run_report
 
           expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -313,8 +313,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             page.find("#s2id_q_order_cycle_id_in").click
             find('li', text: order_cycle.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
@@ -489,8 +488,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             page.find("#s2id_q_order_cycle_id_in").click
             find('li', text: order_cycle3.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
@@ -520,8 +518,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             page.find("#s2id_supplier_id_in").click
             find('li', text: supplier2.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
@@ -545,8 +542,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             page.find(fee_name_selector).click
             find('li', text: supplier_fees.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
 
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -575,8 +571,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             page.find(fee_owner_selector).click
             find('li', text: supplier.name).click
 
-            expect(page).to have_button("Go")
-            click_on "Go"
+            run_report
             expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
             table = page.find("table.report__table tbody")
@@ -690,7 +685,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
     context "with line items from a single supplier" do
       it 'generates the report and displays fees for the respective suppliers' do
         visit_report
-        click_on "Go"
+        run_report
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -828,7 +823,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
       it 'should list all the tax rates' do
         visit_report
-        click_on "Go"
+        run_report
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -923,7 +918,7 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
       it 'should list all the tax rates' do
         visit_report
-        click_on "Go"
+        run_report
 
         expect(page.find("table.report__table thead tr")).to have_content(table_header)
 
@@ -951,6 +946,5 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
       report_type: :enterprise_fee_summary,
       report_subtype: :enterprise_fees_with_tax_report_by_producer
     )
-    expect(page).to have_button("Go")
   end
 end

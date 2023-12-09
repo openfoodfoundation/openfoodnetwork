@@ -170,10 +170,13 @@ describe '
   describe 'listing invoices' do
     let(:date){ Time.current.to_date }
 
+    let(:first_invoice){ "#{distributor.id}-1" }
+    let(:second_invoice){ "#{distributor.id}-2" }
+
     let(:row1){
       [
         I18n.l(date, format: :long),
-        "2",
+        second_invoice,
         order.total,
         "Active",
         "Download"
@@ -183,7 +186,7 @@ describe '
     let(:row2){
       [
         I18n.l(date, format: :long),
-        "1",
+        first_invoice,
         order.total,
         "Cancelled",
         "Download"

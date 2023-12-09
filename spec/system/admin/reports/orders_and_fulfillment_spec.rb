@@ -53,7 +53,7 @@ describe "Orders And Fulfillment" do
       end
 
       it "displays the report" do
-        click_button 'Go'
+        run_report
 
         rows = find("table.report__table").all("thead tr")
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
@@ -104,7 +104,7 @@ describe "Orders And Fulfillment" do
         end
 
         it "correclty renders the report" do
-          click_button 'Go'
+          run_report
           expect(page).to have_content "My Order Cycle"
         end
       end
@@ -127,20 +127,20 @@ describe "Orders And Fulfillment" do
           pick_datetime "#q_completed_at_lt", datetime_end
 
           find("#display_summary_row").set(false) # hides the summary rows
-          click_button 'Go'
+          run_report
           # Then I should see the rows for the first order but not the second
           # One row per line item - order1 only
           expect(all('table.report__table tbody tr').count).to eq(2)
 
           find("#display_summary_row").set(true) # displays the summary rows
-          click_button 'Go'
+          run_report
           # Then I should see the rows for the first order but not the second
           expect(all('table.report__table tbody tr').count).to eq(3)
           # 2 rows for order1 + 1 summary row
 
           # setting a time interval to include both orders
           pick_datetime "#q_completed_at_gt", datetime_start2
-          click_button 'Go'
+          run_report
           # Then I should see the rows for both orders
           expect(all('table.report__table tbody tr').count).to eq(5)
           # 2 rows for order1 + 1 summary row
@@ -168,7 +168,7 @@ describe "Orders And Fulfillment" do
         end
 
         it "orders the report by customer name, case insensitive" do
-          click_button 'Go'
+          run_report
           rows = find("table.report__table tbody").all("tr.summary-row")
           expect(rows[0]).to have_content "Dont Worry"
           expect(rows[1]).to have_content "Chamois xaxa"
@@ -190,7 +190,7 @@ describe "Orders And Fulfillment" do
 
         it "includes only selected product" do
           tomselect_search_and_select(variant3.sku, from: "variant_id_in[]")
-          click_button 'Go'
+          run_report
 
           rows = find("table.report__table").all("tbody tr")
           table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
@@ -225,7 +225,7 @@ describe "Orders And Fulfillment" do
         describe "Totals" do
           before do
             click_link "Order Cycle Supplier Totals"
-            click_button 'Go'
+            run_report
           end
 
           context "with the header row option not selected" do
@@ -285,7 +285,7 @@ describe "Orders And Fulfillment" do
           context "with the header row option selected" do
             before do
               find("#display_header_row").set(true) # displays the header row
-              click_button 'Go'
+              run_report
             end
 
             it "displays the report" do
@@ -319,7 +319,7 @@ describe "Orders And Fulfillment" do
           context "with the header row option not selected" do
             before do
               find("#display_header_row").set(false) # hides the header row
-              click_button 'Go'
+              run_report
             end
 
             it "displays the report" do
@@ -369,7 +369,7 @@ describe "Orders And Fulfillment" do
           context "with the header row option selected" do
             before do
               find("#display_header_row").set(true) # displays the header row
-              click_button 'Go'
+              run_report
             end
 
             it "displays the report" do
@@ -418,7 +418,7 @@ describe "Orders And Fulfillment" do
         context "with the header row option not selected" do
           before do
             find("#display_header_row").set(false) # hides the header row
-            click_button 'Go'
+            run_report
           end
 
           it "displays the report" do
@@ -473,7 +473,7 @@ describe "Orders And Fulfillment" do
           end
 
           it "displays the report" do
-            click_button 'Go'
+            run_report
 
             rows = find("table.report__table").all("thead tr")
             table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
@@ -517,14 +517,14 @@ describe "Orders And Fulfillment" do
             check 'Header Row'
             uncheck 'Summary Row'
 
-            click_button 'Go'
+            run_report
 
             click_link "Report"
             click_link second_report_title
             expect(page).to have_unchecked_field('Header Row')
             expect(page).to have_checked_field('Summary Row')
             check 'Header Row'
-            click_button 'Go'
+            run_report
 
             # Step 2: check if report rendering options are saved properly
             click_link "Report"
@@ -548,7 +548,7 @@ describe "Orders And Fulfillment" do
             expect(page).to have_checked_field('Product')
             uncheck('Producer')
             uncheck('Product')
-            click_button 'Go'
+            run_report
 
             click_link "Report"
             click_link second_report_title
@@ -556,7 +556,7 @@ describe "Orders And Fulfillment" do
             expect(page).to have_checked_field('Producer')
             expect(page).to have_checked_field('Product')
             uncheck('Product')
-            click_button 'Go'
+            run_report
 
             # Step 2: check if report rendering options are saved properly
             click_link "Report"
@@ -582,7 +582,7 @@ describe "Orders And Fulfillment" do
             expect(page).to have_checked_field('Summary Row')
             check 'Header Row'
             uncheck 'Summary Row'
-            click_button 'Go'
+            run_report
 
             logout
             login_as(current_user)
@@ -602,7 +602,7 @@ describe "Orders And Fulfillment" do
             expect(page).to have_checked_field('Product')
             uncheck('Producer')
             uncheck('Product')
-            click_button 'Go'
+            run_report
 
             logout
             login_as(current_user)

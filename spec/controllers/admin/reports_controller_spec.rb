@@ -309,7 +309,7 @@ describe Admin::ReportsController, type: :controller do
       controller_login_as_enterprise_user [coordinator1]
     end
 
-    it 'renders the delivery report' do
+    it "triggers the delivery report" do
       spree_post :show, {
         q: { completed_at_lt: 1.day.ago },
         shipping_method_in: ["123"], # We just need to search for shipping methods
@@ -317,7 +317,7 @@ describe Admin::ReportsController, type: :controller do
         report_subtype: "delivery",
       }
 
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:no_content)
     end
   end
 

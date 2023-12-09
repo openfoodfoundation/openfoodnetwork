@@ -79,8 +79,7 @@ describe "Sales Tax Totals By Producer" do
       visit admin_reports_path
       click_on 'Sales Tax Totals By Producer'
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 
       expect(page.find("table.report__table tbody").text).to have_content([
@@ -140,8 +139,7 @@ describe "Sales Tax Totals By Producer" do
       visit admin_reports_path
       click_on 'Sales Tax Totals By Producer'
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
 
       expect(page.find("table.report__table tbody").text).to have_content([
@@ -329,8 +327,7 @@ describe "Sales Tax Totals By Producer" do
     end
 
     it "should load all the orders" do
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(page.find("table.report__table tbody").text).to have_content(state_tax_rate_row)
@@ -342,8 +339,7 @@ describe "Sales Tax Totals By Producer" do
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer1.email).click
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -359,8 +355,7 @@ describe "Sales Tax Totals By Producer" do
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer2.email).click
 
-      expect(page).to have_button("Go")
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(
@@ -377,7 +372,7 @@ describe "Sales Tax Totals By Producer" do
       find('li', text: customer1.email).click
       page.find(customer_email_dropdown_selector).click
       find('li', text: customer2.email).click
-      click_on "Go"
+      run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content(table_header)
       expect(page.find("table.report__table tbody").text).to have_content(state_tax_rate_row)

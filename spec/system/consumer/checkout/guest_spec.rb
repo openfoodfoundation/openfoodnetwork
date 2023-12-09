@@ -4,7 +4,7 @@ require "system_helper"
 
 describe "As a consumer, I want to checkout my order" do
   include ShopWorkflow
-  include SplitCheckoutHelper
+  include CheckoutHelper
   include FileHelper
   include AuthenticationHelper
 
@@ -76,7 +76,7 @@ describe "As a consumer, I want to checkout my order" do
       visit checkout_step_path(:details)
     end
 
-    it "should display the split checkout login page" do
+    it "should display the checkout login page" do
       expect(page).to have_content("Ok, ready to checkout?")
       expect(page).to have_content("Login")
       expect(page).to have_no_content("Checkout as guest")
@@ -125,14 +125,14 @@ describe "As a consumer, I want to checkout my order" do
       end
     end
 
-    it "should display the split checkout login/guest form" do
+    it "should display the checkout login/guest form" do
       expect(page).to have_content distributor.name
       expect(page).to have_content("Ok, ready to checkout?")
       expect(page).to have_content("Login")
       expect(page).to have_content("Checkout as guest")
     end
 
-    it "should display the split checkout details page" do
+    it "should display the checkout details page" do
       click_on "Checkout as guest"
       expect(page).to have_content distributor.name
       expect_to_be_on_first_step

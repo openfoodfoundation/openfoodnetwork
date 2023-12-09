@@ -985,6 +985,14 @@ nl_BE:
         create: "Maak"
         cancel: "Annuleren"
         back_to_list: "Terug naar lijst"
+      create:
+        success: 'Uw bestelcyclus is gemaakt'
+      update:
+        success: 'Uw bestelcyclus is bijgewerkt'
+      clone:
+        success: "Uw bestelcyclus 1 %{name}  is gedupliceerd"
+      notify_producers:
+        success: 'De e-mails ter bestemming van de producenten staan in de wachtrij '
       edit:
         save: "Save"
         save_and_next: "Opslaan en volgende"
@@ -1332,10 +1340,51 @@ nl_BE:
     orders:
       failed_to_update: "Bijwerking van de bestelcyclus is mislukt"
   checkout:
+    failed: "De check-out is gefaald. Laat ons weten zodat we u besteling in orde kunnen maken."
+    your_details_without_number: Jouw gegevens
     already_ordered:
       cart: "winkelwagentje"
       message_html: "Je hebt al een bestelling voor deze bestellingscyclus. Controleer de %{cart} om de artikels te zien die je voordien besteld hebt. Je kan ook artikels annuleren zolang de bestellingscyclus openstaat."
-    failed: "De check-out is gefaald. Laat ons weten zodat we u besteling in orde kunnen maken."
+    step1:
+      contact_information:
+        email:
+          label: E-mail
+        phone:
+          label: Telefoonnummer
+      billing_address:
+        title: 'Facturatie-adres:'
+        first_name:
+          label: Voornaam
+        last_name:
+          label: Familienaam
+      address:
+        city:
+          label: Stad
+        state_id:
+          label: Staat
+        zipcode:
+          label: Postcode
+        country_id:
+          label: Land
+      shipping_info:
+        title: Leveringsadres
+    step2:
+      form:
+        card_month:
+          label: Maand
+        card_year:
+          label: Jaar
+    step3:
+      delivery_details:
+        title: Leveringsdetails
+        edit: bewerking
+        address: Leveringsadres
+      payment_method:
+        edit: bewerking
+      order:
+        edit: bewerking
+    errors:
+      invalid_email: "Vul een geldig e-mailadres in"
   shops:
     hubs:
       show_closed_shops: "Toon de gesloten winkels"
@@ -1598,51 +1647,6 @@ nl_BE:
   checkout_total_price: Totaal
   checkout_back_to_cart: "Terug naar je Winkelwagentje"
   cost_currency: "Kosten in deviezen "
-  split_checkout:
-    your_details_without_number: Jouw gegevens
-    already_ordered:
-      cart: "winkelwagentje"
-      message_html: "Je hebt al een bestelling voor deze bestellingscyclus. Controleer de %{cart} om de artikels te zien die je voordien besteld hebt. Je kan ook artikels annuleren zolang de bestellingscyclus openstaat."
-    step1:
-      contact_information:
-        email:
-          label: E-mail
-        phone:
-          label: Telefoonnummer
-      billing_address:
-        title: 'Facturatie-adres:'
-        first_name:
-          label: Voornaam
-        last_name:
-          label: Familienaam
-      address:
-        city:
-          label: Stad
-        state_id:
-          label: Staat
-        zipcode:
-          label: Postcode
-        country_id:
-          label: Land
-      shipping_info:
-        title: Leveringsadres
-    step2:
-      form:
-        card_month:
-          label: Maand
-        card_year:
-          label: Jaar
-    step3:
-      delivery_details:
-        title: Leveringsdetails
-        edit: bewerking
-        address: Leveringsadres
-      payment_method:
-        edit: bewerking
-      order:
-        edit: bewerking
-    errors:
-      invalid_email: "Vul een geldig e-mailadres in"
   order_paid: BETAALD
   order_not_paid: NIET BETAALD
   order_total: Totale bestelling
@@ -2544,11 +2548,7 @@ nl_BE:
   enterprise_bulk_update_success_notice: "Bedrijven succesvol bijgewerkt"
   enterprise_bulk_update_error: 'Bijwerking is gefaald'
   enterprise_shop_show_error: "De winkel die uzoekt bestaat niet of is inactief op OFN. Kijk gerust naar andere winkels."
-  order_cycles_create_notice: 'Uw bestelcyclus is gemaakt'
-  order_cycles_update_notice: 'Uw bestelcyclus is bijgewerkt'
   order_cycles_bulk_update_notice: 'Bestelcycli zijn bijgewerkt '
-  order_cycles_clone_notice: "Uw bestelcyclus 1 %{name}  is gedupliceerd"
-  order_cycles_email_to_producers_notice: 'De e-mails ter bestemming van de producenten staan in de wachtrij '
   order_cycles_no_permission_to_coordinate_error: "Geen van uw bedrijven heeft de vereiste rechten om een verkoopcyclus te coördineren"
   order_cycles_no_permission_to_create_error: "U bezit de vereiste rechten niet om een bestelcyclus te maken die gecoördineerd wordt door dat bedrijf"
   order_cycle_closed: "De hub die u hebt geselecteerd is tijdelijk gesloten. Probeer gerust later terug."

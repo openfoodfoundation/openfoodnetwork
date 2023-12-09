@@ -10,7 +10,7 @@ assignees: ''
 ## 1. Preparation on Thursday
 
 - [ ] Merge pull requests in the [Ready To Go] column
-- [ ] Include translations: `script/release/udpate_locales`
+- [ ] Include translations: `script/release/update_locales`
 - [ ] Increment version number: `git push upstream HEAD:refs/tags/vX.Y.Z`
     - Major: if server changes are required (eg. provision with ofn-install)
     - Minor: larger change that is irreversible (eg. migration deleting data)

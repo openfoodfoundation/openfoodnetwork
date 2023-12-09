@@ -88,6 +88,12 @@ RSpec.configure do |config|
     expectations.syntax = :expect
   end
 
+  # Reset all feature toggles to prevent leaking.
+  config.before(:suite) do
+    Flipper.features.each(&:remove)
+    OpenFoodNetwork::FeatureToggle.setup!
+  end
+
   config.before(:each, :feature) do |example|
     feature = example.metadata[:feature].to_s
 
@@ -230,4 +236,5 @@ RSpec.configure do |config|
   config.include Features::DatepickerHelper, type: :system
   config.include Features::TrixEditorHelper, type: :system
   config.include DownloadsHelper, type: :system
+  config.include ReportsHelper, type: :system
 end

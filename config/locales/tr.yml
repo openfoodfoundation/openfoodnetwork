@@ -1053,6 +1053,14 @@ tr:
         create: "Oluştur"
         cancel: "İptal et"
         back_to_list: "Listeye geri dön"
+      create:
+        success: 'Sipariş döneminiz oluşturuldu.'
+      update:
+        success: 'Sipariş döneminiz güncellendi.'
+      clone:
+        success: "%{name} sipariş dönemi kopyalandı."
+      notify_producers:
+        success: 'Üreticilere gönderilecek e-postalar gönderilmek üzere sıraya alınmıştır.'
       edit:
         save: "Kaydet"
         save_and_next: "Kaydet ve İlerle"
@@ -1404,19 +1412,80 @@ tr:
     orders:
       failed_to_update: "Sipariş güncellenemedi"
   checkout:
+    failed: "Ödeme başarısız oldu. Siparişinizi işleme koyabilmemiz için lütfen bizimle iletişime geçin."
+    payment_cancelled_due_to_stock: "Ödeme iptal edildi: Stok sorunları nedeniyle ödeme tamamlanamadı."
+    your_details_without_number: Bilgilerin
+    payment_method_without_number: Ödeme yöntemi
     already_ordered:
       cart: "Sepet"
       message_html: "Bu sipariş dönemi için zaten bir siparişiniz var. Daha önce sipariş ettiğiniz ürünleri görmek için %{cart} adresini kontrol edin. Sipariş dönemi açık olduğu sürece siparişlerinizde değişiklik yapabilirsiniz."
-    terms_and_conditions:
-      message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
-      link_text: "Şartlar ve Koşullar"
-    platform_terms_of_service:
-      message_html: "%{tos_link} platformunu onaylıyorum."
-    all_terms_and_conditions:
-      message_html: "Satıcıya ait %{terms_and_conditions_link} ve platforma ait %{tos_link} onaylıyorum."
-      terms_and_conditions: "Şartlar ve Koşullar"
-    failed: "Ödeme başarısız oldu. Siparişinizi işleme koyabilmemiz için lütfen bizimle iletişime geçin."
-    payment_cancelled_due_to_stock: "Ödeme iptal edildi: Stok sorunları nedeniyle ödeme tamamlanamadı."
+    step1:
+      contact_information:
+        email:
+          label: E-posta
+        phone:
+          label: Tel. no
+      billing_address:
+        title: Fatura adresi
+        first_name:
+          label: Ad
+        last_name:
+          label: Soyad
+      address:
+        address1:
+          label: Adres (Sokak + Ev Numarası)
+        address2:
+          label: Ek adres bilgisi (isteğe bağlı)
+        city:
+          label: ŞEHİR
+        state_id:
+          label: Durum
+        zipcode:
+          label: Posta kodu
+        country_id:
+          label: Ülke
+      shipping_info:
+        title: Teslimat bilgileri
+      submit: Sonraki - Ödeme yöntemi
+      cancel: Sepeti düzenlemeye geri dön
+    step2:
+      payment_method:
+        title: Ödeme yöntemi
+      form:
+        card_number:
+          label: Kart numarası
+        card_month:
+          label: Ay
+        card_year:
+          label: Yıl
+      explaination: Nihai maliyetleri içeren bir sonraki adımda siparişinizi inceleyebilir ve onaylayabilirsiniz.
+      submit: Sonraki - Sipariş özeti
+      cancel: Bilgilerinize geri dönün
+    step3:
+      delivery_details:
+        title: Teslimat Detayları
+        edit: Düzenle
+        address: Teslimat adresi
+      payment_method:
+        title: Ödeme yöntemi
+        edit: Düzenle
+      order:
+        edit: Düzenle
+      terms_and_conditions:
+        message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
+        link_text: "Şartlar ve Koşullar"
+      platform_terms_of_service:
+        message_html: "%{tos_link} platformunu onaylıyorum."
+      all_terms_and_conditions:
+        message_html: "Satıcıya ait %{terms_and_conditions_link} ve platforma ait %{tos_link} onaylıyorum."
+        terms_and_conditions: "Şartlar ve Koşullar"
+      submit: Siparişi tamamla
+      cancel: Ödeme yöntemine geri dön
+    errors:
+      required: Alan boş olamaz
+      invalid_number: "Geçerli bir telefon numarası giriniz"
+      invalid_email: "Lütfen geçerli bir e-posta adresi girin"
+      voucher_not_found: Bulunamadı
   shops:
     hubs:
       show_closed_shops: "Kapalı dükkanları göster"
@@ -1685,79 +1754,6 @@ tr:
   checkout_total_price: Toplam
   checkout_back_to_cart: "Sepete geri dön"
   cost_currency: "Maliyet Para Birimi"
-  split_checkout:
-    your_details_without_number: Bilgilerin
-    payment_method_without_number: Ödeme yöntemi
-    already_ordered:
-      cart: "sepet"
-      message_html: "Bu sipariş dönemi için zaten bir siparişiniz var. Daha önce sipariş ettiğiniz ürünleri görmek için %{cart} adresini kontrol edin. Sipariş dönemi açık olduğu sürece siparişlerinizde değişiklik yapabilirsiniz."
-    step1:
-      contact_information:
-        email:
-          label: E-posta
-        phone:
-          label: Tel. no
-      billing_address:
-        title: Fatura Adresi
-        first_name:
-          label: Ad
-        last_name:
-          label: Soyad
-      address:
-        address1:
-          label: Adres (Sokak + Ev Numarası)
-        address2:
-          label: Ek adres bilgisi (isteğe bağlı)
-        city:
-          label: ŞEHİR
-        state_id:
-          label: Durum
-        zipcode:
-          label: Posta kodu
-        country_id:
-          label: Ülke
-      shipping_info:
-        title: Teslimat bilgileri
-      submit: Sonraki - Ödeme yöntemi
-      cancel: Sepeti düzenlemeye geri dön
-    step2:
-      payment_method:
-        title: Ödeme yöntemi
-      form:
-        card_number:
-          label: Kart numarası
-        card_month:
-          label: Ay
-        card_year:
-          label: Yıl
-      explaination: Nihai maliyetleri içeren bir sonraki adımda siparişinizi inceleyebilir ve onaylayabilirsiniz.
-      submit: Sonraki - Sipariş özeti
-      cancel: Bilgilerinize geri dönün
-    step3:
-      delivery_details:
-        title: Teslimat Detayları
-        edit: Düzenle
-        address: Teslimat adresi
-      payment_method:
-        title: Ödeme yöntemi
-        edit: Düzenle
-      order:
-        edit: Düzenle
-      terms_and_conditions:
-        message_html: "Bu satıcının %{terms_and_conditions_link}'ını onaylıyorum."
-        link_text: "Şartlar ve Koşullar"
-      platform_terms_of_service:
-        message_html: "%{tos_link} platformunu onaylıyorum."
-      all_terms_and_conditions:
-        message_html: "Satıcıya ait %{terms_and_conditions_link} ve platforma ait %{tos_link} onaylıyorum."
-        terms_and_conditions: "Şartlar ve Koşullar"
-      submit: Siparişi tamamla
-      cancel: Ödeme yöntemine geri dön
-    errors:
-      required: Alan boş olamaz
-      invalid_number: "Geçerli bir telefon numarası giriniz"
-      invalid_email: "Lütfen geçerli bir e-posta adresi girin"
-      voucher_not_found: Bulunamadı
   order_paid: ÖDENDİ
   order_not_paid: ÖDENMEYEN
   order_total: Sipariş toplamı
@@ -2676,11 +2672,7 @@ tr:
   enterprise_bulk_update_success_notice: "İşletmeler başarıyla güncellendi"
   enterprise_bulk_update_error: 'Güncelleştirme başarısız'
   enterprise_shop_show_error: "Aradığınız dükkan AGA üzerinde bulunamıyor veya gizli durumda. Lütfen diğerlerini kontrol edin."
-  order_cycles_create_notice: 'Sipariş döneminiz oluşturuldu.'
-  order_cycles_update_notice: 'Sipariş döneminiz güncellendi.'
   order_cycles_bulk_update_notice: 'Sipariş dönemleri güncellendi.'
-  order_cycles_clone_notice: "%{name} sipariş dönemi kopyalandı."
-  order_cycles_email_to_producers_notice: 'Üreticilere gönderilecek e-postalar gönderilmek üzere sıraya alınmıştır.'
   order_cycles_no_permission_to_coordinate_error: "Hiçbir işletmenizin sipariş dönemini koordine etme izni yok"
   order_cycles_no_permission_to_create_error: "Bu işletme tarafından koordine edilen bir sipariş dönemi oluşturma izniniz yok"
   order_cycle_closed: "Seçmiş olduğunuz sipariş dönemi az önce kapandı. Lütfen daha sonra tekrar deneyin :("

@@ -31,16 +31,7 @@ describe '
     end
   end
 
-  describe "Background processing", feature: :background_reports do
-    it "can run the customers report" do
-      login_as_admin
-      visit admin_report_path(report_type: :customers)
-      generate_report
-
-      expect(page).to have_selector "#report-table"
-      expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
-    end
-
+  describe "Background processing" do
     it "renders UTF-8 characters" do
       # We had a problem when UTF-8 was in the page and the report because
       # ActiveStorage read ASCII.
@@ -58,7 +49,7 @@ describe '
       # Run the report:
       login_as_admin
       visit admin_report_path(report_type: :customers)
-      generate_report
+      run_report
       expect(page).to have_content "Späti"
       expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
       expect(page).to have_content "Müller"
@@ -69,7 +60,7 @@ describe '
       visit admin_report_path(report_type: :customers)
       stub_const("ReportJob::NOTIFICATION_TIME", 0)
 
-      generate_report
+      run_report
 
       # We also get an email.
       perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
@@ -114,9 +105,9 @@ describe '
         ReportJob.perform_now(**args)
         breakpoint.synchronize { "continue after unlocked" }
       end
-      click_button "Go"
 
-      expect(page).to have_selector "#report-table table"
+      click_on "Go"
+
       expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
 
       # Now that we see the report, we need to make sure that it's not replaced
@@ -145,7 +136,7 @@ describe '
       within "table.index" do
         click_link "Customers"
       end
-      click_button "Go"
+      run_report
 
       rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
@@ -165,7 +156,7 @@ describe '
 
     it "payment method report" do
       click_link "Payment Methods Report"
-      click_button "Go"
+      run_report
       rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
@@ -176,7 +167,7 @@ describe '
 
     it "delivery report" do
       click_link "Delivery Report"
-      click_button "Go"
+      run_report
       rows = find("table.report__table").all("thead tr")
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
@@ -197,7 +188,7 @@ describe '
 
     it "generates the orders and distributors report" do
       click_link 'Orders And Distributors'
-      click_button 'Go'
+      run_report
 
       rows = find("table.report__table").all("thead tr")
       table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
@@ -235,7 +226,7 @@ describe '
 
     it "generates the payments reports" do
       click_link 'Payments By Type'
-      click_button 'Go'
+      run_report
 
       rows = find("table.report__table").all("thead tr")
       table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
@@ -322,7 +313,7 @@ describe '
 
     it "generate Tax Types reports" do
       click_link "Tax Types"
-      click_button "Go"
+      run_report
 
       # Then it should give me access only to managed enterprises
       expect(page).to     have_select 'q_distributor_id_eq',
@@ -332,7 +323,7 @@ describe '
 
       # When I filter to just one distributor
       select user1.enterprises.first.name, from: 'q_distributor_id_eq'
-      click_button 'Go'
+      run_report
 
       # Then I should see the relevant order
       expect(page).to have_content order1.number.to_s
@@ -353,7 +344,7 @@ describe '
 
     it "generate Tax Rates report" do
       click_link "Tax Rates"
-      click_button "Go"
+      run_report
 
       expect(page).to have_css(".report__table thead th", text: "20.0% ($)")
       expect(page).to have_css(".report__table thead th", text: "0.0% ($)")
@@ -396,7 +387,7 @@ describe '
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
       click_link 'All products'
-      click_button "Go"
+      run_report
       expect(page).to have_content "Supplier"
       expect(page).to have_table_row ["Supplier", "Producer Suburb", "Product",
                                       "Product Properties", "Taxons", "Variant Value", "Price",
@@ -423,7 +414,7 @@ describe '
       login_as_admin
       visit admin_reports_path
       click_link 'LettuceShare'
-      click_button "Go"
+      run_report
 
       expect(page).to have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit',
                                       'Unit Price', 'Total', 'GST incl.',
@@ -448,7 +439,7 @@ describe '
     end
 
     it "shows users and enterprises report" do
-      click_button "Go"
+      run_report
 
       rows = find("table.report__table").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
@@ -469,7 +460,7 @@ describe '
       select enterprise3.name, from:  "enterprise_id_in"
       select enterprise1.owner.email, from: "user_id_in"
 
-      click_button "Go"
+      run_report
 
       rows = find("table.report__table").all("tr")
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
@@ -489,7 +480,7 @@ describe '
 
     it "generating Bulk Co-op Supplier Report" do
       click_link "Bulk Co-op Supplier Report"
-      click_button "Go"
+      run_report
 
       expect(page).to have_table_row [
         "Supplier",
@@ -508,7 +499,7 @@ describe '
 
     it "generating Bulk Co-op Allocation report" do
       click_link "Bulk Co-op Allocation"
-      click_button "Go"
+      run_report
 
       expect(page).to have_table_row [
         "Customer",
@@ -527,7 +518,7 @@ describe '
 
     it "generating Bulk Co-op Packing Sheets report" do
       click_link "Bulk Co-op Packing Sheets"
-      click_button "Go"
+      run_report
 
       expect(page).to have_table_row [
         "Customer",
@@ -539,7 +530,7 @@ describe '
 
     it "generating Bulk Co-op Customer Payments report" do
       click_link "Bulk Co-op Customer Payments"
-      click_button "Go"
+      run_report
 
       expect(page).to have_table_row [
         "Customer",
@@ -652,7 +643,7 @@ describe '
           login_as_admin
           visit admin_reports_path
           click_link "Summary"
-          click_button 'Go'
+          run_report
         end
 
         it "shows Xero invoices report" do
@@ -682,7 +673,7 @@ describe '
           pick_datetime '#due_date', Date.new(2021, 3, 12)
 
           fill_in 'account_code', with: 'abc123'
-          click_button 'Go'
+          run_report
 
           opts = { invoice_number: '5', invoice_date: '2021-02-12',
                    due_date: '2021-03-12', account_code: 'abc123' }
@@ -712,7 +703,7 @@ describe '
           login_as_admin
           visit admin_reports_path
           click_link "Detailed"
-          click_button 'Go'
+          run_report
 
           opts = {}
 
@@ -779,13 +770,5 @@ describe '
        amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency,
        '', 'N']
     end
-  end
-
-  def generate_report
-    click_button "Go"
-    expect(page).to have_selector ".loading"
-    perform_enqueued_jobs(only: ReportJob)
-    expect(page).to have_no_selector ".loading"
-    expect(page).to have_selector "#report-table table"
   end
 end
