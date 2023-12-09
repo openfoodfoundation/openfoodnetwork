@@ -17,7 +17,7 @@ module Admin
     end
 
     def ship
-      @order.send_shipment_email = true if params[:send_shipment_email]
+      @order.send_shipment_email = false unless params[:send_shipment_email]
       if @order.ship
         return set_param_for_controller if request.url.match?('edit')
 

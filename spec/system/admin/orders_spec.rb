@@ -754,7 +754,6 @@ describe '
         page.find("button.icon-road").click
 
         within ".reveal-modal" do
-          check 'Send email confirmation to customer'
           expect {
             find_button("Confirm").click
           }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
@@ -772,6 +771,7 @@ describe '
         page.find("button.icon-road").click
 
         within ".reveal-modal" do
+          uncheck 'Send email confirmation to customer'
           expect {
             find_button("Confirm").click
           }.not_to enqueue_job(ActionMailer::MailDeliveryJob)

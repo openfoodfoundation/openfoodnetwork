@@ -53,7 +53,7 @@
             %p= t('spree.admin.orders.shipment.mark_as_shipped_message')
           %div{class: "margin-bottom-30"}
             = hidden_field_tag :id, order.id
-            = check_box_tag :send_shipment_email
+            = check_box_tag :send_shipment_email, "1", true
             = label_tag :send_shipment_email, t('spree.admin.orders.shipment.mark_as_shipped_label_message')
 
       = render partial: 'admin/shared/tooltip_button', locals: {button_class: "icon-road icon_link with-tip no-text", reflex_data_id: order.id.to_s, tooltip_text: t('spree.admin.orders.index.ship'), shipment: true}
