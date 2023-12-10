@@ -66,15 +66,16 @@ describe "As a consumer, I want to checkout my order" do
           visit checkout_step_path(:summary)
         end
 
-        it "displays the ship address" do
+        it "displays title and ship address" do
+          expect(page).to have_title "Checkout Summary - Open Food Network"
+
           expect(page).to have_content "Delivery address"
           expect(page).to have_content order.ship_address.address1
           expect(page).to have_content order.ship_address.city
           expect(page).to have_content order.ship_address.zipcode
           expect(page).to have_content order.ship_address.phone
-        end
 
-        it "and not the billing address" do
+          # but not the billing address
           expect(page).not_to have_content order.bill_address.address1
           expect(page).not_to have_content order.bill_address.city
           expect(page).not_to have_content order.bill_address.zipcode
