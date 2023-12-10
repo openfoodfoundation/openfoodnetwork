@@ -357,7 +357,7 @@ GEM
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (2.7.1)
-    json-canonicalization (0.3.2)
+    json-canonicalization (0.4.0)
     json-jwt (1.16.3)
       activesupport (>= 4.2)
       aes_key_wrap
