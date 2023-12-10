@@ -20,8 +20,9 @@
       %tr
         %th
           = t :sku
-        %th
-          = t :supplier
+        - if @distributors_pickup_times.many?
+          %th
+            = t :supplier
         %th
           = t :product
         %th.text-right
@@ -37,8 +38,9 @@
         %tr
           %td
             #{line_items.first.variant.sku}
-          %td
-            #{raw(line_items.first.product.supplier.name)}
+          - if @distributors_pickup_times.many?
+            %td
+              #{raw(line_items.first.product.supplier.name)}
           %td
             #{raw(product_and_full_name)}
           %td.text-right
@@ -51,7 +53,8 @@
             #{Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency) }
       %tr.total-row
         %td
-        %td
+        - if @distributors_pickup_times.many?
+          %td
         %td
         %td
         %td
@@ -67,8 +70,9 @@
       %tr
         %th
           = t :sku
-        %th
-          = t :supplier
+        - if @distributors_pickup_times.many?
+          %th
+            = t :supplier
         %th
           = t :product
         %th.text-right
@@ -82,8 +86,9 @@
         %tr
           %td
             #{line_item[:sku]}
-          %td
-            #{raw(line_item[:supplier_name])}
+          - if @distributors_pickup_times.many?
+            %td
+              #{raw(line_item[:supplier_name])}
           %td
             #{raw(line_item[:product_and_full_name])}
           %td.text-right

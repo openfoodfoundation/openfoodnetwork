@@ -185,6 +185,49 @@ describe ProducerMailer, type: :mailer do
     end
   end
 
+  context "products from multiple suppliers" do
+    before do
+      order_cycle.exchanges.create! sender: s1, receiver: d2, incoming: true,
+                                    receival_instructions: 'Community hall'
+      order_cycle.exchanges.create! sender: d2, receiver: d2, incoming: false,
+                                    pickup_time: 'Mon, 22nd Dec'
+      order = create(:order, distributor: d2, order_cycle:, state: 'complete')
+      order.line_items << create(:line_item, quantity: 3, variant: p1.variants.first)
+      order.finalize!
+      order.save
+    end
+
+    it "displays a supplier column" do
+      expect(body_as_html(mail).find(".order-summary"))
+        .to have_selector("th", text: "Supplier")
+    end
+
+    context "when the show customer names to suppliers setting is enabled" do
+      before { order_cycle.coordinator.update!(show_customer_names_to_suppliers: true) }
+
+      it "displays a supplier column in the summary of orders grouped by customer" do
+        expect(body_as_html(mail).find(".customer-order"))
+          .to have_selector("th", text: "Supplier")
+      end
+    end
+  end
+
+  context "products from only one supplier" do
+    it "doesn't display a supplier column" do
+      expect(body_as_html(mail).find(".order-summary"))
+        .to have_no_selector("th", text: "Supplier")
+    end
+
+    context "when the show customer names to suppliers setting is enabled" do
+      before { order_cycle.coordinator.update!(show_customer_names_to_suppliers: true) }
+
+      it "doesn't display a supplier column in the summary of orders grouped by customer" do
+        expect(body_as_html(mail).find(".customer-order"))
+          .to have_no_selector("th", text: "Supplier")
+      end
+    end
+  end
+
   private
 
   def body_lines_including(mail, str)
