@@ -1281,6 +1281,17 @@ en:
           custom_tab_content: "Content for custom tab"
         connected_apps:
           legend: "Connected apps"
+          title: "Discover Regenerative"
+          tagline: "Allow website to publish your enterprise information."
+          action: "Share data"
+          description_html: |
+            <p>
+            Discover Regenerative makes it easier for buyers to discover
+            regenerative produce for their procurement, showcase producers that
+            are using regenerative farming practices, support connection
+            between buyers and producers within a trusted network.
+            </p>
+            <p><a href="" target="_blank"><b>Visit website</b> <i class="icon-external-link"></i></a></p>
       actions:
         edit_profile: Settings
         properties: Properties

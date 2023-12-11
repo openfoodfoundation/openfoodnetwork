@@ -30,10 +30,10 @@ describe "Connected Apps", feature: :connected_apps do
 
   it "is visible" do
     visit edit_admin_enterprise_path(enterprise)
-    expect(page).to have_content "CONNECTED APPS"
 
     scroll_to :bottom
     click_link "Connected apps"
-    expect(page).to have_content "in progress"
+    expect(page).to have_content "Discover Regenerative"
+    expect(page).to have_button "Share data"
   end
 end
