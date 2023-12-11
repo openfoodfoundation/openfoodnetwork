@@ -1279,6 +1279,8 @@ en:
           create_custom_tab: "Create custom tab in shopfront"
           custom_tab_title: "Title for custom tab"
           custom_tab_content: "Content for custom tab"
+        connected_apps:
+          legend: "Connected apps"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1532,6 +1534,7 @@ en:
           users: "Users"
           vouchers: Vouchers
           white_label: "White Label"
+          connected_apps: "Connected apps"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"

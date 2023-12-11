@@ -50,6 +50,7 @@ module Admin
         { name: 'shop_preferences', icon_class: "icon-shopping-cart", show: is_shop },
         { name: 'users', icon_class: "icon-user", show: true },
         { name: 'white_label', icon_class: "icon-leaf", show: true },
+        { name: 'connected_apps', icon_class: "icon-puzzle-piece", show: feature?(:connected_apps) },
       ]
     end
   end
