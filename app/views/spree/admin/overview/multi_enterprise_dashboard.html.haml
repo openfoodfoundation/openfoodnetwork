@@ -1,11 +1,10 @@
+- content_for :page_title do
+  = t('dashboard')
+
 - content_for :page_actions do
   = render 'admin/shared/user_guide_link'
 
-
 %div{ 'ng-app' => 'ofn.admin' }
-  %h1{ :style => 'margin-bottom: 30px' }
-    = t 'dashboard'
-
   - if @enterprises.empty?
 
     = render partial: "enterprises"
