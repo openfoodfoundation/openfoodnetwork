@@ -15,7 +15,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
     )
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1) }
-  let(:taxon) { build(:taxon, name: "Local grocery store", dfc_name: "local_grocery_store") }
+  let(:taxon) { build(:taxon, name: "Processed Vegetable", dfc_name: "processed_vegetable") }
 
   before { login_as user }
 
@@ -148,7 +148,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
         run_test! do
           expect(response.body).to include variant.name
           expect(json_response["ofn:spree_product_id"]).to eq 90_000
-          expect(json_response["dfc-b:hasType"]).to include("Local grocery store")
+          expect(json_response["dfc-b:hasType"]).to eq("dfc-pt:processed-vegetable")
           expect(json_response["ofn:image"]).to include("logo-white.png")
 
           # Insert static value to keep documentation deterministic:
