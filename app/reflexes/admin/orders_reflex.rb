@@ -32,13 +32,16 @@ module Admin
     end
 
     def bulk_invoice(params)
+      visible_orders = editable_orders.where(id: params[:bulk_ids]).filter(&:invoiceable?)
+      return unless all_distributors_can_invoice?(visible_orders)
+
       cable_ready.append(
         selector: "#orders-index",
         html: render(partial: "spree/admin/orders/bulk/invoice_modal")
       ).broadcast
 
       BulkInvoiceJob.perform_later(
-        params[:bulk_ids],
+        visible_orders.pluck(:id),
         "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
         channel: SessionChannel.for_request(request),
         current_user_id: current_user.id
@@ -105,6 +108,17 @@ module Admin
 
     def set_param_for_controller
       params[:id] = @order.number
+    end
+
+    def all_distributors_can_invoice?(orders)
+      distributors = orders.map(&:distributor).uniq.reject(&:can_invoice?)
+
+      return true if distributors.empty?
+
+      flash[:error] = I18n.t(:must_have_valid_business_number,
+                             enterprise_name: distributors.map(&:name).join(", "))
+      morph_admin_flashes
+      false
     end
   end
 end
