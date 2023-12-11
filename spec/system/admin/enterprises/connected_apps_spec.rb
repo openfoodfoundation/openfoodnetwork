@@ -9,7 +9,7 @@ describe "Connected Apps", feature: :connected_apps do
     login_as enterprise.owner
   end
 
-  it "is not visible by default" do
+  it "is only visible when enabled" do
     # Assuming that this feature will be the default one day, I'm treating this
     # as special case and disable the feature. I don't want to wrap all other
     # test cases in a context block for the feature toggle which will need
@@ -17,6 +17,15 @@ describe "Connected Apps", feature: :connected_apps do
     Flipper.disable(:connected_apps)
     visit edit_admin_enterprise_path(enterprise)
     expect(page).to_not have_content "CONNECTED APPS"
+
+    Flipper.enable(:connected_apps, enterprise.owner)
+    visit edit_admin_enterprise_path(enterprise)
+    expect(page).to have_content "CONNECTED APPS"
+
+    Flipper.disable(:connected_apps)
+    Flipper.enable(:connected_apps, enterprise)
+    visit edit_admin_enterprise_path(enterprise)
+    expect(page).to have_content "CONNECTED APPS"
   end
 
   it "is visible" do
