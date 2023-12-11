@@ -27,6 +27,12 @@ end
 require 'knapsack_pro'
 KnapsackPro::Adapters::RSpecAdapter.bind
 
+SimpleCov.start
+
+KnapsackPro::Hooks::Queue.before_queue do |queue_id|
+  SimpleCov.command_name("rspec_ci_node_#{KnapsackPro::Config::Env.ci_node_index}")
+end
+
 # Allow connections to selenium whilst raising errors when connecting to external sites
 require 'webmock/rspec'
 WebMock.enable!
