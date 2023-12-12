@@ -2,7 +2,9 @@
 
 # This soft deletes the product
 class ProductDeleter
-  def self.delete(product)
-    product.destroy
+  # @param id [int] ID of the product to be deleted
+  def self.delete(id)
+    product = Spree::Product.find_by(id:)
+    product&.destroy
   end
 end

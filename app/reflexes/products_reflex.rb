@@ -46,6 +46,24 @@ class ProductsReflex < ApplicationReflex
     render_products_form_with_flash
   end
 
+  def delete_product(product_id)
+    if ProductDeleter.delete(product_id)
+      puts "Deleted Successfully"
+    else
+      puts "Failure"
+    end
+    fetch_and_render_products
+  end
+
+  def delete_variant(variant_id)
+    if VariantDeleter.new.delete(variant_id)
+      puts "Deleted Successfully"
+    else
+      puts "Failure"
+    end
+    fetch_and_render_products
+  end
+
   private
 
   def init_filters_params
