@@ -6,7 +6,7 @@
       %a.six.columns.omega.icon-plus.button.blue{ href: "#{new_admin_product_path}" }
         = t "spree_admin_enterprises_create_new"
     - else
-      %a{ "ofn-with-tip" => "The products that you sell through the Open Food Network." }
+      %a{ "ofn-with-tip" => t(".products_tip") }
         = t "admin.whats_this"
   %div.sixteen.columns.alpha.list
     - if @product_count > 0
