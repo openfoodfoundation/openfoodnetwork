@@ -26,34 +26,33 @@ describe Spree::Gateway::StripeSCA, type: :model do
     { order_id: order.number }
   }
 
+  before { Stripe.api_key = secret }
+
+  let(:pm_card) do
+    Stripe::PaymentMethod.create({
+                                   type: 'card',
+                                   card: {
+                                     number: '4242424242424242',
+                                     exp_month: 12,
+                                     exp_year: year_valid,
+                                     cvc: '314',
+                                   },
+                                 })
+  end
+  let(:payment_intent) do
+    Stripe::PaymentIntent.create({
+                                   amount: 1000, # given in AUD cents
+                                   currency: 'aud', # AUD to match order currency
+                                   payment_method: pm_card,
+                                   payment_method_types: ['card'],
+                                   capture_method: 'manual',
+                                 })
+  end
+
   describe "#purchase", :vcr, :stripe_version do
-    before { Stripe.api_key = secret }
-
-    let!(:pm_card) do
-      Stripe::PaymentMethod.create({
-                                     type: 'card',
-                                     card: {
-                                       number: '4242424242424242',
-                                       exp_month: 12,
-                                       exp_year: year_valid,
-                                       cvc: '314',
-                                     },
-                                   })
-    end
-    let!(:payment_intent) do
-      Stripe::PaymentIntent.create({
-                                     amount: 1000, # given in AUD cents
-                                     currency: 'aud', # AUD to match order currency
-                                     payment_method: pm_card,
-                                     payment_method_types: ['card'],
-                                     capture_method: 'manual',
-                                   })
-    end
-
     # Stripe acepts amounts as positive integers representing how much to charge
     # in the smallest currency unit
-    let(:capture_amount) { order.total.to_i * 10 }
-    let(:response) { subject.purchase(capture_amount, credit_card, gateway_options) }
+    let(:capture_amount) { order.total.to_i * 100 } # order total is 10 AUD
 
     before do
       # confirms the payment
@@ -63,13 +62,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
     it "completes the purchase" do
       payment
 
-      expect {
-        response.to
-        change(
-          Stripe::PaymentIntent.retrieve(payment_intent.id).status
-        ).from("requires_capture").to("suceeded")
-      }
-
+      response = subject.purchase(capture_amount, credit_card, gateway_options)
       expect(response.success?).to eq true
     end
 
@@ -81,30 +74,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
     end
   end
 
-  context "#error message", :vcr, :stripe_version do
-    before { Stripe.api_key = secret }
-
-    let!(:pm_card) do
-      Stripe::PaymentMethod.create({
-                                     type: 'card',
-                                     card: {
-                                       number: '4242424242424242',
-                                       exp_month: 12,
-                                       exp_year: year_valid,
-                                       cvc: '314',
-                                     },
-                                   })
-    end
-    let!(:payment_intent) do
-      Stripe::PaymentIntent.create({
-                                     amount: 1000, # given in AUD cents
-                                     currency: 'aud', # AUD to match order currency
-                                     payment_method: pm_card,
-                                     payment_method_types: ['card'],
-                                     capture_method: 'manual',
-                                   })
-    end
-
+  describe "#error message", :vcr, :stripe_version do
     context "when payment intent state is not in 'requires_capture' state" do
       before do
         payment
