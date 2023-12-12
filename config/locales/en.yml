@@ -4188,6 +4188,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           has_no_payment_methods: "has no payment methods"
           has_no_shipping_methods: "has no shipping methods"
         products:
+          products_tip: "The products that you sell through the Open Food Network."
           active_products:
             zero: "You don't have any active products."
             one: "You have one active product"
