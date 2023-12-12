@@ -6,4 +6,4 @@
         = t(".pagination.clear_search")  
   %form.with-dropdown
     = t(".pagination.per_page.show")
-    = select_tag :per_page, options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy.items), data: { reflex: "change->products#change_per_page" }
+    = select_tag :per_page, options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy.items), class: "no-input", data: { reflex: "change->products#change_per_page", controller: "tom-select", "tom-select-options-value": '{ "plugins": [] }'}
