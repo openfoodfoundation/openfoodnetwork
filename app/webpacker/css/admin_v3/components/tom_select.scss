@@ -55,12 +55,12 @@
 
     .option {
       padding: 8px;
+      border-left: 3px solid transparent;
+      line-height: 20px;
 
-      &.selected {
-        border-left: 2px solid $orient;
-      }
-
+      &.selected,
       &.active {
+        border-left: 3px solid $orient;
         background-color: $lighter-grey;
         color: $near-black;
       }
