@@ -575,7 +575,7 @@ GEM
     redis (4.8.1)
     redis-client (0.18.0)
       connection_pool
-    regexp_parser (2.8.2)
+    regexp_parser (2.8.3)
     reline (0.4.1)
       io-console (~> 0.5)
     request_store (1.5.1)
@@ -634,7 +634,7 @@ GEM
     rswag-ui (2.13.0)
       actionpack (>= 3.1, < 7.2)
       railties (>= 3.1, < 7.2)
-    rubocop (1.58.0)
+    rubocop (1.59.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
