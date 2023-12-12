@@ -824,7 +824,9 @@ en:
           clear_search: Clear search
       filters:
         search_products: Search for products
+        search_for_producers: Search for producers
         all_producers: All producers
+        search_for_categories: Search for categories
         all_categories: All categories
         producers:
           label: Producers
