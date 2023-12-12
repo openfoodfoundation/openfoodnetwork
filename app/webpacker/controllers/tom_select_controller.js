@@ -3,25 +3,18 @@ import TomSelect from "tom-select/dist/esm/tom-select.complete";
 
 export default class extends Controller {
   static values = { options: Object };
-  static defaults = {
-    maxItems: 1,
-    maxOptions: null,
-    plugins: ["dropdown_input"],
-    allowEmptyOption: true,
-    closeAfterSelect: true,
-    onItemAdd: function () {
-      this.setTextboxValue("");
-    },
-  };
 
   connect(options = {}) {
-    if (this.#placeholder()) {
-      options.allowEmptyOption = false;
-      options.placeholder = this.#placeholder();
-    }
-
     this.control = new TomSelect(this.element, {
-      ...this.constructor.defaults,
+      maxItems: 1,
+      maxOptions: null,
+      plugins: ["dropdown_input"],
+      allowEmptyOption: !this.#placeholder(),
+      closeAfterSelect: true,
+      placeholder: this.#placeholder(),
+      onItemAdd: function () {
+        this.setTextboxValue("");
+      },
       ...this.optionsValue,
       ...options,
     });
