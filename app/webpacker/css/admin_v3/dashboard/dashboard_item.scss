@@ -14,10 +14,6 @@ div.dashboard_item {
     padding: 0px 6px;
     border-radius: 10px;
 
-    &.green {
-      background-color: $spree-green;
-    }
-
     &.red {
       background-color: $color-warning;
     }
@@ -177,13 +173,6 @@ div.dashboard_item {
 
         .icon-ok-sign {
           color: #fff;
-        }
-
-        .text-icon {
-          &.green {
-            color: $spree-green;
-            background-color: #fff;
-          }
         }
       }
     }
