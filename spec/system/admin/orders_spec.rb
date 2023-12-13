@@ -607,7 +607,7 @@ describe '
               expect(page).to have_content "Bulk Invoice created"
 
               within ".modal-content" do
-                expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
+                expect(page).to have_link(class: "button", text: "View File", href: /invoices/)
 
                 invoice_content = extract_pdf_content
 
