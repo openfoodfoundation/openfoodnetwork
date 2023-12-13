@@ -21,10 +21,6 @@ div.dashboard_item {
     &.red {
       background-color: $color-warning;
     }
-
-    &.orange {
-      background-color: $color-warning;
-    }
   }
 
   div.header {
@@ -40,15 +36,6 @@ div.dashboard_item {
     }
 
     &.red {
-      border-color: $color-warning;
-      border-width: 3px;
-
-      h3 {
-        color: $color-warning;
-      }
-    }
-
-    &.orange {
       border-color: $color-warning;
       border-width: 3px;
 
@@ -156,18 +143,9 @@ div.dashboard_item {
       font-size: 30px;
     }
 
-    &.orange {
-      color: $color-warning;
-      border: solid $color-warning;
-    }
-
     &.red {
       color: $color-warning;
       border: solid $color-warning;
-    }
-
-    &.orange,
-    &.red {
       border-width: 0px 3px 0px 3px;
     }
 
@@ -216,10 +194,6 @@ div.dashboard_item {
     font-size: 110%;
     font-weight: bold;
     text-align: center;
-
-    &.orange {
-      background-color: $color-warning;
-    }
 
     &.blue {
       background-color: $spree-blue;
