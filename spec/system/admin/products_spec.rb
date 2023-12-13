@@ -260,7 +260,7 @@ RSpec.describe '
                 expect(page).to have_content "Price is not a number"
               end
               within "#product_price_field" do # the form highlights the price field
-                expect(page).to have_content "PRICE"
+                expect(page).to have_content "Price"
                 expect(page).to have_content "is not a number"
               end
             end
