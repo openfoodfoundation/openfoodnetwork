@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ConfirmModalComponent < ModalComponent
-  # @param controller_data_values [Array(Hash)] format: {<value-name-1>: value1, <value-name-2>: value2}
+  # @param controller_data_values [Array(Hash)]
+  #        format: {<value-name-1>: value1, <value-name-2>: value2}
   def initialize(
     id:,
     reflex: nil,
@@ -35,8 +36,8 @@ class ConfirmModalComponent < ModalComponent
   def modal_attrs
     @modal_attrs ||= {
       id: @id,
-      "data-controller": "modal #{@controller}",
-      "data-action": "keyup@document->modal#closeIfEscapeKey",
+      'data-controller': "modal #{@controller}",
+      'data-action': "keyup@document->modal#closeIfEscapeKey",
       "data-#{@controller}-reflex-value": @reflex
     }.merge(@controller_data_values)
   end

@@ -250,7 +250,7 @@ class ProductsReflex < ApplicationReflex
   end
 
   def product_finder(id)
-    ProductScopeQuery.new(current_user, {id:})
+    ProductScopeQuery.new(current_user, { id: })
   end
 
   def variant_scope
