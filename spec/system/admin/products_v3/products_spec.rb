@@ -33,8 +33,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
     it "displays a list of products" do
       within ".products" do
-        expect(page).to have_field("_products__name", with: p1.name.to_s)
-        expect(page).to have_field("_products__name", with: p2.name.to_s)
+        expect(page).to have_field("_products_0_name", with: p1.name.to_s)
+        expect(page).to have_field("_products_1_name", with: p2.name.to_s)
       end
     end
 
@@ -66,18 +66,10 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       end
 
       it "displays an on hand count in a span for each product" do
-        within(:xpath, '//*[@id="products-form"]/table/tbody[1]/tr[1]/td[5]/div') do
-          expect(page).to have_content "On demand"
-        end
-        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[1]/td[5]/div') do
-          expect(page).to have_content "20" # displays the total stock
-        end
-        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[2]/td[5]/div') do
-          expect(page).to have_content "16" # displays the stock for variant_2
-        end
-        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[3]/td[5]/div') do
-          expect(page).to have_content "4"  # displays the stock for variant_3
-        end
+        expect(page).to have_content "On demand"
+        expect(page).to_not have_content "20" # does not display the total stock
+        expect(page).to have_content "16" # displays the stock for variant_2
+        expect(page).to have_content "4"  # displays the stock for variant_3
       end
     end
 
