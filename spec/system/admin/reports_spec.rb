@@ -31,7 +31,6 @@ RSpec.describe '
     end
   end
 
-
   describe "Background processing" do
     it "renders UTF-8 characters" do
       # We had a problem when UTF-8 was in the page and the report because
