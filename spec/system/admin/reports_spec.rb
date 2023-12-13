@@ -133,7 +133,7 @@ RSpec.describe '
 
       click_on "Go"
 
-      expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
+      expect(page).to have_content "First Name Last Name Billing Address Email"
 
       # Now that we see the report, we need to make sure that it's not replaced
       # by the "loading" spinner when the controller action finishes.
