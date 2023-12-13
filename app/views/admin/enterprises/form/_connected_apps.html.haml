@@ -1,11 +1,17 @@
-%div
+%div{ data: {reflex: {root: ".connected-app__head, .connected-app__connection"}} }
   .connected-app__head
     %div
       %h3= t ".title"
       %p= t ".tagline"
     %div
-      %button
-        = t ".action"
+      - if @enterprise.connected_apps.empty?
+        %button{ data: {reflex: "click->Admin::ConnectedApp#create", enterprise_id: @enterprise.id} }
+          = t ".action"
+  .connected-app__connection
+    - if @enterprise.connected_apps.present?
+      .connected-app__note
+        = t ".note"
+
   %hr
   .connected-app__description
     = t ".description_html"

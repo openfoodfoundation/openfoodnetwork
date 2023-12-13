@@ -1284,6 +1284,9 @@ en:
           title: "Discover Regenerative"
           tagline: "Allow website to publish your enterprise information."
           action: "Share data"
+          note: |
+            In order for this enterprise to be published, you need to include
+            regenerative details and accept the Terms and Conditions.
           description_html: |
             <p>
             Discover Regenerative makes it easier for buyers to discover

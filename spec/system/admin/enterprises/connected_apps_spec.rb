@@ -28,12 +28,15 @@ describe "Connected Apps", feature: :connected_apps do
     expect(page).to have_content "CONNECTED APPS"
   end
 
-  it "is visible" do
+  it "can be enabled" do
     visit edit_admin_enterprise_path(enterprise)
 
     scroll_to :bottom
     click_link "Connected apps"
     expect(page).to have_content "Discover Regenerative"
-    expect(page).to have_button "Share data"
+
+    click_button "Share data"
+    expect(page).to_not have_button "Share data"
+    expect(page).to have_content "include regenerative details"
   end
 end
