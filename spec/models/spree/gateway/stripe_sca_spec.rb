@@ -3,80 +3,87 @@
 require 'spec_helper'
 
 describe Spree::Gateway::StripeSCA, type: :model do
-  before { Stripe.api_key = "sk_test_12345" }
+  let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
 
-  let(:order) { create(:order_with_totals_and_distribution) }
-  let(:credit_card) { create(:credit_card) }
+  let(:order) { create(:order_ready_for_payment) }
+
+  let(:year_valid) { Time.zone.now.year.next }
+
+  let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id) }
+
   let(:payment) {
     create(
       :payment,
-      state: "checkout",
       order:,
       amount: order.total,
       payment_method: subject,
       source: credit_card,
-      response_code: "12345"
+      response_code: payment_intent.id
     )
   }
+
   let(:gateway_options) {
     { order_id: order.number }
   }
-  let(:payment_authorised) {
-    payment_intent(payment.amount, "requires_capture")
-  }
-  let(:capture_successful) {
-    payment_intent(payment.amount, "succeeded")
-  }
 
-  describe "#purchase" do
-    it "captures the payment" do
-      stub_request(:get, "https://api.stripe.com/v1/payment_intents/12345").
-        to_return(status: 200, body: payment_authorised)
-      stub_request(:post, "https://api.stripe.com/v1/payment_intents/12345/capture").
-        with(body: { "amount_to_capture" => order.total }).
-        to_return(status: 200, body: capture_successful)
+  before { Stripe.api_key = secret }
 
-      response = subject.purchase(order.total, credit_card, gateway_options)
+  let(:pm_card) do
+    Stripe::PaymentMethod.create({
+                                   type: 'card',
+                                   card: {
+                                     number: '4242424242424242',
+                                     exp_month: 12,
+                                     exp_year: year_valid,
+                                     cvc: '314',
+                                   },
+                                 })
+  end
+  let(:payment_intent) do
+    Stripe::PaymentIntent.create({
+                                   amount: 1000, # given in AUD cents
+                                   currency: 'aud', # AUD to match order currency
+                                   payment_method: pm_card,
+                                   payment_method_types: ['card'],
+                                   capture_method: 'manual',
+                                 })
+  end
 
+  describe "#purchase", :vcr, :stripe_version do
+    # Stripe acepts amounts as positive integers representing how much to charge
+    # in the smallest currency unit
+    let(:capture_amount) { order.total.to_i * 100 } # order total is 10 AUD
+
+    before do
+      # confirms the payment
+      Stripe::PaymentIntent.confirm(payment_intent.id)
+    end
+
+    it "completes the purchase" do
+      payment
+
+      response = subject.purchase(capture_amount, credit_card, gateway_options)
       expect(response.success?).to eq true
     end
 
     it "provides an error message to help developer debug" do
-      stub_request(:get, "https://api.stripe.com/v1/payment_intents/12345").
-        to_return(status: 200, body: capture_successful)
+      response_error = subject.purchase(capture_amount, credit_card, gateway_options)
 
-      response = subject.purchase(order.total, credit_card, gateway_options)
-
-      expect(response.success?).to eq false
-      expect(response.message).to eq "Invalid payment state: succeeded"
+      expect(response_error.success?).to eq false
+      expect(response_error.message).to eq "No pending payments"
     end
+  end
 
+  describe "#error message", :vcr, :stripe_version do
     context "when payment intent state is not in 'requires_capture' state" do
       before do
         payment
       end
 
-      it "succeeds if payment intent state is requires_capture" do
-        stub_request(:post, "https://api.stripe.com/v1/payment_intents/12345/capture").
-          with(body: { "amount_to_capture" => order.total }).
-          to_return(status: 200, body: capture_successful)
-
-        allow(Stripe::PaymentIntentValidator).to receive_message_chain(:new, :call).
-          and_return(double(status: "requires_capture"))
-
-        response = subject.purchase(order.total, credit_card, gateway_options)
-
-        expect(response.success?).to eq true
-      end
-
       it "does not succeed if payment intent state is not requires_capture" do
-        allow(Stripe::PaymentIntentValidator).to receive_message_chain(:new, :call).
-          and_return(double(status: "not_ready_yet"))
-
         response = subject.purchase(order.total, credit_card, gateway_options)
-
         expect(response.success?).to eq false
-        expect(response.message).to eq "Invalid payment state: not_ready_yet"
+        expect(response.message).to eq "Invalid payment state: requires_confirmation"
       end
     end
   end
