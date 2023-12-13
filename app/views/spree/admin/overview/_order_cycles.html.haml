@@ -1,4 +1,4 @@
-- color_class = @order_cycle_count > 0 ? "" : "red"
+- color_class = "red" unless @order_cycle_count > 0
 - icon_class = @order_cycle_count > 0 ? "icon-ok-sign" : "icon-warning-sign"
 %div.dashboard_item.seven.columns.omega#order_cycles
   %div.header.sixteen.columns.alpha{class: color_class}
