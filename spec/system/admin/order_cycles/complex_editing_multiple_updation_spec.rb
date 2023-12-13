@@ -35,6 +35,9 @@ describe '
       click_link 'Orders'
     end
 
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
+
     # Click cancel with unsaved changes
     dismiss_confirm "" do
       click_button 'Cancel'
@@ -85,6 +88,9 @@ describe '
     login_as_admin
     visit edit_admin_order_cycle_path(oc)
 
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
+
     # Go to incoming step
     click_button 'Next'
 
@@ -105,6 +111,9 @@ describe '
     dismiss_confirm "" do
       click_link 'Orders'
     end
+
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
 
     # Click cancel with unsaved changes
     dismiss_confirm "" do
@@ -154,8 +163,14 @@ describe '
     login_as_admin
     visit edit_admin_order_cycle_path(oc)
 
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
+
     # Go to incoming step
     click_button 'Next'
+
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
 
     # Go to outgoing step
     click_button 'Next'
@@ -177,6 +192,9 @@ describe '
     dismiss_confirm "" do
       click_link 'Orders'
     end
+
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
 
     # Click cancel with unsaved changes
     dismiss_confirm "" do
