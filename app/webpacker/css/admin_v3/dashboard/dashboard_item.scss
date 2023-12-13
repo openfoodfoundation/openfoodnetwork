@@ -14,7 +14,7 @@ div.dashboard_item {
     padding: 0px 6px;
     border-radius: 10px;
 
-    &.red {
+    &.warning {
       background-color: $color-warning;
     }
   }
@@ -31,7 +31,7 @@ div.dashboard_item {
       bottom: 5px;
     }
 
-    &.red {
+    &.warning {
       border-color: $color-warning;
       border-width: 3px;
 
@@ -139,7 +139,7 @@ div.dashboard_item {
       font-size: 30px;
     }
 
-    &.red {
+    &.warning {
       color: $color-warning;
       border: solid $color-warning;
       border-width: 0px 3px 0px 3px;
@@ -184,7 +184,7 @@ div.dashboard_item {
     font-weight: bold;
     text-align: center;
 
-    &.red {
+    &.warning {
       background-color: $color-warning;
     }
 

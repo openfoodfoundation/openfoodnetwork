@@ -18,7 +18,7 @@ div.dashboard_item {
       background-color: $spree-green;
     }
 
-    &.red {
+    &.warning {
       background-color: $color-warning;
     }
 
@@ -39,7 +39,7 @@ div.dashboard_item {
       bottom: 5px;
     }
 
-    &.red {
+    &.warning {
       border-color: $color-warning;
       border-width: 3px;
 
@@ -160,13 +160,13 @@ div.dashboard_item {
       border: solid $color-warning;
     }
 
-    &.red {
+    &.warning {
       color: $color-warning;
       border: solid $color-warning;
     }
 
     &.orange,
-    &.red {
+    &.warning {
       border-width: 0px 3px 0px 3px;
     }
 
@@ -224,7 +224,7 @@ div.dashboard_item {
       background-color: $spree-blue;
     }
 
-    &.red {
+    &.warning {
       background-color: $color-warning;
     }
 

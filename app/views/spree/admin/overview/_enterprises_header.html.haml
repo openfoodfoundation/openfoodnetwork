@@ -1,4 +1,4 @@
-%div.header.sixteen.columns.alpha{ :class => "#{@enterprises.count > 0 ? "" : "red"}"}
+%div.header.sixteen.columns.alpha{ :class => "#{@enterprises.count > 0 ? "" : "warning"}"}
   %h3.thirteen.columns.alpha
     = t "spree_admin_overview_enterprises_header"
   - if @enterprises.any?
