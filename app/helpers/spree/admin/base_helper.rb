@@ -17,7 +17,9 @@ module Spree
         obj = object.respond_to?(:errors) ? object : instance_variable_get("@#{object}")
 
         if obj && obj.errors[method].present?
+          # rubocop:disable Rails/OutputSafety
           errors = obj.errors[method].map { |err| h(err) }.join('<br />').html_safe
+          # rubocop:enable Rails/OutputSafety
           content_tag(:span, errors, class: 'formError')
         else
           ''

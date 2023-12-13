@@ -520,11 +520,6 @@ Rails/NegateInclude:
     - 'lib/spree/localized_number.rb'
     - 'spec/support/matchers/table_matchers.rb'
 
-# Offense count: 16
-Rails/OutputSafety:
-  Exclude:
-    - 'app/helpers/spree/admin/base_helper.rb'
-
 # Offense count: 31
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/Pluck:
