@@ -16,6 +16,7 @@ export default class extends ApplicationController {
   }
 
   deleteVariant() {
+    window.dispatchEvent(new Event('modal:close'));
     this.stimulate('Products#delete_variant', this.currentIdValue)
   }
 

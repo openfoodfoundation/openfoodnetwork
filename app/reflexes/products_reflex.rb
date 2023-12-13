@@ -46,21 +46,31 @@ class ProductsReflex < ApplicationReflex
     render_products_form_with_flash
   end
 
-  def delete_product(product_id)
-    if ProductDeleter.delete(product_id)
+  def delete_product(id)
+    authorize! :delete, Spree::Product
+    product = product_finder(id).find_product
+    authorize! :delete, product
+
+    if product.destroy
       puts "Deleted Successfully"
     else
       puts "Failure"
     end
+
     fetch_and_render_products
   end
 
-  def delete_variant(variant_id)
-    if VariantDeleter.new.delete(variant_id)
+  def delete_variant(id)
+    authorize! :delete, Spree::Variant
+    variant = variant_scope.find(id)
+    authorize! :delete, variant
+
+    if VariantDeleter.new.delete(variant)
       puts "Deleted Successfully"
     else
       puts "Failure"
     end
+
     fetch_and_render_products
   end
 
@@ -237,5 +247,13 @@ class ProductsReflex < ApplicationReflex
   def products_bulk_params
     params.permit(products: ::PermittedAttributes::Product.attributes)
       .to_h.with_indifferent_access
+  end
+
+  def product_finder(id)
+    ProductScopeQuery.new(current_user, {id:})
+  end
+
+  def variant_scope
+    Spree::Variant.active
   end
 end
