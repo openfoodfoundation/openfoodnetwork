@@ -531,7 +531,8 @@ RSpec.describe '
         )
 
         # When I save, any exchanges that I can't manage remain
-        click_button 'Save'
+        # overlapping warning, we need to use 'node.trigger("click")'
+        page.find(:button, "Save").trigger("click")
         expect(page).to have_content "Your order cycle has been updated."
 
         oc.reload
@@ -803,11 +804,16 @@ RSpec.describe '
       click_button 'Add coordinator fee'
       select 'that fee', from: 'order_cycle_coordinator_fee_0_id'
 
+      # Click dismiss on distributor warning
+      click_button 'Dismiss'
+
       # When I update, or update and close, both work
       click_button 'Save'
       expect(page).to have_content 'Your order cycle has been updated.'
 
       fill_in 'order_cycle_outgoing_exchange_0_pickup_instructions', with: 'yyz'
+
+      scroll_to(:bottom)
       click_button 'Save and Back to List'
 
       # Then my order cycle should have been updated
