@@ -20,13 +20,29 @@
   }
 
   // Form actions floats over other controls when active
-  #products-form {
-    .form-actions {
-      position: absolute;
-      top: -1em;
-      left: 0;
-      right: 0;
-      z-index: 1; // Ensure tom-select and .disabled-section are covered
+  .form-actions {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1; // Ensure tom-select and .disabled-section are covered
+  }
+
+  .form-actions:not(.hidden) + table.products {
+    thead {
+      top: 54px;
+
+      ::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        right: 50%;
+        width: 102%;
+        height: 0.5rem;
+        background-color: white;
+        transform: translate(-50%, -100%);
+      }
     }
   }
 
@@ -37,6 +53,12 @@
     background-color: $color-tbl-bg;
     padding: 4px;
     border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
+
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
 
     // Additional horizontal padding to align with input contents
     thead th.with-input {
