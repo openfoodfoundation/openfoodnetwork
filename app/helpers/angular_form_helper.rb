@@ -9,7 +9,7 @@ module AngularFormHelper
       text, value = option_text_and_value(element).map(&:to_s)
       %(<option value="#{ERB::Util.html_escape(value)}"\
         #{html_attributes}>#{ERB::Util.html_escape(text)}</option>)
-    end.join("\n").html_safe
+    end.join("\n").html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def ng_options_from_collection_for_select(collection, value_method, text_method, angular_field)

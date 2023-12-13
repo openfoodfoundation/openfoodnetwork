@@ -11,7 +11,7 @@ module Reporting
       def initialize(model, grouping_fields = proc { [] })
         @grouping_fields = instance_exec(&grouping_fields)
 
-        super model.arel_table
+        super(model.arel_table)
       end
 
       def selecting(lambda)
@@ -68,7 +68,9 @@ module Reporting
         options_text = variant_table[:unit_presentation]
 
         unit_to_display = coalesce(nullify_empty_strings(display_as), options_text)
+        # rubocop:disable Rails/OutputSafety
         combined_description = sql_concat(display_name, raw("' ('"), unit_to_display, raw("')'"))
+        # rubocop:enable Rails/OutputSafety
 
         Case.new.
           when(nullify_empty_strings(display_name).eq(nil)).then(unit_to_display).
@@ -79,7 +81,8 @@ module Reporting
       private
 
       def default_mask_rule
-        line_item_table[:order_id].in(raw("#{managed_orders_alias.name}.id")).
+        id = raw("#{managed_orders_alias.name}.id") # rubocop:disable Rails/OutputSafety
+        line_item_table[:order_id].in(id).
           or(distributor_alias[:show_customer_names_to_suppliers].eq(true))
       end
 

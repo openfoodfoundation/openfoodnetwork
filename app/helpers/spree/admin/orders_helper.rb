@@ -7,7 +7,7 @@ module Spree
         links = []
         links << cancel_event_link if @order.can_cancel?
         links << resume_event_link if @order.can_resume?
-        links.join('&nbsp;').html_safe
+        links.join('&nbsp;').html_safe # rubocop:disable Rails/OutputSafety
       end
 
       def line_item_shipment_price(line_item, quantity)

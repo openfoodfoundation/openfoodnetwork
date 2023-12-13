@@ -10,7 +10,7 @@ module ApplicationHelper
 
     return "" unless obj && obj.errors[method].present?
 
-    errors = obj.errors[method].map { |err| h(err) }.join('<br />').html_safe
+    errors = obj.errors[method].map { |err| h(err) }.join('<br />').html_safe # rubocop:disable Rails/OutputSafety
 
     if options[:standalone]
       content_tag(
@@ -36,7 +36,7 @@ module ApplicationHelper
         hreflang: locale.to_s.gsub("_", "-").downcase,
         href: "#{request.protocol}#{request.host_with_port}/locales/#{locale}"
       )
-    end.join("\n").html_safe
+    end.join("\n").html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def ng_form_for(name, *args, &)

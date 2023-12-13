@@ -31,7 +31,7 @@ module Spree
         out = ''
         out << fields.hidden_field(:_destroy) unless fields.object.new_record?
         out << (link_to icon('icon-remove'), "#", class: 'remove')
-        out.html_safe
+        out.html_safe # rubocop:disable Rails/OutputSafety
       end
     end
   end
