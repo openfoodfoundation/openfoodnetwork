@@ -47,9 +47,6 @@ Capybara.configure do |config|
   config.ignore_hidden_elements = true
 end
 
-# activate feature toggle admin_style_v3 to use new admin interface and run the build
-Flipper.enable(:admin_style_v3)
-
 FactoryBot.use_parent_strategy = false
 FactoryBot::SyntaxRunner.include FileHelper
 
@@ -113,6 +110,11 @@ RSpec.configure do |config|
     end
 
     Flipper.enable(feature)
+  end
+
+  # activate feature toggle admin_style_v3 to use new admin interface and run the build
+  config.before(:suite) do
+    Flipper.enable(:admin_style_v3)
   end
 
   # Enable caching in any specs tagged with `caching: true`.
