@@ -3,7 +3,7 @@
     %h3.ten.columns.alpha
       = t "products"
     - if @product_count > 0
-      %a.six.columns.omega.icon-plus.button.blue{ href: "#{new_admin_product_path}" }
+      %a.six.columns.omega.icon-plus.button{ href: "#{new_admin_product_path}" }
         = t "spree_admin_enterprises_create_new"
     - else
       %a{ "ofn-with-tip" => t(".products_tip") }
@@ -15,7 +15,7 @@
           = t(".active_products", count: @product_count )
         %span.three.columns.omega
           %span.icon-ok-sign
-      %a.sixteen.columns.alpha.button.bottom.blue{ href: "#{admin_products_path}" }
+      %a.sixteen.columns.alpha.button.bottom{ href: "#{admin_products_path}" }
         = t "spree_admin_enterprises_producers_manage_products"
         %span.icon-arrow-right
     - else
