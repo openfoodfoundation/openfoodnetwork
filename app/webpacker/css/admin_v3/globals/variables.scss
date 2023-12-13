@@ -25,6 +25,12 @@ $color-success:                  $green !default;
 $color-notice:                   $yellow !default;
 $color-warning:                  $red !default;
 $color-error:                    $red !default;
+$color-flash-success-text:       $white !default;
+$color-flash-success-bg:         $near-black !default;
+$color-flash-notice-text:        $color-body-text !default;
+$color-flash-notice-bg:          $fair-pink !default;
+$color-flash-error-text:         $white !default;
+$color-flash-error-bg:           $color-error !default;
 
 // Table styles
 $color-tbl-bg:                   $light-grey !default;
@@ -40,7 +46,6 @@ $padding-tbl-cell-relaxed:       12px 12px;
 // Button colors
 $color-btn-bg:                   $teal !default;
 $color-btn-text:                 $white !default;
-$color-btn-shadow:               0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07) !default;
 $color-btn-hover-bg:             $orient !default;
 $color-btn-hover-text:           $white !default;
 $color-btn-hover-border:         $dark-blue !default;
@@ -48,6 +53,8 @@ $color-btn-disabled-bg:          $medium-grey !default;
 $color-btn-disabled-text:        $lighter-grey !default;
 $color-btn-red-bg:               $red !default;
 $color-btn-red-hover-bg:         $roof-terracotta !default;
+$color-btn-secondary-bg:         $white !default;
+$color-btn-secondary-hover-bg:   $orient !default;
 
 // Actions colors
 $color-action-edit-bg:           very-light($teal) !default;
@@ -161,6 +168,7 @@ $h2-size:                        $h3-size + 2 !default;
 $h1-size:                        $h2-size + 2 !default;
 
 $border-radius:                  4px !default;
+$box-shadow:                     0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07) !default;
 
 $font-weight-bold:               600 !default;
 $font-weight-normal:             400 !default;

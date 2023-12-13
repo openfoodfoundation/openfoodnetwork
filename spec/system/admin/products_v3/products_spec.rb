@@ -237,7 +237,6 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         expect(page).to have_css "button[aria-label='On Hand']", text: "6"
       end
 
-      pending
       expect(page).to have_content "Changes saved"
     end
 
@@ -259,7 +258,6 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
       end
 
-      pending
       expect(page).to have_content "Changes saved"
     end
 
@@ -298,14 +296,15 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
           fill_in "Name", with: ""
           fill_in "SKU", with: "A" * 256
         end
+      end
+
+      it "shows errors for both product and variant fields" do
+        # Update variant with invalid data too
         within row_containing_name("Medium box") do
           fill_in "Name", with: "L" * 256
           fill_in "SKU", with: "1" * 256
           fill_in "Price", with: "10.25"
         end
-      end
-
-      it "shows errors for both product and variant fields" do
         # Also update another product with valid data
         within row_containing_name("Bananas") do
           fill_in "Name", with: "Bananes"
@@ -316,9 +315,7 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
           product_a.reload
         }.to_not change { product_a.name }
 
-        # pending("unchanged rows are being saved") # TODO: don't report unchanged rows
-        # expect(page).to_not have_content("rows were saved correctly")
-        # Both the product and variant couldn't be saved.
+        expect(page).to have_content("1 product was saved correctly")
         expect(page).to have_content("1 product could not be saved")
         expect(page).to have_content "Please review the errors and try again"
 
@@ -352,7 +349,6 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         }.to change { product_a.name }.to("Pommes")
           .and change{ product_a.sku }.to("POM-00")
 
-        pending
         expect(page).to have_content "Changes saved"
       end
     end
@@ -400,6 +396,8 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
           page.find(".vertical-ellipsis-menu").click
           click_link('Clone')
         end
+
+        expect(page).to have_content "Product cloned"
 
         within "table.products" do
           # Gather input values, because page.content doesn't include them.

@@ -3,7 +3,7 @@
 = yield :stripe_js
 
 #wrapper
-  .flash-container
+  #flashes
     = render partial: "admin/shared/flashes", locals: { flashes: flash }
 
   = render partial: "spree/layouts/admin/progress_spinner"

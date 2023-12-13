@@ -82,8 +82,9 @@ module Spree
 
       def clone
         @new = @product.duplicate
-        @new.save
+        raise "Clone failed" unless @new.save
 
+        flash[:success] = t('.success')
         redirect_to spree.admin_products_url
       end
 

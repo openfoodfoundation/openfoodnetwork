@@ -851,8 +851,8 @@ en:
             other: "%{count} products could not be saved. Please review the errors and try again."
         save: Save changes
         reset: Discard changes
-      bulk_update: # TODO: fix these
-        success: "Products successfully updated" #TODO: add count
+      bulk_update:
+        success: Changes saved
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1510,6 +1510,8 @@ en:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      flashes:
+        dismiss: Dismiss
       side_menu:
         enterprise:
           primary_details: "Primary Details"
@@ -4341,6 +4343,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_unit_size: Bulk unit size
         display_as:
           display_as: Display As
+        clone:
+          success: Product cloned
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."

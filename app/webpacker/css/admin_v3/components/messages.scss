@@ -27,39 +27,43 @@
 
 .flash-container {
   position: fixed;
-  top: 0;
   left: 0;
+  bottom: 0;
   width: 100%;
   z-index: 1000;
+  display: flex;
+  justify-content: center;
 
   .flash {
-    padding: 18px;
-    text-align: center;
-    font-size: 120%;
-    color: $color-1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    bottom: 3.5rem;
+    padding: 0.25rem;
+    min-width: 24rem;
+    max-width: 48.25em;
     font-weight: 600;
-    margin-top: 0;
+    background-color: $light-grey;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
 
-    &.notice {
-      background-color: rgba($color-notice, 0.8);
-    }
     &.success {
-      background-color: rgba($color-success, 0.8);
+      color: $color-flash-success-text;
+      background-color: $color-flash-success-bg;
+    }
+    &.notice {
+      color: $color-flash-notice-text;
+      background-color: $color-flash-notice-bg;
+      border-left: $border-radius solid $red;
     }
     &.error {
-      background-color: rgba($color-error, 0.8);
+      color: $color-flash-error-text;
+      background-color: $color-flash-error-bg;
     }
 
-    // Adjust heights to fit main layout dimension (header, navbar...)
-    &:nth-child(2) {
-      padding: 24px;
-    }
-    &:nth-child(3) {
-      padding: 20px;
-    }
-
-    .actions {
-      display: none; /* avoid adding new button on old design */
+    .msg {
+      flex-grow: 1;
+      margin: 0.25rem 0.75rem;
     }
   }
 }

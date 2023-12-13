@@ -7,6 +7,12 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
   let(:context) {
     { url: admin_products_url, connection: { current_user: } }
   }
+  let(:flash) { {} }
+
+  before do
+    # Mock flash, because stimulus_reflex_testing doesn't support sessions
+    allow_any_instance_of(described_class).to receive(:flash).and_return(flash)
+  end
 
   describe '#fetch' do
     subject{ build_reflex(method_name: :fetch, **context) }
@@ -54,6 +60,8 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
         product_a.reload
       }.to change{ product_a.name }.to("Pommes")
         .and change{ product_a.sku }.to("POM-00")
+
+      expect(flash).to include success: "Changes saved"
     end
 
     it "saves valid changes to products and nested variants" do
@@ -89,6 +97,8 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.price }.to(10.25)
         .and change{ variant_a1.on_hand }.to(6)
+
+      expect(flash).to include success: "Changes saved"
     end
 
     describe "sorting" do
@@ -112,6 +122,7 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
           product_a.id,
           product_b.id,
         ]
+        expect(flash).to include success: "Changes saved"
       end
     end
 
@@ -136,6 +147,7 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
 
         reflex = run_reflex(:bulk_update, params:)
         expect(reflex.get(:error_counts)).to eq({ saved: 1, invalid: 2 })
+        expect(flash).to_not include success: "Changes saved"
 
         # # WTF
         # expect{ reflex(:bulk_update, params:) }.to broadcast(
