@@ -1,5 +1,5 @@
 %div.dashboard_item.seven.columns.alpha#products
-  %div.header.sixteen.columns.alpha{ :class => "#{@product_count > 0 ? "" : "red"}"}
+  %div.header.sixteen.columns.alpha{ :class => "#{@product_count > 0 ? "" : "warning"}"}
     %h3.ten.columns.alpha
       = t "products"
     - if @product_count > 0
@@ -19,11 +19,11 @@
         = t "spree_admin_enterprises_producers_manage_products"
         %span.icon-arrow-right
     - else
-      %div.sixteen.columns.alpha.list-item.red
+      %div.sixteen.columns.alpha.list-item.warning
         %span.thirteen.columns.alpha
           = t(".active_products", count: @product_count )
         %span.three.columns.omega
           %span.icon-remove-sign
-      %a.sixteen.columns.alpha.button.bottom.red{ href: "#{new_admin_product_path}" }
+      %a.sixteen.columns.alpha.button.bottom.warning{ href: "#{new_admin_product_path}" }
         = t "spree_admin_enterprises_create_new_product"
         %span.icon-arrow-right

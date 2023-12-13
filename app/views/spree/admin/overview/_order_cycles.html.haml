@@ -1,10 +1,10 @@
-- color_class = "red" unless @order_cycle_count > 0
-- icon_class = @order_cycle_count > 0 ? "icon-ok-sign" : "icon-warning-sign"
+- color_class = "warning" unless @order_cycle_count.positive?
+- icon_class = @order_cycle_count.positive? ? "icon-ok-sign" : "icon-warning-sign"
 %div.dashboard_item.seven.columns.omega#order_cycles
   %div.header.sixteen.columns.alpha{class: color_class}
     %h3.ten.columns.alpha
       = t ".order_cycles"
-    - if @order_cycle_count > 0
+    - if @order_cycle_count.positive?
       %a.six.columns.omega.icon-plus.button{ href: main_app.new_admin_order_cycle_path }
         = t "spree_admin_enterprises_create_new"
     - else
