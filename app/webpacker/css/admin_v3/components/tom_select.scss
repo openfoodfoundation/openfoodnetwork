@@ -87,8 +87,19 @@
   }
 
   .ts-control {
+    padding-right: 0.5rem !important; // ts has a clever variable-based rule here, but it doesn't seem to work right.
+    overflow: hidden;
+
+    &:not(.rtl)::after {
+      right: 0.5rem;
+    }
+
     .item {
       margin-right: 1rem;
+      // Hide overflow with an ellipsis if a width has been set
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
     }
   }
 }
@@ -97,10 +108,6 @@
 .ts-wrapper.single.no-input {
   &.input-active .ts-control {
     @include hide-input;
-  }
-
-  .ts-control {
-    padding-right: 1rem !important; // ts has a clever variable-based rule here, but it doesn't seem to work right.
   }
 
   .ts-dropdown {
