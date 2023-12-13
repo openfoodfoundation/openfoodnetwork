@@ -7,4 +7,4 @@
 
     .modal-actions
       %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: @cancel_button_text, "data-action": "click->modal#close" }
-      %input{ class: "button icon-plus #{@confirm_button_color}", type: 'button', value: @confirm_button_text, "data-action": @confirm_actions, "data-reflex": @confirm_reflexes }
+      %input{ class: "button icon-plus #{@confirm_button_class}", type: 'button', value: @confirm_button_text, "data-action": @confirm_actions, "data-reflex": @confirm_reflexes }
