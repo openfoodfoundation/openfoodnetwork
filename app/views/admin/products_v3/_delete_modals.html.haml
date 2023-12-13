@@ -1,7 +1,8 @@
+- base_translation_key = ".delete_#{object_type}_modal"
 - object_ids.each do |object_id|
   - delete_modal = ConfirmModalComponent.new(id: "delete_#{object_type}_#{object_id}",
-    confirm_button_text: t(".delete_#{object_type}_modal.confirmation_text"),
-    cancel_button_text: t(".delete_#{object_type}_modal.cancellation_text"),
+    confirm_button_text: t("#{base_translation_key}.confirmation_text"),
+    cancel_button_text: t("#{base_translation_key}.cancellation_text"),
     confirm_reflexes: nil,
     confirm_button_class: :red,
     controller: "products",
@@ -9,6 +10,8 @@
     controller_data_values: {"current-id": object_id},
   )
   = render delete_modal do
-    .margin-bottom-30
-    = t(".delete_#{object_type}_modal.prompt_html")
+    %h2.margin-bottom-20{style:'color: black'}
+      = t("#{base_translation_key}.heading")
+    %p
+      = t("#{base_translation_key}.prompt")
     .margin-bottom-30
