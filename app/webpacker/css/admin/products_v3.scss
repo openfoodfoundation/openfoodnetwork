@@ -166,9 +166,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
 
-  #sort {
     line-height: $btn-relaxed-height;
     height: $btn-relaxed-height;
 
@@ -191,13 +189,6 @@
 
     .query {
       flex-grow: 1;
-    }
-
-    .producers,
-    .categories {
-    }
-
-    .query {
       min-width: 15em;
 
       .search-input {
