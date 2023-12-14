@@ -86,7 +86,7 @@ module Reporting
       end
 
       def empty_string
-        raw("''")
+        raw("''") # rubocop:disable Rails/OutputSafety
       end
 
       def sql_concat(*args)
