@@ -1284,9 +1284,11 @@ en:
           title: "Discover Regenerative"
           tagline: "Allow website to publish your enterprise information."
           action: "Share data"
+          saving_changes: "Saving changes"
           note: |
             In order for this enterprise to be published, you need to include
             regenerative details and accept the Terms and Conditions.
+          link_label: "Update details"
           description_html: |
             <p>
             Discover Regenerative makes it easier for buyers to discover

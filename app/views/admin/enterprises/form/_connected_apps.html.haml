@@ -10,7 +10,17 @@
   .connected-app__connection
     - if @enterprise.connected_apps.present?
       .connected-app__note
-        = t ".note"
+        - link = @enterprise.connected_apps[0].data&.fetch("link", false)
+        - if link
+          %p= t ".note"
+          %div
+            %a{ href: link, target: "_blank", class: "button" }
+              = t ".link_label"
+        - else
+          %p
+            %i.spinner.fa.fa-spin.fa-circle-o-notch
+            &nbsp;
+            = t ".saving_changes"
 
   %hr
   .connected-app__description

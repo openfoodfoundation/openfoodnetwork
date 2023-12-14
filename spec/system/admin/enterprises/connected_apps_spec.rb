@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Connected Apps", feature: :connected_apps do
+describe "Connected Apps", feature: :connected_apps, vcr: true do
   let(:enterprise) { create(:enterprise) }
 
   before do
@@ -37,6 +37,11 @@ describe "Connected Apps", feature: :connected_apps do
 
     click_button "Share data"
     expect(page).to_not have_button "Share data"
+    expect(page).to have_content "Saving changes"
+
+    perform_enqueued_jobs(only: ConnectAppJob)
+    page.refresh # TODO: update via cable_ready
     expect(page).to have_content "include regenerative details"
+    expect(page).to have_link "Update details"
   end
 end
