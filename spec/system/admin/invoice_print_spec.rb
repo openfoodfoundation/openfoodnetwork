@@ -546,7 +546,7 @@ describe '
           expect(page).to have_content "#{enterprise_fee.name} fee by $104.35 15.0% $120.00"
           expect(page).to have_content "coordinator #{user1.enterprises.first.name}"
           # Shipping
-          expect(page).to have_content "Delivery :(#{shipping_method_name}) $91.41 10.0% $100.55"
+          expect(page).to have_content "Delivery (#{shipping_method_name}) $91.41 10.0% $100.55"
           # Tax totals
           expect(page).to have_content "Total tax (10.0%): $9.14 " \
                                        "Total tax (15.0%): $15.65 Total tax (20.0%): $250.08"
@@ -649,7 +649,7 @@ describe '
           expect(page).to have_content "#{enterprise_fee.name} fee by $120.00 15.0% $138.00"
           expect(page).to have_content "coordinator #{user1.enterprises.first.name}"
           # Shipping
-          expect(page).to have_content "Delivery :(#{shipping_method_name}) $100.55 10.0% $110.61"
+          expect(page).to have_content "Delivery (#{shipping_method_name}) $100.55 10.0% $110.61"
           # Tax totals
           expect(page).to have_content "Total tax (10.0%): $10.06 " \
                                        "Total tax (15.0%): $18.00 Total tax (20.0%): $300.09"
