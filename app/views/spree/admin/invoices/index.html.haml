@@ -1,6 +1,6 @@
 - if show_generate_invoice_button?(@order)
   .alert-box.warning 
-    =t(:order_has_changed_and_invoice_might_not_be_up_to_date)
+    = t('.order_has_changed_and_invoice_might_not_be_up_to_date')
 
 = render partial: 'spree/admin/shared/order_page_title'
 = render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Invoices' }
