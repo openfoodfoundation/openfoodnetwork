@@ -583,10 +583,13 @@ describe '
             reader.pages.map(&:text)
           end
 
+          let(:order4_selector){ "#order_#{order4.id} input[name='bulk_ids[]']" }
+          let(:order5_selector){ "#order_#{order5.id} input[name='bulk_ids[]']" }
+
           shared_examples "can bulk print invoices from 2 orders" do
             it "bulk prints invoices in pdf format" do
-              page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
-              page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
+              page.find(order4_selector).click
+              page.find(order5_selector).click
 
               page.find("span.icon-reorder", text: "ACTIONS").click
               within ".ofn-drop-down .menu" do
@@ -621,10 +624,134 @@ describe '
             end
           end
 
-          it_behaves_like "can bulk print invoices from 2 orders"
+          shared_examples "should ignore the non invoiceable order" do
+            it "bulk prints invoices in pdf format" do
+              page.find(order4_selector).click
+              page.find(order5_selector).click
 
-          context "with legal invoices feature", feature: :invoices do
+              page.find("span.icon-reorder", text: "ACTIONS").click
+              within ".ofn-drop-down .menu" do
+                expect {
+                  page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+                }.to enqueue_job(BulkInvoiceJob).exactly(:once)
+              end
+
+              expect(page).to have_content "Compiling Invoices"
+              expect(page).to have_content "Please wait until the PDF is ready " \
+                                           "before closing this modal."
+
+              perform_enqueued_jobs(only: BulkInvoiceJob)
+
+              expect(page).to have_content "Bulk Invoice created"
+
+              within ".modal-content" do
+                expect(page).to have_link(class: "button", text: "VIEW FILE",
+                                          href: /invoices/)
+
+                invoice_content = extract_pdf_content
+
+                expect(invoice_content).to have_content("TAX INVOICE", count: 1)
+                expect(invoice_content).to_not have_content(order4.number.to_s)
+                expect(invoice_content).to have_content(order5.number.to_s)
+                expect(invoice_content).to_not have_content(distributor4.name.to_s)
+                expect(invoice_content).to have_content(distributor5.name.to_s)
+                expect(invoice_content).to_not have_content(order_cycle4.name.to_s)
+                expect(invoice_content).to have_content(order_cycle5.name.to_s)
+              end
+            end
+          end
+
+          context "ABN is not required" do
+            before do
+              allow(Spree::Config).to receive(:enterprise_number_required_on_invoices?)
+                .and_return false
+            end
             it_behaves_like "can bulk print invoices from 2 orders"
+
+            context "with legal invoices feature", feature: :invoices do
+              it_behaves_like "can bulk print invoices from 2 orders"
+            end
+
+            context "one of the two orders is not invoiceable" do
+              before do
+                order4.cancel!
+                assert(!order4.invoiceable?)
+                assert(order5.invoiceable?)
+              end
+
+              it_behaves_like "should ignore the non invoiceable order"
+              context "with legal invoices feature", feature: :invoices do
+                it_behaves_like "should ignore the non invoiceable order"
+              end
+            end
+          end
+
+          context "ABN is required" do
+            before do
+              allow(Spree::Config).to receive(:enterprise_number_required_on_invoices?)
+                .and_return true
+            end
+            context "All the distributors setup the ABN" do
+              before do
+                order4.distributor.update(abn: "123456789")
+                order5.distributor.update(abn: "987654321")
+              end
+              context "all the orders are invoiceable (completed/resumed)" do
+                before do
+                  assert(order4.invoiceable?)
+                  assert(order5.invoiceable?)
+                end
+                it_behaves_like "can bulk print invoices from 2 orders"
+                context "with legal invoices feature", feature: :invoices do
+                  it_behaves_like "can bulk print invoices from 2 orders"
+                end
+              end
+
+              context "one of the two orders is not invoiceable" do
+                before do
+                  order4.cancel!
+                  assert(!order4.invoiceable?)
+                  assert(order5.invoiceable?)
+                end
+
+                it_behaves_like "should ignore the non invoiceable order"
+                context "with legal invoices feature", feature: :invoices do
+                  it_behaves_like "should ignore the non invoiceable order"
+                end
+              end
+            end
+            context "the distributor of one of the order didn't set the ABN" do
+              before do
+                order4.distributor.update(abn: "123456789")
+                order5.distributor.update(abn: nil)
+              end
+
+              shared_examples "should not print the invoice" do
+                it "should render a warning message" do
+                  page.find(order4_selector).click
+                  page.find(order5_selector).click
+
+                  page.find("span.icon-reorder", text: "ACTIONS").click
+                  within ".ofn-drop-down .menu" do
+                    expect {
+                      page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+                    }.to_not enqueue_job(BulkInvoiceJob)
+                  end
+
+                  expect(page).to_not have_content "Compiling Invoices"
+                  expect(page).to_not have_content "Please wait until the PDF is ready " \
+                                                   "before closing this modal."
+
+                  expect(page).to have_content "#{
+                    order5.distributor.name
+                  } must have a valid ABN before invoices can be sent."
+                end
+              end
+              it_behaves_like "should not print the invoice"
+              context "with legal invoices feature", feature: :invoices do
+                it_behaves_like "should not print the invoice"
+              end
+            end
           end
         end
 
