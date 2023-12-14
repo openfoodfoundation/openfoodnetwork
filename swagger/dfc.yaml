@@ -602,7 +602,7 @@ paths:
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Pesto - 1g
                     dfc-b:description: Basil Pesto
-                    dfc-b:hasType: dfc-pt:non-local-vegetable
+                    dfc-b:hasType: dfc-pt:processed-vegetable
                     dfc-b:hasQuantity:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
