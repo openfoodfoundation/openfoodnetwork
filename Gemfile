@@ -168,6 +168,7 @@ group :test, :development do
 end
 
 group :test do
+  gem 'i18n-tasks', '~> 1.0.13'
   gem 'pdf-reader'
   gem 'rails-controller-testing'
   gem 'simplecov', require: false
