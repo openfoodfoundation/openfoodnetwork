@@ -1,9 +1,3 @@
-@mixin hide-input {
-  // Pretend there's no text input (it can't be hidden entirely, in order for tom-select to work)
-  cursor: pointer;
-  caret-color: transparent;
-}
-
 .ts-wrapper.single,
 .ts-wrapper.multi {
   min-height: 40px;
@@ -43,15 +37,19 @@
   }
 
   .ts-dropdown {
+    // Unstyled, we style the dropdown-content instead
+    margin: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .ts-dropdown-content {
     margin-top: 4px;
     color: $near-black;
+    background-color: $color-body-bg;
     @include border-radius($border-radius);
-    border: none;
     box-shadow: $shadow-dropdown;
-
-    .ts-dropdown-content {
-      padding: $border-radius 0;
-    }
 
     .option {
       padding: 8px;
@@ -68,11 +66,31 @@
   }
 }
 
-.plugin-dropdown_input .dropdown-input {
-  border-color: $lighter-grey;
+.plugin-dropdown_input {
+  .ts-dropdown {
+    // Cover up the control with the input
+    top: 0;
+  }
 
-  &:focus {
-    border-color: $orient;
+  .dropdown-input-wrap::after {
+    position: absolute;
+    content: "\f077"; // chevron-up
+    font-family: FontAwesome;
+    border: none;
+    top: 0.7rem;
+    right: 0.7rem;
+    font-size: 13px;
+  }
+
+  .dropdown-input {
+    background-color: $color-body-bg;
+    border: 1px solid $lighter-grey;
+    box-shadow: none;
+    padding: 0.5rem 0.75rem;
+
+    &:focus {
+      border: 1px solid $orient;
+    }
   }
 }
 
@@ -81,10 +99,6 @@
 .ts-wrapper.single {
   max-height: 40px;
   max-width: 100%;
-
-  &.has-items {
-    @include hide-input;
-  }
 
   .ts-control {
     padding: 0.5rem 0.75rem;
@@ -120,13 +134,12 @@
 
 // 'no-input' mode, like a native select (hide text input).
 .ts-wrapper.single.no-input {
-  &.input-active .ts-control {
-    @include hide-input;
-  }
-
   .ts-dropdown {
     position: absolute;
     top: 0; // we don't need to see the currently selected option, because it's visible in the dropdown
+  }
+
+  .ts-dropdown-content {
     margin-top: 0;
   }
 }

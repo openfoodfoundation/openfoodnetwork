@@ -7,12 +7,12 @@
       = label_tag :producer_id, t('.producers.label')
       = select_tag :producer_id, options_for_select(producer_options, producer_id),
         include_blank: t('.all_producers'), class: "fullwidth",
-        data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }', 'tom-select-placeholder-value': t('.search_for_producers')}
+        data: { "controller": "tom-select", 'tom-select-placeholder-value': t('.search_for_producers')}
   .categories
     = label_tag :category_id, t('.categories.label')
     = select_tag :category_id, options_for_select(category_options, category_id),
       include_blank: t('.all_categories'), class: "fullwidth",
-      data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }', 'tom-select-placeholder-value': t('.search_for_categories')}
+      data: { "controller": "tom-select", 'tom-select-placeholder-value': t('.search_for_categories')}
   .submit
     .search-button
       = button_tag t(".search"), class: "secondary icon-search relaxed"
