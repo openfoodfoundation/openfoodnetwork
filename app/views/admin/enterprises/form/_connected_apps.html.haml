@@ -1,16 +1,17 @@
+- enterprise ||= f.object
 %div{ data: {reflex: {root: ".connected-app__head, .connected-app__connection"}} }
   .connected-app__head
     %div
       %h3= t ".title"
       %p= t ".tagline"
     %div
-      - if @enterprise.connected_apps.empty?
-        %button{ data: {reflex: "click->Admin::ConnectedApp#create", enterprise_id: @enterprise.id} }
+      - if enterprise.connected_apps.empty?
+        %button{ data: {reflex: "click->Admin::ConnectedApp#create", enterprise_id: enterprise.id} }
           = t ".action"
   .connected-app__connection
-    - if @enterprise.connected_apps.present?
+    - if enterprise.connected_apps.present?
       .connected-app__note
-        - link = @enterprise.connected_apps[0].data&.fetch("link", false)
+        - link = enterprise.connected_apps[0].data&.fetch("link", false)
         - if link
           %p= t ".note"
           %div

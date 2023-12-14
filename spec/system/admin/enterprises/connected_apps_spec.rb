@@ -40,7 +40,7 @@ describe "Connected Apps", feature: :connected_apps, vcr: true do
     expect(page).to have_content "Saving changes"
 
     perform_enqueued_jobs(only: ConnectAppJob)
-    page.refresh # TODO: update via cable_ready
+    expect(page).to_not have_content "Saving changes"
     expect(page).to have_content "include regenerative details"
     expect(page).to have_link "Update details"
   end

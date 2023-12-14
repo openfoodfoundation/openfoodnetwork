@@ -1,15 +1,28 @@
 # frozen_string_literal: true
 
 class ConnectAppJob < ApplicationJob
-  def perform(app, token)
+  include CableReady::Broadcaster
+
+  def perform(app, token, channel: nil)
     url = "https://n8n.openfoodnetwork.org.uk/webhook/regen/connect-enterprise"
     event = "connect-app"
+    enterprise = app.enterprise
     payload = {
-      enterprise_id: app.enterprise_id,
+      enterprise_id: enterprise.id,
       access_token: token,
     }
 
     response = WebhookDeliveryJob.perform_now(url, event, payload)
     app.update!(data: JSON.parse(response))
+
+    return unless channel
+
+    selector = "#edit_enterprise_#{enterprise.id} #connected_apps_panel div"
+    html = ApplicationController.render(
+      partial: "admin/enterprises/form/connected_apps",
+      locals: { enterprise: },
+    )
+
+    cable_ready[channel].morph(selector:, html:).broadcast
   end
 end
