@@ -87,11 +87,19 @@
   }
 
   .ts-control {
-    padding-right: 0.5rem !important; // ts has a clever variable-based rule here, but it doesn't seem to work right.
+    padding: 0.5rem 0.75rem;
+    padding-right: 1rem !important; // ts has a clever variable-based rule here, but it doesn't seem to work right.
     overflow: hidden;
 
+    // Icon: Override TS icon with icon-chevron-down
+    &::after {
+      content: "\f078";
+      font-family: FontAwesome;
+      border: none;
+      top: 1em;
+    }
     &:not(.rtl)::after {
-      right: 0.5rem;
+      right: 1.5rem;
     }
 
     .item {
@@ -100,6 +108,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
       text-wrap: nowrap;
+    }
+  }
+
+  &.dropdown-active .ts-control {
+    &::after {
+      content: "\f077"; // chevron-up
     }
   }
 }
