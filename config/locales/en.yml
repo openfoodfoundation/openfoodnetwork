@@ -865,6 +865,12 @@ en:
         reset: Discard changes
       bulk_update:
         success: Changes saved
+      delete_product:
+        success: Successfully deleted the product
+        error: Unable to delete the product
+      delete_variant:
+        success: Successfully deleted the variant
+        error: Unable to delete the variant
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

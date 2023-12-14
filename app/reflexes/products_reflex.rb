@@ -6,20 +6,20 @@ class ProductsReflex < ApplicationReflex
   before_reflex :init_filters_params, :init_pagination_params
 
   def fetch
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   def change_per_page
     @per_page = element.value.to_i
     @page = 1
 
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   def filter
     @page = 1
 
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   def clear_search
@@ -28,7 +28,7 @@ class ProductsReflex < ApplicationReflex
     @category_id = nil
     @page = 1
 
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   def bulk_update
@@ -52,12 +52,12 @@ class ProductsReflex < ApplicationReflex
     authorize! :delete, product
 
     if product.destroy
-      puts "Deleted Successfully"
+      flash[:success] = I18n.t('admin.products_v3.delete_product.success')
     else
-      puts "Failure"
+      flash[:error] = I18n.t('admin.products_v3.delete_product.error')
     end
 
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   def delete_variant(id)
@@ -66,12 +66,12 @@ class ProductsReflex < ApplicationReflex
     authorize! :delete, variant
 
     if VariantDeleter.new.delete(variant)
-      puts "Deleted Successfully"
+      flash[:success] = I18n.t('admin.products_v3.delete_variant.success')
     else
-      puts "Failure"
+      flash[:error] = I18n.t('admin.products_v3.delete_variant.error')
     end
 
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   private
@@ -91,7 +91,7 @@ class ProductsReflex < ApplicationReflex
     @per_page = element.dataset.perpage || params[:_per_page] || 15
   end
 
-  def fetch_and_render_products
+  def fetch_and_render_products_with_flash
     fetch_products
     render_products
   end
@@ -102,7 +102,8 @@ class ProductsReflex < ApplicationReflex
       html: render(partial: "admin/products_v3/content",
                    locals: { products: @products, pagy: @pagy, search_term: @search_term,
                              producer_options: producers, producer_id: @producer_id,
-                             category_options: categories, category_id: @category_id })
+                             category_options: categories, category_id: @category_id,
+                             flashes: flash })
     ).broadcast
 
     render_product_delete_modals
