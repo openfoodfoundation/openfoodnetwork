@@ -4184,7 +4184,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           order_total: "Order Total"
       invoices:
         index:
-          order_has_changed_and_invoice_might_not_be_up_to_date: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
+          order_has_changed: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
       overview:
         enterprises_header:
           ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
