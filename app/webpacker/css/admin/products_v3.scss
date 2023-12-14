@@ -32,7 +32,7 @@
     thead {
       top: 54px;
 
-      ::before {
+      &:before {
         content: '';
         position: absolute;
         top: 0;
@@ -42,6 +42,12 @@
         height: 0.5rem;
         background-color: white;
         transform: translate(-50%, -100%);
+      }
+    }
+
+    @media screen and (max-width: 984px) {
+      thead {
+        top: 86px;
       }
     }
   }
