@@ -662,6 +662,39 @@ describe '
         end
       end
     end
+    describe "Rendering previous invoice number" do
+      context "Order doesn't have previous invoices" do
+        it "should display the invoice number" do
+          login_as_admin
+          visit spree.print_admin_order_path(order, params: {})
+
+          convert_pdf_to_page
+          expect(page).to have_content "#{order.distributor_id}-#{order.invoices.first.number}"
+        end
+      end
+
+      context "Order has previous invoices" do
+        before do
+          OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
+          first_line_item = order.line_items.first
+          order.line_items.first.update(quantity: first_line_item.quantity + 1)
+        end
+
+        it "should display the invoice number along with the latest invoice number" do
+          login_as_admin
+          visit spree.print_admin_order_path(order, params: {})
+
+          expect(order.invoices.count).to eq(2)
+
+          new_invoice_number = "#{order.distributor_id}-#{order.invoices.first.number}"
+          canceled_invoice_number = "#{order.distributor_id}-#{order.invoices.last.number}"
+
+          convert_pdf_to_page
+          expect(page).to have_content "#{new_invoice_number} cancels and replaces invoice #{
+            canceled_invoice_number}"
+        end
+      end
+    end
   end
 end
 
