@@ -16,6 +16,9 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1) }
   let(:taxon) { build(:taxon, name: "Processed Vegetable", dfc_name: "processed vegetable") }
+  let!(:non_local_vegetable) {
+    create(:taxon, name: "Non Local Vegetable", dfc_name: "non local vegetable")
+  }
 
   before { login_as user }
 
@@ -102,6 +105,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
           product = Spree::Product.find(product_id)
           expect(product.name).to eq "Apple"
           expect(product.variants).to eq [variant]
+          expect(product.primary_taxon).to eq(non_local_vegetable)
 
           # Creates a variant for existing product
           supplied_product[:'ofn:spree_product_id'] = product_id
