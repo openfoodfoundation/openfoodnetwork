@@ -52,6 +52,7 @@ class SuppliedProductBuilder < DfcBuilder
   def self.apply(supplied_product, variant)
     variant.product.assign_attributes(
       description: supplied_product.description,
+      primary_taxon: taxon(supplied_product)
     )
 
     variant.display_name = supplied_product.name

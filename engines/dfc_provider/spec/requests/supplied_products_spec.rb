@@ -172,6 +172,10 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
     end
 
     put "Update SuppliedProduct" do
+      let!(:drink_taxon) {
+        create(:taxon, name: "Drink", dfc_name: "drink")
+      }
+
       consumes "application/json"
 
       parameter name: :supplied_product, in: :body, schema: {
@@ -197,6 +201,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
           }.to change { variant.description }.to("DFC-Pesto updated")
             .and change { variant.display_name }.to("Pesto novo")
             .and change { variant.unit_value }.to(17)
+            .and change { variant.product.primary_taxon }.to(drink_taxon)
         end
       end
     end
