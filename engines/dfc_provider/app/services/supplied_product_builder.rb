@@ -67,9 +67,10 @@ class SuppliedProductBuilder < DfcBuilder
 
     populate_product_types if PRODUCT_TYPES.empty?
 
-    return nil if PRODUCT_TYPES[taxon_name.to_sym].nil?
+    name = taxon_name.downcase.gsub(" ", "_").to_sym
+    return nil if PRODUCT_TYPES[name].nil?
 
-    call_dfc_product_type(PRODUCT_TYPES[taxon_name.to_sym])
+    call_dfc_product_type(PRODUCT_TYPES[name])
   end
 
   def self.populate_product_types

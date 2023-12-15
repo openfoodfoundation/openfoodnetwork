@@ -17,7 +17,7 @@ describe "CatalogItems", type: :request, swagger_doc: "dfc.yaml",
       :base_product,
       id: 90_000, supplier: enterprise, name: "Apple", description: "Red",
       variants: [variant],
-      primary_taxon: build(:taxon, name: "Non local vegetable", dfc_name: "non_local_vegetable"),
+      primary_taxon: build(:taxon, name: "Non local vegetable", dfc_name: "non local vegetable"),
     )
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "AR") }

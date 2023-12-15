@@ -15,7 +15,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
     )
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1) }
-  let(:taxon) { build(:taxon, name: "Processed Vegetable", dfc_name: "processed_vegetable") }
+  let(:taxon) { build(:taxon, name: "Processed Vegetable", dfc_name: "processed vegetable") }
 
   before { login_as user }
 

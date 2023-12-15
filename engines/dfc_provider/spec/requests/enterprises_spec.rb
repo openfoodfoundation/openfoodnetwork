@@ -29,7 +29,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
       :product_with_image,
       id: 90_000, supplier: enterprise, name: "Apple", description: "Round",
       variants: [variant],
-      primary_taxon: build(:taxon, name: "Non local vegetable", dfc_name: "non_local_vegetable"),
+      primary_taxon: build(:taxon, name: "Non local vegetable", dfc_name: "non local vegetable"),
     )
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "APP") }

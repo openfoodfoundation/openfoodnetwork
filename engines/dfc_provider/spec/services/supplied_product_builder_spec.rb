@@ -55,7 +55,7 @@ describe SuppliedProductBuilder do
       end
 
       context "with second level product type" do
-        let(:taxon) { build(:taxon, name: "Soft Drink", dfc_name: "soft_drink") }
+        let(:taxon) { build(:taxon, name: "Soft Drink", dfc_name: "Soft drink") }
 
         it "assigns a second level product type" do
           soft_drink = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK
