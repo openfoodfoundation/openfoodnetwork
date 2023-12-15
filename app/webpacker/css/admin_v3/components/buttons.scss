@@ -90,6 +90,12 @@ button:not(.plain):not(.trix-button),
     }
   }
 
+  &.mini {
+    line-height: 18px;
+    height: auto; // DC: I don't like fixed heights.
+    padding: 0 6px;
+  }
+
   &.condensed {
     line-height: $btn-condensed-height - 2px; // remove 2px to compensate for border
     height: $btn-condensed-height;

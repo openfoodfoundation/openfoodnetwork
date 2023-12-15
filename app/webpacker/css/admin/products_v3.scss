@@ -88,6 +88,10 @@
           height: 100%;
         }
       }
+
+      .image-field .button {
+        display: block;
+      }
     }
 
     th,
@@ -368,6 +372,21 @@
       input[disabled] {
         color: transparent; // hide value completely
       }
+    }
+  }
+
+  .image-field {
+    position: relative;
+
+    img {
+      border-radius: $border-radius;
+    }
+
+    .button {
+      display: none; // to be shown on tr:hover
+      position: absolute;
+      bottom: 0;
+      left: 0;
     }
   }
 }
