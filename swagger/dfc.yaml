@@ -698,7 +698,7 @@ paths:
                   "@type": dfc-b:QuantitativeValue
                   dfc-b:hasUnit: dfc-m:Piece
                   dfc-b:value: 17
-                dfc-b:hasType: dfc-pt:non-local-vegetable
+                dfc-b:hasType: dfc-pt:drink
                 dfc-b:lifetime: ''
                 dfc-b:name: Pesto novo
                 dfc-b:totalTheoreticalStock: 0
