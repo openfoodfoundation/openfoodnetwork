@@ -38,13 +38,12 @@ class SuppliedProductBuilder < DfcBuilder
     end
   end
 
-  # TODO fix the taxon here
   def self.import_product(supplied_product)
     Spree::Product.new(
       name: supplied_product.name,
       description: supplied_product.description,
       price: 0, # will be in DFC Offer
-      primary_taxon: Spree::Taxon.first, # dummy value until we have a mapping
+      primary_taxon: taxon(supplied_product)
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
     end
@@ -109,5 +108,16 @@ class SuppliedProductBuilder < DfcBuilder
     type
   end
 
-  private_class_method :product_type, :populate_product_types, :record_type
+  def self.taxon(supplied_product)
+    # We use english locale, might need to make this configurable
+    dfc_name = supplied_product.productType.prefLabels[:en].downcase
+    taxon = Spree::Taxon.find_by(dfc_name: )
+
+    return taxon if taxon.present?
+
+    nil
+  end
+
+  private_class_method :product_type, :populate_product_types, :record_type, :call_dfc_product_type,
+                       :taxon
 end

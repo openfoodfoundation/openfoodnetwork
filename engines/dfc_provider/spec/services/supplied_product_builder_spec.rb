@@ -102,4 +102,48 @@ describe SuppliedProductBuilder do
       expect(product.image).to eq variant.product.image.url(:product)
     end
   end
+
+  describe ".import_product" do
+    let(:supplied_product) do
+      DataFoodConsortium::Connector::SuppliedProduct.new(
+        "https://example.net/tomato",
+        name: "Tomato",
+        description: "Awesome tomato",
+        quantity: DataFoodConsortium::Connector::QuantitativeValue.new(
+          unit: DfcLoader.connector.MEASURES.KILOGRAM,
+          value: 2,
+        ),
+        productType: product_type,
+      )
+    end
+    let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
+    let!(:taxon) { create(:taxon, name: "Non local vegetable", dfc_name: "non local vegetable") }
+
+    it "creates a new Spree::Product" do
+      product = builder.import_product(supplied_product)
+
+      expect(product).to be_a(Spree::Product)
+      expect(product.name).to eq("Tomato")
+      expect(product.description).to eq("Awesome tomato")
+      expect(product.variant_unit).to eq("weight")
+    end
+
+    describe "taxon" do
+      it "assigns the taxon matching the DFC product type" do
+        product = builder.import_product(supplied_product)
+
+        expect(product.primary_taxon).to eq(taxon)
+      end
+
+      describe "when no matching taxon" do
+        let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.DRINK }
+
+        it "set the taxon to nil" do
+          product = builder.import_product(supplied_product)
+
+          expect(product.primary_taxon).to be_nil
+        end
+      end
+    end
+  end
 end
