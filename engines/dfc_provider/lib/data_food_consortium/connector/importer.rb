@@ -4,7 +4,7 @@ require_relative "skos_parser"
 
 module DataFoodConsortium
   module Connector
-    class Importer
+    class Importer # rubocop:disable Metrics/ClassLength
       TYPES = [
         DataFoodConsortium::Connector::CatalogItem,
         DataFoodConsortium::Connector::Enterprise,
@@ -106,7 +106,7 @@ module DataFoodConsortium
         if property.value.is_a?(Enumerable)
           property.value << value
         else
-          setter = guess_setter_name(statement.predicate)
+          setter = guess_setter_name(statement)
           subject.try(setter, value) if setter
         end
       end
@@ -120,18 +120,26 @@ module DataFoodConsortium
       end
 
       def skos_concept(object)
-        return unless object.uri?
-
         id = object.value.sub(
           "http://static.datafoodconsortium.org/data/measures.rdf#", "dfc-m:"
         ).sub(
           "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#",
           "dfc-m:"
+        ).sub(
+          "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#",
+          "dfc-pt:"
         )
+
         SKOSParser.concepts[id]
       end
 
-      def guess_setter_name(predicate)
+      def guess_setter_name(statement)
+        predicate = statement.predicate
+
+        # Ideally the product models would be consitent with the rule below and use "type"
+        # instead of "productType" but alast they are not so we need this exception
+        return "productType=" if predicate.fragment == "hasType" && product_type?(statement)
+
         name =
           # Some predicates are named like `hasQuantity`
           # but the attribute name would be `quantity`.
@@ -140,6 +148,14 @@ module DataFoodConsortium
           predicate.to_s.split(":").last
 
         "#{name}="
+      end
+
+      def product_type?(statement)
+        return true if statement.object.literal? && statement.object.value.match("dfc-pt")
+
+        return true if statement.object.path.match("productTypes")
+
+        false
       end
     end
   end

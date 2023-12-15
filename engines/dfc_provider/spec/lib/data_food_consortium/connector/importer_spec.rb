@@ -23,6 +23,7 @@ describe DataFoodConsortium::Connector::Importer do
       name: "Tomato",
       description: "Awesome tomato",
       totalTheoreticalStock: 3,
+      productType: non_local_vegetable,
     )
   end
   let(:product_data) do
@@ -36,7 +37,8 @@ describe DataFoodConsortium::Connector::Importer do
         "dfc-b:alcoholPercentage":0.0,
         "dfc-b:lifetime":"",
         "dfc-b:usageOrStorageCondition":"",
-        "dfc-b:totalTheoreticalStock":3
+        "dfc-b:totalTheoreticalStock":3,
+        "dfc-b:hasType": "dfc-pt:non-local-vegetable"
       }
     JSON
   end
@@ -55,7 +57,8 @@ describe DataFoodConsortium::Connector::Importer do
         "dfc-b:alcoholPercentage":0.0,
         "dfc-b:lifetime":"",
         "dfc-b:usageOrStorageCondition":"",
-        "dfc-b:totalTheoreticalStock":3
+        "dfc-b:totalTheoreticalStock":3,
+        "dfc-b:hasType": "dfc-pt:non-local-vegetable"
       }
     JSON
   end
@@ -74,7 +77,8 @@ describe DataFoodConsortium::Connector::Importer do
         "dfc-b:alcoholPercentage":0.0,
         "dfc-b:lifetime":"",
         "dfc-b:usageOrStorageCondition":"",
-        "dfc-b:totalTheoreticalStock":3
+        "dfc-b:totalTheoreticalStock":3,
+        "dfc-b:hasType": "dfc-pt:non-local-vegetable"
       }
     JSON
   end
@@ -96,6 +100,11 @@ describe DataFoodConsortium::Connector::Importer do
     end
     connector.MEASURES.PIECE
   end
+  let(:non_local_vegetable) do
+    connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
+  end
+
+  before { connector.loadProductTypes(read_file("productTypes")) }
 
   it "imports a single object with simple properties" do
     result = import(product)
@@ -105,6 +114,7 @@ describe DataFoodConsortium::Connector::Importer do
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
     expect(result.description).to eq "Awesome tomato"
+    expect(result.productType).to eq non_local_vegetable
     expect(result.totalTheoreticalStock).to eq 3
   end
 
@@ -116,6 +126,7 @@ describe DataFoodConsortium::Connector::Importer do
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
     expect(result.description).to eq "Awesome tomato"
+    expect(result.productType).to eq non_local_vegetable
     expect(result.totalTheoreticalStock).to eq 3
   end
 
@@ -127,6 +138,7 @@ describe DataFoodConsortium::Connector::Importer do
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
     expect(result.description).to eq "Awesome tomato"
+    expect(result.productType).to eq non_local_vegetable
     expect(result.totalTheoreticalStock).to eq 3
   end
 
@@ -138,6 +150,7 @@ describe DataFoodConsortium::Connector::Importer do
     expect(result.semanticId).to eq "https://example.net/tomato"
     expect(result.name).to eq "Tomato"
     expect(result.description).to eq "Awesome tomato"
+    expect(result.productType).to eq non_local_vegetable
     expect(result.totalTheoreticalStock).to eq 3
   end
 
@@ -154,6 +167,7 @@ describe DataFoodConsortium::Connector::Importer do
     expect(item.semanticId).to eq "https://example.net/tomatoItem"
     expect(tomato.name).to eq "Tomato"
     expect(tomato.description).to eq "Awesome tomato"
+    expect(tomato.productType).to eq non_local_vegetable
     expect(tomato.totalTheoreticalStock).to eq 3
   end
 
@@ -164,6 +178,7 @@ describe DataFoodConsortium::Connector::Importer do
 
     expect(tomato.name).to eq "Tomato"
     expect(tomato.quantity).to eq items
+    expect(tomato.productType).to eq non_local_vegetable
     expect(items.value).to eq 5
     expect(items.unit).to eq piece
   end
