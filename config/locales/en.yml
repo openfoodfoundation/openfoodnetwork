@@ -951,6 +951,7 @@ en:
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: SKU
         name: Name
