@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ConfirmModalComponent < ModalComponent
-  # @param controller_data_values [Array(Hash)]
+  # @param confirm_reflex_data [Array(Hash)]
   #        format: {<value-name-1>: value1, <value-name-2>: value2}
   def initialize(
     id:,
