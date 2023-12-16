@@ -2,7 +2,7 @@ import ApplicationController from "./application_controller";
 
 export default class extends ApplicationController {
   static targets = ["loading"];
-  static values = {currentId: Number};
+  static values = { currentId: Number };
 
   connect() {
     super.connect();
@@ -10,17 +10,11 @@ export default class extends ApplicationController {
     this.stimulate("Products#fetch");
   }
 
-  deleteProduct() {
-    window.dispatchEvent(new Event('modal:close'));
-    this.stimulate('Products#delete_product', this.currentIdValue)
-  }
-
-  deleteVariant() {
-    window.dispatchEvent(new Event('modal:close'));
-    this.stimulate('Products#delete_variant', this.currentIdValue)
-  }
-
-  beforeReflex() {
+  beforeReflex(element) {
+    // To prevent the double click on the confirm modal's confirmation button
+    if (element.id === "confirmModalButton") {
+      window.dispatchEvent(new Event("modal:close"));
+    }
     this.showLoading();
     this.scrollToElement();
   }
@@ -46,15 +40,8 @@ export default class extends ApplicationController {
   };
 
   getLoadingController = () => {
-    let loadingSpinner = null;
-    try {
-      loadingSpinner = this.loadingTarget; // throws missing loading target error
-    } catch (error) {
-      loadingSpinner = document.getElementById('loading-spinner');
-    }
-
     return (this.loadingController ||= this.application.getControllerForElementAndIdentifier(
-      loadingSpinner,
+      this.loadingTarget,
       "loading"
     ));
   };

@@ -46,7 +46,8 @@ class ProductsReflex < ApplicationReflex
     render_products_form_with_flash
   end
 
-  def delete_product(id)
+  def delete_product
+    id = current_id_from_element(element)
     authorize! :delete, Spree::Product
     product = product_finder(id).find_product
     authorize! :delete, product
@@ -60,7 +61,8 @@ class ProductsReflex < ApplicationReflex
     fetch_and_render_products_with_flash
   end
 
-  def delete_variant(id)
+  def delete_variant
+    id = current_id_from_element(element)
     authorize! :delete, Spree::Variant
     variant = variant_scope.find(id)
     authorize! :delete, variant
@@ -119,7 +121,7 @@ class ProductsReflex < ApplicationReflex
   def render_product_delete_modals
     product_ids = @products.pluck(:id)
     cable_ready.replace(
-      selector: "#products-delete-action-modals",
+      selector: "#product-delete-action-modals",
       html: render(
         partial: "admin/products_v3/delete_modals",
         locals: { object_ids: product_ids, object_type: 'product' }
@@ -256,5 +258,9 @@ class ProductsReflex < ApplicationReflex
 
   def variant_scope
     Spree::Variant.active
+  end
+
+  def current_id_from_element(element)
+    element.dataset.current_id
   end
 end

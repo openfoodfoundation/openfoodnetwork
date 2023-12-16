@@ -1,4 +1,4 @@
-%div{ **modal_attrs }
+%div{ id: @id, "data-controller": "modal #{@controller}", "data-action": "keyup@document->modal#closeIfEscapeKey", "data-#{@controller}-reflex-value": @reflex }
   .reveal-modal-bg.fade{ "data-modal-target": "background", "data-action": "click->modal#close" }
   .reveal-modal.fade.tiny.help-modal{ "data-modal-target": "modal" }
     = content
@@ -7,4 +7,4 @@
 
     .modal-actions
       %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: @cancel_button_text, "data-action": "click->modal#close" }
-      %input{ class: "button icon-plus #{@confirm_button_class}", type: 'button', value: @confirm_button_text, "data-action": @confirm_actions, "data-reflex": @confirm_reflexes }
+      %input{ **confirm_button_attrs }

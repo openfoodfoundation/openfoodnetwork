@@ -3,11 +3,9 @@
   - delete_modal = ConfirmModalComponent.new(id: "delete_#{object_type}_#{object_id}",
     confirm_button_text: t("#{base_translation_key}.confirmation_text"),
     cancel_button_text: t("#{base_translation_key}.cancellation_text"),
-    confirm_reflexes: nil,
+    confirm_reflexes: "click->products#delete_#{object_type}",
     confirm_button_class: :red,
-    controller: "products",
-    confirm_actions: "click->products#delete#{object_type.titleize}",
-    controller_data_values: {"current-id": object_id},
+    confirm_reflex_data: {"current-id": object_id},
   )
   = render delete_modal do
     %h2.margin-bottom-20{style:'color: black'}
