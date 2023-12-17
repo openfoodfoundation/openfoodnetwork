@@ -19,7 +19,7 @@ describe "Revenues By Hub Reports" do
       completed_at: 2.days.ago,
       order_cycle:,
       distributor: distributor2,
-      product_price: 110.0,
+      product_price: 110,
       tax_rate_amount: 0.1,
       included_in_price: true,
       tax_rate_name: "Tax 1"
@@ -33,7 +33,7 @@ describe "Revenues By Hub Reports" do
       distributor: distributor3,
       product_price: 110.0,
       tax_rate_amount: 0.1,
-      included_in_price: true,
+      included_in_price: false,
       tax_rate_name: "Tax 1"
     )
   end
@@ -44,27 +44,14 @@ describe "Revenues By Hub Reports" do
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:product) { create(:product, supplier:) }
   let(:supplier) { create(:supplier_enterprise) }
+  let(:voucher2) { create(:voucher_flat_rate, code: 'code', enterprise: distributor2, amount: 10) }
+  let(:voucher3) { create(:voucher_flat_rate, code: 'code', enterprise: distributor3, amount: 10) }
 
   before do
     create(:line_item_with_shipment, order:, product:)
 
-    order_with_voucher_tax_included.create_tax_charge!
-    order_with_voucher_tax_included.update_shipping_fees!
-    order_with_voucher_tax_included.update_order!
-
-    order_with_voucher_tax_excluded.create_tax_charge!
-    order_with_voucher_tax_excluded.update_shipping_fees!
-    order_with_voucher_tax_excluded.update_order!
-
-    allow(VoucherAdjustmentsService).to receive(:new) do |order_arg|
-      if order_arg.id == order.id
-        next double(voucher_included_tax: 0.0, voucher_excluded_tax: 0.0)
-      elsif order_arg.id == order_with_voucher_tax_included.id
-        next double(voucher_included_tax: 0.5, voucher_excluded_tax: 0.0)
-      elsif order_arg.id == order_with_voucher_tax_excluded.id
-        next double(voucher_included_tax: 0.0, voucher_excluded_tax: -0.5)
-      end
-    end
+    apply_voucher(order_with_voucher_tax_included, voucher2)
+    apply_voucher(order_with_voucher_tax_excluded, voucher3)
 
     login_as_admin
     visit main_app.admin_report_path(report_type: 'revenues_by_hub')
@@ -130,11 +117,8 @@ describe "Revenues By Hub Reports" do
         "20170",
         "Victoria",
         "1",
-        # 160.0$ - 10.5$
-        149.5,
-        # 10$ tax + 0.5$ voucher_included_tax
-        10.5,
-        # 5 line_items at 10$ each + 1 line_item at 110$
+        150.63,
+        9.37,
         160.0
       ].compact.join(" "))
 
@@ -153,13 +137,21 @@ describe "Revenues By Hub Reports" do
         "20170",
         "Victoria",
         "1",
-        # 160.0$ - 9.5$
-        150.5,
-        # 10$ tax - 0.5$ voucher_excluded_tax
-        9.5,
-        # 5 line_items at 10$ each + 1 line_item at 110$
-        160.0
+        160.64,
+        10.36,
+        171.0
       ].compact.join(" "))
     end
+  end
+
+  def apply_voucher(order, voucher)
+    voucher.create_adjustment(voucher.code, order)
+
+    # Update taxes
+    order.create_tax_charge!
+    order.update_shipping_fees!
+    order.update_order!
+
+    VoucherAdjustmentsService.new(order).update
   end
 end
