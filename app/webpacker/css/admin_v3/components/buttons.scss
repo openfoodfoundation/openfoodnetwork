@@ -53,14 +53,14 @@ button:not(.plain):not(.trix-button),
   }
 
   &.secondary {
-    background-color: transparent;
+    background-color: $color-btn-secondary-bg;
     border: 1px solid $color-btn-bg;
     color: $color-btn-bg;
 
     &:hover {
       background-color: $color-11;
-      border: 1px solid $color-btn-hover-bg;
-      color: $color-btn-hover-bg;
+      border: 1px solid $color-btn-secondary-hover-bg;
+      color: $color-btn-secondary-hover-bg;
     }
 
     &:active,

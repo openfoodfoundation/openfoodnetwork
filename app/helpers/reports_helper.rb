@@ -5,7 +5,9 @@ module ReportsHelper
     order_cycles.map do |oc|
       orders_open_at = oc.orders_open_at&.to_fs(:short) || 'NA'
       orders_close_at = oc.orders_close_at&.to_fs(:short) || 'NA'
+      # rubocop:disable Rails/OutputSafety
       ["#{oc.name} &nbsp; (#{orders_open_at} - #{orders_close_at})".html_safe, oc.id]
+      # rubocop:enable Rails/OutputSafety
     end
   end
 

@@ -148,4 +148,10 @@ module CheckoutHelper
       ]
     end
   end
+
+  # Set the Page title of checkout process as step based like
+  # Checkout Details, Checkout Payment and Checkout Summary
+  def checkout_page_title
+    t("checkout_#{checkout_step}_title")
+  end
 end

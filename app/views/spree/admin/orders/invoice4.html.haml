@@ -46,6 +46,8 @@
         %br
         = "#{t :invoice_number}:"
         = @order.display_number
+        - if @order.previous_invoice.present?
+          = "#{t :invoice_cancel_and_replace_invoice} #{ @order.previous_invoice.display_number}"
         %br
         = t :invoice_issued_on
         = l @order.invoice_date

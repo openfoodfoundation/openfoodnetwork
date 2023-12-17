@@ -266,11 +266,11 @@ fieldset {
 }
 
 .form-actions {
-  @include defaultBoxShadow;
+  box-shadow: $box-shadow;
   background-color: $fair-pink;
   border: none;
-  border-left: 4px solid $red;
-  border-radius: 4px;
+  border-left: $border-radius solid $red;
+  border-radius: $border-radius;
   margin: 0.5em 0;
   padding: 0;
 
