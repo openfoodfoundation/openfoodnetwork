@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://n8n.openfoodnetwork.org.uk/webhook/regen/connect-enterprise
+    body:
+      encoding: UTF-8
+      string: '{"id":"6efbbeea-4078-4bb5-88b1-c8dbf599c520","at":"2023-12-14 12:13:39
+        +1100","event":"connect-app","data":{"enterprise_id":23,"access_token":"b5fa8c7fa1dd5331a2111fcc907040d842c5eb928c512e43"}}'
+    headers:
+      User-Agent:
+      - openfoodnetwork_webhook/1.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 14 Dec 2023 01:13:41 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Content-Length:
+      - '35'
+      Connection:
+      - keep-alive
+      Etag:
+      - W/"23-GW39X6dSljjgz4GPY7ICa+eNupE"
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=63072000
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Download-Options:
+      - noopen
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - same-origin
+    body:
+      encoding: UTF-8
+      string: '{"link":"https://example.net/edit"}'
+  recorded_at: Thu, 14 Dec 2023 01:13:40 GMT
+recorded_with: VCR 6.2.0

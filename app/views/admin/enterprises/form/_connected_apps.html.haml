@@ -1,0 +1,28 @@
+- enterprise ||= f.object
+#connected-app-discover-regen
+  .connected-app__head
+    %div
+      %h3= t ".title"
+      %p= t ".tagline"
+    %div
+      - if enterprise.connected_apps.empty?
+        %button{ data: {reflex: "click->Admin::ConnectedApp#create", enterprise_id: enterprise.id} }
+          = t ".action"
+  .connected-app__connection
+    - if enterprise.connected_apps.present?
+      .connected-app__note
+        - link = enterprise.connected_apps[0].data&.fetch("link", false)
+        - if link
+          %p= t ".note"
+          %div
+            %a{ href: link, target: "_blank", class: "button" }
+              = t ".link_label"
+        - else
+          %p
+            %i.spinner.fa.fa-spin.fa-circle-o-notch
+            &nbsp;
+            = t ".saving_changes"
+
+  %hr
+  .connected-app__description
+    = t ".description_html"
