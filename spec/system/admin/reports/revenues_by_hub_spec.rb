@@ -82,7 +82,8 @@ describe "Revenues By Hub Reports" do
       ].join(" "))
 
       lines = page.all('table.report__table tbody tr').map(&:text)
-      expect(lines[0]).to have_content([
+      first_line = lines.detect { |line| line.include?('Hub 1') }
+      expect(first_line).to have_content([
         "Hub 1",
         order.distributor.id,
         "none",
@@ -102,7 +103,8 @@ describe "Revenues By Hub Reports" do
         order.total
       ].compact.join(" "))
 
-      expect(lines[1]).to have_content([
+      second_line = lines.detect { |line| line.include?('Hub 2') }
+      expect(second_line).to have_content([
         "Hub 2",
         order_with_voucher_tax_included.distributor.id,
         "none",
@@ -117,12 +119,13 @@ describe "Revenues By Hub Reports" do
         "20170",
         "Victoria",
         "1",
-        150.63,
+        140.63,
         9.37,
-        160.0
+        150.0
       ].compact.join(" "))
 
-      expect(lines[2]).to have_content([
+      third_line = lines.detect { |line| line.include?('Hub 3') }
+      expect(third_line).to have_content([
         "Hub 3",
         order_with_voucher_tax_excluded.distributor.id,
         "none",
@@ -137,9 +140,9 @@ describe "Revenues By Hub Reports" do
         "20170",
         "Victoria",
         "1",
-        160.64,
+        150.64,
         10.36,
-        171.0
+        161.0
       ].compact.join(" "))
     end
   end
@@ -153,5 +156,7 @@ describe "Revenues By Hub Reports" do
     order.update_order!
 
     VoucherAdjustmentsService.new(order).update
+
+    order.update_totals_and_states
   end
 end
