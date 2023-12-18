@@ -61,16 +61,15 @@ class SuppliedProductBuilder < DfcBuilder
   end
 
   def self.product_type(variant)
-    taxon_name = variant.product.primary_taxon&.dfc_name
+    taxon_dfc_id = variant.product.primary_taxon&.dfc_id
 
-    return nil if taxon_name.nil?
+    return nil if taxon_dfc_id.nil?
 
     populate_product_types if PRODUCT_TYPES.empty?
 
-    name = taxon_name.downcase.gsub(" ", "_").to_sym
-    return nil if PRODUCT_TYPES[name].nil?
+    return nil if PRODUCT_TYPES[taxon_dfc_id].nil?
 
-    call_dfc_product_type(PRODUCT_TYPES[name])
+    call_dfc_product_type(PRODUCT_TYPES[taxon_dfc_id])
   end
 
   def self.populate_product_types
@@ -83,9 +82,11 @@ class SuppliedProductBuilder < DfcBuilder
   def self.record_type(stack, product_type)
     name = product_type.to_s
     current_stack = stack.dup.push(name)
-    PRODUCT_TYPES[name.downcase.to_sym] = current_stack
 
     type = call_dfc_product_type(current_stack)
+
+    id = type.semanticId
+    PRODUCT_TYPES[id] = current_stack
 
     # Narrower product types are defined as class method on the current product type object
     narrowers = type.methods(false).sort
@@ -111,8 +112,8 @@ class SuppliedProductBuilder < DfcBuilder
 
   def self.taxon(supplied_product)
     # We use english locale, might need to make this configurable
-    dfc_name = supplied_product.productType.prefLabels[:en].downcase
-    taxon = Spree::Taxon.find_by(dfc_name: )
+    dfc_id = supplied_product.productType.prefLabels[:en].downcase
+    taxon = Spree::Taxon.find_by(dfc_id: )
 
     return taxon if taxon.present?
 

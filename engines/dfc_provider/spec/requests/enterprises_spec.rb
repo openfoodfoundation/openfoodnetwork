@@ -29,7 +29,14 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
       :product_with_image,
       id: 90_000, supplier: enterprise, name: "Apple", description: "Round",
       variants: [variant],
-      primary_taxon: build(:taxon, name: "Non local vegetable", dfc_name: "non local vegetable"),
+      primary_taxon: non_local_vegetable
+    )
+  }
+  let(:non_local_vegetable) {
+    build(
+      :taxon,
+      name: "Non Local Vegetable",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#non-local-vegetable"
     )
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "APP") }

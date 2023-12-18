@@ -12,7 +12,13 @@ describe SuppliedProductBuilder do
       v.product.primary_taxon = taxon
     end
   }
-  let(:taxon) { build(:taxon, name: "Drink", dfc_name: "drink") }
+  let(:taxon) {
+    build(
+      :taxon,
+      name: "Drink",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#drink"
+    )
+  }
 
   describe ".supplied_product" do
     it "assigns a semantic id" do
@@ -55,7 +61,13 @@ describe SuppliedProductBuilder do
       end
 
       context "with second level product type" do
-        let(:taxon) { build(:taxon, name: "Soft Drink", dfc_name: "Soft drink") }
+        let(:taxon) {
+          build(
+            :taxon,
+            name: "Soft Drink",
+            dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#soft-drink"
+          )
+        }
 
         it "assigns a second level product type" do
           soft_drink = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK
@@ -65,7 +77,13 @@ describe SuppliedProductBuilder do
       end
 
       context "with leaf level product type" do
-        let(:taxon) { build(:taxon, name: "Lemonade", dfc_name: "lemonade") }
+        let(:taxon) {
+          build(
+            :taxon,
+            name: "Lemonade",
+            dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#lemonade"
+          )
+        }
 
         it "assigns a leaf level product type" do
           lemonade = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK.LEMONADE
@@ -75,7 +93,7 @@ describe SuppliedProductBuilder do
       end
 
       context "with non existing product type" do
-        let(:taxon) { build(:taxon, name: "other", dfc_name: "other") }
+        let(:taxon) { build(:taxon, name: "other", dfc_id: "other") }
 
         it "returns nil" do
           expect(product.productType).to be_nil
@@ -117,7 +135,7 @@ describe SuppliedProductBuilder do
       )
     end
     let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
-    let!(:taxon) { create(:taxon, name: "Non local vegetable", dfc_name: "non local vegetable") }
+    let!(:taxon) { create(:taxon, name: "Non local vegetable", dfc_id: "non local vegetable") }
 
     it "creates a new Spree::Product" do
       product = builder.import_product(supplied_product)

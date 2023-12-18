@@ -15,9 +15,20 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
     )
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1) }
-  let(:taxon) { build(:taxon, name: "Processed Vegetable", dfc_name: "processed vegetable") }
+  let(:taxon) {
+    build(
+      :taxon,
+      name: "Processed Vegetable",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#processed-vegetable"
+    )
+  }
+
   let!(:non_local_vegetable) {
-    create(:taxon, name: "Non Local Vegetable", dfc_name: "non local vegetable")
+    create(
+      :taxon,
+      name: "Non Local Vegetable",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#non-local-vegetable"
+    )
   }
 
   before { login_as user }
@@ -173,7 +184,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
 
     put "Update SuppliedProduct" do
       let!(:drink_taxon) {
-        create(:taxon, name: "Drink", dfc_name: "drink")
+        create(:taxon, name: "Drink", dfc_id: "drink")
       }
 
       consumes "application/json"
