@@ -1,0 +1,125 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://connect.stripe.com/oauth/deauthorize
+    body:
+      encoding: UTF-8
+      string: stripe_user_id=<HIDDEN_ACCOUNT>&client_id=ca_MzG1xs6tZFDztUlak7uFxoUM36G6307W
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/10.3.0
+      Authorization:
+      - Bearer <HIDDEN_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"10.3.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 6.2.0-39-generic (buildd@lcy02-amd64-045) (x86_64-linux-gnu-gcc-11
+        (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
+        #40~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 16 10:53:04 UTC 2","hostname":"ff-LAT"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 19 Dec 2023 12:55:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '164'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=0, no-cache, no-store, must-revalidate
+      Content-Security-Policy:
+      - report-uri /csp-report?p=%2Foauth%2Fdeauthorize;block-all-mixed-content;default-src
+        'none' 'report-sample';base-uri 'none';form-action 'none';style-src 'unsafe-inline';frame-ancestors
+        'self';connect-src 'self';img-src 'self' https://b.stripecdn.com
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=https://q.stripe.com/coop-report
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Request-Id:
+      - req_pGBBuPOXb6xMly
+      Set-Cookie:
+      - __Host-session=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT;
+        secure; SameSite=None
+      - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Fdeauthorize%22%7D;
+        domain=stripe.com; path=/; expires=Wed, 18 Dec 2024 12:55:30 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - machine_identifier=JJUOdPN1UTC9yKxG3Cief9mNanXTKM9y3VmUcEzfmFXEB%2FViV5jXpnxq0kFsEjoKyyg%3D;
+        domain=stripe.com; path=/; expires=Wed, 18 Dec 2024 12:55:30 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - private_machine_identifier=qnLLWHsR2kIkVnuEZbUabBmPGOMmgoa%2B2t%2Bt82Sn41uVMChBI%2FF%2FmVlhmFtmb9%2Fnd70%3D;
+        domain=stripe.com; path=/; expires=Wed, 18 Dec 2024 12:55:30 GMT; secure;
+        HttpOnly; SameSite=None
+      - site-auth=; domain=stripe.com; path=/; max-age=0; expires=Thu, 01 Jan 1970
+        00:00:00 GMT; secure
+      - stripe.csrf=aIL_e_YV7LaxFPnsyZHeK9DsuQ7sm4bYeawhyIBlivow1bC0KAoKCaoR0E-WklLxlvDMXwX1_tY7Aa5l_gJ-zzw-AYTZVJwtl69iWowmC5Gcjqp-_ni03g1Mcx1Hbz6xqEXSGCKfKg%3D%3D;
+        domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      - max-age=63072000; includeSubDomains; preload
+      Stripe-Kill-Route:
+      - "[]"
+      Stripe-Parent-Id:
+      - '0000000000000000'
+      Stripe-Span-Id:
+      - abaf119f94aa71c4
+      Www-Authenticate:
+      - Bearer realm="Stripe"
+      X-Apiori-Intentional-Latency:
+      - 0s
+      X-Apiori-Reqid:
+      - dub1DISD299L0WxB0Akf1uq
+      X-Apiori-Server-Duration-Ms:
+      - '138'
+      X-Apiori-Upstream-Duration:
+      - 137.918128ms
+      X-Apiori-Upstream-Name:
+      - manage-srv
+      X-Apiori-Upstream-Region:
+      - northwest
+      X-Content-Type-Options:
+      - nosniff
+      X-Envoy-Attempt-Count:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '257'
+      X-Robots-Tag:
+      - none
+      X-Stripe-Bg-Intended-Route-Color:
+      - green
+      X-Stripe-C-Cost:
+      - '4'
+      X-Stripe-Client-Envoy-Start-Time-Us:
+      - '1702990530466139'
+      X-Stripe-Rpc-C-Cost-Report:
+      - Cg0IAxIJY2VsbF8wMDA3Cg8IARILZ2xvYmFsX2NlbGw=
+      X-Stripe-Server-Envoy-Start-Time-Us:
+      - '1702990530466931'
+      X-Stripe-Server-Envoy-Upstream-Service-Time-Ms:
+      - '135'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "error": "invalid_client",
+          "error_description": "This application is not connected to stripe account <HIDDEN_ACCOUNT>, or that account does not exist."
+        }
+  recorded_at: Tue, 19 Dec 2023 12:55:30 GMT
+recorded_with: VCR 6.2.0
