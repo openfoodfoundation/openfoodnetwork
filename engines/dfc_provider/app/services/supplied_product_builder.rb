@@ -111,13 +111,8 @@ class SuppliedProductBuilder < DfcBuilder
   end
 
   def self.taxon(supplied_product)
-    # We use english locale, might need to make this configurable
-    dfc_id = supplied_product.productType.prefLabels[:en].downcase
-    taxon = Spree::Taxon.find_by(dfc_id: )
-
-    return taxon if taxon.present?
-
-    nil
+    dfc_id = supplied_product.productType.semanticId
+    Spree::Taxon.find_by(dfc_id: )
   end
 
   private_class_method :product_type, :populate_product_types, :record_type, :call_dfc_product_type,

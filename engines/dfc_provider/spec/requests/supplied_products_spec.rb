@@ -184,7 +184,11 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
 
     put "Update SuppliedProduct" do
       let!(:drink_taxon) {
-        create(:taxon, name: "Drink", dfc_id: "drink")
+        create(
+          :taxon,
+          name: "Drink",
+          dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#drink"
+        )
       }
 
       consumes "application/json"

@@ -135,7 +135,13 @@ describe SuppliedProductBuilder do
       )
     end
     let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
-    let!(:taxon) { create(:taxon, name: "Non local vegetable", dfc_id: "non local vegetable") }
+    let!(:taxon) {
+      create(
+        :taxon,
+        name: "Non local vegetable",
+        dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#non-local-vegetable"
+      )
+    }
 
     it "creates a new Spree::Product" do
       product = builder.import_product(supplied_product)
