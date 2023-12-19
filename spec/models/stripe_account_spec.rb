@@ -24,9 +24,13 @@ describe StripeAccount do
       before { Stripe.client_id = "bogus_client_id" }
 
       it "destroys the record and notifies Bugsnag" do
+        # returns status 401
         expect(Bugsnag).to receive(:notify)
-        stripe_account.deauthorize_and_destroy
-        expect(StripeAccount.all).to_not include(stripe_account)
+        expect {
+          stripe_account.deauthorize_and_destroy
+        }.to change(
+          StripeAccount.where(stripe_user_id:), :count
+        ).from(1).to(0)
       end
     end
 
@@ -34,8 +38,14 @@ describe StripeAccount do
       before { Stripe.client_id = client_id }
 
       it "destroys the record" do
+        # returns status 200
+        expect(Bugsnag).to_not receive(:notify)
         stripe_account.deauthorize_and_destroy
-        expect(StripeAccount.all).not_to include(stripe_account)
+        expect {
+          stripe_account.deauthorize_and_destroy
+        }.to change(
+          StripeAccount.where(stripe_user_id:), :count
+        ).from(1).to(0)
       end
     end
 
