@@ -205,6 +205,11 @@ RSpec.configure do |config|
   # You can use `rspec -n` to run only failed specs.
   config.example_status_persistence_file_path = "tmp/rspec-status.txt"
 
+  # raise I18n exception handler
+  I18n.exception_handler = proc do |exception, *_|
+    raise exception.to_exception
+  end
+
   # Helpers
   config.include FactoryBot::Syntax::Methods
   config.include JsonSpec::Helpers
