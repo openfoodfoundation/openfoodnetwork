@@ -12,7 +12,7 @@
     .row
       .columns.small-12
         %a.cta-hub{"ng-repeat" => "hub in enterprise.hubs | filter:{id: '!'+enterprise.id} | orderBy:'-active'",
-        "ng-href" => "{{::hub.path}}#/shop", "ofn-empties-cart" => "hub",
+        "ng-href" => "{{::hub.path}}#/shop_panel", "ofn-empties-cart" => "hub",
         "ng-class" => "::{primary: hub.active, secondary: !hub.active}",
         "ng-click" => "$close()",
         "ofn-change-hub" => "hub"}

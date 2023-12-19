@@ -5,93 +5,46 @@ export default class extends Controller {
   static values = { className: String };
 
   connect() {
-    // hide all active panel
-    this.panelTargets.forEach((panel) => {
-      panel.style.display = "none";
-    });
-
-    // only display the default panel
-    this.defaultTarget.style.display = "block";
-
-    // Display panel specified in url anchor
-    const anchors = window.location.toString().split("#");
-    let anchor = anchors.length > 1 ? anchors.pop() : "";
-
-    if (anchor != "") {
-      // Conveniently AngularJs rewrite "example.com#panel" to "example.com#/panel" :(
-      // strip the starting / if any
-      if (anchor[0] == "/") {
-        anchor = anchor.slice(1);
-      }
-      // Add _panel to the anchor to match the panel id if needed
-      if (!anchor.includes("_panel")) {
-        anchor = `${anchor}_panel`;
-      }
-      this.updateActivePanel(anchor);
-
-      // tab
-      const tab_id = anchor.split("_panel").shift();
-      this.updateActiveTab(tab_id);
-    }
-
-    window.addEventListener("tabs-and-panels:click", (event) => {
-      this.simulateClick(event.detail.tab, event.detail.panel);
-    });
+    this._activateFromWindowLocationOrDefaultPanelTarget();
 
     window.addEventListener("popstate", (event) => {
-      const newPanelId = event.target.location.hash.replace("#/", "");
-      const currentPanelId = this.currentActivePanel.id;
-
-      if (newPanelId !== currentPanelId) {
-        const newTabId = newPanelId.split("_panel").shift();
-        this.simulateClick(newTabId, newPanelId);
-      }
+      this._activateFromWindowLocationOrDefaultPanelTarget();
     });
   }
 
-  simulateClick(tab, panel) {
-    this.updateActivePanel(panel);
-    this.updateActiveTab(tab);
-  }
-
-  changeActivePanel(event) {
-    this.updateActivePanel(`${event.currentTarget.id}_panel`);
-  }
-
-  updateActivePanel(panel_id) {
-    const newActivePanel = this.panelTargets.find((panel) => panel.id == panel_id);
-
-    if (newActivePanel === undefined) {
-      // No panel found
-      return;
+  _activateFromWindowLocationOrDefaultPanelTarget() {
+    // Conveniently AngularJs rewrite "example.com#panel" to "example.com#/panel"
+    const hashWithoutSlash = window.location.hash.replace("/", "");
+    const tabWithSameHash = this.tabTargets.find((tab) => tab.hash == hashWithoutSlash);
+    if (hashWithoutSlash != "" && tabWithSameHash) {
+      this._activateByHash(tabWithSameHash.hash);
+    } else {
+      this._activateByHash(`#${this.defaultTarget.id}`);
     }
-
-    this.currentActivePanel.style.display = "none";
-    newActivePanel.style.display = "block";
   }
 
-  changeActiveTab(event) {
-    this.currentActiveTab.classList.remove(`${this.classNameValue}`);
-    event.currentTarget.classList.add(`${this.classNameValue}`);
+  activate(event) {
+    this._activateByHash(event.currentTarget.hash);
   }
 
-  updateActiveTab(tab_id) {
-    const newActiveTab = this.tabTargets.find((tab) => tab.id == tab_id);
-
-    if (newActiveTab === undefined) {
-      // No tab found
-      return;
-    }
-
-    this.currentActiveTab.classList.remove(`${this.classNameValue}`);
-    newActiveTab.classList.add(`${this.classNameValue}`);
+  activateDefaultPanel() {
+    this._activateByHash(`#${this.defaultTarget.id}`);
   }
 
-  get currentActiveTab() {
-    return this.tabTargets.find((tab) => tab.classList.contains("selected"));
-  }
-
-  get currentActivePanel() {
-    return this.panelTargets.find((panel) => panel.id == `${this.currentActiveTab.id}_panel`);
+  _activateByHash(hash) {
+    this.tabTargets.forEach((tab) => {
+      if (tab.hash == hash) {
+        tab.classList.add(this.classNameValue);
+      } else {
+        tab.classList.remove(this.classNameValue);
+      }
+    });
+    this.panelTargets.forEach((panel) => {
+      if (panel.id == hash.replace("#", "")) {
+        panel.style.display = "block";
+      } else {
+        panel.style.display = "none";
+      }
+    });
   }
 }
