@@ -1285,7 +1285,7 @@ en:
           tagline: "Allow website to publish your enterprise information."
           enable: "Share data"
           disable: "Disconnect"
-          saving_changes: "Saving changes"
+          loading: "Loading"
           note: |
             In order for this enterprise to be published, you need to include
             regenerative details and accept the Terms and Conditions.

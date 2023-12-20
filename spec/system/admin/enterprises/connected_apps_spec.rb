@@ -37,10 +37,10 @@ describe "Connected Apps", feature: :connected_apps, vcr: true do
 
     click_button "Share data"
     expect(page).to_not have_button "Share data"
-    expect(page).to have_content "Saving changes"
+    expect(page).to have_button "Loading", disabled: true
 
     perform_enqueued_jobs(only: ConnectAppJob)
-    expect(page).to_not have_content "Saving changes"
+    expect(page).to_not have_button "Loading", disabled: true
     expect(page).to have_content "include regenerative details"
     expect(page).to have_link "Update details"
 
