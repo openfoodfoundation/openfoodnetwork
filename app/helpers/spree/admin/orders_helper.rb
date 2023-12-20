@@ -96,8 +96,7 @@ module Spree
       def ship_order_link
         { name: t(:ship_order),
           url: '#',
-          icon: 'icon-truck',
-        }
+          icon: 'icon-truck' }
       end
 
       def cancel_order_link

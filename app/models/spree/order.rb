@@ -29,6 +29,7 @@ module Spree
 
     attr_accessor :use_billing, :checkout_processing, :save_bill_address,
                   :save_ship_address
+    attr_writer :send_shipment_email
 
     token_resource
 
@@ -621,10 +622,6 @@ module Spree
       return true if @send_shipment_email.nil?
 
       @send_shipment_email
-    end
-
-    def send_shipment_email=(val)
-      @send_shipment_email = val
     end
 
     private

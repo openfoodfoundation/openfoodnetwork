@@ -771,7 +771,7 @@ describe '
         page.find("button.icon-road").click
 
         within ".reveal-modal" do
-          uncheck 'Send email confirmation to customer'
+          uncheck 'Send a shipment/pick up notification email to the customer.'
           expect {
             find_button("Confirm").click
           }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
