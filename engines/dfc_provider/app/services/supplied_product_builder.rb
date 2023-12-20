@@ -9,7 +9,7 @@ class SuppliedProductBuilder < DfcBuilder
 
     DfcProvider::SuppliedProduct.new(
       id,
-      name: variant.name_to_display,
+      name: variant.product_and_full_name,
       description: variant.description,
       productType: product_type,
       quantity: QuantitativeValueBuilder.quantity(variant),
