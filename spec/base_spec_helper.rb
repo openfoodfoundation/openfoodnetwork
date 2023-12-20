@@ -50,6 +50,11 @@ end
 FactoryBot.use_parent_strategy = false
 FactoryBot::SyntaxRunner.include FileHelper
 
+# raise I18n exception handler
+I18n.exception_handler = proc do |exception, *_|
+  raise exception.to_exception
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{Rails.root.join('spec/fixtures')}"
@@ -204,11 +209,6 @@ RSpec.configure do |config|
 
   # You can use `rspec -n` to run only failed specs.
   config.example_status_persistence_file_path = "tmp/rspec-status.txt"
-
-  # raise I18n exception handler
-  I18n.exception_handler = proc do |exception, *_|
-    raise exception.to_exception
-  end
 
   # Helpers
   config.include FactoryBot::Syntax::Methods
