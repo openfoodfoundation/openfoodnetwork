@@ -712,6 +712,7 @@ en:
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
+        instance_publishable_key: Instance Publishable Key
         account_id: Account ID
         business_name: Business Name
         charges_enabled: Charges Enabled
