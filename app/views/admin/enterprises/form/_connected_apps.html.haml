@@ -7,7 +7,11 @@
     %div
       - if enterprise.connected_apps.empty?
         %button{ data: {reflex: "click->Admin::ConnectedApp#create", enterprise_id: enterprise.id} }
-          = t ".action"
+          = t ".enable"
+      - else
+        %button{ data: {reflex: "click->Admin::ConnectedApp#destroy", enterprise_id: enterprise.id} }
+          = t ".disable"
+
   .connected-app__connection
     - if enterprise.connected_apps.present?
       .connected-app__note

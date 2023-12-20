@@ -1283,7 +1283,8 @@ en:
           legend: "Connected apps"
           title: "Discover Regenerative"
           tagline: "Allow website to publish your enterprise information."
-          action: "Share data"
+          enable: "Share data"
+          disable: "Disconnect"
           saving_changes: "Saving changes"
           note: |
             In order for this enterprise to be published, you need to include

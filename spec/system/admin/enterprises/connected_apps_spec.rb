@@ -28,7 +28,7 @@ describe "Connected Apps", feature: :connected_apps, vcr: true do
     expect(page).to have_content "CONNECTED APPS"
   end
 
-  it "can be enabled" do
+  it "can be enabled and disabled" do
     visit edit_admin_enterprise_path(enterprise)
 
     scroll_to :bottom
@@ -43,5 +43,11 @@ describe "Connected Apps", feature: :connected_apps, vcr: true do
     expect(page).to_not have_content "Saving changes"
     expect(page).to have_content "include regenerative details"
     expect(page).to have_link "Update details"
+
+    click_button "Disconnect"
+    expect(page).to have_button "Share data"
+    expect(page).to_not have_button "Disconnect"
+    expect(page).to_not have_content "include regenerative details"
+    expect(page).to_not have_link "Update details"
   end
 end
