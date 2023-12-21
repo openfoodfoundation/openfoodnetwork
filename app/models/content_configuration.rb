@@ -23,7 +23,6 @@ class ContentConfiguration < Spree::Preferences::Configuration
   # Producer sign-up page
   # All the following defaults using I18n don't work.
   # https://github.com/openfoodfoundation/openfoodnetwork/issues/3816
-  # default values for these fields are commented out below
   preference :producer_signup_pricing_table_html, :text,
              default: I18n.t(:content_configuration_pricing_table)
   preference :producer_signup_case_studies_html, :text,
