@@ -48,7 +48,6 @@ class ProductsReflex < ApplicationReflex
 
   def delete_product
     id = current_id_from_element(element)
-    authorize! :delete, Spree::Product
     product = product_finder(id).find_product
     authorize! :delete, product
 
