@@ -1,4 +1,18 @@
 .modal-actions {
   display: flex;
-  justify-content: space-around;
+
+  &.justify-space-around {
+    justify-content: space-around;
+  }
+
+  &.justify-end {
+    justify-content: flex-end;
+    input[type="button"] {
+      margin: 0 5px;
+    }
+
+    @media only screen and (max-width: 1024px) {
+      justify-content: space-around;
+    }
+  }
 }

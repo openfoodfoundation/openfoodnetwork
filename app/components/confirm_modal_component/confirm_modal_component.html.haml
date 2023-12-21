@@ -5,6 +5,6 @@
 
     = render @message if @message
 
-    .modal-actions
+    %div{ class: "modal-actions #{@actions_alignment_class}" }
       %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: @cancel_button_text, "data-action": "click->modal#close" }
       %input{ **confirm_button_attrs }

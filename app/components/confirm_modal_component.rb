@@ -3,6 +3,7 @@
 class ConfirmModalComponent < ModalComponent
   # @param confirm_reflex_data [Array(Hash)]
   #        format: {<value-name-1>: value1, <value-name-2>: value2}
+  # @param actions_alignment_class [String] possible classes: 'justify-space-around', 'justify-end'
   def initialize(
     id:,
     reflex: nil,
@@ -13,7 +14,8 @@ class ConfirmModalComponent < ModalComponent
     confirm_button_class: :primary,
     confirm_button_text: I18n.t('js.admin.modals.confirm'),
     cancel_button_text: I18n.t('js.admin.modals.cancel'),
-    confirm_reflex_data: {}
+    confirm_reflex_data: {},
+    actions_alignment_class: 'justify-space-around'
   )
     super(id:, close_button: true)
     @confirm_actions = confirm_actions
@@ -25,6 +27,7 @@ class ConfirmModalComponent < ModalComponent
     @confirm_button_text = confirm_button_text
     @cancel_button_text = cancel_button_text
     @confirm_reflex_data = transform_values_for_dataset(confirm_reflex_data)
+    @actions_alignment_class = actions_alignment_class
   end
 
   private

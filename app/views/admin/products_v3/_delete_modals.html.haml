@@ -5,8 +5,9 @@
     - delete_modal = ConfirmModalComponent.new(id: "delete_#{object_type}_#{object_id}",
       confirm_button_text: t("#{base_translation_key}.confirmation_text"),
       cancel_button_text: t("#{base_translation_key}.cancellation_text"),
-      confirm_reflexes: "click->products#delete_#{object_type}",
       confirm_button_class: :red,
+      actions_alignment_class: 'justify-end',
+      confirm_reflexes: "click->products#delete_#{object_type}",
       confirm_reflex_data: {"current-id": object_id},
     )
     = render delete_modal do
@@ -14,4 +15,4 @@
         = t("#{base_translation_key}.heading")
       %p
         = t("#{base_translation_key}.prompt")
-      .margin-bottom-30
+      .margin-bottom-50
