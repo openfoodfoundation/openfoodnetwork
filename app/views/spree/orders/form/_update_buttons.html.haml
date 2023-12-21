@@ -6,7 +6,7 @@
           = t(:order_back_to_cart)
       - else
         .columns.small-12.medium-6
-          = link_to "#{main_app.enterprise_shop_path(@order.distributor)}#/shop", class: "button expand" do
+          = link_to "#{main_app.enterprise_shop_path(@order.distributor)}#/shop_panel", class: "button expand" do
             = t(:order_back_to_store)
         .columns.small-12.medium-6
           - if @order.distributor.website.present?

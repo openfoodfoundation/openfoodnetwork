@@ -62,6 +62,7 @@ class Enterprise < ApplicationRecord
   has_many :tag_rules, dependent: :destroy
   has_one :stripe_account, dependent: :destroy
   has_many :vouchers
+  has_many :connected_apps, dependent: :destroy
   has_one :custom_tab, dependent: :destroy
 
   delegate :latitude, :longitude, :city, :state_name, to: :address

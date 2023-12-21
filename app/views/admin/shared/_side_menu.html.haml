@@ -2,12 +2,12 @@
   - if @enterprise
     - enterprise_side_menu_items(@enterprise).each do |item|
     - next if !item[:show] || (item[:name] == 'vouchers' && !feature?(:vouchers, spree_current_user, @enterprise))
-      %a.menu_item{ href: item[:href] || "##{item[:name]}_panel", id: item[:name], data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" }, class: item[:selected] }
+      %a.menu_item{ href: item[:href] || "##{item[:name]}_panel", data: { action: "tabs-and-panels#activate", "tabs-and-panels-target": "tab", test: "link_for_#{item[:name]}" }, class: item[:selected] }
         %i{ class: item[:icon_class] }
         %span= t(".enterprise.#{item[:name] }")
   - else
     - enterprise_group_side_menu_items.each do |item|
-      %a.menu_item{ href: "##{item[:name]}_panel", class: item[:selected], id: item[:name], data: { action: "tabs-and-panels#changeActivePanel tabs-and-panels#changeActiveTab", "tabs-and-panels-target": "tab" } }
+      %a.menu_item{ href: "##{item[:name]}_panel", class: item[:selected], data: { action: "tabs-and-panels#activate", "tabs-and-panels-target": "tab", test: "link_for_#{item[:name]}" } }
         %i{ class: item[:icon_class] }
         %span= t(".enterprise_group.#{item[:name] }")
 

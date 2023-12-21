@@ -50,6 +50,11 @@ end
 FactoryBot.use_parent_strategy = false
 FactoryBot::SyntaxRunner.include FileHelper
 
+# raise I18n exception handler
+I18n.exception_handler = proc do |exception, *_|
+  raise exception.to_exception
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{Rails.root.join('spec/fixtures')}"
