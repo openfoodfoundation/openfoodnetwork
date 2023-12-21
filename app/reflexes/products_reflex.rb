@@ -62,7 +62,6 @@ class ProductsReflex < ApplicationReflex
 
   def delete_variant
     id = current_id_from_element(element)
-    authorize! :delete, Spree::Variant
     variant = variant_scope.find(id)
     authorize! :delete, variant
 
