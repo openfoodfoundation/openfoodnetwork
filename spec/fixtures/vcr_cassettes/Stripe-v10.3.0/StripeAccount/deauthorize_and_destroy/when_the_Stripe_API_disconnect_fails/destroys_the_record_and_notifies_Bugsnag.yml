@@ -32,7 +32,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 19 Dec 2023 12:55:29 GMT
+      - Thu, 21 Dec 2023 10:45:56 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -54,22 +54,22 @@ http_interactions:
       Referrer-Policy:
       - strict-origin-when-cross-origin
       Request-Id:
-      - req_1v8IG0ihHAhDnR
+      - req_5I7fo8ZIT4iiOD
       Set-Cookie:
       - __Host-session=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT;
         secure; SameSite=None
       - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Fdeauthorize%22%7D;
-        domain=stripe.com; path=/; expires=Wed, 18 Dec 2024 12:55:29 GMT; secure;
+        domain=stripe.com; path=/; expires=Fri, 20 Dec 2024 10:45:56 GMT; secure;
         HttpOnly; SameSite=Lax
-      - machine_identifier=nsadMhesm4x1GYVPmQcxGxkwOEHT0uGESxaoxop6tgOLhu%2BvkqpSkkKcxxRvqqlpa%2BQ%3D;
-        domain=stripe.com; path=/; expires=Wed, 18 Dec 2024 12:55:29 GMT; secure;
+      - machine_identifier=QgNDMZHR38PElyy9q592gsCebE6wwZpG2yGY42Pr9eBKa8VgTy3D6hYV68qrQ22Ss6M%3D;
+        domain=stripe.com; path=/; expires=Fri, 20 Dec 2024 10:45:56 GMT; secure;
         HttpOnly; SameSite=Lax
-      - private_machine_identifier=5MctxMzB3oEJsWQPiwovzvt6vy1pHt5g4lYzkFr0hY3jCZZPQz%2F6jU71Ye8gqtUCUkE%3D;
-        domain=stripe.com; path=/; expires=Wed, 18 Dec 2024 12:55:29 GMT; secure;
+      - private_machine_identifier=I5FD6ty3P%2Fu3NcPXx%2FQWf0rlSSmmseIhF3Jjh1k0VDaE0r9pST2zC0QF5zOrj9mL8xU%3D;
+        domain=stripe.com; path=/; expires=Fri, 20 Dec 2024 10:45:56 GMT; secure;
         HttpOnly; SameSite=None
       - site-auth=; domain=stripe.com; path=/; max-age=0; expires=Thu, 01 Jan 1970
         00:00:00 GMT; secure
-      - stripe.csrf=ivC9DH1gR7jYwuuHUpqqkApanZ79wswQZMBVKfzfaLr1n5rf_HwKb4sv66YdBNDs03Zq1H_JeHyOjBZ1rENh4jw-AYTZVJxQjKfvlBDZNhjvEvPk5QdyiiBil-k2Op8FixB9Mw4lkg%3D%3D;
+      - stripe.csrf=3pBovX-WeRInaYekIenxBP4HZPJUKPIapUKWzkq61RZGXY_L4XNwm0d3kPOaWycuCWRVZPILZHIl0E1ajDrp9jw-AYTZVJw3W5vZuecF9T6yl15939IAMLnS4TPsJz7sL-g2uJ-hMA%3D%3D;
         domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -79,17 +79,17 @@ http_interactions:
       Stripe-Parent-Id:
       - '0000000000000000'
       Stripe-Span-Id:
-      - 1317edffcd8f0941
+      - c9754f0ed47ef010
       Www-Authenticate:
       - Bearer realm="Stripe"
       X-Apiori-Intentional-Latency:
       - 0s
       X-Apiori-Reqid:
-      - dub2DISD22ogqObCRqkyYRE
+      - dub1DIXA8nWJL2tSW8r7Vtw
       X-Apiori-Server-Duration-Ms:
-      - '126'
+      - '118'
       X-Apiori-Upstream-Duration:
-      - 126.447763ms
+      - 118.447951ms
       X-Apiori-Upstream-Name:
       - manage-srv
       X-Apiori-Upstream-Region:
@@ -99,21 +99,21 @@ http_interactions:
       X-Envoy-Attempt-Count:
       - '1'
       X-Envoy-Upstream-Service-Time:
-      - '248'
+      - '235'
       X-Robots-Tag:
       - none
       X-Stripe-Bg-Intended-Route-Color:
-      - green
+      - blue
       X-Stripe-C-Cost:
       - '2'
       X-Stripe-Client-Envoy-Start-Time-Us:
-      - '1702990529582694'
+      - '1703155556322583'
       X-Stripe-Rpc-C-Cost-Report:
       - Cg0IARIJY2VsbF8wMDA3Cg8IARILZ2xvYmFsX2NlbGw=
       X-Stripe-Server-Envoy-Start-Time-Us:
-      - '1702990529583695'
+      - '1703155556323654'
       X-Stripe-Server-Envoy-Upstream-Service-Time-Ms:
-      - '123'
+      - '115'
     body:
       encoding: UTF-8
       string: |-
@@ -121,5 +121,5 @@ http_interactions:
           "error": "invalid_client",
           "error_description": "No such application: 'bogus_client_id'"
         }
-  recorded_at: Tue, 19 Dec 2023 12:55:29 GMT
+  recorded_at: Thu, 21 Dec 2023 10:45:56 GMT
 recorded_with: VCR 6.2.0
