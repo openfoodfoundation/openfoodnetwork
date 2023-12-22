@@ -227,7 +227,7 @@ module Openfoodnetwork
     config.action_view.form_with_generates_remote_forms = false
     config.active_record.cache_versioning = false
     config.active_record.has_many_inversing = false
-    config.active_record.yaml_column_permitted_classes = [BigDecimal, Symbol]
+    config.active_record.yaml_column_permitted_classes = [BigDecimal, Symbol, ActiveSupport::SafeBuffer]
 
     config.active_support.escape_html_entities_in_json = true
 
