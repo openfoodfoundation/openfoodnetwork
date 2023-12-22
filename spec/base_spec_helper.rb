@@ -162,6 +162,9 @@ RSpec.configure do |config|
       vcr_config.default_cassette_options = { record: :none } if ENV["CI"]
     end
     example.run
+    VCR.configure do |vcr_config|
+      vcr_config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+    end
   end
 
   # Geocoding
