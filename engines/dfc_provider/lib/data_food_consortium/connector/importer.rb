@@ -120,6 +120,10 @@ module DataFoodConsortium
       end
 
       def skos_concept(object)
+        # Sometimes we get given a literal object with a value referring to skos concept
+        # ie "dfc-pt:drink"
+        return unless object.value.match(":") || object.uri?
+
         id = object.value.sub(
           "http://static.datafoodconsortium.org/data/measures.rdf#", "dfc-m:"
         ).sub(
