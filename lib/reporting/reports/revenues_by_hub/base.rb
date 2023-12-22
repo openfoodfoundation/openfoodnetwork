@@ -19,7 +19,7 @@ module Reporting
           }
         end
 
-        def columns # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+        def columns # rubocop:disable Metrics/AbcSize
           {
             hub: proc { |orders| distributor(orders).name },
             hub_id: proc { |orders| distributor(orders).id },
@@ -35,22 +35,62 @@ module Reporting
             hub_address_zipcode: proc { |orders| distributor(orders).address&.zipcode },
             hub_address_state_name: proc { |orders| distributor(orders).address&.state_name },
             total_orders: proc { |orders| orders.count },
-            total_excl_tax: proc { |orders|
-                              orders.sum { |order| order.total - order.total_tax }
-                            },
-            total_tax: proc { |orders| orders.sum(&:total_tax) },
-            total_incl_tax: proc { |orders| orders.sum(&:total) }
+            total_excl_tax: :total_excl_tax,
+            total_tax: :total_tax,
+            total_incl_tax: :total_incl_tax
           }
         end
 
         def query_result
-          search.result.group_by(&:distributor).values
+          result = search.result.group_by(&:distributor).values
+          build_tax_data(result)
+          result
         end
 
         private
 
         def distributor(orders)
           orders.first.distributor
+        end
+
+        def build_tax_data(grouped_orders)
+          @tax_data = {}
+
+          grouped_orders.each do |orders|
+            voucher_adjustments = calculate_voucher_adjustments(orders)
+
+            total_incl_tax = orders.sum(&:total)
+            total_tax = orders.sum(&:total_tax) + voucher_adjustments
+            total_excl_tax = total_incl_tax - total_tax
+
+            @tax_data[distributor(orders).id] = {
+              total_incl_tax:, total_tax:, total_excl_tax:
+            }
+          end
+        end
+
+        def calculate_voucher_adjustments(orders)
+          result = 0.0
+
+          orders.each do |order|
+            adjustment_service = VoucherAdjustmentsService.new(order)
+            result += adjustment_service.voucher_included_tax +
+                      adjustment_service.voucher_excluded_tax
+          end
+
+          result
+        end
+
+        def total_incl_tax(orders)
+          @tax_data[distributor(orders).id][:total_incl_tax]
+        end
+
+        def total_tax(orders)
+          @tax_data[distributor(orders).id][:total_tax]
+        end
+
+        def total_excl_tax(orders)
+          @tax_data[distributor(orders).id][:total_excl_tax]
         end
       end
     end
