@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SuppliedProductBuilder < DfcBuilder
-  PRODUCT_TYPES = {} # rubocop:disable Style/MutableConstant
-
   def self.supplied_product(variant)
     id = urls.enterprise_supplied_product_url(
       enterprise_id: variant.product.supplier_id,
@@ -63,51 +61,7 @@ class SuppliedProductBuilder < DfcBuilder
   def self.product_type(variant)
     taxon_dfc_id = variant.product.primary_taxon&.dfc_id
 
-    return nil if taxon_dfc_id.nil?
-
-    populate_product_types if PRODUCT_TYPES.empty?
-
-    return nil if PRODUCT_TYPES[taxon_dfc_id].nil?
-
-    call_dfc_product_type(PRODUCT_TYPES[taxon_dfc_id])
-  end
-
-  def self.populate_product_types
-    DfcLoader.connector.PRODUCT_TYPES.topConcepts.each do |product_type|
-      stack = []
-      record_type(stack, product_type.to_s)
-    end
-  end
-
-  def self.record_type(stack, product_type)
-    name = product_type.to_s
-    current_stack = stack.dup.push(name)
-
-    type = call_dfc_product_type(current_stack)
-
-    id = type.semanticId
-    PRODUCT_TYPES[id] = current_stack
-
-    # Narrower product types are defined as class method on the current product type object
-    narrowers = type.methods(false).sort
-
-    # Leaf node
-    return if narrowers.empty?
-
-    narrowers.each do |narrower|
-      # recursive call
-      record_type(current_stack, narrower)
-    end
-  end
-
-  # Callproduct type method ie: DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK
-  def self.call_dfc_product_type(product_type_path)
-    type = DfcLoader.connector.PRODUCT_TYPES
-    product_type_path.each do |pt|
-      type = type.public_send(pt)
-    end
-
-    type
+    DfcProductTypeFactory.for(taxon_dfc_id)
   end
 
   def self.taxon(supplied_product)
@@ -115,6 +69,5 @@ class SuppliedProductBuilder < DfcBuilder
     Spree::Taxon.find_by(dfc_id: )
   end
 
-  private_class_method :product_type, :populate_product_types, :record_type, :call_dfc_product_type,
-                       :taxon
+  private_class_method :product_type, :taxon
 end

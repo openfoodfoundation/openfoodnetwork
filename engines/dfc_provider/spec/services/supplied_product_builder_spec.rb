@@ -15,8 +15,8 @@ describe SuppliedProductBuilder do
   let(:taxon) {
     build(
       :taxon,
-      name: "Drink",
-      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#drink"
+      name: "Soft Drink",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#soft-drink"
     )
   }
 
@@ -54,50 +54,10 @@ describe SuppliedProductBuilder do
     context "product_type mapping" do
       subject(:product) { builder.supplied_product(variant) }
 
-      it "assigns a top level product type" do
-        drink = DfcLoader.connector.PRODUCT_TYPES.DRINK
+      it "assigns a product type" do
+        soft_drink = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK
 
-        expect(product.productType).to eq drink
-      end
-
-      context "with second level product type" do
-        let(:taxon) {
-          build(
-            :taxon,
-            name: "Soft Drink",
-            dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#soft-drink"
-          )
-        }
-
-        it "assigns a second level product type" do
-          soft_drink = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK
-
-          expect(product.productType).to eq soft_drink
-        end
-      end
-
-      context "with leaf level product type" do
-        let(:taxon) {
-          build(
-            :taxon,
-            name: "Lemonade",
-            dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#lemonade"
-          )
-        }
-
-        it "assigns a leaf level product type" do
-          lemonade = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK.LEMONADE
-
-          expect(product.productType).to eq lemonade
-        end
-      end
-
-      context "with non existing product type" do
-        let(:taxon) { build(:taxon, name: "other", dfc_id: "other") }
-
-        it "returns nil" do
-          expect(product.productType).to be_nil
-        end
+        expect(product.productType).to eq soft_drink
       end
 
       context "when no taxon set" do
