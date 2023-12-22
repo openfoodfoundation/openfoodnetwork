@@ -2,6 +2,9 @@
   border-right: 2px solid #f6f6f6;
   border-top: 2px solid #f6f6f6;
 
+  /* Reserve space for the save bar to avoid hidden menu items. */
+  margin-bottom: 2em;
+
   .menu_item {
     display: block;
     padding: 8px 15px;
