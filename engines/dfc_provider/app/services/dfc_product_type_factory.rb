@@ -16,9 +16,7 @@ class DfcProductTypeFactory
   end
 
   def for(dfc_id)
-    return nil if @product_types[dfc_id].nil?
-
-    call_dfc_product_type(@product_types[dfc_id])
+    @product_types[dfc_id]
   end
 
   private
@@ -37,7 +35,7 @@ class DfcProductTypeFactory
     type = call_dfc_product_type(current_stack)
 
     id = type.semanticId
-    @product_types[id] = current_stack
+    @product_types[id] = type
 
     # Narrower product types are defined as class method on the current product type object
     narrowers = type.methods(false).sort
