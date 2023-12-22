@@ -20,12 +20,14 @@
   }
 
   // Form actions floats over other controls when active
-  .form-actions {
-    position: absolute;
-    top: -1em;
-    left: 0;
-    right: 0;
-    z-index: 1; // Ensure tom-select and .disabled-section are covered
+  #products-form {
+    .form-actions {
+      position: absolute;
+      top: -1em;
+      left: 0;
+      right: 0;
+      z-index: 1; // Ensure tom-select and .disabled-section are covered
+    }
   }
 
   // Hopefully these rules will be moved to component(s).

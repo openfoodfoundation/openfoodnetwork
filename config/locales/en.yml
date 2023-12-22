@@ -653,6 +653,9 @@ en:
 
     available_units: "Available Units"
 
+    terms_of_service_have_been_updated_html: "Open Food Network's Terms of Service have been updated: %{tos_link}"
+    terms_of_service: Read Terms of Service
+    accept_terms_of_service: Accept Terms of Service
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"

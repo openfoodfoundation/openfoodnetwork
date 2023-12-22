@@ -1,0 +1,27 @@
+#banner-container {
+  position: fixed;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  z-index: $tos-banner-z-index;
+
+  .terms-of-service-banner {
+    padding: 18px;
+    text-align: center;
+    font-size: 120%;
+    color: white;
+    font-weight: 600;
+    margin-top: 0;
+    background-color: rgba($color-notice, 0.8);
+    display: flex;
+
+    .column-left {
+      width: 70%;
+    }
+
+    .column-right {
+      width: 30%;
+      text-align: center;
+    }
+  }
+}
