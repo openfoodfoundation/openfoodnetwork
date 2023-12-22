@@ -61,6 +61,10 @@ module OpenFoodNetwork
       "background_reports" => <<~DESC,
         Generate reports in a background process to limit memory consumption.
       DESC
+      "vouchers" => <<~DESC,
+        Add voucher functionality. Voucher can be managed via Enterprise settings.
+        This is activated per enterprise. Enter actors as <code>Enterprise;1234</code>.
+      DESC
     }.freeze
 
     def self.setup!
