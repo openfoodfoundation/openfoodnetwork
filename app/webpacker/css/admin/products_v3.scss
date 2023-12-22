@@ -22,18 +22,19 @@
   // Form actions floats over other controls when active
   .form-actions {
     position: sticky;
-    top: 0;
+    top: 0.25rem;
     left: 0;
     right: 0;
     z-index: 1; // Ensure tom-select and .disabled-section are covered
   }
+  
 
   .form-actions:not(.hidden) + table.products {
     thead {
       top: 54px;
 
       &:before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 50%;
@@ -51,6 +52,13 @@
       }
     }
   }
+
+  .form-actions:not(.hidden) > .error_summary + .table.products {
+    thead {
+      top: 88px;
+    }
+  }
+
 
   // Hopefully these rules will be moved to component(s).
   table.products {
