@@ -59,6 +59,11 @@ jobs:
         with:
           node-version-file: .node-version
 
+      - name: Install libvips
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvips
+
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
 
@@ -126,6 +131,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+
+      - name: Install libvips
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvips
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -195,6 +205,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+
+      - name: Install libvips
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvips
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -274,6 +289,10 @@ jobs:
         with:
           node-version-file: .node-version
 
+      - name: Install libvips
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvips
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
 
@@ -352,6 +371,11 @@ jobs:
         with:
           node-version-file: .node-version
 
+      - name: Install libvips
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvips
+
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
 
@@ -429,6 +453,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+
+      - name: Install libvips
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvips
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
