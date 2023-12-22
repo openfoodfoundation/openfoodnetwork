@@ -40,10 +40,6 @@ module OpenFoodNetwork
         shipping categories. Activating this feature for an enterprise owner
         will activate it for all shops of this enterprise.
       DESC
-      "vouchers" => <<~DESC,
-        Add voucher functionality. Voucher can be managed via Enterprise settings.
-        This is activated per enterprise. Enter actors as <code>Enterprise;1234</code>.
-      DESC
       "invoices" => <<~DESC,
         Preserve the state of generated invoices and enable multiple invoice numbers instead of only one live-updating invoice.
       DESC
@@ -60,10 +56,6 @@ module OpenFoodNetwork
     ACTIVE_BY_DEFAULT = {
       "background_reports" => <<~DESC,
         Generate reports in a background process to limit memory consumption.
-      DESC
-      "vouchers" => <<~DESC,
-        Add voucher functionality. Voucher can be managed via Enterprise settings.
-        This is activated per enterprise. Enter actors as <code>Enterprise;1234</code>.
       DESC
     }.freeze
 
