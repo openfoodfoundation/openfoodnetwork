@@ -20,7 +20,7 @@
           = render 'spree/shared/line_item_name', line_item: item
           %br
           %small
-            %em= raw(item.variant.product.supplier.name)
+            %em= item.variant.product.supplier.name
         %td
           - if item.variant.sku.blank?
             \-
@@ -43,7 +43,7 @@
     - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
       %tr
         %td{align: "right", colspan: "3"}
-          = "#{raw(adjustment.label)}:"
+          = "#{adjustment.label}:"
         %td{align: "right"}
           = adjustment.display_amount
     %tr
