@@ -1,7 +1,6 @@
 # frozen_string_literal: false
 
 require 'spec_helper'
-require 'variant_units/option_value_namer'
 require 'spree/localized_number'
 
 describe Spree::Variant do

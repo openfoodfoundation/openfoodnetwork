@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'order_management/subscriptions/proxy_order_syncer'
-
 class OrderCycleClone
   def initialize(order_cycle)
     @original_order_cycle = order_cycle

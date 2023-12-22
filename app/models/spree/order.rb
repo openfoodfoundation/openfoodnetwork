@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/order/checkout'
-require 'open_food_network/enterprise_fee_calculator'
-require 'open_food_network/feature_toggle'
-require 'open_food_network/tag_rule_applicator'
-
 module Spree
   class Order < ApplicationRecord
     include OrderShipment

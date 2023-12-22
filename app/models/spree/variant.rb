@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'open_food_network/enterprise_fee_calculator'
-require 'variant_units/variant_and_line_item_naming'
-require 'concerns/variant_stock'
 require 'spree/localized_number'
 
 module Spree

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spree/localized_number'
-require 'concerns/adjustment_scopes'
 
 # Adjustments represent a change to the +item_total+ of an Order. Each adjustment
 # has an +amount+ that can be either positive or negative.

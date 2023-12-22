@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'order_management/subscriptions/summarizer'
-
 # Confirms orders of unconfirmed proxy orders in recently closed Order Cycles
 class SubscriptionConfirmJob < ApplicationJob
   def perform
