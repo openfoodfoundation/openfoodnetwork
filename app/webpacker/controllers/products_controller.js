@@ -12,7 +12,7 @@ export default class extends ApplicationController {
 
   beforeReflex(element) {
     // To prevent the double click on the confirm modal's confirmation button
-    if (element.id === "confirmModalButton") {
+    if (element.id === "modal-confirm-button") {
       window.dispatchEvent(new Event("modal:close"));
     }
     this.showLoading();

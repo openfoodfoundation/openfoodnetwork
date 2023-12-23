@@ -1,0 +1,15 @@
+-# object_type can be 'variant' or 'product'
+- base_translation_key = ".delete_#{object_type}_modal"
+- delete_modal = ConfirmModalComponent.new(id: "#{object_type}-delete-modal",
+      confirm_button_text: t("#{base_translation_key}.confirmation_text"),
+      cancel_button_text: t("#{base_translation_key}.cancellation_text"),
+      confirm_button_class: :red,
+      actions_alignment_class: 'justify-end',
+      confirm_reflexes: "click->products#delete_#{object_type}",
+    )
+= render delete_modal do
+  %h2.margin-bottom-20{style:'color: black'}
+    = t("#{base_translation_key}.heading")
+  %p
+    = t("#{base_translation_key}.prompt")
+  .margin-bottom-50

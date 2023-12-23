@@ -7,4 +7,4 @@
 
     %div{ class: "modal-actions #{@actions_alignment_class}" }
       %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: @cancel_button_text, "data-action": "click->modal#close" }
-      %input{ **confirm_button_attrs }
+      %input{ id: 'modal-confirm-button', class: "button icon-plus #{@confirm_button_class}", type: 'button', value: @confirm_button_text, "data-action": @confirm_actions, "data-reflex": @confirm_reflexes }

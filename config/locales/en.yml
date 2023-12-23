@@ -816,7 +816,7 @@ en:
         header:
           title: Bulk Edit Products
         loading: Loading your products
-      delete_modals:
+      delete_modal:
         delete_product_modal:
           heading: "Delete product"
           prompt: "This will permanently remove it from your list."

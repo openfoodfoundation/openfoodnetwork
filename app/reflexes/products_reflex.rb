@@ -106,36 +106,11 @@ class ProductsReflex < ApplicationReflex
                              flashes: flash })
     ).broadcast
 
-    render_product_delete_modals
-    render_variant_delete_modals
-
     cable_ready.replace_state(
       url: current_url,
     ).broadcast_later
 
     morph :nothing
-  end
-
-  def render_product_delete_modals
-    product_ids = @products.pluck(:id)
-    cable_ready.replace(
-      selector: "#product-delete-action-modals",
-      html: render(
-        partial: "admin/products_v3/delete_modals",
-        locals: { object_ids: product_ids, object_type: 'product' }
-      )
-    ).broadcast
-  end
-
-  def render_variant_delete_modals
-    variant_ids = @products.joins(:variants).pluck('spree_variants.id')
-    cable_ready.replace(
-      selector: "#variant-delete-action-modals",
-      html: render(
-        partial: "admin/products_v3/delete_modals",
-        locals: { object_ids: variant_ids, object_type: 'variant' }
-      )
-    ).broadcast
   end
 
   def render_products_form_with_flash

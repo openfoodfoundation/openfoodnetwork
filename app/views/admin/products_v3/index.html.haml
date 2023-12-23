@@ -17,5 +17,5 @@
       .spinner
       = t('.loading')
   #products-content
-  #product-delete-action-modals
-  #variant-delete-action-modals
+  - %w[product variant].each do |object_type|
+    = render partial: 'delete_modal', locals: { object_type: }
