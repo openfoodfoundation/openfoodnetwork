@@ -12,7 +12,6 @@ class ConfirmModalComponent < ModalComponent
     confirm_button_class: :primary,
     confirm_button_text: I18n.t('js.admin.modals.confirm'),
     cancel_button_text: I18n.t('js.admin.modals.cancel'),
-    confirm_reflex_data: {},
     actions_alignment_class: 'justify-space-around'
   )
     super(id:, close_button: true)
@@ -32,5 +31,4 @@ class ConfirmModalComponent < ModalComponent
   def close_button_class
     "secondary"
   end
-
 end
