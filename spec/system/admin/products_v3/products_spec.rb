@@ -516,7 +516,8 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
           end
 
           expect(page).to_not have_selector(modal_selector)
-          sleep(0.5) # delay for loading spinner to complete
+          # Make sure the products loading spinner is hidden
+          wait_for_class('.spinner-overlay', 'hidden')
           expect(page).to_not have_selector(variant_selector)
           within success_flash_message_selector do
             expect(page).to have_content("Successfully deleted the variant")
@@ -533,7 +534,8 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
             page.find(delete_button_selector).click
           end
           expect(page).to_not have_selector(modal_selector)
-          sleep(0.5) # delay for loading spinner to complete
+          # Make sure the products loading spinner is hidden
+          wait_for_class('.spinner-overlay', 'hidden')
           expect(page).to_not have_selector(product_selector)
           within success_flash_message_selector do
             expect(page).to have_content("Successfully deleted the product")
@@ -622,5 +624,13 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
   # visible name.
   def row_containing_name(value)
     "tr:has(input[aria-label=Name][value='#{value}'])"
+  end
+
+  # Wait for an element with the given CSS selector and class to be present
+  def wait_for_class(selector, class_name)
+    max_wait_time = Capybara.default_max_wait_time
+    Timeout.timeout(max_wait_time) do
+      until page.has_css?(selector, class: class_name, visible: false); end
+    end
   end
 end
