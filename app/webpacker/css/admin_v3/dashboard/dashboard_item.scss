@@ -186,10 +186,17 @@ div.dashboard_item {
 
     &.warning {
       background-color: $color-warning;
+      border-color: $color-warning;
+
+      &:focus {
+        border-color: $color-btn-hover-bg;
+      }
+
     }
 
     &:hover {
       background-color: $color-btn-hover-bg;
+      border-color: $color-btn-hover-bg;
     }
 
     &.bottom {
