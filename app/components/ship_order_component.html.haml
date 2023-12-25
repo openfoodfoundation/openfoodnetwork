@@ -3,5 +3,6 @@
     %p= t('spree.admin.orders.shipment.mark_as_shipped_message_html')
   %div{class: "margin-bottom-30"}
     = hidden_field_tag :id, @order.id
-    = check_box_tag :send_shipment_email, "1", true
-    = label_tag :send_shipment_email, t('spree.admin.orders.shipment.mark_as_shipped_label_message')
+    = label_tag do
+      = check_box_tag :send_shipment_email, "1", true
+      = t('spree.admin.orders.shipment.mark_as_shipped_label_message')
