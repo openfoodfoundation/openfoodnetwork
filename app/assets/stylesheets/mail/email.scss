@@ -55,16 +55,27 @@ p.callout {
   color: #0096ad;
 }
 
+p.footer, p.footer_icons a {
+  color: #999;
+}
+
+p.footer_icons {
+  font-size: 0px;
+
+  a {
+    text-decoration: none;
+    margin-right: 5px;
+  }
+}
+
+p.footer_icons a:not(.ofn-i_image) {
+  font-size: 20px;
+}
+
 p.notice {
   font-style: italic;
   font-size: 12px;
   margin-top: 20px;
-}
-
-.powered-by-ofn {
-  background-color: #ebebeb;
-  padding: .5em;
-  text-align: center;
 }
 
 table.social {
@@ -177,11 +188,12 @@ del.quantity_was {
 }
 
 /* -------------------------------------
- *		HEADER
+ *		HEADER & FOOTER
  *------------------------------------- */
 
-table.head-wrap {
+.wrap {
   width: 100%;
+  background-color: #f2f2f2;
 }
 
 .header.container table td {

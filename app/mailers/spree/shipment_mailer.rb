@@ -2,6 +2,8 @@
 
 module Spree
   class ShipmentMailer < ApplicationMailer
+    helper MailerHelper
+
     def shipped_email(shipment, delivery:)
       @shipment = shipment.respond_to?(:id) ? shipment : Spree::Shipment.find(shipment)
       @delivery = delivery

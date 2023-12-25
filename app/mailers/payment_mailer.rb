@@ -2,6 +2,7 @@
 
 class PaymentMailer < ApplicationMailer
   include I18nHelper
+  helper MailerHelper
 
   def authorize_payment(payment)
     @payment = payment

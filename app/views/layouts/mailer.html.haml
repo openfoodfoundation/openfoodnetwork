@@ -8,7 +8,7 @@
     = stylesheet_link_tag 'mail'
   %body{:bgcolor => "#FFFFFF" }
     - unless @hide_ofn_navigation
-      %table.head-wrap{:bgcolor => "#f2f2f2"}
+      %table.wrap
         %tr
           %td
           %td.header.container
@@ -34,15 +34,39 @@
                   = yield
         %td
 
-    %table.footer-wrap
+    %table.wrap
       %tr
         %td
         %td.container
           .content
             %table
               %tr
-                %td{:align => "center"}
-                  %p
+                %td.text-center
+                  %p.footer
+                    = t(".powered_html", open_food_network: link_to(t(".open_food_network"), "https://www.openfoodnetwork.org", target: '_blank'))
+
+              %tr
+                %td.text-center
+                  %p.footer_icons
+                    - if ContentConfig.footer_email.present?
+                      %a.ofn-i_050-mail-circle{:href => "mailto:#{ContentConfig.footer_email}", :target => "_blank"}
+                    - if ContentConfig.footer_instagram_url.present?
+                      %a.ofn-i_043-instagram{:href => ContentConfig.footer_instagram_url, :target => "_blank"}
+                    - if ContentConfig.footer_facebook_url.present?
+                      %a.ofn-i_044-facebook{:href => ContentConfig.footer_facebook_url, :target => "_blank"}
+                    - if ContentConfig.footer_linkedin_url.present?
+                      %a.ofn-i_042-linkedin{:href => ContentConfig.footer_linkedin_url, :target => "_blank"}
+                    - if ContentConfig.footer_googleplus_url.present?
+                      %a.ofn-i_046-g{:href => ContentConfig.footer_googleplus_url, :target => "_blank"}
+                    - if ContentConfig.footer_pinterest_url.present?
+                      %a.ofn-i_045-pintrest{:href => ContentConfig.footer_pinterest_url, :target => "_blank"}
+                    - if ContentConfig.footer_twitter_url.present?
+                      %a.ofn-i_image{:href => ContentConfig.footer_twitter_url, :target => "_blank"}
+                        %img{src: image_path("/map_icons/social-logos/x999.png"), style: "width: 20px; position: relative; top: 1.5px;" }
+
+              %tr
+                %td.text-center
+                  %p.footer
                     - if platform_terms_required?
                       = link_to_platform_terms
                       |

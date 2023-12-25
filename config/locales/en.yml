@@ -360,6 +360,10 @@ en:
     report_failed: |
       This report failed. It may be too big to process.
       We will look into it but please let us know if the problem persists.
+  layouts:
+    mailer:
+      open_food_network: "Open Food Network"
+      powered_html: "This service is powered by the %{open_food_network}."
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -2073,11 +2077,6 @@ en:
       show_closed_shops: "Show closed shops"
       hide_closed_shops: "Hide closed shops"
       show_on_map: "Show all on the map"
-  shared:
-    mailers:
-      powered_by:
-        open_food_network: "Open Food Network"
-        powered_html: "Your shopping experience is powered by the %{open_food_network}."
     menu:
       cart:
         cart: "Cart"
