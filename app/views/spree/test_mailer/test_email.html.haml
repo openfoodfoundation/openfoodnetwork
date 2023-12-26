@@ -1,4 +1,6 @@
-= t('.greeting')
-= "================"
+%h3
+  = t('.greeting')
+%p
+  = t('.message')
 
-= t('.message')
+= render 'shared/mailers/signoff'
