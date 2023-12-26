@@ -186,7 +186,7 @@ module Reporting
           let(:order) { line_item.order }
 
           it 'calls #new_outstanding_balance' do
-            expect_any_instance_of(Spree::Order).to receive(:new_outstanding_balance)
+            expect_any_instance_of(Spree::Order).to receive(:new_outstanding_balance).and_return(0)
             CustomerPayments.new(user).__send__(:customer_payments_amount_owed, [line_item])
           end
         end
