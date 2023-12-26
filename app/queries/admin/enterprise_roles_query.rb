@@ -2,10 +2,6 @@
 
 module Admin
   class EnterpriseRolesQuery
-    EnterpriseRoleStruct = Struct.new(:id, :user_id, :enterprise_id, :user_, :enterprise_name)
-    UserStruct = Struct.new(:id, :email)
-    EnterpriseStruct = Struct.new(:id, :name)
-
     class << self
       def query
         enterprise_roles = query_enterprice_roles
