@@ -139,6 +139,7 @@ describe Spree::OrderContents do
       end
 
       it "updates the order's enterprise fees if completed" do
+        allow(order).to receive(:shipment).and_return(create(:shipment, order:))
         allow(order).to receive(:completed?) { true }
         expect(order).to receive(:update_order_fees!)
 
