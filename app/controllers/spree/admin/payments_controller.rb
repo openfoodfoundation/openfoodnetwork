@@ -61,7 +61,7 @@ module Spree
       rescue StandardError => e
         flash[:error] = e.message
       ensure
-        redirect_to request.referer
+        redirect_to request.referer, allow_other_host: true
       end
 
       def paypal_refund

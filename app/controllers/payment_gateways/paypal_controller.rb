@@ -24,7 +24,7 @@ module PaymentGateways
           # At this point Paypal has *provisionally* accepted that the payment can now be placed,
           # and the user will be redirected to a Paypal payment page. On completion, the user is
           # sent back and the response is handled in the #confirm action in this controller.
-          redirect_to provider.express_checkout_url(pp_response, useraction: 'commit')
+          redirect_to provider.express_checkout_url(pp_response, useraction: 'commit'), allow_other_host: true
         else
           flash[:error] =
             Spree.t(
