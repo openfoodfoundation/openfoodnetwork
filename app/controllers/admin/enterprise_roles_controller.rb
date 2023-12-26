@@ -3,9 +3,8 @@
 module Admin
   class EnterpriseRolesController < Admin::ResourceController
     def index
-      @enterprise_roles = EnterpriseRole.by_user_email
-      @users = Spree::User.order('spree_users.email')
-      @my_enterprises = @all_enterprises = Enterprise.by_name
+      @enterprise_roles, @users, @all_enterprises = Admin::EnterpriseRolesQuery.query
+      @my_enterprises = @all_enterprises
     end
 
     def create

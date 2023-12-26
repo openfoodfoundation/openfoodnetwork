@@ -1,4 +1,3 @@
-= admin_inject_enterprise_roles(@enterprise_roles)
-= admin_inject_users(@users)
-= admin_inject_enterprises(@my_enterprises, @all_enterprises)
-
+= admin_inject_json('ofn.admin', 'enterpriseRoles', @enterprise_roles)
+= admin_inject_json('ofn.admin', 'users', @users)
+= admin_inject_json('ofn.admin', 'my_enterprises', @my_enterprises) + admin_inject_json('ofn.admin', 'all_enterprises', @all_enterprises)
