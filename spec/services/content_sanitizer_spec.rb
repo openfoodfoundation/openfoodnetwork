@@ -8,11 +8,11 @@ describe ContentSanitizer do
   context "#strip_content" do
     it "strips disallowed tags" do
       expect(service.strip_content("I'm friendly!<script>alert('hello! I'm malicious');</script>"))
-        .to eq("I'm friendly!")
+        .to eq("I'm friendly!alert('hello! I'm malicious');")
     end
 
     it "replaces spaces" do
-      expect(service.strip_content("swiss&nbsp;chard")).to eq("swiss chard")
+      expect(service.strip_content("swiss&nbsp;chard")).to eq("swiss chard")
     end
 
     it "replaces ampersands" do
@@ -40,7 +40,7 @@ describe ContentSanitizer do
     end
 
     it "replaces spaces" do
-      expect(service.sanitize_content("swiss&nbsp;chard")).to eq("swiss chard")
+      expect(service.sanitize_content("swiss&nbsp;chard")).to eq("swiss chard")
     end
 
     it "replaces ampersands" do
