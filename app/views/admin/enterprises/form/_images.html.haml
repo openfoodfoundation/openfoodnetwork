@@ -2,7 +2,7 @@
   .alpha.three.columns
     = f.label :logo
     %br
-    100 x 100 pixels
+    = t('.logo_size')
   .omega.eight.columns
     %img{ class: 'image-field-group__preview-image', ng: { src: '{{ Enterprise.logo.thumb }}', if: 'Enterprise.logo' } }
     %br
