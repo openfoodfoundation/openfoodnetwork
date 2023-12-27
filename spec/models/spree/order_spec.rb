@@ -1544,4 +1544,50 @@ describe Spree::Order do
       expect(order.voucher_adjustments).to eq(expected_adjustments)
     end
   end
+
+  describe '#applied_voucher_rate' do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order, user:, distributor:) }
+
+    context 'when the order has no voucher adjustment' do
+      it 'returns the BigDecimal 0 value' do
+        actual = order.applied_voucher_rate
+        expect(actual.class).to eq(BigDecimal)
+        # below expectation gets passed if 0 (Integer) is returned regardless of BigDecimal 0
+        # Hence adding the expectation for the class as well
+        expect(actual).to eq(BigDecimal(0))
+      end
+    end
+
+    context "given that the order has voucher adjustment and pre_discount_total is 20" do
+      before do
+        voucher.create_adjustment(voucher.code, order)
+        allow(order).to receive(:pre_discount_total).and_return(BigDecimal(20))
+      end
+
+      context "when order has voucher_flat_rate adjustment" do
+        let(:voucher) { create(:voucher_flat_rate, enterprise: order.distributor, amount: 10) }
+
+        it 'returns the BigDecimal 0 value' do
+          actual = order.applied_voucher_rate
+          expect(actual.class).to eq(BigDecimal)
+          # below expectation gets passed if 0 (Integer) is returned regardless of BigDecimal 0
+          # Hence adding the expectation for the class as well
+          expect(actual).to eq(-BigDecimal('0.5'))
+        end
+      end
+
+      context "when order has voucher_percentage_rate adjustment" do
+        let(:voucher) { create(:voucher_percentage_rate, enterprise: order.distributor, amount: 10) }
+
+        it 'returns the BigDecimal 0 value' do
+          actual = order.applied_voucher_rate
+          expect(actual.class).to eq(BigDecimal)
+          # below expectation gets passed if 0 (Integer) is returned regardless of BigDecimal 0
+          # Hence adding the expectation for the class as well
+          expect(actual).to eq(-BigDecimal('0.1'))
+        end
+      end
+    end
+  end
 end
