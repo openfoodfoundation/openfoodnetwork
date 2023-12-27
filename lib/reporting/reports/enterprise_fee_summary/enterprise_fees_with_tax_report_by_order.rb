@@ -308,7 +308,8 @@ module Reporting
 
         def apply_voucher_on_amount(order, amount)
           rate = order.applied_voucher_rate
-          amount + (amount*rate)
+          result = amount + (amount * rate)
+          BigDecimal(result.to_s).round(2, BigDecimal::ROUND_HALF_UP)
         end
       end
     end

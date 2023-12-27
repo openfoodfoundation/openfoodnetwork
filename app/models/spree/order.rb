@@ -626,7 +626,8 @@ module Spree
 
     # @return [BigDecimal] The rate of the voucher if applied to the order
     def applied_voucher_rate
-      # As an order can have only one voucher, hence using +take+ because each voucher adjustment will have the same voucher
+      # As an order can have only one voucher,
+      # hence using +take+ as each voucher adjustment will have the same voucher
       return BigDecimal(0) unless (voucher_adjustment = voucher_adjustments.take)
 
       voucher = voucher_adjustment.originator

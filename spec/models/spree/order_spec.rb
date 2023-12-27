@@ -1578,7 +1578,9 @@ describe Spree::Order do
       end
 
       context "when order has voucher_percentage_rate adjustment" do
-        let(:voucher) { create(:voucher_percentage_rate, enterprise: order.distributor, amount: 10) }
+        let(:voucher) do
+          create(:voucher_percentage_rate, enterprise: order.distributor, amount: 10)
+        end
 
         it 'returns the BigDecimal 0 value' do
           actual = order.applied_voucher_rate
