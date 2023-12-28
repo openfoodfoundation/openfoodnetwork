@@ -412,7 +412,7 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
 
   describe "Deleting Feature" do
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
-    let(:delete_option_selector) { "p[data-controller='modal-link product-actions'].delete" }
+    let(:delete_option_selector) { "a[data-controller='modal-link product-actions'].delete" }
     let(:product_selector) { row_containing_name("Apples") }
     let(:variant_selector) { row_containing_name("Medium box") }
     let(:default_variant_selector) { "tr:has(input[aria-label=Price][value='#{product_a.price}'])" }
@@ -630,7 +630,7 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
   def wait_for_class(selector, class_name)
     max_wait_time = Capybara.default_max_wait_time
     Timeout.timeout(max_wait_time) do
-      until page.has_css?(selector, class: class_name, visible: false); end
+      sleep(0.1) until page.has_css?(selector, class: class_name, visible: false)
     end
   end
 end
