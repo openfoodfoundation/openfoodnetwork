@@ -412,7 +412,7 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
 
   describe "Deleting Feature" do
     let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
-    let(:delete_option_selector) { "a[data-controller='modal-link product-actions'].delete" }
+    let(:delete_option_selector) { "a[data-controller='modal-link'].delete" }
     let(:product_selector) { row_containing_name("Apples") }
     let(:variant_selector) { row_containing_name("Medium box") }
     let(:default_variant_selector) { "tr:has(input[aria-label=Price][value='#{product_a.price}'])" }
