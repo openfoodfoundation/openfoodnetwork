@@ -62,7 +62,7 @@ class ProductsReflex < ApplicationReflex
 
   def delete_variant
     id = current_id_from_element(element)
-    variant = variant_scope.find(id)
+    variant = Spree::Variant.active.find(id)
     authorize! :delete, variant
 
     if VariantDeleter.new.delete(variant)
@@ -227,10 +227,6 @@ class ProductsReflex < ApplicationReflex
 
   def product_finder(id)
     ProductScopeQuery.new(current_user, { id: })
-  end
-
-  def variant_scope
-    Spree::Variant.active
   end
 
   def current_id_from_element(element)
