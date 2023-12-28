@@ -157,13 +157,20 @@ RSpec.configure do |config|
   #
   config.around(:each, :stripe_version) do |example|
     stripe_version = "Stripe-v#{Stripe::VERSION}"
+    cassette_library_dir, default_cassette_options = nil, nil
+
     VCR.configure do |vcr_config|
-      vcr_config.cassette_library_dir = "spec/fixtures/vcr_cassettes/#{stripe_version}"
+      cassette_library_dir = vcr_config.cassette_library_dir
+      default_cassette_options = vcr_config.default_cassette_options
+      vcr_config.cassette_library_dir += "/#{stripe_version}"
       vcr_config.default_cassette_options = { record: :none } if ENV["CI"]
     end
+
     example.run
+
     VCR.configure do |vcr_config|
-      vcr_config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+      vcr_config.cassette_library_dir = cassette_library_dir
+      vcr_config.default_cassette_options = default_cassette_options
     end
   end
 
