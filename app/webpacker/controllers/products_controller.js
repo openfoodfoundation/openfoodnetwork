@@ -10,11 +10,7 @@ export default class extends ApplicationController {
     this.stimulate("Products#fetch");
   }
 
-  beforeReflex(element) {
-    // To prevent the double click on the confirm modal's confirmation button
-    if (element.id === "modal-confirm-button") {
-      window.dispatchEvent(new Event("modal:close"));
-    }
+  beforeReflex() {
     this.showLoading();
     this.scrollToElement();
   }

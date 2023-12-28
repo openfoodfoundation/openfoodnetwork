@@ -6,6 +6,7 @@
       confirm_button_class: :red,
       actions_alignment_class: 'justify-end',
       confirm_reflexes: "click->products#delete_#{object_type}",
+      confirm_actions: "click->modal#close",
     )
 = render delete_modal do
   %h2.margin-bottom-20.black-text
