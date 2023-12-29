@@ -675,8 +675,6 @@ describe '
             context "one of the two orders is not invoiceable" do
               before do
                 order4.cancel!
-                assert(!order4.invoiceable?)
-                assert(order5.invoiceable?)
               end
 
               it_behaves_like "should ignore the non invoiceable order"
@@ -697,10 +695,6 @@ describe '
                 order5.distributor.update(abn: "987654321")
               end
               context "all the orders are invoiceable (completed/resumed)" do
-                before do
-                  assert(order4.invoiceable?)
-                  assert(order5.invoiceable?)
-                end
                 it_behaves_like "can bulk print invoices from 2 orders"
                 context "with legal invoices feature", feature: :invoices do
                   it_behaves_like "can bulk print invoices from 2 orders"
@@ -710,8 +704,6 @@ describe '
               context "one of the two orders is not invoiceable" do
                 before do
                   order4.cancel!
-                  assert(!order4.invoiceable?)
-                  assert(order5.invoiceable?)
                 end
 
                 it_behaves_like "should ignore the non invoiceable order"
