@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 # Lists available order cycles for a given customer in a given distributor
+
+require 'open_food_network/tag_rule_applicator'
+
 module Shop
   class OrderCyclesList
     def self.active_for(distributor, customer)
