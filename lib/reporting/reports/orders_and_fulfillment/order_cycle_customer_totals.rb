@@ -29,6 +29,8 @@ module Reporting
             admin_handling_fees: proc { |_line_items| "" },
             ship_price: proc { |_line_items| "" },
             pay_fee_price: proc { |_line_items| "" },
+            voucher_label: proc { |_line_items| "" },
+            voucher_amount: proc { |_line_items| "" },
             total_price: proc { |_line_items| "" },
             paid: proc { |line_items| line_items.all? { |li| li.order.paid? } },
 
@@ -105,7 +107,7 @@ module Reporting
         def default_params
           super.merge(
             {
-              fields_to_hide: [:final_weight_volume]
+              fields_to_hide: %i[final_weight_volume voucher_label voucher_amount]
             }
           )
         end
@@ -129,6 +131,8 @@ module Reporting
             admin_handling_fees: order.admin_and_handling_total,
             ship_price: order.ship_total,
             pay_fee_price: order.payment_fee,
+            voucher_label: voucher_label(order),
+            voucher_amount: voucher_amount(order),
             total_price: order.total,
             paid: order.paid?,
             comments: order.special_instructions,
@@ -162,6 +166,23 @@ module Reporting
           distributor = line_items.first.order.distributor
           user = line_items.first.order.user
           user&.customer_of(distributor)
+        end
+
+        def voucher_label(order)
+          return '' unless voucher_applicable?(order)
+
+          voucher = order.voucher_adjustments.take.originator
+          voucher&.code.to_s # in case if we don't get the voucher, return ""
+        end
+
+        def voucher_amount(order)
+          return '' unless voucher_applicable?(order)
+
+          (order.total - order.pre_discount_total).abs
+        end
+
+        def voucher_applicable?(order)
+          order.voucher_adjustments.present?
         end
       end
     end
