@@ -6,6 +6,7 @@ class PaymentMailer < ApplicationMailer
 
   def authorize_payment(payment)
     @payment = payment
+    @hide_ofn_navigation = @payment.order.distributor.hide_ofn_navigation
     subject = I18n.t('spree.payment_mailer.authorize_payment.subject',
                      distributor: @payment.order.distributor.name)
     I18n.with_locale valid_locale(@payment.order.user) do
