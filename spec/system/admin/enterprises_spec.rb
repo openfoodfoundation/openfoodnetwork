@@ -101,6 +101,7 @@ describe '
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
     accept_alert do
+      scroll_to(:bottom)
       within(".side_menu") { click_link "Users" }
     end
     select2_select user.email, from: 'enterprise_owner_id'
@@ -116,14 +117,6 @@ describe '
     description_input.native.send_keys('This is an interesting long description')
 
     # Check StimulusJs switching of sidebar elements
-    accept_alert do
-      click_link "Primary Details"
-    end
-
-    # Back navigation loads the tab content
-    page.execute_script('window.history.back()')
-    expect(page).to have_selector '#enterprise_description'
-
     accept_alert do
       click_link "Primary Details"
     end
@@ -255,6 +248,14 @@ describe '
     )
     expect(page).to have_checked_field "enterprise_require_login_true"
     expect(page).to have_checked_field "enterprise_enable_subscriptions_true"
+
+    # Back navigation loads the tab content
+    page.execute_script('window.history.back()')
+    expect(page).to have_selector '#enterprise_description'
+
+    # Forward navigation brings back the previous tab
+    page.execute_script('window.history.forward()')
+    expect(page).to have_content 'This is my shopfront message.'
 
     # Test that the right input alert text is displayed
     accept_alert('Please enter a URL to insert') do
