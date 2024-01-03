@@ -1286,21 +1286,26 @@ en:
         connected_apps:
           legend: "Connected apps"
           title: "Discover Regenerative"
-          tagline: "Allow website to publish your enterprise information."
-          action: "Share data"
-          saving_changes: "Saving changes"
+          tagline: "Allow Discover Regenerative to publish your enterprise information."
+          enable: "Allow data sharing"
+          disable: "Stop sharing"
+          loading: "Loading"
           note: |
-            In order for this enterprise to be published, you need to include
-            regenerative details and accept the Terms and Conditions.
-          link_label: "Update details"
+            Your Open Food Network account is connected to Discover Regenerative.
+            Add or update information on your Discover Regenerative listing here.
+          link_label: "Manage listing"
           description_html: |
             <p>
-            Discover Regenerative makes it easier for buyers to discover
-            regenerative produce for their procurement, showcase producers that
-            are using regenerative farming practices, support connection
-            between buyers and producers within a trusted network.
+            Eligible producers can showcase their regenerative credentials,
+            farming practices and more through a profile listing.
+            Simplifying how buyers can find regenerative produce and connect
+            with producers of interest.
             </p>
-            <p><a href="" target="_blank"><b>Visit website</b> <i class="icon-external-link"></i></a></p>
+            <p>
+            <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+            target="_blank"><b>Learn more about Discover Regenerative</b>
+            <i class="icon-external-link"></i></a>
+            </p>
       actions:
         edit_profile: Settings
         properties: Properties
