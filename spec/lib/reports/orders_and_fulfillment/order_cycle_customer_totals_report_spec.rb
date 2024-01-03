@@ -147,4 +147,22 @@ describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
       expect(report.rows.first.sku).to eq overidden_sku
     end
   end
+
+  describe '#default_params' do
+    it 'should return expected expected_params' do
+      expected_params = {
+        fields_to_hide: %i[
+          final_weight_volume
+          voucher_label
+          voucher_amount
+        ],
+        q: {
+          completed_at_gt: 1.month.ago.beginning_of_day,
+          completed_at_lt: 1.day.from_now.beginning_of_day
+        }
+      }
+
+      expect(report.default_params).to eq(expected_params)
+    end
+  end
 end

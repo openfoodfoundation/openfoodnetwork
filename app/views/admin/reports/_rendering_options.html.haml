@@ -27,5 +27,5 @@
   .row
     .alpha.two.columns= label_tag nil, t(:report_columns)
     .omega.fourteen.columns
-      = render MultipleCheckedSelectComponent.new(name: "fields_to_show", options: @report.available_headers, selected: @rendering_options.options[:fields_to_show])
+      = render MultipleCheckedSelectComponent.new(id: 'fields_to_show', name: "fields_to_show", options: @report.available_headers, selected: @rendering_options.options[:fields_to_show])
   
