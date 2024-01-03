@@ -1,0 +1,129 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://connect.stripe.com/oauth/deauthorize
+    body:
+      encoding: UTF-8
+      string: stripe_user_id=<HIDDEN_ACCOUNT>&client_id=bogus_client_id
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/10.4.0
+      Authorization:
+      - Bearer <HIDDEN_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_flri4jCAfN36N0","request_duration_ms":362}}'
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"10.4.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 6.1.0-16-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14)
+        12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian
+        6.1.67-1 (2023-12-12)","hostname":"blackbox"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 03 Jan 2024 00:24:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '96'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=0, no-cache, no-store, must-revalidate
+      Content-Security-Policy:
+      - report-uri /csp-report?p=%2Foauth%2Fdeauthorize;block-all-mixed-content;default-src
+        'none' 'report-sample';base-uri 'none';form-action 'none';style-src 'unsafe-inline';frame-ancestors
+        'self';connect-src 'self';img-src 'self' https://b.stripecdn.com
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=https://q.stripe.com/coop-report
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Request-Id:
+      - req_FXYjK5llcFw5ub
+      Set-Cookie:
+      - __Host-session=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT;
+        secure; SameSite=None
+      - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Fdeauthorize%22%7D;
+        domain=stripe.com; path=/; expires=Thu, 02 Jan 2025 00:24:12 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - cid=4ee75444-5f99-4011-9866-fbd488c549ac; domain=stripe.com; path=/; expires=Tue,
+        02 Apr 2024 00:24:12 GMT; secure; SameSite=Lax
+      - machine_identifier=O4OZlsl6wb1FPykgujXIGlARDodT3bMR3y8mZV7MZMiUzR2kz57PIpqRuveNDVPm7o8%3D;
+        domain=stripe.com; path=/; expires=Thu, 02 Jan 2025 00:24:12 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - private_machine_identifier=cxUva7ho0PwA92bDEFBtz%2BFk%2FVKB5UxZRI2HI66WIrPZYsVSuvn3eRm85FZksdSrVQk%3D;
+        domain=stripe.com; path=/; expires=Thu, 02 Jan 2025 00:24:12 GMT; secure;
+        HttpOnly; SameSite=None
+      - site-auth=; domain=stripe.com; path=/; max-age=0; expires=Thu, 01 Jan 1970
+        00:00:00 GMT; secure
+      - stripe.csrf=myUBggbLlsC0V_Cl85bONn6HrvRzVnkmOLAonV0zCJer6HYoxAe3OOXjSjbOURgyKsAN7Bd8fkT8OVzX0_9t8jw-AYTZVJxJefP_XGS3UbcrLpMxSXsZzuO9qnXswcdPkigB9ywiew%3D%3D;
+        domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      - max-age=63072000; includeSubDomains; preload
+      Stripe-Kill-Route:
+      - "[]"
+      Stripe-Parent-Id:
+      - '0000000000000000'
+      Stripe-Span-Id:
+      - 75bfa488ecc49d96
+      Www-Authenticate:
+      - Bearer realm="Stripe"
+      X-Apiori-Intentional-Latency:
+      - 0s
+      X-Apiori-Reqid:
+      - syd1DJ3kxEdygkWCDwGpyFC
+      X-Apiori-Server-Duration-Ms:
+      - '118'
+      X-Apiori-Upstream-Duration:
+      - 117.944244ms
+      X-Apiori-Upstream-Name:
+      - manage-srv
+      X-Apiori-Upstream-Region:
+      - northwest
+      X-Content-Type-Options:
+      - nosniff
+      X-Envoy-Attempt-Count:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '263'
+      X-Robots-Tag:
+      - none
+      X-Stripe-Bg-Intended-Route-Color:
+      - green
+      X-Stripe-C-Cost:
+      - '2'
+      X-Stripe-Client-Envoy-Start-Time-Us:
+      - '1704241452087011'
+      X-Stripe-Rpc-C-Cost-Report:
+      - Cg0IARIJY2VsbF8wMDA3Cg8IARILZ2xvYmFsX2NlbGw=
+      X-Stripe-Server-Envoy-Start-Time-Us:
+      - '1704241452087830'
+      X-Stripe-Server-Envoy-Upstream-Service-Time-Ms:
+      - '115'
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "error": "invalid_client",
+          "error_description": "No such application: 'bogus_client_id'"
+        }
+  recorded_at: Wed, 03 Jan 2024 00:24:12 GMT
+recorded_with: VCR 6.2.0
