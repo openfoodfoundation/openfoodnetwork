@@ -44,7 +44,7 @@ We use [KnapsackPro](https://knapsackpro.com/) for optimal parallelisation of ou
 
 ## Licence
 
-Copyright (c) 2012 - 2022 Open Food Foundation, released under the AGPL licence.
+Copyright (c) 2012 - 2024 Open Food Foundation, released under the AGPL licence.
 
 [survey]: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
 [slack-invite]: https://join.slack.com/t/openfoodnetwork/shared_invite/zt-9sjkjdlu-r02kUMP1zbrTgUhZhYPF~A
