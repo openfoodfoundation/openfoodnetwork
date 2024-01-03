@@ -27,13 +27,6 @@ module Admin
                                   Api::Admin::EnterpriseRelationshipSerializer
     end
 
-    def admin_inject_enterprise_roles(enterprise_roles)
-      admin_inject_json_ams_array "ofn.admin",
-                                  "enterpriseRoles",
-                                  enterprise_roles,
-                                  Api::Admin::EnterpriseRoleSerializer
-    end
-
     def admin_inject_payment_methods(payment_methods)
       admin_inject_json_ams_array "admin.paymentMethods",
                                   "paymentMethods",
@@ -135,13 +128,6 @@ module Admin
                                   "taxons",
                                   taxons,
                                   Api::Admin::TaxonSerializer
-    end
-
-    def admin_inject_users(users)
-      admin_inject_json_ams_array "ofn.admin",
-                                  "users",
-                                  users,
-                                  Api::Admin::UserSerializer
     end
 
     def admin_inject_variant_overrides(variant_overrides)
