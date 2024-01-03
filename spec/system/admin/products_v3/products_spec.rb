@@ -173,7 +173,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
 
     it "displays a select box for the unit of measure for the product's variants" do
-      pending( "[BUU] Change producer, unit type, category and tax category #11060" )
+      pending( "[BUU] Change producer, unit type and tax category #11060" )
       p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1,
                                       variant_unit_name: '')
 
@@ -183,7 +183,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
 
     it "displays a text field for the item name when unit is set to 'Items'" do
-      pending( "[BUU] Change producer, unit type, category and tax category #11060" )
+      pending( "[BUU] Change producer, unit type and tax category #11060" )
       p = FactoryBot.create(:product, variant_unit: 'items', variant_unit_scale: nil,
                                       variant_unit_name: 'packet')
 
@@ -402,8 +402,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
         search_by_category "Category 1"
 
-        # expect(page).to have_content "1 product found for your search criteria."
-        expect(page).to have_select "category_id", selected: "Category 1" # fails in dev but not CI
+        expect(page).to have_content "1 products found for your search criteria."
+        expect(page).to have_select "category_id", selected: "Category 1"
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_category.name
       end
