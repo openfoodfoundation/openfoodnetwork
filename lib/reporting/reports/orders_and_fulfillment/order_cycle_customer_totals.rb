@@ -178,7 +178,7 @@ module Reporting
         def voucher_amount(order)
           return '' unless voucher_applicable?(order)
 
-          (order.total - order.pre_discount_total).abs
+          order.pre_discount_total - order.total
         end
 
         def voucher_applicable?(order)
