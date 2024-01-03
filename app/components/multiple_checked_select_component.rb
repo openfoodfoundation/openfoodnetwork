@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class MultipleCheckedSelectComponent < ViewComponent::Base
-  # @param id [String] uniquely identifies the MultipleCheckedSelect (mcs) field. '_mcs_field' will be appended
+  # @param id [String]
+  #   Uniquely identifies the MultipleCheckedSelect (mcs) field.
+  #   '_mcs_field' will be appended to the given ID to form the complete ID.
   def initialize(id:, name:, options:, selected:)
     @id = "#{id}_mcs_field"
     @name = name
