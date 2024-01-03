@@ -108,7 +108,7 @@ paths:
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: Apple
+                      dfc-b:name: Apple - 1g
                       dfc-b:description: Red
                       dfc-b:hasType: dfc-pt:non-local-vegetable
                       dfc-b:hasQuantity:
@@ -339,7 +339,7 @@ paths:
                       dfc-b:hasCountry: Australia
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: Apple
+                      dfc-b:name: Apple - 1g
                       dfc-b:description: Round
                       dfc-b:hasType: dfc-pt:non-local-vegetable
                       dfc-b:hasQuantity:
@@ -444,7 +444,7 @@ paths:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     "@type": dfc-b:SuppliedProduct
-                    dfc-b:name: Apple
+                    dfc-b:name: Apple - 6g
                     dfc-b:description: A delicious heritage apple
                     dfc-b:hasType: dfc-pt:non-local-vegetable
                     dfc-b:hasQuantity:
@@ -508,7 +508,7 @@ paths:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     "@type": dfc-b:SuppliedProduct
-                    dfc-b:name: Pesto
+                    dfc-b:name: Pesto - 1g
                     dfc-b:description: Basil Pesto
                     dfc-b:hasType: dfc-pt:non-local-vegetable
                     dfc-b:hasQuantity:
