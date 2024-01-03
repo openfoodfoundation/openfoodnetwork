@@ -5,8 +5,8 @@ http_interactions:
     uri: https://n8n.openfoodnetwork.org.uk/webhook/regen/connect-enterprise
     body:
       encoding: UTF-8
-      string: '{"id":"6efbbeea-4078-4bb5-88b1-c8dbf599c520","at":"2023-12-14 12:13:39
-        +1100","event":"connect-app","data":{"enterprise_id":23,"access_token":"b5fa8c7fa1dd5331a2111fcc907040d842c5eb928c512e43"}}'
+      string: '{"id":"27bc9d0a-d95c-4a36-9b16-01fdd8a82b51","at":"2023-12-21 14:54:28
+        +1100","event":"connect-app","data":{"@id":"http://test.host/api/dfc/enterprises/3","access_token":"12345"}}'
     headers:
       User-Agent:
       - openfoodnetwork_webhook/1.0
@@ -24,15 +24,15 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 14 Dec 2023 01:13:41 GMT
+      - Thu, 21 Dec 2023 03:54:33 GMT
       Content-Type:
-      - text/html; charset=utf-8
+      - application/json; charset=utf-8
       Content-Length:
-      - '35'
+      - '141'
       Connection:
       - keep-alive
       Etag:
-      - W/"23-GW39X6dSljjgz4GPY7ICa+eNupE"
+      - W/"8d-Lz10bce6zwT2C429xIkj52OBWyk"
       Vary:
       - Accept-Encoding
       Strict-Transport-Security:
@@ -49,6 +49,6 @@ http_interactions:
       - same-origin
     body:
       encoding: UTF-8
-      string: '{"link":"https://example.net/edit"}'
-  recorded_at: Thu, 14 Dec 2023 01:13:40 GMT
+      string: '{"link":"https://example.net/update","destroy":"https://n8n.openfoodnetwork.org.uk/webhook/remove-enterprise?id=recjBXXXXXXXXXXXX&key=12345"}'
+  recorded_at: Thu, 21 Dec 2023 03:54:33 GMT
 recorded_with: VCR 6.2.0
