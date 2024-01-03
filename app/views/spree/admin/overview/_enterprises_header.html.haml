@@ -1,9 +1,9 @@
-%div.header.sixteen.columns.alpha{ :class => "#{@enterprises.count > 0 ? "" : "red"}"}
+%div.header.sixteen.columns.alpha{ :class => "#{@enterprises.count > 0 ? "" : "warning"}"}
   %h3.thirteen.columns.alpha
     = t "spree_admin_overview_enterprises_header"
   - if @enterprises.any?
     - if spree_current_user.can_own_more_enterprises?
-      %a.three.columns.omega.icon-plus.button.blue.white-bottom{ href: "#{main_app.new_admin_enterprise_path}" }
+      %a.three.columns.omega.icon-plus.button.white-bottom{ href: "#{main_app.new_admin_enterprise_path}" }
         = t "spree_admin_enterprises_create_new"
   - else
     %a{ "ofn-with-tip" => t('.ofn_with_tip') }
