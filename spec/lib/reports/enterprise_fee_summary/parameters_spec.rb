@@ -2,8 +2,6 @@
 
 require "spec_helper"
 
-require "date_time_string_validator"
-
 module Reporting
   module Reports
     module EnterpriseFeeSummary

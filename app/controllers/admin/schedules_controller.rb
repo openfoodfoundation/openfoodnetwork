@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'open_food_network/permissions'
-require 'order_management/subscriptions/proxy_order_syncer'
 
 module Admin
   class SchedulesController < Admin::ResourceController

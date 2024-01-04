@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'order_management/subscriptions/proxy_order_syncer'
 
 describe OrderCycleForm do
   describe "save" do

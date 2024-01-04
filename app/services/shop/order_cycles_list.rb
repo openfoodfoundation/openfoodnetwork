@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'open_food_network/tag_rule_applicator'
+
 # Lists available order cycles for a given customer in a given distributor
 module Shop
   class OrderCyclesList

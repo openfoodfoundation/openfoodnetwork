@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'concerns/payment_method_distributors'
-
 module Spree
   class PaymentMethod < ApplicationRecord
     include CalculatedAdjustments
