@@ -209,10 +209,12 @@ describe "Orders And Fulfillment" do
 
       context "when voucher is applied to the order" do
         let(:voucher) { create(:voucher_percentage_rate, enterprise: distributor) }
+
         before do
-          mcs_field = page.find('#fields_to_show_mcs_field')
-          option_names = ['Voucher Label', 'Voucher Amount ($)']
-          toggle_mcs_options(mcs_field, option_names)
+          within_multi_select("Columns") do
+            check "Voucher Label"
+            check "Voucher Amount ($)"
+          end
         end
 
         it 'displays the voucher label and amount values for the orders with voucher applied' do
@@ -645,16 +647,9 @@ describe "Orders And Fulfillment" do
     end
   end
 
-  # @param mcs_field MultipleCheckedSelect (mcs) field
-  # @param option_name [String] option to check or select
-  def toggle_mcs_options(mcs_field, option_names)
-    mcs_field.click # to open the mcs menu
-
-    option_names.each do |option_name|
-      option = page.find(".menu .menu_items label[data-label='#{option_name}']")
-      option.click
-    end
-
-    mcs_field.click # to close the mcs menu
+  def within_multi_select(text)
+    find(".label", text:).click # open
+    yield
+    find(".label", text:).click # close
   end
 end
