@@ -172,7 +172,7 @@ module Reporting
           return '' unless voucher_applicable?(order)
 
           voucher = order.voucher_adjustments.take.originator
-          voucher&.code.to_s # in case if we don't get the voucher, return ""
+          voucher.code.to_s
         end
 
         def voucher_amount(order)
