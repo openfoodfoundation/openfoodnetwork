@@ -4,7 +4,7 @@ module Admin
   class EnterpriseRolesQuery
     class << self
       def query
-        enterprise_roles = query_enterprice_roles
+        enterprise_roles = query_enterprise_roles
         users = query_users
         enterprises = query_enterprises
 
@@ -13,7 +13,7 @@ module Admin
 
       private
 
-      def query_enterprice_roles
+      def query_enterprise_roles
         EnterpriseRole.joins(:user, :enterprise).order('spree_users.email ASC').
           pluck(:id, :user_id, :enterprise_id, 'spree_users.email', 'enterprises.name').
           map do |data|
