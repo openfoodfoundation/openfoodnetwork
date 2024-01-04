@@ -90,13 +90,8 @@ module DataFoodConsortium
           prefLabels: element.label
         )
         skosConcept.semanticType = element.type
-        # Gaetan's fix for productTypes
-        id = element.id.sub(
-          "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#",
-          "dfc-pt:"
-        )
         # Maikel's patch
-        self.class.concepts[id] = skosConcept
+        self.class.concepts[element.id] = skosConcept
         skosConcept
       end
 

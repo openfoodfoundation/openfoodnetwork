@@ -130,8 +130,8 @@ module DataFoodConsortium
           "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#",
           "dfc-m:"
         ).sub(
-          "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#",
-          "dfc-pt:"
+          "dfc-pt:",
+          "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#"
         )
 
         SKOSParser.concepts[id]
