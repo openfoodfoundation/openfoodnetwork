@@ -878,7 +878,7 @@ DEPENDENCIES
   openid_connect (~> 1.3)
   order_management!
   pagy (~> 5.1)
-  paper_trail (~> 15.1)
+  paper_trail
   paranoia (~> 2.4)
   paypal-sdk-merchant (= 1.117.2)
   pdf-reader
