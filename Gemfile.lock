@@ -430,7 +430,7 @@ GEM
       net-protocol
     newrelic_rpm (9.6.0)
       base64
-    nio4r (2.5.9)
+    nio4r (2.7.0)
     nokogiri (1.15.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -492,7 +492,7 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
-    puma (6.4.0)
+    puma (6.4.1)
       nio4r (~> 2.0)
     query_count (1.1.1)
       activerecord (>= 4.2)
