@@ -42,33 +42,14 @@ describe DataFoodConsortium::Connector::Importer do
       }
     JSON
   end
-  let(:product_data_with_context) do
-    <<~JSON
-      {
-        "@context": {
-          "dfc-b": "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
-          "dfc-m": "http://static.datafoodconsortium.org/data/measures.rdf#",
-          "dfc-pt": "http://static.datafoodconsortium.org/data/productTypes.rdf#"
-        },
-        "@id":"https://example.net/tomato",
-        "@type":"dfc-b:SuppliedProduct",
-        "dfc-b:name":"Tomato",
-        "dfc-b:description":"Awesome tomato",
-        "dfc-b:alcoholPercentage":0.0,
-        "dfc-b:lifetime":"",
-        "dfc-b:usageOrStorageCondition":"",
-        "dfc-b:totalTheoreticalStock":3,
-        "dfc-b:hasType": "dfc-pt:non-local-vegetable"
-      }
-    JSON
-  end
   let(:product_data_with_context_v1_8) do
     <<~JSON
       {
         "@context": {
           "dfc-b": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
           "dfc-m": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#",
-          "dfc-pt": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#"
+          "dfc-pt": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#",
+          "dfc-b:hasType":{"@type":"@id"}
         },
         "@id":"https://example.net/tomato",
         "@type":"dfc-b:SuppliedProduct",
@@ -120,18 +101,6 @@ describe DataFoodConsortium::Connector::Importer do
 
   it "imports an object with referenced context" do
     result = connector.import(product_data)
-
-    expect(result).to be_a DataFoodConsortium::Connector::SuppliedProduct
-    expect(result.semanticType).to eq "dfc-b:SuppliedProduct"
-    expect(result.semanticId).to eq "https://example.net/tomato"
-    expect(result.name).to eq "Tomato"
-    expect(result.description).to eq "Awesome tomato"
-    expect(result.productType).to eq non_local_vegetable
-    expect(result.totalTheoreticalStock).to eq 3
-  end
-
-  it "imports an object with included context" do
-    result = connector.import(product_data_with_context)
 
     expect(result).to be_a DataFoodConsortium::Connector::SuppliedProduct
     expect(result.semanticType).to eq "dfc-b:SuppliedProduct"

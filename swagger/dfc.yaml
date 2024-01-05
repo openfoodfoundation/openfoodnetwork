@@ -553,12 +553,7 @@ paths:
           application/json:
             schema:
               example:
-                "@context":
-                  dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                  dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                  dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                  dfc-b:hasUnit:
-                    "@type": "@id"
+                "@context": https://www.datafoodconsortium.org
                 "@id": http://test.host/api/dfc/enterprises/6201/supplied_products/0
                 "@type": dfc-b:SuppliedProduct
                 dfc-b:name: Apple
