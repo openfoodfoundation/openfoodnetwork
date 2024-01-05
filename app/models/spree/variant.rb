@@ -56,6 +56,7 @@ module Spree
     has_many :exchanges, through: :exchange_variants
     has_many :variant_overrides, dependent: :destroy
     has_many :inventory_items, dependent: :destroy
+    has_many :semantic_links, dependent: :delete_all
 
     localize_number :price, :weight
 

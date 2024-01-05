@@ -6,6 +6,8 @@ require 'spree/localized_number'
 describe Spree::Variant do
   subject(:variant) { build(:variant) }
 
+  it { is_expected.to have_many :semantic_links }
+
   context "validations" do
     it "should validate price is greater than 0" do
       variant.price = -1
