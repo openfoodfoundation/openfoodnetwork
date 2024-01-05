@@ -1104,12 +1104,12 @@ describe '
 
             # the New invoice button + the warning should be visible
             expect(page).to have_link "Create or Update Invoice"
-            expect(page).to have_content "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
+            expect(page).to have_content "The order has changed since the last invoice update."
             click_link "Create or Update Invoice"
 
             # and disappear after clicking
             expect(page).to have_no_link "Create or Update Invoice"
-            expect(page).to_not have_content "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
+            expect(page).to_not have_content "The order has changed since the last invoice update."
 
             # creating an invoice, displays a second row
             expect(page.find("table").text).to have_content(table_contents)
