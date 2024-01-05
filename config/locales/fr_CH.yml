@@ -780,6 +780,7 @@ fr_CH:
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Boutiques
       product_headings:
+        distributor: Distributeur
         producer: Producteur
         sku: Référence Produit
         name: Nom
@@ -1083,6 +1084,8 @@ fr_CH:
           rate: Taux
           customers: Client
           active: Active ?
+        connected_apps:
+          loading: "Chargement en cours"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1700,6 +1703,8 @@ fr_CH:
   invoice_tax_total: "Total TVA :"
   tax_invoice: "FACTURE"
   tax_total: "Total taxe (%{rate}) :"
+  invoice_shipping_category_delivery: "Livraison"
+  invoice_shipping_category_pickup: "Retrait"
   total_excl_tax: "Total HT :"
   total_incl_tax: "Total TTC :"
   abn: "SIRET"

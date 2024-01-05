@@ -717,6 +717,7 @@ pt_BR:
         view_products: Ir para a página de produtos
         view_inventory: Ir para a página de inventário
       product_headings:
+        distributor: Distribuidor
         producer: Produtor
         sku: SKU
         name: Nome
@@ -992,6 +993,8 @@ pt_BR:
         vouchers:
           customers: Consumidor
           active: Ativo?
+        connected_apps:
+          loading: "Carregando"
       actions:
         edit_profile: Configurações
         properties: Propriedades
@@ -1551,6 +1554,8 @@ pt_BR:
   invoice_tax_total: "Total de Imposto sobre Bens e Serviços"
   tax_invoice: "FATURA"
   tax_total: "Total de taxas (%{rate}):"
+  invoice_shipping_category_delivery: "Entrega"
+  invoice_shipping_category_pickup: "Retirada"
   total_excl_tax: "Total (sem imposto):"
   total_incl_tax: "Total (com imposto):"
   abn: "CNPJ:"

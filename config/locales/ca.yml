@@ -713,8 +713,6 @@ ca:
       table:
         save: Guardar canvis
         reset: Descartar canvis
-      bulk_update:
-        success: "Els productes s'han actualitzat amb èxit"
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir
@@ -813,6 +811,7 @@ ca:
         view_products: Anar a la pàgina de Productes
         view_inventory: Anar a la pàgina d'Inventari
       product_headings:
+        distributor: Distribuïdora
         producer: Productora
         sku: Número de referència (SKU)
         name: Nom
@@ -1125,6 +1124,8 @@ ca:
           remove_logo: "Eliminar el logo"
           remove_logo_confirm: "Esteu segur de voler eliminar el logo?"
           remove_logo_success: "Logo eliminat"
+        connected_apps:
+          loading: "S'està carregant"
       actions:
         edit_profile: Configuració
         properties: Propietats
@@ -1740,6 +1741,8 @@ ca:
   invoice_tax_total: "Total IVA:"
   tax_invoice: "FACTURA D'IMPOSTOS"
   tax_total: "Impost total (%{rate}):"
+  invoice_shipping_category_delivery: "Lliurament "
+  invoice_shipping_category_pickup: "Recollida"
   total_excl_tax: "Total (impostos exclòs):"
   total_incl_tax: "Total (impost inclòs):"
   abn: "NIF:"

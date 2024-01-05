@@ -6,7 +6,11 @@ de_CH:
       spree/shipping_method: Lieferoption
     attributes:
       spree/order/ship_address:
-        phone: "Telefonnummer (optional)"
+        address1: "Lieferadresse Straße + Hausnummer"
+        address2: "Lieferadresse Adresszusatz"
+        city: "Lieferadresse Ort"
+        country: "Lieferadresse Land"
+        phone: "Telefonnummer"
         firstname: "Vorname"
         lastname: "Nachname"
       spree/user:
@@ -684,6 +688,8 @@ de_CH:
         categories:
           label: Lieferkategorien
         search: Suche
+      no_products:
+        no_products_found: Keine Produkte gefunden.
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -780,6 +786,7 @@ de_CH:
         view_products: Zur Produktseite
         view_inventory: Zur Katalogseite
       product_headings:
+        distributor: Verteilstelle
         producer: Produzent
         sku: Artikelnummer
         name: Name
@@ -1083,6 +1090,8 @@ de_CH:
           rate: Steuersatz
           customers: Kunde
           active: Aktiv?
+        connected_apps:
+          loading: "Wird geladen ..."
       actions:
         edit_profile: Einstellungen
         properties: Eigenschaften
@@ -1549,10 +1558,11 @@ de_CH:
       message_html: "Sie haben bereits eine Bestellung für diesen Bestellzyklus. Überprüfen Sie den %{cart}, um die Artikel zu sehen, die Sie zuvor bestellt haben. Sie können Artikel auch stornieren, solange der Bestellzyklus geöffnet ist."
     step1:
       contact_information:
+        title: Kontakt Information
         email:
           label: E-Mail-Adresse
         phone:
-          label: Telefonnummer (optional)
+          label: Telefonnummer
       billing_address:
         title: Rechnungsadresse
         first_name:
@@ -1700,6 +1710,8 @@ de_CH:
   invoice_tax_total: "Umsatzsteuersumme:"
   tax_invoice: "RECHNUNG"
   tax_total: "davon Steuern (%{rate}):"
+  invoice_shipping_category_delivery: "Lieferung"
+  invoice_shipping_category_pickup: "Abholen"
   total_excl_tax: "Netto (zzgl. Steuern):"
   total_incl_tax: "GESAMT (inkl. Steuern):"
   abn: "USt-IdNr.:"
@@ -2310,7 +2322,7 @@ de_CH:
         contact_field: "Hauptansprechpartner"
         contact_field_placeholder: "Vorname Nachname"
         contact_field_required: "Bitte geben Sie einen Hauptansprechpartner ein."
-        phone_field: "Telefonnummer (optional)"
+        phone_field: "Telefonnummer"
         phone_field_placeholder: "z. B. +49 40 123 456"
       type:
         title: "Art des Profils"

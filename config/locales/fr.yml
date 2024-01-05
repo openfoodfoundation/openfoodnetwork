@@ -1,5 +1,8 @@
 fr:
   language_name: "Français"
+  time:
+    formats:
+      long: "%e %b %Y, %-k:%M"
   activerecord:
     models:
       spree/product: Produit
@@ -778,7 +781,7 @@ fr:
         save: Sauvegarder les changements
         reset: Annuler les changements
       bulk_update:
-        success: "Produits mis à jour"
+        success: Changements sauvegardés
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -877,6 +880,7 @@ fr:
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Boutiques
       product_headings:
+        distributor: Boutique
         producer: Producteur
         sku: Référence Produit
         name: Nom
@@ -1208,6 +1212,8 @@ fr:
           create_custom_tab: "Créer un onglet personnalisé dans la boutique"
           custom_tab_title: "Titre de l'onglet personnalisé"
           custom_tab_content: "Contenu de l'onglet personnalisé"
+        connected_apps:
+          loading: "Chargement en cours"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1437,6 +1443,8 @@ fr:
         has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
         has_no_enterprise_fees: "%{enterprise} n'a pas défini de marges et commissions"
+      flashes:
+        dismiss: Rejeter
       side_menu:
         enterprise:
           primary_details: "Informations de base"
@@ -1900,9 +1908,11 @@ fr:
   invoice_column_price_per_unit_without_taxes: "Prix par unité (hors taxe)"
   invoice_column_tax_rate: "TVA applicable"
   invoice_tax_total: "Total TVA :"
+  invoice_cancel_and_replace_invoice: "annule et remplace la facture"
   tax_invoice: "FACTURE"
   tax_total: "Total taxe (%{rate}) :"
-  invoice_shipping_type: "Type :"
+  invoice_shipping_category_delivery: "Livraison"
+  invoice_shipping_category_pickup: "Retrait"
   total_excl_tax: "Total HT :"
   total_incl_tax: "Total TTC :"
   total_all_tax: "total taxe"
@@ -2122,6 +2132,9 @@ fr:
   order_back_to_store: Retour à la boutique
   order_back_to_cart: Retour au panier
   order_back_to_website: Retour vers le site
+  checkout_details_title: Détails de la commande
+  checkout_payment_title: Paiement de la commande
+  checkout_summary_title: Résumé de la commande
   bom_tip: "Utilisez cette page pour modifier les quantités sur plusieurs commandes à la fois. Les produits peuvent aussi être supprimés des commandes si nécessaire."
   unsaved_changes_warning: "Des modifications n'ont pas été enregistrées et seront perdues si vous continuez."
   unsaved_changes_error: "Les champs entourés en rouge contiennent des erreurs."
@@ -4064,6 +4077,7 @@ fr:
           has_no_payment_methods: "n'a pas de méthode de paiement"
           has_no_shipping_methods: "n'a pas de méthode de livraison"
         products:
+          products_tip: "Les produits que vous vendez via CoopCircuits."
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "Vous avez un produit actif"
@@ -4216,6 +4230,8 @@ fr:
           bulk_unit_size: Quantité totale du lot
         display_as:
           display_as: Unité affichée
+        clone:
+          success: Produit dupliqué
       reports:
         table:
           select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."

@@ -781,6 +781,7 @@ ko:
         view_products: 제품 페이지로 이동
         view_inventory: 인벤토리 페이지로 이동
       product_headings:
+        distributor: 유통업체
         producer: 제공자
         sku: 재고 관리 단위
         name: 이름
@@ -1077,6 +1078,8 @@ ko:
           rate: 비율
           customers: 고객
           active: 활성화 하시겠습니까?
+        connected_apps:
+          loading: "로딩 중"
       actions:
         edit_profile: 설정
         properties: 특성
@@ -1694,6 +1697,8 @@ ko:
   invoice_tax_total: "물품·용역소비세 총합 :"
   tax_invoice: "세금 계산서"
   tax_total: "총 세금 (%{rate}) :"
+  invoice_shipping_category_delivery: "배달"
+  invoice_shipping_category_pickup: "직접 수령"
   total_excl_tax: "총합 (세금 별도)"
   total_incl_tax: "총합 (세금 포함) :"
   abn: "호주 비즈니스 번호 :"

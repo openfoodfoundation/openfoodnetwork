@@ -766,8 +766,6 @@ en_GB:
           other: "%{count}products modified."
         save: Save changes
         reset: Discard changes
-      bulk_update:
-        success: "Products successfully updated"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -866,6 +864,7 @@ en_GB:
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: Product Code
         name: Name
@@ -1195,6 +1194,8 @@ en_GB:
           create_custom_tab: "Create custom tab in shopfront"
           custom_tab_title: "Title for custom tab"
           custom_tab_content: "Content for custom tab"
+        connected_apps:
+          loading: "Loading"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1883,6 +1884,8 @@ en_GB:
   invoice_tax_total: "VAT Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
+  invoice_shipping_category_delivery: "Delivery"
+  invoice_shipping_category_pickup: "Pickup"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
   abn: "Company Number:"
