@@ -400,6 +400,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "semantic_links", force: :cascade do |t|
+    t.bigint "variant_id", null: false
+    t.string "semantic_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["variant_id"], name: "index_semantic_links_on_variant_id"
+  end
+
   create_table "sessions", id: :serial, force: :cascade do |t|
     t.string "session_id", limit: 255, null: false
     t.text "data"
@@ -1168,6 +1176,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   add_foreign_key "proxy_orders", "spree_orders", column: "order_id", name: "order_id_fk"
   add_foreign_key "proxy_orders", "subscriptions", name: "proxy_orders_subscription_id_fk"
   add_foreign_key "report_rendering_options", "spree_users", column: "user_id"
+  add_foreign_key "semantic_links", "spree_variants", column: "variant_id"
   add_foreign_key "spree_addresses", "spree_countries", column: "country_id", name: "spree_addresses_country_id_fk"
   add_foreign_key "spree_addresses", "spree_states", column: "state_id", name: "spree_addresses_state_id_fk"
   add_foreign_key "spree_inventory_units", "spree_orders", column: "order_id", name: "spree_inventory_units_order_id_fk", on_delete: :cascade
