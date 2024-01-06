@@ -38,7 +38,8 @@ module Admin
       @enterprise_fee_set = EnterpriseFeesBulkUpdate.new(params)
 
       if @enterprise_fee_set.save
-        redirect_to redirect_path, notice: I18n.t(:enterprise_fees_update_notice)
+        flash[:success] = I18n.t(:enterprise_fees_update_notice)
+        redirect_to redirect_path
       else
         redirect_to redirect_path,
                     flash: { error: @enterprise_fee_set.errors.full_messages.to_sentence }
