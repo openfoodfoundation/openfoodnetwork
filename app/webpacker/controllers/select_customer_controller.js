@@ -49,9 +49,8 @@ export default class extends TomSelectController {
         data ? data.country_id : ""
       );
     });
-    $("#order_email").val(customer.email);
-    $("#user_id").val(customer.user_id);
-    $("#customer_id").val(customer.id);
+    document.querySelector("#order_email").value = customer.email;
+    document.querySelector("#customer_id").value = customer.id;
   }
 
   setValueOnTomSelectController = (element, value) => {
