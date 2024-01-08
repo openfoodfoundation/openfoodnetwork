@@ -580,6 +580,7 @@ en:
       actions:
         edit: Edit
         clone: Clone
+        delete: Delete
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     # Common properties / models
@@ -818,6 +819,17 @@ en:
         header:
           title: Bulk Edit Products
         loading: Loading your products
+      delete_modal:
+        delete_product_modal:
+          heading: "Delete product"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete product"
+          cancellation_text: "Keep product"
+        delete_variant_modal:
+          heading: "Delete variant"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete variant"
+          cancellation_text: "Keep variant"
       sort:
         pagination:
           total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
@@ -856,6 +868,12 @@ en:
         reset: Discard changes
       bulk_update:
         success: Changes saved
+      delete_product:
+        success: Successfully deleted the product
+        error: Unable to delete the product
+      delete_variant:
+        success: Successfully deleted the variant
+        error: Unable to delete the variant
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
