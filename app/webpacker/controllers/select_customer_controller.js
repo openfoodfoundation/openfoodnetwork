@@ -11,7 +11,7 @@ export default class extends TomSelectController {
     const options = {
       valueField: "id",
       labelField: "email",
-      searchField: ["email", "full_name", "last_name"],
+      searchField: ["email", "full_name", "first_name", "last_name"],
       load: this.load.bind(this),
       shouldLoad: (query) => query.length > 2,
       render: {
@@ -38,9 +38,7 @@ export default class extends TomSelectController {
       ];
       const attribute_wrapper = "#order_" + address + "_attributes_";
       address_parts.forEach((part) => {
-        document.querySelector(attribute_wrapper + part).value = data
-          ? data[part]
-          : "";
+        document.querySelector(attribute_wrapper + part).value = data ? data[part] : "";
       });
       this.setValueOnTomSelectController(
         document.querySelector(attribute_wrapper + "state_id"),
