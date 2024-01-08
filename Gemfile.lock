@@ -492,7 +492,7 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
-    puma (6.4.1)
+    puma (6.4.2)
       nio4r (~> 2.0)
     query_count (1.1.1)
       activerecord (>= 4.2)
