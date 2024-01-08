@@ -1074,19 +1074,18 @@ describe '
   end
 
   describe "searching customers" do
-    def serching_for_customers
+    def searching_for_customers
       # opens the customer dropdown
       find(".items-placeholder").click
 
-      # sets the query name
-      find(".dropdown-input").set("John")
+      find(".dropdown-input").send_keys("John")
       within(".customer-details") do
         expect(page).to have_content("John Doe")
         expect(page).to have_content(customer.email.to_s)
       end
 
       # sets the query email
-      find(".dropdown-input").set("maura@smith.biz")
+      find(".dropdown-input").send_keys("maura@smith.biz")
       within(".customer-details") do
         expect(page).to have_content("John Doe")
         expect(page).to have_content(customer.email.to_s)
@@ -1103,7 +1102,7 @@ describe '
       end
 
       it "finds a customer by name" do
-        serching_for_customers
+        searching_for_customers
       end
     end
 
@@ -1117,7 +1116,7 @@ describe '
       end
 
       it "finds a customer by name" do
-        serching_for_customers
+        searching_for_customers
       end
     end
   end
