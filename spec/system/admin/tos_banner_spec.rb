@@ -4,12 +4,10 @@ require 'system_helper'
 
 describe 'Terms of Service banner' do
   include AuthenticationHelper
+  include FileHelper
 
   let(:admin_user) { create(:admin_user, terms_of_service_accepted_at: nil) }
-  let(:test_file) { "Terms-of-service.pdf" }
-  let(:pdf_upload) do
-    fixture_file_upload(Rails.public_path.join(test_file), "application/pdf")
-  end
+  let(:pdf_upload) { terms_pdf_file }
 
   before do
     Spree::Config.enterprises_require_tos = true
@@ -43,7 +41,7 @@ describe 'Terms of Service banner' do
 
       # Upload new ToS
       visit admin_terms_of_service_files_path
-      attach_file "Attachment", Rails.public_path.join(test_file)
+      attach_file "Attachment", pdf_upload.path
       click_button "Create Terms of service file"
 
       # check it has been uploaded

@@ -123,14 +123,8 @@ describe "As a consumer, I want to checkout my order" do
       describe "terms and conditions" do
         let(:customer) { create(:customer, enterprise: order.distributor, user:) }
         let(:tos_url) { "https://example.org/tos" }
-        let(:system_terms_path) { Rails.public_path.join('Terms-of-service.pdf') }
-        let(:shop_terms_path) { Rails.public_path.join('Terms-of-ServiceUK.pdf') }
-        let(:system_terms) {
-          fixture_file_upload(system_terms_path, "application/pdf")
-        }
-        let(:shop_terms) {
-          fixture_file_upload(shop_terms_path, "application/pdf")
-        }
+        let(:system_terms) { terms_pdf_file }
+        let(:shop_terms) { terms_pdf_file }
 
         context "when none are required" do
           it "doesn't show checkbox or links" do
@@ -152,7 +146,7 @@ describe "As a consumer, I want to checkout my order" do
           describe "when customer has not accepted T&Cs before" do
             it "shows a link to the T&Cs and disables checkout button until terms are accepted" do
               visit checkout_step_path(:summary)
-              expect(page).to have_link "Terms and Conditions", href: /#{shop_terms_path.basename}$/
+              expect(page).to have_link "Terms and Conditions", href: /Terms-of-service\.pdf/
               expect(page).to have_field "order_accept_terms", checked: false
             end
           end
@@ -243,8 +237,8 @@ describe "As a consumer, I want to checkout my order" do
           it "shows links to both terms and all need accepting" do
             visit checkout_step_path(:summary)
 
-            expect(page).to have_link "Terms and Conditions", href: /#{shop_terms_path.basename}$/
-            expect(page).to have_link("Terms of service", href: /Terms-of-service.pdf/, count: 2)
+            expect(page).to have_link "Terms and Conditions", href: /Terms-of-service\.pdf/
+            expect(page).to have_link("Terms of service", href: /Terms-of-service\.pdf/, count: 2)
             expect(page).to have_field "order_accept_terms", checked: false
           end
         end

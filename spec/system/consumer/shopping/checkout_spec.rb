@@ -89,12 +89,7 @@ describe "As a consumer I want to check out my cart" do
 
   pending 'login in as user' do
     let(:user) { create(:user) }
-    let(:pdf_upload) {
-      fixture_file_upload(
-        Rails.public_path.join('Terms-of-service.pdf'),
-        "application/pdf"
-      )
-    }
+    let(:pdf_upload) { terms_pdf_file }
 
     before do
       login_as(user)
