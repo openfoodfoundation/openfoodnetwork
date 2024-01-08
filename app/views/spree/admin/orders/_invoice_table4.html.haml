@@ -22,7 +22,7 @@
           = render 'spree/admin/orders/_invoice/line_item_name', line_item: item
           %br
           %small
-            %em= raw(item.variant.product.supplier.name)
+            %em= item.variant.product.supplier.name
         %td{:align => "right"}
           = item.quantity
         %td{:align => "right"}
@@ -37,8 +37,8 @@
           = item.display_amount_with_adjustments_and_with_taxes
     %tr
       %td
-        %strong= "#{t(:shipping)} "
-        = "( #{t(:invoice_shipping_type)} #{raw(@order.shipping_method.name)} )"
+        %strong= "#{@order.shipping_method.category} "
+        = "(#{@order.shipping_method.name})"
       %td{:align => "right"}
       %td{:align => "right"}
       %td{:align => "right"}
@@ -51,7 +51,7 @@
     - @order.checkout_adjustments(exclude: [:line_item, :shipment]).reverse_each do |adjustment|
       %tr
         %td
-          %strong= "#{raw(adjustment.label)}"
+          %strong= adjustment.label
         %td{:align => "right"}
         %td{:align => "right"}
         %td{:align => "right"}

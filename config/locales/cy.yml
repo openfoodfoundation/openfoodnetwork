@@ -766,8 +766,6 @@ cy:
           other: "Addaswyd %{count} cynnyrch"
         save: Cadw’r newidiadau
         reset: Hepgor y newidiadau
-      bulk_update:
-        success: "Llwyddwyd i ddiweddaru’r cynnyrch"
     product_import:
       title: Mewnforio Cynnyrch
       file_not_found: Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor
@@ -866,6 +864,7 @@ cy:
         view_products: Ewch i'r Dudalen Cynhyrchion
         view_inventory: Ewch i Dudalen y Stocrestr
       product_headings:
+        distributor: Dosbarthwr
         producer: Cynhyrchydd
         sku: Cod y Cynnyrch
         name: Enw
@@ -1195,6 +1194,8 @@ cy:
           create_custom_tab: "Creu tab pwrpasol yn ffrynt y siop"
           custom_tab_title: "Teitl y tab pwrpasol"
           custom_tab_content: "Cynnwys y tab pwrpasol"
+        connected_apps:
+          loading: "Yn llwytho"
       actions:
         edit_profile: Gosodiadau
         properties: Manylion
@@ -1878,6 +1879,8 @@ cy:
   invoice_tax_total: "Cyfanswm GST:"
   tax_invoice: "ANFONEB TRETH"
   tax_total: "Cyfanswm treth (%{rate}):"
+  invoice_shipping_category_delivery: "Dosbarthu"
+  invoice_shipping_category_pickup: "Casglu"
   total_excl_tax: "Cyfanswm (heb dreth):"
   total_incl_tax: "Cyfanswm (gan gynnwys treth):"
   abn: "Rhif y Cwmni:"

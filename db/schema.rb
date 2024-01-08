@@ -63,6 +63,14 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
     t.index ["user_id", "action_name", "column_name"], name: "index_column_prefs_on_user_id_and_action_name_and_column_name", unique: true
   end
 
+  create_table "connected_apps", force: :cascade do |t|
+    t.bigint "enterprise_id"
+    t.json "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enterprise_id"], name: "index_connected_apps_on_enterprise_id"
+  end
+
   create_table "coordinator_fees", id: :serial, force: :cascade do |t|
     t.integer "order_cycle_id", null: false
     t.integer "enterprise_fee_id", null: false
@@ -924,6 +932,7 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
     t.boolean "show_api_key_view", default: false, null: false
     t.string "provider"
     t.string "uid"
+    t.datetime "terms_of_service_accepted_at"
     t.index ["confirmation_token"], name: "index_spree_users_on_confirmation_token", unique: true
     t.index ["email"], name: "email_idx_unique", unique: true
     t.index ["persistence_token"], name: "index_users_on_persistence_token"
@@ -1101,6 +1110,7 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", column: "adjustment_id", name: "adjustment_metadata_adjustment_id_fk", on_delete: :cascade
+  add_foreign_key "connected_apps", "enterprises"
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
   add_foreign_key "custom_tabs", "enterprises", on_delete: :cascade

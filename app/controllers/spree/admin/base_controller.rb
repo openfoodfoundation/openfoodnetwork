@@ -9,6 +9,7 @@ module Spree
       helper 'admin/injection'
       helper 'admin/orders'
       helper 'admin/enterprises'
+      helper 'admin/terms_of_service'
       helper 'enterprise_fees'
       helper 'angular_form'
 

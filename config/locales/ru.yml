@@ -848,6 +848,7 @@ ru:
         view_products: Перейти на Страницу Товаров
         view_inventory: Перейти на Страницу Элементов товарной номенклатуры
       product_headings:
+        distributor: Дистрибьютор
         producer: Производитель
         sku: SKU
         name: Название
@@ -1178,6 +1179,8 @@ ru:
           create_custom_tab: "Создать пользовательскую вкладку на витрине магазина"
           custom_tab_title: "Название пользовательской вкладки"
           custom_tab_content: "Контент для пользовательской вкладки"
+        connected_apps:
+          loading: "Загружается"
       actions:
         edit_profile: Настройки
         properties: Свойства
@@ -1868,6 +1871,8 @@ ru:
   invoice_tax_total: "Всего налогов:"
   tax_invoice: "СЧЁТ"
   tax_total: "Всего налога (%{rate}):"
+  invoice_shipping_category_delivery: "Доставка"
+  invoice_shipping_category_pickup: "Самовывоз"
   total_excl_tax: "Всего (Искл. налог):"
   total_incl_tax: "Всего (Вкл. налог):"
   abn: "ИНН"

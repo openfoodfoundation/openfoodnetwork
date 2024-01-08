@@ -1,6 +1,7 @@
 #products-content
   .container
     .sixteen.columns
+      = render partial: 'admin/shared/flashes', locals: { flashes: } if defined? flashes
       = render partial: 'filters', locals: { search_term: search_term,
                                               producer_id: producer_id,
                                               producer_options: producer_options,

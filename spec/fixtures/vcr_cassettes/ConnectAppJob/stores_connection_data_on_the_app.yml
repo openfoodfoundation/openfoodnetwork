@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://n8n.openfoodnetwork.org.uk/webhook/regen/connect-enterprise
+    body:
+      encoding: UTF-8
+      string: '{"id":"27bc9d0a-d95c-4a36-9b16-01fdd8a82b51","at":"2023-12-21 14:54:28
+        +1100","event":"connect-app","data":{"@id":"http://test.host/api/dfc/enterprises/3","access_token":"12345"}}'
+    headers:
+      User-Agent:
+      - openfoodnetwork_webhook/1.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 21 Dec 2023 03:54:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '141'
+      Connection:
+      - keep-alive
+      Etag:
+      - W/"8d-Lz10bce6zwT2C429xIkj52OBWyk"
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=63072000
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Download-Options:
+      - noopen
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - same-origin
+    body:
+      encoding: UTF-8
+      string: '{"link":"https://example.net/update","destroy":"https://n8n.openfoodnetwork.org.uk/webhook/remove-enterprise?id=recjBXXXXXXXXXXXX&key=12345"}'
+  recorded_at: Thu, 21 Dec 2023 03:54:33 GMT
+recorded_with: VCR 6.2.0

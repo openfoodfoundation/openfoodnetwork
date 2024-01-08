@@ -101,6 +101,7 @@ describe '
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
     accept_alert do
+      scroll_to(:bottom)
       within(".side_menu") { click_link "Users" }
     end
     select2_select user.email, from: 'enterprise_owner_id'
@@ -120,36 +121,28 @@ describe '
       click_link "Primary Details"
     end
 
-    # Back navigation loads the tab content
-    page.execute_script('window.history.back()')
-    expect(page).to have_selector '#enterprise_description'
-
-    accept_alert do
-      click_link "Primary Details"
-    end
-
     # Unchecking hides the Properties tab
     uncheck 'enterprise_is_primary_producer'
     choose 'None'
-    expect(page).not_to have_selector "#enterprise_fees"
-    expect(page).not_to have_selector "#payment_methods"
-    expect(page).not_to have_selector "#shipping_methods"
-    expect(page).not_to have_selector "#properties"
+    expect(page).not_to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
+    expect(page).not_to have_selector "[data-test=link_for_properties]"
     # Checking displays the Properties tab
     check 'enterprise_is_primary_producer'
-    expect(page).to have_selector "#enterprise_fees"
-    expect(page).not_to have_selector "#payment_methods"
-    expect(page).not_to have_selector "#shipping_methods"
-    expect(page).to have_selector "#properties"
+    expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
+    expect(page).to have_selector "[data-test=link_for_properties]"
     uncheck 'enterprise_is_primary_producer'
     choose 'Own'
-    expect(page).to have_selector "#enterprise_fees"
-    expect(page).to have_selector "#payment_methods"
-    expect(page).to have_selector "#shipping_methods"
+    expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).to have_selector "[data-test=link_for_shipping_methods]"
     choose 'Any'
-    expect(page).to have_selector "#enterprise_fees"
-    expect(page).to have_selector "#payment_methods"
-    expect(page).to have_selector "#shipping_methods"
+    expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).to have_selector "[data-test=link_for_shipping_methods]"
 
     page.find("#enterprise_group_ids-ts-control").set(eg1.name)
     page.find("#enterprise_group_ids-ts-dropdown .option.active").click
@@ -255,6 +248,14 @@ describe '
     )
     expect(page).to have_checked_field "enterprise_require_login_true"
     expect(page).to have_checked_field "enterprise_enable_subscriptions_true"
+
+    # Back navigation loads the tab content
+    page.execute_script('window.history.back()')
+    expect(page).to have_selector '#enterprise_description'
+
+    # Forward navigation brings back the previous tab
+    page.execute_script('window.history.forward()')
+    expect(page).to have_content 'This is my shopfront message.'
 
     # Test that the right input alert text is displayed
     accept_alert('Please enter a URL to insert') do

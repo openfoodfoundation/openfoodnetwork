@@ -1,0 +1,31 @@
+- enterprise ||= f.object
+#connected-app-discover-regen
+  .connected-app__head
+    %div
+      %h3= t ".title"
+      %p= t ".tagline"
+    %div
+      - if enterprise.connected_apps.empty?
+        %button{ data: {reflex: "click->Admin::ConnectedApp#create", enterprise_id: enterprise.id} }
+          = t ".enable"
+      - elsif enterprise.connected_apps.connecting.present?
+        %button{ disabled: true }
+          %i.spinner.fa.fa-spin.fa-circle-o-notch
+          &nbsp;
+          = t ".loading"
+      - else
+        %button{ data: {reflex: "click->Admin::ConnectedApp#destroy", enterprise_id: enterprise.id} }
+          = t ".disable"
+
+  .connected-app__connection
+    - if enterprise.connected_apps.ready.present?
+      .connected-app__note
+        - link = enterprise.connected_apps[0].data["link"]
+        %p= t ".note"
+        %div
+          %a{ href: link, target: "_blank", class: "button secondary" }
+            = t ".link_label"
+
+  %hr
+  .connected-app__description
+    = t ".description_html"

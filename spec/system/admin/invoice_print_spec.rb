@@ -546,8 +546,7 @@ describe '
           expect(page).to have_content "#{enterprise_fee.name} fee by $104.35 15.0% $120.00"
           expect(page).to have_content "coordinator #{user1.enterprises.first.name}"
           # Shipping
-          expect(page).to have_content "Shipping ( Type: $91.41 10.0% $100.55"
-          expect(page).to have_content "#{shipping_method_name} )"
+          expect(page).to have_content "Delivery (#{shipping_method_name}) $91.41 10.0% $100.55"
           # Tax totals
           expect(page).to have_content "Total tax (10.0%): $9.14 " \
                                        "Total tax (15.0%): $15.65 Total tax (20.0%): $250.08"
@@ -650,8 +649,7 @@ describe '
           expect(page).to have_content "#{enterprise_fee.name} fee by $120.00 15.0% $138.00"
           expect(page).to have_content "coordinator #{user1.enterprises.first.name}"
           # Shipping
-          expect(page).to have_content "Shipping ( Type: $100.55 10.0% $110.61"
-          expect(page).to have_content "#{shipping_method_name} )"
+          expect(page).to have_content "Delivery (#{shipping_method_name}) $100.55 10.0% $110.61"
           # Tax totals
           expect(page).to have_content "Total tax (10.0%): $10.06 " \
                                        "Total tax (15.0%): $18.00 Total tax (20.0%): $300.09"
@@ -659,6 +657,39 @@ describe '
           # Order Totals
           expect(page).to have_content "Total (Incl. tax): $2,061.69"
           expect(page).to have_content "Total (Excl. tax): $1,733.54"
+        end
+      end
+    end
+    describe "Rendering previous invoice number" do
+      context "Order doesn't have previous invoices" do
+        it "should display the invoice number" do
+          login_as_admin
+          visit spree.print_admin_order_path(order, params: {})
+
+          convert_pdf_to_page
+          expect(page).to have_content "#{order.distributor_id}-#{order.invoices.first.number}"
+        end
+      end
+
+      context "Order has previous invoices" do
+        before do
+          OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
+          first_line_item = order.line_items.first
+          order.line_items.first.update(quantity: first_line_item.quantity + 1)
+        end
+
+        it "should display the invoice number along with the latest invoice number" do
+          login_as_admin
+          visit spree.print_admin_order_path(order, params: {})
+
+          expect(order.invoices.count).to eq(2)
+
+          new_invoice_number = "#{order.distributor_id}-#{order.invoices.first.number}"
+          canceled_invoice_number = "#{order.distributor_id}-#{order.invoices.last.number}"
+
+          convert_pdf_to_page
+          expect(page).to have_content "#{new_invoice_number} cancels and replaces invoice #{
+            canceled_invoice_number}"
         end
       end
     end

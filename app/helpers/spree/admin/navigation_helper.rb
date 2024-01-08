@@ -133,7 +133,7 @@ module Spree
           if html_options[:icon]
             html_options[:class] += " #{html_options[:icon]}"
           end
-          link_to(text_for_button_link(text, html_options), url, html_options)
+          link_to(text, url, html_options)
         end
       end
 

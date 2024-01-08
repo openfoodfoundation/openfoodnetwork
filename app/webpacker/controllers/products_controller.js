@@ -2,6 +2,7 @@ import ApplicationController from "./application_controller";
 
 export default class extends ApplicationController {
   static targets = ["loading"];
+  static values = { currentId: Number };
 
   connect() {
     super.connect();

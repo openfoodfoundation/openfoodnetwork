@@ -11,10 +11,6 @@
     padding: 15px 0;
     margin-top: 25px;
 
-    h1 {
-      color: $near-black;
-    }
-
     .ofn-drop-down {
       border: 0;
       background-color: $spree-blue;
@@ -135,3 +131,9 @@
     display: none;
   }
 }
+
+// Text Colors
+.black-text {
+  color: $near-black
+}
+//------------

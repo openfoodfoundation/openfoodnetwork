@@ -594,6 +594,9 @@ de_DE:
     has_n_rules: "hat %{num} Regeln"
     unsaved_confirm_leave: "Es gibt ungespeicherte Änderungen auf dieser Seite. Möchten Sie ohne Speichern fortfahren?"
     available_units: "Verfügbare Einheiten"
+    terms_of_service_have_been_updated_html: "Die Nutzungsbedingungen des Open Food Network wurden aktualisiert: %{tos_link} Bitte stimmen Sie den neuen Bedingungen zu, bevor Sie die Plattform weiter verwenden."
+    terms_of_service: Nutzungsbedingungen lesen
+    accept_terms_of_service: Nutzungsbedingungen zustimmen
     shopfront_settings:
       embedded_shopfront_settings: "Einstellungen für eingebettete Gruppen"
       enable_embedded_shopfronts: "Eingebettete Gruppen erlauben"
@@ -781,7 +784,7 @@ de_DE:
         save: Änderungen speichern
         reset: Änderungen verwerfen
       bulk_update:
-        success: "Produkte erfolgreich aktualisiert"
+        success: Die Änderungen wurden gespeichert.
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -880,6 +883,7 @@ de_DE:
         view_products: Zur Produktseite
         view_inventory: Zur Katalogseite
       product_headings:
+        distributor: Verteilstelle
         producer: Produzent
         sku: Artikelnummer
         name: Name
@@ -1212,6 +1216,9 @@ de_DE:
           create_custom_tab: "Benutzerdefinierten Reiter im Online-Shop hinzufügen"
           custom_tab_title: "Titel des Reiters"
           custom_tab_content: "Inhalt des Reiters"
+        connected_apps:
+          legend: "Verknüpfte Apps"
+          loading: "Wird geladen ..."
       actions:
         edit_profile: Einstellungen
         properties: Eigenschaften
@@ -1461,6 +1468,7 @@ de_DE:
           users: "Benutzer"
           vouchers: Gutscheine
           white_label: "OFN verbergen"
+          connected_apps: "Verknüpfte Apps"
         enterprise_group:
           primary_details: "Unternehmen"
           users: "Benutzer"
@@ -1835,8 +1843,8 @@ de_DE:
   shared:
     mailers:
       powered_by:
-        open_food_network: "Open Food Network"
-        powered_html: "Ermöglicht durch das %{open_food_network}."
+        open_food_network: "E-Mail"
+        powered_html: "Ermöglicht durch das Open Food Network. Schicken Sie uns eine %{open_food_network}."
     menu:
       cart:
         cart: "Warenkorb/Kasse"
@@ -1903,7 +1911,8 @@ de_DE:
   invoice_tax_total: "Umsatzsteuersumme:"
   tax_invoice: "RECHNUNG"
   tax_total: "davon Steuern (%{rate}):"
-  invoice_shipping_type: "Lieferoption:"
+  invoice_shipping_category_delivery: "Lieferoptionen"
+  invoice_shipping_category_pickup: "Abholen"
   total_excl_tax: "Netto (zzgl. Steuern):"
   total_incl_tax: "GESAMT (inkl. Steuern):"
   total_all_tax: "Steuern gesamt:"
@@ -2219,7 +2228,7 @@ de_DE:
   shopping_contact_address: "Adresse"
   shopping_contact_web: "Kontakt"
   shopping_contact_social: "Folgen"
-  shopping_groups_part_of: "Ist Mitglied der Gruppe(n):"
+  shopping_groups_part_of: "ist Mitglied der Gruppe(n):"
   shopping_producers_of_hub: "Produzenten bei %{hub}:"
   enterprises_next_closing: "Nächster Bestellschluss"
   enterprises_currently_open: "Bestellzyklus ist geöffnet"

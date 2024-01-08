@@ -620,6 +620,7 @@ en_PH:
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: SKU
         name: Name
@@ -886,6 +887,8 @@ en_PH:
         vouchers:
           rate: Rate
           customers: Customer
+        connected_apps:
+          loading: "Loading"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1416,6 +1419,8 @@ en_PH:
   invoice_tax_total: "VAT Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
+  invoice_shipping_category_delivery: "Delivery"
+  invoice_shipping_category_pickup: "Pickup"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
   abn: "TIN:"

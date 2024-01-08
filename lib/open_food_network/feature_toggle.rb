@@ -47,6 +47,10 @@ module OpenFoodNetwork
       "invoices" => <<~DESC,
         Preserve the state of generated invoices and enable multiple invoice numbers instead of only one live-updating invoice.
       DESC
+      "connected_apps" => <<~DESC,
+        Enterprise data can be shared with another app.
+        The first example is the Australian Discover Regenerative Portal.
+      DESC
     }.freeze
 
     # Features you would like to be enabled to start with.

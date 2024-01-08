@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'open_food_network/property_merge'
-require 'concerns/product_stock'
 
 # PRODUCTS
 # Products represent an entity for sale in a store.
