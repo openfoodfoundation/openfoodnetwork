@@ -178,7 +178,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
-    bugsnag (6.26.0)
+    bugsnag (6.26.1)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
     bullet (7.1.5)
