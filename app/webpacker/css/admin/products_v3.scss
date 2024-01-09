@@ -49,9 +49,15 @@
     border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
 
     // Additional horizontal padding to align with input contents
-    thead th.with-input {
-      padding-left: $padding-tbl-cell + $hpadding-txt;
-      padding-right: $padding-tbl-cell + $hpadding-txt;
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 1; // TODO: Cover .popout and .vertical-ellipsis-menu, but only when sticky
+
+      th.with-input {
+        padding-left: $padding-tbl-cell + $hpadding-txt;
+        padding-right: $padding-tbl-cell + $hpadding-txt;
+      }
     }
 
     // Row hover
