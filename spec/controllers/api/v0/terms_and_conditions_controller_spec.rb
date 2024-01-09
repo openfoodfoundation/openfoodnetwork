@@ -12,10 +12,7 @@ module Api
     let(:enterprise_manager) { create(:user, enterprises: [enterprise]) }
 
     describe "removing terms and conditions file" do
-      let(:terms_file_path) { Rails.public_path.join('Terms-of-service.pdf') }
-      let(:terms_and_conditions_file) {
-        Rack::Test::UploadedFile.new(terms_file_path, "application/pdf")
-      }
+      let(:terms_and_conditions_file) { terms_pdf_file }
       let(:enterprise) { create(:enterprise, owner: enterprise_owner) }
 
       before do
