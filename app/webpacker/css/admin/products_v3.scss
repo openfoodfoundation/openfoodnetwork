@@ -27,6 +27,16 @@
       left: 0;
       right: 0;
       z-index: 1; // Ensure tom-select and .disabled-section are covered
+
+      .container {
+        .status {
+          flex-grow: 1; // Fill space
+        }
+
+        .form-buttons {
+          flex-shrink: 0; // Don't shrink
+        }
+      }
     }
   }
 

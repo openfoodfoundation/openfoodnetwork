@@ -7,13 +7,13 @@
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
   %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
     .container
-      .status.eleven.columns
+      .status
         .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
         - if defined?(error_counts)
           .error_summary
             -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
             = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
-      .form-buttons.five.columns
+      .form-buttons
         = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
         = form.submit t('.save'), class: "medium"
   %table.products
