@@ -1,5 +1,6 @@
 import "controllers";
 import "@hotwired/turbo";
+import "../js/hotkeys";
 import "../js/mrujs";
 import "../js/matomo";
 import "../js/moment";

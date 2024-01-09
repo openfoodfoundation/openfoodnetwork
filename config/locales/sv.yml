@@ -328,6 +328,7 @@ sv:
         blank: kan inte vara blank
         none_saved: sparade inte några produkter
       product_headings:
+        distributor: Distributör
         producer: Producent
         sku: SKU
         name: Namn
@@ -896,6 +897,8 @@ sv:
   invoice_tax_total: "Summa moms"
   tax_invoice: "SKATTEFAKTURA"
   tax_total: "Summa skatter (%{rate}):"
+  invoice_shipping_category_delivery: "Leverans"
+  invoice_shipping_category_pickup: "Upphämtning"
   total_excl_tax: "Summa (Exkl skatt):"
   total_incl_tax: "Summa (Inkl skatt):"
   abn: "ABN:"

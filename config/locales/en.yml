@@ -580,6 +580,7 @@ en:
       actions:
         edit: Edit
         clone: Clone
+        delete: Delete
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     # Common properties / models
@@ -818,6 +819,17 @@ en:
         header:
           title: Bulk Edit Products
         loading: Loading your products
+      delete_modal:
+        delete_product_modal:
+          heading: "Delete product"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete product"
+          cancellation_text: "Keep product"
+        delete_variant_modal:
+          heading: "Delete variant"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete variant"
+          cancellation_text: "Keep variant"
       sort:
         pagination:
           total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
@@ -856,6 +868,12 @@ en:
         reset: Discard changes
       bulk_update:
         success: Changes saved
+      delete_product:
+        success: Successfully deleted the product
+        error: Unable to delete the product
+      delete_variant:
+        success: Successfully deleted the variant
+        error: Unable to delete the variant
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1286,21 +1304,26 @@ en:
         connected_apps:
           legend: "Connected apps"
           title: "Discover Regenerative"
-          tagline: "Allow website to publish your enterprise information."
-          action: "Share data"
-          saving_changes: "Saving changes"
+          tagline: "Allow Discover Regenerative to publish your enterprise information."
+          enable: "Allow data sharing"
+          disable: "Stop sharing"
+          loading: "Loading"
           note: |
-            In order for this enterprise to be published, you need to include
-            regenerative details and accept the Terms and Conditions.
-          link_label: "Update details"
+            Your Open Food Network account is connected to Discover Regenerative.
+            Add or update information on your Discover Regenerative listing here.
+          link_label: "Manage listing"
           description_html: |
             <p>
-            Discover Regenerative makes it easier for buyers to discover
-            regenerative produce for their procurement, showcase producers that
-            are using regenerative farming practices, support connection
-            between buyers and producers within a trusted network.
+            Eligible producers can showcase their regenerative credentials,
+            farming practices and more through a profile listing.
+            Simplifying how buyers can find regenerative produce and connect
+            with producers of interest.
             </p>
-            <p><a href="" target="_blank"><b>Visit website</b> <i class="icon-external-link"></i></a></p>
+            <p>
+            <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+            target="_blank"><b>Learn more about Discover Regenerative</b>
+            <i class="icon-external-link"></i></a>
+            </p>
       actions:
         edit_profile: Settings
         properties: Properties
@@ -4209,6 +4232,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           line_item_adjustments: "Line Item Adjustments"
           order_adjustments: "Order Adjustments"
           order_total: "Order Total"
+      invoices:
+        index:
+          order_has_changed: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
       overview:
         enterprises_header:
           ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.

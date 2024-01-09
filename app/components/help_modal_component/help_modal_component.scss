@@ -2,6 +2,9 @@
   visibility: visible;
   position: fixed;
   top: 3em;
+  &.in {
+    padding: 1.2rem;
+  }
 }
 
 /* prevent arrow on selected admin menu item appearing above modal */

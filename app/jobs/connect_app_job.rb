@@ -8,7 +8,7 @@ class ConnectAppJob < ApplicationJob
     event = "connect-app"
     enterprise = app.enterprise
     payload = {
-      enterprise_id: enterprise.id,
+      '@id': DfcBuilder.urls.enterprise_url(enterprise.id),
       access_token: token,
     }
 

@@ -38,7 +38,7 @@ describe SuppliedProductBuilder do
       variant.display_name = "Granny Smith"
       product = builder.supplied_product(variant)
 
-      expect(product.name).to eq "Granny Smith"
+      expect(product.name).to eq "Apple - Granny Smith"
     end
 
     it "assigns a product type" do

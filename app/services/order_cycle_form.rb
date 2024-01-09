@@ -2,7 +2,6 @@
 
 require 'open_food_network/permissions'
 require 'open_food_network/order_cycle_form_applicator'
-require 'order_management/subscriptions/proxy_order_syncer'
 
 class OrderCycleForm
   def initialize(order_cycle, order_cycle_params, user)

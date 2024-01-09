@@ -32,15 +32,15 @@ ml:
       enterprise_fee:
         fee_type: ഫീസ് തരം
       spree/order:
-        payment_state: പേയ്മെന്റ് സംസ്ഥാനം
-        shipment_state: ഷിപ്പിംഗ് സംസ്ഥാനം
+        payment_state: പേയ്മെന്റ് സ്റ്റേറ്റ്
+        shipment_state: ഷിപ്പിംഗ് സ്റ്റേറ്റ്
         completed_at: പൂർത്തിയാക്കിയത്
         number: നമ്പർ
-        state: സംസ്ഥാനം
+        state: സ്റ്റേറ്റ്
         email: ഉപഭോക്താവിന്റെ ഇ-മെയിൽ
       spree/payment:
         amount: തുക
-        state: സംസ്ഥാനം
+        state: സ്റ്റേറ്റ്
         source: ഉറവിടം
       spree/product:
         name: "ഉത്പന്നത്തിന്റെ പേര്"
@@ -371,9 +371,9 @@ ml:
   home: "ഒഎഫ്എൻ"
   title: "ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്ക്"
   welcome_to: "-ലേക്ക് സ്വാഗതം"
-  site_meta_description: "ഞങ്ങൾ അടിത്തറയിൽ നിന്ന് ആരംഭിക്കുന്നു. തങ്ങളുടെ കഥകൾ അഭിമാനത്തോടെയും സത്യസന്ധമായും പറയാൻ തയ്യാറായ കർഷകരോടൊപ്പം. ന്യായമായും സത്യസന്ധമായും ഉൽപ്പന്നങ്ങളുമായി ആളുകളെ ബന്ധിപ്പിക്കാൻ തയ്യറാകുന്ന വിതരണക്കാരോടൊപ്പം. മികച്ച പ്രതിവാര ഷോപ്പിംഗ് തീരുമാനങ്ങൾ എടുക്കാൻ കഴിയുമെന്ന് വിശ്വസിക്കുന്ന ഉപഭോക്താക്കൾക്കൊപ്പം..."
-  search_by_name: പേരോ നഗരമോ ഉപയോഗിച്ച് തിരയുക...
-  producers_join: ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിൽ ചേരാൻ ഓസ്‌ട്രേലിയൻ കർഷകരെ ഇപ്പോൾ സ്വാഗതം ചെയ്യുന്നു.
+  site_meta_description: "ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്ക് ഇന്ത്യ സോഫ്റ്റ്‌വെയർ പ്ലാറ്റ്‌ഫോം, കർഷകരെ ന്യായമായ വിലയ്ക്ക് ഉൽപ്പന്നങ്ങൾ ഓൺലൈനിൽ വിൽക്കാൻ അനുവദിക്കുന്നു. ഇത് ആഹാരസാധനങ്ങൾ വിൽക്കുന്നതിനായി പ്രത്യേകം നിർമ്മിച്ചതാണ്, അതിനാൽ അതിൽ മാത്രം ഉള്ള തന്ത്രപരമായ അളവുകളോ സ്റ്റോക്ക് ലെവലുകളോ കൈകാര്യം ചെയ്യാൻ ഇതിന് കഴിയും - ഉദാഹരണത്തിന്, ഒരു ഡസൻ മുട്ടകൾ, ഒരു കെട്ട് ചീര, ഭാരത്തിൽ വ്യത്യാസമുള്ള ഒരു മുഴുവൻ കോഴി…"
+  search_by_name: പേര്, നഗരം, സംസ്ഥാനം അല്ലെങ്കിൽ പിൻ കോഡ് എന്നിവ പ്രകാരം തിരയുക...
+  producers_join: ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിൽ ചേരാൻ ഇന്ത്യൻ കർഷകരെ ഇപ്പോൾ സ്വാഗതം ചെയ്യുന്നു.
   charges_sales_tax: ജി എസ് ടി ഈടാക്കുന്നുണ്ടോ?
   business_address: "വ്യാപാര മേൽവിലാസം"
   print_invoice: "ഇൻവോയ്സ് പ്രിന്റ് ചെയ്യുക"
@@ -420,7 +420,7 @@ ml:
   enterprises: എൻറ്റർപ്രൈസിസ്
   enterprise_groups: ഗ്രൂപ്പുകൾ
   reports: റിപ്പോർട്ടുകൾ
-  listing_reports: ലിസ്റ്റിംഗ് റിപ്പോർട്ടുകൾ
+  listing_reports: റിപ്പോർട്ടുകളുടെ പട്ടിക
   variant_overrides: ചരക്കുപട്ടിക
   import: ഇറക്കുമതി ചെയ്യുക
   spree_products: സ്പ്രി ഉൽപ്പന്നങ്ങൾ
@@ -561,7 +561,7 @@ ml:
     shipping_method: ഷിപ്പിംഗ് രീതി
     shop: ഷോപ്പ്
     sku: എസ്.കെ.യു
-    status_state: സംസ്ഥാനം
+    status_state: സ്റ്റേറ്റ്
     tags: ടാഗുകൾ
     variant: വേരിയന്റ്
     weight: ഭാരം
@@ -594,6 +594,9 @@ ml:
     has_n_rules: "%{num} നിയമങ്ങളുണ്ട്"
     unsaved_confirm_leave: "ഈ പേജിൽ സേവ് ചെയ്യാത്ത മാറ്റങ്ങളുണ്ട്. സേവ് ചെയ്യാതെ തുടരണോ?"
     available_units: "ലഭ്യമായ യൂണിറ്റുകൾ"
+    terms_of_service_have_been_updated_html: "ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിന്റെ സേവന നിബന്ധനകൾ അപ്‌ഡേറ്റ് ചെയ്‌തു: %{tos_link}"
+    terms_of_service: സേവന നിബന്ധനകൾ വായിക്കുക
+    accept_terms_of_service: സേവന നിബന്ധനകൾ അംഗീകരിക്കുക
     shopfront_settings:
       embedded_shopfront_settings: "ഉൾച്ചേർത്ത ഷോപ്പ്ഫ്രണ്ട് ക്രമീകരണങ്ങൾ"
       enable_embedded_shopfronts: "എംബഡഡ് ഷോപ്പ്ഫ്രണ്ടുകൾ പ്രവർത്തനക്ഷമമാക്കുക"
@@ -626,7 +629,7 @@ ml:
         stripe_connect_enabled: സ്ട്രൈപ്പ് കണക്ട് ഉപയോഗിച്ച് പേയ്‌മെന്റുകൾ സ്വീകരിക്കാൻ ഷോപ്പുകളെ പ്രാപ്‌തമാക്കണോ?
         no_api_key_msg: ഈ എന്റർപ്രൈസസിന് സ്ട്രൈപ്പ് അക്കൗണ്ട് നിലവിലില്ല.
         configuration_explanation_html: സ്ട്രൈപ്പ് കണക്റ്റ് ഇന്റഗ്രേഷൻ കോൺഫിഗർ ചെയ്യുന്നതിനുള്ള വിശദമായ നിർദ്ദേശങ്ങൾക്ക്, ദയവായി <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>ഈ ഗൈഡ് പരിശോധിക്കുക</a>.
-        status: പദവി
+        status: സ്ഥിതി
         ok: ശരി
         instance_secret_key: അടിയന്തര രഹസ്യ കീ
         account_id: അക്കൗണ്ട് ഐഡി
@@ -780,6 +783,8 @@ ml:
             other: "%{count} ഉൽപ്പന്നങ്ങൾ സേവ് ചെയ്യാൻ കഴിഞ്ഞില്ല. തകരാറുകൾ അവലോകനം ചെയ്‌ത് വീണ്ടും ശ്രമിക്കുക."
         save: മാറ്റങ്ങൾ സേവ് ചെയ്യുക
         reset: മാറ്റങ്ങൾ ഉപേക്ഷിക്കുക
+      bulk_update:
+        success: മാറ്റങ്ങൾ സേവ് ചെയ്തു.
     product_import:
       title: ഉൽപ്പന്ന ഇറക്കുമതി
       file_not_found: ഫയൽ കണ്ടെത്തിയില്ല അല്ലെങ്കിൽ തുറക്കാൻ കഴിഞ്ഞില്ല
@@ -878,6 +883,7 @@ ml:
         view_products: ഉൽപ്പന്നങ്ങളുടെ പേജിലേക്ക് പോകുക
         view_inventory: ചരക്കുപ്പട്ടിക പേജിലേക്ക് പോകുക
       product_headings:
+        distributor: വിതരണക്കാരൻ
         producer: പ്രൊഡ്യൂസർ
         sku: എസ്.കെ.യു
         name: പേര്
@@ -957,7 +963,7 @@ ml:
         new_enterprise: പുതിയ എന്റർപ്രൈസ്
         producer?: "പ്രൊഡ്യൂസർ?"
         package: പാക്കേജ്
-        status: പദവി
+        status: സ്ഥിതി
         manage: കൈകാര്യം ചെയ്യുക
       form:
         about_us:
@@ -1211,6 +1217,10 @@ ml:
           create_custom_tab: "ഷോപ്പ്ഫ്രണ്ടിൽ ഇഷ്‌ടാനുസൃത ടാബ് സൃഷ്‌ടിക്കുക"
           custom_tab_title: "ഇഷ്‌ടാനുസൃത ടാബിനുള്ള ശീർഷകം"
           custom_tab_content: "ഇഷ്‌ടാനുസൃത ടാബിനുള്ള ഉള്ളടക്കം"
+        connected_apps:
+          legend: "ബന്ധിപ്പിച്ച ആപ്പുകൾ"
+          title: "റീജനറേറ്റീവ് കണ്ടെത്തുക"
+          loading: "ലോഡിംഗ്"
       actions:
         edit_profile: ക്രമീകരണങ്ങൾ
         properties: പ്രോപ്പർട്ടികൾ
@@ -1255,7 +1265,7 @@ ml:
         manage_link: ക്രമീകരണങ്ങൾ
         producer?: "പ്രൊഡ്യൂസർ?"
         package: "പാക്കേജ്"
-        status: "പദവി"
+        status: "സ്ഥിതി"
       new_form:
         owner: ഉടമ
         owner_tip: ഈ എന്റർപ്രൈസസിന്റെ ഉത്തരവാദിത്തമുള്ള പ്രാഥമിക ഉപയോക്താവ്.
@@ -1440,6 +1450,8 @@ ml:
         has_no_payment_methods: "%{enterprise} -ന് പേയ്‌മെന്റ് രീതികളൊന്നുമില്ല"
         has_no_shipping_methods: "%{enterprise} -ന് ഷിപ്പിംഗ് രീതികളൊന്നുമില്ല"
         has_no_enterprise_fees: "%{enterprise} -ന് എന്റർപ്രൈസ് ഫീസ് ഇല്ല"
+      flashes:
+        dismiss: ബഹിഷ്കരിക്കുക
       side_menu:
         enterprise:
           primary_details: "പ്രാഥമിക വിശദാംശങ്ങൾ"
@@ -1460,6 +1472,7 @@ ml:
           users: "ഉപയോക്താക്കൾ"
           vouchers: വൗച്ചറുകൾ
           white_label: "വൈറ്റ് ലേബൽ"
+          connected_apps: "ബന്ധിപ്പിച്ച ആപ്പുകൾ"
         enterprise_group:
           primary_details: "പ്രാഥമിക വിശദാംശങ്ങൾ"
           users: "ഉപയോക്താക്കൾ"
@@ -1531,7 +1544,7 @@ ml:
         name: ഉൽപ്പന്നങ്ങളും ചരക്കുപട്ടികയും
       users_and_enterprises:
         name: ഉപയോക്താക്കളും സംരംഭങ്ങളും
-        description: എന്റർപ്രൈസ് ഉടമസ്ഥതയും നിലയും
+        description: എന്റർപ്രൈസ് ഉടമസ്ഥതയും സ്ഥിതിയും
       order_cycle_management:
         name: ഓർഡർ സൈക്കിൾ മാനേജ്മെന്റ്
       sales_tax:
@@ -1580,7 +1593,7 @@ ml:
       index:
         title: "ഓഐഡിസി ക്രമീകരണങ്ങൾ"
         connect: "നിങ്ങളുടെ അക്കൗണ്ട് ബന്ധിപ്പിക്കുക"
-        already_connected: "നിങ്ങളുടെ അക്കൗണ്ട് ഇതിനകം തന്നെ ഈ ഡിഎഫ്സി അംഗീകാര അക്കൗണ്ടുമായി ലിങ്ക് ചെയ്തിട്ടുണ്ട്:"
+        already_connected: "നിങ്ങളുടെ അക്കൗണ്ട് ഇതിനകം തന്നെ ഈ ഡിഎഫ്സി അനുമതി അക്കൗണ്ടുമായി ലിങ്ക് ചെയ്തിട്ടുണ്ട്:"
         les_communs_link: "ലെസ് കമ്മ്യൂണ്സ് ഓപ്പൺ ഐഡി സെർവർ"
         link_your_account: "ആദ്യം ഡിഎഫ്സി (ലെസ് കമ്മ്യൂണ്സ് ഓപ്പൺ ഐഡി കണക്ട്) ഉപയോഗിക്കുന്ന അംഗീകൃത ദാതാവുമായി നിങ്ങളുടെ അക്കൗണ്ട് ലിങ്ക് ചെയ്യേണ്ടത് ആവശ്യമാണ്."
         link_account_button: "നിങ്ങളുടെ ലെസ് കമ്മ്യൂണ്സ് ഓപ്പൺ ഐഡി കണക്ട് അക്കൗണ്ട് ലിങ്ക് ചെയ്യുക"
@@ -1754,7 +1767,7 @@ ml:
         city:
           label: നഗരം
         state_id:
-          label: സംസ്ഥാനം
+          label: സ്റ്റേറ്റ്
         zipcode:
           label: പിൻ കോഡ്
         country_id:
@@ -1900,6 +1913,7 @@ ml:
   invoice_column_price_per_unit_without_taxes: "ഓരോ യൂണിറ്റിനും വില (നികുതി ഒഴികെ)"
   invoice_column_tax_rate: "നികുതി നിരക്ക്"
   invoice_tax_total: "ജി.എസ്.ടി ആകെ:"
+  invoice_cancel_and_replace_invoice: "ഇൻവോയ്സ് റദ്ദാക്കുകയും പകരം വയ്ക്കുകയും ചെയ്യുന്നു"
   tax_invoice: "നികുതി ഇൻവോയ്സ്"
   tax_total: "മൊത്തം നികുതി (%{rate}):"
   invoice_shipping_category_delivery: "ഡെലിവറി"
@@ -1925,6 +1939,7 @@ ml:
   menu_6_title: "ബന്ധിപ്പിക്കുക"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
   menu_7_title: "പഠിക്കുക"
+  menu_7_url: "https://openfoodnetwork.org/au/learn/"
   logo: "ലോഗോ (640x130)"
   logo_mobile: "മൊബൈൽ ലോഗോ (75x26)"
   logo_mobile_svg: "മൊബൈൽ ലോഗോ (എസ് വി ജി)"
@@ -1958,7 +1973,7 @@ ml:
   longitude: രേഖാംശം
   longitude_placeholder: ഉദാ. 144.7851531
   use_geocoder: വിലാസത്തിൽ നിന്ന് സ്വയമേവ അക്ഷാംശവും രേഖാംശവും കണക്കാക്കണോ?
-  state: സംസ്ഥാനം
+  state: സ്റ്റേറ്റ്
   postcode: പിൻ കോഡ്
   postcode_placeholder: ഉദാ. 3070
   suburb: നഗരപ്രാന്തം
@@ -2056,20 +2071,20 @@ ml:
   home_shop: ഇപ്പോൾ ഷോപ്പുചെയ്യുക
   brandstory_headline: "ആഹാരസാധനങ്ങൾ, ഉൾപ്പെടുത്താത്തത്."
   brandstory_intro: "ചിലപ്പോൾ സിസ്റ്റം ശരിയാക്കാനുള്ള ഏറ്റവും നല്ല മാർഗം പുതിയൊരെണ്ണം ആരംഭിക്കുക എന്നതാണ്..."
-  brandstory_part1: "ഞങ്ങൾ അടിത്തറയിൽ നിന്ന് ആരംഭിക്കുന്നു. തങ്ങളുടെ കഥകൾ അഭിമാനത്തോടെയും സത്യസന്ധമായും പറയാൻ തയ്യാറായ കർഷകരോടൊപ്പം. ന്യായമായും സത്യസന്ധമായും ഉൽപ്പന്നങ്ങളുമായി ആളുകളെ ബന്ധിപ്പിക്കാൻ തയ്യറാകുന്ന വിതരണക്കാരോടൊപ്പം. മികച്ച പ്രതിവാര ഷോപ്പിംഗ് തീരുമാനങ്ങൾക്ക് ലോകത്തെ മാറ്റാൻ കഴിയുമെന്ന് വിശ്വസിക്കുന്ന ഉപഭോക്താക്കൾക്കൊപ്പം."
-  brandstory_part2: "അപ്പോൾ അത് യാഥാർത്ഥ്യമാക്കാൻ നമുക്ക് ഒരു വഴി ആവശ്യമാണ്. ആഹാരസാധനങ്ങൾ കൃഷി ചെയ്യുകയും വിൽക്കുകയും വാങ്ങുകയും ചെയ്യുന്ന എല്ലാവരെയും ശാക്തീകരിക്കുന്നതിനുള്ള ഒരു മാർഗം. എല്ലാ കഥകളും പറയാനും എല്ലാ ലോജിസ്റ്റിക്‌സും കൈകാര്യം ചെയ്യാനുമുള്ള ഒരു മാർഗം. ഇടപാട് എല്ലാ ദിവസവും പരിവർത്തനത്തിലേക്ക് മാറ്റാനുള്ള ഒരു മാർഗം."
-  brandstory_part3: "അതിനാൽ ഞങ്ങൾ കളത്തെ സമനിലയിലാക്കുന്ന ഒരു ഓൺലൈൻ മാർക്കറ്റ് പ്ലേസ് നിർമ്മിക്കുന്നു. ഇത് സുതാര്യമാണ്, അതിനാൽ ഇത് യഥാർത്ഥ ബന്ധങ്ങൾ സൃഷ്ടിക്കുന്നു. ഇത് ഓപ്പൺ സോഴ്‌സ് ആയതിനാൽ ഇത് എല്ലാവരുടെയും ഉടമസ്ഥതയിലാണ്. ഇത് പ്രദേശങ്ങളിലേക്കും രാജ്യങ്ങളിലേക്കും വ്യാപിക്കുന്നു, അതിനാൽ ആളുകൾ ലോകമെമ്പാടുമുള്ള പതിപ്പുകൾ ആരംഭിക്കുന്നു."
-  brandstory_part4: "ഇത് എല്ലായിടത്തും പ്രവർത്തിക്കുന്നു. ഇത് എല്ലാം മാറ്റുന്നു."
-  brandstory_part5_strong: "ഞങ്ങൾ അതിനെ ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്ക് എന്ന് വിളിക്കുന്നു."
-  brandstory_part6: "നമുക്കെല്ലാവർക്കും ആഹാരസാധനങ്ങൾ ഇഷ്ടമാണ്. ഇനി നമുക്ക് നമ്മുടെ ആഹാര സമ്പ്രദായവും ഇഷ്ടപ്പെടാം."
-  system_headline: "ഷോപ്പിംഗ് - ഇത് എങ്ങനെ പ്രവർത്തിക്കുന്നു എന്നത് ഇതാ."
-  system_step1: "1. തിരയുക"
-  system_step1_text: "സീസണൽ പ്രാദേശിക ആഹാരത്തിനായി ഞങ്ങളുടെ വൈവിധ്യമാർന്ന സ്വതന്ത്ര ഷോപ്പുകൾ തിരയുക. അയൽപക്കവും ആഹാര വിഭാഗവും അനുസരിച്ച് തിരയുകയോ, അല്ലെങ്കിൽ നിങ്ങൾ ഡെലിവറി / പിക്കപ്പ് തിരഞ്ഞെടുക്കുകയോ ചെയ്യുക."
-  system_step2: "2. ഷോപ്പ്"
-  system_step2_text: "വൈവിധ്യമാർന്ന പ്രൊഡ്യൂസേഴ്സിൽ നിന്നും, ഹബുകളിൽ നിന്നും താങ്ങാനാവുന്ന പ്രാദേശിക ആഹാരം ഉപയോഗിച്ച് നിങ്ങളുടെ ഇടപാടുകൾ രൂപാന്തരപ്പെടുത്തുക. നിങ്ങളുടെ ആഹാരത്തിന് പിന്നിലെ കഥകളും അത് ഉണ്ടാക്കുന്ന ആളുകളെയും അറിയുക!"
-  system_step3: "3. പിക്ക്-അപ്പ് / ഡെലിവറി"
-  system_step3_text: "നിങ്ങളുടെ ഡെലിവറിക്കായി കാത്തിരിക്കുക, അല്ലെങ്കിൽ നിങ്ങളുടെ ആഹാരവുമായി കൂടുതൽ വ്യക്തിഗത ബന്ധത്തിനായി നിങ്ങളുടെ പ്രൊഡ്യൂസർ അല്ലെങ്കിൽ ഹബ് സന്ദർശിക്കുക. പ്രകൃതി ഉദ്ദേശിച്ചതുപോലെ വൈവിധ്യമാർന്ന ഫുഡ് ഷോപ്പിംഗ്."
-  cta_headline: "ലോകത്തെ മികച്ച സ്ഥലമാക്കി മാറ്റുന്ന ഷോപ്പിംഗ്."
+  brandstory_part1: "ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്ക് ഇന്ത്യ സോഫ്റ്റ്‌വെയർ പ്ലാറ്റ്‌ഫോം, കർഷകരെ ന്യായമായ വിലയ്ക്ക് ഉൽപ്പന്നങ്ങൾ ഓൺലൈനിൽ വിൽക്കാൻ അനുവദിക്കുന്നു. ഇത് ആഹാരസാധനങ്ങൾ വിൽക്കുന്നതിനായി പ്രത്യേകം നിർമ്മിച്ചതാണ്, അതിനാൽ അതിൽ മാത്രം ഉള്ള തന്ത്രപരമായ അളവുകളോ സ്റ്റോക്ക് ലെവലുകളോ കൈകാര്യം ചെയ്യാൻ ഇതിന് കഴിയും - ഉദാഹരണത്തിന്, ഒരു ഡസൻ മുട്ടകൾ, ഒരു കെട്ട് ചീര, ഭാരത്തിൽ വ്യത്യാസമുള്ള ഒരു മുഴുവൻ കോഴി…"
+  brandstory_part2: "ഫുഡ് പ്രൊഡ്യൂസർമാർ, ഫാർമർ പ്രൊഡ്യൂസർ ഓർഗനൈസേഷനുകൾ (എഫ്.പി.ഓ), അല്ലെങ്കിൽ ഫാർമർ പ്രൊഡ്യൂസർ കമ്പനികൾ (എഫ്.പി.സി) എന്നിവയ്ക്ക് ഈ പ്ലാറ്റ്‌ഫോമിൽ ഒരു ഓൺലൈൻ ഷോപ്പ് സൃഷ്ടിക്കാനും പേയ്‌മെന്റുകൾ ശേഖരിക്കാനും മറ്റ് ഷോപ്പുകൾ വഴി വിൽക്കാനും കഴിയും"
+  brandstory_part3: "മൊത്തക്കച്ചവടക്കാർ, ഫാർമർ പ്രൊഡ്യൂസർ ഓർഗനൈസേഷനുകൾ (എഫ്‌പി‌ഒ), അല്ലെങ്കിൽ ഫാർമർ പ്രൊഡ്യൂസർ കമ്പനികൾ (എഫ്‌പിസി) എന്നിവയ്‌ക്ക് അവരുടെ നിലവിലുള്ള സംവിധാനങ്ങളുമായി ഓഎഫ്എൻ സമന്വയിപ്പിക്കാനും ഞങ്ങളുടെ ദേശീയ ഭക്ഷ്യ ഹബ്ബുകളും ഷോപ്പുകളും വഴി ഉപഭോക്താക്കൾക്ക് അവരുടെ ഉൽപ്പന്നങ്ങൾ വിതരണം ചെയ്യുന്നതിനായി ഉപഭോക്തൃ ഗ്രൂപ്പുകളെ നിയന്ത്രിക്കാനും കഴിയും."
+  brandstory_part4: "ഫാർമർ പ്രൊഡ്യൂസർ ഓർഗനൈസേഷനുകൾ (എഫ്‌പി‌ഒ), അല്ലെങ്കിൽ ഫാർമർ പ്രൊഡ്യൂസർ കമ്പനികൾ (എഫ്‌പി‌സി) എന്നിവർക്ക് അവരുടെ പ്രാദേശിക പ്രദേശത്തെ ഉൽ‌പാദകരെ ഒരുമിച്ച് കൊണ്ടുവന്ന് ഒരു സാങ്കല്പിക കർഷക വിപണികൾ സൃഷ്ടിക്കാനും പ്രാദേശിക ഭക്ഷ്യ സമ്പദ്‌വ്യവസ്ഥ കെട്ടിപ്പടുക്കാനും കഴിയും."
+  brandstory_part5_strong: "സോഫ്‌റ്റ്‌വെയറിനെ പോലെ തന്നെ പ്രധാനപ്പെട്ടത് അതിന് അടിവരയിടുന്ന മൂല്യങ്ങളാണ്."
+  brandstory_part6: "ഒരു കർഷകൻ, കർഷക വിപണി, ഫുഡ് സഹകരണ സ്ഥാപനം, അല്ലെങ്കിൽ ഫുഡ് ഹബ്ബ് എന്നീ നിലകളിൽ നിങ്ങൾ നല്ല ആഹാരം വിൽക്കുകയാണെങ്കിൽ, പിന്നെ ലാഭത്തിനല്ല, ആളുകൾക്കും ഭൂമിക്കും വേണ്ടിയുള്ള ഭക്ഷ്യ സംവിധാനങ്ങൾ ഉണ്ടാക്കുന്നതിന് നിങ്ങളുടെ മൂല്യങ്ങളുമായി പൊരുത്തപ്പെടുന്ന സോഫ്‌റ്റ്‌വെയർ തിരഞ്ഞെടുക്കുക. മത്സരാധിഷ്ഠിതമായി പ്രവർത്തിക്കുന്നതിനുപകരം കൂട്ടായി പ്രവർത്തിക്കുന്നതിലൂടെ, പുതിയ സോഫ്‌റ്റ്‌വെയർ വികസിപ്പിക്കുന്നതിനുള്ള ചെലവുകൾ ഞങ്ങൾ വഹിക്കുന്നു, ഞങ്ങളുടെ പ്രോജക്‌റ്റ് മാറ്റങ്ങളെ ഉൾകൊള്ളാൻ കഴിയുന്നതാണെന്ന് ഞങ്ങൾ ഉറപ്പുവരുത്തുന്നു!"
+  system_headline: "ഓഎഫ്എൻ -ൽ സാധനങ്ങൾ വിൽക്കണോ- 3 എളുപ്പ ഘട്ടങ്ങൾ"
+  system_step1: "1. പുതിയ അക്കൗണ്ട് ഉണ്ടാക്കുക"
+  system_step1_text: "പേര്, വിവരണം, ഫോട്ടോകൾ, ബന്ധപ്പെടാനുള്ള വിശദാംശങ്ങൾ, സോഷ്യൽ മീഡിയ ലിങ്കുകൾ എന്നിവ ഉപയോഗിച്ച് നിങ്ങളുടെ എന്റർപ്രൈസ് സജ്ജീകരിക്കുക."
+  system_step2: "2. നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ കൂട്ടിച്ചേർക്കുക"
+  system_step2_text: "നിങ്ങളുടെ ഷോപ്പിലേക്ക് ഉൽപ്പന്നങ്ങൾ കൂട്ടിച്ചേർക്കുക - നിങ്ങളുടെ സ്വന്തമോ കൂടാതെ/അല്ലെങ്കിൽ നിങ്ങൾക്ക് ചുറ്റുമുള്ള മറ്റ് പ്രൊഡ്യൂസർമാരിൽ നിന്ന്. ചിത്രങ്ങൾ, വിവരണങ്ങൾ, വിലകൾ, സ്റ്റോക്ക് ലെവലുകൾ, എങ്ങനെവേണമെങ്കിലും ഉള്ള തൂക്കങ്ങൾ അളവുകൾ എന്നിവ സജ്ജമാക്കുക."
+  system_step3: "3. നിങ്ങളുടെ ഡെലിവറികൾ ആസൂത്രണം ചെയ്യുക"
+  system_step3_text: "പേയ്‌മെന്റ് രീതികൾ സജ്ജീകരിക്കുക. ഒന്നിലധികം പിക്ക്-അപ്പ് പോയിന്റുകളും ഡെലിവറി വിശദാംശങ്ങളും രൂപപ്പെടുത്തുക. ആവർത്തിച്ചുള്ള ഓർഡറുകളും പതിവ് വിതരണങ്ങളും ഉണ്ടാക്കുക."
+  cta_headline: "ഭാവിയിലെ സുസ്ഥിര ഭക്ഷ്യ ശൃംഖല."
   cta_label: "ഞാൻ തയാറാണ്"
   stats_headline: "ഞങ്ങൾ ഒരു പുതിയ ആഹാര സമ്പ്രദായം സൃഷ്ടിക്കുകയാണ്."
   stats_producers: "ഭക്ഷ്യ ഉത്പാദകർ"
@@ -2504,7 +2519,7 @@ ml:
         postcode_field: "പിൻ കോഡ്:"
         postcode_field_placeholder: "ഉദാ 3070"
         postcode_field_error: "പിൻ കോഡ് ആവശ്യമാണ്"
-        state_field: "സംസ്ഥാനം:"
+        state_field: "സ്റ്റേറ്റ്:"
         state_field_error: "സംസ്ഥാനം ആവശ്യമാണ്"
         country_field: "രാജ്യം:"
         country_field_error: "ദയവായി ഒരു രാജ്യം തിരഞ്ഞെടുക്കുക"
@@ -2627,8 +2642,8 @@ ml:
   balance: "മിച്ചം"
   transaction: "ഇടപാട്"
   transaction_date: "തീയതി"
-  payment_state: "പേയ്മെന്റ് നില"
-  shipping_state: "ഷിപ്പിംഗ് നില"
+  payment_state: "പേയ്മെന്റ് സ്ഥിതി"
+  shipping_state: "ഷിപ്പിംഗ് സ്ഥിതി"
   value: "മൂല്യം"
   balance_due: "ബാക്കി"
   credit: "ക്രെഡിറ്റ്"
@@ -2662,7 +2677,7 @@ ml:
   admin_enterprise_groups_contact_city_placeholder: "ഉദാ. നോർത്ത്കോട്ടെ"
   admin_enterprise_groups_contact_zipcode: "പിൻ കോഡ്"
   admin_enterprise_groups_contact_zipcode_placeholder: "ഉദാ. 3070"
-  admin_enterprise_groups_contact_state_id: "സംസ്ഥാനം"
+  admin_enterprise_groups_contact_state_id: "സ്റ്റേറ്റ്"
   admin_enterprise_groups_contact_country_id: "രാജ്യം"
   admin_enterprise_groups_web_twitter: "ഉദാ. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "ഉദാ. www.truffles.com"
@@ -2785,7 +2800,7 @@ ml:
   admin_share_city: "നഗരം"
   admin_share_zipcode: "പിൻ കോഡ്"
   admin_share_country: "രാജ്യം"
-  admin_share_state: "സംസ്ഥാനം"
+  admin_share_state: "സ്റ്റേറ്റ്"
   hub_sidebar_hubs: "ഹബ്ബുകൾ"
   hub_sidebar_none_available: "ഒന്നും ലഭ്യമല്ല"
   hub_sidebar_manage: "കൈകാര്യം ചെയ്യുക"
@@ -2824,7 +2839,7 @@ ml:
   report_header_order_cycle: ഓർഡർ സൈക്കിൾ
   report_header_user: ഉപയോക്താവ്
   report_header_email: ഇമെയിൽ
-  report_header_status: പദവി
+  report_header_status: സ്ഥിതി
   report_header_comments: അഭിപ്രായങ്ങൾ
   report_header_first_name: പേരിന്റെ ആദ്യഭാഗം
   report_header_last_name: പേരിന്റെ അവസാന ഭാഗം
@@ -2834,14 +2849,60 @@ ml:
   report_header_billing_address: ബില്ലിംഗ് വിലാസം
   report_header_relationship: ബന്ധം
   report_header_hub: ഹബ്
+  report_header_hub_address: ഹബ് വിലാസം
+  report_header_to_hub: ഹബ്ബിലേക്ക്
+  report_header_hub_code: ഹബ് കോഡ്
+  report_header_hub_id: ഹബ് ഐഡി
+  report_header_hub_business_number: "ഹബ് ബിസിനസ് നമ്പർ"
+  report_header_hub_legal_name: "ഹബ്ബിന്റെ നിയമപരമായ പേര്"
+  report_header_hub_contact_name: "ഹബ് കോൺടാക്റ്റ് പേര്"
+  report_header_hub_email: "ഹബ് പൊതു ഇമെയിൽ"
+  report_header_hub_owner_email: ഹബ് ഉടമയുടെ ഇമെയിൽ
+  report_header_hub_phone: "ഹബ് ഫോൺ നമ്പർ"
+  report_header_hub_address_line1: "ഹബ് വിലാസം ലൈൻ 1"
+  report_header_hub_address_line2: "ഹബ് വിലാസം ലൈൻ 2"
+  report_header_hub_address_city: "ഹബ് നഗരപ്രാന്തം"
+  report_header_hub_address_zipcode: "ഹബ് പിൻകോഡ്"
+  report_header_hub_address_state_name: "ഹബ് സ്റ്റേറ്റ്"
   report_header_code: കോഡ്
+  report_header_paid: പണം നൽകിയോ?
+  report_header_delivery: ഡെലിവറി?
   report_header_shipping: ഷിപ്പിംഗ്
   report_header_shipping_method: ഷിപ്പിംഗ് രീതി
+  report_header_shipping_instructions: ഷിപ്പിംഗ് നിർദ്ദേശങ്ങൾ
+  report_header_ship_street: ഷിപ്പിംഗ് തെരുവ്
+  report_header_ship_street_2: ഷിപ്പിംഗ് തെരുവ് 2
+  report_header_ship_city: ഷിപ്പിംഗ് നഗരം
+  report_header_ship_postcode: ഷിപ്പിംഗ് പിൻകോഡ്
+  report_header_ship_state: ഷിപ്പിംഗ് സ്റ്റേറ്റ്
+  report_header_billing_street: ബില്ലിംഗ് സ്ട്രീറ്റ്
+  report_header_billing_street_2: ബില്ലിംഗ് സ്ട്രീറ്റ് 2
+  report_header_billing_street_3: ബില്ലിംഗ് സ്ട്രീറ്റ് 3
+  report_header_billing_street_4: ബില്ലിംഗ് സ്ട്രീറ്റ് 4
+  report_header_billing_city: ബില്ലിംഗ് സിറ്റി
+  report_header_billing_postcode: ബില്ലിംഗ് പിൻ കോഡ്
+  report_header_billing_state: ബില്ലിംഗ് സ്റ്റേറ്റ്
+  report_header_incoming_transport: ഇൻകമിംഗ് ട്രാൻസ്പോർട്ട്
+  report_header_special_instructions: പ്രത്യേക നിർദ്ദേശങ്ങൾ
+  report_header_order_number: ഓർഡർ നമ്പർ
   report_header_date: തീയതി
+  report_header_confirmation_date: സ്ഥിരീകരണ തീയതി
   report_header_tags: ടാഗുകൾ
   report_header_items: ഇനങ്ങൾ
+  report_header_items_total: "ഇനങ്ങൾ ആകെ %{currency_symbol}"
+  report_header_taxable_items_total: "നികുതി ചുമത്താവുന്ന ഇനങ്ങളുടെ ആകെത്തുക (%{currency_symbol})"
+  report_header_sales_tax: "വിൽപ്പന നികുതി (%{currency_symbol})"
+  report_header_delivery_charge: "ഡെലിവറി ചാർജ് (%{currency_symbol})"
   report_header_tax: "നികുതി"
+  report_header_tax_on_delivery: "ഡെലിവറിയ്ക്കുള്ള നികുതി (%{currency_symbol})"
+  report_header_tax_on_fees: "ഫീസിനുള്ള നികുതി (%{currency_symbol})"
   report_header_tax_category: "നികുതി വിഭാഗം"
+  report_header_tax_rate_name: "നികുതി നിരക്ക് പേര്"
+  report_header_tax_rate: "നികുതി നിരക്ക്"
+  report_header_total_tax: "മൊത്തം നികുതി (%{currency_symbol})"
+  report_header_total_excl_tax: "ആകെ നികുതി ഒഴികെ (%{currency_symbol})"
+  report_header_total_incl_tax: "മൊത്തം നികുതി ഉൾപ്പെടെ (%{currency_symbol})"
+  report_header_total_orders: "ഓർഡറുകളുടെ ആകെ എണ്ണം"
   report_header_enterprise: എന്റർപ്രൈസ്
   report_header_enterprise_fee_name: പേര്
   report_header_enterprise_fee_type: ഇനം
@@ -2849,224 +2910,991 @@ ml:
   report_header_customer: ഉപഭോക്താവ്
   report_header_customer_first_name: പേരിന്റെ ആദ്യഭാഗം
   report_header_customer_last_name: പേരിന്റെ അവസാന ഭാഗം
+  report_header_customer_code: ഉപഭോക്തൃ കോഡ്
   report_header_product: ഉൽപ്പന്നം
   report_header_product_properties: ഉൽപ്പന്ന സവിശേഷതകൾ
+  report_header_product_tax_category: ഉൽപ്പന്ന നികുതി വിഭാഗം
   report_header_quantity: അളവ്
+  report_header_max_quantity: പരമാവധി അളവ്
   report_header_variant: വേരിയന്റ്
+  report_header_variant_value: വേരിയന്റ് മൂല്യം
   report_header_variant_unit: വേരിയന്റ് യൂണിറ്റ്
+  report_header_total_available: ആകെ ലഭ്യമായത്
+  report_header_unallocated: അനുവദിച്ചിട്ടില്ലാത്തത്
+  report_header_max_quantity_excess: പരമാവധി അളവിൽ അധികമുള്ളത്
+  report_header_taxons: നികുതികൾ
   report_header_supplier: വിതരണക്കാരൻ
-  report_header_producer: നിർമ്മാതാവ്
+  report_header_producer: പ്രൊഡ്യൂസർ
+  report_header_producer_suburb: പ്രൊഡ്യൂസർ നഗരപ്രാന്തം
+  report_header_producer_tax_status: പ്രൊഡ്യൂസർ ടാക്സ് സ്ഥിതി
+  report_header_producer_charges_sales_tax?: ജിഎസ്ടി/വാറ്റ് രജിസ്റ്റർ ചെയ്തത്
   report_header_unit: യൂണിറ്റ്
+  report_header_group_buy_unit_quantity: ഗ്രൂപ്പ് വാങ്ങൽ യൂണിറ്റ് അളവ്
+  report_header_cost: ചെലവ്
+  report_header_shipping_cost: ഷിപ്പിംഗ് കൂലി
+  report_header_curr_cost_per_unit: ഓരോ യൂണിറ്റിനും ഉള്ള ചെലവ്
+  report_header_total_shipping_cost: മൊത്തം ഷിപ്പിംഗ് ചെലവ്
   report_header_payment_method: പണമടയ്ക്കൽ രീതി
   report_header_sells: വിൽക്കുന്നു
+  report_header_visible: ദൃശ്യമാണ്
   report_header_price: വില
   report_header_unit_size: യൂണിറ്റ് വലിപ്പം
   report_header_distributor: വിതരണക്കാരൻ
+  report_header_distributor_address: വിതരണക്കാരന്റെ വിലാസം
+  report_header_distributor_city: വിതരണക്കാരന്റെ നഗരം
+  report_header_distributor_postcode: വിതരണക്കാരന്റെ പിൻകോഡ്
+  report_header_distributor_tax_status: വിതരണക്കാരന്റെ നികുതി നില
+  report_header_delivery_address: ഡെലിവറി വിലാസം
+  report_header_delivery_postcode: ഡെലിവറി പിൻ കോഡ്
+  report_header_bulk_unit_size: ബൾക്ക് യൂണിറ്റ് വലുപ്പം
   report_header_weight: ഭാരം
+  report_header_final_weight_volume: ഫൈനൽ (ഭാരം/വോളിയം)
   report_header_height: ഉയരം
   report_header_width: വീതി
   report_header_depth: ആഴം
+  report_header_sum_total: ആകെ തുക
+  report_header_date_of_order: ഓർഡർ തീയതി
+  report_header_amount_owing: കുടിശ്ശിക തുക
   report_header_amount_paid: അടച്ച തുക
+  report_header_units_required: ആവശ്യമായ യൂണിറ്റുകൾ
+  report_header_remainder: ബാക്കിയുള്ളത്
+  report_header_order_date: ഓർഡർ തീയതി
+  report_header_order_id: ഓർഡർ ഐഡി
+  report_header_item_name: ഇനത്തിന്റെ പേര്
+  report_header_temp_controlled_items: താപനില നിയന്ത്രിത ഇനങ്ങൾ?
+  report_header_customer_name: ഉപഭോക്താവിന്റെ പേര്
+  report_header_customer_email: ഉപഭോക്തൃ ഇമെയിൽ
+  report_header_customer_phone: ഉപഭോക്തൃ ഫോൺ
+  report_header_customer_city: ഉപഭോക്തൃ നഗരം
   report_header_payment_state: പേയ്മെന്റ് സ്റ്റേറ്റ്
+  report_header_payment_type: പേയ്മെന്റ് തരം
+  report_header_item_price: "ഇനം (%{currency})"
+  report_header_item_fees_price: "ഇനം + ഫീസ് (%{currency})"
+  report_header_admin_handling_fees: "അഡ്മിൻ & കൈകാര്യം ചെയ്യൽ (%{currency})"
+  report_header_ship_price: "ഷിപ്പിംഗ് (%{currency})"
+  report_header_pay_fee_price: "ഫീസ് അടയ്ക്കുക (%{currency})"
+  report_header_total_price: "ആകെ (%{currency})"
+  report_header_product_total_price: "ഉൽപ്പന്ന ആകെത്തുക (%{currency})"
+  report_header_shipping_total_price: "ഷിപ്പിംഗ് ആകെ (%{currency})"
+  report_header_outstanding_balance_price: "ബാക്കിയുള്ള തുക (%{currency})"
+  report_header_eft_price: "ഇ എഫ് ടി (%{currency})"
+  report_header_paypal_price: "പേപാൽ (%{currency})"
   report_header_sku: എസ്.കെ.യു
   report_header_amount: തുക
   report_header_balance: മിച്ചം
+  report_header_total_cost: "മൊത്തം ചെലവ്"
+  report_header_total_ordered: ആകെ ഓർഡർ ചെയ്തത്
+  report_header_total_max: ആകെ പരമാവധി
+  report_header_total_units: ആകെ യൂണിറ്റുകൾ
+  report_header_sum_max_total: "പരമാവധി ആകെ തുക"
+  report_header_total_excl_vat: "ആകെ ഒഴികെ. നികുതി (%{currency_symbol})"
+  report_header_total_incl_vat: "മൊത്തം നികുതി ഉൾപ്പെടെ (%{currency_symbol})"
   report_header_temp_controlled: ടെമ്പ് കൺട്രോൾഡ്?
   report_header_is_producer: പ്രൊഡ്യൂസർ?
+  report_header_not_confirmed: സ്ഥിരീകരിച്ചില്ല
+  report_header_gst_on_income: വരുമാനത്തിൽ ജി.എസ്.ടി
+  report_header_gst_free_income: ജിഎസ്ടി സൗജന്യ വരുമാനം
+  report_header_total_untaxable_produce: നികുതി നൽകേണ്ടാത്ത മൊത്തം ഉൽപ്പന്നങ്ങൾ (നികുതി ഇല്ല)
+  report_header_total_taxable_produce: നികുതി നൽകേണ്ട മൊത്തം ഉൽപ്പന്നങ്ങൾ (നികുതി ഉൾപ്പെടെ)
+  report_header_total_untaxable_fees: നികുതി നൽകാത്ത മൊത്തം ഫീസ് (നികുതി ഇല്ല)
+  report_header_total_taxable_fees: നികുതി നൽകേണ്ട മൊത്തം ഫീസ് (നികുതി ഉൾപ്പെടെ)
+  report_header_delivery_shipping_cost: ഡെലിവറി ഷിപ്പിംഗ് ചെലവ് (നികുതി ഉൾപ്പെടെ)
+  report_header_transaction_fee: ഇടപാട് ഫീസ് (നികുതി ഇല്ല)
+  report_header_total_untaxable_admin: മൊത്തം നികുതി നൽകാത്ത അഡ്മിൻ ക്രമീകരണങ്ങൾ (നികുതി ഇല്ല)
+  report_header_total_taxable_admin: നികുതി നൽകേണ്ട മൊത്തം അഡ്മിൻ ക്രമീകരണങ്ങൾ (നികുതി ഉൾപ്പെടെ)
+  report_line_cost_of_produce: ഉല്പന്ന ചെലവ്
+  report_line_line_items: ലൈൻ ഇനങ്ങൾ
+  report_header_last_completed_order_date: അവസാനം പൂർത്തിയാക്കിയ ഓർഡർ തീയതി
+  report_xero_configuration: സീറോ കോൺഫിഗറേഷൻ
+  initial_invoice_number: "പ്രാരംഭ ഇൻവോയ്സ് നമ്പർ"
+  invoice_date: "രസീത് തീയതി"
+  due_date: "അവസാന തീയതി"
+  account_code: "അക്കൗണ്ട് കോഡ്"
+  equals: "തുല്യമായത്"
+  contains: "അടങ്ങിയിട്ടുള്ളത്"
+  discount: "കിഴിവ്"
+  filter_products: "ഉൽപ്പന്നങ്ങൾ ഫിൽട്ടർ ചെയ്യുക"
+  delete_product_variant: "അവസാന വേരിയന്റ് ഇല്ലാതാക്കാൻ കഴിയില്ല!"
+  progress: "പുരോഗതി"
+  saving: "സേവ് ചെയ്യുന്നു.."
+  success: "വിജയം"
+  failure: "പരാജയം"
+  unsaved_changes_confirmation: "സേവ് ചെയ്യാത്ത മാറ്റങ്ങൾ നഷ്ടപ്പെടും. എന്തായാലും തുടരണോ?"
+  one_product_unsaved: "ഒരു ഉൽപ്പന്നത്തിലേക്കുള്ള മാറ്റങ്ങൾ സേവ് ചെയ്തിട്ടില്ല"
+  products_unsaved: "%{n} ഉൽപ്പന്നങ്ങളിലേക്കുള്ള മാറ്റങ്ങൾ സേവ് ചെയ്തിട്ടില്ല."
+  is_already_manager: "ഇതിനകം ഒരു മാനേജരാണ്!"
+  no_change_to_save: "സേവ് ചെയ്യാൻ മാറ്റങ്ങളൊന്നുമില്ല"
+  user_invited: "ഈ എന്റർപ്രൈസ് മാനേജ് ചെയ്യാൻ %{email} ക്ഷണിച്ചു"
+  add_manager: "നിലവിലുള്ള ഒരു ഉപയോക്താവിനെ ചേർക്കുക"
   users: "ഉപയോക്താക്കൾ"
   about: "കുറിച്ച്"
   images: "ചിത്രങ്ങൾ"
+  web: "വെബ്"
   primary_details: "പ്രാഥമിക വിശദാംശങ്ങൾ"
   social: "സാമൂഹികം"
   shipping: "ഷിപ്പിംഗ്"
   shipping_methods: "ഷിപ്പിംഗ് രീതികൾ"
   payment_methods: "പേയ്മെന്റ് രീതികൾ"
-  tag_rules: "നിയമങ്ങൾ കൂട്ടിയോജിപ്പിക്കുക"
+  payment_method_fee: "ഇടപാട് ഫീസ്"
+  payment_processing_failed: "പേയ്‌മെന്റ് പ്രോസസ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല, നിങ്ങൾ നൽകിയ വിശദാംശങ്ങൾ പരിശോധിക്കുക"
+  payment_method_not_supported: "ആ പേയ്‌മെന്റ് രീതി പിന്തുണയ്ക്കുന്നില്ല. ദയവായി മറ്റൊന്ന് തിരഞ്ഞെടുക്കുക."
+  payment_updated: "പേയ്മെന്റ് അപ്ഡേറ്റ് ചെയ്തു"
+  cannot_perform_operation: "പേയ്മെന്റ് അപ്ഡേറ്റ് ചെയ്യാനായില്ല"
+  action_required: "നടപടി ആവശ്യമാണ്"
+  tag_rules: "നിയമങ്ങൾ ടാഗ് ചെയ്യുക"
+  enterprise_fee_whole_order: മുഴുവൻ ഓർഡർ
+  enterprise_fee_by_name: " %{role} %{enterprise_name} മുഖേനയുള്ള %{name}ഫീസ്"
+  validation_msg_relationship_already_established: "^ആ ബന്ധം ഇതിനകം സ്ഥാപിതമാണ്."
+  validation_msg_at_least_one_hub: "^കുറഞ്ഞത് ഒരു ഹബ്ബെങ്കിലും തിരഞ്ഞെടുക്കണം"
+  validation_msg_tax_category_cant_be_blank: "^നികുതി വിഭാഗം ശൂന്യമാക്കാൻ കഴിയില്ല"
+  validation_msg_is_associated_with_an_exising_customer: "നിലവിലുള്ള ഒരു ഉപഭോക്താവുമായി ഇത് ബന്ധപ്പെട്ടിരിക്കുന്നു"
+  content_configuration_pricing_table: "(TODO: വിലനിർണ്ണയ പട്ടിക)"
+  content_configuration_case_studies: "(TODO: കേസ് സ്റ്റഡീസ്)"
+  content_configuration_detail: "(TODO: വിശദാംശങ്ങൾ)"
+  enterprise_name_error: "ഇതിനകം എടുത്തുകഴിഞ്ഞു. ഇത് നിങ്ങളുടെ എന്റർപ്രൈസ് ആണെങ്കിൽ നിങ്ങൾ ഉടമസ്ഥാവകാശം ക്ലെയിം ചെയ്യാൻ ആഗ്രഹിക്കുന്നുവെങ്കിൽ, അല്ലെങ്കിൽ ഈ എന്റർപ്രൈസുമായി വ്യാപാരം ചെയ്യാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുവെങ്കിൽ, ഈ പ്രൊഫൈലിന്റെ നിലവിലെ മാനേജരെ %{email} -ൽ ബന്ധപ്പെടുക."
   enterprise_owner_error: "^ %{email} ന് കൂടുതൽ സംരംഭങ്ങൾ സ്വന്തമാക്കാൻ അനുവാദമില്ല (പരിധി %{enterprise_limit})."
-  product_importer_file_error: " തകരാറ്: ഒരു ഫയലും അപ്‌ലോഡ് ചെയ്‌തിട്ടില്ല"
+  enterprise_role_uniqueness_error: "^ആ ജോലി ഇതിനകം നിലവിലുണ്ട്."
+  enterprise_terms_and_conditions_type_error: "പിഡിഎഫ്-കൾ മാത്രമേ അനുവദിക്കൂ"
+  inventory_item_visibility_error: ശരിയോ തെറ്റോ ആയിരിക്കണം
+  product_importer_file_error: "തകരാറ്: ഒരു ഫയലും അപ്‌ലോഡ് ചെയ്‌തിട്ടില്ല"
   product_importer_spreadsheet_error: "ഫയൽ പ്രോസസ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല: അസാധുവായ ഫയൽ തരം"
   product_importer_products_save_error: ഉൽപ്പന്നങ്ങളൊന്നും വിജയകരമായി സേവ് ചെയ്തില്ല
   product_import_file_not_found_notice: 'ഫയൽ കണ്ടെത്തിയില്ല അല്ലെങ്കിൽ തുറക്കാൻ കഴിഞ്ഞില്ല'
   product_import_no_data_in_spreadsheet_notice: 'സ്‌പ്രെഡ്‌ഷീറ്റിൽ ഡാറ്റയൊന്നും കണ്ടെത്തിയില്ല'
+  order_choosing_hub_notice: നിങ്ങളുടെ ഹബ് തിരഞ്ഞെടുത്തു.
+  order_cycle_selecting_notice: നിങ്ങളുടെ ഓർഡർ സൈക്കിൾ തിരഞ്ഞെടുത്തു.
+  adjustments_tax_rate_error: "^ഈ ക്രമീകരണത്തിനുള്ള നികുതി നിരക്ക് ശരിയാണോയെന്ന് പരിശോധിക്കുക."
+  active_distributors_not_ready_for_checkout_message_singular: >-
+      %{distributor_names} എന്ന ഹബ്  ഒരു സജീവ ഓർഡർ സൈക്കിളിൽ ലിസ്‌റ്റ് ചെയ്‌തിരിക്കുന്നു,
+      എന്നാൽ സാധുവായ ഷിപ്പിംഗ്, പേയ്‌മെന്റ് രീതികൾ ഇല്ല. നിങ്ങൾ ഇവ സജ്ജീകരിക്കുന്നത്
+      വരെ, ഉപഭോക്താക്കൾക്ക് ഈ ഹബ്ബിൽ ഷോപ്പിംഗ് നടത്താൻ കഴിയില്ല.
+  active_distributors_not_ready_for_checkout_message_plural: >-
+      %{distributor_names} എന്ന ഹബുകൾ ഒരു സജീവ ഓർഡർ സൈക്കിളിൽ ലിസ്‌റ്റ് ചെയ്‌തിട്ടുണ്ട്,
+      എന്നാൽ സാധുവായ ഷിപ്പിംഗ്, പേയ്‌മെന്റ് രീതികൾ ഇല്ല. നിങ്ങൾ ഇവ സജ്ജീകരിക്കുന്നത്
+      വരെ, ഉപഭോക്താക്കൾക്ക് ഈ ഹബ്ബുകളിൽ ഷോപ്പിംഗ് നടത്താൻ കഴിയില്ല.
+  enterprise_fees_update_notice: നിങ്ങളുടെ എന്റർപ്രൈസ് ഫീസ് അപ്ഡേറ്റ് ചെയ്തു.
+  enterprise_register_package_error: "ദയവായി ഒരു പാക്കേജ് തിരഞ്ഞെടുക്കുക"
+  enterprise_register_error: "%{enterprise} -നുള്ള രജിസ്ട്രേഷൻ പൂർത്തിയാക്കാൻ കഴിഞ്ഞില്ല"
+  enterprise_register_success_notice: "അഭിനന്ദനങ്ങൾ! %{enterprise} -നുള്ള രജിസ്‌ട്രേഷൻ പൂർത്തിയായി!"
+  enterprise_bulk_update_success_notice: "എന്റർപ്രൈസസ് വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു"
+  enterprise_bulk_update_error: 'അപ്ഡേറ്റ് പരാജയപ്പെട്ടു'
+  enterprise_shop_show_error: "നിങ്ങൾ തിരയുന്ന ഷോപ്പ് ഓഎഫ്എൻ-ൽ നിലവിലില്ല അല്ലെങ്കിൽ നിഷ്‌ക്രിയമാണ്. ദയവായി മറ്റ് കടകൾ പരിശോധിക്കുക."
+  order_cycles_bulk_update_notice: 'ഓർഡർ സൈക്കിളുകൾ അപ്ഡേറ്റ് ചെയ്തു.'
+  order_cycles_no_permission_to_coordinate_error: "ഒരു ഓർഡർ സൈക്കിൾ ഏകോപിപ്പിക്കാൻ നിങ്ങളുടെ സംരംഭങ്ങൾക്കൊന്നും അനുമതിയില്ല"
+  order_cycles_no_permission_to_create_error: "ആ എന്റർപ്രൈസ് ഏകോപിപ്പിച്ച ഒരു ഓർഡർ സൈക്കിൾ സൃഷ്ടിക്കാൻ നിങ്ങൾക്ക് അനുമതിയില്ല"
+  order_cycle_closed: "നിങ്ങൾ തിരഞ്ഞെടുത്ത ഓർഡർ സൈക്കിൾ ഇപ്പോൾ അടച്ചു. ദയവായി വീണ്ടും ശ്രമിക്കുക!"
+  back_to_orders_list: "ഓർഡർ ലിസ്റ്റിലേക്ക് മടങ്ങുക"
+  no_orders_found: "ഓർഡറുകളൊന്നും കണ്ടെത്തിയില്ല"
+  order_information: "ഓർഡർ വിവരം"
+  new_payment: "പുതിയ പേയ്മെന്റ്"
+  create_or_update_invoice: "ഇൻവോയ്സ് സൃഷ്ടിക്കുക അല്ലെങ്കിൽ അപ്ഡേറ്റ് ചെയ്യുക"
+  date_completed: "പൂർത്തിയായ തീയതി"
   amount: "തുക"
+  invoice_number: "ഇൻവോയ്സ് നമ്പർ"
   invoice_file: "ഫയൽ"
+  invalid_url: "'%{url}' എന്ന യുആർഎൽ അസാധുവാണ്"
   state_names:
     ready: തയ്യാറാണ്
+    pending: തീർപ്പാക്കാത്തത്
+    shipped: ഷിപ് ചെയ്തു
   js:
+    saving: 'സേവ് ചെയ്യുന്നു..'
     changes_saved: 'മാറ്റങ്ങൾ സേവ് ചെയ്തു.'
-    unsaved_changes: നിങ്ങൾക്ക് സംരക്ഷിക്കാത്ത മാറ്റങ്ങളുണ്ട്
-    error: പിശക്
+    authorising: "അധികാരപ്പെടുത്തുന്നു..."
+    save_changes_first: ആദ്യം മാറ്റങ്ങൾ സേവ് ചെയ്യുക.
+    all_changes_saved: എല്ലാ മാറ്റങ്ങളും സേവ് ചെയ്തു
+    unsaved_changes: നിങ്ങൾക്ക് സേവ് ചെയ്യാത്ത മാറ്റങ്ങളുണ്ട്
+    all_changes_saved_successfully: എല്ലാ മാറ്റങ്ങളും വിജയകരമായി സേവ് ചെയ്തു
+    oh_no: "അയ്യോ! നിങ്ങളുടെ മാറ്റങ്ങൾ സേവ് ചെയ്യാൻ എനിക്ക് കഴിഞ്ഞില്ല."
+    unauthorized: "ഈ പേജ് ആക്സസ് ചെയ്യാൻ നിങ്ങൾക്ക് അധികാരമില്ല."
+    error: തകരാറ്
+    unavailable: ലഭ്യമല്ല
     profile: പ്രൊഫൈൽ
     hub: ഹബ്
     shop: കട
+    choose: തിരഞ്ഞെടുക്കുക
+    resolve_errors: ഇനിപ്പറയുന്ന തകരാറുകൾ പരിഹരിക്കുക
+    more_items: "+ %{count} കൂടുതൽ"
+    default_card_updated: ഡിഫോൾട്ട് കാർഡ് അപ്ഡേറ്റ് ചെയ്തു
+    default_card_voids_auth: നിങ്ങളുടെ ഡിഫോൾട്ട് കാർഡ് മാറ്റുന്നത്, അത് ചാർജ് ചെയ്യുന്നതിനുള്ള കടകളുടെ നിലവിലുള്ള അംഗീകാരങ്ങൾ നീക്കം ചെയ്യും. ഡിഫോൾട്ട് കാർഡ് അപ്ഡേറ്റ് ചെയ്തതിന് ശേഷം നിങ്ങൾക്ക് ഷോപ്പുകൾക്ക് വീണ്ടും അംഗീകാരം നൽകാം. ഡിഫോൾട്ട് കാർഡ് മാറ്റാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുണ്ടോ?
+    cart:
+      add_to_cart_failed: >
+          കാർട്ടിലേക്ക് ഈ ഉൽപ്പന്നം ചേർക്കുന്നതിൽ ഒരു പ്രശ്നമുണ്ടായി. ഒരുപക്ഷേ അത്
+          ലഭ്യമല്ലാതാവുകയോ കട പൂട്ടുകയോ ചെയ്തേക്കാം.
     admin:
+      unit_price_tooltip: "വ്യത്യസ്ത ഉൽപ്പന്നങ്ങളും പാക്കേജിംഗ് വലുപ്പങ്ങളും തമ്മിലുള്ള വിലകൾ എളുപ്പത്തിൽ താരതമ്യം ചെയ്യാൻ നിങ്ങളുടെ ഉപഭോക്താക്കളെ അനുവദിക്കുന്നതിലൂടെ യൂണിറ്റ് വില സുതാര്യത വർദ്ധിപ്പിക്കുന്നു. ശ്രദ്ധിക്കുക, കടയുടെ മുൻവശത്ത് പ്രദർശിപ്പിക്കുന്ന അവസാന യൂണിറ്റ് വിലയിൽ നികുതിയും ഫീസും ഉൾപ്പെടുന്നതിനാൽ വ്യത്യാസമുണ്ടാകാം."
+      enterprise_limit_reached: "ഓരോ അക്കൗണ്ടിനും എന്റർപ്രൈസസിന്റെ സ്റ്റാൻഡേർഡ് പരിധിയിൽ നിങ്ങൾ എത്തിയിരിക്കുന്നു. നിങ്ങൾക്ക് ഇത് വർദ്ധിപ്പിക്കണമെങ്കിൽ %{contact_email} -ലേക്ക് എഴുതുക."
+      deleting_item_will_cancel_order: "ഈ പ്രവർത്തനം ഒന്നോ അതിലധികമോ ശൂന്യമായ ഓർഡറുകൾക്ക് കാരണമാകും, അത് റദ്ദാക്കപ്പെടും. നിങ്ങൾക്ക് തുടരാൻ താൽപ്പര്യമുണ്ടോ?"
       modals:
+        got_it: "മനസ്സിലായി"
+        confirm: "സ്ഥിരീകരിക്കുക"
         close: "അടയ്ക്കുക"
         continue: "തുടരുക"
         cancel: "റദ്ദാക്കുക"
+        invite: "ക്ഷണിക്കുക"
+        invite_title: "രജിസ്റ്റർ ചെയ്യാത്ത ഒരു ഉപയോക്താവിനെ ക്ഷണിക്കുക"
         tag_rule_help:
           title: നിയമങ്ങൾ കൂട്ടിയോജിപ്പിക്കുക
+          overview: അവലോകനം
+          overview_text: >
+              ഏതൊക്കെ ഇനങ്ങൾ ദൃശ്യമാകുമെന്നോ അല്ലെങ്കിൽ ഏതൊക്കെ ഉപയോക്താക്കൾക്ക് ദൃശ്യമാകുമെന്നോ
+              വിവരിക്കുന്നതിനുള്ള ഒരു മാർഗം ടാഗ് റൂൾസ് നൽകുന്നു. ഇനങ്ങൾ ഷിപ്പിംഗ്
+              രീതികൾ, പേയ്‌മെന്റ് രീതികൾ, ഉൽപ്പന്നങ്ങൾ, ഓർഡർ സൈക്കിളുകൾ എന്നിവ ആകാം.
+          by_default_rules: "'സ്വതവേ...' നിയമങ്ങൾ"
+          by_default_rules_text: >
+              ഇനങ്ങൾ ഡിഫോൾട്ടായി ദൃശ്യമാകാത്ത വിധം മറയ്ക്കാൻ ഡിഫോൾട്ട് നിയമങ്ങൾ നിങ്ങളെ
+              അനുവദിക്കുന്നു. പ്രത്യേക ടാഗുകളുള്ള ഉപഭോക്താക്കൾക്കുള്ള സ്ഥിരമല്ലാത്ത
+              നിയമങ്ങളാൽ ഈ സ്വഭാവം അസാധുവാക്കാവുന്നതാണ്.
+          customer_tagged_rules: "'ഉപഭോക്താക്കൾ ടാഗ് ചെയ്‌ത...' നിയമങ്ങൾ"
+          customer_tagged_rules_text: >
+              ഒരു നിർദ്ദിഷ്‌ട ഉപഭോക്തൃ ടാഗുമായി ബന്ധപ്പെട്ട നിയമങ്ങൾ സൃഷ്‌ടിക്കുന്നതിലൂടെ,
+              നിർദ്ദിഷ്‌ട ടാഗ് ഉള്ള ഉപഭോക്താക്കൾക്കായി നിങ്ങൾക്ക് ഡിഫോൾട്ട് സ്വഭാവം
+              (അത് ഇനങ്ങൾ കാണിക്കാനോ മറയ്‌ക്കാനോ ആകട്ടെ) അസാധുവാക്കാനാകും.
+        terms_and_conditions_info:
+          title: "നിബന്ധനകളും വ്യവസ്ഥകളും അപ്‌ലോഡ് ചെയ്യുന്നു"
+          message_1: "വിൽപ്പനക്കാരനും വാങ്ങുന്നയാളും തമ്മിലുള്ള കരാറാണ് നിബന്ധനകളും വ്യവസ്ഥകളും എന്നതിലുള്ളത്. നിങ്ങൾ ഇവിടെ ഒരു ഫയൽ അപ്‌ലോഡ് ചെയ്യുകയാണെങ്കിൽ, ചെക്ക്ഔട്ട് പൂർത്തിയാക്കുന്നതിന് ഷോപ്പർമാർ നിങ്ങളുടെ നിബന്ധനകളും വ്യവസ്ഥകളും അംഗീകരിക്കണം. വാങ്ങുന്നയാൾക്ക് ഇത് ചെക്ക്ഔട്ടിൽ ഒരു ചെക്ക്ബോക്സായി ദൃശ്യമാകും, അത് ചെക്ക്ഔട്ടുമായി മുന്നോട്ട് പോകുന്നതിന് പരിശോധിക്കേണ്ടതാണ്. ദേശീയ നിയമനിർമ്മാണത്തിന് അനുസൃതമായി നിബന്ധനകളും വ്യവസ്ഥകളും അപ്‌ലോഡ് ചെയ്യാൻ ഞങ്ങൾ ശുപാർശ ചെയ്യുന്നു."
+          message_2: "ഉപഭോക്താക്കൾ ഒരിക്കൽ മാത്രം നിബന്ധനകളും വ്യവസ്ഥകളും അംഗീകരിച്ചാൽ മതിയാകും. എന്നിരുന്നാലും, നിങ്ങൾ നിബന്ധനകളും വ്യവസ്ഥകളും മാറ്റുകയാണെങ്കിൽ ഉപഭോക്താക്കൾ വീണ്ടും അവ അംഗീകരിക്കേണ്ടതുണ്ട്."
+        terms_and_conditions_warning:
+          title: "നിബന്ധനകളും വ്യവസ്ഥകളും അപ്‌ലോഡ് ചെയ്യുന്നു"
+          message_1: "നിങ്ങളുടെ എല്ലാ ഉപഭോക്താക്കളും ചെക്ക്ഔട്ട് ചെയ്യുമ്പോൾ ഒരിക്കൽ അവ സമ്മതിക്കേണ്ടി വരും. നിങ്ങൾ ഫയൽ അപ്ഡേറ്റ് ചെയ്യുകയാണെങ്കിൽ, ചെക്ക്ഔട്ടിൽ നിങ്ങളുടെ എല്ലാ ഉപഭോക്താക്കളും അവ വീണ്ടും അംഗീകരിക്കേണ്ടതുണ്ട്."
+          message_2: "സബ്‌സ്‌ക്രിപ്‌ഷനുള്ള ഉപഭോക്താക്കൾക്കായി, നിങ്ങൾ അവർക്ക് ഇപ്പോൾ നിബന്ധനകളും വ്യവസ്ഥകളും (അല്ലെങ്കിൽ അവയിലെ മാറ്റങ്ങൾ) ഇമെയിൽ ചെയ്യേണ്ടതുണ്ട്, ഈ പുതിയ നിബന്ധനകളെയും വ്യവസ്ഥകളെയും കുറിച്ച് അവരെ ഒന്നും അറിയിക്കില്ല."
+        business_address_info:
+          message: "കമ്പനിയുടെ നിയമപരമായ പേര്, നിയമപരമായ വിലാസം, നിയമപരമായ ഫോൺ നമ്പർ എന്നിവ അവരുടെ പൊതു വ്യാപാര വിവരങ്ങളിലേക്ക് വ്യത്യസ്‌ത വിശദാംശങ്ങളോടെ രജിസ്റ്റർ ചെയ്‌ത നിയമപരമായ സ്ഥാപനത്തിൽ നിന്ന് ഇൻവോയ്‌സ് ചെയ്യുന്ന ബിസിനസുകൾക്കായി ഉപയോഗിക്കുന്നു. ഈ വിശദാംശങ്ങൾ ഇൻവോയ്സുകളിൽ മാത്രമേ ഉപയോഗിക്കൂ. ഈ വിശദാംശങ്ങൾ ശൂന്യമാണെങ്കിൽ നിങ്ങളുടെ പൊതു പേരും വിലാസവും ഫോൺ നമ്പറും ഇൻവോയ്സുകളിൽ ഉപയോഗിക്കും."
       panels:
         save: സേവ്
         saved: സേവ് ചെയ്തു
         saving: സേവ് ചെയ്യുന്നു
         enterprise_package:
+          hub_profile: ഹബ് പ്രൊഫൈൽ
+          hub_profile_cost: "ചെലവ്: എപ്പോഴും സൗജന്യം"
+          hub_profile_text1: >
+              ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിൽ ആളുകൾക്ക് നിങ്ങളെ കണ്ടെത്താനും ബന്ധപ്പെടാനും
+              കഴിയും. നിങ്ങളുടെ എന്റർപ്രൈസ് മാപ്പിൽ ദൃശ്യമാകും, കൂടാതെ ലിസ്റ്റിംഗുകളിൽ
+              തിരയാനും കഴിയും.
+          hub_profile_text2: >
+              ഒരു പ്രൊഫൈൽ ഉണ്ടായിരിക്കുന്നതും ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിലൂടെ നിങ്ങളുടെ
+              പ്രാദേശിക ആഹാര സംവിധാനത്തിൽ കണക്ഷനുകൾ ഉണ്ടാക്കുന്നതും എല്ലായ്പ്പോഴും
+              സൗജന്യമായിരിക്കും.
           hub_shop: ഹബ് ഷോപ്പ്
+          hub_shop_text1: >
+              നിങ്ങളുടെ പ്രാദേശിക ആഹാര സമ്പ്രദായത്തിന്റെ നട്ടെല്ലാണ് നിങ്ങളുടെ സംരംഭം.
+              നിങ്ങൾക്ക് മറ്റ് സംരംഭങ്ങളിൽ നിന്നുള്ള ഉൽപ്പന്നങ്ങൾ സമാഹരിക്കുകയും ഓപ്പൺ
+              ഫുഡ് നെറ്റ്‌വർക്കിലെ നിങ്ങളുടെ ഷോപ്പ് വഴി വിൽക്കുകയും ചെയ്യാം.
+          hub_shop_text2: >
+              ഹബുകൾക്ക് പല രൂപങ്ങൾ എടുക്കാം, അവ ഒരു ഫുഡ് സഹകരണ സ്ഥാപനം, ഒരു വാങ്ങൽ
+              ഗ്രൂപ്പ്, ഒരു വെജി-ബോക്സ് പ്രോഗ്രാം അല്ലെങ്കിൽ ഒരു പ്രാദേശിക പലചരക്ക്
+              കട എന്നിവ ആകാം.
+          hub_shop_text3: >
+              നിങ്ങളുടെ സ്വന്തം ഉൽപ്പന്നങ്ങൾ വിൽക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുവെങ്കിൽ,
+              ഈ എന്റർപ്രൈസ് ഒരു പ്രൊഡ്യൂസർ ആയി മാറേണ്ടതുണ്ട്.
+          choose_package: ദയവായി ഒരു പാക്കേജ് തിരഞ്ഞെടുക്കുക
+          choose_package_text1: >
+              ഇടതുവശത്തുള്ള ഓപ്ഷനുകളിൽ നിന്ന് ഒരു പാക്കേജ് തിരഞ്ഞെടുക്കുന്നത് വരെ
+              നിങ്ങളുടെ എന്റർപ്രൈസ് പൂർണ്ണമായും സജീവമാകില്ല.
+          choose_package_text2: >
+              ഓരോ പാക്കേജിനെക്കുറിച്ചും കൂടുതൽ വിശദമായ വിവരങ്ങൾ കാണുന്നതിന് ഒരു ഓപ്‌ഷനിൽ
+              ക്ലിക്ക് ചെയ്യുക, നിങ്ങൾ പൂർത്തിയാക്കുമ്പോൾ ചുവന്ന സേവ് ബട്ടൺ അമർത്തുക!
           profile_only: പ്രൊഫൈൽ മാത്രം
+          profile_only_cost: "ചെലവ്: എപ്പോഴും സൗജന്യം"
+          profile_only_text1: >
+              ഒരു പ്രൊഫൈൽ നിങ്ങളെ മറ്റുള്ളവർക്ക് ദൃശ്യവും കോൺടാക്റ്റ് ചെയ്യാവുന്നതുമാക്കുന്നു,
+              നിങ്ങളുടെ കഥ പങ്കിടാനുള്ള ഒരു മാർഗമാണിത്.
+          profile_only_text2: >
+              നിങ്ങൾ ആഹാരം ഉൽപ്പാദിപ്പിക്കുന്നതിൽ ശ്രദ്ധ കേന്ദ്രീകരിക്കുകയും അത് മറ്റൊരാൾക്ക്
+              വിൽക്കുന്ന ജോലി ഉപേക്ഷിക്കുകയും ചെയ്യുകയാണെങ്കിൽ, നിങ്ങൾക്ക് ഓപ്പൺ ഫുഡ്
+              നെറ്റ്‌വർക്കിൽ ഒരു ഷോപ്പ് ആവശ്യമില്ല.
+          profile_only_text3: >
+              ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിലേക്ക് നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ ചേർക്കുക, നിങ്ങളുടെ
+              ഉൽപ്പന്നങ്ങൾ അവരുടെ സ്റ്റോറുകളിൽ സ്റ്റോക്ക് ചെയ്യാൻ ഹബുകളെ അനുവദിക്കുന്നു.
           producer_shop: പ്രൊഡ്യൂസർ ഷോപ്പ്
+          producer_shop_text1: >
+              നിങ്ങളുടെ സ്വന്തം ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്ക് ഷോപ്പ് ഫ്രണ്ട് വഴി നിങ്ങളുടെ
+              ഉൽപ്പന്നങ്ങൾ ഉപഭോക്താക്കൾക്ക് നേരിട്ട് വിൽക്കുക.
+          producer_shop_text2: >
+              ഒരു പ്രൊഡ്യൂസർ ഷോപ്പ് നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾക്ക് മാത്രമുള്ളതാണ്, സൈറ്റിന്
+              പുറത്ത് ഉൽപ്പാദിപ്പിച്ച ഉൽപ്പന്നങ്ങൾ വിൽക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുവെങ്കിൽ,
+              ദയവായി 'പ്രൊഡ്യൂസർ ഹബ്' തിരഞ്ഞെടുക്കുക.
           producer_hub: പ്രൊഡ്യൂസർ ഹബ്
+          producer_hub_text1: >
+              നിങ്ങളുടെ പ്രാദേശിക ആഹാര സമ്പ്രദായത്തിന്റെ നട്ടെല്ലാണ് നിങ്ങളുടെ സംരംഭം.
+              ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിലെ ഷോപ്പ് ഫ്രണ്ട് വഴി നിങ്ങൾക്ക് നിങ്ങളുടെ സ്വന്തം
+              ഉൽപ്പന്നങ്ങളും മറ്റ് സംരംഭങ്ങളിൽ നിന്ന് സമാഹരിച്ച ഉൽപ്പന്നങ്ങളും വിൽക്കാൻ
+              കഴിയും.
+          producer_hub_text2: >
+              പ്രൊഡ്യൂസർ ഹബ്‌സിന് പല രൂപങ്ങൾ എടുക്കാം, അവ ഒരു സിഎസ്‌എ, വെജി-ബോക്‌സ്
+              പ്രോഗ്രാം, അല്ലെങ്കിൽ റൂഫ്‌ടോപ്പ് ഗാർഡൻ ഉള്ള ആഹാര സഹകരണ സ്ഥാപനം എന്നിങ്ങനെ.
+          producer_hub_text3: >
+              ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്ക് കഴിയുന്നത്ര ഹബ് മോഡലുകളെ പിന്തുണയ്‌ക്കാൻ ലക്ഷ്യമിടുന്നു,
+              അതിനാൽ നിങ്ങളുടെ സാഹചര്യം പ്രശ്‌നമല്ല, നിങ്ങളുടെ സ്ഥാപനമോ പ്രാദേശിക
+              ഭക്ഷണ ബിസിനസോ പ്രവർത്തിപ്പിക്കുന്നതിന് ആവശ്യമായ സൗകര്യങ്ങൾ നൽകാൻ ഞങ്ങൾ
+              ആഗ്രഹിക്കുന്നു.
           get_listing: ഒരു ലിസ്റ്റിംഗ് നേടുക
           always_free: എപ്പോഴും സൗജന്യം
           sell_produce_others: മറ്റുള്ളവരിൽ നിന്നുള്ള ഉൽപ്പന്നങ്ങൾ വിൽക്കുക
           sell_own_produce: നിങ്ങളുടെ സ്വന്തം ഉൽപ്പന്നങ്ങൾ വിൽക്കുക
           sell_both: തന്നിൽ നിന്നും മറ്റുള്ളവരിൽ നിന്നും ഉള്ള ഉൽപ്പന്നങ്ങൾ വിൽക്കുക
         enterprise_producer:
-          producer: നിർമ്മാതാവ്
+          producer: പ്രൊഡ്യൂസർ
+          producer_text1: >
+              പ്രൊഡ്യൂസേഴ്‌സ് കഴിക്കാനും/അല്ലെങ്കിൽ കുടിക്കാനും സ്വാദിഷ്ടമായ കാര്യങ്ങൾ
+              ഉണ്ടാക്കുന്നു. നിങ്ങൾ അത് കൃഷി ചെയ്താലും, വളർത്തിയാലും, പാകം ചെയ്താലും,
+              ചുട്ടാലും, പുളിപ്പിച്ചാലും അല്ലെങ്കിൽ വാർത്തെടുത്താലും നിങ്ങൾ ഒരു പ്രൊഡ്യൂസർ
+              ആണ്.
+          producer_text2: >
+              മറ്റ് സംരംഭങ്ങളിൽ നിന്നുള്ള ആഹാരം സമാഹരിച്ച് ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിലെ
+              ഒരു ഷോപ്പ് വഴി വിൽക്കുന്നത് പോലുള്ള മറ്റ് പ്രവർത്തനങ്ങളും പ്രൊഡ്യൂസർമാർക്ക്
+              ചെയ്യാൻ കഴിയും.
+          non_producer: നോൺ പ്രൊഡ്യൂസർ
+          non_producer_text1: >
+              ഉൽപ്പാദകരല്ലാത്തവർ സ്വയം ഒരു ഭക്ഷണവും ഉൽപ്പാദിപ്പിക്കുന്നില്ല, അതായത്
+              ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിലൂടെ വിൽപ്പനയ്‌ക്കായി സ്വന്തം ഉൽപ്പന്നങ്ങൾ സൃഷ്ടിക്കാൻ
+              അവർക്ക് കഴിയില്ല.
+          non_producer_text2: >
+              പകരം, ഉൽപ്പാദകരല്ലാത്തവർ ഉത്പാദകരെ ഉപഭോക്താക്കളുമായി ബന്ധിപ്പിക്കുന്നതിൽ
+              വൈദഗ്ദ്ധ്യം നേടുന്നു, അത് സമാഹരിക്കുകയോ ഗ്രേഡിംഗ് ചെയ്യുകയോ പാക്കുചെയ്യുകയോ
+              ഭക്ഷണം വിൽക്കുകയോ വിതരണം ചെയ്യുകയോ മൂലമാകാം.
+          producer_desc: ആഹാര ഉത്പാദകർ
+          producer_example: ഉദാ. ഗ്രോവേഴ്സ്, ബേക്കേഴ്സ്, ബ്രൂവേഴ്സ്, മേക്കേഴ്സ്
+          non_producer_desc: മറ്റെല്ലാ ഭക്ഷ്യ സംരംഭങ്ങളും
+          non_producer_example: ഉദാ. പലചരക്ക് കടകൾ, ഭക്ഷ്യ സഹകരണ സ്ഥാപനങ്ങൾ, വാങ്ങൽ ഗ്രൂപ്പുകൾ
         enterprise_status:
+          status_title: "%{name} സജ്ജീകരിച്ചു, മുന്നോട്ടുപോകാൻ തയ്യാറാണ്!"
+          severity: തീവ്രത
           description: വിവരണം
+          resolve: പരിഹരിക്കുക
+        exchange_products:
+          load_more_variants: "കൂടുതൽ വേരിയന്റുകൾ ലോഡ് ചെയ്യുക"
+          load_all_variants: "എല്ലാ വേരിയന്റുകളും ലോഡ് ചെയ്യുക"
+          select_all_variants: "%{total_number_of_variants} വേരിയന്റുകളും തിരഞ്ഞെടുക്കുക"
+          variants_loaded: "%{num_of_variants_loaded} ൽ %{total_number_of_variants} വേരിയന്റുകൾ ലോഡ് ചെയ്തു"
+          loading_variants: "വേരിയന്റുകൾ ലോഡുചെയ്യുന്നു"
+          no_variants: "ഈ ഉൽപ്പന്നത്തിന് വേരിയന്റൊന്നും ലഭ്യമല്ല (ഇൻവെന്ററി ക്രമീകരണങ്ങൾ വഴി മറച്ചിരിക്കുന്നു)."
+          some_variants_hidden: "(ചില വേരിയന്റുകൾ ഇൻവെന്ററി ക്രമീകരണങ്ങൾ വഴി മറച്ചിരിക്കാം)"
+      tag_rules:
+        shipping_method_tagged_top: "ഷിപ്പിംഗ് രീതികൾ ടാഗ് ചെയ്‌തു"
+        shipping_method_tagged_bottom: "ഇവ:"
+        payment_method_tagged_top: "പേയ്‌മെന്റ് രീതികൾ ടാഗ് ചെയ്‌തു"
+        payment_method_tagged_bottom: "ഇവ:"
+        order_cycle_tagged_top: "ഓർഡർ സൈക്കിളുകൾ ടാഗ് ചെയ്‌തു"
+        order_cycle_tagged_bottom: "ഇവ:"
+        inventory_tagged_top: "ഇൻവെന്ററി വേരിയന്റുകൾ ടാഗ് ചെയ്‌തു"
+        inventory_tagged_bottom: "ഇവ:"
+      new_tag_rule_dialog:
+        select_rule_type: "ഒരു റൂൾ തരം തിരഞ്ഞെടുക്കുക:"
+        add_rule: "നിയമം ചേർക്കുക"
+      enterprise_fees:
+        inherit_from_product: "ഉൽപ്പന്നത്തിൽ നിന്ന് അവകാശം നേടുക"
       orders:
+        index:
+          per_page: "ഓരോ പേജിലും %{results}"
+          view_file: "ഫയൽ കാണുക"
+          compiling_invoices: "ഇൻവോയ്സുകൾ സമാഹരിക്കുന്നു"
+          bulk_invoice_created: "ബൾക്ക് ഇൻവോയ്സ് സൃഷ്ടിച്ചു"
+          bulk_invoice_failed: "ബൾക്ക് ഇൻവോയ്സ് സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു"
+          please_wait: "ഈ മോഡൽ അടയ്ക്കുന്നതിന് മുമ്പ് പിഡിഎഫ് തയ്യാറാകുന്നത് വരെ കാത്തിരിക്കുക."
         order_state:
+          address: "വിലാസം"
+          adjustments: "മാറ്റംവരുത്തലുകൾ"
+          awaiting_return: "തിരിച്ചുവരവിനായി കാത്തിരിക്കുന്നു"
+          canceled: "റദ്ദാക്കി"
           cart: "കാർട്ട്"
+          complete: "പൂർത്തിയായത്"
+          confirm: "സ്ഥിരീകരിക്കുക"
+          delivery: "ഡെലിവറി"
+          paused: "താൽക്കാലികമായി നിർത്തി"
+          payment: "പേയ്മെന്റ്"
+          pending: "തീർച്ചപ്പെടാത്ത"
+          resumed: "പുനരാരംഭിച്ചു"
+          returned: "തിരിച്ചയച്ചു"
+          confirmation: "സ്ഥിരീകരണം"
+        shipment_states:
+          backorder: "ബാക്ക്ഓർഡർ"
+          partial: "ഭാഗികമായ"
+          pending: "തീർച്ചപ്പെടാത്ത"
+          ready: "തയ്യാർ"
+          shipped: "അയച്ചു"
+          canceled: "റദ്ദാക്കി"
+        payment_states:
+          balance_due: "ബാക്കി"
+          completed: "പൂർത്തിയാക്കിയത്"
+          checkout: "ചെക്ക് ഔട്ട്"
+          credit_owed: "കടബാധ്യത"
+          failed: "പരാജയപ്പെട്ടു"
+          paid: "പണം നൽകി"
+          pending: "തീർച്ചപ്പെടാത്ത"
+          requires_authorization: "അനുമതി ആവശ്യമാണ്"
+          processing: "പ്രോസസ്സിംഗ്"
+          void: "ശൂന്യം"
+          invalid: "അസാധുവാണ്"
+        quantity_unavailable: "ആവശ്യത്തിന് സ്റ്റോക്ക് ലഭ്യമല്ല. ലൈൻ ഇനം സേവ് ചെയ്തിട്ടില്ല!"
+        quantity_unchanged: "മുൻ അളവിൽ നിന്ന് മാറ്റമില്ല."
+        cancel_the_order_html: "ഇത് നിലവിലെ ഓർഡർ റദ്ദാക്കും.<br /> നിങ്ങൾക്ക് തുടരണമെന്ന് തീർച്ചയാണോ?"
+        cancel_the_order_send_cancelation_email: "ഉപഭോക്താവിന് ഒരു റദ്ദാക്കൽ ഇമെയിൽ അയയ്ക്കുക"
+        restock_item: "റീസ്റ്റോക്ക് ഇനങ്ങൾ: ഈ ഇനം സ്റ്റോക്കിലേക്ക് തിരികെ നൽകുക"
+        restock_items: "റീസ്റ്റോക്ക് ഇനങ്ങൾ: എല്ലാ ഇനങ്ങളും സ്റ്റോക്കിലേക്ക് തിരികെ നൽകുക"
+        delete_line_items_html:
+          one: "ഇത് ഓർഡറിൽ നിന്ന് ഒരു വരി ഇനം ഇല്ലാതാക്കും.<br /> നിങ്ങൾക്ക് തുടരണമെന്ന് തീർച്ചയാണോ?"
+          other: "ഇത് ഓർഡറിൽ നിന്ന് %{count} ലൈൻ ഇനങ്ങൾ ഇല്ലാതാക്കും.<br /> നിങ്ങൾക്ക് തുടരണമെന്ന് തീർച്ചയാണോ?"
       resend_user_email_confirmation:
         resend: "വീണ്ടും അയയ്ക്കുക"
+        sending: "വീണ്ടും അയയ്‌ക്കുക..."
+        done: "വീണ്ടും അയച്ചു ✓"
+        failed: "വീണ്ടും അയയ്‌ക്കാനായില്ല ✗"
       order_cycles:
         schedules:
+          adding_a_new_schedule: "ഒരു പുതിയ ഷെഡ്യൂൾ ചേർക്കുന്നു"
+          updating_a_schedule: "ഒരു ഷെഡ്യൂൾ അപ്ഡേറ്റ് ചെയ്യുന്നു"
+          create_schedule: "ഷെഡ്യൂൾ സൃഷ്ടിക്കുക"
+          update_schedule: "ഷെഡ്യൂൾ അപ്ഡേറ്റ് ചെയ്യുക"
+          delete_schedule: "ഷെഡ്യൂൾ ഡിലീറ്റ് ചെയ്യുക"
+          schedule_name_placeholder: "ഷെഡ്യൂൾ പേര്"
+          created_schedule: "ഷെഡ്യൂൾ സൃഷ്ടിച്ചു"
+          updated_schedule: "ഷെഡ്യൂൾ അപ്ഡേറ്റ് ചെയ്തു"
+          deleted_schedule: "ഷെഡ്യൂൾ ഡിലീറ്റ് ചെയ്തു"
+          name_required_error: "ദയവായി ഈ ഷെഡ്യൂളിന് ഒരു പേര് നൽകുക"
+          no_order_cycles_error: "ദയവായി ഒരു ഓർഡർ സൈക്കിളെങ്കിലും തിരഞ്ഞെടുക്കുക (വലിച്ചിടുക)"
           available: "ലഭ്യമാണ്"
+          selected: "തിരഞ്ഞെടുത്തത്"
       customers:
         index:
+          add_customer: "ഉപഭോക്താവിനെ ചേർക്കുക"
+          add_a_new_customer_for: "%{shop_name} -നായി ഒരു പുതിയ ഉപഭോക്താവിനെ ചേർക്കുക"
+          customer_placeholder: "customer@example.org"
           valid_email_error: "സാധുതയുള്ള ഒരു ഇമെയിൽ വിലാസം നൽകുക"
+      subscriptions:
+        error_saving: "സബ്സ്ക്രിപ്ഷൻ സേവ് ചെയ്യുന്നതിൽ തകരാറ് സംഭവിച്ചു"
+        new:
+          please_select_a_shop: "ദയവായി ഒരു ഷോപ്പ് തിരഞ്ഞെടുക്കുക"
+      enterprises:
+        form:
+          images:
+            removed_logo_successfully: "ലോഗോ വിജയകരമായി നീക്കം ചെയ്തു"
+            immediate_logo_removal_warning: "നിങ്ങൾ സ്ഥിരീകരിച്ചതിന് ശേഷം ഉടൻ തന്നെ ലോഗോ നീക്കം ചെയ്യപ്പെടും."
+            removed_promo_image_successfully: "പ്രമോ ചിത്രം വിജയകരമായി നീക്കം ചെയ്തു"
+            immediate_promo_image_removal_warning: "നിങ്ങൾ സ്ഥിരീകരിച്ചതിന് ശേഷം ഉടൻ തന്നെ പ്രമോ ചിത്രം നീക്കം ചെയ്യപ്പെടും."
+            immediate_terms_and_conditions_removal_warning: "നിങ്ങൾ സ്ഥിരീകരിച്ചതിന് ശേഷം ഉടൻ തന്നെ നിബന്ധനകളും വ്യവസ്ഥകളും എന്ന ഫയൽ നീക്കം ചെയ്യപ്പെടും."
+            removed_terms_and_conditions_successfully: "നിബന്ധനകളും വ്യവസ്ഥകളും എന്ന ഫയൽ വിജയകരമായി നീക്കം ചെയ്തു"
+    insufficient_stock: "മതിയായ സ്റ്റോക്ക് ലഭ്യമല്ല, %{on_hand} മാത്രം ശേഷിക്കുന്നു"
+    out_of_stock:
+      reduced_stock_available: കുറഞ്ഞ സ്റ്റോക്ക് ലഭ്യമാണ്
+      out_of_stock_text: >
+          നിങ്ങൾ ഷോപ്പിംഗ് നടത്തുമ്പോൾ, നിങ്ങളുടെ കാർട്ടിലെ ഒന്നോ അതിലധികമോ ഉൽപ്പന്നങ്ങളുടെ
+          സ്റ്റോക്ക് ലെവലുകൾ കുറഞ്ഞു. എന്താണ് മാറിയതെന്ന് ഇവിടെ പറയുന്നു:
+      now_out_of_stock: ഇത് ഇപ്പോൾ സ്റ്റോക്കില്ല.
+      only_n_remainging: "ഇപ്പോൾ %{num} മാത്രമേ ശേഷിക്കുന്നുള്ളൂ."
     shopfront:
       variant:
         add_to_cart: "ചേർക്കുക"
+        in_cart: "കാർട്ടിൽ"
+        quantity_in_cart: "കാർട്ടിൽ %{quantity}"
+        remaining_in_stock: "%{quantity} മാത്രം ശേഷിക്കുന്നു"
       bulk_buy_modal:
+        min_quantity: "കുറഞ്ഞ അളവ്"
         max_quantity: "പരമാവധി അളവ്"
+      price_breakdown: "വില വിശ്ലേഷണം"
+      unit_price_tooltip: "ഇതാണ് ഈ ഉൽപ്പന്നത്തിന്റെ യൂണിറ്റ് വില. പാക്കേജിംഗ് വലുപ്പത്തിലും ഭാരത്തിലും നിന്ന് സ്വതന്ത്രമായി ഉൽപ്പന്നങ്ങളുടെ വില താരതമ്യം ചെയ്യാൻ ഇത് നിങ്ങളെ അനുവദിക്കുന്നു."
     variants:
       on_demand:
         'yes': "ആവശ്യപ്പെടുന്നതനുസരിച്ച്"
     variant_overrides:
       on_demand:
+        use_producer_settings: "പ്രൊഡ്യൂസർ സ്റ്റോക്ക് ക്രമീകരണങ്ങൾ ഉപയോഗിക്കുക"
         'yes': "അതെ"
         'no': "ഇല്ല"
+      inventory_products: "ഇൻവെന്ററി ഉൽപ്പന്നങ്ങൾ"
+      hidden_products: "മറഞ്ഞിരിക്കുന്ന ഉൽപ്പന്നങ്ങൾ"
+      new_products: "പുതിയ ഉൽപ്പന്നങ്ങൾ"
+      reset_stock_levels: സ്റ്റോക്ക് ലെവലുകൾ ഡിഫോൾട്ടിലേക്ക് പുനഃസജ്ജമാക്കുക
+      changes_to: -എന്നതിലേക്കുള്ള മാറ്റങ്ങൾ
+      one_override: ഒന്ന് അസാധുവാക്കുക
+      overrides: അസാധുവാക്കുന്നു
+      remain_unsaved: സേവ് ചെയ്യാതെ തുടരുന്നു.
+      no_changes_to_save: സേവ് ചെയ്യാൻ മാറ്റങ്ങളൊന്നുമില്ല.'
+      no_authorisation: "ആ മാറ്റങ്ങൾ സേവ് ചെയ്യാൻ എനിക്ക് അംഗീകാരം നേടാനായില്ല, അതിനാൽ അവ സേവ് ചെയ്യപ്പെട്ടിട്ടില്ല."
+      some_trouble: "%{errors} സേവ് ചെയ്യുന്നതിൽ എനിക്ക് കുറച്ച് പ്രശ്നമുണ്ടായിരുന്നു: "
+      changing_on_hand_stock: ഹാൻഡ് സ്റ്റോക്ക് ലെവൽ മാറുന്നു...
+      stock_reset: സ്റ്റോക്കുകൾ ഡിഫോൾട്ടിലേക്ക് റീസെറ്റ് ചെയ്യുന്നു.
+    tag_rules:
+      show_hide_variants: 'എന്റെ ഷോപ്പ് ഫ്രണ്ടിൽ വേരിയന്റുകൾ കാണിക്കുക അല്ലെങ്കിൽ മറയ്ക്കുക'
+      show_hide_shipping: 'ചെക്ക്ഔട്ടിൽ ഷിപ്പിംഗ് രീതികൾ കാണിക്കുക അല്ലെങ്കിൽ മറയ്ക്കുക'
+      show_hide_payment: 'ചെക്ക്ഔട്ടിൽ പേയ്മെന്റ് രീതികൾ കാണിക്കുക അല്ലെങ്കിൽ മറയ്ക്കുക'
+      show_hide_order_cycles: 'എന്റെ ഷോപ്പ് ഫ്രണ്ടിൽ ഓർഡർ സൈക്കിളുകൾ കാണിക്കുക അല്ലെങ്കിൽ മറയ്ക്കുക'
+      visible: ദൃശ്യമാണ്
+      not_visible: ദൃശ്യമല്ല
     services:
-      save: സേവ്
+      unsaved_changes_message: സേവ് ചെയ്യപ്പെടാത്ത മാറ്റങ്ങൾ നിലവിൽ നിലവിലുണ്ട്, ഇപ്പോൾ സേവ് ചെയ്യണോ അതോ അവഗണിക്കണോ?
+      save: സേവ് ചെയ്യുക
+      ignore: അവഗണിക്കുക
+      add_to_order_cycle: "ഓർഡർ സൈക്കിളിലേക്ക് ചേർക്കുക"
+      manage_products: "ഉൽപ്പന്നങ്ങൾ കൈകാര്യം ചെയ്യുക"
+      edit_profile: "പ്രൊഫൈൽ എഡിറ്റ് ചെയ്യുക"
+      add_products_to_inventory: "ഇൻവെന്ററിയിലേക്ക് ഉൽപ്പന്നങ്ങൾ ചേർക്കുക"
+    resources:
+      could_not_delete_customer: 'ഉപഭോക്താവിനെ ഇല്ലാതാക്കാൻ കഴിഞ്ഞില്ല'
+    product_import:
+      confirmation: |
+          ഇതിനായുള്ള എല്ലാ ഉൽപ്പന്നങ്ങളുടെയും സ്റ്റോക്ക് ലെവൽ പൂജ്യമായി സജ്ജമാക്കും
+          അപ്‌ലോഡ് ചെയ്ത ഫയലിൽ ഇല്ലാത്ത എന്റർപ്രൈസ്.
     order_cycles:
+      create_failure: "ഓർഡർ സൈക്കിൾ സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു"
       update_success: 'നിങ്ങളുടെ ഓർഡർ സൈക്കിൾ അപ്ഡേറ്റ് ചെയ്തു.'
+      update_failure: "ഓർഡർ സൈക്കിൾ അപ്ഡേറ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
+      no_distributors: ഈ ഓർഡർ സൈക്കിളിൽ വിതരണക്കാരില്ല. നിങ്ങൾ ഒരെണ്ണം ചേർക്കുന്നത് വരെ ഈ ഓർഡർ സൈക്കിൾ ഉപഭോക്താക്കൾക്ക് ദൃശ്യമാകില്ല. ഈ ഓർഡർ സൈക്കിൾ സേവ് ചെയ്യുന്നത് തുടരാൻ നിങ്ങൾക്ക് താൽപ്പര്യമുണ്ടോ?'
     enterprises:
-      producer: "നിർമ്മാതാവ്"
+      producer: "പ്രൊഡ്യൂസർ"
+      non_producer: "നോൺ പ്രൊഡ്യൂസർ"
+    customers:
+      select_shop: 'ആദ്യം ഒരു ഷോപ്പ് തിരഞ്ഞെടുക്കുക'
+      could_not_create: ക്ഷമിക്കണം! സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല
     subscriptions:
+      closes: അടയ്ക്കുന്നു
       closed: അടച്ചു
+      close_date_not_set: അടയ്ക്കുന്ന തീയതി സജ്ജീകരിച്ചിട്ടില്ല
+    spree:
+      users:
+        order: "ഓർഡർ ചെയ്യുക"
     registration:
       welcome_to_ofn: "ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിലേക്ക് സ്വാഗതം!"
+      signup_or_login: "സൈൻ അപ്പ് ചെയ്തുകൊണ്ട് ആരംഭിക്കുക (അല്ലെങ്കിൽ ലോഗിൻ ചെയ്യുക)"
+      have_an_account: "ഇതിനകം ഒരു അക്കൗണ്ട് ഉണ്ടോ?"
+      action_login: "ഇപ്പോൾ ലോഗിൻ ചെയ്യുക."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          ഞങ്ങളുടെ പേയ്‌മെന്റ് ഗേറ്റ്‌വേയിൽ നിങ്ങളുടെ കാർഡ് സജ്ജീകരിക്കുന്നതിൽ ഒരു തകരാറുണ്ടായി.
+          പേജ് പുതുക്കിയ ശേഷം വീണ്ടും ശ്രമിക്കുക, ഇത് രണ്ടാം തവണയും പരാജയപ്പെടുകയാണെങ്കിൽ,
+          പിന്തുണയ്ക്കായി ഞങ്ങളെ ബന്ധപ്പെടുക.
+  inflections:
+    each:
+      one: "ഓരോന്നും"
+      other: "ഓരോന്നും"
+    bunch:
+      one: "കുല"
+      other: "കൂട്ടങ്ങൾ"
+    pack:
+      one: "പായ്ക്ക്"
+      other: "പാക്കുകൾ"
+    box:
+      one: "പെട്ടി"
+      other: "പെട്ടികൾ"
+    bottle:
+      one: "കുപ്പി"
+      other: "കുപ്പികൾ"
+    jar:
+      one: "ഭരണി"
+      other: "ജാറുകൾ"
+    head:
+      one: "തല"
+      other: "ഹെഡ്സ്"
+    bag:
+      one: "ബാഗ്"
+      other: "ബാഗുകൾ"
+    loaf:
+      one: "അപ്പം"
+      other: "ബ്രെഡ്‌ഡുകൾ"
+    single:
+      one: "സിംഗിൾ"
+      other: "സിംഗിൾസ്"
+    tub:
+      one: "ടബ്"
+      other: "ട്യൂബുകൾ"
+    punnet:
+      one: "പന്നറ്റ്"
+      other: "പഴക്കൂടകൾ"
+    packet:
+      one: "പാക്കറ്റ്"
+      other: "പാക്കറ്റുകൾ"
+    item:
+      one: "ഇനം"
+      other: "ഇനങ്ങൾ"
+    dozen:
+      one: "ഡസൻ"
+      other: "ഡസനുകൾ"
+    unit:
+      one: "യൂണിറ്റ്"
+      other: "യൂണിറ്റുകൾ"
+    serve:
+      one: "സേവിക്കുക"
+      other: "സേവിക്കുന്നു"
+    tray:
+      one: "ട്രേ"
+      other: "ട്രേകൾ"
+    piece:
+      one: "കഷണം"
+      other: "കഷണങ്ങൾ"
+    pot:
+      one: "കലം"
+      other: "പാത്രങ്ങൾ"
+    bundle:
+      one: "ബണ്ടിൽ"
+      other: "ബണ്ടിലുകൾ"
+    flask:
+      one: "ഫ്ലാസ്ക്"
+      other: "ഫ്ലാസ്കുകൾ"
+    basket:
+      one: "കൊട്ടയിൽ"
+      other: "കൊട്ടകൾ"
+    sack:
+      one: "ചാക്ക്"
+      other: "ചാക്കുകൾ"
+  producers:
+    signup:
+      start_free_profile: "ഒരു സൗജന്യ പ്രൊഫൈലിൽ ആരംഭിക്കുക, നിങ്ങൾ തയ്യാറാകുമ്പോൾ വികസിപ്പിക്കുക!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "ബൾക്ക് കോ-ഓപ് അലോക്കേഷൻ"
+          bulk_coop_customer_payments: "ബൾക്ക് കോ-ഓപ്പ് ഉപഭോക്തൃ പേയ്‌മെന്റുകൾ"
+          bulk_coop_packing_sheets: "ബൾക്ക് കോ-ഓപ്പ് പാക്കിംഗ് ഷീറ്റുകൾ"
+          bulk_coop_supplier_report: "ബൾക്ക് കോ-ഓപ്പ് സപ്ലയർ റിപ്പോർട്ട്"
       enterprise_fee_summaries:
+        filters:
+          date_range: "തീയതി പരിധി"
+          report_format_csv: "സി.എസ്.വി ഫയൽ ആയി ഡൗൺലോഡ് ചെയ്യുക"
+          generate_report: "റിപ്പോർട്ട് സൃഷ്ടിക്കുക"
         report:
           none: "ഒന്നുമില്ല"
+          select_and_search: "നിങ്ങളുടെ ഡാറ്റ ആക്‌സസ് ചെയ്യാൻ ഫിൽട്ടറുകൾ തിരഞ്ഞെടുത്ത് റിപ്പോർട്ട് സൃഷ്ടിക്കുക എന്നതിൽ ക്ലിക്ക് ചെയ്യുക."
       enterprise_fee_summary:
+        date_end_before_start_error: "ആരംഭിച്ചതിന് ശേഷമായിരിക്കണം"
+        parameter_not_allowed_error: "ഈ റിപ്പോർട്ടിനായി തിരഞ്ഞെടുത്ത ഒന്നോ അതിലധികമോ ഫിൽട്ടറുകൾ ഉപയോഗിക്കാൻ നിങ്ങൾക്ക് അധികാരമില്ല."
         fee_calculated_on_transfer_through_all: "എല്ലാം"
+        fee_calculated_on_transfer_through_entire_orders: "മുഴുവൻ ഓർഡറുകളും %{distributor} വഴി"
+        tax_category_various: "വിവിധ"
+        fee_type:
+          payment_method: "പേയ്മെന്റ് ഇടപാട്"
+          shipping_method: "ഷിപ്മെന്റ്"
         fee_placements:
           supplier: "ഇൻകമിംഗ്"
           distributor: "ഔട്ട്ഗോയിംഗ്"
           coordinator: "കോർഡിനേറ്റർ"
+        tax_category_name:
+          shipping_instance_rate: "പ്ലാറ്റ്ഫോം നിരക്ക്"
         formats:
           csv:
             header:
               fee_type: "ഫീസ് തരം"
+              enterprise_name: "എന്റർപ്രൈസ് ഉടമ"
               fee_name: "ഫീസ് പേര്"
               customer_name: "ഉപഭോക്താവ്"
+              fee_placement: "ഫീസ് പ്ലേസ്മെന്റ്"
+              fee_calculated_on_transfer_through_name: "കൈമാറ്റം ചെയ്യുമ്പോൾ ഉള്ള ഫീസ് കണക്ക്"
               tax_category_name: "നികുതി വിഭാഗം"
+              total_amount: "$$ ആകെ"
           html:
             header:
               fee_type: "ഫീസ് തരം"
+              enterprise_name: "എന്റർപ്രൈസ് ഉടമ"
               fee_name: "ഫീസ് പേര്"
               customer_name: "ഉപഭോക്താവ്"
+              fee_placement: "ഫീസ് പ്ലേസ്മെന്റ്"
+              fee_calculated_on_transfer_through_name: "കൈമാറ്റം ചെയ്യുമ്പോൾ ഉള്ള ഫീസ് കണക്ക്"
               tax_category_name: "നികുതി വിഭാഗം"
+              total_amount: "$$ ആകെ"
+        invalid_filter_parameters: "ഈ റിപ്പോർട്ടിനായി നിങ്ങൾ തിരഞ്ഞെടുത്ത ഫിൽട്ടറുകൾ അസാധുവാണ്."
       report:
         none: "ഒന്നുമില്ല"
+  order: "ഓർഡർ ചെയ്യുക"
+  order_details: "ഓർഡർ വിശദാംശങ്ങൾ"
+  customer_details: "ഉപഭോക്തൃ വിശദാംശങ്ങൾ"
+  adjustments: "മാറ്റംവരുത്തലുകൾ"
+  payments: "പേയ്മെന്റുകൾ"
+  return_authorizations: "റിട്ടേൺ അനുമതികൾ"
   credit_owed: "കടപ്പെട്ടിരിക്കുന്നു"
+  new_adjustment: "പുതിയ മാറ്റംവരുത്തലുകൾ"
   payment: "പേയ്മെന്റ്"
   payment_method: "പണമടയ്ക്കൽ രീതി"
+  shipment: "ഷിപ്മെന്റ്"
+  shipment_inc_vat: "വാറ്റ് ഉൾപ്പെടെയുള്ള ഷിപ്മെന്റ്"
+  shipping_tax_rate: "ഷിപ്പിംഗ് നികുതി നിരക്ക്"
   category: "വിഭാഗം"
   import_date: "ഇറക്കുമതി തീയതി"
   delivery: "ഡെലിവറി"
+  temperature_controlled: "താപ നിയന്ത്രിതം"
+  new_product: "പുതിയ ഉൽപ്പന്നം"
   administration: "ഭരണകൂടം"
+  logged_in_as: "ലോഗിൻ ചെയ്തത്"
   account: "അക്കൗണ്ട്"
   logout: "ലോഗൗട്ട്"
+  date_range: "തീയതി പരിധി"
+  status: "സ്ഥിതി"
+  new: "പുതിയത്"
+  start: "ആരംഭിക്കുക"
+  end: "അവസാനിപ്പിക്കുക"
+  stop: "നിർത്തുക"
+  first: "ആദ്യം"
   previous: "മുന്നിലത്തേത്"
+  last: "അവസാനത്തെത്"
+  webhook_endpoints:
+    create:
+      success: വെബ്ഹൂക് എൻഡ്‌പോയിന്റ് വിജയകരമായി സൃഷ്‌ടിച്ചു
+      error: വെബ്ഹൂക് എൻഡ്‌പോയിന്റ് സൃഷ്‌ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു
+    destroy:
+      success: വെബ്ഹൂക് എൻഡ്‌പോയിന്റ് വിജയകരമായി ഇല്ലാതാക്കി
+      error: വെബ്ഹൂക് എൻഡ്‌പോയിന്റ് ഇല്ലാതാക്കുന്നതിൽ പരാജയപ്പെട്ടു
   spree:
+    order_updated: "ഓർഡർ അപ്ഡേറ്റ് ചെയ്തു"
+    add_country: "രാജ്യം ചേർക്കുക"
+    add_state: "സ്റ്റേറ്റ് ചേർക്കുക"
+    adjustment: "മാറ്റംവരുത്തലുകൾ"
     all: "എല്ലാം"
+    associated_adjustment_closed: "അനുബന്ധ മാറ്റംവരുത്തലുകൾ അടച്ചു"
+    back_to_adjustments_list: "മാറ്റംവരുത്തലുകളിലേക്ക് മടങ്ങുക"
+    back_to_users_list: "ഉപയോക്താക്കളിലേക്ക് മടങ്ങുക"
+    back_to_zones_list: "സോണുകളിലേക്ക് മടങ്ങുക"
+    card_code: "കാർഡ് കോഡ്"
     card_number: "കാർഡ് നമ്പർ"
     category: "വിഭാഗം"
+    created_successfully: "വിജയകരമായി സൃഷ്ടിച്ചു"
     credit: "ക്രെഡിറ്റ്"
+    editing_tax_category: "നികുതി വിഭാഗം എഡിറ്റുചെയ്യുന്നു"
+    editing_tax_rate: "നികുതി നിരക്ക് എഡിറ്റുചെയ്യുന്നു"
+    editing_zone: "എഡിറ്റിംഗ് സോൺ"
+    expiration: "കാലഹരണപ്പെടൽ"
+    invalid_payment_provider: "പേയ്‌മെന്റ് ദാതാവ് അസാധുവാണ്"
+    items_cannot_be_shipped: "സാധനങ്ങൾ അയക്കാൻ കഴിയില്ല"
+    gateway_config_unavailable: "ഗേറ്റ്‌വേ കോൺഫിഗറേഷൻ ലഭ്യമല്ല"
+    gateway_error: "പേയ്‌മെന്റ് പരാജയപ്പെട്ടു"
     more: "കൂടുതൽ"
+    new_adjustment: "പുതിയ മാറ്റംവരുത്തൽ"
+    new_tax_category: "പുതിയ നികുതി വിഭാഗം"
+    new_taxon: "പുതിയ ടാക്സൺ"
+    new_user: "പുതിയ ഉപയോക്താവ്"
     no_pending_payments: "തീർപ്പാക്കാത്ത പേയ്‌മെന്റുകളൊന്നുമില്ല"
     none: "ഒന്നുമില്ല"
     not_found: "കണ്ടെത്തിയില്ല"
+    notice_messages:
+      variant_deleted: "വേരിയന്റ് ഇല്ലാതാക്കി"
+    payment_method_not_supported: "പേയ്‌മെന്റ് രീതി പിന്തുണയ്ക്കുന്നില്ല"
+    resend_authorization_email: "അനുമതി ഇമെയിൽ വീണ്ടും അയയ്ക്കുക"
+    rma_credit: "ആർഎംഎ ക്രെഡിറ്റ്"
+    refund: "റീഫണ്ട്"
+    server_error: "സെർവർ തകരാർ"
+    shipping_method_names:
+      UPS Ground: "യുപിഎസ് ഗ്രൗണ്ട്"
+      pick_up: "ഫാമിൽ നിന്നും പിക്കപ്പ് ചെയ്യുക"
+      delivery: "ഒപ്പിട്ടു, സീൽ ചെയ്തു, എത്തിച്ചു"
+    start_date: "ആരംഭിക്കുന്ന തീയതി"
+    successfully_removed: "വിജയകരമായി നീക്കം ചെയ്തു"
+    taxonomy_edit: "ടാക്സോണമി എഡിറ്റ്"
+    taxonomy_tree_error: "ടാക്സോണമി ട്രീ തകരാർ"
+    taxonomy_tree_instruction: "ടാക്സോണമി ട്രീ നിർദ്ദേശം"
+    tree: "ട്രീ"
     updating: "അപ്ഡേറ്റ് ചെയ്യുന്നു"
+    your_order_is_empty_add_product: "നിങ്ങളുടെ ഓർഡർ ശൂന്യമാണ്, മുകളിൽ ഒരു ഉൽപ്പന്നം തിരയുകയും ചേർക്കുകയും ചെയ്യുക"
+    add_product: "ഉൽപ്പന്നം ചേർക്കുക"
+    name_or_sku: "പേര് അല്ലെങ്കിൽ എസ്കെയു (ഉൽപ്പന്നത്തിന്റെ പേരിന്റെ ആദ്യ 4 പ്രതീകങ്ങളെങ്കിലും നൽകുക)"
     resend: "വീണ്ടും അയയ്ക്കുക"
+    back_to_orders_list: "ഓർഡർ ലിസ്റ്റിലേക്ക് മടങ്ങുക"
+    back_to_payments_list: "പേയ്‌മെന്റ് ലിസ്റ്റിലേക്ക് മടങ്ങുക"
+    return_authorizations: "റിട്ടേൺ അനുമതികൾ"
+    cannot_create_returns: "ഈ ഓർഡറിന് ഷിപ്പ് ചെയ്‌ത യൂണിറ്റുകൾ ഇല്ലാത്തതിനാൽ റിട്ടേണുകൾ സൃഷ്‌ടിക്കാനാവില്ല."
+    select_stock: "സ്റ്റോക്ക് തിരഞ്ഞെടുക്കുക"
+    location: "സ്ഥാനം"
+    count_on_hand: "കൈയിൽ എണ്ണുക"
     quantity: "അളവ്"
     on_demand: "ആവശ്യപ്പെടുന്നതനുസരിച്ച്"
     on_hand: "കയ്യിൽ"
+    package_from: "പാക്കേജ് എവിടെ നിന്നും-"
+    item_description: "ഇനത്തെ കുറിച്ചുള്ള വിശദീകരണം"
     price: "വില"
     total: "ആകെ"
     edit: "എഡിറ്റ് ചെയ്യുക"
+    split: "രണ്ടായി പിരിക്കുക"
     delete: "ഇല്ലാതാക്കുക"
+    cannot_set_shipping_method_without_address: "ഉപഭോക്തൃ വിശദാംശങ്ങൾ നൽകുന്നതുവരെ ഷിപ്പിംഗ് രീതി സജ്ജീകരിക്കാൻ കഴിയില്ല."
+    no_tracking_present: "ട്രാക്കിംഗ് വിശദാംശങ്ങളൊന്നും നൽകിയിട്ടില്ല."
+    tracking: "ട്രാക്കിംഗ്"
+    tracking_number: "ട്രാക്കിംഗ് നമ്പർ"
+    order_total: "ഓർഡർ ആകെ"
+    customer_details: "ഉപഭോക്തൃ വിശദാംശങ്ങൾ"
+    customer_details_updated: "ഉപഭോക്തൃ വിശദാംശങ്ങൾ അപ്ഡേറ്റ് ചെയ്തു"
+    customer_search: "ഉപഭോക്തൃ തിരയൽ"
+    choose_a_customer: "ഒരു ഉപഭോക്താവിനെ തിരഞ്ഞെടുക്കുക"
     account: "അക്കൗണ്ട്"
     billing_address: "ബില്ലിംഗ് വിലാസം"
     shipping_address: "ഷിപ്പിംഗ് വിലാസം"
     first_name: "ഒന്നാം പേര് "
     last_name: "പേരിന്റെ അവസാന ഭാഗം"
+    street_address: "സ്ട്രീറ്റ് വിലാസം"
+    street_address_2: "വിലാസം (തുടർച്ച)"
     city: "നഗരം"
+    zip: "പിൻകോഡ്"
     country: "രാജ്യം"
-    state: "സംസ്ഥാനം"
+    state: "സ്റ്റേറ്റ്"
     phone: "ഫോൺ"
     update: "അപ്ഡേറ്റ് ചെയ്യുക"
+    use_billing_address: "ബില്ലിംഗ് വിലാസം ഉപയോഗിക്കുക"
+    adjustments: "മാറ്റംവരുത്തലുകൾ"
     continue: "തുടരുക"
+    fill_in_customer_info: "ഉപഭോക്തൃ വിവരങ്ങൾ പൂരിപ്പിക്കുക"
     credit_card: "ക്രെഡിറ്റ് കാർഡ്"
+    new_payment: "പുതിയ പേയ്മെന്റ്"
+    capture: "ക്യാപ്‌ചർ"
+    capture_and_complete_order: "ക്യാപ്‌ചർ ചെയ്‌ത് ഓർഡർ പൂർത്തിയാക്കുക"
+    void: "ശൂന്യം"
     login: "ലോഗിൻ"
     password: "പാസ്സ്‌വേർഡ്"
+    signature: "കയ്യൊപ്പ്"
+    solution: "പരിഹാരം"
+    landing_page: "ലാൻഡിംഗ് പേജ്"
+    server: "സെർവർ"
+    test_mode: "ടെസ്റ്റ് മോഡ്"
+    logourl: "ലോഗോ യുആർഎൽ"
+    are_you_sure_delete: "ഈ റെക്കോർഡ് ഇല്ലാതാക്കണമെന്ന് തീർച്ചയാണോ?"
+    confirm_delete: "ഇല്ലാതാക്കൽ സ്ഥിരീകരിക്കുക"
+    configurations: "കോൺഫിഗറേഷനുകൾ"
     general_settings: "പൊതുവായ ക്രമീകരണങ്ങൾ"
+    site_name: "സൈറ്റിന്റെ പേര്"
+    site_url: "സൈറ്റ് യുആർഎൽ"
+    default_seo_title: "ഡിഫോൾട്ട് എസ്ഇഓ ശീർഷകം"
+    default_meta_description: "ഡിഫോൾട്ട് മെറ്റാ വിവരണം"
+    default_meta_keywords: "ഡിഫോൾട്ട് മെറ്റാ കീവേഡുകൾ"
+    currency_decimal_mark: "കറൻസി ഡെസിമൽ മാർക്ക്"
+    currency_settings: "കറൻസി ക്രമീകരണങ്ങൾ"
+    currency_symbol_position: '"രൂപയിലുള്ള തുകയ്ക്ക് മുൻപാണോ അതോ ശേഷമാണോ കറൻസി ചിഹ്നം" ഇടേണ്ടത്?'
+    currency_thousands_separator: "കറൻസി സെപ്പറേറ്റർ ചിഹ്നം"
+    hide_cents: "പൈസ മറയ്ക്കുക"
+    display_currency: "കറൻസി പ്രദർശിപ്പിക്കുക"
+    choose_currency: "കറൻസി തിരഞ്ഞെടുക്കുക"
+    mail_method_settings: "മെയിൽ രീതി ക്രമീകരണങ്ങൾ"
+    mail_settings_notice_html: "ഡീബഗ്ഗിംഗിനായി മാത്രം </b>ഇവിടെ വരുത്തിയ മാറ്റങ്ങൾ താൽക്കാലികമായിരിക്കും</b>, ഭാവിയിൽ അത് പഴയപടിയായേക്കാം.<br> ഇൻസ്‌റ്റൻസിന്റെ രഹസ്യങ്ങൾ അപ്‌ഡേറ്റ് ചെയ്‌ത് <a href='https://github.com/openfoodfoundation/ofn-install'>ഓഫ്-ഇൻസ്റ്റാൾ</a> ഉപയോഗിച്ച് പ്രൊവിഷൻ ചെയ്‌ത് ശാശ്വതമായ മാറ്റങ്ങൾ വരുത്താനാകും. കൂടുതൽ വിവരങ്ങൾക്ക് ഓഎഫ്എൻ ഗ്ലോബൽ ടീമിനെ സമീപിക്കുക."
+    general: "പൊതുവായത്"
+    enable_mail_delivery: "മെയിൽ ഡെലിവറി പ്രവർത്തനക്ഷമമാക്കുക"
+    send_mails_as: "മെയിലുകൾ ഇങ്ങനെ അയയ്ക്കുക"
+    smtp_send_all_emails_as_from_following_address: "ഇനിപ്പറയുന്ന വിലാസത്തിൽ നിന്ന് എല്ലാ മെയിലുകളും അയയ്ക്കുക."
+    send_copy_of_all_mails_to: "എല്ലാ മെയിലുകളുടെയും പകർപ്പ് ഇതിലേക്ക് അയയ്ക്കുക"
+    smtp_send_copy_to_this_addresses: "ഈ വിലാസത്തിലേക്ക് എല്ലാ ഔട്ട്‌ഗോയിംഗ് മെയിലുകളുടെയും ഒരു പകർപ്പ് അയയ്ക്കുന്നു. ഒന്നിലധികം വിലാസങ്ങൾ കോമ ഉപയോഗിച്ച് വേർതിരിക്കുക."
     tax_categories: "നികുതി വിഭാഗങ്ങൾ"
+    listing_tax_categories: "നികുതി വിഭാഗങ്ങളുടെ പട്ടിക"
+    back_to_tax_categories_list: "നികുതി വിഭാഗങ്ങളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
     tax rate: "നികുതി നിരക്കുകൾ"
+    new_tax_rate: "പുതിയ നികുതി നിരക്ക്"
     tax_category: "നികുതി വിഭാഗം"
     tax_rates: "നികുതി നിരക്കുകൾ"
     rate: "നിരക്ക്"
+    tax_rate_amount_explanation: "കണക്കുകൂട്ടലുകളെ സഹായിക്കുന്നതിനുള്ള ഒരു ദശാംശ തുകയാണ് നികുതി നിരക്കുകൾ, (അതായത് നികുതി നിരക്ക് 5% ആണെങ്കിൽ 0.05 നൽകുക)"
+    included_in_price: "വിലയിൽ ഉൾപ്പെടുത്തിയിട്ടുണ്ട്"
+    show_rate_in_label: "ലേബലിൽ നിരക്ക് കാണിക്കുക"
+    back_to_tax_rates_list: "നികുതി നിരക്കുകളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
     tax_settings: "നികുതി ക്രമീകരണങ്ങൾ"
+    zones: "സോണുകൾ"
+    new_zone: "പുതിയ സോൺ"
+    default_tax: "സ്ഥിരസ്ഥിതി നികുതി"
+    default_tax_zone: "സ്ഥിരസ്ഥിതി നികുതി സോൺ"
+    country_based: "രാജ്യം അടിസ്ഥാനമാക്കിയുള്ളത്"
+    state_based: "സംസ്ഥാനം അടിസ്ഥാനമാക്കിയുള്ളത്"
+    countries: "രാജ്യങ്ങൾ"
+    listing_countries: "രാജ്യങ്ങളുടെ പട്ടിക"
+    iso_name: "ഐഎസ്ഓ നാമം"
+    states_required: "ആവശ്യമുള്ള സംസ്ഥാനങ്ങൾ"
+    editing_country: "രാജ്യം എഡിറ്റ് ചെയ്യുന്നു"
+    back_to_countries_list: "രാജ്യങ്ങളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
+    states: "സംസ്ഥാനങ്ങൾ"
+    abbreviation: "ചുരുക്കെഴുത്ത്"
+    new_state: "പുതിയ സംസ്ഥാനം"
     payment_methods: "പേയ്മെന്റ് രീതികൾ"
+    taxonomies: "ടാക്സോണമികൾ"
+    new_taxonomy: "പുതിയ ടാക്സോണമി"
+    back_to_taxonomies_list: "ടാക്‌സോണമി ലിസ്റ്റിലേക്ക് മടങ്ങുക"
     shipping_methods: "ഷിപ്പിംഗ് രീതികൾ"
     shipping_method: "ഷിപ്പിംഗ് രീതി"
+    shipment: "കയറ്റുമതി"
     payment: "പേയ്മെന്റ്"
-    status: "പദവി"
+    status: "സ്ഥിതി"
     shipping_categories: "ഷിപ്പിംഗ് വിഭാഗങ്ങൾ"
+    new_shipping_category: "പുതിയ ഷിപ്പിംഗ് വിഭാഗം"
+    back_to_shipping_categories: "ഷിപ്പിംഗ് വിഭാഗങ്ങളിലേക്ക് മടങ്ങുക"
+    editing_shipping_category: "ഷിപ്പിംഗ് വിഭാഗം എഡിറ്റുചെയ്യുന്നു"
     name: "പേര്"
     description: "വിവരണം"
     type: "ഇനം"
+    default: "സ്ഥിരസ്ഥിതി"
     calculator: "കാൽക്കുലേറ്റർ"
+    zone: "സോൺ"
     display: "പ്രദർശിപ്പിക്കുക"
+    environment: "പരിസ്ഥിതി"
     active: "സജീവമാണ്"
     nore: "കൂടുതൽ"
-    create: "സൃഷ്ടിക്കാൻ"
+    no_results: "ഫലങ്ങളൊന്നുമില്ല"
+    create: "ഉണ്ടാക്കുക"
+    loading: "ലോഡിംഗ്"
+    flat_percent: "ശതമാനം"
+    per_kg: "കിലോയ്ക്ക്"
     amount: "തുക"
+    currency: "കറൻസി"
+    first_item: "ആദ്യ ഇനത്തിന്റെ വില"
+    additional_item: "അധിക ഇനത്തിന്റെ വില"
+    max_items: "പരമാവധി ഇനങ്ങൾ"
+    minimal_amount: "കുറഞ്ഞ തുക"
+    normal_amount: "സാധാരണ തുക"
+    discount_amount: "കിഴിവ് തുക"
+    no_images_found: "ചിത്രങ്ങളൊന്നും കണ്ടെത്തിയില്ല"
+    new_image: "പുതിയ ചിത്രം"
+    filename: "ഫയലിന്റെ പേര്"
+    alt_text: "ഇതര വാചകം"
+    thumbnail: "ലഘുചിത്രം"
+    back_to_images_list: "ചിത്രങ്ങളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
     email: ഇമെയിൽ
+    account_updated: "അക്കൗണ്ട് അപ്ഡേറ്റ് ചെയ്തു!"
+    email_updated: "പുതിയ ഇമെയിൽ സ്ഥിരീകരിച്ചുകഴിഞ്ഞാൽ അക്കൗണ്ട് അപ്‌ഡേറ്റ് ചെയ്യും."
+    show_api_key_view_toggled: "ഷോ എപിഐ കീ വീക്ഷണം മാറ്റി!"
+    my_account: "എന്റെ അക്കൗണ്ട്"
     date: "തീയതി"
+    time: "സമയം"
+    inventory_error_flash_for_insufficient_quantity: "നിങ്ങളുടെ കാർട്ടിലെ ഒരു ഇനം ലഭ്യമല്ലാതായി."
     inventory: ഇൻവെന്ററി
     zipcode: പിൻ കോഡ്
+    weight: ഭാരം (കിലോ അല്ലെങ്കിൽ പൗണ്ട്)
+    error_user_destroy_with_orders: "പൂർത്തിയാക്കിയ ഓർഡറുകൾ ഉള്ള ഉപയോക്താക്കളെ ഡിലീറ്റ് ചെയ്യാൻ പാടില്ല"
+    cannot_create_payment_without_payment_methods: "പേയ്‌മെന്റ് രീതികളൊന്നും നിർവചിക്കാതെ നിങ്ങൾക്ക് ഒരു ഓർഡറിനായി പേയ്‌മെന്റ് ഉണ്ടാക്കാനാവില്ല."
+    please_define_payment_methods: "ദയവായി ആദ്യം ചില പേയ്മെന്റ് രീതികൾ നിർവ്വചിക്കുക."
+    options: "ഓപ്ഷനുകൾ"
+    has_no_shipped_units: "ഷിപ്പ് ചെയ്ത യൂണിറ്റുകൾ ഇല്ല"
     successfully_created: '%{resource} വിജയകരമായി സൃഷ്‌ടിച്ചു!'
     successfully_updated: '%{resource} വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്‌തു!'
     payment_method: "പണമടയ്ക്കൽ രീതി"
+    payment_processing_failed: "പേയ്‌മെന്റ് പ്രോസസ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല, നിങ്ങൾ നൽകിയ വിശദാംശങ്ങൾ പരിശോധിക്കുക"
+    not_available: "ബാധകമല്ല"
     sku: "എസ്.കെ.യു"
+    there_are_no_items_for_this_order: "ഈ ഓർഡറിന് ഇനങ്ങളൊന്നുമില്ല."
+    order_populator:
+      out_of_stock: '%{item} സ്റ്റോക്കില്ല.'
     actions:
       update: "അപ്ഡേറ്റ് ചെയ്യുക"
       cancel: "റദ്ദാക്കുക"
     shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 തകരാർ ഈ റെക്കോർഡ് സേവ് ചെയ്യുന്നത് തടഞ്ഞു:"
+          few: "%{count} തകരാറുകൾ ഈ റെക്കോർഡ് സേവ് ചെയ്യുന്നത് തടഞ്ഞു:"
+          many: "%{count} തകരാറുകൾ ഈ റെക്കോർഡ് സേവ് ചെയ്യുന്നത് തടഞ്ഞു:"
+          other: "%{count} തകരാറുകൾ ഈ റെക്കോർഡ് സേവ് ചെയ്യുന്നത് തടഞ്ഞു:"
+        there_were_problems_with_the_following_fields: "ഇനിപ്പറയുന്ന ഫീൽഡുകളിൽ പ്രശ്‌നങ്ങളുണ്ടായി"
       payments_list:
+        date_time: "തീയതി / സമയം"
         amount: "തുക"
         payment_method: "പണമടയ്ക്കൽ രീതി"
         payment_state: "പേയ്മെന്റ് സ്റ്റേറ്റ്"
     errors:
       messages:
+        included_price_validation: "നിങ്ങൾ ഒരു ഡിഫോൾട്ട് ടാക്സ് സോൺ സജ്ജീകരിച്ചിട്ടില്ലെങ്കിൽ തിരഞ്ഞെടുക്കാൻ കഴിയില്ല"
         blank: "ശൂന്യമായിരിക്കാൻ കഴിയില്ല"
+        invalid_instagram_url: "ഉപയോക്തൃ നാമം മാത്രമായിരിക്കണം ഉദാ. പ്രൊഫ"
+    layouts:
+      admin:
+        login_nav:
+          header:
+            store: സ്റ്റോർ
+    validation:
+      must_be_int: "ഒരു പൂർണ്ണസംഖ്യ ആയിരിക്കണം"
     admin:
+      mail_methods:
+        send_testmail: "ടെസ്റ്റ് ഇമെയിൽ അയയ്ക്കുക"
+        testmail:
+          delivery_success: "ടെസ്റ്റ് ഇമെയിൽ അയച്ചു."
+          error: "ടെസ്റ്റ് ഇമെയിൽ അയയ്‌ക്കാൻ ശ്രമിക്കുമ്പോൾ ഒരു തകരാറ്‌ സംഭവിച്ചു."
+      unit_price_tooltip: "വ്യത്യസ്ത ഉൽപ്പന്നങ്ങളും പാക്കേജിംഗ് വലുപ്പങ്ങളും തമ്മിലുള്ള വിലകൾ എളുപ്പത്തിൽ താരതമ്യം ചെയ്യാൻ നിങ്ങളുടെ ഉപഭോക്താക്കളെ അനുവദിക്കുന്നതിലൂടെ യൂണിറ്റ് വില സുതാര്യത വർദ്ധിപ്പിക്കുന്നു. ശ്രദ്ധിക്കുക, കടയുടെ മുൻവശത്ത് പ്രദർശിപ്പിക്കുന്ന അവസാന യൂണിറ്റ് വിലയിൽ നികുതിയും ഫീസും ഉൾപ്പെടുന്നതിനാൽ വ്യത്യാസമുണ്ടാകാം."
       subscriptions:
         number: "നമ്പർ"
       tab:
@@ -3075,111 +3903,263 @@ ml:
         bulk_order_management: "ബൾക്ക് ഓർഡർ മാനേജ്മെന്റ്"
         subscriptions: "സബ്സ്ക്രിപ്ഷനുകൾ"
         products: "ഉൽപ്പന്നങ്ങൾ"
+        option_types: "ഓപ്ഷൻ തരങ്ങൾ"
         properties: "പ്രോപ്പർട്ടികൾ"
         variant_overrides: "ഇൻവെന്ററി"
         reports: "റിപ്പോർട്ടുകൾ"
+        configuration: "കോൺഫിഗറേഷൻ"
         users: "ഉപയോക്താക്കൾ"
         roles: "കർത്തവ്യങ്ങൾ"
         order_cycles: "ഓർഡർ സൈക്കിളുകൾ"
         enterprises: "സംരംഭങ്ങൾ"
+        enterprise_relationships: "അനുമതികൾ"
         customers: "ഉപഭോക്താക്കൾ"
         groups: "ഗ്രൂപ്പുകൾ"
         oidc_settings: "ഓഐഡിസി ക്രമീകരണങ്ങൾ"
+      product_properties:
+        index:
+          inherits_properties_checkbox_hint: "%{supplier} ൽ നിന്ന് പ്രോപ്പർട്ടികൾ അവകാശമാക്കണോ? (മുകളിൽ അസാധുവായില്ലെങ്കിൽ)"
+          add_product_properties: "ഉൽപ്പന്ന ഗുണവിശേഷങ്ങൾ ചേർക്കുക"
       properties:
         index:
-          properties: "പ്രോപ്പർട്ടികൾ"
+          properties: "ഗുണവിശേഷങ്ങൾ"
+          new_property: "പുതിയ പ്രോപ്പർട്ടി"
           name: "പേര്"
+          presentation: "അവതരണം"
+        new:
+          new_property: "പുതിയ പ്രോപ്പർട്ടി"
+        edit:
+          editing_property: "പ്രോപ്പർട്ടി എഡിറ്റ് ചെയ്യുന്നു"
+          back_to_properties_list: "പ്രോപ്പർട്ടീസ് ലിസ്റ്റിലേക്ക് മടങ്ങുക"
         form:
           name: "പേര്"
+          presentation: "അവതരണം"
       return_authorizations:
         index:
-          status: "പദവി"
+          new_return_authorization: "പുതിയ റിട്ടേൺ അനുമതി"
+          return_authorizations: "റിട്ടേൺ അനുമതികൾ"
+          back_to_orders_list: "ഓർഡർ ലിസ്റ്റിലേക്ക് മടങ്ങുക"
+          rma_number: "ആർഎംഎ നമ്പർ"
+          status: "സ്ഥിതി"
           amount: "തുക"
+          cannot_create_returns: "ഈ ഓർഡറിന് ഷിപ്പ് ചെയ്‌ത യൂണിറ്റുകൾ ഇല്ലാത്തതിനാൽ റിട്ടേണുകൾ സൃഷ്‌ടിക്കാനാവില്ല."
           continue: "തുടരുക"
         new:
+          new_return_authorization: "പുതിയ റിട്ടേൺ അനുമതി"
+          back_to_return_authorizations_list: "റിട്ടേൺ അനുമതി ലിസ്റ്റിലേക്ക് മടങ്ങുക"
           continue: "തുടരുക"
         edit:
+          receive: "സ്വീകരിക്കുക"
           are_you_sure: "നിങ്ങൾക്ക് ഉറപ്പാണോ?"
+          return_authorization: "റിട്ടേൺ അനുമതി"
         form:
           product: "ഉൽപ്പന്നം"
+          quantity_shipped: "അളവ് അയച്ചു"
+          quantity_returned: "അളവ് തിരിച്ചയച്ചു"
+          return_quantity: "തിരിച്ചയച്ച അളവ്"
           amount: "തുക"
-      orders:
+          rma_value: "ആർഎംഎ മൂല്യം"
+          reason: "കാരണം"
+          stock_location: "സ്റ്റോക്ക് സ്ഥാനം"
+        states:
+          authorized: "അധികാരപ്പെടുത്തിയത്"
+          received: "ലഭിച്ചു"
+          canceled: "റദ്ദാക്കി"
+      line_items:
         index:
+          results_found: "%{number} ഫലങ്ങൾ കണ്ടെത്തി."
+          viewing: "%{start} മുതൽ %{end} വരെ കാണുന്നു."
+      orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "റദ്ദാക്കിയ ഓർഡറിലേക്ക് ഇനം ചേർക്കാൻ കഴിയില്ല"
+          include_out_of_stock_variants: "സ്റ്റോക്ക് ലഭ്യമല്ലാത്ത വേരിയന്റുകൾ ഉൾപ്പെടുത്തുക"
+        index:
+          listing_orders: "ഓർഡറുകളുടെ പട്ടിക"
           new_order: "പുതിയ ഓർഡർ"
+          capture: "പിടിച്ചെടുക്കുക"
           ship: "കപ്പൽ"
           edit: "എഡിറ്റ് ചെയ്യുക"
+          order_not_updated: "ഓർഡർ അപ്ഡേറ്റ് ചെയ്യാൻ കഴിഞ്ഞില്ല"
+          note: "കുറിപ്പ്"
+          first: "ആദ്യം"
+          last: "അവസാനത്തെത്"
           previous: "മുന്നിലത്തേത്"
           next: "അടുത്തത്"
+          loading: "ലോഡിംഗ്"
+          no_orders_found: "ഓർഡറുകളൊന്നും കണ്ടെത്തിയില്ല"
+          results_found: "%{number} ഫലങ്ങൾ കണ്ടെത്തി."
+          viewing: "%{start} മുതൽ %{end} വരെ കാണുന്നു."
+          print_invoices: "ഇൻവോയ്സുകൾ അച്ചടിക്കുക"
+          cancel_orders: "ഓർഡറുകൾ റദ്ദാക്കുക"
           resend_confirmation: "സ്ഥിരീകരണം അയയ്ക്കുക"
+          resend_confirmation_confirm_html: "ഇത് സ്ഥിരീകരണ ഇമെയിൽ ഉപഭോക്താവിന് വീണ്ടും അയയ്ക്കും.<br />നിങ്ങൾക്ക് തുടരണമെന്ന് തീർച്ചയാണോ?"
+          send_invoice: "ഇൻവോയ്‌സുകൾ അയയ്‌ക്കുക"
+          send_invoice_confirm_html: "തിരഞ്ഞെടുത്ത എല്ലാ പൂർണ്ണമായ ഓർഡറുകൾക്കും ഇത് ഉപഭോക്തൃ ഇൻവോയ്‌സുകൾ ഇമെയിൽ ചെയ്യും.<br>നിങ്ങൾക്ക് തുടരണമെന്ന് തീർച്ചയാണോ?"
+          selected:
+            zero: "ഓർഡർ ഒന്നും തിരഞ്ഞെടുത്തിട്ടില്ല"
+            one: "1 ഓർഡർ തിരഞ്ഞെടുത്തു"
+            other: "%{count} ഓർഡറുകൾ തിരഞ്ഞെടുത്തു"
         sortable_header:
           payment_state: "പേയ്മെന്റ് സ്റ്റേറ്റ്"
           shipment_state: "ഷിപ്പിംഗ് സ്റ്റേറ്റ്"
           completed_at: "പൂർത്തിയാക്കിയത്"
           number: "നമ്പർ"
-          state: "സംസ്ഥാനം"
+          state: "സ്റ്റേറ്റ്"
           email: "ഉപഭോക്താവിന്റെ ഇ-മെയിൽ"
         invoice:
+          issued_on: "പ്രസിദ്ധീകരിച്ചത്"
           tax_invoice: "നികുതി ഇൻവോയ്സ്"
           code: "കോഡ്"
+          from: "നിന്ന്"
+          to: "-നുള്ള ബിൽ"
           shipping: "ഷിപ്പിംഗ്"
+          order_number: "ഓർഡർ നമ്പർ"
+          invoice_number: "ഇൻവോയ്സ് നമ്പർ"
           payments_list:
+            date_time: "തീയതി / സമയം"
             payment_method: "പണമടയ്ക്കൽ രീതി"
+            payment_state: "പേയ്മെന്റ് സ്റ്റേറ്റ്"
             amount: "തുക"
         note:
           note_label: "കുറിപ്പ്:"
           no_note_present: "കുറിപ്പൊന്നും നൽകിയിട്ടില്ല."
         form:
           distribution_fields:
-            title: "വിതരണ"
+            title: "വിതരണം"
+            distributor: "വിതരണക്കാരൻ:"
+            order_cycle: "ഓർഡർ സൈക്കിൾ:"
+          line_item_adjustments: "ലൈൻ ഇനം മാറ്റംവരുത്തലുകൾ"
+          order_adjustments: "ഓർഡർ മാറ്റംവരുത്തലുകൾ"
+          order_total: "ഓർഡർ ആകെ"
       overview:
+        enterprises_header:
+          ofn_with_tip: എന്റർപ്രൈസസ് എന്നത് പ്രൊഡ്യൂസർമാർ കൂടാതെ/അല്ലെങ്കിൽ ഹബുകൾ ആണ്, മാത്രമല്ല അത് ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിലെ ഓർഗനൈസേഷന്റെ അടിസ്ഥാന യൂണിറ്റുമാണ്.
+        enterprise_row:
+          has_no_enterprise_fees: "എന്റർപ്രൈസ് ഫീസ് ഇല്ല"
+          has_no_payment_methods: "പേയ്‌മെന്റ് രീതികളൊന്നുമില്ല"
+          has_no_shipping_methods: "ഷിപ്പിംഗ് രീതികളൊന്നുമില്ല"
+        products:
+          products_tip: "ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിലൂടെ നിങ്ങൾ വിൽക്കുന്ന ഉൽപ്പന്നങ്ങൾ."
+          active_products:
+            zero: "നിങ്ങൾക്ക് സജീവ ഉൽപ്പന്നങ്ങളൊന്നുമില്ല."
+            one: "നിങ്ങൾക്ക് ഒരു സജീവ ഉൽപ്പന്നമുണ്ട്"
+            few: "നിങ്ങൾക്ക് %{count} സജീവ ഉൽപ്പന്നങ്ങളുണ്ട്"
+            many: "നിങ്ങൾക്ക് %{count} സജീവ ഉൽപ്പന്നങ്ങളുണ്ട്"
+            other: "നിങ്ങൾക്ക് %{count} സജീവ ഉൽപ്പന്നങ്ങളുണ്ട്"
         order_cycles:
           order_cycles: "ഓർഡർ സൈക്കിളുകൾ"
+          order_cycles_tip: "നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ ഉപഭോക്താക്കൾക്ക് എപ്പോൾ, എവിടെയാണ് ലഭ്യമാകുന്നതെന്ന് ഓർഡർ സൈക്കിളുകൾ നിർണ്ണയിക്കുന്നു."
+          you_have_active:
+            zero: "നിങ്ങൾക്ക് സജീവമായ ഓർഡർ സൈക്കിളുകളൊന്നുമില്ല."
+            one: "നിങ്ങൾക്ക് ഒരു സജീവ ഓർഡർ സൈക്കിൾ ഉണ്ട്."
+            few: "നിങ്ങൾക്ക് %{count} സജീവമായ ഓർഡർ സൈക്കിളുകൾ ഉണ്ട്."
+            many: "നിങ്ങൾക്ക് %{count} സജീവമായ ഓർഡർ സൈക്കിളുകൾ ഉണ്ട്."
+            other: "നിങ്ങൾക്ക് %{count} സജീവമായ ഓർഡർ സൈക്കിളുകൾ ഉണ്ട്."
+          manage_order_cycles: "ഓർഡർ സൈക്കിളുകൾ നിയന്ത്രിക്കുക"
+        version:
+          view_all_releases: എല്ലാ റിലീസുകളും കാണുക
       shipping_methods:
         index:
           shipping_methods: "ഷിപ്പിംഗ് രീതികൾ"
+          new_shipping_method: "പുതിയ ഷിപ്പിംഗ് രീതി"
           name: "പേര്"
           products_distributor: "വിതരണക്കാരൻ"
+          zone: "സോൺ"
           calculator: "കാൽക്കുലേറ്റർ"
           display: "പ്രദർശിപ്പിക്കുക"
+          both: "ചെക്ക്ഔട്ടും ബാക്ക് ഓഫീസും"
           back_end: "ബാക്ക് ഓഫീസ് മാത്രം"
+          no_shipping_methods_found: "ഷിപ്പിംഗ് രീതികളൊന്നും കണ്ടെത്തിയില്ല"
+        new:
+          new_shipping_method: "പുതിയ ഷിപ്പിംഗ് രീതി"
+          back_to_shipping_methods_list: "ഷിപ്പിംഗ് രീതികളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
+        edit:
+          editing_shipping_method: "ഷിപ്പിംഗ് രീതി എഡിറ്റുചെയ്യുന്നു"
+          new: "പുതിയത്"
+          back_to_shipping_methods_list: "ഷിപ്പിംഗ് രീതികളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
         form:
           categories: "വിഭാഗങ്ങൾ"
           tax_category: "നികുതി വിഭാഗം"
+          zones: "സോണുകൾ"
+          both: "ചെക്ക്ഔട്ടും ബാക്ക് ഓഫീസും"
           back_end: "ബാക്ക് ഓഫീസ് മാത്രം"
+          deactivation_warning: "ഒരു ഷിപ്പിംഗ് രീതി ഡീ-ആക്ടിവേറ്റ് ചെയ്യുന്നത് നിങ്ങളുടെ ലിസ്റ്റിൽ നിന്ന് ഷിപ്പിംഗ് രീതി അപ്രത്യക്ഷമാക്കും. പകരമായി, 'ഡിസ്‌പ്ലേ' എന്ന ഓപ്‌ഷൻ 'ബാക്ക് ഓഫീസ് മാത്രം' ആയി സജ്ജീകരിച്ച് നിങ്ങൾക്ക് ചെക്ക്ഔട്ട് പേജിൽ നിന്ന് ഒരു ഷിപ്പിംഗ് രീതി മറയ്ക്കാം."
       payment_methods:
         index:
           payment_methods: "പേയ്മെന്റ് രീതികൾ"
+          new_payment_method: "പുതിയ പേയ്‌മെന്റ് രീതി"
           name: "പേര്"
           products_distributor: "വിതരണക്കാരൻ"
+          provider: "ദാതാവ്"
+          environment: "പരിസ്ഥിതി"
           display: "പ്രദർശിപ്പിക്കുക"
           active: "സജീവമാണ്"
+          both: "രണ്ടും"
           back_end: "ബാക്ക് ഓഫീസ് മാത്രം"
           active_yes: "അതെ"
           active_no: "ഇല്ല"
+          no_payment_methods_found: "പേയ്‌മെന്റ് രീതികളൊന്നും കണ്ടെത്തിയില്ല"
+        new:
+          new_payment_method: "പുതിയ പേയ്‌മെന്റ് രീതി"
+          back_to_payment_methods_list: "പേയ്‌മെന്റ് രീതികളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
+        edit:
+          new: "പുതിയത്"
+          editing_payment_method: "പേയ്‌മെന്റ് രീതി എഡിറ്റുചെയ്യുന്നു"
+          back_to_payment_methods_list: "പേയ്‌മെന്റ് രീതികളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
         stripe_connect:
           enterprise_select_placeholder: തിരഞ്ഞെടുക്കുക...
+          loading_account_information_msg: സ്ട്രൈപ്പിൽ നിന്ന് അക്കൗണ്ട് വിവരങ്ങൾ ലോഡുചെയ്യുന്നു, ദയവായി കാത്തിരിക്കൂ...
+          stripe_disabled_msg: സ്ട്രൈപ്പ് പേയ്‌മെന്റുകൾ സിസ്റ്റം അഡ്മിനിസ്ട്രേറ്റർ പ്രവർത്തനരഹിതമാക്കി.
+          request_failed_msg: ക്ഷമിക്കണം. സ്ട്രൈപ്പ് ഉപയോഗിച്ച് അക്കൗണ്ട് വിശദാംശങ്ങൾ പരിശോധിക്കാൻ ശ്രമിക്കുമ്പോൾ എന്തോ തകരാർ സംഭവിച്ചു...
           account_missing_msg: ഈ എന്റർപ്രൈസസിന് സ്ട്രൈപ്പ് അക്കൗണ്ട് നിലവിലില്ല.
-          status: പദവി
+          connect_one: ഒന്ന് ബന്ധിപ്പിക്കുക
+          access_revoked_msg: ഈ സ്‌ട്രൈപ്പ് അക്കൗണ്ടിലേക്കുള്ള ആക്‌സസ് റദ്ദാക്കി, നിങ്ങളുടെ അക്കൗണ്ട് വീണ്ടും കണക്‌റ്റ് ചെയ്യുക.
+          status: സ്ഥിതി
+          connected: ബന്ധിപ്പിച്ചു
           account_id: അക്കൗണ്ട് ഐഡി
           business_name: ബിസിനസ്സ് പേര്
           charges_enabled: ചാർജുകൾ പ്രവർത്തനക്ഷമമാക്കി
         form:
           name: "പേര്"
           description: "വിവരണം"
+          environment: "പരിസ്ഥിതി"
           display: "പ്രദർശിപ്പിക്കുക"
           active: "സജീവമാണ്"
           active_yes: "അതെ"
           active_no: "ഇല്ല"
+          both: "ചെക്ക്ഔട്ടും ബാക്ക് ഓഫീസും"
           back_end: "ബാക്ക് ഓഫീസ് മാത്രം"
           tags: "ടാഗുകൾ"
+          deactivation_warning: "പേയ്‌മെന്റ് രീതി ഡീ-ആക്ടിവേറ്റ് ചെയ്യുന്നത് നിങ്ങളുടെ ലിസ്റ്റിൽ നിന്ന് പേയ്‌മെന്റ് രീതി അപ്രത്യക്ഷമാക്കും. പകരമായി, 'ഡിസ്‌പ്ലേ'എന്ന ഓപ്‌ഷൻ 'ബാക്ക് ഓഫീസ് മാത്രം' ആയി സജ്ജീകരിച്ച് നിങ്ങൾക്ക് ചെക്ക്ഔട്ട് പേജിൽ നിന്ന് ഒരു പേയ്‌മെന്റ് രീതി മറയ്ക്കാം."
+        providers:
+          provider: "ദാതാവ്"
+          check: "പണം/ഇഎഫ്ടി/ മുതലായവ (ഓട്ടോമാറ്റിക് മൂല്യനിർണ്ണയം ആവശ്യമില്ലാത്ത പേയ്‌മെന്റുകൾ)"
+          pin: "പേയ്‌മെന്റുകൾ പിൻ ചെയ്യുക"
+          paypalexpress: "പേപാൽ എക്സ്പ്രസ്"
+          stripeconnect: "സ്‌ട്രൈപ്പ്"
+          stripesca: "സ്‌ട്രൈപ്പ് എസ്സിഎ"
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: പേയ്‌മെന്റ് സംരക്ഷിക്കുന്നതിൽ തകരാറ്‌
+            submitting_payment: പേയ്‌മെന്റ് സമർപ്പിക്കുന്നു...
+          paypal:
+            no_payment_via_admin_backend: പേപാൽ പേയ്‌മെന്റുകൾ ബാക്ക് ഓഫീസിൽ ക്യാപ്‌ചർ ചെയ്യാൻ കഴിയില്ല
       products:
+        image_upload_error: "ദയവായി JPG, PNG, GIF, SVG അല്ലെങ്കിൽ WEBP ഫോർമാറ്റിൽ ചിത്രം അപ്‌ലോഡ് ചെയ്യുക."
+        image_not_processable: "ഇമേജ് അറ്റാച്ച്‌മെന്റ് ഒരു സാധുവായ ചിത്രമല്ല."
         new:
+          title: "പുതിയ ഉൽപ്പന്നം"
+          new_product: "പുതിയ ഉൽപ്പന്നം"
           supplier: "വിതരണക്കാരൻ"
+          supplier_select_placeholder: "ഒരു വിതരണക്കാരനെ തിരഞ്ഞെടുക്കുക"
           product_name: "ഉത്പന്നത്തിന്റെ പേര്"
           units: "യൂണിറ്റ് വലിപ്പം"
           value: "മൂല്യം"
           unit_name: "യൂണിറ്റിന്റെ പേര്"
           price: "വില"
+          unit_price: "യൂണിറ്റ് വില"
+          unit_price_legend: "ഇനത്തിന്റെ വിലയെ അടിസ്ഥാനമാക്കി കണക്കാക്കുന്നു"
           on_hand: "കയ്യിൽ"
           on_demand: "ആവശ്യപ്പെടുന്നതനുസരിച്ച്"
           product_description: "ഉൽപ്പന്ന വിവരണം"
@@ -3188,6 +4168,10 @@ ml:
         index:
           header:
             title: ഉൽപ്പന്നങ്ങൾ മൊത്തമായി തിരുത്തുക
+          indicators:
+            title: ഉൽപ്പന്നങ്ങൾ ലോഡുചെയ്യുന്നു
+            no_products: "ഇതുവരെ ഉൽപ്പന്നങ്ങളൊന്നുമില്ല. എന്തുകൊണ്ടാണ് നിങ്ങൾ ഒന്നും ചേർക്കാത്തത്?"
+            no_results: "ക്ഷമിക്കണം, ഫലങ്ങളൊന്നും പൊരുത്തപ്പെടുന്നില്ല"
           products_head:
             name: പേര്
             unit: യൂണിറ്റ്
@@ -3197,40 +4181,74 @@ ml:
             inherits_properties?: സ്വത്തുക്കൾ അവകാശമാക്കുന്നുണ്ടോ?
             av_on: "Av. ഓൺ"
             import_date: "ഇറക്കുമതി തീയതി"
+          products_variant:
+            variant_has_n_overrides: "ഈ വേരിയന്റിന് %{n} തിരുത്തൽ(കൾ) ഉണ്ട്"
+            new_variant: "പുതിയ വേരിയന്റ്"
           product_name: ഉത്പന്നത്തിന്റെ പേര്
         primary_taxon_form:
           product_category: ഉൽപ്പന്ന വിഭാഗം
+        group_buy_form:
+          group_buy: "ഗ്രൂപ്പ് വാങ്ങൽ?"
+          bulk_unit_size: ബൾക്ക് യൂണിറ്റ് വലിപ്പം
         display_as:
           display_as: പ്രദർശന മാർഗ്ഗം
+        clone:
+          success: ഉൽപ്പന്നം ക്ലോൺ ചെയ്തു
       reports:
         table:
           select_and_search: "നിങ്ങളുടെ ഡാറ്റ ആക്‌സസ് ചെയ്യാൻ ഫിൽട്ടറുകൾ തിരഞ്ഞെടുത്ത് %{option} ക്ലിക്ക് ചെയ്യുക."
+        customer_names_message:
+          customer_names_tip: "നിങ്ങൾ വിതരണം ചെയ്ത ഓർഡറുകൾക്കായി ഉപഭോക്തൃ പേരുകൾ മറച്ചിട്ടുണ്ടെങ്കിൽ, നിങ്ങൾക്ക് വിതരണക്കാരനെ ബന്ധപ്പെടുകയും ഉപഭോക്തൃ പേരുകൾ കാണാൻ വിതരണക്കാരെ അനുവദിക്കുന്നതിന് അവരുടെ ഷോപ്പ് മുൻഗണനകൾ അപ്‌ഡേറ്റ് ചെയ്യാൻ കഴിയുമോ എന്ന് ചോദിക്കുകയും ചെയ്യാം."
+        products_and_inventory:
+          all_products:
+            message: "റിപ്പോർട്ടുചെയ്ത സ്റ്റോക്ക് ലെവലുകൾ വിതരണക്കാരന്റെ ഉൽപ്പന്ന ലിസ്റ്റുകളിൽ നിന്ന് മാത്രമാണെന്ന കാര്യം ശ്രദ്ധിക്കുക. നിങ്ങളുടെ സ്റ്റോക്ക് അളവ് നിയന്ത്രിക്കാൻ നിങ്ങൾ ഇൻവെന്ററി ഉപയോഗിക്കുകയാണെങ്കിൽ ഈ റിപ്പോർട്ടിൽ ഈ മൂല്യങ്ങൾ അവഗണിക്കപ്പെടും."
       users:
         index:
+          listing_users: "ഉപയോക്താക്കളെ ലിസ്റ്റുചെയ്യുന്നു"
+          new_user: "പുതിയ ഉപയോക്താവ്"
           user: "ഉപയോക്താവ്"
           enterprise_limit: "എന്റർപ്രൈസ് പരിധി"
           search: "തിരയുക"
           email: "ഇമെയിൽ"
         edit:
+          editing_user: "ഉപയോക്താവ് എഡിറ്റ് ചെയ്യുന്നു"
+          back_to_users_list: "ഉപയോക്താക്കളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
           general_settings: "പൊതുവായ ക്രമീകരണങ്ങൾ"
         form:
+          disabled: "പ്രവർത്തനരഹിതമാണോ?"
           email: "ഇമെയിൽ"
           roles: "കർത്തവ്യങ്ങൾ"
           enterprise_limit: "എന്റർപ്രൈസ് പരിധി"
+          confirm_password: "പാസ്സ്‌വേർഡ് സ്ഥിരീകരിക്കുക"
           password: "പാസ്സ്‌വേർഡ്"
+          locale: "ഭാഷ"
+        email_confirmation:
+          confirmation_pending: "ഇമെയിൽ സ്ഥിരീകരണം തീർച്ചപ്പെടുത്തിയിട്ടില്ല. ഞങ്ങൾ ഒരു സ്ഥിരീകരണ ഇമെയിൽ %{address} ലേക്ക് അയച്ചു."
       variants:
         index:
           sku: "എസ്.കെ.യു"
           price: "വില"
+          options: "ഓപ്ഷനുകൾ"
+          no_results: "ഫലങ്ങളൊന്നുമില്ല"
+          option_types: "ഓപ്ഷൻ തരങ്ങൾ"
+          option_values: "ഓപ്ഷൻ മൂല്യങ്ങൾ"
           and: "ഒപ്പം"
+          new_variant: "പുതിയ വേരിയന്റ്"
+          show_active: "സജീവമായവ കാണിക്കുക"
+          show_deleted: "ഇല്ലാതാക്കിയവ കാണിക്കുക"
+        new:
+          new_variant: "പുതിയ വേരിയന്റ്"
         form:
           sku: "എസ്.കെ.യു"
           price: "വില"
+          unit_price: "യൂണിറ്റ് വില"
           display_as: "പ്രദർശന മാർഗ്ഗം"
           display_name: "പ്രദർശന നാമം"
+          display_as_placeholder: 'ഉദാ. 2 കി.ഗ്രാം'
+          display_name_placeholder: 'ഉദാ. തക്കാളി'
         autocomplete:
           out_of_stock: "സ്റ്റോക്കില്ല"
-          producer_name: "നിർമ്മാതാവ്"
+          producer_name: "പ്രൊഡ്യൂസർ"
           unit: "യൂണിറ്റ്"
       shared:
         configuration_menu:
@@ -3239,59 +4257,303 @@ ml:
           name: "പേര്"
           number: "നമ്പർ"
           completed_at: "പൂർത്തിയാക്കിയത്"
-          state: "സംസ്ഥാനം"
+          state: "സ്റ്റേറ്റ്"
           payment_state: "പേയ്മെന്റ് സ്റ്റേറ്റ്"
           shipment_state: "ഷിപ്പിംഗ് സ്റ്റേറ്റ്"
           email: "ഇമെയിൽ"
           total: "ആകെ"
           billing_address_name: "പേര്"
+      general_settings:
+        edit:
+          legal_settings: "നിയമ ക്രമീകരണങ്ങൾ"
+          cookies_consent_banner_toggle: "കുക്കികളുടെ സമ്മത ബാനർ പ്രദർശിപ്പിക്കുക"
+          privacy_policy_url: "സ്വകാര്യതാ നയ യുആർഎൽ"
+          enterprises_require_tos: "സംരംഭങ്ങൾ സേവന നിബന്ധനകൾ അംഗീകരിക്കണം"
+          shoppers_require_tos: "ഷോപ്പർമാർ സേവന നിബന്ധനകൾ അംഗീകരിക്കണം"
+          cookies_policy_matomo_section: "കുക്കി നയ പേജിൽ മറ്റോമോ വിഭാഗം പ്രദർശിപ്പിക്കുക"
+          footer_tos_url: "സേവന നിബന്ധനകൾ യുആർഎൽ"
+    checkout:
+      payment:
+        stripe:
+          choose_one: ഒന്ന് തിരഞ്ഞെടുക്കുക
+          enter_new_card: ഒരു പുതിയ കാർഡിനായി വിശദാംശങ്ങൾ നൽകുക
+          used_saved_card: "സേവ് ചെയ്തിട്ടുള്ള കാർഡ് ഉപയോഗിക്കുക:"
+          or_enter_new_card: "അല്ലെങ്കിൽ, ഒരു പുതിയ കാർഡിന്റെ വിശദാംശങ്ങൾ നൽകുക:"
+          remember_this_card: ഈ കാർഡ് ഓർമിച്ചിരിക്കണോ?
+        stripe_sca:
+          choose_one: ഒന്ന് തിരഞ്ഞെടുക്കുക
+          enter_new_card: ഒരു പുതിയ കാർഡിനായി വിശദാംശങ്ങൾ നൽകുക
+          used_saved_card: "സേവ് ചെയ്തിട്ടുള്ള കാർഡ് ഉപയോഗിക്കുക:"
+          or_enter_new_card: "അല്ലെങ്കിൽ, ഒരു പുതിയ കാർഡിന്റെ വിശദാംശങ്ങൾ നൽകുക:"
+          remember_this_card: ഈ കാർഡ് ഓർമിച്ചിരിക്കണോ?
     date_picker:
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
+      today: "ഇന്ന്"
+      now: "ഇപ്പോൾ"
       close: "അടയ്ക്കുക"
     orders:
+      error_flash_for_unavailable_items: "നിങ്ങളുടെ കാർട്ടിലെ ഒരു ഇനം ലഭ്യമല്ലാതായി. തിരഞ്ഞെടുത്ത അളവുകൾ തിരുത്തുക."
+      edit:
+        login_to_view_order: "നിങ്ങളുടെ ഓർഡർ കാണുന്നതിന് ദയവായി ലോഗിൻ ചെയ്യുക."
+      bought:
+        item: "ഈ ഓർഡർ സൈക്കിളിൽ ഇതിനകം ഓർഡർ ചെയ്തിട്ടുണ്ട്"
       line_item:
+        insufficient_stock: "മതിയായ സ്റ്റോക്ക് ലഭ്യമല്ല, %{on_hand} മാത്രം ശേഷിക്കുന്നു"
         out_of_stock: "സ്റ്റോക്കില്ല"
+        unavailable_item: "നിലവിൽ ലഭ്യമല്ല"
+    shipment_states:
+      backorder: ബാക്ക്ഓർഡർ
+      partial: ഭാഗികമായ
+      pending: തീർച്ചപ്പെടാത്ത
+      ready: തയ്യാർ
+      shipped: അയച്ചു
+      canceled: റദ്ദാക്കി
+    payment_states:
+      balance_due: ബാക്കി
+      completed: പൂർത്തിയാക്കിയത്
+      checkout: ചെക്ക് ഔട്ട്
+      credit_owed: കടബാധ്യത
+      failed: പരാജയപ്പെട്ടു
+      paid: പണം നൽകി
+      pending: തീർച്ചപ്പെടാത്ത
+      processing: പ്രോസസ്സിംഗ്
+      requires_authorization: "അനുമതി ആവശ്യമാണ്"
+      void: ശൂന്യം
+      invalid: അസാധുവാണ്
+      authorise: അധികാരപ്പെടുത്തുക
     order_mailer:
+      cancel_email:
+        customer_greeting: "പ്രിയ %{name},"
+        instructions_html: "<strong>%{distributor}</strong> -ൽ നിന്നുള്ള നിങ്ങളുടെ ഓർഡർ റദ്ദാക്കി. നിങ്ങളുടെ രേഖകൾക്കായി ഈ റദ്ദാക്കൽ വിവരം സൂക്ഷിക്കുക."
+        dont_cancel: "നിങ്ങൾ മനസ്സ് മാറ്റുകയോ ഈ ഓർഡർ റദ്ദാക്കാൻ ആഗ്രഹിക്കുന്നില്ലെങ്കിലോ ദയവായി %{email} -ൽ ബന്ധപ്പെടുക "
+        order_summary_canceled_html: "<strong>ഓർഡർ സംഗ്രഹം #%{number} [റദ്ദാക്കി]</strong>"
+        details: "നിങ്ങൾ ഓർഡർ ചെയ്തതിന്റെ വിശദാംശങ്ങൾ ഇതാ:"
+        unpaid_order: "നിങ്ങളുടെ ഓർഡറിന് പണമടച്ചിട്ടില്ലാത്തതിനാൽ റീഫണ്ട് നൽകിയിട്ടില്ല"
+        paid_order: "നിങ്ങളുടെ ഓർഡറിന് പണമടച്ചിട്ടുള്ളതിനാൽ %{distributor} മുഴുവൻ തുകയും റീഫണ്ട് ചെയ്തു"
+        credit_order: "നിങ്ങളുടെ ഓർഡറിന് പണമടച്ചിട്ടുള്ളതിനാൽ നിങ്ങളുടെ അക്കൗണ്ടിൽ ക്രെഡിറ്റ് ചെയ്യപ്പെട്ടു"
+        subject: "ഓർഡർ റദ്ദാക്കൽ"
+      cancel_email_for_shop:
+        greeting: "പ്രിയ %{name},"
+        subject: "ഓർഡർ റദ്ദാക്കൽ"
+        intro: "ഒരു ഉപഭോക്താവ് അവരുടെ ഓർഡർ # %{number} റദ്ദാക്കി."
+        view_cancelled_order: "റദ്ദാക്കിയ ഓർഡർ കാണുക"
       confirm_email:
         subject: "ഓർഡർ സ്ഥിരീകരണം"
+      invoice_email:
+        hi: "ഹായ് %{name}"
+        invoice_attached_text: നിങ്ങളുടെ സമീപകാല ഓർഡറിന്റെ ഇൻവോയ്സ് ഇവിടെ കൊടുത്തിരിക്കുന്നു, കാണുക
+    user_mailer:
+      reset_password_instructions:
+        request_sent_text: |
+            നിങ്ങളുടെ പാസ്‌വേഡ് പുനഃസജ്ജമാക്കാനുള്ള അഭ്യർത്ഥന നടത്തി.
+            നിങ്ങളല്ല ഈ അഭ്യർത്ഥന നടത്തിയതെങ്കിൽ, ഈ ഇമെയിൽ അവഗണിക്കുക.
+        link_text: >
+            നിങ്ങൾ ഈ അഭ്യർത്ഥന നടത്തിയെങ്കിൽ താഴെയുള്ള ലിങ്കിൽ ക്ലിക്ക് ചെയ്യുക:
+        issue_text: |
+            മുകളിലുള്ള യുആർഎൽ പ്രവർത്തിക്കുന്നില്ലെങ്കിൽ, അത് നിങ്ങളുടെ ബ്രൗസറിൽ പകർത്താൻ ശ്രമിക്കുക.
+            എന്തെങ്കിലും പ്രശ്നങ്ങൾ ഉണ്ടെങ്കിൽ ഞങ്ങളുമായി ബന്ധപ്പെടുക.
+        subject: "പാസ്‌വേഡ് പുനഃസജ്ജമാക്കുന്നതിനുള്ള നിർദ്ദേശങ്ങൾ "
+      confirmation_instructions:
+        subject: "നിങ്ങളുടെ ഓഎഫ്എൻ അക്കൗണ്ട് സ്ഥിരീകരിക്കുക"
+    payment_mailer:
+      authorize_payment:
+        subject: "ഓഎഫ്എൻ-ൽ %{distributor} -ലേക്കുള്ള നിങ്ങളുടെ പേയ്‌മെന്റ് അംഗീകരിക്കുക"
+        instructions: "%{distributor} -ക്കുള്ള നിങ്ങളുടെ %{amount}പേയ്‌മെന്റിന് അധിക പ്രാമാണീകരണം ആവശ്യമാണ്. നിങ്ങളുടെ പേയ്‌മെന്റ് അംഗീകരിക്കുന്നതിന് ഇനിപ്പറയുന്ന യുആർഎൽ സന്ദർശിക്കുക:"
+      authorization_required:
+        subject: "ഒരു പേയ്‌മെന്റിന് ഉപഭോക്താവിന്റെ അനുമതി ആവശ്യമാണ്"
+        message: "%{order_number} എന്ന ഓർഡറിന്റെ പേയ്‌മെന്റിന് ഉപഭോക്താവിൽ നിന്ന് അധിക അനുമതി ആവശ്യമാണ്. ഉപഭോക്താവിന് ഇമെയിൽ വഴി അറിയിപ്പ് ലഭിച്ചു, അത് അംഗീകരിക്കപ്പെടുന്നതുവരെ പേയ്‌മെന്റ് തീർച്ചപ്പെടുത്തിയിട്ടില്ലെന്ന് ദൃശ്യമാകും."
     shipment_mailer:
       shipped_email:
         dear_customer: "പ്രിയ ഉപഭോക്താവേ,"
+        instructions: "%{distributor} ൽ നിന്നുള്ള നിങ്ങളുടെ ഓർഡർ അയച്ചു"
         shipment_summary: "ഷിപ്പിംഗ് സംഗ്രഹം"
         subject: "ഷിപ്പ്മെന്റ് അറിയിപ്പ്"
         thanks: "നിങ്ങളുടെ ബിസിനസ്സിന് നന്ദി."
         track_information: "ട്രാക്കിംഗ് വിവരങ്ങൾ: %{tracking}"
         track_link: "ട്രാക്കിംഗ് ലിങ്ക്: %{url}"
+        picked_up_instructions: "%{distributor} ൽ നിന്നുള്ള നിങ്ങളുടെ ഓർഡർ പിക്ക് ചെയ്തു"
+        picked_up_subject: "പിക്കപ്പ് അറിയിപ്പ്"
+    test_mailer:
+      test_email:
+        greeting: "അഭിനന്ദനങ്ങൾ!"
+        message: "നിങ്ങൾക്ക് ഈ ഇമെയിൽ ലഭിച്ചിട്ടുണ്ടെങ്കിൽ, നിങ്ങളുടെ ഇമെയിൽ ക്രമീകരണം ശരിയാണ്."
+        subject: "ടെസ്റ്റ് മെയിൽ"
     order_state:
+      address: വിലാസം
+      adjustments: മാറ്റംവരുത്തലുകൾ
+      awaiting_return: തിരിച്ചുവരവിനായി കാത്തിരിക്കുന്നു
+      canceled: റദ്ദാക്കി
       cart: കാർട്ട്
+      confirmation: "സ്ഥിരീകരണം"
+      complete: പൂർത്തിയായത്
+      confirm: സ്ഥിരീകരിക്കുക
+      delivery: ഡെലിവറി
+      paused: താൽക്കാലികമായി നിർത്തി
+      payment: പേയ്മെന്റ്
+      pending: തീർച്ചപ്പെടാത്ത
+      resumed: പുനരാരംഭിച്ചു
+      returned: തിരിച്ചയച്ചു
+    subscription_state:
+      active: സജീവം
+      pending: തീർച്ചപ്പെടാത്ത
+      ended: അവസാനിച്ചു
+      paused: താൽക്കാലികമായി നിർത്തി
+      canceled: റദ്ദാക്കി
     paypal:
+      already_refunded: "ഈ പേയ്‌മെന്റ് റീഫണ്ട് ചെയ്‌തു, അതിൽ തുടർ നടപടികളൊന്നും സ്വീകരിക്കാനാകില്ല."
+      no_payment_via_admin_backend: "നിങ്ങൾക്ക് ഇപ്പോൾ അഡ്‌മിൻ ബാക്കെൻഡ് വഴി പേയ്പാൽ അക്കൗണ്ടുകൾ ചാർജ് ചെയ്യാൻ കഴിയില്ല."
+      transaction: "പേപാൽ ഇടപാട്"
+      payer_id: "പേയർ ഐഡി"
+      transaction_id: "ഇടപാട് ഐഡി"
+      token: "ടോക്കൺ"
+      refund: "റീഫണ്ട്"
       refund_amount: "തുക"
+      original_amount: "യഥാർത്ഥ തുക: %{amount}"
+      refund_successful: "പേയ്പാൽ റീഫണ്ട് വിജയകരമായി"
+      refund_unsuccessful: "പേയ്പാൽ റീഫണ്ട് പരാജയപ്പെട്ടു"
+      actions:
+        refund: "റീഫണ്ട്"
+      flash:
+        cancel: "പേയ്പാൽ ഉപയോഗിക്കാൻ താൽപ്പര്യമില്ലേ? കുഴപ്പമില്ല."
+        connection_failed: "പേയ്പാൽ-ലേക്ക് ബന്ധിപ്പിക്കാൻ കഴിഞ്ഞില്ല."
+        generic_error: "പേയ്പാൽ പരാജയപ്പെട്ടു. %{reasons}"
     users:
+      api_keys:
+        regenerate_key: "കീ വീണ്ടും ഉണ്ടാക്കുക"
+        title: എപിഐ കീ
+      webhook_endpoints:
+        title: വെബ്‌ഹുക്ക് എൻഡ്‌പോയിന്റുകൾ
+        description: സിസ്റ്റത്തിലെ ഇവന്റുകൾ ബാഹ്യ സിസ്റ്റങ്ങളിലേക്ക് വെബ്‌ഹുക്കുകളെ ട്രിഗർ ചെയ്‌തേക്കാം.
+        event_types:
+          order_cycle_opened: ഓർഡർ സൈക്കിൾ തുറന്നു
+        event_type:
+          header: ഇവന്റ് തരം
+        url:
+          header: എൻഡ്‌പോയിന്റ് യുആർഎൽ
+          create_placeholder: റിമോട്ട് വെബ്ഹുക്ക് എൻഡ് പോയിന്റിന്റെ യുആർഎൽ നൽകുക
+      developer_settings:
+        title: ഡെവലപ്പർ ക്രമീകരണങ്ങൾ
+      form:
+        account_settings: അക്കൗണ്ട് ക്രമീകരണങ്ങൾ
       show:
         tabs:
+          developer_settings: ഡെവലപ്പർ ക്രമീകരണങ്ങൾ
           orders: ഓർഡറുകൾ
+          cards: ക്രെഡിറ്റ് കാർഡുകൾ
+          transactions: ഇടപാടുകൾ
+          settings: അക്കൗണ്ട് ക്രമീകരണങ്ങൾ
+        unconfirmed_email: "%{unconfirmed_email} -ന്റെ ഇമെയിൽ സ്ഥിരീകരണം നടന്നിട്ടില്ല. പുതിയ ഇമെയിൽ സ്ഥിരീകരിച്ചുകഴിഞ്ഞാൽ നിങ്ങളുടെ ഇമെയിൽ വിലാസം അപ്ഡേറ്റ് ചെയ്യപ്പെടും."
+      orders:
+        open_orders: ആരംഭിച്ച ഓർഡറുകൾ
+        past_orders: കഴിഞ്ഞ ഓർഡറുകൾ
+      transactions:
+        transaction_history: ഇടപാട് ചരിത്രം
+        authorisation_required: അംഗീകാരം ആവശ്യമാണ്
+        authorise: അധികാരപ്പെടുത്തുക
       open_orders:
+        order: ഓർഡർ ചെയ്യുക
         shop: കട
+        changes_allowed_until: -വരെ മാറ്റങ്ങൾ അനുവദിച്ചിരിക്കുന്നു
         items: ഇനങ്ങൾ
         total: ആകെ
         edit: എഡിറ്റ് ചെയ്യുക
         cancel: റദ്ദാക്കുക
         closed: അടച്ചു
+        until: വരെ
       past_orders:
+        order: ഓർഡർ ചെയ്യുക
         shop: കട
         completed_at: പൂർത്തിയാക്കിയത്
         items: ഇനങ്ങൾ
         total: ആകെ
-        status: പദവി
+        paid?: പണം നൽകിയോ?
+        status: സ്ഥിതി
+        completed: പൂർത്തിയായി
         cancelled: റദ്ദാക്കി
+      saved_cards:
+        default?: സ്ഥിരസ്ഥിതി?
+        delete?: ഇല്ലാതാക്കുക?
+      cards:
+        authorised_shops: അംഗീകൃത കടകൾ
+        authorised_shops_agreement: നിങ്ങൾക്കുള്ള ഏതൊരു സബ്‌സ്‌ക്രിപ്‌ഷനും (അതായത്. ആവർത്തിച്ചുള്ള ഓർഡറുകൾ) നിങ്ങളുടെ ഡിഫോൾട്ട് ക്രെഡിറ്റ് കാർഡ് ചാർജ് ചെയ്യാൻ അനുവദിച്ചിരിക്കുന്ന ഷോപ്പുകളുടെ ലിസ്‌റ്റാണിത്. നിങ്ങളുടെ കാർഡ് വിശദാംശങ്ങൾ സുരക്ഷിതമായി സൂക്ഷിക്കും, കട ഉടമകളുമായി പങ്കിടില്ല. നിങ്ങളിൽ നിന്ന് നിരക്ക് ഈടാക്കുമ്പോൾ എല്ലായ്പ്പോഴും നിങ്ങളെ അറിയിക്കും. ഒരു ഷോപ്പിനായി ബോക്‌സ് ചെക്ക് ചെയ്യുന്നതിലൂടെ, ആ ഷോപ്പിൽ നിങ്ങൾ സൃഷ്‌ടിക്കുന്ന ഏതൊരു സബ്‌സ്‌ക്രിപ്‌ഷന്റെയും നിബന്ധനകൾക്ക് അനുസൃതമായി പേയ്‌മെന്റുകൾ എടുക്കുന്നതിന് നിങ്ങളുടെ കാർഡ് ഇഷ്യൂ ചെയ്‌ത ധനകാര്യ സ്ഥാപനത്തിന് നിർദ്ദേശങ്ങൾ അയയ്‌ക്കാൻ ആ ഷോപ്പിനെ അധികാരപ്പെടുത്താൻ നിങ്ങൾ സമ്മതിക്കുന്നു.
+        saved_cards_popover: പിന്നീടുള്ള ഉപയോഗത്തിനായി സേവ് ചെയ്യാൻ നിങ്ങൾ തിരഞ്ഞെടുത്ത കാർഡുകളുടെ പട്ടികയാണിത്. നിങ്ങൾ ഒരു ഓർഡർ ചെക്ക്ഔട്ട് ചെയ്യുമ്പോൾ നിങ്ങളുടെ 'ഡിഫോൾട്ട്' സ്വയമേവ തിരഞ്ഞെടുക്കപ്പെടും, നിങ്ങൾ അങ്ങനെ ചെയ്യാൻ അനുവദിച്ചിട്ടുള്ള ഏതെങ്കിലും കടകളിൽ നിന്ന് ചാർജുകൾ ഈടാക്കാം (വലത് കാണുക).
+      authorised_shops:
+        shop_name: "കടയുടെ പേര്"
+        allow_charges?: "ഡിഫോൾട്ട് കാർഡിലേക്ക് ചാർജുകൾ അനുവദിക്കണോ?"
+        no_default_saved_cards_tooltip: ചാർജുകൾ അനുവദിക്കുന്നതിന് നിങ്ങൾ ഒരു ക്രെഡിറ്റ് കാർഡ് ഡിഫോൾട്ടായി അടയാളപ്പെടുത്തേണ്ടതുണ്ട്.
+    localized_number:
+      invalid_format: ഒരു അസാധുവായ ഫോർമാറ്റ് ഉണ്ട്. ദയവായി ഒരു നമ്പർ നൽകുക.
     api:
       invalid_api_key: "അസാധുവായ എപിഐ കീ ( %{key} ) വ്യക്തമായിട്ടുണ്ട്."
       unauthorized: "ആ പ്രവർത്തനം നടത്താൻ നിങ്ങൾക്ക് അധികാരമില്ല."
       invalid_resource: "അസാധുവായ റീസോർസ്. തകരാറുകൾ പരിഹരിച്ച് വീണ്ടും ശ്രമിക്കുക."
       resource_not_found: "നിങ്ങൾ തിരയുന്ന റീസോർസ് കണ്ടെത്താനായില്ല."
+      access: "എപിഐ ആക്സസ്"
+      key: "കീ"
+      clear_key: "കീ മായ്ക്കുക"
+      regenerate_key: "കീ വീണ്ടും ഉണ്ടാക്കുക"
+      no_key: "കീ ഇല്ല"
+      generate_key: "എപിഐ കീ ഉണ്ടാക്കുക"
+      key_generated: "കീ ഉണ്ടാക്കി"
+      key_cleared: "കീ മായ്ച്ചു"
+      shipment:
+        cannot_ready: "കയറ്റുമതി തയ്യാറാക്കാൻ കഴിയില്ല."
+      invalid_taxonomy_id: "ടാക്സോണമി ഐഡി അസാധുവാണ്."
+      toggle_api_key_view: "ഉപയോക്താവിനായി എപിഐ കീ കാണിക്കുക"
+    activerecord:
+      models:
+        spree/payment:
+          one: പേയ്മെന്റ്
+          other: പേയ്മെന്റുകൾ
+    unit: യൂണിറ്റ്
+    per_unit: യൂണിറ്റിന്
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: ഏകദേശം 1 മണിക്കൂർ
+        other: ഏകദേശം %{count} മണിക്കൂറുകൾ
+      about_x_months:
+        one: ഏകദേശം 1 മാസം
+        other: ഏകദേശം %{count} മാസങ്ങൾ
+      about_x_years:
+        one: ഏകദേശം 1 വർഷം
+        other: ഏകദേശം %{count} വർഷങ്ങൾ
+      almost_x_years:
+        one: ഏകദേശം 1 വർഷം
+        other: '%{count}വർഷങ്ങളോളം'
+      half_a_minute: അര മിനിറ്റ്
+      less_than_x_seconds:
+        one: 1 സെക്കൻഡിൽ കുറവ്
+        other: '%{count} സെക്കൻഡിൽ കുറവ്'
+      less_than_x_minutes:
+        one: ഒരു മിനിറ്റിൽ താഴെ
+        other: '%{count} മിനിറ്റിൽ കുറവ്'
+      over_x_years:
+        one: 1 വർഷത്തിൽ കൂടുതൽ
+        other: '%{count} വർഷത്തിൽ കൂടുതൽ'
+      x_seconds:
+        one: "1 സെക്കൻഡ്"
+        other: "%{count} സെക്കൻഡുകൾ"
+      x_minutes:
+        one: "1 മിനിറ്റ്"
+        other: "%{count} മിനിറ്റുകൾ"
+      x_days:
+        one: "1 ദിവസം"
+        other: "%{count} ദിവസങ്ങൾ"
+      x_months:
+        one: "1 മാസം"
+        other: "%{count} മാസങ്ങൾ"
+      x_years:
+        one: "1 വർഷം"
+        other: "%{count} വർഷങ്ങൾ"
   components:
+    multiple_checked_select:
+      filter_placeholder: "ഫിൽട്ടർ ഓപ്ഷനുകൾ"
     search_input:
       placeholder: തിരയുക
     selector_with_filter:
+      selected_items: "%{count} തിരഞ്ഞെടുത്തു"
       search_placeholder: തിരയുക
     pagination:
       next: അടുത്തത്

@@ -674,6 +674,7 @@ pt:
         view_products: Ir para a Página de Produtos
         view_inventory: Ir para a Página de Inventário
       product_headings:
+        distributor: Distribuidor
         producer: Produtor/a
         sku: SKU
         name: Nome
@@ -951,6 +952,8 @@ pt:
           rate: Taxa
           customers: Consumidor
           active: Activo?
+        connected_apps:
+          loading: "A carregar"
       actions:
         edit_profile: Definições
         properties: Propriedades
@@ -1475,6 +1478,8 @@ pt:
   invoice_tax_total: "Total IVA:"
   tax_invoice: "FACTURA FISCAL"
   tax_total: "Total de Impostos (%{rate}):"
+  invoice_shipping_category_delivery: "Entrega"
+  invoice_shipping_category_pickup: "Levantamento"
   total_excl_tax: "Total (excl. imposto):"
   total_incl_tax: "Total (incl. imposto):"
   abn: "NIPC:"

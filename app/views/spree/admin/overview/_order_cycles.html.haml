@@ -1,11 +1,11 @@
-- color_class = @order_cycle_count > 0 ? "blue" : "orange"
-- icon_class = @order_cycle_count > 0 ? "icon-ok-sign" : "icon-warning-sign"
+- color_class = "warning" unless @order_cycle_count.positive?
+- icon_class = @order_cycle_count.positive? ? "icon-ok-sign" : "icon-warning-sign"
 %div.dashboard_item.seven.columns.omega#order_cycles
   %div.header.sixteen.columns.alpha{class: color_class}
     %h3.ten.columns.alpha
       = t ".order_cycles"
-    - if @order_cycle_count > 0
-      %a.six.columns.omega.icon-plus.button.blue{ href: main_app.new_admin_order_cycle_path }
+    - if @order_cycle_count.positive?
+      %a.six.columns.omega.icon-plus.button{ href: main_app.new_admin_order_cycle_path }
         = t "spree_admin_enterprises_create_new"
     - else
       %a{ "ofn-with-tip" => t(".order_cycles_tip") }
@@ -13,9 +13,9 @@
   %div.sixteen.columns.alpha.list
     %div.sixteen.columns.alpha.list-item{class: color_class}
       %span.thirteen.columns.alpha
-        = t('.you_have_active', count: @order_cycle_count)
+        = t(".you_have_active", count: @order_cycle_count)
       %span.three.columns.omega
         %span{class: icon_class}
-    %a.sixteen.columns.alpha.button.bottom{ href: main_app.admin_order_cycles_path, class: color_class }
-      = t ".manage_order_cycles"
-      %span.icon-arrow-right
+  %a.sixteen.columns.alpha.button.bottom{ href: main_app.admin_order_cycles_path, class: color_class }
+    = t ".manage_order_cycles"
+    %span.icon-arrow-right

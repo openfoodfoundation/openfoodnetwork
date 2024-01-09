@@ -18,7 +18,7 @@ div.dashboard_item {
       background-color: $spree-green;
     }
 
-    &.red {
+    &.warning {
       background-color: $color-warning;
     }
 
@@ -39,7 +39,7 @@ div.dashboard_item {
       bottom: 5px;
     }
 
-    &.red {
+    &.warning {
       border-color: $color-warning;
       border-width: 3px;
 
@@ -101,6 +101,10 @@ div.dashboard_item {
     max-height: 250px;
     overflow-y: auto;
     overflow-x: hidden;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .list-title {
@@ -121,7 +125,7 @@ div.dashboard_item {
   .list-item {
     border: solid $spree-blue;
     border-width: 0px 1px 0px 1px;
-    height: 38px;
+    height: 41px;
 
     span.alpha {
       font-weight: bold;
@@ -160,13 +164,13 @@ div.dashboard_item {
       border: solid $color-warning;
     }
 
-    &.red {
+    &.warning {
       color: $color-warning;
       border: solid $color-warning;
     }
 
     &.orange,
-    &.red {
+    &.warning {
       border-width: 0px 3px 0px 3px;
     }
 
@@ -224,7 +228,7 @@ div.dashboard_item {
       background-color: $spree-blue;
     }
 
-    &.red {
+    &.warning {
       background-color: $color-warning;
     }
 

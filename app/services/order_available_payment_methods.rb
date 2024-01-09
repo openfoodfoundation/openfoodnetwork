@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'open_food_network/tag_rule_applicator'
+
 class OrderAvailablePaymentMethods
   attr_reader :order, :customer
 

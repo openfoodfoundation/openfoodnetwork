@@ -683,6 +683,7 @@ el:
         view_products: Μεταβείτε στη σελίδα προϊόντων
         view_inventory: Μετάβαση στη σελίδα αποθέματος
       product_headings:
+        distributor: Διανομέας
         producer: Παραγωγός
         sku: SKU
         name: Όνομα

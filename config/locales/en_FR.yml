@@ -781,7 +781,7 @@ en_FR:
         save: Save changes
         reset: Discard changes
       bulk_update:
-        success: "Products successfully updated"
+        success: Changes saved
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -880,6 +880,7 @@ en_FR:
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: SKU
         name: Name
@@ -1210,6 +1211,8 @@ en_FR:
           create_custom_tab: "Create custom tab in shopfront"
           custom_tab_title: "Title for custom tab"
           custom_tab_content: "Content for custom tab"
+        connected_apps:
+          loading: "Loading"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1439,6 +1442,8 @@ en_FR:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      flashes:
+        dismiss: Dismiss
       side_menu:
         enterprise:
           primary_details: "Primary Details"
@@ -1898,9 +1903,11 @@ en_FR:
   invoice_column_price_per_unit_without_taxes: "Price Per unit (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
   invoice_tax_total: "GST Total:"
+  invoice_cancel_and_replace_invoice: "cancels and replaces invoice"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
-  invoice_shipping_type: "Type:"
+  invoice_shipping_category_delivery: "Delivery"
+  invoice_shipping_category_pickup: "Pickup"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
   total_all_tax: "Total tax:"
@@ -2120,6 +2127,9 @@ en_FR:
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
   order_back_to_website: Back To Website
+  checkout_details_title: Checkout Details
+  checkout_payment_title: Checkout Payment
+  checkout_summary_title: Checkout Summary
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
@@ -4010,6 +4020,7 @@ en_FR:
           has_no_payment_methods: "has no payment methods"
           has_no_shipping_methods: "has no shipping methods"
         products:
+          products_tip: "The products that you sell through CoopCircuits."
           active_products:
             zero: "You don't have any active products."
             one: "You have one active product"
@@ -4162,6 +4173,8 @@ en_FR:
           bulk_unit_size: Bulk unit size
         display_as:
           display_as: Display As
+        clone:
+          success: Product cloned
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."

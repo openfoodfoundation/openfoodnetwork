@@ -28,20 +28,26 @@ describe "Connected Apps", feature: :connected_apps, vcr: true do
     expect(page).to have_content "CONNECTED APPS"
   end
 
-  it "can be enabled" do
+  it "can be enabled and disabled" do
     visit edit_admin_enterprise_path(enterprise)
 
     scroll_to :bottom
     click_link "Connected apps"
     expect(page).to have_content "Discover Regenerative"
 
-    click_button "Share data"
-    expect(page).to_not have_button "Share data"
-    expect(page).to have_content "Saving changes"
+    click_button "Allow data sharing"
+    expect(page).to_not have_button "Allow data sharing"
+    expect(page).to have_button "Loading", disabled: true
 
     perform_enqueued_jobs(only: ConnectAppJob)
-    expect(page).to_not have_content "Saving changes"
-    expect(page).to have_content "include regenerative details"
-    expect(page).to have_link "Update details"
+    expect(page).to_not have_button "Loading", disabled: true
+    expect(page).to have_content "account is connected"
+    expect(page).to have_link "Manage listing"
+
+    click_button "Stop sharing"
+    expect(page).to have_button "Allow data sharing"
+    expect(page).to_not have_button "Stop sharing"
+    expect(page).to_not have_content "account is connected"
+    expect(page).to_not have_link "Manage listing"
   end
 end

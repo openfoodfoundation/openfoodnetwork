@@ -758,6 +758,7 @@ it_CH:
         view_products: Vai alla Pagina dei Prodotti
         view_inventory: Vai alla Pagina dell'Inventario
       product_headings:
+        distributor: Distributore
         producer: Produttore
         sku: Codice ID
         name: Nome
@@ -1057,6 +1058,8 @@ it_CH:
           rate: Tariffa
           customers: Cliente
           active: Attivo?
+        connected_apps:
+          loading: "Caricamento"
       actions:
         edit_profile: Impostazioni
         properties: Proprietà
@@ -1665,6 +1668,8 @@ it_CH:
   invoice_tax_total: "IVA totale"
   tax_invoice: "Conferma d'ordine"
   tax_total: "Totale tasse (%{rate}):"
+  invoice_shipping_category_delivery: "Consegna"
+  invoice_shipping_category_pickup: "Prelievo"
   total_excl_tax: "Totale (Tasse escl.):"
   total_incl_tax: "Totale (Tasse incl.):"
   abn: "CF:"
