@@ -5,17 +5,6 @@
                    'data-bulk-form-error-value': defined?(error_counts),
                   } do |form|
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
-  %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
-    .container
-      .status
-        .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
-        - if defined?(error_counts)
-          .error_summary
-            -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
-            = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
-      .form-buttons
-        = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
-        = form.submit t('.save'), class: "medium"
   %table.products
     %col{ width:"15%" }
     %col{ width:"5%", style: "max-width:5em" }
@@ -28,6 +17,20 @@
     %col{ width:"5%", style: "max-width:5em" }
     %col{ width:"5%", style: "max-width:5em" }
     %thead
+      %tr
+        %td.form-actions-wrapper{ colspan: 10 }
+          .form-actions-wrapper2
+            %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
+              .container
+                .status
+                  .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
+                  - if defined?(error_counts)
+                    .error_summary
+                      -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
+                      = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
+                .form-buttons
+                  = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
+                  = form.submit t('.save'), class: "medium"
       %tr
         %th.align-left.with-input= t('admin.products_page.columns.name')
         %th.align-right= t('admin.products_page.columns.sku')
