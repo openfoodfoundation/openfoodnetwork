@@ -206,6 +206,34 @@ describe "Orders And Fulfillment" do
           expect(selected_product.text).to have_content(variant3.product.name)
         end
       end
+
+      context "when voucher is applied to the order" do
+        let(:voucher) { create(:voucher_percentage_rate, enterprise: distributor) }
+
+        before do
+          within_multi_select("Columns") do
+            check "Voucher Label"
+            check "Voucher Amount ($)"
+          end
+        end
+
+        it 'displays the voucher label and amount values for the orders with voucher applied' do
+          voucher.create_adjustment(voucher.code, order1)
+          # mocking the total and pre_discount_total values
+          total_before_discount = BigDecimal(20)
+          total_after_discount = BigDecimal(15)
+          order1.update_columns(total: total_after_discount)
+          allow(order1).to receive(:pre_discount_total).and_return(total_before_discount)
+          discounted_amount = total_before_discount - total_after_discount
+
+          run_report
+
+          within '.report__table' do
+            expect(page).to have_content(voucher.code)
+            expect(page).to have_content(discounted_amount)
+          end
+        end
+      end
     end
 
     describe "Order Cycle Supplier" do
@@ -617,5 +645,11 @@ describe "Orders And Fulfillment" do
         end
       end
     end
+  end
+
+  def within_multi_select(text)
+    find(".label", text:).click # open
+    yield
+    find(".label", text:).click # close
   end
 end
