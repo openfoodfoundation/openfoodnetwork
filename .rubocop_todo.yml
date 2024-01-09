@@ -944,13 +944,6 @@ Style/RedundantInterpolation:
     - 'lib/tasks/karma.rake'
     - 'spec/base_spec_helper.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantLineContinuation:
-  Exclude:
-    - 'app/helpers/shop_helper.rb'
-    - 'spec/system/admin/configuration/content_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantParentheses:
