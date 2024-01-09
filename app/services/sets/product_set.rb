@@ -118,7 +118,7 @@ module Sets
       # Copy any variant errors to product
       variant&.errors&.each do |error|
         # The name is namespaced to avoid confusion with product attrs of same name.
-        product.errors.add("variant_#{error.attribute}".to_sym, error.message)
+        product.errors.add(:"variant_#{error.attribute}", error.message)
       end
       variant&.errors.blank?
     end

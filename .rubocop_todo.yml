@@ -121,16 +121,6 @@ Lint/SelfAssignment:
   Exclude:
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: strict, consistent
-Lint/SymbolConversion:
-  Exclude:
-    - 'app/models/spree/preferences/preferable_class_methods.rb'
-    - 'app/services/sets/product_set.rb'
-    - 'lib/spree/core/environment_extension.rb'
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Lint/UselessMethodDefinition:

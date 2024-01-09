@@ -70,31 +70,31 @@ module Spree
       end
 
       def preference_getter_method(name)
-        "preferred_#{name}".to_sym
+        :"preferred_#{name}"
       end
 
       def preference_setter_method(name)
-        "preferred_#{name}=".to_sym
+        :"preferred_#{name}="
       end
 
       def prefers_getter_method(name)
-        "prefers_#{name}?".to_sym
+        :"prefers_#{name}?"
       end
 
       def prefers_setter_method(name)
-        "prefers_#{name}=".to_sym
+        :"prefers_#{name}="
       end
 
       def preference_default_getter_method(name)
-        "preferred_#{name}_default".to_sym
+        :"preferred_#{name}_default"
       end
 
       def preference_type_getter_method(name)
-        "preferred_#{name}_type".to_sym
+        :"preferred_#{name}_type"
       end
 
       def preference_description_getter_method(name)
-        "preferred_#{name}_description".to_sym
+        :"preferred_#{name}_description"
       end
     end
   end
