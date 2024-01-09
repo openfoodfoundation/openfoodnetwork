@@ -20,8 +20,10 @@ describe "Orders And Fulfillment" do
       create(:address, address1: "distributor address", city: 'The Shire', zipcode: "1234")
     }
     let(:distributor) {
-      create(:distributor_enterprise, address: distributor_address,
-                                      name: "Distributor Name")
+      create(:distributor_enterprise,
+             with_payment_and_shipping: true,
+             address: distributor_address,
+             name: "Distributor Name")
     }
     let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
     let(:order1) {

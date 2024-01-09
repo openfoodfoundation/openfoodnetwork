@@ -108,7 +108,7 @@ describe "As a consumer, I want to see adjustment breakdown" do
         assert_db_tax_incl
       end
 
-      context "when using a voucher", feature: :vouchers do
+      context "when using a voucher" do
         let!(:voucher) do
           create(:voucher_flat_rate, code: 'some_code', enterprise: distributor, amount: 10)
         end
