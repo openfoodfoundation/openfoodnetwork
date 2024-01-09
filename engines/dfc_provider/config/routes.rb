@@ -8,7 +8,7 @@ DfcProvider::Engine.routes.draw do
     resources :social_medias, only: [:show]
   end
   resources :enterprise_groups, only: [:index, :show] do
-    resources :affiliated_by, only: [:create], module: 'enterprise_groups'
+    resources :affiliated_by, only: [:create, :destroy], module: 'enterprise_groups'
   end
   resources :persons, only: [:show]
 end

@@ -70,4 +70,36 @@ describe "EnterpriseGroups::AffiliatedBy", type: :request, swagger_doc: "dfc.yam
       end
     end
   end
+
+  path "/api/dfc/enterprise_groups/{enterprise_group_id}/affiliated_by/{id}" do
+    delete "Remove enterprise from group" do
+      parameter name: :enterprise_group_id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string
+
+      let(:enterprise_group_id) { group.id }
+      let(:id) { enterprise2.id }
+
+      response "204", "no content" do
+        before do
+          group.enterprises << enterprise2
+          group.save!
+        end
+
+        it "removes enterperise from group" do |example|
+          expect {
+            submit_request(example.metadata)
+            group.reload
+          }.to change { group.enterprises.count }.by(-1)
+        end
+      end
+
+      response "401", "unauthorized" do
+        let(:non_group_owner) { create(:oidc_user, id: 12_346) }
+
+        before { login_as non_group_owner }
+
+        run_test!
+      end
+    end
+  end
 end

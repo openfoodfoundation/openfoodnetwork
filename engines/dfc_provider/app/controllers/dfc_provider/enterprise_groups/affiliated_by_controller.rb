@@ -22,6 +22,14 @@ module DfcProvider
         head :created
       end
 
+      def destroy
+        group = EnterpriseGroup.find(params[:enterprise_group_id])
+
+        authorize! :update, group
+
+        group.enterprises.delete(params[:id])
+      end
+
       private
 
       def ofn_id_from_uri(uri)

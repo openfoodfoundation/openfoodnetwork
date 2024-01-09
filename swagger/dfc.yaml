@@ -260,6 +260,27 @@ paths:
             schema:
               example:
                 "@id": http://test.host/api/dfc/enterprises/10001
+  "/api/dfc/enterprise_groups/{enterprise_group_id}/affiliated_by/{id}":
+    delete:
+      summary: Remove enterprise from group
+      parameters:
+      - name: enterprise_group_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - EnterpriseGroups::AffiliatedBy
+      responses:
+        '204':
+          description: no content
+        '401':
+          description: unauthorized
   "/api/dfc/enterprise_groups":
     get:
       summary: List groups
