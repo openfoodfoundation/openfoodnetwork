@@ -22,8 +22,8 @@
   // Form actions floats over other controls when active
   #products-form {
     .form-actions {
-      position: absolute;
-      top: -1em;
+      // position: absolute;
+      // top: -1;
       left: 0;
       right: 0;
       z-index: 1; // Ensure tom-select and .disabled-section are covered
@@ -174,7 +174,8 @@
   }
 
   #sort {
-    margin-bottom: 1em;
+    margin-top: 3px; // Helps even up with .form-actions when visible
+    margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -183,6 +184,10 @@
   #sort {
     line-height: $btn-relaxed-height;
     height: $btn-relaxed-height;
+
+    &.disabled-section {
+      display: none;
+    }
 
     .with-dropdown {
       display: flex;
@@ -198,7 +203,7 @@
     grid-template-rows: 1fr;
     grid-column-gap: 20px;
     align-items: end;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 
     .query {
       grid-column: 1 / span 3;
