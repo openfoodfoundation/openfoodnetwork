@@ -135,7 +135,7 @@ module Spree
 
     # Enable cache
     preference :enable_products_cache?, :boolean,
-               default: (Rails.env.production? || Rails.env.staging?)
+               default: Rails.env.production? || Rails.env.staging?
 
     # Available units
     preference :available_units, :string, default: "g,kg,T,mL,L,kL"
