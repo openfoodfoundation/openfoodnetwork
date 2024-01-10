@@ -234,12 +234,11 @@ module Reporting
 
         def tax(query_result_row, all: false, included: nil)
           order = order(query_result_row)
-          order_id = order.id
           adjustment_ids = enterprise_fee_adjustment_ids(query_result_row)
           query = Spree::Adjustment.tax
           query = query.where(included: true) unless included.nil?
           query = query.where(originator_id: tax_rate_id(query_result_row)) unless all == true
-          tax_amount = query.where(order_id:)
+          tax_amount = query.where(order:)
             .where(adjustable_type: 'Spree::Adjustment')
             .where(adjustable_id: adjustment_ids)
             .pick("sum(amount)") || 0
