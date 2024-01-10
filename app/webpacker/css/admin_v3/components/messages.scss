@@ -30,7 +30,7 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: $flash-message-z-index;
   display: flex;
   justify-content: center;
 
