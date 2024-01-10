@@ -17,8 +17,6 @@ module DfcProvider
 
         group.enterprises << enterprise
 
-        return head :unprocessable_entity unless group.save
-
         head :created
       end
 

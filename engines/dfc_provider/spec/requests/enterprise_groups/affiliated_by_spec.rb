@@ -82,7 +82,6 @@ describe "EnterpriseGroups::AffiliatedBy", type: :request, swagger_doc: "dfc.yam
       response "204", "no content" do
         before do
           group.enterprises << enterprise2
-          group.save!
         end
 
         it "removes enterperise from group" do |example|
