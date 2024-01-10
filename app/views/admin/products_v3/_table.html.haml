@@ -48,10 +48,10 @@
       = form.fields_for("products", product, index: product_index) do |product_form|
         %tbody.relaxed{ 'data-record-id': product_form.object.id }
           %tr
-            %td
-              - if product.image.present?
-                .image-field
-                  = image_tag product.image.url(:mini), width: 40
+            %td.with-image
+              .image-field
+                = image_tag product.image&.url(:mini) || Spree::Image.default_image_url(:mini), width: 40, height: 40
+                - if product.image.present?
                   = link_to t('admin.products_page.image.edit'), edit_admin_product_image_path(product, product.image), class: "button secondary mini"
             %td.field.align-left.header
               = product_form.hidden_field :id
