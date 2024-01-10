@@ -131,6 +131,10 @@
 
       td {
         border-bottom: 2px solid $color-tbl-bg;
+
+        &.with-image {
+          padding: 8px;
+        }
       }
 
       tr:first-child td {
@@ -379,6 +383,7 @@
     position: relative;
 
     img {
+      display: block;
       border-radius: $border-radius;
     }
 
