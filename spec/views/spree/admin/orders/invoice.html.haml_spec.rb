@@ -27,10 +27,11 @@ describe "spree/admin/orders/invoice.html.haml" do
                                     display_checkout_total_less_tax: '8',
                                     outstanding_balance_label: 'Outstanding Balance'
 
-    # Ignore requests for CSS pack like: 'http://test.host/packs-test/css/mail-1ab2dc7f.css'
-    VCR.configure do |config|
-      config.ignore_hosts('test.host')
-    end
+    # return a duplicate empaty string for CSS pack request like:
+    # 'http://test.host/packs-test/css/mail-1ab2dc7f.css'
+    # This is because Wicked PDF will try to force an encoding on the returned string, which will
+    # break with a frozen string
+    stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" }).to_return(body: "".dup)
   end
 
   it "displays the customer code" do

@@ -29,12 +29,12 @@ describe '
 
   before do
     Capybara.current_driver = :rack_test
-    # Ignore request for CSS pack like: 'http://www.example.com/packs-test/css/mail-1ab2dc7f.css'
-    VCR.configure do |config|
-      config.ignore_request do |request|
-        request.uri.to_s.include?('packs-test/css/mail')
-      end
-    end
+
+    # return a duplicate empaty string for CSS pack request like:
+    # 'http://test.host/packs-test/css/mail-1ab2dc7f.css'
+    # This is because Wicked PDF will try to force an encoding on the returned string, which will
+    # break with a frozen string
+    stub_request(:get, ->(uri) { uri.to_s.include? "/css/mail" }).to_return(body: "".dup)
   end
 
   after do
