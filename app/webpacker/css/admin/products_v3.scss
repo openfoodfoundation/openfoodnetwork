@@ -47,6 +47,7 @@
       position: sticky;
       top: 0;
       z-index: 1; // TODO: Cover .popout and .vertical-ellipsis-menu, but only when sticky
+      box-shadow: $box-shadow;
 
       // Form actions replaces other controls when active
       // It is part of the table header, to allow for sticky stacking when scrolling.
