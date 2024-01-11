@@ -409,6 +409,35 @@ paths:
                       dfc-b:URL: https://facebook.com/user
         '404':
           description: not found
+  "/api/dfc/enterprises/{enterprise_id}/offers/{id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Offer
+      tags:
+      - Offers
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                    "@type": dfc-b:Offer
+                    dfc-b:hasPrice: 19.99
+                    dfc-b:stockLimitation: 5
   "/api/dfc/persons/{id}":
     get:
       summary: Show person
