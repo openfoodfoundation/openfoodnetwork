@@ -32,5 +32,34 @@ describe "Offers", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true 
         run_test!
       end
     end
+
+    put "Update Offer" do
+      consumes "application/json"
+
+      parameter name: :offer, in: :body, schema: {
+        example: {
+          '@context': "https://www.datafoodconsortium.org",
+          '@id': "http://test.host/api/dfc/enterprises/10000/offers/10001",
+          '@type': "dfc-b:Offer",
+          'dfc-b:hasPrice': 9.99,
+          'dfc-b:stockLimitation': 7
+        }
+      }
+
+      let(:id) { variant.id }
+      let(:offer) { |example|
+        example.metadata[:operation][:parameters].first[:schema][:example]
+      }
+
+      response "204", "success" do
+        it "updates a variant" do |example|
+          expect {
+            submit_request(example.metadata)
+            variant.reload
+          }.to change { variant.price }.to(9.99)
+            .and change { variant.on_hand }.to(7)
+        end
+      end
+    end
   end
 end

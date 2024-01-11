@@ -59,5 +59,9 @@ module DfcProvider
     def current_ability
       @current_ability ||= Spree::Ability.new(current_user)
     end
+
+    def import
+      DfcIo.import(request.body)
+    end
   end
 end

@@ -9,6 +9,16 @@ module DfcProvider
       render json: DfcIo.export(subject)
     end
 
+    def update
+      offer = import
+
+      return head :bad_request unless offer
+
+      OfferBuilder.apply(offer, variant)
+
+      variant.save!
+    end
+
     private
 
     def variant

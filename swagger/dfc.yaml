@@ -438,6 +438,24 @@ paths:
                     "@type": dfc-b:Offer
                     dfc-b:hasPrice: 19.99
                     dfc-b:stockLimitation: 5
+    put:
+      summary: Update Offer
+      parameters: []
+      tags:
+      - Offers
+      responses:
+        '204':
+          description: success
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@context": https://www.datafoodconsortium.org
+                "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                "@type": dfc-b:Offer
+                dfc-b:hasPrice: 9.99
+                dfc-b:stockLimitation: 7
   "/api/dfc/persons/{id}":
     get:
       summary: Show person
