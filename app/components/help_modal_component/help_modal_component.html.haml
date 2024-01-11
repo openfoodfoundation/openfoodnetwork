@@ -1,6 +1,6 @@
 %div{ id: @id, "data-controller": "help-modal", "data-action": "keyup@document->help-modal#closeIfEscapeKey" }
   .reveal-modal-bg.fade{ "data-help-modal-target": "background", "data-action": "click->help-modal#close" }
-  .reveal-modal.fade.small.help-modal{ "data-help-modal-target": "modal" }
+  .reveal-modal.fade.small.modal-component{ "data-help-modal-target": "modal" }
     = content
 
     - if close_button?

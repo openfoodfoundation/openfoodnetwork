@@ -34,7 +34,7 @@ describe("HelpModalController", () => {
              data-action="click->help-modal#close">
         </div>
         <div id="modal"
-             class="reveal-modal.fade.medium.help-modal"
+             class="reveal-modal.fade.medium.modal-component"
              data-help-modal-target="modal">
           Hello world
           <a id="close-link" data-action="click->help-modal#close">Close</a>

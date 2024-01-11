@@ -1,4 +1,5 @@
-.help-modal {
+// class name 'modal' is already taken by 'custom-alert' and 'custom-confirm'.
+.modal-component {
   visibility: visible;
   position: fixed;
   top: 3em;
