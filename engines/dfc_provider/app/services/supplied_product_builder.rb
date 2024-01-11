@@ -49,10 +49,10 @@ class SuppliedProductBuilder < DfcBuilder
 
   def self.apply(supplied_product, variant)
     variant.product.assign_attributes(
-      name: supplied_product.name,
       description: supplied_product.description,
     )
 
+    variant.display_name = supplied_product.name
     QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
     variant.unit_value = variant.product.unit_value
   end

@@ -188,7 +188,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
             submit_request(example.metadata)
             variant.reload
           }.to change { variant.description }.to("DFC-Pesto updated")
-            .and change { variant.name }.to("Pesto novo")
+            .and change { variant.display_name }.to("Pesto novo")
             .and change { variant.unit_value }.to(17)
         end
       end

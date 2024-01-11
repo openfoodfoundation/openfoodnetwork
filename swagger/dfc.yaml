@@ -489,7 +489,7 @@ paths:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     "@type": dfc-b:SuppliedProduct
-                    dfc-b:name: Apple - 6g
+                    dfc-b:name: Apple (6g)
                     dfc-b:description: A delicious heritage apple
                     dfc-b:hasType: dfc-pt:non-local-vegetable
                     dfc-b:hasQuantity:
