@@ -874,6 +874,7 @@ en:
         success: Changes saved
       edit_image:
         title: Edit product photo
+        close: Back
         upload: Upload photo
       delete_product:
         success: Successfully deleted the product
