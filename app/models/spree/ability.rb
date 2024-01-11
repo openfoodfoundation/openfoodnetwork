@@ -147,7 +147,8 @@ module Spree
       end
       can [:manage_payment_methods,
            :manage_shipping_methods,
-           :manage_enterprise_fees], Enterprise do |enterprise|
+           :manage_enterprise_fees,
+           :manage_connected_apps], Enterprise do |enterprise|
         user.enterprises.include? enterprise
       end
 

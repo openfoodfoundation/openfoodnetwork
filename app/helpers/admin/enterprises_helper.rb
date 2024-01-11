@@ -21,7 +21,8 @@ module Admin
       show_payment_methods = can?(:manage_payment_methods, enterprise) && is_shop
       show_enterprise_fees = can?(:manage_enterprise_fees,
                                   enterprise) && (is_shop || enterprise.is_primary_producer)
-      show_connected_apps = feature?(:connected_apps, spree_current_user, enterprise)
+      show_connected_apps = can?(:manage_connected_apps, enterprise) &&
+                            feature?(:connected_apps, spree_current_user, enterprise)
 
       build_enterprise_side_menu_items(
         is_shop:,
