@@ -76,7 +76,7 @@ module Spree
       end
 
       def location_after_save
-        spree.admin_product_images_url(params[:product_id], @url_filters)
+        params[:return_url] || spree.admin_product_images_url(params[:product_id], @url_filters)
       end
 
       def load_data

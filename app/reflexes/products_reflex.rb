@@ -74,6 +74,15 @@ class ProductsReflex < ApplicationReflex
     fetch_and_render_products_with_flash
   end
 
+  def edit_image
+    id = current_id_from_element(element)
+    product = product_finder(id).find_product
+
+    morph "#modal-component",
+          render(partial: "admin/products_v3/edit_image",
+                 locals: { product:, image: product.image, return_url: url })
+  end
+
   private
 
   def init_filters_params
@@ -231,5 +240,11 @@ class ProductsReflex < ApplicationReflex
 
   def current_id_from_element(element)
     element.dataset.current_id
+  end
+
+  def image_params
+    params.require(:image).permit(
+      :attachment, :viewable_id
+    )
   end
 end

@@ -52,7 +52,7 @@
               .image-field
                 = image_tag product.image&.url(:mini) || Spree::Image.default_image_url(:mini), width: 40, height: 40
                 - if product.image.present?
-                  = link_to t('admin.products_page.image.edit'), edit_admin_product_image_path(product, product.image), class: "button secondary mini"
+                  = link_to t('admin.products_page.image.edit'), edit_admin_product_image_path(product, product.image), class: "button secondary mini", "data-controller": "modal", "data-reflex": "click->products#edit_image", "data-current-id": product.id
             %td.field.align-left.header
               = product_form.hidden_field :id
               = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
