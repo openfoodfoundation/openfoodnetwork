@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class ModalComponent < ViewComponent::Base
-  def initialize(id:, close_button: true)
+  def initialize(id:, close_button: true, instant: false)
     @id = id
     @close_button = close_button
+    @instant = instant
   end
 
   private

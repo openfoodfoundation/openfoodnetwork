@@ -1,4 +1,4 @@
-%div{ id: @id, "data-controller": "modal", "data-action": "keyup@document->modal#closeIfEscapeKey" }
+%div{ id: @id, "data-controller": "modal", "data-action": "keyup@document->modal#closeIfEscapeKey", "data-modal-instant-value": @instant }
   .reveal-modal-bg.fade{ "data-modal-target": "background", "data-action": "click->modal#close" }
   .reveal-modal.fade.small.modal-component{ "data-modal-target": "modal" }
     = content
