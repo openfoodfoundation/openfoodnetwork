@@ -14,7 +14,8 @@
       "question-mark-with-tooltip-placement" => "top",
       "question-mark-with-tooltip-animation" => true,
       key: "'js.shopfront.unit_price_tooltip'"}
-      {{ variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ variant.unit_price_unit }}
+      %span.unit_price_unit
+        {{ variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ variant.unit_price_unit }}
 
   .medium-2.large-2.columns.total-price
     %span{"ng-class" => "{filled: variant.line_item.total_price}"}
