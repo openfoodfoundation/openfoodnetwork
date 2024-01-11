@@ -22,7 +22,7 @@
 
 Changelog Category (reviewers may add a label for the release notes):
 
-- [x] User facing changes
+- [ ] User facing changes
 - [ ] API changes (V0, V1, DFC or Webhook)
 - [ ] Technical changes only
 - [ ] Feature toggled
