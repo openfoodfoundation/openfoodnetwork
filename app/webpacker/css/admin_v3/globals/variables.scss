@@ -74,6 +74,9 @@ $color-action-save-brd:          very-light($color-success, 20 ) !default;
 $color-action-mail-bg:           very-light($color-success, 5  ) !default;
 $color-action-mail-brd:          very-light($color-success, 20 ) !default;
 
+// Dropdown styles
+$shadow-dropdown:                0px 0px 8px 0px rgba($near-black, 0.25);
+
 // Select2 select field colors
 $color-sel-bg:                   $lighter-grey !default;
 $color-sel-hover-bg:             $lighter-grey !default;

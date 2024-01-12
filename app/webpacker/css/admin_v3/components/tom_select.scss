@@ -4,11 +4,12 @@
 
   &.input-active {
     .ts-control {
-      border-color: $lighter-grey;
+      border-color: $orient;
+      background-color: $lighter-grey;
 
       input {
         &::placeholder {
-          color: $light-grey;
+          color: $medium-light-grey;
         }
       }
     }
@@ -22,24 +23,42 @@
     @include border-radius($border-radius);
 
     input {
+      font-size: $body-font-size;
+      height: auto;
+
       &::placeholder {
         color: $near-black;
       }
     }
+
+    .item {
+      margin-top: 2px; // Ensure it lines up with the input. I have no idea why it's necessary.
+    }
   }
 
   .ts-dropdown {
-    @include border-radius($border-radius);
+    // Unstyled, we style the dropdown-content instead
+    margin: 0;
+    background: none;
     border: none;
     box-shadow: none;
+  }
+
+  .ts-dropdown-content {
+    margin-top: 4px;
     color: $near-black;
+    background-color: $color-body-bg;
+    @include border-radius($border-radius);
+    box-shadow: $shadow-dropdown;
 
     .option {
-      &.selected {
-        border-left: 2px solid $orient;
-      }
+      padding: 8px;
+      border-left: 3px solid transparent;
+      line-height: 20px;
 
+      &.selected,
       &.active {
+        border-left: 3px solid $orient;
         background-color: $lighter-grey;
         color: $near-black;
       }
@@ -47,21 +66,80 @@
   }
 }
 
-.plugin-dropdown_input .dropdown-input {
-  border-color: $lighter-grey;
+.plugin-dropdown_input {
+  .ts-dropdown {
+    // Cover up the control with the input
+    top: 0;
+  }
 
-  &:focus {
-    border-color: $orient;
+  .dropdown-input-wrap::after {
+    position: absolute;
+    content: "\f077"; // chevron-up
+    font-family: FontAwesome;
+    border: none;
+    top: 0.7rem;
+    right: 0.7rem;
+    font-size: 13px;
+  }
+
+  .dropdown-input {
+    background-color: $color-body-bg;
+    border: 1px solid $lighter-grey;
+    box-shadow: none;
+    padding: 0.6rem 0.75rem;
+
+    &:focus {
+      border: 1px solid $orient;
+    }
   }
 }
 
-// For the "single" tom_select, be as clause as native select boxes
+// For the "single" tom_select, be as close as possible to native select boxes
 // without too many options
 .ts-wrapper.single {
   max-height: 40px;
   max-width: 100%;
 
-  &.input-active .ts-control {
-    cursor: pointer;
+  .ts-control {
+    padding: 0.5rem 0.75rem;
+    padding-right: 1rem !important; // ts has a clever variable-based rule here, but it doesn't seem to work right.
+    overflow: hidden;
+
+    // Icon: Override TS icon with icon-chevron-down
+    &::after {
+      content: "\f078";
+      font-family: FontAwesome;
+      border: none;
+      top: 1em;
+    }
+    &:not(.rtl)::after {
+      right: 1.5rem;
+    }
+
+    .item {
+      margin-right: 1rem;
+      // Hide overflow with an ellipsis if a width has been set
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
+    }
+  }
+
+  &.dropdown-active .ts-control {
+    &::after {
+      content: "\f077"; // chevron-up
+    }
+  }
+}
+
+// 'no-input' mode, like a native select (hide text input).
+.ts-wrapper.single.no-input {
+  .ts-dropdown {
+    position: absolute;
+    top: 0; // we don't need to see the currently selected option, because it's visible in the dropdown
+  }
+
+  .ts-dropdown-content {
+    margin-top: 0;
   }
 }

@@ -11,7 +11,6 @@
     box-shadow: none !important;
     @include border-radius($border-radius);
     color: $color-1 !important;
-    font-size: 90%;
     height: 31px;
     line-height: inherit !important;
     padding: 5px 15px 7px;
@@ -23,7 +22,6 @@
 
     .select2-search-choice-close {
       background-image: none !important;
-      font-size: 100% !important;
       @extend .icon-remove;
       @extend [class^="icon-"], :before;
       margin-top: 2px;
@@ -54,7 +52,6 @@
 .select2-search {
   @extend .icon-search;
 
-  font-size: 100%;
   color: darken($color-border, 15);
   padding: 0 9px 0 0;
 
@@ -72,7 +69,6 @@
     padding: 6px 0 6px 25px;
     margin: 5px 0 0 5px;
     font-family: $base-font-family;
-    font-size: 90%;
     box-shadow: none;
     background-image: none;
   }
@@ -102,8 +98,6 @@
   padding-left: 0 !important;
 
   li {
-    font-size: 85% !important;
-
     &.select2-highlighted {
       .select2-result-label {
         &,
@@ -117,7 +111,6 @@
       color: $color-body-text;
       min-height: 22px;
       clear: both;
-      overflow: auto;
     }
 
     &.select2-no-results,
@@ -160,7 +153,6 @@
       border: none;
       box-shadow: none;
       color: $color-1 !important;
-      font-size: 85%;
 
       &:hover {
         background-color: $color-btn-hover-bg;
@@ -168,7 +160,6 @@
 
       .select2-search-choice-close {
         background-image: none !important;
-        font-size: 85% !important;
         @extend .icon-remove;
         @extend [class^="icon-"], :before;
         margin-left: 2px;
@@ -248,7 +239,6 @@ label .select2-container {
         top: 0;
         margin: 0;
         padding: 0;
-        font-size: 100% !important;
       }
     }
   }

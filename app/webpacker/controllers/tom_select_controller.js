@@ -2,26 +2,20 @@ import { Controller } from "stimulus";
 import TomSelect from "tom-select/dist/esm/tom-select.complete";
 
 export default class extends Controller {
-  static values = { options: Object };
-  static defaults = {
-    maxItems: 1,
-    maxOptions: null,
-    plugins: ["dropdown_input"],
-    allowEmptyOption: true,
-    closeAfterSelect: true,
-    onItemAdd: function () {
-      this.setTextboxValue("");
-    },
-  };
+  static values = { options: Object, placeholder: String };
 
   connect(options = {}) {
-    if (this.#placeholder()) {
-      options.allowEmptyOption = false;
-      options.placeholder = this.#placeholder();
-    }
-
+    console.log(this.element, this.placeholderValue);
     this.control = new TomSelect(this.element, {
-      ...this.constructor.defaults,
+      maxItems: 1,
+      maxOptions: null,
+      plugins: ["dropdown_input"],
+      allowEmptyOption: true, // Show blank option (option with empty value)
+      closeAfterSelect: true,
+      placeholder: this.placeholderValue || this.#emptyOption(),
+      onItemAdd: function () {
+        this.setTextboxValue("");
+      },
       ...this.optionsValue,
       ...options,
     });
@@ -33,7 +27,7 @@ export default class extends Controller {
 
   // private
 
-  #placeholder() {
+  #emptyOption() {
     const optionsArray = [...this.element.options];
     return optionsArray.find((option) => [null, ""].includes(option.value))?.text;
   }

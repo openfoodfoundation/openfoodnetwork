@@ -198,9 +198,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
 
-  #sort {
     line-height: $btn-relaxed-height;
     height: $btn-relaxed-height;
 
@@ -214,29 +212,21 @@
       align-items: center;
       gap: 10px;
     }
+    .per-page {
+      width: 10em;
+    }
   }
 
   #filters {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 20px;
+    display: flex;
+    column-gap: 20px;
     align-items: end;
     margin-bottom: 1rem;
 
     .query {
-      grid-column: 1 / span 3;
-    }
+      flex-grow: 1;
+      min-width: 15em;
 
-    .producers,
-    .categories {
-    }
-
-    .submit {
-      grid-column: 6 / span 1;
-    }
-
-    .query {
       .search-input {
         width: 100%;
         position: relative;
@@ -270,10 +260,7 @@
 
     .producers,
     .categories {
-      select {
-        width: 150px;
-        height: $btn-relaxed-height;
-      }
+      width: 15em;
     }
 
     .submit {
