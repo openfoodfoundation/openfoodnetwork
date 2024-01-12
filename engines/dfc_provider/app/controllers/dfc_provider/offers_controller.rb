@@ -5,7 +5,7 @@ module DfcProvider
     before_action :check_enterprise
 
     def show
-      subject = DfcBuilder.offer(variant)
+      subject = OfferBuilder.build(variant)
       render json: DfcIo.export(subject)
     end
 
