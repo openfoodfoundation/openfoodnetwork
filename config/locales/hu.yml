@@ -452,6 +452,7 @@ hu:
       actions:
         edit: Szerkesztés
         clone: Klón
+        delete: Töröl
     adjustments:
       skipped_changing_canceled_order: "A törölt rendelést nem módosíthatja."
     begins_at: 'Kezdete:'

@@ -465,6 +465,7 @@ en_NZ:
       actions:
         edit: Edit
         clone: Clone
+        delete: Delete
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At

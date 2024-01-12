@@ -338,6 +338,7 @@ nl_BE:
       actions:
         edit: bewerking
         clone: Kloon
+        delete: 'Uitwissen '
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant

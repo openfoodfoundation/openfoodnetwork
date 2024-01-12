@@ -523,6 +523,7 @@ cy:
       actions:
         edit: Golygu
         clone: Clôn
+        delete: Dileu
     adjustments:
       skipped_changing_canceled_order: "Nid yw'n bosib newid archeb a ganslwyd"
     begins_at: Yn dechrau am

@@ -375,6 +375,7 @@ pt:
       actions:
         edit: Editar
         clone: Clonar
+        delete: Apagar
     begins_at: Começa às
     begins_on: Começa em
     customer: Consumidor/a

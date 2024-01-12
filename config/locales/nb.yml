@@ -530,6 +530,7 @@ nb:
       actions:
         edit: Rediger
         clone: Klon
+        delete: Slett
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på

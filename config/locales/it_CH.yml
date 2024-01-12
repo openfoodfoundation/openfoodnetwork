@@ -442,6 +442,7 @@ it_CH:
       actions:
         edit: Modifica
         clone: Duplica
+        delete: Annulla
     adjustments:
       skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
     begins_at: Inizia a

@@ -465,6 +465,7 @@ ko:
       actions:
         edit: 편집
         clone: 복사
+        delete: 삭제
     adjustments:
       skipped_changing_canceled_order: "취소된 명령을 바꿀 수 없습니다."
     begins_at: 시작 시간

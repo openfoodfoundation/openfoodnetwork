@@ -322,6 +322,7 @@ en_DE:
       actions:
         edit: Edit
         clone: Clone
+        delete: Delete
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer

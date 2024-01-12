@@ -468,6 +468,7 @@ de_CH:
       actions:
         edit: Bearbeiten
         clone: Duplizieren
+        delete: Löschen
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt

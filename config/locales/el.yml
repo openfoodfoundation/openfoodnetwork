@@ -381,6 +381,7 @@ el:
       actions:
         edit: Επεξεργασία
         clone: Κλώνος
+        delete: Διαγραφή
     adjustments:
       skipped_changing_canceled_order: "Δεν μπορείτε να κάνετε αλλαγή ακυρωμένης παραγγελίας."
     begins_at: Ξεκινάει από

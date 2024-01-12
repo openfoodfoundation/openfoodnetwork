@@ -521,6 +521,7 @@ ru:
       actions:
         edit: Изменить
         clone: Клонировать
+        delete: Удалить
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С

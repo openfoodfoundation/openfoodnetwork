@@ -403,6 +403,7 @@ pt_BR:
       actions:
         edit: Editar
         clone: Cópia
+        delete: Deletar
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
     begins_at: Começa em

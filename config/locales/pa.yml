@@ -519,6 +519,7 @@ pa:
       actions:
         edit: ਸੰਪਾਦਿਤ ਕਰੋ
         clone: ਕਲੋਨ
+        delete: ਹਟਾਓ
     adjustments:
       skipped_changing_canceled_order: "ਤੁਸੀਂ ਰੱਦ ਕੀਤੇ ਆਰਡਰ ਨੂੰ ਬਦਲ ਨਹੀਂ ਸਕਦੇ ਹੋ।"
     begins_at: ਇਸਤੇ ਸ਼ੁਰੂ ਹੋਵੇਗਾ
@@ -758,6 +759,8 @@ pa:
       table:
         save: ਤਬਦੀਲੀਆਂ ਨੂੰ ਸੇਵ ਕਰੋ
         reset: ਤਬਦੀਲੀਆਂ ਤਿਆਗੋ
+      bulk_update:
+        success: ਬਦਲਾਵ ਸੇਵ ਕੀਤੇ ਗਏ।'
     product_import:
       title: ਉਤਪਾਦ ਦਾ ਇਮਪੋਰਟ
       file_not_found: ਫ਼ਾਈਲ ਨਹੀਂ ਮਿਲੀ ਜਾਂ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ
@@ -860,8 +863,10 @@ pa:
         producer: ਉਤਪਾਦਕ
         sku: SKU
         name: ਨਾਮ
+        display_name: ਡਿਸਪਲੇ ਕੀਤੇ ਜਾਣ ਵਾਲਾ ਨਾਂ
         category: ਸ਼੍ਰੇਣੀ
         description: ਵਰਣਨ
+        units: ਯੂਨਿਟਾਂ
         unit_type: ਯੂਨਿਟ ਦੀ ਕਿਸਮ
         variant_unit_name: ਵੇਰੀਐਂਟ ਯੂਨਿਟ ਦਾ ਨਾਮ
         price: ਕੀਮਤ
@@ -1186,6 +1191,8 @@ pa:
           create_custom_tab: "ਸ਼ਾਪਫ੍ਰੰਟ ਵਿੱਚ ਕਸਟਮ ਟੈਬ ਬਣਾਓ"
           custom_tab_title: "ਕਸਟਮ ਟੈਬ ਲਈ ਸਿਰਲੇਖ"
           custom_tab_content: "ਕਸਟਮ ਟੈਬ ਲਈ ਕੰਟੇਂਟ"
+        connected_apps:
+          loading: "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
       actions:
         edit_profile: ਸੈਟਿੰਗਾਂ
         properties: ਪ੍ਰਾਪਰਟੀਜ਼
@@ -1260,6 +1267,14 @@ pa:
         create: "ਬਣਾਓ"
         cancel: "ਰੱਦ ਕਰੋ"
         back_to_list: "ਸੂਚੀ ਤੇ ਵਾਪਸ"
+      create:
+        success: 'ਤੁਹਾਡਾ ਆਰਡਰ ਸਾਈਕਲ ਬਣਾਇਆ ਗਿਆ।'''
+      update:
+        success: 'ਤੁਹਾਡਾ ਆਰਡਰ ਸਾਈਕਲ ਅੱਪਡੇਟ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ।'''
+      clone:
+        success: "ਤੁਹਾਡਾ ਆਰਡਰ ਸਾਈਕਲ %{name} ਕਲੋਨ ਕੀਤਾ ਗਿਆ ਹੈ।"
+      notify_producers:
+        success: 'ਨਿਰਮਾਤਾਵਾਂ ਨੂੰ ਭੇਜੀਆਂ ਜਾਣ ਵਾਲੀਆਂ ਈਮੇਲਾਂ ਨੂੰ ਭੇਜਣ ਲਈ ਕਤਾਰਬੱਧ ਕੀਤਾ ਗਿਆ ਹੈ।'''
       edit:
         save: "ਸੇਵ ਕਰੋ"
         save_and_next: "ਸੇਵ ਕਰੋ ਅਤੇ ਅਗਲਾ"
@@ -2004,8 +2019,15 @@ pa:
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
       disabling_cookies_note: "ਪਰ ਧਿਆਨ ਰੱਖੋ ਕਿ ਜੇਕਰ ਤੁਸੀਂ ਓਪਨ ਫੂਡ ਨੈਟਵਰਕ ਦੁਆਰਾ ਵਰਤੀਆਂ ਜਾਣ ਵਾਲੀਆਂ ਜ਼ਰੂਰੀ ਕੂਕੀਜ਼ ਨੂੰ ਹਟਾਉਂਦੇ ਜਾਂ ਸੰਸ਼ੋਧਿਤ ਕਰਦੇ ਹੋ, ਤਾਂ ਵੈਬਸਾਈਟ ਕੰਮ ਨਹੀਂ ਕਰੇਗੀ, ਉਦਾਹਰਨ ਲਈ ਤੁਸੀਂ ਆਪਣੇ ਕਾਰਟ ਵਿੱਚ ਨਾ ਤਾਂ ਕੁਜ ਜੋੜ ਸਕੋਗੇ ਅਤੇ ਨਾ ਹੀ ਚੈਕਆਉਟ ਕਰ ਸਕੋਗੇ।"
     cookies_banner:
+      cookies_usage: "ਇਹ ਸਾਈਟ ਤੁਹਾਡੀ ਨੈਵੀਗੇਸ਼ਨ ਨੂੰ ਪਰੇਸ਼ਾਨੀ-ਮੁਕਤ ਅਤੇ ਸੁਰੱਖਿਅਤ ਬਣਾਉਣ ਲਈ ਕੂਕੀਜ਼ ਦੀ ਵਰਤੋਂ ਕਰਦੀ ਹੈ, ਅਤੇ ਨਾਲ ਹੀ ਸਾਨੂੰ ਇਹ ਸਮਝਾ ਕੇ ਕੀ ਤੁਸੀ ਇਸਦਾ ਉਪਯੋਗ ਕਿਵੇਂ ਕਰਦੇ ਹੋ, ਸਾਡੇ ਦੁਆਰਾ ਪ੍ਰਦਾਨ ਕੀਤੀਆਂ ਜਾਣ ਵਾਲਿਆਂ ਸੁਵਿਧਾਵਾਂ ਨੂੰ ਬਿਹਤਰ ਬਣਾਉਣ ਵਿੱਚ ਸਾਡੀ ਮਦਦ ਕਰਦੀ ਹੈ।"
       cookies_definition: "ਕੂਕੀਜ਼ ਬਹੁਤ ਛੋਟੀਆਂ ਟੈਕਸਟ ਫਾਈਲਾਂ ਹੁੰਦੀਆਂ ਹਨ ਜੋ ਤੁਹਾਡੇ ਕੰਪਿਊਟਰ ਉਤੇ ਸਟੋਰ ਕੀਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ ਜਦੋਂ ਤੁਸੀਂ ਕੁਝ ਵੈਬਸਾਈਟਾਂ ਤੇ ਜਾਂਦੇ ਹੋ।"
+      cookies_desc: "ਅਸੀਂ ਸਿਰਫ਼ ਉਹਨਾਂ ਕੂਕੀਜ਼ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹਾਂ ਜੋ ਤੁਹਾਨੂੰ ਆਨਲਾਈਨ ਭੋਜਨ ਵੇਚਣ/ਖਰੀਦਣ ਦੀ ਸੇਵਾ ਪ੍ਰਦਾਨ ਕਰਨ ਲਈ ਜ਼ਰੂਰੀ ਹਨ। ਅਸੀਂ ਤੁਹਾਡਾ ਕੋਈ ਵੀ ਡੇਟਾ ਵੇਚਦੇ ਨਹੀਂ ਹਾਂ। ਅਸੀਂ ਕੂਕੀਜ਼ ਦੀ ਵਰਤੋਂ ਮੁੱਖ ਤੌਰ ਤੇ ਇਹ ਯਾਦ ਰੱਖਣ ਲਈ ਕਰਦੇ ਹਾਂ ਕਿ ਜੇਕਰ ਤੁਸੀਂ ਸੇਵਾ ਵਿੱਚ 'ਲਾਗ ਇਨ' ਕਰਦੇ ਹੋ ਤਾਂ ਤੁਸੀਂ ਕੌਣ ਹੋ, ਜਾਂ ਤੁਹਾਡੇ ਦੁਆਰਾ ਆਪਣੀ ਕਾਰਟ ਵਿੱਚ ਰੱਖੀਆਂ ਆਈਟਮਾਂ ਨੂੰ ਯਾਦ ਰੱਖਣ ਲਈ, ਉਦੋਂ ਵੀ ਜਦੋਂ ਤੁਸੀਂ ਲਾਗਇਨ ਨਾ ਹੋਵੋ। ਜੇਕਰ ਤੁਸੀਂ \"ਕੂਕੀਜ਼ ਸਵੀਕਾਰ ਹਨ\" ਉਤੇ ਕਲਿੱਕ ਕੀਤੇ ਬਿਨਾਂ ਵੈਬਸਾਈਟ ਰਾਹੀਂ ਨੈਵੀਗੇਟ ਕਰਨਾ ਜਾਰੀ ਰੱਖਦੇ ਹੋ, ਤਾਂ ਅਸੀਂ ਇਹ ਮੰਨ ਕੇ ਚਲਦੇ ਹਾਂ ਕਿ ਤੁਸੀਂ ਸਾਨੂੰ ਉਹਨਾਂ ਕੂਕੀਜ਼ ਨੂੰ ਸਟੋਰ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਦੇ ਰਹੇ ਹੋ ਜੋ ਵੈਬਸਾਈਟ ਦੇ ਕੰਮ ਕਰਨ ਲਈ ਜ਼ਰੂਰੀ ਹਨ।"
+      cookies_policy_link_desc: "ਜੇ ਤੁਸੀਂ ਹੋਰ ਜਾਣਨਾ ਚਾਹੁੰਦੇ ਹੋ, ਤਾਂ ਚੈਕ ਕਰੋ ਸਾਡੀ"
       cookies_policy_link: "ਕੂਕੀਜ਼ ਪਾਲਿਸੀ"
+      cookies_accept_button: "ਕੂਕੀਜ਼ ਸਵੀਕਾਰ ਹਨ"
+  home_shop: ਹੁਣੇ ਖਰੀਦੋ
+  brandstory_headline: "ਭੋਜਨ, ਅਨਿਯੁਕਤ."
+  brandstory_intro: "ਕਈ ਵਾਰ ਸਿਸਟਮ ਨੂੰ ਠੀਕ ਕਰਨ ਦਾ ਸਭ ਤੋਂ ਵਧੀਆ ਤਰੀਕਾ ਹੈ ਇੱਕ ਨਵਾਂ ਸ਼ੁਰੂ ਕਰਨਾ..."
   brandstory_part1: "ਓਪਨ ਫੂਡ ਨੈਟਵਰਕ ਸਾਫਟਵੇਅਰ ਪਲੇਟਫਾਰਮ ਕਿਸਾਨਾਂ ਨੂੰ ਔਨਲਾਈਨ ਉਤਪਾਦ ਵੇਚਣ ਦੀ ਇਜਾਜ਼ਤ ਦਿੰਦਾ ਹੈ, ਉਸ ਕੀਮਤ ਤੇ ਜੋ ਉਹਨਾਂ ਲਈ ਸਹੀ ਹਨ। ਇਹ ਖਾਸ ਤੌਰ ਉਤੇ ਭੋਜਨ ਉਤਪਾਦ ਵੇਚਣ ਲਈ ਬਣਾਇਆ ਗਿਆ ਹੈ ਤਾਂ ਜੋ ਇਹ ਔਖੇ ਉਪਾਵਾਂ ਜਾਂ ਸਟਾਕ ਦੇ ਪੱਧਰਾਂ ਨੂੰ ਸੰਭਾਲ ਸਕੇ ਜੋ ਸਿਰਫ ਭੋਜਨ ਵਿੱਚ ਹੁੰਦੇ ਹਨ - ਇੱਕ ਦਰਜਨ ਅੰਡੇ, ਅਜਵਾਇਣ ਦਾ ਇੱਕ ਗੁੱਛਾ, ਇੱਕ ਪੂਰਾ ਚਿਕਨ ਜੋ ਭਾਰ ਵਿੱਚ ਵੱਖਰੇ ਹੁੰਦੇ ਹਨ..."
   brandstory_part2: "ਫਾਰਮਰਜ਼, ਭੋਜਨ ਉਤਪਾਦਕ, ਫਾਰਮਰ ਪ੍ਰੋਡਿਊਸਰ ਆਰਗੇਨਾਈਜ਼ੇਸ਼ਨਾਂ (FPO), ਜਾਂ ਫਾਰਮਰ ਪ੍ਰੋਡਿਊਸਰ ਕੰਪਨੀਆਂ (FPC) ਇਸ ਪਲੇਟਫਾਰਮ ਉਤੇ ਇੱਕ ਔਨਲਾਈਨ ਸ਼ਾਪ ਬਣਾ ਸਕਦੇ ਹਨ, ਭੁਗਤਾਨ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ ਹਨ ਅਤੇ ਹੋਰ ਸ਼ਾਪਾਂ ਰਾਹੀਂ ਵੇਚ ਸਕਦੇ ਹਨ।"
   brandstory_part3: "ਥੋਕ ਵਿਕਰੇਤਾ, ਫਾਰਮਰ ਪ੍ਰੋਡਿਊਸਰ ਆਰਗੇਨਾਈਜ਼ੇਸ਼ਨਾਂ (FPO), ਜਾਂ ਫਾਰਮਰ ਪ੍ਰੋਡਿਊਸਰ ਕੰਪਨੀਆਂ (FPC) ਆਪਣੇ ਮੌਜੂਦਾ ਸਿਸਟਮਾਂ ਨਾਲ OFN ਨੂੰ ਜੋੜ ਸਕਦੀਆਂ ਹਨ ਅਤੇ ਫੂਡ ਹੱਬਾਂ ਅਤੇ ਸ਼ਾਪਾਂ ਦੇ ਸਾਡੇ ਰਾਸ਼ਟਰੀ ਨੈਟਵਰਕ ਰਾਹੀਂ ਗਾਹਕਾਂ ਨੂੰ ਉਹਨਾਂ ਦੀ ਉਪਜ ਦੀ ਸਪਲਾਈ ਕਰਨ ਲਈ ਖਰੀਦ ਸਮੂਹਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦੀਆਂ ਹਨ।"
@@ -2052,8 +2074,11 @@ pa:
   cost_currency: "ਲਾਗਤ ਦੀ ਕਰੰਸੀ"
   order_paid: ਭੁਗਤਾਨ ਕੀਤਾ ਗਿਆ
   order_not_paid: ਭੁਗਤਾਨ ਨਹੀਂ ਕੀਤਾ ਗਿਆ
+  order_total: ਕੁੱਲ ਆਰਡਰ
   order_payment: "ਇਸ ਰਾਹੀਂ ਭੁਗਤਾਨ:"
+  no_payment_required: "ਕਿਸੇ ਭੁਗਤਾਨ ਦੀ ਲੋੜ ਨਹੀਂ"
   order_billing_address: ਬਿਲਿੰਗ ਪਤਾ
+  order_delivery_on: ਡਿਲਿਵਰੀ ਦਾ ਦਿਨ
   order_delivery_address: ਡਿਲਿਵਰੀ ਪਤਾ
   order_delivery_time: ਡਿਲਿਵਰੀ ਦਾ ਸਮਾਂ
   order_special_instructions: "ਤੁਹਾਡੇ ਨੋਟ:"
@@ -2143,6 +2168,19 @@ pa:
     greeting: "ਸਤ ਸ੍ਰੀ ਅਕਾਲ!"
     invited_to_manage: "ਤੁਹਾਨੂੰ %{instance} ਉਤੇ %{enterprise} ਦੇ ਪ੍ਰਬੰਧਨ ਲਈ ਸੱਦਾ ਦਿੱਤਾ ਗਿਆ ਹੈ।"
     confirm_your_email: "ਤੁਹਾਨੂੰ ਇੱਕ ਪੁਸ਼ਟੀਕਰਨ ਲਿੰਕ ਦੇ ਨਾਲ ਇੱਕ ਈਮੇਲ ਪ੍ਰਾਪਤ ਹੋਇਆ ਹੋਵੇਗਾ ਜਾਂ ਜਲਦੀ ਹੀ ਪ੍ਰਾਪਤ ਹੋਵੇਗਾ। ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਆਪਣੀ ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਨਹੀਂ ਕਰ ਲੈਂਦੇ, ਤੁਸੀਂ %{enterprise} ਦੇ ਪ੍ਰੋਫਾਈਲ ਤੱਕ ਪਹੁੰਚ ਨਹੀਂ ਪਾਉਂਗੇ।"
+    set_a_password: "ਫਿਰ ਤੁਹਾਨੂੰ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰਨ ਦੇ ਯੋਗ ਹੋਣ ਤੋਂ ਪਹਿਲਾਂ ਇੱਕ ਪਾਸਵਰਡ ਸੇਟ ਕਰਨ ਲਈ ਕਿਹਾ ਜਾਵੇਗਾ।"
+  producer_mail_greeting: "ਪਿਆਰੇ"
+  producer_mail_text_before: "ਕਿਰਪਾ ਹੇਠਾਂ ਆਰਡਰ ਸਾਈਕਲ ਦੇ ਬਾਰੇ ਵਿੱਚ ਇੱਕ ਅੱਪਡੇਟ ਵੇਖੋ, ਜੋ ਕਿ ਤਿਆਰ ਹੈ ਇਸ ਲਈ:"
+  producer_mail_order_text: "ਇਹ ਰਿਹਾ ਤੁਹਾਡੇ ਉਤਪਾਦਾਂ ਦੇ ਆਰਡਰ ਦਾ ਸੰਖੇਪ:"
+  producer_mail_delivery_instructions: "ਸਟਾਕ ਪਿਕਅਪ/ਡਿਲਿਵਰੀ ਨਿਰਦੇਸ਼:"
+  producer_mail_signoff: "ਧੰਨਵਾਦ ਅਤੇ ਸ਼ੁੱਭਕਾਮਨਾਵਾਂ"
+  producer_mail_order_customer_text: "ਇੱਥੇ ਗਾਹਕਾਂ ਦੁਆਰਾ ਸਮੂਹ ਕੀਤੇ ਗਏ ਆਰਡਰਾਂ ਦਾ ਸਾਰ ਹੈ"
+  shopping_oc_closed: ਆਰਡਰ ਬੰਦ ਹਨ
+  shopping_oc_closed_description: "ਕਿਰਪਾ ਕਰਕੇ ਅਗਲਾ ਸਾਈਕਲ ਖੁੱਲ੍ਹਣ ਤੱਕ ਇੰਤਜ਼ਾਰ ਕਰੋ (ਜਾਂ ਇਹ ਵੇਖਣ ਲਈ ਸਾਡੇ ਨਾਲ ਸਿੱਧਾ ਸੰਪਰਕ ਕਰੋ ਕਿ ਕੀ ਅਸੀਂ ਕਿਸੇ ਲੇਟ ਆਰਡਰ ਨੂੰ ਸਵੀਕਾਰ ਕਰ ਸਕਦੇ ਹਾਂ)"
+  shopping_oc_last_closed: "ਆਖਰੀ ਸਾਈਕਲ %{distance_of_time} ਪਹਿਲਾਂ ਬੰਦ ਹੋ ਗਈ ਸੀ"
+  shopping_oc_next_open: "ਅਗਲੀ ਸਾਈਕਲ %{distance_of_time} ਵਿੱਚ ਖੁਲੇਗੀ"
+  shopping_oc_select: "ਚੁਣੋ..."
+  shopping_tabs_home: "ਹੋਮ"
   shopping_tabs_shop: "ਸ਼ਾਪ"
   shopping_tabs_about: "ਦੇ ਬਾਰੇ ਵਿੱਚ"
   shopping_tabs_producers: "ਉਤਪਾਦਕ"
@@ -2750,6 +2788,7 @@ pa:
   report_render_options: ਰੈਂਡਰਿੰਗ ਵਿਕਲਪ
   report_header_ofn_uid: OFN UID
   report_header_order_cycle: ਆਰਡਰ ਸਾਈਕਲ
+  report_header_user: ਉਪਭੋਗਤਾ
   report_header_email: ਈਮੇਲ
   report_header_status: ਸਥਿਤੀ
   report_header_comments: ਟਿੱਪਣੀਆਂ
@@ -2990,17 +3029,40 @@ pa:
   enterprise_register_success_notice: "ਵਧਾਈਆਂ! %{enterprise} ਲਈ ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਪੂਰਾ ਹੋ ਗਿਆ ਹੈ!"
   enterprise_bulk_update_success_notice: "ਐਂਟਰਪ੍ਰਾਈਜ਼ਾਂ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ"
   enterprise_bulk_update_error: 'ਅੱਪਡੇਟ ਅਸਫਲ'''
+  enterprise_shop_show_error: "ਜਿਸ ਸ਼ਾਪ ਨੂੰ ਤੁਸੀਂ ਲੱਭ ਰਹੇ ਹੋ ਉਹ ਮੌਜੂਦ ਨਹੀਂ ਹੈ ਜਾਂ OFN ਤੇ ਅਕਿਰਿਆਸ਼ੀਲ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਸ਼ਾਪਾਂ ਦੀ ਜਾਂਚ ਕਰੋ।"
+  order_cycles_bulk_update_notice: 'ਆਰਡਰ ਸਾਈਕਲ ਅੱਪਡੇਟ ਕੀਤੇ ਗਏ।'''
+  order_cycles_no_permission_to_coordinate_error: "ਤੁਹਾਡੇ ਕਿਸੇ ਵੀ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਨੂੰ ਆਰਡਰ ਸਾਈਕਲ ਦਾ ਤਾਲਮੇਲ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ"
+  order_cycles_no_permission_to_create_error: "ਤੁਹਾਡੇ ਕੋਲ ਉਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦੁਆਰਾ ਤਾਲਮੇਲ ਕੀਤਾ ਆਰਡਰ ਸਾਈਕਲ ਬਣਾਉਣ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ"
+  order_cycle_closed: "ਤੁਹਾਡੇ ਵੱਲੋਂ ਚੁਣਿਆ ਗਿਆ ਆਰਡਰ ਸਾਈਕਲ ਹੁਣੇ ਹੀ ਬੰਦ ਹੋਇਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ!"
+  back_to_orders_list: "ਆਰਡਰ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+  no_orders_found: "ਕੋਈ ਆਰਡਰ ਨਹੀਂ ਮਿਲਿਆ"
+  order_information: "ਆਰਡਰ ਜਾਣਕਾਰੀ"
+  new_payment: "ਨਵਾਂ ਭੁਗਤਾਨ"
+  create_or_update_invoice: "ਇਨਵੌਇਸ ਬਣਾਓ ਜਾਂ ਅੱਪਡੇਟ ਕਰੋ"
+  date_completed: "ਮੁਕੰਮਲ ਹੋਣ ਦੀ ਮਿਤੀ"
   amount: "ਰਕਮ"
+  invoice_number: "ਇਨਵੌਇਸ ਨੰਬਰ"
   invoice_file: "ਫਾਇਲ"
   state_names:
     ready: ਤਿਆਰ
+    pending: ਲੰਬਿਤ
+    shipped: ਭੇਜਿਆ ਗਿਆ
   js:
+    saving: 'ਸੇਵ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...'''
     changes_saved: 'ਬਦਲਾਵਾਂ ਨੂੰ ਸੇਵ ਕੀਤਾ ਗਿਆ।'
+    authorising: "ਅਧਿਕਾਰਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
+    save_changes_first: ਪਹਿਲਾਂ ਤਬਦੀਲੀਆਂ ਸੇਵ ਕਰੋ।
+    all_changes_saved: ਸਾਰੇ ਬਦਲਾਵ ਸੇਵ ਕੀਤੇ ਗਏ
     unsaved_changes: ਤੁਹਾਡੇ ਕੋਲ ਸੇਵ ਨਾ ਕੀਤੀਆਂ ਤਬਦੀਲੀਆਂ ਹਨ
+    all_changes_saved_successfully: ਸਾਰੇ ਬਦਲਾਵ ਸਫਲਤਾਪੂਰਵਕ ਸੇਵ ਕੀਤੇ ਗਏ
+    oh_no: "ਓ ਨਹੀਂ! ਮੈਂ ਤੁਹਾਡੇ ਬਦਲਾਵਾਂ ਨੂੰ ਸੇਵ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ ਰਿਹਾ।"
+    unauthorized: "ਤੁਸੀਂ ਇਸ ਪੰਨੇ ਤੱਕ ਪਹੁੰਚਣ ਲਈ ਅਣਅਧਿਕਾਰਤ ਹੋ।"
     error: ਗਲਤੀ
+    unavailable: ਅਣਉਪਲਬਧ
     profile: ਪ੍ਰੋਫਾਈਲ
     hub: ਹੱਬ
     shop: ਸ਼ਾਪ
+    choose: ਚੁਣੋ
     resolve_errors: ਕਿਰਪਾ ਕਰਕੇ ਹੇਠਾਂ ਦਿੱਤੀਆਂ ਗਲਤੀਆਂ ਨੂੰ ਹੱਲ ਕਰੋ
     more_items: "+ %{count} ਹੋਰ"
     default_card_updated: ਡਿਫੌਲਟ ਕਾਰਡ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ
@@ -3272,137 +3334,433 @@ pa:
       bulk_buy_modal:
         min_quantity: "ਨਿਊਨਤਮ ਮਾਤਰਾ"
         max_quantity: "ਅਧਿਕਤਮ ਮਾਤਰਾ"
+      price_breakdown: "ਕੀਮਤ ਦਾ ਬ੍ਰੇਕਡਾਊਨ"
+      unit_price_tooltip: "ਇਹ ਇਸ ਉਤਪਾਦ ਦੀ ਯੂਨਿਟ ਕੀਮਤ ਹੈ। ਇਹ ਤੁਹਾਨੂੰ ਪੈਕੇਜਿੰਗ ਸਾਈਜ਼ ਅਤੇ ਵਜ਼ਨ ਤੋਂ ਸੁਤੰਤਰ ਉਤਪਾਦਾਂ ਦੀ ਕੀਮਤ ਦੀ ਤੁਲਨਾ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਦਿੰਦੀ ਹੈ।"
     variants:
       on_demand:
         'yes': "ਡਿਮਾਂਡ ਤੇ"
     variant_overrides:
       on_demand:
+        use_producer_settings: "ਉਤਪਾਦਕ ਸਟਾਕ ਸੈਟਿੰਗਾਂ ਦੀ ਵਰਤੋਂ ਕਰੋ"
         'yes': "ਹਾਂ"
         'no': "ਨਹੀਂ"
+      inventory_products: "ਇਨਵੇਂਟਰੀ ਉਤਪਾਦ"
+      hidden_products: "ਲੁਕੇ ਹੋਏ ਉਤਪਾਦ"
+      new_products: "ਨਵੇਂ ਉਤਪਾਦ"
+      reset_stock_levels: ਸਟਾਕ ਪੱਧਰਾਂ ਨੂੰ ਡਿਫੌਲਟ ਤੇ ਰੀਸੈਟ ਕਰੋ
+      changes_to: ਇਸ ਵਿੱਚ ਬਦਲਦੇ ਹਨ
+      one_override: ਇੱਕ ਓਵਰਰਾਈਡ
+      overrides: ਓਵਰਰਾਈਡ ਕਰਦਾ ਹੈ
+      remain_unsaved: ਬਿਨਾ ਸੇਵ ਦੇ ਰਹਿ ਜਾਂਦੇ ਹਨ।
+      no_changes_to_save: ਸੇਵ ਕਰਨ ਲਈ ਕੋਈ ਵੀ ਬਦਲਾਵ ਨਹੀਂ।'
+      no_authorisation: "ਮੈਂ ਉਹਨਾਂ ਬਦਲਾਵਾਂ ਨੂੰ ਸੇਵ ਕਰਨ ਲਈ ਅਧਿਕਾਰ ਪ੍ਰਾਪਤ ਨਹੀਂ ਕਰ ਸਕਿਆ, ਇਸਲਈ ਉਹ ਬਿਨਾ ਸੇਵ ਕੀਤੇ ਰਹਿ ਗਏ ਹਨ।"
+      some_trouble: "ਮੈਨੂੰ ਸੇਵ ਕਰਨ ਵਿੱਚ ਕੁਝ ਮੁਸ਼ਕਲ ਆਈ: %{errors}"
+      changing_on_hand_stock: ਹੱਥ ਵਿਚ ਸਟਾਕ ਦੇ ਪੱਧਰਾਂ ਨੂੰ ਬਦਲ ਰਹੇ ਹਾਂ...
+      stock_reset: ਸਟਾਕ ਡਿਫੌਲਟ ਤੇ ਰੀਸੈਟ ਕੀਤੇ ਗਏ ਹਨ।
+    tag_rules:
+      show_hide_variants: 'ਮੇਰੇ ਸ਼ੌਪਫਰੰਟ ਵਿੱਚ ਵਾਰੀਏਂਟ ਵਿ ਓ ਜਾਂ ਲੁਕਾਓ'''
+      show_hide_shipping: 'ਚੈਕਆਉਟ ਵੇਲੇ ਸ਼ਿਪਿੰਗ ਢੰਗ ਵਿਖਾਓ ਜਾਂ ਲੁਕਾਓ'''
+      show_hide_payment: 'ਚੈਕਆਉਟ ਵੇਲੇ ਭੁਗਤਾਨ ਦੇ ਢੰਗ ਵਿਖਾਓ ਜਾਂ ਲੁਕਾਓ'''
+      show_hide_order_cycles: 'ਮੇਰੇ ਸ਼ੌਪਫਰੰਟ ਵਿੱਚ ਆਰਡਰ ਸਾਈਕਲ ਵਿਖਾਓ ਜਾਂ ਲੁਕਾਓ'''
+      visible: ਵਿਖਾਈ ਦੇ ਰਿਹਾ ਹੈ
+      not_visible: ਵਿਖਾਈ ਨਹੀਂ ਦੇ ਰਿਹਾ ਹੈ
     services:
+      unsaved_changes_message: ਸੇਵ ਨਾ ਕਿੱਤੇ ਗਏ ਬਦਲਾਵ ਮੌਜੂਦ ਹਨ, ਹੁਣੇ ਸੇਵ ਕਰੋ ਜਾਂ ਨਜ਼ਰਅੰਦਾਜ਼ ਕਰੋ?
       save: ਸੇਵ ਕਰੋ
+      ignore: ਨਜ਼ਰਅੰਦਾਜ਼ ਕਰੋ
+      add_to_order_cycle: "ਆਰਡਰ ਸਾਈਕਲ ਵਿੱਚ ਜੋੜੋ"
+      manage_products: "ਉਤਪਾਦਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ"
+      edit_profile: "ਪ੍ਰੋਫਾਈਲ ਸੰਪਾਦਿਤ ਕਰੋ"
+      add_products_to_inventory: "ਇਨਵੇਂਟਰੀ ਵਿੱਚ ਉਤਪਾਦ ਸ਼ਾਮਲ ਕਰੋ"
+    resources:
+      could_not_delete_customer: 'ਗਾਹਕ ਨੂੰ ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਿਆ'''
+    product_import:
+      confirmation: |
+          ਇਹ ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਲਈ ਉਹਨਾਂ ਸਾਰੇ ਉਤਪਾਦਾਂ ਦੇ ਸਟਾਕ ਪੱਧਰ ਨੂੰ ਜ਼ੀਰੋ ਤੇ ਸੇਟ ਕਰ ਦੇਵੇਗਾ ਜੋ ਅੱਪਲੋਡ ਕੀਤੀ ਫਾਈਲ ਵਿੱਚ ਮੌਜੂਦ ਨਹੀਂ ਹਨ।
+    order_cycles:
+      create_failure: "ਆਰਡਰ ਸਾਈਕਲ ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ"
+      update_success: 'ਤੁਹਾਡਾ ਆਰਡਰ ਸਾਈਕਲ ਅੱਪਡੇਟ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ।'''
+      update_failure: "ਆਰਡਰ ਸਾਈਕਲ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
+      no_distributors: ਇਸ ਆਰਡਰ ਸਾਈਕਲ ਵਿੱਚ ਕੋਈ ਵਿਤਰਕ ਨਹੀਂ ਹਨ। ਇਹ ਆਰਡਰ ਸਾਈਕਲ ਗਾਹਕਾਂ ਨੂੰ ਉਦੋਂ ਤੱਕ ਵਿਖਾਈ ਨਹੀਂ ਦੇਵੇਗਾ ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਇੱਕ ਨੂੰ ਜੋੜ ਨਹੀਂ ਲੈਂਦੇ। ਕੀ ਤੁਸੀਂ ਇਸ ਆਰਡਰ ਸਾਈਕਲ ਨੂੰ ਸੇਵ ਕਰਨਾ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਗੇ?'
     enterprises:
       producer: "ਉਤਪਾਦਕ"
+      non_producer: "ਗੈਰ-ਉਤਪਾਦਕ"
+    customers:
+      select_shop: 'ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਇੱਕ ਸ਼ਾਪ ਚੁਣੋ'
+      could_not_create: ਮਾਫ ਕਰਨਾ! ਬਣਾਇਆ ਨਹੀਂ ਜਾ ਸਕਿਆ
     subscriptions:
+      closes: ਬੰਦ ਹੋ ਰਿਹਾ ਹੈ
       closed: ਬੰਦ ਕੀਤਾ ਹੋਇਆ
+      close_date_not_set: ਬੰਦ ਕਰਨ ਦੀ ਮਿਤੀ ਸੇਟ ਨਹੀਂ ਕੀਤੀ ਗਈ
     spree:
       users:
         order: "ਆਰਡਰ"
     registration:
       welcome_to_ofn: "ਓਪਨ ਫੂਡ ਨੈਟਵਰਕ ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ!"
+      signup_or_login: "ਸਾਈਨ ਅੱਪ (ਜਾਂ ਲੌਗਇਨ ਕਰਕੇ) ਸ਼ੁਰੂ ਕਰੋ"
+      have_an_account: "ਪਹਿਲਾਂ ਹੀ ਕੋਈ ਖਾਤਾ ਹੈ?"
+      action_login: "ਹੁਣੇ ਲਾਗਇਨ ਕਰੋ।"
+    stripe_elements:
+      unknown_error_from_stripe: |
+          ਸਾਡੇ ਭੁਗਤਾਨ ਗੇਟਵੇ ਵਿੱਚ ਤੁਹਾਡੇ ਕਾਰਡ ਨੂੰ ਸੇਟ ਕਰਨ ਵਿੱਚ ਇੱਕ ਸਮੱਸਿਆ ਆਈ ਸੀ। ਕਿਰਪਾ ਕਰਕੇ ਪੇਜ ਨੂੰ ਤਾਜ਼ਾ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ, ਜੇਕਰ ਇਹ ਦੂਜੀ ਵਾਰ ਅਸਫਲ ਹੁੰਦਾ ਹੈ, ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ ਮਦਦ ਲਈ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।
+  producers:
+    signup:
+      start_free_profile: "ਇੱਕ ਮੁਫ਼ਤ ਪ੍ਰੋਫਾਈਲ ਨਾਲ ਸ਼ੁਰੂ ਕਰੋ, ਅਤੇ ਜਦੋਂ ਤੁਸੀਂ ਤਿਆਰ ਹੋਵੋ ਤਾਂ ਵਿਸਤਾਰ ਕਰੋ!"
   order_management:
     reports:
+      bulk_coop:
+        filters:
+          bulk_coop_allocation: "Bulk Co-op Allocation"
+          bulk_coop_customer_payments: "ਬਲਕ ਕੋ-ਆਪ ਗਾਹਕ ਭੁਗਤਾਨ"
+          bulk_coop_packing_sheets: "ਬਲਕ ਕੋ-ਆਪ ਪੈਕਿੰਗ ਸ਼ੀਟਾਂ"
+          bulk_coop_supplier_report: "ਬਲਕ ਕੋ-ਆਪ ਸਪਲਾਇਰ ਰਿਪੋਰਟ"
       enterprise_fee_summaries:
+        filters:
+          date_range: "ਮਿਤੀ ਰੇਂਜ"
+          report_format_csv: "CSV ਦੇ ਤੌਰ ਤੇ ਡਾਊਨਲੋਡ ਕਰੋ"
+          generate_report: "ਰਿਪੋਰਟ ਤਿਆਰ ਕਰੋ"
         report:
           none: "ਕੋਈ ਨਹੀਂ"
+          select_and_search: "ਫਿਲਟਰ ਚੁਣੋ ਅਤੇ ਆਪਣੇ ਡੇਟਾ ਤੱਕ ਪਹੁੰਚਣ ਲਈ ਰਿਪੋਰਟ ਤਿਆਰ ਕਰੋ ਉਤੇ ਕਲਿੱਕ ਕਰੋ।"
       enterprise_fee_summary:
+        date_end_before_start_error: "ਸ਼ੁਰੂ ਹੋਣ ਤੋਂ ਬਾਅਦ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ"
+        parameter_not_allowed_error: "ਤੁਸੀਂ ਇਸ ਰਿਪੋਰਟ ਲਈ ਇੱਕ ਜਾਂ ਇੱਕ ਤੋਂ ਵੱਧ ਚੁਣੇ ਗਏ ਫਿਲਟਰਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਅਧਿਕਾਰਤ ਨਹੀਂ ਹੋ।"
         fee_calculated_on_transfer_through_all: "ਸਾਰੇ"
+        fee_calculated_on_transfer_through_entire_orders: "%{distributor} ਰਾਹੀਂ ਪੂਰੇ ਆਰਡਰ"
+        tax_category_various: "ਕਈ ਤਰ੍ਹਾਂ ਦੇ"
+        fee_type:
+          payment_method: "ਭੁਗਤਾਨ ਲੈਣ-ਦੇਣ"
+          shipping_method: "ਸ਼ਿਪਮੈਂਟ"
         fee_placements:
           supplier: "ਅੰਦਰ ਆਉਣ ਵਾਲੇ"
           distributor: "ਬਾਹਰ ਜਾਣ ਵਾਲੇ"
           coordinator: "ਕੋਆਰਡੀਨੇਟਰ"
+        tax_category_name:
+          shipping_instance_rate: "ਪਲੇਟਫਾਰਮ ਰੇਟ"
         formats:
           csv:
             header:
               fee_type: "ਫੀਸ ਦੀ ਕਿਸਮ"
+              enterprise_name: "ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦੇ ਮਾਲਕ"
               fee_name: "ਫ਼ੀਸ ਦਾ ਨਾਮ"
               customer_name: "ਗਾਹਕ"
+              fee_placement: "ਫੀਸ ਪਲੇਸਮੈਂਟ"
+              fee_calculated_on_transfer_through_name: "ਇਸਦੇ ਰਾਹੀਂ ਟਰਾਂਸਫਰ ਉਤੇ ਫੀਸ ਦੀ ਗਣਨਾ"
               tax_category_name: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
+              total_amount: "$$ ਯੋਗ"
           html:
             header:
               fee_type: "ਫੀਸ ਦੀ ਕਿਸਮ"
+              enterprise_name: "ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦੇ ਮਾਲਕ"
               fee_name: "ਫ਼ੀਸ ਦਾ ਨਾਮ"
               customer_name: "ਗਾਹਕ"
+              fee_placement: "ਫੀਸ ਪਲੇਸਮੈਂਟ"
+              fee_calculated_on_transfer_through_name: "ਇਸਦੇ ਰਾਹੀਂ ਟਰਾਂਸਫਰ ਉਤੇ ਫੀਸ ਦੀ ਗਣਨਾ"
               tax_category_name: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
+              total_amount: "$$ ਯੋਗ"
+        invalid_filter_parameters: "ਇਸ ਰਿਪੋਰਟ ਲਈ ਤੁਹਾਡੇ ਦੁਆਰਾ ਚੁਣੇ ਗਏ ਫਿਲਟਰ ਅਵੈਧ ਹਨ।"
       report:
         none: "ਕੋਈ ਨਹੀਂ"
   order: "ਆਰਡਰ"
+  order_details: "ਆਰਡਰ ਵੇਰਵੇ"
+  customer_details: "ਗਾਹਕ ਦੇ ਵੇਰਵੇ"
+  adjustments: "ਸਮਾਯੋਜਨ"
+  payments: "ਭੁਗਤਾਨ"
+  return_authorizations: "ਵਾਪਸ ਕਰਨ ਦੇ ਅਧਿਕਾਰ"
   credit_owed: "ਬਕਾਇਆ ਕਰਜ਼ਾ"
+  new_adjustment: "ਨਵਾਂ ਸਮਾਯੋਜਨ"
   payment: "ਭੁਗਤਾਨ"
   payment_method: "ਭੁਗਤਾਨ ਦਾ ਤਰੀਕਾ"
+  shipment: "ਸ਼ਿਪਮੈਂਟ"
+  shipment_inc_vat: "ਵੈਟ ਸਮੇਤ ਸ਼ਿਪਮੈਂਟ"
+  shipping_tax_rate: "ਸ਼ਿਪਿੰਗ ਟੈਕਸ ਦਰ"
   category: "ਸ਼੍ਰੇਣੀ"
   import_date: "ਇਮਪੋਰਟ ਮਿਤੀ"
   delivery: "ਡਿਲਿਵਰੀ"
+  temperature_controlled: "ਤਾਪਮਾਨ ਨਿਯੰਤਰਿਤ"
+  new_product: "ਨਵਾਂ ਉਤਪਾਦ"
   administration: "ਪ੍ਰਸ਼ਾਸਨ"
+  logged_in_as: "ਇਸ ਦੇ ਤੌਰ ਤੇ ਲੌਗ ਇਨ ਕੀਤਾ ਹੈ"
   account: "ਖਾਤਾ"
   logout: "ਲਾਗਆਊਟ"
+  date_range: "ਮਿਤੀ ਰੇਂਜ"
+  status: "ਸਥਿਤੀ"
+  new: "ਨਵਾਂ"
+  start: "ਸ਼ੁਰੂ"
+  end: "ਅੰਤ"
+  stop: "ਰੂਕੋ"
+  first: "ਪਹਿਲਾ"
   previous: "ਪਿਛਲਾ"
+  last: "ਆਖਰੀ"
+  webhook_endpoints:
+    create:
+      success: ਵੇਬਹੁੱਕ ਐਂਡਪੁਆਇੰਟ ਸਫਲਤਾਪੂਰਵਕ ਬਣਾਇਆ ਗਿਆ
+      error: ਵੇਬਹੁੱਕ ਐਂਡਪੁਆਇੰਟ ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ ਰਿਹਾ
+    destroy:
+      success: ਵੇਬਹੁੱਕ ਐਂਡਪੁਆਇੰਟ ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ
+      error: ਵੇਬਹੁੱਕ ਐਂਡਪੁਆਇੰਟ ਨੂੰ ਮਿਟਾਉਣਾ ਅਸਫਲ ਰਿਹਾ
   spree:
+    order_updated: "ਆਰਡਰ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ"
+    add_country: "ਦੇਸ਼ ਜੋੜੋ"
+    add_state: "ਰਾਜ ਜੋੜੋ\""
+    adjustment: "ਸਮਾਯੋਜਨ"
     all: "ਸਾਰੇ"
+    associated_adjustment_closed: "ਸਬੰਧਿਤ ਸਮਾਯੋਜਨ ਬੰਦ"
+    back_to_adjustments_list: "ਸਮਾਯੋਜਨ ਤੇ ਵਾਪਸ"
+    back_to_users_list: "ਉਪਭੋਗਤਾਵਾਂ ਤੇ ਵਾਪਸ"
+    back_to_zones_list: "ਜ਼ੋਨਾਂ ਤੇ ਵਾਪਸ"
+    card_code: "ਕਾਰਡ ਕੋਡ"
     card_number: "ਕਾਰਡ ਨੰਬਰ"
     category: "ਸ਼੍ਰੇਣੀ"
+    created_successfully: "ਸਫ਼ਲਤਾਪੂਰਵਕ ਬਣਾਇਆ ਗਿਆ"
     credit: "ਕ੍ਰੈਡਿਟ"
+    editing_tax_category: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ ਦਾ ਸੰਪਾਦਨ"
+    editing_tax_rate: "ਟੈਕਸ ਦਰ ਦਾ ਸੰਪਾਦਨ"
+    editing_zone: "ਸੰਪਾਦਨ ਜ਼ੋਨ"
+    expiration: "ਮਿਆਦ ਸਮਾਪਤੀ"
+    invalid_payment_provider: "ਅਵੈਧ ਭੁਗਤਾਨ ਪ੍ਰਦਾਤਾ"
+    items_cannot_be_shipped: "ਆਈਟਮਾਂ ਭੇਜੀਆਂ ਨਹੀਂ ਜਾ ਸਕਦੀਆਂ"
+    gateway_config_unavailable: "ਗੇਟਵੇ ਕੌਂਫਿਗਰੇਸ਼ਨ ਉਪਲਬਧ ਨਹੀਂ ਹੈ"
+    gateway_error: "ਭੁਗਤਾਨ ਅਸਫਲ"
     more: "ਹੋਰ"
+    new_adjustment: "ਨਵਾਂ ਸਮਾਯੋਜਨ"
+    new_tax_category: "ਨਵੀਂ ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
+    new_taxon: "ਨਵਾਂ ਟੈਕਸੋਨ"
+    new_user: "ਨਵਾਂ ਉਪਭੋਗਤਾ"
     no_pending_payments: "ਕੋਈ ਬਕਾਇਆ ਭੁਗਤਾਨ ਨਹੀਂ ਹੈ"
     none: "ਕੋਈ ਨਹੀਂ"
     not_found: "ਨਹੀਂ ਲਭਿਆ"
+    notice_messages:
+      variant_deleted: "ਵੇਰੀਐਂਟ ਹਟਾਇਆ ਗਿਆ"
+    payment_method_not_supported: "ਭੁਗਤਾਨ ਦਾ ਢੰਗ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ"
+    resend_authorization_email: "ਪ੍ਰਮਾਣਿਕਤਾ ਈਮੇਲ ਮੁੜ ਭੇਜੋ"
+    rma_credit: "RMA ਕ੍ਰੈਡਿਟ"
     refund: "ਰਿਫੰਡ"
+    server_error: "ਸਰਵਰ ਤਰੁੱਟੀ"
+    shipping_method_names:
+      UPS Ground: "ਯੂਪੀਐਸ ਗਰਾਊਂਡ"
+      pick_up: "ਖੇਤ ਤੋਂ ਪਿਕ-ਅੱਪ"
+      delivery: "ਦਸਤਖਤ ਕੀਤੇ, ਸੀਲ ਕੀਤੇ, ਡਿਲੀਵਰ ਕੀਤੇ ਗਏ"
+    start_date: "ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ"
+    successfully_removed: "ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
+    taxonomy_edit: "ਟੈਕਸੋਨੌਮੀ ਸੰਪਾਦਨ"
+    taxonomy_tree_error: "ਟੈਕਸੋਨੌਮੀ ਟ੍ਰੀ ਗਲਤੀ"
+    taxonomy_tree_instruction: "ਟੈਕਸੋਨੌਮੀ ਟ੍ਰੀ ਹਿਦਾਇਤ"
+    tree: "ਟ੍ਰੀ"
     updating: "ਅੱਪਡੇਟ ਹੋ ਰਿਹਾ ਹੈ"
+    your_order_is_empty_add_product: "ਤੁਹਾਡਾ ਆਰਡਰ ਖਾਲੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਉਪਰ ਇੱਕ ਉਤਪਾਦ ਦੀ ਖੋਜ ਕਰੋ ਅਤੇ ਜੋੜੋ"
+    add_product: "ਉਤਪਾਦ ਜੋੜੋ"
+    name_or_sku: "ਨਾਮ ਜਾਂ SKU (ਉਤਪਾਦ ਦੇ ਨਾਮ ਦੇ ਘੱਟੋ-ਘੱਟ ਪਹਿਲੇ 4 ਅੱਖਰ ਦਾਖਲ ਕਰੋ)"
     resend: "ਦੁਬਾਰਾ ਭੇਜੋ"
+    back_to_orders_list: "ਆਰਡਰ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+    back_to_payments_list: "ਭੁਗਤਾਨ ਸੂਚੀ ਤੇ ਵਾਪਸ ਜਾਓ"
+    return_authorizations: "ਵਾਪਸ ਕਰਨ ਦੇ ਅਧਿਕਾਰ"
+    cannot_create_returns: "ਰਿਟਰਨ ਨਹੀਂ ਬਣਾ ਸਕਦਾ ਕਿਉਂਕਿ ਇਸ ਆਰਡਰ ਵਿੱਚ ਕੋਈ ਵੀ ਸ਼ਿਪ ਕੀਤੀ ਯੂਨਿਟ ਨਹੀਂ ਹੈ।"
+    select_stock: "ਸਟਾਕ ਚੁਣੋ"
+    location: "ਲੋਕੇਸ਼ਨ"
+    count_on_hand: "ਹੱਥ ਤੇ ਗਿਣੋ"
     quantity: "ਮਾਤਰਾ"
     on_demand: "ਡਿਮਾਂਡ ਤੇ"
     on_hand: "ਹੱਥ ਵਿਚ"
+    package_from: "ਇਸ ਤੋਂ ਪੈਕੇਜ"
+    item_description: "ਆਈਟਮ ਦਾ ਵੇਰਵਾ"
     price: "ਕੀਮਤ"
     total: "ਕੁੱਲ"
     edit: "ਸੰਪਾਦਿਤ ਕਰੋ"
+    split: "ਵੰਡ"
     delete: "ਹਟਾਓ"
+    cannot_set_shipping_method_without_address: "ਜਦ ਤੱਕ ਗਾਹਕ ਵੇਰਵੇ ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤੇ ਜਾਂਦੇ ਉਦੋਂ ਤੱਕ ਸ਼ਿਪਿੰਗ ਦੇ ਢੰਗ ਨੂੰ ਸੇਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
+    no_tracking_present: "ਕੋਈ ਟਰੈਕਿੰਗ ਵੇਰਵੇ ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤੇ ਗਏ।"
+    tracking: "ਟਰੈਕਿੰਗ"
+    tracking_number: "ਟਰੈਕਿੰਗ ਨੰਬਰ"
+    order_total: "ਆਰਡਰ ਦਾ ਕੁੱਲ"
+    customer_details: "ਗਾਹਕ ਦੇ ਵੇਰਵੇ"
+    customer_details_updated: "ਗਾਹਕ ਵੇਰਵੇ ਅੱਪਡੇਟ ਕੀਤੇ ਗਏ"
+    customer_search: "ਗਾਹਕ ਖੋਜ"
+    choose_a_customer: "ਇੱਕ ਗਾਹਕ ਚੁਣੋ"
     account: "ਖਾਤਾ"
     billing_address: "ਬਿਲਿੰਗ ਪਤਾ"
     shipping_address: "ਸ਼ਿਪਿੰਗ ਪਤਾ"
     first_name: "ਪਹਿਲਾ ਨਾਂ"
     last_name: "ਆਖਰੀ ਨਾਂ"
+    street_address: "ਗਲੀ ਦਾ ਪਤਾ"
+    street_address_2: "ਗਲੀ ਦਾ ਪਤਾ (ਜਾਰੀ)"
     city: "ਸ਼ਹਿਰ"
+    zip: "ਪਿਨ"
     country: "ਦੇਸ਼"
     state: "ਸਥਿਤੀ"
     phone: "ਫੋਨ"
     update: "ਅੱਪਡੇਟ"
+    use_billing_address: "ਬਿਲਿੰਗ ਪਤਾ ਵਰਤੋ"
+    adjustments: "ਸਮਾਯੋਜਨ"
     continue: "ਜਾਰੀ ਰੱਖੋ"
+    fill_in_customer_info: "ਕਿਰਪਾ ਕਰਕੇ ਗਾਹਕ ਦੀ ਜਾਣਕਾਰੀ ਭਰੋ"
     credit_card: "ਕਰੇਡਿਟ ਕਾਰਡ"
+    new_payment: "ਨਵਾਂ ਭੁਗਤਾਨ"
+    capture: "ਕੈਪਚਰ"
+    capture_and_complete_order: "ਕੈਪਚਰ ਕਰੋ ਅਤੇ ਆਰਡਰ ਪੂਰਾ ਕਰੋ"
+    void: "ਖਾਲੀ"
     login: "ਲਾਗਇਨ"
     password: "ਪਾਸਵਰਡ"
+    signature: "ਦਸਤਖਤ"
+    solution: "ਹੱਲ"
+    landing_page: "ਲੈਂਡਿੰਗ ਪੇਜ"
+    server: "ਸਰਵਰ"
+    test_mode: "ਟੈਸਟ ਮੋਡ"
+    logourl: "ਲੋਗੋurl"
+    are_you_sure_delete: "ਕੀ ਤੁਸੀਂ ਵਾਕਈ ਇਸ ਰਿਕਾਰਡ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+    confirm_delete: "ਹਟਾਉਣ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
+    configurations: "ਕੌਂਫਿਗਰੇਸ਼ਨ"
     general_settings: "ਆਮ ਸੈਟਿੰਗਾਂ"
+    site_name: "ਸਾਈਟ ਦਾ ਨਾਂ"
+    site_url: "ਸਾਈਟ URL"
+    default_seo_title: "ਡਿਫੌਲਟ SEO ਸਿਰਲੇਖ"
+    default_meta_description: "ਡਿਫੌਲਟ ਮੈਟਾ ਵਰਣਨ"
+    default_meta_keywords: "ਡਿਫੌਲਟ ਮੈਟਾ ਕੀਵਰਡਸ"
+    currency_decimal_mark: "ਕਰੰਸੀ ਦਸ਼ਮਲਵ ਚਿੰਨ੍ਹ"
+    currency_settings: "ਕਰੰਸੀ ਸੈਟਿੰਗ"
+    currency_symbol_position: ਲਗਾਓ ਡਾਲਰ ਦੀ ਰਕਮ ਤੋਂ ਪਹਿਲਾਂ ਜਾਂ ਬਾਅਦ ਵਿੱਚ ਮੁਦਰਾ ਚਿੰਨ੍ਹ?
+    currency_thousands_separator: "ਕਰੰਸੀ ਹਜ਼ਾਰ ਵੱਖ ਕਰਨ ਵਾਲਾ"
+    hide_cents: "ਸੇਂਟ ਲੁਕਾਓ"
+    display_currency: "ਕਰੰਸੀ ਡਿਸਪਲੇ ਕਰੋ"
+    choose_currency: "ਕਰੰਸੀ ਚੁਣੋ"
+    mail_method_settings: "ਮੇਲ ਵਿਧੀ ਸੈਟਿੰਗਾਂ"
+    mail_settings_notice_html: "<b>ਇੱਥੇ ਕੀਤੀਆਂ ਤਬਦੀਲੀਆਂ ਅਸਥਾਈ ਹੋਣਗੀਆਂ</b>ਸਿਰਫ ਡੀਬਗਿੰਗ ਲਈ, ਅਤੇ ਭਵਿੱਖ ਵਿੱਚ ਵਾਪਸ ਕੀਤੀਆਂ ਜਾ ਸਕਦੀਆਂ ਹਨ। <br>ਸਥਾਈ ਤਬਦੀਲੀਆਂ ਇੰਸਟੈਂਸ ਦੇ ਭੇਦ ਨੂੰ ਅੱਪਡੇਟ ਕਰਕੇ ਅਤੇ <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> ਦਾ ਉਪਯੋਗ ਕਰ ਕੇ ਕੀਤੇ ਜਾ ਸਕਦੇ ਹਨ। ਹੋਰ ਜਾਣਕਾਰੀ ਲਈ OFN ਦੀ ਗਲੋਬਲ ਟੀਮ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।"
+    general: "ਜਨਰਲ"
+    enable_mail_delivery: "ਮੇਲ ਡਿਲਿਵਰੀ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ"
+    send_mails_as: "ਇਸ ਦੇ ਤੌਰ ਤੇ ਮੇਲ ਭੇਜੋ"
+    smtp_send_all_emails_as_from_following_address: "ਸਾਰੇ ਮੇਲ ਹੇਠਾਂ ਦਿੱਤੇ ਪਤੇ ਤੋਂ ਭੇਜੋ।"
+    send_copy_of_all_mails_to: "ਸਾਰੀਆਂ ਮੇਲਾਂ ਦੀ ਕਾਪੀ ਇਥੇ ਭੇਜੋ"
+    smtp_send_copy_to_this_addresses: "ਇਸ ਪਤੇ ਤੇ ਸਾਰੀਆਂ ਬਾਹਰ ਜਾਣ ਵਾਲਿਆਂ ਮੇਲਾਂ ਦੀ ਕਾਪੀ ਭੇਜਦਾ ਹੈ। ਇੱਕ ਤੋਂ ਜ਼ਿਆਦਾ ਪਤਿਆਂ ਲਈ, ਕਾੱਮੇ ਲਾ ਕੇ ਵੱਖ ਕਰੋ।"
     tax_categories: "ਟੈਕਸ ਸ਼੍ਰੇਣੀਆਂ"
+    listing_tax_categories: "ਟੈਕਸ ਸ਼੍ਰੇਣੀਆਂ ਦੀ ਲਿਸਟਿੰਗ"
+    back_to_tax_categories_list: "ਟੈਕਸ ਸ਼੍ਰੇਣੀਆਂ ਦੀ ਸੂਚੀ ਵਿੱਚ ਵਾਪਸ"
     tax rate: "ਟੈਕਸ ਦੀਆਂ ਦਰਾਂ"
+    new_tax_rate: "ਨਵੀਂ ਟੈਕਸ ਦਰ"
     tax_category: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
     tax_rates: "ਟੈਕਸ ਦੀਆਂ ਦਰਾਂ"
     rate: "ਦਰ"
+    tax_rate_amount_explanation: "ਟੈਕਸ ਦੀਆਂ ਦਰਾਂ ਗਣਨਾ ਵਿੱਚ ਸਹਾਇਤਾ ਲਈ ਇੱਕ ਦਸ਼ਮਲਵ ਰਕਮ ਹਨ, (ਜਿਵੇਂ ਕਿ ਜੇਕਰ ਟੈਕਸ ਦਰ 5% ਹੈ ਤਾਂ 0.05 ਦਰਜ ਕਰੋ)"
+    included_in_price: "ਕੀਮਤ ਵਿੱਚ ਸ਼ਾਮਲ"
+    show_rate_in_label: "ਲੇਬਲ ਵਿੱਚ ਦਰ ਦਿਖਾਓ"
+    back_to_tax_rates_list: "ਟੈਕਸ ਦਰਾਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਸ"
     tax_settings: "ਟੈਕਸ ਸੈਟਿੰਗਾਂ"
+    zones: "ਜ਼ੋਨਾਂ"
+    new_zone: "ਨਵਾਂ ਜ਼ੋਨ"
+    default_tax: "ਡਿਫੌਲਟ ਟੈਕਸ"
+    default_tax_zone: "ਡਿਫੌਲਟ ਟੈਕਸ ਜ਼ੋਨ"
+    country_based: "ਦੇਸ਼ ਅਧਾਰਤ"
+    state_based: "ਰਾਜ ਅਧਾਰਤ"
+    countries: "ਦੇਸ਼"
+    listing_countries: "ਸੂਚੀਬੱਧ ਦੇਸ਼"
+    iso_name: "ISO ਨਾਂ"
+    states_required: "ਰਾਜਾਂ ਦੀ ਲੋੜ ਹੈ"
+    editing_country: "ਦੇਸ਼ ਦਾ ਸੰਪਾਦਨ"
+    back_to_countries_list: "ਦੇਸ਼ਾਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+    states: "ਰਾਜ"
+    abbreviation: "ਸੰਖਿਪਤ ਰੂਪ"
+    new_state: "ਨਵਾਂ ਰਾਜ"
     payment_methods: "ਭੁਗਤਾਨ ਦੇ ਢੰਗ"
+    taxonomies: "ਟੈਕਸੋਨੌਮੀਜ਼"
+    new_taxonomy: "ਨਵਾਂ ਟੈਕਸੋਨੌਮੀ"
+    back_to_taxonomies_list: "\"ਟੈਕਸਨੋਮੀਜ਼ ਸੂਚੀ ਤੇ ਵਾਪਸ"
     shipping_methods: "ਸ਼ਿਪਿੰਗ ਦੇ ਢੰਗ"
     shipping_method: "ਸ਼ਿਪਿੰਗ ਦਾ ਤਰੀਕਾ"
+    shipment: "ਸ਼ਿਪਮੈਂਟ"
     payment: "ਭੁਗਤਾਨ"
     status: "ਸਥਿਤੀ"
     shipping_categories: "ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀਆਂ"
+    new_shipping_category: "ਨਵੀਂ ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀ"
+    back_to_shipping_categories: "ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀਆਂ ਤੇ ਵਾਪਸ"
+    editing_shipping_category: "ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀ ਦਾ ਸੰਪਾਦਨ"
     name: "ਨਾਮ"
     description: "ਵਰਣਨ"
     type: "ਕਿਸਮ"
+    default: "ਡਿਫੌਲਟ"
     calculator: "ਕੈਲਕੁਲੇਟਰ"
+    zone: "ਜ਼ੋਨ"
     display: "ਡਿਸਪਲੇ"
+    environment: "ਵਾਤਾਵਰਣ"
     active: "ਸਕ੍ਰਿਅ"
     nore: "ਹੋਰ"
+    no_results: "ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ"
     create: "ਬਣਾਓ"
+    loading: "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+    flat_percent: "ਫਲੈਟ ਪ੍ਰਤੀਸ਼ਤ"
+    per_kg: "ਪ੍ਰਤੀ ਕਿਲੋ"
     amount: "ਰਕਮ"
+    currency: "ਕਰੰਸੀ"
+    first_item: "ਪਹਿਲੀ ਆਈਟਮ ਦੀ ਕੀਮਤ"
+    additional_item: "ਵਧੀਕ ਆਈਟਮ ਦੀ ਕੀਮਤ"
+    max_items: "ਅਧਿਕਤਮ ਆਈਟਮਾਂ"
+    minimal_amount: "ਨਿਊਨਤਮ ਰਕਮ"
+    normal_amount: "ਆਮ ਰਕਮ"
+    discount_amount: "ਛੂਟ ਰਕਮ"
+    no_images_found: "ਕੋਈ ਫੋਟੋ ਨਹੀਂ ਮਿਲੇ"
+    new_image: "ਨਈ ਫੋਟੋ"
+    filename: "ਫਾਈਲ ਦਾ ਨਾਂ"
+    alt_text: "ਵੈਕਲਪਿਕ ਟੈਕਸਟ"
+    thumbnail: "ਥੰਬਨੇਲ"
+    back_to_images_list: "ਫੋਟੋ ਸੂਚੀ ਤੇ ਵਾਪਸ"
     email: ਈਮੇਲ
+    account_updated: "ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ!"
+    email_updated: "ਨਵੇਂ ਈਮੇਲ ਦੀ ਪੁਸ਼ਟੀ ਹੋਣ ਤੋਂ ਬਾਅਦ ਖਾਤਾ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾਵੇਗਾ।"
+    show_api_key_view_toggled: "ਦਿਖਾਓ ਕਿ API ਕੁੰਜੀ ਦ੍ਰਿਸ਼ ਬਦਲਿਆ ਗਿਆ ਹੈ!"
+    my_account: "ਮੇਰਾ ਖਾਤਾ"
     date: "ਮਿਤੀ"
+    time: "ਸਮਾਂ"
+    inventory_error_flash_for_insufficient_quantity: "ਤੁਹਾਡੀ ਕਾਰਟ ਵਿੱਚ ਇੱਕ ਆਈਟਮ ਅਣਉਪਲਬਧ ਹੋ ਗਈ ਹੈ।"
     inventory: ਇਨਵੇਂਟਰੀ
     zipcode: ਪਿੰਨ ਕੋਡ
+    weight: ਵਜ਼ਨ (ਪ੍ਰਤੀ ਕਿਲੋ ਜਾਂ ਪੌਂਡ)
+    error_user_destroy_with_orders: "ਉਪਭੋਗਤਾ ਜਿਹਨਾਂ ਦੇ ਆਰਡਰ ਪੂਰੇ ਹੋ ਗਏ ਨੇ ਉਹਨਾਂ ਨੂੰ ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ"
+    cannot_create_payment_without_payment_methods: "ਤੁਸੀਂ ਬਿਨਾਂ ਕਿਸੇ ਭੁਗਤਾਨ ਦੇ ਢੰਗ ਦੇ ਪਰਿਭਾਸ਼ਿਤ ਕੀਤੇ ਆਰਡਰ ਲਈ ਭੁਗਤਾਨ ਨਹੀਂ ਬਣਾ ਸਕਦੇ ਹੋ।"
+    please_define_payment_methods: "ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਕੁਝ ਭੁਗਤਾਨ ਦੇ ਢੰਗਾਂ ਨੂੰ ਪਰਿਭਾਸ਼ਿਤ ਕਰੋ।"
+    options: "ਵਿਕਲਪ"
+    has_no_shipped_units: "ਕੋਈ ਵੀ ਭੇਜੇ ਗਏ ਯੂਨਿਟ ਨਹੀਂ ਹਨ"
     successfully_created: '%{resource} ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਬਣਾਇਆ ਗਿਆ ਹੈ!'
     successfully_updated: '%{resource} ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ ਹੈ!'''
     payment_method: "ਭੁਗਤਾਨ ਦਾ ਤਰੀਕਾ"
     payment_processing_failed: "ਭੁਗਤਾਨ ਸੰਸਾਧਿਤ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਿਆ, ਕਿਰਪਾ ਕਰਕੇ ਤੁਹਾਡੇ ਦੁਆਰਾ ਦਰਜ ਕੀਤੇ ਵੇਰਵਿਆਂ ਦੀ ਜਾਂਚ ਕਰੋ"
+    not_available: "ਉਪਲਬਧ ਨਹੀਂ"
     sku: "SKU"
+    there_are_no_items_for_this_order: "ਇਸ ਆਰਡਰ ਲਈ ਕੋਈ ਆਈਟਮਾਂ ਨਹੀਂ ਹਨ।"
+    order_populator:
+      out_of_stock: '%{item} ਸਟਾਕ ਵਿੱਚ ਖਤਮ ਹੋ ਗਿਆ ਹੈ।'''
     actions:
       update: "ਅੱਪਡੇਟ"
       cancel: "ਰੱਦ ਕਰੋ"
     shared:
+      error_messages:
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 ਗਲਤੀ ਨੇ ਇਸ ਰਿਕਾਰਡ ਨੂੰ ਸੇਵ ਕੀਤੇ ਜਾਣ ਤੋਂ ਰੋਕ ਦਿੱਤਾ:"
+          few: "%{count} ਗਲਤੀਆਂ ਨੇ ਇਸ ਰਿਕਾਰਡ ਨੂੰ ਸੇਵ ਕੀਤੇ ਜਾਣ ਤੋਂ ਰੋਕ ਦਿੱਤਾ:"
+          many: "%{count} ਗਲਤੀਆਂ ਨੇ ਇਸ ਰਿਕਾਰਡ ਨੂੰ ਸੇਵ ਕੀਤੇ ਜਾਣ ਤੋਂ ਰੋਕ ਦਿੱਤਾ:"
+          other: "%{count} ਗਲਤੀਆਂ ਨੇ ਇਸ ਰਿਕਾਰਡ ਨੂੰ ਸੇਵ ਕੀਤੇ ਜਾਣ ਤੋਂ ਰੋਕ ਦਿੱਤਾ:"
+        there_were_problems_with_the_following_fields: "ਹੇਠ ਦਿੱਤੇ ਖੇਤਰਾਂ ਵਿੱਚ ਸਮੱਸਿਆਵਾਂ ਸਨ"
       payments_list:
+        date_time: "ਮਿਤੀ/ਸਮਾਂ"
         amount: "ਰਕਮ"
         payment_method: "ਭੁਗਤਾਨ ਦਾ ਤਰੀਕਾ"
         payment_state: "ਭੁਗਤਾਨ ਸਥਿਤੀ"
     errors:
       messages:
+        included_price_validation: "ਉਦੋਂ ਤੱਕ ਚੁਣਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ, ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਇੱਕ ਡਿਫਾਲਟ ਟੈਕਸ ਜ਼ੋਨ ਸੇਟ ਨਹੀਂ ਕੀਤਾ ਹੋਵੇ"
         blank: "ਖਾਲੀ ਨਹੀਂ ਹੋ ਸਕਦਾ"
+        invalid_instagram_url: "ਸਿਰਫ਼ ਉਪਭੋਗਤਾ ਦਾ ਨਾਂ ਹੀ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ, ਜਿਵੇਂ ਕਿ. the_prof"
+    layouts:
+      admin:
+        login_nav:
+          header:
+            store: ਸਟੋਰ
+    validation:
+      must_be_int: "ਇੱਕ ਪੂਰਨ ਅੰਕ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ"
     admin:
+      mail_methods:
+        send_testmail: "ਟੈਸਟ ਈਮੇਲ ਭੇਜੋ"
+        testmail:
+          delivery_success: "ਟੈਸਟ ਈਮੇਲ ਭੇਜਿਆ ਗਿਆ।"
+          error: "ਟੈਸਟ ਈਮੇਲ ਭੇਜਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਵਿੱਚ ਇੱਕ ਗਲਤੀ ਹੋਈ।"
       unit_price_tooltip: "\"ਯੂਨਿਟ ਦੀ ਕੀਮਤ ਤੁਹਾਡੇ ਗਾਹਕਾਂ ਨੂੰ ਵੱਖ-ਵੱਖ ਉਤਪਾਦਾਂ ਅਤੇ ਪੈਕੇਜਿੰਗ ਆਕਾਰਾਂ ਵਿਚਕਾਰ ਕੀਮਤਾਂ ਦੀ ਆਸਾਨੀ ਨਾਲ ਤੁਲਨਾ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਦੇ ਕੇ ਪਾਰਦਰਸ਼ਤਾ ਵਧਾਉਂਦੀ ਹੈ। ਧਿਆਨ ਦਿਓ, ਕਿ ਸ਼ਾਪਫ੍ਰੰਟ ਵਿੱਚ ਪ੍ਰਦਰਸ਼ਿਤ ਕੀਤੀ ਗਈ ਅੰਤਿਮ ਯੂਨਿਟ ਕੀਮਤ ਵੱਖਰੀ ਹੋ ਸਕਦੀ ਹੈ ਕਿਉਂਕਿ ਇਸ ਵਿੱਚ ਟੈਕਸ ਅਤੇ ਫੀਸਾਂ ਸ਼ਾਮਲ ਹਨ।\""
       subscriptions:
         number: "ਨੰਬਰ"
@@ -3412,42 +3770,102 @@ pa:
         bulk_order_management: "ਥੋਕ ਆਰਡਰ ਪ੍ਰਬੰਧਨ"
         subscriptions: "ਸਬਸਕ੍ਰਿਪਸ਼ਨ"
         products: "ਉਤਪਾਦ"
+        option_types: "ਵਿਕਲਪ ਦੀਆਂ ਕਿਸਮਾਂ"
         properties: "ਪ੍ਰਾਪਰਟੀਜ਼"
         variant_overrides: "ਇਨਵੇਂਟਰੀ"
         reports: "ਰਿਪੋਰਟਾਂ"
+        configuration: "ਕੌਂਫਿਗਰੇਸ਼ਨ"
         users: "ਉਪਭੋਗਤਾ"
         roles: "ਭੂਮਿਕਾਵਾਂ"
         order_cycles: "ਆਰਡਰ ਸਾਈਕਲ"
         enterprises: "ਐਂਟਰਪ੍ਰਾਈਜ਼"
+        enterprise_relationships: "ਇਜਾਜ਼ਤਾਂ"
         customers: "ਗਾਹਕ"
         groups: "ਸਮੂਹ"
         oidc_settings: "OIDC ਸੈਟਿੰਗਾਂ"
+      product_properties:
+        index:
+          inherits_properties_checkbox_hint: "%{supplier} ਤੋਂ ਪ੍ਰੋਪੇਰਟੀਜ਼ ਅਪਣਾਓ? (ਜਦੋਂ ਤੱਕ ਕਿ ਉਪਰ ਓਵਰਰਾਈਡ ਨਾ ਕੀਤਾ ਗਿਆ ਹੋਵੇ)"
+          add_product_properties: "ਉਤਪਾਦ ਪਰੌਪਰਟੀਆਂ ਜੋੜੋ"
       properties:
         index:
           properties: "ਪ੍ਰਾਪਰਟੀਜ਼"
+          new_property: "ਨਵੀ ਪ੍ਰਾਪਰਟੀ"
           name: "ਨਾਮ"
+          presentation: "ਪ੍ਰਸਤੁਤੀ"
+        new:
+          new_property: "ਨਵੀ ਪ੍ਰਾਪਰਟੀ"
+        edit:
+          editing_property: "ਪ੍ਰਾਪਰਟੀ ਦਾ ਸੰਪਾਦਨ"
+          back_to_properties_list: "ਪਰੌਪਰਟੀਆਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਸ"
         form:
           name: "ਨਾਮ"
+          presentation: "ਪ੍ਰਸਤੁਤੀ"
       return_authorizations:
         index:
+          new_return_authorization: "ਨਵਾਂ ਵਾਪਸੀ ਅਧਿਕਾਰ"
+          return_authorizations: "ਵਾਪਸ ਕਰਨ ਦੇ ਅਧਿਕਾਰ"
+          back_to_orders_list: "ਆਰਡਰ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+          rma_number: "RMA ਨੰਬਰ"
           status: "ਸਥਿਤੀ"
           amount: "ਰਕਮ"
+          cannot_create_returns: "ਰਿਟਰਨ ਨਹੀਂ ਬਣਾ ਸਕਦਾ ਕਿਉਂਕਿ ਇਸ ਆਰਡਰ ਵਿੱਚ ਕੋਈ ਵੀ ਸ਼ਿਪ ਕੀਤੀ ਯੂਨਿਟ ਨਹੀਂ ਹੈ।"
           continue: "ਜਾਰੀ ਰੱਖੋ"
         new:
+          new_return_authorization: "ਨਵਾਂ ਵਾਪਸੀ ਅਧਿਕਾਰ"
+          back_to_return_authorizations_list: "ਵਾਪਸੀ ਅਧਿਕਾਰ ਸੂਚੀ ਤੇ ਵਾਪਸ"
           continue: "ਜਾਰੀ ਰੱਖੋ"
         edit:
+          receive: "ਪ੍ਰਾਪਤ ਕਰੋ"
           are_you_sure: "ਕੀ ਤੁਹਾਨੂੰ ਯਕੀਨ ਹੈ?"
+          return_authorization: "ਵਾਪਸੀ ਅਧਿਕਾਰ"
         form:
           product: "ਉਤਪਾਦ"
+          quantity_shipped: "ਭੇਜੀ ਗਈ ਮਾਤਰ"
+          quantity_returned: "ਵਾਪਸ ਕੀਤੀ ਗਈ ਮਾਤਰਾ "
+          return_quantity: "ਵਾਪਸੀ ਦੀ ਮਾਤਰਾ"
           amount: "ਰਕਮ"
-      orders:
+          rma_value: "ਵੈਲਯੂ"
+          reason: "ਕਾਰਨ"
+          stock_location: "ਸਟਾਕ ਲੋਕੇਸ਼ਨ"
+        states:
+          authorized: "ਅਧਿਕਾਰਤ"
+          received: "ਪ੍ਰਾਪਤ ਹੋਇਆ"
+          canceled: "ਰੱਦ ਕੀਤਾ ਗਿਆ"
+      line_items:
         index:
+          results_found: "%{number} ਨਤੀਜੇ ਮਿਲੇ।"
+          viewing: "%{start} ਨੂੰ %{end} ਤੱਕ ਵੇਖਨਾ।"
+      orders:
+        add_product:
+          cannot_add_item_to_canceled_order: "ਰੱਦ ਕੀਤੇ ਆਰਡਰ ਵਿੱਚ ਆਈਟਮ ਨੂੰ ਜੋੜਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ"
+          include_out_of_stock_variants: "ਉਪਲਬਧ ਸਟਾਕ ਦੇ ਨਾਲ ਵੇਰੀਐਂਟ ਸ਼ਾਮਲ ਕਰੋ"
+        index:
+          listing_orders: "ਲਿਸਟਿੰਗ ਆਰਡਰ"
           new_order: "ਨਵਾਂ ਆਰਡਰ"
+          capture: "ਕੈਪਚਰ"
           ship: "ਸ਼ਿਪ"
           edit: "ਸੰਪਾਦਿਤ ਕਰੋ"
+          order_not_updated: "ਆਰਡਰ ਅੱਪਡੇਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ"
+          note: "ਨੋਟ"
+          first: "ਪਹਿਲਾ"
+          last: "ਆਖਰੀ"
           previous: "ਪਿਛਲਾ"
           next: "ਅਗਲਾ"
+          loading: "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+          no_orders_found: "ਕੋਈ ਆਰਡਰ ਨਹੀਂ ਮਿਲਿਆ"
+          results_found: "%{number} ਨਤੀਜੇ ਮਿਲੇ।"
+          viewing: "%{start} ਨੂੰ %{end} ਤੱਕ ਵੇਖਨਾ।"
+          print_invoices: "ਇਨਵੌਇਸ ਪ੍ਰਿੰਟ ਕਰੋ"
+          cancel_orders: "ਆਰਡਰ ਰੱਦ ਕਰੋ"
           resend_confirmation: "ਪੁਸ਼ਟੀ ਮੁੜ ਭੇਜੋ"
+          resend_confirmation_confirm_html: "ਇਹ ਗਾਹਕ ਨੂੰ ਪੁਸ਼ਟੀਕਰਨ ਈਮੇਲ ਦੁਬਾਰਾ ਭੇਜੇਗਾ।<br />ਕੀ ਤੁਸੀਂ ਵਾਕਈ ਅੱਗੇ ਵਧਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+          send_invoice: "ਇਨਵੌਇਸ ਭੇਜੋ"
+          send_invoice_confirm_html: "ਇਹ ਸਾਰੇ ਚੁਣੇ ਹੋਏ ਪੂਰੇ ਆਰਡਰਾਂ ਲਈ ਗਾਹਕ ਇਨਵੌਇਸ ਈਮੇਲ ਕਰੇਗਾ। <br>ਕੀ ਤੁਸੀਂ ਵਾਕਈ ਅੱਗੇ ਵਧਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+          selected:
+            zero: "ਕੋਈ ਆਰਡਰ ਨਹੀਂ ਚੁਣਿਆ ਗਿਆ"
+            one: "1 ਆਰਡਰ ਚੁਣਿਆ ਗਿਆ"
+            other: "%{count} ਆਰਡਰ ਚੁਣੇ ਗਏ"
         sortable_header:
           payment_state: "ਭੁਗਤਾਨ ਸਥਿਤੀ"
           shipment_state: "ਸ਼ਿਪਮੈਂਟ ਦੀ ਸਥਿਤੀ"
@@ -3456,11 +3874,18 @@ pa:
           state: "ਸਥਿਤੀ"
           email: "ਗਾਹਕ ਦਾ ਈਮੇਲ"
         invoice:
+          issued_on: "ਇਸ ਮਿਤੀ ਨੂੰ ਜਾਰੀ ਕੀਤਾ ਗਿਆ"
           tax_invoice: "ਟੈਕਸ ਇਨਵੌਇਸ"
           code: "ਕੋਡ"
+          from: "ਤੋਂ"
+          to: "ਇਹਨਾਂ ਨੂੰ ਬਿੱਲ ਕਰੋ"
           shipping: "ਸ਼ਿਪਿੰਗ"
+          order_number: "ਆਰਡਰ ਨੰਬਰ"
+          invoice_number: "ਇਨਵੌਇਸ ਨੰਬਰ"
           payments_list:
+            date_time: "ਮਿਤੀ/ਸਮਾਂ"
             payment_method: "ਭੁਗਤਾਨੇ ਦੇ ਢੰਗ"
+            payment_state: "ਭੁਗਤਾਨ ਦੀ ਸਥਿਤੀ"
             amount: "ਰਕਮ"
         note:
           note_label: "ਨੋਟ:"
@@ -3468,55 +3893,139 @@ pa:
         form:
           distribution_fields:
             title: "ਵਿਤਰਣ"
+            distributor: "ਵਿਤਰਕ:"
+            order_cycle: "ਆਰਡਰ ਸਾਈਕਲ:"
+          line_item_adjustments: "ਲਾਈਨ ਆਈਟਮ ਸਮਾਯੋਜਨ"
+          order_adjustments: "ਆਰਡਰ ਸਮਾਯੋਜਨ"
+          order_total: "ਆਰਡਰ ਦਾ ਕੁੱਲ"
       overview:
+        enterprises_header:
+          ofn_with_tip: ਐਂਟਰਪ੍ਰਾਈਜ਼ ਉਤਪਾਦਕ ਅਤੇ/ਜਾਂ ਹੱਬ ਹਨ ਅਤੇ ਓਪਨ ਫੂਡ ਨੈਟਵਰਕ ਦੇ ਅੰਦਰ ਸੰਗਠਨ ਦੀ ਮੂਲ ਇਕਾਈ ਹਨ।
+        enterprise_row:
+          has_no_enterprise_fees: "ਐਂਟਰਪ੍ਰਾਈਜ਼ ਦੀ ਕੋਈ ਫੀਸ ਨਹੀਂ ਹੈ"
+          has_no_payment_methods: "ਭੁਗਤਾਨ ਦੇ ਕੋਈ ਢੰਗ ਨਹੀਂ ਹਨ"
+          has_no_shipping_methods: "ਸ਼ਿਪਿੰਗ ਦੇ ਕੋਈ ਢੰਗ ਨਹੀਂ ਹਨ"
+        products:
+          active_products:
+            zero: "ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਕਿਰਿਆਸ਼ੀਲ ਉਤਪਾਦ ਨਹੀਂ ਹਨ।"
+            one: "ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਕਿਰਿਆਸ਼ੀਲ ਉਤਪਾਦ ਹੈ"
+            few: "ਤੁਹਾਡੇ ਕੋਲ %{count} ਕਿਰਿਆਸ਼ੀਲ ਉਤਪਾਦ ਹਨ"
+            many: "ਤੁਹਾਡੇ ਕੋਲ %{count} ਕਿਰਿਆਸ਼ੀਲ ਉਤਪਾਦ ਹਨ"
+            other: "ਤੁਹਾਡੇ ਕੋਲ %{count} ਕਿਰਿਆਸ਼ੀਲ ਉਤਪਾਦ ਹਨ"
         order_cycles:
           order_cycles: "ਆਰਡਰ ਸਾਈਕਲ"
+          order_cycles_tip: "ਆਰਡਰ ਸਾਈਕਲ ਇਹ ਨਿਰਧਾਰਤ ਕਰਦੇ ਹਨ ਕਿ ਤੁਹਾਡੇ ਉਤਪਾਦ ਗਾਹਕਾਂ ਲਈ ਕਦੋਂ ਅਤੇ ਕਿੱਥੇ ਉਪਲਬਧ ਹੋਣਗੇ।"
+          you_have_active:
+            zero: "ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਕਿਰਿਆਸ਼ੀਲ ਆਰਡਰ ਸਾਈਕਲ ਨਹੀਂ ਹਨ।"
+            one: "ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਕਿਰਿਆਸ਼ੀਲ ਆਰਡਰ ਸਾਈਕਲ ਹੈ।"
+            few: "ਤੁਹਾਡੇ ਕੋਲ %{count} ਕਿਰਿਆਸ਼ੀਲ ਆਰਡਰ ਸਾਈਕਲ ਹਨ।"
+            many: "ਤੁਹਾਡੇ ਕੋਲ %{count} ਕਿਰਿਆਸ਼ੀਲ ਆਰਡਰ ਸਾਈਕਲ ਹਨ।"
+            other: "ਤੁਹਾਡੇ ਕੋਲ %{count} ਕਿਰਿਆਸ਼ੀਲ ਆਰਡਰ ਸਾਈਕਲ ਹਨ।"
+          manage_order_cycles: "ਆਰਡਰ ਸਾਈਕਲ ਪ੍ਰਬੰਧਿਤ ਕਰੋ"
+        version:
+          view_all_releases: ਸਾਰੀਆਂ ਰਿਲੀਜ਼ਾਂ ਵੇਖੋ
       shipping_methods:
         index:
           shipping_methods: "ਸ਼ਿਪਿੰਗ ਦੇ ਢੰਗ"
+          new_shipping_method: "ਨਵੀਂ ਸ਼ਿਪਿੰਗ ਦਾ ਢੰਗ"
           name: "ਨਾਮ"
           products_distributor: "ਵਿਤਰਕ"
+          zone: "ਜ਼ੋਨ"
           calculator: "ਕੈਲਕੁਲੇਟਰ"
           display: "ਡਿਸਪਲੇ"
+          both: "ਚੈਕਆਉਟ ਅਤੇ ਬੈਕ ਆਫਿਸ ਦੋਨੋ"
           back_end: "ਸਿਰਫ ਬੈਕ ਆਫਿਸ"
+          no_shipping_methods_found: "ਸ਼ਿਪਿੰਗ ਦੇ ਕੋਈ ਢੰਗ ਨਹੀਂ ਮਿਲੇ"
+        new:
+          new_shipping_method: "ਨਵੀਂ ਸ਼ਿਪਿੰਗ ਦਾ ਢੰਗ"
+          back_to_shipping_methods_list: "ਸ਼ਿੱਪਿੰਗ ਦੇ ਢੰਗਾਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+        edit:
+          editing_shipping_method: "ਸ਼ਿਪਿੰਗ ਦੇ ਢੰਗਾਂ ਦਾ ਸੰਪਾਦਨ"
+          new: "ਨਵਾਂ"
+          back_to_shipping_methods_list: "ਸ਼ਿੱਪਿੰਗ ਦੇ ਢੰਗਾਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਸ"
         form:
           categories: "ਸ਼੍ਰੇਣੀਆਂ"
           tax_category: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
+          zones: "ਜ਼ੋਨਾਂ"
+          both: "ਚੈਕਆਉਟ ਅਤੇ ਬੈਕ ਆਫਿਸ ਦੋਨੋ"
           back_end: "ਸਿਰਫ ਬੈਕ ਆਫਿਸ"
+          deactivation_warning: "ਡਿਸਪਲੇ"
       payment_methods:
         index:
           payment_methods: "ਭੁਗਤਾਨ ਦੇ ਢੰਗ"
+          new_payment_method: "ਭੁਗਤਾਨ ਦਾ ਨਵਾਂ ਢੰਗ"
           name: "ਨਾਮ"
           products_distributor: "ਵਿਤਰਕ"
+          provider: "ਪ੍ਰਦਾਤਾ"
+          environment: "ਵਾਤਾਵਰਣ"
           display: "ਡਿਸਪਲੇ"
           active: "ਸਕ੍ਰਿਅ"
+          both: "ਦੋਨੋ"
           back_end: "ਸਿਰਫ ਬੈਕ ਆਫਿਸ"
           active_yes: "ਹਾਂ"
           active_no: "ਨਹੀਂ"
+          no_payment_methods_found: "ਭੁਗਤਾਨ ਦਾ ਕੋਈ ਢੰਗ ਨਹੀਂ ਲੱਭੀਆ"
+        new:
+          new_payment_method: "ਭੁਗਤਾਨ ਦਾ ਨਵਾਂ ਢੰਗ"
+          back_to_payment_methods_list: "ਭੁਗਤਾਨ ਦੇ ਢੰਗਾਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+        edit:
+          new: "ਨਵਾਂ"
+          editing_payment_method: "ਭੁਗਤਾਨ ਦੇ ਢੰਗ ਦਾ ਸੰਪਾਦਨ"
+          back_to_payment_methods_list: "ਭੁਗਤਾਨ ਦੇ ਢੰਗਾਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਸ"
         stripe_connect:
           enterprise_select_placeholder: ਚੁਣੋ...
+          loading_account_information_msg: ਸਟਰਿੱਪ ਤੋਂ ਖਾਤਾ ਜਾਣਕਾਰੀ ਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ...
+          stripe_disabled_msg: ਸਟ੍ਰਾਈਪ ਤੋਂ ਖਾਤਾ ਜਾਣਕਾਰੀ ਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ...
+          request_failed_msg: ਮਾਫ਼ ਕਰਨਾ। ਸਟ੍ਰਾਈਪ ਨਾਲ ਖਾਤੇ ਦੇ ਵੇਰਵਿਆਂ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰਦੇ ਸਮੇਂ ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ...
           account_missing_msg: ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਲਈ ਕੋਈ ਸਟ੍ਰਾਈਪ ਖਾਤਾ ਨਹੀਂ ਹੈ।
+          connect_one: ਇੱਕ ਨੂੰ ਕਨੈਕਟ ਕਰੋ
+          access_revoked_msg: ਇਸ ਸਟ੍ਰਾਈਪ ਖਾਤੇ ਤੱਕ ਪਹੁੰਚ ਨੂੰ ਰੱਦ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਖਾਤੇ ਨੂੰ ਦੁਬਾਰਾ ਕਨੇਕਟ ਕਰੋ।
           status: ਸਥਿਤੀ
+          connected: ਕਨੇਕਟ ਕੀਤਾ ਗਿਆ
           account_id: ਖਾਤਾ ਆਈ.ਡੀ
           business_name: ਕਾਰੋਬਾਰ ਦਾ ਨਾਮ
           charges_enabled: ਚਾਰਜ ਸਮਰੱਥ ਕੀਤੇ ਗਏ
         form:
           name: "ਨਾਮ"
           description: "ਵਰਣਨ"
+          environment: "ਵਾਤਾਵਰਣ"
           display: "ਡਿਸਪਲੇ"
           active: "ਸਕ੍ਰਿਅ"
           active_yes: "ਹਾਂ"
           active_no: "ਨਹੀਂ"
+          both: "ਚੈਕਆਉਟ ਅਤੇ ਬੈਕ ਆਫਿਸ ਦੋਨੋ"
           back_end: "ਸਿਰਫ ਬੈਕ ਆਫਿਸ"
           tags: "ਟੈਗ"
+          deactivation_warning: "ਭੁਗਤਾਨ ਦੇ ਢੰਗ ਨੂੰ ਡੀ-ਐਕਟੀਵੇਟ ਕਰਨ ਨਾਲ ਭੁਗਤਾਨ ਦਾ ਢੰਗ ਤੁਹਾਡੀ ਸੂਚੀ ਵਿੱਚੋਂ ਗਾਇਬ ਹੋ ਸਕਦਾ ਹੈ। ਵਿਕਲਪਕ ਤੌਰ ਤੇ, ਤੁਸੀਂ 'ਸਿਰਫ਼ ਬੈਕ ਆਫਿਸ' ਤੇ 'ਡਿਸਪਲੇ' ਵਿਕਲਪ ਨੂੰ ਸੇਟ ਕਰਕੇ ਚੈਕਆਉਟ ਪੇਜ ਤੋਂ ਭੁਗਤਾਨ ਦੇ ਢੰਗ ਨੂੰ ਲੁਕਾ ਸਕਦੇ ਹੋ।"
+        providers:
+          provider: "ਪ੍ਰਦਾਤਾ"
+          check: "ਨਕਦ/ਈਐਫਟੀ/ਆਦਿ (ਭੁਗਤਾਨ ਜਿਸ ਲਈ ਸਵੈਚਲਿਤ ਪ੍ਰਮਾਣਿਕਤਾ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ)"
+          pin: "ਪਿੰਨ ਭੁਗਤਾਨ"
+          paypalexpress: "ਪੇਪਾਲ ਐਕਸਪ੍ਰੈਸ"
+          stripeconnect: "ਸਟ੍ਰਾਈਪ"
+          stripesca: "ਸਟ੍ਰਾਈਪ SCA"
+      payments:
+        source_forms:
+          stripe:
+            error_saving_payment: ਭੁਗਤਾਨ ਸੇਵ ਕਰਨ ਵਿੱਚ ਗੜਬੜ
+            submitting_payment: ਭੁਗਤਾਨ ਜਮ੍ਹਾਂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...
+          paypal:
+            no_payment_via_admin_backend: ਪੇਪਾਲ ਭੁਗਤਾਨਾਂ ਨੂੰ ਬੈਕ ਆਫਿਸ ਵਿੱਚ ਕੈਪਚਰ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ
       products:
+        image_upload_error: "ਕਿਰਪਾ ਕਰਕੇ ਫੋਟੋ ਨੂੰ JPG, PNG, GIF, SVG ਜਾਂ WEBP ਫਾਰਮੈਟ ਵਿੱਚ ਅੱਪਲੋਡ ਕਰੋ।"
+        image_not_processable: "ਅਟੈਚ ਕੀਤੀ ਫੋਟੋ ਇੱਕ ਵੈਧ ਫੋਟੋ ਨਹੀਂ ਹੈ।"
         new:
+          title: "ਨਵਾਂ ਉਤਪਾਦ"
+          new_product: "ਨਵਾਂ ਉਤਪਾਦ"
           supplier: "ਸਪਲਾਇਰ"
+          supplier_select_placeholder: "ਇੱਕ ਸਪਲਾਇਰ ਚੁਣੋ"
           product_name: "\"ਉਤਪਾਦ ਦਾ ਨਾਂ\""
           units: "ਯੂਨਿਟ ਸਾਈਜ਼"
           value: "ਵਲਯੂ"
           unit_name: "ਯੂਨਿਟ ਦਾ ਨਾਮ"
           price: "ਕੀਮਤ"
+          unit_price: "ਯੂਨਿਟ ਦੀ ਕੀਮਤ"
+          unit_price_legend: "ਆਈਟਮ ਦੀ ਕੀਮਤ ਦੇ ਅਧਾਰ ਤੇ ਗਣਨਾ ਕੀਤੀ ਗਈ"
           on_hand: "ਹੱਥ ਵਿਚ"
           on_demand: "ਡਿਮਾਂਡ ਤੇ"
           product_description: "ਉਤਪਾਦ ਵਰਣਨ"
@@ -3525,6 +4034,10 @@ pa:
         index:
           header:
             title: ਥੋਕ ਸੰਪਾਦਿਤ ਉਤਪਾਦ
+          indicators:
+            title: ਉਤਪਾਦ ਲੋਡ ਹੋ ਰਹੇ ਹਨ...
+            no_products: "ਅਜੇ ਤੱਕ ਕੋਈ ਉਤਪਾਦ ਨਹੀਂ। ਤੁਸੀਂ ਕੁਝ ਕਿਉਂ ਨਹੀਂ ਜੋੜਦੇ?"
+            no_results: "ਮਾਫ਼ ਕਰਨਾ, ਕੋਈ ਨਤੀਜਾ ਮੇਲ ਨਹੀਂ ਖਾਂਦਾ"
           products_head:
             name: ਨਾਮ
             unit: ਯੂਨਿਟ
@@ -3534,35 +4047,69 @@ pa:
             inherits_properties?: ਪ੍ਰਾਪਰਟੀਜ਼ ਅਪਣਾਉਂਦੇ ਹਨ?
             av_on: "ਏਵੀ. ਆਨ"
             import_date: "ਇਮਪੋਰਟ ਮਿਤੀ"
+          products_variant:
+            variant_has_n_overrides: "ਇਸ ਵੇਰੀਐਂਟ ਵਿੱਚ %{n} ਓਵਰਰਾਈਡ ਹਨ"
+            new_variant: "ਨਵਾਂ ਵੇਰੀਐਂਟ"
           product_name: '"ਉਤਪਾਦ ਦਾ ਨਾਂ"'
         primary_taxon_form:
           product_category: ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ
+        group_buy_form:
+          group_buy: "ਸਮੂਹ ਖਰੀਦ?"
+          bulk_unit_size: ਥੋਕ ਯੂਨਿਟ ਦਾ ਸਾਈਜ਼
         display_as:
           display_as: ਇਸ ਤਰ੍ਹਾਂ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰੋ
       reports:
         table:
           select_and_search: "ਫਿਲਟਰ ਚੁਣੋ ਅਤੇ ਆਪਣੇ ਡੇਟਾ ਤੱਕ ਪਹੁੰਚਣ ਲਈ %{option} ਤੇ ਕਲਿੱਕ ਕਰੋ।"
+        customer_names_message:
+          customer_names_tip: "ਜੇਕਰ ਤੁਹਾਡੇ ਦੁਆਰਾ ਸਪਲਾਈ ਕੀਤੇ ਗਏ ਆਰਡਰਾਂ ਲਈ ਗਾਹਕ ਦੇ ਨਾਂ ਲੁਕੇ ਹੋਏ ਹਨ, ਤਾਂ ਤੁਸੀਂ ਵਿਤਰਕ ਨਾਲ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ ਅਤੇ ਪੁੱਛ ਸਕਦੇ ਹੋ ਕਿ ਕੀ ਉਹ ਆਪਣੇ ਸਪਲਾਇਰਾਂ ਨੂੰ ਗਾਹਕਾਂ ਦੇ ਨਾਮ ਵੇਖਣ ਦੀ ਆਗਿਆ ਦੇਣ ਲਈ ਆਪਣੀਆਂ ਸ਼ਾਪਾਂ ਦੀਆਂ ਤਰਜੀਹਾਂ ਨੂੰ ਅਪਡੇਟ ਕਰ ਸਕਦੇ ਹਨ।"
+        products_and_inventory:
+          all_products:
+            message: "ਨੋਟ ਕਰੋ ਕਿ ਰਿਪੋਰਟ ਕੀਤੇ ਗਏ ਸਟਾਕ ਦੇ ਪੱਧਰ ਕੇਵਲ ਸਪਲਾਇਰ ਉਤਪਾਦ ਸੂਚੀਆਂ ਤੋਂ ਹਨ। ਜੇਕਰ ਤੁਸੀਂ ਆਪਣੇ ਸਟਾਕ ਦੀ ਮਾਤਰਾ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰਨ ਲਈ ਇਨਵੇਂਟਰੀ ਦੀ ਵਰਤੋਂ ਕਰ ਰਹੇ ਹੋ ਤਾਂ ਇਸ ਵੈਲਯੂ ਨੂੰ ਇਸ ਰਿਪੋਰਟ ਵਿੱਚ ਨਜ਼ਰਅੰਦਾਜ਼ ਕੀਤਾ ਜਾਵੇਗਾ।"
       users:
         index:
+          listing_users: "ਲਿਸਟਿੰਗ ਉਪਭੋਗਤਾ"
+          new_user: "ਨਵਾਂ ਉਪਭੋਗਤਾ"
+          user: "ਉਪਭੋਗਤਾ"
           enterprise_limit: "ਐਂਟਰਪ੍ਰਾਈਜ਼ ਸੀਮਾ"
           search: "ਖੋਜੋ"
           email: "ਈਮੇਲ"
         edit:
+          editing_user: "ਉਪਭੋਗਤਾ ਦਾ ਸੰਪਾਦਨ"
+          back_to_users_list: "ਉਪਭੋਗਤਾ ਸੂਚੀ ਤੇ ਵਾਪਸ"
           general_settings: "ਆਮ ਸੈਟਿੰਗਾਂ"
         form:
+          disabled: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
           email: "ਈਮੇਲ"
           roles: "ਭੂਮਿਕਾਵਾਂ"
           enterprise_limit: "ਐਂਟਰਪ੍ਰਾਈਜ਼ ਸੀਮਾ"
+          confirm_password: "ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
           password: "ਪਾਸਵਰਡ"
+          locale: "ਭਾਸ਼ਾ"
+        email_confirmation:
+          confirmation_pending: "ਈਮੇਲ ਪੁਸ਼ਟੀਕਰਨ ਲੰਬਿਤ ਹੈ। ਅਸੀਂ %{address} ਤੇ ਪੁਸ਼ਟੀਕਰਨ ਈਮੇਲ ਭੇਜਿਆ ਹੈ।"
       variants:
         index:
           sku: "SKU"
           price: "ਕੀਮਤ"
+          options: "ਵਿਕਲਪ"
+          no_results: "ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ"
+          option_types: "ਵਿਕਲਪ ਦੀਆਂ ਕਿਸਮਾਂ"
+          option_values: "ਵੈਲਯੂ"
           and: "ਅਤੇ"
+          new_variant: "ਨਵਾਂ ਵੇਰੀਐਂਟ"
+          show_active: "ਕਿਰਿਆਸ਼ੀਲ ਵਿਖਾਓ"
+          show_deleted: "ਹਟਾਏ ਹੋਏ ਵਿਖਾਓ"
+        new:
+          new_variant: "ਨਵਾਂ ਵੇਰੀਐਂਟ"
         form:
           sku: "SKU"
           price: "ਕੀਮਤ"
+          unit_price: "ਯੂਨਿਟ ਦੀ ਕੀਮਤ"
           display_as: "ਇਸ ਤਰ੍ਹਾਂ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰੋ"
+          display_name: "ਡਿਸਪਲੇ ਕੀਤੇ ਜਾਣ ਵਾਲਾ ਨਾਂ"
+          display_as_placeholder: 'ਜਿਵੇਂ ਕਿ 2 ਕਿਲੋ'
+          display_name_placeholder: 'ਜਿਵੇਂ ਕਿ ਟਮਾਟਰ'''
         autocomplete:
           out_of_stock: "ਸਟਾਕ ਵਿੱਚ ਨਹੀਂ ਹੈਂ"
           producer_name: "ਉਤਪਾਦਕ"
@@ -3580,18 +4127,52 @@ pa:
           email: "ਈਮੇਲ"
           total: "ਕੁੱਲ"
           billing_address_name: "ਨਾਮ"
+      general_settings:
+        edit:
+          legal_settings: "ਕਾਨੂੰਨੀ ਸੈਟਿੰਗਾਂ"
+          cookies_consent_banner_toggle: "ਕੂਕੀਜ਼ ਸਹਿਮਤੀ ਬੈਨਰ ਡਿਸਪਲੇ ਕਰੋ"
+          privacy_policy_url: "ਗੋਪਨੀਯਤਾ ਨੀਤੀ URL"
+          enterprises_require_tos: "ਐਂਟਰਪ੍ਰਾਈਜ਼ਾਂ ਨੂੰ ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ ਸਵੀਕਾਰ ਕਰਨੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ"
+          shoppers_require_tos: "ਖਰੀਦਦਾਰਾਂ ਨੂੰ ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ ਨੂੰ ਸਵੀਕਾਰ ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ"
+          cookies_policy_matomo_section: "ਕੂਕੀਜ਼ ਨੀਤੀ ਦੇ ਪੇਜ ਉਤੇ ਮਾਟੋਮੋ ਸੈਕਸ਼ਨ ਦਿਸਪਲੇ ਕਰੋ"
+          footer_tos_url: "ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ ਦਾ URL"
+    checkout:
+      payment:
+        stripe:
+          choose_one: ਇੱਕ ਚੁਣੋ
+          enter_new_card: ਨਵੇਂ ਕਾਰਡ ਲਈ ਵੇਰਵੇ ਦਰਜ ਕਰੋ
+          used_saved_card: "ਸੇਵ ਕੀਤੇ ਗਏ ਕਾਰਡ ਦਾ ਉਪਯੋਗ ਕਰੋ"
+          or_enter_new_card: "ਜਾਂ, ਇੱਕ ਨਵੇਂ ਕਾਰਡ ਲਈ ਵੇਰਵੇ ਦਰਜ ਕਰੋ:"
+          remember_this_card: ਇਹ ਕਾਰਡ ਯਾਦ ਰੱਖੀਏ?
+        stripe_sca:
+          choose_one: ਇੱਕ ਚੁਣੋ
+          enter_new_card: ਨਵੇਂ ਕਾਰਡ ਲਈ ਵੇਰਵੇ ਦਰਜ ਕਰੋ
+          used_saved_card: "ਸੇਵ ਕੀਤੇ ਗਏ ਕਾਰਡ ਦਾ ਉਪਯੋਗ ਕਰੋ"
+          or_enter_new_card: "ਜਾਂ, ਇੱਕ ਨਵੇਂ ਕਾਰਡ ਲਈ ਵੇਰਵੇ ਦਰਜ ਕਰੋ:"
+          remember_this_card: ਇਹ ਕਾਰਡ ਯਾਦ ਰੱਖੀਏ?
     date_picker:
+      flatpickr_date_format: "ਸਾਲ-ਮਹੀਨਾ-ਦਿਨ"
+      flatpickr_datetime_format: "ਸਾਲ-ਮਹੀਨਾ-ਦਿਨ ਘੰਟੇ: ਮਿੰਟ"
+      today: "ਅੱਜ"
+      now: "ਹੁਣੇ"
       close: "ਬੰਦ"
     orders:
+      error_flash_for_unavailable_items: "ਤੁਹਾਡੇ ਕਾਰਟ ਵਿੱਚ ਇੱਕ ਆਈਟਮ ਅਣਉਪਲਬਧ ਹੋ ਗਈ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਚੁਣੀਆਂ ਗਈਆਂ ਮਾਤਰਾਵਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰੋ।"
+      edit:
+        login_to_view_order: "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਆਰਡਰ ਵੇਖਣ ਲਈ ਲਾਗਇਨ ਕਰੋ।"
+      bought:
+        item: "ਇਸ ਆਰਡਰ ਸਾਈਕਲ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਆਰਡਰ ਕੀਤਾ ਗਿਆ ਹੈ"
       line_item:
         insufficient_stock: "ਨਾਕਾਫ਼ੀ ਸਟਾਕ ਉਪਲਬਧ ਹੈ, ਸਿਰਫ਼ %{on_hand} ਬਾਕੀ"
         out_of_stock: "ਸਟਾਕ ਵਿੱਚ ਨਹੀਂ ਹੈਂ"
+        unavailable_item: "ਇਸ ਵੇਲੇ ਅਣਉਪਲਬਧ"
     shipment_states:
       backorder: ਬੈਕ ਆਰਡਰ
       partial: ਅੰਸ਼ਕ
       pending: ਲੰਬਿਤ
       ready: ਤਿਆਰ
       shipped: ਭੇਜਿਆ ਗਿਆ
+      canceled: ਰੱਦ ਕੀਤਾ ਗਿਆ
     payment_states:
       balance_due: ਬਕਾਇਆ ਰਕਮ
       completed: ਮੁਕੰਮਲ ਕੀਤਾ
@@ -3604,10 +4185,39 @@ pa:
       requires_authorization: "ਅਧਿਕਾਰ ਦੀ ਲੋੜ ਹੈ"
       void: ਖਾਲੀ
       invalid: ਅਵੈਧ
+      authorise: ਅਧਿਕਾਰਤ
     order_mailer:
+      cancel_email:
+        customer_greeting: "ਪਿਆਰੇ %{name},"
+        instructions_html: "<strong>%{distributor}</strong> ਦੇ ਨਾਲ ਤੁਹਾਡਾ ਆਰਡਰ ਰੱਦ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਰਿਕਾਰਡਾਂ ਲਈ ਇਸ ਕੈਂਸਲੇਸ਼ਨ ਜਾਣਕਾਰੀ ਨੂੰ ਬਣਾਏ ਰੱਖੋ।"
+        dont_cancel: "ਜੇਕਰ ਤੁਸੀਂ ਆਪਣਾ ਮਨ ਬਦਲ ਲਿਆ ਹੈ ਜਾਂ ਇਸ ਆਰਡਰ ਨੂੰ ਰੱਦ ਨਹੀਂ ਕਰਨਾ ਚਾਹੁੰਦੇ ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ %{email} ਨਾਲ ਸੰਪਰਕ ਕਰੋ"
+        order_summary_canceled_html: "<strong>ਆਰਡਰ ਸੰਖੇਪ #%{number} [ਰੱਦ]</strong>"
+        details: "Here are the details of what you ordered:"
+        unpaid_order: "ਤੁਹਾਡੇ ਆਰਡਰ ਦਾ ਭੁਗਤਾਨ ਨਹੀਂ ਕੀਤਾ ਗਿਆ ਸੀ ਇਸਲਈ ਕੋਈ ਰਿਫੰਡ ਨਹੀਂ ਕੀਤਾ ਗਿਆ"
+        paid_order: "ਤੁਹਾਡੇ ਆਰਡਰ ਦਾ ਭੁਗਤਾਨ ਕੀਤਾ ਗਿਆ ਸੀ ਇਸਲਈ %{distributor} ਨੇ ਪੂਰੀ ਰਕਮ ਵਾਪਸ ਕਰ ਦਿੱਤੀ ਹੈ"
+        credit_order: "ਤੁਹਾਡੇ ਆਰਡਰ ਦਾ ਭੁਗਤਾਨ ਕੀਤਾ ਗਿਆ ਸੀ ਇਸਲਈ ਤੁਹਾਡੇ ਖਾਤੇ ਵਿੱਚ ਪੈਸੇ ਜਮਾ ਕਰ ਦਿੱਤੇ ਗਏ ਹਨ"
+        subject: "ਆਰਡਰ ਰੱਦ"
+      cancel_email_for_shop:
+        greeting: "ਪਿਆਰੇ %{name},"
+        subject: "ਆਰਡਰ ਰੱਦ"
+        intro: "ਇੱਕ ਗਾਹਕ ਨੇ ਆਪਣਾ ਆਰਡਰ #%{number} ਰੱਦ ਕਰ ਦਿੱਤਾ ਹੈ।"
+        view_cancelled_order: "ਰੱਦ ਕੀਤੇ ਆਰਡਰ ਵੇਖੋ"
       confirm_email:
         subject: "ਆਰਡਰ ਦੀ ਪੁਸ਼ਟੀ"
+      invoice_email:
+        hi: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ %{name}"
+        invoice_attached_text: ਕਿਰਪਾ ਕਰਕੇ ਤੁਹਾਡੇ ਹਾਲੀਆ ਆਰਡਰ ਲਈ ਨੱਥੀ ਇਨਵੌਇਸ ਲੱਭੋ
     user_mailer:
+      reset_password_instructions:
+        request_sent_text: |+
+            ਤੁਹਾਡੇ ਪਾਸਵਰਡ ਨੂੰ ਰੀਸੈਟ ਕਰਨ ਦੀ ਬੇਨਤੀ ਕੀਤੀ ਗਈ ਹੈ। ਜੇਕਰ ਤੁਸੀਂ ਇਹ ਬੇਨਤੀ ਨਹੀਂ ਕੀਤੀ ਹੈ, ਤਾਂ ਇਸ ਈਮੇਲ ਨੂੰ ਨਜ਼ਰਅੰਦਾਜ਼ ਕਰੋ।
+
+        link_text: >+
+            ਜੇਕਰ ਤੁਸੀਂ ਇਹ ਬੇਨਤੀ ਕੀਤੀ ਹੈ ਤਾਂ ਹੇਠਾਂ ਦਿੱਤੇ ਲਿੰਕ ਉਤੇ ਕਲਿੱਕ ਕਰੋ:
+
+        issue_text: |
+            ਜੇਕਰ ਉਪਰੋਕਤ URL ਕੰਮ ਨਹੀਂ ਕਰਦਾ ਹੈ ਤਾਂ ਇਸਨੂੰ ਆਪਣੇ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਕਾਪੀ ਅਤੇ ਪੇਸਟ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ। ਜੇਕਰ ਸਮੱਸਿਆਵਾਂ ਜਾਰੀ ਰਹਿੰਦੀਆਂ ਹਨ ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ ਸਾਡੇ ਨਾਲ ਬੇਝਿਜਕ ਹੋ ਕੇ ਸੰਪਰਕ ਕਰੋ।
+        subject: "ਪਾਸਵਰਡ ਰੀਸੈਟ ਕਰਨ ਦੀਆਂ ਹਦਾਇਤਾਂ"
       confirmation_instructions:
         subject: "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ OFN ਖਾਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
     payment_mailer:
@@ -3757,6 +4367,9 @@ pa:
       toggle_api_key_view: "ਉਪਭੋਗਤਾ ਲਈ API ਕੁੰਜੀ ਦ੍ਰਿਸ਼ ਵਿਖਾਓ"
     unit: ਯੂਨਿਟ
     per_unit: ਪ੍ਰਤੀ ਯੂਨਿਟ
+  datetime:
+    distance_in_words:
+      half_a_minute: ਅੱਧਾ ਮਿੰਟ
   components:
     multiple_checked_select:
       filter_placeholder: "ਫਿਲਟਰ ਵਿਕਲਪ"

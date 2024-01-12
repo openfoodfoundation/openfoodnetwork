@@ -529,6 +529,7 @@ fr:
       actions:
         edit: Modifier
         clone: Dupliquer
+        delete: Supprimer
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -593,6 +594,9 @@ fr:
     has_n_rules: "a %{num} règles"
     unsaved_confirm_leave: "Des modifications n'ont pas été sauvegardées et seront perdues si vous quittez la page. Souhaitez-vous quitter la page?"
     available_units: "Unités disponibles"
+    terms_of_service_have_been_updated_html: "Les conditions d'utilisation de CoopCircuits ont été mises à jour : %{tos_link}"
+    terms_of_service: Lire les conditions d'utilisation
+    accept_terms_of_service: Accepter les conditions d'utilisation
     shopfront_settings:
       embedded_shopfront_settings: "Paramètres Boutiques Intégrées"
       enable_embedded_shopfronts: "Autoriser l'intégration des boutiques"
@@ -746,6 +750,17 @@ fr:
         header:
           title: Gestion du catalogue produits
         loading: Vos produits sont en cours de chargement
+      delete_modal:
+        delete_product_modal:
+          heading: "Supprimer produit"
+          prompt: "Cette action va supprimer ceci de façon permanente de votre liste."
+          confirmation_text: "Supprimer produit"
+          cancellation_text: "Conserver le produit"
+        delete_variant_modal:
+          heading: "Supprimer la variante"
+          prompt: "Cette action va supprimer ceci de façon permanente de votre liste."
+          confirmation_text: "Supprimer la variante"
+          cancellation_text: "Conserver la variante"
       sort:
         pagination:
           total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
@@ -782,6 +797,12 @@ fr:
         reset: Annuler les changements
       bulk_update:
         success: Changements sauvegardés
+      delete_product:
+        success: Le produit a bien été supprimé
+        error: Le produit n'a pas pu être supprimé
+      delete_variant:
+        success: La variante a bien été supprimée
+        error: La variante n'a pas pu être supprimée
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -924,7 +945,7 @@ fr:
     orders:
       edit:
         order_sure_want_to: Êtes-vous sûr de vouloir %{event} cette commande ?
-        voucher_tax_included_in_price: "%{label} (taxe inclue dans le bon de promotion)"
+        voucher_tax_included_in_price: "%{label} (taxe inclue dans le bon de réduction)"
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
       bulk_management:
@@ -1188,8 +1209,8 @@ fr:
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
         vouchers:
-          legend: Bon de réduction
-          voucher_code: Code promo
+          legend: Bons de réduction
+          voucher_code: Code de réduction
           rate: Taux
           label: Nom
           purpose: Raison
@@ -1213,7 +1234,28 @@ fr:
           custom_tab_title: "Titre de l'onglet personnalisé"
           custom_tab_content: "Contenu de l'onglet personnalisé"
         connected_apps:
+          legend: "Applications connectées"
+          title: "Discover Regenerative"
+          tagline: "Autoriser Discover Regenerative à publier les informations de votre entreprise"
+          enable: "Autoriser le partage de données"
+          disable: "Arrêter le partage"
           loading: "Chargement en cours"
+          note: |
+              Votre compte Open Food Network est connecté à Discover Regenerative.
+              Ajouter et mettre à jour les informations sur votre liste Discover Regenerative ici.
+          link_label: "Gérer la liste"
+          description_html: |
+              <p>
+              Les producteurs éligibles peuvent mettre en avant leurs références Regenerative,
+              pratiques agricoles et plus à travers le listing du profil.
+              Simplifier comment les acheteurs peuvent trouver les produits regeneratives et se connecter
+              avec des producteurs.
+              </p>
+              <p>
+              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+              target="_blank"><b>En savoir plus sur Discover Regenerative</b>
+              <i class="icon-external-link"></i></a>
+              </p>
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1463,8 +1505,9 @@ fr:
           tag_rules: "Règles de tag"
           shop_preferences: "Préférences boutique"
           users: "Gestionnaires"
-          vouchers: Bon de réduction
+          vouchers: Bons de réduction
           white_label: "Marque blanche"
+          connected_apps: "Applications connectées"
         enterprise_group:
           primary_details: "Informations de base"
           users: "Gestionnaires"
@@ -1691,9 +1734,9 @@ fr:
         legend: Nouveau bon de réduction
         back: Retour
         save: Sauvegarder
-        voucher_code: Code promo
+        voucher_code: Code de réduction
         voucher_amount: Montant
-        voucher_type: Type de promo
+        voucher_type: Type de réduction
         flat_rate: fixe
         percentage_rate: Pourcentage (%)
     controllers:
@@ -2997,6 +3040,8 @@ fr:
   report_header_transaction_fee: Frais de Transaction (TVA non incluse)
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
+  report_header_voucher_label: Label de la réduction
+  report_header_voucher_amount: "Montant de la réduction (%{currency_symbol})"
   report_line_cost_of_produce: 'Coût des produits hors '
   report_line_line_items: produits
   report_header_last_completed_order_date: Date dernière commande
@@ -4069,6 +4114,9 @@ fr:
           line_item_adjustments: "Ajustements sur la ligne produit"
           order_adjustments: "Ajustements sur la commande"
           order_total: "Total Commande"
+      invoices:
+        index:
+          order_has_changed: "La commande a changé depuis la dernière mise à jour de la facture. La facture affichée ici risque donc de ne pas être à jour."
       overview:
         enterprises_header:
           ofn_with_tip: Les Entreprises sont les entités qui organisent des circuits courts et utilisent pour cela CoopCircuits.

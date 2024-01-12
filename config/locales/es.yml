@@ -474,6 +474,7 @@ es:
       actions:
         edit: Editar
         clone: Duplicar
+        delete: Borrar
     adjustments:
       skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
     begins_at: Empieza en

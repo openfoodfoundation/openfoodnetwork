@@ -465,6 +465,7 @@ uk:
       actions:
         edit: Редагувати
         clone: Клонувати
+        delete: Видалити
     adjustments:
       skipped_changing_canceled_order: "Ви не можете змінити скасоване замовлення."
     begins_at: Починається о

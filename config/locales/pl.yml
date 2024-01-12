@@ -334,6 +334,7 @@ pl:
       actions:
         edit: Edytuj
         clone: Kopiuj
+        delete: Usuń
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient

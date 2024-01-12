@@ -329,6 +329,7 @@ fil_PH:
       actions:
         edit: i-edit
         clone: Gayahin
+        delete: Tanggalin
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
     customer: Customer

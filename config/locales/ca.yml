@@ -480,6 +480,7 @@ ca:
       actions:
         edit: Editar
         clone: Clonar
+        delete: Suprimir
     adjustments:
       skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
     begins_at: Comença a

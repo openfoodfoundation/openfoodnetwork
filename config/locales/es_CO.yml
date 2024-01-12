@@ -353,6 +353,7 @@ es_CO:
       actions:
         edit: Editar
         clone: Duplicar
+        delete: Borrar
     begins_at: Empieza en
     begins_on: Comienza en
     customer: Cliente

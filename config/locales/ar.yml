@@ -473,6 +473,7 @@ ar:
       actions:
         edit: تعديل
         clone: استنساخ
+        delete: حذف
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند

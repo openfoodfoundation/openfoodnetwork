@@ -530,6 +530,7 @@ ml:
       actions:
         edit: എഡിറ്റ് ചെയ്യുക
         clone: ക്ലോൺ
+        delete: ഡിലീറ്റ് ചെയ്യുക
     adjustments:
       skipped_changing_canceled_order: "നിങ്ങൾക്ക് റദ്ദാക്കിയ ഓർഡർ മാറ്റാൻ കഴിയില്ല."
     begins_at: ആരംഭിക്കുന്നത്

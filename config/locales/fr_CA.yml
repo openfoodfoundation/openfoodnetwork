@@ -523,6 +523,7 @@ fr_CA:
       actions:
         edit: Modifier
         clone: Dupliquer
+        delete: Supprimer
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence à

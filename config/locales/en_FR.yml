@@ -530,6 +530,7 @@ en_FR:
       actions:
         edit: Edit
         clone: Clone
+        delete: Delete
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -594,6 +595,9 @@ en_FR:
     has_n_rules: "has %{num} rules"
     unsaved_confirm_leave: "There are unsaved changed on this page. Continue without saving?"
     available_units: "Available Units"
+    terms_of_service_have_been_updated_html: "CoopCircuits Terms of Service have been updated: %{tos_link}"
+    terms_of_service: Read Terms of Service
+    accept_terms_of_service: Accept Terms of Service
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
@@ -747,6 +751,17 @@ en_FR:
         header:
           title: Bulk Edit Products
         loading: Loading your products
+      delete_modal:
+        delete_product_modal:
+          heading: "Delete product"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete product"
+          cancellation_text: "Keep product"
+        delete_variant_modal:
+          heading: "Delete variant"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete variant"
+          cancellation_text: "Keep variant"
       sort:
         pagination:
           total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
@@ -782,6 +797,12 @@ en_FR:
         reset: Discard changes
       bulk_update:
         success: Changes saved
+      delete_product:
+        success: Successfully deleted the product
+        error: Unable to delete the product
+      delete_variant:
+        success: Successfully deleted the variant
+        error: Unable to delete the variant
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1212,7 +1233,28 @@ en_FR:
           custom_tab_title: "Title for custom tab"
           custom_tab_content: "Content for custom tab"
         connected_apps:
+          legend: "Connected apps"
+          title: "Discover Regenerative"
+          tagline: "Allow Discover Regenerative to publish your enterprise information."
+          enable: "Allow data sharing"
+          disable: "Stop sharing"
           loading: "Loading"
+          note: |
+              Your Open Food Network account is connected to Discover Regenerative.
+              Add or update information on your Discover Regenerative listing here.
+          link_label: "Manage listing"
+          description_html: |
+              <p>
+              Eligible producers can showcase their regenerative credentials,
+              farming practices and more through a profile listing.
+              Simplifying how buyers can find regenerative produce and connect
+              with producers of interest.
+              </p>
+              <p>
+              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+              target="_blank"><b>Learn more about Discover Regenerative</b>
+              <i class="icon-external-link"></i></a>
+              </p>
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1464,6 +1506,7 @@ en_FR:
           users: "Users"
           vouchers: Vouchers
           white_label: "White Label"
+          connected_apps: "Connected apps"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
@@ -2992,6 +3035,8 @@ en_FR:
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_header_voucher_label: Voucher Label
+  report_header_voucher_amount: "Voucher Amount (%{currency_symbol})"
   report_line_cost_of_produce: Cost of produce
   report_line_line_items: line items
   report_header_last_completed_order_date: Last completed order date
@@ -4012,6 +4057,9 @@ en_FR:
           line_item_adjustments: "Line Item Adjustments"
           order_adjustments: "Order Adjustments"
           order_total: "Order Total"
+      invoices:
+        index:
+          order_has_changed: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
       overview:
         enterprises_header:
           ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.

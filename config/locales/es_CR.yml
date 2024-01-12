@@ -465,6 +465,7 @@ es_CR:
       actions:
         edit: Editar
         clone: Duplicar
+        delete: Borrar
     adjustments:
       skipped_changing_canceled_order: "No se puede cambiar una orden cancelada"
     begins_at: Empieza en

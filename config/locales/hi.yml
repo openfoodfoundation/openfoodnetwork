@@ -530,6 +530,7 @@ hi:
       actions:
         edit: एडिट करें
         clone: क्लोन
+        delete: हटाएं
     adjustments:
       skipped_changing_canceled_order: "आप रद्द किए गए ऑर्डर को बदल नहीं सकते।"
     begins_at: को शुरू होता है

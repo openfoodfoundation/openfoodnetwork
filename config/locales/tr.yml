@@ -383,6 +383,7 @@ tr:
       actions:
         edit: Düzenle
         clone: Kopyala
+        delete: Sil
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
