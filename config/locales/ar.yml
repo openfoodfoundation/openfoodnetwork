@@ -796,6 +796,7 @@ ar:
         view_products: الذهاب إلى صفحة المنتجات
         view_inventory: انتقل إلى صفحة المخزون
       product_headings:
+        distributor: الموزع
         producer: المنتج
         sku: SKU
         name: الاسم
@@ -1112,6 +1113,8 @@ ar:
           active: نشيط؟
           add_new: اضف جديد
           no_voucher_yet: لا قسائم حتى الآن
+        connected_apps:
+          loading: "جار التحميل"
       actions:
         edit_profile: الإعدادات
         properties: الخصائص
@@ -1777,6 +1780,8 @@ ar:
   invoice_tax_total: "إجمالي ضريبة السلع والخدمات:"
   tax_invoice: "فاتورة ضريبية"
   tax_total: "إجمالي الضريبة (%{rate}):"
+  invoice_shipping_category_delivery: "توصيل"
+  invoice_shipping_category_pickup: "استلام"
   total_excl_tax: "المجموع (باستثناء الضرائب):"
   total_incl_tax: "إجمالي (بما في ذلك الضرائب):"
   abn: "ABN:"

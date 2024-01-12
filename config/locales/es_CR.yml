@@ -786,6 +786,7 @@ es_CR:
         view_products: Ir a la página de productos
         view_inventory: Ir a la página de inventario
       product_headings:
+        distributor: Distribuidor
         producer: Productor
         sku: SKU
         name: Nombre
@@ -1095,6 +1096,8 @@ es_CR:
           rate: Impuesto
           customers: Cliente
           active: Activo?
+        connected_apps:
+          loading: "Cargando"
       actions:
         edit_profile: Configuración
         properties: Propiedades
@@ -1714,6 +1717,8 @@ es_CR:
   invoice_tax_total: "Total IVA:"
   tax_invoice: "FACTURA DE IMPUESTOS"
   tax_total: "Total impuestos (%{rate}):"
+  invoice_shipping_category_delivery: "Entrega"
+  invoice_shipping_category_pickup: "Recoger"
   total_excl_tax: "Total (sin impuestos):"
   total_incl_tax: "Total (Impuestos incl.)"
   abn: "NIF:"

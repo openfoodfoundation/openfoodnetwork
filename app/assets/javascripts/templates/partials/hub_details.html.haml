@@ -14,7 +14,7 @@
             {{'hubs_delivery' | t}}
     .row
       .columns.small-12
-        %a.cta-hub{"ng-href" => "{{::enterprise.path}}#/shop", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}",
+        %a.cta-hub{"ng-href" => "{{::enterprise.path}}#/shop_panel", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}",
         "ng-class" => "{primary: enterprise.active, secondary: !enterprise.active}",
         "ng-click" => "$close()",
         "ofn-change-hub" => "enterprise"}

@@ -21,15 +21,28 @@ module Admin
       show_payment_methods = can?(:manage_payment_methods, enterprise) && is_shop
       show_enterprise_fees = can?(:manage_enterprise_fees,
                                   enterprise) && (is_shop || enterprise.is_primary_producer)
+      show_connected_apps = feature?(:connected_apps, spree_current_user, enterprise)
 
-      build_enterprise_side_menu_items(is_shop, show_properties, show_shipping_methods,
-                                       show_payment_methods, show_enterprise_fees)
+      build_enterprise_side_menu_items(
+        is_shop:,
+        show_properties:,
+        show_shipping_methods:,
+        show_payment_methods:,
+        show_enterprise_fees:,
+        show_connected_apps:,
+      )
     end
 
     private
 
-    def build_enterprise_side_menu_items(is_shop, show_properties, show_shipping_methods,
-                                         show_payment_methods, show_enterprise_fees)
+    def build_enterprise_side_menu_items(
+      is_shop:,
+      show_properties:,
+      show_shipping_methods:,
+      show_payment_methods:,
+      show_enterprise_fees:,
+      show_connected_apps:
+    )
       [
         { name: 'primary_details', icon_class: "icon-home", show: true, selected: 'selected' },
         { name: 'address', icon_class: "icon-map-marker", show: true },
@@ -50,6 +63,7 @@ module Admin
         { name: 'shop_preferences', icon_class: "icon-shopping-cart", show: is_shop },
         { name: 'users', icon_class: "icon-user", show: true },
         { name: 'white_label', icon_class: "icon-leaf", show: true },
+        { name: 'connected_apps', icon_class: "icon-puzzle-piece", show: show_connected_apps },
       ]
     end
   end

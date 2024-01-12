@@ -40,12 +40,12 @@ module OpenFoodNetwork
         shipping categories. Activating this feature for an enterprise owner
         will activate it for all shops of this enterprise.
       DESC
-      "vouchers" => <<~DESC,
-        Add voucher functionality. Voucher can be managed via Enterprise settings.
-        This is activated per enterprise. Enter actors as <code>Enterprise;1234</code>.
-      DESC
       "invoices" => <<~DESC,
         Preserve the state of generated invoices and enable multiple invoice numbers instead of only one live-updating invoice.
+      DESC
+      "connected_apps" => <<~DESC,
+        Enterprise data can be shared with another app.
+        The first example is the Australian Discover Regenerative Portal.
       DESC
     }.freeze
 

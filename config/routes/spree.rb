@@ -50,7 +50,6 @@ Spree::Core::Engine.routes.draw do
 
     resources :users
 
-
     constraints FeatureToggleConstraint.new(:admin_style_v3, negate: true) do
       # Show old bulk products screen
       resources :products, :index do

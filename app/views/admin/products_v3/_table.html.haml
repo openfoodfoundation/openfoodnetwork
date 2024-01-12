@@ -5,17 +5,6 @@
                    'data-bulk-form-error-value': defined?(error_counts),
                   } do |form|
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
-  %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
-    .container
-      .status.eleven.columns
-        .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
-        - if defined?(error_counts)
-          .error_summary
-            -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
-            = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
-      .form-buttons.five.columns
-        = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
-        = form.submit t('.save'), class: "medium"
   %table.products
     %col{ width:"15%" }
     %col{ width:"5%", style: "max-width:5em" }
@@ -28,6 +17,20 @@
     %col{ width:"5%", style: "max-width:5em" }
     %col{ width:"5%", style: "max-width:5em" }
     %thead
+      %tr
+        %td.form-actions-wrapper{ colspan: 10 }
+          .form-actions-wrapper2
+            %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
+              .container
+                .status
+                  .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
+                  - if defined?(error_counts)
+                    .error_summary
+                      -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
+                      = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
+                .form-buttons
+                  = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
+                  = form.submit t('.save'), class: "medium"
       %tr
         %th.align-left.with-input= t('admin.products_page.columns.name')
         %th.align-right= t('admin.products_page.columns.sku')
@@ -70,6 +73,10 @@
               = render(VerticalEllipsisMenu::Component.new) do
                 = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product)
                 = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product)
+                %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
+                    "data-modal-link-target-value": "product-delete-modal", "class": "delete",
+                    "data-modal-link-modal-dataset-value": {'data-current-id': product.id}.to_json }
+                  = t('admin.products_page.actions.delete')
 
           - product.variants.each_with_index do |variant, variant_index|
             = form.fields_for("products][#{product_index}][variants_attributes][", variant, variant_index:) do |variant_form|
@@ -108,3 +115,8 @@
                 %td.align-right
                   = render(VerticalEllipsisMenu::Component.new) do
                     = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(product, variant)
+                    - if product.variants.size > 1
+                      %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
+                          "data-modal-link-target-value": "variant-delete-modal", "class": "delete",
+                          "data-modal-link-modal-dataset-value": {'data-current-id': variant.id}.to_json }
+                        = t('admin.products_page.actions.delete')

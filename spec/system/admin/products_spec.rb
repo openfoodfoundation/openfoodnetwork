@@ -340,6 +340,7 @@ describe '
   context "as an enterprise user" do
     let!(:tax_category) { create(:tax_category) }
     let(:filter) { { producerFilter: 2 } }
+    let(:image_file_path) { Rails.root.join(file_fixture_path, "thinking-cat.jpg") }
 
     before do
       @new_user = create(:user)
@@ -627,14 +628,13 @@ describe '
     end
 
     it "upload a new product image including url filters" do
-      file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
       product = create(:simple_product, supplier: @supplier2)
 
       visit spree.admin_product_images_path(product, filter)
 
       page.find('a#new_image_link').click
 
-      attach_file('image_attachment', file_path)
+      attach_file('image_attachment', image_file_path)
       click_button "Create"
 
       uri = URI.parse(current_url)
@@ -680,13 +680,11 @@ describe '
                                          viewable_type: 'Spree::Product', alt: "position 1",
                                          attachment: image, position: 1)
 
-      file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
-
       visit spree.admin_product_images_path(product, filter)
 
       page.find("a.icon-edit").click
 
-      attach_file('image_attachment', file_path)
+      attach_file('image_attachment', image_file_path)
       click_button "Update"
 
       uri = URI.parse(current_url)

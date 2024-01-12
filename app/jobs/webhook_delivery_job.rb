@@ -46,5 +46,7 @@ class WebhookDeliveryJob < ApplicationJob
     # Raise a failed request error and let job runner handle retrying.
     # In theory, only 5xx errors should be retried, but who knows.
     raise FailedWebhookRequestError, response.status.to_s unless response.success?
+
+    response.body
   end
 end

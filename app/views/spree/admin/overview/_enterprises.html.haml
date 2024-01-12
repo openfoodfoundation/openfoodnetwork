@@ -2,12 +2,12 @@
   = render 'enterprises_header'
 
   - if @enterprises.empty?
-    %div.sixteen.columns.alpha.list-item.red
+    %div.sixteen.columns.alpha.list-item.warning
       %span.text.fifteen.columns.alpha
         = t "spree_admin_enterprises_none_text"
       %span.one.columns.omega
         %span.icon-remove-sign
-    %a.sixteen.columns.alpha.button.bottom.red{ href: "#{main_app.new_admin_enterprise_path}" }
+    %a.sixteen.columns.alpha.button.bottom.warning{ href: "#{main_app.new_admin_enterprise_path}" }
       = t "spree_admin_enterprises_none_create_a_new_enterprise"
       %span.icon-arrow-right
 
@@ -27,6 +27,6 @@
     %div.sixteen.columns.alpha.list
       = render partial: 'enterprise_row', collection: @enterprises, as: :enterprise
 
-    %a.sixteen.columns.alpha.button.bottom.blue{ href: "#{main_app.admin_enterprises_path}" }
+    %a.sixteen.columns.alpha.button.bottom{ href: "#{main_app.admin_enterprises_path}" }
       = t "spree_admin_overview_enterprises_footer"
       %span.icon-arrow-right

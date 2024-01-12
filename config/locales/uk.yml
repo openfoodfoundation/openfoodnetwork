@@ -784,6 +784,7 @@ uk:
         view_products: Перейдіть на сторінку продуктів
         view_inventory: Перейдіть на сторінку інвентаризації
       product_headings:
+        distributor: Дистрибютор
         producer: Виробник
         sku: Артикул
         name: Ім&#39;я
@@ -1092,6 +1093,8 @@ uk:
           rate: Оцінка
           customers: Замовник
           active: Активний?
+        connected_apps:
+          loading: "Завантаження"
       actions:
         edit_profile: Налаштування
         properties: Властивості
@@ -1712,6 +1715,8 @@ uk:
   invoice_tax_total: "Всього ПДВ:"
   tax_invoice: "ПОДАТКОВА НАКЛАДНА"
   tax_total: "Загальний податок (%{rate}):"
+  invoice_shipping_category_delivery: "Доставка"
+  invoice_shipping_category_pickup: "Самовивіз"
   total_excl_tax: "Усього (без податку):"
   total_incl_tax: "Всього (вкл. податок):"
   abn: "ABN:"

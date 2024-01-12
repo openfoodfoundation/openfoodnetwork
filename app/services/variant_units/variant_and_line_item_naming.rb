@@ -4,8 +4,6 @@
 # It contains all of our logic for creating and naming option values (which are associated
 # with both models) and methods for printing human readable "names" for instances of these models.
 
-require 'variant_units/option_value_namer'
-
 module VariantUnits
   module VariantAndLineItemNaming
     def options_text

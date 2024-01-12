@@ -780,8 +780,6 @@ nb:
             other: "%{count} produkter kunne ikke lagres. Se gjennom feilene og prøv igjen."
         save: Lagre endringer
         reset: Forkaste endringer
-      bulk_update:
-        success: "Produktene er oppdatert"
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes
@@ -880,6 +878,7 @@ nb:
         view_products: Gå til produktside
         view_inventory: Gå til varelager
       product_headings:
+        distributor: Distributør
         producer: Produsent
         sku: SKU
         name: Navn
@@ -1210,6 +1209,8 @@ nb:
           create_custom_tab: "Lag egendefinert fane i butikk"
           custom_tab_title: "Tittel for egendefinert fane"
           custom_tab_content: "Innhold for egendefinert fane"
+        connected_apps:
+          loading: "Laster"
       actions:
         edit_profile: Innstillinger
         properties: Egenskaper
@@ -1900,7 +1901,8 @@ nb:
   invoice_tax_total: "MVA Totalt:"
   tax_invoice: "AVGIFTSFAKTURA"
   tax_total: "Totalavgift (%{rate}):"
-  invoice_shipping_type: "Type:"
+  invoice_shipping_category_delivery: "Levering"
+  invoice_shipping_category_pickup: "Henting"
   total_excl_tax: "Sum (Eks. avgift):"
   total_incl_tax: "Sum (Inkl. avgift):"
   total_all_tax: "Total skatt:"

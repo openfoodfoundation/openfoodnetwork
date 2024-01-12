@@ -10,7 +10,10 @@ class DefaultCountry
   end
 
   def self.country
-    Spree::Country.cached_find_by(iso: ENV.fetch("DEFAULT_COUNTRY_CODE",
-                                                 nil)) || Spree::Country.first
+    # Changing ENV requires restarting the process.
+    iso = ENV.fetch("DEFAULT_COUNTRY_CODE", nil)
+
+    # When ENV changes on restart, this cache will be reset as well.
+    @country ||= Spree::Country.find_by(iso:) || Spree::Country.first
   end
 end

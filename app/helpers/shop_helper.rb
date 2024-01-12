@@ -45,7 +45,7 @@ module ShopHelper
   end
 
   def shopfront_closed_message?(order_cycles)
-    no_open_order_cycles?(order_cycles) && \
+    no_open_order_cycles?(order_cycles) &&
       current_distributor.preferred_shopfront_closed_message.present?
   end
 

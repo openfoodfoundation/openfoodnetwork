@@ -773,6 +773,7 @@ hu:
         view_products: Ugrás a Termékek oldalra
         view_inventory: Ugrás a Leltár oldalra
       product_headings:
+        distributor: Elosztó
         producer: Termelő
         sku: SKU
         name: Név
@@ -1078,6 +1079,8 @@ hu:
           rate: Mérték
           customers: Vevő
           active: Aktív?
+        connected_apps:
+          loading: "Betöltés"
       actions:
         edit_profile: Beállítások
         properties: Tulajdonságok
@@ -1705,6 +1708,8 @@ hu:
   invoice_tax_total: "GST összesen:"
   tax_invoice: "ADÓSZÁMLA"
   tax_total: "Teljes adó (%{rate}):"
+  invoice_shipping_category_delivery: "Szállítás"
+  invoice_shipping_category_pickup: "Átvétel"
   total_excl_tax: "Összesen (adó nélkül):"
   total_incl_tax: "Összesen (adóval együtt):"
   abn: "LÉGI ÚTON SZÁLLÍTOTT:"

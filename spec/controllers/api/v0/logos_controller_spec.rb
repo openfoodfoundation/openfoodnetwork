@@ -18,7 +18,7 @@ module Api
     }
 
     describe "removing logo" do
-      let(:image) { Rack::Test::UploadedFile.new(black_logo_file, "image/png") }
+      let(:image) { black_logo_file }
 
       let(:enterprise) { create(:enterprise, owner: enterprise_owner, logo: image) }
 

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'open_food_network/scope_variant_to_hub'
-require 'variant_units/variant_and_line_item_naming'
 
 module Spree
   class LineItem < ApplicationRecord

@@ -1354,6 +1354,7 @@ pl:
   invoice_tax_total: "Suma podatku VAT:"
   tax_invoice: "FAKTURA PODATKOWA"
   tax_total: "Całkowity podatek (%{rate}):"
+  invoice_shipping_category_pickup: "Odbiór"
   total_excl_tax: "Razem (bez podatku):"
   total_incl_tax: "Razem (z podatkiem):"
   abn: "NIP:"

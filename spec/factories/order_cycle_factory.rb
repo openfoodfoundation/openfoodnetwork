@@ -35,7 +35,7 @@ FactoryBot.define do
           viewable_id: product.id,
           viewable_type: 'Spree::Product',
           alt: "position 1",
-          attachment: Rack::Test::UploadedFile.new(white_logo_path),
+          attachment: white_logo_file,
           position: 1
         )
 

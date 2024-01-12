@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'open_food_network/property_merge'
-require 'concerns/product_stock'
 
 # PRODUCTS
 # Products represent an entity for sale in a store.
@@ -189,7 +188,7 @@ module Spree
         .with_permission(:add_to_order_cycle)
         .where(enterprises: { is_primary_producer: true })
         .pluck(:parent_id)
-      return where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
+      where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
     }
 
     scope :active, lambda { where("spree_products.deleted_at IS NULL") }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'api/admin/enterprise_serializer'
-
 module Api
   module V0
     class EnterpriseAttachmentController < Api::V0::BaseController

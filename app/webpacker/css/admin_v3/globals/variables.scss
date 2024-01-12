@@ -12,7 +12,7 @@ $base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial,
 // Body base colors
 $color-body-bg:                  $white !default;
 $color-body-text:                $near-black !default;
-$color-headers:                  $dark-blue !default;
+$color-headers:                  $near-black !default;
 $color-link:                     $teal !default;
 $color-link-hover:               $orient !default;
 $color-link-active:              $dark-blue !default;
@@ -179,3 +179,8 @@ $font-weight-normal:             400 !default;
 $btn-relaxed-height:             40px !default;
 $btn-regular-height:             32px !default;
 $btn-condensed-height:           26px !default;
+
+// z-index
+//--------------------------------------------------------------
+$tos-banner-z-index: 1001;
+$flash-message-z-index: 1000;

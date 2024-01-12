@@ -114,7 +114,7 @@ describe "As a consumer, I want to checkout my order" do
         end
       end
 
-      describe "vouchers", feature: :vouchers do
+      describe "vouchers" do
         context "with no voucher available" do
           before do
             visit checkout_step_path(:payment)

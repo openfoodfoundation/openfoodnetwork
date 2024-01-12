@@ -26,9 +26,5 @@ module OpenFoodNetwork
       expect(json_response).to eq("error" => "You are not authorized to perform that action.")
       expect(response.status).to eq 401
     end
-
-    def image(filename)
-      Rack::Test::UploadedFile.new(Rails.root + "spec/support/fixtures" + filename)
-    end
   end
 end

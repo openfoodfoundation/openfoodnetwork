@@ -16,7 +16,7 @@
           = render 'spree/shared/line_item_name', line_item: item
           %br
           %small
-            %em= raw(item.variant.product.supplier.name)
+            %em= item.variant.product.supplier.name
         %td{:align => "right"}
           = item.quantity
         %td{:align => "right"}
@@ -28,7 +28,7 @@
       - taxable = adjustment.adjustable_type == "Spree::Shipment" ? adjustment.adjustable : adjustment
       %tr
         %td
-          %strong= "#{raw(adjustment.label)}"
+          %strong= adjustment.label
         %td{:align => "right"}
           1
         %td{:align => "right"}

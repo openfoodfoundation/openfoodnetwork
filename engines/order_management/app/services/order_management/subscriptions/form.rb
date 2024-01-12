@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'order_management/subscriptions/proxy_order_syncer'
-
 module OrderManagement
   module Subscriptions
     class Form

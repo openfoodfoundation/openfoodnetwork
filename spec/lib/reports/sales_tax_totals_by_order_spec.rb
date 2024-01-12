@@ -105,7 +105,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
       expect(tax_total).to eq(0.2 + 2)
     end
 
-    context "with a voucher", feature: :vouchers do
+    context "with a voucher" do
       let(:voucher) do
         create(:voucher_flat_rate, code: 'some_code', enterprise: order.distributor, amount: 10)
       end
@@ -133,7 +133,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
       expect(total).to eq(113.3 - 3.3)
     end
 
-    context "with a voucher", feature: :vouchers do
+    context "with a voucher" do
       let(:voucher) do
         create(:voucher_flat_rate, code: 'some_code', enterprise: order.distributor, amount: 10)
       end
@@ -214,7 +214,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
           create(:voucher_flat_rate, code: 'some_code', enterprise: order.distributor, amount: 10)
         end
 
-        it "adjusts total_excl_tax and tax with voucher tax", feature: :vouchers do
+        it "adjusts total_excl_tax and tax with voucher tax" do
           add_voucher(order, voucher)
           mock_voucher_adjustment_service(excluded_tax: -0.29)
 

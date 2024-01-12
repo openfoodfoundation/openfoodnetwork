@@ -41,7 +41,7 @@ describe EnterpriseBuilder do
       expect(variant).to be_persisted
 
       expect(result.suppliedProducts.count).to eq 1
-      expect(result.suppliedProducts[0].name).to eq "Apple"
+      expect(result.suppliedProducts[0].name).to eq "Apple - 1g"
     end
 
     it "assigns an address" do

@@ -699,6 +699,7 @@ tr:
         view_products: Ürünler Sayfasına Git
         view_inventory: Stok Sayfasına Git
       product_headings:
+        distributor: Dağıtımcı
         producer: ÜRETİCİ
         sku: Stok Kodu
         name: Ad
@@ -979,6 +980,8 @@ tr:
           rate: oran
           customers: Müşteri
           active: AKTİF?
+        connected_apps:
+          loading: "Yükleniyor"
       actions:
         edit_profile: Ayarlar
         properties: ÖZELLİKLER
@@ -1559,6 +1562,8 @@ tr:
   invoice_tax_total: "Toplam KDV:"
   tax_invoice: "VERGİ FATURASI"
   tax_total: "Toplam vergi (%{rate}):"
+  invoice_shipping_category_delivery: "Eve Teslim"
+  invoice_shipping_category_pickup: "Teslimat Noktası"
   total_excl_tax: "Toplam (vergi hariç):"
   total_incl_tax: "Toplam (Vergi dahil):"
   abn: "VKN/TCKN:"

@@ -638,6 +638,7 @@ nl_BE:
         view_products: Ga naar de pagina Producten
         view_inventory: Ga naar de inventarispagina
       product_headings:
+        distributor: Distributeur
         producer: Producent
         sku: SKU
         name: Naam
@@ -911,6 +912,8 @@ nl_BE:
           rate: Percentage
           customers: Klant
           active: Actief?
+        connected_apps:
+          loading: "Aan het opladen"
       actions:
         edit_profile: Instellingen
         properties: Eigenschappen
@@ -1458,6 +1461,8 @@ nl_BE:
   invoice_tax_total: "Totaal BTW:"
   tax_invoice: "FACTUUR"
   tax_total: "BTW Totaal (%{rate}):"
+  invoice_shipping_category_delivery: "Levering"
+  invoice_shipping_category_pickup: "Ophaling"
   total_excl_tax: "Totaal (Excl. BTW):"
   total_incl_tax: "Totaal (Incl. BTW):"
   abn: "Bedrijfsnummer : "

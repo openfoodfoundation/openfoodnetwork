@@ -19,13 +19,18 @@
     position: relative;
   }
 
-  // Form actions floats over other controls when active
-  .form-actions {
-    position: absolute;
-    top: -1em;
-    left: 0;
-    right: 0;
-    z-index: 1; // Ensure tom-select and .disabled-section are covered
+  #products-form {
+    .form-actions {
+      .container {
+        .status {
+          flex-grow: 1; // Fill space
+        }
+
+        .form-buttons {
+          flex-shrink: 0; // Don't shrink
+        }
+      }
+    }
   }
 
   // Hopefully these rules will be moved to component(s).
@@ -34,12 +39,37 @@
 
     background-color: $color-tbl-bg;
     padding: 4px;
+    padding-top: 0; // Hide border because .form-actions is there. It is added with th padding instead.
     border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
 
     // Additional horizontal padding to align with input contents
-    thead th.with-input {
-      padding-left: $padding-tbl-cell + $hpadding-txt;
-      padding-right: $padding-tbl-cell + $hpadding-txt;
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 1; // TODO: Cover .popout and .vertical-ellipsis-menu, but only when sticky
+      box-shadow: $box-shadow;
+
+      // Form actions replaces other controls when active
+      // It is part of the table header, to allow for sticky stacking when scrolling.
+      .form-actions-wrapper {
+        padding: 0;
+        overflow: visible;
+        background-color: white;
+      }
+      .form-actions-wrapper2 {
+        position: relative;
+        // Stretch to cover table side borders
+        left: -4px;
+        width: calc(100% + 8px);
+        background-color: white;
+
+        padding: 4px 0;
+      }
+
+      th.with-input {
+        padding-left: $padding-tbl-cell + $hpadding-txt;
+        padding-right: $padding-tbl-cell + $hpadding-txt;
+      }
     }
 
     // Row hover
@@ -75,6 +105,7 @@
     }
 
     th {
+      padding-top: $padding-tbl-cell + 4px; // Increase padding to create a top border
       // Clip long content in headers, but allow wrapping
       overflow: hidden;
       text-overflow: clip; // If colums are so small that headers are clipping, ellipsis are more of a hindrance
@@ -124,7 +155,7 @@
     }
 
     // "Naked" inputs. Row hover helps reveal them.
-    input:not([type="checkbox"]) {
+    tbody input:not([type="checkbox"]) {
       background-color: $color-tbl-cell-bg;
       height: auto;
       font-size: inherit;
@@ -162,13 +193,18 @@
   }
 
   #sort {
-    margin-bottom: 1em;
+    margin-top: 3px; // Helps even up with .form-actions when visible
+    margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     line-height: $btn-relaxed-height;
     height: $btn-relaxed-height;
+
+    &.disabled-section {
+      display: none;
+    }
 
     .with-dropdown {
       display: flex;
@@ -185,7 +221,7 @@
     display: flex;
     column-gap: 20px;
     align-items: end;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 
     .query {
       flex-grow: 1;

@@ -32,7 +32,7 @@ describe "
 
     # And markdown is rendered
     # expect(page).to have_link "markdown link" and the correct href
-    expect(page).to have_selector :link, "markdown link", href: \
+    expect(page).to have_selector :link, "markdown link", href:
     "/:/?#@!$&'()*+,;=0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
   end
 

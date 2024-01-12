@@ -22,6 +22,7 @@ FactoryBot.define do
 
     confirmation_sent_at { '1970-01-01 00:00:00' }
     confirmed_at { '1970-01-01 00:00:01' }
+    terms_of_service_accepted_at { 1.hour.ago }
 
     before(:create) do |user, evaluator|
       if evaluator.confirmation_sent_at
