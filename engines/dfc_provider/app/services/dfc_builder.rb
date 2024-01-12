@@ -22,12 +22,6 @@ class DfcBuilder
     variant.on_demand ? nil : variant.total_on_hand
   end
 
-  # OFN product categories (taxons) are currently not standardised.
-  # This is just a dummy value for demos.
-  def self.product_type
-    DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
-  end
-
   def self.urls
     DfcProvider::Engine.routes.url_helpers
   end

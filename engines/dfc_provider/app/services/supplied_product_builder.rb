@@ -18,6 +18,12 @@ class SuppliedProductBuilder < DfcBuilder
     )
   end
 
+  # OFN product categories (taxons) are currently not standardised.
+  # This is just a dummy value for demos.
+  def self.product_type
+    DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
+  end
+
   def self.import_variant(supplied_product)
     product_id = supplied_product.spree_product_id
 
