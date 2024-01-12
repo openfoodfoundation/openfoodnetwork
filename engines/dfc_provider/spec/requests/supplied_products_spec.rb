@@ -79,6 +79,11 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
         end
 
         it "creates a product and variant" do |example|
+          # Despite requiring a tax catogory...
+          # https://github.com/openfoodfoundation/openfoodnetwork/issues/11212
+          create(:tax_category, is_default: true)
+          Spree::Config.products_require_tax_category = true
+
           expect { submit_request(example.metadata) }
             .to change { enterprise.supplied_products.count }.by(1)
 
