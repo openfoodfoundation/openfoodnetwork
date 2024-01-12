@@ -23,85 +23,17 @@ module Stripe
         JSON.generate(id: new_payment_method_id)
       }
 
-      let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
-
-
-      let(:cardholder) { 
-        Stripe::Issuing::Cardholder.create({
-          name: 'Damian Michelfelder',
-          email: 'damian.michelfelder@example.de',
-          phone_number: '+49 30 12345-67',
-          status: 'active',
-          type: 'individual',
-          individual: {
-            first_name: 'Damian',
-            last_name: 'Michelfelder',
-            dob: {day: 1, month: 11, year: 1981},
-          },
-          billing: {
-            address: {
-              line1: "20 Waldweg",
-              city: "Berlin",
-              postal_code: "45276",
-              country: "DE",
-            },
-          },
-        })
-      }
-
       before do
-        Stripe.api_key = secret
+        Stripe.api_key = "sk_test_12345"
 
         stub_customers_post_request email: credit_card.user.email,
                                     response: { customer_id: new_customer_id },
                                     stripe_account_header: true
 
-        # def stub_customers_post_request(email:, response: {}, stripe_account_header: false)
-        #   stub = stub_request(:post, "https://api.stripe.com/v1/customers")
-        #     .with(body: { email: })
-        #   stub = stub.with(headers: { 'Stripe-Account' => 'abc123' }) if stripe_account_header
-        #   stub.to_return(customers_response_mock(response))
-        # end
-
         stub_retrieve_payment_method_request(payment_method_id)
-        
-        # def stub_retrieve_payment_method_request(payment_method_id = "pm_1234")
-        #   stub_request(:get, "https://api.stripe.com/v1/payment_methods/#{payment_method_id}")
-        #     .to_return(retrieve_payment_method_response_mock({}))
-        # end
-
         stub_list_customers_request(email: credit_card.user.email, response: {})
-        
-        #  def stub_list_customers_request(email:, response: {})
-        #    stub = stub_request(:get, "https://api.stripe.com/v1/customers?email=#{email}&limit=100")
-        #    stub = stub.with(
-        #      headers: { 'Stripe-Account' => 'abc123' }
-        #    )
-        #    stub.to_return(list_customers_response_mock(response))
-        #  end
-        
         stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
-
-        # def stub_get_customer_payment_methods_request(customer: "cus_A456", response: {})
-        #   stub = stub_request(
-        #     :get, "https://api.stripe.com/v1/payment_methods?customer=#{customer}&limit=100&type=card"
-        #   )
-        #   stub = stub.with(
-        #     headers: { 'Stripe-Account' => 'abc123' }
-        #   )
-        #   stub.to_return(get_customer_payment_methods_response_mock(response))
-        # end
-        
         stub_add_metadata_request(payment_method: "pm_456", response: {})
-
-        # def stub_add_metadata_request(payment_method: "pm_456", response: {})
-        #   stub = stub_request(:post, "https://api.stripe.com/v1/payment_methods/#{payment_method}")
-        #   stub = stub.with(body: { metadata: { 'ofn-clone': true } })
-        #   stub = stub.with(
-        #     headers: { 'Stripe-Account' => 'abc123' }
-        #   )
-        #   stub.to_return(add_metadata_response_mock(response))
-        # end
 
         stub_request(:post,
                      "https://api.stripe.com/v1/payment_methods/#{new_payment_method_id}/attach")
