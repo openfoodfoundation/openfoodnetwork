@@ -2,15 +2,6 @@
 
 module OpenFoodNetwork
   module ProductsHelper
-    def with_products_require_tax_category(value)
-      original_value = Spree::Config.products_require_tax_category
-
-      Spree::Config.products_require_tax_category = value
-      yield
-    ensure
-      Spree::Config.products_require_tax_category = original_value
-    end
-
     shared_examples "modifying product actions are restricted" do
       it "cannot create a new product if not an admin" do
         api_post :create, product: { name: "Brand new product!" }
