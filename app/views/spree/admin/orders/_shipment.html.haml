@@ -9,7 +9,7 @@
       - if shipment.ready? and can? :update, shipment
         = "-"
         %button{"class": "ship button icon-arrow-right","data-controller": "modal-link",
-                "data-action": "click->modal-link#open", "data-modal-link-target-value": "ship_order" }= t(:ship)
+                "data-action": "click->modal-link#open", "data-modal-link-target-value": dom_id(order, :ship)}= t(:ship)
         %form
           = render ShipOrderComponent.new(order: order)
 

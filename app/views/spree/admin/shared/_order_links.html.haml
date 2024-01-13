@@ -7,7 +7,7 @@
     %div.menu{"data-dropdown-target": "menu"}
       - order_links(@order).each do |link|
         - if link[:name] == t(:ship_order)
-          %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { "modal-link-target-value": "ship_order", "action":  "click->modal-link#open", "controller": "modal-link" } }
+          %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { "modal-link-target-value": dom_id(@order, :ship), "action":  "click->modal-link#open", "controller": "modal-link" } }
             %span
               %i{ class: link[:icon] }
             %span=link[:name]
