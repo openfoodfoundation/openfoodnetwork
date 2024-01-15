@@ -241,10 +241,4 @@ class ProductsReflex < ApplicationReflex
   def current_id_from_element(element)
     element.dataset.current_id
   end
-
-  def image_params
-    params.require(:image).permit(
-      :attachment, :viewable_id
-    )
-  end
 end
