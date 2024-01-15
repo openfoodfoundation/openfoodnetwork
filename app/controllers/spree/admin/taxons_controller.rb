@@ -118,7 +118,7 @@ module Spree
       def taxon_params
         params.require(:taxon).permit(
           :name, :parent_id, :position, :icon, :description, :permalink, :taxonomy_id,
-          :meta_description, :meta_keywords, :meta_title, :dfc_name
+          :meta_description, :meta_keywords, :meta_title, :dfc_id
         )
       end
     end

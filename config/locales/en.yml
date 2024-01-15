@@ -4487,7 +4487,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           meta_description: Meta Description
           meta_keywords: Meta Keywords
           description: Description
-          dfc_name: DFC name 
+          dfc_id: DFC URI 
       general_settings:
         edit:
           legal_settings: "Legal Settings"
