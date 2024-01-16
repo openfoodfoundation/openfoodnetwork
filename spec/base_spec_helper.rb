@@ -287,6 +287,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper
   config.include ReportsHelper
+  config.include TomSelectHelper
 
   config.include ViewComponent::TestHelpers, type: :component
 

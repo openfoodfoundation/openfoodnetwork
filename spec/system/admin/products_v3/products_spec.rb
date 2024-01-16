@@ -1581,6 +1581,36 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
   end
 
+  describe "creating a new product" do
+    let!(:stock_location) { create(:stock_location, backorderable_default: false) }
+    let!(:supplier) { create(:supplier_enterprise) }
+    let!(:distributor) { create(:distributor_enterprise) }
+    let!(:shipping_category) { create(:shipping_category) }
+    let!(:taxon) { create(:taxon) }
+
+    before do
+      login_as_admin
+      visit spree.admin_products_path
+    end
+
+    it "creating a new product" do
+      find("a", text: "New Product").click
+      expect(page).to have_content "New Product"
+      fill_in 'product_name', with: 'Big Bag Of Apples'
+      select_tom_select supplier.name, from: 'product_supplier_field'
+      select_tom_select 'Weight (g)', from: 'product_variant_unit_field'
+      fill_in 'product_unit_value', with: '100'
+      fill_in 'product_price', with: '10.00'
+      # TODO dropdowns below are still using select2:
+      select taxon.name, from: 'product_primary_taxon_id' # ...instead of tom-select
+      select shipping_category.name, from: 'product_shipping_category_id' # ...instead of tom-select
+      click_button 'Create'
+      expect(URI.parse(current_url).path).to eq spree.admin_products_path
+      expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
+      expect(page).to have_field "_products_0_name", with: 'Big Bag Of Apples'
+    end
+  end
+
   def create_products(amount)
     amount.times do |i|
       create(:simple_product, name: "product #{i}", supplier: producer)
