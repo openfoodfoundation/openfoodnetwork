@@ -395,6 +395,8 @@
       .button.secondary {
         display: block;
         background-color: $color-btn-secondary-hover-bg;
+        color: $color-btn-hover-bg;
+        border-color: $color-btn-hover-border;
       }
     }
   }
