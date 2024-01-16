@@ -324,6 +324,38 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     end
   end
 
+  describe "edit image" do
+    context "product has an image" do
+      let!(:product) { create(:product_with_image, name: "Apples") }
+
+      before do
+        visit admin_products_url
+      end
+
+      it "updates product image" do
+        within row_containing_name("Apples") do
+          click_on "Edit"
+        end
+
+        within ".reveal-modal" do
+          expect(page).to have_content "Edit product photo"
+          expect_page_to_have_image(product.image.url(:product))
+
+          # Upload a new image file
+          attach_file 'image[attachment]', Rails.public_path.join('500.jpg'), visible: false
+        end
+
+        expect(page).to have_content "Loading"
+        expect(page).to have_content "Image has been successfully updated"
+        expect(product.image.reload.url(:product)).to match /500.jpg$/
+
+        within row_containing_name("Apples") do
+          expect_page_to_have_image('500.jpg')
+        end
+      end
+    end
+  end
+
   describe "actions" do
     describe "edit" do
       let!(:variant_a1) {
@@ -635,5 +667,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     Timeout.timeout(max_wait_time) do
       sleep(0.1) until page.has_css?(selector, class: class_name, visible: false)
     end
+  end
+
+  def expect_page_to_have_image(url)
+    expect(page).to have_selector("img[src$='#{url}']")
   end
 end
