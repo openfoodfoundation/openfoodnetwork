@@ -180,7 +180,7 @@ create(:enterprise)
 
   def navigate_to_enterprise_users
     within ".side_menu" do
-      click_link "Users"
+      trigger_click(:link, "Users")
     end
   end
 
