@@ -6,6 +6,7 @@
                   } do |form|
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
   %table.products
+    %col{ width:"4%" }
     %col{ width:"15%" }
     %col{ width:"5%", style: "max-width:5em" }
     %col{ width:"8%" }
@@ -18,7 +19,7 @@
     %col{ width:"5%", style: "max-width:5em" }
     %thead
       %tr
-        %td.form-actions-wrapper{ colspan: 10 }
+        %td.form-actions-wrapper{ colspan: 11 }
           .form-actions-wrapper2
             %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
               .container
@@ -32,6 +33,7 @@
                   = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
                   = form.submit t('.save'), class: "medium"
       %tr
+        %th.align-left= # image
         %th.align-left.with-input= t('admin.products_page.columns.name')
         %th.align-right= t('admin.products_page.columns.sku')
         %th.align-right= t('admin.products_page.columns.unit')
@@ -46,6 +48,11 @@
       = form.fields_for("products", product, index: product_index) do |product_form|
         %tbody.relaxed{ 'data-record-id': product_form.object.id }
           %tr
+            %td
+              - if product.image.present?
+                .image-field
+                  = image_tag product.image.url(:mini), width: 40
+                  = link_to t('admin.products_page.image.edit'), edit_admin_product_image_path(product, product.image), class: "button secondary mini"
             %td.field.align-left.header
               = product_form.hidden_field :id
               = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
@@ -81,6 +88,8 @@
           - product.variants.each_with_index do |variant, variant_index|
             = form.fields_for("products][#{product_index}][variants_attributes][", variant, variant_index:) do |variant_form|
               %tr.condensed
+                %td
+                  -# empty
                 %td.field
                   = variant_form.hidden_field :id
                   = variant_form.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name

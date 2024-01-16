@@ -581,6 +581,8 @@ en:
         edit: Edit
         clone: Clone
         delete: Delete
+      image:
+        edit: Edit
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     # Common properties / models
