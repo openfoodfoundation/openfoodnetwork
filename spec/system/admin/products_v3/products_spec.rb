@@ -325,34 +325,44 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   describe "edit image" do
-    context "product has an image" do
-      let!(:product) { create(:product_with_image, name: "Apples") }
-
-      before do
+    shared_examples "updating image" do
+      it "saves product image" do
         visit admin_products_url
-      end
 
-      it "updates product image" do
         within row_containing_name("Apples") do
           click_on "Edit"
         end
 
         within ".reveal-modal" do
           expect(page).to have_content "Edit product photo"
-          expect_page_to_have_image(product.image.url(:product))
+          expect_page_to_have_image(current_img_url)
 
           # Upload a new image file
           attach_file 'image[attachment]', Rails.public_path.join('500.jpg'), visible: false
+          # It uploads automatically
         end
 
-        expect(page).to have_content "Loading"
-        expect(page).to have_content "Image has been successfully updated"
+        expect(page).to have_content /Image has been successfully (updated|created)/
         expect(product.image.reload.url(:product)).to match /500.jpg$/
 
         within row_containing_name("Apples") do
           expect_page_to_have_image('500.jpg')
         end
       end
+    end
+
+    context "with existing image" do
+      let!(:product) { create(:product_with_image, name: "Apples") }
+      let(:current_img_url) { product.image.url(:product) }
+
+      include_examples "updating image"
+    end
+
+    context "with default image" do
+      let!(:product) { create(:product, name: "Apples") }
+      let(:current_img_url) { Spree::Image.default_image_url(:product) }
+
+      include_examples "updating image"
     end
   end
 

@@ -49,13 +49,9 @@
         %tbody.relaxed{ 'data-record-id': product_form.object.id }
           %tr
             %td.with-image
-              - if product.image.present?
-                %a.image-field{ href: edit_admin_product_image_path(product, product.image), data: { controller: "modal", reflex: "click->products#edit_image", "current-id": product.id} }
-                  = image_tag product.image&.url(:mini), width: 40, height: 40
-                  .button.secondary.mini= t('admin.products_page.image.edit')
-              - else
-                .image-field
-                  = image_tag Spree::Image.default_image_url(:mini), width: 40, height: 40
+              %a.image-field{ href: admin_product_images_path(product), data: { controller: "modal", reflex: "click->products#edit_image", "current-id": product.id} }
+                = image_tag product.image&.url(:mini) || Spree::Image.default_image_url(:mini), width: 40, height: 40
+                .button.secondary.mini= t('admin.products_page.image.edit')
             %td.field.align-left.header
               = product_form.hidden_field :id
               = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
