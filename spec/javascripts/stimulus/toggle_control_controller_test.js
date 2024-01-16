@@ -61,4 +61,31 @@ describe("ToggleControlController", () => {
       });
     });
   });
+  describe("#enableIfPresent", () => {
+    describe("with input", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `<div data-controller="toggle-control">
+          <input id="input" value="" data-action="input->toggle-control#enableIfPresent" />
+          <input id="control" data-toggle-control-target="control">
+        </div>`;
+      });
+
+      it("Enables when input is filled", () => {
+        input.value = "a"
+        input.dispatchEvent(new Event("input"));
+
+        expect(control.disabled).toBe(false);
+      });
+
+      it("Disables when input is emptied", () => {
+        input.value = "test"
+        input.dispatchEvent(new Event("input"));
+
+        input.value = ""
+        input.dispatchEvent(new Event("input"));
+
+        expect(control.disabled).toBe(true);
+      });
+    });
+  });
 });
