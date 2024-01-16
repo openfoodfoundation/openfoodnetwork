@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe 'As an admin, I can see the new product page', feature: :admin_style_v3 do
+describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   include WebHelper
   include AuthenticationHelper
   include FileHelper
@@ -158,36 +158,6 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
         expect(page).to have_select "category_id", selected: "Category 1"
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_category.name
-      end
-    end
-  end
-
-  describe "Actions columns (edit)" do
-    let!(:variant_a1) {
-      create(:variant,
-             product: product_a,
-             display_name: "Medium box",
-             sku: "APL-01",
-             price: 5.25)
-    }
-    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
-
-    before do
-      visit admin_products_url
-    end
-
-    it "shows an actions memu with an edit link when clicking on icon for product" do
-      within row_containing_name("Apples") do
-        page.find(".vertical-ellipsis-menu").click
-        expect(page).to have_link "Edit", href: spree.edit_admin_product_path(product_a)
-      end
-    end
-
-    it "shows an actions memu with an edit link when clicking on icon for variant" do
-      within row_containing_name("Medium box") do
-        page.find(".vertical-ellipsis-menu").click
-        expect(page).to have_link "Edit",
-                                  href: spree.edit_admin_product_variant_path(product_a, variant_a1)
       end
     end
   end
@@ -354,112 +324,8 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
     end
   end
 
-  describe "Cloning Feature" do
-    let!(:variant_a1) {
-      create(:variant,
-             product: product_a,
-             display_name: "Medium box",
-             sku: "APL-01",
-             price: 5.25)
-    }
-    let(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
-
-    before do
-      visit admin_products_url
-    end
-
-    describe "Actions columns (clone)" do
-      it "shows an actions menu with a clone link when clicking on icon for product" do
-        within row_containing_name("Apples") do
-          page.find(".vertical-ellipsis-menu").click
-          expect(page).to have_link "Clone", href: spree.clone_admin_product_path(product_a)
-        end
-
-        within row_containing_name("Medium box") do
-          page.find(".vertical-ellipsis-menu").click
-          expect(page).to_not have_link "Clone", href: spree.clone_admin_product_path(product_a)
-        end
-      end
-    end
-
-    describe "Cloning product" do
-      it "shows the cloned product on page when clicked on the cloned option" do
-        within "table.products" do
-          # Gather input values, because page.content doesn't include them.
-          input_content = page.find_all('input[type=text]').map(&:value).join
-
-          # Products does not include the cloned product.
-          expect(input_content).to_not match /COPY OF Apples/
-        end
-
-        within row_containing_name("Apples") do
-          page.find(".vertical-ellipsis-menu").click
-          click_link('Clone')
-        end
-
-        expect(page).to have_content "Product cloned"
-
-        within "table.products" do
-          # Gather input values, because page.content doesn't include them.
-          input_content = page.find_all('input[type=text]').map(&:value).join
-
-          # Products include the cloned product.
-          expect(input_content).to match /COPY OF Apples/
-        end
-      end
-    end
-  end
-
-  describe "Deleting Feature" do
-    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
-    let(:delete_option_selector) { "a[data-controller='modal-link'].delete" }
-    let(:product_selector) { row_containing_name("Apples") }
-    let(:variant_selector) { row_containing_name("Medium box") }
-    let(:default_variant_selector) { "tr:has(input[aria-label=Price][value='#{product_a.price}'])" }
-
-    before do
-      visit admin_products_url
-    end
-
-    describe "Actions columns (delete)" do
-      it "shows an actions menu with a delete link when clicking on icon for product. " \
-         "doesn't show delete link for the single variant" do
-        within product_selector do
-          page.find(".vertical-ellipsis-menu").click
-          expect(page).to have_css(delete_option_selector)
-        end
-        page.find("div#content").click # to close the vertical actions menu
-
-        # to select the default variant
-        within default_variant_selector do
-          page.find(".vertical-ellipsis-menu").click
-          expect(page).to_not have_css(delete_option_selector)
-        end
-      end
-
-      it "shows an actions menu with a delete link when clicking on icon for variant" \
-         "if have multiple" do
-        create(:variant,
-               product: product_a,
-               display_name: "Medium box",
-               sku: "APL-01",
-               price: 5.25)
-
-        # to select the default variant
-        within default_variant_selector do
-          page.find(".vertical-ellipsis-menu").click
-          expect(page).to have_css(delete_option_selector)
-        end
-        page.find("div#content").click # to close the vertical actions menu
-
-        within variant_selector do
-          page.find(".vertical-ellipsis-menu").click
-          expect(page).to have_css(delete_option_selector)
-        end
-      end
-    end
-
-    describe "Delete Action" do
+  describe "actions" do
+    describe "edit" do
       let!(:variant_a1) {
         create(:variant,
                product: product_a,
@@ -467,118 +333,257 @@ describe 'As an admin, I can see the new product page', feature: :admin_style_v3
                sku: "APL-01",
                price: 5.25)
       }
-      let(:modal_selector) { "div[data-modal-target=modal]" }
-      let(:dismiss_button_selector) { "button[data-action='click->flash#close']" }
+      let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
 
-      context "when 'keep product/variant' is selected" do
-        it 'should not delete the product/variant' do
-          # Keep Product
-          within product_selector do
-            page.find(".vertical-ellipsis-menu").click
-            page.find(delete_option_selector).click
-          end
-          keep_button_selector = "input[type=button][value='Keep product']"
-          within modal_selector do
-            page.find(keep_button_selector).click
-          end
+      before do
+        visit admin_products_url
+      end
 
-          expect(page).to_not have_selector(modal_selector)
-          expect(page).to have_selector(product_selector)
-
-          # Keep Variant
-          within variant_selector do
-            page.find(".vertical-ellipsis-menu").click
-            page.find(delete_option_selector).click
-          end
-          keep_button_selector = "input[type=button][value='Keep variant']"
-          within modal_selector do
-            page.find(keep_button_selector).click
-          end
-
-          expect(page).to_not have_selector(modal_selector)
-          expect(page).to have_selector(variant_selector)
+      it "shows an actions memu with an edit link when clicking on icon for product" do
+        within row_containing_name("Apples") do
+          page.find(".vertical-ellipsis-menu").click
+          expect(page).to have_link "Edit", href: spree.edit_admin_product_path(product_a)
         end
       end
 
-      context "when 'delete product/variant' is selected" do
-        let(:success_flash_message_selector) { "div.flash.success" }
-        let(:error_flash_message_selector) { "div.flash.error" }
-        it 'should successfully delete the product/variant' do
-          # Delete Variant
-          within variant_selector do
+      it "shows an actions memu with an edit link when clicking on icon for variant" do
+        within row_containing_name("Medium box") do
+          page.find(".vertical-ellipsis-menu").click
+          expect(page).to have_link "Edit",
+                                    href: spree.edit_admin_product_variant_path(product_a,
+                                                                                variant_a1)
+        end
+      end
+    end
+
+    describe "clone" do
+      let!(:variant_a1) {
+        create(:variant,
+               product: product_a,
+               display_name: "Medium box",
+               sku: "APL-01",
+               price: 5.25)
+      }
+      let(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
+
+      before do
+        visit admin_products_url
+      end
+
+      describe "Actions columns (clone)" do
+        it "shows an actions menu with a clone link when clicking on icon for product" do
+          within row_containing_name("Apples") do
             page.find(".vertical-ellipsis-menu").click
-            page.find(delete_option_selector).click
+            expect(page).to have_link "Clone", href: spree.clone_admin_product_path(product_a)
           end
 
-          delete_button_selector = "input[type=button][value='Delete variant']"
-          within modal_selector do
-            page.find(delete_button_selector).click
+          within row_containing_name("Medium box") do
+            page.find(".vertical-ellipsis-menu").click
+            expect(page).to_not have_link "Clone", href: spree.clone_admin_product_path(product_a)
+          end
+        end
+      end
+
+      describe "Cloning product" do
+        it "shows the cloned product on page when clicked on the cloned option" do
+          within "table.products" do
+            # Gather input values, because page.content doesn't include them.
+            input_content = page.find_all('input[type=text]').map(&:value).join
+
+            # Products does not include the cloned product.
+            expect(input_content).to_not match /COPY OF Apples/
           end
 
-          expect(page).to_not have_selector(modal_selector)
-          # Make sure the products loading spinner is hidden
-          wait_for_class('.spinner-overlay', 'hidden')
-          expect(page).to_not have_selector(variant_selector)
-          within success_flash_message_selector do
-            expect(page).to have_content("Successfully deleted the variant")
-            page.find(dismiss_button_selector).click
+          within row_containing_name("Apples") do
+            page.find(".vertical-ellipsis-menu").click
+            click_link('Clone')
           end
 
-          # Delete product
+          expect(page).to have_content "Product cloned"
+
+          within "table.products" do
+            # Gather input values, because page.content doesn't include them.
+            input_content = page.find_all('input[type=text]').map(&:value).join
+
+            # Products include the cloned product.
+            expect(input_content).to match /COPY OF Apples/
+          end
+        end
+      end
+    end
+
+    describe "delete" do
+      let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
+      let(:delete_option_selector) { "a[data-controller='modal-link'].delete" }
+      let(:product_selector) { row_containing_name("Apples") }
+      let(:variant_selector) { row_containing_name("Medium box") }
+      let(:default_variant_selector) {
+        "tr:has(input[aria-label=Price][value='#{product_a.price}'])"
+      }
+
+      before do
+        visit admin_products_url
+      end
+
+      describe "Actions columns (delete)" do
+        it "shows an actions menu with a delete link when clicking on icon for product. " \
+           "doesn't show delete link for the single variant" do
           within product_selector do
             page.find(".vertical-ellipsis-menu").click
-            page.find(delete_option_selector).click
+            expect(page).to have_css(delete_option_selector)
           end
-          delete_button_selector = "input[type=button][value='Delete product']"
-          within modal_selector do
-            page.find(delete_button_selector).click
-          end
-          expect(page).to_not have_selector(modal_selector)
-          # Make sure the products loading spinner is hidden
-          wait_for_class('.spinner-overlay', 'hidden')
-          expect(page).to_not have_selector(product_selector)
-          within success_flash_message_selector do
-            expect(page).to have_content("Successfully deleted the product")
+          page.find("div#content").click # to close the vertical actions menu
+
+          # to select the default variant
+          within default_variant_selector do
+            page.find(".vertical-ellipsis-menu").click
+            expect(page).to_not have_css(delete_option_selector)
           end
         end
 
-        it 'should be failed to delete the product/variant' do
-          allow_any_instance_of(Spree::Product).to receive(:destroy).and_return(false)
-          allow_any_instance_of(Spree::Variant).to receive(:destroy).and_return(false)
+        it "shows an actions menu with a delete link when clicking on icon for variant" \
+           "if have multiple" do
+          create(:variant,
+                 product: product_a,
+                 display_name: "Medium box",
+                 sku: "APL-01",
+                 price: 5.25)
 
-          # Delete Variant
+          # to select the default variant
+          within default_variant_selector do
+            page.find(".vertical-ellipsis-menu").click
+            expect(page).to have_css(delete_option_selector)
+          end
+          page.find("div#content").click # to close the vertical actions menu
+
           within variant_selector do
             page.find(".vertical-ellipsis-menu").click
-            page.find(delete_option_selector).click
+            expect(page).to have_css(delete_option_selector)
+          end
+        end
+      end
+
+      describe "Delete Action" do
+        let!(:variant_a1) {
+          create(:variant,
+                 product: product_a,
+                 display_name: "Medium box",
+                 sku: "APL-01",
+                 price: 5.25)
+        }
+        let(:modal_selector) { "div[data-modal-target=modal]" }
+        let(:dismiss_button_selector) { "button[data-action='click->flash#close']" }
+
+        context "when 'keep product/variant' is selected" do
+          it 'should not delete the product/variant' do
+            # Keep Product
+            within product_selector do
+              page.find(".vertical-ellipsis-menu").click
+              page.find(delete_option_selector).click
+            end
+            keep_button_selector = "input[type=button][value='Keep product']"
+            within modal_selector do
+              page.find(keep_button_selector).click
+            end
+
+            expect(page).to_not have_selector(modal_selector)
+            expect(page).to have_selector(product_selector)
+
+            # Keep Variant
+            within variant_selector do
+              page.find(".vertical-ellipsis-menu").click
+              page.find(delete_option_selector).click
+            end
+            keep_button_selector = "input[type=button][value='Keep variant']"
+            within modal_selector do
+              page.find(keep_button_selector).click
+            end
+
+            expect(page).to_not have_selector(modal_selector)
+            expect(page).to have_selector(variant_selector)
+          end
+        end
+
+        context "when 'delete product/variant' is selected" do
+          let(:success_flash_message_selector) { "div.flash.success" }
+          let(:error_flash_message_selector) { "div.flash.error" }
+          it 'should successfully delete the product/variant' do
+            # Delete Variant
+            within variant_selector do
+              page.find(".vertical-ellipsis-menu").click
+              page.find(delete_option_selector).click
+            end
+
+            delete_button_selector = "input[type=button][value='Delete variant']"
+            within modal_selector do
+              page.find(delete_button_selector).click
+            end
+
+            expect(page).to_not have_selector(modal_selector)
+            # Make sure the products loading spinner is hidden
+            wait_for_class('.spinner-overlay', 'hidden')
+            expect(page).to_not have_selector(variant_selector)
+            within success_flash_message_selector do
+              expect(page).to have_content("Successfully deleted the variant")
+              page.find(dismiss_button_selector).click
+            end
+
+            # Delete product
+            within product_selector do
+              page.find(".vertical-ellipsis-menu").click
+              page.find(delete_option_selector).click
+            end
+            delete_button_selector = "input[type=button][value='Delete product']"
+            within modal_selector do
+              page.find(delete_button_selector).click
+            end
+            expect(page).to_not have_selector(modal_selector)
+            # Make sure the products loading spinner is hidden
+            wait_for_class('.spinner-overlay', 'hidden')
+            expect(page).to_not have_selector(product_selector)
+            within success_flash_message_selector do
+              expect(page).to have_content("Successfully deleted the product")
+            end
           end
 
-          delete_button_selector = "input[type=button][value='Delete variant']"
-          within modal_selector do
-            page.find(delete_button_selector).click
-          end
+          it 'should be failed to delete the product/variant' do
+            allow_any_instance_of(Spree::Product).to receive(:destroy).and_return(false)
+            allow_any_instance_of(Spree::Variant).to receive(:destroy).and_return(false)
 
-          expect(page).to_not have_selector(modal_selector)
-          sleep(0.5) # delay for loading spinner to complete
-          expect(page).to have_selector(variant_selector)
-          within error_flash_message_selector do
-            expect(page).to have_content("Unable to delete the variant")
-            page.find(dismiss_button_selector).click
-          end
+            # Delete Variant
+            within variant_selector do
+              page.find(".vertical-ellipsis-menu").click
+              page.find(delete_option_selector).click
+            end
 
-          # Delete product
-          within product_selector do
-            page.find(".vertical-ellipsis-menu").click
-            page.find(delete_option_selector).click
-          end
-          delete_button_selector = "input[type=button][value='Delete product']"
-          within modal_selector do
-            page.find(delete_button_selector).click
-          end
-          expect(page).to_not have_selector(modal_selector)
-          sleep(0.5) # delay for loading spinner to complete
-          expect(page).to have_selector(product_selector)
-          within error_flash_message_selector do
-            expect(page).to have_content("Unable to delete the product")
+            delete_button_selector = "input[type=button][value='Delete variant']"
+            within modal_selector do
+              page.find(delete_button_selector).click
+            end
+
+            expect(page).to_not have_selector(modal_selector)
+            sleep(0.5) # delay for loading spinner to complete
+            expect(page).to have_selector(variant_selector)
+            within error_flash_message_selector do
+              expect(page).to have_content("Unable to delete the variant")
+              page.find(dismiss_button_selector).click
+            end
+
+            # Delete product
+            within product_selector do
+              page.find(".vertical-ellipsis-menu").click
+              page.find(delete_option_selector).click
+            end
+            delete_button_selector = "input[type=button][value='Delete product']"
+            within modal_selector do
+              page.find(delete_button_selector).click
+            end
+            expect(page).to_not have_selector(modal_selector)
+            sleep(0.5) # delay for loading spinner to complete
+            expect(page).to have_selector(product_selector)
+            within error_flash_message_selector do
+              expect(page).to have_content("Unable to delete the product")
+            end
           end
         end
       end
