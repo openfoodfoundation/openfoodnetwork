@@ -569,9 +569,6 @@ RSpec.describe "Orders And Fulfillment" do
             # Step 1: Update report rendering options on two reports
             click_link report_title
 
-            # Click dismiss on distributor warning
-            click_button 'Dismiss'
-
             find(columns_dropdown_selector).click
             expect(page).to have_checked_field('Producer')
             expect(page).to have_checked_field('Product')
@@ -581,9 +578,6 @@ RSpec.describe "Orders And Fulfillment" do
 
             click_link "Report"
             click_link second_report_title
-
-            # Click dismiss on distributor warning
-            click_button 'Dismiss'
 
             find(columns_dropdown_selector).click
             expect(page).to have_checked_field('Producer')
@@ -595,18 +589,12 @@ RSpec.describe "Orders And Fulfillment" do
             click_link "Report"
             click_link report_title
 
-            # Click dismiss on distributor warning
-            click_button 'Dismiss'
-
             find(columns_dropdown_selector).click
             expect(page).to have_unchecked_field('Producer')
             expect(page).to have_unchecked_field('Product')
 
             click_link "Report"
             click_link second_report_title
-
-            # Click dismiss on distributor warning
-            click_button 'Dismiss'
 
             find(columns_dropdown_selector).click
             expect(page).to have_checked_field('Producer')
@@ -639,8 +627,6 @@ RSpec.describe "Orders And Fulfillment" do
           it "should store columns after logout" do
             click_link report_title
 
-            dismiss_warning
-
             find(columns_dropdown_selector).click
             expect(page).to have_checked_field('Producer')
             expect(page).to have_checked_field('Product')
@@ -654,8 +640,6 @@ RSpec.describe "Orders And Fulfillment" do
 
             click_link "Report"
             click_link report_title
-
-            dismiss_warning
 
             find(columns_dropdown_selector).click
             expect(page).to have_unchecked_field('Producer')
