@@ -88,10 +88,6 @@
           height: 100%;
         }
       }
-
-      .image-field .button {
-        display: block;
-      }
     }
 
     th,
@@ -131,6 +127,10 @@
 
       td {
         border-bottom: 2px solid $color-tbl-bg;
+
+        &.with-image {
+          padding: 8px;
+        }
       }
 
       tr:first-child td {
@@ -375,18 +375,29 @@
     }
   }
 
-  .image-field {
+  a.image-field {
     position: relative;
 
     img {
+      display: block;
       border-radius: $border-radius;
     }
 
     .button {
-      display: none; // to be shown on tr:hover
+      display: none; // to be shown on hover
       position: absolute;
       bottom: 0;
       left: 0;
+    }
+
+    &:hover,
+    &:focus {
+      .button.secondary {
+        display: block;
+        background-color: $color-btn-secondary-hover-bg;
+        color: $color-btn-hover-bg;
+        border-color: $color-btn-hover-border;
+      }
     }
   }
 }

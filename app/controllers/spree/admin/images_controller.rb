@@ -32,7 +32,7 @@ module Spree
 
         if @object.save
           flash[:success] = flash_message_for(@object, :successfully_created)
-          redirect_to spree.admin_product_images_url(params[:product_id], @url_filters)
+          redirect_to location_after_save
         else
           respond_with(@object)
         end
@@ -44,7 +44,7 @@ module Spree
 
         if @object.update(permitted_resource_params)
           flash[:success] = flash_message_for(@object, :successfully_updated)
-          redirect_to spree.admin_product_images_url(params[:product_id], @url_filters)
+          redirect_to location_after_save
         else
           respond_with(@object)
         end
@@ -58,7 +58,7 @@ module Spree
           flash[:success] = flash_message_for(@object, :successfully_removed)
         end
 
-        redirect_to spree.admin_product_images_url(params[:product_id], @url_filters)
+        redirect_to location_after_save
       end
 
       private
@@ -76,7 +76,7 @@ module Spree
       end
 
       def location_after_save
-        spree.admin_product_images_url(@product)
+        params[:return_url] || spree.admin_product_images_url(params[:product_id], @url_filters)
       end
 
       def load_data

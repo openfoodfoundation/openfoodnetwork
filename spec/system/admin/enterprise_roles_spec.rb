@@ -149,7 +149,7 @@ create(:enterprise)
       end
 
       xit "can invite unregistered users to be managers" do
-        find('a.button.help-modal').click
+        find('a.button.modal').click
         expect(page).to have_css '#invite-manager-modal'
 
         within '#invite-manager-modal' do

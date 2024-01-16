@@ -1,16 +1,13 @@
 .vertical-ellipsis-menu {
   position: relative;
-  width: $btn-relaxed-height;
 
   i.fa-ellipsis-v {
     cursor: pointer;
     display: block;
-    height: $btn-relaxed-height;
-    width: $btn-relaxed-height;
-    line-height: $btn-relaxed-height;
     text-align: center;
     border-radius: 3px;
     background-color: white;
+    padding: 10px 14px;
   }
 
   .vertical-ellipsis-menu-content {

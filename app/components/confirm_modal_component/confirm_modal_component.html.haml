@@ -1,6 +1,6 @@
 %div{ id: @id, "data-controller": "modal #{@controller}", "data-action": "keyup@document->modal#closeIfEscapeKey", "data-#{@controller}-reflex-value": @reflex }
   .reveal-modal-bg.fade{ "data-modal-target": "background", "data-action": "click->modal#close" }
-  .reveal-modal.fade.tiny.help-modal{ "data-modal-target": "modal" }
+  .reveal-modal.fade.tiny.modal-component{ "data-modal-target": "modal" }
     = content
 
     = render @message if @message
