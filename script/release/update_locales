@@ -6,10 +6,10 @@
 # Exit on error or uncommitted changes
 # TODO: check that master matches upstream/master
 set -e
-#if [ ! -z "$(git status --porcelain)" ]; then
-#  echo "Aborted: git working directory is not clean."
-#  exit 1
-#fi
+if [ ! -z "$(git status --porcelain)" ]; then
+  echo "Aborted: git working directory is not clean."
+  exit 1
+fi
 
 echo "\n*** Checking out latest master... ***\n"
 git checkout master
