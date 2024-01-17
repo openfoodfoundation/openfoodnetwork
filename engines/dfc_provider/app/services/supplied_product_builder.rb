@@ -18,6 +18,12 @@ class SuppliedProductBuilder < DfcBuilder
     )
   end
 
+  # OFN product categories (taxons) are currently not standardised.
+  # This is just a dummy value for demos.
+  def self.product_type
+    DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
+  end
+
   def self.import_variant(supplied_product)
     product_id = supplied_product.spree_product_id
 
@@ -49,10 +55,10 @@ class SuppliedProductBuilder < DfcBuilder
 
   def self.apply(supplied_product, variant)
     variant.product.assign_attributes(
-      name: supplied_product.name,
       description: supplied_product.description,
     )
 
+    variant.display_name = supplied_product.name
     QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
     variant.unit_value = variant.product.unit_value
   end

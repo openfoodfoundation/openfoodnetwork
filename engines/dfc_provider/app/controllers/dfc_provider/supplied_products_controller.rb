@@ -48,10 +48,6 @@ module DfcProvider
 
     private
 
-    def import
-      DfcIo.import(request.body)
-    end
-
     def variant
       @variant ||= current_enterprise.supplied_variants.find(params[:id])
     end
