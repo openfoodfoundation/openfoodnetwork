@@ -14,4 +14,8 @@ module MailerHelper
   def order_reply_email(order)
     order.distributor.email_address.presence || order.distributor.contact.email
   end
+
+  def enterprise_logo(enterprise = nil)
+    image_tag(enterprise.logo_url(:medium), class: "float-right") if enterprise&.logo&.variable?
+  end
 end
