@@ -466,6 +466,8 @@ uk:
         edit: Редагувати
         clone: Клонувати
         delete: Видалити
+      image:
+        edit: Редагувати
     adjustments:
       skipped_changing_canceled_order: "Ви не можете змінити скасоване замовлення."
     begins_at: Починається о
@@ -689,6 +691,8 @@ uk:
         categories:
           label: Категорії
         search: Пошук
+      edit_image:
+        close: Назад
     product_import:
       title: Імпорт продукту
       file_not_found: Файл не знайдено або не вдалося відкрити

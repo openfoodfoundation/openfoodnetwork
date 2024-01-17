@@ -531,6 +531,8 @@ ml:
         edit: എഡിറ്റ് ചെയ്യുക
         clone: ക്ലോൺ
         delete: ഡിലീറ്റ് ചെയ്യുക
+      image:
+        edit: എഡിറ്റ് ചെയ്യുക
     adjustments:
       skipped_changing_canceled_order: "നിങ്ങൾക്ക് റദ്ദാക്കിയ ഓർഡർ മാറ്റാൻ കഴിയില്ല."
     begins_at: ആരംഭിക്കുന്നത്
@@ -786,6 +788,8 @@ ml:
         reset: മാറ്റങ്ങൾ ഉപേക്ഷിക്കുക
       bulk_update:
         success: മാറ്റങ്ങൾ സേവ് ചെയ്തു.
+      edit_image:
+        close: തിരികെ
     product_import:
       title: ഉൽപ്പന്ന ഇറക്കുമതി
       file_not_found: ഫയൽ കണ്ടെത്തിയില്ല അല്ലെങ്കിൽ തുറക്കാൻ കഴിഞ്ഞില്ല

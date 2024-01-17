@@ -531,6 +531,8 @@ de_DE:
         edit: Bearbeiten
         clone: Duplizieren
         delete: Löschen
+      image:
+        edit: Bearbeiten
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -786,6 +788,8 @@ de_DE:
         reset: Änderungen verwerfen
       bulk_update:
         success: Die Änderungen wurden gespeichert.
+      edit_image:
+        close: Zurück
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -3068,7 +3072,7 @@ de_DE:
   enterprise_fees_update_notice: Ihre Gebühren wurden aktualisiert.
   enterprise_register_package_error: "Bitte wählen Sie ein Paket."
   enterprise_register_error: "Die Registrierung für %{enterprise} konnte nicht abgeschlossen werden."
-  enterprise_register_success_notice: "Herzlichen Glückwünsch! Die Registrierung für %{enterprise} ist abgeschlossen!"
+  enterprise_register_success_notice: "Herzlichen Glückwunsch! Die Registrierung für %{enterprise} ist abgeschlossen!"
   enterprise_bulk_update_success_notice: "Unternehmen wurden erfolgreich aktualisiert."
   enterprise_bulk_update_error: 'Das Speichern der Änderungen ist fehlgeschlagen.'
   enterprise_shop_show_error: "Der gesuchte Laden existiert nicht oder ist im Open Food Network inaktiv. Bitte schauen Sie nach anderen Läden!"
@@ -4364,7 +4368,7 @@ de_DE:
         picked_up_subject: "Abholbenachrichtigung"
     test_mailer:
       test_email:
-        greeting: "Herzlichen Glückwünsch!"
+        greeting: "Herzlichen Glückwunsch!"
         message: "Wenn Sie diese E-Mail erhalten haben, sind Ihre E-Mail-Einstellungen korrekt."
         subject: "Test-E-Mail"
     order_state:

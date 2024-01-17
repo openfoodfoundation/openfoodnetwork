@@ -524,6 +524,8 @@ fr_CA:
         edit: Modifier
         clone: Dupliquer
         delete: Supprimer
+      image:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence à
@@ -767,6 +769,8 @@ fr_CA:
           other: "%{count} produits modifiés"
         save: Sauvegarder les changements
         reset: Annuler les changements
+      edit_image:
+        close: Retour
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir

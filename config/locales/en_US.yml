@@ -444,6 +444,8 @@ en_US:
         edit: Edit
         clone: Clone
         delete: Delete
+      image:
+        edit: Edit
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -665,6 +667,8 @@ en_US:
         categories:
           label: Categories
         search: Search
+      edit_image:
+        close: Back
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

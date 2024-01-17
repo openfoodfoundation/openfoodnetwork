@@ -469,6 +469,8 @@ de_CH:
         edit: Bearbeiten
         clone: Duplizieren
         delete: Löschen
+      image:
+        edit: Bearbeiten
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -691,6 +693,8 @@ de_CH:
         search: Suche
       no_products:
         no_products_found: Keine Produkte gefunden.
+      edit_image:
+        close: Zurück
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.

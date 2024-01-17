@@ -172,6 +172,8 @@ sv:
         inherits_properties: "Ärva egenskaper?"
       actions:
         edit: Redigera
+      image:
+        edit: Redigera
     customer: Kund
     date: Datum
     email: epost
@@ -319,6 +321,8 @@ sv:
         producers:
           label: 'Producenter '
         search: Sök
+      edit_image:
+        close: Backa
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet

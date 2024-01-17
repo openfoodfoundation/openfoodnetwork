@@ -528,6 +528,8 @@ en_CA:
         edit: Edit
         clone: Clone
         delete: Delete
+      image:
+        edit: Edit
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -771,6 +773,8 @@ en_CA:
           other: "%{count} products modified."
         save: Save changes
         reset: Discard changes
+      edit_image:
+        close: Back
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

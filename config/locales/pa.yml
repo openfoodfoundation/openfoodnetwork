@@ -288,6 +288,9 @@ pa:
     integer_array_validator:
       not_array_error: "ਇੱਕ ਐਰੇ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ"
       invalid_element_error: "ਸਿਰਫ਼ ਵੈਧ ਪੂਰਨ ਅੰਕ ਹੋਣੇ ਚਾਹੀਦੇ ਹਨ"
+  report_job:
+    report_failed: |
+        ਇਹ ਰਿਪੋਰਟ ਅਸਫਲ ਰਹੀ। ਇਹ ਸੰਸਾਧਨ ਕਰਨ ਲਈ ਬਹੁਤ ਵੱਡਾ ਹੋ ਸਕਦੀ ਹੈ। ਅਸੀਂ ਇਸ ਦੀ ਜਾਂਚ ਕਰਾਂਗੇ, ਪਰ ਜੇਕਰ ਸਮੱਸਿਆ ਬਣੀ ਰਹਿੰਦੀ ਹੈ ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ ਸਾਨੂੰ ਦੱਸੋ।
   enterprise_mailer:
     confirmation_instructions:
       subject: "ਕਿਰਪਾ ਕਰਕੇ %{enterprise} ਲਈ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
@@ -505,6 +508,7 @@ pa:
         tax_category: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
         inherits_properties: "ਪ੍ਰਾਪਰਟੀਜ਼ ਅਪਣਾਉਂਦੇ ਹਨ?"
         import_date: "ਇਮਪੋਰਟ ਮਿਤੀ"
+        actions: <div></div>
       columns_selector:
         unit: ਯੂਨਿਟ
         price: ਕੀਮਤ
@@ -520,6 +524,8 @@ pa:
         edit: ਸੰਪਾਦਿਤ ਕਰੋ
         clone: ਕਲੋਨ
         delete: ਹਟਾਓ
+      image:
+        edit: ਸੰਪਾਦਿਤ ਕਰੋ
     adjustments:
       skipped_changing_canceled_order: "ਤੁਸੀਂ ਰੱਦ ਕੀਤੇ ਆਰਡਰ ਨੂੰ ਬਦਲ ਨਹੀਂ ਸਕਦੇ ਹੋ।"
     begins_at: ਇਸਤੇ ਸ਼ੁਰੂ ਹੋਵੇਗਾ
@@ -761,6 +767,8 @@ pa:
         reset: ਤਬਦੀਲੀਆਂ ਤਿਆਗੋ
       bulk_update:
         success: ਬਦਲਾਵ ਸੇਵ ਕੀਤੇ ਗਏ।'
+      edit_image:
+        close: ਵਾਪਸ
     product_import:
       title: ਉਤਪਾਦ ਦਾ ਇਮਪੋਰਟ
       file_not_found: ਫ਼ਾਈਲ ਨਹੀਂ ਮਿਲੀ ਜਾਂ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ

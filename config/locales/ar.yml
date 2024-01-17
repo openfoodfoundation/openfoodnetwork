@@ -474,6 +474,8 @@ ar:
         edit: تعديل
         clone: استنساخ
         delete: حذف
+      image:
+        edit: تعديل
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند
@@ -699,6 +701,8 @@ ar:
         categories:
           label: التصنيفات
         search: بحث
+      edit_image:
+        close: عودة
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه

@@ -466,6 +466,8 @@ ko:
         edit: 편집
         clone: 복사
         delete: 삭제
+      image:
+        edit: 편집
     adjustments:
       skipped_changing_canceled_order: "취소된 명령을 바꿀 수 없습니다."
     begins_at: 시작 시간
@@ -686,6 +688,8 @@ ko:
         categories:
           label: 카테고리
         search: 탐색
+      edit_image:
+        close: 뒤로
     product_import:
       title: 제품 가져오기
       file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.

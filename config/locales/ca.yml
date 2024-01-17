@@ -58,6 +58,8 @@ ca:
         orders_close_at: Data de tancament
       variant_override:
         count_on_hand: "Disponibles"
+      enterprise:
+        white_label_logo_link: "Enllaç del logotip utilitzat a botiga"
     errors:
       models:
         spree/user:
@@ -85,6 +87,7 @@ ca:
         blank: "no es pot deixar en blanc"
   errors:
     messages:
+      content_type_invalid: "té un tipus de contingut no vàlid"
       file_size_out_of_range: "la mida %{file_size} no és entre el rang necessari"
       limit_out_of_range: "el total està fora del marge"
       image_metadata_missing: "no és una imatge vàlida"
@@ -100,6 +103,9 @@ ca:
     internal_server_error:
       title: "Ens sap greu, però alguna cosa no ha funcionat (505)"
       message_html: "<b>Si us plau, torna a provar</b> <p>Pot ser un problema temporal. Si us plau, clica al botó de tornar enrere per a tornar a la pantalla anterior o torna a l'<a href='/''>Inici</a> i prova una altra vegada.</p> <b>Ho estem intentant</b> <p>Si has vist aquest problema abans, probablement ja estem assabentats i estem treballant per a solucionar-lo. Registrem tots els errors que apareixen.</p> <b>Contacte de suport</b> <p>Si el problema persisteix o és urgent, si us plau informa'ns. Busca com fer-ho a la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>pàgina Open Food Network Local</a>.</p> <p>Ens ajuda molt que ens proporcionis tants detalls com sigui possible de què estaves fent quan es va aparèixer aquest error.</p>"
+    unprocessable_entity:
+      message_html: "<p>El canvi que volies va ser rebutjat. Potser heu intentat canviar alguna cosa a la qual no teniu accés.<br><h3> <a href='/' >Tornar a l'inici</a></h3></p>"
+    stimulus_reflex_error: "Ens sap greu, però alguna cosa ha anat malament.\n\n Pot ser que sigui un problema temporal, així que si us plau, torna-ho a provar o torna a carregar la pàgina.\n Enregistrem tots els errors i és possible que estiguem treballant en una solució.\n Si el problema persisteix o és urgent, poseu-vos en contacte amb nosaltres."
   stripe:
     error_code:
       incorrect_number: "El número de la targeta és incorrecte."
@@ -259,6 +265,10 @@ ca:
     integer_array_validator:
       not_array_error: "ha de ser una matriu"
       invalid_element_error: "ha de contenir només nombres enters vàlids"
+  report_job:
+    report_failed: |
+        Aquest informe ha fallat. Pot ser massa gran per processar-lo.
+        Ho analitzarem, però si el problema persisteix, si us plau, aviseu-nos.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Sisplau, confirma l'adreça electrònica d'%{enterprise}"
@@ -278,6 +288,13 @@ ca:
     order_cycle:
       subject: "Informe del cicle de comanda per %{producer}"
   provider_settings: "Configuració del proveïdor"
+  report_mailer:
+    report_ready:
+      subject: "Informe a punt"
+      heading: "Informe a punt per descarregar"
+      intro: |
+          L'enllaç següent caducarà al cap d'una setmana.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Benvolguda consumidora:"
@@ -450,8 +467,11 @@ ca:
       filters:
         categories:
           title: Categories
+          selected_categories: "%{count} categories seleccionades"
         producers:
           title: Productors
+          selected_producers: "%{count} productors seleccionats"
+        per_page: "%{count} elements per pàgina"
         colums: Columnes
       columns:
         name: Nom
@@ -481,6 +501,8 @@ ca:
         edit: Editar
         clone: Clonar
         delete: Suprimir
+      image:
+        edit: Editar
     adjustments:
       skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
     begins_at: Comença a
@@ -545,6 +567,9 @@ ca:
     has_n_rules: "té %{num} regles"
     unsaved_confirm_leave: "Hi ha canvis no desats canviats en aquesta pàgina. Continua sense desar?"
     available_units: "Unitats disponibles"
+    terms_of_service_have_been_updated_html: "Les condicions de servei de Katuma/-OFN s'han actualitzat: %{tos_link}"
+    terms_of_service: Llegeix les condicions del servei
+    accept_terms_of_service: Accepteu les condicions del servei
     shopfront_settings:
       embedded_shopfront_settings: "Configuració de botiga incrustada"
       enable_embedded_shopfronts: "Habilita les botigues incrustades"
@@ -697,12 +722,30 @@ ca:
       index:
         header:
           title: Edició de productes en bloc
+        loading: Carregant els vostres productes
+      delete_modal:
+        delete_product_modal:
+          heading: "Suprimeix el producte"
+          prompt: "Això l'eliminarà permanentment de la vostra llista."
+          confirmation_text: "Suprimeix el producte"
+          cancellation_text: "Conserveu el producte"
+        delete_variant_modal:
+          heading: "Suprimeix la variant"
+          prompt: "Això l'eliminarà permanentment de la vostra llista."
+          confirmation_text: "Suprimeix la variant"
+          cancellation_text: "Mantenir la variant"
       sort:
         pagination:
+          total_html: "<strong>%{total} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
+          per_page:
+            show: Mostra
+            per_page: "%{num} per pàgina"
           clear_search: Esborra la cerca
       filters:
         search_products: Cerca de productes
+        search_for_producers: Cercar productors
         all_producers: Tots els productors
+        search_for_categories: Cercar categories
         all_categories: Totes les categories
         producers:
           label: Productors
@@ -712,8 +755,19 @@ ca:
       no_products:
         no_products_found: No hem trobat productes
       table:
+        error_summary:
+          saved:
+            one: "%{count} producte ha estat guardat correctament, però"
+            other: "%{count} productes han estat guardats correctament, però "
+          invalid:
+            one: "El producte %{count} no s&#39;ha pogut desar. Reviseu els errors i torneu-ho a provar."
+            other: "%{count} productes no s'han pogut desar. Reviseu els errors i torneu-ho a provar."
         save: Guardar canvis
         reset: Descartar canvis
+      bulk_update:
+        success: Canvis guardats
+      edit_image:
+        close: Enrere
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir
@@ -1125,6 +1179,7 @@ ca:
           remove_logo: "Eliminar el logo"
           remove_logo_confirm: "Esteu segur de voler eliminar el logo?"
           remove_logo_success: "Logo eliminat"
+          white_label_logo_link_label: "Enllaç del logotip utilitzat a botiga"
         connected_apps:
           loading: "S'està carregant"
       actions:
@@ -1463,6 +1518,7 @@ ca:
         generate_report: "Generació d'informe"
         on_screen: "A la pantalla"
         display: Mostra
+        header_row: Fila de capçalera
       packing:
         name: "Informes de repartiment"
     subscriptions:
@@ -1565,6 +1621,7 @@ ca:
         back: Enrere
         save: Desa
         voucher_amount: Quantitat
+        percentage_rate: Percentatge (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "S'ha cancel·lat la connexió a Stripe"
@@ -1746,6 +1803,7 @@ ca:
   invoice_shipping_category_pickup: "Recollida"
   total_excl_tax: "Total (impostos exclòs):"
   total_incl_tax: "Total (impost inclòs):"
+  total_all_tax: "Impost total:"
   abn: "NIF:"
   acn: "IVA intracomunitari:"
   invoice_issued_on: "Factura emesa el:"
@@ -2496,7 +2554,7 @@ ca:
   admin_enterprise_groups_web_twitter: "p. ex: @horta_josepribes"
   admin_enterprise_groups_web_website_placeholder: "p. ex.: www.hortajosepribes.coop"
   admin_order_cycles: "Cicles de comanda de l'Admin"
-  open: "Obert"
+  open: "Obre"
   close: "Tanca"
   create: "Crear"
   search: "Cerca"
@@ -3100,6 +3158,7 @@ ca:
           processing: "processant"
           void: "pendent"
           invalid: "invàlid"
+        quantity_unavailable: "Estoc disponible insuficient. L'article de la línia no s'ha desat!"
         quantity_unchanged: "Quantitat sense canvis respecte a l’import anterior."
       resend_user_email_confirmation:
         resend: "Reenviar"
@@ -3429,6 +3488,8 @@ ca:
     server_error: "Error del servidor"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Recollida a la granja"
+      delivery: "Signat, segellat, lliurat"
     start_date: "Data d'inici"
     successfully_removed: "S'ha suprimit correctament"
     taxonomy_edit: "Edició de taxonomia"
@@ -3486,6 +3547,7 @@ ca:
     credit_card: "Targeta de crèdit"
     new_payment: "Nou pagament"
     capture: "Pagat"
+    capture_and_complete_order: "Capturar i completar comanda"
     void: "Pendent"
     login: "Inicia sessió"
     password: "Contrasenya"
@@ -3512,6 +3574,7 @@ ca:
     display_currency: "Moneda de visualització"
     choose_currency: "Escull la moneda"
     mail_method_settings: "Configuració del mètode de correu"
+    mail_settings_notice_html: "<b>Els canvis fets aquí seran temporals</b> només per a la depuració i es poden revertir en el futur.<br> Es poden fer canvis permanents actualitzant els secrets de la instància i proporcionant-los mitjançant <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install</a> . Poseu-vos en contacte amb l'equip global OFN per obtenir més detalls."
     general: "General"
     enable_mail_delivery: "Habilita el lliurament de correu"
     send_mails_as: "Enviar missatges com"
@@ -3721,6 +3784,7 @@ ca:
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "No es pot afegir l'article a la comanda cancel·lada"
+          include_out_of_stock_variants: "Inclou variants sense estoc disponible"
         index:
           listing_orders: "Llistat comandes"
           new_order: "Nova comanda"
@@ -3738,7 +3802,13 @@ ca:
           results_found: "%{number} Resultats trobats."
           viewing: "Veient %{start} a %{end}."
           print_invoices: "Imprimir factures"
+          cancel_orders: "Cancel·lar comandes"
           resend_confirmation: "Reenviar Confirmació"
+          send_invoice: "Enviar factures"
+          selected:
+            zero: "No s'ha seleccionat cap comanda"
+            one: "1 comanda seleccionada"
+            other: "%{count} comandes seleccionades"
         sortable_header:
           payment_state: "Estat del pagament"
           shipment_state: "Estat de la Tramesa"
@@ -4272,6 +4342,8 @@ ca:
         one: "1 any"
         other: "%{count} anys"
   components:
+    multiple_checked_select:
+      filter_placeholder: "Opcions de filtre"
     search_input:
       placeholder: Cerca
     selector_with_filter:

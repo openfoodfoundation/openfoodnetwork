@@ -475,6 +475,8 @@ es:
         edit: Editar
         clone: Duplicar
         delete: Borrar
+      image:
+        edit: Editar
     adjustments:
       skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
     begins_at: Empieza en
@@ -705,6 +707,8 @@ es:
       table:
         save: Guardar Cambios
         reset: Desechar Cambios
+      edit_image:
+        close: Atrás
     product_import:
       title: Importación de productos
       file_not_found: Archivo no encontrado o no se pudo abrir

@@ -404,6 +404,8 @@ pt_BR:
         edit: Editar
         clone: Cópia
         delete: Deletar
+      image:
+        edit: Editar
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
     begins_at: Começa em
@@ -622,6 +624,8 @@ pt_BR:
         producers:
           label: Produtores
         search: Buscar
+      edit_image:
+        close: Voltar
     product_import:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto

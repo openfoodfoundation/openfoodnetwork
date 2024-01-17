@@ -330,6 +330,8 @@ en_ZA:
         edit: Edit
         clone: Clone
         delete: Delete
+      image:
+        edit: Edit
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
@@ -530,6 +532,8 @@ en_ZA:
         categories:
           label: Categories
         search: Search
+      edit_image:
+        close: Back
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

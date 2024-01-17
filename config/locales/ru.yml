@@ -522,6 +522,8 @@ ru:
         edit: Изменить
         clone: Клонировать
         delete: Удалить
+      image:
+        edit: Изменить
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С
@@ -751,6 +753,8 @@ ru:
       no_products:
         no_products_found: Товары не найдены
         import_products: Импорт нескольких товаров
+      edit_image:
+        close: Назад
     product_import:
       title: Импорт Товара
       file_not_found: Файл не найден или не может быть открыт

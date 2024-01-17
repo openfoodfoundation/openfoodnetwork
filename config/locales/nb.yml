@@ -531,6 +531,8 @@ nb:
         edit: Rediger
         clone: Klon
         delete: Slett
+      image:
+        edit: Rediger
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på
@@ -781,6 +783,8 @@ nb:
             other: "%{count} produkter kunne ikke lagres. Se gjennom feilene og prøv igjen."
         save: Lagre endringer
         reset: Forkaste endringer
+      edit_image:
+        close: Tilbake
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes

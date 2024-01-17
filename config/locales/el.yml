@@ -382,6 +382,8 @@ el:
         edit: Επεξεργασία
         clone: Κλώνος
         delete: Διαγραφή
+      image:
+        edit: Επεξεργασία
     adjustments:
       skipped_changing_canceled_order: "Δεν μπορείτε να κάνετε αλλαγή ακυρωμένης παραγγελίας."
     begins_at: Ξεκινάει από
@@ -588,6 +590,8 @@ el:
         producers:
           label: Παραγωγοί
         search: Αναζήτηση
+      edit_image:
+        close: Πίσω
     product_import:
       title: Είσαγωγή Προϊόντος
       file_not_found: Το αρχείο δεν βρέθηκε ή δεν μπόρεσε να φορτωθεί

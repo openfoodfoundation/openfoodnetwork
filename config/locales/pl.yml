@@ -335,6 +335,8 @@ pl:
         edit: Edytuj
         clone: Kopiuj
         delete: Usuń
+      image:
+        edit: Edytuj
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient
@@ -519,6 +521,8 @@ pl:
         producers:
           label: Producenci
         search: Szukaj
+      edit_image:
+        close: Wstecz
     product_import:
       title: Import produktów
       file_not_found: Nie znaleziono pliku lub nie można go otworzyć

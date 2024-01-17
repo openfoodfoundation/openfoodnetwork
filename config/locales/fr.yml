@@ -530,6 +530,8 @@ fr:
         edit: Modifier
         clone: Dupliquer
         delete: Supprimer
+      image:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -770,7 +772,9 @@ fr:
           clear_search: Annuler la recherche
       filters:
         search_products: Chercher des produits
+        search_for_producers: Rechercher des producteurs
         all_producers: Tous les producteurs
+        search_for_categories: Rechercher des catégories
         all_categories: Toutes les catégories
         producers:
           label: Producteurs
@@ -797,6 +801,10 @@ fr:
         reset: Annuler les changements
       bulk_update:
         success: Changements sauvegardés
+      edit_image:
+        title: Modifier la photo du produit
+        close: Retour
+        upload: Télécharger la photo
       delete_product:
         success: Le produit a bien été supprimé
         error: Le produit n'a pas pu être supprimé
@@ -1048,6 +1056,7 @@ fr:
         images:
           legend: "Images"
           logo: Logo
+          logo_size: "300 x 300 pixels"
           promo_image_placeholder: 'Cette image est affichée dans "A propos"'
           promo_image_note1: 'ATTENTION:'
           promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.

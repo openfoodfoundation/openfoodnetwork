@@ -464,6 +464,8 @@ fr_BE:
         edit: Modifier
         clone: Dupliquer
         delete: Supprimer
+      image:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -686,6 +688,8 @@ fr_BE:
         categories:
           label: Les catégories
         search: Rechercher
+      edit_image:
+        close: Retour
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir

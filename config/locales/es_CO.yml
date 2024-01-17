@@ -354,6 +354,8 @@ es_CO:
         edit: Editar
         clone: Duplicar
         delete: Borrar
+      image:
+        edit: Editar
     begins_at: Empieza en
     begins_on: Comienza en
     customer: Cliente
@@ -554,6 +556,8 @@ es_CO:
         categories:
           label: Categorías
         search: Buscar
+      edit_image:
+        close: Atrás
     product_import:
       title: Importe de producto
       file_not_found: Archivo no encontrado o no se pudo abrir

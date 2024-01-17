@@ -531,6 +531,8 @@ hi:
         edit: एडिट करें
         clone: क्लोन
         delete: हटाएं
+      image:
+        edit: एडिट करें
     adjustments:
       skipped_changing_canceled_order: "आप रद्द किए गए ऑर्डर को बदल नहीं सकते।"
     begins_at: को शुरू होता है
@@ -781,6 +783,8 @@ hi:
             other: "%{count} उत्पाद सेव नहीं किए जा सके। कृपया त्रुटियों को रिव्यू करें और फिर से प्रयास करें।"
         save: परिवर्तन सेव करें
         reset: परिवर्तनों को अस्वीकार करें
+      edit_image:
+        close: वापस जाएं
     product_import:
       title: उत्पाद इम्पोर्ट करें
       file_not_found: फ़ाइल नहीं मिली या खोली नहीं जा सकी

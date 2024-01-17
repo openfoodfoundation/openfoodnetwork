@@ -384,6 +384,8 @@ tr:
         edit: Düzenle
         clone: Kopyala
         delete: Sil
+      image:
+        edit: Düzenle
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
@@ -604,6 +606,8 @@ tr:
         categories:
           label: Kategoriler
         search: Ara
+      edit_image:
+        close: Geri
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı

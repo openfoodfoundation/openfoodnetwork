@@ -330,6 +330,8 @@ fil_PH:
         edit: i-edit
         clone: Gayahin
         delete: Tanggalin
+      image:
+        edit: i-edit
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
     customer: Customer
@@ -527,6 +529,8 @@ fil_PH:
         categories:
           label: mga kategorya
         search: hanapin
+      edit_image:
+        close: bumalik
     product_import:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '

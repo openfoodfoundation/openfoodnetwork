@@ -339,6 +339,8 @@ nl_BE:
         edit: bewerking
         clone: Kloon
         delete: 'Uitwissen '
+      image:
+        edit: bewerking
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant
@@ -543,6 +545,8 @@ nl_BE:
         categories:
           label: Categorieën
         search: Zoeken
+      edit_image:
+        close: achterstevoren
     product_import:
       title: Importeren van producten
       file_not_found: Bestand niet gevonden of kon niet worden geopend

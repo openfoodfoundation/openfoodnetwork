@@ -443,6 +443,8 @@ it_CH:
         edit: Modifica
         clone: Duplica
         delete: Annulla
+      image:
+        edit: Modifica
     adjustments:
       skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
     begins_at: Inizia a
@@ -663,6 +665,8 @@ it_CH:
         categories:
           label: categorie
         search: Cerca
+      edit_image:
+        close: Indietro
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile

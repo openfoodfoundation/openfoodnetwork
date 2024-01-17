@@ -531,6 +531,8 @@ en_FR:
         edit: Edit
         clone: Clone
         delete: Delete
+      image:
+        edit: Edit
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -771,7 +773,9 @@ en_FR:
           clear_search: Clear search
       filters:
         search_products: Search for products
+        search_for_producers: Search for producers
         all_producers: All producers
+        search_for_categories: Search for categories
         all_categories: All categories
         producers:
           label: Producers
@@ -797,6 +801,10 @@ en_FR:
         reset: Discard changes
       bulk_update:
         success: Changes saved
+      edit_image:
+        title: Edit product photo
+        close: Back
+        upload: Upload photo
       delete_product:
         success: Successfully deleted the product
         error: Unable to delete the product
@@ -1048,6 +1056,7 @@ en_FR:
         images:
           legend: "Images"
           logo: Logo
+          logo_size: "300 x 300 pixels"
           promo_image_placeholder: 'This image is displayed in "About Us"'
           promo_image_note1: 'PLEASE NOTE:'
           promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.

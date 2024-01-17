@@ -376,6 +376,8 @@ pt:
         edit: Editar
         clone: Clonar
         delete: Apagar
+      image:
+        edit: Editar
     begins_at: Começa às
     begins_on: Começa em
     customer: Consumidor/a
@@ -579,6 +581,8 @@ pt:
         categories:
           label: Categorias
         search: Procurar
+      edit_image:
+        close: Voltar
     product_import:
       title: Importação de Produtos
       file_not_found: O ficheiro não foi encontrado ou não pôde ser aberto
