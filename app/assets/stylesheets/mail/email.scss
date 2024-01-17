@@ -181,6 +181,10 @@ a {
 img.float-right {
   float: right;
   display: block;
+  max-width: 100px;
+  max-height: 100px;
+  margin-bottom: 15px;
+  margin-left: 15px;
 }
 
 del.quantity_was {
@@ -379,6 +383,10 @@ ul {
   }
 }
 
+.greeting_and_intro {
+  overflow: hidden;
+}
+
 /* Let's make sure tables in the content area are 100% wide */
 
 /* Odds and ends */
@@ -445,6 +453,7 @@ ul {
 
   img.float-right {
     float: none !important;
+    margin: 0px auto 15px;
   }
 }
 
