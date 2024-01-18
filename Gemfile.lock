@@ -177,7 +177,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.17.1)
       msgpack (~> 1.2)
-    bugsnag (6.26.1)
+    bugsnag (6.26.2)
       concurrent-ruby (~> 1.0)
     builder (3.2.4)
     bullet (7.1.5)
@@ -218,7 +218,7 @@ GEM
     combine_pdf (1.0.26)
       matrix
       ruby-rc4 (>= 0.1.5)
-    concurrent-ruby (1.2.2)
+    concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
     crack (0.4.5)
       rexml
