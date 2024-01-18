@@ -419,6 +419,11 @@ en:
     report_failed: |
       This report failed. It may be too big to process.
       We will look into it but please let us know if the problem persists.
+
+# E-Mails
+#
+  mailers_shared:
+    general_greeting: "Hello!"
   backorder_mailer:
     backorder_failed:
       subject: "An automatic backorder failed"
@@ -2670,8 +2675,6 @@ en:
   email_shipping_collection_instructions: "Collection instructions:"
   email_special_instructions: "Your notes:"
 
-  email_signup_greeting: Hello!
-  email_signup_welcome: "Welcome to %{sitename}!"
   email_signup_confirmed_email: "Thanks for confirming your email."
   email_signup_shop_html: "You can now log in at %{link}."
   email_signup_text: "Thanks for joining the network.
@@ -4955,7 +4958,6 @@ en:
         invoice_attached_text: Please find attached an invoice for your recent order from
     user_mailer:
       reset_password_instructions:
-        dear_customer: "Dear customer,"
         request_sent_text: |
           A request to reset your password has been made.
           If you did not make this request, simply ignore this email.
@@ -4965,8 +4967,11 @@ en:
           If the above URL does not work try copying and pasting it into your browser.
           If you continue to have problems please feel free to contact us.
         subject: "Reset password instructions"
+      signup_confirmation:
+        welcome: "Welcome to %{sitename}!"
       confirmation_instructions:
         subject: "Please confirm your OFN account"
+        welcome: "Welcome to %{sitename}!"
     shipment_mailer:
       shipped_email:
         dear_customer: "Dear Customer,"
