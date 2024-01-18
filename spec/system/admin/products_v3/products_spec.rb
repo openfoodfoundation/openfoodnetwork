@@ -1611,6 +1611,121 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
   end
 
+  context "creating new variants" do
+    let!(:product) { create(:product, variant_unit: 'weight', variant_unit_scale: 1000) }
+
+    before do
+      pending "Pending implementation, issue #11066"
+
+      login_as_admin
+      visit spree.admin_products_path
+
+      # I should see an add variant button
+      page.find('a.view-variants').click
+    end
+
+    it "handle the default behaviour" do
+      # When I add three variants
+      page.find('a.add-variant').click
+      page.find('a.add-variant').click
+
+      # They should be added, and should not see edit buttons for new variants
+      expect(page).to have_selector "tr.variant", count: 3
+      expect(page).to have_selector "a.edit-variant", count: 1
+
+      # When I remove two, they should be removed
+      accept_alert do
+        page.all('a.delete-variant').first.click
+      end
+      expect(page).to have_selector "tr.variant", count: 2
+      page.all('a.delete-variant').first.click
+      expect(page).to have_selector "tr.variant", count: 1
+
+      # When I fill out variant details and hit update
+      fill_in "variant_display_name", with: "Case of 12 Bottles"
+      fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
+      fill_in "variant_display_as", with: "Case"
+      fill_in "variant_price", with: "4.0"
+      fill_in "variant_on_hand", with: "10"
+
+      click_button 'Save Changes', match: :first
+      expect(page.find("#status-message")).to have_content "Changes saved."
+
+      updated_variant = Spree::Variant.where(deleted_at: nil).last
+      expect(updated_variant.display_name).to eq "Case of 12 Bottles"
+      expect(updated_variant.unit_value).to eq 3000
+      expect(updated_variant.unit_description).to eq "(12x250 mL bottles)"
+      expect(updated_variant.display_as).to eq "Case"
+      expect(updated_variant.price).to eq 4.0
+      expect(updated_variant.on_hand).to eq 10
+
+      # Then I should see edit buttons for the new variant
+      expect(page).to have_selector "a.edit-variant"
+    end
+
+    context "handle the 'on_demand' variant case creation" do
+      let(:v1) { create(:variant, product:, on_hand: 4) }
+      let(:v2) { create(:variant, product:, on_demand: true) }
+      pending("Pending implementation, issue #11066")
+
+      before do
+        product.variants << v1
+        product.variants << v2
+
+        visit spree.admin_products_path
+        page.find('a.view-variants').click
+      end
+
+      it "when variant unit value is: '120'" do
+        within "tr#v_#{v2.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120"
+          fill_in "variant_price", with: "6.66"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message")).to have_content "Changes saved."
+      end
+
+      it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
+        within "tr#v_#{v2.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          fill_in "variant_on_hand", with: "222"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message"))
+          .to have_content "Variant unit value can't be blank Variant unit value is not a number"
+      end
+
+      it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
+        scroll_to(:bottom)
+
+        within "tr#v_#{v2.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          check "variant_on_demand"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message"))
+          .to have_content "Variant unit value can't be blank Variant unit value is not a number"
+      end
+    end
+  end
+
   def create_products(amount)
     amount.times do |i|
       create(:simple_product, name: "product #{i}", supplier: producer)
