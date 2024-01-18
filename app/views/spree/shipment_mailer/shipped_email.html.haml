@@ -1,12 +1,17 @@
-%h3
-  = t('.dear_customer')
+- if @shipment.order.distributor.logo.variable?
+  - @enterprise_for_logo = @shipment.order.distributor
+
+- greeting_key = "mailers_shared.customer_greeting"
 
 - if @delivery
-  %p.lead
-    = t('.instructions', distributor: @shipment.order.distributor.name)
+  - intro_key = ".shipped_intro_html"
 - else
-  %p.lead
-    = t('.picked_up_instructions', distributor: @shipment.order.distributor.name)
+  - intro_key = ".picked_up_intro_html"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key, name: @shipment.order.bill_address.firstname),
+                   intro: t(intro_key, distributor: @shipment.order.distributor.name),
+                   enterprise_for_logo: @enterprise_for_logo }
 
 %p
   %strong

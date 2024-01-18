@@ -368,6 +368,7 @@ en:
 # E-Mails
 #
   mailers_shared:
+    customer_greeting: "Dear %{name},"
     general_greeting: "Hello!"
   enterprise_mailer:
     confirmation_instructions:
@@ -397,8 +398,6 @@ en:
       link_label: "%{name}"
   shipment_mailer:
     shipped_email:
-      dear_customer: "Dear Customer,"
-      instructions: "Your order has been shipped"
       shipment_summary: "Shipment Summary"
       subject: "Shipment Notification"
       thanks: "Thank you for your business."
@@ -3926,6 +3925,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       error: Webhook endpoint failed to delete
 
   spree:
+    shipment_mailer:
+      shipped_email:
+        shipped_intro_html: "Your order from <strong>%{distributor}</strong> has been shipped."
+        picked_up_intro_html: "Your order from <strong>%{distributor}</strong> has been picked-up."
     test_mailer:
       test_email:
         greeting: "Congratulations!"
@@ -4721,14 +4724,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
     shipment_mailer:
       shipped_email:
-        dear_customer: "Dear Customer,"
-        instructions: "Your order from %{distributor} has been shipped"
         shipment_summary: "Shipment Summary"
         subject: "Shipment Notification"
         thanks: "Thank you for your business."
         track_information: ! "Tracking Information: %{tracking}"
         track_link: ! "Tracking Link: %{url}"
-        picked_up_instructions: "Your order from %{distributor} has been picked-up"
         picked_up_subject: "Pick up Notification"
     test_mailer:
       test_email:
