@@ -364,6 +364,11 @@ en:
     mailer:
       open_food_network: "Open Food Network"
       powered_html: "This service is powered by the %{open_food_network}."
+
+# E-Mails
+#
+  mailers_shared:
+    general_greeting: "Hello!"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -2457,8 +2462,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_shipping_collection_instructions: "Collection instructions:"
   email_special_instructions: "Your notes:"
 
-  email_signup_greeting: Hello!
-  email_signup_welcome: "Welcome to %{sitename}!"
   email_signup_confirmed_email: "Thanks for confirming your email."
   email_signup_shop_html: "You can now log in at %{link}."
   email_signup_text: "Thanks for joining the network.
@@ -3923,6 +3926,16 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       error: Webhook endpoint failed to delete
 
   spree:
+    user_mailer:
+      confirmation_instructions:
+        welcome: "Welcome to %{sitename}!"
+      signup_confirmation:
+        welcome: "Welcome to %{sitename}!"
+      reset_password_instructions:
+        request_sent_text: |
+          A request to reset your password has been made.
+          If you did not make this request, simply ignore this email.
+
     order_updated: "Order Updated"
     add_country: "Add country"
     add_state: "Add state"
@@ -4687,10 +4700,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         invoice_attached_text: Please find attached an invoice for your recent order from
     user_mailer:
       reset_password_instructions:
-        dear_customer: "Dear customer,"
-        request_sent_text: |
-          A request to reset your password has been made.
-          If you did not make this request, simply ignore this email.
         link_text: >
           If you did make this request just click the link below:
         issue_text: |

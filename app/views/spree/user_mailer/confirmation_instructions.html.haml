@@ -1,7 +1,10 @@
-%h3
-  = t :email_signup_greeting
-%p.lead
-  = t :email_signup_welcome, sitename: @instance
+- greeting_key = "mailers_shared.general_greeting"
+- intro_key = ".welcome"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key),
+                   intro: t(intro_key, sitename: @instance) }
+
 %p= t :email_confirmation_activate_account
 
 %p.callout
