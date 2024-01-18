@@ -25,7 +25,6 @@ export default class extends Controller {
       target.disabled = !enable;
     });
   }
-  //todo: can a new method disableIfBlank replace ButtonDisabledController?
   //todo: can a new method toggleDisplay replace ToggleController?
   //todo: can toggleDisplay with optional chevron-target replace RemoteToggleController?
 
