@@ -14,9 +14,9 @@ class StripeAccount < ApplicationRecord
     return destroy if accounts.count > 1
 
     destroy && Stripe::OAuth.deauthorize(stripe_user_id:)
-  rescue Stripe::OAuth::OAuthError
+  rescue Stripe::OAuth::OAuthError => e
     Bugsnag.notify(
-      RuntimeError.new("StripeDeauthorizeFailure"),
+      e,
       stripe_account: stripe_user_id,
       enterprise_id:
     )
