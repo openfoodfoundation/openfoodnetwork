@@ -2415,13 +2415,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_signoff: "Cheers,"
   email_signature: "%{sitename} Team"
 
-  email_confirm_customer_greeting: "Hi %{name},"
-  email_confirm_customer_intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
   email_confirm_customer_number_html: "Order confirmation <strong>#%{number}</strong>"
   email_confirm_customer_details_html: "Here are your order details from <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Kind regards,"
-  email_confirm_shop_greeting: "Hi %{name},"
-  email_confirm_shop_order_html: "Well done! You have a new order for <strong>%{distributor}</strong>!"
   email_confirm_shop_number_html: "Order confirmation <strong>#%{number}</strong>"
   email_order_summary_item: "Item"
   email_order_summary_quantity: "Qty"
@@ -3925,6 +3921,17 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       error: Webhook endpoint failed to delete
 
   spree:
+    order_mailer:
+      cancel_email:
+        instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
+      cancel_email_for_shop:
+        intro: "A customer has cancelled their order #%{number}."
+      confirm_email_for_customer:
+        intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
+      confirm_email_for_shop:
+        intro_html: "Well done! You have a new order for <strong>%{distributor}</strong>!"
+      invoice_email:
+        intro_html: "Please find attached an invoice for your recent order from <strong>%{distributor}</strong>."
     shipment_mailer:
       shipped_email:
         shipped_intro_html: "Your order from <strong>%{distributor}</strong> has been shipped."
@@ -4686,8 +4693,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       authorise: authorise
     order_mailer:
       cancel_email:
-        customer_greeting: "Dear %{name},"
-        instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
         dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
         order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
         details: "Here are the details of what you ordered:"
@@ -4696,15 +4701,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         credit_order: "Your order was paid so your account has been credited"
         subject: "Cancellation of Order"
       cancel_email_for_shop:
-        greeting: "Dear %{name},"
         subject: "Cancellation of Order"
-        intro: "A customer has cancelled their order #%{number}."
         view_cancelled_order: "View cancelled order"
       confirm_email:
         subject: "Order Confirmation"
-      invoice_email:
-        hi: "Hi %{name}"
-        invoice_attached_text: Please find attached an invoice for your recent order from
     user_mailer:
       reset_password_instructions:
         link_text: >

@@ -1,7 +1,12 @@
-%p
-  = t('spree.order_mailer.cancel_email_for_shop.greeting', name: @order.distributor.name)
+- if @order.distributor.logo.variable?
+  - @enterprise_for_logo = @order.distributor
 
-%p
-  = t('spree.order_mailer.cancel_email_for_shop.intro', number: @order.number)
+- greeting_key = "mailers_shared.enterprise_greeting"
+- intro_key = ".intro"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key, name: @order.distributor.contact_name),
+                   intro: t(intro_key, number: @order.number),
+                   enterprise_for_logo: @enterprise_for_logo }
 
 = link_to t('spree.order_mailer.cancel_email_for_shop.view_cancelled_order'), spree.edit_admin_order_url(@order)

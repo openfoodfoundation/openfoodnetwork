@@ -1,21 +1,14 @@
-%table.social.white-bg{:width => "100%"}
-  %tr
-    %td
-      %table.column{:align => "left"}
-        %tr
-          %td
-            %h3 
-              = t :email_confirm_customer_greeting, name: @order.bill_address.firstname
-            %h4
-              = t :email_confirm_customer_intro_html, distributor: @order.distributor.name
-      %table.column{:align => "left"}
-        %tr
-          %td{:align => "right"}
-            - if @order.distributor.logo.variable?
-              = image_tag @order.distributor.logo_url(:medium), class: "float-right"
-      %span.clear
+- if @order.distributor.logo.variable?
+  - @enterprise_for_logo = @order.distributor
 
-%p &nbsp;
+- greeting_key = "mailers_shared.customer_greeting"
+- intro_key = ".intro_html"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key, name: @order.bill_address.firstname),
+                   intro: t(intro_key, distributor: @order.distributor.name),
+                   enterprise_for_logo: @enterprise_for_logo }
+
 %h4
   = t :email_confirm_customer_number_html, number: @order.number
 %p
