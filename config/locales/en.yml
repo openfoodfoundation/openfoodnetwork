@@ -3926,6 +3926,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       error: Webhook endpoint failed to delete
 
   spree:
+    test_mailer:
+      test_email:
+        greeting: "Congratulations!"
+        message: "If you have received this email, then your email settings are correct."
     user_mailer:
       confirmation_instructions:
         welcome: "Welcome to %{sitename}!"
@@ -4728,8 +4732,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         picked_up_subject: "Pick up Notification"
     test_mailer:
       test_email:
-        greeting: "Congratulations!"
-        message: "If you have received this email, then your email settings are correct."
         subject: "Test Mail"
     order_state:
       address: address
