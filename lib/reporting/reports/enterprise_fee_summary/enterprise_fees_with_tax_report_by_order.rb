@@ -228,8 +228,7 @@ module Reporting
             .where(order:)
             .where(originator_id: enterprise_fee_id(query_result_row))
             .pick("sum(amount)") || 0
-          total_excl_tax_amount = amount - tax(query_result_row, all: true, included: true)
-          apply_voucher_on_amount(order, total_excl_tax_amount)
+          apply_voucher_on_amount(order, amount) - tax(query_result_row, all: true, included: true)
         end
 
         def tax(query_result_row, all: false, included: nil)
