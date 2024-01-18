@@ -47,42 +47,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(page).to have_selector "th", text: "ON HAND"
       end
     end
-
-    describe "using filtering controls" do
-      it "displays basic filtering controls which filter the product list" do
-        s1 = create(:supplier_enterprise)
-        s2 = create(:supplier_enterprise)
-        p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)
-        p2 = FactoryBot.create(:simple_product, name: "product2", supplier: s2)
-
-        login_as_admin
-        visit spree.admin_products_path
-
-        # Page shows the filter controls
-        expect(page).to have_select "producer_filter", visible: false
-        expect(page).to have_select "category_filter", visible: false
-
-        # All products are shown when no filter is selected
-        expect(page).to have_field "product_name", with: p1.name
-        expect(page).to have_field "product_name", with: p2.name
-
-        # Set a filter
-        select2_select s1.name, from: "producer_filter"
-        apply_filters
-
-        # Products are hidden when filtered out
-        expect(page).to have_field "product_name", with: p1.name
-        expect(page).to have_no_field "product_name", with: p2.name
-
-        # Clearing filters
-        click_button "Clear Filters"
-        apply_filters
-
-        # All products are shown again
-        expect(page).to have_field "product_name", with: p1.name
-        expect(page).to have_field "product_name", with: p2.name
-      end
-    end
   end
 
   describe "listing" do
@@ -218,7 +182,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
       end
 
@@ -235,7 +199,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect_per_page_to_be 15
         expect_products_count_to_be 1
         search_for "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
       end
 
@@ -245,7 +209,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_name.name
 
@@ -276,7 +240,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         search_by_producer "Producer 1"
 
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect(page).to have_select "producer_id", selected: "Producer 1"
         expect_products_count_to_be 1
       end
@@ -295,7 +259,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         search_by_category "Category 1"
 
-        expect(page).to have_content "1 products found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect(page).to have_select "category_id", selected: "Category 1"
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_category.name

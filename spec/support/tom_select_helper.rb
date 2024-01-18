@@ -20,6 +20,13 @@ module TomSelectHelper
     tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
   end
 
+  def tomselect_select(value, options)
+    tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
+    tomselect_wrapper.find(".ts-control").click
+
+    tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
+  end
+
   def select_tom_select(value, from:)
     container = find(:id, from)
 
