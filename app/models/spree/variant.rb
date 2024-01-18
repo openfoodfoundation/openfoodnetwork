@@ -209,6 +209,13 @@ module Spree
       Spree::Stock::Quantifier.new(self).total_on_hand
     end
 
+    # Silently fail when tax_category has been deleted
+    def tax_category
+      super
+    rescue ActiveRecord::RecordNotFound
+      nil
+    end
+
     private
 
     def check_currency
