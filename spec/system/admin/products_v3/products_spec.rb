@@ -339,14 +339,12 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         visit admin_products_url
       end
 
-      it "shows an actions memu with an edit link when clicking on icon for product" do
+      it "shows an actions menu with an edit link for product and variant" do
         within row_containing_name("Apples") do
           page.find(".vertical-ellipsis-menu").click
           expect(page).to have_link "Edit", href: spree.edit_admin_product_path(product_a)
         end
-      end
 
-      it "shows an actions memu with an edit link when clicking on icon for variant" do
         within row_containing_name("Medium box") do
           page.find(".vertical-ellipsis-menu").click
           expect(page).to have_link "Edit",
