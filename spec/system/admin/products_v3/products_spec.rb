@@ -23,6 +23,68 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     end
   end
 
+  describe "using the page" do
+    describe "using column display dropdown" do
+      let(:product) { create(:simple_product) }
+
+      before do
+        pending "Pending implementation, issue #11055"
+        login_as_admin
+        visit spree.admin_products_path
+      end
+
+      it "shows a column display dropdown, which shows a list of columns when clicked" do
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
+
+        toggle_columns /^.{0,1}Producer$/i
+
+        expect(page).to have_no_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
+      end
+    end
+
+    describe "using filtering controls" do
+      it "displays basic filtering controls which filter the product list" do
+        s1 = create(:supplier_enterprise)
+        s2 = create(:supplier_enterprise)
+        p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)
+        p2 = FactoryBot.create(:simple_product, name: "product2", supplier: s2)
+
+        login_as_admin
+        visit spree.admin_products_path
+
+        # Page shows the filter controls
+        expect(page).to have_select "producer_filter", visible: false
+        expect(page).to have_select "category_filter", visible: false
+
+        # All products are shown when no filter is selected
+        expect(page).to have_field "product_name", with: p1.name
+        expect(page).to have_field "product_name", with: p2.name
+
+        # Set a filter
+        select2_select s1.name, from: "producer_filter"
+        apply_filters
+
+        # Products are hidden when filtered out
+        expect(page).to have_field "product_name", with: p1.name
+        expect(page).to have_no_field "product_name", with: p2.name
+
+        # Clearing filters
+        click_button "Clear Filters"
+        apply_filters
+
+        # All products are shown again
+        expect(page).to have_field "product_name", with: p1.name
+        expect(page).to have_field "product_name", with: p2.name
+      end
+    end
+  end
+
   describe "listing" do
     let!(:p1) { create(:product) }
     let!(:p2) { create(:product) }
