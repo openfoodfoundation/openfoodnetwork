@@ -14,7 +14,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_4nCcxe7bcNQOjp","request_duration_ms":301}}'
+      - '{"last_request_metrics":{"request_id":"req_6vh46X1sMvFzh7","request_duration_ms":323}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -33,7 +33,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 18 Jan 2024 01:13:56 GMT
+      - Thu, 18 Jan 2024 01:29:19 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -58,11 +58,11 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - 4ff21ff7-9bd0-4dd9-9580-2f1907411424
+      - 701a5f89-40e1-4205-8165-9f82759b6a6b
       Original-Request:
-      - req_lDwCPaiDcpo2yT
+      - req_KOYJi1K4Obm63I
       Request-Id:
-      - req_lDwCPaiDcpo2yT
+      - req_KOYJi1K4Obm63I
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -77,7 +77,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "acct_1OZkB44FUH8To5ai",
+          "id": "acct_1OZkPx4Guq1MuAYI",
           "object": "account",
           "business_profile": {
             "mcc": null,
@@ -97,7 +97,7 @@ http_interactions:
             "type": "application"
           },
           "country": "AU",
-          "created": 1705540435,
+          "created": 1705541358,
           "default_currency": "aud",
           "details_submitted": false,
           "email": "jumping.jack@example.com",
@@ -106,7 +106,7 @@ http_interactions:
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/accounts/acct_1OZkB44FUH8To5ai/external_accounts"
+            "url": "/v1/accounts/acct_1OZkPx4Guq1MuAYI/external_accounts"
           },
           "future_requirements": {
             "alternatives": [],
@@ -200,13 +200,13 @@ http_interactions:
           },
           "type": "standard"
         }
-  recorded_at: Thu, 18 Jan 2024 01:13:56 GMT
+  recorded_at: Thu, 18 Jan 2024 01:29:19 GMT
 - request:
     method: post
     uri: https://connect.stripe.com/oauth/deauthorize
     body:
       encoding: UTF-8
-      string: stripe_user_id=acct_1OZkB44FUH8To5ai&client_id=ca_MzG1xs6tZFDztUlak7uFxoUM36G6307W
+      string: stripe_user_id=acct_1OZkPx4Guq1MuAYI&client_id=<HIDDEN-STRIPE_CLIENT_ID>
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.5.0
@@ -215,7 +215,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_lDwCPaiDcpo2yT","request_duration_ms":1966}}'
+      - '{"last_request_metrics":{"request_id":"req_KOYJi1K4Obm63I","request_duration_ms":1722}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -234,7 +234,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 18 Jan 2024 01:13:56 GMT
+      - Thu, 18 Jan 2024 01:29:19 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -256,24 +256,24 @@ http_interactions:
       Referrer-Policy:
       - strict-origin-when-cross-origin
       Request-Id:
-      - req_TcoWmMD8KhmPXv
+      - req_Qzx8KliGB1xBxC
       Set-Cookie:
       - __Host-session=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT;
         secure; SameSite=None
       - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Fdeauthorize%22%7D;
-        domain=stripe.com; path=/; expires=Fri, 17 Jan 2025 01:13:56 GMT; secure;
+        domain=stripe.com; path=/; expires=Fri, 17 Jan 2025 01:29:19 GMT; secure;
         HttpOnly; SameSite=Lax
-      - cid=8e3dea8a-8858-4e1f-ad5f-285adfe9591f; domain=stripe.com; path=/; expires=Wed,
-        17 Apr 2024 01:13:56 GMT; secure; SameSite=Lax
-      - machine_identifier=BRNsDOzRjgmDZH30IEHHjtdFe%2F1BrZhtnBPIj3EEEaoA07JSeKgzPuY2bHtoLqEvPzM%3D;
-        domain=stripe.com; path=/; expires=Fri, 17 Jan 2025 01:13:56 GMT; secure;
+      - cid=26b51708-e414-4f14-a5d3-fad9283a711f; domain=stripe.com; path=/; expires=Wed,
+        17 Apr 2024 01:29:19 GMT; secure; SameSite=Lax
+      - machine_identifier=MmU20ak41E5kQ7Q8zFqPiXtArIXlWyFpxBJSnqeYDHk%2F%2Fj64646dXI%2FfQWQsZHw%2F4r8%3D;
+        domain=stripe.com; path=/; expires=Fri, 17 Jan 2025 01:29:19 GMT; secure;
         HttpOnly; SameSite=Lax
-      - private_machine_identifier=laVx%2FtytzeuovD5lI%2BkcNwmJuLilAXrvE6Q13%2B5%2BGBSCr2H1IAyy15Ef0Ht2%2F1EnZgQ%3D;
-        domain=stripe.com; path=/; expires=Fri, 17 Jan 2025 01:13:56 GMT; secure;
+      - private_machine_identifier=%2FQaEflARYhdGe0qVilmcTPJ3dTKgFjqHaVxzOxT0EB6%2FK9C76%2F1v0P9%2Bt%2FD26HZTzfE%3D;
+        domain=stripe.com; path=/; expires=Fri, 17 Jan 2025 01:29:19 GMT; secure;
         HttpOnly; SameSite=None
       - site-auth=; domain=stripe.com; path=/; max-age=0; expires=Thu, 01 Jan 1970
         00:00:00 GMT; secure
-      - stripe.csrf=fHmcsu3voknTQK_mk6NLaUZYhWB6qZyPWRobfTV6yDe7ZS6pUBHT4Nj5ZbZPpo6zvRLXhITCiaRcvBDiVPtaQTw-AYTZVJxtNT6kzbY5APTPq77w4XWBRqy6xF_AvMjBauxPfYt13Q%3D%3D;
+      - stripe.csrf=u8CxAAXEGJVfFBNcox8MMHXWFEBiMulMxukF7FZ19rQNEX0aMLnV7ICpFDvGgz2CGm9Af26yAS0CzkB8eeZ15jw-AYTZVJwUaRiFa00ThQb73ki441ish0w-pnaJgJ5BnfnIA6i_rQ%3D%3D;
         domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -283,15 +283,15 @@ http_interactions:
       Stripe-Parent-Id:
       - '0000000000000000'
       Stripe-Span-Id:
-      - bf8cc38dccae076e
+      - 30eea7c3772d4858
       X-Apiori-Intentional-Latency:
       - 0s
       X-Apiori-Reqid:
-      - syd1DJgkJmN0xLhUFPjXAPJ
+      - syd1DJgm2HuV7MyP2p9qZ5o
       X-Apiori-Server-Duration-Ms:
-      - '175'
+      - '149'
       X-Apiori-Upstream-Duration:
-      - 175.319575ms
+      - 149.454256ms
       X-Apiori-Upstream-Name:
       - manage-srv
       X-Apiori-Upstream-Region:
@@ -301,28 +301,28 @@ http_interactions:
       X-Envoy-Attempt-Count:
       - '1'
       X-Envoy-Upstream-Service-Time:
-      - '353'
+      - '328'
       X-Robots-Tag:
       - none
       X-Stripe-Bg-Intended-Route-Color:
-      - blue
+      - green
       X-Stripe-C-Cost:
       - '22'
       X-Stripe-Client-Envoy-Start-Time-Us:
-      - '1705540436326630'
+      - '1705541359440913'
       X-Stripe-Rpc-C-Cost-Report:
       - Cg0IFBIJY2VsbF8wMDA3Cg8IAhILZ2xvYmFsX2NlbGw=
       X-Stripe-Server-Envoy-Start-Time-Us:
-      - '1705540436327922'
+      - '1705541359441654'
       X-Stripe-Server-Envoy-Upstream-Service-Time-Ms:
-      - '172'
+      - '147'
       Stripe-Action-Id:
-      - syd1DJgkJmN0xLhUFPjXAPJ
+      - syd1DJgm2HuV7MyP2p9qZ5o
     body:
       encoding: UTF-8
       string: |-
         {
-          "stripe_user_id": "acct_1OZkB44FUH8To5ai"
+          "stripe_user_id": "acct_1OZkPx4Guq1MuAYI"
         }
-  recorded_at: Thu, 18 Jan 2024 01:13:56 GMT
+  recorded_at: Thu, 18 Jan 2024 01:29:19 GMT
 recorded_with: VCR 6.2.0
