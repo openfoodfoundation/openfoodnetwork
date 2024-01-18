@@ -915,6 +915,86 @@ describe '
         expect(page).to have_selector 'td.tax', text: shipping_fee.included_tax_total.to_s
       end
 
+      context "shipping orders" do
+        before do
+          order.finalize! # ensure order has a payment to capture
+          order.payments << create(:check_payment, order:, amount: order.total)
+          order.payments.first.capture!
+          visit spree.edit_admin_order_path(order)
+        end
+
+        it "ships the order and shipment email is sent" do
+          expect(order.reload.shipped?).to be false
+
+          click_button 'Ship'
+
+          within ".reveal-modal" do
+            expect(page).to have_checked_field('Send a shipment/pick up ' \
+                                               'notification email to the customer.')
+            expect {
+              find_button("Confirm").click
+            }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
+          end
+
+          expect(order.reload.shipped?).to be true
+          expect(page).to have_text 'SHIPPED'
+        end
+
+        it "ships the order without sending email" do
+          expect(order.reload.shipped?).to be false
+
+          click_button 'Ship'
+
+          within ".reveal-modal" do
+            uncheck 'Send a shipment/pick up notification email to the customer.'
+            expect {
+              find_button("Confirm").click
+            }.to_not enqueue_job(ActionMailer::MailDeliveryJob)
+          end
+
+          save_screenshot('~/hello.png')
+          expect(order.reload.shipped?).to be true
+          expect(page).to have_text 'SHIPPED'
+        end
+
+        context "ship order from dropdown" do
+          it "ships the order and sends email" do
+            expect(order.reload.shipped?).to be false
+
+            find('.ofn-drop-down').click
+            click_link 'Ship Order'
+
+            within ".reveal-modal" do
+              expect(page).to have_checked_field('Send a shipment/pick up ' \
+                                                 'notification email to the customer.')
+              expect {
+                find_button("Confirm").click
+              }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
+            end
+
+            expect(order.reload.shipped?).to be true
+            expect(page).to have_text 'SHIPPED'
+          end
+
+          it "ships the order without sending email" do
+            expect(order.reload.shipped?).to be false
+
+            find('.ofn-drop-down').click
+            click_link 'Ship Order'
+
+            within ".reveal-modal" do
+              uncheck 'Send a shipment/pick up notification email to the customer.'
+              expect {
+                find_button("Confirm").click
+              }.to_not enqueue_job(ActionMailer::MailDeliveryJob)
+            end
+
+            expect(order.reload.shipped?).to be true
+            expect(page).to have_text 'SHIPPED'
+          end
+        end
+      end
+
       context "when an included variant has been deleted" do
         let!(:deleted_variant) do
           order.line_items.first.variant.tap(&:delete)

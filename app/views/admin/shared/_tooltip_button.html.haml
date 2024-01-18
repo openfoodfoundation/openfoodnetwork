@@ -1,5 +1,8 @@
 %div{ "data-controller": "tooltip" }
-  %button{class: button_class, "data-reflex": button_reflex, "data-id": reflex_data_id, "data-tooltip-target": "element" }
+  - if local_assigns[:shipment]
+    %button{class: button_class,"data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "ship_order_#{reflex_data_id}", "data-id": reflex_data_id, "data-tooltip-target": "element" }
+  - else
+    %button{class: button_class, "data-reflex": button_reflex, "data-id": reflex_data_id, "data-tooltip-target": "element" }
   .tooltip-container
     .tooltip{"data-tooltip-target": "tooltip"}
       = sanitize tooltip_text

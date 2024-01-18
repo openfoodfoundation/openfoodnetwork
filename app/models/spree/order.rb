@@ -27,7 +27,9 @@ module Spree
       go_to_state :complete
     end
 
-    attr_accessor :use_billing, :checkout_processing, :save_bill_address, :save_ship_address
+    attr_accessor :use_billing, :checkout_processing, :save_bill_address,
+                  :save_ship_address
+    attr_writer :send_shipment_email
 
     token_resource
 
@@ -614,6 +616,12 @@ module Spree
 
     def after_delivery_state?
       state.in?(["payment", "confirmation"])
+    end
+
+    def send_shipment_email
+      return true if @send_shipment_email.nil?
+
+      @send_shipment_email
     end
 
     private

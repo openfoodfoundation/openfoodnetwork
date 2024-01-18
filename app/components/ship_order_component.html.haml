@@ -1,0 +1,8 @@
+= render ConfirmModalComponent.new(id: dom_id(@order, :ship), confirm_reflexes: "click->Admin::OrdersReflex#ship", controller: "orders", reflex: "Admin::Orders#ship") do
+  %div{class: "margin-bottom-30"}
+    %p= t('spree.admin.orders.shipment.mark_as_shipped_message_html')
+  %div{class: "margin-bottom-30"}
+    = hidden_field_tag :id, @order.id
+    = label_tag do
+      = check_box_tag :send_shipment_email, "1", true
+      = t('spree.admin.orders.shipment.mark_as_shipped_label_message')

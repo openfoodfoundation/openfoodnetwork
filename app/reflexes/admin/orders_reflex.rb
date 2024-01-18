@@ -8,8 +8,10 @@ module Admin
       payment_capture = OrderCaptureService.new(@order)
 
       if payment_capture.call
-        morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
-                                     locals: { order: @order.reload, success: true })
+        cable_ready.replace(selector: dom_id(@order),
+                            html: render(partial: "spree/admin/orders/table_row",
+                                         locals: { order: @order.reload, success: true }))
+        morph :nothing
       else
         flash[:error] = payment_capture.gateway_error || I18n.t(:payment_processing_failed)
         morph_admin_flashes
@@ -17,7 +19,10 @@ module Admin
     end
 
     def ship
+      @order.send_shipment_email = false unless params[:send_shipment_email]
       if @order.ship
+        return set_param_for_controller if request.url.match?('edit')
+
         morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
                                      locals: { order: @order.reload, success: true })
       else
@@ -83,7 +88,8 @@ module Admin
     private
 
     def authorize_order
-      @order = Spree::Order.find_by(id: element.dataset[:id])
+      id = element.dataset[:id] || params[:id]
+      @order = Spree::Order.find_by(id:)
       authorize! :admin, @order
     end
 
@@ -95,6 +101,10 @@ module Admin
 
     def editable_orders
       Permissions::Order.new(current_user).editable_orders
+    end
+
+    def set_param_for_controller
+      params[:id] = @order.number
     end
   end
 end
