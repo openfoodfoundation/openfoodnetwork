@@ -275,7 +275,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
-        expect(page).to have_content "1 products found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
       end
 
@@ -294,7 +294,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
-        expect(page).to have_content "1 products found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
       end
 
@@ -307,7 +307,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         search_for "Big box"
 
         expect(page).to have_field "search_term", with: "Big box"
-        expect(page).to have_content "1 products found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
       end
 
@@ -324,7 +324,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         expect_per_page_to_be 15
         expect_products_count_to_be 1
         search_for "searchable product"
-        expect(page).to have_content "1 products found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
       end
 
@@ -334,7 +334,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
-        expect(page).to have_content "1 products found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_name.name
 
@@ -402,7 +402,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
         search_by_category "Category 1"
 
-        expect(page).to have_content "1 products found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect(page).to have_select "category_id", selected: "Category 1"
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_category.name
