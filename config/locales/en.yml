@@ -395,9 +395,9 @@ en:
       intro_html: "A payment for order <strong>%{order_number}</strong> at <strong>%{distributor}</strong> requires additional authorization from the customer."
       instructions: "The customer has been notified via email and the payment will appear as pending until it is authorized."
   producer_mailer:
-    order_cycle:
+    order_cycle_report:
       subject: "Order cycle report for %{producer}"
-  provider_settings: "Provider settings"
+      intro_html: "An order cycle report is ready for <strong>%{producer}</strong>."
   report_mailer:
     report_ready:
       subject: "Report ready"
@@ -447,6 +447,8 @@ en:
       other:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
+
+  provider_settings: "Provider settings"
 
   home: "OFN"
   title: "Open Food Network"
@@ -2478,7 +2480,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
 
-  producer_mail_greeting: "Dear"
   producer_mail_text_before: "Please find below an update about the order cycle ready for:"
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"

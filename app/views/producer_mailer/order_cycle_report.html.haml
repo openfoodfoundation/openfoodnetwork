@@ -1,6 +1,14 @@
-%p
-  = t :producer_mail_greeting
-  #{" " + @producer.name},
+- if @coordinator.logo.variable?
+  - @enterprise_for_logo = @coordinator
+
+- greeting_key = "mailers_shared.enterprise_greeting"
+- intro_key = ".intro_html"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key, name: @producer.contact_name),
+                   intro: t(intro_key, producer: @producer.name),
+                   enterprise_for_logo: @enterprise_for_logo }
+
 %p
   = t :producer_mail_text_before
   %ul
