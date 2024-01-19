@@ -369,6 +369,7 @@ en:
 #
   mailers_shared:
     customer_greeting: "Dear %{name},"
+    enterprise_greeting: "Dear %{name},"
     general_greeting: "Hello!"
   enterprise_mailer:
     confirmation_instructions:
@@ -386,6 +387,13 @@ en:
     manager_invitation:
       subject: "%{enterprise} has invited you to be a manager"
       invited_to_manage_html: "You have been invited to manage <strong>%{enterprise}</strong> on %{instance}."
+  payment_mailer:
+    authorize_payment:
+      intro_html: "Your payment of <strong>%{amount}</strong> to <strong>%{distributor}</strong> requires additional authentication."
+      instructions: "Please visit the following URL to authorize your payment:"
+    authorization_required:
+      intro_html: "A payment for order <strong>%{order_number}</strong> at <strong>%{distributor}</strong> requires additional authorization from the customer."
+      instructions: "The customer has been notified via email and the payment will appear as pending until it is authorized."
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
@@ -4717,10 +4725,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     payment_mailer:
       authorize_payment:
         subject: "Please authorize your payment to %{distributor} on OFN"
-        instructions: "Your payment of %{amount} to %{distributor} requires additional authentication. Please visit the following URL to authorize your payment:"
       authorization_required:
         subject: "A payment requires authorization from the customer"
-        message: "A payment for order %{order_number} requires additional authorization from the customer. The customer has been notified via email and the payment will appear as pending until it is authorized."
     shipment_mailer:
       shipped_email:
         shipment_summary: "Shipment Summary"

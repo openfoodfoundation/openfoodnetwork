@@ -1,2 +1,15 @@
-= t('spree.payment_mailer.authorization_required.message', order_number: @payment.order.number)
-= link_to spree.edit_admin_order_url(@payment.order), spree.edit_admin_order_url(@payment.order)
+- if @payment.order.distributor.logo.variable?
+  - @enterprise_for_logo = @payment.order.distributor
+
+- greeting_key = "mailers_shared.enterprise_greeting"
+- intro_key = ".intro_html"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key, name: @payment.order.distributor.contact_name),
+                   intro: t(intro_key, order_number: @payment.order.number, distributor: @payment.order.distributor.name),
+                   enterprise_for_logo: @enterprise_for_logo }
+
+%p
+  = t(".instructions")
+%p
+  = link_to spree.edit_admin_order_url(@payment.order), spree.edit_admin_order_url(@payment.order)
