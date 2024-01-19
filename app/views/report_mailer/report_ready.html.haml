@@ -1,5 +1,9 @@
-%h3= t(".heading")
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t("mailers_shared.general_greeting"),
+                   intro: t(".intro"),
+                   enterprise_for_logo: nil }
+
 %p
-  = t(".intro")
+  = t(".message")
 %ul
   %li= link_to(t(".link_label", name: @blob.filename), @blob.expiring_service_url)
