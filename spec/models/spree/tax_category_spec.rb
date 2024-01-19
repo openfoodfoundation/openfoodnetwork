@@ -5,6 +5,7 @@ require 'spec_helper'
 describe Spree::TaxCategory do
   describe "associations" do
     it { is_expected.to have_many(:tax_rates).dependent(:destroy) }
+    it { is_expected.to have_many(:variants).dependent(:restrict_with_error) }
   end
 
   context 'default tax category' do
