@@ -3,6 +3,10 @@
 require 'spec_helper'
 
 describe Spree::TaxCategory do
+  describe "associations" do
+    it { is_expected.to have_many(:tax_rates).dependent(:destroy) }
+  end
+
   context 'default tax category' do
     let(:tax_category) { create(:tax_category) }
     let(:new_tax_category) { create(:tax_category) }
