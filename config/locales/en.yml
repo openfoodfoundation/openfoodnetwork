@@ -491,6 +491,7 @@ en:
     order_cycle:
       subject: "Order cycle report for %{producer}"
     order_cycle_report:
+      intro_html: "An order cycle report is ready for <strong>%{producer}</strong>."
       order_number: "Order Number"
   provider_settings: "Provider settings"
   report_mailer:
@@ -2680,7 +2681,6 @@ en:
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
 
-  producer_mail_greeting: "Dear"
   producer_mail_text_before: "Please find below an update about the order cycle ready for:"
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
