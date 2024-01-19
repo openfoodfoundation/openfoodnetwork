@@ -1,9 +1,9 @@
-%h3
-  = "#{t(".email_welcome")}!"
-%p.lead
-  %strong
-    = @enterprise.name
-  = "#{t(".email_registered")} #{ Spree::Config.site_name }!"
+- greeting_key = ".greeting"
+- intro_key = ".registered"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key),
+                   intro: t(intro_key, enterprise: @enterprise.name, sitename: Spree::Config.site_name) }
 
 %p
   = t(".email_userguide_html", link: link_to(t(".userguide"), ContentConfig.user_guide_link))

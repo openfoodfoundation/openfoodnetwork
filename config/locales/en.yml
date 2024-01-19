@@ -375,16 +375,17 @@ en:
       subject: "Please confirm the email address for %{enterprise}"
     welcome:
       subject: "%{enterprise} is now on %{sitename}"
-      email_welcome: "Welcome"
-      email_registered: "is now part of"
       email_userguide_html: "The User Guide with detailed support for setting up your Producer or Hub is here: %{link}"
+      greeting: "Welcome!"
+      registered: "%{enterprise} is now part of %{sitename}!"
       userguide: "Open Food Network User Guide"
       email_admin_html: "You can manage your account by logging into the %{link} or by clicking on the cog in the top right hand side of the homepage, and selecting Administration."
       admin_panel: "Admin Panel"
       email_community_html: "We also have an online forum for community discussion related to OFN software and the unique challenges of running a food enterprise. You are encouraged to join in. We are constantly evolving and your input into this forum will shape what happens next. %{link}"
       join_community: "Join the community"
-    invite_manager:
+    manager_invitation:
       subject: "%{enterprise} has invited you to be a manager"
+      invited_to_manage_html: "You have been invited to manage <strong>%{enterprise}</strong> on %{instance}."
   producer_mailer:
     order_cycle:
       subject: "Order cycle report for %{producer}"
@@ -2465,8 +2466,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_signup_help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
 
   invite_email:
-    greeting: "Hello!"
-    invited_to_manage: "You have been invited to manage %{enterprise} on %{instance}."
     confirm_your_email: "You should have received or will soon receive an email with a confirmation link. You won’t be able to access %{enterprise}'s profile until you have confirmed your email."
     set_a_password: "You will then be prompted to set a password before you are able to administer the enterprise."
     mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
