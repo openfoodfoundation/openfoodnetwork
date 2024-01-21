@@ -412,14 +412,17 @@ en:
       track_information: "Tracking Information: %{tracking}"
       track_link: "Tracking Link: %{url}"
   subscription_mailer:
+    placement_email:
+      intro_html: "You have a new order with <strong>%{distributor}</strong>."
     placement_summary_email:
       subject: A summary of recently placed subscription orders
-      greeting: "Hi %{name},"
-      intro: "Below is a summary of the subscription orders that have just been placed for %{shop}."
+      intro_html: "Below is a summary of the subscription orders that have just been placed for <strong>%{shop}</strong>."
+    confirmation_email:
+      payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
+      confirmation_intro_html: "Your order with <strong>%{distributor}</strong> is now confirmed."
     confirmation_summary_email:
       subject: A summary of recently confirmed subscription orders
-      greeting: "Hi %{name},"
-      intro: "Below is a summary of the subscription orders that have just been finalised for %{shop}."
+      intro_html: "Below is a summary of the subscription orders that have just been finalised for <strong>%{shop}</strong>."
     summary_overview:
       total: A total of %{count} subscriptions were marked for automatic processing.
       success_zero: Of these, none were processed successfully.
@@ -446,6 +449,10 @@ en:
       other:
         title: Other Failure (%{count} orders)
         explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
+    empty_email:
+      intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
+    failed_payment_email:
+      intro_html: "We tried to process a payment for <strong>%{distributor}</strong>, but had some problems..."
 
   provider_settings: "Provider settings"
 
@@ -2441,22 +2448,17 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_payment_description: Payment Description at Checkout
   email_payment_summary: Payment summary
   email_payment_method: "Paying via:"
-  email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
-  email_so_payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
   email_so_placement_explainer_html: "This order was automatically created for you."
   email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
   email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
   email_so_contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via %{email}."
   email_so_contact_distributor_to_change_order_html: "This order was automatically created for you. You can make changes until orders close on %{orders_close_at} by contacting <strong>%{distributor}</strong> via %{email}."
-  email_so_confirmation_intro_html: "Your order with <strong>%{distributor}</strong> is now confirmed"
   email_so_confirmation_explainer_html: "This order was automatically placed for you, and it has now been finalised."
   email_so_confirmation_details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
-  email_so_empty_intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
   email_so_empty_explainer_html: "Unfortunately, none of products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
   email_so_empty_details_html: "Here are the details of the unplaced order for <strong>%{distributor}</strong>:"
-  email_so_failed_payment_intro_html: "We tried to process a payment, but had some problems..."
   email_so_failed_payment_explainer_html: "The payment for your subscription with <strong>%{distributor}</strong> failed because of a problem with your credit card. <strong>%{distributor}</strong> has been notified of this failed payment."
   email_so_failed_payment_details_html: "Here are the details of the failure provided by the payment gateway:"
   email_shipping_delivery_details: Delivery details

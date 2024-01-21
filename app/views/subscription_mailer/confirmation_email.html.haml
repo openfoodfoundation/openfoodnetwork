@@ -1,5 +1,13 @@
-- intro_key = @order.paid? ? "email_so_payment_success_intro_html" : "email_so_confirmation_intro_html"
-= render 'header', intro: t(intro_key, distributor: @order.distributor.name)
+- if @order.distributor.logo.variable?
+  - @enterprise_for_logo = @order.distributor
+
+- greeting_key = "mailers_shared.customer_greeting"
+- intro_key = @order.paid? ? ".payment_success_intro_html" : ".confirmation_intro_html"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key, name: @order.bill_address.firstname),
+                   intro: t(intro_key, distributor: @order.distributor.name),
+                   enterprise_for_logo: @enterprise_for_logo }
 
 %p.callout
   = t("email_so_confirmation_explainer_html")

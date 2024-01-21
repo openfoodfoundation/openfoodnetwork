@@ -1,19 +1,13 @@
-%table.social.white-bg{:width => "100%"}
-  %tr
-    %td
-      %table.column{:align => "left"}
-        %tr
-          %td
-            %h3
-              = t(".greeting", name: @shop.contact_name)
-            %h4
-              = t(".intro", shop: @shop.name)
-      %table.column{:align => "left"}
-        %tr
-          %td{:align => "right"}
-            - if @shop.logo.variable?
-              = image_tag @shop.logo_url(:medium), class: "float-right"
-      %span.clear
+- if @shop.logo.variable?
+  - @enterprise_for_logo = @shop
+
+- greeting_key = "mailers_shared.enterprise_greeting"
+- intro_key = ".intro_html"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key, name: @shop.contact_name),
+                   intro: t(intro_key, shop: @shop.name),
+                   enterprise_for_logo: @enterprise_for_logo }
 
 = render 'summary_overview', summary: @summary
 = render 'summary_detail', summary: @summary

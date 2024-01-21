@@ -201,7 +201,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
 
     it "sends the email" do
       body = strip_tags(SubscriptionMailer.deliveries.last.body.encoded)
-      expect(body).to include 'We tried to process a payment, but had some problems...'
+      expect(body).to include 'We tried to process a payment for '
       email_so_failed_payment_explainer_html = "The payment for your subscription with <strong>%s" \
                                                "</strong> failed because of a problem with your " \
                                                "credit card. <strong>%s</strong> has been " \
