@@ -1,0 +1,16 @@
+%p
+  = t('.signoff')
+  %em
+    %p
+      = @coordinator.name
+    %p
+      %br
+        = @coordinator.address.address1
+      %br
+        = @coordinator.address.city
+      %br
+        = @coordinator.address.zipcode
+    %p
+      = @coordinator.phone
+    %p
+      = @coordinator.contact.email

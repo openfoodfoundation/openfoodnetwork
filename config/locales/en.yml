@@ -371,6 +371,7 @@ en:
     customer_greeting: "Dear %{name},"
     enterprise_greeting: "Dear %{name},"
     general_greeting: "Hello!"
+    order_confirmation_html: "Order confirmation <strong>#%{number}</strong>"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -412,6 +413,10 @@ en:
       track_information: "Tracking Information: %{tracking}"
       track_link: "Tracking Link: %{url}"
   subscription_mailer:
+    shared:
+      edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
+      edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
+      contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via %{email}."
     placement_email:
       intro_html: "You have a new order with <strong>%{distributor}</strong>."
     placement_summary_email:
@@ -453,6 +458,18 @@ en:
       intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
     failed_payment_email:
       intro_html: "We tried to process a payment for <strong>%{distributor}</strong>, but had some problems..."
+  shared:
+    mailers:
+      signoff_distributor:
+        signoff: "Kind regards,"
+      signoff_enterprise:
+        signoff: "Thanks and best wishes,"
+      signoff_instance:
+        signoff: "Cheers,"
+        signature: "%{sitename} Team"
+      social_and_contact:
+        social: "Connect with Us:"
+        contact: "Email us:"
 
   provider_settings: "Provider settings"
 
@@ -2427,15 +2444,8 @@ To activate your Profile we need to confirm this email address."
   email_confirmation_help_html: "After confirming your email you can access your administration account for this enterprise.
 See the %{link} to find out more about %{sitename}'s features and to start using your profile or online store."
   email_confirmation_notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
-  email_social: "Connect with Us:"
-  email_contact: "Email us:"
-  email_signoff: "Cheers,"
-  email_signature: "%{sitename} Team"
 
-  email_confirm_customer_number_html: "Order confirmation <strong>#%{number}</strong>"
   email_confirm_customer_details_html: "Here are your order details from <strong>%{distributor}</strong>:"
-  email_confirm_customer_signoff: "Kind regards,"
-  email_confirm_shop_number_html: "Order confirmation <strong>#%{number}</strong>"
   email_order_summary_item: "Item"
   email_order_summary_quantity: "Qty"
   email_order_summary_sku: "SKU"
@@ -2443,17 +2453,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(includes tax):"
-  email_payment_paid: PAID
-  email_payment_not_paid: NOT PAID
-  email_payment_description: Payment Description at Checkout
-  email_payment_summary: Payment summary
   email_payment_method: "Paying via:"
   email_so_placement_details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
   email_so_placement_explainer_html: "This order was automatically created for you."
-  email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
-  email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
-  email_so_contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via %{email}."
   email_so_contact_distributor_to_change_order_html: "This order was automatically created for you. You can make changes until orders close on %{orders_close_at} by contacting <strong>%{distributor}</strong> via %{email}."
   email_so_confirmation_explainer_html: "This order was automatically placed for you, and it has now been finalised."
   email_so_confirmation_details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
@@ -2485,7 +2488,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   producer_mail_order_text: "Here is a summary of the orders for your products:"
   producer_mail_delivery_instructions: "Stock pickup/delivery instructions:"
   producer_mail_text_after: ""
-  producer_mail_signoff: "Thanks and best wishes"
   producer_mail_order_customer_text: "Here is a summary of the orders grouped by customers"
 
   shopping_oc_closed: Orders are closed
@@ -4201,6 +4203,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       update: "Update"
       cancel: "Cancel"
     shared:
+      payment:
+        email_paid: "PAID"
+        email_not_paid: "NOT PAID"
+        email_summary: "Payment summary"
+        email_description: "Payment Description at Checkout"
       error_messages:
         errors_prohibited_this_record_from_being_saved:
           one: "1 error prohibited this record from being saved:"

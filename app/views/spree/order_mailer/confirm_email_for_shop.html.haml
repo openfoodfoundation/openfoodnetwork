@@ -10,7 +10,7 @@
                    enterprise_for_logo: @enterprise_for_logo }
 
 %h4
-  = t :email_confirm_shop_number_html, number: @order.number
+  = t('mailers_shared.order_confirmation_html', number: @order.number)
 %h5
   %strong= "#{@order.bill_address.firstname} #{@order.bill_address.lastname}"
   = " <#{@order.email}>" if @order.email
@@ -22,5 +22,5 @@
 = render 'special_instructions'
 
 %p &nbsp;
-= render 'shared/mailers/signoff'
+= render 'shared/mailers/signoff_instance'
 = render 'shared/mailers/social_and_contact'

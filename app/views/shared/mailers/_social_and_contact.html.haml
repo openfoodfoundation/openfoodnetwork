@@ -6,7 +6,7 @@
         %tr
           %td
             %h5
-              = t :email_social
+              = t('.social')
             %p.social-icons
               - if ContentConfig.footer_facebook_url.present?
                 %a.soc-btn.fb{href: ContentConfig.footer_facebook_url}
@@ -25,7 +25,7 @@
           %td
             - if ContentConfig.footer_email.present?
               %h5
-                = t :email_contact
+                = t('.contact')
               %strong
                 = mail_to ContentConfig.footer_email
       %span.clear

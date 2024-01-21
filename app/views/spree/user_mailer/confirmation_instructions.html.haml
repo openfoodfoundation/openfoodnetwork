@@ -13,7 +13,7 @@
   %strong
     = link_to t(:email_confirmation_link_label), spree.spree_user_confirmation_url(:confirmation_token => @user.confirmation_token)
 
-= render 'shared/mailers/signoff'
+= render 'shared/mailers/signoff_instance'
 
 %p.notice
   = t :email_confirmation_notice_unexpected, sitename: @instance, contact: @contact

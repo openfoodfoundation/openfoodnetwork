@@ -12,19 +12,19 @@
 %p.callout
   = t("email_so_failed_payment_explainer_html", distributor: @order.distributor.name)
   - if @order.user.present?
-    = t("email_so_edit_false_html",
+    = t("subscription_mailer.shared.edit_false_html",
       orders_close_at: l(@order.order_cycle.orders_close_at, format: mail_long_datetime_format),
       order_url: order_url(@order))
-  = t("email_so_contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.contact.email)
+  = t("subscription_mailer.shared.contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.contact.email)
 
 - if @order.errors.any?
   %p &nbsp;
   %h4
-    = t :email_confirm_customer_number_html, number: @order.number
+    = t("mailers_shared.order_confirmation_html", number: @order.number)
   %p
     = t("email_so_failed_payment_details_html", distributor: @order.distributor.name)
     - @order.errors.full_messages.each do |message|
       = message
       %br
 
-= render 'spree/order_mailer/signoff'
+= render 'shared/mailers/signoff_distributor'

@@ -10,7 +10,7 @@
                    enterprise_for_logo: @enterprise_for_logo }
 
 %h4
-  = t :email_confirm_customer_number_html, number: @order.number
+  = t('mailers_shared.order_confirmation_html', number: @order.number)
 %p
   = t :email_confirm_customer_details_html, distributor: @order.distributor.name
 
@@ -18,4 +18,4 @@
 = render 'spree/shared/payment'
 = render 'shipping'
 = render 'special_instructions'
-= render 'signoff'
+= render 'shared/mailers/signoff_distributor'
