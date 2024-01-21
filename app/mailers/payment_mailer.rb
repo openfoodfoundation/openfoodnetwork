@@ -6,6 +6,7 @@ class PaymentMailer < ApplicationMailer
 
   def authorize_payment(payment)
     @payment = payment
+    @order = @payment.order
     @hide_ofn_navigation = @payment.order.distributor.hide_ofn_navigation
     subject = I18n.t('spree.payment_mailer.authorize_payment.subject',
                      distributor: @payment.order.distributor.name)
@@ -16,6 +17,7 @@ class PaymentMailer < ApplicationMailer
 
   def authorization_required(payment)
     @payment = payment
+    @order = @payment.order
     shop_owner = @payment.order.distributor.owner
     subject = I18n.t('spree.payment_mailer.authorization_required.subject',
                      order: @payment.order)

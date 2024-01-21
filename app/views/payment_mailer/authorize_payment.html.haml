@@ -12,3 +12,5 @@
 %p
   = t(".instructions")
   = link_to main_app.authorize_payment_url(@payment), main_app.authorize_payment_url(@payment)
+
+= render 'shared/mailers/signoff_distributor'

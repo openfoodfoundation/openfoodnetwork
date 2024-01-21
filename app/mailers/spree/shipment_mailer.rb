@@ -6,6 +6,7 @@ module Spree
 
     def shipped_email(shipment, delivery:)
       @shipment = shipment.respond_to?(:id) ? shipment : Spree::Shipment.find(shipment)
+      @order = @shipment.order
       @hide_ofn_navigation = @shipment.order.distributor.hide_ofn_navigation
       @delivery = delivery
       subject = base_subject
