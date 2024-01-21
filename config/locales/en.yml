@@ -437,7 +437,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
       changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
     placement_summary_email:
-      subject: A summary of recently placed subscription orders
+      subject: "A summary of recently placed subscription orders"
       intro_html: "Below is a summary of the subscription orders that have just been placed for <strong>%{shop}</strong>."
     confirmation_email:
       payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
@@ -445,34 +445,34 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       explainer_html: "This order was automatically placed for you, and it has now been finalised."
       details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
     confirmation_summary_email:
-      subject: A summary of recently confirmed subscription orders
+      subject: "A summary of recently confirmed subscription orders"
       intro_html: "Below is a summary of the subscription orders that have just been finalised for <strong>%{shop}</strong>."
     summary_overview:
-      total: A total of %{count} subscriptions were marked for automatic processing.
-      success_zero: Of these, none were processed successfully.
-      success_some: Of these, %{count} were processed successfully.
-      success_all: All were processed successfully.
-      issues: Details of the issues encountered are provided below.
+      total: "A total of %{count} subscriptions were marked for automatic processing."
+      success_zero: "Of these, none were processed successfully."
+      success_some: "Of these, %{count} were processed successfully."
+      success_all: "All were processed successfully."
+      issues: "Details of the issues encountered are provided below."
     summary_detail:
-      no_message_provided: No error message provided
+      no_message_provided: "No error message provided"
       changes:
-        title: Insufficient Stock (%{count} orders)
-        explainer: These orders were processed but insufficient stock was available for some requested items
+        title: "Insufficient Stock (%{count} orders)"
+        explainer: "These orders were processed but insufficient stock was available for some requested items"
       empty:
-        title: No Stock (%{count} orders)
-        explainer: These orders were unable to be processed because no stock was available for any requested items
+        title: "No Stock (%{count} orders)"
+        explainer: "These orders were unable to be processed because no stock was available for any requested items"
       complete:
-        title: Already Processed (%{count} orders)
-        explainer: These orders were already marked as complete, and were therefore left untouched
+        title: "Already Processed (%{count} orders)"
+        explainer: "These orders were already marked as complete, and were therefore left untouched"
       processing:
-        title: Error Encountered (%{count} orders)
-        explainer: Automatic processing of these orders failed due to an error. The error has been listed where possible.
+        title: "Error Encountered (%{count} orders)"
+        explainer: "Automatic processing of these orders failed due to an error. The error has been listed where possible."
       failed_payment:
-        title: Failed Payment (%{count} orders)
-        explainer: Automatic processing of payment for these orders failed due to an error. The error has been listed where possible.
+        title: "Failed Payment (%{count} orders)"
+        explainer: "Automatic processing of payment for these orders failed due to an error. The error has been listed where possible."
       other:
-        title: Other Failure (%{count} orders)
-        explainer: Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this.
+        title: "Other Failure (%{count} orders)"
+        explainer: "Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this."
     empty_email:
       intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
       explainer_html: "Unfortunately, none of products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
