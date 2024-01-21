@@ -13,6 +13,8 @@
   = t('invite_email.confirm_your_email', enterprise: @enterprise.name)
 %p
   = t('invite_email.mistakenly_sent', owner_email: @enterprise.owner.email)
+%p
+  = t('.set_a_password')
 
 = render 'shared/mailers/signoff_instance'
 
