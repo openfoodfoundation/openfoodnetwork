@@ -5,15 +5,16 @@
          locals: { greeting: t(greeting_key),
                    intro: t(intro_key, sitename: @instance) }
 
-%p= t :email_confirmation_activate_account
+%p
+  = t('.activate_account')
 
 %p.callout
-  = t :email_confirmation_click_link
+  = t('.click_link')
   %br
   %strong
-    = link_to t(:email_confirmation_link_label), spree.spree_user_confirmation_url(:confirmation_token => @user.confirmation_token)
+    = link_to t('.link_label'), spree.spree_user_confirmation_url(:confirmation_token => @user.confirmation_token)
 
 = render 'shared/mailers/signoff_instance'
 
 %p.notice
-  = t :email_confirmation_notice_unexpected, sitename: @instance, contact: @contact
+  = t('.notice_unexpected', sitename: @instance, contact: @contact)

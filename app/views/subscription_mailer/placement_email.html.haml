@@ -10,7 +10,7 @@
                    enterprise_for_logo: @enterprise_for_logo }
 
 %p.callout
-  = t("email_so_placement_explainer_html")
+  = t(".explainer_html")
 
   - if @order.user.present?
     - allow_changes = !!@order.distributor.allow_order_changes?
@@ -19,7 +19,7 @@
       order_url: order_url(@order))
     = t("subscription_mailer.shared.contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.contact.email)
   - else
-    = t("email_so_contact_distributor_to_change_order_html",
+    = t(".contact_distributor_to_change_order_html",
       orders_close_at: l(@order.order_cycle.orders_close_at, format: mail_long_datetime_format),
       distributor: @order.distributor.name,
       email: @order.distributor.contact.email)
@@ -28,11 +28,11 @@
 %h4
   = t("mailers_shared.order_confirmation_html", number: @order.number)
 %p
-  = t("email_so_placement_details_html", distributor: @order.distributor.name)
+  = t(".details_html", distributor: @order.distributor.name)
 
 - if @changes.any?
   %p.callout
-    = t("email_so_placement_changes")
+    = t(".changes")
 
 = render 'spree/order_mailer/order_summary'
 

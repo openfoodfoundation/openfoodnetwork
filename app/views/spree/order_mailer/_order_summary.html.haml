@@ -3,16 +3,16 @@
     %tr
       %th{align: "left"}
         %h4
-          = t :email_order_summary_item
+          = t('.item')
       %th{align: "left"}
         %h4
-          = t :email_order_summary_sku
+          = t('.sku')
       %th{align: "right"}
         %h4
-          = t :email_order_summary_quantity
+          = t('.quantity')
       %th{align: "right", width: "25%"}
         %h4
-          = t :email_order_summary_price
+          = t('.price')
   %tbody
     - @order.line_items.sorted_by_name_and_unit_value.each do |item|
       %tr
@@ -37,7 +37,7 @@
   %tfoot
     %tr
       %td{align: "right", colspan: "3"}
-        = t :email_order_summary_subtotal
+        = t('.subtotal')
       %td{align: "right"}
         = display_checkout_subtotal(@order)
     - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
@@ -49,14 +49,14 @@
     %tr
       %td{align: "right", colspan: "3"}
         %strong
-          = t :email_order_summary_total
+          = t('.total')
       %td{align: "right"}
         %strong= @order.display_total
 
     - if @order.total_tax > 0
       %tr
         %td{align: "right", colspan: "3"}
-          = t :email_order_summary_includes_tax
+          = t('.includes_tax')
         %td{align: "right"}
           = display_checkout_tax_total(@order)
 %p &nbsp;

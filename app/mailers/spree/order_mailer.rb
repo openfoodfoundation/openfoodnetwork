@@ -31,7 +31,7 @@ module Spree
       @order = find_order(order_or_order_id)
       @hide_ofn_navigation = @order.distributor.hide_ofn_navigation
       I18n.with_locale valid_locale(@order.user) do
-        subject = mail_subject(t('spree.order_mailer.confirm_email.subject'), resend)
+        subject = mail_subject(t('spree.order_mailer.confirm_email_for_customer.subject'), resend)
         mail(to: @order.email,
              subject:,
              reply_to: @order.distributor.contact.email)
@@ -41,7 +41,7 @@ module Spree
     def confirm_email_for_shop(order_or_order_id, resend = false)
       @order = find_order(order_or_order_id)
       I18n.with_locale valid_locale(@order.user) do
-        subject = mail_subject(t('spree.order_mailer.confirm_email.subject'), resend)
+        subject = mail_subject(t('spree.order_mailer.confirm_email_for_shop.subject'), resend)
         mail(to: @order.distributor.contact.email,
              subject:)
       end

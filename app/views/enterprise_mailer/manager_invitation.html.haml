@@ -10,11 +10,11 @@
                    enterprise_for_logo: @enterprise_for_logo }
 
 %p
-  = t('invite_email.confirm_your_email', enterprise: @enterprise.name)
-%p
-  = t('invite_email.mistakenly_sent', owner_email: @enterprise.owner.email)
+  = t('.confirm_your_email_html', enterprise: @enterprise.name)
 %p
   = t('.set_a_password')
+%p
+  = t('.mistakenly_sent', owner_email: @enterprise.owner.email)
 
 = render 'shared/mailers/signoff_instance'
 

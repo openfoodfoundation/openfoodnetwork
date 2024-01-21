@@ -10,7 +10,7 @@
                    enterprise_for_logo: @enterprise_for_logo }
 
 %p.callout
-  = t("email_so_failed_payment_explainer_html", distributor: @order.distributor.name)
+  = t(".explainer_html", distributor: @order.distributor.name)
   - if @order.user.present?
     = t("subscription_mailer.shared.edit_false_html",
       orders_close_at: l(@order.order_cycle.orders_close_at, format: mail_long_datetime_format),
@@ -22,7 +22,7 @@
   %h4
     = t("mailers_shared.order_confirmation_html", number: @order.number)
   %p
-    = t("email_so_failed_payment_details_html", distributor: @order.distributor.name)
+    = t(".details_html", distributor: @order.distributor.name)
     - @order.errors.full_messages.each do |message|
       = message
       %br

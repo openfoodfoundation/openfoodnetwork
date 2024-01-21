@@ -12,7 +12,7 @@
 %h4
   = t('mailers_shared.order_confirmation_html', number: @order.number)
 %p
-  = t :email_confirm_customer_details_html, distributor: @order.distributor.name
+  = t('.details_html', distributor: @order.distributor.name)
 
 = render 'order_summary'
 = render 'spree/shared/payment'

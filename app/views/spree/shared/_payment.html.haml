@@ -6,15 +6,15 @@
       %strong= @order.display_outstanding_balance
     - else
       - if @order.paid?
-        = t :email_payment_paid
+        = t('.email_paid')
       - else
-        = t :email_payment_not_paid
+        = t('.email_not_paid')
   %strong
-    = t :email_payment_summary
+    = t('.email_summary')
 - if @order.payments.any?
   = render partial: 'spree/shared/payments_list', locals: { payments: @order.payments }
   - if last_payment_method(@order).present?
     %p.callout{style: "margin-top: 40px"}
       %strong
-        = t :email_payment_description
+        = t('.email_description')
     %p{style: "margin: 5px"}= last_payment_method(@order).description

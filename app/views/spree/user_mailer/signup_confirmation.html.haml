@@ -6,17 +6,17 @@
                    intro: t(intro_key, sitename: Spree::Config[:site_name]) }
 
 %p
-  = t :email_signup_confirmed_email
+  = t('.confirmed_email')
 %p
   -# Remove http:// and trailing slashes from root url if they exist
-  = t :email_signup_shop_html, link: link_to(main_app.root_url.sub(/http:\/\//,"").sub(/\/$/,""), main_app.root_url, target: '_blank')
+  = t('.shop_html', link: link_to(main_app.root_url.sub(/http:\/\//,"").sub(/\/$/,""), main_app.root_url, target: '_blank'))
 %p &nbsp;
 %hr/
 %p &nbsp;
 %p.lead
-  = t :email_signup_text
+  = t('.signup_text')
 %p
-  = t :email_signup_help_html, email: mail_to(ContentConfig.footer_email)
+  = t('.help_html', email: mail_to(ContentConfig.footer_email))
 
 = render 'shared/mailers/signoff_instance'
 

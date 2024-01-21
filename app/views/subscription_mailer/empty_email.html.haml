@@ -10,14 +10,14 @@
                    enterprise_for_logo: @enterprise_for_logo }
 
 %p.callout
-  = t("email_so_empty_explainer_html")
+  = t(".explainer_html")
   = t("subscription_mailer.shared.contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.contact.email)
 
 %p &nbsp;
 %h4
   = t("mailers_shared.order_confirmation_html", number: @order.number)
 %p
-  = t("email_so_empty_details_html", distributor: @order.distributor.name)
+  = t(".details_html", distributor: @order.distributor.name)
 
 = render 'spree/order_mailer/order_summary'
 

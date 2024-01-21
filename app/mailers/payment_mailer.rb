@@ -8,7 +8,7 @@ class PaymentMailer < ApplicationMailer
     @payment = payment
     @order = @payment.order
     @hide_ofn_navigation = @payment.order.distributor.hide_ofn_navigation
-    subject = I18n.t('spree.payment_mailer.authorize_payment.subject',
+    subject = I18n.t('payment_mailer.authorize_payment.subject',
                      distributor: @payment.order.distributor.name)
     I18n.with_locale valid_locale(@payment.order.user) do
       mail(to: payment.order.email, subject:)
@@ -19,7 +19,7 @@ class PaymentMailer < ApplicationMailer
     @payment = payment
     @order = @payment.order
     shop_owner = @payment.order.distributor.owner
-    subject = I18n.t('spree.payment_mailer.authorization_required.subject',
+    subject = I18n.t('payment_mailer.authorization_required.subject',
                      order: @payment.order)
     I18n.with_locale valid_locale(shop_owner) do
       mail(to: shop_owner.email,

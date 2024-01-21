@@ -9,6 +9,6 @@
                    intro: t(intro_key, number: @order.number),
                    enterprise_for_logo: @enterprise_for_logo }
 
-= link_to t('spree.order_mailer.cancel_email_for_shop.view_cancelled_order'), spree.edit_admin_order_url(@order)
+= link_to t('.view_cancelled_order'), spree.edit_admin_order_url(@order)
 
 = render 'shared/mailers/signoff_instance'
