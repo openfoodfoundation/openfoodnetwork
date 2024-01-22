@@ -7,10 +7,17 @@ class EnterpriseFeeAdjustments
     @adjustments = adjustments
   end
 
-  # Calculate the tax portion of enterprise fee when tax excluded from price
-  def total_tax
+  def total_additional_tax
     @adjustments.reduce(0.0) do |sum, enterprise_fee|
-      sum += enterprise_fee.adjustments.tax.additional.sum(:amount) if enterprise_fee&.adjustments
+      sum += enterprise_fee.additional_tax_total if enterprise_fee&.adjustments
+
+      sum
+    end
+  end
+
+  def total_included_tax
+    @adjustments.reduce(0.0) do |sum, enterprise_fee|
+      sum += enterprise_fee.included_tax_total if enterprise_fee&.adjustments
 
       sum
     end
