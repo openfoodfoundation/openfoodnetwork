@@ -375,6 +375,7 @@ paths:
                       ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
                       ofn:contact_name: Fred Farmer
                       ofn:logo_url: http://www.example.com/rails/active_storage/url/logo.png
+                      ofn:promo_image_url: http://www.example.com/rails/active_storage/url/promo.png
                       dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
                     - "@id": http://test.host/api/dfc/addresses/40000
                       "@type": dfc-b:Address

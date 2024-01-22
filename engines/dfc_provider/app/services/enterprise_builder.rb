@@ -27,6 +27,7 @@ class EnterpriseBuilder < DfcBuilder
       add_ofn_property(e, "ofn:contact_name", enterprise.contact_name)
 
       add_ofn_property(e, "ofn:logo_url", enterprise.logo.url)
+      add_ofn_property(e, "ofn:promo_image_url", enterprise.promo_image.url)
     end
   end
 
