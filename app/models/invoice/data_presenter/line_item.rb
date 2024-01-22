@@ -4,7 +4,7 @@ class Invoice
   class DataPresenter
     class LineItem < Invoice::DataPresenter::Base
       attributes :added_tax, :currency, :included_tax, :price_with_adjustments, :quantity,
-                 :variant_id, :unit_price_price_and_unit, :unit_presentation
+                 :variant_id, :unit_price_price_and_unit, :unit_presentation, :enterprise_fee_tax
       attributes_with_presenter :variant
       array_attribute :tax_rates, class_name: 'TaxRate'
       invoice_generation_attributes :added_tax, :included_tax, :price_with_adjustments,
@@ -17,7 +17,8 @@ class Invoice
       end
 
       def amount_with_adjustments_and_with_taxes
-        ( price_with_adjustments * quantity) + added_tax
+        fee_tax = enterprise_fee_tax || 0.00
+        ( price_with_adjustments * quantity) + added_tax + fee_tax
       end
 
       def display_amount_with_adjustments_without_taxes
