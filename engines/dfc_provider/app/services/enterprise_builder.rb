@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class EnterpriseBuilder < DfcBuilder
-  def self.enterprise(enterprise)
+  def self.enterprise(enterprise) # rubocop:disable Metrics/AbcSize
+    # The ABC size of this method should shrink when our custom attributes are
+    # in the DFC standard.
+
     variants = enterprise.supplied_variants.to_a
     catalog_items = variants.map(&method(:catalog_item))
     supplied_products = catalog_items.map(&:product)
