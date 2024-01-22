@@ -73,10 +73,11 @@ describe TaxHelper, type: :helper do
           )
         }
 
-        it "doesn't add enterprise fee tax, it is already included in the line item tax" do
+        it "includes enterprise fee tax" do
+          expected_tax = line_item.included_tax + fee_tax_adjustment.amount
           expect(
             helper.display_line_items_taxes(line_item)
-          ).to eq Spree::Money.new(line_item.included_tax, currency: line_item.currency)
+          ).to eq Spree::Money.new(expected_tax, currency: line_item.currency)
         end
       end
     end
