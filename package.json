@@ -28,7 +28,7 @@
     "foundation-sites": "^5.5.3",
     "hotkeys-js": "^3.13.5",
     "jquery-ui": "1.13.2",
-    "js-big-decimal": "^2.0.4",
+    "js-big-decimal": "^2.0.7",
     "moment": "^2.30.1",
     "mrujs": "^1.0.0",
     "select2": "^4.0.13",
