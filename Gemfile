@@ -142,6 +142,7 @@ gem "faraday"
 gem "private_address_check"
 
 gem 'newrelic_rpm'
+
 gem 'invisible_captcha'
 
 group :production, :staging do
