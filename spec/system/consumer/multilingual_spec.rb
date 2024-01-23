@@ -27,7 +27,7 @@ describe 'Multilingual' do
       visit root_path
       expect(get_i18n_locale).to eq 'en'
       expect(get_i18n_translation('label_shops')).to eq 'Shops'
-      expect(cookies).to be_empty
+      expect(cookies_name).not_to include('locale')
       expect(page).to have_content 'SHOPS'
 
       visit root_path(locale: 'es')
