@@ -7,7 +7,7 @@ describe Spree::UsersController, type: :controller do
 
   include AuthenticationHelper
 
-  describe "show" do
+  describe "#show" do
     let!(:u1) { create(:user) }
     let!(:u2) { create(:user) }
     let!(:distributor1) { create(:distributor_enterprise) }
@@ -55,7 +55,7 @@ describe Spree::UsersController, type: :controller do
     end
   end
 
-  describe "registered_email" do
+  describe "#registered_email" do
     routes { Openfoodnetwork::Application.routes }
 
     let!(:user) { create(:user) }
@@ -71,16 +71,16 @@ describe Spree::UsersController, type: :controller do
     end
   end
 
-  context '#load_object' do
-    it 'should redirect to signup path if user is not found' do
+  describe '#load_object' do
+    it 'redirects to signup path if user is not found' do
       allow(controller).to receive_messages(spree_current_user: nil)
       put :update, params: { user: { email: 'foobar@example.com' } }
       expect(response).to redirect_to('/login')
     end
   end
 
-  context '#create' do
-    it 'should create a new user' do
+  describe '#create' do
+    it 'creates a new user' do
       post :create,
            params: { user: { email: 'foobar@example.com', password: 'foobar123',
                              password_confirmation: 'foobar123', locale: 'es' } }
