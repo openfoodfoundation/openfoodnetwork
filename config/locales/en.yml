@@ -99,6 +99,10 @@ en:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Inheriting the tax categeory requires a per-item calculator."
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "failed to load. Please check to ensure the file is not corrupt, and try again."
         spree/user:
           attributes:
             email:
