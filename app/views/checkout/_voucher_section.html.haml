@@ -1,7 +1,7 @@
 %div#voucher-section
   .checkout-title
     = t("checkout.step2.voucher.apply_voucher")
-  .checkout-input{"data-controller": "toggle-button-disabled"}
+  .checkout-input{"data-controller": "toggle-control"}
     = form_with url: voucher_adjustments_path, model: @order, method: :post, data: { remote: true } do |form|
       - if voucher_adjustment.present?
         .two-columns-inputs.voucher
@@ -18,8 +18,8 @@
       - else
         .two-columns-inputs
           %div.checkout-input
-            = form.text_field :voucher_code, value: params.dig(:order, :voucher_code), data: { action: "input->toggle-button-disabled#inputIsChanged" }, placeholder: t("checkout.step2.voucher.placeholder"), class: "voucher"
+            = form.text_field :voucher_code, value: params.dig(:order, :voucher_code), data: { action: "input->toggle-control#enableIfPresent" }, placeholder: t("checkout.step2.voucher.placeholder"), class: "voucher"
             = form.error_message_on :voucher_code
 
           %div.checkout-input
-            = form.submit t("checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher-button", "data-disable-with": false, data: { "toggle-button-disabled-target": "button" }
+            = form.submit t("checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher-button", "data-disable-with": false, data: { "toggle-control-target": "control" }

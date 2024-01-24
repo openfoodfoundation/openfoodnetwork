@@ -17,7 +17,14 @@ export default class extends Controller {
     }
   }
 
-  //todo: can a new method disableIfBlank replace ButtonDisabledController?
+  enableIfPresent(event) {
+    const input = event.currentTarget;
+    const enable = !!this.#inputValue(input);
+
+    this.controlTargets.forEach((target) => {
+      target.disabled = !enable;
+    });
+  }
   //todo: can a new method toggleDisplay replace ToggleController?
   //todo: can toggleDisplay with optional chevron-target replace RemoteToggleController?
 
