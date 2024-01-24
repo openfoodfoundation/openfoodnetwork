@@ -5,7 +5,6 @@ export default class extends Controller {
   static values = { options: Object, placeholder: String };
 
   connect(options = {}) {
-    console.log(this.element, this.placeholderValue);
     this.control = new TomSelect(this.element, {
       maxItems: 1,
       maxOptions: null,

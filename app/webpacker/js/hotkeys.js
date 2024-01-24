@@ -13,8 +13,9 @@ hotkeys.filter = function (event) {
 hotkeys("ctrl+enter, command+enter", function (event, handler) {
   const form = event.target.form;
 
-  // If element has a non-angular form
-  if (form && !form.classList.contains("ng")) {
-    form.submit();
-  }
+  // Simulate a click on the first available submit button. This seems to be the most robust option,
+  // ensuring that event handlers are handled first (eg for StimulusReflex). If there's no submit
+  // button, nothing happens (eg for Angular forms).
+  const submit = form && form.querySelector('input[type="submit"], button[type="submit"]');
+  submit && submit.click();
 });
