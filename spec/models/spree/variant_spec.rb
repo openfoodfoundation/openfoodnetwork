@@ -23,20 +23,35 @@ describe Spree::Variant do
     end
 
     describe "tax category" do
-      context "when a tax category is required" do
-        it "is invalid when a tax category is not provided" do
-          with_products_require_tax_category(true) do
-            expect(build_stubbed(:variant, tax_category_id: nil)).not_to be_valid
-          end
-        end
+      # `build_stubbed` avoids creating a tax category in the database.
+      subject(:variant) { build_stubbed(:variant) }
+
+      it "is valid when empty by default" do
+        expect(variant.tax_category).to eq nil
+        expect(variant).to be_valid
       end
 
-      context "when a tax category is not required" do
-        it "is valid when a tax category is not provided" do
-          with_products_require_tax_category(false) do
-            expect(build_stubbed(:variant, tax_category_id: nil)).to be_valid
-          end
-        end
+      it "loads the default tax category" do
+        default = create(:tax_category, is_default: true)
+
+        expect(variant.tax_category).to eq default
+        expect {
+          variant.tax_category = nil
+        }.to_not change {
+          variant.tax_category
+        }
+        expect(variant).to be_valid
+      end
+
+      it "doesn't load any tax category" do
+        non_default = create(:tax_category, is_default: false)
+        expect(variant.tax_category).to eq nil
+      end
+
+      context "when a tax category is required" do
+        before { Spree::Config.products_require_tax_category = true }
+
+        it { is_expected.to validate_presence_of :tax_category }
       end
     end
   end

@@ -167,11 +167,7 @@ module Spree
     end
 
     def tax_category
-      if self[:tax_category_id].nil?
-        TaxCategory.find_by(is_default: true)
-      else
-        TaxCategory.find(self[:tax_category_id])
-      end
+      super || TaxCategory.find_by(is_default: true)
     end
 
     def price_with_fees(distributor, order_cycle)
