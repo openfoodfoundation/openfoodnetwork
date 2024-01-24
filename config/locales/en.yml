@@ -4479,6 +4479,15 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           email: "Email"
           total: "Total"
           billing_address_name: "Name"
+      taxons:
+        form:
+          name: Name
+          permalink: Permalink
+          meta_title: Meta Title
+          meta_description: Meta Description
+          meta_keywords: Meta Keywords
+          description: Description
+          dfc_id: DFC URI 
       general_settings:
         edit:
           legal_settings: "Legal Settings"

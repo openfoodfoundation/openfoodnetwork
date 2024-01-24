@@ -11,17 +11,11 @@ class SuppliedProductBuilder < DfcBuilder
       id,
       name: variant.product_and_full_name,
       description: variant.description,
-      productType: product_type,
+      productType: product_type(variant),
       quantity: QuantitativeValueBuilder.quantity(variant),
       spree_product_id: variant.product.id,
       image_url: variant.product&.image&.url(:product)
     )
-  end
-
-  # OFN product categories (taxons) are currently not standardised.
-  # This is just a dummy value for demos.
-  def self.product_type
-    DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
   end
 
   def self.import_variant(supplied_product)
@@ -47,7 +41,7 @@ class SuppliedProductBuilder < DfcBuilder
       name: supplied_product.name,
       description: supplied_product.description,
       price: 0, # will be in DFC Offer
-      primary_taxon: Spree::Taxon.first, # dummy value until we have a mapping
+      primary_taxon: taxon(supplied_product)
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
     end
@@ -56,10 +50,24 @@ class SuppliedProductBuilder < DfcBuilder
   def self.apply(supplied_product, variant)
     variant.product.assign_attributes(
       description: supplied_product.description,
+      primary_taxon: taxon(supplied_product)
     )
 
     variant.display_name = supplied_product.name
     QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
     variant.unit_value = variant.product.unit_value
   end
+
+  def self.product_type(variant)
+    taxon_dfc_id = variant.product.primary_taxon&.dfc_id
+
+    DfcProductTypeFactory.for(taxon_dfc_id)
+  end
+
+  def self.taxon(supplied_product)
+    dfc_id = supplied_product.productType.semanticId
+    Spree::Taxon.find_by(dfc_id: )
+  end
+
+  private_class_method :product_type, :taxon
 end

@@ -553,12 +553,7 @@ paths:
           application/json:
             schema:
               example:
-                "@context":
-                  dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                  dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                  dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                  dfc-b:hasUnit:
-                    "@type": "@id"
+                "@context": https://www.datafoodconsortium.org
                 "@id": http://test.host/api/dfc/enterprises/6201/supplied_products/0
                 "@type": dfc-b:SuppliedProduct
                 dfc-b:name: Apple
@@ -602,7 +597,7 @@ paths:
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Pesto - 1g
                     dfc-b:description: Basil Pesto
-                    dfc-b:hasType: dfc-pt:non-local-vegetable
+                    dfc-b:hasType: dfc-pt:processed-vegetable
                     dfc-b:hasQuantity:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
@@ -698,7 +693,7 @@ paths:
                   "@type": dfc-b:QuantitativeValue
                   dfc-b:hasUnit: dfc-m:Piece
                   dfc-b:value: 17
-                dfc-b:hasType: dfc-pt:non-local-vegetable
+                dfc-b:hasType: dfc-pt:drink
                 dfc-b:lifetime: ''
                 dfc-b:name: Pesto novo
                 dfc-b:totalTheoreticalStock: 0

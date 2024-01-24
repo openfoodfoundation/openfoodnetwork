@@ -7,7 +7,17 @@ describe SuppliedProductBuilder do
 
   subject(:builder) { described_class }
   let(:variant) {
-    build(:variant, id: 5).tap { |v| v.product.supplier_id = 7 }
+    build(:variant, id: 5).tap do |v|
+      v.product.supplier_id = 7
+      v.product.primary_taxon = taxon
+    end
+  }
+  let(:taxon) {
+    build(
+      :taxon,
+      name: "Soft Drink",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#soft-drink"
+    )
   }
 
   describe ".supplied_product" do
@@ -41,11 +51,22 @@ describe SuppliedProductBuilder do
       expect(product.name).to eq "Apple - Granny Smith"
     end
 
-    it "assigns a product type" do
-      product = builder.supplied_product(variant)
-      vegetable = DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE
+    context "product_type mapping" do
+      subject(:product) { builder.supplied_product(variant) }
 
-      expect(product.productType).to eq vegetable
+      it "assigns a product type" do
+        soft_drink = DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK
+
+        expect(product.productType).to eq soft_drink
+      end
+
+      context "when no taxon set" do
+        let(:taxon) { nil }
+
+        it "returns nil" do
+          expect(product.productType).to be_nil
+        end
+      end
     end
 
     it "assigns an image_url type" do
@@ -57,6 +78,56 @@ describe SuppliedProductBuilder do
       product = builder.supplied_product(variant)
 
       expect(product.image).to eq variant.product.image.url(:product)
+    end
+  end
+
+  describe ".import_product" do
+    let(:supplied_product) do
+      DataFoodConsortium::Connector::SuppliedProduct.new(
+        "https://example.net/tomato",
+        name: "Tomato",
+        description: "Awesome tomato",
+        quantity: DataFoodConsortium::Connector::QuantitativeValue.new(
+          unit: DfcLoader.connector.MEASURES.KILOGRAM,
+          value: 2,
+        ),
+        productType: product_type,
+      )
+    end
+    let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
+    let!(:taxon) {
+      create(
+        :taxon,
+        name: "Non local vegetable",
+        dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#non-local-vegetable"
+      )
+    }
+
+    it "creates a new Spree::Product" do
+      product = builder.import_product(supplied_product)
+
+      expect(product).to be_a(Spree::Product)
+      expect(product.name).to eq("Tomato")
+      expect(product.description).to eq("Awesome tomato")
+      expect(product.variant_unit).to eq("weight")
+    end
+
+    describe "taxon" do
+      it "assigns the taxon matching the DFC product type" do
+        product = builder.import_product(supplied_product)
+
+        expect(product.primary_taxon).to eq(taxon)
+      end
+
+      describe "when no matching taxon" do
+        let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.DRINK }
+
+        it "set the taxon to nil" do
+          product = builder.import_product(supplied_product)
+
+          expect(product.primary_taxon).to be_nil
+        end
+      end
     end
   end
 end
