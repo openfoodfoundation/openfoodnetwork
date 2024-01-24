@@ -105,6 +105,13 @@ module WebHelper
     tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
   end
 
+  def tomselect_select(value, options)
+    tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
+    tomselect_wrapper.find(".ts-control").click
+
+    tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
+  end
+
   def request_monitor_finished(controller = nil)
     page.evaluate_script("#{angular_scope(controller)}.scope().RequestMonitor.loading == false")
   end
