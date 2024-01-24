@@ -158,7 +158,8 @@ module Reporting
         end
 
         def enterprise_fees_sum(order)
-          enterprise_fees(order).sum(:amount)
+          amount = enterprise_fees(order).sum(:amount)
+          apply_voucher_on_amount(order, amount)
         end
 
         def enterprise_fees(order)
@@ -181,7 +182,8 @@ module Reporting
           query = order.all_adjustments.tax
           query = query.inclusive if included == true
           query = query.additional if added == true
-          query.where(adjustable: enterprise_fees(order)).sum(:amount)
+          amount = query.where(adjustable: enterprise_fees(order)).sum(:amount)
+          apply_voucher_on_amount(order, amount)
         end
 
         def distributor(query_result_row)
@@ -221,23 +223,25 @@ module Reporting
         end
 
         def total_excl_tax(query_result_row)
+          order = order(query_result_row)
           amount = Spree::Adjustment.enterprise_fee
-            .where(order: order(query_result_row))
+            .where(order:)
             .where(originator_id: enterprise_fee_id(query_result_row))
             .pick("sum(amount)") || 0
-          amount - tax(query_result_row, all: true, included: true)
+          apply_voucher_on_amount(order, amount) - tax(query_result_row, all: true, included: true)
         end
 
         def tax(query_result_row, all: false, included: nil)
-          order_id = order(query_result_row).id
+          order = order(query_result_row)
           adjustment_ids = enterprise_fee_adjustment_ids(query_result_row)
           query = Spree::Adjustment.tax
           query = query.where(included: true) unless included.nil?
           query = query.where(originator_id: tax_rate_id(query_result_row)) unless all == true
-          query.where(order_id:)
+          tax_amount = query.where(order:)
             .where(adjustable_type: 'Spree::Adjustment')
             .where(adjustable_id: adjustment_ids)
             .pick("sum(amount)") || 0
+          apply_voucher_on_amount(order, tax_amount)
         end
 
         def total_incl_tax(query_result_row)
@@ -298,6 +302,12 @@ module Reporting
 
         def keys(query_result_row)
           query_result_row.first
+        end
+
+        def apply_voucher_on_amount(order, amount)
+          rate = order.applied_voucher_rate
+          result = amount + (amount * rate)
+          BigDecimal(result.to_s).round(2, BigDecimal::ROUND_HALF_UP)
         end
       end
     end
