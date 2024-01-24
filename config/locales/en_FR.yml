@@ -4008,6 +4008,9 @@ en_FR:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
           include_out_of_stock_variants: "Include variants with no available stock"
+        shipment:
+          mark_as_shipped_message_html: "This will mark the order as Shipped.<br />Are you sure you want to proceed?"
+          mark_as_shipped_label_message: "Send a shipment/pick up notification email to the customer."
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"

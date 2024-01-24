@@ -4065,6 +4065,9 @@ fr:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée"
           include_out_of_stock_variants: "Inclure les variantes sans stock"
+        shipment:
+          mark_as_shipped_message_html: "Cette action marque la commande comme livrée.<br />Etes-vous certain de vouloir faire ceci? "
+          mark_as_shipped_label_message: "Envoyer une notification de livraison / distribution par e-mail au client"
         index:
           listing_orders: "Liste des commandes"
           new_order: "Nouvelle commande"

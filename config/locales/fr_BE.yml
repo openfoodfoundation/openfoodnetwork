@@ -1316,7 +1316,7 @@ fr_BE:
         cancel: Annuler
         proceed: Continuer
       status:
-        open: ouvrir
+        open: ouvert
         closed: fermé
     producer_properties:
       index:
@@ -3969,9 +3969,9 @@ fr_BE:
         dont_cancel: "Si vous avez changer d'avis ou souhaiter annuler cette commande contacter nous %{email}"
         order_summary_canceled_html: "<strong>Résumé de la commande #%{number} [ANNULEE]"
         details: "Voici les détails que vous avez commander:"
-        unpaid_order: "Votre commande n'était pas encore payer donc aucun remboursement na été fait."
-        paid_order: "Votre commande était payer donc %{distributor} vous a rembourser le montant totale. "
-        credit_order: "Votre commande était payer donc vous avez eter crediter."
+        unpaid_order: "Votre commande n'était pas encore payée donc aucun remboursement n'a été effectué."
+        paid_order: "Votre commande était payée donc %{distributor} vous a remboursé le montant total. "
+        credit_order: "Votre commande était payée donc vous avez été credité."
         subject: "Annulation de Commande"
       cancel_email_for_shop:
         greeting: "Chère %{name}"
