@@ -127,20 +127,4 @@ RSpec.describe "Database" do
       #   AND #{model_class.table_name}.#{foreign_key_column} IS NOT NULL
     SQL
   end
-
-  # Generates a unique timestamp.
-  #
-  # We may create multiple migrations within the same second, maybe even millisecond.
-  # So we add precision to milliseconds and increment on conflict.
-  def generate_timestamp
-    @last_creation_time ||= Time.new.utc(0)
-
-    creation_time = Time.now.utc
-    if creation_time <= @last_creation_time
-      creation_time += 0.001.seconds
-    end
-    @last_creation_time = creation_time
-
-    creation_time.utc.strftime('%Y%m%d%H%M%S%L')
-  end
 end
