@@ -233,7 +233,7 @@ describe 'Subscriptions' do
       before do
         visit admin_subscriptions_path
         page.find("#new-subscription").click
-        tomselect_search_and_select shop.name, from: "subscription[shop_id]"
+        tomselect_select shop.name, from: "subscription[shop_id]"
         click_button "Continue"
       end
 
