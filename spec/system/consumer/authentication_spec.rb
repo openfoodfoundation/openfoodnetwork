@@ -135,7 +135,7 @@ describe "Authentication" do
               fill_in "Confirm password", with: "test12345"
               click_signup_button
 
-              expect(page).to have_content "Sorry, that was too quick! Please resubmit."
+              expect(page).to have_content "Please try again after 5 seconds."
             end
 
             it "succeeding after time threshold" do

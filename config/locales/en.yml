@@ -4778,5 +4778,5 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   # Gem to prevent bot form submissions
   invisible_captcha:
-    sentence_for_humans: "If you are human, ignore this field"
-    timestamp_error_message: "Sorry, that was too quick! Please resubmit."
+    sentence_for_humans: "Please leave empty"
+    timestamp_error_message: "Please try again after 5 seconds."
