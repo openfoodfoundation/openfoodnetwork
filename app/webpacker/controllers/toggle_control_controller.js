@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["control"];
+  static targets = ["control", "content"];
 
   disableIfPresent(event) {
     const input = event.currentTarget;
@@ -25,7 +25,13 @@ export default class extends Controller {
       target.disabled = !enable;
     });
   }
-  //todo: can a new method toggleDisplay replace ToggleController?
+
+  toggleDisplay(event) {
+    const input = event.currentTarget;
+    this.contentTargets.forEach((t) => {
+      t.style.display = input.dataset.toggleShow === "true" ? "block" : "none";
+    });
+  }
   //todo: can toggleDisplay with optional chevron-target replace RemoteToggleController?
 
   // private
