@@ -7,7 +7,6 @@
   },
   "license": "AGPL-3.0",
   "scripts": {
-    "prepare": "husky install",
     "pretty-quick": "pretty-quick"
   },
   "jest": {
@@ -41,7 +40,6 @@
     "webpack": "~4"
   },
   "devDependencies": {
-    "husky": "^8.0.0",
     "jasmine-core": "~5.1.1",
     "jest": "^27.4.7",
     "karma": "~6.4.2",
