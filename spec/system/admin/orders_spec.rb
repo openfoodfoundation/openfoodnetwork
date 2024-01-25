@@ -934,8 +934,8 @@ describe '
       fill_in "Order number", with: "R123456"
       tomselect_multiselect order_cycle.name, from: 'q[order_cycle_id_in][]'
       tomselect_multiselect distributor.name, from: 'q[distributor_id_in][]'
-      tomselect_search_and_select shipping_method.name, from: 'shipping_method_id'
-      tomselect_search_and_select "complete", from: 'q[state_eq]'
+      tomselect_select shipping_method.name, from: 'shipping_method_id'
+      tomselect_select "complete", from: 'q[state_eq]'
       fill_in "Email", with: user.email
       fill_in "First name begins with", with: "J"
       fill_in "Last name begins with", with: "D"
