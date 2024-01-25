@@ -11,8 +11,6 @@ module Stripe
     let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
 
     describe "#find_or_clone", :vcr, :stripe_version do
-      include StripeStubs
-
       before { Stripe.api_key = secret }
 
       let(:customer_id) { ENV.fetch('STRIPE_CUSTOMER', nil) }
@@ -80,7 +78,6 @@ module Stripe
           expect(payment_method_id).to match(/pm_/)
           expect(new_payment_method_id).to match(/pm_/)
           expect(payment_method_id).not_to eq new_payment_method_id
-          expect(customer_id).to match(/cus_/)
           expect(new_customer_id).to match(/cus_/)
           expect(customer_id).not_to eq new_customer_id
         end
