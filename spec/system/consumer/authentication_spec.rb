@@ -108,21 +108,6 @@ describe "Authentication" do
             expect(page).to have_content "doesn't match"
           end
 
-          it "Failing to sign up because the user is too quick" do
-            InvisibleCaptcha.timestamp_enabled = true
-            InvisibleCaptcha.timestamp_threshold = 30
-
-            fill_in "Your email", with: "test@foo.com"
-            fill_in "Choose a password", with: "test12345"
-            fill_in "Confirm password", with: "test12345"
-            click_signup_button
-
-            expect(page).to have_content "Sorry, that was too quick! Please resubmit."
-
-            InvisibleCaptcha.timestamp_enabled = false
-            InvisibleCaptcha.timestamp_threshold = 30
-          end
-
           it "Signing up successfully" do
             fill_in "Your email", with: "test@foo.com"
             fill_in "Choose a password", with: "test12345"
@@ -134,6 +119,35 @@ describe "Authentication" do
                                            'your email address. Please open the link to activate ' \
                                            'your account.'
             end.to enqueue_job ActionMailer::MailDeliveryJob
+          end
+
+          describe "invisible_captcha gem" do
+            around do |example|
+              InvisibleCaptcha.timestamp_enabled = true
+              InvisibleCaptcha.timestamp_threshold = 30
+              example.run
+              InvisibleCaptcha.timestamp_enabled = false
+            end
+
+            it "Failing to sign up because the user is too quick" do
+              fill_in "Your email", with: "test@foo.com"
+              fill_in "Choose a password", with: "test12345"
+              fill_in "Confirm password", with: "test12345"
+              click_signup_button
+
+              expect(page).to have_content "Sorry, that was too quick! Please resubmit."
+            end
+
+            it "succeeding after time threshold" do
+              Timecop.travel(30.seconds.from_now) do
+                fill_in "Your email", with: "test@foo.com"
+                fill_in "Choose a password", with: "test12345"
+                fill_in "Confirm password", with: "test12345"
+                click_signup_button
+
+                expect(page).to have_content 'A message with a confirmation link has been sent'
+              end
+            end
           end
         end
 
