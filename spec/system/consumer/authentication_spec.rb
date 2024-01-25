@@ -102,7 +102,7 @@ describe "Authentication" do
           end
 
           it "Failing to sign up because password confirmation doesn't match or is blank" do
-            fill_in "Your email", with: user.email
+            fill_in "Your email", with: "test@foo.com"
             fill_in "Choose a password", with: "ForgotToRetype"
             click_signup_button
             expect(page).to have_content "doesn't match"
@@ -112,7 +112,7 @@ describe "Authentication" do
             InvisibleCaptcha.timestamp_enabled = true
             InvisibleCaptcha.timestamp_threshold = 30
 
-            fill_in "Your email", with: user.email
+            fill_in "Your email", with: "test@foo.com"
             fill_in "Choose a password", with: "test12345"
             fill_in "Confirm password", with: "test12345"
             click_signup_button
