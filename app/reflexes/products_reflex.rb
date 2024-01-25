@@ -77,10 +77,13 @@ class ProductsReflex < ApplicationReflex
   def edit_image
     id = current_id_from_element(element)
     product = product_finder(id).find_product
+    image = product.image
+
+    image = Spree::Image.new(viewable: product) if product.image.blank?
 
     morph "#modal-component",
           render(partial: "admin/products_v3/edit_image",
-                 locals: { product:, image: product.image, return_url: url })
+                 locals: { product:, image:, return_url: url })
   end
 
   private

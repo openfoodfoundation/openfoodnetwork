@@ -36,6 +36,9 @@ module Spree
         else
           respond_with(@object)
         end
+      rescue ActiveStorage::IntegrityError
+        @object.errors.add :attachment, :integrity_error
+        respond_with(@object)
       end
 
       def update
@@ -48,6 +51,9 @@ module Spree
         else
           respond_with(@object)
         end
+      rescue ActiveStorage::IntegrityError
+        @object.errors.add :attachment, :integrity_error
+        respond_with(@object)
       end
 
       def destroy

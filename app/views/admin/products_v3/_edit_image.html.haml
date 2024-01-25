@@ -1,10 +1,10 @@
 = render ModalComponent.new id: "#modal_edit_product_image_#{image.id}", instant: true, close_button: false do
   %h2= t(".title")
 
-  %p= image_tag image.variant(:product)
+  %p= image_tag image.persisted? ? image.url(:product) : Spree::Image.default_image_url(:product)
 
   -# Submit to controller, because StimulusReflex doesn't support file uploads
-  = form_for [:admin, product, image], url: admin_product_image_path(product, image),
+  = form_for [:admin, product, image],
       html: { multipart: true }, data: { controller: "form" } do |f|
     %input{ type: :hidden, name: :return_url, value: return_url}
     = f.hidden_field :viewable_id, value: product.id
