@@ -41,7 +41,7 @@
     "webpack": "~4"
   },
   "devDependencies": {
-    "husky": "^8.0.0",
+    "husky": "^9.0.6",
     "jasmine-core": "~5.1.1",
     "jest": "^27.4.7",
     "karma": "~6.4.2",
