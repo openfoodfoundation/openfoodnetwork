@@ -437,7 +437,7 @@ en:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
+  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be used."
   invoice: "Invoice"
   invoices: "Invoices"
   file: "File"

@@ -10,6 +10,17 @@ module Spree
         links.join('&nbsp;').html_safe # rubocop:disable Rails/OutputSafety
       end
 
+      def generate_invoice_button(order)
+        if order.distributor.can_invoice?
+          button_link_to t(:create_or_update_invoice), generate_admin_order_invoices_path(@order),
+                         data: { method: 'post' }, icon: 'icon-plus'
+        else
+          button_link_to t(:create_or_update_invoice), "#", data: {
+            confirm: t(:must_have_valid_business_number, enterprise_name: @order.distributor.name)
+          }, icon: 'icon-plus'
+        end
+      end
+
       def line_item_shipment_price(line_item, quantity)
         Spree::Money.new(line_item.price * quantity, currency: line_item.currency)
       end
