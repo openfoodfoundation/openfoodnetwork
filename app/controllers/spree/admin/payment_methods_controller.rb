@@ -193,7 +193,9 @@ module Spree
 
       def clear_preference_cache
         @payment_method.calculator.preferences.each_key do |key|
-          Rails.cache.delete(@payment_method.calculator.preference_cache_key(key))
+          # Only persisted models have cache keys.
+          cache_key = @payment_method.calculator.preference_cache_key(key)
+          Rails.cache.delete(cache_key) if cache_key
         end
       end
 
