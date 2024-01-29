@@ -165,8 +165,10 @@ describe "As a consumer I want to shop with a distributor" do
         let(:exchange2) { oc2.exchanges.to_enterprises(distributor).outgoing.first }
 
         before do
+          pending("Issue #12076")
           exchange1.update_attribute :pickup_time, "frogs"
           exchange2.update_attribute :pickup_time, "turtles"
+          distributor.update!(preferred_shopfront_message: "Hello!")
         end
 
         it "shows a select with all order cycles, but doesn't show the products by default" do
