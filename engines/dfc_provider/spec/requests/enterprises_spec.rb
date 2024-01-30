@@ -72,10 +72,6 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
             ).gsub!(
               %r{active_storage/[0-9A-Za-z/=-]*/logo.png},
               "active_storage/url/logo.png",
-            )
-            response.body.gsub!(
-              %r{active_storage/[0-9A-Za-z/=-]*/promo.png},
-              "active_storage/url/promo.png",
             ).gsub!(
               %r{active_storage/[0-9A-Za-z/=-]*/promo.png},
               "active_storage/url/promo.png",
