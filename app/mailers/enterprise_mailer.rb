@@ -23,7 +23,8 @@ class EnterpriseMailer < ApplicationMailer
     I18n.with_locale valid_locale(@enterprise.owner) do
       subject = t('enterprise_mailer.invite_manager.subject', enterprise: @enterprise.name)
       mail(to: user.email,
-           subject:)
+           subject:,
+           reply_to: @enterprise.contact.email)
     end
   end
 
