@@ -3,9 +3,7 @@
 
 - content_for :minimal_js, true
 
-- options = { data: { remote: "true" } }
-
-= form_for @report.search, { url: url_for }.merge(options) do |f|
+= form_for @report.search, { url: url_for, data: { remote: "true" } } do |f|
   = hidden_field_tag "uuid", request.uuid
 
   %fieldset.no-border-bottom.print-hidden
