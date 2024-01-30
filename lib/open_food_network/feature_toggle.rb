@@ -32,9 +32,6 @@ module OpenFoodNetwork
       "api_v1" => <<~DESC,
         Enable the new API at <code>/api/v1</code>
       DESC
-      "background_reports" => <<~DESC,
-        Generate reports in a background process to limit memory consumption.
-      DESC
       "match_shipping_categories" => <<~DESC,
         During checkout, show only shipping methods that support <em>all</em>
         shipping categories. Activating this feature for an enterprise owner
@@ -54,9 +51,6 @@ module OpenFoodNetwork
     # Copy features here that were activated in a migration so that new
     # instances, development and test environments have the feature active.
     ACTIVE_BY_DEFAULT = {
-      "background_reports" => <<~DESC,
-        Generate reports in a background process to limit memory consumption.
-      DESC
     }.freeze
 
     def self.setup!
