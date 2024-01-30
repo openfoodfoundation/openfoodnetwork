@@ -41,8 +41,10 @@ class ProducerMailer < ApplicationMailer
   end
 
   def subject
-    order_cycle_subject = I18n.t('producer_mailer.order_cycle_report.subject', producer: @producer.name)
-    "[#{Spree::Config.site_name}] #{order_cycle_subject}"
+    order_cycle_subject = I18n.t('producer_mailer.order_cycle_report.subject',
+                                  coordinator: @coordinator.name,
+                                  producer: @producer.name)
+    "#{order_cycle_subject}"
   end
 
   def orders?(order_cycle, producer)

@@ -8,22 +8,24 @@ module Spree
 
     # Overrides `Devise::Mailer.reset_password_instructions`
     def reset_password_instructions(user, token, _opts = {})
+      @instance = Spree::Config[:site_name]
       @edit_password_reset_url = spree.
         edit_spree_user_password_url(reset_password_token: token)
-      subject = "#{Spree::Config[:site_name]} " \
-                "#{I18n.t('spree.user_mailer.reset_password_instructions.subject')}"
-
       I18n.with_locale valid_locale(user) do
-        mail(to: user.email, subject:)
+        subject = t('.subject', sitename: @instance)
+        mail(to: user.email,
+             subject:)
       end
     end
 
     # This is a OFN specific email, not from Devise::Mailer
     def signup_confirmation(user)
       @user = user
+      @instance = Spree::Config[:site_name]
       I18n.with_locale valid_locale(@user) do
+        subject = t('.subject', sitename: @instance)
         mail(to: user.email,
-             subject: "#{t(:welcome_to)} #{Spree::Config[:site_name]}")
+             subject:)
       end
     end
 
@@ -33,9 +35,8 @@ module Spree
       @token = token
       @instance = Spree::Config[:site_name]
       @contact = ContentConfig.footer_email
-
       I18n.with_locale valid_locale(@user) do
-        subject = t('spree.user_mailer.confirmation_instructions.subject')
+        subject = t('.subject', sitename: @instance)
         mail(to: confirmation_email_address,
              subject:)
       end

@@ -46,7 +46,7 @@ RSpec.describe Spree::UserMailer do
         email.deliver_now
 
         expect(ActionMailer::Base.deliveries.first.subject).to include(
-          "Please confirm your OFN account"
+          "Please confirm your account on OFN Demo Site"
         )
       end
     end

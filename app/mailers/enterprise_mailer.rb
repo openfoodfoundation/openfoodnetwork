@@ -8,7 +8,7 @@ class EnterpriseMailer < ApplicationMailer
   def welcome(enterprise)
     @enterprise = enterprise
     I18n.with_locale valid_locale(@enterprise.owner) do
-      subject = t('enterprise_mailer.welcome.subject',
+      subject = t('.subject',
                   enterprise: @enterprise.name,
                   sitename: Spree::Config[:site_name])
       mail(to: enterprise.contact.email,
@@ -21,7 +21,8 @@ class EnterpriseMailer < ApplicationMailer
     @instance = Spree::Config[:site_name]
 
     I18n.with_locale valid_locale(@enterprise.owner) do
-      subject = t('enterprise_mailer.manager_invitation.subject', enterprise: @enterprise.name)
+      subject = t('.subject',
+                  enterprise: @enterprise.name)
       mail(to: user.email,
            subject:)
     end

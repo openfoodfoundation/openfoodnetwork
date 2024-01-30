@@ -403,16 +403,16 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       mistakenly_sent: "Not sure why you have received this email? Please contact %{owner_email} for more information."
   payment_mailer:
     authorize_payment:
-      subject: "Please authorize your payment to %{distributor} on OFN"
+      subject: "Please authorize your payment for order %{number} at %{distributor}"
       intro_html: "Your payment of <strong>%{amount}</strong> to <strong>%{distributor}</strong> requires additional authentication."
       instructions: "Please visit the following URL to authorize your payment:"
     authorization_required:
-      subject: "A payment requires authorization from the customer"
+      subject: "Authentication from customer required for payment of order %{number} at %{distributor}"
       intro_html: "A payment for order <strong>%{order_number}</strong> at <strong>%{distributor}</strong> requires additional authorization from the customer."
       instructions: "The customer has been notified via email and the payment will appear as pending until it is authorized."
   producer_mailer:
     order_cycle_report:
-      subject: "Order cycle report for %{producer}"
+      subject: "Order cycle report from %{coordinator} for %{producer}"
       intro_html: "An order cycle report is ready for <strong>%{producer}</strong>."
       text_before: "Please find below an update about the order cycle ready for:"
       order_text: "Here is a summary of the orders for your products:"
@@ -421,7 +421,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       text_after: ""
   report_mailer:
     report_ready:
-      subject: "Report ready"
+      subject: "Report ready for download"
       intro: "Your report is ready for download."
       message: "The link below will expire after one week."
       link_label: "%{name}"
@@ -431,21 +431,23 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
       contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via %{email}."
     placement_email:
+      subject: "Subscription order %{number} was placed at %{distributor}"
       intro_html: "You have a new order with <strong>%{distributor}</strong>."
       explainer_html: "This order was automatically created for you."
       contact_distributor_to_change_order_html: "This order was automatically created for you. You can make changes until orders close on %{orders_close_at} by contacting <strong>%{distributor}</strong> via %{email}."
       details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
       changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
     placement_summary_email:
-      subject: "A summary of recently placed subscription orders"
+      subject: "Summary of recently placed subscription orders at %{distributor}"
       intro_html: "Below is a summary of the subscription orders that have just been placed for <strong>%{shop}</strong>."
     confirmation_email:
+      subject: "Order confirmation of subscription order %{number} at %{distributor}"
       payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
       confirmation_intro_html: "Your order with <strong>%{distributor}</strong> is now confirmed."
       explainer_html: "This order was automatically placed for you, and it has now been finalised."
       details_html: "Here's everything you need to know about your order from <strong>%{distributor}</strong>:"
     confirmation_summary_email:
-      subject: "A summary of recently confirmed subscription orders"
+      subject: "Summary of recently confirmed subscription orders at %{distributor}"
       intro_html: "Below is a summary of the subscription orders that have just been finalised for <strong>%{shop}</strong>."
     summary_overview:
       total: "A total of %{count} subscriptions were marked for automatic processing."
@@ -474,10 +476,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         title: "Other Failure (%{count} orders)"
         explainer: "Automatic processing of these orders failed for an unknown reason. This should not occur, please contact us if you are seeing this."
     empty_email:
+      subject: "Empty subscription order %{number} at %{distributor}"
       intro_html: "We tried to place a new order with <strong>%{distributor}</strong>, but had some problems..."
       explainer_html: "Unfortunately, none of products that you ordered were available, so no order has been placed. The original quantities that you requested appear crossed-out below."
       details_html: "Here are the details of the unplaced order for <strong>%{distributor}</strong>:"
     failed_payment_email:
+      subject: "Failed payment for subscription order %{number} at %{distributor}"
       intro_html: "We tried to process a payment for <strong>%{distributor}</strong>, but had some problems..."
       explainer_html: "The payment for your subscription with <strong>%{distributor}</strong> failed because of a problem with your credit card. <strong>%{distributor}</strong> has been notified of this failed payment."
       details_html: "Here are the details of the failure provided by the payment gateway:"
@@ -3901,7 +3905,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   spree:
     order_mailer:
       cancel_email:
-        subject: "Cancellation of Order"
+        subject: "Cancellation of order %{number} at %{distributor}"
         instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
         dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
         order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
@@ -3910,17 +3914,18 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         unpaid_order: "Your order was unpaid so no refund has been made"
         credit_order: "Your order was paid so your account has been credited" # Is this used anywhere?
       cancel_email_for_shop:
-        subject: "Cancellation of Order"
+        subject: "Cancellation of order %{number} at %{distributor}"
         intro: "A customer has cancelled their order #%{number}."
         view_cancelled_order: "View cancelled order"
       confirm_email_for_customer:
-        subject: "Order Confirmation"
+        subject: "Order confirmation %{number} at %{distributor}"
         intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
         details_html: "Here are your order details from <strong>%{distributor}</strong>:"
       confirm_email_for_shop:
-        subject: "Order Confirmation"
+        subject: "Incoming order %{number} for %{distributor}"
         intro_html: "Well done! You have a new order for <strong>%{distributor}</strong>!"
       invoice_email:
+        subject: "Invoice for order %{number} at %{distributor}"
         intro_html: "Please find attached an invoice for your recent order from <strong>%{distributor}</strong>."
       order_summary:
         item: "Item"
@@ -3941,8 +3946,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         special_instructions: "Your notes:"
     shipment_mailer:
       shipped_email:
-        subject: "Shipment Notification"
-        picked_up_subject: "Pick up Notification"
+        subject: "Shipment notification of order %{number} at %{distributor}"
+        picked_up_subject: "Pick up notification of order %{number} at %{distributor}"
         shipped_intro_html: "Your order from <strong>%{distributor}</strong> has been shipped."
         picked_up_intro_html: "Your order from <strong>%{distributor}</strong> has been picked-up."
         shipment_summary: "Shipment Summary"
@@ -3951,18 +3956,19 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         thanks: "Thank you for your business."
     test_mailer:
       test_email:
-        subject: "Test Mail"
+        subject: "Test Mail from %{sitename}"
         greeting: "Congratulations!"
         message: "If you have received this email, then your email settings are correct."
     user_mailer:
       confirmation_instructions:
-        subject: "Please confirm your OFN account"
+        subject: "Please confirm your account on %{sitename}"
         welcome: "Welcome to %{sitename}!"
         activate_account: "Before we can activate your new account, we need to confirm your email address."
         click_link: "Please click the link below to confirm your email and to continue setting up your profile."
         link_label: "Confirm this email address »"
         notice_unexpected: "You received this message because you signed up on %{sitename}, or were invited to sign up by someone you probably know. If you don't understand why you are receiving this email, please write to %{contact}."
       signup_confirmation:
+        subject: "Welcome to %{sitename}"
         welcome: "Welcome to %{sitename}!"
         confirmed_email: "Thanks for confirming your email."
         shop_html: "You can now log in at %{link}."
@@ -3971,7 +3977,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   If you are a producer or food enterprise, we are excited to have you as a part of the network."
         help_html: "We welcome all your questions and feedback; you can use the <em>Send Feedback</em> button on the site or email us at %{email}"
       reset_password_instructions:
-        subject: "Reset password instructions"
+        subject: "Reset password instructions for %{sitename}"
         request_sent_text: |
           A request to reset your password has been made.
           If you did not make this request, simply ignore this email.

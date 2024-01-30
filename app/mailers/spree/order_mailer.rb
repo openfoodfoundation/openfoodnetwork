@@ -9,19 +9,24 @@ module Spree
     helper MailerHelper
     include I18nHelper
 
-    def cancel_email(order_or_order_id, resend = false)
+    def cancel_email(order_or_order_id)
       @order = find_order(order_or_order_id)
       @hide_ofn_navigation = @order.distributor.hide_ofn_navigation
       I18n.with_locale valid_locale(@order.user) do
+        subject = t('.subject',
+                    number: @order.number,
+                    distributor: @order.distributor.name)
         mail(to: @order.email,
-             subject: mail_subject(t('spree.order_mailer.cancel_email.subject'), resend))
+             subject:)
       end
     end
 
     def cancel_email_for_shop(order)
       @order = order
       I18n.with_locale valid_locale(@order.distributor.owner) do
-        subject = I18n.t('spree.order_mailer.cancel_email_for_shop.subject')
+        subject = t('.subject',
+                    number: @order.number,
+                    distributor: @order.distributor.name)
         mail(to: @order.distributor.contact.email,
              subject:)
       end
@@ -30,18 +35,23 @@ module Spree
     def confirm_email_for_customer(order_or_order_id, resend = false)
       @order = find_order(order_or_order_id)
       @hide_ofn_navigation = @order.distributor.hide_ofn_navigation
+      resend_prefix = (resend ? "[#{t(:resend).upcase}] " : '')
       I18n.with_locale valid_locale(@order.user) do
-        subject = mail_subject(t('spree.order_mailer.confirm_email_for_customer.subject'), resend)
+        subject = "#{resend_prefix}#{t('.subject',
+                                       number: @order.number,
+                                       distributor: @order.distributor.name)}"
         mail(to: @order.email,
              subject:,
              reply_to: @order.distributor.contact.email)
       end
     end
 
-    def confirm_email_for_shop(order_or_order_id, resend = false)
+    def confirm_email_for_shop(order_or_order_id)
       @order = find_order(order_or_order_id)
       I18n.with_locale valid_locale(@order.user) do
-        subject = mail_subject(t('spree.order_mailer.confirm_email_for_shop.subject'), resend)
+        subject = t('.subject',
+                    number: @order.number,
+                    distributor: @order.distributor.name)
         mail(to: @order.distributor.contact.email,
              subject:)
       end
@@ -65,8 +75,11 @@ module Spree
 
       attach_file("invoice-#{@order.number}.pdf", pdf)
       I18n.with_locale valid_locale(@order.user) do
+        subject = t('.subject',
+                    number: @order.number,
+                    distributor: @order.distributor.name)
         mail(to: @order.email,
-             subject: mail_subject(t(:invoice), false),
+             subject:,
              reply_to: @order.distributor.contact.email)
       end
     end
@@ -76,11 +89,6 @@ module Spree
     # Finds an order instance from an order or from an order id
     def find_order(order_or_order_id)
       order_or_order_id.respond_to?(:id) ? order_or_order_id : Spree::Order.find(order_or_order_id)
-    end
-
-    def mail_subject(base_subject, resend)
-      resend_prefix = (resend ? "[#{t(:resend).upcase}] " : '')
-      "#{resend_prefix}#{Spree::Config[:site_name]} #{base_subject} ##{@order.number}"
     end
 
     def attach_file(filename, file)
