@@ -24,7 +24,8 @@ class EnterpriseMailer < ApplicationMailer
       subject = t('.subject',
                   enterprise: @enterprise.name)
       mail(to: user.email,
-           subject:)
+           subject:,
+           reply_to: @enterprise.contact.email)
     end
   end
 

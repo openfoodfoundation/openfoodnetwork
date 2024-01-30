@@ -17,7 +17,8 @@ module Spree
                     number: @order.number,
                     distributor: @order.distributor.name)
         mail(to: @order.email,
-             subject:)
+             subject:,
+             reply_to: @order.distributor.contact.email)
       end
     end
 

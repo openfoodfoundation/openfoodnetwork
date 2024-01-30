@@ -12,7 +12,9 @@ class PaymentMailer < ApplicationMailer
       subject = t('.subject',
                   number: @order.number,
                   distributor: @order.distributor.name)
-      mail(to: payment.order.email, subject:)
+      mail(to: @order.email,
+           subject:,
+           reply_to: @order.distributor.contact.email)
     end
   end
 

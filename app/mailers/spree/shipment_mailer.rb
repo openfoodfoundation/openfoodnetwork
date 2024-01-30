@@ -12,7 +12,9 @@ module Spree
       subject = t(base_subject,
                   number: @order.number,
                   distributor: @order.distributor.name)
-      mail(to: @shipment.order.email, subject:)
+      mail(to: @shipment.order.email,
+           subject:,
+           reply_to: @order.distributor.contact.email)
     end
 
     private
