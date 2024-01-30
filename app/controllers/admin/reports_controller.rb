@@ -22,14 +22,10 @@ module Admin
     def show
       @report = report_class.new(spree_current_user, params, render: render_data?)
 
-      if request.post?
+      if render_data?
         rendering_options # stores user preferences
 
-        return background(report_format)
-      end
-
-      if params[:report_format].present?
-        export_report
+        background(report_format)
       else
         show_report
       end
@@ -37,13 +33,8 @@ module Admin
 
     private
 
-    def export_report
-      send_data @report.render_as(report_format), filename: report_filename
-    end
-
     def show_report
       assign_view_data
-      @table = @report.render_as(:html) if render_data?
       render "show"
     end
 
