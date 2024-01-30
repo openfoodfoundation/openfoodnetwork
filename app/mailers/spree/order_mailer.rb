@@ -49,7 +49,7 @@ module Spree
 
     def confirm_email_for_shop(order_or_order_id)
       @order = find_order(order_or_order_id)
-      I18n.with_locale valid_locale(@order.user) do
+      I18n.with_locale valid_locale(@order.distributor.owner) do
         subject = t('.subject',
                     number: @order.number,
                     distributor: @order.distributor.name)
