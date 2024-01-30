@@ -47,10 +47,9 @@ module OpenFoodNetwork
     }.freeze
 
     # Features you would like to be enabled to start with.
-    #
-    # Copy features here that were activated in a migration so that new
-    # instances, development and test environments have the feature active.
     ACTIVE_BY_DEFAULT = {
+      # Copy features here that were activated in a migration so that new
+      # instances, development and test environments have the feature active.
     }.freeze
 
     def self.setup!
