@@ -5,6 +5,14 @@
 # If our node-build version is outdated and it can't build the version we want
 # then we try upgrading node-build and installing again.
 
+# Fail if a single command fails.
+set -e
+
+if ! command -v nodenv > /dev/null; then
+  printf "Please install https://github.com/nodenv/nodenv.\n"
+  exit 1
+fi
+
 if nodenv install --skip-existing; then
   echo "Correct Node version is installed."
 else
