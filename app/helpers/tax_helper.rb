@@ -14,9 +14,11 @@ module TaxHelper
 
   def display_line_items_taxes(line_item, display_zero: true)
     if line_item.included_tax.positive?
-      Spree::Money.new(line_item.included_tax, currency: line_item.currency)
+      tax = line_item.included_tax + enterprise_fee_adjustments(line_item).total_included_tax
+      Spree::Money.new(tax, currency: line_item.currency)
     elsif line_item.added_tax.positive?
-      Spree::Money.new(line_item.added_tax, currency: line_item.currency)
+      tax = line_item.added_tax + enterprise_fee_adjustments(line_item).total_additional_tax
+      Spree::Money.new(tax, currency: line_item.currency)
     elsif display_zero
       Spree::Money.new(0.00, currency: line_item.currency)
     end
@@ -25,5 +27,11 @@ module TaxHelper
   def display_total_with_tax(taxable)
     total = taxable.amount + taxable.additional_tax_total
     Spree::Money.new(total, currency: taxable.currency)
+  end
+
+  private
+
+  def enterprise_fee_adjustments(line_item)
+    EnterpriseFeeAdjustments.new(line_item.enterprise_fee_adjustments)
   end
 end

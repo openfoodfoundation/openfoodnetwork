@@ -49,22 +49,80 @@ describe TaxHelper, type: :helper do
   end
 
   describe "#display_line_items_taxes" do
-    it "displays included tax" do
-      expect(
-        helper.display_line_items_taxes(line_item)
-      ).to eq Spree::Money.new(line_item.included_tax, currency: line_item.currency)
+    let(:enterprise_fee) { create(:enterprise_fee, tax_category: tax_rate.tax_category) }
+
+    context "with included tax" do
+      it "displays included tax" do
+        expect(
+          helper.display_line_items_taxes(line_item)
+        ).to eq Spree::Money.new(line_item.included_tax, currency: line_item.currency)
+      end
+
+      context "with enterprise fee incuring tax" do
+        let(:fee_adjustment) {
+          create( :adjustment, originator: enterprise_fee, adjustable: line_item, state: "closed")
+        }
+        let!(:fee_tax_adjustment) {
+          create(
+            :adjustment,
+            originator: tax_rate,
+            adjustable: fee_adjustment,
+            amount: 10,
+            state: "closed",
+            included: true
+          )
+        }
+
+        it "includes enterprise fee tax" do
+          expected_tax = line_item.included_tax + fee_tax_adjustment.amount
+          expect(
+            helper.display_line_items_taxes(line_item)
+          ).to eq Spree::Money.new(expected_tax, currency: line_item.currency)
+        end
+      end
     end
 
-    it "displays additional tax" do
-      expect(
-        helper.display_line_items_taxes(line_item2)
-      ).to eq Spree::Money.new(line_item2.added_tax, currency: line_item2.currency)
+    context "with additional tax (tax exluded from price)" do
+      it "displays additional tax" do
+        expect(
+          helper.display_line_items_taxes(line_item2)
+        ).to eq Spree::Money.new(line_item2.added_tax, currency: line_item2.currency)
+      end
+
+      context "with enterprise fee incuring tax" do
+        let(:fee_adjustment) {
+          create( :adjustment, originator: enterprise_fee, adjustable: line_item2, state: "closed")
+        }
+        let(:fee_tax_adjustment) {
+          create(
+            :adjustment,
+            originator: tax_rate,
+            adjustable: fee_adjustment,
+            amount: 10,
+            state: "closed",
+            included: false
+          )
+        }
+
+        it "includes enterprise fee tax" do
+          expected_tax = line_item2.added_tax + fee_tax_adjustment.amount
+          expect(
+            helper.display_line_items_taxes(line_item2)
+          ).to eq Spree::Money.new(expected_tax, currency: line_item2.currency)
+        end
+      end
     end
 
     it "displays formatted 0.00 amount when amount is zero" do
       expect(
         helper.display_line_items_taxes(line_item3)
-      ).to eq Spree::Money.new(0.00,)
+      ).to eq Spree::Money.new(0.00)
+    end
+
+    it "optionally displays nothing when amount is zero" do
+      expect(
+        helper.display_line_items_taxes(line_item3, display_zero: false)
+      ).to be_nil
     end
   end
 

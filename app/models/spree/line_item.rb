@@ -202,7 +202,7 @@ module Spree
       # so line_item.adjustments returns an empty array
       return 0 if quantity.zero?
 
-      fees = adjustments.enterprise_fee.sum(:amount)
+      fees = enterprise_fee_adjustments.sum(:amount)
 
       (price + (fees / quantity)).round(2)
     end
@@ -239,6 +239,10 @@ module Spree
 
     def scoper
       @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
+    end
+
+    def enterprise_fee_adjustments
+      adjustments.enterprise_fee
     end
 
     private
