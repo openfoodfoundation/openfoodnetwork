@@ -181,9 +181,15 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         fill_in "Name", with: "Large box"
         fill_in "SKU", with: "POM-01"
         fill_in "Price", with: "10.25"
-        click_on "On Hand" # activate stock popout
-        fill_in "On Hand", with: "6"
+
+        click_on "On Hand" # activate popout
       end
+
+      # Stock popout
+      fill_in "On Hand", with: "-1"
+      click_button "Save changes" # attempt to save or close the popout
+      expect(page).to have_field "On Hand", with: "-1" # popout is still open
+      fill_in "On Hand", with: "6"
 
       expect {
         click_button "Save changes"

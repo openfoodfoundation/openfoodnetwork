@@ -16,7 +16,7 @@ describe("PopoutController", () => {
       <div data-controller="popout">
         <button id="button" data-popout-target="button">On demand</button>
         <div id="dialog" data-popout-target="dialog" style="display: none;">
-          <input id="input1" value="value1">
+          <input id="input1" value="value1" required>
           <label>
             <input id="input2" type="checkbox" value="value2" data-action="change->popout#closeIfChecked">
             label2
@@ -88,6 +88,14 @@ describe("PopoutController", () => {
 
       expect(input2.checked).toBe(false);
       expectToBeShown(dialog);
+    });
+
+    it("doesn't close the dialog when a field is invalid", () => {
+      input1.value = "" // field is required
+
+      input4.click();
+      expectToBeShown(dialog);
+      // Browser will show a validation message
     });
   });
 

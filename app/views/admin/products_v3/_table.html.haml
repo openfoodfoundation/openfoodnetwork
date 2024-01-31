@@ -106,7 +106,7 @@
                     = variant.on_demand ? t(:on_demand) : variant.on_hand
                   %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
                     .field
-                      = variant_form.number_field :on_hand, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: variant_form.object.on_demand
+                      = variant_form.number_field :on_hand, min: 0, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: variant_form.object.on_demand
                       = error_message_on variant, :on_hand
                     .field.checkbox
                       = variant_form.label :on_demand do

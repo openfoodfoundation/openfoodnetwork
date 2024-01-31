@@ -42,6 +42,12 @@ export default class PopoutController extends Controller {
   close() {
     // Close if not already closed
     if (this.dialogTarget.style.display != "none") {
+      // Check every element for browser-side validation, before the fields get hidden.
+      if (!this.#enabledDisplayElements().every((element) => element.reportValidity())) {
+        // If any fail, don't close
+        return;
+      }
+
       // Update button to represent any changes
       this.buttonTarget.innerText = this.#displayValue();
       this.buttonTarget.classList.toggle("changed", this.#isChanged());
