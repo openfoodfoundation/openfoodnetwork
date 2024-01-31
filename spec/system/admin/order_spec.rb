@@ -727,14 +727,14 @@ describe '
                 click_link "Print Invoice"
               end
               expect(message)
-                .to eq "#{distributor1.name} must have a valid ABN before invoices can be sent."
+                .to eq "#{distributor1.name} must have a valid ABN before invoices can be used."
 
               find("#links-dropdown .ofn-drop-down").click
               message = accept_prompt do
                 click_link "Send Invoice"
               end
               expect(message)
-                .to eq "#{distributor1.name} must have a valid ABN before invoices can be sent."
+                .to eq "#{distributor1.name} must have a valid ABN before invoices can be used."
             end
           end
         end
@@ -1172,6 +1172,7 @@ describe '
           }
 
           before do
+            Spree::Config[:enterprise_number_required_on_invoices?] = false
             visit spree.admin_order_invoices_path(order1)
           end
 
@@ -1196,6 +1197,22 @@ describe '
             # with a valid invoice download link
             expect(page).to have_link("Download",
                                       href: download_href)
+          end
+
+          context "the Create or Update Invoice button" do
+            context "when an ABN number is mandatory for invoices but not present" do
+              before do
+                Spree::Config[:enterprise_number_required_on_invoices?] = true
+              end
+
+              it "displays a warning that an ABN is required when it's clicked" do
+                visit spree.admin_order_invoices_path(order1)
+                message = accept_prompt { click_link "Create or Update Invoice" }
+                distributor = order1.distributor
+                expect(message)
+                  .to eq "#{distributor.name} must have a valid ABN before invoices can be used."
+              end
+            end
           end
         end
       end
