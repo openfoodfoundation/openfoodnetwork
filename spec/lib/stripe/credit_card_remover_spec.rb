@@ -89,13 +89,16 @@ describe Stripe::CreditCardRemover do
     end
 
     context 'Stripe customer does not exist' do
-      it 'deletes the credit card clone' do
-        allow(Stripe::Customer).to receive(:retrieve).and_return(nil)
+      let(:non_existing_customer_id) { 'non_existing_customer_id' }
 
-        expect_any_instance_of(Stripe::CreditCardCloneDestroyer).to receive(:destroy_clones).with(
-          credit_card
-        )
-        Stripe::CreditCardRemover.new(credit_card).call
+      before do
+        credit_card.update_attribute :gateway_customer_profile_id, non_existing_customer_id
+      end
+
+      it 'deletes the credit card clone' do
+        expect {
+          Stripe::CreditCardRemover.new(credit_card).call
+        }.to raise_error Stripe::InvalidRequestError
       end
     end
   end
