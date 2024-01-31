@@ -88,4 +88,24 @@ describe("ToggleControlController", () => {
       });
     });
   });
+  describe("#toggleDisplay", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `<div data-controller="toggle-control">
+        <span id="button" data-action="click->toggle-control#toggleDisplay" data-toggle-show="true" />
+        <div id="content" data-toggle-control-target="content" >
+          content
+        </div>
+      </div>`;
+    });
+
+    it("toggles the content", () => {
+      const button = document.getElementById("button");
+      const content = document.getElementById("content");
+      expect(content.style.display).toBe("");
+
+      button.click();
+
+      expect(content.style.display).toBe("block");
+    });
+  });
 });

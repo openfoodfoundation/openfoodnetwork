@@ -69,7 +69,7 @@
             = f.check_box :save_bill_address
             = f.label :save_bill_address, t(:checkout_default_bill_address)
 
-    %div.checkout-substep{ "data-controller": "toggle shippingmethod" }
+    %div.checkout-substep{ "data-controller": "toggle-control shippingmethod" }
       - selected_shipping_method = @order.shipping_method&.id || params[:shipping_method_id]
       %div.checkout-title
         = t("checkout.step1.shipping_info.title")
@@ -87,7 +87,7 @@
               checked: ship_method_is_selected,
               name: "shipping_method_id",
               "data-requireAddress": shipping_method.require_ship_address,
-              "data-action": "toggle#toggle shippingmethod#selectShippingMethod",
+              "data-action": "toggle-control#toggleDisplay shippingmethod#selectShippingMethod",
               "data-toggle-show": shipping_method.require_ship_address
             = shipping_method_form.label shipping_method.id, shipping_method.name, {for: "shipping_method_" + shipping_method.id.to_s }
             %em.fees= payment_or_shipping_price(shipping_method, @order)
@@ -104,7 +104,7 @@
 
       = f.error_message_on :shipping_method, standalone: true
 
-      %div.checkout-input{ "data-toggle-target": "content", style: "display: #{display_ship_address ? 'block' : 'none'}" }
+      %div.checkout-input{ "data-toggle-control-target": "content", style: "display: #{display_ship_address ? 'block' : 'none'}" }
         = f.check_box :ship_address_same_as_billing, { id: "ship_address_same_as_billing", name: "ship_address_same_as_billing", "data-action": "shippingmethod#showHideShippingAddress", "data-shippingmethod-target": "shippingAddressCheckbox", checked: shipping_and_billing_match?(@order) }, 1, nil
         = f.label :ship_address_same_as_billing, t(:checkout_address_same), { for: "ship_address_same_as_billing" }
 
@@ -142,7 +142,7 @@
               = ship_address.select :state_id, states_for_country(ship_address_country), { selected: @order.ship_address&.state_id }, { "data-dependent-select-target": "select" }
 
       - if spree_current_user
-        %div.checkout-input{ "data-toggle-target": "content", style: "display: #{display_ship_address ? 'block' : 'none'}" }
+        %div.checkout-input{ "data-toggle-control-target": "content", style: "display: #{display_ship_address ? 'block' : 'none'}" }
           = f.check_box :save_ship_address
           = f.label :save_ship_address, t(:checkout_default_ship_address)
 
