@@ -127,6 +127,7 @@ RSpec.describe "Orders And Fulfillment" do
           # with a timeframe that includes one order but not the other
           find("input.datepicker").click
           select_dates_from_daterangepicker datetime_start1, datetime_end
+          find(".shortcut-buttons-flatpickr-button").click # closes flatpickr
 
           find("#display_summary_row").set(false) # hides the summary rows
           run_report
