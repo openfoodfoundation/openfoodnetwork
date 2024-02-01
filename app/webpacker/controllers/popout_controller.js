@@ -43,6 +43,8 @@ export default class PopoutController extends Controller {
       // Show, and apply value if it's a digit or word character
       this.show(e);
       this.first_input.value = e.key;
+      // Notify of change
+      this.first_input.dispatchEvent(new Event("input"));
     }
   }
 
@@ -57,6 +59,7 @@ export default class PopoutController extends Controller {
 
       // Update button to represent any changes
       this.buttonTarget.innerText = this.#displayValue();
+      this.buttonTarget.innerHTML ||= "&nbsp;"; // (with default space to help with styling)
       this.buttonTarget.classList.toggle("changed", this.#isChanged());
 
       this.dialogTarget.style.display = "none";
