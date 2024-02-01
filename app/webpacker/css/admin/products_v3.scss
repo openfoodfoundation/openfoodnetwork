@@ -112,6 +112,7 @@
     }
 
     td {
+      position: relative; // Ensure that overflowing content is covered by the following cell. We don't use overflow: hidden because that messes with the popover.
       background-color: $color-tbl-cell-bg;
     }
 
