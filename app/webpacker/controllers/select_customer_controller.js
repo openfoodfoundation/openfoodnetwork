@@ -6,6 +6,7 @@ export default class extends TomSelectController {
   static values = { options: Object, distributor: Number };
 
   connect() {
+    this.items = [];
     useSearchCustomer(this);
     useRenderCustomer(this);
     const options = {
@@ -20,7 +21,6 @@ export default class extends TomSelectController {
     };
     super.connect(options);
     this.control.on("item_add", this.onItemSelect.bind(this));
-    this.items = [];
   }
 
   onItemSelect(id, item) {
