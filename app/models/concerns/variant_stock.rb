@@ -154,6 +154,6 @@ module VariantStock
   # There shouldn't be any other stock items, because we should
   # have only one stock location.
   def stock_item
-    @stock_item ||= stock_items.first
+    stock_items.first
   end
 end
