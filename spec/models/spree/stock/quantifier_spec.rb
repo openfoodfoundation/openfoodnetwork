@@ -5,6 +5,8 @@ require 'spec_helper'
 module Spree
   module Stock
     describe Quantifier do
+      include DatabaseHelper
+
       let(:quantifier) { Spree::Stock::Quantifier.new(variant) }
       let(:variant) { create(:variant, on_hand: 99) }
 
@@ -16,6 +18,17 @@ module Spree
 
           it "returns zero stock for the variant" do
             expect(quantifier.total_on_hand).to eq 0
+          end
+        end
+      end
+
+      describe "#backorderable" do
+        describe "eager-loading stock_items" do
+          it "doesn't create extra query for stock_items" do
+            variant_loaded = Variant.where(id: variant).includes(:stock_items).first
+            expect do
+              Spree::Stock::Quantifier.new(variant_loaded).backorderable?
+            end.to query_database []
           end
         end
       end
