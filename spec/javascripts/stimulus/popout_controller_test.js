@@ -42,7 +42,21 @@ describe("PopoutController", () => {
       expectToBeShown(dialog);
     });
 
-    it("doesn't show the dialog on other key press (tab)", () => {
+    it("shows and updates on number press", () => {
+      button.dispatchEvent(new KeyboardEvent("keydown", { key: "1" }));
+
+      expectToBeShown(dialog);
+      expect(input1.value).toBe("1");
+    });
+
+    it("shows and updates on character press", () => {
+      button.dispatchEvent(new KeyboardEvent("keydown", { key: "a" }));
+
+      expectToBeShown(dialog);
+      expect(input1.value).toBe("a");
+    });
+
+    it("doesn't show the dialog on control key press (tab)", () => {
       button.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 9 }));
 
       expectToBeClosed(dialog);
