@@ -6,7 +6,7 @@
       - url = main_app.notify_producers_admin_order_cycle_path
       - confirm_msg = "#{t('.notify_producers_tip')} #{t(:are_you_sure)}"
 
-      %a.button.icon-email.with-tip{ href: url, data: { method: :post, "ujs-navigate": "false", confirm: confirm_msg }, 'data-powertip': t('.notify_producers_tip') }
+      %a.button.icon-email.with-tip{ "href" => url, "data-powertip" => t('.notify_producers_tip'), "data-method" => :post, "data-ujs-navigate" => "false", "data-confirm" => confirm_msg }
         = mails_sent ? t('.re_notify_producers') : t(:notify_producers)
         - if mails_sent
           .badge.icon-ok.success
@@ -19,13 +19,13 @@
 = form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form'} do |f|
 
   %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
-    %input.red{ type: "button", value: t('.save'), ng: { click: "submit($event, null)", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
+    %input.red{ "type" => "button", "value" => t('.save'), "ng-click" => "submit($event, null)", "ng-disabled" => "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
     - if @order_cycle.simple?
-      %input.red{ type: "button", value: t('.save_and_back_to_list'), ng: { click: "submit($event, '#{main_app.admin_order_cycles_path}')", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
+      %input.red{ "type" => "button", "value" => t('.save_and_back_to_list'), "ng-click" => "submit($event, '#{main_app.admin_order_cycles_path}')", "ng-disabled" => "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
     - else
-      %input.red{ type: "button", value: t('.save_and_next'), ng: { click: "submit($event, '#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
-      %input{ type: "button", value: t('.next'), ng: { click: "cancel('#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", disabled: "order_cycle_form.$dirty" } }
-    %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
+      %input.red{ "type" => "button", "value" => t('.save_and_next'), "ng-click" => "submit($event, '#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled" => "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
+      %input{ "type" => "button", "value" => t('.next'), "ng-click" => "cancel('#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled" => "order_cycle_form.$dirty" }
+    %input{ "type" => "button", "ng-value" => "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", "ng-click" => "cancel('#{main_app.admin_order_cycles_path}')" }
 
   - if @order_cycle.simple?
     = render 'simple_form', f: f

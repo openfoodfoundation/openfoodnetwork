@@ -23,5 +23,5 @@
     .columns.small-12.medium-3
       = button_tag :class => 'button primary expand', :id => 'update-button', "ng-disabled" => 'update_order_form.$pristine' do
         %i.ofn-i_051-check-big
-        %span{ ng: { show: 'update_order_form.$dirty' } }= t(:save_changes)
-        %span{ ng: { hide: 'update_order_form.$dirty' } }= t(:order_saved)
+        %span{ "ng-show" => 'update_order_form.$dirty' }= t(:save_changes)
+        %span{ "ng-hide" => 'update_order_form.$dirty' }= t(:order_saved)

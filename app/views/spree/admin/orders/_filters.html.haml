@@ -7,7 +7,7 @@
     .field-block.alpha.four.columns
       .date-range-filter.field
         = label_tag nil, t(:date_range)
-        .date-range-fields{ data: { controller: "flatpickr", "flatpickr-mode-value": "range" } }
+        .date-range-fields{ "data-controller" => "flatpickr", "data-flatpickr-mode-value" => "range" }
           = text_field_tag nil, nil, class: "datepicker", data: { "flatpickr-target": "instance", action: "flatpickr_clear@window->flatpickr#clear" }
           = text_field_tag "q[completed_at_gteq]", nil, "ng-model": "q.completed_at_gteq", data: { "flatpickr-target": "start" }, style: "display: none"
           = text_field_tag "q[completed_at_lteq]", nil, "ng-model": "q.completed_at_lteq", data: { "flatpickr-target": "end" }, style: "display: none"

@@ -2,7 +2,7 @@
   %div
     = t(".pagination.total_html", total: pagy.count, from: pagy.from, to: pagy.to)
     - if search_term.present? || producer_id.present? || category_id.present?
-      %a{ href: "#", class: "button disruptive", data: { reflex: "click->products#clear_search" } }
+      %a{ "href" => "#", "class" => "button disruptive", "data-reflex" => "click->products#clear_search" }
         = t(".pagination.clear_search")  
   %form.with-dropdown
     = t(".pagination.per_page.show")

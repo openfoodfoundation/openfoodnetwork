@@ -2,7 +2,7 @@
 = render 'spree/admin/products/index/data'
 = admin_inject_available_units
 
-%div{ ng: { app: 'ofn.admin', controller: 'AdminProductEditCtrl', init: 'initialise()' } }
+%div{ "ng-app" => 'ofn.admin', "ng-controller" => 'AdminProductEditCtrl', "ng-init" => 'initialise()' }
 
   = render 'spree/admin/products/index/filters'
   %div{ 'ng-cloak' => true }

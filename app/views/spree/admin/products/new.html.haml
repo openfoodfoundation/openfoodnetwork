@@ -54,7 +54,7 @@
             %br/
             = f.text_field :price, { "class": "fullwidth", "ng-model": "product.price", "ng-value": "'#{@product.price}'" }
             = f.error_message_on :price
-        .four.columns{ ng: { app: 'ofn.admin'}}
+        .four.columns{ "ng-app" => 'ofn.admin' }
           = f.field_container :unit_price do
             %div{style: "display: flex"}
               = f.label :unit_price, t(".unit_price")

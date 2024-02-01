@@ -1,10 +1,10 @@
 %table.index.edit-note-table
   %tr.edit-note.hidden.total
-    %td{ colspan: "5", data: { controller: "input-char-count" }, style: "position: relative;" }
+    %td{ "colspan" => "5", "style" => "position: relative;", "data-controller" => "input-char-count" }
       %label
         = t(".note_label")
         = text_field_tag :note, @order.note, { maxLength: 280, data: { "input-char-count-target": "input" } }
-      %span.edit-note-count{ data: { "input-char-count-target": "count" }, style: "position: absolute; right: 7px; top: 7px; font-size: 11px;" }
+      %span.edit-note-count{ "style" => "position: absolute; right: 7px; top: 7px; font-size: 11px;", "data-input-char-count-target" => "count" }
 
     %td.actions
       = link_to '', '', class: 'save-note icon_link icon-ok no-text with-tip', data: { action: 'save' }, title: I18n.t('actions.save')

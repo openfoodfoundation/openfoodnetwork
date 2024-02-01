@@ -1,5 +1,5 @@
-%div{ ng: { show: 'views.hidden.visible' } }
-  %table#hidden-products{ ng: { show: 'filteredProducts.length > 0' } }
+%div{ "ng-show" => 'views.hidden.visible' }
+  %table#hidden-products{ "ng-show" => 'filteredProducts.length > 0' }
     %col.producer{ width: "20%" }
     %col.product{ width: "20%" }
     %col.variant{ width: "20%" }
@@ -10,13 +10,13 @@
         %th.product=t('admin.product')
         %th.variant=t('admin.variant')
         %th.add=t('admin.variant_overrides.index.add')
-    %tbody{ ng: { repeat: 'product in filteredProducts | limitTo:productLimit' } }
-      %tr{ id: "v_{{variant.id}}", ng: { repeat: 'variant in product.variants | inventoryVariants:hub_id:views' } }
-        %td.producer{ ng: { bind: '::producersByID[product.producer_id].name'} }
-        %td.product{ ng: { bind: '::product.name'} }
+    %tbody{ "ng-repeat" => 'product in filteredProducts | limitTo:productLimit' }
+      %tr{ "id" => "v_{{variant.id}}", "ng-repeat" => 'variant in product.variants | inventoryVariants:hub_id:views' }
+        %td.producer{ "ng-bind" => '::producersByID[product.producer_id].name' }
+        %td.product{ "ng-bind" => '::product.name' }
         %td.variant
-          %span{ ng: { bind: '::variant.display_name || ""'} }
-          .variant-override-unit{ ng: { bind: '::variant.unit_to_display'} }
+          %span{ "ng-bind" => '::variant.display_name || ""' }
+          .variant-override-unit{ "ng-bind" => '::variant.unit_to_display' }
         %td.add
-          %button.fullwidth.icon-plus{ ng: { click: "setVisibility(hub_id,variant.id,true)" } }
+          %button.fullwidth.icon-plus{ "ng-click" => "setVisibility(hub_id,variant.id,true)" }
             = t('admin.variant_overrides.index.add')

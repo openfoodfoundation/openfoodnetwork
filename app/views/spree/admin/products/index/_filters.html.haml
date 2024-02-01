@@ -5,20 +5,20 @@
     .quick_search.three.columns.alpha
       %label{ for: 'quick_filter' }
       %br
-      %input.quick-search.fullwidth{ ng: {model: 'q.query'}, name: "quick_filter", type: 'text', placeholder: t('admin.quick_search'), "ng-keypress" => "$event.keyCode === 13 && fetchProducts()" }
+      %input.quick-search.fullwidth{ "name" => "quick_filter", "type" => 'text', "placeholder" => t('admin.quick_search'), "ng-keypress" => "$event.keyCode === 13 && fetchProducts()", "ng-model" => 'q.query' }
     .one.columns &nbsp;
     .filter_select.three.columns
       %label{ for: 'producer_filter' }= t 'producer'
       %br
-      %select.fullwidth{ id: 'producer_filter', 'ofn-select2-min-search' => 5, ng: {model: 'q.producerFilter', options: 'producer.id as producer.name for producer in producers'} }
+      %select.fullwidth{ "id" => 'producer_filter', "ofn-select2-min-search" => 5, "ng-model" => 'q.producerFilter', "ng-options" => 'producer.id as producer.name for producer in producers' }
     .filter_select.three.columns
       %label{ for: 'category_filter' }= t 'category'
       %br
-      %select.fullwidth{ id: 'category_filter', 'ofn-select2-min-search' => 5, ng: {model: 'q.categoryFilter', options: 'taxon.id as taxon.name for taxon in taxons'} }
+      %select.fullwidth{ "id" => 'category_filter', "ofn-select2-min-search" => 5, "ng-model" => 'q.categoryFilter', "ng-options" => 'taxon.id as taxon.name for taxon in taxons' }
     .filter_select.three.columns
       %label{ for: 'import_filter' }= t 'import_date'
       %br
-      %select.fullwidth{ id: 'import_date_filter', 'ofn-select2-min-search' => 5, ng: {model: 'q.importDateFilter', init: "importDates = #{@import_dates}; showLatestImport = #{@show_latest_import}", options: 'date.id as date.name for date in importDates'} }
+      %select.fullwidth{ "id" => 'import_date_filter', "ofn-select2-min-search" => 5, "ng-model" => 'q.importDateFilter', "ng-init" => "importDates = #{@import_dates}; showLatestImport = #{@show_latest_import}", "ng-options" => 'date.id as date.name for date in importDates' }
 
     .filter_clear.three.columns.omega
       %label{ for: 'clear_all_filters' }

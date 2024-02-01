@@ -1,7 +1,7 @@
-%div.text-big.no-results{ ng: { show: 'hub_id && products.length > 0 && filteredProducts.length == 0' } }
-  %span{ ng: { show: 'views.inventory.visible && !filtersApplied()' } }=t('admin.variant_overrides.index.currently_empty')
-  %span{ ng: { show: 'views.inventory.visible && filtersApplied()' } }=t('admin.variant_overrides.index.no_matching_products')
-  %span{ ng: { show: 'views.hidden.visible && !filtersApplied()' } }=t('admin.variant_overrides.index.no_hidden_products')
-  %span{ ng: { show: 'views.hidden.visible && filtersApplied()' } }=t('admin.variant_overrides.index.no_matching_hidden_products')
-  %span{ ng: { show: 'views.new.visible && !filtersApplied()' } }=t('admin.variant_overrides.index.no_new_products')
-  %span{ ng: { show: 'views.new.visible && filtersApplied()' } }=t('admin.variant_overrides.index.no_matching_new_products')
+%div.text-big.no-results{ "ng-show" => 'hub_id && products.length > 0 && filteredProducts.length == 0' }
+  %span{ "ng-show" => 'views.inventory.visible && !filtersApplied()' }=t('admin.variant_overrides.index.currently_empty')
+  %span{ "ng-show" => 'views.inventory.visible && filtersApplied()' }=t('admin.variant_overrides.index.no_matching_products')
+  %span{ "ng-show" => 'views.hidden.visible && !filtersApplied()' }=t('admin.variant_overrides.index.no_hidden_products')
+  %span{ "ng-show" => 'views.hidden.visible && filtersApplied()' }=t('admin.variant_overrides.index.no_matching_hidden_products')
+  %span{ "ng-show" => 'views.new.visible && !filtersApplied()' }=t('admin.variant_overrides.index.no_new_products')
+  %span{ "ng-show" => 'views.new.visible && filtersApplied()' }=t('admin.variant_overrides.index.no_matching_new_products')

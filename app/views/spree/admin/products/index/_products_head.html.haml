@@ -1,24 +1,24 @@
 %colgroup
   %col.actions
-  %col.image{ ng: { show: 'columns.image.visible' } }
-  %col.producer{ ng: { show: 'columns.producer.visible' } }
-  %col.sku{ ng: { show: 'columns.sku.visible' } }
-  %col.name{ ng: { show: 'columns.name.visible' } }
-  %col.unit{ ng: { show: 'columns.unit.visible' } }
-  %col.display_as{ ng: { show: 'columns.unit.visible' } }
-  %col.price{ ng: { show: 'columns.price.visible'} }
-  %col.on_hand{ ng: { show: 'columns.on_hand.visible' } }
-  %col.on_demand{ ng: { show: 'columns.on_demand.visible' } }
-  %col.category{ ng: { show: 'columns.category.visible' } }
-  %col.tax_category{ ng: { show: 'columns.tax_category.visible' } }
-  %col.inherits_properties{ ng: { show: 'columns.inherits_properties.visible' } }
-  %col.import_date{ ng: { show: 'columns.import_date.visible' } }
+  %col.image{ "ng-show" => 'columns.image.visible' }
+  %col.producer{ "ng-show" => 'columns.producer.visible' }
+  %col.sku{ "ng-show" => 'columns.sku.visible' }
+  %col.name{ "ng-show" => 'columns.name.visible' }
+  %col.unit{ "ng-show" => 'columns.unit.visible' }
+  %col.display_as{ "ng-show" => 'columns.unit.visible' }
+  %col.price{ "ng-show" => 'columns.price.visible' }
+  %col.on_hand{ "ng-show" => 'columns.on_hand.visible' }
+  %col.on_demand{ "ng-show" => 'columns.on_demand.visible' }
+  %col.category{ "ng-show" => 'columns.category.visible' }
+  %col.tax_category{ "ng-show" => 'columns.tax_category.visible' }
+  %col.inherits_properties{ "ng-show" => 'columns.inherits_properties.visible' }
+  %col.import_date{ "ng-show" => 'columns.import_date.visible' }
   %col.actions
   %col.actions
   %col.actions
 
 %thead
-  %tr{ ng: { controller: "ColumnsCtrl" } }
+  %tr{ "ng-controller" => "ColumnsCtrl" }
     %th.left-actions
       %a{ 'ng-click' => 'toggleShowAllVariants()', :style => 'color: red; cursor: pointer' }
         = t(:expand_all)

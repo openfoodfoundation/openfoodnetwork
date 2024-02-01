@@ -6,7 +6,7 @@
       %p= t ".tagline"
     %div
       - if enterprise.connected_apps.empty?
-        %button{ data: {reflex: "click->Admin::ConnectedApp#create", enterprise_id: enterprise.id} }
+        %button{ "data-reflex" => "click->Admin::ConnectedApp#create", "data-enterprise_id" => enterprise.id }
           = t ".enable"
       - elsif enterprise.connected_apps.connecting.present?
         %button{ disabled: true }
@@ -14,7 +14,7 @@
           &nbsp;
           = t ".loading"
       - else
-        %button{ data: {reflex: "click->Admin::ConnectedApp#destroy", enterprise_id: enterprise.id} }
+        %button{ "data-reflex" => "click->Admin::ConnectedApp#destroy", "data-enterprise_id" => enterprise.id }
           = t ".disable"
 
   .connected-app__connection

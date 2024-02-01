@@ -1,6 +1,6 @@
 - if search_term.present? || producer_id.present? || category_id.present?
   = t('.no_products_found_for_search')
-  %a{ href: "#", class: "button disruptive relaxed", data: { reflex: "click->products#clear_search" } }
+  %a{ "href" => "#", "class" => "button disruptive relaxed", "data-reflex" => "click->products#clear_search" }
     = t("admin.products_v3.sort.pagination.clear_search")
 - else
   = t('.no_products_found')

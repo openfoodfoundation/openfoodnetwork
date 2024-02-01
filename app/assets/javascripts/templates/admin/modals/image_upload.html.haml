@@ -1,10 +1,10 @@
 %a.close-reveal-modal{"ng-click" => "$close()"}
   %i.fa.fa-times-circle{'aria-hidden' => "true"}
 
-%form#image_upload{ name: 'form', novalidate: true, enctype: 'multipart/form-data', multipart: true, ng: { controller: "ProductImageCtrl" } }
+%form#image_upload{ "name" => 'form', "novalidate" => true, "enctype" => 'multipart/form-data', "multipart" => true, "ng-controller" => "ProductImageCtrl" }
   %div.image-preview
-    %img.spinner{ src: image_path("/spinning-circles.svg"), ng: { hide: "!imageUploader.isUploading" }}
-    %img.preview{ng: {src: "{{imagePreview}}", class: "{'faded': imageUploader.isUploading}"}}
+    %img.spinner{ "src" => image_path("/spinning-circles.svg"), "ng-hide" => "!imageUploader.isUploading" }
+    %img.preview{ "ng-src" => "{{imagePreview}}", "ng-class" => "{'faded': imageUploader.isUploading}" }
 
   %label{for: 'image-upload', class: 'button'} {{ 'admin.products.index.upload_an_image' | t }}
   %input#image-upload{hidden: true, type: 'file', 'nv-file-select' => true, uploader: "imageUploader"}

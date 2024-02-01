@@ -10,24 +10,24 @@
           %h4
             = t(".question")
 
-    %form{ name: 'type', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "create(type)" } }
-      .row#enterprise-types{ 'data-equalizer' => true, ng: { if: "::enterprise.type != 'own'" } }
+    %form{ "name" => 'type', "novalidate" => true, "ng-controller" => "RegistrationFormCtrl", "ng-submit" => "create(type)" }
+      .row#enterprise-types{ "data-equalizer" => true, "ng-if" => "::enterprise.type != 'own'" }
         .small-12.columns.field
           .row
             .small-12.medium-6.large-6.columns{ 'data-equalizer-watch' => true }
-              %a.btnpanel#producer-panel{ href: "#", ng: { click: "enterprise.is_primary_producer = true", class: "{selected: enterprise.is_primary_producer}" } }
+              %a.btnpanel#producer-panel{ "href" => "#", "ng-click" => "enterprise.is_primary_producer = true", "ng-class" => "{selected: enterprise.is_primary_producer}" }
                 %i.ofn-i_059-producer
                 %h4= t(".yes_producer")
 
             .small-12.medium-6.large-6.columns{ 'data-equalizer-watch' => true }
-              %a.btnpanel#hub-panel{ href: "#", ng: { click: "enterprise.is_primary_producer = false", class: "{selected: enterprise.is_primary_producer == false}" } }
+              %a.btnpanel#hub-panel{ "href" => "#", "ng-click" => "enterprise.is_primary_producer = false", "ng-class" => "{selected: enterprise.is_primary_producer == false}" }
                 %i.ofn-i_063-hub
                 %h4= t(".no_producer")
 
           .row
             .small-12.columns
-              %input.chunky{ id: 'enterprise_is_primary_producer', name: 'is_primary_producer', type: "hidden", required: true, ng: { model: 'enterprise.is_primary_producer' } }
-              %span.error{ ng: { show: "type.is_primary_producer.$error.required && submitted" } }
+              %input.chunky{ "id" => 'enterprise_is_primary_producer', "name" => 'is_primary_producer', "type" => "hidden", "required" => true, "ng-model" => 'enterprise.is_primary_producer' }
+              %span.error{ "ng-show" => "type.is_primary_producer.$error.required && submitted" }
                 = t(".producer_field_error")
           .row
             .small-12.columns
@@ -44,5 +44,5 @@
 
       .row.buttons
         .small-12.columns
-          %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "select('contact')" } }
-          %input.button.primary.right{ ng: { disabled: 'isDisabled' }, type: "submit", value: t(".create_profile") }
+          %input.button.secondary{ "type" => "button", "value" => "{{'back' | t}}", "ng-click" => "select('contact')" }
+          %input.button.primary.right{ "type" => "submit", "value" => t(".create_profile"), "ng-disabled" => 'isDisabled' }
