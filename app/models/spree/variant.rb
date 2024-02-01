@@ -202,7 +202,7 @@ module Spree
     end
 
     def total_on_hand
-      Spree::Stock::Quantifier.new(self).total_on_hand
+      quantifier.total_on_hand
     end
 
     private
@@ -255,6 +255,10 @@ module Spree
 
     def convert_variant_weight_to_decimal
       self.weight = weight.to_d
+    end
+
+    def quantifier
+      @quantifier ||= Spree::Stock::Quantifier.new(self)
     end
   end
 end

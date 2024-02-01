@@ -252,7 +252,7 @@ describe Spree::Variant do
       expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
     end
 
-    it "minimises database queries for subsequent calls" do
+    it "doesn't make additional db queries for subsequent calls" do
       expect do
         variant.total_on_hand
         pending "it generates a query for each call"
