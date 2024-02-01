@@ -7,13 +7,10 @@
 
 %p
   = t('.confirmed_email')
-%p
+%p.callout
   -# Remove http:// and trailing slashes from root url if they exist
   = t('.shop_html', link: link_to(main_app.root_url.sub(/http:\/\//,"").sub(/\/$/,""), main_app.root_url, target: '_blank'))
-%p &nbsp;
-%hr/
-%p &nbsp;
-%p.lead
+%p
   = t('.signup_text')
 %p
   = t('.help_html', email: mail_to(ContentConfig.footer_email))
