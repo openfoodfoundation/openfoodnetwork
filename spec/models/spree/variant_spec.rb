@@ -255,7 +255,6 @@ describe Spree::Variant do
     it "doesn't make additional db queries for subsequent calls" do
       expect do
         variant.total_on_hand
-        pending "it generates a query for each call"
         variant.total_on_hand
       end.to query_database [
         "Spree::StockItem Sum"

@@ -15,7 +15,7 @@ module Spree
         # may still be in an active cart after it's deleted, so this will mark it as out of stock.
         return 0 if @variant.deleted?
 
-        stock_items.sum(:count_on_hand)
+        @total_on_hand ||= stock_items.sum(:count_on_hand)
       end
 
       def backorderable?

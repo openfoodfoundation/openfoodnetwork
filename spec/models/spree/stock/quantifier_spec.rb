@@ -20,6 +20,16 @@ module Spree
             expect(quantifier.total_on_hand).to eq 0
           end
         end
+
+        it "doesn't create extra query on subsequent calls" do
+          quantifier
+          expect do
+            quantifier.total_on_hand
+            quantifier.total_on_hand
+          end.to query_database [
+            "Spree::StockItem Sum"
+          ]
+        end
       end
 
       describe "#backorderable" do
