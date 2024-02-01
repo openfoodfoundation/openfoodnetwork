@@ -4,6 +4,8 @@ require 'spec_helper'
 require 'spree/localized_number'
 
 describe Spree::Variant do
+  include DatabaseHelper
+
   subject(:variant) { build(:variant) }
 
   context "validations" do
@@ -244,9 +246,20 @@ describe Spree::Variant do
   end
 
   describe '#total_on_hand' do
+    let!(:variant){ build :variant }
+
     it 'matches quantifier total_on_hand' do
-      variant = build(:variant)
       expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
+    end
+
+    it "minimises database queries for subsequent calls" do
+      expect do
+        variant.total_on_hand
+        pending "it generates a query for each call"
+        variant.total_on_hand
+      end.to query_database [
+        "Spree::StockItem Sum"
+      ]
     end
   end
 
