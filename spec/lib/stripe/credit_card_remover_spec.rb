@@ -37,11 +37,11 @@ describe Stripe::CreditCardRemover do
     }
 
     let(:connected_account) do
-      Stripe::Account.create({
-                               type: 'standard',
-                               country: 'AU',
-                               email: 'apple.producer@example.com'
-                             })
+      Stripe::Account.create(
+        type: 'standard',
+        country: 'AU',
+        email: 'apple.producer@example.com'
+      )
     end
 
     let(:cloner) { Stripe::CreditCardCloner.new(credit_card, connected_account.id) }
