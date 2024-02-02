@@ -23,6 +23,8 @@ module Api
 
         OrderWorkflow.new(@order).advance_to_payment if @order.line_items.any?
 
+        @order.recreate_all_fees!
+
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
 
