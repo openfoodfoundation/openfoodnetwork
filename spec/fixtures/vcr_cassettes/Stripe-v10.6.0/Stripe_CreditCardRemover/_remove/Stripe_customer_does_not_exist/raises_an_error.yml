@@ -32,11 +32,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 31 Jan 2024 19:04:42 GMT
+      - Fri, 02 Feb 2024 12:34:42 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1084'
+      - '930'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -57,11 +57,11 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - 47d21ec0-d1bb-41dc-98de-94c985992cb1
+      - ac534a65-f0cc-41dc-9e05-f09e9ac769be
       Original-Request:
-      - req_DzVgCjW9ZQ146O
+      - req_9umUNdXkK1NOpT
       Request-Id:
-      - req_DzVgCjW9ZQ146O
+      - req_9umUNdXkK1NOpT
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -76,7 +76,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1Oej5SKuuB1fWySnd7KqZATn",
+          "id": "pm_1OfLx8KuuB1fWySnSl66LWab",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -99,11 +99,6 @@ http_interactions:
               "cvc_check": "unchecked"
             },
             "country": "US",
-            "display_brand": {
-              "label": "Visa",
-              "logo_url": "https://b.stripecdn.com/cards-metadata/logos/card-visa.svg",
-              "type": "visa"
-            },
             "exp_month": 8,
             "exp_year": 2025,
             "fingerprint": "6E6tgVjx6U65iHFV",
@@ -121,13 +116,13 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1706727882,
+          "created": 1706877282,
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Wed, 31 Jan 2024 19:04:42 GMT
+  recorded_at: Fri, 02 Feb 2024 12:34:42 GMT
 - request:
     method: get
     uri: https://api.stripe.com/v1/customers/non_existing_customer_id
@@ -142,7 +137,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_DzVgCjW9ZQ146O","request_duration_ms":719}}'
+      - '{"last_request_metrics":{"request_id":"req_9umUNdXkK1NOpT","request_duration_ms":772}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -162,7 +157,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 31 Jan 2024 19:04:43 GMT
+      - Fri, 02 Feb 2024 12:34:43 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -188,7 +183,7 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Request-Id:
-      - req_kfp8zfiuKDQeCw
+      - req_NRBUy7l7nHKTUp
       Stripe-Version:
       - '2023-10-16'
       Vary:
@@ -206,9 +201,9 @@ http_interactions:
             "doc_url": "https://stripe.com/docs/error-codes/resource-missing",
             "message": "No such customer: 'non_existing_customer_id'",
             "param": "id",
-            "request_log_url": "https://dashboard.stripe.com/test/logs/req_kfp8zfiuKDQeCw?t=1706727882",
+            "request_log_url": "https://dashboard.stripe.com/test/logs/req_NRBUy7l7nHKTUp?t=1706877282",
             "type": "invalid_request_error"
           }
         }
-  recorded_at: Wed, 31 Jan 2024 19:04:43 GMT
+  recorded_at: Fri, 02 Feb 2024 12:34:43 GMT
 recorded_with: VCR 6.2.0

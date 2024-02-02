@@ -95,7 +95,7 @@ describe Stripe::CreditCardRemover do
         credit_card.update_attribute :gateway_customer_profile_id, non_existing_customer_id
       end
 
-      it 'deletes the credit card clone' do
+      it 'raises an error' do
         expect {
           Stripe::CreditCardRemover.new(credit_card).call
         }.to raise_error Stripe::InvalidRequestError
