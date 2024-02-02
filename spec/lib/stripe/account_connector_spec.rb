@@ -6,16 +6,26 @@ require 'stripe/oauth'
 
 module Stripe
   describe AccountConnector do
-    describe "create_account" do
-      let(:user) { create(:user) }
+    describe "create_account", :vcr, :stripe_version do
+      # settings
+
+      # let(:user) { create(:user) } <- replaced by
+      let(:user) { create(:user, email: "apple.producer@example.com") }
+
       let(:enterprise) { create(:enterprise) }
+
+      let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
+
+      let(:connector) { AccountConnector.new(user, params) }
+
+      # stubs - to be replaced
+
       let(:payload) { { "junk" => "Ssfs" } }
       let(:state) { JWT.encode(payload, Openfoodnetwork::Application.config.secret_token) }
       let(:params) { { "state" => state } }
-      let(:connector) { AccountConnector.new(user, params) }
 
       before do
-        Stripe.api_key = "sk_test_12345"
+        Stripe.api_key = secret
       end
 
       context "when the connection was cancelled by the user" do
@@ -42,6 +52,11 @@ module Stripe
 
         context "when params have a 'code' key" do
           before { params["code"] = 'code' }
+
+          response = Stripe::OAuth.token({
+                                           grant_type: 'authorization_code',
+                                           code: 'ac_123456789',
+                                         })
 
           context "and the decoded state param doesn't contain an 'enterprise_id' key" do
             it "raises an AccessDenied error" do
