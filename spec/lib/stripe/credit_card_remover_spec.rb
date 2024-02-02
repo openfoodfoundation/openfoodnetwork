@@ -4,16 +4,12 @@ require 'spec_helper'
 require 'stripe/credit_card_remover'
 
 describe Stripe::CreditCardRemover do
-  let!(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
-
   let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id, user:) }
 
   let!(:user) { create(:user, email: "apple.customer@example.com") }
   let!(:enterprise) { create(:enterprise) }
 
   describe "#remove", :vcr, :stripe_version do
-    before { Stripe.api_key = secret }
-
     let(:stripe_account_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
 
     let(:stripe_account) {
