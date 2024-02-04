@@ -14,7 +14,8 @@
 - if @order.payments.any?
   = render partial: 'spree/shared/payments_list', locals: { payments: @order.payments }
   - if last_payment_method(@order).present?
-    %p.callout{style: "margin-top: 40px"}
-      %strong
-        = t('.email_description')
-    %p{style: "margin: 5px"}= last_payment_method(@order).description
+    -if last_payment_method(@order).description.present?
+      %p.callout{style: "margin-top: 40px"}
+        %strong
+          = t('.email_description')
+      %p{style: "margin: 5px"}= last_payment_method(@order).description

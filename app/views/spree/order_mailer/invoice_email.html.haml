@@ -6,7 +6,7 @@
 
 = render partial: 'shared/mailers/greeting_and_intro',
          locals: { greeting: t(greeting_key, name: @order.bill_address.firstname),
-                   intro: t(intro_key, distributor: @order.distributor.name),
+                   intro: t(intro_key, number: @order.number, distributor: @order.distributor.name),
                    enterprise_for_logo: @enterprise_for_logo }
 
 = render 'shared/mailers/signoff_distributor'

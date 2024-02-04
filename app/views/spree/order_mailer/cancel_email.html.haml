@@ -10,15 +10,17 @@
                    enterprise_for_logo: @enterprise_for_logo }
 
 %p.callout
-  = t(".dont_cancel", email: @order.distributor.contact.email)
+  = t(".dont_cancel")
+  %br
+  %a{:href => "mailto:#{@order.distributor.contact.email}", :target => "_blank"}
+    = @order.distributor.contact.email
 
-%p &nbsp;
-%h4
+%h3
   = t(".order_summary_canceled_html", number: @order.number)
 %p
   = t(".details")
 
-= render 'order_summary'
+= render 'shared/mailers/order_summary'
 
 %p
   - if @order.paid?

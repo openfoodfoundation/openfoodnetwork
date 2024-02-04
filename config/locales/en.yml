@@ -497,6 +497,14 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       social_and_contact:
         social: "Connect with Us:"
         contact: "Email us:"
+      order_summary:
+        item: "Item"
+        sku: "SKU"
+        quantity: "Qty"
+        price: "Price"
+        subtotal: "Subtotal:"
+        total: "Total:"
+        includes_tax: "(includes tax):"
 
   provider_settings: "Provider settings"
 
@@ -3907,16 +3915,19 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       cancel_email:
         subject: "Cancellation of order %{number} at %{distributor}"
         instructions_html: "Your order with <strong>%{distributor}</strong> has been CANCELED. Please retain this cancellation information for your records."
-        dont_cancel: "If you have changed your mind or don't wish to cancel this order please contact %{email}"
-        order_summary_canceled_html: "<strong>Order Summary #%{number} [CANCELED]</strong>"
-        details: "Here are the details of what you ordered:"
-        paid_order: "Your order was paid so %{distributor} has refunded the full amount"
-        unpaid_order: "Your order was unpaid so no refund has been made"
-        credit_order: "Your order was paid so your account has been credited" # Is this used anywhere?
+        dont_cancel: "If you have questions please click the link below to send an email."
+        order_summary_canceled_html: "<strong>Order Summary %{number} [CANCELED]</strong>"
+        details: "Here are the details of your cancelled order:"
+        paid_order: "Your order was paid so %{distributor} has refunded the full amount."
+        unpaid_order: "Your order was unpaid so no refund has been made."
+        credit_order: "Your order was paid so your account has been credited." # Is this used anywhere?
       cancel_email_for_shop:
         subject: "Cancellation of order %{number} at %{distributor}"
-        intro: "A customer has cancelled their order #%{number}."
-        view_cancelled_order: "View cancelled order"
+        intro_html: "A customer has cancelled their order <strong>%{number}</strong> at <strong>%{distributor}</strong>."
+        view_cancelled_order: "To view the cancelled order click the link below."
+        link_label: "View order »"
+        order_summary_canceled_html: "<strong>Order Summary %{number} [CANCELED]</strong>"
+        details: "Here are the details of the cancelled order:"
       confirm_email_for_customer:
         subject: "Order confirmation %{number} at %{distributor}"
         intro_html: "Thanks for shopping at <strong>%{distributor}</strong>!"
@@ -3924,17 +3935,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       confirm_email_for_shop:
         subject: "Incoming order %{number} for %{distributor}"
         intro_html: "Well done! You have a new order for <strong>%{distributor}</strong>!"
+        customer_info: "Customer information:"
       invoice_email:
         subject: "Invoice for order %{number} at %{distributor}"
-        intro_html: "Please find attached an invoice for your recent order from <strong>%{distributor}</strong>."
-      order_summary:
-        item: "Item"
-        sku: "SKU"
-        quantity: "Qty"
-        price: "Price"
-        subtotal: "Subtotal:"
-        total: "Total:"
-        includes_tax: "(includes tax):"
+        intro_html: "Please find attached an invoice for your recent order <strong>%{number}</strong> at <strong>%{distributor}</strong>."
       shipping:
         delivery_details: "Delivery details"
         delivery_time: "Delivery on:"
@@ -3943,7 +3947,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         collection_time: "Ready for collection:"
         collection_instructions: "Collection instructions:"
       special_instructions:
-        special_instructions: "Your notes:"
+        special_instructions: "Special notes"
     shipment_mailer:
       shipped_email:
         subject: "Shipment notification of order %{number} at %{distributor}"

@@ -28,9 +28,18 @@
     text-align: left;
   }
 
+  th, td {
+    &:first-child {
+      padding-left: 10px;
+    }
+
+    &:last-child {
+      padding-right: 10px;
+    }
+  }
+
   .amount {
     text-align: right;
-    padding-right: 15px;
   }
 
   .payment-state {

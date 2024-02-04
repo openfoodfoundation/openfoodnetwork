@@ -2,13 +2,24 @@
   - @enterprise_for_logo = @order.distributor
 
 - greeting_key = "mailers_shared.enterprise_greeting"
-- intro_key = ".intro"
+- intro_key = ".intro_html"
 
 = render partial: 'shared/mailers/greeting_and_intro',
          locals: { greeting: t(greeting_key, name: @order.distributor.contact_name),
-                   intro: t(intro_key, number: @order.number),
+                   intro: t(intro_key, number: @order.number, distributor: @order.distributor.name),
                    enterprise_for_logo: @enterprise_for_logo }
 
-= link_to t('.view_cancelled_order'), spree.edit_admin_order_url(@order)
+%p.callout
+  = t(".view_cancelled_order")
+  %br
+  %a{:href => spree.edit_admin_order_url(@order), :target => "_blank"}
+    = t(".link_label")
+
+%h3
+  = t(".order_summary_canceled_html", number: @order.number)
+%p
+  = t(".details")
+
+= render 'shared/mailers/order_summary'
 
 = render 'shared/mailers/signoff_instance'

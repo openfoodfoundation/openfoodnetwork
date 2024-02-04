@@ -9,18 +9,23 @@
                    intro: t(intro_key, distributor: @order.distributor.name),
                    enterprise_for_logo: @enterprise_for_logo }
 
-%h4
+%h3
   = t('mailers_shared.order_confirmation_html', number: @order.number)
-%h5
-  %strong= "#{@order.bill_address.firstname} #{@order.bill_address.lastname}"
-  = " <#{@order.email}>" if @order.email
+%h4
+  = t('.customer_info')
+%p
+  = "#{@order.bill_address.firstname} #{@order.bill_address.lastname}"
+  %br
+  = "#{@order.email}" if @order.email
+  %br
   = @order.bill_address.phone if @order.bill_address.phone
 
-= render 'order_summary'
-= render 'spree/shared/payment'
-= render 'shipping'
-= render 'special_instructions'
+= render 'shared/mailers/order_summary'
 
-%p &nbsp;
+.detail
+  = render 'spree/shared/payment'
+  = render 'shipping'
+  = render 'special_instructions'
+
 = render 'shared/mailers/signoff_instance'
 = render 'shared/mailers/social_and_contact'

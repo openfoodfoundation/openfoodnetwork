@@ -9,13 +9,16 @@
                    intro: t(intro_key, distributor: @order.distributor.name),
                    enterprise_for_logo: @enterprise_for_logo }
 
-%h4
+%h3
   = t('mailers_shared.order_confirmation_html', number: @order.number)
 %p
   = t('.details_html', distributor: @order.distributor.name)
 
-= render 'order_summary'
-= render 'spree/shared/payment'
-= render 'shipping'
-= render 'special_instructions'
+= render 'shared/mailers/order_summary'
+
+.detail
+  = render 'spree/shared/payment'
+  = render 'shipping'
+  = render 'special_instructions'
+
 = render 'shared/mailers/signoff_distributor'

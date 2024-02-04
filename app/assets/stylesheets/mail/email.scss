@@ -55,6 +55,25 @@ p.callout {
   color: #0096ad;
 }
 
+.detail {
+  & .callout {
+    margin-top: 40px;
+    padding: 10px;
+  }
+
+  & p.callout + p {
+    padding-left: 5px;
+  }
+
+  & .subsection {
+    margin-left: 10px;
+  }
+
+  & .subsection:last-child {
+    margin-bottom: 15px;
+  }
+}
+
 p.footer, p.footer_icons a {
   color: #999;
 }
@@ -94,20 +113,21 @@ table.social {
 table.order-summary {
   border-collapse: separate;
   border-spacing: 0px 10px;
+  font-size: 14px;
 
   tbody tr td {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   thead tr th {
     background-color: #f2f2f2;
     border-bottom: 1px solid black;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
 
     h4 {
-      margin-top: 15px;
+      margin-top: 10px;
     }
   }
 
@@ -118,8 +138,8 @@ table.order-summary {
     }
 
     tr td {
-      padding-left: 5px;
-      padding-right: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
     }
   }
 }
@@ -244,7 +264,6 @@ table {
 h1, h2, h3, h4, h5, h6 {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   line-height: 1.1;
-  margin-bottom: 15px;
   color: #000;
 }
 
@@ -266,18 +285,21 @@ h2 {
 }
 
 h3 {
-  font-weight: 500;
-  font-size: 27px;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 15px;
 }
 
 h4 {
-  font-weight: 500;
-  font-size: 23px;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 h5 {
-  font-weight: 900;
-  font-size: 17px;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 h6 {
@@ -300,11 +322,16 @@ p, ul {
 
 p {
   &.lead {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   &.last {
     margin-bottom: 0px;
+  }
+
+  &.small {
+    font-size: 12px;
+    margin: 5px;
   }
 }
 
