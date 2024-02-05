@@ -380,7 +380,6 @@ pa:
   cancel_order: "ਆਰਡਰ ਰੱਦ ਕਰੋ"
   confirm_send_invoice: "ਇਸ ਆਰਡਰ ਲਈ ਗਾਹਕ ਨੂੰ ਇੱਕ ਇਨਵੌਇਸ ਭੇਜਿਆ ਜਾਵੇਗਾ। ਕੀ ਤੁਸੀਂ ਵਾਕਈ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
   confirm_resend_order_confirmation: "ਕੀ ਤੁਸੀਂ ਵਾਕਈ ਆਰਡਰ ਦੇ ਪੁਸ਼ਟੀਕਰਨ ਈਮੇਲ ਨੂੰ ਦੁਬਾਰਾ ਭੇਜਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
-  must_have_valid_business_number: "ਇਨਵੌਇਸ ਭੇਜਣ ਤੋਂ ਪਹਿਲਾਂ %{enterprise_name} ਕੋਲ ਇੱਕ ਵੈਧ ABN ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"
   invoice: "ਇਨਵੌਇਸ"
   invoices: "ਇਨਵੌਇਸ"
   file: "ਫਾਇਲ"
@@ -4135,6 +4134,11 @@ pa:
           email: "ਈਮੇਲ"
           total: "ਕੁੱਲ"
           billing_address_name: "ਨਾਮ"
+      taxons:
+        form:
+          name: ਨਾਂ
+          permalink: ਪਰਮਾਲਿੰਕ
+          description: ਵਰਣਨ
       general_settings:
         edit:
           legal_settings: "ਕਾਨੂੰਨੀ ਸੈਟਿੰਗਾਂ"

@@ -334,7 +334,6 @@ ar:
   cancel_order: "الغاء الطلب"
   confirm_send_invoice: "سيتم إرسال فاتورة لهذا الطلب إلى العميل. هل أنت متأكد أنك تريد المتابعة؟"
   confirm_resend_order_confirmation: "هل أنت متأكد من أنك تريد إعادة إرسال رسالة تأكيد الطلب؟"
-  must_have_valid_business_number: "يجب أن يكون %{enterprise_name} على ABN صالح قبل إرسال الفواتير."
   invoice: "فاتورة"
   active: "نشط"
   cancelled: "ألغيت"
@@ -4186,6 +4185,11 @@ ar:
           email: "البريد الإلكتروني"
           total: "المجموع"
           billing_address_name: "الاسم"
+      taxons:
+        form:
+          name: الاسم
+          permalink: الرابط الثابت
+          description: وصف
       general_settings:
         edit:
           legal_settings: "الإعدادات القانونية"

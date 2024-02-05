@@ -329,7 +329,6 @@ uk:
   cancel_order: "Відмінити замовлення"
   confirm_send_invoice: "Рахунок-фактура на це замовлення буде надіслано клієнту. Ви впевнені, що хочете продовжити?"
   confirm_resend_order_confirmation: "Ви впевнені, що хочете повторно надіслати електронний лист із підтвердженням замовлення?"
-  must_have_valid_business_number: "%{enterprise_name} має мати дійсний номер ABN, перш ніж можна буде надсилати рахунки-фактури."
   invoice: "Рахунок-фактура"
   active: "Активний"
   cancelled: "Скасовано"
@@ -4028,6 +4027,11 @@ uk:
           email: "Email"
           total: "Всього"
           billing_address_name: "Ім'я"
+      taxons:
+        form:
+          name: Ім'я
+          permalink: Постійне посилання
+          description: Опис
       general_settings:
         edit:
           legal_settings: "Юридичні налаштування"

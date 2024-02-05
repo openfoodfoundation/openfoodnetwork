@@ -380,7 +380,6 @@ fr_CA:
   cancel_order: "Annuler la commande"
   confirm_send_invoice: "La facture de cette commande va être transmise à l'acheteur. Etes-vous sûr de vouloir continuer ?"
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
-  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
   invoice: "Facture"
   invoices: "Factures"
   file: "fichier"
@@ -4259,6 +4258,11 @@ fr_CA:
           email: "Email"
           total: "Total"
           billing_address_name: "Nom"
+      taxons:
+        form:
+          name: Nom
+          permalink: Nom pour URL (sans espace)
+          description: Description
       general_settings:
         edit:
           legal_settings: "Configuration légales"

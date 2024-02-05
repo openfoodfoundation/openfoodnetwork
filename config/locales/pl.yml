@@ -213,7 +213,6 @@ pl:
   cancel_order: "Anuluj zamówienie"
   confirm_send_invoice: "Rachunek do tego zamówienia zostanie wysłany do klienta. Kontynuować?"
   confirm_resend_order_confirmation: "Na pewno ponownie wysłać potwierdzającą wiadomość e-mail?"
-  must_have_valid_business_number: "%{enterprise_name} musi mieć ważny NIP, aby można było wysyłać faktury."
   invoice: "Faktura"
   cancelled: "Anulowane"
   more: "Więcej"
@@ -3466,6 +3465,10 @@ pl:
           email: "E-mail"
           total: "Razem"
           billing_address_name: "Nazwa"
+      taxons:
+        form:
+          name: Nazwa
+          description: Opis
       general_settings:
         edit:
           legal_settings: "Ustawienia prawne"

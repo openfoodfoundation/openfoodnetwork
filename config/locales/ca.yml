@@ -358,7 +358,6 @@ ca:
   cancel_order: "Cancel·lar Comanda"
   confirm_send_invoice: " S'enviarà al client una factura per a aquesta comanda Està segur de continuar?"
   confirm_resend_order_confirmation: "Segur que vol reenviar el correu de confirmació de la comanda?"
-  must_have_valid_business_number: "%{enterprise_name} ha de tenir un NIF vàlid abans de poder enviar les factures."
   invoice: "Factura"
   invoices: "Factures"
   file: "Arxiu"
@@ -4068,6 +4067,11 @@ ca:
           email: "Correu electrònic"
           total: "Total"
           billing_address_name: "Nom"
+      taxons:
+        form:
+          name: Nom
+          permalink: Enllaç permanent
+          description: Descripció
       general_settings:
         edit:
           legal_settings: "Paràmetres legals"

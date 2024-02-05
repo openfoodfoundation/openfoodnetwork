@@ -270,7 +270,6 @@ pt_BR:
   cancel_order: "Cancelar pedido"
   confirm_send_invoice: "Uma fatura desse pedido será enviada ao cliente. Tem certeza que deseja continuar?"
   confirm_resend_order_confirmation: "Tem certeza que deseja enviar novamente o pedido de confirmação do e-mail?"
-  must_have_valid_business_number: "%{enterprise_name} deve ter um CNPJ válido antes que as faturas possam ser enviadas."
   invoice: "Fatura"
   active: "Ativo"
   cancelled: "Cancelado"
@@ -3791,6 +3790,11 @@ pt_BR:
           email: "E-mail"
           total: "Total"
           billing_address_name: "Nome"
+      taxons:
+        form:
+          name: Nome
+          permalink: Permalink
+          description: Descrição
       general_settings:
         edit:
           legal_settings: "Configurações de Legislação"

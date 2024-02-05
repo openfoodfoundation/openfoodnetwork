@@ -378,7 +378,6 @@ ru:
   cancel_order: "Отменить Заказ"
   confirm_send_invoice: "Счет на этот заказ будет отправлен клиенту. Вы уверены что хотите продолжить?"
   confirm_resend_order_confirmation: "Вы уверены, что хотите повторно отправить письмо с подтверждением заказа?"
-  must_have_valid_business_number: " %{enterprise_name} должен быть указан ИНН перед отправкой счетов."
   invoice: "Счёт"
   invoices: "Счета"
   file: "Файл"
@@ -4248,6 +4247,11 @@ ru:
           email: "Email"
           total: "Всего"
           billing_address_name: "Название"
+      taxons:
+        form:
+          name: Название
+          permalink: Постоянная ссылка
+          description: Описание
       general_settings:
         edit:
           legal_settings: "Правовые настройки"

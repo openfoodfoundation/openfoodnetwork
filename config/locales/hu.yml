@@ -316,7 +316,6 @@ hu:
   cancel_order: "Megrendelés visszavonása"
   confirm_send_invoice: "Erről a megrendelésről számlát küldünk a vásárlónak. Biztos, hogy akarod folytatni?"
   confirm_resend_order_confirmation: "Biztos, hogy újra el akarja küldeni a rendelést visszaigazoló e-mailt?"
-  must_have_valid_business_number: "%{enterprise_name}-nak érvényes adószámmal kell rendelkeznie a számlák küldéséhez."
   invoice: "Számla"
   active: "Aktív"
   cancelled: "Törölve"
@@ -4001,6 +4000,11 @@ hu:
           email: "Email"
           total: "Összesen"
           billing_address_name: "Név"
+      taxons:
+        form:
+          name: Név
+          permalink: Permalink
+          description: Leírás
       general_settings:
         edit:
           legal_settings: "Jogi beállítások"

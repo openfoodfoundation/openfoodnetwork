@@ -243,7 +243,6 @@ pt:
   cancel_order: "Cancelar Encomenda"
   confirm_send_invoice: "Vai ser enviada uma factura desta encomenda ao consumidor. Tem a certeza que deseja continuar?"
   confirm_resend_order_confirmation: "Tem a certeza que deseja enviar novamente o email de confirmação de encomenda? "
-  must_have_valid_business_number: "%{enterprise_name}tem de ter um NIPC/NIF válido antes de se poder enviar facturas."
   invoice: "Factura"
   active: "Ativo"
   cancelled: "Cancelada"
@@ -3457,6 +3456,10 @@ pt:
           email: "Email"
           total: "Total"
           billing_address_name: "Nome"
+      taxons:
+        form:
+          name: Nome
+          description: Descrição
       general_settings:
         edit:
           legal_settings: "Configurações Legais"

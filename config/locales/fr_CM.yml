@@ -265,7 +265,6 @@ fr_CM:
   cancel_order: "Annuler la commande"
   confirm_send_invoice: "La facture de cette commande va être transmise au client. Etes-vous sûr de vouloir continuer ?"
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
-  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
   invoice: "Facture"
   active: "Actif"
   cancelled: "Annulée"
@@ -3903,6 +3902,11 @@ fr_CM:
           email: "Email"
           total: "Total"
           billing_address_name: "Produit/Variante"
+      taxons:
+        form:
+          name: Produit/Variante
+          permalink: Permalien
+          description: Description
       general_settings:
         edit:
           legal_settings: "Configuration légales"

@@ -387,7 +387,6 @@ ml:
   cancel_order: "ഓർഡർ റദ്ദാക്കുക"
   confirm_send_invoice: "ഈ ഓർഡറിന്റെ ഇൻവോയ്സ് ഉപഭോക്താവിന് അയയ്ക്കും. നിങ്ങൾക്ക് തുടരണമെന്നുള്ളത് തീർച്ചയാണോ?"
   confirm_resend_order_confirmation: "ഓർഡർ സ്ഥിരീകരണ ഇമെയിൽ വീണ്ടും അയയ്‌ക്കണമെന്നത് തീർച്ചയാണോ?"
-  must_have_valid_business_number: "ഇൻവോയ്‌സുകൾ അയയ്‌ക്കുന്നതിന് മുമ്പ് %{enterprise_name} -ന് സാധുവായ ഒരു എബിഎൻ ഉണ്ടായിരിക്കണം."
   invoice: "ഇൻവോയ്സ്"
   invoices: "ഇൻവോയ്സുകൾ"
   file: "ഫയൽ"
@@ -4268,6 +4267,11 @@ ml:
           email: "ഇമെയിൽ"
           total: "ആകെ"
           billing_address_name: "പേര്"
+      taxons:
+        form:
+          name: പേര്
+          permalink: പെർമലിങ്ക്
+          description: വിവരണം
       general_settings:
         edit:
           legal_settings: "നിയമ ക്രമീകരണങ്ങൾ"

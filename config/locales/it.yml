@@ -355,7 +355,6 @@ it:
   cancel_order: "Cancella Ordine"
   confirm_send_invoice: "Verrà mandata al cliente una mail con la conferma di quest'ordine. Sei sicuro di voler continuare?"
   confirm_resend_order_confirmation: "Sei sicuro di voler inviare di nuovo l'email di conferma per l'ordine?"
-  must_have_valid_business_number: "%{enterprise_name} deve avere una partita iva valida per poter emettere fattura."
   invoice: "Conferma d'ordine"
   active: "Attivo"
   cancelled: "Annullato"
@@ -4096,6 +4095,11 @@ it:
           email: "Email"
           total: "Totale"
           billing_address_name: "Nome"
+      taxons:
+        form:
+          name: Nome
+          permalink: Permalink
+          description: Descrizione
       general_settings:
         edit:
           legal_settings: "Impostazioni Legali"

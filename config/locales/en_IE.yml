@@ -384,7 +384,6 @@ en_IE:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "Please enter your company number."
   invoice: "Invoice"
   invoices: "Invoices"
   file: "File"
@@ -4239,6 +4238,11 @@ en_IE:
           email: "Email"
           total: "Total"
           billing_address_name: "Name"
+      taxons:
+        form:
+          name: Name
+          permalink: Permalink
+          description: Description
       general_settings:
         edit:
           legal_settings: "Legal Settings"

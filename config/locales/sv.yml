@@ -7,6 +7,8 @@ sv:
     attributes:
       spree/order/ship_address:
         phone: "Telefonnummer"
+        firstname: "Förnamn"
+        lastname: "Efternamn"
       spree/user:
         password: "Lösenord"
       enterprise_fee:
@@ -78,7 +80,6 @@ sv:
   cancel_order: "Ångra beställning"
   confirm_send_invoice: "En faktura på denna beställning kommer att skickas till kunden. Är du säker på att du vill fortsätta? "
   confirm_resend_order_confirmation: "Är du säker på att du vill skicka beställningsbekräftelsen en gång till? "
-  must_have_valid_business_number: "%{enterprise_name} måste ha ett giltigt organisationsnummer innan fakturor kan skickas."
   invoice: "Faktura"
   cancelled: "Avbokad"
   say_no: "Nej"
@@ -2136,6 +2137,8 @@ sv:
     account: "Konto"
     billing_address: "Fakturerirngsadress"
     shipping_address: "Leveransadress"
+    first_name: "Förnamn"
+    last_name: "Efternamn"
     city: "Ort"
     country: "Land"
     state: "Region"
@@ -2331,6 +2334,10 @@ sv:
           email: "E-post"
           total: "Summa"
           billing_address_name: "Namn"
+      taxons:
+        form:
+          name: Namn
+          description: Beskrivning
       general_settings:
         edit:
           enterprises_require_tos: "Företag måste acceptera servicevillkoren"

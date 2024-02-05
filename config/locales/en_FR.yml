@@ -78,6 +78,10 @@ en_FR:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Inheriting the tax categeory requires a per-item calculator."
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "failed to load. Please check to ensure the file is not corrupt, and try again."
         spree/user:
           attributes:
             email:
@@ -387,7 +391,7 @@ en_FR:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
+  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be used."
   invoice: "Invoice"
   invoices: "Invoices"
   file: "File"
@@ -4304,6 +4308,15 @@ en_FR:
           email: "Email"
           total: "Total"
           billing_address_name: "Name"
+      taxons:
+        form:
+          name: Name
+          permalink: Permalink
+          meta_title: Meta Title
+          meta_description: Meta Description
+          meta_keywords: Meta Keywords
+          description: Description
+          dfc_id: DFC URI
       general_settings:
         edit:
           legal_settings: "Legal Settings"

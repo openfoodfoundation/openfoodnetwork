@@ -329,7 +329,6 @@ ko:
   cancel_order: "주문 취소"
   confirm_send_invoice: "이 주문에 대한 청구서가 고객님께 보내질 예정입니다. 계속해서 진행하시겠습니까?"
   confirm_resend_order_confirmation: "주문 확인 이메일을 재전송하기를 원하시는 것이 확실합니까?"
-  must_have_valid_business_number: "%{enterprise_name}는 청구서가 보내기 전에 사용가능한 호주 사업 번호를 가져야 합니다. "
   invoice: "청구서"
   active: "활성화"
   cancelled: "취소됨"
@@ -3905,6 +3904,11 @@ ko:
           email: "이메일"
           total: "총합"
           billing_address_name: "이름"
+      taxons:
+        form:
+          name: 이름
+          permalink: 하이퍼링크
+          description: 설명
       general_settings:
         edit:
           legal_settings: "법적 설정"

@@ -387,7 +387,6 @@ de_DE:
   cancel_order: "Bestellung stornieren"
   confirm_send_invoice: "Eine Rechnung für diese Bestellung wird an den Kunden geschickt. Sind Sie sicher, dass sie fortfahren möchten?"
   confirm_resend_order_confirmation: "Sind Sie sicher, dass Sie die E-Mail-Bestätigung erneut senden wollen?"
-  must_have_valid_business_number: "%{enterprise_name} muss eine gültige Umsatzsteueridentifikationsnummer (USt-IdNr.) haben, bevor Rechnungen gesendet werden können."
   invoice: "Rechnung"
   invoices: "Rechnungen"
   file: "Datei"
@@ -4256,6 +4255,11 @@ de_DE:
           email: "E-Mail-Adresse"
           total: "Gesamt"
           billing_address_name: "Name"
+      taxons:
+        form:
+          name: Name
+          permalink: Permalink
+          description: Beschreibung
       general_settings:
         edit:
           legal_settings: "Rechtliche Einstellungen"

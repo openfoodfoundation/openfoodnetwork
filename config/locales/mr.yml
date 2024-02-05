@@ -387,7 +387,6 @@ mr:
   cancel_order: "ऑर्डर रद्द करा"
   confirm_send_invoice: "या ऑर्डरचे इन्व्हॉईस ग्राहकाला पाठवले जाईल. तुम्ही पुढे जाऊ इच्छिता?"
   confirm_resend_order_confirmation: "तुम्हाला खात्री आहे की तुम्ही ऑर्डर पुष्टीकरण ईमेल पुन्हा पाठवू इच्छिता?"
-  must_have_valid_business_number: "इनव्हॉइस पाठवण्यापूर्वी %{enterprise_name} कडे वैध ABN असणे आवश्यक आहे."
   invoice: "इनव्हॉइस"
   invoices: "इनव्हॉइसेस"
   file: "फाईल"
@@ -4173,6 +4172,9 @@ mr:
           email: "ईमेल"
           total: "एकूण"
           billing_address_name: "नाव"
+      taxons:
+        form:
+          name: नाव
       general_settings:
         edit:
           legal_settings: "कायदेशीर सेटिंग्ज"

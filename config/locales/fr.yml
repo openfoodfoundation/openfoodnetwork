@@ -78,6 +78,10 @@ fr:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Déterminer la catégorie de taxe requiert l'utilisation du calculateur par article. "
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "Echec du chargement. Merci de vérifier que le fichier n'est pas endommagé et réessayer."
         spree/user:
           attributes:
             email:
@@ -386,7 +390,7 @@ fr:
   cancel_order: "Annuler la commande"
   confirm_send_invoice: "La facture de cette commande va être transmise au client. Etes-vous sûr de vouloir continuer ?"
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
-  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
+  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées. "
   invoice: "Facture"
   invoices: "Factures"
   file: "fichier"
@@ -4361,6 +4365,15 @@ fr:
           email: "Email"
           total: "Total"
           billing_address_name: "Nom"
+      taxons:
+        form:
+          name: Nom
+          permalink: Permalien
+          meta_title: Méta titre
+          meta_description: Méta description
+          meta_keywords: Méta mots clés
+          description: Description
+          dfc_id: URI DFC
       general_settings:
         edit:
           legal_settings: "Configuration légales"

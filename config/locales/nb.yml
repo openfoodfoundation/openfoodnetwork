@@ -387,7 +387,6 @@ nb:
   cancel_order: "Avbryt Bestilling"
   confirm_send_invoice: "En faktura for denne bestillingen vil bli sendt til kunden. Er du sikker på at du vil fortsette?"
   confirm_resend_order_confirmation: "Er du sikker på at du vil sende ordrebekreftelse via epost på nytt?"
-  must_have_valid_business_number: "%{enterprise_name} må ha et gyldig ORG nr. før fakturaer kan sendes."
   invoice: "Faktura"
   invoices: "Fakturaer"
   file: "Fil"
@@ -4235,6 +4234,11 @@ nb:
           email: "Epost"
           total: "Total"
           billing_address_name: "Navn"
+      taxons:
+        form:
+          name: Navn
+          permalink: Permalink
+          description: Beskrivelse
       general_settings:
         edit:
           legal_settings: "Juridiske innstillinger"

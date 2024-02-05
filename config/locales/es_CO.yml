@@ -226,7 +226,6 @@ es_CO:
   cancel_order: "Cancelar pedido"
   confirm_send_invoice: "Al cliente se enviará una factura por este pedido. ¿Desea continuar?"
   confirm_resend_order_confirmation: "¿Estás seguro que quieres reenviar el correo de confirmación del pedido?"
-  must_have_valid_business_number: "%{enterprise_name} debe tener un NIT válido antes de que las facturas se puedan enviar."
   invoice: "Factura"
   active: "Activo"
   cancelled: "Cancelado"
@@ -3593,6 +3592,10 @@ es_CO:
           email: "Correo electrónico"
           total: "Total"
           billing_address_name: "Nombre"
+      taxons:
+        form:
+          name: Nombre
+          description: Descripción
       general_settings:
         edit:
           legal_settings: "Configuraciones legales"

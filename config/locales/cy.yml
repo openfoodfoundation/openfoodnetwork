@@ -291,6 +291,10 @@ cy:
     integer_array_validator:
       not_array_error: "rhaid iddo fod yn arae"
       invalid_element_error: "rhaid iddo gynnwys cyfanrifau dilys yn unig"
+  report_job:
+    report_failed: |
+        Methodd yr adroddiad hwn. Hwyrach ei fod yn rhy fawr i’w brosesu.
+        Byddwn yn ymchwilio i hyn, ond cofiwch gysylltu os bydd y broblem yn parhau.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Cadarnhewch y cyfeiriad e-bost ar gyfer %{enterprise}"
@@ -380,7 +384,6 @@ cy:
   cancel_order: "Canslo Archeb"
   confirm_send_invoice: "Anfonir anfoneb ar gyfer yr archeb hon at y cwsmer. Ydych chi'n siŵr eich bod chi eisiau parhau?"
   confirm_resend_order_confirmation: "Ydych chi'n siŵr eich bod chi eisiau ail-anfon e-bost cadarnhau archeb?"
-  must_have_valid_business_number: "Noder rhif eich cwmni yma."
   invoice: "Anfoneb"
   invoices: "Anfonebau"
   file: "Ffeil"
@@ -590,6 +593,9 @@ cy:
     has_n_rules: "%{num} rheolau'n berthnasol"
     unsaved_confirm_leave: "Mae yna newidiadau heb eu cadw ar y dudalen hon. Parhau heb eu cadw?"
     available_units: "Unedau sydd ar gael"
+    terms_of_service_have_been_updated_html: "Diweddarwyd Telerau Gwasanaeth y Rhwydwaith Bwyd Agored: %{tos_link}"
+    terms_of_service: Darllen y Telerau Gwasanaeth
+    accept_terms_of_service: Derbyn y Telerau Gwasanaeth
     shopfront_settings:
       embedded_shopfront_settings: "Mewnosodwyd gosodiadau blaen siop "
       enable_embedded_shopfronts: "Galluogi blaenau siopau a fewnosodwyd"
@@ -743,6 +749,17 @@ cy:
         header:
           title: Cynhyrchion Golygu Swmp
         loading: Yn llwytho eich cynnyrch
+      delete_modal:
+        delete_product_modal:
+          heading: "Dileu cynnyrch"
+          prompt: "Caiff ei ddileu’n barhaol o’ch rhestr."
+          confirmation_text: "Dileu cynnyrch"
+          cancellation_text: "Cadw cynnyrch"
+        delete_variant_modal:
+          heading: "Dileu amrywiolyn"
+          prompt: "Caiff ei ddileu’n barhaol o’ch rhestr."
+          confirmation_text: "Dileu amrywiolyn"
+          cancellation_text: "Cadw amrywiolyn"
       sort:
         pagination:
           total_html: "<strong>%{total}Cafwyd hyd i </strong> cynnyrch ar gyfer eich meini prawf chwilio. Yn dangos %{from} i %{to}."
@@ -752,7 +769,9 @@ cy:
           clear_search: Clirio'r chwiliad
       filters:
         search_products: Chwilio am gynnyrch
+        search_for_producers: Chwilio am gynhyrchwyr
         all_producers: Pob cynhyrchydd
+        search_for_categories: Chwilio am gategorïau
         all_categories: Pob categori
         producers:
           label: Prynu bwyd
@@ -767,10 +786,24 @@ cy:
         changed_summary:
           one: "Addaswyd %{count} cynnyrch"
           other: "Addaswyd %{count} cynnyrch"
+        error_summary:
+          saved:
+            one: "Cadwyd %{count} cynnyrch yn iawn, ond"
+            other: "Cadwyd %{count} cynnyrch yn iawn, ond"
         save: Cadw’r newidiadau
         reset: Hepgor y newidiadau
+      bulk_update:
+        success: Cadwyd y newidiadau
       edit_image:
+        title: Golygu llun y cynnyrch
         close: Yn ôl
+        upload: Lanlwytho llun
+      delete_product:
+        success: Llwyddwyd i ddileu’r cynnyrch
+        error: Yn methu dileu’r cynnyrch
+      delete_variant:
+        success: Llwyddwyd i ddileu’r amrywiolyn
+        error: Yn methu dileu’r amrywiolyn
     product_import:
       title: Mewnforio Cynnyrch
       file_not_found: Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor
@@ -913,6 +946,7 @@ cy:
     orders:
       edit:
         order_sure_want_to: Ydych chi'n siŵr eich bod chi am %{event} yr archeb hwn?
+        voucher_tax_included_in_price: "%{label} (treth wedi ei chynnwys yn y daleb)"
       invoice_email_sent: 'Anfonwyd e-bost anfonebu'
       order_email_resent: 'Ail-anfonwyd e-bost archebu'
       bulk_management:
@@ -1015,6 +1049,7 @@ cy:
         images:
           legend: "Delweddau"
           logo: Logo
+          logo_size: "300 x 300 picsel"
           promo_image_placeholder: 'Mae''r ddelwedd hon i''w gweld yn ''Amdanom Ni'''
           promo_image_note1: 'NODER:'
           promo_image_note2: Bydd unrhyw ddelwedd hyrwyddo a lanlwythir yma'n cael ei thocio i 1200 x 260.
@@ -1200,7 +1235,11 @@ cy:
           custom_tab_title: "Teitl y tab pwrpasol"
           custom_tab_content: "Cynnwys y tab pwrpasol"
         connected_apps:
+          legend: "Apiau cysylltiedig"
+          enable: "Caniatáu rhannu data"
+          disable: "Rhoi’r gorau i rannu"
           loading: "Yn llwytho"
+          link_label: "Rheoli’r rhestru"
       actions:
         edit_profile: Gosodiadau
         properties: Manylion
@@ -1430,6 +1469,8 @@ cy:
         has_no_payment_methods: "nid oes gan %{enterprise} unrhyw ddulliau talu"
         has_no_shipping_methods: "nid oes gan %{enterprise} unrhyw ddulliau anfon"
         has_no_enterprise_fees: "nid oes gan %{enterprise} unrhyw ffioedd menter"
+      flashes:
+        dismiss: Anwybyddu
       side_menu:
         enterprise:
           primary_details: "Manylion sylfaenol"
@@ -1450,6 +1491,7 @@ cy:
           users: "Defnyddwyr"
           vouchers: Talebau
           white_label: "Label gwyn"
+          connected_apps: "Apiau cysylltiedig"
         enterprise_group:
           primary_details: "Manylion sylfaenol"
           users: "Defnyddwyr"
@@ -1876,18 +1918,22 @@ cy:
   invoice_column_price: "Pris"
   invoice_column_item: "Eitem"
   invoice_column_qty: "Nifer"
+  invoice_column_weight_volume: "Pwysau / Cyfaint"
   invoice_column_unit_price_with_taxes: "Pris yr uned (gan gynnwys treth)"
   invoice_column_unit_price_without_taxes: "Pris yr uned (heb dreth)"
   invoice_column_price_with_taxes: "Cyfanswm pris (gan gynnwys treth)"
   invoice_column_price_without_taxes: "Cyfanswm pris (heb dreth)"
+  invoice_column_price_per_unit_without_taxes: "Pris fesul uned (heb dreth)"
   invoice_column_tax_rate: "Cyfradd dreth"
   invoice_tax_total: "Cyfanswm GST:"
+  invoice_cancel_and_replace_invoice: "Yn canslo ac yn disodli’r anfoneb"
   tax_invoice: "ANFONEB TRETH"
   tax_total: "Cyfanswm treth (%{rate}):"
   invoice_shipping_category_delivery: "Dosbarthu"
   invoice_shipping_category_pickup: "Casglu"
   total_excl_tax: "Cyfanswm (heb dreth):"
   total_incl_tax: "Cyfanswm (gan gynnwys treth):"
+  total_all_tax: "Cyfanswm treth:"
   abn: "Rhif y Cwmni:"
   acn: "Rhif yr Elusen"
   invoice_issued_on: "Cyhoeddwyd yr anfoneb ar:"
@@ -2104,6 +2150,9 @@ cy:
   order_back_to_store: Yn ôl i'r siop
   order_back_to_cart: Yn ôl i'r basged
   order_back_to_website: Yn ôl i’r Wefan
+  checkout_details_title: Manylion talu
+  checkout_payment_title: Taliad
+  checkout_summary_title: Crynodeb wrth dalu
   bom_tip: "Defnyddiwch y dudalen hon i newid nifer cynnyrch ar draws sawl archeb. Gellir hefyd dileu cynnyrch o archebion yn gyfan gwbl, pe dymunir."
   unsaved_changes_warning: "Mae newidiadau heb eu cadw yn bodoli a byddant yn cael eu colli os byddwch yn parhau."
   unsaved_changes_error: "Mae'r meysydd â ffiniau coch yn cynnwys gwallau."
@@ -2966,6 +3015,8 @@ cy:
   report_header_transaction_fee: Ffi Trafodiad (dim treth)
   report_header_total_untaxable_admin: Cyfanswm addasiadau gweinyddol na ellir eu  trethu (dim treth)
   report_header_total_taxable_admin: Cyfanswm addasiadau gweinyddol trethadwy (sy'n cynnwys treth)
+  report_header_voucher_label: Label taleb
+  report_header_voucher_amount: "Swm y daleb (%{currency_symbol})"
   report_line_cost_of_produce: Cost y cynnyrch
   report_line_line_items: eitemau llinell
   report_header_last_completed_order_date: Dyddiad yr archeb ddiweddaraf a gwblhawyd
@@ -3283,6 +3334,7 @@ cy:
           processing: "yn prosesu"
           void: "di-rym"
           invalid: "annilys"
+        quantity_unavailable: "Dim digon o stoc ar gael. Heb gadw’r eitem llinell!"
         quantity_unchanged: "Ni newidiwyd y nifer/maint o'r nifer/maint blaenorol."
         cancel_the_order_html: "Trwy hyn byddwch yn canslo'r archeb presennol.<br />Ydych chi'n siwr eich bod am wneud hyn?"
         cancel_the_order_send_cancelation_email: "Anfon ebost canslo at y cwsmer"
@@ -3732,6 +3784,7 @@ cy:
     credit_card: "Cerdyn credyd"
     new_payment: "Taliad Newydd"
     capture: "Cipio"
+    capture_and_complete_order: "Cofnodi a chwblhau’r archeb"
     void: "Di-rym"
     login: "Mewngofnodi"
     password: "Cyfrinair"
@@ -4013,6 +4066,7 @@ cy:
           from: "O"
           to: "Bil i"
           shipping: "Yn anfon"
+          order_number: "Rhif archeb"
           invoice_number: "Rhif anfoneb"
           payments_list:
             date_time: "Dyddiad / amser"
@@ -4030,6 +4084,9 @@ cy:
           line_item_adjustments: "Addasiadau Eitemau Llinell"
           order_adjustments: "Addasiadau i archeb"
           order_total: "Cyfanswm yr archeb"
+      invoices:
+        index:
+          order_has_changed: "Mae’r archeb wedi newid ers diweddaru’r anfoneb ddiwethaf. Hwyrach nad yw’r anfoneb a ddangosir yma’n gyfredol bellach."
       overview:
         enterprises_header:
           ofn_with_tip: Cynhyrchwyr a / neu Hybiau yw mentrau a nhw yw'r uned sefydliadol sylfaenol yn y Open Food Network.
@@ -4038,6 +4095,7 @@ cy:
           has_no_payment_methods: "does dim dulliau talu"
           has_no_shipping_methods: "does dim dulliau anfon nwyddau"
         products:
+          products_tip: "Y cynnyrch rydych chi’n eu gwerthu trwy’r Rhwydwaith Bwyd Agored."
           active_products:
             zero: "Nid oes gennych unrhyw gynnyrch gweithredol."
             one: "Mae gennych chi un cynnyrch gweithredol"
@@ -4190,6 +4248,8 @@ cy:
           bulk_unit_size: Maint uned swmp
         display_as:
           display_as: Arddangos fel
+        clone:
+          success: Mae’r cynnyrch wedi’i glonio
       reports:
         table:
           select_and_search: "Dewis hidlwyr a chlicio ar %{option} i gael mynediad i'ch data."
@@ -4259,6 +4319,11 @@ cy:
           email: "E-bost"
           total: "Cyfanswm"
           billing_address_name: "Enw"
+      taxons:
+        form:
+          name: Enw
+          permalink: Permalink
+          description: Disgrifiad
       general_settings:
         edit:
           legal_settings: "Gosodiadau Cyfreithiol"

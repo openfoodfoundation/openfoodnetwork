@@ -206,7 +206,6 @@ fil_PH:
   cancel_order: "kanselahin ang order"
   confirm_send_invoice: "ang invoice para sa order na ito ay ipapadala sa customer. nais mo bang magpatuloy?"
   confirm_resend_order_confirmation: "nais mo bang ipadala muli ang order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name}ay dapat may valid na TIN bago makapagpadala ng mga invoice"
   invoice: "invoice"
   active: "aktibo"
   cancelled: "kanselado"
@@ -3479,6 +3478,10 @@ fil_PH:
           email: "Email"
           total: "kabuuan"
           billing_address_name: "Pangalan"
+      taxons:
+        form:
+          name: Pangalan
+          description: paglalarawan
       general_settings:
         edit:
           legal_settings: "Legal Settings"

@@ -247,7 +247,6 @@ tr:
   cancel_order: "Siparişi İptal Et"
   confirm_send_invoice: "Bu siparişin faturası müşteriye gönderilecek. Devam etmek istiyor musunuz?"
   confirm_resend_order_confirmation: "Sipariş onayı e-postasını tekrar göndermek istediğinizden emin misiniz?"
-  must_have_valid_business_number: "Faturaların gönderilebilmesi için %{enterprise_name} adına geçerli bir VKN/TCKN olmalı."
   invoice: "Fatura"
   active: "AKTİF"
   cancelled: "İptal edildi"
@@ -3792,6 +3791,11 @@ tr:
           email: "E-posta"
           total: "Toplam"
           billing_address_name: "Ad"
+      taxons:
+        form:
+          name: Ad
+          permalink: Permalink
+          description: Açıklama
       general_settings:
         edit:
           legal_settings: "Yasal Ayarlar"
