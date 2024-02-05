@@ -37,28 +37,6 @@ ActiveMerchant::Billing::StripePaymentIntentsGateway.class_eval do
     super(money, charge_id, options)
   end
 
-  # Note: Not all payment methods are currently supported by the
-  #     {Payment Methods API}[https://stripe.com/docs/payments/payment-methods]
-  # Current implementation will create a PaymentMethod object if the method is a token
-  #     or credit card
-  # All other types will default to legacy Stripe store
-  def store(payment_method, options = {})
-    params = {}
-    post = {}
-
-    # If customer option is provided, create a payment method and attach to customer id
-    # Otherwise, create a customer, then attach
-    result = add_payment_method_token(params, payment_method, options)
-    return result if result.is_a?(ActiveMerchant::Billing::Response)
-
-    customer_id = options[:customer] || customer(post, payment_method, options).params['id']
-    options = format_idempotency_key(options, 'attach')
-    attach_parameters = { customer: customer_id }
-    attach_parameters[:validate] = options[:validate] unless options[:validate].nil?
-
-    commit(:post, "payment_methods/#{params[:payment_method]}/attach", attach_parameters, options)
-  end
-
   private
 
   def add_connected_account(post, options = {})
