@@ -4,26 +4,6 @@ ActiveMerchant::Billing::StripePaymentIntentsGateway.class_eval do
   CREATE_INTENT_ATTRIBUTES =
     %i[description statement_descriptor receipt_email save_payment_method].freeze
 
-  def create_intent(money, payment_method, options = {})
-    post = {}
-    add_amount(post, money, options, true)
-    add_capture_method(post, options)
-    add_confirmation_method(post, options)
-    add_customer(post, options)
-    add_payment_method_token(post, payment_method, options)
-    add_metadata(post, options)
-    add_return_url(post, options)
-    add_connected_account(post, options)
-    add_shipping_address(post, options)
-    setup_future_usage(post, options)
-
-    CREATE_INTENT_ATTRIBUTES.each do |attribute|
-      add_whitelisted_attribute(post, options, attribute)
-    end
-
-    commit(:post, 'payment_intents', post, options)
-  end
-
   def refund(money, intent_id, options = {})
     intent = commit(:get, "payment_intents/#{intent_id}", nil, options)
     charge_id = intent.params.dig('charges', 'data')[0]['id']
