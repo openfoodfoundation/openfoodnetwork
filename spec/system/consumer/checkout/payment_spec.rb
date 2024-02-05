@@ -236,7 +236,9 @@ describe "As a consumer, I want to checkout my order" do
 
           context "for Stripe SCA", if: pay_method.eql?("Stripe SCA") do
             around do |example|
-              with_stripe_setup { example.run }
+              with_stripe_setup(
+                ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil)
+              ) { example.run }
             end
 
             before do
@@ -249,6 +251,25 @@ describe "As a consumer, I want to checkout my order" do
               fill_out_card_details
               click_on "Next - Order summary"
               proceed_to_summary
+            end
+
+            context "when saving card" do
+              it "selects Stripe SCA and proceeds to the summary step" do
+                stub_customers_post_request(email: order.user.email)
+                stub_payment_method_attach_request
+
+                choose pay_method.to_s
+                fill_out_card_details
+                check "Save card for future use"
+
+                click_on "Next - Order summary"
+                proceed_to_summary
+
+                # Verify card has been saved with correct stripe IDs
+                user_credit_card = order.reload.user.credit_cards.first
+                expect(user_credit_card.gateway_payment_profile_id).to eq "pm_123"
+                expect(user_credit_card.gateway_customer_profile_id).to eq "cus_A123"
+              end
             end
           end
         end
