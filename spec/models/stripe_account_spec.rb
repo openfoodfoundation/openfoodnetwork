@@ -10,15 +10,10 @@ describe StripeAccount do
     let(:client_id) { ENV.fetch('STRIPE_CLIENT_ID', nil) }
     let(:stripe_user_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
     let(:stripe_publishable_key) { ENV.fetch('STRIPE_PUBLIC_TEST_API_KEY', nil) }
-    let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
 
     let!(:stripe_account) {
       create(:stripe_account, enterprise:, stripe_user_id:)
     }
-
-    before do
-      Stripe.api_key = secret
-    end
 
     context "when the Stripe API disconnect fails" do
       before { Stripe.client_id = "bogus_client_id" }
