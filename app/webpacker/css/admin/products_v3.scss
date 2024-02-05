@@ -112,6 +112,7 @@
     }
 
     td {
+      position: relative; // Ensure that overflowing content is covered by the following cell. We don't use overflow: hidden because that messes with the popover.
       background-color: $color-tbl-cell-bg;
     }
 
@@ -354,8 +355,8 @@
 
     &__popout {
       position: absolute;
-      top: -1em;
-      left: -1em;
+      top: -0.6em;
+      left: -0.2em;
       z-index: 1; // Cover below row when hover
       width: 9em;
 

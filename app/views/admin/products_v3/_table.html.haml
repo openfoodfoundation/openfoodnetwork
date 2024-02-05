@@ -11,7 +11,7 @@
     %col{ width:"5%", style: "max-width:5em" }
     %col{ width:"8%" }
     %col{ width:"5%", style: "max-width:5em"}
-    %col{ width:"5%", style: "max-width:5em"}
+    %col{ width:"8%", style: "max-width:5em"}
     %col{ width:"10%" }= # producer
     %col{ width:"10%" }
     %col{ width:"5%" }
@@ -35,10 +35,10 @@
       %tr
         %th.align-left= # image
         %th.align-left.with-input= t('admin.products_page.columns.name')
-        %th.align-right= t('admin.products_page.columns.sku')
+        %th.align-left.with-input= t('admin.products_page.columns.sku')
         %th.align-right= t('admin.products_page.columns.unit')
-        %th.align-right= t('admin.products_page.columns.price')
-        %th.align-right= t('admin.products_page.columns.on_hand')
+        %th.align-left.with-input= t('admin.products_page.columns.price')
+        %th.align-left.with-input= t('admin.products_page.columns.on_hand')
         %th.align-left= t('admin.products_page.columns.producer')
         %th.align-left= t('admin.products_page.columns.category')
         %th.align-left= t('admin.products_page.columns.tax_category')
@@ -106,7 +106,7 @@
                     = variant.on_demand ? t(:on_demand) : variant.on_hand
                   %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
                     .field
-                      = variant_form.number_field :on_hand, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: variant_form.object.on_demand
+                      = variant_form.number_field :on_hand, min: 0, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: variant_form.object.on_demand
                       = error_message_on variant, :on_hand
                     .field.checkbox
                       = variant_form.label :on_demand do

@@ -10,7 +10,7 @@ export default class PopoutController extends Controller {
 
     // Show when click or down-arrow on button
     this.buttonTarget.addEventListener("click", this.show.bind(this));
-    this.buttonTarget.addEventListener("keydown", this.showIfDownArrow.bind(this));
+    this.buttonTarget.addEventListener("keydown", this.applyKeyAction.bind(this));
 
     // Close when click or tab outside of dialog. Run async (don't block primary event handlers).
     this.closeIfOutsideBound = this.closeIfOutside.bind(this); // Store reference for removing listeners later.
@@ -33,17 +33,33 @@ export default class PopoutController extends Controller {
     e.preventDefault();
   }
 
-  showIfDownArrow(e) {
-    if (e.keyCode == 40) {
+  // Apply an appropriate action, behaving similar to a dropdown
+  // Shows the popout and applies the value where appropriate
+  applyKeyAction(e) {
+    if ([38, 40].includes(e.keyCode)) {
+      // Show if Up or Down arrow
       this.show(e);
+    } else if (e.key.match(/^[\d\w]$/)) {
+      // Show, and apply value if it's a digit or word character
+      this.show(e);
+      this.first_input.value = e.key;
+      // Notify of change
+      this.first_input.dispatchEvent(new Event("input"));
     }
   }
 
   close() {
     // Close if not already closed
     if (this.dialogTarget.style.display != "none") {
+      // Check every element for browser-side validation, before the fields get hidden.
+      if (!this.#enabledDisplayElements().every((element) => element.reportValidity())) {
+        // If any fail, don't close
+        return;
+      }
+
       // Update button to represent any changes
       this.buttonTarget.innerText = this.#displayValue();
+      this.buttonTarget.innerHTML ||= "&nbsp;"; // (with default space to help with styling)
       this.buttonTarget.classList.toggle("changed", this.#isChanged());
 
       this.dialogTarget.style.display = "none";
