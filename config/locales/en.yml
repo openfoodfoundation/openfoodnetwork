@@ -4787,3 +4787,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     pagination:
       next: Next
       previous: Previous
+
+
+  # Gem to prevent bot form submissions
+  invisible_captcha:
+    sentence_for_humans: "Please leave empty"
+    timestamp_error_message: "Please try again after 5 seconds."

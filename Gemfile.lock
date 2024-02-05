@@ -344,6 +344,8 @@ GEM
       ruby-vips (>= 2.0.17, < 3)
     immigrant (0.3.6)
       activerecord (>= 3.0)
+    invisible_captcha (2.1.0)
+      rails (>= 5.2)
     io-console (0.7.1)
     ipaddress (0.8.3)
     irb (1.11.0)
@@ -862,6 +864,7 @@ DEPENDENCIES
   i18n-js (~> 3.9.0)
   image_processing
   immigrant
+  invisible_captcha
   jquery-rails (= 4.4.0)
   jquery-ui-rails (~> 4.2)
   json
