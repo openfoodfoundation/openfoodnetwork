@@ -24,13 +24,6 @@ ActiveMerchant::Billing::StripePaymentIntentsGateway.class_eval do
     commit(:post, 'payment_intents', post, options)
   end
 
-  def capture(money, intent_id, options = {})
-    post = {}
-    post[:amount_to_capture] = money
-    add_connected_account(post, options)
-    commit(:post, "payment_intents/#{intent_id}/capture", post, options)
-  end
-
   def refund(money, intent_id, options = {})
     intent = commit(:get, "payment_intents/#{intent_id}", nil, options)
     charge_id = intent.params.dig('charges', 'data')[0]['id']
