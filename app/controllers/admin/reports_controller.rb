@@ -21,18 +21,10 @@ module Admin
 
     def show
       @report = report_class.new(spree_current_user, params, render: render_data?)
+      @rendering_options = rendering_options # also stores user preferences
 
-      @background_reports = OpenFoodNetwork::FeatureToggle
-        .enabled?(:background_reports, spree_current_user)
-
-      if @background_reports && request.post?
-        rendering_options # stores user preferences
-
-        return background(report_format)
-      end
-
-      if params[:report_format].present?
-        export_report
+      if render_data?
+        render_in_background
       else
         show_report
       end
@@ -40,13 +32,8 @@ module Admin
 
     private
 
-    def export_report
-      send_data @report.render_as(report_format), filename: report_filename
-    end
-
     def show_report
       assign_view_data
-      @table = @report.render_as(:html) if render_data?
       render "show"
     end
 
@@ -55,7 +42,6 @@ module Admin
       @report_subtypes = report_subtypes
       @report_subtype = report_subtype
       @report_title = report_title
-      @rendering_options = rendering_options
       @data = Reporting::FrontendData.new(spree_current_user)
 
       variant_id_in = params[:variant_id_in]&.compact_blank
@@ -72,7 +58,7 @@ module Admin
       request.post?
     end
 
-    def background(format)
+    def render_in_background
       cable_ready[ScopedChannel.for_id(params[:uuid])]
         .inner_html(
           selector: "#report-table",
@@ -84,7 +70,8 @@ module Admin
 
       ReportJob.perform_later(
         report_class:, user: spree_current_user, params:,
-        format:, filename: report_filename,
+        format: report_format,
+        filename: report_filename,
         channel: ScopedChannel.for_id(params[:uuid]),
       )
 
