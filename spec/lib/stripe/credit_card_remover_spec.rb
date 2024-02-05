@@ -72,7 +72,7 @@ describe Stripe::CreditCardRemover do
 
       context 'and is deleted' do
         it 'deletes the credit card clone' do
-          customer = double('customer', deleted?: true)
+          customer = instance_double('customer', deleted?: true)
           allow(Stripe::Customer).to receive(:retrieve).and_return(customer)
 
           expect_any_instance_of(Stripe::CreditCardCloneDestroyer).to receive(:destroy_clones).with(
