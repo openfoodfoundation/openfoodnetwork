@@ -13,13 +13,14 @@ module Stripe
     describe "#find_or_clone", :vcr, :stripe_version do
       before { Stripe.api_key = secret }
 
-      let(:customer_id) { ENV.fetch('STRIPE_CUSTOMER', nil) }
+      let(:customer) do
+        Stripe::Customer.create({
+                                  name: 'Apple Customer',
+                                  email: 'apple.customer@example.com',
+                                })
+      end
 
-      let(:stripe_account_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
-
-      let(:stripe_account) {
-        create(:stripe_account, enterprise:, stripe_user_id: stripe_account_id)
-      }
+      let(:customer_id) { customer.id }
 
       let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id, user:) }
 
@@ -30,7 +31,7 @@ module Stripe
             card: {
               number: '4242424242424242',
               exp_month: 8,
-              exp_year: 2026,
+              exp_year: Time.zone.now.year.next,
               cvc: '314',
             },
           },
