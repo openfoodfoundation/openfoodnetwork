@@ -1,8 +1,8 @@
 - content_for :page_actions do
-  %li{ "data-controller": "remote-toggle", "data-remote-toggle-selector-value": "#advanced_settings" }
-    %button#toggle_settings{ "data-action": "click->remote-toggle#toggle" }
+  %li{ "data-controller": "toggle-control", "data-toggle-control-selector-value": "#advanced_settings" }
+    %button#toggle_settings{ "data-action": "click->toggle-control#toggleAdvancedSettings" }
       = t('.advanced_settings')
-      %i.icon-chevron-down{ "data-remote-toggle-target": "chevron" }
+      %i.icon-chevron-down{ "data-toggle-control-target": "chevron" }
 
 #advanced_settings{ style: "display: none" }
   = render partial: "/admin/order_cycles/advanced_settings"
