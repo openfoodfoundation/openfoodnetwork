@@ -13,13 +13,8 @@ module Stripe
 end
 
 Rails.application.reloader.to_prepare do
-  Stripe.api_key = if Rails.env.test? || ENV["CI"]
-                     ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil)
-                   else
-                     ENV.fetch('STRIPE_INSTANCE_SECRET_KEY', nil)
-                   end
-
-  Stripe.publishable_key = ENV.fetch('STRIPE_INSTANCE_PUBLISHABLE_KEY', nil)
-  Stripe.client_id = ENV.fetch('STRIPE_CLIENT_ID', nil)
-  Stripe.endpoint_secret = ENV.fetch('STRIPE_ENDPOINT_SECRET', nil)
+  Stripe.api_key = ENV['STRIPE_INSTANCE_SECRET_KEY']
+  Stripe.publishable_key = ENV['STRIPE_INSTANCE_PUBLISHABLE_KEY']
+  Stripe.client_id = ENV['STRIPE_CLIENT_ID']
+  Stripe.endpoint_secret = ENV['STRIPE_ENDPOINT_SECRET']
 end
