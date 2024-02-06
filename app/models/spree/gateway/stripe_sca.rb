@@ -4,7 +4,6 @@ require 'stripe/profile_storer'
 require 'stripe/credit_card_cloner'
 require 'stripe/authorize_response_patcher'
 require 'stripe/payment_intent_validator'
-require 'active_merchant/billing/gateways/stripe_payment_intents_decorator'
 require 'active_merchant/billing/gateways/stripe'
 
 module Spree
@@ -87,6 +86,7 @@ module Spree
       # NOTE: the name of this method is determined by Spree::Payment::Processing
       def void(response_code, _creditcard, gateway_options)
         payment_intent_id = response_code
+
         payment_intent_response = Stripe::PaymentIntent.retrieve(payment_intent_id,
                                                                  stripe_account: stripe_account_id)
         gateway_options[:stripe_account] = stripe_account_id
@@ -95,8 +95,7 @@ module Spree
         if voidable?(payment_intent_response)
           provider.void(response_code, gateway_options)
         else
-          provider.refund(refundable_amount(payment_intent_response), response_code,
-                          gateway_options)
+          provider.refund(payment_intent_response.amount_received, response_code, gateway_options)
         end
       end
 
@@ -117,11 +116,6 @@ module Spree
 
       def voidable?(payment_intent_response)
         VOIDABLE_STATES.include? payment_intent_response.status
-      end
-
-      def refundable_amount(payment_intent_response)
-        payment_intent_response.amount_received -
-          payment_intent_response.charges.data.map(&:amount_refunded).sum
       end
 
       # In this gateway, what we call 'secret_key' is the 'login'

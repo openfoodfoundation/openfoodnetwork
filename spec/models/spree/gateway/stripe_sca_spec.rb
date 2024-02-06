@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe Spree::Gateway::StripeSCA, type: :model do
-
   let(:order) { create(:order_ready_for_payment) }
 
   let(:year_valid) { Time.zone.now.year.next }
@@ -25,17 +24,10 @@ describe Spree::Gateway::StripeSCA, type: :model do
     { order_id: order.number }
   }
 
-  let(:pm_card) do
-    Stripe::PaymentMethod.create({
-                                   type: 'card',
-                                   card: {
-                                     number: '4242424242424242',
-                                     exp_month: 12,
-                                     exp_year: year_valid,
-                                     cvc: '314',
-                                   },
-                                 })
-  end
+  # Stripe testing card:
+  #     https://stripe.com/docs/testing?testing-method=payment-methods
+  let(:pm_card) { Stripe::PaymentMethod.retrieve('pm_card_mastercard') }
+
   let(:payment_intent) do
     Stripe::PaymentIntent.create({
                                    amount: 1000, # given in AUD cents
@@ -68,6 +60,77 @@ describe Spree::Gateway::StripeSCA, type: :model do
 
       expect(response_error.success?).to eq false
       expect(response_error.message).to eq "No pending payments"
+    end
+  end
+
+  describe "#void", :vcr, :stripe_version do
+    # This is the first account retrieved using Stripe::Account.list
+    let(:stripe_test_account) { "acct_1OhZ9lQQeZbvfZRJ" }
+
+    before do
+      # Inject our test stripe account
+      stripe_account = create(:stripe_account, stripe_user_id: stripe_test_account)
+      allow(StripeAccount).to receive(:find_by).and_return(stripe_account)
+    end
+
+    context "with a confirmed payment" do
+      it "refunds the payment" do
+        # Link the payment intent to our test stripe account, and automatically confirm and capture
+        # the payment.
+        payment_intent = Stripe::PaymentIntent.create(
+          {
+            amount: 1000, # given in AUD cents
+            currency: 'aud', # AUD to match order currency
+            payment_method: 'pm_card_mastercard',
+            payment_method_types: ['card'],
+            capture_method: 'automatic',
+            confirm: true,
+          },
+          stripe_account: stripe_test_account
+        )
+
+        payment = create(
+          :payment,
+          order:,
+          amount: order.total,
+          payment_method: subject,
+          source: credit_card,
+          response_code: payment_intent.id
+        )
+
+        response = subject.void(payment_intent.id, nil, {})
+
+        expect(response.success?).to eq true
+      end
+    end
+
+    context "with a voidable payment" do
+      it "void the payment" do
+        # Link the payment intent to our test stripe account
+        payment_intent = Stripe::PaymentIntent.create(
+          {
+            amount: 1000, # given in AUD cents
+            currency: 'aud', # AUD to match order currency
+            payment_method: 'pm_card_mastercard',
+            payment_method_types: ['card'],
+            capture_method: 'manual'
+          },
+          stripe_account: stripe_test_account
+        )
+
+        payment = create(
+          :payment,
+          order:,
+          amount: order.total,
+          payment_method: subject,
+          source: credit_card,
+          response_code: payment_intent.id
+        )
+
+        response = subject.void(payment_intent.id, nil, {})
+
+        expect(response.success?).to eq true
+      end
     end
   end
 

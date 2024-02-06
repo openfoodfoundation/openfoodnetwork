@@ -1,6 +1,141 @@
 ---
 http_interactions:
 - request:
+    method: post
+    uri: https://api.stripe.com/v1/payment_intents
+    body:
+      encoding: UTF-8
+      string: amount=1000&currency=aud&payment_method=pm_card_mastercard&payment_method_types[0]=card&capture_method=manual
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/10.6.0
+      Authorization:
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_kqqjMU3wRPfz7h","request_duration_ms":485}}'
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 5.15.0-92-generic (buildd@lcy02-amd64-002) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2)
+        9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #102~20.04.1-Ubuntu SMP Mon
+        Jan 15 13:09:14 UTC 2024","hostname":"gaetan-Dell-G15"}'
+      Stripe-Account:
+      - acct_1OhZ9lQQeZbvfZRJ
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 12 Feb 2024 22:53:14 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1377'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET,HEAD,PUT,PATCH,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - report-uri https://q.stripe.com/csp-report?p=v1%2Fpayment_intents; block-all-mixed-content;
+        default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
+      Idempotency-Key:
+      - 816e3630-03dc-4f3a-b4c6-5e88e3322536
+      Original-Request:
+      - req_6jrnUl6aZNQxLk
+      Request-Id:
+      - req_6jrnUl6aZNQxLk
+      Stripe-Account:
+      - acct_1OhZ9lQQeZbvfZRJ
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - '2023-10-16'
+      Vary:
+      - Origin
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "pi_3Oj8NCQQeZbvfZRJ1ahXc6sm",
+          "object": "payment_intent",
+          "amount": 1000,
+          "amount_capturable": 0,
+          "amount_details": {
+            "tip": {}
+          },
+          "amount_received": 0,
+          "application": "<HIDDEN-STRIPE_CLIENT_ID>",
+          "application_fee_amount": null,
+          "automatic_payment_methods": null,
+          "canceled_at": null,
+          "cancellation_reason": null,
+          "capture_method": "manual",
+          "client_secret": "pi_3Oj8NCQQeZbvfZRJ1ahXc6sm_secret_S6BFb7CunuRZPNoXb2GSmSUsh",
+          "confirmation_method": "automatic",
+          "created": 1707778394,
+          "currency": "aud",
+          "customer": null,
+          "description": null,
+          "invoice": null,
+          "last_payment_error": null,
+          "latest_charge": null,
+          "livemode": false,
+          "metadata": {},
+          "next_action": null,
+          "on_behalf_of": null,
+          "payment_method": "pm_1Oj8NCQQeZbvfZRJUrdNo9RL",
+          "payment_method_configuration_details": null,
+          "payment_method_options": {
+            "card": {
+              "installments": null,
+              "mandate_options": null,
+              "network": null,
+              "request_three_d_secure": "automatic"
+            }
+          },
+          "payment_method_types": [
+            "card"
+          ],
+          "processing": null,
+          "receipt_email": null,
+          "review": null,
+          "setup_future_usage": null,
+          "shipping": null,
+          "source": null,
+          "statement_descriptor": null,
+          "statement_descriptor_suffix": null,
+          "status": "requires_confirmation",
+          "transfer_data": null,
+          "transfer_group": null
+        }
+  recorded_at: Mon, 12 Feb 2024 22:53:14 GMT
+- request:
     method: get
     uri: https://api.stripe.com/v1/payment_methods/pm_card_mastercard
     body:
@@ -8,17 +143,17 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Stripe/v1 RubyBindings/10.2.0
+      - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer <HIDDEN_KEY>
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_3zPIl85xE98iJP","request_duration_ms":295}}'
+      - '{"last_request_metrics":{"request_id":"req_6jrnUl6aZNQxLk","request_duration_ms":572}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"10.2.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+      - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
         version 5.15.0-92-generic (buildd@lcy02-amd64-002) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2)
         9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #102~20.04.1-Ubuntu SMP Mon
         Jan 15 13:09:14 UTC 2024","hostname":"gaetan-Dell-G15"}'
@@ -34,7 +169,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 12 Feb 2024 03:46:46 GMT
+      - Mon, 12 Feb 2024 22:53:15 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -60,13 +195,11 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Request-Id:
-      - req_cTgKnTotXU2m08
+      - req_fiClXhKKwaSAmy
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
-      X-Stripe-Non-Api-Overhead-Duration-Ms:
-      - '177.00000000000003'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -75,7 +208,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OiqThGkyVbTBiYe79xZ1M6F",
+          "id": "pm_1Oj8NDKuuB1fWySnzaxDjTO2",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -100,7 +233,7 @@ http_interactions:
             "country": "US",
             "exp_month": 2,
             "exp_year": 2025,
-            "fingerprint": "1Zr75a6zBSZLu0Zp",
+            "fingerprint": "BL35fEFVcTTS5wpE",
             "funding": "credit",
             "generated_from": null,
             "last4": "4444",
@@ -115,168 +248,37 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1707709605,
+          "created": 1707778395,
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Mon, 12 Feb 2024 03:46:46 GMT
-- request:
-    method: post
-    uri: https://api.stripe.com/v1/payment_intents
-    body:
-      encoding: UTF-8
-      string: amount=1000&currency=aud&payment_method=pm_1OiqThGkyVbTBiYe79xZ1M6F&payment_method_types[0]=card&capture_method=manual
-    headers:
-      User-Agent:
-      - Stripe/v1 RubyBindings/10.2.0
-      Authorization:
-      - Bearer <HIDDEN_KEY>
-      Content-Type:
-      - application/x-www-form-urlencoded
-      X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_cTgKnTotXU2m08","request_duration_ms":414}}'
-      Stripe-Version:
-      - '2023-10-16'
-      X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"10.2.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 5.15.0-92-generic (buildd@lcy02-amd64-002) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2)
-        9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #102~20.04.1-Ubuntu SMP Mon
-        Jan 15 13:09:14 UTC 2024","hostname":"gaetan-Dell-G15"}'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx
-      Date:
-      - Mon, 12 Feb 2024 03:46:46 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '1344'
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET,HEAD,PUT,PATCH,POST,DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
-        X-Stripe-Privileged-Session-Required
-      Access-Control-Max-Age:
-      - '300'
-      Cache-Control:
-      - no-cache, no-store
-      Content-Security-Policy:
-      - report-uri https://q.stripe.com/csp-report?p=v1%2Fpayment_intents; block-all-mixed-content;
-        default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
-        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
-      Idempotency-Key:
-      - cbee6ab9-167f-4f87-bf9b-e756850cf038
-      Original-Request:
-      - req_1DypHzrDYgsR9w
-      Request-Id:
-      - req_1DypHzrDYgsR9w
-      Stripe-Should-Retry:
-      - 'false'
-      Stripe-Version:
-      - '2023-10-16'
-      Vary:
-      - Origin
-      X-Stripe-Non-Api-Overhead-Duration-Ms:
-      - '184.0'
-      X-Stripe-Routing-Context-Priority-Tier:
-      - api-testmode
-      Strict-Transport-Security:
-      - max-age=63072000; includeSubDomains; preload
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "id": "pi_3OiqTiGkyVbTBiYe1e33LyXE",
-          "object": "payment_intent",
-          "amount": 1000,
-          "amount_capturable": 0,
-          "amount_details": {
-            "tip": {}
-          },
-          "amount_received": 0,
-          "application": null,
-          "application_fee_amount": null,
-          "automatic_payment_methods": null,
-          "canceled_at": null,
-          "cancellation_reason": null,
-          "capture_method": "manual",
-          "client_secret": "pi_3OiqTiGkyVbTBiYe1e33LyXE_secret_Xv2XJAG5i7druXN4lekU5771E",
-          "confirmation_method": "automatic",
-          "created": 1707709606,
-          "currency": "aud",
-          "customer": null,
-          "description": null,
-          "invoice": null,
-          "last_payment_error": null,
-          "latest_charge": null,
-          "livemode": false,
-          "metadata": {},
-          "next_action": null,
-          "on_behalf_of": null,
-          "payment_method": "pm_1OiqThGkyVbTBiYe79xZ1M6F",
-          "payment_method_configuration_details": null,
-          "payment_method_options": {
-            "card": {
-              "installments": null,
-              "mandate_options": null,
-              "network": null,
-              "request_three_d_secure": "automatic"
-            }
-          },
-          "payment_method_types": [
-            "card"
-          ],
-          "processing": null,
-          "receipt_email": null,
-          "review": null,
-          "setup_future_usage": null,
-          "shipping": null,
-          "source": null,
-          "statement_descriptor": null,
-          "statement_descriptor_suffix": null,
-          "status": "requires_confirmation",
-          "transfer_data": null,
-          "transfer_group": null
-        }
-  recorded_at: Mon, 12 Feb 2024 03:46:46 GMT
+  recorded_at: Mon, 12 Feb 2024 22:53:15 GMT
 - request:
     method: get
-    uri: https://api.stripe.com/v1/payment_intents/pi_3OiqTiGkyVbTBiYe1e33LyXE
+    uri: https://api.stripe.com/v1/payment_intents/pi_3Oj8NCQQeZbvfZRJ1ahXc6sm
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Stripe/v1 RubyBindings/10.2.0
+      - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer <HIDDEN_KEY>
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_1DypHzrDYgsR9w","request_duration_ms":387}}'
+      - '{"last_request_metrics":{"request_id":"req_fiClXhKKwaSAmy","request_duration_ms":535}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"10.2.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+      - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
         version 5.15.0-92-generic (buildd@lcy02-amd64-002) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2)
         9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #102~20.04.1-Ubuntu SMP Mon
         Jan 15 13:09:14 UTC 2024","hostname":"gaetan-Dell-G15"}'
+      Stripe-Account:
+      - acct_1OhZ9lQQeZbvfZRJ
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -289,11 +291,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 12 Feb 2024 03:46:46 GMT
+      - Mon, 12 Feb 2024 22:53:15 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1344'
+      - '1377'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -315,13 +317,13 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Request-Id:
-      - req_41RUDZ0JcBgpJK
+      - req_mclrPggiyKYO9S
+      Stripe-Account:
+      - acct_1OhZ9lQQeZbvfZRJ
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
-      X-Stripe-Non-Api-Overhead-Duration-Ms:
-      - '57.99999999999999'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -330,7 +332,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pi_3OiqTiGkyVbTBiYe1e33LyXE",
+          "id": "pi_3Oj8NCQQeZbvfZRJ1ahXc6sm",
           "object": "payment_intent",
           "amount": 1000,
           "amount_capturable": 0,
@@ -338,15 +340,15 @@ http_interactions:
             "tip": {}
           },
           "amount_received": 0,
-          "application": null,
+          "application": "<HIDDEN-STRIPE_CLIENT_ID>",
           "application_fee_amount": null,
           "automatic_payment_methods": null,
           "canceled_at": null,
           "cancellation_reason": null,
           "capture_method": "manual",
-          "client_secret": "pi_3OiqTiGkyVbTBiYe1e33LyXE_secret_Xv2XJAG5i7druXN4lekU5771E",
+          "client_secret": "pi_3Oj8NCQQeZbvfZRJ1ahXc6sm_secret_S6BFb7CunuRZPNoXb2GSmSUsh",
           "confirmation_method": "automatic",
-          "created": 1707709606,
+          "created": 1707778394,
           "currency": "aud",
           "customer": null,
           "description": null,
@@ -357,7 +359,7 @@ http_interactions:
           "metadata": {},
           "next_action": null,
           "on_behalf_of": null,
-          "payment_method": "pm_1OiqThGkyVbTBiYe79xZ1M6F",
+          "payment_method": "pm_1Oj8NCQQeZbvfZRJUrdNo9RL",
           "payment_method_configuration_details": null,
           "payment_method_options": {
             "card": {
@@ -382,5 +384,147 @@ http_interactions:
           "transfer_data": null,
           "transfer_group": null
         }
-  recorded_at: Mon, 12 Feb 2024 03:46:46 GMT
+  recorded_at: Mon, 12 Feb 2024 22:53:15 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/payment_intents/pi_3Oj8NCQQeZbvfZRJ1ahXc6sm/cancel
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Authorization:
+      - Basic c2tfdGVzdF94RmdKUU9sWHBNQUZzb3p0endGQlRGaFAwMEhHN0J1Q0ptOg==
+      User-Agent:
+      - Stripe/v1 ActiveMerchantBindings/1.133.0
+      Stripe-Version:
+      - '2020-08-27'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.133.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","publisher":"active_merchant"}'
+      X-Stripe-Client-User-Metadata:
+      - '{"ip":null}'
+      Stripe-Account:
+      - acct_1OhZ9lQQeZbvfZRJ
+      Connection:
+      - close
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 12 Feb 2024 22:53:16 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1541'
+      Connection:
+      - close
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET,HEAD,PUT,PATCH,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - report-uri https://q.stripe.com/csp-report?p=v1%2Fpayment_intents%2F%3Aintent%2Fcancel;
+        block-all-mixed-content; default-src 'none'; base-uri 'none'; form-action
+        'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
+        style-src 'self'
+      Idempotency-Key:
+      - 3e00f853-05da-4290-86df-fad9bca9d5ea
+      Original-Request:
+      - req_clYJJBeUWvA3Fe
+      Request-Id:
+      - req_clYJJBeUWvA3Fe
+      Stripe-Account:
+      - acct_1OhZ9lQQeZbvfZRJ
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - '2020-08-27'
+      Vary:
+      - Origin
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "pi_3Oj8NCQQeZbvfZRJ1ahXc6sm",
+          "object": "payment_intent",
+          "amount": 1000,
+          "amount_capturable": 0,
+          "amount_details": {
+            "tip": {}
+          },
+          "amount_received": 0,
+          "application": "<HIDDEN-STRIPE_CLIENT_ID>",
+          "application_fee_amount": null,
+          "automatic_payment_methods": null,
+          "canceled_at": 1707778396,
+          "cancellation_reason": null,
+          "capture_method": "manual",
+          "charges": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/charges?payment_intent=pi_3Oj8NCQQeZbvfZRJ1ahXc6sm"
+          },
+          "client_secret": "pi_3Oj8NCQQeZbvfZRJ1ahXc6sm_secret_S6BFb7CunuRZPNoXb2GSmSUsh",
+          "confirmation_method": "automatic",
+          "created": 1707778394,
+          "currency": "aud",
+          "customer": null,
+          "description": null,
+          "invoice": null,
+          "last_payment_error": null,
+          "latest_charge": null,
+          "livemode": false,
+          "metadata": {},
+          "next_action": null,
+          "on_behalf_of": null,
+          "payment_method": "pm_1Oj8NCQQeZbvfZRJUrdNo9RL",
+          "payment_method_configuration_details": null,
+          "payment_method_options": {
+            "card": {
+              "installments": null,
+              "mandate_options": null,
+              "network": null,
+              "request_three_d_secure": "automatic"
+            }
+          },
+          "payment_method_types": [
+            "card"
+          ],
+          "processing": null,
+          "receipt_email": null,
+          "review": null,
+          "setup_future_usage": null,
+          "shipping": null,
+          "source": null,
+          "statement_descriptor": null,
+          "statement_descriptor_suffix": null,
+          "status": "canceled",
+          "transfer_data": null,
+          "transfer_group": null
+        }
+  recorded_at: Mon, 12 Feb 2024 22:53:16 GMT
 recorded_with: VCR 6.2.0
