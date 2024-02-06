@@ -105,6 +105,20 @@ module OrderManagement
           expect(shipment).to receive(:update!).with(order)
           updater.update_shipments
         end
+
+        context "whith pending payments" do
+          let(:order) { create(:completed_order_with_totals) }
+
+          it "updates pending payments" do
+            payment = create(:payment, order: , amount: order.total)
+
+            # update order so the order total will change
+            update_order_quantity(order)
+            order.payments.reload
+
+            expect { updater.update }.to change { payment.reload.amount }.from(50).to(60)
+          end
+        end
       end
 
       context "incompleted order" do

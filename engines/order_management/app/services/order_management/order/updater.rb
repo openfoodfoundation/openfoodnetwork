@@ -234,7 +234,10 @@ module OrderManagement
       end
 
       def update_pending_payment
-        return unless order.state.in? ["payment", "confirmation"]
+        # We only want to update complete order pending payment when it's a cash payment. We assume
+        # that if the payment was a credit card it would alread have been processed, so we don't
+        # bother checking the payment type
+        return unless order.state.in? ["payment", "confirmation", "complete"]
         return unless order.pending_payments.any?
 
         order.pending_payments.first.update_attribute :amount, order.total
