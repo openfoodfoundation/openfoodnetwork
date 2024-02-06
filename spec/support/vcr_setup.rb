@@ -11,10 +11,11 @@ VCR.configure do |config|
 
   # Filter sensitive environment variables
   %w[
-    STRIPE_SECRET_TEST_API_KEY
+    STRIPE_INSTANCE_SECRET_KEY
     STRIPE_CUSTOMER
     STRIPE_ACCOUNT
     STRIPE_CLIENT_ID
+    STRIPE_ENDPOINT_SECRET
   ].each do |env_var|
     config.filter_sensitive_data("<HIDDEN-#{env_var}>") { ENV.fetch(env_var, nil) }
   end

@@ -10,18 +10,17 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer <HIDDEN-STRIPE_SECRET_TEST_API_KEY>
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_gG5ra8Uywc0X0K","request_duration_ms":368}}'
+      - '{"last_request_metrics":{"request_id":"req_syTIAs5eTss7Qw","request_duration_ms":265}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.1.0-17-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14)
-        12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian
-        6.1.69-1 (2023-12-30)","hostname":"blackbox"}'
+      - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-darwin19","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro.local 23.3.0 Darwin Kernel Version 23.3.0: Wed Dec 20 21:28:58
+        PST 2023; root:xnu-10002.81.5~7/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro.local"}'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -34,7 +33,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sun, 21 Jan 2024 23:19:44 GMT
+      - Tue, 06 Feb 2024 22:48:58 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -56,24 +55,24 @@ http_interactions:
       Referrer-Policy:
       - strict-origin-when-cross-origin
       Request-Id:
-      - req_N0jHvcWXU7xF8I
+      - req_NMSMlMkLt0QPPF
       Set-Cookie:
       - __Host-session=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT;
         secure; SameSite=None
       - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Fdeauthorize%22%7D;
-        domain=stripe.com; path=/; expires=Mon, 20 Jan 2025 23:19:44 GMT; secure;
+        domain=stripe.com; path=/; expires=Wed, 05 Feb 2025 22:48:58 GMT; secure;
         HttpOnly; SameSite=Lax
-      - cid=3a8e1ba3-9ae7-4e86-9751-0a35403f2465; domain=stripe.com; path=/; expires=Sat,
-        20 Apr 2024 23:19:44 GMT; secure; SameSite=Lax
-      - machine_identifier=WVvKEJAnBq5vlD%2FBZrPMjAHBU2FyW7fQ92Oli0iAs%2F8BJm4JnMJ3gyke%2FzlbJaSl%2BFY%3D;
-        domain=stripe.com; path=/; expires=Mon, 20 Jan 2025 23:19:44 GMT; secure;
+      - cid=b4bb01e5-72ae-4559-9ed9-da4abdd31e38; domain=stripe.com; path=/; expires=Mon,
+        06 May 2024 22:48:58 GMT; secure; SameSite=Lax
+      - machine_identifier=grsNI57m8zbKFBkgl1vz3mrgu0Qxnxi9U4EOo1L89VdeGOCtP2HA4Ajti%2By6eHzEbGA%3D;
+        domain=stripe.com; path=/; expires=Wed, 05 Feb 2025 22:48:58 GMT; secure;
         HttpOnly; SameSite=Lax
-      - private_machine_identifier=sVC7qdoNZ28xZXkc2xne7nPB5o%2F4XACCtFwDcdopcG%2FbcxSAo6YxIxeSBblUhHak7%2Fw%3D;
-        domain=stripe.com; path=/; expires=Mon, 20 Jan 2025 23:19:44 GMT; secure;
+      - private_machine_identifier=yxVsl8ZoZTvbYeQSTbgNOWOyIpEjMq1aXu63uxGSmzj8hr2Bb3bYR2roIJqaqkS3o2s%3D;
+        domain=stripe.com; path=/; expires=Wed, 05 Feb 2025 22:48:58 GMT; secure;
         HttpOnly; SameSite=None
       - site-auth=; domain=stripe.com; path=/; max-age=0; expires=Thu, 01 Jan 1970
         00:00:00 GMT; secure
-      - stripe.csrf=5eQpnkO8ljaphg5y7B4X0uZ5jYrEFrb55Jbmm7AC35jh19gtrcUBxVUABPsIGBSamcR37fb77GK_iNbUq9k0NTw-AYTZVJycukEVO439Kvi9z9cg-cSskl1sx-tlfI4INhUoXr7UEg%3D%3D;
+      - stripe.csrf=KAO-PdEc8RJbbPf4YJ6fKBxGCgTLfF3v2AAsZ1eTbn-HoLwl43QCDnicb3FfuoSCyS_VKgyLb6SBI9rWbuYQPTw-AYTZVJw88G_t5LIjLIpORiqNeBuUAmFZi2dH4yaosONZa--rnA%3D%3D;
         domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
@@ -83,17 +82,17 @@ http_interactions:
       Stripe-Parent-Id:
       - '0000000000000000'
       Stripe-Span-Id:
-      - a8e9e61296965589
+      - e741d10a61b4e3b4
       Www-Authenticate:
       - Bearer realm="Stripe"
       X-Apiori-Intentional-Latency:
       - 0s
       X-Apiori-Reqid:
-      - syd1DJquiVHdgEr1mnf6RLS
+      - syd1DKWLsXhHjUQLV4cVlbz
       X-Apiori-Server-Duration-Ms:
-      - '77'
+      - '121'
       X-Apiori-Upstream-Duration:
-      - 77.398085ms
+      - 121.512664ms
       X-Apiori-Upstream-Name:
       - manage-srv
       X-Apiori-Upstream-Region:
@@ -103,21 +102,21 @@ http_interactions:
       X-Envoy-Attempt-Count:
       - '1'
       X-Envoy-Upstream-Service-Time:
-      - '255'
+      - '263'
       X-Robots-Tag:
       - none
       X-Stripe-Bg-Intended-Route-Color:
-      - green
+      - blue
       X-Stripe-C-Cost:
       - '2'
       X-Stripe-Client-Envoy-Start-Time-Us:
-      - '1705879184732166'
+      - '1707259738625670'
       X-Stripe-Rpc-C-Cost-Report:
       - Cg0IARIJY2VsbF8wMDA3Cg8IARILZ2xvYmFsX2NlbGw=
       X-Stripe-Server-Envoy-Start-Time-Us:
-      - '1705879184733241'
+      - '1707259738626420'
       X-Stripe-Server-Envoy-Upstream-Service-Time-Ms:
-      - '74'
+      - '119'
     body:
       encoding: UTF-8
       string: |-
@@ -125,5 +124,5 @@ http_interactions:
           "error": "invalid_client",
           "error_description": "No such application: 'bogus_client_id'"
         }
-  recorded_at: Sun, 21 Jan 2024 23:19:45 GMT
+  recorded_at: Tue, 06 Feb 2024 22:48:58 GMT
 recorded_with: VCR 6.2.0

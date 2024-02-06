@@ -10,10 +10,11 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer <HIDDEN-STRIPE_SECRET_TEST_API_KEY>
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
+<<<<<<< HEAD
       - '{"last_request_metrics":{"request_id":"req_wMJERd2KNABPc0","request_duration_ms":518}}'
       Stripe-Version:
       - '2023-10-16'
@@ -22,6 +23,15 @@ http_interactions:
         version 6.5.0-15-generic (buildd@bos03-amd64-040) (x86_64-linux-gnu-gcc-12
         (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
         #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
+=======
+      - '{"last_request_metrics":{"request_id":"req_KM0V6YzsMcJI0g","request_duration_ms":390}}'
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-darwin19","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro.local 23.3.0 Darwin Kernel Version 23.3.0: Wed Dec 20 21:28:58
+        PST 2023; root:xnu-10002.81.5~7/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro.local"}'
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -34,7 +44,11 @@ http_interactions:
       Server:
       - nginx
       Date:
+<<<<<<< HEAD
       - Wed, 07 Feb 2024 16:29:46 GMT
+=======
+      - Tue, 06 Feb 2024 22:48:39 GMT
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       Content-Type:
       - application/json
       Content-Length:
@@ -59,11 +73,19 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
+<<<<<<< HEAD
       - 17c17911-dde8-4d5a-8c02-580297cfe04e
       Original-Request:
       - req_ZGjzvDl6RUVOpX
       Request-Id:
       - req_ZGjzvDl6RUVOpX
+=======
+      - f7de88f6-e16d-43dc-9a5c-2a1addba38be
+      Original-Request:
+      - req_L5nWWHZFA19cgx
+      Request-Id:
+      - req_L5nWWHZFA19cgx
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -71,7 +93,11 @@ http_interactions:
       Vary:
       - Origin
       X-Stripe-Non-Api-Overhead-Duration-Ms:
+<<<<<<< HEAD
       - '239.0'
+=======
+      - '277.0'
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -80,7 +106,11 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
+<<<<<<< HEAD
           "id": "pm_1OhE0MKuuB1fWySnC0ptS8Pk",
+=======
+          "id": "pm_1OgxRTKuuB1fWySnSw3pk6LE",
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -120,27 +150,40 @@ http_interactions:
             },
             "wallet": null
           },
+<<<<<<< HEAD
           "created": 1707323386,
+=======
+          "created": 1707259719,
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
+<<<<<<< HEAD
   recorded_at: Wed, 07 Feb 2024 16:29:46 GMT
+=======
+  recorded_at: Tue, 06 Feb 2024 22:48:39 GMT
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
 - request:
     method: post
     uri: https://api.stripe.com/v1/payment_intents
     body:
       encoding: UTF-8
+<<<<<<< HEAD
       string: amount=100&currency=eur&payment_method=pm_1OhE0MKuuB1fWySnC0ptS8Pk&payment_method_types[0]=card&capture_method=manual
+=======
+      string: amount=100&currency=eur&payment_method=pm_1OgxRTKuuB1fWySnSw3pk6LE&payment_method_types[0]=card&capture_method=manual
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer <HIDDEN-STRIPE_SECRET_TEST_API_KEY>
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
+<<<<<<< HEAD
       - '{"last_request_metrics":{"request_id":"req_ZGjzvDl6RUVOpX","request_duration_ms":470}}'
       Stripe-Version:
       - '2023-10-16'
@@ -149,6 +192,15 @@ http_interactions:
         version 6.5.0-15-generic (buildd@bos03-amd64-040) (x86_64-linux-gnu-gcc-12
         (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
         #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
+=======
+      - '{"last_request_metrics":{"request_id":"req_L5nWWHZFA19cgx","request_duration_ms":475}}'
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-darwin19","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro.local 23.3.0 Darwin Kernel Version 23.3.0: Wed Dec 20 21:28:58
+        PST 2023; root:xnu-10002.81.5~7/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro.local"}'
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -161,7 +213,11 @@ http_interactions:
       Server:
       - nginx
       Date:
+<<<<<<< HEAD
       - Wed, 07 Feb 2024 16:29:47 GMT
+=======
+      - Tue, 06 Feb 2024 22:48:39 GMT
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       Content-Type:
       - application/json
       Content-Length:
@@ -186,11 +242,19 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
+<<<<<<< HEAD
       - 75cf4f17-1891-4797-a03c-b47cfa0ac1bf
       Original-Request:
       - req_DOXqxSvziA2Lbj
       Request-Id:
       - req_DOXqxSvziA2Lbj
+=======
+      - b053eeb3-0b77-4b32-851e-a36422365298
+      Original-Request:
+      - req_bbmilYLl9N7znh
+      Request-Id:
+      - req_bbmilYLl9N7znh
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -198,7 +262,11 @@ http_interactions:
       Vary:
       - Origin
       X-Stripe-Non-Api-Overhead-Duration-Ms:
+<<<<<<< HEAD
       - '251.0'
+=======
+      - '185.0'
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -207,7 +275,11 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
+<<<<<<< HEAD
           "id": "pi_3OhE0MKuuB1fWySn2QgHzma4",
+=======
+          "id": "pi_3OgxRTKuuB1fWySn0DS604ja",
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
           "object": "payment_intent",
           "amount": 100,
           "amount_capturable": 0,
@@ -221,9 +293,15 @@ http_interactions:
           "canceled_at": null,
           "cancellation_reason": null,
           "capture_method": "manual",
+<<<<<<< HEAD
           "client_secret": "pi_3OhE0MKuuB1fWySn2QgHzma4_secret_hCwwgME6OG8qq9WBw0wGDpJlD",
           "confirmation_method": "automatic",
           "created": 1707323386,
+=======
+          "client_secret": "pi_3OgxRTKuuB1fWySn0DS604ja_secret_xHcRx7h7IbQ6dOuGPom4PqSo2",
+          "confirmation_method": "automatic",
+          "created": 1707259719,
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
           "currency": "eur",
           "customer": null,
           "description": null,
@@ -234,7 +312,11 @@ http_interactions:
           "metadata": {},
           "next_action": null,
           "on_behalf_of": null,
+<<<<<<< HEAD
           "payment_method": "pm_1OhE0MKuuB1fWySnC0ptS8Pk",
+=======
+          "payment_method": "pm_1OgxRTKuuB1fWySnSw3pk6LE",
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
           "payment_method_configuration_details": null,
           "payment_method_options": {
             "card": {
@@ -259,10 +341,17 @@ http_interactions:
           "transfer_data": null,
           "transfer_group": null
         }
+<<<<<<< HEAD
   recorded_at: Wed, 07 Feb 2024 16:29:47 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/payment_intents/pi_3OhE0MKuuB1fWySn2QgHzma4/confirm
+=======
+  recorded_at: Tue, 06 Feb 2024 22:48:39 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/payment_intents/pi_3OgxRTKuuB1fWySn0DS604ja/confirm
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
     body:
       encoding: US-ASCII
       string: ''
@@ -270,10 +359,11 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer <HIDDEN-STRIPE_SECRET_TEST_API_KEY>
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
+<<<<<<< HEAD
       - '{"last_request_metrics":{"request_id":"req_DOXqxSvziA2Lbj","request_duration_ms":518}}'
       Stripe-Version:
       - '2023-10-16'
@@ -282,6 +372,15 @@ http_interactions:
         version 6.5.0-15-generic (buildd@bos03-amd64-040) (x86_64-linux-gnu-gcc-12
         (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
         #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
+=======
+      - '{"last_request_metrics":{"request_id":"req_bbmilYLl9N7znh","request_duration_ms":384}}'
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-darwin19","engine":"ruby","publisher":"stripe","uname":"Darwin
+        MacBook-Pro.local 23.3.0 Darwin Kernel Version 23.3.0: Wed Dec 20 21:28:58
+        PST 2023; root:xnu-10002.81.5~7/RELEASE_X86_64 x86_64","hostname":"MacBook-Pro.local"}'
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -294,7 +393,11 @@ http_interactions:
       Server:
       - nginx
       Date:
+<<<<<<< HEAD
       - Wed, 07 Feb 2024 16:29:48 GMT
+=======
+      - Tue, 06 Feb 2024 22:48:40 GMT
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       Content-Type:
       - application/json
       Content-Length:
@@ -320,11 +423,19 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Idempotency-Key:
+<<<<<<< HEAD
       - b0bb1683-a7cc-4543-80f0-a763c1c91c51
       Original-Request:
       - req_swBzNqWX3MNl3E
       Request-Id:
       - req_swBzNqWX3MNl3E
+=======
+      - 74061873-77d4-4888-9497-6b011532f241
+      Original-Request:
+      - req_AC8Ntyfiv9HHfg
+      Request-Id:
+      - req_AC8Ntyfiv9HHfg
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -332,7 +443,11 @@ http_interactions:
       Vary:
       - Origin
       X-Stripe-Non-Api-Overhead-Duration-Ms:
+<<<<<<< HEAD
       - '852.0000000000001'
+=======
+      - '826.0000000000001'
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -342,13 +457,21 @@ http_interactions:
       string: |
         {
           "error": {
+<<<<<<< HEAD
             "charge": "ch_3OhE0MKuuB1fWySn2xQQTXoX",
+=======
+            "charge": "ch_3OgxRTKuuB1fWySn0RVkcFJn",
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
             "code": "card_declined",
             "decline_code": "stolen_card",
             "doc_url": "https://stripe.com/docs/error-codes/card-declined",
             "message": "Your card was declined.",
             "payment_intent": {
+<<<<<<< HEAD
               "id": "pi_3OhE0MKuuB1fWySn2QgHzma4",
+=======
+              "id": "pi_3OgxRTKuuB1fWySn0DS604ja",
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
               "object": "payment_intent",
               "amount": 100,
               "amount_capturable": 0,
@@ -363,21 +486,35 @@ http_interactions:
               "canceled_at": null,
               "cancellation_reason": null,
               "capture_method": "manual",
+<<<<<<< HEAD
               "client_secret": "pi_3OhE0MKuuB1fWySn2QgHzma4_secret_hCwwgME6OG8qq9WBw0wGDpJlD",
               "confirmation_method": "automatic",
               "created": 1707323386,
+=======
+              "client_secret": "pi_3OgxRTKuuB1fWySn0DS604ja_secret_xHcRx7h7IbQ6dOuGPom4PqSo2",
+              "confirmation_method": "automatic",
+              "created": 1707259719,
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
               "currency": "eur",
               "customer": null,
               "description": null,
               "invoice": null,
               "last_payment_error": {
+<<<<<<< HEAD
                 "charge": "ch_3OhE0MKuuB1fWySn2xQQTXoX",
+=======
+                "charge": "ch_3OgxRTKuuB1fWySn0RVkcFJn",
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
                 "code": "card_declined",
                 "decline_code": "stolen_card",
                 "doc_url": "https://stripe.com/docs/error-codes/card-declined",
                 "message": "Your card was declined.",
                 "payment_method": {
+<<<<<<< HEAD
                   "id": "pm_1OhE0MKuuB1fWySnC0ptS8Pk",
+=======
+                  "id": "pm_1OgxRTKuuB1fWySnSw3pk6LE",
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
                   "object": "payment_method",
                   "billing_details": {
                     "address": {
@@ -417,7 +554,11 @@ http_interactions:
                     },
                     "wallet": null
                   },
+<<<<<<< HEAD
                   "created": 1707323386,
+=======
+                  "created": 1707259719,
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
                   "customer": null,
                   "livemode": false,
                   "metadata": {
@@ -426,7 +567,11 @@ http_interactions:
                 },
                 "type": "card_error"
               },
+<<<<<<< HEAD
               "latest_charge": "ch_3OhE0MKuuB1fWySn2xQQTXoX",
+=======
+              "latest_charge": "ch_3OgxRTKuuB1fWySn0RVkcFJn",
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
               "livemode": false,
               "metadata": {
               },
@@ -458,7 +603,11 @@ http_interactions:
               "transfer_group": null
             },
             "payment_method": {
+<<<<<<< HEAD
               "id": "pm_1OhE0MKuuB1fWySnC0ptS8Pk",
+=======
+              "id": "pm_1OgxRTKuuB1fWySnSw3pk6LE",
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
               "object": "payment_method",
               "billing_details": {
                 "address": {
@@ -498,16 +647,28 @@ http_interactions:
                 },
                 "wallet": null
               },
+<<<<<<< HEAD
               "created": 1707323386,
+=======
+              "created": 1707259719,
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
               "customer": null,
               "livemode": false,
               "metadata": {
               },
               "type": "card"
             },
+<<<<<<< HEAD
             "request_log_url": "https://dashboard.stripe.com/test/logs/req_swBzNqWX3MNl3E?t=1707323387",
             "type": "card_error"
           }
         }
   recorded_at: Wed, 07 Feb 2024 16:29:48 GMT
+=======
+            "request_log_url": "https://dashboard.stripe.com/test/logs/req_AC8Ntyfiv9HHfg?t=1707259719",
+            "type": "card_error"
+          }
+        }
+  recorded_at: Tue, 06 Feb 2024 22:48:40 GMT
+>>>>>>> 97b18eeb8a (Filter out STRIPE_INSTANCE_SECRET_KEY from cassettes)
 recorded_with: VCR 6.2.0
