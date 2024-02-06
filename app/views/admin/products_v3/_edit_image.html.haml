@@ -9,7 +9,7 @@
     %input{ type: :hidden, name: :return_url, value: return_url}
     = f.hidden_field :viewable_id, value: product.id
 
-    %p
+    .modal-actions.justify-end
       %input{ class: "secondary", type: 'button', value: t('.close'), "data-action": "click->modal#close" }
       -# label.button provides a handy shortcut to open the file selector on click. Unfortunately this trick isn't keyboard accessible though..
       = f.label :attachment, t(".upload"), class: "button primary icon-upload-alt"
