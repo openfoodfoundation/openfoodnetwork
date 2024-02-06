@@ -235,7 +235,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    datafoodconsortium-connector (1.0.0.pre.alpha.9)
+    datafoodconsortium-connector (1.0.0.pre.alpha.10)
       virtual_assembly-semantizer (~> 1.0, >= 1.0.5)
     date (3.3.4)
     debug (1.9.1)
@@ -359,7 +359,7 @@ GEM
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (2.7.1)
-    json-canonicalization (0.4.0)
+    json-canonicalization (1.0.0)
     json-jwt (1.16.5)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -367,9 +367,9 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    json-ld (3.3.0)
+    json-ld (3.3.1)
       htmlentities (~> 4.3)
-      json-canonicalization (~> 0.3, >= 0.3.2)
+      json-canonicalization (~> 1.0)
       link_header (~> 0.0, >= 0.0.8)
       multi_json (~> 1.15)
       rack (>= 2.2, < 4)

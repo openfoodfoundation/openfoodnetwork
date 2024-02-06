@@ -104,7 +104,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin"
     } ],
@@ -128,9 +128,9 @@
     }, {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Quail"
     }, {
-      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Roster"
-    }, {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Sheep"
+    }, {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Rooster"
     } ],
     "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
       "@language" : "en",
@@ -218,7 +218,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
@@ -245,7 +245,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeeHoney",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
@@ -261,7 +261,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeePollen",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
@@ -277,7 +277,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeePropolis",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
@@ -293,7 +293,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeeVenom",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
@@ -309,7 +309,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BeeWax",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bee"
     } ],
@@ -424,7 +424,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bulb",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
@@ -440,7 +440,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bull",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
@@ -459,7 +459,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#BullBody",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Bull"
     } ],
@@ -531,6 +531,22 @@
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
     } ]
   }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ChickenBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#c_99fce7e0"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "fr",
+      "@value" : "Partie du poulet"
+    }, {
+      "@language" : "en",
+      "@value" : "Chicken's body"
+    } ]
+  }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Claim",
     "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/terms/description" : [ {
@@ -551,6 +567,19 @@
     }, {
       "@language" : "fr",
       "@value" : "Allégations nutritionnelles et de santé"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#topConceptOf" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ]
+  }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ContainerInformation",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "en",
+      "@value" : "Container Information"
     } ],
     "http://www.w3.org/2004/02/skos/core#topConceptOf" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
@@ -599,7 +628,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Cow",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
@@ -620,7 +649,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#CowBody",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Cow"
     } ],
@@ -636,7 +665,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#CowMilk",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Cow"
     } ],
@@ -830,7 +859,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Ewe",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
@@ -851,7 +880,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EweBody",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Ewe"
     } ],
@@ -867,7 +896,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#EweMilk",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Ewe"
     } ],
@@ -958,7 +987,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Flower",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
@@ -1027,7 +1056,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Fruit",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
@@ -1094,7 +1123,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Goat",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
@@ -1115,7 +1144,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GoatBody",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Goat"
     } ],
@@ -1131,7 +1160,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#GoatMilk",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Goat"
     } ],
@@ -1231,7 +1260,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Hen",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
@@ -1252,7 +1281,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HenBody",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Hen"
     } ],
@@ -1268,7 +1297,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#HenEgg",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Hen"
     } ],
@@ -1565,7 +1594,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Leaf",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
@@ -1880,7 +1909,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#MultiOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin"
     } ],
@@ -2410,8 +2439,21 @@
       "@value" : "Statut géographique protégé"
     } ]
   }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Package",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#ContainerInformation"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "en",
+      "@value" : "Package"
+    } ]
+  }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://purl.org/dc/elements/1.1/description" : [ {
       "@language" : "en",
       "@value" : "Part of natural \"living\" origin concerned"
@@ -2490,7 +2532,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Pig",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
@@ -2509,7 +2551,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PigBody",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Pig"
     } ],
@@ -2541,7 +2583,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin"
     } ],
@@ -2640,7 +2682,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Quail",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
@@ -2659,7 +2701,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#QuailEgg",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Quail"
     } ],
@@ -2739,8 +2781,43 @@
       "@value" : "Réduit en nutriment"
     } ]
   }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Rooster",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#narrower" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RoosterBody"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "fr",
+      "@value" : "Coq"
+    }, {
+      "@language" : "en",
+      "@value" : "Rooster"
+    } ]
+  }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RoosterBody",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Rooster"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "fr",
+      "@value" : "Partie de coq"
+    }, {
+      "@language" : "en",
+      "@value" : "Rooster's body"
+    } ]
+  }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Root",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
@@ -2753,41 +2830,6 @@
     }, {
       "@language" : "en",
       "@value" : "Root"
-    } ]
-  }, {
-    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Roster",
-    "@type" : [ "skos:Concept" ],
-    "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
-    } ],
-    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
-    } ],
-    "http://www.w3.org/2004/02/skos/core#narrower" : [ {
-      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RosterBody"
-    } ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
-      "@language" : "fr",
-      "@value" : "Coq"
-    }, {
-      "@language" : "en",
-      "@value" : "Rooster"
-    } ]
-  }, {
-    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#RosterBody",
-    "@type" : [ "skos:Concept" ],
-    "http://www.w3.org/2004/02/skos/core#broader" : [ {
-      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Roster"
-    } ],
-    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
-      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
-    } ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
-      "@language" : "fr",
-      "@value" : "Partie de coq"
-    }, {
-      "@language" : "en",
-      "@value" : "Rooster's body"
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SaturatedFatFree",
@@ -2833,7 +2875,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Seed",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
@@ -2849,7 +2891,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Sheep",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
     } ],
@@ -2868,7 +2910,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#SheepBody",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Sheep"
     } ],
@@ -3037,7 +3079,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Stem",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
@@ -3151,7 +3193,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#Tuber",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
@@ -3250,7 +3292,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#UnknownPartOrigin",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PartOrigin"
     } ],
@@ -3356,7 +3398,7 @@
     } ]
   }, {
     "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#WholePlant",
-    "@type" : [ "skos:Concept" ],
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
     "http://www.w3.org/2004/02/skos/core#broader" : [ {
       "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#PlantPartOrigin"
     } ],
@@ -3369,6 +3411,22 @@
     }, {
       "@language" : "en",
       "@value" : "Whole plant"
+    } ]
+  }, {
+    "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#c_99fce7e0",
+    "@type" : [ "http://www.w3.org/2004/02/skos/core#Concept" ],
+    "http://www.w3.org/2004/02/skos/core#broader" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#AnimalPartOrigin"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#inScheme" : [ {
+      "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#DFC_ProductGlossary_Facet"
+    } ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel" : [ {
+      "@language" : "en",
+      "@value" : "Chicken"
+    }, {
+      "@language" : "fr",
+      "@value" : "Poulet"
     } ]
   } ],
   "@id" : "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf"
