@@ -128,6 +128,46 @@ module OrderManagement
           expect(updater).not_to receive(:update_shipments).with(order)
           updater.update
         end
+
+        context "with pending payments" do
+          let!(:payment) { create(:payment, order: , amount: order.total) }
+
+          context "with order in payment state" do
+            let(:order) { create(:order_with_totals, state: "payment") }
+
+            it "updates pending payments" do
+              # update order so the order total will change
+              update_order_quantity(order)
+              order.payments.reload
+
+              expect { updater.update }.to change { payment.reload.amount }.from(10).to(20)
+            end
+          end
+
+          context "with order in confirmation state" do
+            let(:order) { create(:order_with_totals, state: "confirmation") }
+
+            it "updates pending payments" do
+              # update order so the order total will change
+              update_order_quantity(order)
+              order.payments.reload
+
+              expect { updater.update }.to change { payment.reload.amount }.from(10).to(20)
+            end
+
+          end
+
+          context "with order in cart" do
+            let(:order) { create(:order_with_totals) }
+
+            it "doesn't update pending payments" do
+              # update order so the order total will change
+              update_order_quantity(order)
+
+              expect { updater.update }.not_to change { payment.reload.amount }
+            end
+          end
+        end
       end
 
       it "updates totals once" do
@@ -376,6 +416,10 @@ module OrderManagement
 
           order.updater.update_payment_state
         end
+      end
+
+      def update_order_quantity(order)
+        order.line_items.first.update_attribute(:quantity, 2)
       end
     end
   end
