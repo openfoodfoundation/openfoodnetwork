@@ -22,3 +22,26 @@
 body.modal-open #admin-menu li.selected a::after {
   z-index: 0;
 }
+
+.modal-actions {
+  display: flex;
+
+  &.justify-space-around {
+    justify-content: space-around;
+  }
+
+  &.justify-end {
+    justify-content: flex-end;
+    input[type="button"] {
+      margin: 0 5px;
+    }
+
+    @media only screen and (max-width: 1024px) {
+      flex-direction: column;
+      justify-content: space-around;
+      input[type="button"] {
+        margin: 5px 0;
+      }
+    }
+  }
+}
