@@ -27,6 +27,7 @@ body.modal-open #admin-menu li.selected a::after {
 
 .modal-actions {
   display: flex;
+  text-align: center; // Ensure text inside fullwidth buttons are centred on small screens
 
   &.justify-space-around {
     justify-content: space-around;
