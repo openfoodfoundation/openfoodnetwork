@@ -3,6 +3,8 @@
   visibility: visible;
   position: fixed;
   top: 3em;
+  min-height: auto; // reset from reveal-modal
+
   &.in {
     padding: 1.2rem;
   }
