@@ -18,6 +18,12 @@
   p {
     margin-bottom: 0.5em;
   }
+
+  img {
+    // Ensure image fits in container
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 /* prevent arrow on selected admin menu item appearing above modal */

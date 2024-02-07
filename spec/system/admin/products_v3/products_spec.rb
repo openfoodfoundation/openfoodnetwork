@@ -343,7 +343,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         end
 
         expect(page).to have_content /Image has been successfully (updated|created)/
-        expect(product.image.reload.url(:product)).to match /500.jpg$/
+        expect(product.image.reload.url(:large)).to match /500.jpg$/
 
         within row_containing_name("Apples") do
           expect_page_to_have_image('500.jpg')
@@ -353,14 +353,14 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
     context "with existing image" do
       let!(:product) { create(:product_with_image, name: "Apples") }
-      let(:current_img_url) { product.image.url(:product) }
+      let(:current_img_url) { product.image.url(:large) }
 
       include_examples "updating image"
     end
 
     context "with default image" do
       let!(:product) { create(:product, name: "Apples") }
-      let(:current_img_url) { Spree::Image.default_image_url(:product) }
+      let(:current_img_url) { Spree::Image.default_image_url(:large) }
 
       include_examples "updating image"
     end

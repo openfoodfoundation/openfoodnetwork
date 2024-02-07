@@ -168,6 +168,10 @@ dialog[open] {
   dialog {
     top: 6.25rem;
   }
+  .reveal-modal.fit,
+  dialog.fit {
+    width: fit-content;
+  }
   .reveal-modal.tiny,
   dialog.tiny {
     width: 30%;
