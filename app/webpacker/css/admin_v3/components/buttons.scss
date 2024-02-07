@@ -1,3 +1,6 @@
+// Button styles
+// Design reference: https://github.com/openfoodfoundation/openfoodnetwork/wiki/Design-styleguide%3A-links-and-buttons
+
 @mixin disabled-button() {
   &:disabled,
   &:disabled:hover {
@@ -47,11 +50,7 @@ button:not(.plain):not(.trix-button),
     color: $color-btn-hover-text;
   }
 
-  &.fullwidth {
-    width: 100%;
-    text-align: center;
-  }
-
+  // --- Colours ---
   &.secondary {
     background-color: $color-btn-secondary-bg;
     color: $color-link;
@@ -86,6 +85,7 @@ button:not(.plain):not(.trix-button),
     }
   }
 
+  // --- Sizes ---
   &.mini {
     line-height: 18px;
     height: auto; // DC: I don't like fixed heights.
@@ -110,15 +110,9 @@ button:not(.plain):not(.trix-button),
     text-transform: uppercase;
   }
 
-  &.red {
-    background-color: $color-btn-red-bg;
-    border-color: $color-btn-red-bg;
-    @include disabled-button(); // required for specifity
-
-    &:hover {
-      background-color: $color-btn-red-hover-bg;
-      border-color: $color-btn-red-hover-bg;
-    }
+  &.fullwidth {
+    width: 100%;
+    text-align: center;
   }
 
   .badge {
@@ -144,6 +138,7 @@ button:not(.plain):not(.trix-button),
   }
 }
 
+// --- Reset buttons ---
 input[type="reset"] {
   // Reset button looks like a link, but has a border the same as buttons when active.
   background: none;
