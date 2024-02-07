@@ -344,7 +344,7 @@ GEM
       ruby-vips (>= 2.0.17, < 3)
     immigrant (0.3.6)
       activerecord (>= 3.0)
-    invisible_captcha (2.1.0)
+    invisible_captcha (2.2.0)
       rails (>= 5.2)
     io-console (0.7.1)
     ipaddress (0.8.3)
@@ -413,7 +413,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
-    minitest (5.21.2)
+    minitest (5.22.1)
     monetize (1.13.0)
       money (~> 6.12)
     money (6.16.0)
@@ -423,7 +423,7 @@ GEM
     multi_xml (0.6.0)
     net-http (0.4.1)
       uri
-    net-imap (0.4.9.1)
+    net-imap (0.4.10)
       date
       net-protocol
     net-pop (0.1.2)
@@ -434,7 +434,7 @@ GEM
       net-protocol
     newrelic_rpm (9.7.1)
     nio4r (2.7.0)
-    nokogiri (1.16.0)
+    nokogiri (1.16.2)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (1.4.11)
@@ -801,7 +801,7 @@ GEM
     xml-simple (1.1.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.12)
+    zeitwerk (2.6.13)
 
 PLATFORMS
   ruby
