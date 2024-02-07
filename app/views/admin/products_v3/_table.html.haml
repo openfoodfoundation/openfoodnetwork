@@ -54,3 +54,9 @@
             = form.fields_for("products][#{product_index}][variants_attributes][", variant, variant_index:) do |variant_form|
               %tr.condensed
                 = render partial: 'variant_row', locals: { variant:, f: variant_form }
+
+          %tr.condensed
+            %td
+            %td{ colspan: 10 }
+              %button.secondary.condensed.naked.icon-plus
+                New variant

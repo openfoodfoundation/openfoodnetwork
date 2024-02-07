@@ -88,6 +88,11 @@
           height: 100%;
         }
       }
+
+      // Reveal naked button text when any part of row is hovered
+      button.naked {
+        color: $color-link;
+      }
     }
 
     th,
