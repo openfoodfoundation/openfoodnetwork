@@ -221,7 +221,8 @@ GEM
       ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
-    crack (0.4.5)
+    crack (0.4.6)
+      bigdecimal
       rexml
     crass (1.0.6)
     css_parser (1.16.0)
@@ -330,7 +331,7 @@ GEM
     haml (5.2.2)
       temple (>= 0.8.0)
       tilt
-    hashdiff (1.0.1)
+    hashdiff (1.1.0)
     hashery (2.1.2)
     hashie (5.0.0)
     highline (2.0.3)
@@ -780,7 +781,7 @@ GEM
       activesupport
       faraday (~> 2.0)
       faraday-follow_redirects
-    webmock (3.19.1)
+    webmock (3.20.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
