@@ -239,8 +239,11 @@ describe SubscriptionConfirmJob do
 
         context "when payments are processed without error" do
           before do
-            expect(payment).to receive(:process_offline!) { true }
-            expect(payment).to receive(:completed?) { true }
+            allow(payment).to receive(:process_offline!) do
+              # Mark payment as complete like it would be if sucessfully processed offline
+              payment.state = "complete"
+              true
+            end
           end
 
           it "sends only a subscription confirm email, no regular confirmation emails" do
