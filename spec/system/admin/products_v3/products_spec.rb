@@ -350,7 +350,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         within new_variant_row do
           fill_in "Name", with: "Large box"
           fill_in "SKU", with: "APL-02"
-          # fill_in "Unit", with: 1000
+          fill_in "Unit", with: 1000
           fill_in "Price", with: 10.25
           click_on "On Hand" # activate popout
         end
@@ -359,7 +359,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect {
           click_button "Save changes"
 
-          pending "variant is invalid without unit"
           expect(page).to have_content "Changes saved"
           product_a.reload
         }.to change { product_a.variants.count }.by(1)
@@ -368,14 +367,14 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(new_variant.display_name).to eq "Large box"
         expect(new_variant.sku).to eq "APL-02"
         expect(new_variant.price).to eq 10.25
-        # expect(new_variant.unit_value).to eq 1000
+        expect(new_variant.unit_value).to eq 1000
         expect(new_variant.on_hand).to eq 3
 
         within row_containing_name("Large box") do
           expect(page).to have_field "Name", with: "Large box"
           expect(page).to have_field "SKU", with: "APL-02"
           expect(page).to have_field "Price", with: "10.25"
-          # expect(page).to have_content "1kg"
+          expect(page).to have_content "1kg"
           expect(page).to have_css "button[aria-label='On Hand']", text: "3"
         end
       end
@@ -391,7 +390,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           within new_variant_row do
             fill_in "Name", with: "N" * 256 # too long
             fill_in "SKU", with: "n" * 256
-            # fill_in "Unit", with: "" # can't be blank
+            fill_in "Unit", with: "" # can't be blank
             fill_in "Price", with: "10.25" # valid
           end
         end
@@ -407,7 +406,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect {
             click_button "Save changes"
 
-            pending "variant is invalid without unit"
             expect(page).to have_content "1 product could not be saved"
             expect(page).to have_content "Please review the errors and try again"
             variant_a1.reload
@@ -418,7 +416,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             expect(page).to have_field "Name", with: "N" * 256
             expect(page).to have_field "SKU", with: "n" * 256
             expect(page).to have_content "is too long"
-            # expect(page).to have_field "Unit", with: ""
+            expect(page).to have_field "Unit", with: ""
             expect(page).to have_content "can't be blank"
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
           end
@@ -438,16 +436,16 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             variant_a1.reload
           }.to_not change { variant_a1.display_name }
 
+          pending
           within row_containing_name("N" * 256) do
             fill_in "Name", with: "Nice box"
             fill_in "SKU", with: "APL-02"
-            # fill_in "Unit", with: "200"
+            fill_in "Unit", with: 200
           end
 
           expect {
             click_button "Save changes"
 
-            pending "variant is invalid without unit"
             expect(page).to have_content "Changes saved"
             product_a.reload
           }.to change { product_a.variants.count }.by(1)
@@ -456,7 +454,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect(new_variant.display_name).to eq "Nice box"
           expect(new_variant.sku).to eq "APL-02"
           expect(new_variant.price).to eq 10.25
-          # expect(new_variant.unit_value).to eq 200
+          expect(new_variant.unit_value).to eq 200
         end
       end
     end

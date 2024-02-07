@@ -7,8 +7,13 @@
 %td.field
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on variant, :sku
-%td.align-right
-  .content= variant.unit_to_display
+- if variant.persisted?
+  %td.align-right
+    .content= variant.unit_to_display
+- else # until unit component is developed, use a basic input just so we can create new records
+  %td.field
+    = f.number_field :unit_value, 'aria-label': t('admin.products_page.columns.unit')
+    = error_message_on variant, :unit_value
 %td.field
   = f.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
   = error_message_on variant, :price
