@@ -882,7 +882,7 @@ DEPENDENCIES
   oauth2 (~> 1.4.7)
   omniauth-rails_csrf_protection
   omniauth_openid_connect
-  openid_connect (~> 1.3)
+  openid_connect
   order_management!
   pagy (~> 5.1)
   paper_trail

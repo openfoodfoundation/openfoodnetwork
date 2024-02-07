@@ -74,7 +74,7 @@ gem 'rswag-ui'
 
 gem 'omniauth_openid_connect'
 gem 'omniauth-rails_csrf_protection'
-gem 'openid_connect', '~> 1.3'
+gem 'openid_connect'
 
 gem 'angularjs-rails', '1.8.0'
 gem 'bugsnag'
