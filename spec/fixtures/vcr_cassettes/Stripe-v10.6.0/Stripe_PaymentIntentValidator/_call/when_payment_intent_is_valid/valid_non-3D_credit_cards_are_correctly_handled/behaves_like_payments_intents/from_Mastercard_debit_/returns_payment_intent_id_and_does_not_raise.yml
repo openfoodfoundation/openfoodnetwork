@@ -14,14 +14,14 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_YhaRphu15FXl0K","request_duration_ms":408}}'
+      - '{"last_request_metrics":{"request_id":"req_8JHOlF3fZbu0Wp","request_duration_ms":293}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.1.0-17-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14)
-        12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian
-        6.1.69-1 (2023-12-30)","hostname":"blackbox"}'
+        version 6.5.0-15-generic (buildd@bos03-amd64-040) (x86_64-linux-gnu-gcc-12
+        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
+        #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -34,7 +34,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sun, 21 Jan 2024 23:17:58 GMT
+      - Wed, 07 Feb 2024 16:28:30 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -59,17 +59,19 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - 302152fe-4798-40d3-ba8e-880e0cb5042c
+      - a5358940-5a5e-41ae-a0b5-09441b86ea52
       Original-Request:
-      - req_PuCnuRjr6OErAF
+      - req_8o2n0ApgIVSi9k
       Request-Id:
-      - req_PuCnuRjr6OErAF
+      - req_8o2n0ApgIVSi9k
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '276.0'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -78,7 +80,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1ObAH4KuuB1fWySns6yQhsIg",
+          "id": "pm_1OhDz7KuuB1fWySnPxzsChRe",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -118,19 +120,19 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1705879078,
+          "created": 1707323309,
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Sun, 21 Jan 2024 23:17:58 GMT
+  recorded_at: Wed, 07 Feb 2024 16:28:30 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/payment_intents
     body:
       encoding: UTF-8
-      string: amount=100&currency=eur&payment_method=pm_1ObAH4KuuB1fWySns6yQhsIg&payment_method_types[0]=card&capture_method=manual
+      string: amount=100&currency=eur&payment_method=pm_1OhDz7KuuB1fWySnPxzsChRe&payment_method_types[0]=card&capture_method=manual
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
@@ -139,14 +141,14 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_PuCnuRjr6OErAF","request_duration_ms":585}}'
+      - '{"last_request_metrics":{"request_id":"req_8o2n0ApgIVSi9k","request_duration_ms":487}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.1.0-17-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14)
-        12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian
-        6.1.69-1 (2023-12-30)","hostname":"blackbox"}'
+        version 6.5.0-15-generic (buildd@bos03-amd64-040) (x86_64-linux-gnu-gcc-12
+        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
+        #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -159,7 +161,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sun, 21 Jan 2024 23:17:59 GMT
+      - Wed, 07 Feb 2024 16:28:30 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -184,17 +186,19 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - e3ddf0ed-ce8d-47c1-9ce9-72fb3791245e
+      - 466b90b8-1ccb-4018-9d5e-28b2f0376eeb
       Original-Request:
-      - req_itjFYRahw4pOHf
+      - req_zdIbaygqa3H2Wd
       Request-Id:
-      - req_itjFYRahw4pOHf
+      - req_zdIbaygqa3H2Wd
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '223.0'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -203,7 +207,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pi_3ObAH5KuuB1fWySn2Mo3lQoF",
+          "id": "pi_3OhDz8KuuB1fWySn0YwkuVn5",
           "object": "payment_intent",
           "amount": 100,
           "amount_capturable": 0,
@@ -217,9 +221,9 @@ http_interactions:
           "canceled_at": null,
           "cancellation_reason": null,
           "capture_method": "manual",
-          "client_secret": "pi_3ObAH5KuuB1fWySn2Mo3lQoF_secret_FebJgiV1HPdjB5ASlL86bTLho",
+          "client_secret": "pi_3OhDz8KuuB1fWySn0YwkuVn5_secret_ggBbD4A7uT1pP2Y68xDqgrTtq",
           "confirmation_method": "automatic",
-          "created": 1705879079,
+          "created": 1707323310,
           "currency": "eur",
           "customer": null,
           "description": null,
@@ -230,7 +234,7 @@ http_interactions:
           "metadata": {},
           "next_action": null,
           "on_behalf_of": null,
-          "payment_method": "pm_1ObAH4KuuB1fWySns6yQhsIg",
+          "payment_method": "pm_1OhDz7KuuB1fWySnPxzsChRe",
           "payment_method_configuration_details": null,
           "payment_method_options": {
             "card": {
@@ -255,10 +259,10 @@ http_interactions:
           "transfer_data": null,
           "transfer_group": null
         }
-  recorded_at: Sun, 21 Jan 2024 23:17:59 GMT
+  recorded_at: Wed, 07 Feb 2024 16:28:30 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/payment_intents/pi_3ObAH5KuuB1fWySn2Mo3lQoF/confirm
+    uri: https://api.stripe.com/v1/payment_intents/pi_3OhDz8KuuB1fWySn0YwkuVn5/confirm
     body:
       encoding: US-ASCII
       string: ''
@@ -270,14 +274,14 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_itjFYRahw4pOHf","request_duration_ms":508}}'
+      - '{"last_request_metrics":{"request_id":"req_zdIbaygqa3H2Wd","request_duration_ms":528}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.1.0-17-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14)
-        12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian
-        6.1.69-1 (2023-12-30)","hostname":"blackbox"}'
+        version 6.5.0-15-generic (buildd@bos03-amd64-040) (x86_64-linux-gnu-gcc-12
+        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
+        #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -290,7 +294,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sun, 21 Jan 2024 23:18:00 GMT
+      - Wed, 07 Feb 2024 16:28:31 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -316,17 +320,19 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Idempotency-Key:
-      - 4aec626f-6bef-4ca6-a9c6-66ff1382d355
+      - a957ea24-b85c-4b2d-8509-c5623d26216d
       Original-Request:
-      - req_Sn5SL7Hwnfeayf
+      - req_TuzwY4DHoG4gDf
       Request-Id:
-      - req_Sn5SL7Hwnfeayf
+      - req_TuzwY4DHoG4gDf
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '835.0'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -335,7 +341,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pi_3ObAH5KuuB1fWySn2Mo3lQoF",
+          "id": "pi_3OhDz8KuuB1fWySn0YwkuVn5",
           "object": "payment_intent",
           "amount": 100,
           "amount_capturable": 100,
@@ -349,20 +355,20 @@ http_interactions:
           "canceled_at": null,
           "cancellation_reason": null,
           "capture_method": "manual",
-          "client_secret": "pi_3ObAH5KuuB1fWySn2Mo3lQoF_secret_FebJgiV1HPdjB5ASlL86bTLho",
+          "client_secret": "pi_3OhDz8KuuB1fWySn0YwkuVn5_secret_ggBbD4A7uT1pP2Y68xDqgrTtq",
           "confirmation_method": "automatic",
-          "created": 1705879079,
+          "created": 1707323310,
           "currency": "eur",
           "customer": null,
           "description": null,
           "invoice": null,
           "last_payment_error": null,
-          "latest_charge": "ch_3ObAH5KuuB1fWySn274sODo7",
+          "latest_charge": "ch_3OhDz8KuuB1fWySn0YPblsE9",
           "livemode": false,
           "metadata": {},
           "next_action": null,
           "on_behalf_of": null,
-          "payment_method": "pm_1ObAH4KuuB1fWySns6yQhsIg",
+          "payment_method": "pm_1OhDz7KuuB1fWySnPxzsChRe",
           "payment_method_configuration_details": null,
           "payment_method_options": {
             "card": {
@@ -387,5 +393,5 @@ http_interactions:
           "transfer_data": null,
           "transfer_group": null
         }
-  recorded_at: Sun, 21 Jan 2024 23:18:00 GMT
+  recorded_at: Wed, 07 Feb 2024 16:28:31 GMT
 recorded_with: VCR 6.2.0
