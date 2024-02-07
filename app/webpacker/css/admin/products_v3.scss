@@ -165,20 +165,18 @@
     }
 
     // "Naked" inputs. Row hover helps reveal them.
-    tbody input:not([type="checkbox"]) {
-      background-color: $color-tbl-cell-bg;
-      height: auto;
-      font-size: inherit;
-      font-weight: inherit;
-
-      &:not(:focus):not(.changed):not([disabled]) {
-        border-color: transparent;
+    tbody {
+      input:not([type="checkbox"]) {
+        background-color: $color-tbl-cell-bg;
+        height: auto;
+        font-size: inherit;
+        font-weight: inherit;
       }
-    }
 
-    .field_with_errors {
-      input {
-        border-color: $color-error;
+      :not(.field_with_errors) > {
+        input:not([type="checkbox"]):not(:focus):not(.changed):not([disabled]) {
+          border-color: transparent;
+        }
       }
     }
   }
