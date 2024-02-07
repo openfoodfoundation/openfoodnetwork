@@ -32,10 +32,11 @@
 %td.align-left
   -# empty
 %td.align-right
-  = render(VerticalEllipsisMenu::Component.new) do
-    = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(variant.product, variant)
-    - if variant.product.variants.size > 1
-      %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
-          "data-modal-link-target-value": "variant-delete-modal", "class": "delete",
-          "data-modal-link-modal-dataset-value": {'data-current-id': variant.id}.to_json }
-        = t('admin.products_page.actions.delete')
+  - if variant.persisted?
+    = render(VerticalEllipsisMenu::Component.new) do
+      = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(variant.product, variant)
+      - if variant.product.variants.size > 1
+        %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
+            "data-modal-link-target-value": "variant-delete-modal", "class": "delete",
+            "data-modal-link-modal-dataset-value": {'data-current-id': variant.id}.to_json }
+          = t('admin.products_page.actions.delete')

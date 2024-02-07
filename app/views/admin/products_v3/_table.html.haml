@@ -55,8 +55,12 @@
               %tr.condensed
                 = render partial: 'variant_row', locals: { variant:, f: variant_form }
 
+          = form.fields_for("products][#{product_index}][variants_attributes][#{product.variants.count}", product.variants.build) do |new_variant_form|
+            %tr.condensed
+              = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form }
+
           %tr.condensed
             %td
             %td{ colspan: 10 }
-              %button.secondary.condensed.naked.icon-plus
-                New variant
+              %button.secondary.condensed.naked.icon-plus{ 'aria-label': t('.new_variant') }
+                =t('.new_variant')
