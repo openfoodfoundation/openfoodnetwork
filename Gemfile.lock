@@ -413,7 +413,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
-    minitest (5.21.2)
+    minitest (5.22.1)
     monetize (1.13.0)
       money (~> 6.12)
     money (6.16.0)
@@ -423,7 +423,7 @@ GEM
     multi_xml (0.6.0)
     net-http (0.4.1)
       uri
-    net-imap (0.4.9.1)
+    net-imap (0.4.10)
       date
       net-protocol
     net-pop (0.1.2)
@@ -750,7 +750,7 @@ GEM
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
     uri (0.13.0)
-    valid_email2 (5.1.1)
+    valid_email2 (5.2.1)
       activemodel (>= 3.2)
       mail (~> 2.5)
     validate_url (1.0.15)
