@@ -181,6 +181,48 @@ describe("BulkFormController", () => {
     });
   });
 
+  describe("Adding new fields", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <form id="form" data-controller="bulk-form" data-action="custom-event->bulk-form#registerElements",
+          <div data-record-id="1">
+            <input id="input1a" type="text" value="initial1a">
+            <template id="template">
+              <input id="input1b" type="text" value="initial1b">
+            </template>
+          </div>
+          <div data-record-id="2">
+            <input id="input2" type="text" value="initial2">
+          </div>
+          <input type="submit">
+        </form>
+      `;
+    });
+
+    describe("registerElements", () => {
+      beforeEach(() => {
+        // Add new field after controller has initialised
+        input1a.insertAdjacentHTML("afterend", template.innerHTML);
+
+        // Trigger bulk-form#registerElements
+        form.dispatchEvent(new Event("custom-event"));
+      });
+
+      it("onInput", () => {
+        input1b.value = 'updated1b';
+        input1b.dispatchEvent(new Event("input"));
+        // Expect only updated field to show changed
+        expect(input1b.classList).toContain('changed');
+        expect(input2.classList).not.toContain('changed');
+
+        // Change back to original value
+        input1b.value = 'initial1b';
+        input1b.dispatchEvent(new Event("input"));
+        expect(input1b.classList).not.toContain('changed');
+      });
+    })
+  });
+
   // unable to test disconnect at this stage
   // describe("disconnect()", () => {
   //   it("resets other elements", () => {

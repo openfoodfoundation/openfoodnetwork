@@ -24,6 +24,15 @@ export default class BulkFormController extends Controller {
     window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
   }
 
+  // Register any new elements (may be called by another controller after dynamically adding fields)
+  registerElements() {
+    const registeredElements = Object.values(this.recordElements).flat();
+    // Select only elements that haven't been registered yet
+    const newElements = Array.from(this.form.elements).filter(n => !registeredElements.includes(n));
+
+    this.#registerElements(newElements);
+  }
+
   toggleChanged(e) {
     const element = e.target;
     element.classList.toggle("changed", this.#isChanged(element));
