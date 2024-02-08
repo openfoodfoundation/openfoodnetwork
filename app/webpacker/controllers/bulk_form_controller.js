@@ -39,7 +39,7 @@ export default class BulkFormController extends Controller {
     const formChanged = changedRecordCount > 0 || this.errorValue;
 
     // Show actions
-    this.actionsTarget.classList.toggle("hidden", !formChanged);
+    this.hasActionsTarget && this.actionsTarget.classList.toggle("hidden", !formChanged);
     this.#disableOtherElements(formChanged); // like filters and sorting
 
     // Display number of records changed
