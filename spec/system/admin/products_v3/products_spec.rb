@@ -1597,7 +1597,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       find("a", text: "New Product").click
       expect(page).to have_content "New Product"
       fill_in 'product_name', with: 'Big Bag Of Apples'
-      select_tom_select supplier.name, from: 'product_supplier_field'
+      tomselect_select supplier.name, from: 'product[supplier_id]'
       select_tom_select 'Weight (g)', from: 'product_variant_unit_field'
       fill_in 'product_unit_value', with: '100'
       fill_in 'product_price', with: '10.00'
