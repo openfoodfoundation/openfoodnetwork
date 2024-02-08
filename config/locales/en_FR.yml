@@ -4612,3 +4612,6 @@ en_FR:
     pagination:
       next: Next
       previous: Previous
+  invisible_captcha:
+    sentence_for_humans: "Please leave empty"
+    timestamp_error_message: "Please try again after 5 seconds."

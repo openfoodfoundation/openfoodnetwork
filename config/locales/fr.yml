@@ -4683,3 +4683,6 @@ fr:
     pagination:
       next: Suivant
       previous: Précédent
+  invisible_captcha:
+    sentence_for_humans: "Merci de laisser ce champ libre"
+    timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."

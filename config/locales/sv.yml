@@ -24,6 +24,9 @@ sv:
         price: "Pris"
         supplier: "Leverantör"
         variant_unit: "Enhet för variant"
+      spree/credit_card:
+        month: "Månad"
+        year: "År"
       variant_override:
         count_on_hand: "På lager"
     errors:
@@ -84,7 +87,7 @@ sv:
   cancelled: "Avbokad"
   say_no: "Nej"
   say_yes: "Ja"
-  bill_address: Fakturerirngsadress
+  bill_address: Faktureringsadress
   ship_address: Leveransadress
   sort_order_cycles_on_shopfront_by: "Sortera butikens beställningsomgångar efter"
   required_fields: Obligatoriska fält är märkta med en asterisk
@@ -840,6 +843,12 @@ sv:
           label: Land
       shipping_info:
         title: 'Leveransadress '
+    step2:
+      form:
+        card_month:
+          label: Månad
+        card_year:
+          label: År
     step3:
       delivery_details:
         title: Leveransdetaljer
