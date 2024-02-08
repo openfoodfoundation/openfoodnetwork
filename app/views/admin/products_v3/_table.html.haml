@@ -1,9 +1,9 @@
 = form_with url: bulk_update_admin_products_path, method: :patch, id: "products-form",
             builder: BulkFormBuilder,
-            html: {'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#bulk_update',
-                   'data-controller': "bulk-form", 'data-bulk-form-disable-selector-value': "#sort,#filters",
-                   'data-bulk-form-error-value': defined?(error_counts),
-                  } do |form|
+            html: { data: { reflex: 'submit->products#bulk_update', 'reflex-serialize-form': true,
+              controller: "bulk-form", 'bulk-form-disable-selector-value': "#sort,#filters",
+              'bulk-form-error-value': defined?(error_counts),
+              } } do |form|
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
   %table.products
     %col{ width:"4%" }
