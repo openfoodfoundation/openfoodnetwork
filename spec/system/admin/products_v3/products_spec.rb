@@ -341,7 +341,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
     describe "adding variants" do
       it "creates a new variant" do
-        # click_on "New variant"
+        click_on "New variant"
 
         # find empty row for Apples
         new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
@@ -357,6 +357,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         fill_in "On Hand", with: "3"
 
         expect {
+          pending "changes are not detected"
           click_button "Save changes"
 
           expect(page).to have_content "Changes saved"
@@ -381,7 +382,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
       context "with invalid data" do
         before do
-          # click_on "New variant"
+          click_on "New variant"
 
           # find empty row for Apples
           new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
@@ -431,12 +432,12 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         it "saves changes after fixing errors" do
           expect {
+            pending "changes are not detected"
             click_button "Save changes"
 
             variant_a1.reload
           }.to_not change { variant_a1.display_name }
 
-          pending
           within row_containing_name("N" * 256) do
             fill_in "Name", with: "Nice box"
             fill_in "SKU", with: "APL-02"

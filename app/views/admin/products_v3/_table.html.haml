@@ -46,7 +46,7 @@
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
       = form.fields_for("products", product, index: product_index) do |product_form|
-        %tbody.relaxed{ 'data-record-id': product_form.object.id }
+        %tbody.relaxed{ 'data-record-id': product_form.object.id, 'data-controller': "nested-form" }
           %tr
             = render partial: 'product_row', locals: { product:, f: product_form }
 
@@ -56,12 +56,14 @@
                 = render partial: 'variant_row', locals: { variant:, f: variant_form }
 
           = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", product.variants.build) do |new_variant_form|
-            %template
+            %template{ 'data-nested-form-target': "template" }
               %tr.condensed
                 = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form }
 
+          %tr{ 'data-nested-form-target': "target" }
           %tr.condensed
             %td
             %td{ colspan: 10 }
-              %button.secondary.condensed.naked.icon-plus{ 'aria-label': t('.new_variant') }
+              %button.secondary.condensed.naked.icon-plus{ 'data-action': "nested-form#add",
+                                                           'aria-label': t('.new_variant') }
                 =t('.new_variant')
