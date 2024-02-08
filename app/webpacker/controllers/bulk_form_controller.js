@@ -13,18 +13,7 @@ export default class BulkFormController extends Controller {
     this.form = this.element;
 
     // Start listening for any changes within the form
-    // this.element.addEventListener('change', this.toggleChanged.bind(this)); // dunno why this doesn't work
-    for (const element of this.form.elements) {
-      element.addEventListener("input", this.toggleChanged.bind(this)); // immediately respond to any change
-
-      // Set up a tree of fields according to their associated record
-      const recordContainer = element.closest("[data-record-id]"); // The JS could be more efficient if this data was added to each element. But I didn't want to pollute the HTML too much.
-      const recordId = recordContainer && recordContainer.dataset.recordId;
-      if (recordId) {
-        this.recordElements[recordId] ||= [];
-        this.recordElements[recordId].push(element);
-      }
-    }
+    this.#registerElements(this.form.elements);
 
     this.toggleFormChanged();
   }
@@ -77,6 +66,20 @@ export default class BulkFormController extends Controller {
   }
 
   // private
+
+  #registerElements(elements) {
+    for (const element of elements) {
+      element.addEventListener("input", this.toggleChanged.bind(this)); // immediately respond to any change
+
+      // Set up a tree of fields according to their associated record
+      const recordContainer = element.closest("[data-record-id]"); // The JS could be more efficient if this data was added to each element. But I didn't want to pollute the HTML too much.
+      const recordId = recordContainer && recordContainer.dataset.recordId;
+      if (recordId) {
+        this.recordElements[recordId] ||= [];
+        this.recordElements[recordId].push(element);
+      }
+    }
+  }
 
   #disableOtherElements(disable) {
     if (!this.hasDisableSelectorValue) return;
