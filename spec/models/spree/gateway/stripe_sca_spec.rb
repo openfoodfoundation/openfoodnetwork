@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe Spree::Gateway::StripeSCA, type: :model do
-  let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
 
   let(:order) { create(:order_ready_for_payment) }
 
@@ -25,8 +24,6 @@ describe Spree::Gateway::StripeSCA, type: :model do
   let(:gateway_options) {
     { order_id: order.number }
   }
-
-  before { Stripe.api_key = secret }
 
   let(:pm_card) do
     Stripe::PaymentMethod.create({

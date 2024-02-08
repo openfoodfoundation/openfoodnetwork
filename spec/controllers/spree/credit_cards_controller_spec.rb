@@ -5,10 +5,8 @@ require 'spec_helper'
 describe Spree::CreditCardsController, type: :controller do
   describe "using VCR", :vcr, :stripe_version do
     let(:user) { create(:user) }
-    let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
 
     before do
-      Stripe.api_key = secret
       allow(controller).to receive(:spree_current_user) { user }
     end
 

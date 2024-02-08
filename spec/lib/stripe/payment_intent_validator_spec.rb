@@ -4,7 +4,6 @@ require 'spec_helper'
 require 'stripe/payment_intent_validator'
 
 describe Stripe::PaymentIntentValidator do
-  let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
 
   let(:payment_method) {
     create(:stripe_sca_payment_method, distributor_ids: [create(:distributor_enterprise).id],
@@ -12,10 +11,6 @@ describe Stripe::PaymentIntentValidator do
   }
 
   let(:year_valid) { Time.zone.now.year.next }
-
-  before {
-    Stripe.api_key = secret
-  }
 
   describe "#call", :vcr, :stripe_version do
     let(:payment) {

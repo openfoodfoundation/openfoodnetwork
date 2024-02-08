@@ -10,16 +10,16 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer <HIDDEN-STRIPE_SECRET_TEST_API_KEY>
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.1.0-17-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14)
-        12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian
-        6.1.69-1 (2023-12-30)","hostname":"blackbox"}'
+        version 6.5.0-15-generic (buildd@bos03-amd64-040) (x86_64-linux-gnu-gcc-12
+        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
+        #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -32,11 +32,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sun, 21 Jan 2024 23:17:31 GMT
+      - Thu, 08 Feb 2024 15:04:44 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '799'
+      - '800'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -57,17 +57,19 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - 25f85b6b-843b-4a64-89b0-fbec80e642e5
+      - 53ea4a8a-bd4a-406f-a235-6601bcf7b642
       Original-Request:
-      - req_zz9NZyBc8pMdP4
+      - req_X5b1XHvHTEwZeg
       Request-Id:
-      - req_zz9NZyBc8pMdP4
+      - req_X5b1XHvHTEwZeg
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '240.0'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -76,10 +78,10 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "tok_1ObAGdKuuB1fWySn5e53EYXn",
+          "id": "tok_1OhZ9cKuuB1fWySnbrYK1oKq",
           "object": "token",
           "card": {
-            "id": "card_1ObAGdKuuB1fWySnzig5k3T2",
+            "id": "card_1OhZ9cKuuB1fWySntTSf6ZaW",
             "object": "card",
             "address_city": null,
             "address_country": null,
@@ -103,35 +105,35 @@ http_interactions:
             "tokenization_method": null,
             "wallet": null
           },
-          "client_ip": "115.166.50.47",
-          "created": 1705879051,
+          "client_ip": "176.79.246.198",
+          "created": 1707404684,
           "livemode": false,
           "type": "card",
           "used": false
         }
-  recorded_at: Sun, 21 Jan 2024 23:17:31 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:44 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: UTF-8
-      string: email=demetra%40greenfelder.ca&source=tok_1ObAGdKuuB1fWySn5e53EYXn
+      string: email=karin%40beier.biz&source=tok_1OhZ9cKuuB1fWySnbrYK1oKq
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer <HIDDEN-STRIPE_SECRET_TEST_API_KEY>
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_zz9NZyBc8pMdP4","request_duration_ms":848}}'
+      - '{"last_request_metrics":{"request_id":"req_X5b1XHvHTEwZeg","request_duration_ms":932}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.1.0-17-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14)
-        12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian
-        6.1.69-1 (2023-12-30)","hostname":"blackbox"}'
+        version 6.5.0-15-generic (buildd@bos03-amd64-040) (x86_64-linux-gnu-gcc-12
+        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
+        #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -144,11 +146,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sun, 21 Jan 2024 23:17:33 GMT
+      - Thu, 08 Feb 2024 15:04:46 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '661'
+      - '654'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -169,17 +171,19 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - d0274fe4-9ce7-4387-829e-c6b246035491
+      - cb68c9ff-2b99-45c8-8542-2393a9fb1b62
       Original-Request:
-      - req_144xT6tf8cLxH7
+      - req_yjoScrobtfS8su
       Request-Id:
-      - req_144xT6tf8cLxH7
+      - req_yjoScrobtfS8su
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '555.9999999999999'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -188,18 +192,18 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "cus_PQ0HyRJ0baOkF6",
+          "id": "cus_PWcOBOPM8iweN3",
           "object": "customer",
           "address": null,
           "balance": 0,
-          "created": 1705879052,
+          "created": 1707404685,
           "currency": null,
-          "default_source": "card_1ObAGdKuuB1fWySnzig5k3T2",
+          "default_source": "card_1OhZ9cKuuB1fWySntTSf6ZaW",
           "delinquent": false,
           "description": null,
           "discount": null,
-          "email": "demetra@greenfelder.ca",
-          "invoice_prefix": "F02BC31D",
+          "email": "karin@beier.biz",
+          "invoice_prefix": "A1731923",
           "invoice_settings": {
             "custom_fields": null,
             "default_payment_method": null,
@@ -216,10 +220,10 @@ http_interactions:
           "tax_exempt": "none",
           "test_clock": null
         }
-  recorded_at: Sun, 21 Jan 2024 23:17:33 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:46 GMT
 - request:
     method: get
-    uri: https://api.stripe.com/v1/customers/cus_PQ0HyRJ0baOkF6/sources?limit=1&object=card
+    uri: https://api.stripe.com/v1/customers/cus_PWcOBOPM8iweN3/sources?limit=1&object=card
     body:
       encoding: US-ASCII
       string: ''
@@ -227,18 +231,18 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer <HIDDEN-STRIPE_SECRET_TEST_API_KEY>
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_144xT6tf8cLxH7","request_duration_ms":1043}}'
+      - '{"last_request_metrics":{"request_id":"req_yjoScrobtfS8su","request_duration_ms":965}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
       - '{"bindings_version":"10.6.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.1.0-17-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14)
-        12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian
-        6.1.69-1 (2023-12-30)","hostname":"blackbox"}'
+        version 6.5.0-15-generic (buildd@bos03-amd64-040) (x86_64-linux-gnu-gcc-12
+        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
+        #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -251,7 +255,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sun, 21 Jan 2024 23:17:33 GMT
+      - Thu, 08 Feb 2024 15:04:46 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -277,11 +281,13 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Request-Id:
-      - req_iiAzSB5Tpf5LMk
+      - req_dyetzonDYKFtZB
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '44.0'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -293,7 +299,7 @@ http_interactions:
           "object": "list",
           "data": [
             {
-              "id": "card_1ObAGdKuuB1fWySnzig5k3T2",
+              "id": "card_1OhZ9cKuuB1fWySntTSf6ZaW",
               "object": "card",
               "address_city": null,
               "address_country": null,
@@ -305,7 +311,7 @@ http_interactions:
               "address_zip_check": null,
               "brand": "Visa",
               "country": "US",
-              "customer": "cus_PQ0HyRJ0baOkF6",
+              "customer": "cus_PWcOBOPM8iweN3",
               "cvc_check": "pass",
               "dynamic_last4": null,
               "exp_month": 9,
@@ -320,7 +326,7 @@ http_interactions:
             }
           ],
           "has_more": false,
-          "url": "/v1/customers/cus_PQ0HyRJ0baOkF6/sources"
+          "url": "/v1/customers/cus_PWcOBOPM8iweN3/sources"
         }
-  recorded_at: Sun, 21 Jan 2024 23:17:33 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:46 GMT
 recorded_with: VCR 6.2.0

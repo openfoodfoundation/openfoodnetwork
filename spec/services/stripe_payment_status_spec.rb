@@ -5,16 +5,12 @@ require 'spec_helper'
 describe StripePaymentStatus, :vcr, :stripe_version do
   subject { StripePaymentStatus.new(payment) }
 
-  let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
-
   let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id) }
 
   let(:payment_method) {
     create(:stripe_sca_payment_method, distributor_ids: [create(:distributor_enterprise).id],
                                        preferred_enterprise_id: create(:enterprise).id)
   }
-
-  before { Stripe.api_key = secret }
 
   let(:pm_card) do
     Stripe::PaymentMethod.create({
@@ -44,10 +40,6 @@ describe StripePaymentStatus, :vcr, :stripe_version do
       source: credit_card,
       response_code: payment_intent.id
     )
-  }
-
-  before {
-    Stripe.api_key = secret
   }
 
   describe '#stripe_status' do

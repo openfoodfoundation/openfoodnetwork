@@ -8,11 +8,7 @@ module Stripe
     let!(:user) { create(:user, email: "apple.customer@example.com") }
     let!(:enterprise) { create(:enterprise) }
 
-    let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
-
     describe "#find_or_clone", :vcr, :stripe_version do
-      before { Stripe.api_key = secret }
-
       let(:customer) do
         Stripe::Customer.create({
                                   name: 'Apple Customer',

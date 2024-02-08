@@ -10,11 +10,11 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_WDobZZX30jLukm","request_duration_ms":408}}'
+      - '{"last_request_metrics":{"request_id":"req_JDUN1MbMwUh4WC","request_duration_ms":409}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -34,7 +34,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:33 GMT
+      - Thu, 08 Feb 2024 15:04:51 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -59,17 +59,19 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - ed1948a3-7b17-485e-8a6c-ef5a8c68d92e
+      - 54508471-5943-4b77-b84c-efcf3e963814
       Original-Request:
-      - req_fWFpHYy4YY1kyI
+      - req_MuhDieoGTY0ASs
       Request-Id:
-      - req_fWFpHYy4YY1kyI
+      - req_MuhDieoGTY0ASs
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '296.0'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -78,7 +80,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OgtbJKuuB1fWySnjM9KpMs5",
+          "id": "pm_1OhZ9jKuuB1fWySnJSTqCHMV",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -118,13 +120,13 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1707244953,
+          "created": 1707404691,
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:33 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:51 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/customers
@@ -135,11 +137,11 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_fWFpHYy4YY1kyI","request_duration_ms":585}}'
+      - '{"last_request_metrics":{"request_id":"req_MuhDieoGTY0ASs","request_duration_ms":545}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -159,7 +161,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:34 GMT
+      - Thu, 08 Feb 2024 15:04:52 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -184,17 +186,19 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - bf734dc7-5dc7-41e8-8664-46ebe5bb139d
+      - 905149ed-1a56-4b11-84b0-84a8ce563124
       Original-Request:
-      - req_t6WpLHshrnivBb
+      - req_VRL35Jdab7ntYD
       Request-Id:
-      - req_t6WpLHshrnivBb
+      - req_VRL35Jdab7ntYD
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '238.0'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -203,18 +207,18 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "cus_PVvSX99w0Qwhq3",
+          "id": "cus_PWcOf3YRoTOc9T",
           "object": "customer",
           "address": null,
           "balance": 0,
-          "created": 1707244953,
+          "created": 1707404691,
           "currency": null,
           "default_source": null,
           "delinquent": false,
           "description": null,
           "discount": null,
           "email": "apple.customer@example.com",
-          "invoice_prefix": "AB17908F",
+          "invoice_prefix": "332E0DFE",
           "invoice_settings": {
             "custom_fields": null,
             "default_payment_method": null,
@@ -231,22 +235,22 @@ http_interactions:
           "tax_exempt": "none",
           "test_clock": null
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:34 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:52 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/payment_methods/pm_1OgtbJKuuB1fWySnjM9KpMs5/attach
+    uri: https://api.stripe.com/v1/payment_methods/pm_1OhZ9jKuuB1fWySnJSTqCHMV/attach
     body:
       encoding: UTF-8
-      string: customer=cus_PVvSX99w0Qwhq3
+      string: customer=cus_PWcOf3YRoTOc9T
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_t6WpLHshrnivBb","request_duration_ms":406}}'
+      - '{"last_request_metrics":{"request_id":"req_VRL35Jdab7ntYD","request_duration_ms":510}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -266,7 +270,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:34 GMT
+      - Thu, 08 Feb 2024 15:04:52 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -292,17 +296,19 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Idempotency-Key:
-      - 8227bd73-0fba-4e75-927f-12e1e98d8c24
+      - ab2eb454-35fb-4803-a387-ab11a9a72fea
       Original-Request:
-      - req_GW3zum6dtoJ4Tj
+      - req_mnd7HlON4K32Lh
       Request-Id:
-      - req_GW3zum6dtoJ4Tj
+      - req_mnd7HlON4K32Lh
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '442.0'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -311,7 +317,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OgtbJKuuB1fWySnjM9KpMs5",
+          "id": "pm_1OhZ9jKuuB1fWySnJSTqCHMV",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -351,13 +357,13 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1707244953,
-          "customer": "cus_PVvSX99w0Qwhq3",
+          "created": 1707404691,
+          "customer": "cus_PWcOf3YRoTOc9T",
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:35 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:52 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/accounts
@@ -368,11 +374,11 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_GW3zum6dtoJ4Tj","request_duration_ms":817}}'
+      - '{"last_request_metrics":{"request_id":"req_mnd7HlON4K32Lh","request_duration_ms":713}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -392,7 +398,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:36 GMT
+      - Thu, 08 Feb 2024 15:04:54 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -417,17 +423,19 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - 9ef2e379-baa2-4e83-9c23-71a633410be3
+      - bc28ad88-efad-45e3-a35f-9442c2e66b42
       Original-Request:
-      - req_CkE7P6fa4jWbc5
+      - req_Z7oqKsG6A39VsM
       Request-Id:
-      - req_CkE7P6fa4jWbc5
+      - req_Z7oqKsG6A39VsM
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '1273.0000000000002'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -436,7 +444,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "acct_1OgtbLQPYEsuvN2e",
+          "id": "acct_1OhZ9lQQeZbvfZRJ",
           "object": "account",
           "business_profile": {
             "annual_revenue": null,
@@ -458,7 +466,7 @@ http_interactions:
             "type": "application"
           },
           "country": "AU",
-          "created": 1707244955,
+          "created": 1707404693,
           "default_currency": "aud",
           "details_submitted": false,
           "email": "apple.producer@example.com",
@@ -467,7 +475,7 @@ http_interactions:
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/accounts/acct_1OgtbLQPYEsuvN2e/external_accounts"
+            "url": "/v1/accounts/acct_1OhZ9lQQeZbvfZRJ/external_accounts"
           },
           "future_requirements": {
             "alternatives": [],
@@ -564,10 +572,10 @@ http_interactions:
           },
           "type": "standard"
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:36 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:54 GMT
 - request:
     method: get
-    uri: https://api.stripe.com/v1/payment_methods/pm_1OgtbJKuuB1fWySnjM9KpMs5
+    uri: https://api.stripe.com/v1/payment_methods/pm_1OhZ9jKuuB1fWySnJSTqCHMV
     body:
       encoding: US-ASCII
       string: ''
@@ -575,11 +583,11 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_CkE7P6fa4jWbc5","request_duration_ms":1609}}'
+      - '{"last_request_metrics":{"request_id":"req_Z7oqKsG6A39VsM","request_duration_ms":1510}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -599,7 +607,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:36 GMT
+      - Thu, 08 Feb 2024 15:04:54 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -625,11 +633,13 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Request-Id:
-      - req_9zrDjGKDkvIl0I
+      - req_mnF0JvvpldLXVg
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '61.99999999999999'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -638,7 +648,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OgtbJKuuB1fWySnjM9KpMs5",
+          "id": "pm_1OhZ9jKuuB1fWySnJSTqCHMV",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -678,13 +688,13 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1707244953,
-          "customer": "cus_PVvSX99w0Qwhq3",
+          "created": 1707404691,
+          "customer": "cus_PWcOf3YRoTOc9T",
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:37 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:54 GMT
 - request:
     method: get
     uri: https://api.stripe.com/v1/customers?email=apple.customer@example.com&limit=100
@@ -695,11 +705,11 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_9zrDjGKDkvIl0I","request_duration_ms":401}}'
+      - '{"last_request_metrics":{"request_id":"req_mnF0JvvpldLXVg","request_duration_ms":284}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -708,7 +718,7 @@ http_interactions:
         (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
         #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -721,7 +731,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:37 GMT
+      - Thu, 08 Feb 2024 15:04:54 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -746,13 +756,15 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Request-Id:
-      - req_ZZK3fKNsOOt5pY
+      - req_JJgzrPt4Zcpx9v
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '24.0'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -766,22 +778,22 @@ http_interactions:
           "has_more": false,
           "url": "/v1/customers"
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:37 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:55 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/payment_methods
     body:
       encoding: UTF-8
-      string: customer=cus_PVvSX99w0Qwhq3&payment_method=pm_1OgtbJKuuB1fWySnjM9KpMs5
+      string: customer=cus_PWcOf3YRoTOc9T&payment_method=pm_1OhZ9jKuuB1fWySnJSTqCHMV
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_ZZK3fKNsOOt5pY","request_duration_ms":406}}'
+      - '{"last_request_metrics":{"request_id":"req_JJgzrPt4Zcpx9v","request_duration_ms":422}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -790,7 +802,7 @@ http_interactions:
         (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
         #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -803,7 +815,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:37 GMT
+      - Thu, 08 Feb 2024 15:04:55 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -828,19 +840,21 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - 656446d0-44ba-4fbd-bffc-63de228d3751
+      - 0a6c0462-b571-46fb-8c5e-80fc427c4a21
       Original-Request:
-      - req_TAKGmEPBmkHbeR
+      - req_exrBqcUuzSrB0u
       Request-Id:
-      - req_TAKGmEPBmkHbeR
+      - req_exrBqcUuzSrB0u
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '153.00000000000003'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -849,7 +863,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OgtbNQPYEsuvN2eWoZgexrS",
+          "id": "pm_1OhZ9nQQeZbvfZRJBrszjngq",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -889,13 +903,13 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1707244957,
+          "created": 1707404695,
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:37 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:55 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/customers
@@ -906,11 +920,11 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_TAKGmEPBmkHbeR","request_duration_ms":409}}'
+      - '{"last_request_metrics":{"request_id":"req_exrBqcUuzSrB0u","request_duration_ms":510}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -919,7 +933,7 @@ http_interactions:
         (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
         #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -932,7 +946,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:38 GMT
+      - Thu, 08 Feb 2024 15:04:55 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -957,19 +971,21 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Idempotency-Key:
-      - 56abe1e3-635a-49be-9368-f8f18457c899
+      - 2cae99d1-2b10-469d-a84d-3dad4b8835fb
       Original-Request:
-      - req_8WMDVl077REzTQ
+      - req_yNRxcshB0tOZ2s
       Request-Id:
-      - req_8WMDVl077REzTQ
+      - req_yNRxcshB0tOZ2s
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '150.00000000000003'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -978,18 +994,18 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "cus_PVvSTXxTWvfbQ1",
+          "id": "cus_PWcOrcNRS2MrsA",
           "object": "customer",
           "address": null,
           "balance": 0,
-          "created": 1707244958,
+          "created": 1707404695,
           "currency": null,
           "default_source": null,
           "delinquent": false,
           "description": null,
           "discount": null,
           "email": "apple.customer@example.com",
-          "invoice_prefix": "6C00D688",
+          "invoice_prefix": "B312C5D2",
           "invoice_settings": {
             "custom_fields": null,
             "default_payment_method": null,
@@ -1006,22 +1022,22 @@ http_interactions:
           "tax_exempt": "none",
           "test_clock": null
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:38 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:55 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/payment_methods/pm_1OgtbNQPYEsuvN2eWoZgexrS/attach
+    uri: https://api.stripe.com/v1/payment_methods/pm_1OhZ9nQQeZbvfZRJBrszjngq/attach
     body:
       encoding: UTF-8
-      string: customer=cus_PVvSTXxTWvfbQ1
+      string: customer=cus_PWcOrcNRS2MrsA
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_8WMDVl077REzTQ","request_duration_ms":405}}'
+      - '{"last_request_metrics":{"request_id":"req_yNRxcshB0tOZ2s","request_duration_ms":370}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -1030,7 +1046,7 @@ http_interactions:
         (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
         #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -1043,7 +1059,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:38 GMT
+      - Thu, 08 Feb 2024 15:04:56 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -1069,19 +1085,21 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Idempotency-Key:
-      - e184320b-85e3-438d-ba30-0e9c4a99cbaf
+      - 66dd5765-8297-45d0-957c-68d5ebac8b6d
       Original-Request:
-      - req_LFwK3oJxEPIw50
+      - req_q8Dy6gISUy0QSp
       Request-Id:
-      - req_LFwK3oJxEPIw50
+      - req_q8Dy6gISUy0QSp
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '158.99999999999997'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -1090,7 +1108,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OgtbNQPYEsuvN2eWoZgexrS",
+          "id": "pm_1OhZ9nQQeZbvfZRJBrszjngq",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -1130,16 +1148,16 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1707244957,
-          "customer": "cus_PVvSTXxTWvfbQ1",
+          "created": 1707404695,
+          "customer": "cus_PWcOrcNRS2MrsA",
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:38 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:56 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/payment_methods/pm_1OgtbNQPYEsuvN2eWoZgexrS
+    uri: https://api.stripe.com/v1/payment_methods/pm_1OhZ9nQQeZbvfZRJBrszjngq
     body:
       encoding: UTF-8
       string: metadata[ofn-clone]=true
@@ -1147,11 +1165,11 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/10.6.0
       Authorization:
-      - Bearer sk_test_xFgJQOlXpMAFsoztzwFBTFhP00HG7BuCJm
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_LFwK3oJxEPIw50","request_duration_ms":407}}'
+      - '{"last_request_metrics":{"request_id":"req_q8Dy6gISUy0QSp","request_duration_ms":546}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -1160,7 +1178,7 @@ http_interactions:
         (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
         #15~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 12 18:54:30 UTC 2","hostname":"ff-LAT"}'
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -1173,7 +1191,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 06 Feb 2024 18:42:39 GMT
+      - Thu, 08 Feb 2024 15:04:56 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -1199,19 +1217,21 @@ http_interactions:
         'none'; frame-ancestors 'none'; img-src 'self'; script-src 'self' 'report-sample';
         style-src 'self'
       Idempotency-Key:
-      - 4865c36f-4266-4ba7-9dac-320bcd654d5d
+      - 7b333719-a304-4ff1-8ccd-a56d92b14384
       Original-Request:
-      - req_Oqo6xAAoElWbWk
+      - req_YFT5jeuMegnjxU
       Request-Id:
-      - req_Oqo6xAAoElWbWk
+      - req_YFT5jeuMegnjxU
       Stripe-Account:
-      - acct_1OgtbLQPYEsuvN2e
+      - acct_1OhZ9lQQeZbvfZRJ
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
       - '2023-10-16'
       Vary:
       - Origin
+      X-Stripe-Non-Api-Overhead-Duration-Ms:
+      - '191.99999999999997'
       X-Stripe-Routing-Context-Priority-Tier:
       - api-testmode
       Strict-Transport-Security:
@@ -1220,7 +1240,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OgtbNQPYEsuvN2eWoZgexrS",
+          "id": "pm_1OhZ9nQQeZbvfZRJBrszjngq",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -1260,13 +1280,13 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1707244957,
-          "customer": "cus_PVvSTXxTWvfbQ1",
+          "created": 1707404695,
+          "customer": "cus_PWcOrcNRS2MrsA",
           "livemode": false,
           "metadata": {
             "ofn-clone": "true"
           },
           "type": "card"
         }
-  recorded_at: Tue, 06 Feb 2024 18:42:39 GMT
+  recorded_at: Thu, 08 Feb 2024 15:04:57 GMT
 recorded_with: VCR 6.2.0
