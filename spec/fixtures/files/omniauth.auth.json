@@ -1,0 +1,48 @@
+{
+  "provider": "openid_connect",
+  "uid": "ofn@example.com",
+  "info": {
+    "name": "OFN Developer",
+    "email": "ofn@example.com",
+    "email_verified": false,
+    "nickname": "ofn@example.com",
+    "first_name": "OFN",
+    "last_name": "Developer",
+    "gender": null,
+    "image": null,
+    "phone": null,
+    "urls": {
+      "website": null
+    }
+  },
+  "credentials": {
+    "id_token": "ey...id_token...zg",
+    "token": "ey...token...9g",
+    "refresh_token": "ey...refresh_token...bk",
+    "expires_in": 1800,
+    "scope": "openid profile email"
+  },
+  "extra": {
+    "raw_info": {
+      "sub": "97da8027-a7a9-44c8-9cfd-ad639cec8630",
+      "email_verified": false,
+      "name": "OFN Developer",
+      "preferred_username": "ofn@example.com",
+      "given_name": "OFN",
+      "family_name": "Developer",
+      "email": "ofn@example.com",
+      "exp": 1707458565,
+      "iat": 1707456765,
+      "auth_time": 1707456763,
+      "jti": "00643994-5914-4699-96b0-2b4a308fca65",
+      "iss": "https://login.lescommuns.org/auth/realms/data-food-consortium",
+      "aud": "coopcircuits",
+      "typ": "ID",
+      "azp": "coopcircuits",
+      "nonce": "215831991b35c70d43fb2102ee78be55",
+      "session_state": "8b5725a1-e83a-4f78-a54b-36c5a2983dd4",
+      "at_hash": "RT8oVVJdFDiaytyDxHJLyQ",
+      "sid": "8b5725a1-e83a-4f78-a54b-36c5a2983dd4"
+    }
+  }
+}

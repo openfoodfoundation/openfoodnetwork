@@ -19,15 +19,11 @@ describe '/user/spree_user/auth/openid_connect/callback', type: :request do
   end
 
   context 'when the omniauth setup is returning with an authorization' do
+    # The auth hash data has been observed by connecting to the Keycloak server
+    # https://login.lescommuns.org/.
     before do
       OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
-        'provider' => 'openid_connect',
-        'uid' => 'john@doe.com',
-        'info' => {
-          'email' => 'john@doe.com',
-          'first_name' => 'John',
-          'last_name' => 'Doe'
-        }
+        JSON.parse(file_fixture("omniauth.auth.json").read)
       )
     end
 
@@ -35,7 +31,7 @@ describe '/user/spree_user/auth/openid_connect/callback', type: :request do
       request!
 
       expect(user.provider).to eq "openid_connect"
-      expect(user.uid).to eq "john@doe.com"
+      expect(user.uid).to eq "ofn@example.com"
       expect(response.status).to eq(302)
     end
   end
