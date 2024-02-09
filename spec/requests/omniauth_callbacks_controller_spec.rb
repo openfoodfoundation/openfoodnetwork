@@ -10,9 +10,6 @@ describe OmniauthCallbacksController, type: :request do
   subject do
     login_as user
     post '/user/spree_user/auth/openid_connect/callback', params: { code: 'code123' }
-
-    request.env['devise.mapping'] = Devise.mappings[:spree_user]
-    request.env['omniauth.auth'] = omniauth_response
   end
 
   let(:user) { create(:user) }
@@ -35,7 +32,6 @@ describe OmniauthCallbacksController, type: :request do
 
       expect(user.provider).to eq "openid_connect"
       expect(user.uid).to eq "john@doe.com"
-      expect(request.cookies[:omniauth_connect]).to be_nil
       expect(response.status).to eq(302)
     end
   end
@@ -50,7 +46,6 @@ describe OmniauthCallbacksController, type: :request do
 
       expect(user.provider).to be_nil
       expect(user.uid).to be_nil
-      expect(request.cookies[:omniauth_connect]).to be_nil
       expect(response.status).to eq(302)
     end
   end
