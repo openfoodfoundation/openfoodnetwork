@@ -165,7 +165,6 @@ describe "As a consumer I want to shop with a distributor" do
         let(:exchange2) { oc2.exchanges.to_enterprises(distributor).outgoing.first }
 
         before do
-          pending("Issue #12076")
           exchange1.update_attribute :pickup_time, "frogs"
           exchange2.update_attribute :pickup_time, "turtles"
           distributor.update!(preferred_shopfront_message: "Hello!")
@@ -176,7 +175,7 @@ describe "As a consumer I want to shop with a distributor" do
 
           expect(page).to have_selector "option", text: 'frogs'
           expect(page).to have_selector "option", text: 'turtles'
-          expect(page).to have_content "choose when you want your order"
+          expect(page).to have_content "Choose when you want your order:"
           expect(page).not_to have_selector("input.button.right")
         end
 

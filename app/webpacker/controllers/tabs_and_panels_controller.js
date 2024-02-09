@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["tab", "panel", "default"];
+  static targets = ["tab", "panel", "default", "shop"];
   static values = { className: String };
 
   connect() {
@@ -29,6 +29,10 @@ export default class extends Controller {
 
   activateDefaultPanel() {
     this._activateByHash(`#${this.defaultTarget.id}`);
+  }
+
+  activateShopPanel() {
+    this._activateByHash(`#${this.shopTarget.id}`);
   }
 
   _activateByHash(hash) {

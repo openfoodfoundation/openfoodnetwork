@@ -22,7 +22,7 @@ module ShopHelper
       { name: 'home', title: t(:shopping_tabs_home), show: show_home_tab?,
         default: show_home_tab? },
       { name: 'shop', title: t(:shopping_tabs_shop), show: !require_customer?,
-        default: !show_home_tab? },
+        default: !show_home_tab?, shop: true },
       { name: 'about', title: t(:shopping_tabs_about), show: true },
       { name: 'producers', title: t(:shopping_tabs_producers), show: true },
       { name: 'contact', title: t(:shopping_tabs_contact), show: true },
