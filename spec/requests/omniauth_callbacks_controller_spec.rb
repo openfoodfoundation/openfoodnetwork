@@ -2,20 +2,24 @@
 
 require 'spec_helper'
 
-describe OmniauthCallbacksController, type: :request do
+# Devise calls OmniauthCallbacksController for OpenID Connect callbacks.
+describe '/user/spree_user/auth/openid_connect/callback', type: :request do
   include AuthenticationHelper
 
-  OmniAuth.config.test_mode = true
+  let(:user) { create(:user) }
+  let(:params) { { code: 'code123' } }
 
-  subject do
+  before do
+    OmniAuth.config.test_mode = true
     login_as user
-    post '/user/spree_user/auth/openid_connect/callback', params: { code: 'code123' }
   end
 
-  let(:user) { create(:user) }
+  def request!
+    post(self.class.top_level_description, params:)
+  end
 
   context 'when the omniauth setup is returning with an authorization' do
-    let!(:omniauth_response) do
+    before do
       OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
         'provider' => 'openid_connect',
         'uid' => 'john@doe.com',
@@ -28,7 +32,7 @@ describe OmniauthCallbacksController, type: :request do
     end
 
     it 'is successful' do
-      subject
+      request!
 
       expect(user.provider).to eq "openid_connect"
       expect(user.uid).to eq "john@doe.com"
@@ -37,12 +41,12 @@ describe OmniauthCallbacksController, type: :request do
   end
 
   context 'when the omniauth openid_connect is mocked with an error' do
-    let!(:omniauth_response) do
+    before do
       OmniAuth.config.mock_auth[:openid_connect] = :invalid_credentials
     end
 
     it 'fails with bad auth data' do
-      subject
+      request!
 
       expect(user.provider).to be_nil
       expect(user.uid).to be_nil
