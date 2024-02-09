@@ -6,6 +6,23 @@ require 'spree/localized_number'
 describe Spree::Variant do
   subject(:variant) { build(:variant) }
 
+  describe "associations" do
+    describe "tax_category" do
+      before do
+        variant.tax_category = build(:tax_category)
+        variant.save!
+      end
+
+      it "returns nil without error when soft-deleted" do
+        variant.tax_category.destroy # soft-deleted with acts_as_paranoid
+        variant.reload
+
+        expect(variant.tax_category).to be_nil
+        expect{ variant.tax_category }.not_to raise_error
+      end
+    end
+  end
+
   context "validations" do
     it "should validate price is greater than 0" do
       variant.price = -1
