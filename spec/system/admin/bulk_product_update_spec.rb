@@ -705,10 +705,10 @@ RSpec.describe '
 
         toggle_columns /^.{0,1}Producer$/i
 
-        expect(page).to have_no_selector "th", text: "Producer"
-        expect(page).to have_selector "th", text: "Name"
-        expect(page).to have_selector "th", text: "Price"
-        expect(page).to have_selector "th", text: "On Hand"
+        expect(page).not_to have_selector "th", text: "Producer"
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
       end
     end
 

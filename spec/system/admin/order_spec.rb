@@ -125,7 +125,8 @@ RSpec.describe '
     it "sets the customer on the order" do
       expect(order.customer_id).to be_nil
 
-      tomselect_search_and_select customer2.email, from: 'select-customer'
+      tomselect_search_and_select customer2.email, from: 'customer_search_override'
+
       check 'order_use_billing'
 
       trigger_click(:button, 'Update')
@@ -148,7 +149,8 @@ RSpec.describe '
 
       it "should update the order customer (not only its details)" do
         expect(page).to have_field 'order_email', with: customer2.email
-        tomselect_search_and_select customer3.email, from: 'select-customer'
+        tomselect_search_and_select customer3.email, from: 'customer_search_override'
+
         check 'order_use_billing'
 
         expect(page).to have_field 'order_email', with: customer3.email
@@ -513,7 +515,7 @@ RSpec.describe '
     expect(page).to have_selector '#select-customer'
 
     # And I select that customer's email address and save the order
-    tomselect_search_and_select customer.email, from: 'select-customer'
+    tomselect_search_and_select customer.email, from: 'customer_search_override'
     expect(page).to have_field "order_email", with: customer.email
     click_button 'Update'
 

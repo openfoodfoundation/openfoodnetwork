@@ -712,9 +712,9 @@ RSpec.describe "Product Import" do
 
       expect(page).to have_selector '.created-count', text: '1'
 
-      expect(page).to have_no_selector '.updated-count'
-      expect(page).to have_content "Go To Products Page"
-      expect(page).to have_content "Upload Another File"
+      expect(page).not_to have_selector '.updated-count'
+      expect(page).to have_content "Go To Products Page".upcase
+      expect(page).to have_content "Upload Another File".upcase
 
       visit spree.admin_products_path
 
