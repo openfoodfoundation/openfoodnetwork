@@ -134,6 +134,37 @@ describe Spree::Gateway::StripeSCA, type: :model do
     end
   end
 
+  describe "#credit", :vcr, :stripe_version do
+    # This is the first account retrieved using Stripe::Account.list
+    let(:stripe_test_account) { "acct_1OhZ9lQQeZbvfZRJ" }
+
+    before do
+      # Inject our test stripe account
+      stripe_account = create(:stripe_account, stripe_user_id: stripe_test_account)
+      allow(StripeAccount).to receive(:find_by).and_return(stripe_account)
+    end
+
+    it "refunds the payment" do
+      # Link the payment intent to our test stripe account, and automatically confirm and capture
+      # the payment.
+      payment_intent = Stripe::PaymentIntent.create(
+        {
+          amount: 1000, # given in AUD cents
+          currency: 'aud', # AUD to match order currency
+          payment_method: 'pm_card_mastercard',
+          payment_method_types: ['card'],
+          capture_method: 'automatic',
+          confirm: true,
+        },
+        stripe_account: stripe_test_account
+      )
+
+      response = subject.credit(1000, nil, payment_intent.id, {})
+
+      expect(response.success?).to eq true
+    end
+  end
+
   describe "#error message", :vcr, :stripe_version do
     context "when payment intent state is not in 'requires_capture' state" do
       before do
