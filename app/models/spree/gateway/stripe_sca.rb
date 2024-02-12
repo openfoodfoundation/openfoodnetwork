@@ -43,7 +43,7 @@ module Spree
         StripeAccount.find_by(enterprise_id: preferred_enterprise_id)&.stripe_user_id
       end
 
-      # NOTE: the name of this method is determined by Spree::Payment::Processing
+      # NOTE: this method is required by Spree::Payment::Processing
       def purchase(money, creditcard, gateway_options)
         begin
           payment_intent_id = fetch_payment_intent(creditcard, gateway_options)
@@ -63,7 +63,7 @@ module Spree
         provider.capture(money, payment_intent_id, options)
       end
 
-      # NOTE: the name of this method is determined by Spree::Payment::Processing
+      # NOTE: this method is required by Spree::Payment::Processing
       def charge_offline(money, creditcard, gateway_options)
         customer, payment_method =
           Stripe::CreditCardCloner.new(creditcard, stripe_account_id).find_or_clone
@@ -74,7 +74,7 @@ module Spree
         failed_activemerchant_billing_response(e.message)
       end
 
-      # NOTE: the name of this method is determined by Spree::Payment::Processing
+      # NOTE: this method is required by Spree::Payment::Processing
       def authorize(money, creditcard, gateway_options)
         authorize_response =
           provider.authorize(*options_for_authorize(money, creditcard, gateway_options))
@@ -83,26 +83,27 @@ module Spree
         failed_activemerchant_billing_response(e.message)
       end
 
-      # NOTE: the name of this method is determined by Spree::Payment::Processing
-      def void(response_code, _creditcard, gateway_options)
-        payment_intent_id = response_code
-
-        payment_intent_response = Stripe::PaymentIntent.retrieve(payment_intent_id,
-                                                                 stripe_account: stripe_account_id)
+      # NOTE: this method is required by Spree::Payment::Processing
+      def void(payment_intent_id, _creditcard, gateway_options)
+        payment_intent_response = Stripe::PaymentIntent.retrieve(
+          payment_intent_id, stripe_account: stripe_account_id
+        )
         gateway_options[:stripe_account] = stripe_account_id
 
         # If a payment has been confirmed it can't be voided by Stripe, and must be refunded instead
         if voidable?(payment_intent_response)
-          provider.void(response_code, gateway_options)
+          provider.void(payment_intent_id, gateway_options)
         else
-          provider.refund(payment_intent_response.amount_received, response_code, gateway_options)
+          provider.refund(
+            payment_intent_response.amount_received, payment_intent_id, gateway_options
+          )
         end
       end
 
-      # NOTE: the name of this method is determined by Spree::Payment::Processing
-      def credit(money, _creditcard, response_code, gateway_options)
+      # NOTE: this method is required by Spree::Payment::Processing
+      def credit(money, _creditcard, payment_intent_id, gateway_options)
         gateway_options[:stripe_account] = stripe_account_id
-        provider.refund(money, response_code, gateway_options)
+        provider.refund(money, payment_intent_id, gateway_options)
       end
 
       def create_profile(payment)
