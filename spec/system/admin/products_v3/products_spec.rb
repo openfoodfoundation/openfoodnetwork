@@ -41,7 +41,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         toggle_columns /^.{0,1}Producer$/i
 
-        expect(page).to have_no_selector "th", text: "PRODUCER"
+        expect(page).not_to have_selector "th", text: "PRODUCER"
         expect(page).to have_selector "th", text: "NAME"
         expect(page).to have_selector "th", text: "PRICE"
         expect(page).to have_selector "th", text: "ON HAND"
