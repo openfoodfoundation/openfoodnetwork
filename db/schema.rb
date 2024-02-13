@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_15_022359) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_13_042618) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -306,6 +306,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_022359) do
     t.datetime "updated_at", null: false
     t.boolean "cancelled", default: false, null: false
     t.index ["order_id"], name: "index_invoices_on_order_id"
+  end
+
+  create_table "oidc_accounts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "provider"
+    t.string "uid", null: false
+    t.string "token"
+    t.string "refresh_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid"], name: "index_oidc_accounts_on_uid", unique: true
+    t.index ["user_id"], name: "index_oidc_accounts_on_user_id", unique: true
   end
 
   create_table "order_cycle_schedules", id: :serial, force: :cascade do |t|
@@ -1146,6 +1158,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_022359) do
   add_foreign_key "inventory_items", "enterprises"
   add_foreign_key "inventory_items", "spree_variants", column: "variant_id"
   add_foreign_key "invoices", "spree_orders", column: "order_id"
+  add_foreign_key "oidc_accounts", "spree_users", column: "user_id"
   add_foreign_key "order_cycle_schedules", "order_cycles", name: "oc_schedules_order_cycle_id_fk"
   add_foreign_key "order_cycle_schedules", "schedules", name: "oc_schedules_schedule_id_fk"
   add_foreign_key "order_cycles", "enterprises", column: "coordinator_id", name: "order_cycles_coordinator_id_fk"
