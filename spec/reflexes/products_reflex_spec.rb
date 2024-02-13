@@ -36,8 +36,10 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
 
   describe '#bulk_update' do
     let!(:variant_a1) {
-      create(:variant, product: product_a, display_name: "Medium box", sku: "APL-01", price: 5.25,
-                       on_hand: 5, on_demand: false)
+      product_a.variants.first.tap{ |v|
+        v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
+                  on_demand: false
+      }
     }
     let!(:product_c) { create(:simple_product, name: "Carrots", sku: "CAR-00") }
     let!(:product_b) { create(:simple_product, name: "Bananas", sku: "BAN-00") }
@@ -97,6 +99,63 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.price }.to(10.25)
         .and change{ variant_a1.on_hand }.to(6)
+
+      expect(flash).to include success: "Changes saved"
+    end
+
+    it "creates new variants" do
+      # Form field names:
+      #   '[products][0][id]' (hidden field)
+      #   '[products][0][name]'
+      #   '[products][0][variants_attributes][0][id]' (hidden field)
+      #   '[products][0][variants_attributes][0][display_name]'
+      #   '[products][0][variants_attributes][1][display_name]' (id is omitted for new record)
+      #   '[products][0][variants_attributes][2][display_name]' (more than 1 new record is allowed)
+      params = {
+        "products" => {
+          "0" => {
+            "id" => product_a.id.to_s,
+            "name" => "Pommes",
+            "variants_attributes" => {
+              "0" => {
+                "id" => variant_a1.id.to_s,
+                "display_name" => "Large box",
+              },
+              "1" => {
+                "display_name" => "Small box",
+                "sku" => "POM-02",
+                "price" => "5.25",
+                "unit_value" => "0.5",
+              },
+              "2" => {
+                "sku" => "POM-03",
+                "price" => "15.25",
+                "unit_value" => "2",
+              },
+            },
+          },
+        },
+      }
+
+      expect{
+        run_reflex(:bulk_update, params:)
+        product_a.reload
+        variant_a1.reload
+      }.to change{ product_a.name }.to("Pommes")
+        .and change{ variant_a1.display_name }.to("Large box")
+        .and change{ product_a.variants.count }.by(2)
+
+      variant_a2 = product_a.variants[1]
+      expect(variant_a2.display_name).to eq "Small box"
+      expect(variant_a2.sku).to eq "POM-02"
+      expect(variant_a2.price).to eq 5.25
+      expect(variant_a2.unit_value).to eq 0.5
+
+      variant_a3 = product_a.variants[2]
+      expect(variant_a3.display_name).to be_nil
+      expect(variant_a3.sku).to eq "POM-03"
+      expect(variant_a3.price).to eq 15.25
+      expect(variant_a3.unit_value).to eq 2
 
       expect(flash).to include success: "Changes saved"
     end
