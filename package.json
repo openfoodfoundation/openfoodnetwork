@@ -18,7 +18,7 @@
     ]
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.6.1",
+    "@floating-ui/dom": "^1.6.2",
     "@hotwired/turbo": "^8.0.2",
     "@rails/webpacker": "5.4.4",
     "cable_ready": "5.0.2",
