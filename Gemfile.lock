@@ -259,9 +259,6 @@ GEM
     digest (3.1.1)
     docile (1.4.0)
     dotenv (3.0.0)
-    dotenv-rails (3.0.0)
-      dotenv (= 3.0.0)
-      railties (>= 6.1)
     email_validator (2.2.4)
       activemodel
     erubi (1.12.0)
@@ -846,7 +843,7 @@ DEPENDENCIES
   devise-token_authenticatable
   dfc_provider!
   digest
-  dotenv-rails
+  dotenv
   factory_bot_rails (= 6.2.0)
   faraday
   ffaker

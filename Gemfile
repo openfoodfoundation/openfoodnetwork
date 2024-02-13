@@ -5,7 +5,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 ruby File.read('.ruby-version').chomp
 
-gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gems
+gem 'dotenv', require: 'dotenv/load' # Load ENV vars before other gems
 
 gem 'rails'
 
