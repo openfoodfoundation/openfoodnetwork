@@ -442,10 +442,23 @@ describe Spree::Payment do
         end
       end
 
-      context "#credit" do
+      describe "#credit" do
+        let(:success_response) do
+          instance_double(
+            ActiveMerchant::Billing::Response,
+            authorization: "12345",
+            success?: true,
+            avs_result: { 'code' => 'avs-code' },
+            cvv_result: { code: nil, message: nil }
+          )
+        end
+
         before do
           payment.state = 'completed'
           payment.response_code = '123'
+
+          # Stub payment.method#credit
+          allow(payment_method).to receive(:credit).and_return(success_response)
         end
 
         context "when outstanding_balance is less than payment amount" do
@@ -468,10 +481,6 @@ describe Spree::Payment do
           end
 
           it "should not applied any transaction fees" do
-            stub_request(:get, "https://api.stripe.com/v1/payment_intents/123").
-              to_return(status: 200, body: payment_authorised)
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-              to_return(status: 200, body: payment_refunded)
             payment.credit!
             expect(payment.adjustment.finalized?).to eq(false)
             expect(order.all_adjustments.payment_fee.length).to eq(0)
@@ -504,11 +513,40 @@ describe Spree::Payment do
           end
         end
 
+        context "when amount <= credit_allowed" do
+          it "makes the state processing" do
+            payment.payment_method.name = 'Gateway'
+            payment.payment_method.distributors << create(:distributor_enterprise)
+            payment.payment_method.save!
+
+            payment.order = create(:order)
+
+            payment.state = 'completed'
+            allow(payment).to receive(:credit_allowed) { 10 }
+            payment.partial_credit(10)
+            expect(payment).to be_processing
+          end
+
+          it "calls credit on the source with the payment and amount" do
+            payment.state = 'completed'
+            allow(payment).to receive(:credit_allowed) { 10 }
+            expect(payment).to receive(:credit!).with(10)
+            payment.partial_credit(10)
+          end
+        end
+
+        context "when amount > credit_allowed" do
+          it "should not call credit on the source" do
+            payment = build_stubbed(:payment)
+            payment.state = 'completed'
+            allow(payment).to receive(:credit_allowed) { 10 }
+            payment.partial_credit(20)
+            expect(payment).to be_completed
+          end
+        end
+
+
         it "should log the response" do
-          stub_request(:get, "https://api.stripe.com/v1/payment_intents/123").
-            to_return(status: 200, body: payment_authorised)
-          stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-            to_return(status: 200, body: payment_refunded)
           payment.credit!
           expect(payment).to have_received(:record_response)
         end
@@ -523,19 +561,11 @@ describe Spree::Payment do
 
         context "when response is successful" do
           it "should create an offsetting payment" do
-            stub_request(:get, "https://api.stripe.com/v1/payment_intents/123").
-              to_return(status: 200, body: payment_authorised)
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-              to_return(status: 200, body: payment_refunded)
             expect(Spree::Payment).to receive(:create!)
             payment.credit!
           end
 
           it "resulting payment should have correct values" do
-            stub_request(:get, "https://api.stripe.com/v1/payment_intents/123").
-              to_return(status: 200, body: payment_authorised)
-            stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-              to_return(status: 200, body: payment_refunded)
             allow(payment.order).to receive(:new_outstanding_balance) { 100 }
             allow(payment).to receive(:credit_allowed) { 10 }
 
@@ -552,15 +582,7 @@ describe Spree::Payment do
                                     verification_value: '123')
             end
 
-            let(:successful_response) do
-              ActiveMerchant::Billing::Response.new(true, "Yay!")
-            end
-
             it 'lets the new payment to be saved' do
-              stub_request(:get, "https://api.stripe.com/v1/payment_intents/123").
-                to_return(status: 200, body: payment_authorised)
-              stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-                to_return(status: 200, body: payment_refunded)
               allow(payment.order).to receive(:new_outstanding_balance) { 100 }
               allow(payment).to receive(:credit_allowed) { 10 }
 
@@ -633,42 +655,6 @@ describe Spree::Payment do
         payment = build_stubbed(:payment)
         allow(payment).to receive(:credit_allowed) { 0 }
         expect(payment.can_credit?).to be false
-      end
-    end
-
-    context "#credit" do
-      context "when amount <= credit_allowed" do
-        it "makes the state processing" do
-          stub_request(:get, "https://api.stripe.com/v1/payment_intents/12345").
-            to_return(status: 200, body: payment_authorised)
-          stub_request(:post, "https://api.stripe.com/v1/charges/ch_1234/refunds").
-            to_return(status: 200, body: payment_refunded)
-          payment.payment_method.name = 'Gateway'
-          payment.payment_method.distributors << create(:distributor_enterprise)
-          payment.payment_method.save!
-
-          payment.order = create(:order)
-
-          payment.state = 'completed'
-          allow(payment).to receive(:credit_allowed) { 10 }
-          payment.partial_credit(10)
-          expect(payment).to be_processing
-        end
-        it "calls credit on the source with the payment and amount" do
-          payment.state = 'completed'
-          allow(payment).to receive(:credit_allowed) { 10 }
-          expect(payment).to receive(:credit!).with(10)
-          payment.partial_credit(10)
-        end
-      end
-      context "when amount > credit_allowed" do
-        it "should not call credit on the source" do
-          payment = build_stubbed(:payment)
-          payment.state = 'completed'
-          allow(payment).to receive(:credit_allowed) { 10 }
-          payment.partial_credit(20)
-          expect(payment).to be_completed
-        end
       end
     end
 
