@@ -7,9 +7,11 @@
   %h2= t(".connect")
   %br
 
-  - if spree_current_user.provider == 'openid_connect' && spree_current_user.uid.present?
+  - # I'll refactor this later:
+  - account = OidcAccount.find_by(provider: "openid_connect", user: spree_current_user)
+  - if account
     = t(".already_connected")
-    = spree_current_user.uid
+    = account.uid
     %br
     %br
 

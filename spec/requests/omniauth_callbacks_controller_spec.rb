@@ -28,10 +28,11 @@ describe '/user/spree_user/auth/openid_connect/callback', type: :request do
     end
 
     it 'is successful' do
-      request!
+      expect { request! }.to change { OidcAccount.count }.by(1)
 
-      expect(user.provider).to eq "openid_connect"
-      expect(user.uid).to eq "ofn@example.com"
+      account = OidcAccount.last
+      expect(account.provider).to eq "openid_connect"
+      expect(account.uid).to eq "ofn@example.com"
       expect(response.status).to eq(302)
     end
   end
@@ -42,10 +43,8 @@ describe '/user/spree_user/auth/openid_connect/callback', type: :request do
     end
 
     it 'fails with bad auth data' do
-      request!
+      expect { request! }.to_not change { OidcAccount.count }
 
-      expect(user.provider).to be_nil
-      expect(user.uid).to be_nil
       expect(response.status).to eq(302)
     end
   end

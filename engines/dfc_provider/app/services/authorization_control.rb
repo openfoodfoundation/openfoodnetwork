@@ -57,6 +57,6 @@ class AuthorizationControl
   def find_ofn_user(payload)
     return if payload["email"].blank?
 
-    Spree::User.find_by(uid: payload["email"])
+    OidcAccount.find_by(uid: payload["email"])&.user
   end
 end

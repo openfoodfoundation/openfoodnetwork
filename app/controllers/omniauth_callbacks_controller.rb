@@ -2,7 +2,7 @@
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def openid_connect
-    spree_current_user.link_from_omniauth(request.env["omniauth.auth"])
+    OidcAccount.link(spree_current_user, request.env["omniauth.auth"])
 
     redirect_to admin_oidc_settings_path
   end

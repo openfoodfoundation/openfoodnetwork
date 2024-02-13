@@ -268,18 +268,4 @@ describe Spree::User do
       expect(user.disabled).to be_falsey
     end
   end
-
-  describe "#link_from_omniauth" do
-    let!(:user) { create(:user, email: "user@email.com") }
-    let(:auth) { double(:auth, provider: "openid_connect", uid: "user@email.com") }
-
-    it "creates a user without errors" do
-      user.link_from_omniauth(auth)
-
-      expect(user.errors.present?).to be false
-      expect(user.confirmed?).to be true
-      expect(user.provider).to eq "openid_connect"
-      expect(user.uid).to eq "user@email.com"
-    end
-  end
 end
