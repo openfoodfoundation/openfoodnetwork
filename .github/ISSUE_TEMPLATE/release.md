@@ -39,7 +39,7 @@ assignees: ''
   </details>
 - [ ] Notify [#instance-managers]:
   > @instance_managers The new release has been deployed.
-- [ ] Nudge next release manager
+- [ ] [Create issue] for next release and confirm with next release manager in [#core-devs].
 
 The full process is described at https://github.com/openfoodfoundation/openfoodnetwork/wiki/Releasing.
 
@@ -51,3 +51,5 @@ The full process is described at https://github.com/openfoodfoundation/openfoodn
 [#testing]: https://openfoodnetwork.slack.com/app_redirect?channel=C02TZ6X00
 [Deploy to Staging]: https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/stage.yml
 [#global-community]: https://app.slack.com/client/T02G54U79/C59ADD8F2
+[Create issue]: https://github.com/openfoodfoundation/openfoodnetwork/issues/new?assignees=&labels=&projects=&template=release.md&title=Release
+[#core-devs]: https://openfoodnetwork.slack.com/archives/GK2T38QPJ
