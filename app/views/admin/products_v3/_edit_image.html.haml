@@ -1,7 +1,8 @@
-= render ModalComponent.new id: "#modal_edit_product_image_#{image.id}", instant: true, close_button: false do
+= render ModalComponent.new id: "#modal_edit_product_image_#{image.id}", instant: true, close_button: false, modal_class: :fit do
   %h2= t(".title")
 
-  %p= image_tag image.persisted? ? image.url(:product) : Spree::Image.default_image_url(:product)
+  -# Display image in the same way it appears in the shopfront popup
+  %p= image_tag image.persisted? ? image.url(:large) : Spree::Image.default_image_url(:large), width: 433, height: 433
 
   -# Submit to controller, because StimulusReflex doesn't support file uploads
   = form_for [:admin, product, image],
@@ -9,8 +10,8 @@
     %input{ type: :hidden, name: :return_url, value: return_url}
     = f.hidden_field :viewable_id, value: product.id
 
-    %p
-      %input{ class: "secondary", type: 'button', value: t('.close'), "data-action": "click->modal#close" }
+    .modal-actions.justify-end
+      %input{ class: "secondary relaxed", type: 'button', value: t('.close'), "data-action": "click->modal#close" }
       -# label.button provides a handy shortcut to open the file selector on click. Unfortunately this trick isn't keyboard accessible though..
-      = f.label :attachment, t(".upload"), class: "button primary icon-upload-alt"
+      = f.label :attachment, t(".upload"), class: "button primary relaxed icon-upload-alt"
       = f.file_field :attachment, accept: "image/*", style: "display: none", "data-action": "change->form#submit"
