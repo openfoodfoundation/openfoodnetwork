@@ -8,6 +8,7 @@ describe AddressBuilder do
     build(
       :address,
       id: 1, address1: "Paradise 15", zipcode: "0001", city: "Goosnargh",
+      state: build(:state, name: "Victoria")
     )
   }
 
@@ -32,6 +33,10 @@ describe AddressBuilder do
 
     it "assigns a country" do
       expect(result.country).to eq "Australia"
+    end
+
+    it "assigns a region" do
+      expect(result.region).to eq "Victoria"
     end
   end
 end
