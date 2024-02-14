@@ -1712,6 +1712,7 @@ en:
       index:
         title: "OIDC Settings"
         connect: "Connect Your Account"
+        disconnect: "Disconnect"
         already_connected: "Your account is already linked to this DFC authorization account:"
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."

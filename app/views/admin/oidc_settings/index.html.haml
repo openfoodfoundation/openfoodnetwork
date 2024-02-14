@@ -7,16 +7,17 @@
   %h2= t(".connect")
   %br
 
-  - # I'll refactor this later:
-  - account = OidcAccount.find_by(provider: "openid_connect", user: spree_current_user)
-  - if account
+  - if @account
     = t(".already_connected")
-    = account.uid
+    = @account.uid
     %br
     %br
 
     = t(".view_account")
     = link_to t(".les_communs_link"), "#{ Devise.omniauth_configs[:openid_connect].options[:issuer] }/account"
+    %br
+    %br
+    = button_to t(".disconnect"), admin_oidc_setting_path(@account), method: :delete
 
   - else
     = t(".link_your_account")
