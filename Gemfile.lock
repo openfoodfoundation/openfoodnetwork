@@ -733,7 +733,7 @@ GEM
       stimulus_reflex (>= 3.3.0)
     stringex (2.8.6)
     stringio (3.1.0)
-    stripe (10.6.0)
+    stripe (10.8.0)
     swd (2.0.3)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
