@@ -4,10 +4,9 @@
 # This allows us to find <input aria-label="Name"> with `expect(page).to have_field "Name"`
 Capybara.enable_aria_label = true
 
-# Usually, especially when using Selenium, developers tend to increase the max wait time.
-# With Cuprite, there is no need for that.
-# We use a Capybara default value here explicitly.
-Capybara.default_max_wait_time = 10
+# The default wait time is 2 seconds. Small is good for test-driven development
+# ensuring efficient code but CI can be a bit slow. We want to avoid flakiness.
+Capybara.default_max_wait_time = 10 if ENV["CI"]
 
 # Normalize whitespaces when using `has_text?` and similar matchers,
 # i.e., ignore newlines, trailing spaces, etc.
