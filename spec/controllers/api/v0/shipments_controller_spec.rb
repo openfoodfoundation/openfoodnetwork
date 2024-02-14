@@ -91,6 +91,18 @@ describe Api::V0::ShipmentsController, type: :controller do
 
         expect_error_response
       end
+
+      it "applies any enterprise fees that are present" do
+        order_cycle = create(:simple_order_cycle,
+                             coordinator: order.distributor,
+                             coordinator_fees: [create(:enterprise_fee, amount: 20)],
+                             distributors: [order.distributor],
+                             variants: [variant])
+        order.update!(order_cycle_id: order_cycle.id)
+        spree_post :create, params
+
+        expect(order.line_item_adjustments.where(originator_type: "EnterpriseFee")).to be_present
+      end
     end
 
     it "can make a shipment ready" do
