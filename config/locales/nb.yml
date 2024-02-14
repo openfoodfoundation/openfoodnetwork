@@ -78,6 +78,10 @@ nb:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Å arve skattekategorien krever en varekalkulator."
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "kunne ikke laste. Kontroller at filen ikke er korrupt, og prøv igjen."
         spree/user:
           attributes:
             email:
@@ -387,6 +391,7 @@ nb:
   cancel_order: "Avbryt Bestilling"
   confirm_send_invoice: "En faktura for denne bestillingen vil bli sendt til kunden. Er du sikker på at du vil fortsette?"
   confirm_resend_order_confirmation: "Er du sikker på at du vil sende ordrebekreftelse via epost på nytt?"
+  must_have_valid_business_number: "%{enterprise_name} må ha et gyldig ABN før faktura kan brukes."
   invoice: "Faktura"
   invoices: "Fakturaer"
   file: "Fil"
@@ -596,6 +601,9 @@ nb:
     has_n_rules: "har %{num} regler"
     unsaved_confirm_leave: "Det finnes ulagrede endringer på denne siden. Fortsett uten å lagre?"
     available_units: "Tilgjengelige Enheter"
+    terms_of_service_have_been_updated_html: "Open Food Networks Vilkår for bruk er oppdatert: %{tos_link}"
+    terms_of_service: Les Vilkår for bruk
+    accept_terms_of_service: Godta Vilkårene for bruk
     shopfront_settings:
       embedded_shopfront_settings: "Innstillinger Innebygd Nettbutikk"
       enable_embedded_shopfronts: "Aktiver Innebygd Nettbutikk"
@@ -749,6 +757,17 @@ nb:
         header:
           title: Endre produkter i bulk
         loading: Laster inn produktene dine
+      delete_modal:
+        delete_product_modal:
+          heading: "Slett produkt"
+          prompt: "Dette vil fjerne den permanent fra listen din."
+          confirmation_text: "Slett produkt"
+          cancellation_text: "Behold produkt"
+        delete_variant_modal:
+          heading: "Slett variant"
+          prompt: "Dette vil fjerne den permanent fra listen din."
+          confirmation_text: "Slett variant"
+          cancellation_text: "Behold variant"
       sort:
         pagination:
           total_html: "<strong>%{total} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
@@ -758,7 +777,9 @@ nb:
           clear_search: Tøm søk
       filters:
         search_products: Søk etter produkter
+        search_for_producers: Søk etter produsenter
         all_producers: Alle produsenter
+        search_for_categories: Søk etter kategorier
         all_categories: Alle kategorier
         producers:
           label: Produsenter
@@ -782,8 +803,18 @@ nb:
             other: "%{count} produkter kunne ikke lagres. Se gjennom feilene og prøv igjen."
         save: Lagre endringer
         reset: Forkaste endringer
+      bulk_update:
+        success: Endringer lagret
       edit_image:
+        title: Rediger produktbilde
         close: Tilbake
+        upload: Last opp bilde
+      delete_product:
+        success: Produktet ble slettet
+        error: Kan ikke slette produktet
+      delete_variant:
+        success: Varianten ble slettet
+        error: Kan ikke slette varianten
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes
@@ -1029,6 +1060,7 @@ nb:
         images:
           legend: "Bilder"
           logo: Logo
+          logo_size: "300 x 300 piksler"
           promo_image_placeholder: 'Dette bildet vises i "Om Oss"'
           promo_image_note1: 'VENNLIGST MERK:'
           promo_image_note2: Ethvert promobilde lastet opp her vil bli kuttet til 1200x260.
@@ -1214,7 +1246,28 @@ nb:
           custom_tab_title: "Tittel for egendefinert fane"
           custom_tab_content: "Innhold for egendefinert fane"
         connected_apps:
+          legend: "Tilkoblede apper"
+          title: "Oppdag Regenerativ"
+          tagline: "Tillat Discover Regenerativ å publisere bedriftsinformasjonen din."
+          enable: "Tillat datadeling"
+          disable: "Stopp deling"
           loading: "Laster"
+          note: |
+              Open Food Network-kontoen din er koblet til Discover Regenerativ.
+              Legg til eller oppdater informasjon om Discover Regenerativ-oppføringen din her.
+          link_label: "Administrer oppføring"
+          description_html: |
+              <p>
+              Kvalifiserte produsenter kan vise frem sin regenerative legitimasjon,
+              oppdrettspraksis og mer gjennom en profiloppføring.
+              Forenkler hvordan kunder kan finne regenerative produkter og koble sammen
+              med produsenter av interesse.
+              </p>
+              <p>
+              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+              target="_blank"><b>Lær mer om Discover Regenerativ</b>
+              <i class="icon-external-link"></i></a>
+              </p>
       actions:
         edit_profile: Innstillinger
         properties: Egenskaper
@@ -1444,6 +1497,8 @@ nb:
         has_no_payment_methods: "%{enterprise} har ingen betalingsmetoder"
         has_no_shipping_methods: "%{enterprise} har ingen fraktmetoder"
         has_no_enterprise_fees: "%{enterprise} har ingen bedriftsavgifter"
+      flashes:
+        dismiss: Lukk
       side_menu:
         enterprise:
           primary_details: "Primærdetaljer"
@@ -1464,6 +1519,7 @@ nb:
           users: "Brukere"
           vouchers: Kuponger
           white_label: "Blank"
+          connected_apps: "Tilkoblede apper"
         enterprise_group:
           primary_details: "Primærdetaljer"
           users: "Brukere"
@@ -1903,6 +1959,7 @@ nb:
   invoice_column_price_per_unit_without_taxes: "Pris per enhet (ekskl. mva)"
   invoice_column_tax_rate: "Avgiftsrate"
   invoice_tax_total: "MVA Totalt:"
+  invoice_cancel_and_replace_invoice: "kansellerer og erstatter faktura"
   tax_invoice: "AVGIFTSFAKTURA"
   tax_total: "Totalavgift (%{rate}):"
   invoice_shipping_category_delivery: "Levering"
@@ -2126,6 +2183,9 @@ nb:
   order_back_to_store: Tilbake til butikken
   order_back_to_cart: Tilbake til handlekurven
   order_back_to_website: Tilbake til nettsiden
+  checkout_details_title: Kassedetaljer
+  checkout_payment_title: Betaling i kassen
+  checkout_summary_title: Kassesammendrag
   bom_tip: "Bruk denne siden for å endre produktmengder på tvers av flere bestillinger. Produkter kan også fjernes fra bestillinger helt hvis påkrevd."
   unsaved_changes_warning: "Ulagrede endringer finnes og vil gå tapt hvis du fortsetter."
   unsaved_changes_error: "Felt med røde kanter inneholder feil."
@@ -2988,6 +3048,8 @@ nb:
   report_header_transaction_fee: Transaksjonsgebyr (ingen skatt)
   report_header_total_untaxable_admin: Samlede avgiftsfrie administreringsjusteringer (ingen skatt)
   report_header_total_taxable_admin: Sum skattepliktige adminintreringsjusteringer (inklusive skatt)
+  report_header_voucher_label: Kupongetikett
+  report_header_voucher_amount: "Kupongbeløp ( %{currency_symbol} )"
   report_line_cost_of_produce: Produktkostnad
   report_line_line_items: linjeelementer
   report_header_last_completed_order_date: Siste fullførte bestillingsdato
@@ -3947,6 +4009,9 @@ nb:
         add_product:
           cannot_add_item_to_canceled_order: "Kan ikke legge varen til den avbrutte bestillingen"
           include_out_of_stock_variants: "Inkluder varianter uten tilgjengelig lager"
+        shipment:
+          mark_as_shipped_message_html: "Dette vil merke bestillingen som sendt.<br /> Er du sikker på at du vil fortsette?"
+          mark_as_shipped_label_message: "Send en e-post om forsendelse/hentingsvarsling til kunden."
         index:
           listing_orders: "Lister opp bestillinger"
           new_order: "Ny bestilling"
@@ -4005,6 +4070,9 @@ nb:
           line_item_adjustments: "Artikkeljustering"
           order_adjustments: "Bestillingsjusteringer"
           order_total: "Bestilling Totalt"
+      invoices:
+        index:
+          order_has_changed: "Ordren er endret siden siste fakturaoppdatering. Fakturaen som vises her er kanskje ikke oppdatert lenger."
       overview:
         enterprises_header:
           ofn_with_tip: Bedrifter er Produsenter og / eller Hubs og er den grunnleggende organisasjonsenheten innen Open Food Network.
@@ -4013,6 +4081,7 @@ nb:
           has_no_payment_methods: "har ingen betalingsmåter"
           has_no_shipping_methods: "har ingen leveringmetoder"
         products:
+          products_tip: "Produktene du selger gjennom Open Food Network."
           active_products:
             zero: "Du har ingen aktive produkter."
             one: "Du har ett aktivt produkt"
@@ -4165,6 +4234,8 @@ nb:
           bulk_unit_size: Bulk enhetsstørrelse
         display_as:
           display_as: Vis som
+        clone:
+          success: Produkt klonet
       reports:
         table:
           select_and_search: "Velg filtre og klikk på %{option} for å få tilgang til dine data."
@@ -4238,7 +4309,11 @@ nb:
         form:
           name: Navn
           permalink: Permalink
+          meta_title: Metatittel
+          meta_description: Metabeskrivelse
+          meta_keywords: Meta nøkkelord
           description: Beskrivelse
+          dfc_id: DFC URI
       general_settings:
         edit:
           legal_settings: "Juridiske innstillinger"
@@ -4534,3 +4609,6 @@ nb:
     pagination:
       next: Neste
       previous: Tidligere
+  invisible_captcha:
+    sentence_for_humans: "Vennligst la stå tomt"
+    timestamp_error_message: "Vennligst prøv igjen etter 5 sekunder."

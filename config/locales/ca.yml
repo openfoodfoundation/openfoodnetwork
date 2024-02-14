@@ -1722,6 +1722,7 @@ ca:
         message_html: "Accepto el %{terms_and_conditions_link} del venedor i la plataforma %{tos_link}."
         terms_and_conditions: "Termes i condicions"
       submit: Finalitzar comanda
+      cancel: Tornar a mètodes de pagament
     errors:
       invalid_email: "siusplau, introduïu una adreça de correu electrònic vàlida"
       voucher_not_found: No trobat
@@ -2016,6 +2017,7 @@ ca:
   order_hub_info: Informació del grup
   order_back_to_store: Tornar a la botiga
   order_back_to_cart: Tornar a la cistella
+  order_back_to_website: Tornar a la teva pàgina web
   bom_tip: "Utilitzeu aquesta pàgina per alterar les quantitats de productes en diverses comandes. Els productes també es poden eliminar de les comandes completament, si es requereix."
   unsaved_changes_warning: "Hi ha canvis sense desar i es perdran si continueu."
   unsaved_changes_error: "Els camps amb vora vermella contenen errors."
