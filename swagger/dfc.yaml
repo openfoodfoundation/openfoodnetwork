@@ -64,6 +64,7 @@ paths:
                     dfc-b:hasPostalCode: '20170'
                     dfc-b:hasCity: Herndon
                     dfc-b:hasCountry: Australia
+                    dfc-b:region: Victoria
         '404':
           description: not found
   "/api/dfc/enterprises/{enterprise_id}/catalog_items":
@@ -339,6 +340,7 @@ paths:
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
                       dfc-b:hasCountry: Australia
+                      dfc-b:region: Victoria
   "/api/dfc/enterprises/{id}":
     get:
       summary: Show enterprise
@@ -383,6 +385,7 @@ paths:
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
                       dfc-b:hasCountry: Australia
+                      dfc-b:region: Victoria
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple - 1g
