@@ -14,8 +14,6 @@ module Stripe
 
       let(:enterprise) { create(:enterprise) }
 
-      let(:secret) { ENV.fetch('STRIPE_SECRET_TEST_API_KEY', nil) }
-
       let(:connector) { AccountConnector.new(user, params) }
 
       # stubs - to be replaced
@@ -23,10 +21,6 @@ module Stripe
       let(:payload) { { "junk" => "Ssfs" } }
       let(:state) { JWT.encode(payload, Openfoodnetwork::Application.config.secret_token) }
       let(:params) { { "state" => state } }
-
-      before do
-        Stripe.api_key = secret
-      end
 
       context "when the connection was cancelled by the user" do
         before do
@@ -53,11 +47,6 @@ module Stripe
         context "when params have a 'code' key" do
           before { params["code"] = 'code' }
 
-          response = Stripe::OAuth.token({
-                                           grant_type: 'authorization_code',
-                                           code: 'ac_123456789',
-                                         })
-
           context "and the decoded state param doesn't contain an 'enterprise_id' key" do
             it "raises an AccessDenied error" do
               expect do
@@ -73,9 +62,13 @@ module Stripe
             }
 
             before do
-              stub_request(:post, "https://connect.stripe.com/oauth/token").
-                with(body: { "code" => "code", "grant_type" => "authorization_code" }).
-                to_return(status: 200, body: JSON.generate(token_response) )
+              response = Stripe::OAuth.token({
+                                               grant_type: 'authorization_code',
+                                               code: 'ac_123456789',
+                                             })
+              # stub_request(:post, "https://connect.stripe.com/oauth/token").
+              #   with(body: { "code" => "code", "grant_type" => "authorization_code" }).
+              #   to_return(status: 200, body: JSON.generate(token_response) )
             end
 
             context "but the user doesn't manage own or manage the corresponding enterprise" do

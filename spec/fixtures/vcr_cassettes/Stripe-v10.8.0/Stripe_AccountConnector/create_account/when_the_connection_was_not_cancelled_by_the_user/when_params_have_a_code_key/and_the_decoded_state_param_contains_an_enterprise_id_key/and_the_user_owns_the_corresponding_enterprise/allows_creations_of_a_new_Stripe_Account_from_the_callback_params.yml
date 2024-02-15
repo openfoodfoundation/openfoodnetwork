@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://connect.stripe.com/oauth/token
+    body:
+      encoding: UTF-8
+      string: grant_type=authorization_code&code=ac_123456789
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/10.8.0
+      Authorization:
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"10.8.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 6.5.0-17-generic (buildd@lcy02-amd64-043) (x86_64-linux-gnu-gcc-12
+        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
+        #17~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jan 16 14:32:32 UTC 2","hostname":"ff-LAT"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 15 Feb 2024 19:15:18 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '104'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=0, no-cache, no-store, must-revalidate
+      Content-Security-Policy:
+      - report-uri /csp-report?p=%2Foauth%2Ftoken;block-all-mixed-content;default-src
+        'none' 'report-sample';base-uri 'none';form-action 'none';style-src 'unsafe-inline';frame-ancestors
+        'self';connect-src 'self';img-src 'self' https://b.stripecdn.com
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=https://q.stripe.com/coop-report
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Request-Id:
+      - req_1LpwQ0zPzTX8f7
+      Set-Cookie:
+      - __Host-session=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT;
+        secure; SameSite=None
+      - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Ftoken%22%7D;
+        domain=stripe.com; path=/; expires=Fri, 14 Feb 2025 19:15:18 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - machine_identifier=uac8k3y0dey62WRi4eZ3JKyVOf0d9OUb0PH2yJCtaGkXujK7tvurmuh5j2FxPE%2BbmJc%3D;
+        domain=stripe.com; path=/; expires=Fri, 14 Feb 2025 19:15:18 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - private_machine_identifier=EoNoG48Xmhlq723fthlCODOKwh7fv%2BRBDi0RGuldaptde0kIRLoD3Pxsz9RzSKPegy0%3D;
+        domain=stripe.com; path=/; expires=Fri, 14 Feb 2025 19:15:18 GMT; secure;
+        HttpOnly; SameSite=None
+      - site-auth=; domain=stripe.com; path=/; max-age=0; expires=Thu, 01 Jan 1970
+        00:00:00 GMT; secure
+      - stripe.csrf=woELQcTBhDLqVSv8bQpo7Fg1BYEl8nw3ZELBjDEllEqpwvfGhqI4Mcr-HVVvfs_IRV4wRXcLrXsjUz_jtrcI1jw-AYTZVJycFA7I1cRDCqzEqJwMpIs5uGeYPZzS4FRJs3vp9AVpWA%3D%3D;
+        domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
+      Stripe-Kill-Route:
+      - "[]"
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "error": "invalid_grant",
+          "error_description": "Authorization code does not exist: ac_123456789"
+        }
+  recorded_at: Thu, 15 Feb 2024 19:15:18 GMT
+recorded_with: VCR 6.2.0
