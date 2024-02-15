@@ -328,9 +328,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(page).to have_content "Changes saved"
       end
     end
-  end
 
-  context "when only one product edited with invalid data" do
+    context "when only one product edited with invalid data" do
       let!(:product_b) { create(:simple_product, name: "Bananas") }
 
       before do
