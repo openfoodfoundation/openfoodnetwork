@@ -193,6 +193,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
       expect {
         click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
         product_a.reload
         variant_a1.reload
       }.to change { product_a.name }.to("Pommes")
@@ -213,7 +215,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(page).to have_css "button[aria-label='On Hand']", text: "6"
       end
 
-      expect(page).to have_content "Changes saved"
     end
 
     it "switches stock to on-demand" do
@@ -226,6 +227,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
       expect {
         click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
         product_a.reload
         variant_a1.reload
       }.to change{ variant_a1.on_demand }.to(true)
@@ -233,8 +236,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       within row_containing_name("Medium box") do
         expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
       end
-
-      expect(page).to have_content "Changes saved"
     end
 
     it "discards changes and reloads latest data" do
@@ -288,12 +289,12 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         expect {
           click_button "Save changes"
+
+          expect(page).to have_content "1 product was saved correctly"
+          expect(page).to have_content "1 product could not be saved"
+          expect(page).to have_content "Please review the errors and try again"
           product_a.reload
         }.to_not change { product_a.name }
-
-        expect(page).to have_content("1 product was saved correctly")
-        expect(page).to have_content("1 product could not be saved")
-        expect(page).to have_content "Please review the errors and try again"
 
         # (there's no identifier displayed, so the user must remember which product it is..)
         within row_containing_name("") do
@@ -313,19 +314,26 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       end
 
       it "saves changes after fixing errors" do
-        within row_containing_name("Apples") do
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content("1 product could not be saved")
+          product_a.reload
+        }.to_not change { product_a.name }
+
+        within row_containing_name("") do
           fill_in "Name", with: "Pommes"
           fill_in "SKU", with: "POM-00"
         end
 
         expect {
           click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
           product_a.reload
           variant_a1.reload
         }.to change { product_a.name }.to("Pommes")
           .and change{ product_a.sku }.to("POM-00")
-
-        expect(page).to have_content "Changes saved"
       end
     end
   end
