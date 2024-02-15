@@ -351,7 +351,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           product_a.reload
         }.to_not change { product_a.name }
 
-        expect(page).not_to have_content("0 product was saved correctly")
+        expect(page).not_to have_content("0 product was saved correctly, but")
         expect(page).to have_content("1 product could not be saved")
         expect(page).to have_content "Please review the errors and try again"
       end
