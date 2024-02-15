@@ -27,8 +27,12 @@
                   .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
                   - if defined?(error_counts)
                     .error_summary
-                      -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
-                      = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
+                      - if error_counts[:saved] > 0
+                        -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
+                        = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
+                      - else 
+                        -# Y products could not be saved correctly. Please review errors and try again
+                        = t('.error_summary.invalid', count: error_counts[:invalid])
                 .form-buttons
                   = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
                   = form.submit t('.save'), class: "medium"
