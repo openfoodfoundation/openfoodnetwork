@@ -20,8 +20,7 @@ describe OidcAccount, type: :model do
     let(:user) { create(:user, email: "user@example.com") }
     let(:auth) {
       OmniAuth::AuthHash.new(
-        provider: "openid_connect",
-        uid: "user@example.net"
+        JSON.parse(file_fixture("omniauth.auth.json").read)
       )
     }
 
@@ -32,6 +31,8 @@ describe OidcAccount, type: :model do
       account = OidcAccount.last
       expect(account.user).to eq user
       expect(account.provider).to eq "openid_connect"
+      expect(account.token).to match /^ey/
+      expect(account.refresh_token).to match /^ey/
 
       auth.uid = "user@example.org"
 
@@ -41,7 +42,7 @@ describe OidcAccount, type: :model do
       }
         .to change { OidcAccount.count }.by(0)
         .and change { account.uid }
-        .from("user@example.net").to("user@example.org")
+        .from("ofn@example.com").to("user@example.org")
     end
   end
 end

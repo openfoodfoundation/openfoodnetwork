@@ -25,5 +25,18 @@ describe "OIDC Settings" do
       click_button "Disconnect"
       expect(page).to have_button "Link your Les Communs OIDC Account"
     end
+
+    it "allows you to refresh authorisation tokens" do
+      OidcAccount.create!(user:, provider: "openid_connect", uid: "a@b.com")
+      OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
+        JSON.parse(file_fixture("omniauth.auth.json").read)
+      )
+
+      visit admin_oidc_settings_path
+
+      expect(page).to have_content "Tokens to access connected apps have expired"
+      click_button "Refresh authorisation"
+      expect(page).to_not have_content "Tokens to access connected apps have expired"
+    end
   end
 end

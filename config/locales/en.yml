@@ -1717,6 +1717,10 @@ en:
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
         link_account_button: "Link your Les Communs OIDC Account"
+        note_expiry: |
+          Tokens to access connected apps have expired. Please refresh your
+          account connection to keep all integrations working.
+        refresh: "Refresh authorisation"
         view_account: "To view your account, see:"
     subscriptions:
       index:

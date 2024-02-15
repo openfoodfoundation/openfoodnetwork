@@ -8,9 +8,13 @@ class OidcAccount < ApplicationRecord
   validates :uid, presence: true, uniqueness: true
 
   def self.link(user, auth)
-    upsert_all(
-      [{user_id: user.id, provider: auth.provider, uid: auth.uid}],
-      unique_by: [:user_id]
-    )
+    attributes = {
+      user_id: user.id,
+      provider: auth.provider,
+      uid: auth.uid,
+      token: auth.dig(:credentials, :token),
+      refresh_token: auth.dig(:credentials, :refresh_token),
+    }
+    upsert_all([attributes], unique_by: [:user_id])
   end
 end
