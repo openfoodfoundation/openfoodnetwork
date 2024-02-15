@@ -1,7 +1,8 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["control", "content"];
+  static targets = ["control", "content", "chevron"];
+  static values = { selector: String };
 
   disableIfPresent(event) {
     const input = event.currentTarget;
@@ -32,7 +33,16 @@ export default class extends Controller {
       t.style.display = input.dataset.toggleShow === "true" ? "block" : "none";
     });
   }
-  //todo: can toggleDisplay with optional chevron-target replace RemoteToggleController?
+
+  toggleAdvancedSettings(event) {
+    if (this.hasChevronTarget) {
+      this.chevronTarget.classList.toggle("icon-chevron-down");
+      this.chevronTarget.classList.toggle("icon-chevron-up");
+    }
+
+    const element = document.querySelector(this.selectorValue);
+    element.style.display = element.style.display === "none" ? "block" : "none";
+  }
 
   // private
 
