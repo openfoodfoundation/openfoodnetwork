@@ -872,8 +872,9 @@ en:
           invalid:
             one: "%{count} product could not be saved. Please review the errors and try again."
             other: "%{count} products could not be saved. Please review the errors and try again."
-        save: Save changes
         reset: Discard changes
+        save: Save changes
+        new_variant: New variant
       bulk_update:
         success: Changes saved
       edit_image:

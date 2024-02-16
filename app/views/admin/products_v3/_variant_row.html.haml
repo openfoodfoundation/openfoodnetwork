@@ -1,0 +1,47 @@
+%td
+  -# empty
+%td.field
+  = f.hidden_field :id
+  = f.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: variant.product.name
+  = error_message_on variant, :display_name
+%td.field
+  = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
+  = error_message_on variant, :sku
+- if variant.persisted?
+  %td.align-right
+    .content= variant.unit_to_display
+- else # until unit component is developed, use a basic input just so we can create new records
+  %td.field
+    = f.number_field :unit_value, 'aria-label': t('admin.products_page.columns.unit')
+    = error_message_on variant, :unit_value
+%td.field
+  = f.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
+  = error_message_on variant, :price
+%td.field.on-hand__wrapper{'data-controller': "popout"}
+  %button.on-hand__button{'data-popout-target': "button", 'aria-label': t('admin.products_page.columns.on_hand')}
+    = variant.on_demand ? t(:on_demand) : variant.on_hand
+  %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
+    .field
+      = f.number_field :on_hand, min: 0, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: f.object.on_demand
+      = error_message_on variant, :on_hand
+    .field.checkbox
+      = f.label :on_demand do
+        = f.check_box :on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
+        = t(:on_demand)
+%td.align-left
+  .content= variant.product.supplier&.name # same as product
+%td.align-left
+  -# empty
+%td.align-left
+  .content= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
+%td.align-left
+  -# empty
+%td.align-right
+  - if variant.persisted?
+    = render(VerticalEllipsisMenu::Component.new) do
+      = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(variant.product, variant)
+      - if variant.product.variants.size > 1
+        %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
+            "data-modal-link-target-value": "variant-delete-modal", "class": "delete",
+            "data-modal-link-modal-dataset-value": {'data-current-id': variant.id}.to_json }
+          = t('admin.products_page.actions.delete')

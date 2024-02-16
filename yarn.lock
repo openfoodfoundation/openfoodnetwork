@@ -8350,6 +8350,10 @@ stimulus-flatpickr@^1.4.0:
   resolved "https://registry.yarnpkg.com/stimulus-flatpickr/-/stimulus-flatpickr-1.4.0.tgz#a41071a3e69cfc50b7eaaacf356fc0ab1ab0543c"
   integrity sha512-rcC/c9+E+f5W2kOjaaLShtf3i+p95ACqt+oGzSAgeuZh2YeIN8gW4EWO7h0STBLzSVPl6BjIfPWP7upMPavIVQ==
 
+"stimulus-rails-nested-form@https://github.com/openfoodfoundation/stimulus-rails-nested-form.git#dist":
+  version "4.1.0"
+  resolved "https://github.com/openfoodfoundation/stimulus-rails-nested-form.git#d3b82ea638a7156f1122736cf739ab1821a1817e"
+
 stimulus@^3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/stimulus/-/stimulus-3.2.2.tgz#a2e955f43e12e2e5784b175d4df5517ef678aa68"

@@ -243,6 +243,46 @@ describe Sets::ProductSet do
           end
         end
       end
+
+      context "new variant" do
+        let(:variants_attributes) {
+          [
+            { id: product.variants.first.id.to_s }, # default variant unchanged
+            { sku: "new sku", price: "5.00", unit_value: "5" }, # omit ID for new variant
+          ]
+        }
+
+        it "creates new variant" do
+          expect {
+            product_set.save
+            expect(product_set.errors).to be_empty
+          }.to change { product.variants.count }.by(1)
+
+          expect(product.variants.last.sku).to eq "new sku"
+          expect(product.variants.last.price).to eq 5.00
+          expect(product.variants.last.unit_value).to eq 5
+        end
+
+        context "variant has error" do
+          let(:variants_attributes) {
+            [
+              { id: product.variants.first.id.to_s }, # default variant unchanged
+              { sku: "new sku", unit_value: "blah" }, # price missing, unit_value should be number
+            ]
+          }
+
+          include_examples "nothing saved"
+
+          it "logs variant errors" do
+            product_set.save
+            expect(product_set.errors.full_messages).to include(
+              "Variant price is not a number",
+              "Variant price can't be blank",
+              "Variant unit value is not a number"
+            )
+          end
+        end
+      end
     end
 
     context 'when there are multiple products' do

@@ -34,6 +34,7 @@
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.2.2",
     "stimulus-flatpickr": "^1.4.0",
+    "stimulus-rails-nested-form": "https://github.com/openfoodfoundation/stimulus-rails-nested-form.git#dist",
     "stimulus_reflex": "3.5.0-rc3",
     "tom-select": "^2.3.1",
     "trix": "^2.0.10",
