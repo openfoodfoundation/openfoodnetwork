@@ -20,7 +20,7 @@ describe "OIDC Settings" do
     it "allows you to connect to an account and disconnect again" do
       visit admin_oidc_settings_path
       click_button "Link your Les Communs OIDC Account"
-      expect(page).to have_content "Your account is already linked"
+      expect(page).to have_content "Your account is linked"
 
       click_button "Disconnect"
       expect(page).to have_button "Link your Les Communs OIDC Account"
