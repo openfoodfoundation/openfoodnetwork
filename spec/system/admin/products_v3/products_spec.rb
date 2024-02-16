@@ -328,6 +328,33 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(page).to have_content "Changes saved"
       end
     end
+
+    context "when only one product edited with invalid data" do
+      let!(:product_b) { create(:simple_product, name: "Bananas") }
+
+      before do
+        within row_containing_name("Apples") do
+          fill_in "Name", with: ""
+          fill_in "SKU", with: "A" * 256
+        end
+      end
+
+      it "shows errors for product" do
+        # Also update another product with valid data
+        within row_containing_name("Bananas") do
+          fill_in "Name", with: "Bananes"
+        end
+
+        expect {
+          click_button "Save changes"
+          product_a.reload
+        }.to_not change { product_a.name }
+
+        expect(page).not_to have_content("0 product was saved correctly, but")
+        expect(page).to have_content("1 product could not be saved")
+        expect(page).to have_content "Please review the errors and try again"
+      end
+    end
   end
 
   describe "edit image" do
