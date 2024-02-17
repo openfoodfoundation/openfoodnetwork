@@ -13,26 +13,20 @@
                    intro: t(intro_key, distributor: @shipment.order.distributor.name),
                    enterprise_for_logo: @enterprise_for_logo }
 
-%p
-  %strong
-    = t('.shipment_summary')
+%h3
+  = t('.shipment_summary', number: @order.number)
 
-%p{ style: "font-family: monospace, serif;" }
-  - @shipment.manifest.each do |item|
-    = item.variant.sku
-    = item.variant.product.name
-    = item.variant.options_text
-    %br
+= render 'shared/mailers/order_summary'
 
 - if @shipment.tracking.present?
-  %p.lead
+  %p.callout
     = t('.track_information', tracking: @shipment.tracking)
 
 - if @shipment.tracking_url
-  %p.lead
+  %p.callout
     = t('.track_link', url: @shipment.tracking_url)
 
-%p.lead
+%p
   = t('.thanks')
 
 = render 'shared/mailers/signoff_distributor'

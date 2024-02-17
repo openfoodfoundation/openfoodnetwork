@@ -3954,7 +3954,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         picked_up_subject: "Pick up notification of order %{number} at %{distributor}"
         shipped_intro_html: "Your order from <strong>%{distributor}</strong> has been shipped."
         picked_up_intro_html: "Your order from <strong>%{distributor}</strong> has been picked-up."
-        shipment_summary: "Shipment Summary"
+        shipment_summary: "Shipment summary for order %{number}"
         track_information: ! "Tracking Information: %{tracking}"
         track_link: ! "Tracking Link: %{url}"
         thanks: "Thank you for your business."
