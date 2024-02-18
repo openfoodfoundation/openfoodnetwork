@@ -11,7 +11,16 @@
 
 %p
   = t(".instructions")
-%p
-  = link_to spree.edit_admin_order_url(@payment.order), spree.edit_admin_order_url(@payment.order)
+
+%p.callout
+  = t(".view_order")
+  %br
+  %strong
+    = link_to t(".link_label"), spree.edit_admin_order_url(@payment.order)
+
+%h3
+  = t('mailers_shared.order_summary_html', number: @order.number)
+
+= render 'shared/mailers/order_summary'
 
 = render 'shared/mailers/signoff_instance'

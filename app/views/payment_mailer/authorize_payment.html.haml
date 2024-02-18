@@ -9,8 +9,17 @@
                    intro: t(intro_key, distributor: @payment.order.distributor.name, amount: @payment.display_amount),
                    enterprise_for_logo: @enterprise_for_logo }
 
+%p.callout
+  = t('.click_link')
+  %br
+  %strong
+    = link_to t('.link_label'), main_app.authorize_payment_url(@payment)
+
+%h3
+  = t('mailers_shared.order_summary_html', number: @order.number)
 %p
-  = t(".instructions")
-  = link_to main_app.authorize_payment_url(@payment), main_app.authorize_payment_url(@payment)
+  = t('.details_html', distributor: @order.distributor.name)
+
+= render 'shared/mailers/order_summary'
 
 = render 'shared/mailers/signoff_distributor'

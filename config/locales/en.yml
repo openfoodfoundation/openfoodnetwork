@@ -382,6 +382,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     enterprise_greeting: "Dear %{name},"
     general_greeting: "Hello!"
     order_confirmation_html: "Order confirmation <strong>#%{number}</strong>"
+    order_summary_html: "Order summary <strong>#%{number}</strong>"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}" # I don't think this is ever used, because 'confirmation_instructions' is part of user_mailer and has a different subject defined.
@@ -405,11 +406,15 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     authorize_payment:
       subject: "Please authorize your payment for order %{number} at %{distributor}"
       intro_html: "Your payment of <strong>%{amount}</strong> to <strong>%{distributor}</strong> requires additional authentication."
-      instructions: "Please visit the following URL to authorize your payment:"
+      click_link: "Please click the link below to authorize your payment:"
+      link_label: "Authorize payment »"
+      details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
     authorization_required:
       subject: "Authentication from customer required for payment of order %{number} at %{distributor}"
       intro_html: "A payment for order <strong>%{order_number}</strong> at <strong>%{distributor}</strong> requires additional authorization from the customer."
       instructions: "The customer has been notified via email and the payment will appear as pending until it is authorized."
+      view_order: "To view the order click the link below."
+      link_label: "View order »"
   producer_mailer:
     order_cycle_report:
       subject: "Order cycle report from %{coordinator} for %{producer}"
