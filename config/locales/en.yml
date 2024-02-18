@@ -428,8 +428,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     report_ready:
       subject: "Report ready for download"
       intro: "Your report is ready for download."
-      message: "The link below will expire after one week."
-      link_label: "%{name}"
+      message: "To access the report please use the link below. It will expire after one week."
+      link_label: "Download %{name} »"
   subscription_mailer:
     shared:
       edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."

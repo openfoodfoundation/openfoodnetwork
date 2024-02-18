@@ -5,9 +5,9 @@
          locals: { greeting: t(greeting_key),
                    intro: t(intro_key) }
 
-%p
+%p.callout
   = t(".message")
-%ul
-  %li= link_to(t(".link_label", name: @blob.filename), @blob.expiring_service_url)
+  %br
+  = link_to(t(".link_label", name: @blob.filename), @blob.expiring_service_url)
 
 = render 'shared/mailers/signoff_instance'
