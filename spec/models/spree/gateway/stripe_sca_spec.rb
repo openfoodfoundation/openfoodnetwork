@@ -78,13 +78,22 @@ describe Spree::Gateway::StripeSCA, type: :model do
       # Inject our test stripe account
       stripe_account = create(:stripe_account, stripe_user_id: stripe_test_account)
       allow(StripeAccount).to receive(:find_by).and_return(stripe_account)
+
+      create(
+        :payment,
+        order:,
+        amount: order.total,
+        payment_method: subject,
+        source: credit_card,
+        response_code: payment_intent.id
+      )
     end
 
     context "with a confirmed payment" do
-      it "refunds the payment" do
-        # Link the payment intent to our test stripe account, and automatically confirm and capture
-        # the payment.
-        payment_intent = Stripe::PaymentIntent.create(
+      # Link the payment intent to our test stripe account, and automatically confirm and capture
+      # the payment.
+      let(:payment_intent) do
+        Stripe::PaymentIntent.create(
           {
             amount: 1000, # given in AUD cents
             currency: 'aud', # AUD to match order currency
@@ -95,16 +104,9 @@ describe Spree::Gateway::StripeSCA, type: :model do
           },
           stripe_account: stripe_test_account
         )
+      end
 
-        payment = create(
-          :payment,
-          order:,
-          amount: order.total,
-          payment_method: subject,
-          source: credit_card,
-          response_code: payment_intent.id
-        )
-
+      it "refunds the payment" do
         response = subject.void(payment_intent.id, nil, {})
 
         expect(response.success?).to eq true
@@ -112,9 +114,9 @@ describe Spree::Gateway::StripeSCA, type: :model do
     end
 
     context "with a voidable payment" do
-      it "void the payment" do
-        # Link the payment intent to our test stripe account
-        payment_intent = Stripe::PaymentIntent.create(
+      # Link the payment intent to our test stripe account
+      let(:payment_intent) do
+        Stripe::PaymentIntent.create(
           {
             amount: 1000, # given in AUD cents
             currency: 'aud', # AUD to match order currency
@@ -124,16 +126,9 @@ describe Spree::Gateway::StripeSCA, type: :model do
           },
           stripe_account: stripe_test_account
         )
+      end
 
-        payment = create(
-          :payment,
-          order:,
-          amount: order.total,
-          payment_method: subject,
-          source: credit_card,
-          response_code: payment_intent.id
-        )
-
+      it "void the payment" do
         response = subject.void(payment_intent.id, nil, {})
 
         expect(response.success?).to eq true
