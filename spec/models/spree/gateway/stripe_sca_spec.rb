@@ -38,6 +38,14 @@ describe Spree::Gateway::StripeSCA, type: :model do
                                  })
   end
 
+  let(:connected_account) do
+    Stripe::Account.create({
+                             type: 'standard',
+                             country: 'AU',
+                             email: 'carrot.producer@example.com'
+                           })
+  end
+
   describe "#purchase", :vcr, :stripe_version do
     # Stripe acepts amounts as positive integers representing how much to charge
     # in the smallest currency unit
@@ -64,8 +72,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
   end
 
   describe "#void", :vcr, :stripe_version do
-    # This is the first account retrieved using Stripe::Account.list
-    let(:stripe_test_account) { "acct_1OhZ9lQQeZbvfZRJ" }
+    let(:stripe_test_account) { connected_account.id }
 
     before do
       # Inject our test stripe account
@@ -135,8 +142,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
   end
 
   describe "#credit", :vcr, :stripe_version do
-    # This is the first account retrieved using Stripe::Account.list
-    let(:stripe_test_account) { "acct_1OhZ9lQQeZbvfZRJ" }
+    let(:stripe_test_account) { connected_account.id }
 
     before do
       # Inject our test stripe account
