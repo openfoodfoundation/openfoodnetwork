@@ -7,9 +7,8 @@
 
 %p
   = t(".userguide_html", link: link_to(t(".userguide"), ContentConfig.user_guide_link))
-%p
+%p.callout
   = t(".admin_html", link: link_to(t(".admin_panel"), spree.admin_dashboard_url))
-
 %p
   = t(".community_html", link: link_to(t(".join_community"), ContentConfig.community_forum_url))
 

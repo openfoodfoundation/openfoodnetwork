@@ -13,8 +13,10 @@
   = t('.confirm_your_email_html', enterprise: @enterprise.name)
 %p
   = t('.set_a_password')
-%p
-  = t('.mistakenly_sent', owner_email: @enterprise.owner.email)
+%p.callout
+  = t('.mistakenly_sent', enterprise: @enterprise.name)
+  %a{:href => "mailto:#{@enterprise.owner.email}", :target => "_blank"}
+    = @enterprise.owner.email
 
 = render 'shared/mailers/signoff_instance'
 
