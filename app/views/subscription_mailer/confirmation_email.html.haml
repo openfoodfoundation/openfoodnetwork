@@ -12,21 +12,25 @@
 %p.callout
   = t(".explainer_html")
   - if @order.user.present?
+    %br
     = t("subscription_mailer.shared.edit_false_html",
       orders_close_at: l(@order.order_cycle.orders_close_at, format: mail_long_datetime_format),
       order_url: order_url(@order))
-  = t("subscription_mailer.shared.contact_distributor_html", distributor: @order.distributor.name, email: @order.distributor.contact.email)
+  %br
+  = t("subscription_mailer.shared.contact_distributor_html", distributor: @order.distributor.name)
+  %a{:href => "mailto:#{@order.distributor.contact.email}", :target => "_blank"}
+    = @order.distributor.contact.email
 
-%p &nbsp;
-%h4
+%h3
   = t("mailers_shared.order_confirmation_html", number: @order.number)
 %p
   = t(".details_html", distributor: @order.distributor.name)
 
-= render 'spree/order_mailer/order_summary'
+= render 'shared/mailers/order_summary'
 
-= render 'spree/shared/payment'
-= render 'spree/order_mailer/shipping'
-= render 'spree/order_mailer/special_instructions'
+.detail
+  = render 'spree/shared/payment'
+  = render 'spree/order_mailer/shipping'
+  = render 'spree/order_mailer/special_instructions'
 
 = render 'shared/mailers/signoff_distributor'

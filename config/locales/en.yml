@@ -434,12 +434,12 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     shared:
       edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
       edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
-      contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via %{email}."
+      contact_distributor_html: "If you have any questions you can contact <strong>%{distributor}</strong> via email by clicking the following link:"
     placement_email:
       subject: "Subscription order %{number} was placed at %{distributor}"
       intro_html: "You have a new order with <strong>%{distributor}</strong>."
       explainer_html: "This order was automatically created for you."
-      contact_distributor_to_change_order_html: "This order was automatically created for you. You can make changes until orders close on %{orders_close_at} by contacting <strong>%{distributor}</strong> via %{email}."
+      contact_distributor_to_change_order_html: "You can make changes until orders close on %{orders_close_at}. To do so please contact <strong>%{distributor}</strong> via email by clicking the following link:"
       details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
       changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
     placement_summary_email:
