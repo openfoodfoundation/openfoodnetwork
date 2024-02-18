@@ -27,20 +27,27 @@
     %thead
       %tr
         %th
-          = t :sku
+          %h4
+            = t :sku
         - if @distributors_pickup_times.many?
           %th
-            = t :supplier
+            %h4
+              = t :supplier
         %th
-          = t :product
+          %h4
+            = t :product
         %th.text-right
-          = t :quantity
+          %h4
+            = t :quantity
         %th.text-right
-          = t :price
+          %h4
+            = t :price
         %th.text-right
-          = t :subtotal
+          %h4
+            = t :subtotal
         %th.text-right
-          = t :included_tax
+          %h4
+            = t :included_tax
     %tbody
       - @grouped_line_items.each_pair do |product_and_full_name, line_items|
         %tr
@@ -65,11 +72,12 @@
           %td
         %td
         %td
-        %td
         %td.text-right
-          = @total
+          %strong= "#{t('total')}:"
         %td.text-right
-          = @tax_total
+          %strong= @total
+        %td.text-right
+          %strong= @tax_total
 - if @customer_line_items
   %p
     = t('.order_customer_text')
@@ -77,18 +85,24 @@
     %thead
       %tr
         %th
-          = t :sku
+          %h4
+            = t :sku
         - if @distributors_pickup_times.many?
           %th
-            = t :supplier
+            %h4
+              = t :supplier
         %th
-          = t :product
+          %h4
+            = t :product
         %th.text-right
-          = t :quantity
+          %h4
+            = t :quantity
         %th.text-right
-          = t :first_name
+          %h4
+            = t :first_name
         %th.text-right
-          = t :last_name
+          %h4
+            = t :last_name
     %tbody
       - @customer_line_items.each do |line_item|
         %tr
