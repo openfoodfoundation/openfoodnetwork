@@ -7,7 +7,6 @@ class Invoice
                  :variant_id, :unit_price_price_and_unit, :unit_presentation,
                  :enterprise_fee_additional_tax, :enterprise_fee_included_tax
       attributes_with_presenter :variant
-      array_attribute :tax_rates, class_name: 'TaxRate'
       invoice_generation_attributes :added_tax, :included_tax, :price_with_adjustments,
                                     :quantity, :variant_id
 
