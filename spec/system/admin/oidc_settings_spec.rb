@@ -10,7 +10,7 @@ describe "OIDC Settings" do
   end
 
   describe "with valid login" do
-    let(:user) { create(:admin_user) }
+    let(:user) { create(:enterprise_user) }
 
     before do
       OmniAuth.config.test_mode = true

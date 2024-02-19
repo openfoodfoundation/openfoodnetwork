@@ -30,6 +30,10 @@ FactoryBot.define do
       end
     end
 
+    factory :enterprise_user do
+      enterprises { [build(:enterprise)] }
+    end
+
     factory :admin_user do
       spree_roles { [Spree::Role.find_or_create_by!(name: 'admin')] }
     end
