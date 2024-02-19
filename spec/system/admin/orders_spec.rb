@@ -736,7 +736,7 @@ describe '
 
                   expect(page).to have_content "#{
                     order5.distributor.name
-                  } must have a valid ABN before invoices can be sent."
+                  } must have a valid ABN before invoices can be used."
                 end
               end
               it_behaves_like "should not print the invoice"
