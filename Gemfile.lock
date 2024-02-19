@@ -579,7 +579,7 @@ GEM
     redcarpet (3.6.0)
     redis (5.1.0)
       redis-client (>= 0.17.0)
-    redis-client (0.19.1)
+    redis-client (0.20.0)
       connection_pool
     regexp_parser (2.9.0)
     reline (0.4.1)
@@ -681,7 +681,7 @@ GEM
     semantic_range (3.0.0)
     shoulda-matchers (6.1.0)
       activesupport (>= 5.2.0)
-    sidekiq (7.2.1)
+    sidekiq (7.2.2)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
