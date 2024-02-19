@@ -49,6 +49,6 @@
     "karma-jasmine": "~0.3.8",
     "prettier": "3.2.4",
     "pretty-quick": "4.0.0",
-    "webpack-dev-server": "~3"
+    "webpack-dev-server": "~5"
   }
 }
