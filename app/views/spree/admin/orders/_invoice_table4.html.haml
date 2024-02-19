@@ -32,7 +32,7 @@
         %td{:align => "right"}
           = item.display_amount_with_adjustments_without_taxes
         %td{:align => "right"}
-          = item.display_line_item_tax_rates
+          = @order.display_line_item_tax_rate(item)
         %td{:align => "right"}
           = item.display_amount_with_adjustments_and_with_taxes
     %tr
