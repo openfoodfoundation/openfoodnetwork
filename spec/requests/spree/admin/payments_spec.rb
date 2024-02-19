@@ -107,7 +107,7 @@ describe Spree::Admin::PaymentsController, type: :request do
         allow(payment).to receive(:void_transaction!).and_raise(StandardError, "Unexpected !")
       end
 
-      pending "log the error message" do
+      it "log the error message" do
         # The redirect_do also calls Rails.logger.error
         expect(Rails.logger).to receive(:error).with("Unexpected !").ordered
         expect(Rails.logger).to receive(:error).with(/Redirected/).ordered
