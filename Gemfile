@@ -188,6 +188,7 @@ group :development do
   gem 'rubocop-rails'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'spring-commands-rubocop'
   gem 'web-console'
 
   gem 'rack-mini-profiler', '< 3.0.0'
