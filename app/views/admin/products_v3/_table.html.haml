@@ -6,17 +6,18 @@
               } } do |form|
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
   %table.products
-    %col{ width:"4%" }
-    %col{ width:"15%" }
-    %col{ width:"5%", style: "max-width:5em" }
-    %col{ width:"8%" }
-    %col{ width:"5%", style: "max-width:5em"}
-    %col{ width:"8%", style: "max-width:5em"}
-    %col{ width:"10%" }= # producer
-    %col{ width:"10%" }
-    %col{ width:"5%" }
-    %col{ width:"5%", style: "max-width:5em" }
-    %col{ width:"5%", style: "max-width:5em" }
+    %colgroup
+      %col{ width:"56" }= #  Img (size + padding)
+      %col= # (grow to fill) Name
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"10%"}
+      %col{ width:"15%"}= # Producer
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"8%"}= # Actions
     %thead
       %tr
         %td.form-actions-wrapper{ colspan: 11 }
