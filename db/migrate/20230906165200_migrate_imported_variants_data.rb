@@ -1,3 +1,5 @@
+require "open_food_network/i18n_inflections"
+
 class MigrateImportedVariantsData < ActiveRecord::Migration[7.0]
   class OptionValueNamer
     # nameable can be either a Spree::LineItem or a Spree::Variant
