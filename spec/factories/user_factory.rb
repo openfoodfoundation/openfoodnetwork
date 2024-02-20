@@ -39,9 +39,9 @@ FactoryBot.define do
     end
 
     factory :oidc_user do
-      after(:create) do |user|
-        OidcAccount.create!(user:, provider: "openid_connect", uid: user.email)
-      end
+      oidc_account {
+        OidcAccount.new(provider: "openid_connect", uid: email)
+      }
     end
   end
 end
