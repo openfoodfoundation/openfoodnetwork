@@ -87,6 +87,8 @@ class SuppliedProductBuilder < DfcBuilder
   end
 
   def self.taxon(supplied_product)
+    return unless supplied_product.productType
+
     dfc_id = supplied_product.productType.semanticId
     Spree::Taxon.find_by(dfc_id: )
   end
