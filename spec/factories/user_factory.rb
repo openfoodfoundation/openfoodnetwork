@@ -6,10 +6,6 @@ FactoryBot.define do
   end
 
   factory :user, class: Spree::User do
-    transient do
-      enterprises { [] }
-    end
-
     email { generate(:random_email) }
     login { email }
     password { 'secret' }
@@ -32,10 +28,6 @@ FactoryBot.define do
           user.skip_confirmation_notification!
         end
       end
-    end
-
-    after(:create) do |user, proxy|
-      user.enterprises << proxy.enterprises
     end
 
     factory :admin_user do
