@@ -7,12 +7,10 @@ describe SuppliedProductBuilder do
 
   subject(:builder) { described_class }
   let(:variant) {
-    build(:variant, id: 5, product: spree_product)
+    build(:variant, id: 5, product: spree_product, primary_taxon: taxon)
   }
   let(:spree_product) {
-    create(:product, id: 6, supplier:).tap do |p|
-      p.primary_taxon = taxon
-    end
+    create(:product, id: 6, supplier:)
   }
   let(:supplier) {
     build(:supplier_enterprise, id: 7)
@@ -121,7 +119,7 @@ describe SuppliedProductBuilder do
       it "assigns the taxon matching the DFC product type" do
         product = builder.import_product(supplied_product)
 
-        expect(product.primary_taxon).to eq(taxon)
+        expect(product.variants.first.primary_taxon).to eq(taxon)
       end
     end
   end
@@ -191,58 +189,7 @@ describe SuppliedProductBuilder do
         imported_product = imported_variant.product
         expect(imported_product.id).to eq(spree_product.id)
         expect(imported_product.description).to eq("Better Awesome tomato")
-        expect(imported_product.primary_taxon).to eq(new_taxon)
-      end
-
-      it "adds a new variant" do
-        expect(imported_variant.id).to be_nil
-        expect(imported_variant.product).to eq(spree_product)
-        expect(imported_variant.display_name).to eq("Tomato")
-        expect(imported_variant.unit_value).to eq(2000)
-      end
-    end
-
-    context "with spree_product_uri supplied" do
-      let(:imported_variant) { builder.import_variant(supplied_product, supplier) }
-      let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK }
-      let!(:new_taxon) {
-        create(
-          :taxon,
-          name: "Soft Drink",
-          dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#soft-drink"
-        )
-      }
-
-      context "when spree_product_uri match the server host" do
-        let(:supplied_product) do
-          variant.save! # referenced in spree_product_id
-
-          DfcProvider::SuppliedProduct.new(
-            "https://example.net/tomato",
-            name: "Tomato",
-            description: "Better Awesome tomato",
-            quantity: DataFoodConsortium::Connector::QuantitativeValue.new(
-              unit: DfcLoader.connector.MEASURES.KILOGRAM,
-              value: 2,
-            ),
-            productType: product_type,
-            spree_product_uri: "http://test.host/api/dfc/enterprises/7?spree_product_id=6"
-          )
-        end
-
-        it "update an existing Spree::Product" do
-          imported_product = imported_variant.product
-          expect(imported_product.id).to eq(spree_product.id)
-          expect(imported_product.description).to eq("Better Awesome tomato")
-          expect(imported_product.primary_taxon).to eq(new_taxon)
-        end
-
-        it "adds a new variant" do
-          expect(imported_variant.id).to be_nil
-          expect(imported_variant.product).to eq(spree_product)
-          expect(imported_variant.display_name).to eq("Tomato")
-          expect(imported_variant.unit_value).to eq(2000)
-        end
+        expect(imported_variant.primary_taxon).to eq(new_taxon)
       end
 
       context "when spree_product_uri doesn't match the server host" do

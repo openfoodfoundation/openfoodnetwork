@@ -65,26 +65,25 @@ class SuppliedProductBuilder < DfcBuilder
     Spree::Product.new(
       name: supplied_product.name,
       description: supplied_product.description,
-      price: 0, # will be in DFC Offer
-      primary_taxon_id: taxon(supplied_product).id
+      price: 0 # will be in DFC Offer
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
+      product.ensure_standard_variant
+      product.variants.first.primary_taxon = taxon(supplied_product)
     end
   end
 
   def self.apply(supplied_product, variant)
-    variant.product.assign_attributes(
-      description: supplied_product.description,
-      primary_taxon: taxon(supplied_product)
-    )
+    variant.product.assign_attributes(description: supplied_product.description)
 
     variant.display_name = supplied_product.name
+    variant.primary_taxon = taxon(supplied_product)
     QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
     variant.unit_value = variant.product.unit_value
   end
 
   def self.product_type(variant)
-    taxon_dfc_id = variant.product.primary_taxon&.dfc_id
+    taxon_dfc_id = variant.primary_taxon&.dfc_id
 
     DfcProductTypeFactory.for(taxon_dfc_id)
   end
