@@ -10,12 +10,6 @@ describe Stripe::CreditCardRemover do
   let!(:enterprise) { create(:enterprise) }
 
   describe "#remove", :vcr, :stripe_version do
-    let(:stripe_account_id) { ENV.fetch('STRIPE_ACCOUNT', nil) }
-
-    let(:stripe_account) {
-      create(:stripe_account, enterprise:, stripe_user_id: stripe_account_id)
-    }
-
     let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id, user:) }
 
     let(:pm_card) {
