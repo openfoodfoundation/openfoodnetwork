@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Api::V0::ReportsController, type: :controller do
-  let(:enterprise_user) { create(:user, enterprises: create(:enterprise)) }
+  let(:enterprise_user) { create(:user, enterprises: [create(:enterprise)]) }
   let(:params) {
     {
       report_type: 'packing',
