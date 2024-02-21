@@ -704,6 +704,8 @@ GEM
     spring (4.1.3)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
+    spring-commands-rubocop (0.4.0)
+      spring (>= 1.0)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -925,6 +927,7 @@ DEPENDENCIES
   spreadsheet_architect
   spring
   spring-commands-rspec
+  spring-commands-rubocop
   state_machines-activerecord
   stimulus_reflex (= 3.5.0.rc3)
   stimulus_reflex_testing
