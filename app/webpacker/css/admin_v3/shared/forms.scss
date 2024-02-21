@@ -13,8 +13,7 @@ input[type="date"],
 input[type="datetime"],
 input[type="time"],
 input[type="number"],
-textarea,
-fieldset {
+textarea {
   @include border-radius($border-radius);
   padding: ($vpadding-txt - 1px) ($hpadding-txt - 1px); // Minus 1px for border
   border: 1px solid $lighter-grey;
