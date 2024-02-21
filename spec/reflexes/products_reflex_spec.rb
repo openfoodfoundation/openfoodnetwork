@@ -15,7 +15,7 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
   end
 
   describe '#fetch' do
-    subject{ build_reflex(method_name: :fetch, **context) }
+    subject { build_reflex(method_name: :fetch, **context) }
 
     describe "sorting" do
       let!(:product_z) { create(:simple_product, name: "Zucchini") }
@@ -30,6 +30,27 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
           # product_b,
           product_z,
         ]
+      end
+    end
+  end
+
+  describe '#filter' do
+    context "when filtering by category" do
+      let!(:product_a) { create(:simple_product, name: "Apples") }
+      let!(:product_z) do
+        create(:simple_product, name: "Zucchini").tap do |p|
+          p.variants.first.update(primary_taxon: category_c)
+        end
+      end
+      let(:category_c) { create(:taxon, name: "Category 1") }
+
+      it "returns product with a variant matching the given category" do
+        # Add a second variant to test we are not returning duplicate product
+        product_z.variants << create(:variant, primary_taxon: category_c)
+
+        reflex = run_reflex(:filter, params: { category_id: category_c.id } )
+
+        expect(reflex.get(:products).to_a).to eq([product_z])
       end
     end
   end
