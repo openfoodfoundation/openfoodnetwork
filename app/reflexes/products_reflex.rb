@@ -152,7 +152,7 @@ class ProductsReflex < ApplicationReflex
 
   def fetch_products
     product_query = OpenFoodNetwork::Permissions.new(current_user)
-      .editable_products.merge(product_scope).ransack(ransack_query).result
+      .editable_products.merge(product_scope).ransack(ransack_query).result(distinct: true)
     @pagy, @products = pagy(product_query.order(:name), items: @per_page, page: @page,
                                                         size: [1, 2, 2, 1])
   end
