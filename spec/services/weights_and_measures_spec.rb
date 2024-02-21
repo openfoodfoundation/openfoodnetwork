@@ -30,6 +30,11 @@ describe WeightsAndMeasures do
         allow(product).to receive(:variant_unit_scale) { 28.35 }
         expect(subject.system).to eq("imperial")
       end
+
+      it "when precise scale is for an imperial unit" do
+        allow(product).to receive(:variant_unit_scale) { 28.349523125 }
+        expect(subject.system).to eq("imperial")
+      end
     end
 
     context "volume" do
@@ -79,7 +84,6 @@ describe WeightsAndMeasures do
         ["Volume (kL)", "volume_1000"],
         ["Items", "items"],
       ]
-      pending "imperial measurements are duplicated"
       expect(subject).to match_array expected_array # diff each element
       expect(subject).to eq expected_array # test ordering also
     end
@@ -97,7 +101,6 @@ describe WeightsAndMeasures do
           ["Volume (L)", "volume_1"],
           ["Items", "items"],
         ]
-        pending "imperial measurements are duplicated"
         expect(subject).to match_array expected_array # diff each element
         expect(subject).to eq expected_array # test ordering also
       end
