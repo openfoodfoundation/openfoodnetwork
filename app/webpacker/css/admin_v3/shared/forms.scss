@@ -23,6 +23,17 @@ fieldset {
   font-size: 14px;
   line-height: 22px;
 
+
+  // Appears just like other text on the page.
+  // See table.products tr:hover for example of revealing them
+  .naked_inputs & {
+    background-color: inherit;
+    height: auto;
+    font-size: inherit;
+    font-weight: inherit;
+    border-color: transparent;
+  }
+
   &:focus {
     outline: none;
     border-color: $color-txt-hover-brd;

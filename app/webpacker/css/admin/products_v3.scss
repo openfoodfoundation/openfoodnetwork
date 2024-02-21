@@ -73,7 +73,7 @@
     }
 
     // Row hover
-    tr:hover {
+    tbody tr:hover {
       td {
         background-color: $light-grey;
         position: relative;
@@ -87,6 +87,11 @@
           border-left: 4px solid $teal;
           height: 100%;
         }
+      }
+
+      // "Naked" inputs. Row hover helps reveal them.
+      input:not([type="checkbox"]) {
+        background-color: $color-tbl-cell-bg;
       }
 
       // Reveal naked button text when any part of row is hovered
@@ -162,22 +167,6 @@
 
     label {
       margin: 0;
-    }
-
-    // "Naked" inputs. Row hover helps reveal them.
-    tbody {
-      input:not([type="checkbox"]) {
-        background-color: $color-tbl-cell-bg;
-        height: auto;
-        font-size: inherit;
-        font-weight: inherit;
-      }
-
-      :not(.field_with_errors) > {
-        input:not([type="checkbox"]):not(:focus):not(.changed):not([disabled]) {
-          border-color: transparent;
-        }
-      }
     }
   }
 
