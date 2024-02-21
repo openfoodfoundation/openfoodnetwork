@@ -55,7 +55,56 @@ describe WeightsAndMeasures do
     end
   end
 
-  describe "#scale_for_unit_value" do
+  describe "#variant_unit_options" do
+    let(:available_units) { "mg,g,kg,T,mL,cL,dL,L,kL,lb,oz,gal" }
+    subject { WeightsAndMeasures.variant_unit_options }
+
+    before do
+      allow(Spree::Config).to receive(:available_units).and_return(available_units)
+    end
+
+    it "returns options for each unit" do
+      expected_array = [
+        ["Weight (mg)", "weight_0.001"],
+        ["Weight (g)", "weight_1"],
+        ["Weight (oz)", "weight_28.35"],
+        ["Weight (lb)", "weight_453.6"],
+        ["Weight (kg)", "weight_1000"],
+        ["Weight (T)", "weight_1000000"],
+        ["Volume (mL)", "volume_0.001"],
+        ["Volume (cL)", "volume_0.01"],
+        ["Volume (dL)", "volume_0.1"],
+        ["Volume (L)", "volume_1"],
+        ["Volume (gal)", "volume_4.54609"],
+        ["Volume (kL)", "volume_1000"],
+        ["Items", "items"],
+      ]
+      pending "imperial measurements are duplicated"
+      expect(subject).to match_array expected_array # diff each element
+      expect(subject).to eq expected_array # test ordering also
+    end
+
+    describe "filtering available units" do
+      let(:available_units) { "g,kg,mL,L,lb,oz" }
+
+      it "returns options for available units only" do
+        expected_array = [
+          ["Weight (g)", "weight_1"],
+          ["Weight (oz)", "weight_28.35"],
+          ["Weight (lb)", "weight_453.6"],
+          ["Weight (kg)", "weight_1000"],
+          ["Volume (mL)", "volume_0.001"],
+          ["Volume (L)", "volume_1"],
+          ["Items", "items"],
+        ]
+        pending "imperial measurements are duplicated"
+        expect(subject).to match_array expected_array # diff each element
+        expect(subject).to eq expected_array # test ordering also
+      end
+    end
+  end
+
+  describe "#scales_for_unit_value" do
     context "weight" do
       before do
         allow(product).to receive(:variant_unit) { "weight" }
