@@ -13,6 +13,12 @@ class OrderCycleDistributedProducts
     Spree::Product.where(id: stocked_products).group("spree_products.id")
   end
 
+  # Joins on the first product variant to allow us to filter product by taxon. This is so
+  # enterprise can display product sorted by category in a custom order on their shopfront.
+  #
+  # Caveat, the category sorting won't work properly if there are multiple variant with different
+  # category for a given product.
+  #
   def products_taxons_relation
     Spree::Product.where(id: stocked_products).
       joins("LEFT JOIN (SELECT DISTINCT ON(product_id) id, product_id, primary_taxon_id
