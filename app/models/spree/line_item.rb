@@ -193,6 +193,7 @@ module Spree
       adjustments.tax.additional.sum(:amount)
     end
 
+    # Some of the tax rates may not be applicable depending to the order's tax zone
     def tax_rates
       variant&.tax_category&.tax_rates || []
     end
