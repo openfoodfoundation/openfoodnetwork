@@ -145,7 +145,13 @@ end
 
 if ENV["OPENID_APP_ID"].present? && ENV["OPENID_APP_SECRET"].present?
   Devise.setup do |config|
-    protocol = Rails.env.development? ? "http://" : "https://"
+    site = if Rails.env.development?
+             # The lescommuns server accepts localhost:3000 as valid.
+             # So you can test in development.
+             "http://localhost:3000"
+           else
+             "https://#{ENV["SITE_URL"]}"
+           end
     config.omniauth :openid_connect, {
       name: :openid_connect,
       issuer: "https://login.lescommuns.org/auth/realms/data-food-consortium",
@@ -158,7 +164,7 @@ if ENV["OPENID_APP_ID"].present? && ENV["OPENID_APP_SECRET"].present?
       client_options: {
         identifier: ENV["OPENID_APP_ID"],
         secret: ENV["OPENID_APP_SECRET"],
-        redirect_uri: "#{protocol}#{ENV["SITE_URL"]}/user/spree_user/auth/openid_connect/callback",
+        redirect_uri: "#{site}/user/spree_user/auth/openid_connect/callback",
         jwks_uri: 'https://login.lescommuns.org/auth/realms/data-food-consortium/protocol/openid-connect/certs'
       }
     }

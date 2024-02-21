@@ -113,7 +113,7 @@ Openfoodnetwork::Application.routes.draw do
       put :unpause, on: :member
     end
 
-    resources :oidc_settings, only: :index
+    resources :oidc_settings, only: [:index, :destroy]
 
     resources :subscription_line_items, only: [], format: :json do
       post :build, on: :collection

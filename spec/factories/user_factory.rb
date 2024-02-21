@@ -30,14 +30,18 @@ FactoryBot.define do
       end
     end
 
+    factory :enterprise_user do
+      enterprises { [build(:enterprise)] }
+    end
+
     factory :admin_user do
       spree_roles { [Spree::Role.find_or_create_by!(name: 'admin')] }
     end
 
     factory :oidc_user do
-      after(:create) do |user|
-        user.update uid: user.email
-      end
+      oidc_account {
+        OidcAccount.new(provider: "openid_connect", uid: email)
+      }
     end
   end
 end

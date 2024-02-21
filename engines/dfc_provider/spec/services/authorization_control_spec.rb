@@ -16,9 +16,8 @@ describe AuthorizationControl do
     end
 
     it "ignores blank email" do
-      create(:user, uid: nil)
-      create(:user, uid: "")
-      token = allow_token_for(email: nil)
+      OidcAccount.where(user:).update_all(uid: "")
+      token = allow_token_for(email: "")
 
       expect(auth(oidc_token: token).user).to eq nil
     end

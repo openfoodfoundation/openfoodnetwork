@@ -42,6 +42,7 @@ module Spree
     has_many :credit_cards, dependent: :destroy
     has_many :report_rendering_options, class_name: "::ReportRenderingOptions", dependent: :destroy
     has_many :webhook_endpoints, dependent: :destroy
+    has_one :oidc_account, dependent: :destroy
 
     accepts_nested_attributes_for :enterprise_roles, allow_destroy: true
     accepts_nested_attributes_for :webhook_endpoints
@@ -51,20 +52,11 @@ module Spree
 
     validates :email, 'valid_email_2/email': { mx: true }, if: :email_changed?
     validate :limit_owned_enterprises
-    validates :uid, uniqueness: true, if: lambda { uid.present? }
-
-    # Same validation as in the openid_connect gem.
-    # This validator is totally outdated but we indirectly depend on it.
-    validates :uid, email: true, if: lambda { uid.present? }
 
     class DestroyWithOrdersError < StandardError; end
 
     def self.admin_created?
       User.admin.count > 0
-    end
-
-    def link_from_omniauth(auth)
-      update!(provider: auth.provider, uid: auth.uid)
     end
 
     # Whether a user has a role or not.
