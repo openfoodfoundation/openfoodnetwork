@@ -45,9 +45,16 @@ class WeightsAndMeasures
 
   def self.available_units_sorted
     self::UNITS.transform_values do |measurement_info|
+      # Filter to only include available units
       measurement_info.filter do |_scale, unit_info|
         available_units.include?(unit_info['name'])
-      end.sort.to_h # sort by unit (hash key)
+      end.
+        # Remove duplicates by name
+        uniq do |_scale, unit_info|
+        unit_info['name']
+      end.
+        # Sort by unit number
+        sort.to_h
     end
   end
 
@@ -60,10 +67,10 @@ class WeightsAndMeasures
       1000.0 => { 'name' => 'kg', 'system' => 'metric' },
       1_000_000.0 => { 'name' => 'T', 'system' => 'metric' },
 
-      28.349523125 => { 'name' => 'oz', 'system' => 'imperial' },
       28.35 => { 'name' => 'oz', 'system' => 'imperial' },
-      453.59237 => { 'name' => 'lb', 'system' => 'imperial' },
+      28.349523125 => { 'name' => 'oz', 'system' => 'imperial' },
       453.6 => { 'name' => 'lb', 'system' => 'imperial' },
+      453.59237 => { 'name' => 'lb', 'system' => 'imperial' },
     },
     'volume' => {
       0.001 => { 'name' => 'mL', 'system' => 'metric' },
