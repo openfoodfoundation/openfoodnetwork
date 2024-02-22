@@ -27,5 +27,5 @@
 
 = t(@error, link: link_to(t(".report_link_label"), @error_url)) if @error
 
-#report-table{ "data-controller" => "scoped-channel", "data-scoped-channel-id-value" => request.uuid }
+#report-table{ data: { controller: "scoped-channel", "scoped-channel-id-value": request.uuid } }
   = @table

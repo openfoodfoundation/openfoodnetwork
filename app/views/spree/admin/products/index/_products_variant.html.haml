@@ -22,7 +22,7 @@
     %input.field{ 'ng-model' => 'variant.on_demand', :name => 'variant_on_demand', 'ofn-track-variant' => 'on_demand', :type => 'checkbox' }
   %td{ 'ng-show' => 'columns.category.visible' }
   %td{ 'ng-show' => 'columns.tax_category.visible' }
-    %select.select2{ "name" => 'variant_tax_category_id', "ofn-track-variant" => 'tax_category_id', "ng-model" => 'variant.tax_category_id', "ng-options" => 'tax_category.id as tax_category.name for tax_category in tax_categories' }
+    %select.select2{ name: 'variant_tax_category_id', "ofn-track-variant": 'tax_category_id', "ng-model": 'variant.tax_category_id', "ng-options": 'tax_category.id as tax_category.name for tax_category in tax_categories' }
       %option{ value: '' }= t(:none)
   %td{ 'ng-show' => 'columns.inherits_properties.visible' }
   %td{ 'ng-show' => 'columns.import_date.visible' }

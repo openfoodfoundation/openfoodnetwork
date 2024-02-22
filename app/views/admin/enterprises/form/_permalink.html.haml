@@ -1,4 +1,4 @@
-.permalink#permalink{ "data-controller" => 'permalink', "data-permalink-initial-permalink-value" => @enterprise.permalink, "data-permalink-url-value" => check_permalink_enterprises_url }
+.permalink#permalink{ data: { controller: 'permalink', permalink: { 'initial-permalink-value': @enterprise.permalink, 'url-value': check_permalink_enterprises_url } }}
   - unless @enterprise.sells == 'none'
     .row
       .three.columns.alpha
@@ -7,12 +7,12 @@
       .eight.columns
         = text_field_tag "enterprise[permalink]", @enterprise.permalink, data: { action: "input->permalink#validate", "permalink-target": "permalinkField" }
       .two.columns.omega
-        %div{ "style" => "width: 30px; height: 30px;", "class" => "hidden", "data-permalink-target" => "spinner" }
+        %div{ style: "width: 30px; height: 30px;", class: "hidden", data: { "permalink-target": "spinner" } }
           = render partial: "components/admin_spinner"
-        %span.available.hidden{ "data-permalink-target" => "available" }
+        %span.available.hidden{data: { "permalink-target": "available" }}
           = t('available')
           %i.icon-ok-sign
-        %span.unavailable.hidden{ "data-permalink-target" => "unavailable" }
+        %span.unavailable.hidden{data: { "permalink-target": "unavailable" }}
           = t('js.unavailable')
           %i.icon-remove-sign
             

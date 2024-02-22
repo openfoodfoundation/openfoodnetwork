@@ -1,11 +1,11 @@
-.row{ "ng-controller" => "TagRulesCtrl" }
+.row{ "ng-controller": "TagRulesCtrl" }
   .eleven.columns.alpha.omega
-    %ofn-sortable{ "axis" => "y", "handle" => ".header", "items" => '.customer_tag', "position" => "tagGroup.position", "after-sort" => "updateRuleCounts()" }
-      .no_tags{ "ng-show" => "tagGroups.length == 0" }
+    %ofn-sortable{ axis: "y", handle: ".header", items: '.customer_tag', position: "tagGroup.position", "after-sort": "updateRuleCounts()" }
+      .no_tags{ "ng-show": "tagGroups.length == 0" }
         = t('.no_tags_yet')
       = render 'admin/enterprises/form/tag_rules/default_rules'
       -# = render 'customer_tags'
-      .customer_tag{ "id" => "tg_{{tagGroup.position}}", "ng-repeat" => "tagGroup in tagGroups" }
+      .customer_tag{ id: "tg_{{tagGroup.position}}", "ng-repeat": "tagGroup in tagGroups" }
         .header
           %table
             %colgroup
@@ -16,12 +16,12 @@
                 %h5
                   = t('.for_customers_tagged')
               %td
-                %tags-with-translation{ "object" => "tagGroup", "max" => 1, "on-tag-added" => "updateTagsRulesFor(tagGroup)", "on-tag-removed" => "updateTagsRulesFor(tagGroup)" }
+                %tags-with-translation{ object: "tagGroup", max: 1, "on-tag-added": "updateTagsRulesFor(tagGroup)", "on-tag-removed": "updateTagsRulesFor(tagGroup)" }
 
-        .no_rules{ "ng-show" => "tagGroup.rules.length == 0" }
+        .no_rules{ "ng-show": "tagGroup.rules.length == 0" }
           = t('.no_rules_yet')
-        .tag_rule{ "ng-repeat" => "rule in tagGroup.rules" }
+        .tag_rule{ "ng-repeat": "rule in tagGroup.rules" }
         .add_rule.text-center
           %input.button.icon-plus{ type: 'button', value: t('.add_new_rule'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "tagGroup", "new-tag-rule-dialog" => true }
       .add_tag
-        %input.button.red.icon-plus{ "type" => 'button', "value" => t('.add_new_tag'), "ng-click" => 'addNewTag()' }
+        %input.button.red.icon-plus{ type: 'button', value: t('.add_new_tag'), "ng-click": 'addNewTag()' }

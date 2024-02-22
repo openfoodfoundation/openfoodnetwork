@@ -1,20 +1,20 @@
 = cache_with_locale do
   .small-5.medium-3.large-3.columns.variant-quantity-column.text-right{"ng-if" => "::!variant.product.group_buy"}
 
-    .variant-quantity-inputs{ "ng-if" => "variant.line_item.quantity == 0" }
-      %button.add-variant{ "type" => "button", "ng-click" => "add(1)", "ng-disabled" => "!canAdd(1)" }
+    .variant-quantity-inputs{ "ng-if": "variant.line_item.quantity == 0" }
+      %button.add-variant{ type: "button", "ng-click": "add(1)", "ng-disabled": "!canAdd(1)" }
         {{ "js.shopfront.variant.add_to_cart" | t }}
 
-    .variant-quantity-inputs{ "ng-if" => "variant.line_item.quantity != 0" }
-      %button.variant-quantity{ "type" => "button", "ng-click" => "add(-1)", "ng-disabled" => "!canAdd(-1)" }>
+    .variant-quantity-inputs{ "ng-if": "variant.line_item.quantity != 0" }
+      %button.variant-quantity{ type: "button", "ng-click": "add(-1)", "ng-disabled": "!canAdd(-1)" }>
         -# U+FF0D Fullwidth Hyphen-Minus
         －
-      %input.variant-quantity{ "type" => "number", "min" => "0", "max" => "{{ available() }}", "ng-model" => "variant.line_item.quantity", "ng-max" => "Infinity" }>
-      %button.variant-quantity{ "type" => "button", "ng-click" => "add(1)", "ng-disabled" => "!canAdd(1)" }
+      %input.variant-quantity{ type: "number", min: "0", max: "{{ available() }}", "ng-model": "variant.line_item.quantity", "ng-max": "Infinity" }>
+      %button.variant-quantity{ type: "button", "ng-click": "add(1)", "ng-disabled": "!canAdd(1)" }
         -# U+FF0B Fullwidth Plus Sign
         ＋
-    .variant-remaining-stock{ "ng-if" => "displayRemainingInStock()" }
+    .variant-remaining-stock{ "ng-if": "displayRemainingInStock()" }
       {{ "js.shopfront.variant.remaining_in_stock" | t:{quantity: available()} }}
-    .variant-quantity-display{ "ng-class" => "{visible: variant.line_item.quantity}" }
+    .variant-quantity-display{ "ng-class": "{visible: variant.line_item.quantity}" }
       {{ "js.shopfront.variant.quantity_in_cart" | t:{quantity: variant.line_item.quantity || 0} }}
-    %input{ "type" => :hidden, "name" => "variants[{{::variant.id}}]", "ng-model" => "variant.line_item.quantity" }
+    %input{ type: :hidden, name: "variants[{{::variant.id}}]", "ng-model": "variant.line_item.quantity" }

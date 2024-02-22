@@ -8,8 +8,8 @@
   "ng-cloak" => true } do |f|
 
   %save-bar{ dirty: "enterprise_form.$dirty", persist: "true" }
-    %input.red{ "type" => "button", "value" => t(:update), "ng-click" => "submit()", "ng-disabled" => "!enterprise_form.$dirty" }
-    %input{ "type" => "button", "ng-value" => "enterprise_form.$dirty ? '#{t(:cancel)}' : '#{t(:close)}'", "ng-click" => "cancel('#{main_app.admin_enterprises_path}')" }
+    %input.red{ type: "button", value: t(:update), "ng-click": "submit()", "ng-disabled": "!enterprise_form.$dirty" }
+    %input{ type: "button", "ng-value": "enterprise_form.$dirty ? '#{t(:cancel)}' : '#{t(:close)}'", "ng-click": "cancel('#{main_app.admin_enterprises_path}')" }
 
   .row{ data: { 
     controller: "tabs-and-panels", "tabs-and-panels-class-name-value": "selected" }}

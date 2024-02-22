@@ -4,10 +4,10 @@
     %br
     = t('.logo_size')
   .omega.eight.columns
-    %img{ "class" => 'image-field-group__preview-image', "ng-src" => '{{ Enterprise.logo.thumb }}', "ng-if" => 'Enterprise.logo' }
+    %img{ class: 'image-field-group__preview-image', "ng-src": '{{ Enterprise.logo.thumb }}', "ng-if": 'Enterprise.logo' }
     %br
     = f.file_field :logo
-    %a.button.red{ "href" => '', "ng-click" => 'removeLogo()', "ng-if" => 'Enterprise.logo' }
+    %a.button.red{ href: '', "ng-click": 'removeLogo()', "ng-if": 'Enterprise.logo' }
       = t('.remove_logo')
 
 .row.page-admin-enterprises-form__promo-image-field-group.image-field-group
@@ -21,7 +21,7 @@
     = t('.promo_image_note3')
 
   .omega.eight.columns
-    %img{ "class" => 'image-field-group__preview-image', "ng-src" => '{{ Enterprise.promo_image.large }}', "ng-if" => 'Enterprise.promo_image' }
+    %img{ class: 'image-field-group__preview-image', "ng-src": '{{ Enterprise.promo_image.large }}', "ng-if": 'Enterprise.promo_image' }
     = f.file_field :promo_image
-    %a.button.red{ "href" => '', "ng-click" => 'removePromoImage()', "ng-if" => 'Enterprise.promo_image' }
+    %a.button.red{ href: '', "ng-click": 'removePromoImage()', "ng-if": 'Enterprise.promo_image' }
       = t('.remove_promo_image')

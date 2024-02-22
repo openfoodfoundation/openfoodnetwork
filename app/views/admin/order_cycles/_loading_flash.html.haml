@@ -1,6 +1,6 @@
-%div.sixteen.columns.alpha.omega#loading{ "ng-cloak" => true, "ng-if" => 'RequestMonitor.loading' }
+%div.sixteen.columns.alpha.omega#loading{ "ng-cloak": true, "ng-if": 'RequestMonitor.loading' }
   = render partial: "components/admin_spinner"
-  %h1{ "ng-hide" => 'orderCycles.length > 0' }
+  %h1{ "ng-hide": 'orderCycles.length > 0' }
     = t('.loading_order_cycles')
-  %h1{ "ng-show" => 'orderCycles.length > 0' }
+  %h1{ "ng-show": 'orderCycles.length > 0' }
     = t('.loading')

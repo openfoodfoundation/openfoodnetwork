@@ -1,7 +1,7 @@
 %div.sixteen.columns.alpha{ 'ng-hide' => 'RequestMonitor.loading || products.length == 0' }
   %form{ name: 'bulk_product_form', autocomplete: "off" }
     %save-bar{ dirty: "bulk_product_form.$dirty", persist: "false" }
-      %input.red{ "type" => "button", "value" => t(:save_changes), "ng-click" => "submitProducts()", "ng-disabled" => "!bulk_product_form.$dirty" }
+      %input.red{ type: "button", value: t(:save_changes), "ng-click": "submitProducts()", "ng-disabled": "!bulk_product_form.$dirty" }
       %input{ type: "button", value: t(:close), 'ng-click' => "cancel('#{admin_products_path}')" }
 
     %table.index#listing_products.bulk

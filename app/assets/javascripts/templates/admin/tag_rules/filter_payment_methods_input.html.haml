@@ -1,5 +1,5 @@
 %div
-  %input.fullwidth.light.ofn-select2{ "id" => "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_matched_payment_methods_visibility", "name" => "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_matched_payment_methods_visibility]", "data" => 'visibilityOptions', "min-search" => 5, "ng-model" => "rule.preferred_matched_payment_methods_visibility", "ng-if" => "!rule.is_default" }
-  %input{ "type" => "hidden", "id" => "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_matched_payment_methods_visibility", "name" => "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_matched_payment_methods_visibility]", "ng-value" => "'hidden'", "ng-if" => "rule.is_default" }
-  %span.text-normal{ "ng-if" => "rule.is_default" }
+  %input.fullwidth.light.ofn-select2{ id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_matched_payment_methods_visibility", name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_matched_payment_methods_visibility]", data: 'visibilityOptions', "min-search": 5, "ng-model": "rule.preferred_matched_payment_methods_visibility", "ng-if": "!rule.is_default" }
+  %input{ type: "hidden", id: "enterprise_tag_rules_attributes_{{tagGroup.startIndex + $index}}_preferred_matched_payment_methods_visibility", name: "enterprise[tag_rules_attributes][{{tagGroup.startIndex + $index}}][preferred_matched_payment_methods_visibility]", "ng-value": "'hidden'", "ng-if": "rule.is_default" }
+  %span.text-normal{ "ng-if": "rule.is_default" }
     = t(:not_visible)

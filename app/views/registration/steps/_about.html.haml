@@ -7,49 +7,49 @@
           %h2= t(".headline")
           %h5
             = t(".message")
-            %span{ "ng-class" => "{brick: !enterprise.is_primary_producer, turquoise: enterprise.is_primary_producer}" }
+            %span{ "ng-class": "{brick: !enterprise.is_primary_producer, turquoise: enterprise.is_primary_producer}" }
               {{ enterprise.name }}
 
-    %form{ "name" => 'about', "novalidate" => true, "ng-controller" => "RegistrationFormCtrl", "ng-submit" => "selectIfValid('images', about)" }
+    %form{ name: 'about', novalidate: true, "ng-controller": "RegistrationFormCtrl", "ng-submit": "selectIfValid('images', about)" }
       .row
         .small-12.columns
-          .alert-box.info{ "ofn-inline-alert" => true, "ng-show" => "visible" }
+          .alert-box.info{ "ofn-inline-alert": true, "ng-show": "visible" }
             %h6{ "ng-bind" => "'registration.steps.about.success' | t:{enterprise: enterprise.name}" }
             %span= t(".registration_exit_message")
-            %a.close{ "ng-click" => "close()" } &times;
+            %a.close{ "ng-click": "close()" } &times;
 
         .small-12.large-8.columns
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_description' }= t(".enterprise_description")
-                %input.chunky{ "id" => 'enterprise_description', "placeholder" => "{{'registration.steps.about.enterprise_description_placeholder' | t}}", "ng-model" => 'enterprise.description' }
+                %input.chunky{ id: 'enterprise_description', placeholder: "{{'registration.steps.about.enterprise_description_placeholder' | t}}", "ng-model": 'enterprise.description' }
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_long_desc' }= t(".enterprise_long_desc")
-                %textarea.chunky{ "id" => 'enterprise_long_desc', "rows" => 6, "placeholder" => "{{'registration.steps.about.enterprise_long_desc_placeholder' | t}}", "ng-model" => 'enterprise.long_description' }
+                %textarea.chunky{ id: 'enterprise_long_desc', rows: 6, placeholder: "{{'registration.steps.about.enterprise_long_desc_placeholder' | t}}", "ng-model": 'enterprise.long_description' }
                   %small{ "ng-bind" => "'registration.steps.about.enterprise_long_desc_length' | t:{num: enterprise.long_description.length}" }
         .small-12.large-4.columns
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_abn' }= t(".enterprise_abn")+":"
-                %input.chunky{ "id" => 'enterprise_abn', "placeholder" => "{{'registration.steps.about.enterprise_abn_placeholder' | t}}", "ng-model" => 'enterprise.abn' }
+                %input.chunky{ id: 'enterprise_abn', placeholder: "{{'registration.steps.about.enterprise_abn_placeholder' | t}}", "ng-model": 'enterprise.abn' }
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_acn' }= t(".enterprise_acn")+":"
-                %input.chunky{ "id" => 'enterprise_acn', "placeholder" => "{{'registration.steps.about.enterprise_acn_placeholder' | t}}", "ng-model" => 'enterprise.acn' }
+                %input.chunky{ id: 'enterprise_acn', placeholder: "{{'registration.steps.about.enterprise_acn_placeholder' | t}}", "ng-model": 'enterprise.acn' }
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_charges_sales_tax' }= t(:charges_sales_tax)
-                %input{ "id" => 'enterprise_charges_sales_tax_true', "type" => 'radio', "name" => 'charges_sales_tax', "value" => 'true', "required" => true, "ng-model" => 'enterprise.charges_sales_tax' }
+                %input{ id: 'enterprise_charges_sales_tax_true', type: 'radio', name: 'charges_sales_tax', value: 'true', required: true, "ng-model": 'enterprise.charges_sales_tax' }
                 %label{ for: 'enterprise_charges_sales_tax_true' } {{'say_yes' | t}}
-                %input{ "id" => 'enterprise_charges_sales_tax_false', "type" => 'radio', "name" => 'charges_sales_tax', "value" => 'false', "required" => true, "ng-model" => 'enterprise.charges_sales_tax' }
+                %input{ id: 'enterprise_charges_sales_tax_false', type: 'radio', name: 'charges_sales_tax', value: 'false', required: true, "ng-model": 'enterprise.charges_sales_tax' }
                 %label{ for: 'enterprise_charges_sales_tax_false' } {{'say_no' | t}}
-                %span.error.small-12.columns{ "ng-show" => "about.charges_sales_tax.$error.required && submitted" }
+                %span.error.small-12.columns{ "ng-show": "about.charges_sales_tax.$error.required && submitted" }
                   = t(".enterprise_tax_required")
 
       .row.buttons.pad-top

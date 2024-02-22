@@ -1,15 +1,15 @@
 - enterprise_side_menu_items(@enterprise).each do |item|
   - case item[:name]
   - when 'primary_details'
-    %fieldset.alpha.no-border-bottom{ "id" => "#{item[:name]}_panel", "data-controller" => "primary-details", "data-primary-details-primary-producer-value" => @enterprise.is_primary_producer.to_s, "data-primary-details-enterprise-sells-value" => @enterprise.sells, "data-tabs-and-panels-target" => "panel default" }
+    %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { controller: "primary-details", "primary-details-primary-producer-value": @enterprise.is_primary_producer.to_s, "primary-details-enterprise-sells-value": @enterprise.sells, "tabs-and-panels-target": "panel default" }}
       %legend= t(".#{ item[:name] }.legend")
       = render "admin/enterprises/form/#{ item[:form_name] || item[:name] }", f: f
 
   - when 'enterprise_permissions'
-    %fieldset.alpha.no-border-bottom{ "id" => "#{item[:name]}_panel", "data-tabs-and-panels-target" => "panel" }
+    %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel" }}
       %legend= t(".#{ item[:name] }.legend")
 
   - else
-    %fieldset.alpha.no-border-bottom{ "id" => "#{item[:name]}_panel", "data-tabs-and-panels-target" => "panel" }
+    %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel"  }}
       %legend= t(".#{ item[:form_name] || item[:name] }.legend")
       = render "admin/enterprises/form/#{ item[:form_name] || item[:name] }", f: f

@@ -34,7 +34,7 @@
       %span.required *
     .four.columns
       = af.select :state_id, @enterprise.address.country.states.map { |s| [s.name, s.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "select", class: "primary" }
-    .four.columns.omega{ "data-controller" => "primary-details" }
+    .four.columns.omega{ data: { controller: "primary-details" }}
       = af.select :country_id, available_countries.map { |c| [c.name, c.id] }, {}, { "data-controller": "tom-select", "data-dependent-select-target": "source", "data-action": "dependent-select#handleSelectChange", class: "primary" }
   .row
     .three.columns.alpha

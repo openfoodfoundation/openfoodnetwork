@@ -32,7 +32,7 @@
     .four.columns.omega
       = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"}
       = f.label :sells, t('.any'), value: "any"
-      %span{ "style" => "width: 30px; height: 30px;", "class" => "hidden", "data-primary-details-target" => "spinner" }
+      %span{ style: "width: 30px; height: 30px;", class: "hidden", data: { "primary-details-target": "spinner" } }
         = render partial: "components/admin_spinner"
 .row
   .three.columns.alpha

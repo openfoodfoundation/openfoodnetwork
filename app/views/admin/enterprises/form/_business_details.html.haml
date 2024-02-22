@@ -31,22 +31,22 @@
     = f.label :invoice_text, t('.invoice_text')
   .omega.eight.columns
     = f.text_area :invoice_text, style: "width: 100%; height: 100px;"
-.row{ "data-controller" => 'terms-and-conditions', "data-terms-and-conditions-message-value" => t('js.admin.enterprises.form.images.immediate_terms_and_conditions_removal_warning') }
+.row{ data: { controller: 'terms-and-conditions', "terms-and-conditions-message-value": t('js.admin.enterprises.form.images.immediate_terms_and_conditions_removal_warning') } }
   .alpha.three.columns
     = f.label :terms_and_conditions, t('.terms_and_conditions')
     %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "terms_and_conditions_info_modal" }
 
-  .omega.eight.columns#terms_and_conditions{ "data-reflex-root" => '#terms_and_conditions' }
+  .omega.eight.columns#terms_and_conditions{data: { 'reflex-root': '#terms_and_conditions' } }
     - if @enterprise.terms_and_conditions.attached?
       = link_to "#{@enterprise.terms_and_conditions.blob.filename} #{ t('.uploaded_on') } #{@enterprise.terms_and_conditions.blob.created_at}", url_for(@enterprise.terms_and_conditions), target: '_blank'
       %div
-        %a.icon-trash{ "href" => '#', "data-action" => 'click->terms-and-conditions#remove', "data-terms-and-conditions-message-value" => t('js.admin.enterprises.form.images.immediate_terms_and_conditions_removal_warning'), "data-enterprise-id" => @enterprise.id }
+        %a.icon-trash{ href: '#', data: {  action: 'click->terms-and-conditions#remove', "terms-and-conditions-message-value": t('js.admin.enterprises.form.images.immediate_terms_and_conditions_removal_warning'), 'enterprise-id': @enterprise.id}}
           = t('.remove_terms_and_conditions')
     .pad-top
     %div
-      .button.small{ "data-controller" => 'help-modal-link', "data-action" => 'click->help-modal-link#open', "data-help-modal-link-target-value" => "terms_and_conditions_warning_modal" }
+      .button.small{ data: { controller: 'help-modal-link', action: 'click->help-modal-link#open', "help-modal-link-target-value": "terms_and_conditions_warning_modal" } }
         = t('.upload')
-      %span{ "data-terms-and-conditions-target" => "filename" }
+      %span{ data: { "terms-and-conditions-target": "filename" } }
       = f.file_field :terms_and_conditions, accept: 'application/pdf', style: 'display: none;', data: { "terms-and-conditions-target": "fileinput" }
 
   = render HelpModalComponent.new(id: "terms_and_conditions_warning_modal", close_button: false ) do
