@@ -102,7 +102,15 @@ class HamlUp
     entries = hash.map do |key, value|
       value = stringify(value) if value.is_a? Hash
 
-      "#{key.inspect} => #{value}"
+      # We prefer the Ruby 1.9 hash syntax with symbols followed by a colon
+      # like this:
+      #
+      #   %button{ disabled: true, "ng-class": "primary-button" }
+      #
+      # Symbols start with `:` which we slice off. It gets appended below.
+      key = key.to_sym.inspect.slice(1..-1)
+
+      "#{key}: #{value}"
     end
 
     "{ #{entries.join(', ')} }"
