@@ -58,9 +58,9 @@ class HamlUp
   end
 
   def flatten_tree(parent)
-    parent.children.map do |child|
-      [child] + flatten_tree(child)
-    end.flatten
+    parent.children.flat_map do |child|
+      [child, *flatten_tree(child)]
+    end
   end
 
   def parse_attributes(string)
