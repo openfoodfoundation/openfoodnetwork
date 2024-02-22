@@ -761,7 +761,7 @@ GEM
     validates_lengths_from_database (0.8.0)
       activerecord (>= 4)
     vcr (6.2.0)
-    view_component (3.10.0)
+    view_component (3.11.0)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
