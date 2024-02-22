@@ -216,7 +216,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(page).to have_field "Price", with: "10.25"
         expect(page).to have_css "button[aria-label='On Hand']", text: "6"
       end
-
     end
 
     it "switches stock to on-demand" do

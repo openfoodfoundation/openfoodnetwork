@@ -4,7 +4,6 @@ require 'spec_helper'
 require 'stripe/payment_intent_validator'
 
 describe Stripe::PaymentIntentValidator do
-
   let(:payment_method) {
     create(:stripe_sca_payment_method, distributor_ids: [create(:distributor_enterprise).id],
                                        preferred_enterprise_id: create(:enterprise).id)
