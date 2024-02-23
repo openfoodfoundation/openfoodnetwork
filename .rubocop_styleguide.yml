@@ -14,10 +14,6 @@ AllCops:
     # Excluding: inadequate Naming/FileName rule rejects GemFile name with camelcase
     - 'engines/web/Gemfile'
 
-## OFN SETTINGS
-#
-# Cop settings that have been agreed upon by the OFN community
-
 Metrics:
   Enabled: true
 
@@ -110,11 +106,6 @@ Naming/VariableNumber:
 
 Bundler/DuplicatedGem:
   Enabled: false
-
-## TEMPORARY/CONTESTED SETTINGS
-#
-# These are still to be decided upon, but recommended for inclusion by
-# oeoeaio after scrutinising offenses the codebase
 
 # Don't think this is a big issue, mostly picking up RPSEC scope definitions
 # with lamdas and RSpec '.to change{}' blocks
