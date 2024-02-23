@@ -690,6 +690,8 @@ uk:
         categories:
           label: Категорії
         search: Пошук
+      table:
+        new_variant: Новий варіант
       edit_image:
         close: Назад
     product_import:

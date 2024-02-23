@@ -687,6 +687,8 @@ fr_BE:
         categories:
           label: Les catégories
         search: Rechercher
+      table:
+        new_variant: Nouvelle variante
       edit_image:
         close: Retour
     product_import:

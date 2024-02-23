@@ -721,6 +721,8 @@ it:
         categories:
           label: categorie
         search: Cerca
+      table:
+        new_variant: Nuova variante
       edit_image:
         close: Indietro
     product_import:
@@ -1480,7 +1482,6 @@ it:
       index:
         title: "Impoostazioni"
         connect: "Collega il tuo profilo"
-        already_connected: "Il tuo profilo è già collegato a questo profilo di autorizzazione DFC"
         view_account: "Per vedere il tuo profilo, vedi:"
     subscriptions:
       index:

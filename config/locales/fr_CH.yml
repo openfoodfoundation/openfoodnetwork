@@ -686,6 +686,8 @@ fr_CH:
         categories:
           label: Conditions de transport
         search: Rechercher
+      table:
+        new_variant: Nouvelle variante
       edit_image:
         close: Retour
     product_import:

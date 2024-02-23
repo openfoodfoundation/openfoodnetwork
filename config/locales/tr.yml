@@ -605,6 +605,8 @@ tr:
         categories:
           label: Kategoriler
         search: Ara
+      table:
+        new_variant: Yeni Çeşit
       edit_image:
         close: Geri
     product_import:

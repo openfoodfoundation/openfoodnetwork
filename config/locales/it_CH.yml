@@ -664,6 +664,8 @@ it_CH:
         categories:
           label: categorie
         search: Cerca
+      table:
+        new_variant: Nuova variante
       edit_image:
         close: Indietro
     product_import:

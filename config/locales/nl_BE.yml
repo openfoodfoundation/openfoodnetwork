@@ -544,6 +544,8 @@ nl_BE:
         categories:
           label: Categorieën
         search: Zoeken
+      table:
+        new_variant: Nieuw variant
       edit_image:
         close: achterstevoren
     product_import:

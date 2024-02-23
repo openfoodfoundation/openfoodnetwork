@@ -783,8 +783,9 @@ de_DE:
           invalid:
             one: "%{count} Produkt konnte nicht gespeichert werden. Bitte überprüfen Sie die Fehler und versuchen Sie es erneut."
             other: "%{count} Produkte konnten nicht gespeichert werden. Bitte überprüfen Sie die Fehler und versuchen Sie es erneut."
-        save: Änderungen speichern
         reset: Änderungen verwerfen
+        save: Änderungen speichern
+        new_variant: Neue Produktvariante
       bulk_update:
         success: Die Änderungen wurden gespeichert.
       edit_image:
@@ -1593,7 +1594,6 @@ de_DE:
       index:
         title: "OIDC-Einstellungen"
         connect: "Verbinden Sie Ihr Benutzerkonto"
-        already_connected: "Ihr Benutzerkonto ist bereits mit diesem DFC-Autorisierungskonto verbunden:"
         les_communs_link: "Les Communs Open ID-Server"
         link_your_account: "Sie müssen Ihr Benutzerkonto zunächst mit dem von DFC (Les Communs Open ID Connect) verwendeten Autorisierungsanbieter verbinden."
         link_account_button: "Verbinden Sie Ihr Les Communs OIDC-Konto"

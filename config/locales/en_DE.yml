@@ -517,6 +517,8 @@ en_DE:
         categories:
           label: Categories
         search: Search
+      table:
+        new_variant: New variant
       edit_image:
         close: Back
     product_import:

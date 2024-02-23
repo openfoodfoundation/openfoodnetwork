@@ -580,6 +580,8 @@ pt:
         categories:
           label: Categorias
         search: Procurar
+      table:
+        new_variant: Nova variante
       edit_image:
         close: Voltar
     product_import:

@@ -752,6 +752,8 @@ ru:
       no_products:
         no_products_found: Товары не найдены
         import_products: Импорт нескольких товаров
+      table:
+        new_variant: Новый вариант
       edit_image:
         close: Назад
     product_import:
@@ -1553,7 +1555,6 @@ ru:
       index:
         title: "Настройки OIDC"
         connect: "Подключить свою учетную запись"
-        already_connected: "Ваша учетная запись уже связана с этой учетной записью DFC:"
         les_communs_link: "Les Communs Open ID сервер"
         link_your_account: "Сначала вам необходимо связать свою учетную запись с поставщиком авторизации, используемым DFC (Les Communs Open ID Connect)."
         link_account_button: "Свяжите свою учетную запись Les Communs OIDC"

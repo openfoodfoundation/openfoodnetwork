@@ -555,6 +555,8 @@ es_CO:
         categories:
           label: Categorías
         search: Buscar
+      table:
+        new_variant: Nueva variante
       edit_image:
         close: Atrás
     product_import:

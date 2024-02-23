@@ -528,6 +528,8 @@ fil_PH:
         categories:
           label: mga kategorya
         search: hanapin
+      table:
+        new_variant: bagong uri
       edit_image:
         close: bumalik
     product_import:

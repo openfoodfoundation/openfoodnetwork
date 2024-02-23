@@ -762,8 +762,9 @@ pa:
         import_products: ਇੱਕ ਤੋਂ ਜ਼ਿਆਦਾ ਉਤਪਾਦ ਇਮਪੋਰਟ ਕਰੋ
         no_products_found_for_search: ਤੁਹਾਡੇ ਖੋਜ ਮਾਪਦੰਡਾਂ ਦੇ ਅਨੁਸਾਰ ਕੋਈ ਉਤਪਾਦ ਨਹੀਂ ਮਿਲੇ
       table:
-        save: ਤਬਦੀਲੀਆਂ ਨੂੰ ਸੇਵ ਕਰੋ
         reset: ਤਬਦੀਲੀਆਂ ਤਿਆਗੋ
+        save: ਤਬਦੀਲੀਆਂ ਨੂੰ ਸੇਵ ਕਰੋ
+        new_variant: ਨਵਾਂ ਵੇਰੀਐਂਟ
       bulk_update:
         success: ਬਦਲਾਵ ਸੇਵ ਕੀਤੇ ਗਏ।'
       edit_image:
@@ -1569,7 +1570,6 @@ pa:
       index:
         title: "OIDC ਸੈਟਿੰਗਾਂ"
         connect: "ਆਪਣਾ ਖਾਤਾ ਕਨੈਕਟ ਕਰੋ"
-        already_connected: "ਤੁਹਾਡਾ ਖਾਤਾ ਪਹਿਲਾਂ ਹੀ ਇਸ DFC ਪ੍ਰਮਾਣੀਕਰਨ ਖਾਤੇ ਨਾਲ ਜੁੜਿਆ ਹੋਇਆ ਹੈ:"
         les_communs_link: "ਲੇਸ ਕਮਿਊਨਜ਼ ਓਪਨ ਆਈਡੀ ਸਰਵਰ"
         link_your_account: "ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ ਆਪਣੇ ਖਾਤੇ ਨੂੰ DFC (ਲੇਸ ਕਮਿਊਨਸ ਓਪਨ ਆਈਡੀ ਕਨੈਕਟ) ਦੁਆਰਾ ਵਰਤੇ ਗਏ ਅਧਿਕਾਰ ਪ੍ਰਦਾਤਾ ਨਾਲ ਲਿੰਕ ਕਰਨ ਦੀ ਲੋੜ ਹੈ।"
         link_account_button: "ਆਪਣੇ ਲੇਸ ਕਮਿਊਨਸ OIDC ਖਾਤੇ ਨੂੰ ਲਿੰਕ ਕਰੋ"

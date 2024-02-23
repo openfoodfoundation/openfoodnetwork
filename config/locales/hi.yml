@@ -780,8 +780,9 @@ hi:
           invalid:
             one: "%{count} उत्पाद सेव नहीं किया जा सका। कृपया त्रुटियों को रिव्यू करें और फिर से प्रयास करें।"
             other: "%{count} उत्पाद सेव नहीं किए जा सके। कृपया त्रुटियों को रिव्यू करें और फिर से प्रयास करें।"
-        save: परिवर्तन सेव करें
         reset: परिवर्तनों को अस्वीकार करें
+        save: परिवर्तन सेव करें
+        new_variant: नया वैरिएंट
       edit_image:
         close: वापस जाएं
     product_import:
@@ -1585,7 +1586,6 @@ hi:
       index:
         title: "OIDC सेटिंग्स"
         connect: "अपना अकाउंट कनेक्ट करें"
-        already_connected: "आपका अकाउंट पहले से ही इस DFC प्राधिकरण अकाउंट से जुड़ा हुआ है:"
         les_communs_link: "Les Communs ओपन ID सर्वर"
         link_your_account: "आपको सबसे पहले अपने अकाउंट को DFC (Les Communs Open ID Connect) द्वारा उपयोग किए जाने वाले प्राधिकरण प्रदाता के साथ लिंक करने की जरूरत है।"
         link_account_button: "अपने Les Communs OIDC अकाउंट को लिंक करें"

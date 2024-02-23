@@ -790,8 +790,9 @@ cy:
           saved:
             one: "Cadwyd %{count} cynnyrch yn iawn, ond"
             other: "Cadwyd %{count} cynnyrch yn iawn, ond"
-        save: Cadw’r newidiadau
         reset: Hepgor y newidiadau
+        save: Cadw’r newidiadau
+        new_variant: Amrywiolyn newydd
       bulk_update:
         success: Cadwyd y newidiadau
       edit_image:
@@ -1612,7 +1613,6 @@ cy:
       index:
         title: "OIDC Settings"
         connect: "Cysylltu eich Cyfrif"
-        already_connected: "Your account is already linked to this DFC authorization account:"
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
         link_account_button: "Link your Les Communs OIDC Account"

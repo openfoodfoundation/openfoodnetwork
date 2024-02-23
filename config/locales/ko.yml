@@ -687,6 +687,8 @@ ko:
         categories:
           label: 카테고리
         search: 탐색
+      table:
+        new_variant: 새로운 변경사항
       edit_image:
         close: 뒤로
     product_import:

@@ -700,6 +700,8 @@ ar:
         categories:
           label: التصنيفات
         search: بحث
+      table:
+        new_variant: نوع جديد
       edit_image:
         close: عودة
     product_import:
@@ -1468,7 +1470,6 @@ ar:
       index:
         title: "إعدادات OIDC"
         connect: "اربط حسابك"
-        already_connected: "حسابك مرتبط بالفعل بحساب تفويض DFC هذا:"
         les_communs_link: "خادم معرف Les Communs"
         link_your_account: "تحتاج أولاً إلى ربط حسابك بموفر التفويض الذي تستخدمه DFC (Les Communs Open ID Connect)."
         link_account_button: "اربط حسابك في Les Communs OIDC"

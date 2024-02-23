@@ -761,8 +761,9 @@ ca:
           invalid:
             one: "El producte %{count} no s&#39;ha pogut desar. Reviseu els errors i torneu-ho a provar."
             other: "%{count} productes no s'han pogut desar. Reviseu els errors i torneu-ho a provar."
-        save: Guardar canvis
         reset: Descartar canvis
+        save: Guardar canvis
+        new_variant: Nova variant
       bulk_update:
         success: Canvis guardats
       edit_image:

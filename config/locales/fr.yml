@@ -791,18 +791,19 @@ fr:
         no_products_found_for_search: Aucun produit trouvé avec vos critères de recherche
       table:
         changed_summary:
-          one: "%{count} produits modifiés"
+          one: "%{count} produit modifié"
           other: "%{count} produits modifiés"
         error_summary:
           saved:
             one: "%{count} le produit a été sauvegardé correctement, mais "
             other: "%{count} les produits ont été sauvegardés correctement, mais"
           invalid:
-            one: "Le produit %{count} n'a pas pu être enregistré. Veuillez examiner les erreurs et réessayer."
-            many: "Les produits %{count} n'ont pas pu être enregistrés. Veuillez examiner les erreurs et réessayer."
-            other: "Les produits %{count} n'ont pas pu être enregistrés. Veuillez examiner les erreurs et réessayer."
-        save: Sauvegarder les changements
+            one: "%{count} produit n'a pas pu être sauvegardé. Veuillez examiner les erreurs et réessayer."
+            many: "%{count} produits n'ont pas pu être sauvegardés. Veuillez examiner les erreurs et réessayer."
+            other: "%{count} produits n'ont pas pu être sauvegardés. Veuillez examiner les erreurs et réessayer."
         reset: Annuler les changements
+        save: Sauvegarder les changements
+        new_variant: Nouvelle variante
       bulk_update:
         success: Changements sauvegardés
       edit_image:
@@ -1488,7 +1489,7 @@ fr:
       resume:
         could_not_resume_the_order: La commande n'a pas pu être reprise
     select2:
-      minimal_search_length: Entrez %{count} ou caractères
+      minimal_search_length: Entrez %{count} ou plus de caractères
       searching: Recherche...
       no_matches: Pas de correspondance trouvée
     shared:
@@ -1499,7 +1500,7 @@ fr:
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
         has_no_enterprise_fees: "%{enterprise} n'a pas défini de marges et commissions"
       flashes:
-        dismiss: Rejeter
+        dismiss: Masquer
       side_menu:
         enterprise:
           primary_details: "Informations de base"
@@ -1642,10 +1643,15 @@ fr:
       index:
         title: "OIDC"
         connect: "Connecter votre compte"
-        already_connected: "Votre compte est déjà relié avec cette autorisation :"
+        disconnect: "Déconnecter"
+        connected: "Votre compte est relié à %{uid}."
         les_communs_link: "Serveur OIDC Les Communs"
         link_your_account: "Vous devez d'abord vous connecter avec le serveur des Communs."
         link_account_button: "Relier votre compte OIDC Les Communs"
+        note_expiry: |
+            Les approbations permettant d'accéder aux applications connectées ont expiré. Veuillez rafraîchir
+            la connexion à votre compte pour que toutes les intégrations fonctionnent.
+        refresh: "Rafraichir l'autorisation"
         view_account: "Pour voir votre compte, consultez :"
     subscriptions:
       index:

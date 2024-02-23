@@ -779,8 +779,8 @@ mr:
           invalid:
             one: "%{count} उत्पादन जतन करणे शक्य नाही. कृपया त्रुटींचे पुनरावलोकन करा आणि पुन्हा प्रयत्न करा."
             other: "%{count} उत्पादने जतन करणे शक्य नाही. कृपया एरर्सचे पुनरावलोकन करा आणि पुन्हा प्रयत्न करा."
-        save: बदल जतन करा
         reset: बदल जतन करू नका
+        save: बदल जतन करा
     product_import:
       title: उत्पादन आयात
       file_not_found: फाइल सापडली नाही किंवा उघडता आली नाही
@@ -1576,7 +1576,6 @@ mr:
       index:
         title: "OIDC सेटिंग्ज"
         connect: "तुमचे खाते कनेक्ट करा"
-        already_connected: "तुमचे खाते आधीपासून या DFC अधिकृतता खात्याशी जोडलेले आहे:"
         les_communs_link: "Les Communs Open ID  सर्व्हर"
         link_your_account: "DFC (Les Communs Open ID Connect) द्वारे वापरल्या जाणार्‍या अधिकृतता प्रदात्याशी तुम्ही प्रथम तुमचे खाते लिंक करणे आवश्यक आहे."
         link_account_button: "तुमचे Les Communs OIDC खाते लिंक करा"

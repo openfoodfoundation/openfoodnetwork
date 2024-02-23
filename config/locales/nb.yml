@@ -801,8 +801,9 @@ nb:
           invalid:
             one: "%{count} produkt kunne ikke lagres. Se gjennom feilene og prøv igjen."
             other: "%{count} produkter kunne ikke lagres. Se gjennom feilene og prøv igjen."
-        save: Lagre endringer
         reset: Forkaste endringer
+        save: Lagre endringer
+        new_variant: Ny variant
       bulk_update:
         success: Endringer lagret
       edit_image:
@@ -1639,7 +1640,6 @@ nb:
       index:
         title: "OIDC-innstillinger"
         connect: "Koble til kontoen din"
-        already_connected: "Kontoen din er allerede knyttet til denne DFC-autorisasjonskontoen:"
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "Du må først koble kontoen din til autorisasjonsleverandøren som brukes av DFC (Les Communs Open ID Connect)."
         link_account_button: "Koble til Les Communs OIDC-kontoen din"

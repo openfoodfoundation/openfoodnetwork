@@ -692,6 +692,8 @@ de_CH:
         search: Suche
       no_products:
         no_products_found: Keine Produkte gefunden.
+      table:
+        new_variant: Neue Produktvariante
       edit_image:
         close: Zurück
     product_import:

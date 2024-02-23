@@ -704,8 +704,9 @@ es:
         no_products_found: No se encontraron productos
         import_products: Importar varios productos
       table:
-        save: Guardar Cambios
         reset: Desechar Cambios
+        save: Guardar Cambios
+        new_variant: Nueva variante
       edit_image:
         close: Atrás
     product_import:

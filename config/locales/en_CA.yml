@@ -801,8 +801,9 @@ en_CA:
           invalid:
             one: "%{count} product could not be saved. Please review the errors and try again."
             other: "%{count} products could not be saved. Please review the errors and try again."
-        save: Save changes
         reset: Discard changes
+        save: Save changes
+        new_variant: New variant
       bulk_update:
         success: Changes saved
       edit_image:
@@ -1639,7 +1640,6 @@ en_CA:
       index:
         title: "OIDC Settings"
         connect: "Connect Your Account"
-        already_connected: "Your account is already linked to this DFC authorization account:"
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "First you need to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
         link_account_button: "Link your Les Communs OIDC Account"

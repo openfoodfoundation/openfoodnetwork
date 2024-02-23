@@ -766,8 +766,9 @@ fr_CA:
         changed_summary:
           one: "%{count} produits modifiés"
           other: "%{count} produits modifiés"
-        save: Sauvegarder les changements
         reset: Annuler les changements
+        save: Sauvegarder les changements
+        new_variant: Nouvelle variante
       edit_image:
         close: Retour
     product_import:
@@ -1572,7 +1573,6 @@ fr_CA:
       index:
         title: "OIDC"
         connect: "Connecter votre compte"
-        already_connected: "Votre compte est déjà relié avec cette autorisation :"
         les_communs_link: "Serveur OIDC Les Communs"
         link_your_account: "Vous devez d'abord vous connecter avec le serveur des Communs."
         link_account_button: "Relier votre compte OIDC Les Communs"

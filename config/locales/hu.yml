@@ -679,6 +679,8 @@ hu:
         categories:
           label: Kategóriák
         search: Keresés
+      table:
+        new_variant: Új variáns
       edit_image:
         close: Vissza
     product_import:
