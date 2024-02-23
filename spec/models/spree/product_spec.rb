@@ -42,7 +42,11 @@ module Spree
       let(:product) { create(:product) }
 
       it "should properly assign properties" do
-        product.set_property('the_prop', 'value1')
+        expect {
+          product.set_property('the_prop', 'value1')
+          product.save
+          product.reload
+        }.to change { product.properties.length }.by(1)
         expect(product.property('the_prop')).to eq 'value1'
 
         product.set_property('the_prop', 'value2')
@@ -58,13 +62,6 @@ module Spree
           product.save
           product.reload
         }.not_to change { product.properties.length }
-
-        expect {
-          product.set_property('the_prop_new', 'value')
-          product.save
-          product.reload
-          expect(product.property('the_prop_new')).to eq 'value'
-        }.to change { product.properties.length }.by(1)
       end
 
       # Regression test for #2455
