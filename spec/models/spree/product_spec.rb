@@ -50,6 +50,9 @@ module Spree
       end
 
       it "should not create duplicate properties when set_property is called" do
+        product.set_property('the_prop', 'value2')
+        product.save
+
         expect {
           product.set_property('the_prop', 'value2')
           product.save
