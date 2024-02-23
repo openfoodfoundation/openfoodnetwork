@@ -125,7 +125,7 @@ describe ProducerMailer, type: :mailer do
   it "sends no mail when the producer has no orders" do
     expect do
       ProducerMailer.order_cycle_report(s3, order_cycle).deliver_now
-    end.to change(ActionMailer::Base.deliveries, :count).by(0)
+    end.to change { ActionMailer::Base.deliveries.count }.by(0)
   end
 
   it "shows a deleted variant's full name" do

@@ -212,7 +212,7 @@ describe 'Subscriptions' do
         expect {
           click_button "Create Subscription"
           expect(page).to have_current_path admin_subscriptions_path
-        }.to change(Subscription, :count).by(1)
+        }.to change { Subscription.count }.by(1)
 
         # Subscription line items are created
         subscription = Subscription.last

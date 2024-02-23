@@ -20,7 +20,7 @@ describe DefaultStockLocation do
       end
 
       it 'does not create any other location' do
-        expect { described_class.find_or_create }.not_to change(Spree::StockLocation, :count)
+        expect { described_class.find_or_create }.not_to change { Spree::StockLocation.count }
       end
     end
 
@@ -32,7 +32,7 @@ describe DefaultStockLocation do
 
       it 'does not create any other location' do
         expect { described_class.find_or_create }
-          .to change(Spree::StockLocation, :count).from(0).to(1)
+          .to change { Spree::StockLocation.count }.from(0).to(1)
       end
     end
   end

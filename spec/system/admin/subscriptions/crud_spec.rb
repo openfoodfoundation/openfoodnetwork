@@ -371,7 +371,7 @@ describe 'Subscriptions' do
               expect{
                 click_button('Create Subscription')
                 expect(page).to have_content 'Please add at least one product'
-              }.to_not change(Subscription, :count)
+              }.to_not change { Subscription.count }
             end
 
             context 'and adding a new product' do
@@ -400,7 +400,7 @@ describe 'Subscriptions' do
                   expect{
                     click_button('Create Subscription')
                     expect(page).to have_current_path admin_subscriptions_path
-                  }.to change(Subscription, :count).by(1)
+                  }.to change { Subscription.count }.by(1)
                 end
 
                 context 'and click Create Subscription button' do

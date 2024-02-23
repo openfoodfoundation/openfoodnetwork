@@ -15,7 +15,7 @@ describe OrderCycleForm do
         it "returns true" do
           expect do
             expect(form.save).to be true
-          end.to change(OrderCycle, :count).by(1)
+          end.to change { OrderCycle.count }.by(1)
         end
       end
 
@@ -25,7 +25,7 @@ describe OrderCycleForm do
         it "returns false" do
           expect do
             expect(form.save).to be false
-          end.to_not change(OrderCycle, :count)
+          end.to_not change { OrderCycle.count }
         end
       end
     end
@@ -41,7 +41,7 @@ describe OrderCycleForm do
         it "returns true" do
           expect do
             expect(form.save).to be true
-          end.to change(order_cycle.reload, :name).to("Test Order Cycle")
+          end.to change { order_cycle.reload.name }.to("Test Order Cycle")
         end
       end
 

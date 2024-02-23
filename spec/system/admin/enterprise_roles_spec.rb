@@ -64,7 +64,7 @@ create(:enterprise)
 
         # Then I should see an error message
         expect(page).to have_content "That role is already present."
-      end.to change(EnterpriseRole, :count).by(0)
+      end.to change { EnterpriseRole.count }.by(0)
     end
 
     it "deleting a relationship" do

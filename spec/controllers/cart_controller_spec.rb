@@ -111,7 +111,7 @@ describe CartController, type: :controller do
       expect do
         spree_post :populate, variants: { variant.id => 1 },
                               variant_attributes: { variant.id => { max_quantity: "3" } }
-      end.to change(Spree::LineItem, :count).by(1)
+      end.to change { Spree::LineItem.count }.by(1)
     end
   end
 end

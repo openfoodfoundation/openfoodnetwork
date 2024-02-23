@@ -156,7 +156,7 @@ describe EnterpriseFee do
 
       expect do
         EnterpriseFee.clear_all_adjustments order
-      end.to change(order.all_adjustments, :count).by(-4)
+      end.to change { order.all_adjustments.count }.by(-4)
     end
 
     it "clears adjustments from per-order fees" do
@@ -168,7 +168,7 @@ describe EnterpriseFee do
 
       expect do
         EnterpriseFee.clear_all_adjustments order
-      end.to change(order.adjustments, :count).by(-1)
+      end.to change { order.adjustments.count }.by(-1)
     end
 
     it "does not clear adjustments from another originator" do
@@ -181,7 +181,7 @@ describe EnterpriseFee do
 
       expect do
         EnterpriseFee.clear_all_adjustments order
-      end.to change(order.adjustments, :count).by(0)
+      end.to change { order.adjustments.count }.by(0)
     end
   end
 

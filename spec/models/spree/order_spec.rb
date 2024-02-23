@@ -1181,7 +1181,7 @@ describe Spree::Order do
     end
 
     it "returns a validation error" do
-      expect{ order.next }.to change(order.errors, :count).from(0).to(1)
+      expect{ order.next }.to change { order.errors.count }.from(0).to(1)
       expect(order.errors.messages[:email]).to eq ['This email address is already registered. ' \
                                                    'Please log in to continue, or go back and ' \
                                                    'use another email address.']

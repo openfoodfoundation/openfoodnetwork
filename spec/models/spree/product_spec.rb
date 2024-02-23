@@ -54,7 +54,7 @@ module Spree
           product.set_property('the_prop', 'value2')
           product.save
           product.reload
-        }.not_to change(product.properties, :length)
+        }.not_to change { product.properties.length }
 
         expect {
           product.set_property('the_prop_new', 'value')

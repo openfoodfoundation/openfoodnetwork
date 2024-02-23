@@ -163,7 +163,7 @@ describe "
             expect do
               click_button 'Save Changes'
               expect(page).to have_content "Changes saved."
-            end.to change(VariantOverride, :count).by(1)
+            end.to change { VariantOverride.count }.by(1)
 
             vo = VariantOverride.last
             expect(vo.variant_id).to eq(variant.id)
@@ -185,7 +185,7 @@ describe "
               expect do
                 click_button 'Save Changes'
                 expect(page).to have_content "Changes saved."
-              end.to change(VariantOverride, :count).by(1)
+              end.to change { VariantOverride.count }.by(1)
 
               # And I update its settings without reloading the page
               fill_in "variant-overrides-#{variant.id}-price", with: '111.11'
@@ -196,7 +196,7 @@ describe "
               expect do
                 click_button 'Save Changes'
                 expect(page).to have_content "Changes saved."
-              end.to change(VariantOverride, :count).by(0)
+              end.to change { VariantOverride.count }.by(0)
 
               # And the override should be updated
               vo = VariantOverride.last
@@ -225,7 +225,7 @@ describe "
               wait_until { page.find("#status-message").text != "Saving..." }
               expect(page).to have_content "I couldn't get authorisation to save those changes, " \
                                            "so they remain unsaved."
-            end.to change(VariantOverride, :count).by(0)
+            end.to change { VariantOverride.count }.by(0)
           end
 
           it "displays an error when unauthorised to update a particular override" do
@@ -239,7 +239,7 @@ describe "
               click_button 'Save Changes'
               expect(page).to have_content "I couldn't get authorisation to save those changes, " \
                                            "so they remain unsaved."
-            end.to change(VariantOverride, :count).by(0)
+            end.to change { VariantOverride.count }.by(0)
           end
         end
 
@@ -299,7 +299,7 @@ describe "
             expect do
               click_button 'Save Changes'
               expect(page).to have_content "Changes saved."
-            end.to change(VariantOverride, :count).by(0)
+            end.to change { VariantOverride.count }.by(0)
 
             vo.reload
             expect(vo.variant_id).to eq(variant.id)
@@ -362,7 +362,7 @@ describe "
             expect do
               click_button 'Save Changes'
               expect(page).to have_content "Changes saved."
-            end.to change(VariantOverride, :count).by(-2)
+            end.to change { VariantOverride.count }.by(-2)
 
             expect(VariantOverride.where(id: vo.id)).to be_empty
             expect(VariantOverride.where(id: vo3.id)).to be_empty

@@ -14,7 +14,7 @@ describe 'enterprises.rake' do
 
         expect {
           Rake.application.invoke_task "ofn:remove_enterprise[#{enterprise.id}]"
-        }.to change(Enterprise, :count).by(-1)
+        }.to change { Enterprise.count }.by(-1)
       end
     end
   end

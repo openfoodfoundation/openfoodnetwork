@@ -915,7 +915,7 @@ describe Spree::Payment do
 
         expect do
           payment.refund!
-        end.to change(Spree::Payment, :count).by(1)
+        end.to change { Spree::Payment.count }.by(1)
 
         p = Spree::Payment.last
         expect(p.order).to eq(payment.order)

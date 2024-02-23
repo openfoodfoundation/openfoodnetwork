@@ -518,7 +518,7 @@ module OpenFoodNetwork
         expect do
           applicator.send(:touched_exchanges=, [])
           applicator.send(:add_exchange, sender.id, receiver.id, incoming)
-        end.to change(Exchange, :count).by(0)
+        end.to change { Exchange.count }.by(0)
       end
 
       it "does not update exchanges it is not permitted to touch" do

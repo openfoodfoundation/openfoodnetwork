@@ -25,7 +25,7 @@ describe RemoveTransientData do
       Spree::LogEntry.create(created_at: retention_period - 1.day)
 
       expect { RemoveTransientData.new.call }
-        .to change(Spree::LogEntry, :count).by(-1)
+        .to change { Spree::LogEntry.count }.by(-1)
     end
 
     it 'deletes sessions older than retention_period' do

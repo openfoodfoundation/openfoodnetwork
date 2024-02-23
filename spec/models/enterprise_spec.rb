@@ -600,7 +600,7 @@ describe Enterprise do
         it "does not create any other links" do
           expect do
             producer1
-          end.to change(EnterpriseRelationship, :count).by(2)
+          end.to change { EnterpriseRelationship.count }.by(2)
         end
       end
 
@@ -631,13 +631,13 @@ describe Enterprise do
         it "does not create any other links" do
           producer1
           producer2
-          expect { hub1 }.to change(EnterpriseRelationship, :count).by(2) # 2 producer links
+          expect { hub1 }.to change { EnterpriseRelationship.count }.by(2) # 2 producer links
           expect {
             hub2
-          }.to change(EnterpriseRelationship, :count).by(3) # 2 producer links + 1 hub link
+          }.to change { EnterpriseRelationship.count }.by(3) # 2 producer links + 1 hub link
           expect {
             hub3
-          }.to change(EnterpriseRelationship, :count).by(4) # 2 producer links + 2 hub links
+          }.to change { EnterpriseRelationship.count }.by(4) # 2 producer links + 2 hub links
         end
       end
 
