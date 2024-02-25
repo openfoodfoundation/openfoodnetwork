@@ -1,44 +1,29 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["arrow", "menu"];
 
   connect() {
-    this.collapsedClasses = this.arrowTarget.dataset.collapsedClass.split(" ");
-    this.expandedClasses = this.arrowTarget.dataset.expandedClass.split(" ");
-    this.#hide();
-    document.addEventListener("click", this.#onBodyClick.bind(this));
+    document.body.addEventListener("click", this.#close.bind(this));
+    this.element.addEventListener("click", this.#stopPropagation.bind(this));
   }
 
   disconnect() {
-    document.removeEventListener("click", this.#onBodyClick);
+    document.removeEventListener("click", this.#close);
+    document.removeEventListener("click", this.#stopPropagation);
   }
 
-  toggle() {
-    if (this.element.classList.contains("disabled")) {
-      return;
-    }
-    if (this.menuTarget.classList.contains("hidden")) {
-      this.#show();
-    } else {
-      this.#hide();
-    }
+  closeOnMenu(event) {
+    this.#close();
+    this.#stopPropagation(event);
   }
 
-  #onBodyClick(event) {
-    if (!this.element.contains(event.target)) {
-      this.#hide();
-    }
+  // private
+
+  #close(event) {
+    this.element.open = false;
   }
 
-  #show() {
-    this.menuTarget.classList.remove("hidden");
-    this.arrowTarget.classList.remove(...this.collapsedClasses);
-    this.arrowTarget.classList.add(...this.expandedClasses);
-  }
-  #hide() {
-    this.menuTarget.classList.add("hidden");
-    this.arrowTarget.classList.remove(...this.expandedClasses);
-    this.arrowTarget.classList.add(...this.collapsedClasses);
+  #stopPropagation(event) {
+    event.stopPropagation();
   }
 }
