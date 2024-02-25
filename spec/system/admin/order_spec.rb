@@ -719,7 +719,7 @@ describe '
             it "should not display links but a js alert" do
               visit spree.edit_admin_order_path(order)
 
-              find("#links-dropdown .ofn-drop-down").click
+              find("#links-dropdown .ofn-drop-down details").click
               expect(page).to have_link "Send Invoice", href: "#"
               expect(page).to have_link "Print Invoice", href: "#"
 
@@ -729,7 +729,7 @@ describe '
               expect(message)
                 .to eq "#{distributor1.name} must have a valid ABN before invoices can be used."
 
-              find("#links-dropdown .ofn-drop-down").click
+              find("#links-dropdown .ofn-drop-down details").click
               message = accept_prompt do
                 click_link "Send Invoice"
               end
