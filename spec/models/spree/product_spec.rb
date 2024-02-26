@@ -42,7 +42,11 @@ module Spree
       let(:product) { create(:product) }
 
       it "should properly assign properties" do
-        product.set_property('the_prop', 'value1')
+        expect {
+          product.set_property('the_prop', 'value1')
+          product.save
+          product.reload
+        }.to change { product.properties.length }.by(1)
         expect(product.property('the_prop')).to eq 'value1'
 
         product.set_property('the_prop', 'value2')
@@ -50,18 +54,14 @@ module Spree
       end
 
       it "should not create duplicate properties when set_property is called" do
+        product.set_property('the_prop', 'value2')
+        product.save
+
         expect {
           product.set_property('the_prop', 'value2')
           product.save
           product.reload
-        }.not_to change(product.properties, :length)
-
-        expect {
-          product.set_property('the_prop_new', 'value')
-          product.save
-          product.reload
-          expect(product.property('the_prop_new')).to eq 'value'
-        }.to change { product.properties.length }.by(1)
+        }.not_to change { product.properties.length }
       end
 
       # Regression test for #2455

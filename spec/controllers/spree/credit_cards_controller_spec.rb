@@ -94,7 +94,7 @@ describe Spree::CreditCardsController, type: :controller do
           { status: 402, body: JSON.generate(error: { message: "Bup-bow..." }) }
         }
         it "doesn't save the card locally, and renders a flash error" do
-          expect{ spree_post :new_from_token, params }.to_not change(Spree::CreditCard, :count)
+          expect{ spree_post :new_from_token, params }.to_not change { Spree::CreditCard.count }
 
           json_response = JSON.parse(response.body)
           flash_message = "There was a problem with your payment information: %s" % 'Bup-bow...'
@@ -205,7 +205,7 @@ describe Spree::CreditCardsController, type: :controller do
             end
 
             it "doesn't delete the card" do
-              expect{ spree_delete :destroy, params }.to_not change(Spree::CreditCard, :count)
+              expect{ spree_delete :destroy, params }.to_not change { Spree::CreditCard.count }
               expect(flash[:error]).to eq 'Sorry, the card could not be removed'
               expect(response.status).to eq 422
             end
@@ -218,7 +218,7 @@ describe Spree::CreditCardsController, type: :controller do
             end
 
             it "deletes the card and redirects to account_path" do
-              expect{ spree_delete :destroy, params }.to change(Spree::CreditCard, :count).by(-1)
+              expect{ spree_delete :destroy, params }.to change { Spree::CreditCard.count }.by(-1)
               expect(flash[:success])
                 .to eq "Your card has been removed (number: %s)" % "x-#{card.last_digits}"
               expect(response.status).to eq 200

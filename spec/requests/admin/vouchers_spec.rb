@@ -39,7 +39,7 @@ describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
       let(:type) { "Vouchers::FlatRate" }
 
       it "creates a new voucher" do
-        expect { create_voucher }.to change(Vouchers::FlatRate, :count).by(1)
+        expect { create_voucher }.to change { Vouchers::FlatRate.count }.by(1)
 
         voucher = Vouchers::FlatRate.last
         expect(voucher.code).to eq(code)
@@ -60,7 +60,7 @@ describe "/admin/enterprises/:enterprise_id/vouchers", type: :request do
       let(:type) { "Vouchers::PercentageRate" }
 
       it "creates a new voucher" do
-        expect { create_voucher }.to change(Vouchers::PercentageRate, :count).by(1)
+        expect { create_voucher }.to change { Vouchers::PercentageRate.count }.by(1)
 
         voucher = Vouchers::PercentageRate.last
         expect(voucher.code).to eq(code)

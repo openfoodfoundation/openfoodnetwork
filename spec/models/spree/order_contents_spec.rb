@@ -55,7 +55,7 @@ describe Spree::OrderContents do
 
         expect{
           subject.remove(variant)
-        }.to change(Spree::LineItem, :count).by(-1)
+        }.to change { Spree::LineItem.count }.by(-1)
       end
     end
 

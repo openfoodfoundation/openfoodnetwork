@@ -23,9 +23,7 @@ describe StripeAccount do
         expect(Bugsnag).to receive(:notify) # and receives Bugsnag notification
         expect {
           stripe_account.deauthorize_and_destroy
-        }.to change(
-          StripeAccount.where(stripe_user_id:), :count
-        ).from(1).to(0)
+        }.to change { StripeAccount.where(stripe_user_id:).count }.from(1).to(0)
       end
     end
 
@@ -48,9 +46,9 @@ describe StripeAccount do
         expect(Bugsnag).to_not receive(:notify) # and does not receive Bugsnag notification
         expect {
           stripe_account.deauthorize_and_destroy
-        }.to change(
-          StripeAccount.where(stripe_user_id: connected_account.id), :count
-        ).from(1).to(0)
+        }.to change {
+               StripeAccount.where(stripe_user_id: connected_account.id).count
+             }.from(1).to(0)
       end
     end
 

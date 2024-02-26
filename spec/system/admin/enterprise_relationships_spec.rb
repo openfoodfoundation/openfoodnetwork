@@ -75,7 +75,7 @@ create(:enterprise)
 
         # Then I should see an error message
         expect(page).to have_content "That relationship is already established."
-      end.to change(EnterpriseRelationship, :count).by(0)
+      end.to change { EnterpriseRelationship.count }.by(0)
     end
 
     it "deleting a relationship" do

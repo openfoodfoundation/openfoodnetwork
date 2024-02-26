@@ -204,7 +204,7 @@ module Admin
           end
 
           it "allows me to create the customer" do
-            expect { create_customer enterprise }.to change(Customer, :count).by(1)
+            expect { create_customer enterprise }.to change { Customer.count }.by(1)
             expect(Customer.reorder(:id).last.created_manually).to eq true
           end
         end
@@ -215,7 +215,7 @@ module Admin
           end
 
           it "prevents me from creating the customer" do
-            expect { create_customer enterprise }.to change(Customer, :count).by(0)
+            expect { create_customer enterprise }.to change { Customer.count }.by(0)
           end
         end
 
@@ -225,7 +225,7 @@ module Admin
           end
 
           it "allows admins to create the customer" do
-            expect { create_customer enterprise }.to change(Customer, :count).by(1)
+            expect { create_customer enterprise }.to change { Customer.count }.by(1)
           end
         end
       end

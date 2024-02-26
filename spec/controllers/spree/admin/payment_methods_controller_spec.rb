@@ -93,7 +93,7 @@ module Spree
           spree_post :create,
                      payment_method: { name: "Test Method", type: "Spree::Gateway::PayPalExpress",
                                        distributor_ids: [enterprise.id] }
-        }.to change(Spree::PaymentMethod, :count).by(1)
+        }.to change { Spree::PaymentMethod.count }.by(1)
 
         expect(response).to be_redirect
         expect(response).to redirect_to spree
@@ -105,7 +105,7 @@ module Spree
           spree_post :create,
                      payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType",
                                        distributor_ids: [enterprise.id] }
-        }.to change(Spree::PaymentMethod, :count).by(0)
+        }.to change { Spree::PaymentMethod.count }.by(0)
 
         expect(response).to be_redirect
         expect(response).to redirect_to spree.new_admin_payment_method_path
