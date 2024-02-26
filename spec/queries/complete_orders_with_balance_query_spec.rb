@@ -26,9 +26,11 @@ describe CompleteOrdersWithBalanceQuery do
 
       it 'calls OutstandingBalanceQuery#call' do
         allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
-        expect(outstanding_balance).to receive(:call)
+        allow(outstanding_balance).to receive(:call)
 
         result
+
+        expect(outstanding_balance).to have_received(:call)
       end
 
       it 'returns complete orders including their balance' do
@@ -46,9 +48,11 @@ describe CompleteOrdersWithBalanceQuery do
 
       it 'calls OutstandingBalanceQuery' do
         allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
-        expect(outstanding_balance).to receive(:call)
+        allow(outstanding_balance).to receive(:call)
 
         result
+
+        expect(outstanding_balance).to have_received(:call)
       end
 
       it 'returns an empty array' do
