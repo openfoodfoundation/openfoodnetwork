@@ -16,6 +16,8 @@ require 'capybara'
 require 'paper_trail/frameworks/rspec'
 require "factory_bot_rails"
 
+require 'billy/capybara/rspec'
+
 require 'shoulda/matchers'
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -222,6 +224,14 @@ RSpec.configure do |config|
 
   # You can use `rspec -n` to run only failed specs.
   config.example_status_persistence_file_path = "tmp/rspec-status.txt"
+
+  # Setup up puffing-billy  
+  config.around(:each, :billy) do |example|
+    Capybara.javascript_driver = :cuprite_billy
+    Capybara.current_driver = Capybara.javascript_driver
+    example.run
+    Capybara.default_driver = Capybara.javascript_driver = :cuprite_ofn
+  end
 
   # Helpers
   config.include FactoryBot::Syntax::Methods
