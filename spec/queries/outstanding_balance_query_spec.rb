@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe OutstandingBalanceQuery do
   subject { described_class.new(relation) }
+
   let(:result) { subject.call }
 
   describe '#statement' do
@@ -12,7 +13,7 @@ describe OutstandingBalanceQuery do
     it 'returns the CASE statement necessary to compute the order balance' do
       normalized_sql_statement = normalize(subject.statement)
 
-      expect(normalized_sql_statement).to eq(normalize(<<-SQL))
+      expect(normalized_sql_statement).to eq(normalize(<<-SQL.squish))
         CASE WHEN "spree_orders"."state" IN ('canceled', 'returned') THEN "spree_orders"."payment_total"
              WHEN "spree_orders"."state" IS NOT NULL THEN "spree_orders"."payment_total" - "spree_orders"."total"
         ELSE 0 END

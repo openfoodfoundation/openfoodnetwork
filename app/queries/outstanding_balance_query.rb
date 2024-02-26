@@ -29,7 +29,7 @@ class OutstandingBalanceQuery
   # Arel doesn't support CASE statements until v7.1.0 so we'll have to wait with SQL literals
   # a little longer. See https://github.com/rails/arel/pull/400 for details.
   def statement
-    <<~SQL
+    <<~SQL.squish
       CASE WHEN "spree_orders"."state" IN #{non_fulfilled_states_group.to_sql} THEN "spree_orders"."payment_total"
            WHEN "spree_orders"."state" IS NOT NULL THEN "spree_orders"."payment_total" - "spree_orders"."total"
       ELSE 0 END

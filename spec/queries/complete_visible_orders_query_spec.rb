@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe CompleteVisibleOrdersQuery do
   subject { described_class.new(order_permissions).call }
+
   let(:filter_canceled) { false }
 
   describe '#call' do

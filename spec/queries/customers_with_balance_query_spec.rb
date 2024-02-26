@@ -64,7 +64,8 @@ describe CustomersWithBalanceQuery do
     context 'when orders are in delivery state' do
       before do
         create(:order, customer: customers, total: order_total, payment_total: 0, state: 'delivery')
-        create(:order, customer: customers, total: order_total, payment_total: 50, state: 'delivery')
+        create(:order, customer: customers, total: order_total, payment_total: 50,
+                       state: 'delivery')
       end
 
       it 'returns the customer balance' do
