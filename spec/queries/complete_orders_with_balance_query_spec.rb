@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe CompleteOrdersWithBalanceQuery do
-  subject { described_class.new(user).call }
+  subject(:result) { described_class.new(user).call }
 
   describe '#call' do
     let(:user) { order.user }
@@ -28,16 +28,16 @@ describe CompleteOrdersWithBalanceQuery do
         allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
         expect(outstanding_balance).to receive(:call)
 
-        subject
+        result
       end
 
       it 'returns complete orders including their balance' do
-        order = subject.first
+        order = result.first
         expect(order[:balance_value]).to eq(-1.0)
       end
 
       it 'sorts them by their completed_at with the most recent first' do
-        expect(subject.pluck(:id)).to eq([other_order.id, order.id])
+        expect(result.pluck(:id)).to eq([other_order.id, order.id])
       end
     end
 
@@ -48,11 +48,11 @@ describe CompleteOrdersWithBalanceQuery do
         allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
         expect(outstanding_balance).to receive(:call)
 
-        subject
+        result
       end
 
       it 'returns an empty array' do
-        expect(subject).to be_empty
+        expect(result).to be_empty
       end
     end
   end

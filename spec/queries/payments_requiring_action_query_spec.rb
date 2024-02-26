@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe PaymentsRequiringActionQuery do
-  subject { described_class.new(user).call }
+  subject(:result) { described_class.new(user).call }
 
   let(:user) { create(:user) }
   let(:order) { create(:order, user:) }
@@ -18,7 +18,7 @@ describe PaymentsRequiringActionQuery do
       end
 
       it "finds the payment" do
-        expect(subject.all).to include(payment)
+        expect(result.all).to include(payment)
       end
     end
 
@@ -28,7 +28,7 @@ describe PaymentsRequiringActionQuery do
       end
 
       it "does not find the payment" do
-        expect(subject.all).not_to include(payment)
+        expect(result.all).not_to include(payment)
       end
     end
   end
