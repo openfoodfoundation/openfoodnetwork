@@ -29,11 +29,9 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :supplier_id, :meta_keywords, :sku
-    searchable_associations :supplier, :properties, :variants
+    searchable_attributes :meta_keywords, :sku
+    searchable_associations :properties, :variants
     searchable_scopes :active, :with_properties
-
-    belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
@@ -45,7 +43,6 @@ module Spree
     has_many :prices, -> { order('spree_variants.id, currency') }, through: :variants
 
     has_many :stock_items, through: :variants
-    has_many :supplier_properties, through: :supplier, source: :properties
     has_many :variant_images, -> { order(:position) }, source: :images,
                                                        through: :variants
 
@@ -79,14 +76,11 @@ module Spree
     around_destroy :destruction
     after_save :update_units
 
+    # -- Scopes
     scope :with_properties, ->(*property_ids) {
       left_outer_joins(:product_properties).
-        left_outer_joins(:supplier_properties).
         where(inherits_properties: true).
-        where(producer_properties: { property_id: property_ids }).
-        or(
-          where(spree_product_properties: { property_id: property_ids })
-        )
+        where(spree_product_properties: { property_id: property_ids })
     }
 
     scope :with_order_cycles_outer, -> {
@@ -126,8 +120,9 @@ module Spree
         distinct
     }
 
-    # -- Scopes
-    scope :in_supplier, lambda { |supplier| where(supplier_id: supplier) }
+    scope :in_supplier, lambda { |supplier|
+      joins(:variants).where(spree_variants: { supplier: })
+    }
 
     # Products distributed via the given distributor through an OC
     scope :in_distributor, lambda { |distributor|
@@ -149,10 +144,10 @@ module Spree
       enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
 
       with_order_cycles_outer.
-        where("
-          spree_products.supplier_id = ?
-          OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)
-        ", enterprise, false, enterprise).
+        in_supplier(enterprise).
+        or(
+          where(o_exchanges: { incoming: false, receiver_id: enterprise })
+        ).
         select('distinct spree_products.*')
     }
 
@@ -170,14 +165,14 @@ module Spree
         where.not(order_cycles: { id: nil })
     }
 
-    scope :by_producer, -> { joins(:supplier).order('enterprises.name') }
-    scope :by_name, -> { order('name') }
+    scope :by_producer, -> { joins(variants: :supplier).order('enterprises.name') }
+    scope :by_name, -> { order('spree_products.name') }
 
     scope :managed_by, lambda { |user|
       if user.has_spree_role?('admin')
         where(nil)
       else
-        where(supplier_id: user.enterprises.select("enterprises.id"))
+        in_supplier(user.enterprises)
       end
     }
 
@@ -188,7 +183,8 @@ module Spree
         .with_permission(:add_to_order_cycle)
         .where(enterprises: { is_primary_producer: true })
         .pluck(:parent_id)
-      where(spree_products: { supplier_id: [enterprise.id] | permitted_producer_ids })
+
+      in_supplier([enterprise.id].union(permitted_producer_ids))
     }
 
     scope :active, lambda { where(spree_products: { deleted_at: nil }) }
@@ -236,7 +232,10 @@ module Spree
       ps = product_properties.all
 
       if inherits_properties
-        ps = OpenFoodNetwork::PropertyMerge.merge(ps, supplier.producer_properties)
+        # NOTE: Set the supplier as the first variant supplier. If variants have different supplier,
+        # result might not be correct
+        supplier = variants.first.supplier
+        ps = OpenFoodNetwork::PropertyMerge.merge(ps, supplier&.producer_properties || [])
       end
 
       ps.
