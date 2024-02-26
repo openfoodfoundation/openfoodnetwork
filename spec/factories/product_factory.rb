@@ -14,8 +14,6 @@ FactoryBot.define do
     sku { 'ABC' }
     deleted_at { nil }
 
-    supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
-
     unit_value { 1 }
     unit_description { '' }
 
