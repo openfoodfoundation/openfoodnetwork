@@ -7,7 +7,7 @@
 # Alternatively, you can get the SQL by calling #statement, which is suitable for more complex
 # cases.
 #
-# See CompleteOrdersWithBalance or CustomersWithBalance as examples.
+# See CompleteOrdersWithBalanceQuery or CustomersWithBalance as examples.
 #
 # Note this query object and `app/models/concerns/balance.rb` should implement the same behavior
 # until we find a better way. If you change one, please, change the other too.

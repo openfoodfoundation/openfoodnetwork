@@ -79,7 +79,7 @@ module Spree
     private
 
     def orders_collection
-      CompleteOrdersWithBalance.new(@user).query
+      CompleteOrdersWithBalanceQuery.new(@user).call
     end
 
     def load_object

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 # Fetches complete orders of the specified user including their balance as a computed column
-class CompleteOrdersWithBalance
+class CompleteOrdersWithBalanceQuery
   def initialize(user)
     @user = user
   end
 
-  def query
+  def call
     OutstandingBalance.new(sorted_finalized_orders).query
   end
 

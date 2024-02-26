@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe CompleteOrdersWithBalance do
-  let(:complete_orders_with_balance) { described_class.new(user) }
+describe CompleteOrdersWithBalanceQuery do
+  let(:result) { described_class.new(user).call }
 
-  describe '#query' do
+  describe '#call' do
     let(:user) { order.user }
     let(:outstanding_balance) { instance_double(OutstandingBalance) }
 
@@ -28,17 +28,16 @@ describe CompleteOrdersWithBalance do
         allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
         expect(outstanding_balance).to receive(:query)
 
-        complete_orders_with_balance.query
+        result
       end
 
       it 'returns complete orders including their balance' do
-        order = complete_orders_with_balance.query.first
+        order = result.first
         expect(order[:balance_value]).to eq(-1.0)
       end
 
       it 'sorts them by their completed_at with the most recent first' do
-        orders = complete_orders_with_balance.query
-        expect(orders.pluck(:id)).to eq([other_order.id, order.id])
+        expect(result.pluck(:id)).to eq([other_order.id, order.id])
       end
     end
 
@@ -49,12 +48,11 @@ describe CompleteOrdersWithBalance do
         allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
         expect(outstanding_balance).to receive(:query)
 
-        complete_orders_with_balance.query
+        result
       end
 
       it 'returns an empty array' do
-        order = complete_orders_with_balance.query
-        expect(order).to be_empty
+        expect(result).to be_empty
       end
     end
   end

@@ -9,7 +9,7 @@ module Api
 
     has_many :payments, serializer: Api::PaymentSerializer
 
-    # This method relies on `balance_value` as a computed DB column. See `CompleteOrdersWithBalance`
+    # This method relies on `balance_value` as a computed DB column. See `CompleteOrdersWithBalanceQuery`
     # for reference.
     def outstanding_balance
       -object.balance_value
