@@ -17,9 +17,9 @@ module Reporting
           end
 
           describe "fetching orders" do
-            it 'calls the OutstandingBalance query object' do
-              outstanding_balance = instance_double(OutstandingBalance, query: Spree::Order.none)
-              expect(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+            it 'calls the OutstandingBalanceQuery query object' do
+              outstanding_balance = instance_double(OutstandingBalanceQuery, call: Spree::Order.none)
+              expect(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
 
               subject.orders
             end

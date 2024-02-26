@@ -32,6 +32,6 @@ class CustomersWithBalanceQuery
   end
 
   def outstanding_balance_sum
-    "SUM(#{OutstandingBalance.new.statement})::float"
+    "SUM(#{OutstandingBalanceQuery.new.statement})::float"
   end
 end

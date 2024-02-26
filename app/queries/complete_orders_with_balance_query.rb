@@ -7,7 +7,7 @@ class CompleteOrdersWithBalanceQuery
   end
 
   def call
-    OutstandingBalance.new(sorted_finalized_orders).query
+    OutstandingBalanceQuery.new(sorted_finalized_orders).call
   end
 
   private

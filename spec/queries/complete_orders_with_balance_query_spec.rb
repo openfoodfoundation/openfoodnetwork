@@ -7,7 +7,7 @@ describe CompleteOrdersWithBalanceQuery do
 
   describe '#call' do
     let(:user) { order.user }
-    let(:outstanding_balance) { instance_double(OutstandingBalance) }
+    let(:outstanding_balance) { instance_double(OutstandingBalanceQuery) }
 
     context 'when the user has complete orders' do
       let(:order) do
@@ -24,9 +24,9 @@ describe CompleteOrdersWithBalanceQuery do
         )
       end
 
-      it 'calls OutstandingBalance#query' do
-        allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
-        expect(outstanding_balance).to receive(:query)
+      it 'calls OutstandingBalanceQuery#call' do
+        allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
+        expect(outstanding_balance).to receive(:call)
 
         result
       end
@@ -44,9 +44,9 @@ describe CompleteOrdersWithBalanceQuery do
     context 'when the user has no complete orders' do
       let(:order) { create(:order) }
 
-      it 'calls OutstandingBalance' do
-        allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
-        expect(outstanding_balance).to receive(:query)
+      it 'calls OutstandingBalanceQuery' do
+        allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
+        expect(outstanding_balance).to receive(:call)
 
         result
       end

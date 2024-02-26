@@ -9,10 +9,10 @@ describe CustomersWithBalanceQuery do
     let(:customers) { create(:customer) }
     let(:total) { 200.00 }
     let(:order_total) { 100.00 }
-    let(:outstanding_balance) { instance_double(OutstandingBalance) }
+    let(:outstanding_balance) { instance_double(OutstandingBalanceQuery) }
 
-    it 'calls OutstandingBalance#statement' do
-      allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
+    it 'calls OutstandingBalanceQuery#statement' do
+      allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
       expect(outstanding_balance).to receive(:statement)
 
       result
