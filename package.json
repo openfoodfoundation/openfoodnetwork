@@ -20,7 +20,7 @@
   "dependencies": {
     "@floating-ui/dom": "^1.6.3",
     "@hotwired/turbo": "^8.0.2",
-    "@rails/webpacker": "5.4.4",
+    "@rails/webpacker": "6.0.0-rc.6",
     "cable_ready": "5.0.2",
     "debounced": "^0.0.5",
     "flatpickr": "^4.6.9",
@@ -38,7 +38,7 @@
     "stimulus_reflex": "3.5.0-rc3",
     "tom-select": "^2.3.1",
     "trix": "^2.0.10",
-    "webpack": "~4"
+    "webpack": "^5.90.3"
   },
   "devDependencies": {
     "jasmine-core": "~5.1.2",
@@ -49,6 +49,11 @@
     "karma-jasmine": "~0.3.8",
     "prettier": "3.2.4",
     "pretty-quick": "4.0.0",
-    "webpack-dev-server": "~3"
-  }
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.2"
+  },
+  "browserslist": [
+    "defaults",
+    "IE 11"
+  ]
 }

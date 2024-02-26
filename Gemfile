@@ -20,7 +20,7 @@ gem 'awesome_nested_set'
 gem 'ransack', '~> 4.1.0'
 gem 'responders'
 gem 'rexml'
-gem 'webpacker', '~> 5'
+gem 'webpacker', '6.0.0.rc.6'
 
 gem 'i18n'
 gem 'i18n-js', '~> 3.9.0'
