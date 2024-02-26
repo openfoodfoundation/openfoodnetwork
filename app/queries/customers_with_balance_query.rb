@@ -2,12 +2,12 @@
 
 # Adds an aggregated 'balance_value' to each customer based on their order history
 #
-class CustomersWithBalance
+class CustomersWithBalanceQuery
   def initialize(customers)
     @customers = customers
   end
 
-  def query
+  def call
     @customers.
       joins(left_join_complete_orders).
       group("customers.id").
