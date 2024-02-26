@@ -21,7 +21,8 @@ module Spree
     belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
 
     has_many :offsets, -> { where("source_type = 'Spree::Payment' AND amount < 0").completed },
-             class_name: "Spree::Payment", foreign_key: :source_id, dependent: :restrict_with_exception
+             class_name: "Spree::Payment", foreign_key: :source_id,
+             dependent: :restrict_with_exception
     has_many :log_entries, as: :source, dependent: :destroy
 
     has_one :adjustment, as: :adjustable, dependent: :destroy

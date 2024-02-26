@@ -295,15 +295,6 @@ FactoryBot/SyntaxMethods:
     - 'spec/models/spree/order_spec.rb'
     - 'spec/system/admin/bulk_product_update_spec.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Max, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, AllowedPatterns.
-# URISchemes: http, https
-Layout/LineLength:
-  Exclude:
-    - 'app/models/spree/payment.rb'
-    - 'spec/system/admin/tag_rules_spec.rb'
-
 # Offense count: 16
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
