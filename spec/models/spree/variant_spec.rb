@@ -7,7 +7,24 @@ RSpec.describe Spree::Variant do
   subject(:variant) { build(:variant) }
 
   it { is_expected.to have_many :semantic_links }
+  it { is_expected.to belong_to(:supplier).required }
+  it { is_expected.to have_many(:supplier_properties) }
+  # TODO add test for the other associations
 
+  describe "supplier properties" do
+    subject { create(:variant) }
+
+    it "has no supplier properties to start with" do
+      expect(subject.supplier_properties).to eq []
+    end
+
+    it "includes the supplier's properties" do
+      subject.supplier.set_producer_property("certified", "yes")
+      expect(subject.supplier_properties.map(&:presentation)).to eq ["certified"]
+    end
+  end
+
+  # add test for the other validation
   context "validations" do
     it "should validate price is greater than 0" do
       variant.price = -1
@@ -266,6 +283,7 @@ RSpec.describe Spree::Variant do
   end
 
   describe "scopes" do
+    # TODO rename describer below with scope names
     describe "finding variants in a distributor" do
       let!(:d1) { create(:distributor_enterprise) }
       let!(:d2) { create(:distributor_enterprise) }
@@ -410,15 +428,15 @@ RSpec.describe Spree::Variant do
       end
     end
 
-    describe 'stockable_by' do
+    describe '.stockable_by' do
       let(:shop) { create(:distributor_enterprise) }
       let(:add_to_oc_producer) { create(:supplier_enterprise) }
       let(:other_producer) { create(:supplier_enterprise) }
-      let!(:v1) { create(:variant, product: create(:simple_product, supplier: shop ) ) }
+      let!(:v1) { create(:variant, product: create(:simple_product), supplier: shop ) }
       let!(:v2) {
-        create(:variant, product: create(:simple_product, supplier: add_to_oc_producer ) )
+        create(:variant, product: create(:simple_product), supplier: add_to_oc_producer )
       }
-      let!(:v3) { create(:variant, product: create(:simple_product, supplier: other_producer ) ) }
+      let!(:v3) { create(:variant, product: create(:simple_product), supplier: other_producer ) }
 
       before do
         create(:enterprise_relationship, parent: add_to_oc_producer, child: shop,
@@ -431,6 +449,33 @@ RSpec.describe Spree::Variant do
         stockable_variants = Spree::Variant.stockable_by(shop)
         expect(stockable_variants).to include v1, v2
         expect(stockable_variants).not_to include v3
+      end
+    end
+
+    describe ".with_properties" do
+      let!(:variant_without_wanted_property_on_supplier) {
+        create(:variant, supplier: supplier_without_wanted_property)
+      }
+      let!(:variant_with_wanted_property_on_supplier) {
+        create(:variant, supplier: supplier_with_wanted_property)
+      }
+      let(:supplier_with_wanted_property) {
+        create(:supplier_enterprise, properties: [wanted_property])
+      }
+      let(:supplier_without_wanted_property) {
+        create(:supplier_enterprise, properties: [unwanted_property])
+      }
+      let(:wanted_property) { create(:property, presentation: 'Certified Organic') }
+      let(:unwanted_property) { create(:property, presentation: 'Latest Hype') }
+
+      it "returns no products without a property id" do
+        expect(Spree::Variant.with_properties([])).to eq []
+      end
+
+      it "returns only variants with the wanted property set on supplier" do
+        expect(
+          Spree::Variant.with_properties([wanted_property.id])
+        ).to match_array [variant_with_wanted_property_on_supplier]
       end
     end
   end
@@ -771,8 +816,8 @@ RSpec.describe Spree::Variant do
     let(:variant1) { create(:variant) }
     let(:variant2) { create(:variant) }
     let!(:order_cycle) do
-      enterprise1.supplied_products << variant1.product
-      enterprise2.supplied_products << variant2.product
+      enterprise1.supplied_variants << variant1
+      enterprise2.supplied_variants << variant2
       create(
         :simple_order_cycle,
         coordinator: enterprise1,

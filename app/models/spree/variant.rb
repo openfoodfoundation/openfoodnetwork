@@ -13,8 +13,8 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id
-    searchable_associations :product, :default_price, :primary_taxon
+    searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id, :supplier_id
+    searchable_associations :product, :default_price, :primary_taxon, :supplier
     searchable_scopes :active, :deleted
 
     NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze
@@ -29,6 +29,7 @@ module Spree
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
+    belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
@@ -58,6 +59,7 @@ module Spree
     has_many :variant_overrides, dependent: :destroy
     has_many :inventory_items, dependent: :destroy
     has_many :semantic_links, dependent: :delete_all
+    has_many :supplier_properties, through: :supplier, source: :properties
 
     localize_number :price, :weight
 
@@ -142,8 +144,17 @@ module Spree
     scope :stockable_by, lambda { |enterprise|
       return where("1=0") if enterprise.blank?
 
-      joins(:product).
-        where(spree_products: { id: Spree::Product.stockable_by(enterprise).select(:id) })
+      permitted_producer_ids = EnterpriseRelationship.joins(:parent).permitting(enterprise.id)
+        .with_permission(:add_to_order_cycle)
+        .where(enterprises: { is_primary_producer: true })
+        .pluck(:parent_id)
+
+      where(supplier: [enterprise.id].union(permitted_producer_ids))
+    }
+
+    scope :with_properties, lambda { |property_ids|
+      left_outer_joins(:supplier_properties).
+        where(producer_properties: { property_id: property_ids })
     }
 
     # Define sope as class method to allow chaining with other scopes filtering id.
