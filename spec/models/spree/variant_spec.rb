@@ -834,11 +834,18 @@ RSpec.describe Spree::Variant do
 
   describe "destruction" do
     it "destroys exchange variants" do
-      v = create(:variant)
-      e = create(:exchange, variants: [v])
+      variant = create(:variant)
+      exchange = create(:exchange, variants: [variant])
 
-      v.destroy
-      expect(e.reload.variant_ids).to be_empty
+      variant.destroy
+      expect(exchange.reload.variant_ids).to be_empty
+    end
+
+    it "touches the supplier" do
+      supplier = create(:supplier_enterprise)
+      variant = create(:variant, supplier:)
+
+      expect { variant.destroy }.to change { supplier.reload.updated_at }
     end
   end
 
