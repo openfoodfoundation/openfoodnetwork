@@ -164,36 +164,31 @@ RSpec.describe EnterpriseRelationship do
                                                               :create_variant_overrides] )
         }
         let!(:vo1) {
-          create(:variant_override, hub:,
-                                    variant: create(
-                                      :variant,
-                                      product: create(
-                                        :product, supplier: producer
-                                      )
-                                    ))
+          create(
+            :variant_override,
+            hub:,
+            variant: create(:variant, product: create(:product), supplier: producer)
+          )
         }
         let!(:vo2) {
-          create(:variant_override, hub:,
-                                    variant: create(
-                                      :variant,
-                                      product: create(
-                                        :product, supplier: producer
-                                      )
-                                    ))
+          create(
+            :variant_override,
+            hub:,
+            variant: create(:variant, product: create(:product), supplier: producer)
+          )
         }
         let!(:vo3) {
-          create(:variant_override, hub:,
-                                    variant: create(
-                                      :variant,
-                                      product: create(
-                                        :product, supplier: some_other_producer
-                                      )
-                                    ))
+          create(
+            :variant_override,
+            hub:,
+            variant: create(:variant, product: create(:product), supplier: some_other_producer)
+          )
         }
 
         context "revoking variant override permissions" do
           context "when the enterprise relationship is destroyed" do
             before { er.destroy }
+
             it "should set permission_revoked_at to the current time " \
                "for all variant overrides of the relationship" do
               expect(vo1.reload.permission_revoked_at).not_to be_nil
@@ -205,6 +200,7 @@ RSpec.describe EnterpriseRelationship do
 
         context "and is then removed" do
           before { er.permissions_list = [:add_to_order_cycles]; er.save! }
+
           it "should set permission_revoked_at to the current time " \
              "for all relevant variant overrides" do
             expect(vo1.reload.permission_revoked_at).not_to be_nil
@@ -237,34 +233,28 @@ RSpec.describe EnterpriseRelationship do
                                            permissions_list: [:add_to_order_cycles] )
         }
         let!(:vo1) {
-          create(:variant_override, hub:,
-                                    variant: create(
-                                      :variant,
-                                      product: create(
-                                        :product, supplier: producer
-                                      )
-                                    ),
-                                    permission_revoked_at: Time.now.in_time_zone)
+          create(
+            :variant_override,
+            hub:,
+            variant: create(:variant, product: create(:product), supplier: producer),
+            permission_revoked_at: Time.now.in_time_zone
+          )
         }
         let!(:vo2) {
-          create(:variant_override, hub:,
-                                    variant: create(
-                                      :variant,
-                                      product: create(
-                                        :product, supplier: producer
-                                      )
-                                    ),
-                                    permission_revoked_at: Time.now.in_time_zone)
+          create(
+            :variant_override,
+            hub:,
+            variant: create(:variant, product: create(:product), supplier: producer),
+            permission_revoked_at: Time.now.in_time_zone
+          )
         }
         let!(:vo3) {
-          create(:variant_override, hub:,
-                                    variant: create(
-                                      :variant,
-                                      product: create(
-                                        :product, supplier: some_other_producer
-                                      )
-                                    ),
-                                    permission_revoked_at: Time.now.in_time_zone)
+          create(
+            :variant_override,
+            hub:,
+            variant: create(:variant, product: create(:product), supplier: some_other_producer),
+            permission_revoked_at: Time.now.in_time_zone
+          )
         }
 
         context "and is then added" do
@@ -292,6 +282,7 @@ RSpec.describe EnterpriseRelationship do
         end
       end
     end
+
     describe "updating order cycles" do
       let(:hub) { create(:distributor_enterprise) }
       let(:producer) { create(:supplier_enterprise) }
