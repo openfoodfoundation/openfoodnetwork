@@ -9,11 +9,9 @@
 %td.field
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on product, :sku
-%td.align-right
-  .content
-    = product.variant_unit.upcase_first
-    / TODO: properly handle custom unit names
-    = WeightsAndMeasures::UNITS[product.variant_unit] && "(" + WeightsAndMeasures::UNITS[product.variant_unit][product.variant_unit_scale]["name"] + ")"
+%td.field
+  = f.select :variant_unit_with_scale,
+      options_for_select(WeightsAndMeasures.variant_unit_options, product.variant_unit_with_scale)
 %td.align-right
   -# empty
 %td.align-right
