@@ -3,7 +3,7 @@
 require 'system_helper'
 
 describe "Sales Tax Totals By Producer" do
-  #  Scenarion 1: added tax
+  #  Scenario 1: added tax
   #  1 producer
   #  1 distributor
   #  1 product that costs 100$
@@ -30,6 +30,7 @@ describe "Sales Tax Totals By Producer" do
   let!(:state_tax_rate){ create(:tax_rate, zone: state_zone, tax_category:) }
   let!(:country_tax_rate){ create(:tax_rate, zone: country_zone, tax_category:) }
   let!(:ship_address){ create(:ship_address) }
+  let(:another_state){ create(:state, name: 'Another state', country: ship_address.country) }
 
   let!(:variant){ create(:variant) }
   let!(:product){ variant.product }
@@ -115,6 +116,66 @@ describe "Sales Tax Totals By Producer" do
         "100.0",
         "4.0",
         "104.0"
+      ].join(" "))
+    end
+  end
+
+  context 'Order not to be shipped in a state affected by state tax rate' do
+    # Therefore, do not apply both tax rates here, only country one
+    before do
+      ship_address.update!({ state_id: another_state.id })
+      order.line_items.create({ variant:, quantity: 1, price: 100 })
+      order.update!({
+                      order_cycle_id: order_cycle.id,
+                      ship_address_id: ship_address.id
+                    })
+
+      while !order.completed?
+        break unless order.next!
+      end
+    end
+
+    it 'generates the report' do
+      login_as admin
+      visit admin_reports_path
+      click_on 'Sales Tax Totals By Producer'
+
+      run_report
+      expect(page.find("table.report__table thead tr").text).to have_content(table_header)
+
+      expect(page.find("table.report__table tbody").text).to have_content([
+        "Distributor",
+        "Yes",
+        "Supplier",
+        "Yes",
+        "oc1",
+        "tax_category",
+        "State",
+        "1.5 %",
+        "0",
+        "0",
+        "0"
+      ].join(" "))
+
+      expect(page.find("table.report__table tbody").text).to have_content([
+        "Distributor",
+        "Yes",
+        "Supplier",
+        "Yes",
+        "oc1",
+        "tax_category",
+        "Country",
+        "2.5 %",
+        "100.0",
+        "2.5",
+        "102.5"
+      ].join(" "))
+
+      expect(page.find("table.report__table tbody").text).to have_content([
+        "TOTAL",
+        "100.0",
+        "2.5",
+        "102.5"
       ].join(" "))
     end
   end

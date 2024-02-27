@@ -125,8 +125,14 @@ module Reporting
         end
 
         def total_excl_tax(query_result_row)
-          line_items(query_result_row).sum(&:amount) -
-            line_items(query_result_row).sum(&:included_tax)
+          line_items(query_result_row)&.map do |line_item|
+            if line_item.adjustments.eligible.tax
+                .where(originator_id: tax_rate_id(query_result_row)).empty?
+              0
+            else
+              (line_item.amount - line_item.included_tax)
+            end
+          end&.sum
         end
 
         def tax(query_result_row)
