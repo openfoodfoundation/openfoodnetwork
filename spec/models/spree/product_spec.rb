@@ -303,6 +303,22 @@ module Spree
         end
       end
 
+      describe "after updating primary taxon" do
+        let(:product) { create(:simple_product) }
+        let(:supplier) { create(:supplier_enterprise) }
+        let(:new_taxon) { create(:taxon) }
+
+        before do
+          product.variants = []
+          product.variants << create(:variant, product:, supplier:)
+        end
+
+        it "touches the supplier" do
+          expect { product.update(primary_taxon_id: new_taxon.id) }
+            .to change { supplier.reload.updated_at }
+        end
+      end
+
       it "updates units when saved change to variant unit" do
         product.variant_unit = 'items'
         product.variant_unit_scale = nil
@@ -355,6 +371,7 @@ module Spree
         it "shows products in supplier" do
           s1 = create(:supplier_enterprise)
           p1 = create(:product, supplier_id: s1.id)
+          create(:variant, product: p1, supplier: s1)
           create(:variant, product: p1, supplier: s1)
           s2 = create(:supplier_enterprise)
           p2 = create(:product, supplier_id: s2.id)
