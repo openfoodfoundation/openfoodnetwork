@@ -7,9 +7,29 @@ RSpec.describe Spree::Variant do
   subject(:variant) { build(:variant) }
 
   it { is_expected.to have_many :semantic_links }
+  it { is_expected.to belong_to(:product).required }
   it { is_expected.to belong_to(:supplier).required }
-  it { is_expected.to have_many(:supplier_properties) }
-  # TODO add test for the other associations
+  it { is_expected.to have_many(:inventory_units) }
+  it { is_expected.to have_many(:line_items) }
+  it { is_expected.to have_many(:stock_items) }
+  it { is_expected.to have_many(:stock_locations).through(:stock_items) }
+  it { is_expected.to have_many(:images) }
+  it { is_expected.to have_one(:default_price) }
+  it { is_expected.to have_many(:prices) }
+  it { is_expected.to have_many(:exchange_variants) }
+  it { is_expected.to have_many(:exchanges).through(:exchange_variants) }
+  it { is_expected.to have_many(:variant_overrides) }
+  it { is_expected.to have_many(:inventory_items) }
+  it { is_expected.to have_many(:supplier_properties).through(:supplier) }
+
+  describe "shipping category" do
+    it "sets a shipping category if none provided" do
+      variant = build(:variant, shipping_category: nil)
+
+      expect(variant).to be_valid
+      expect(variant.shipping_category).to_not be_nil
+    end
+  end
 
   describe "supplier properties" do
     subject { create(:variant) }
