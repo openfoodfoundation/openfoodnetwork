@@ -96,7 +96,7 @@ module Spree
     after_save :save_default_price
 
     # default variant scope only lists non-deleted variants
-    scope :deleted, lambda { where.not(deleted_at: nil) }
+    scope :deleted, -> { where.not(deleted_at: nil) }
 
     scope :with_order_cycles_inner, -> { joins(exchanges: :order_cycle) }
 

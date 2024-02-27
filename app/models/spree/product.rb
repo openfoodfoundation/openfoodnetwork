@@ -65,7 +65,7 @@ module Spree
     accepts_nested_attributes_for :image
     accepts_nested_attributes_for :product_properties,
                                   allow_destroy: true,
-                                  reject_if: lambda { |pp| pp[:property_name].blank? }
+                                  reject_if: ->(pp) { pp[:property_name].blank? }
 
     # Transient attributes used temporarily when creating a new product,
     # these values are persisted on the product's variant
@@ -77,13 +77,13 @@ module Spree
     after_save :update_units
 
     # -- Scopes
-    scope :with_properties, ->(*property_ids) {
+    scope :with_properties, lambda { |property_ids|
       left_outer_joins(:product_properties).
         where(inherits_properties: true).
         where(spree_product_properties: { property_id: property_ids })
     }
 
-    scope :with_order_cycles_outer, -> {
+    scope :with_order_cycles_outer, lambda {
       joins("
         LEFT OUTER JOIN spree_variants AS o_spree_variants
           ON (o_spree_variants.product_id = spree_products.id)").
@@ -105,9 +105,7 @@ module Spree
         where(import_date: import_date.all_day))
     }
 
-    scope :with_order_cycles_inner, -> {
-      joins(variants: { exchanges: :order_cycle })
-    }
+    scope :with_order_cycles_inner, -> { joins(variants: { exchanges: :order_cycle }) }
 
     scope :visible_for, lambda { |enterprise|
       joins('
@@ -120,6 +118,7 @@ module Spree
         distinct
     }
 
+    # TODO rewrite everything with lambda or ->
     scope :in_supplier, lambda { |supplier|
       joins(:variants).where(spree_variants: { supplier: })
     }
