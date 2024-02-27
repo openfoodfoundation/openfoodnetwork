@@ -107,6 +107,17 @@ module Spree
       end
     end
 
+    describe "associations" do
+      it { is_expected.to have_one(:image) }
+
+      it { is_expected.to have_many(:product_properties) }
+      it { is_expected.to have_many(:properties).through(:product_properties) }
+      it { is_expected.to have_many(:variants) }
+      it { is_expected.to have_many(:prices).through(:variants) }
+      it { is_expected.to have_many(:stock_items).through(:variants) }
+      it { is_expected.to have_many(:variant_images).through(:variants) }
+    end
+
     describe "validations and defaults" do
       it "is valid when built from factory" do
         expect(build(:product)).to be_valid
@@ -143,6 +154,8 @@ module Spree
           create(:variant, product:)
           product.reload
         end
+
+        it { is_expected.to validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
 
         it "requires a unit" do
           product.variant_unit = nil
@@ -498,12 +511,9 @@ module Spree
           producer_a = create(:enterprise, name: "a_cooperative")
           producer_g = create(:enterprise, name: "g_cooperative")
 
-          product_1 = create(:product)
-          create(:variant, product: product_1, supplier: producer_z)
-          product_2 = create(:product)
-          create(:variant, product: product_2, supplier: producer_a)
-          product_3 = create(:product)
-          create(:variant, product: product_3, supplier: producer_g)
+          product_1 = create(:product, supplier_id: producer_z.id)
+          product_2 = create(:product, supplier_id: producer_a.id)
+          product_3 = create(:product, supplier_id: producer_g.id)
 
           expect(Product.by_producer).to match_array([
                                                        product_2,
