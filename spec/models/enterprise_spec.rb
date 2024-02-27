@@ -37,13 +37,13 @@ RSpec.describe Enterprise do
       expect(EnterpriseRole.where(id: role.id)).to be_empty
     end
 
-    xit "destroys supplied products upon destroy" do
-      s = create(:supplier_enterprise)
-      p = create(:simple_product, supplier: s)
+    it "destroys supplied variants upon destroy" do
+      supplier = create(:supplier_enterprise)
+      variant = create(:variant, supplier:)
 
-      s.destroy
+      variant.destroy
 
-      expect(Spree::Product.where(id: p.id)).to be_empty
+      expect(Spree::Variant.where(id: variant.id)).to be_empty
     end
 
     it "destroys relationships upon destroy" do
@@ -567,31 +567,30 @@ RSpec.describe Enterprise do
       end
     end
 
-    describe "supplying_variant_in" do
+    describe ".supplying_variant_in" do
       it "finds producers by supply of variant" do
-        s = create(:supplier_enterprise)
-        p = create(:simple_product, supplier: s)
-        v = create(:variant, product: p)
+        supplier = create(:supplier_enterprise)
+        variant = create(:variant, supplier:)
 
-        expect(Enterprise.supplying_variant_in([v])).to eq([s])
+        expect(Enterprise.supplying_variant_in([variant])).to eq([supplier])
       end
 
       it "returns multiple enterprises when given multiple variants" do
-        s1 = create(:supplier_enterprise)
-        s2 = create(:supplier_enterprise)
-        p1 = create(:simple_product, supplier: s1)
-        p2 = create(:simple_product, supplier: s2)
+        supplier1 = create(:supplier_enterprise)
+        supplier2 = create(:supplier_enterprise)
+        variant1 = create(:variant, supplier: supplier1)
+        variant2 = create(:variant, supplier: supplier2)
 
-        expect(Enterprise.supplying_variant_in([p1.variants.first,
-                                                p2.variants.first])).to match_array [s1, s2]
+        expect(Enterprise.supplying_variant_in([variant1, variant2]))
+          .to match_array([supplier1, supplier2])
       end
 
       it "does not return duplicates" do
-        s = create(:supplier_enterprise)
-        p1 = create(:simple_product, supplier: s)
-        p2 = create(:simple_product, supplier: s)
+        supplier = create(:supplier_enterprise)
+        variant1 = create(:variant, supplier:)
+        variant2 = create(:variant, supplier:)
 
-        expect(Enterprise.supplying_variant_in([p1.variants.first, p2.variants.first])).to eq([s])
+        expect(Enterprise.supplying_variant_in([variant1, variant2])).to eq([supplier])
       end
     end
 
