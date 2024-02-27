@@ -11,7 +11,11 @@
   = error_message_on product, :sku
 %td.field
   = f.select :variant_unit_with_scale,
-      options_for_select(WeightsAndMeasures.variant_unit_options, product.variant_unit_with_scale)
+      options_for_select(WeightsAndMeasures.variant_unit_options, product.variant_unit_with_scale),
+      {},
+      class: "fullwidth no-input",
+      'aria-label': t('admin.products_page.columns.unit_scale'),
+      data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }' }
 %td.align-right
   -# empty
 %td.align-right

@@ -90,7 +90,7 @@
       }
 
       // "Naked" inputs. Row hover helps reveal them.
-      input:not([type="checkbox"]) {
+      input:not([type="checkbox"]), .ts-control {
         background-color: $color-tbl-cell-bg;
       }
 
@@ -167,6 +167,10 @@
 
     label {
       margin: 0;
+    }
+
+    .ts-control {
+      z-index: 0; // Avoid hovering over thead
     }
   }
 
