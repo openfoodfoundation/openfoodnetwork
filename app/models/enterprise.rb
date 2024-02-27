@@ -39,13 +39,13 @@ class Enterprise < ApplicationRecord
                                    class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id', dependent: :destroy
   has_many :properties, through: :producer_properties
-  has_many :supplied_products, class_name: 'Spree::Product',
-                               foreign_key: 'supplier_id',
-                               dependent: :destroy
-  has_many :supplied_variants, through: :supplied_products, source: :variants
+  has_many :supplied_variants,
+           class_name: 'Spree::Variant', foreign_key: 'supplier_id', dependent: :destroy
+  has_many :supplied_products, through: :supplied_variants, source: :product
   has_many :distributed_orders, class_name: 'Spree::Order',
                                 foreign_key: 'distributor_id',
                                 dependent: :restrict_with_exception
+  
   belongs_to :address, class_name: 'Spree::Address'
   belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy
   has_many :enterprise_fees, dependent: :restrict_with_exception
@@ -167,7 +167,7 @@ class Enterprise < ApplicationRecord
   scope :is_distributor, -> { where.not(sells: 'none') }
   scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
-    joins(supplied_products: :variants).
+    joins(:supplied_variants).
       where(spree_variants: { id: variants }).
       select('DISTINCT enterprises.*')
   }
