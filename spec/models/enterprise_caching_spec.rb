@@ -11,12 +11,15 @@ RSpec.describe Enterprise do
       let(:supplier2) { create(:supplier_enterprise) }
 
       describe "with a supplied product" do
-        let(:product) { create(:simple_product, supplier: enterprise, primary_taxon_id: taxon.id) }
-        let(:variant) { product.variants.first }
+        let(:product) { create(:simple_product, primary_taxon_id: taxon.id) }
         let(:property) { product.product_properties.last }
         let(:producer_property) { enterprise.producer_properties.last }
+        let(:variant) { create(:variant, product:, supplier: enterprise) }
 
         before do
+          product.variants = []
+          product.variants <<  variant
+
           product.set_property 'Organic', 'NASAA 12345'
           enterprise.set_producer_property 'Biodynamic', 'ASDF 4321'
         end
@@ -41,7 +44,7 @@ RSpec.describe Enterprise do
 
         it "touches enterprise when the supplier of a product changes" do
           expect {
-            later { product.update!(supplier: supplier2) }
+            later { variant.update!(supplier: supplier2) }
           }.to change { enterprise.reload.updated_at }
         end
       end
@@ -53,11 +56,15 @@ RSpec.describe Enterprise do
           create(:simple_order_cycle, distributors: [enterprise],
                                       variants: [product.variants.first])
         }
-        let(:supplier) { product.supplier }
+        let(:supplier) { variant.supplier }
         let(:property) { product.product_properties.last }
         let(:producer_property) { supplier.producer_properties.last }
+        let(:variant) { create(:variant, product:, supplier: enterprise) }
 
         before do
+          product.variants = []
+          product.variants <<  variant
+
           product.set_property 'Organic', 'NASAA 12345'
           supplier.set_producer_property 'Biodynamic', 'ASDF 4321'
         end
@@ -83,9 +90,9 @@ RSpec.describe Enterprise do
             }.to change { enterprise.reload.updated_at }
           end
 
-          it "touches enterprise when the supplier of a product changes" do
+          it "touches enterprise when the supplier of a variant changes" do
             expect {
-              later { product.update!(supplier: supplier2) }
+              later { variant.update!(supplier: supplier2) }
             }.to change { enterprise.reload.updated_at }
           end
 

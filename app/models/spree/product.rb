@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'open_food_network/property_merge'
+# TODO update description
 
 # PRODUCTS
 # Products represent an entity for sale in a store.
@@ -75,6 +76,7 @@ module Spree
     after_create :ensure_standard_variant
     around_destroy :destruction
     after_save :update_units
+    after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
 
     # -- Scopes
     scope :with_properties, lambda { |property_ids|
@@ -118,9 +120,8 @@ module Spree
         distinct
     }
 
-    # TODO rewrite everything with lambda or ->
     scope :in_supplier, lambda { |supplier|
-      joins(:variants).where(spree_variants: { supplier: })
+      distinct.joins(:variants).where(spree_variants: { supplier: })
     }
 
     # Products distributed via the given distributor through an OC
@@ -319,6 +320,12 @@ module Spree
       return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
 
       variants.each(&:update_units)
+    end
+
+    def touch_supplier
+      # Assume the product supplier is the supplier of the first variant
+      # Will breack if product has mutiple variants with different supplier
+      variants.first.supplier.touch
     end
 
     def touch_distributors
