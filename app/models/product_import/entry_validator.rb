@@ -287,9 +287,7 @@ module ProductImport
     end
 
     def inventory_validation(entry)
-      products = Spree::Product.where(supplier_id: entry.producer_id,
-                                      name: entry.name,
-                                      deleted_at: nil)
+      products = Spree::Product.in_supplier(entry.producer_id).where(name: entry.name)
 
       if products.empty?
         mark_as_invalid(entry, attribute: 'name',
