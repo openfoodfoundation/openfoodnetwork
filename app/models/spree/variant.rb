@@ -25,7 +25,7 @@ module Spree
                        variants_display_name
                        supplier_name).join('_or_')}_cont".freeze
 
-    belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
+    belongs_to :product, -> { with_deleted }, required: true, touch: true, class_name: 'Spree::Product'
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
