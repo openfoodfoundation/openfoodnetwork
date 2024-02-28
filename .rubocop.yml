@@ -15,9 +15,10 @@ inherit_from:
   # The relaxed style rules as a common starting point which we can refine.
   - .rubocop_relaxed_styleguide.yml
 
-  # Our Open Food Network style guide. If you want to see all violations,
+  # Our Open Food Network style guides. If you want to see all violations,
   # then use only that configuration:
   #
   #     bundle exec rubocop -c .rubocop_styleguide.yml
   #
   - .rubocop_styleguide.yml
+  - .rubocop_rspec_styleguide.yml
