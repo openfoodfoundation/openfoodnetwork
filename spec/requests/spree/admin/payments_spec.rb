@@ -111,6 +111,7 @@ describe Spree::Admin::PaymentsController, type: :request do
         # The redirect_do also calls Rails.logger.error
         expect(Rails.logger).to receive(:error).with("Unexpected !").ordered
         expect(Rails.logger).to receive(:error).with(/Redirected/).ordered
+        expect(Bugsnag).to receive(:notify).with(StandardError)
 
         put(
           "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/fire?e=void",
