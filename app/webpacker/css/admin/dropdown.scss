@@ -182,6 +182,7 @@
   }
 
   > details {
+    // Override padding on ofn-drop-down-style
     margin: -7px -15px;
     padding: 7px 15px;
   }
@@ -193,6 +194,7 @@
     text-transform: uppercase;
     font-size: 85%;
     font-weight: 600;
+    // Override padding on ofn-drop-down-style to increase clickable area
     margin: -8px -15px;
     padding: 8px 15px;
   }
