@@ -70,9 +70,7 @@ describe "Sales Tax Totals By Producer" do
                       ship_address_id: ship_address.id
                     })
 
-      while !order.completed?
-        break unless order.next!
-      end
+      OrderWorkflow.new(order).complete!
     end
 
     it "generates the report" do
@@ -130,9 +128,7 @@ describe "Sales Tax Totals By Producer" do
                       ship_address_id: ship_address.id
                     })
 
-      while !order.completed?
-        break unless order.next!
-      end
+      OrderWorkflow.new(order).complete!
     end
 
     it 'generates the report' do
@@ -191,9 +187,7 @@ describe "Sales Tax Totals By Producer" do
                       ship_address_id: ship_address.id
                     })
 
-      while !order.completed?
-        break unless order.next!
-      end
+      OrderWorkflow.new(order).complete!
     end
     it "generates the report" do
       login_as admin
@@ -369,9 +363,7 @@ describe "Sales Tax Totals By Producer" do
                       ship_address_id: customer1.bill_address_id,
                       customer_id: customer1.id
                     })
-      while !order.completed?
-        break unless order.next!
-      end
+      OrderWorkflow.new(order).complete!
 
       order2.line_items.create({ variant:, quantity: 1, price: 200 })
       order2.update!({
@@ -379,9 +371,7 @@ describe "Sales Tax Totals By Producer" do
                        ship_address_id: customer2.bill_address_id,
                        customer_id: customer2.id
                      })
-      while !order2.completed?
-        break unless order2.next!
-      end
+      OrderWorkflow.new(order2).complete!
       login_as admin
       visit admin_reports_path
       click_on 'Sales Tax Totals By Producer'
