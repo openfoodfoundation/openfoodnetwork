@@ -181,6 +181,11 @@
     }
   }
 
+  > details {
+    margin: -7px -15px;
+    padding: 7px 15px;
+  }
+
   > details > summary {
     display: inline-block;
     list-style: none;
@@ -188,6 +193,8 @@
     text-transform: uppercase;
     font-size: 85%;
     font-weight: 600;
+    margin: -8px -15px;
+    padding: 8px 15px;
   }
 
   > details > summary:after {
