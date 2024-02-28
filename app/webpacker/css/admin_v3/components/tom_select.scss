@@ -167,6 +167,7 @@
     background-color: $color-body-bg;
 
     &::after {
+      display: none; // hide until hover
       top: 0.8em;
       right: 1em;
       font-size: 0.75em;
@@ -174,6 +175,16 @@
 
     .item {
       margin-top: 0;
+      margin-right: 0; // full width until hover
+    }
+
+    &:hover {
+      &::after {
+        display: block;
+      }
+      .item {
+        margin-right: 1em;
+      }
     }
   }
 }
