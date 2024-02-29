@@ -237,12 +237,31 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         click_button "Save changes"
 
         expect(page).to have_content "Changes saved"
-        product_a.reload
         variant_a1.reload
       }.to change{ variant_a1.on_demand }.to(true)
 
       within row_containing_name("Medium box") do
         expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
+      end
+    end
+
+    it "saves a custom item unit name" do
+      within row_containing_name("Apples") do
+        tomselect_select "Items", from: "Unit scale"
+        fill_in "Items", with: "box"
+      end
+
+      expect {
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+      }.to change{ product_a.variant_unit }.to("items")
+        .and change{ product_a.variant_unit_name }.to("box")
+
+      within row_containing_name("Apples") do
+        pending
+        expect(page).to have_content "Items (box)"
       end
     end
 
