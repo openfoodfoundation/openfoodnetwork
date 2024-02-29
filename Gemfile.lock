@@ -380,7 +380,7 @@ GEM
       rspec (>= 2.0, < 4.0)
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
-    jwt (2.8.0)
+    jwt (2.8.1)
       base64
     knapsack_pro (6.0.4)
       rake
