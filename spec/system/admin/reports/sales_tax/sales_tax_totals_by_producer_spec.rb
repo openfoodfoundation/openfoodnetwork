@@ -146,20 +146,6 @@ describe "Sales Tax Totals By Producer" do
         "Yes",
         "oc1",
         "tax_category",
-        "State",
-        "1.5 %",
-        "0",
-        "0",
-        "0"
-      ].join(" "))
-
-      expect(page.find("table.report__table tbody").text).to have_content([
-        "Distributor",
-        "Yes",
-        "Supplier",
-        "Yes",
-        "oc1",
-        "tax_category",
         "Country",
         "2.5 %",
         "100.0",
@@ -173,6 +159,10 @@ describe "Sales Tax Totals By Producer" do
         "2.5",
         "102.5"
       ].join(" "))
+
+      # Even though 2 tax rates exist (but only one has been applied), we should get only 2 lines:
+      # one line item + total
+      expect(page.all("table.report__table tbody tr").count).to eq(2)
     end
   end
 

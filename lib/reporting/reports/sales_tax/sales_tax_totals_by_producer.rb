@@ -24,9 +24,9 @@ module Reporting
           # [tax_rate, supplier_id, distributor_id and order_cycle_id]
           report_line_items.list
             .flat_map do |line_item|
-              line_item.tax_rates.map do |tax_rate|
+              line_item.adjustments.eligible.tax.map do |tax_rate|
                 {
-                  tax_rate_id: tax_rate.id,
+                  tax_rate_id: tax_rate.originator_id,
                   line_item:
                 }
               end
@@ -125,14 +125,8 @@ module Reporting
         end
 
         def total_excl_tax(query_result_row)
-          line_items(query_result_row)&.map do |line_item|
-            if line_item.adjustments.eligible.tax
-                .where(originator_id: tax_rate_id(query_result_row)).empty?
-              0
-            else
-              (line_item.amount - line_item.included_tax)
-            end
-          end&.sum
+          line_items(query_result_row).sum(&:amount) -
+            line_items(query_result_row).sum(&:included_tax)
         end
 
         def tax(query_result_row)
