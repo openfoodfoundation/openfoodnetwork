@@ -36,6 +36,10 @@ describe("BulkFormController", () => {
           <div data-record-id="1">
             <input id="input1a" type="text" value="initial1a">
             <input id="input1b" type="text" value="initial1b">
+            <select id="select1">
+              <option>one</option>
+              <option selected>two</option>
+            </select>
             <button>a button is counted as a form element, but value is undefined</button>
           </div>
           <div data-record-id="2">
@@ -47,7 +51,7 @@ describe("BulkFormController", () => {
     });
 
     describe("marking changed fields", () => {
-      it("onInput", () => {
+      it("input: onInput", () => {
         input1a.value = 'updated1a';
         input1a.dispatchEvent(new Event("input"));
         // Expect only first field to show changed
@@ -59,7 +63,23 @@ describe("BulkFormController", () => {
         input1a.value = 'initial1a';
         input1a.dispatchEvent(new Event("input"));
         expect(input1a.classList).not.toContain('changed');
+      });
 
+      it("select: onInput", () => {
+        // Select a different option (it's the only way in Jest..)
+        select1.options[0].selected = true;
+        select1.options[1].selected = false;
+        select1.dispatchEvent(new Event("input"));
+        // Expect select to show changed
+        expect(input1a.classList).not.toContain('changed');
+        expect(input1b.classList).not.toContain('changed');
+        expect(select1.classList).toContain('changed');
+
+        // Change back to original value
+        select1.options[0].selected = false;
+        select1.options[1].selected = true;
+        select1.dispatchEvent(new Event("input"));
+        expect(select1.classList).not.toContain('changed');
       });
 
       it("multiple fields", () => {

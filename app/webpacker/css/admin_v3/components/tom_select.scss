@@ -188,3 +188,12 @@
     }
   }
 }
+
+// Display as "changed" if sibling select is marked as changed.
+select.changed + .ts-wrapper {
+  &.single, &.multi {
+    .ts-control {
+      border-color: $color-txt-changed-brd;
+    }
+  }
+}
