@@ -46,6 +46,7 @@
 
   .ts-dropdown-content {
     margin-top: 4px;
+    min-width: 10em;
     color: $near-black;
     background-color: $color-body-bg;
     @include border-radius($border-radius);

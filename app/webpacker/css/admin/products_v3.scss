@@ -397,4 +397,9 @@
       }
     }
   }
+
+  // Hide unit field until it is initialised
+  [data-controller="tom-select-unit"] ~ [data-tom-select-unit-target] {
+    display: none;
+  }
 }
