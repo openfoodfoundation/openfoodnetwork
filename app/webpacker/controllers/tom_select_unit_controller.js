@@ -9,6 +9,8 @@ export default class extends TomSelectController {
     const createElementWithText = this.createElementWithText;
 
     options = {
+      closeAfterSelect: false,
+      searchField: [], //disable type to search. todo: copy for a no-input controller
       render: {
         // Render item option with its associate input
         option: function(data, escape) {
@@ -20,6 +22,13 @@ export default class extends TomSelectController {
 
           return div;
         },
+      },
+      onChange: function(value) {
+        if (value == "items") {
+          console.log('onChange', value);
+          nameInputTarget.focus(); //pls focus the input, I want to type into it!
+          return false;
+        }
       },
       plugins: [],
       ...options,
