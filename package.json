@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.3",
-    "@hotwired/turbo": "^8.0.2",
+    "@hotwired/turbo": "^8.0.3",
     "@rails/webpacker": "5.4.4",
     "cable_ready": "5.0.2",
     "debounced": "^0.0.5",
@@ -43,7 +43,7 @@
   "devDependencies": {
     "jasmine-core": "~5.1.2",
     "jest": "^27.4.7",
-    "karma": "~6.4.2",
+    "karma": "~6.4.3",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",

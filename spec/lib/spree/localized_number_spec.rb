@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'spree/localized_number'
 
 describe Spree::LocalizedNumber do
   describe ".parse" do

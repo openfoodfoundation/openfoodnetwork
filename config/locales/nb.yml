@@ -1640,9 +1640,15 @@ nb:
       index:
         title: "OIDC-innstillinger"
         connect: "Koble til kontoen din"
+        disconnect: "Koble fra"
+        connected: "Kontoen din er knyttet til %{uid} ."
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "Du må først koble kontoen din til autorisasjonsleverandøren som brukes av DFC (Les Communs Open ID Connect)."
         link_account_button: "Koble til Les Communs OIDC-kontoen din"
+        note_expiry: |
+            Tokens for å få tilgang til tilkoblede apper har utløpt. Vennligst oppdater din
+            kontotilkobling for å holde alle integrasjoner i gang.
+        refresh: "Oppdater autorisasjonen"
         view_account: "For å se kontoen din, se:"
     subscriptions:
       index:

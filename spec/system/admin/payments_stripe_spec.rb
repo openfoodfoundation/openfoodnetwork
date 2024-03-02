@@ -18,11 +18,11 @@ describe '
     create(:stripe_account, enterprise: order.distributor, stripe_user_id: "abc123")
   end
 
-  around do |example|
-    with_stripe_setup { example.run }
-  end
-
   context "making a new Stripe payment" do
+    around do |example|
+      with_stripe_setup { example.run }
+    end
+
     before do
       stub_payment_methods_post_request
       stub_payment_intent_get_request
@@ -145,14 +145,50 @@ describe '
       end
     end
 
-    context "that is completed" do
-      let(:payment) { OrderPaymentFinder.new(order.reload).last_payment }
+    context "that is completed", :vcr, :stripe_version do
+      let(:payment) do
+        create(
+          :payment,
+          order:,
+          amount: order.total,
+          payment_method: stripe_payment_method,
+          source: credit_card,
+          response_code: payment_intent.id,
+          state: "completed"
+        )
+      end
+
+      let(:connected_account) do
+        Stripe::Account.create({
+                                 type: 'standard',
+                                 country: 'AU',
+                                 email: 'lettuce.producer@example.com'
+                               })
+      end
+      let(:stripe_test_account) { connected_account.id }
+      # Stripe testing card:
+      #     https://stripe.com/docs/testing?testing-method=payment-methods
+      let(:pm_card) { Stripe::PaymentMethod.retrieve('pm_card_mastercard') }
+      let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id) }
+      let(:payment_intent) do
+        Stripe::PaymentIntent.create(
+          {
+            amount: (order.total * 100).to_i, # given in AUD cents
+            currency: 'aud', # AUD to match order currency
+            payment_method: 'pm_card_mastercard',
+            payment_method_types: ['card'],
+            capture_method: 'automatic',
+            confirm: true
+          },
+          stripe_account: stripe_test_account
+        )
+      end
 
       before do
-        payment.update response_code: "pi_123", amount: order.total, state: "completed"
-        stub_payment_intent_get_request response: { intent_status: "succeeded" },
-                                        stripe_account_header: false
-        stub_refund_request
+        stripe_account.update!(stripe_user_id: stripe_test_account)
+
+        order.update payments: []
+        order.payments << payment
       end
 
       it "allows to refund the payment" do

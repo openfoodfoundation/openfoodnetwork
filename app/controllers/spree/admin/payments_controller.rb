@@ -59,6 +59,8 @@ module Spree
           flash[:error] = t(:cannot_perform_operation)
         end
       rescue StandardError => e
+        logger.error e.message
+        Bugsnag.notify(e)
         flash[:error] = e.message
       ensure
         redirect_to request.referer

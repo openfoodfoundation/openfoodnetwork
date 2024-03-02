@@ -19,4 +19,4 @@
         %td.actions
           - payment.actions.each do |action|
             = link_to_with_icon "icon-#{action}", Spree.t(action), fire_admin_order_payment_path(@order, payment, e: action),
-            no_text: true, data: { method: :put, "ujs-navigate": "false", action: action, disable_with: "" }
+            no_text: true, data: { method: :put, action: action, disable_with: "" }
