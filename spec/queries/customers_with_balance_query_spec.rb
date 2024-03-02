@@ -6,16 +6,19 @@ describe CustomersWithBalanceQuery do
   subject(:result) { described_class.new(Customer.where(id: customers)).call }
 
   describe '#call' do
-    let(:customers) { create(:customer) }
+    let(:customer) { create(:customer) }
+    let(:customers) { [customer] }
     let(:total) { 200.00 }
     let(:order_total) { 100.00 }
     let(:outstanding_balance) { instance_double(OutstandingBalanceQuery) }
 
     it 'calls OutstandingBalanceQuery#statement' do
       allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
-      expect(outstanding_balance).to receive(:statement)
+      allow(outstanding_balance).to receive(:statement)
 
       result
+
+      expect(outstanding_balance).to have_received(:statement)
     end
 
     describe 'arguments' do
@@ -39,8 +42,8 @@ describe CustomersWithBalanceQuery do
 
     context 'when orders are in cart state' do
       before do
-        create(:order, customer: customers, total: order_total, payment_total: 0, state: 'cart')
-        create(:order, customer: customers, total: order_total, payment_total: 0, state: 'cart')
+        create(:order, customer:, total: order_total, payment_total: 0, state: 'cart')
+        create(:order, customer:, total: order_total, payment_total: 0, state: 'cart')
       end
 
       it 'returns the customer balance' do
@@ -51,8 +54,8 @@ describe CustomersWithBalanceQuery do
 
     context 'when orders are in address state' do
       before do
-        create(:order, customer: customers, total: order_total, payment_total: 0, state: 'address')
-        create(:order, customer: customers, total: order_total, payment_total: 50, state: 'address')
+        create(:order, customer:, total: order_total, payment_total: 0, state: 'address')
+        create(:order, customer:, total: order_total, payment_total: 50, state: 'address')
       end
 
       it 'returns the customer balance' do
@@ -63,8 +66,8 @@ describe CustomersWithBalanceQuery do
 
     context 'when orders are in delivery state' do
       before do
-        create(:order, customer: customers, total: order_total, payment_total: 0, state: 'delivery')
-        create(:order, customer: customers, total: order_total, payment_total: 50,
+        create(:order, customer:, total: order_total, payment_total: 0, state: 'delivery')
+        create(:order, customer:, total: order_total, payment_total: 50,
                        state: 'delivery')
       end
 
@@ -76,8 +79,8 @@ describe CustomersWithBalanceQuery do
 
     context 'when orders are in payment state' do
       before do
-        create(:order, customer: customers, total: order_total, payment_total: 0, state: 'payment')
-        create(:order, customer: customers, total: order_total, payment_total: 50, state: 'payment')
+        create(:order, customer:, total: order_total, payment_total: 0, state: 'payment')
+        create(:order, customer:, total: order_total, payment_total: 50, state: 'payment')
       end
 
       it 'returns the customer balance' do
@@ -88,9 +91,9 @@ describe CustomersWithBalanceQuery do
 
     context 'when no orders where paid' do
       before do
-        order = create(:order, customer: customers, total: order_total, payment_total: 0)
+        order = create(:order, customer:, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, customer: customers, total: order_total, payment_total: 0)
+        order = create(:order, customer:, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
       end
 
@@ -104,9 +107,9 @@ describe CustomersWithBalanceQuery do
       let(:payment_total) { order_total }
 
       before do
-        order = create(:order, customer: customers, total: order_total, payment_total: 0)
+        order = create(:order, customer:, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, customer: customers, total: order_total, payment_total:)
+        order = create(:order, customer:, total: order_total, payment_total:)
         order.update_attribute(:state, 'complete')
       end
 
@@ -121,11 +124,11 @@ describe CustomersWithBalanceQuery do
       let(:non_canceled_orders_total) { order_total }
 
       before do
-        order = create(:order, customer: customers, total: order_total, payment_total: 0)
+        order = create(:order, customer:, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
         create(
           :order,
-          customer: customers,
+          customer:,
           total: order_total,
           payment_total: order_total,
           state: 'canceled'
@@ -142,9 +145,9 @@ describe CustomersWithBalanceQuery do
       let(:payment_total) { order_total }
 
       before do
-        order = create(:order, customer: customers, total: order_total, payment_total: 0)
+        order = create(:order, customer:, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, customer: customers, total: order_total, payment_total:)
+        order = create(:order, customer:, total: order_total, payment_total:)
         order.update_attribute(:state, 'resumed')
       end
 
@@ -158,9 +161,9 @@ describe CustomersWithBalanceQuery do
       let(:payment_total) { order_total }
 
       before do
-        order = create(:order, customer: customers, total: order_total, payment_total: 0)
+        order = create(:order, customer:, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, customer: customers, total: order_total, payment_total:)
+        order = create(:order, customer:, total: order_total, payment_total:)
         order.update_attribute(:state, 'payment')
       end
 
@@ -174,9 +177,9 @@ describe CustomersWithBalanceQuery do
       let(:payment_total) { order_total }
 
       before do
-        order = create(:order, customer: customers, total: order_total, payment_total: 0)
+        order = create(:order, customer:, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, customer: customers, total: order_total, payment_total:)
+        order = create(:order, customer:, total: order_total, payment_total:)
         order.update_attribute(:state, 'awaiting_return')
       end
 
@@ -191,9 +194,9 @@ describe CustomersWithBalanceQuery do
       let(:non_returned_orders_total) { order_total }
 
       before do
-        order = create(:order, customer: customers, total: order_total, payment_total: 0)
+        order = create(:order, customer:, total: order_total, payment_total: 0)
         order.update_attribute(:state, 'complete')
-        order = create(:order, customer: customers, total: order_total, payment_total:)
+        order = create(:order, customer:, total: order_total, payment_total:)
         order.update_attribute(:state, 'returned')
       end
 
