@@ -2,16 +2,17 @@
 
 require 'spec_helper'
 
-describe OutstandingBalance do
-  subject(:outstanding_balance) { described_class.new(relation) }
+describe OutstandingBalanceQuery do
+  subject(:query) { described_class.new(relation) }
+
+  let(:result) { query.call }
 
   describe '#statement' do
     let(:relation) { Spree::Order.none }
+    let(:normalized_sql_statement) { normalize(query.statement) }
 
     it 'returns the CASE statement necessary to compute the order balance' do
-      normalized_sql_statement = normalize(outstanding_balance.statement)
-
-      expect(normalized_sql_statement).to eq(normalize(<<-SQL))
+      expect(normalized_sql_statement).to eq(normalize(<<-SQL.squish))
         CASE WHEN "spree_orders"."state" IN ('canceled', 'returned') THEN "spree_orders"."payment_total"
              WHEN "spree_orders"."state" IS NOT NULL THEN "spree_orders"."payment_total" - "spree_orders"."total"
         ELSE 0 END
@@ -23,7 +24,7 @@ describe OutstandingBalance do
     end
   end
 
-  describe '#query' do
+  describe '#call' do
     let(:relation) { Spree::Order.all }
     let(:total) { 200.00 }
     let(:order_total) { 100.00 }
@@ -35,7 +36,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the order balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(-order_total)
       end
     end
@@ -47,7 +48,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the order balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(-order_total)
       end
     end
@@ -59,7 +60,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the order balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(-order_total)
       end
     end
@@ -71,7 +72,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the order balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(-order_total)
       end
     end
@@ -85,7 +86,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(-order_total)
       end
     end
@@ -101,7 +102,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(payment_total - 200.0)
       end
     end
@@ -117,7 +118,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(payment_total)
       end
     end
@@ -133,7 +134,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(payment_total - 200.0)
       end
     end
@@ -149,7 +150,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(payment_total - 200.0)
       end
     end
@@ -165,7 +166,7 @@ describe OutstandingBalance do
       end
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(payment_total - 200.0)
       end
     end
@@ -182,14 +183,14 @@ describe OutstandingBalance do
       end
 
       it 'returns the customer balance' do
-        order = outstanding_balance.query.first
+        order = result.first
         expect(order.balance_value).to eq(payment_total)
       end
     end
 
     context 'when there are no orders' do
       it 'returns the order balance' do
-        orders = outstanding_balance.query
+        orders = result
         expect(orders).to be_empty
       end
     end

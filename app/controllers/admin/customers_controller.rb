@@ -70,7 +70,7 @@ module Admin
 
     def collection
       if json_request? && params[:enterprise_id].present?
-        CustomersWithBalance.new(customers).query.
+        CustomersWithBalanceQuery.new(customers).call.
           includes(
             :enterprise,
             { bill_address: [:state, :country] },

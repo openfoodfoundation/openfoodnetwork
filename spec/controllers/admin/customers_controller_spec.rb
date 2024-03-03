@@ -44,12 +44,12 @@ module Admin
               get :index, params:
             end
 
-            it 'calls CustomersWithBalance' do
-              customers_with_balance = instance_double(CustomersWithBalance)
-              allow(CustomersWithBalance)
+            it 'calls CustomersWithBalanceQuery' do
+              customers_with_balance = instance_double(CustomersWithBalanceQuery)
+              allow(CustomersWithBalanceQuery)
                 .to receive(:new).with(customers) { customers_with_balance }
 
-              expect(customers_with_balance).to receive(:query) { Customer.none }
+              expect(customers_with_balance).to receive(:call) { Customer.none }
 
               get :index, params:
             end

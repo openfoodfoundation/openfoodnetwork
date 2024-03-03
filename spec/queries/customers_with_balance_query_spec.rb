@@ -2,35 +2,40 @@
 
 require 'spec_helper'
 
-describe CustomersWithBalance do
-  subject(:customers_with_balance) { described_class.new(Customer.where(id: customer)) }
+describe CustomersWithBalanceQuery do
+  subject(:result) { described_class.new(Customer.where(id: customers)).call }
 
-  describe '#query' do
+  describe '#call' do
     let(:customer) { create(:customer) }
+    let(:customers) { [customer] }
     let(:total) { 200.00 }
     let(:order_total) { 100.00 }
-    let(:outstanding_balance) { instance_double(OutstandingBalance) }
+    let(:outstanding_balance) { instance_double(OutstandingBalanceQuery) }
 
-    it 'calls CustomersWithBalance#statement' do
-      allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
-      expect(outstanding_balance).to receive(:statement)
+    it 'calls OutstandingBalanceQuery#statement' do
+      allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance)
+      allow(outstanding_balance).to receive(:statement)
 
-      customers_with_balance.query
+      result
+
+      expect(outstanding_balance).to have_received(:statement)
     end
 
     describe 'arguments' do
       context 'with customers collection' do
+        let(:customers) { create_pair(:customer) }
+
         it 'returns balance' do
-          customers = create_pair(:customer)
-          query = described_class.new(Customer.where(id: customers)).query
-          expect(query.pluck(:id).sort).to eq([customers.first.id, customers.second.id].sort)
-          expect(query.map(&:balance_value)).to eq([0, 0])
+          expect(result.pluck(:id).sort).to eq([customers.first.id, customers.second.id].sort)
+          expect(result.map(&:balance_value)).to eq([0, 0])
         end
       end
 
       context 'with empty customers collection' do
+        let(:customers) { Customer.none }
+
         it 'returns empty customers collection' do
-          expect(described_class.new(Customer.none).query).to eq([])
+          expect(result).to eq([])
         end
       end
     end
@@ -42,7 +47,7 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(0)
       end
     end
@@ -54,7 +59,7 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(0)
       end
     end
@@ -62,11 +67,12 @@ describe CustomersWithBalance do
     context 'when orders are in delivery state' do
       before do
         create(:order, customer:, total: order_total, payment_total: 0, state: 'delivery')
-        create(:order, customer:, total: order_total, payment_total: 50, state: 'delivery')
+        create(:order, customer:, total: order_total, payment_total: 50,
+                       state: 'delivery')
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(0)
       end
     end
@@ -78,7 +84,7 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(0)
       end
     end
@@ -92,7 +98,7 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(-total)
       end
     end
@@ -108,7 +114,7 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(payment_total - total)
       end
     end
@@ -130,7 +136,7 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(payment_total - non_canceled_orders_total)
       end
     end
@@ -146,7 +152,7 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(payment_total - total)
       end
     end
@@ -162,7 +168,7 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(payment_total - total)
       end
     end
@@ -178,7 +184,7 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(payment_total - total)
       end
     end
@@ -195,14 +201,14 @@ describe CustomersWithBalance do
       end
 
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(payment_total - non_returned_orders_total)
       end
     end
 
     context 'when there are no orders' do
       it 'returns the customer balance' do
-        customer = customers_with_balance.query.first
+        customer = result.first
         expect(customer.balance_value).to eq(0)
       end
     end

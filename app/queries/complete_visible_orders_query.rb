@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class CompleteVisibleOrders
+class CompleteVisibleOrdersQuery
   def initialize(order_permissions)
     @order_permissions = order_permissions
   end
 
-  def query
+  def call
     order_permissions.visible_orders.complete
   end
 

@@ -2,12 +2,12 @@
 
 # Adds an aggregated 'balance_value' to each customer based on their order history
 #
-class CustomersWithBalance
+class CustomersWithBalanceQuery
   def initialize(customers)
     @customers = customers
   end
 
-  def query
+  def call
     @customers.
       joins(left_join_complete_orders).
       group("customers.id").
@@ -20,7 +20,7 @@ class CustomersWithBalance
   # The resulting orders are in states that belong after the checkout. Only these can be considered
   # for a customer's balance.
   def left_join_complete_orders
-    <<~SQL
+    <<~SQL.squish
       LEFT JOIN spree_orders ON spree_orders.customer_id = customers.id
         AND #{finalized_states.to_sql}
     SQL
@@ -32,6 +32,6 @@ class CustomersWithBalance
   end
 
   def outstanding_balance_sum
-    "SUM(#{OutstandingBalance.new.statement})::float"
+    "SUM(#{OutstandingBalanceQuery.new.statement})::float"
   end
 end

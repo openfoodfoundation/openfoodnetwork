@@ -16,7 +16,7 @@ module Spree
     before_action :set_locale
 
     def show
-      @payments_requiring_action = PaymentsRequiringAction.new(spree_current_user).query
+      @payments_requiring_action = PaymentsRequiringActionQuery.new(spree_current_user).call
       @orders = orders_collection.includes(:line_items)
 
       customers = spree_current_user.customers
@@ -79,7 +79,7 @@ module Spree
     private
 
     def orders_collection
-      CompleteOrdersWithBalance.new(@user).query
+      CompleteOrdersWithBalanceQuery.new(@user).call
     end
 
     def load_object

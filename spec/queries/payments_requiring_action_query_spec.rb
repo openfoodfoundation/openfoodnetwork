@@ -2,12 +2,13 @@
 
 require 'spec_helper'
 
-describe PaymentsRequiringAction do
+describe PaymentsRequiringActionQuery do
+  subject(:result) { described_class.new(user).call }
+
   let(:user) { create(:user) }
   let(:order) { create(:order, user:) }
-  subject(:payments_requiring_action) { described_class.new(user) }
 
-  describe '#query' do
+  describe '#call' do
     context "payment has a cvv_response_message" do
       let(:payment) do
         create(:payment,
@@ -17,7 +18,7 @@ describe PaymentsRequiringAction do
       end
 
       it "finds the payment" do
-        expect(payments_requiring_action.query.all).to include(payment)
+        expect(result.all).to include(payment)
       end
     end
 
@@ -27,7 +28,7 @@ describe PaymentsRequiringAction do
       end
 
       it "does not find the payment" do
-        expect(payments_requiring_action.query.all).to_not include(payment)
+        expect(result.all).not_to include(payment)
       end
     end
   end

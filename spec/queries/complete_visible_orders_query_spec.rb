@@ -2,11 +2,12 @@
 
 require 'spec_helper'
 
-describe CompleteVisibleOrders do
-  subject(:complete_visible_orders) { described_class.new(order_permissions) }
+describe CompleteVisibleOrdersQuery do
+  subject(:result) { described_class.new(order_permissions).call }
+
   let(:filter_canceled) { false }
 
-  describe '#query' do
+  describe '#call' do
     let(:user) { create(:user) }
     let(:enterprise) { create(:enterprise) }
     let(:order_permissions) { Permissions::Order.new(user, filter_canceled) }
@@ -20,7 +21,7 @@ describe CompleteVisibleOrders do
       let(:cart_order) { create(:order, distributor: enterprise) }
 
       it 'does not return it' do
-        expect(complete_visible_orders.query).not_to include(cart_order)
+        expect(result).not_to include(cart_order)
       end
     end
 
@@ -28,13 +29,13 @@ describe CompleteVisibleOrders do
       let(:complete_order) { create(:order, completed_at: 1.day.ago, distributor: enterprise) }
 
       it 'does not return it' do
-        expect(complete_visible_orders.query).to include(complete_order)
+        expect(result).to include(complete_order)
       end
     end
 
     it 'calls #visible_orders' do
       expect(order_permissions).to receive(:visible_orders).and_call_original
-      complete_visible_orders.query
+      result
     end
   end
 end
