@@ -6,6 +6,58 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
+# Offense count: 229
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: have_no, not_to
+Capybara/NegationMatcher:
+  Exclude:
+    - 'spec/mailers/producer_mailer_spec.rb'
+    - 'spec/support/reports_helper.rb'
+    - 'spec/system/admin/authentication_spec.rb'
+    - 'spec/system/admin/bulk_order_management_spec.rb'
+    - 'spec/system/admin/bulk_product_update_spec.rb'
+    - 'spec/system/admin/customers_spec.rb'
+    - 'spec/system/admin/enterprise_fees_spec.rb'
+    - 'spec/system/admin/enterprise_groups_spec.rb'
+    - 'spec/system/admin/enterprise_roles_spec.rb'
+    - 'spec/system/admin/enterprises/images_spec.rb'
+    - 'spec/system/admin/enterprises/index_spec.rb'
+    - 'spec/system/admin/enterprises_spec.rb'
+    - 'spec/system/admin/invoice_print_spec.rb'
+    - 'spec/system/admin/order_cycles/list_spec.rb'
+    - 'spec/system/admin/order_spec.rb'
+    - 'spec/system/admin/orders/invoices_spec.rb'
+    - 'spec/system/admin/orders_spec.rb'
+    - 'spec/system/admin/overview_spec.rb'
+    - 'spec/system/admin/product_import_spec.rb'
+    - 'spec/system/admin/reports/enterprise_fee_summaries_spec.rb'
+    - 'spec/system/admin/reports_spec.rb'
+    - 'spec/system/admin/schedules_spec.rb'
+    - 'spec/system/admin/shipping_methods_spec.rb'
+    - 'spec/system/admin/subscriptions/crud_spec.rb'
+    - 'spec/system/admin/tag_rules_spec.rb'
+    - 'spec/system/admin/users_spec.rb'
+    - 'spec/system/admin/variant_overrides_spec.rb'
+    - 'spec/system/consumer/account/cards_spec.rb'
+    - 'spec/system/consumer/account_spec.rb'
+    - 'spec/system/consumer/checkout/guest_spec.rb'
+    - 'spec/system/consumer/cookies_spec.rb'
+    - 'spec/system/consumer/footer_links_spec.rb'
+    - 'spec/system/consumer/multilingual_spec.rb'
+    - 'spec/system/consumer/registration_spec.rb'
+    - 'spec/system/consumer/shopping/cart_spec.rb'
+    - 'spec/system/consumer/shopping/checkout_auth_spec.rb'
+    - 'spec/system/consumer/shopping/checkout_spec.rb'
+    - 'spec/system/consumer/shopping/embedded_groups_spec.rb'
+    - 'spec/system/consumer/shopping/orders_spec.rb'
+    - 'spec/system/consumer/shopping/shopping_spec.rb'
+    - 'spec/system/consumer/shopping/unit_price_spec.rb'
+    - 'spec/system/consumer/shops_spec.rb'
+    - 'spec/system/consumer/user_password_spec.rb'
+    - 'spec/system/consumer/white_label_spec.rb'
+    - 'spec/views/admin/products_v3/_filters.html.haml_spec.rb'
+
 # Offense count: 16
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
