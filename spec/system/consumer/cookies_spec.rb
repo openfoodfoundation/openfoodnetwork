@@ -64,9 +64,11 @@ describe "Cookies", caching: true do
       scenario "it is not showing" do
         Spree::Config[:cookies_consent_banner_toggle] = false
         visit root_path
-        expect(page).not_to have_content 'This site uses cookies in order to make your navigation ' \
-                                         'frictionless and secure, and to help us understand how ' \
-                                         'you use it in order to improve the features we offer.'
+        expect(page).not_to have_content(
+          'This site uses cookies in order to make your navigation ' \
+          'frictionless and secure, and to help us understand how ' \
+          'you use it in order to improve the features we offer.'
+        )
       end
     end
   end
