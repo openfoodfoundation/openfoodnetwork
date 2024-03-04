@@ -10,8 +10,8 @@ module Catalog
       describe '#reset' do
         let(:supplier_ids) { enterprise.id }
         let(:product) { create(:product) }
-        let(:enterprise) { product.supplier }
         let(:variant) { product.variants.first }
+        let(:enterprise) { variant.supplier }
 
         before { variant.on_hand = 2 }
 

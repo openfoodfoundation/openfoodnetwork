@@ -169,7 +169,6 @@ module ProductImport
       product.assign_attributes(
         entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
       )
-      product.supplier_id = entry.producer_id
 
       if product.save
         ensure_variant_updated(product, entry)
@@ -231,6 +230,7 @@ module ProductImport
       variant.on_demand = entry.on_demand if entry.on_demand
       variant.on_hand = entry.on_hand if entry.on_hand
       variant.import_date = @import_time
+      variant.supplier_id = entry.producer_id
       variant.save
     end
   end
