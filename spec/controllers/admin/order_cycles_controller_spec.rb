@@ -132,9 +132,9 @@ module Admin
           end
 
           it do
-            query_counter = QueryCounter.new
-            get :show, params: { id: order_cycle.id }, as: :json
-            expect(query_counter.queries).to eq(
+            expect {
+              get :show, params: { id: order_cycle.id }, as: :json
+            }.to query_database(
               {
                 select: {
                   enterprise_fees: 3,
@@ -151,7 +151,6 @@ module Admin
                 update: { spree_users: 1 }
               }
             )
-            query_counter.stop
           end
         end
       end
