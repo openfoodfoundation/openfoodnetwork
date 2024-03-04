@@ -175,7 +175,7 @@ GEM
     bcp47_spec (0.2.1)
     bcrypt (3.1.19)
     bigdecimal (3.0.2)
-    bindata (2.4.15)
+    bindata (2.5.0)
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
@@ -359,7 +359,7 @@ GEM
       railties (>= 3.2.16)
     json (2.7.1)
     json-canonicalization (1.0.0)
-    json-jwt (1.16.5)
+    json-jwt (1.16.6)
       activesupport (>= 4.2)
       aes_key_wrap
       base64
