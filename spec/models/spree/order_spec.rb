@@ -1459,10 +1459,10 @@ RSpec.describe Spree::Order do
     let(:aaron) { create(:supplier_enterprise, name: "Aaron the farmer") }
     let(:zed) { create(:supplier_enterprise, name: "Zed the farmer") }
 
-    let(:aaron_apple) { create(:product, name: "Apple", supplier: aaron) }
-    let(:aaron_banana) { create(:product, name: "Banana", supplier: aaron) }
-    let(:zed_apple) { create(:product, name: "Apple", supplier: zed) }
-    let(:zed_banana) { create(:product, name: "Banana", supplier: zed) }
+    let(:aaron_apple) { create(:product, name: "Apple", supplier_id: aaron.id) }
+    let(:aaron_banana) { create(:product, name: "Banana", supplier_id: aaron.id) }
+    let(:zed_apple) { create(:product, name: "Apple", supplier_id: zed.id) }
+    let(:zed_banana) { create(:product, name: "Banana", supplier_id: zed.id) }
 
     let(:distributor) { create(:distributor_enterprise) }
     let(:order) do
