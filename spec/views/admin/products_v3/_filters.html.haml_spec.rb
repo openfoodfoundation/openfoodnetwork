@@ -38,7 +38,7 @@ describe "admin/products_v3/_filters.html.haml" do
       ],
     )
 
-    is_expected.to have_no_content "Producers"
-    is_expected.to have_no_select "producer_id"
+    is_expected.not_to have_content "Producers"
+    is_expected.not_to have_select "producer_id"
   end
 end

@@ -39,13 +39,13 @@ describe 'Schedules' do
           expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc1.name
           expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc2.name
           expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc3.name
-          expect(page).to have_no_selector '#available-order-cycles .order-cycle', text: oc4.name
+          expect(page).not_to have_selector '#available-order-cycles .order-cycle', text: oc4.name
           expect(page).to have_selector '#available-order-cycles .order-cycle', text: oc5.name
           fill_in 'name', with: "Fortnightly"
           find("#available-order-cycles .order-cycle", text: oc1.name).click
           find("#add-remove-buttons a.add").click
           # Selection of an order cycles limits available options to those with the same coordinator
-          expect(page).to have_no_selector '#available-order-cycles .order-cycle', text: oc5.name
+          expect(page).not_to have_selector '#available-order-cycles .order-cycle', text: oc5.name
           find("#available-order-cycles .order-cycle", text: oc3.name).click
           find("#add-remove-buttons a.add").click
           click_button "Create Schedule"
@@ -61,7 +61,7 @@ describe 'Schedules' do
 
         within ".order-cycle-#{oc2.id} td.schedules" do
           expect(page).to have_selector "a", text: "Weekly"
-          expect(page).to have_no_selector "a", text: "Fortnightly"
+          expect(page).not_to have_selector "a", text: "Fortnightly"
         end
 
         within ".order-cycle-#{oc3.id} td.schedules" do
@@ -100,11 +100,11 @@ describe 'Schedules' do
 
         within ".order-cycle-#{oc2.id} td.schedules" do
           expect(page).to have_selector "a", text: "Weekly"
-          expect(page).to have_no_selector "a", text: "Fortnightly"
+          expect(page).not_to have_selector "a", text: "Fortnightly"
         end
 
         within ".order-cycle-#{oc3.id} td.schedules" do
-          expect(page).to have_no_selector "a", text: "Weekly"
+          expect(page).not_to have_selector "a", text: "Weekly"
           expect(page).to have_selector "a", text: "Fortnightly"
         end
       end
@@ -128,15 +128,15 @@ describe 'Schedules' do
         expect(save_bar).to have_content "Deleted schedule: 'Weekly'"
 
         within ".order-cycle-#{oc1.id} td.schedules" do
-          expect(page).to have_no_selector "a", text: "Weekly"
+          expect(page).not_to have_selector "a", text: "Weekly"
         end
 
         within ".order-cycle-#{oc2.id} td.schedules" do
-          expect(page).to have_no_selector "a", text: "Weekly"
+          expect(page).not_to have_selector "a", text: "Weekly"
         end
 
         within ".order-cycle-#{oc3.id} td.schedules" do
-          expect(page).to have_no_selector "a", text: "Weekly"
+          expect(page).not_to have_selector "a", text: "Weekly"
         end
 
         expect(Schedule.find_by(id: weekly_schedule.id)).to be_nil

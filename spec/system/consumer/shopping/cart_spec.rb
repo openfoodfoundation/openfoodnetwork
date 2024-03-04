@@ -49,9 +49,9 @@ describe "full-page cart" do
 
         click_link "Continue shopping"
 
-        expect(page).to have_no_link "Continue shopping"
+        expect(page).not_to have_link "Continue shopping"
         expect(page).to have_link "Shop"
-        expect(page).to have_no_content distributor.preferred_shopfront_message
+        expect(page).not_to have_content distributor.preferred_shopfront_message
       end
     end
 
@@ -59,7 +59,7 @@ describe "full-page cart" do
       it "does not link to the product page" do
         add_product_to_cart order, product_with_fee, quantity: 2
         visit main_app.cart_path
-        expect(page).to have_no_selector '.item-thumb-image a'
+        expect(page).not_to have_selector '.item-thumb-image a'
       end
     end
 
@@ -132,7 +132,7 @@ describe "full-page cart" do
 
         it "hides admin and handlings row" do
           expect(page).to have_selector('#cart-detail')
-          expect(page).to have_no_content('Admin & Handling')
+          expect(page).not_to have_content('Admin & Handling')
           expect(page).to have_selector '.cart-item-price', text: with_currency(0.86)
           expect(page).to have_selector '.order-total.grand-total',
                                         text: with_currency(1.72) # price * 3
@@ -293,8 +293,8 @@ describe "full-page cart" do
         item1 = prev_order1.line_items.first
         item2 = prev_order2.line_items.first
 
-        expect(page).to have_no_content item1.variant.name
-        expect(page).to have_no_content item2.variant.name
+        expect(page).not_to have_content item1.variant.name
+        expect(page).not_to have_content item2.variant.name
 
         expect(page).to have_link 'Edit confirmed items', href: spree.account_path
         find("td.toggle-bought").click
@@ -302,13 +302,13 @@ describe "full-page cart" do
         expect(page).to have_content item1.variant.name
         expect(page).to have_content item2.variant.name
         page.find(".line-item-#{item1.id} td.bought-item-delete a").click
-        expect(page).to have_no_content item1.variant.name
+        expect(page).not_to have_content item1.variant.name
         expect(page).to have_content item2.variant.name
 
         visit main_app.cart_path
 
         find("td.toggle-bought").click
-        expect(page).to have_no_content item1.variant.name
+        expect(page).not_to have_content item1.variant.name
         expect(page).to have_content item2.variant.name
       end
 

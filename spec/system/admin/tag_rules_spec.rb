@@ -16,7 +16,7 @@ describe 'Tag Rules' do
     it "allows creation of rules of each type" do
       # Creating a new tag
       expect(page).to have_content 'No tags apply to this enterprise yet'
-      expect(page).to have_no_selector '.customer_tag'
+      expect(page).not_to have_selector '.customer_tag'
       click_button '+ Add A New Tag'
       fill_in_tag "volunteer"
 
@@ -271,13 +271,13 @@ describe 'Tag Rules' do
             first("a.delete-tag-rule").click
           end
         end
-        expect(page).to have_no_selector "#tr_1"
+        expect(page).not_to have_selector "#tr_1"
         accept_alert do
           within "#tr_0" do
             first("a.delete-tag-rule").click
           end
         end
-        expect(page).to have_no_selector "#tr_0"
+        expect(page).not_to have_selector "#tr_0"
       end.to change{ TagRule.count }.by(-2)
 
       # After deleting tags, the form is dirty and we need to confirm leaving

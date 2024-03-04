@@ -45,7 +45,7 @@ describe '
         visit "/account"
 
         # No distributors allow changes to orders
-        expect(page).to have_no_content 'Open Orders'
+        expect(page).not_to have_content 'Open Orders'
 
         expect(page).to have_content 'Past Orders'
 
