@@ -304,9 +304,9 @@ RSpec.describe Spree::Ability do
     let(:d1) { create(:distributor_enterprise) }
     let(:d2) { create(:distributor_enterprise) }
 
-    let(:p1) { create(:product, supplier: s1) }
-    let(:p2) { create(:product, supplier: s2) }
-    let(:p_related) { create(:product, supplier: s_related) }
+    let(:p1) { create(:product, supplier_id: s1.id) }
+    let(:p2) { create(:product, supplier_id: s2.id) }
+    let(:p_related) { create(:product, supplier_id: s_related.id) }
 
     let(:er1) { create(:enterprise_relationship, parent: s1, child: d1) }
     let(:er2) { create(:enterprise_relationship, parent: d1, child: s1) }
@@ -796,8 +796,7 @@ RSpec.describe Spree::Ability do
   describe "permissions for variant overrides" do
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:producer) { create(:supplier_enterprise) }
-    let!(:product) { create(:product, supplier: producer) }
-    let!(:variant) { create(:variant, product:) }
+    let!(:variant) { create(:variant, supplier: producer) }
     let!(:variant_override) { create(:variant_override, hub: distributor, variant:) }
 
     subject { user }
