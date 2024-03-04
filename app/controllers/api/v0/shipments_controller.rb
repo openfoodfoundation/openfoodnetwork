@@ -85,6 +85,8 @@ module Api
         @order.contents.remove(variant, quantity, @shipment, restock_item)
         @shipment.reload if @shipment.persisted?
 
+        @order.recreate_all_fees!
+
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
 
