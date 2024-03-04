@@ -49,8 +49,8 @@ describe 'Subscriptions' do
 
           # Loads the right subscriptions
           expect(page).to have_selector "tr#so_#{subscription2.id}"
-          expect(page).to have_no_selector "tr#so_#{subscription.id}"
-          expect(page).to have_no_selector "tr#so_#{subscription_unmanaged.id}"
+          expect(page).not_to have_selector "tr#so_#{subscription.id}"
+          expect(page).not_to have_selector "tr#so_#{subscription_unmanaged.id}"
           within "tr#so_#{subscription2.id}" do
             expect(page).to have_selector "td.customer", text: subscription2.customer.email
           end
@@ -60,8 +60,8 @@ describe 'Subscriptions' do
 
           # Loads the right subscriptions
           expect(page).to have_selector "tr#so_#{subscription.id}"
-          expect(page).to have_no_selector "tr#so_#{subscription2.id}"
-          expect(page).to have_no_selector "tr#so_#{subscription_unmanaged.id}"
+          expect(page).not_to have_selector "tr#so_#{subscription2.id}"
+          expect(page).not_to have_selector "tr#so_#{subscription_unmanaged.id}"
           within "tr#so_#{subscription.id}" do
             expect(page).to have_selector "td.customer", text: subscription.customer.email
           end
@@ -72,23 +72,23 @@ describe 'Subscriptions' do
 
           # Using the Quick Search: no result
           fill_in 'query', with: 'blah blah blah'
-          expect(page).to have_no_selector "tr#so_#{subscription.id}"
-          expect(page).to have_no_selector "tr#so_#{other_subscription.id}"
+          expect(page).not_to have_selector "tr#so_#{subscription.id}"
+          expect(page).not_to have_selector "tr#so_#{other_subscription.id}"
 
           # Using the Quick Search: filter by email
           fill_in 'query', with: other_subscription.customer.email
           expect(page).to have_selector "tr#so_#{other_subscription.id}"
-          expect(page).to have_no_selector "tr#so_#{subscription.id}"
+          expect(page).not_to have_selector "tr#so_#{subscription.id}"
 
           # Using the Quick Search: filter by first_name
           fill_in 'query', with: other_subscription.customer.first_name
           expect(page).to have_selector "tr#so_#{other_subscription.id}"
-          expect(page).to have_no_selector "tr#so_#{subscription.id}"
+          expect(page).not_to have_selector "tr#so_#{subscription.id}"
 
           # Using the Quick Search: filter by last_name
           fill_in 'query', with: other_subscription.customer.last_name
           expect(page).to have_selector "tr#so_#{other_subscription.id}"
-          expect(page).to have_no_selector "tr#so_#{subscription.id}"
+          expect(page).not_to have_selector "tr#so_#{subscription.id}"
 
           # Using the Quick Search: reset filter
           fill_in 'query', with: ''
@@ -99,8 +99,8 @@ describe 'Subscriptions' do
           expect(page).to have_selector "th.customer"
           expect(page).to have_content subscription.customer.email
           toggle_columns "Customer"
-          expect(page).to have_no_selector "th.customer"
-          expect(page).to have_no_content subscription.customer.email
+          expect(page).not_to have_selector "th.customer"
+          expect(page).not_to have_content subscription.customer.email
 
           # Viewing Products
           open_subscription_products_panel
@@ -124,7 +124,7 @@ describe 'Subscriptions' do
 
             proxy_order = subscription.proxy_orders.first
             within "tr#po_#{proxy_order.id}" do
-              expect(page).to have_no_content 'CANCELLED'
+              expect(page).not_to have_content 'CANCELLED'
               accept_alert 'Are you sure?' do
                 find("a.cancel-order").click
               end

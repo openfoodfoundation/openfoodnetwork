@@ -18,7 +18,7 @@ describe "Authentication" do
     click_login_button
     expect(page).to have_content "DASHBOARD"
     expect(page).to have_current_path spree.admin_dashboard_path
-    expect(page).to have_no_content "CONFIGURATION"
+    expect(page).not_to have_content "CONFIGURATION"
   end
 
   it "viewing my account" do

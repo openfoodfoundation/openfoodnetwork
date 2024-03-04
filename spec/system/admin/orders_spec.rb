@@ -281,7 +281,7 @@ describe '
         # And the same orders are displayed when sorting by name:
         find("th a", text: "NAME").click
 
-        expect(page).to have_no_content order_empty.number
+        expect(page).not_to have_content order_empty.number
         expect(page).to have_content order_not_empty.number
         expect(page).to have_content order_not_empty_no_address.number
       end
@@ -899,15 +899,15 @@ describe '
       visit spree.admin_orders_path
       expect(page).to have_content complete_order.number
       expect(page).to have_content empty_complete_order.number
-      expect(page).to have_no_content incomplete_order.number
-      expect(page).to have_no_content empty_order.number
+      expect(page).not_to have_content incomplete_order.number
+      expect(page).not_to have_content empty_order.number
 
       uncheck 'Only show complete orders'
       page.find('button[type=submit]').click
 
       expect(page).to have_content complete_order.number
       expect(page).to have_content incomplete_order.number
-      expect(page).to have_no_content empty_order.number
+      expect(page).not_to have_content empty_order.number
     end
   end
 

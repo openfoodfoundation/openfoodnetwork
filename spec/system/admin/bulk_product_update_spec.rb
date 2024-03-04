@@ -68,9 +68,9 @@ describe '
       expect(page).to have_selector "a.view-variants", count: 1
       find("a.view-variants").click
 
-      expect(page).to have_no_selector "span[name='on_hand']", text: "On demand"
+      expect(page).not_to have_selector "span[name='on_hand']", text: "On demand"
       expect(page).to have_field "variant_on_hand", with: "4"
-      expect(page).to have_no_field "variant_on_hand", with: ""
+      expect(page).not_to have_field "variant_on_hand", with: ""
       expect(page).to have_selector "span[name='variant_on_hand']", text: "On demand"
     end
 
@@ -527,7 +527,7 @@ describe '
 
     sleep 2 # wait for page to initialise
 
-    expect(page).to have_no_field "product_name", with: p2.name
+    expect(page).not_to have_field "product_name", with: p2.name
     fill_in "product_name", with: "new product1"
 
     within "#save-bar" do
@@ -708,7 +708,7 @@ describe '
 
         toggle_columns /^.{0,1}Producer$/i
 
-        expect(page).to have_no_selector "th", text: "PRODUCER"
+        expect(page).not_to have_selector "th", text: "PRODUCER"
         expect(page).to have_selector "th", text: "NAME"
         expect(page).to have_selector "th", text: "PRICE"
         expect(page).to have_selector "th", text: "ON HAND"
@@ -739,7 +739,7 @@ describe '
 
         # Products are hidden when filtered out
         expect(page).to have_field "product_name", with: p1.name
-        expect(page).to have_no_field "product_name", with: p2.name
+        expect(page).not_to have_field "product_name", with: p2.name
 
         # Clearing filters
         click_button "Clear Filters"
@@ -787,7 +787,7 @@ describe '
 
       expect(page).to have_field 'product_name', with: product_supplied.name
       expect(page).to have_field 'product_name', with: product_supplied_permitted.name
-      expect(page).to have_no_field 'product_name', with: product_not_supplied.name
+      expect(page).not_to have_field 'product_name', with: product_not_supplied.name
     end
 
     it "shows only suppliers that I manage or have permission to" do
@@ -799,7 +799,7 @@ describe '
           with_options: [supplier_managed1.name, supplier_managed2.name, supplier_permitted.name],
           selected: supplier_managed1.name,
         )
-      expect(page).to have_no_select 'producer_id', with_options: [supplier_unmanaged.name]
+      expect(page).not_to have_select 'producer_id', with_options: [supplier_unmanaged.name]
     end
 
     it "shows inactive products that I supply" do
@@ -910,8 +910,8 @@ describe '
         expect(page).to have_css ".spinner"
       end
 
-      expect(page).to have_no_css ".spinner"
-      expect(page).to have_no_selector "div.reveal-modal"
+      expect(page).not_to have_css ".spinner"
+      expect(page).not_to have_selector "div.reveal-modal"
 
       within "table#listing_products tr#p_#{product.id}" do
         # New thumbnail is shown in image column

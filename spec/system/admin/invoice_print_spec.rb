@@ -56,7 +56,7 @@ describe '
         login_as_admin
         visit spree.print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
-        expect(page).to have_no_content 'Payment Description at Checkout'
+        expect(page).not_to have_content 'Payment Description at Checkout'
       end
     end
 

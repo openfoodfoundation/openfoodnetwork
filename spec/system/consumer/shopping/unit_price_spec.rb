@@ -48,9 +48,9 @@ describe "As a consumer, I want to check unit price information for a product" d
 
       page.find("body").click
       expect(page).not_to have_selector '.joyride-tip-guide.question-mark-tooltip'
-      expect(page).to have_no_content('This is the unit price of this product. ' \
-                                      'It allows you to compare the price of products ' \
-                                      'independent of packaging sizes & weights.')
+      expect(page).not_to have_content('This is the unit price of this product. ' \
+                                       'It allows you to compare the price of products ' \
+                                       'independent of packaging sizes & weights.')
     end
   end
 
@@ -72,9 +72,9 @@ describe "As a consumer, I want to check unit price information for a product" d
       end
       page.find("body").click
       expect(page).not_to have_selector '.joyride-tip-guide.question-mark-tooltip'
-      expect(page).to have_no_content('This is the unit price of this product. ' \
-                                      'It allows you to compare the price of products ' \
-                                      'independent of packaging sizes & weights.')
+      expect(page).not_to have_content('This is the unit price of this product. ' \
+                                       'It allows you to compare the price of products ' \
+                                       'independent of packaging sizes & weights.')
     end
   end
 end

@@ -122,7 +122,7 @@ describe '
         page.has_selector? ".loading"
       end
 
-      expect(page).to have_no_selector ".loading"
+      expect(page).not_to have_selector ".loading"
     end
   end
 

@@ -103,7 +103,7 @@ describe '
       first("a.delete-resource").click
     end
 
-    expect(page).to have_no_content 'EGEGEG'
+    expect(page).not_to have_content 'EGEGEG'
 
     expect(EnterpriseGroup.all).not_to include eg
   end
