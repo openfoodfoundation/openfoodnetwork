@@ -7,6 +7,16 @@ module Spree
     let(:order) { create :order_with_line_items, line_items_count: 1 }
     let(:line_item) { order.line_items.first }
 
+    describe "associations" do
+      it { is_expected.to belong_to(:order).required }
+      it { is_expected.to have_one(:order_cycle).through(:order) }
+      it { is_expected.to belong_to(:variant).required }
+      it { is_expected.to have_one(:product).through(:variant) }
+      it { is_expected.to have_one(:supplier).through(:variant) }
+      it { is_expected.to belong_to(:tax_category).optional }
+      it { is_expected.to have_many(:adjustments) }
+    end
+
     context '#save' do
       it 'should update inventory, totals, and tax' do
         # Regression check for Spree #1481
@@ -144,11 +154,11 @@ module Spree
       let(:s1) { create(:supplier_enterprise) }
       let(:s2) { create(:supplier_enterprise) }
 
-      let(:p1) { create(:simple_product, supplier: s1) }
-      let(:p2) { create(:simple_product, supplier: s2) }
+      let(:variant1) { create(:variant, supplier: s1) }
+      let(:variant2) { create(:variant, supplier: s2) }
 
-      let(:li1) { create(:line_item, order: o, product: p1) }
-      let(:li2) { create(:line_item, order: o, product: p2) }
+      let(:li1) { create(:line_item, order: o, variant: variant1) }
+      let(:li2) { create(:line_item, order: o, variant: variant2) }
 
       let(:p3) { create(:product, name: 'Clear Honey') }
       let(:p4) { create(:product, name: 'Apricots') }
@@ -806,10 +816,12 @@ module Spree
   RSpec.describe "searching with ransack" do
     let(:order_cycle1) { create(:order_cycle) }
     let(:order_cycle2) { create(:order_cycle) }
-    let(:product1) { create(:product, supplier: create(:supplier_enterprise)) }
-    let(:product2) { create(:product, supplier: create(:supplier_enterprise)) }
-    let!(:line_item1) { create(:line_item, variant: product1.variants.first) }
-    let!(:line_item2) { create(:line_item, variant: product2.variants.first) }
+    let(:variant1) { create(:variant, supplier: supplier1) }
+    let(:variant2) { create(:variant, supplier: supplier2) }
+    let(:supplier1) { create(:supplier_enterprise) }
+    let(:supplier2) { create(:supplier_enterprise) }
+    let!(:line_item1) { create(:line_item, variant: variant1) }
+    let!(:line_item2) { create(:line_item, variant: variant2) }
 
     let(:search_result) { Spree::LineItem.ransack(query).result }
 
@@ -819,7 +831,7 @@ module Spree
     end
 
     context "searching by supplier" do
-      let(:query) { { supplier_id_eq: line_item1.variant.product.supplier_id } }
+      let(:query) { { supplier_id_eq: line_item1.variant.supplier_id } }
 
       it "filters results" do
         expect(search_result.to_a).to eq [line_item1]
