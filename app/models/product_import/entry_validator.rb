@@ -73,6 +73,7 @@ module ProductImport
       # Variant needs a product. Product needs to be assigned first in order for
       # delegate to work. name= will fail otherwise.
       new_variant = Spree::Variant.new(product_id:, **variant_attributes)
+      new_variant.supplier_id = entry.producer_id
 
       new_variant.save
       if new_variant.persisted?
@@ -356,9 +357,7 @@ module ProductImport
     end
 
     def product_validation(entry)
-      products = Spree::Product.where(supplier_id: entry.enterprise_id,
-                                      name: entry.name,
-                                      deleted_at: nil)
+      products = Spree::Product.in_supplier(entry.enterprise_id).where(name: entry.name)
 
       if products.empty?
         mark_as_new_product(entry)
@@ -382,7 +381,6 @@ module ProductImport
       new_product.assign_attributes(
         entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
       )
-      new_product.supplier_id = entry.producer_id
       entry.on_hand = 0 if entry.on_hand.nil?
 
       if new_product.valid?
