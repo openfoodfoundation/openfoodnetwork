@@ -14,7 +14,9 @@ RSpec.describe ExchangeProductsRenderer do
       it "loads products" do
         products = renderer.exchange_products(true, exchange.sender)
 
-        expect(products.first.supplier.name).to eq exchange.variants.first.product.supplier.name
+        expect(products.first.variants.first.supplier.name).to eq(
+          exchange.variants.first.supplier.name
+        )
       end
 
       it "loads products in order" do
@@ -31,10 +33,10 @@ RSpec.describe ExchangeProductsRenderer do
       it "loads products" do
         products = renderer.exchange_products(false, exchange.receiver)
 
-        suppliers = [exchange.variants[0].product.supplier.name,
-                     exchange.variants[1].product.supplier.name]
-        expect(suppliers).to include products.first.supplier.name
-        expect(suppliers).to include products.second.supplier.name
+        suppliers = [exchange.variants[0].supplier.name,
+                     exchange.variants[1].supplier.name]
+        expect(suppliers).to include products.first.variants.first.supplier.name
+        expect(suppliers).to include products.second.variants.first.supplier.name
       end
 
       it "loads products in order" do
@@ -74,8 +76,8 @@ RSpec.describe ExchangeProductsRenderer do
         exchange = order_cycle.exchanges.incoming.first
         variants = renderer.exchange_variants(true, exchange.sender)
 
-        expect(variants.first.product.supplier.name)
-          .to eq exchange.variants.first.product.supplier.name
+        expect(variants.first.supplier.name)
+          .to eq exchange.variants.first.supplier.name
       end
 
       describe "when OC is showing only the coordinators inventory" do
