@@ -27,7 +27,7 @@ module Reporting
         end
 
         it "has a variant row under the distributor" do
-          supplier = order.line_items.first.variant.product.supplier
+          supplier = order.line_items.first.variant.supplier
           expect(report.rows.first.producer).to eq supplier.name
           expect(report.rows.first.hub).to eq distributor.name
         end
