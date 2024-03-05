@@ -8,16 +8,6 @@ export default class extends TomSelectController {
     const nameInputTarget = this.element.parentNode.querySelector('[data-tom-select-unit-target=nameInput]');
     const createElementWithText = this.createElementWithText;
 
-    nameInputTarget.addEventListener("keydown", function(e){ console.log('keydown'); e.stopPropagation(); });
-    // Prevent bubbling up to tomselect, and focus. But tomselect captures it still :(
-    nameInputTarget.addEventListener("click", function(e){
-      console.log('click'); e.stopPropagation();
-      // e.preventDefault();
-      // nameInputTarget.focus();
-    });
-    // But tomselect seems to  captures it still, befure this is called:
-    nameInputTarget.addEventListener("focus", function(e){ console.log('focus'); e.stopPropagation(); });
-
     options = {
       closeAfterSelect: false,
       searchField: [], //disable type to search. todo: copy for a no-input controller
@@ -58,6 +48,23 @@ export default class extends TomSelectController {
     };
 
     super.connect(options);
+
+
+    const control = this.control;
+
+    nameInputTarget.addEventListener("keydown", function(e){ console.log('keydown'); e.stopPropagation(); });
+    // Prevent bubbling up to tomselect, and focus. But tomselect captures it still :(
+    nameInputTarget.addEventListener("click", function(e){
+      console.log('click'); e.stopPropagation();
+      console.log(control, control.ignoreFocus);
+      control.ignoreFocus = true;
+      // e.preventDefault();
+      nameInputTarget.focus();
+      return false;
+    });
+    // But tomselect seems to  captures it still, befure this is called:
+    nameInputTarget.addEventListener("focus", function(e){ console.log('focus'); e.stopPropagation(); });
+
   }
 
   createElementWithText(tagName, text) {
