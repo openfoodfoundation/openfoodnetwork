@@ -217,8 +217,7 @@ module Admin
           let(:coordinator) { order_cycle.coordinator }
           let(:producer) { create(:supplier_enterprise) }
           let!(:schedule) { create(:schedule, order_cycles: [order_cycle]) }
-          let!(:p) { create(:product) }
-          let!(:v) { p.variants.first }
+          let(:v) { create(:variant) }
           let!(:incoming_exchange) {
             create(:exchange, order_cycle:, sender: producer, receiver: coordinator,
                               incoming: true, variants: [v])
