@@ -41,7 +41,7 @@ module Reporting
 
         def line_item_includes
           [{ order: :distributor,
-             variant: { product: :supplier } }]
+             variant: [:product, :supplier] }]
         end
       end
     end
