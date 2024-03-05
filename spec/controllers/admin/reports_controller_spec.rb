@@ -15,9 +15,9 @@ RSpec.describe Admin::ReportsController, type: :controller do
   let(:distributor1) { create(:distributor_enterprise) }
   let(:distributor2) { create(:distributor_enterprise) }
   let(:distributor3) { create(:distributor_enterprise) }
-  let(:product1) { create(:product, price: 12.34, supplier: supplier1) }
-  let(:product2) { create(:product, price: 23.45, supplier: supplier2) }
-  let(:product3) { create(:product, price: 34.56, supplier: supplier3) }
+  let(:product1) { create(:product, price: 12.34, supplier_id: supplier1.id) }
+  let(:product2) { create(:product, price: 23.45, supplier_id: supplier2.id) }
+  let(:product3) { create(:product, price: 34.56, supplier_id: supplier3.id) }
 
   # Given two order cycles with both distributors
   let(:ocA) {
