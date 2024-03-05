@@ -497,8 +497,9 @@ describe '
         expect(page.find(
                  "#listing_orders tbody tr td:first-child input[type=checkbox]"
                )).to_not be_checked
-        # disables print invoices button
-        page.find("span.icon-reorder", text: "ACTIONS").click
+        # disables print invoices button not clickable
+        expect { find("span.icon-reorder", text: "ACTIONS").click }
+          .to raise_error(Capybara::Cuprite::MouseEventFailed)
         expect(page).to_not have_content "Print Invoices"
       end
     end
