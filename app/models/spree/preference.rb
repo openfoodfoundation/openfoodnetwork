@@ -2,8 +2,7 @@
 
 module Spree
   class Preference < ApplicationRecord
-    serialize :value
-
+    serialize :value, coder: YAML
     validates :key, presence: true
     validates :value_type, presence: true
 
