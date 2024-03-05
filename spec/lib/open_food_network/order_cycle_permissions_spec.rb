@@ -207,7 +207,7 @@ module OpenFoodNetwork
 
             context "and distributes variants distributed by an unmanaged & unpermitted producer" do
               before {
-                ex.variants << create(:variant, product: create(:product, supplier: producer))
+                ex.variants << create(:variant, supplier: producer)
               }
 
               # TODO: update this when we are confident about P-OCs
@@ -338,8 +338,7 @@ module OpenFoodNetwork
                                   incoming: false)
               }
               before {
-                ex_outgoing.variants << create(:variant,
-                                               product: create(:product, supplier: producer))
+                ex_outgoing.variants << create(:variant, supplier: producer)
               }
 
               # TODO: update this when we are confident about P-OCs
@@ -423,8 +422,7 @@ module OpenFoodNetwork
         describe "legacy compatability" do
           context "where my hub's outgoing exchange contains variants of a producer " \
                   "I don't manage and has not given my hub P-OC" do
-            let!(:product) { create(:product, supplier: producer) }
-            let!(:variant) { create(:variant, product:) }
+            let!(:variant) { create(:variant, supplier: producer) }
             let!(:ex_out) {
               create(:exchange, order_cycle: oc, sender: coordinator, receiver: hub, incoming: true)
             }
@@ -484,8 +482,8 @@ module OpenFoodNetwork
         # remove when behaviour no longer required
         describe "legacy compatability" do
           context "where an outgoing exchange contains variants of a producer I manage" do
-            let!(:product) { create(:product, supplier: producer) }
-            let!(:variant) { create(:variant, product:) }
+            let!(:variant) { create(:variant, supplier: producer) }
+
             before { ex_out.variants << variant }
 
             context "where my producer supplies to the order cycle" do
@@ -513,8 +511,8 @@ module OpenFoodNetwork
              "between two enterprises which are visible to a user" do
       let!(:producer1) { create(:supplier_enterprise) }
       let!(:producer2) { create(:supplier_enterprise) }
-      let!(:v1) { create(:variant, product: create(:simple_product, supplier: producer1)) }
-      let!(:v2) { create(:variant, product: create(:simple_product, supplier: producer2)) }
+      let!(:v1) { create(:variant, supplier: producer1) }
+      let!(:v2) { create(:variant, supplier: producer2) }
 
       describe "incoming exchanges" do
         context "as a manager of the coordinator" do
@@ -593,7 +591,7 @@ module OpenFoodNetwork
           end
 
           context "where the coordinator produces products" do
-            let!(:v3) { create(:variant, product: create(:simple_product, supplier: coordinator)) }
+            let!(:v3) { create(:variant, supplier: coordinator) }
 
             it "returns any variants produced by the coordinator itself for exchanges w/ 'self'" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(coordinator)
@@ -642,7 +640,7 @@ module OpenFoodNetwork
 
           context "where the hub produces products" do
             # NOTE: No relationship to self required
-            let!(:v3) { create(:variant, product: create(:simple_product, supplier: hub)) }
+            let!(:v3) { create(:variant, supplier: hub) }
 
             it "returns any variants produced by the hub" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
@@ -720,7 +718,7 @@ module OpenFoodNetwork
                                 incoming: false)
             }
             # This one won't be in the exchange, and so shouldn't be visible
-            let!(:v3) { create(:variant, product: create(:simple_product, supplier: producer2)) }
+            let!(:v3) { create(:variant, supplier: producer2) }
 
             before { ex.variants << v2 }
 
@@ -738,8 +736,8 @@ module OpenFoodNetwork
              "between two enterprises which are editable by a user" do
       let!(:producer1) { create(:supplier_enterprise) }
       let!(:producer2) { create(:supplier_enterprise) }
-      let!(:v1) { create(:variant, product: create(:simple_product, supplier: producer1)) }
-      let!(:v2) { create(:variant, product: create(:simple_product, supplier: producer2)) }
+      let!(:v1) { create(:variant, supplier: producer1) }
+      let!(:v2) { create(:variant, supplier: producer2) }
 
       describe "incoming exchanges" do
         context "as a manager of the coordinator" do
@@ -801,7 +799,7 @@ module OpenFoodNetwork
           end
 
           context "where the coordinator produces products" do
-            let!(:v3) { create(:variant, product: create(:simple_product, supplier: coordinator)) }
+            let!(:v3) { create(:variant, supplier: coordinator) }
 
             it "returns any variants produced by the coordinator itself for exchanges w/ 'self'" do
               visible = permissions.editable_variants_for_outgoing_exchanges_to(coordinator)
@@ -849,7 +847,7 @@ module OpenFoodNetwork
 
           context "where the hub produces products" do
             # NOTE: No relationship to self required
-            let!(:v3) { create(:variant, product: create(:simple_product, supplier: hub)) }
+            let!(:v3) { create(:variant, supplier: hub) }
 
             it "returns any variants produced by the hub" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
@@ -943,7 +941,7 @@ module OpenFoodNetwork
                                 incoming: false)
             }
             # This one won't be in the exchange, and so shouldn't be visible
-            let!(:v3) { create(:variant, product: create(:simple_product, supplier: producer2)) }
+            let!(:v3) { create(:variant, supplier: producer2) }
 
             before { ex.variants << v2 }
 
