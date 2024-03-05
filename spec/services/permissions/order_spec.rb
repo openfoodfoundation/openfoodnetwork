@@ -88,8 +88,8 @@ module Permissions
 
         context "which contains my products" do
           before do
-            line_item.product.supplier = producer
-            line_item.product.save
+            line_item.variant.supplier = producer
+            line_item.variant.save
           end
 
           it "should let me see the order" do
@@ -165,8 +165,8 @@ module Permissions
           create(:enterprise_relationship, parent: producer, child: distributor,
                                            permissions_list: [:add_to_order_cycle])
 
-          line_item1.product.supplier = producer
-          line_item1.product.save
+          line_item1.variant.supplier = producer
+          line_item1.variant.save
         end
 
         it "should let me see the line_items pertaining to variants I produce" do
