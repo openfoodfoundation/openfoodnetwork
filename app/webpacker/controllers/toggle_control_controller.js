@@ -1,32 +1,29 @@
 import { Controller } from "stimulus";
 
+// Toggle state of a control based on a condition.
+//
+// 1. When an action occurs on an element,
+// 2. The element's value is inspected, and
+// 3. The related control(s) are changed state
+//
 export default class extends Controller {
   static targets = ["control", "content", "chevron"];
   static values = { selector: String };
 
   disableIfPresent(event) {
-    const input = event.currentTarget;
-    const disable = !!this.#inputValue(input); // Coerce value to boolean
+    const present = !!this.#inputValue(event.currentTarget); // Coerce value to boolean
 
-    this.controlTargets.forEach((target) => {
-      target.disabled = disable;
-    });
-
-    // Focus when enabled
-    if (!disable) {
-      this.controlTargets[0].focus();
-    }
+    this.#toggleDisabled(present);
   }
 
   enableIfPresent(event) {
-    const input = event.currentTarget;
-    const enable = !!this.#inputValue(input);
+    const present = !!this.#inputValue(event.currentTarget); // Coerce value to boolean
 
-    this.controlTargets.forEach((target) => {
-      target.disabled = !enable;
-    });
+    this.#toggleDisabled(!present);
   }
 
+  // Display the "content" target if element has data-toggle-show="true"
+  // (TODO: why not use the "control" target?)
   toggleDisplay(event) {
     const input = event.currentTarget;
     this.contentTargets.forEach((t) => {
@@ -34,6 +31,8 @@ export default class extends Controller {
     });
   }
 
+  // Toggle element specified by data-control-toggle-selector-value="<css selector>"
+  // (TODO: give a more general name)
   toggleAdvancedSettings(event) {
     if (this.hasChevronTarget) {
       this.chevronTarget.classList.toggle("icon-chevron-down");
@@ -45,6 +44,17 @@ export default class extends Controller {
   }
 
   // private
+
+  #toggleDisabled(disable) {
+    this.controlTargets.forEach((target) => {
+      target.disabled = disable;
+    });
+
+    // Focus first when enabled
+    if (!disable) {
+      this.controlTargets[0].focus();
+    }
+  }
 
   // Return input's value, but only if it would be submitted by a form
   // Radio buttons not supported (yet)
