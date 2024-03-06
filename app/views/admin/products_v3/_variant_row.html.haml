@@ -7,6 +7,8 @@
 %td.field
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on variant, :sku
+%td
+  -# empty
 - if variant.persisted?
   %td.align-right
     .content= variant.unit_to_display

@@ -5,7 +5,8 @@ module PermittedAttributes
     def self.attributes
       [
         :id, :name, :description, :supplier_id, :price,
-        :variant_unit, :variant_unit_scale, :unit_value, :unit_description, :variant_unit_name,
+        :variant_unit, :variant_unit_scale, :variant_unit_with_scale, :unit_value,
+        :unit_description, :variant_unit_name,
         :display_as, :sku, :group_buy, :group_buy_unit_size,
         :taxon_ids, :primary_taxon_id, :tax_category_id,
         :meta_keywords, :notes, :inherits_properties,

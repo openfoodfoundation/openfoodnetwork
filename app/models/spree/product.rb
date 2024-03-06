@@ -287,6 +287,22 @@ module Spree
       variants << variant
     end
 
+    # Format as per WeightsAndMeasures (todo: re-orgnaise maybe after product/variant refactor)
+    def variant_unit_with_scale
+      scale_clean = ActiveSupport::NumberHelper.number_to_rounded(variant_unit_scale,
+                                                                  precision: nil,
+                                                                  strip_insignificant_zeros: true)
+      [variant_unit, scale_clean].compact_blank.join("_")
+    end
+
+    def variant_unit_with_scale=(variant_unit_with_scale)
+      values = variant_unit_with_scale.split("_")
+      assign_attributes(
+        variant_unit: values[0],
+        variant_unit_scale: values[1] || nil
+      )
+    end
+
     private
 
     def update_units

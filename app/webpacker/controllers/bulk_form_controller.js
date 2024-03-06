@@ -1,6 +1,19 @@
 import { Controller } from "stimulus";
 
-// Manages "changed" state for a form with multiple records
+// Manage "changed" state for a form with multiple records
+//
+// When any elements are changed:
+//  - the element is marked ".changed"
+//  - "actions" element appears
+//  - "changedSummary" element is updated using I18n
+//  - "disableSelector" elements are disabled
+//  - The browser will warn if trying to leave the page
+//
+// Supported element types:
+//  - input[type=text] and similar
+//  - input[type=checkbox]
+//  - select (single) - including tom-select
+//
 export default class BulkFormController extends Controller {
   static targets = ["actions", "changedSummary"];
   static values = {
@@ -113,6 +126,11 @@ export default class BulkFormController extends Controller {
   #isChanged(element) {
     if (element.type == "checkbox") {
       return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
+
+    } else if (element.type == "select-one") {
+      const defaultSelected = Array.from(element.options).find((opt)=>opt.hasAttribute('selected'));
+      return element.selectedOptions[0] != defaultSelected;
+
     } else {
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }
