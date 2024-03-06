@@ -8,7 +8,7 @@ import { Controller } from "stimulus";
 //
 export default class extends Controller {
   static targets = ["control", "content", "chevron"];
-  static values = { selector: String };
+  static values = { selector: String, match: String };
 
   disableIfPresent(event) {
     const present = !!this.#inputValue(event.currentTarget); // Coerce value to boolean
@@ -43,6 +43,13 @@ export default class extends Controller {
     element.style.display = element.style.display === "none" ? "block" : "none";
   }
 
+  // Display the control if selected value matches value in data-toggle-match="<value>"
+  displayIfMatch(event) {
+    const inputValue = this.#inputValue(event.currentTarget);
+
+    this.#toggleDisplay(inputValue == this.matchValue);
+  }
+
   // private
 
   #toggleDisabled(disable) {
@@ -52,6 +59,17 @@ export default class extends Controller {
 
     // Focus first when enabled
     if (!disable) {
+      this.controlTargets[0].focus();
+    }
+  }
+
+  #toggleDisplay(show) {
+    this.controlTargets.forEach((target) => {
+      target.style.display = (show ? "block" : "none");
+    });
+
+    // Focus first when displayed
+    if (show) {
       this.controlTargets[0].focus();
     }
   }
