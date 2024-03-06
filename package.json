@@ -21,7 +21,7 @@
     "@floating-ui/dom": "^1.6.3",
     "@hotwired/turbo": "^8.0.3",
     "@rails/webpacker": "5.4.4",
-    "cable_ready": "5.0.2",
+    "cable_ready": "5.0.1",
     "debounced": "^0.0.5",
     "flatpickr": "^4.6.9",
     "foundation-sites": "^5.5.3",
