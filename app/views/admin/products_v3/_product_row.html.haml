@@ -17,6 +17,7 @@
       'aria-label': t('admin.products_page.columns.unit_scale'),
       data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }', action: "change->toggle-control#displayIfMatch"}
   = f.text_field :variant_unit_name, 'aria-label': t('items'), 'data-toggle-control-target': 'control', style: (product.variant_unit == "items" ? "" : "display: none")
+  = error_message_on product, :variant_unit_name, 'data-toggle-control-target': 'control'
 %td.align-right
   -# empty
 %td.align-right
