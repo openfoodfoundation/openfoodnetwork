@@ -13,16 +13,25 @@ class SuppliedProductBuilder < DfcBuilder
       description: variant.description,
       productType: product_type(variant),
       quantity: QuantitativeValueBuilder.quantity(variant),
+      spree_product_uri: id,
       spree_product_id: variant.product.id,
       image_url: variant.product&.image&.url(:product)
     )
   end
 
-  def self.import_variant(supplied_product)
+  def self.import_variant(supplied_product, host: "")
     product_id = supplied_product.spree_product_id
 
-    if product_id.present?
-      product = Spree::Product.find(product_id)
+    uri = RDF::URI.new(supplied_product.spree_product_uri)
+
+    if product_id.present? || uri.host == host
+      if uri.length > 0 # rubocop:disable Style/ZeroLengthPredicate RDF::URI doesn't implement empty?
+        variant_id = uri.path.split("/").last
+        product = Spree::Variant.find(variant_id).product
+      else
+        product = Spree::Product.find(product_id)
+      end
+
       Spree::Variant.new(
         product:,
         price: 0,
