@@ -162,7 +162,12 @@
 
     .field {
       padding: 0;
-      margin-bottom: 0.75em;
+    }
+    .multi-field {
+      // Allow wrap with small gap
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
     }
 
     label {
@@ -362,8 +367,12 @@
       border-radius: $border-radius;
       box-shadow: 0px 0px 8px 0px rgba($near-black, 0.25);
 
-      .field:last-child {
-        margin-bottom: 0;
+      .field{
+        margin-bottom: 0.75em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
 
       input[disabled] {
