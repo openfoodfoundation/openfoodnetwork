@@ -142,6 +142,36 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
               '"ofn:spree_product_id":90000'
             )
         end
+
+        context "when supplying spree_product_uri matching the host" do
+          it "creates a variant for the existing product" do |example|
+            supplied_product[:'ofn:spree_product_uri'] =
+              "http://test.host/api/dfc/enterprises/10000?spree_product_id=90000"
+            supplied_product[:'dfc-b:hasQuantity'][:'dfc-b:value'] = 6
+
+            expect {
+              submit_request(example.metadata)
+              product.variants.reload
+            }
+              .to change { product.variants.count }.by(1)
+
+            # Creates a variant for existing product
+            variant_id = json_response["@id"].split("/").last.to_i
+            new_variant = Spree::Variant.find(variant_id)
+            expect(product.variants).to include(new_variant)
+            expect(new_variant.unit_value).to eq 6
+
+            # Insert static value to keep documentation deterministic:
+            response.body.gsub!(
+              "supplied_products/#{variant_id}",
+              "supplied_products/10001"
+            )
+              .gsub!(
+                %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
+                "active_storage/url/logo-white.png",
+              )
+          end
+        end
       end
     end
   end

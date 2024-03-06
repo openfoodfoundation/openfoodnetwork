@@ -542,7 +542,7 @@ paths:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     "@type": dfc-b:SuppliedProduct
-                    dfc-b:name: Apple (6g)
+                    dfc-b:name: Pesto - Apple (6g)
                     dfc-b:description: A delicious heritage apple
                     dfc-b:hasType: dfc-pt:non-local-vegetable
                     dfc-b:hasQuantity:
@@ -554,7 +554,8 @@ paths:
                     dfc-b:usageOrStorageCondition: ''
                     dfc-b:totalTheoreticalStock: 0.0
                     ofn:spree_product_id: 90000
-                    ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=142
+                    ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                    ofn:image: http://test.host/rails/active_storage/url/logo-white.png
       requestBody:
         content:
           application/json:
@@ -575,6 +576,7 @@ paths:
                 dfc-b:usageOrStorageCondition: ''
                 dfc-b:totalTheoreticalStock: 0.0
                 ofn:spree_product_id: 90000
+                ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
   "/api/dfc/enterprises/{enterprise_id}/supplied_products/{id}":
     parameters:
     - name: enterprise_id
