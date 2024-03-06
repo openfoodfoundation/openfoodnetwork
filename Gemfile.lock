@@ -193,7 +193,7 @@ GEM
     bullet (7.1.6)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    cable_ready (5.0.1)
+    cable_ready (5.0.2)
       actionpack (>= 5.2)
       actionview (>= 5.2)
       activesupport (>= 5.2)
@@ -855,7 +855,7 @@ DEPENDENCIES
   bootsnap
   bugsnag
   bullet
-  cable_ready (= 5.0.1)
+  cable_ready (= 5.0.2)
   cancancan (~> 1.15.0)
   capybara
   catalog!
