@@ -67,8 +67,12 @@
       }
 
       th.with-input {
+        // Additional padding to line up with content of input
         padding-left: $padding-tbl-cell + $hpadding-txt;
-        padding-right: $padding-tbl-cell + $hpadding-txt;
+
+        &.align-right {
+          padding-right: $padding-tbl-cell + $hpadding-txt;
+        }
       }
     }
 
