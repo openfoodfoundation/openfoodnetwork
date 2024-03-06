@@ -103,7 +103,7 @@ gem 'redis'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
-gem "cable_ready", "5.0.1"
+gem "cable_ready", "5.0.2"
 gem "stimulus_reflex", "3.5.0.rc4"
 
 gem 'combine_pdf'
