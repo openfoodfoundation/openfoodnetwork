@@ -54,6 +54,8 @@
     @include border-radius($border-radius);
     box-shadow: $shadow-dropdown;
 
+    max-height: 21em; // Show up to 8 items without scrolling
+
     .option {
       padding: 8px;
       border-left: 3px solid transparent;
