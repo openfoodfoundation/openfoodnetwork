@@ -10,10 +10,11 @@
     = check_box_tag 'preferences[enable_invoices?]', '1',  Spree::Config[:enable_invoices?]
     = label_tag nil, t('.enable_invoices?')
 
-  .field.align-center
-    = hidden_field_tag 'preferences[invoice_style2?]', '0'
-    = check_box_tag 'preferences[invoice_style2?]', '1',  Spree::Config[:invoice_style2?]
-    = label_tag nil, t('.invoice_style2?')
+  - if ! OpenFoodNetwork::FeatureToggle.enabled?(:invoices, spree_current_user)
+    .field.align-center
+      = hidden_field_tag 'preferences[invoice_style2?]', '0'
+      = check_box_tag 'preferences[invoice_style2?]', '1',  Spree::Config[:invoice_style2?]
+      = label_tag nil, t('.invoice_style2?')
 
   .field.align-center
     = hidden_field_tag 'preferences[enterprise_number_required_on_invoices?]', '0'
