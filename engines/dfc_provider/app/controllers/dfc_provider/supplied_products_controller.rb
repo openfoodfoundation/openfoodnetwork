@@ -14,6 +14,9 @@ module DfcProvider
 
       return head :bad_request unless supplied_product
 
+      # TODO add check the user current enterprise matches the one provided in parameter
+      authorize! :create, Spree::Product
+
       variant = SuppliedProductBuilder.import_variant(supplied_product, host: request.host)
       product = variant.product
 
@@ -39,6 +42,8 @@ module DfcProvider
       supplied_product = import&.first
 
       return head :bad_request unless supplied_product
+
+      authorize! :update, Spree::Product
 
       SuppliedProductBuilder.apply(supplied_product, variant)
 

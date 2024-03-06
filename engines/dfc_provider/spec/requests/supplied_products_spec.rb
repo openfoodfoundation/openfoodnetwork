@@ -82,6 +82,21 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
         end
       end
 
+      # TODO fix test
+      response "401", "unauthorized" do
+        let(:supplied_product) do |example|
+          example.metadata[:operation][:parameters].first[:schema][:example]
+        end
+        let(:other_enterprise_owner) { create(:oidc_user, id: 12_346) }
+        let!(:other_enterprise) {
+          create(:distributor_enterprise, id: 20_000, owner: other_enterprise_owner)
+        }
+
+        before { login_as other_enterprise_owner }
+
+        run_test!
+      end
+
       response "200", "success" do
         let(:supplied_product) do |example|
           example.metadata[:operation][:parameters].first[:schema][:example]
@@ -229,6 +244,8 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
         example.metadata[:operation][:parameters].first[:schema][:example]
       }
 
+
+      # TODO review this
       response "401", "unauthorized" do
         before { login_as nil }
 
