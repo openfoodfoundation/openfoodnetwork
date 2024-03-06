@@ -42,6 +42,9 @@
     background: none;
     border: none;
     box-shadow: none;
+
+    min-width: 10em; // Ensure content doesn't wrap too much
+    // We could consider always stretching to fit with width: max-content;
   }
 
   .ts-dropdown-content {
