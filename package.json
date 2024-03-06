@@ -14,7 +14,7 @@
     "@hotwired/turbo": "^8.0.4",
     "@rails/webpacker": "5.4.4",
     "@stimulus-components/rails-nested-form": "^5.0.0",
-    "cable_ready": "5.0.1",
+    "cable_ready": "5.0.3",
     "debounced": "^0.0.5",
     "flatpickr": "^4.6.9",
     "foundation-sites": "^5.5.3",
