@@ -4,7 +4,7 @@
       = f.label :name, t(".name")
       %span.required *
       %br/
-      = error_message_on :taxon, :name, class: 'fullwidth title'
+      = error_message_on :taxon, :name
       = text_field :taxon, :name, class: 'fullwidth'
     = f.field_container :permalink_part do
       = f.label :permalink_part, t(".permalink")
