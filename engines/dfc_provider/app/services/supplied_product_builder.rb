@@ -6,6 +6,10 @@ class SuppliedProductBuilder < DfcBuilder
       enterprise_id: variant.product.supplier_id,
       id: variant.id,
     )
+    product_uri = urls.enterprise_url(
+      variant.product.supplier_id,
+      spree_product_id: variant.product_id
+    )
 
     DfcProvider::SuppliedProduct.new(
       id,
@@ -13,16 +17,16 @@ class SuppliedProductBuilder < DfcBuilder
       description: variant.description,
       productType: product_type(variant),
       quantity: QuantitativeValueBuilder.quantity(variant),
+      spree_product_uri: product_uri,
       spree_product_id: variant.product.id,
       image_url: variant.product&.image&.url(:product)
     )
   end
 
   def self.import_variant(supplied_product)
-    product_id = supplied_product.spree_product_id
+    product = referenced_spree_product(supplied_product)
 
-    if product_id.present?
-      product = Spree::Product.find(product_id)
+    if product
       Spree::Variant.new(
         product:,
         price: 0,
@@ -33,6 +37,23 @@ class SuppliedProductBuilder < DfcBuilder
       product = import_product(supplied_product)
       product.ensure_standard_variant
       product.variants.first
+    end
+  end
+
+  def self.referenced_spree_product(supplied_product)
+    uri = supplied_product.spree_product_uri
+    id = supplied_product.spree_product_id
+
+    if uri.present?
+      route = Rails.application.routes.recognize_path(uri)
+      params = Rack::Utils.parse_nested_query(URI.parse(uri).query)
+
+      # Check that the given URI points to us:
+      return unless uri == urls.enterprise_url(route.merge(params))
+
+      Spree::Product.find(params["spree_product_id"])
+    elsif id.present?
+      Spree::Product.find(id)
     end
   end
 

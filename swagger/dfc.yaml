@@ -121,6 +121,7 @@ paths:
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
                       ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                     - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice: 19.99
@@ -400,6 +401,7 @@ paths:
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
                       ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                       ofn:image: http://test.host/rails/active_storage/url/logo-white.png
                     - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       "@type": dfc-b:CatalogItem
@@ -552,6 +554,7 @@ paths:
                     dfc-b:usageOrStorageCondition: ''
                     dfc-b:totalTheoreticalStock: 0.0
                     ofn:spree_product_id: 90000
+                    ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=142
       requestBody:
         content:
           application/json:
@@ -611,6 +614,7 @@ paths:
                     dfc-b:usageOrStorageCondition: ''
                     dfc-b:totalTheoreticalStock: 0.0
                     ofn:spree_product_id: 90000
+                    ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                     ofn:image: http://test.host/rails/active_storage/url/logo-white.png
         '404':
           description: not found
