@@ -14,7 +14,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_GMWrNtR4vvIB1h","request_duration_ms":1553}}'
+      - '{"last_request_metrics":{"request_id":"req_C7QOEy3slcdnR9","request_duration_ms":1419}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -34,7 +34,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:19:39 GMT
+      - Thu, 07 Mar 2024 14:41:06 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -62,7 +62,7 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Request-Id:
-      - req_WQoM9s4npzzwFM
+      - req_aqokX0boDYvpUt
       Stripe-Version:
       - '2023-10-16'
       Vary:
@@ -75,7 +75,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OrhnLKuuB1fWySnZx07IdzL",
+          "id": "pm_1Ori86KuuB1fWySnurYGVy9H",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -116,19 +116,19 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1709821179,
+          "created": 1709822466,
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Thu, 07 Mar 2024 14:19:39 GMT
+  recorded_at: Thu, 07 Mar 2024 14:41:06 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/payment_intents
     body:
       encoding: UTF-8
-      string: amount=1000&currency=aud&payment_method=pm_1OrhnLKuuB1fWySnZx07IdzL&payment_method_types[0]=card&capture_method=manual
+      string: amount=1000&currency=aud&payment_method=pm_1Ori86KuuB1fWySnurYGVy9H&payment_method_types[0]=card&capture_method=manual
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.11.0
@@ -137,7 +137,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_WQoM9s4npzzwFM","request_duration_ms":466}}'
+      - '{"last_request_metrics":{"request_id":"req_aqokX0boDYvpUt","request_duration_ms":418}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -157,7 +157,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:19:39 GMT
+      - Thu, 07 Mar 2024 14:41:06 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -184,11 +184,11 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Idempotency-Key:
-      - 8c0544c8-07d0-425d-8732-c7177fe5f5e7
+      - 52dd9c2f-e901-4555-bb6f-1423ff2769d9
       Original-Request:
-      - req_bre1PSWvkolkr0
+      - req_gX0WQsuDgkgjOd
       Request-Id:
-      - req_bre1PSWvkolkr0
+      - req_gX0WQsuDgkgjOd
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -203,7 +203,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pi_3OrhnLKuuB1fWySn16uMnfxL",
+          "id": "pi_3Ori86KuuB1fWySn2KSuRXgr",
           "object": "payment_intent",
           "amount": 1000,
           "amount_capturable": 0,
@@ -217,9 +217,9 @@ http_interactions:
           "canceled_at": null,
           "cancellation_reason": null,
           "capture_method": "manual",
-          "client_secret": "pi_3OrhnLKuuB1fWySn16uMnfxL_secret_Imdl0qQega6u3ahtGL12Ullnz",
+          "client_secret": "pi_3Ori86KuuB1fWySn2KSuRXgr_secret_EOP6SxcCrsmmqPDh5wYTYXsqa",
           "confirmation_method": "automatic",
-          "created": 1709821179,
+          "created": 1709822466,
           "currency": "aud",
           "customer": null,
           "description": null,
@@ -230,7 +230,7 @@ http_interactions:
           "metadata": {},
           "next_action": null,
           "on_behalf_of": null,
-          "payment_method": "pm_1OrhnLKuuB1fWySnZx07IdzL",
+          "payment_method": "pm_1Ori86KuuB1fWySnurYGVy9H",
           "payment_method_configuration_details": null,
           "payment_method_options": {
             "card": {
@@ -255,10 +255,10 @@ http_interactions:
           "transfer_data": null,
           "transfer_group": null
         }
-  recorded_at: Thu, 07 Mar 2024 14:19:39 GMT
+  recorded_at: Thu, 07 Mar 2024 14:41:06 GMT
 - request:
     method: get
-    uri: https://api.stripe.com/v1/payment_intents/pi_3OrhnLKuuB1fWySn16uMnfxL
+    uri: https://api.stripe.com/v1/payment_intents/pi_3Ori86KuuB1fWySn2KSuRXgr
     body:
       encoding: US-ASCII
       string: ''
@@ -270,7 +270,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_bre1PSWvkolkr0","request_duration_ms":503}}'
+      - '{"last_request_metrics":{"request_id":"req_gX0WQsuDgkgjOd","request_duration_ms":502}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -290,7 +290,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:19:40 GMT
+      - Thu, 07 Mar 2024 14:41:07 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -318,7 +318,7 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Request-Id:
-      - req_pLPlchMFwozqR0
+      - req_ogaznpXJbLOhKJ
       Stripe-Version:
       - '2023-10-16'
       Vary:
@@ -331,7 +331,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pi_3OrhnLKuuB1fWySn16uMnfxL",
+          "id": "pi_3Ori86KuuB1fWySn2KSuRXgr",
           "object": "payment_intent",
           "amount": 1000,
           "amount_capturable": 0,
@@ -345,9 +345,9 @@ http_interactions:
           "canceled_at": null,
           "cancellation_reason": null,
           "capture_method": "manual",
-          "client_secret": "pi_3OrhnLKuuB1fWySn16uMnfxL_secret_Imdl0qQega6u3ahtGL12Ullnz",
+          "client_secret": "pi_3Ori86KuuB1fWySn2KSuRXgr_secret_EOP6SxcCrsmmqPDh5wYTYXsqa",
           "confirmation_method": "automatic",
-          "created": 1709821179,
+          "created": 1709822466,
           "currency": "aud",
           "customer": null,
           "description": null,
@@ -358,7 +358,7 @@ http_interactions:
           "metadata": {},
           "next_action": null,
           "on_behalf_of": null,
-          "payment_method": "pm_1OrhnLKuuB1fWySnZx07IdzL",
+          "payment_method": "pm_1Ori86KuuB1fWySnurYGVy9H",
           "payment_method_configuration_details": null,
           "payment_method_options": {
             "card": {
@@ -383,5 +383,5 @@ http_interactions:
           "transfer_data": null,
           "transfer_group": null
         }
-  recorded_at: Thu, 07 Mar 2024 14:19:40 GMT
+  recorded_at: Thu, 07 Mar 2024 14:41:07 GMT
 recorded_with: VCR 6.2.0

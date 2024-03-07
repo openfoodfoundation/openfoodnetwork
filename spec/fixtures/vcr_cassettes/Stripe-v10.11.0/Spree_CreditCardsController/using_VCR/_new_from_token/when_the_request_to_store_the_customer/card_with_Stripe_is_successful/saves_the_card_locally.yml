@@ -32,7 +32,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:16:48 GMT
+      - Thu, 07 Mar 2024 14:38:16 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -59,11 +59,11 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Idempotency-Key:
-      - efe14657-131e-4db9-808f-a87f15eaa01f
+      - 1c81519a-c4c3-4674-b4d9-51990997900b
       Original-Request:
-      - req_rSCJvIBuQdlw68
+      - req_IfRAgx7ZHzZGQd
       Request-Id:
-      - req_rSCJvIBuQdlw68
+      - req_IfRAgx7ZHzZGQd
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -78,10 +78,10 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "tok_1OrhkaKuuB1fWySnM8AzVJqP",
+          "id": "tok_1Ori5MKuuB1fWySnsDyySLg8",
           "object": "token",
           "card": {
-            "id": "card_1OrhkZKuuB1fWySnP2xXtiCk",
+            "id": "card_1Ori5MKuuB1fWySnEb5EBdRx",
             "object": "card",
             "address_city": null,
             "address_country": null,
@@ -109,18 +109,18 @@ http_interactions:
             "wallet": null
           },
           "client_ip": "176.79.242.165",
-          "created": 1709821008,
+          "created": 1709822296,
           "livemode": false,
           "type": "card",
           "used": false
         }
-  recorded_at: Thu, 07 Mar 2024 14:16:48 GMT
+  recorded_at: Thu, 07 Mar 2024 14:38:16 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: UTF-8
-      string: email=olevia.schumm%40koeppondricka.com&source=tok_1OrhkaKuuB1fWySnM8AzVJqP
+      string: email=ettie_runte%40stracke.ca&source=tok_1Ori5MKuuB1fWySnsDyySLg8
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.11.0
@@ -129,7 +129,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_rSCJvIBuQdlw68","request_duration_ms":698}}'
+      - '{"last_request_metrics":{"request_id":"req_IfRAgx7ZHzZGQd","request_duration_ms":681}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -149,11 +149,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:16:49 GMT
+      - Thu, 07 Mar 2024 14:38:17 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '670'
+      - '661'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -176,11 +176,11 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Idempotency-Key:
-      - 39a72761-656d-4911-adc2-40f94e6ae427
+      - 848d4255-e485-4459-bfd3-0f037692da20
       Original-Request:
-      - req_9dDtXPOE9Kpo23
+      - req_r0UB4vYNGsk1o2
       Request-Id:
-      - req_9dDtXPOE9Kpo23
+      - req_r0UB4vYNGsk1o2
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -195,18 +195,18 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "cus_Ph5wyyVZX7uWCo",
+          "id": "cus_Ph6Hlzag6f8JXI",
           "object": "customer",
           "address": null,
           "balance": 0,
-          "created": 1709821008,
+          "created": 1709822297,
           "currency": null,
-          "default_source": "card_1OrhkZKuuB1fWySnP2xXtiCk",
+          "default_source": "card_1Ori5MKuuB1fWySnEb5EBdRx",
           "delinquent": false,
           "description": null,
           "discount": null,
-          "email": "olevia.schumm@koeppondricka.com",
-          "invoice_prefix": "60D0C6C3",
+          "email": "ettie_runte@stracke.ca",
+          "invoice_prefix": "A46019A5",
           "invoice_settings": {
             "custom_fields": null,
             "default_payment_method": null,
@@ -223,10 +223,10 @@ http_interactions:
           "tax_exempt": "none",
           "test_clock": null
         }
-  recorded_at: Thu, 07 Mar 2024 14:16:49 GMT
+  recorded_at: Thu, 07 Mar 2024 14:38:17 GMT
 - request:
     method: get
-    uri: https://api.stripe.com/v1/customers/cus_Ph5wyyVZX7uWCo/sources?limit=1&object=card
+    uri: https://api.stripe.com/v1/customers/cus_Ph6Hlzag6f8JXI/sources?limit=1&object=card
     body:
       encoding: US-ASCII
       string: ''
@@ -238,7 +238,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_9dDtXPOE9Kpo23","request_duration_ms":1090}}'
+      - '{"last_request_metrics":{"request_id":"req_r0UB4vYNGsk1o2","request_duration_ms":1132}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -258,7 +258,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:16:50 GMT
+      - Thu, 07 Mar 2024 14:38:18 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -286,7 +286,7 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Request-Id:
-      - req_fQBUTPOEqROOqL
+      - req_8JCk5jQYHzpR3e
       Stripe-Version:
       - '2023-10-16'
       Vary:
@@ -302,7 +302,7 @@ http_interactions:
           "object": "list",
           "data": [
             {
-              "id": "card_1OrhkZKuuB1fWySnP2xXtiCk",
+              "id": "card_1Ori5MKuuB1fWySnEb5EBdRx",
               "object": "card",
               "address_city": null,
               "address_country": null,
@@ -314,7 +314,7 @@ http_interactions:
               "address_zip_check": null,
               "brand": "Visa",
               "country": "US",
-              "customer": "cus_Ph5wyyVZX7uWCo",
+              "customer": "cus_Ph6Hlzag6f8JXI",
               "cvc_check": "pass",
               "dynamic_last4": null,
               "exp_month": 9,
@@ -329,7 +329,7 @@ http_interactions:
             }
           ],
           "has_more": false,
-          "url": "/v1/customers/cus_Ph5wyyVZX7uWCo/sources"
+          "url": "/v1/customers/cus_Ph6Hlzag6f8JXI/sources"
         }
-  recorded_at: Thu, 07 Mar 2024 14:16:50 GMT
+  recorded_at: Thu, 07 Mar 2024 14:38:18 GMT
 recorded_with: VCR 6.2.0

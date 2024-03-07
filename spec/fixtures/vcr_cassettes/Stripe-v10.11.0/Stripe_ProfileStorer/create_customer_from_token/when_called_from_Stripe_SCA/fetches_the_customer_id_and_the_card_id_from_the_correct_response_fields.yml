@@ -14,7 +14,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_Pk11EipArgbZw2","request_duration_ms":509}}'
+      - '{"last_request_metrics":{"request_id":"req_jK3S1jfWIgYhut","request_duration_ms":480}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -34,7 +34,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:19:01 GMT
+      - Thu, 07 Mar 2024 14:40:29 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -61,11 +61,11 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Idempotency-Key:
-      - 85ae54a6-3d8d-4117-8d14-d8328b03679d
+      - c051a7ae-3827-47d3-8dca-a16171e69284
       Original-Request:
-      - req_qefyeFX7Psf4sT
+      - req_Op08rYHGvAaruH
       Request-Id:
-      - req_qefyeFX7Psf4sT
+      - req_Op08rYHGvAaruH
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -80,7 +80,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OrhmjKuuB1fWySnWB6rTEGL",
+          "id": "pm_1Ori7UKuuB1fWySn76qyslW5",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -121,19 +121,19 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1709821141,
+          "created": 1709822428,
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Thu, 07 Mar 2024 14:19:02 GMT
+  recorded_at: Thu, 07 Mar 2024 14:40:29 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: UTF-8
-      string: expand[0]=sources&email=nancey.jakubowski%40hane.info
+      string: expand[0]=sources&email=syreeta_mante%40rowe.biz
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -161,11 +161,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:19:03 GMT
+      - Thu, 07 Mar 2024 14:40:30 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '824'
+      - '819'
       Connection:
       - close
       Access-Control-Allow-Credentials:
@@ -188,11 +188,11 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Idempotency-Key:
-      - 21e9a3f2-a8fc-46c8-9439-345f427ef200
+      - 487f4a1e-f085-4bc0-b700-2c74ba0c99d3
       Original-Request:
-      - req_BTwlF6p6kmIQoU
+      - req_csrGBnT3G2xSHG
       Request-Id:
-      - req_BTwlF6p6kmIQoU
+      - req_csrGBnT3G2xSHG
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -207,19 +207,19 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "cus_Ph5yd4DHppEoKr",
+          "id": "cus_Ph6KskC35H85qa",
           "object": "customer",
           "address": null,
           "balance": 0,
-          "created": 1709821142,
+          "created": 1709822429,
           "currency": null,
           "default_currency": null,
           "default_source": null,
           "delinquent": false,
           "description": null,
           "discount": null,
-          "email": "nancey.jakubowski@hane.info",
-          "invoice_prefix": "6E87E60A",
+          "email": "syreeta_mante@rowe.biz",
+          "invoice_prefix": "641A4283",
           "invoice_settings": {
             "custom_fields": null,
             "default_payment_method": null,
@@ -238,18 +238,18 @@ http_interactions:
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/customers/cus_Ph5yd4DHppEoKr/sources"
+            "url": "/v1/customers/cus_Ph6KskC35H85qa/sources"
           },
           "tax_exempt": "none",
           "test_clock": null
         }
-  recorded_at: Thu, 07 Mar 2024 14:19:03 GMT
+  recorded_at: Thu, 07 Mar 2024 14:40:30 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/payment_methods/pm_1OrhmjKuuB1fWySnWB6rTEGL/attach
+    uri: https://api.stripe.com/v1/payment_methods/pm_1Ori7UKuuB1fWySn76qyslW5/attach
     body:
       encoding: UTF-8
-      string: customer=cus_Ph5yd4DHppEoKr
+      string: customer=cus_Ph6KskC35H85qa
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -277,7 +277,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:19:04 GMT
+      - Thu, 07 Mar 2024 14:40:30 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -305,11 +305,11 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Idempotency-Key:
-      - 80234bb3-45b9-4b98-ba00-cd0fbb86b3e2
+      - d317f319-35a7-4987-a662-138d8f1f2b65
       Original-Request:
-      - req_x2bd9tQGKFEayC
+      - req_7mzjqpGBfSWXfr
       Request-Id:
-      - req_x2bd9tQGKFEayC
+      - req_7mzjqpGBfSWXfr
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -324,7 +324,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1OrhmjKuuB1fWySnWB6rTEGL",
+          "id": "pm_1Ori7UKuuB1fWySn76qyslW5",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -365,11 +365,11 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1709821141,
-          "customer": "cus_Ph5yd4DHppEoKr",
+          "created": 1709822428,
+          "customer": "cus_Ph6KskC35H85qa",
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Thu, 07 Mar 2024 14:19:04 GMT
+  recorded_at: Thu, 07 Mar 2024 14:40:31 GMT
 recorded_with: VCR 6.2.0
