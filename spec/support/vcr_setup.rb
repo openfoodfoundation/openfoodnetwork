@@ -16,6 +16,8 @@ VCR.configure do |config|
     STRIPE_ACCOUNT
     STRIPE_CLIENT_ID
     STRIPE_ENDPOINT_SECRET
+    CLIENT_SECRET
+    HOSTNAME
   ].each do |env_var|
     config.filter_sensitive_data("<HIDDEN-#{env_var}>") { ENV.fetch(env_var, nil) }
   end
