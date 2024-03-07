@@ -49,8 +49,8 @@ describe "Using embedded shopfront functionality" do
     it "doesn't display contact details when embedded" do
       on_embedded_page do
         within 'div#group-page' do
-          expect(page).to have_no_selector 'div.contact-container'
-          expect(page).to have_no_content group.address.address1.to_s
+          expect(page).not_to have_selector 'div.contact-container'
+          expect(page).not_to have_content group.address.address1.to_s
         end
       end
     end
@@ -58,9 +58,9 @@ describe "Using embedded shopfront functionality" do
     it "does not display the header when embedded" do
       on_embedded_page do
         within 'div#group-page' do
-          expect(page).to have_no_selector 'header'
-          expect(page).to have_no_selector 'img.group-logo'
-          expect(page).to have_no_selector 'h2.group-name'
+          expect(page).not_to have_selector 'header'
+          expect(page).not_to have_selector 'img.group-logo'
+          expect(page).not_to have_selector 'h2.group-name'
         end
       end
     end

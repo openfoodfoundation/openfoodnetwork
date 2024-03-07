@@ -90,7 +90,7 @@ describe "Credit Cards" do
       expect(page).to have_content(
         format("Your card has been removed (number: %s)", "x-#{default_card.last_digits}")
       )
-      expect(page).to have_no_selector ".card#card#{default_card.id}"
+      expect(page).not_to have_selector ".card#card#{default_card.id}"
 
       # Allows authorisation of card use by shops
       within "tr#customer#{customer.id}" do

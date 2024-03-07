@@ -79,7 +79,7 @@ describe "As a consumer, I want to checkout my order" do
     it "should display the checkout login page" do
       expect(page).to have_content("Ok, ready to checkout?")
       expect(page).to have_content("Login")
-      expect(page).to have_no_content("Checkout as guest")
+      expect(page).not_to have_content("Checkout as guest")
     end
 
     it "should show the login modal when clicking the login button" do

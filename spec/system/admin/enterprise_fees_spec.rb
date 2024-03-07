@@ -250,7 +250,7 @@ describe '
 
     # Then my enterprise fee should have been deleted
     visit admin_enterprise_fees_path
-    expect(page).to have_no_selector "input[value='#{fee.name}']"
+    expect(page).not_to have_selector "input[value='#{fee.name}']"
   end
 
   context "as an enterprise manager" do

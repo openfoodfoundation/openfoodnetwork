@@ -64,9 +64,11 @@ describe "Cookies", caching: true do
       scenario "it is not showing" do
         Spree::Config[:cookies_consent_banner_toggle] = false
         visit root_path
-        expect(page).to have_no_content 'This site uses cookies in order to make your navigation ' \
-                                        'frictionless and secure, and to help us understand how ' \
-                                        'you use it in order to improve the features we offer.'
+        expect(page).not_to have_content(
+          'This site uses cookies in order to make your navigation ' \
+          'frictionless and secure, and to help us understand how ' \
+          'you use it in order to improve the features we offer.'
+        )
       end
     end
   end
@@ -91,8 +93,8 @@ describe "Cookies", caching: true do
       scenario "does not show Matomo cookies details and does not show Matomo optout text" do
         Spree::Config[:cookies_policy_matomo_section] = false
         visit_cookies_policy_page
-        expect(page).to have_no_content matomo_description_text
-        expect(page).to have_no_content matomo_opt_out_iframe
+        expect(page).not_to have_content matomo_description_text
+        expect(page).not_to have_content matomo_opt_out_iframe
       end
     end
 
@@ -120,8 +122,8 @@ describe "Cookies", caching: true do
           Spree::Config[:cookies_policy_matomo_section] = true
           Spree::Config[:matomo_url] = ""
           visit_cookies_policy_page
-          expect(page).to have_no_content matomo_opt_out_iframe
-          expect(page).to have_no_selector("iframe")
+          expect(page).not_to have_content matomo_opt_out_iframe
+          expect(page).not_to have_selector("iframe")
         end
       end
     end
@@ -136,7 +138,7 @@ describe "Cookies", caching: true do
   end
 
   def expect_not_visible_cookies_banner
-    expect(page).to have_no_css("button", text: accept_cookies_button_text)
+    expect(page).not_to have_css("button", text: accept_cookies_button_text)
   end
 
   def accept_cookies_button_text

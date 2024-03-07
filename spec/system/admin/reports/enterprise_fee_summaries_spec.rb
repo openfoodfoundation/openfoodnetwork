@@ -44,7 +44,7 @@ describe "enterprise fee summaries" do
         let(:current_user) { create(:user) }
 
         it "does not allow access to the report" do
-          expect(page).to have_no_link('Enterprise Fee Summary')
+          expect(page).not_to have_link('Enterprise Fee Summary')
           visit main_app.admin_report_path(report_type: 'enterprise_fee_summary')
           expect(page).to have_content('Unauthorized')
         end

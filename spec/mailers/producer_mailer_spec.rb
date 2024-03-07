@@ -215,7 +215,7 @@ describe ProducerMailer, type: :mailer do
   context "products from only one supplier" do
     it "doesn't display a supplier column" do
       expect(body_as_html(mail).find(".order-summary"))
-        .to have_no_selector("th", text: "Supplier")
+        .not_to have_selector("th", text: "Supplier")
     end
 
     context "when the show customer names to suppliers setting is enabled" do
@@ -223,7 +223,7 @@ describe ProducerMailer, type: :mailer do
 
       it "doesn't display a supplier column in the summary of orders grouped by customer" do
         expect(body_as_html(mail).find(".customer-order"))
-          .to have_no_selector("th", text: "Supplier")
+          .not_to have_selector("th", text: "Supplier")
       end
     end
   end

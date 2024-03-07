@@ -45,9 +45,9 @@ describe 'Customers' do
 
         # Loads the right customers; positive assertion first, so DOM content is loaded
         expect(page).to have_selector "tr#c_#{customer4.id}"
-        expect(page).to have_no_selector "tr#c_#{customer1.id}"
-        expect(page).to have_no_selector "tr#c_#{customer2.id}"
-        expect(page).to have_no_selector "tr#c_#{customer3.id}"
+        expect(page).not_to have_selector "tr#c_#{customer1.id}"
+        expect(page).not_to have_selector "tr#c_#{customer2.id}"
+        expect(page).not_to have_selector "tr#c_#{customer3.id}"
 
         # Changing Shops
         select2_select managed_distributor1.name, from: "shop_id"
@@ -55,12 +55,12 @@ describe 'Customers' do
         # Loads the right customers
         expect(page).to have_selector "tr#c_#{customer1.id}"
         expect(page).to have_selector "tr#c_#{customer2.id}"
-        expect(page).to have_no_selector "tr#c_#{customer3.id}"
-        expect(page).to have_no_selector "tr#c_#{customer4.id}"
+        expect(page).not_to have_selector "tr#c_#{customer3.id}"
+        expect(page).not_to have_selector "tr#c_#{customer4.id}"
 
         # Searching
         fill_in "quick_search", with: customer2.email
-        expect(page).to have_no_selector "tr#c_#{customer1.id}"
+        expect(page).not_to have_selector "tr#c_#{customer1.id}"
         expect(page).to have_selector "tr#c_#{customer2.id}"
         fill_in "quick_search", with: ""
 
@@ -87,8 +87,8 @@ describe 'Customers' do
         expect(page).to have_selector "th.email"
         expect(page).to have_content customer1.email
         toggle_columns "Email"
-        expect(page).to have_no_selector "th.email"
-        expect(page).to have_no_content customer1.email
+        expect(page).not_to have_selector "th.email"
+        expect(page).not_to have_content customer1.email
 
         # Deleting
         create(:subscription, customer: customer1)
@@ -110,7 +110,7 @@ describe 'Customers' do
               find("a.delete-customer").click
             end
           end
-          expect(page).to have_no_selector "tr#c_#{customer2.id}"
+          expect(page).not_to have_selector "tr#c_#{customer2.id}"
         }.to change{ Customer.count }.by(-1)
       end
 

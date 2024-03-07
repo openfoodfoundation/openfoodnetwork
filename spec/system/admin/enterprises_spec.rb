@@ -97,7 +97,7 @@ describe '
     expect(page).to have_checked_field "enterprise_require_login_false"
     expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
     find(:xpath, '//*[@id="enterprise_require_login_true"]').trigger("click")
-    expect(page).to have_no_checked_field "enterprise_require_login_false"
+    expect(page).not_to have_checked_field "enterprise_require_login_false"
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
     accept_alert do
@@ -105,7 +105,7 @@ describe '
       within(".side_menu") { click_link "Users" }
     end
     select2_select user.email, from: 'enterprise_owner_id'
-    expect(page).to have_no_selector '.select2-drop-mask' # Ensure select2 has finished
+    expect(page).not_to have_selector '.select2-drop-mask' # Ensure select2 has finished
 
     accept_alert do
       click_link "About"
@@ -413,7 +413,7 @@ describe '
           click_button 'Create'
 
           # Then it should show me an error
-          expect(page).to have_no_content 'Enterprise "zzz" has been successfully created!'
+          expect(page).not_to have_content 'Enterprise "zzz" has been successfully created!'
           expect(page).to have_content "#{enterprise_user.email} is not permitted " \
                                        "to own any more enterprises (limit is 1)."
         end

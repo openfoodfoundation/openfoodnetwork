@@ -531,7 +531,7 @@ describe "As a consumer I want to shop with a distributor" do
           # Update amount in cart
           within_variant(variant) do
             expect(page).to have_button "Add", disabled: true
-            expect(page).to have_no_content "in cart"
+            expect(page).not_to have_content "in cart"
           end
           within_variant(variant2) do
             expect(page).to have_button "Add", disabled: false
@@ -578,7 +578,7 @@ describe "As a consumer I want to shop with a distributor" do
             # Update amount in cart
             within_variant(variant) do
               expect(page).to have_button "Add", disabled: true
-              expect(page).to have_no_content "in cart"
+              expect(page).not_to have_content "in cart"
             end
 
             # Update amount available in product list
@@ -703,7 +703,7 @@ describe "As a consumer I want to shop with a distributor" do
           visit shop_path
           expect(page).to have_content "Only approved customers can access this shop."
           expect(page).to have_content "login to proceed"
-          expect(page).to have_no_content product.name
+          expect(page).not_to have_content product.name
           expect(page).not_to have_selector "ordercycle"
         end
       end
@@ -721,7 +721,7 @@ describe "As a consumer I want to shop with a distributor" do
             visit shop_path
             expect(page).to have_content "Only approved customers can access this shop."
             expect(page).to have_content "please contact #{distributor.name}"
-            expect(page).to have_no_content product.name
+            expect(page).not_to have_content product.name
             expect(page).not_to have_selector "ordercycle"
           end
         end
@@ -773,7 +773,7 @@ describe "As a consumer I want to shop with a distributor" do
   end
 
   def shows_products_without_customer_warning
-    expect(page).to have_no_content "This shop is for customers only."
+    expect(page).not_to have_content "This shop is for customers only."
     expect(page).to have_content product.name
   end
 
@@ -789,7 +789,7 @@ describe "As a consumer I want to shop with a distributor" do
     expect(page).to have_selector "#variant-#{variant.id}.out-of-stock"
     within_variant(variant) do
       expect(page).to have_button "Add", disabled: true
-      expect(page).to have_no_content "in cart"
+      expect(page).not_to have_content "in cart"
     end
   end
 end

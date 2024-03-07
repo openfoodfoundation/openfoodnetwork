@@ -148,13 +148,13 @@ describe "As a consumer I want to check out my cart" do
       end
 
       it "shows only applicable content" do
-        expect(page).to have_no_content("You have an order for this order cycle already.")
+        expect(page).not_to have_content("You have an order for this order cycle already.")
 
-        expect(page).to have_no_link("Terms and Conditions")
+        expect(page).not_to have_link("Terms and Conditions")
 
         # We always have this link in the footer.
         within "#checkout_form" do
-          expect(page).to have_no_link("Terms of service")
+          expect(page).not_to have_link("Terms of service")
         end
       end
     end

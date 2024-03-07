@@ -25,7 +25,7 @@ describe "User password confirm/reset page" do
       fill_in "Password Confirmation", with: "my secret"
       click_button
 
-      expect(page).to have_no_text "Reset password token has expired"
+      expect(page).not_to have_text "Reset password token has expired"
       expect(page).to be_logged_in_as user
     end
 
