@@ -42,6 +42,9 @@
     background: none;
     border: none;
     box-shadow: none;
+
+    min-width: 10em; // Ensure content doesn't wrap too much
+    // We could consider always stretching to fit with width: max-content;
   }
 
   .ts-dropdown-content {
@@ -50,6 +53,8 @@
     background-color: $color-body-bg;
     @include border-radius($border-radius);
     box-shadow: $shadow-dropdown;
+
+    max-height: 21em; // Show up to 8 items without scrolling
 
     .option {
       padding: 8px;
@@ -77,8 +82,8 @@
     content: "\f077"; // chevron-up
     font-family: FontAwesome;
     border: none;
-    top: 0.7rem;
-    right: 0.7rem;
+    top: 0.7em;
+    right: 0.7em;
     font-size: 13px;
   }
 
@@ -86,7 +91,7 @@
     background-color: $color-body-bg;
     border: 1px solid $lighter-grey;
     box-shadow: none;
-    padding: 0.6rem 0.75rem;
+    padding: 0.6em 0.75em;
 
     &:focus {
       border: 1px solid $orient;
@@ -101,8 +106,8 @@
   max-width: 100%;
 
   .ts-control {
-    padding: 0.5rem 0.75rem;
-    padding-right: 1rem !important; // ts has a clever variable-based rule here, but it doesn't seem to work right.
+    padding: 0.5em 0.75em;
+    padding-right: 1em !important; // ts has a clever variable-based rule here, but it doesn't seem to work right.
     overflow: hidden;
 
     // Icon: Override TS icon with icon-chevron-down
@@ -113,11 +118,11 @@
       top: 1em;
     }
     &:not(.rtl)::after {
-      right: 1.5rem;
+      right: 1.9em;
     }
 
     .item {
-      margin-right: 1rem;
+      margin-right: 1em;
       // Hide overflow with an ellipsis if a width has been set
       overflow: hidden;
       text-overflow: ellipsis;
@@ -134,6 +139,11 @@
 
 // 'no-input' mode, like a native select (hide text input).
 .ts-wrapper.single.no-input {
+  .ts-control input {
+    // Hide input, while keeping it focusable for keyboard events.
+    height: 0;
+  }
+
   .ts-dropdown {
     position: absolute;
     top: 0; // we don't need to see the currently selected option, because it's visible in the dropdown
@@ -141,5 +151,54 @@
 
   .ts-dropdown-content {
     margin-top: 0;
+  }
+}
+
+// Appears just like other text on the page.
+// See table.products tr:hover for example of revealing them
+.naked_inputs .ts-wrapper {
+  height: auto;
+  min-height: 0;
+
+    .ts-control {
+    padding: ($vpadding-txt - 1px) ($hpadding-txt - 1px); // Minus 1px for border
+
+    height: auto;
+    min-height: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    border-color: transparent;
+    line-height: 22px;
+    background-color: $color-body-bg;
+
+    &::after {
+      display: none; // hide until hover
+      top: 0.8em;
+      right: 1em;
+      font-size: 0.75em;
+    }
+
+    .item {
+      margin-top: 0;
+      margin-right: 0; // full width until hover
+    }
+
+    &:hover {
+      &::after {
+        display: block;
+      }
+      .item {
+        margin-right: 1em;
+      }
+    }
+  }
+}
+
+// Display as "changed" if sibling select is marked as changed.
+select.changed + .ts-wrapper {
+  &.single, &.multi {
+    .ts-control {
+      border-color: $color-txt-changed-brd;
+    }
   }
 }

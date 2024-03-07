@@ -61,6 +61,7 @@ describe("ToggleControlController", () => {
       });
     });
   });
+
   describe("#enableIfPresent", () => {
     describe("with input", () => {
       beforeEach(() => {
@@ -88,6 +89,35 @@ describe("ToggleControlController", () => {
       });
     });
   });
+
+  describe("#displayIfMatch", () => {
+    describe("with select", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `<div data-controller="toggle-control" data-toggle-control-match-value="items">
+          <select id="select" data-action="change->toggle-control#displayIfMatch" />
+            <option value="items">Items</option>
+            <option value="weight_1">Weight (g)</option>
+          </select>
+          <input id="control" data-toggle-control-target="control">
+        </div>`;
+      });
+
+      it("Shows when match is selected", () => {
+        select.value = "items"
+        select.dispatchEvent(new Event("change"));
+
+        expect(control.style.display).toBe("block");
+      });
+
+      it("Hides when match is not selected", () => {
+        select.value = "weight_1"
+        select.dispatchEvent(new Event("change"));
+
+        expect(control.style.display).toBe("none");
+      });
+    });
+  });
+
   describe("#toggleDisplay", () => {
     beforeEach(() => {
       document.body.innerHTML = `<div data-controller="toggle-control">
@@ -108,6 +138,7 @@ describe("ToggleControlController", () => {
       expect(content.style.display).toBe("block");
     });
   });
+
   describe("#toggleAdvancedSettings", () => {
     beforeEach(() => {
       document.body.innerHTML = `

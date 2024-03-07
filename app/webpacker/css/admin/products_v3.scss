@@ -67,13 +67,17 @@
       }
 
       th.with-input {
+        // Additional padding to line up with content of input
         padding-left: $padding-tbl-cell + $hpadding-txt;
-        padding-right: $padding-tbl-cell + $hpadding-txt;
+
+        &.align-right {
+          padding-right: $padding-tbl-cell + $hpadding-txt;
+        }
       }
     }
 
     // Row hover
-    tr:hover {
+    tbody tr:hover {
       td {
         background-color: $light-grey;
         position: relative;
@@ -87,6 +91,11 @@
           border-left: 4px solid $teal;
           height: 100%;
         }
+      }
+
+      // "Naked" inputs. Row hover helps reveal them.
+      input:not([type="checkbox"]), .ts-control {
+        background-color: $color-tbl-cell-bg;
       }
 
       // Reveal naked button text when any part of row is hovered
@@ -157,27 +166,20 @@
 
     .field {
       padding: 0;
-      margin-bottom: 0.75em;
+    }
+    .multi-field {
+      // Allow wrap with small gap
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
     }
 
     label {
       margin: 0;
     }
 
-    // "Naked" inputs. Row hover helps reveal them.
-    tbody {
-      input:not([type="checkbox"]) {
-        background-color: $color-tbl-cell-bg;
-        height: auto;
-        font-size: inherit;
-        font-weight: inherit;
-      }
-
-      :not(.field_with_errors) > {
-        input:not([type="checkbox"]):not(:focus):not(.changed):not([disabled]) {
-          border-color: transparent;
-        }
-      }
+    .ts-control {
+      z-index: 0; // Avoid hovering over thead
     }
   }
 
@@ -369,8 +371,12 @@
       border-radius: $border-radius;
       box-shadow: 0px 0px 8px 0px rgba($near-black, 0.25);
 
-      .field:last-child {
-        margin-bottom: 0;
+      .field{
+        margin-bottom: 0.75em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
 
       input[disabled] {

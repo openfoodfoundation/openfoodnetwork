@@ -169,7 +169,10 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
                   on_demand: false
       }
     }
-    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
+    let!(:product_a) {
+      create(:simple_product, name: "Apples", sku: "APL-00",
+                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+    }
     before do
       visit admin_products_url
     end
@@ -178,6 +181,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       within row_containing_name("Apples") do
         fill_in "Name", with: "Pommes"
         fill_in "SKU", with: "POM-00"
+        tomselect_select "Volume (mL)", from: "Unit scale"
       end
       within row_containing_name("Medium box") do
         fill_in "Name", with: "Large box"
@@ -201,6 +205,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         variant_a1.reload
       }.to change { product_a.name }.to("Pommes")
         .and change{ product_a.sku }.to("POM-00")
+        .and change{ product_a.variant_unit }.to("volume")
+        .and change{ product_a.variant_unit_scale }.to(0.001)
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.price }.to(10.25)
@@ -230,12 +236,31 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         click_button "Save changes"
 
         expect(page).to have_content "Changes saved"
-        product_a.reload
         variant_a1.reload
       }.to change{ variant_a1.on_demand }.to(true)
 
       within row_containing_name("Medium box") do
         expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
+      end
+    end
+
+    it "saves a custom item unit name" do
+      within row_containing_name("Apples") do
+        tomselect_select "Items", from: "Unit scale"
+        fill_in "Items", with: "box"
+      end
+
+      expect {
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+      }.to change{ product_a.variant_unit }.to("items")
+        .and change{ product_a.variant_unit_name }.to("box")
+
+      within row_containing_name("Apples") do
+        pending
+        expect(page).to have_content "Items (box)"
       end
     end
 

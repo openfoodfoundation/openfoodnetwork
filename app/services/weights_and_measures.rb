@@ -20,6 +20,44 @@ class WeightsAndMeasures
     scales[product_scale.to_f]['system']
   end
 
+  # @returns enumerable with label and value for select
+  def self.variant_unit_options
+    available_units_sorted.flat_map do |measurement, measurement_info|
+      measurement_info.filter_map do |scale, unit_info|
+        scale_clean =
+          ActiveSupport::NumberHelper.number_to_rounded(scale, precision: nil,
+                                                               strip_insignificant_zeros: true)
+        [
+          "#{I18n.t(measurement)} (#{unit_info['name']})", # Label (eg "Weight (g)")
+          "#{measurement}_#{scale_clean}", # Scale ID (eg "weight_1")
+        ]
+      end
+    end <<
+      [
+        I18n.t('items'),
+        'items'
+      ]
+  end
+
+  def self.available_units
+    Spree::Config.available_units.split(",")
+  end
+
+  def self.available_units_sorted
+    self::UNITS.transform_values do |measurement_info|
+      # Filter to only include available units
+      measurement_info.filter do |_scale, unit_info|
+        available_units.include?(unit_info['name'])
+      end.
+        # Remove duplicates by name
+        uniq do |_scale, unit_info|
+        unit_info['name']
+      end.
+        # Sort by unit number
+        sort.to_h
+    end
+  end
+
   private
 
   UNITS = {
@@ -29,10 +67,10 @@ class WeightsAndMeasures
       1000.0 => { 'name' => 'kg', 'system' => 'metric' },
       1_000_000.0 => { 'name' => 'T', 'system' => 'metric' },
 
-      28.349523125 => { 'name' => 'oz', 'system' => 'imperial' },
       28.35 => { 'name' => 'oz', 'system' => 'imperial' },
-      453.59237 => { 'name' => 'lb', 'system' => 'imperial' },
+      28.349523125 => { 'name' => 'oz', 'system' => 'imperial' },
       453.6 => { 'name' => 'lb', 'system' => 'imperial' },
+      453.59237 => { 'name' => 'lb', 'system' => 'imperial' },
     },
     'volume' => {
       0.001 => { 'name' => 'mL', 'system' => 'metric' },
@@ -49,7 +87,7 @@ class WeightsAndMeasures
     return @units[@variant.product.variant_unit] if ignore_available_units
 
     @units[@variant.product.variant_unit]&.reject { |_scale, unit_info|
-      available_units.exclude?(unit_info['name'])
+      self.class.available_units.exclude?(unit_info['name'])
     }
   end
 
@@ -66,9 +104,5 @@ class WeightsAndMeasures
     return scales.first if largest_unit.nil?
 
     largest_unit
-  end
-
-  def available_units
-    Spree::Config.available_units.split(",")
   end
 end

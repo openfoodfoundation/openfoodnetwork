@@ -77,6 +77,7 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
           "0" => {
             "id" => product_a.id.to_s,
             "name" => "Pommes",
+            "variant_unit_with_scale" => "volume_0.001", # 1mL
             "variants_attributes" => {
               "0" => {
                 "id" => variant_a1.id.to_s,
@@ -95,6 +96,8 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
         product_a.reload
         variant_a1.reload
       }.to change{ product_a.name }.to("Pommes")
+        .and change{ product_a.variant_unit }.to("volume")
+        .and change{ product_a.variant_unit_scale }.to(0.001)
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.price }.to(10.25)

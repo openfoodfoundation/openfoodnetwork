@@ -12,7 +12,7 @@ module Spree
                     id: "#{model}_#{method}_field")
       end
 
-      def error_message_on(object, method, _options = {})
+      def error_message_on(object, method, options = {})
         object = convert_to_model(object)
         obj = object.respond_to?(:errors) ? object : instance_variable_get("@#{object}")
 
@@ -20,7 +20,7 @@ module Spree
           # rubocop:disable Rails/OutputSafety
           errors = obj.errors[method].map { |err| h(err) }.join('<br />').html_safe
           # rubocop:enable Rails/OutputSafety
-          content_tag(:span, errors, class: 'formError')
+          content_tag(:span, errors, class: 'formError', **options)
         else
           ''
         end
