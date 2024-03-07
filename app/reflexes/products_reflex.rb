@@ -136,9 +136,8 @@ class ProductsReflex < ApplicationReflex
     )
     morph :nothing
 
-    # dunno why this doesn't work.
-    # morph "#products-form", render(partial: "admin/products_v3/table",
-    #                locals: { products: products })
+    # dunno why this doesn't work. The HTML stops after the first `<col>` element, wtf?!
+    # morph "#products-form", render(partial: "admin/products_v3/table", locals:)
   end
 
   def producers
