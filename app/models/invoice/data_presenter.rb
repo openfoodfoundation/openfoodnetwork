@@ -91,6 +91,14 @@ class Invoice
       Spree::Money.new(shipment.amount + shipment.additional_tax_total, currency:)
     end
 
+    def display_line_item_tax_rate(item)
+      all_tax_adjustments.select { |a|
+        a.adjustable.type == 'Spree::LineItem' && a.adjustable.id == item.id
+      }.map(&:originator).map { |tr|
+        number_to_percentage(tr.amount * 100, precision: 1)
+      }.join(", ")
+    end
+
     def display_shipment_tax_rates
       all_eligible_adjustments.select { |a|
         a.originator.type == 'Spree::TaxRate' && a.adjustable_type == 'Spree::Shipment'

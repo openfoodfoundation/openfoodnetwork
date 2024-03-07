@@ -542,7 +542,7 @@ describe '
           # first line item, no tax
           expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "($12,540.00 / kg)" # unit price
-          expect(page).to have_content "1 1g $12.54 $12.54 0.0% $12.54"
+          expect(page).to have_content "1 1g $12.54 $12.54 $12.54"
           # # second line item, included tax
           expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "($500,150.00 / kg)" # unit price
@@ -645,7 +645,7 @@ describe '
           # first line item, no tax
           expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "($12,540.00 / kg)" # unit price
-          expect(page).to have_content "1 1g $12.54 $12.54 0.0% $12.54"
+          expect(page).to have_content "1 1g $12.54 $12.54 $12.54"
           # second line item, included tax
           expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "($500,150.00 / kg)" # unit price
