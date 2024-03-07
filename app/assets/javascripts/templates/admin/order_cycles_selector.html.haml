@@ -3,16 +3,16 @@
     %td#available-order-cycles
       {{ 'js.admin.order_cycles.schedules.available' | t }}
       .order-cycles
-        .order-cycle{ ng: { repeat: 'orderCycle in orderCycles | available:selectedOrderCycles as availableOrderCycles', click: 'selections.available = orderCycle', dblclick: 'add(orderCycle)', class: '{selected: selections.available == orderCycle}' } }
+        .order-cycle{ "ng-repeat": 'orderCycle in orderCycles | available:selectedOrderCycles as availableOrderCycles', "ng-click": 'selections.available = orderCycle', "ng-dblclick": 'add(orderCycle)', "ng-class": '{selected: selections.available == orderCycle}' }
           {{ orderCycle.name }}
     %td#add-remove-buttons
-      %a.add.button{ href: 'javascript:void(0)', ng: { click: 'add()' } }
+      %a.add.button{ href: 'javascript:void(0)', "ng-click": 'add()' }
         %i.icon-chevron-right
-      %a.remove.button{ href: 'javascript:void(0)', ng: { click: 'remove()' } }
+      %a.remove.button{ href: 'javascript:void(0)', "ng-click": 'remove()' }
         %i.icon-chevron-left
     %td#selected-order-cycles
       {{ 'js.admin.order_cycles.schedules.selected' | t }}
       .order-cycles
-        .order-cycle{ ng: { repeat: 'orderCycle in selectedOrderCycles', click: 'selections.selected = orderCycle', dblclick: 'remove(orderCycle)', class: '{selected: selections.selected == orderCycle}' } }
+        .order-cycle{ "ng-repeat": 'orderCycle in selectedOrderCycles', "ng-click": 'selections.selected = orderCycle', "ng-dblclick": 'remove(orderCycle)', "ng-class": '{selected: selections.selected == orderCycle}' }
           {{ orderCycle.name }}
-.error{ ng: { repeat: "error in errors", bind: "error" } }
+.error{ "ng-repeat": "error in errors", "ng-bind": "error" }

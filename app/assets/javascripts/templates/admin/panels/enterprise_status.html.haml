@@ -1,10 +1,10 @@
-.row.enterprise_status_panel{ ng: { controller: 'indexStatusPanelCtrl' } }
+.row.enterprise_status_panel{ "ng-controller": 'indexStatusPanelCtrl' }
   .alpha.omega.sixteen.columns
-    %h4.status-ok.text-center{ ng: { show: "issues.length == 0 && warnings.length == 0" } }
+    %h4.status-ok.text-center{ "ng-show": "issues.length == 0 && warnings.length == 0" }
       %i.icon-ok-sign
       {{ 'js.admin.panels.enterprise_status.status_title' | t:{ name: object.name } }}
 
-    %table{ ng: { show: "issues.length > 0 || warnings.length > 0" } }
+    %table{ "ng-show": "issues.length > 0 || warnings.length > 0" }
       %thead
         %th.severity
           {{ 'js.admin.panels.enterprise_status.severity' | t }}
@@ -12,17 +12,17 @@
           {{ 'js.admin.panels.enterprise_status.description' | t }}
         %th.resolve
           {{ 'js.admin.panels.enterprise_status.resolve' | t }}
-      %tr{ ng: { repeat: "issue in issues"} }
+      %tr{ "ng-repeat": "issue in issues" }
         %td.severity
           %i.icon-warning-sign.issue
         %td.description
-          %span{ ng: { bind: "::issue.description" } }
+          %span{ "ng-bind": "::issue.description" }
         %td.resolve
-          %div{ ng: { bind: { html: "issue.link" } } }
-      %tr{ ng: { repeat: "warning in warnings"} }
+          %div{ "ng-bind-html": "issue.link" }
+      %tr{ "ng-repeat": "warning in warnings" }
         %td.severity
           %i.icon-warning-sign.warning
         %td.description
-          %span{ ng: { bind: "::warning.description" } }
+          %span{ "ng-bind": "::warning.description" }
         %td.resolve
-          %div{ ng: { bind: { html: "warning.link" } } }
+          %div{ "ng-bind-html": "warning.link" }

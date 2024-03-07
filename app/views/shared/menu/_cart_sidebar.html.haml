@@ -1,5 +1,5 @@
-.expanding-sidebar.cart-sidebar{ng: {controller: 'CartCtrl', class: "{'shown': showCartSidebar}"}}
-  .background{ng: {click: 'toggleCartSidebar()'}}
+.expanding-sidebar.cart-sidebar{ "ng-controller": 'CartCtrl', "ng-class": "{'shown': showCartSidebar}" }
+  .background{ "ng-click": 'toggleCartSidebar()' }
   .sidebar
     = cache_with_locale "cart-header" do
       .cart-header
@@ -7,7 +7,7 @@
           = t('.items_in_cart_singular', num: "{{ Cart.total_item_count() }}")
         %span.title{"ng-show" => "Cart.line_items.length > 1"}
           = t('.items_in_cart_plural', num: "{{ Cart.total_item_count() }}")
-        %a.close{ng: {click: 'toggleCartSidebar()'}}
+        %a.close{ "ng-click": 'toggleCartSidebar()' }
           = t('.close')
           %i.ofn-i_009-close
 
@@ -40,7 +40,7 @@
         %p
           = t('.cart_empty')
 
-        %a.go-shopping.button.large.bright{ng: {show: "#{show_shopping_cta?}", href: "{{ CurrentHub.hub.id ? '#{main_app.shop_path}' : '#{main_app.shops_path}' }}"}}
+        %a.go-shopping.button.large.bright{ "ng-show": "#{show_shopping_cta?}", "ng-href": "{{ CurrentHub.hub.id ? '#{main_app.shop_path}' : '#{main_app.shops_path}' }}" }
           = t('.take_me_shopping')
 
   .sidebar-footer{"ng-show" => "Cart.line_items.length > 0"}
@@ -52,8 +52,8 @@
 
       %div.fullwidth
         %a.edit-cart.button.large.dark.left{href: main_app.cart_path, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }"}
-          %div{ ng: { if: "Cart.dirty" } }= t(:cart_updating)
-          %div{ ng: { if: "!Cart.dirty && Cart.empty()" } }= t(:cart_empty)
-          %div{ ng: { if: "!Cart.dirty && !Cart.empty()" } }= t('.edit_cart')
+          %div{ "ng-if": "Cart.dirty" }= t(:cart_updating)
+          %div{ "ng-if": "!Cart.dirty && Cart.empty()" }= t(:cart_empty)
+          %div{ "ng-if": "!Cart.dirty && !Cart.empty()" }= t('.edit_cart')
         %a.checkout.button.large.bright.right{href: main_app.checkout_path, "ng-disabled" => "Cart.dirty || Cart.empty()"}
           = t '.checkout'

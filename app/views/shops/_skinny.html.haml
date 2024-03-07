@@ -2,7 +2,7 @@
   .row.active_table_row{"ng-if" => "hub.is_distributor", "ng-click" => "toggle($event)", "ng-class" => "{'closed' : !open(), 'is_distributor' : producer.is_distributor}"}
     .columns.small-12.medium-5.large-5.skinny-head
       %a.hub{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub", "data-is-link" => "true"}
-        %i{ng: {class: "::hub.icon_font"}}
+        %i{ "ng-class": "::hub.icon_font" }
         %span.margin-top.hub-name-listing{"ng-bind" => "::hub.name | truncate:40"}
 
     .columns.small-4.medium-2.large-2
@@ -13,9 +13,9 @@
 
     .columns.small-5.medium-3.large-3.text-right.no-wrap.flex.flex-align-center.flex-justify-end{"ng-if" => "::hub.active"}
       %a.hub.open_closed.flex.flex-align-center{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
-        %span{ ng: { if: "::current()" } }
+        %span{ "ng-if": "::current()" }
           %em= t :hubs_shopping_here
-        %span{ ng: { if: "::!current()" } }
+        %span{ "ng-if": "::!current()" }
           %span{"ng-bind" => "::hub.orders_close_at | sensible_timeframe"}
         %i.ofn-i_068-shop-reversed.show-for-medium-up
       %span{style: "margin-left: 0.5rem;"}
@@ -23,9 +23,9 @@
 
     .columns.small-5.medium-3.large-3.text-right.no-wrap.flex.flex-align-center.flex-justify-end{"ng-if" => "::!hub.active"}
       %a.hub.open_closed.flex{"ng-href" => "{{::hub.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "ng-class" => "{primary: hub.active, secondary: !hub.active}", "ofn-change-hub" => "hub"}
-        %span{ ng: { if: "::current()" } }
+        %span{ "ng-if": "::current()" }
           %em= t :hubs_shopping_here
-        %span{ ng: { if: "::!current()" } }
+        %span{ "ng-if": "::!current()" }
           = t :hubs_orders_closed
         %i.ofn-i_068-shop-reversed.show-for-medium-up
       %span{style: "margin-left: 0.5rem;"}
@@ -34,7 +34,7 @@
   .row.active_table_row{"ng-if" => "!hub.is_distributor", "ng-class" => "closed"}
     .columns.small-12.medium-6.large-5.skinny-head
       %a.hub{"ng-click" => "openModal(hub)", "ng-class" => "{primary: hub.active, secondary: !hub.active}"}
-        %i{ng: {class: "hub.icon_font"}}
+        %i{ "ng-class": "hub.icon_font" }
         %span.hub-name-listing{"ng-bind" => "::hub.name | truncate:40"}
 
     .columns.small-4.medium-2.large-2
@@ -43,5 +43,5 @@
       %span.ellipsed{"ng-bind" => "::hub.address.state_name"}
 
     .columns.small-6.medium-3.large-4.text-right.no-wrap.flex.flex-align-center.flex-justify-end
-      %span{ ng: { if: "::!current()" } }
+      %span{ "ng-if": "::!current()" }
         %em= t :hubs_profile_only

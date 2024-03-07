@@ -149,7 +149,7 @@ describe '
 
     within(".permalink") do
       link_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"
-      link = find_link(link)
+      link = find_link(link_path)
       expect(link[:href]).to eq link_path
       expect(link[:target]).to eq '_blank'
     end

@@ -1,7 +1,7 @@
 %h5= t('admin.product_import.import.validation_overview')
 %br
 
-%div{ng: {controller: 'ImportFeedbackCtrl'}}
+%div{ "ng-controller": 'ImportFeedbackCtrl' }
 
   - if @importer.product_field_errors?
     .alert-box.warning
@@ -9,10 +9,10 @@
       %em= @non_updatable_fields.keys.join(', ') + "."
       = t('.fields_ignored')
 
-  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl'}}
-    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count((entries | entriesFilterValid:"all"))}'}}
+  %div.panel-section{ "ng-controller": 'DropdownPanelsCtrl' }
+    %div.panel-header{ "ng-click": 'togglePanel()', "ng-class": '{active: active && count((entries | entriesFilterValid:"all"))}' }
       %div.header-caret
-        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count((entries | entriesFilterValid:"all")) == 0'}}
+        %i{ "ng-class": "{'icon-chevron-down': active, 'icon-chevron-right': !active}", "ng-hide": 'count((entries | entriesFilterValid:"all")) == 0' }
       %div.header-icon.success
         %i.fa.fa-info-circle.info
       %div.header-count
@@ -20,13 +20,13 @@
           {{ count((entries | entriesFilterValid:"all")) }}
       %div.header-description
         = t('admin.product_import.import.entries_found')
-    %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"all")) == 0'}}
+    %div.panel-content{ "ng-hide": '!active || count((entries | entriesFilterValid:"all")) == 0' }
       = render 'entries_table', entries: 'all'
 
-  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', hide: 'count((entries | entriesFilterValid:"invalid")) == 0'}}
-    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count((entries | entriesFilterValid:"invalid"))}'}}
+  %div.panel-section{ "ng-controller": 'DropdownPanelsCtrl', "ng-hide": 'count((entries | entriesFilterValid:"invalid")) == 0' }
+    %div.panel-header{ "ng-click": 'togglePanel()', "ng-class": '{active: active && count((entries | entriesFilterValid:"invalid"))}' }
       %div.header-caret
-        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count((entries | entriesFilterValid:"invalid")) == 0'}}
+        %i{ "ng-class": "{'icon-chevron-down': active, 'icon-chevron-right': !active}", "ng-hide": 'count((entries | entriesFilterValid:"invalid")) == 0' }
       %div.header-icon.error
         %i.fa.fa-warning
       %div.header-count
@@ -34,15 +34,15 @@
           {{ count((entries | entriesFilterValid:"invalid")) }}
       %div.header-description
         = t('admin.product_import.import.entries_with_errors')
-    %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"invalid")) == 0'}}
+    %div.panel-content{ "ng-hide": '!active || count((entries | entriesFilterValid:"invalid")) == 0' }
       = render 'errors_list'
       %br
       = render 'entries_table', entries: 'invalid'
 
-  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', hide: 'count((entries | entriesFilterValid:"create_product")) == 0'}}
-    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count((entries | entriesFilterValid:"create_product"))}'}}
+  %div.panel-section{ "ng-controller": 'DropdownPanelsCtrl', "ng-hide": 'count((entries | entriesFilterValid:"create_product")) == 0' }
+    %div.panel-header{ "ng-click": 'togglePanel()', "ng-class": '{active: active && count((entries | entriesFilterValid:"create_product"))}' }
       %div.header-caret
-        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count((entries | entriesFilterValid:"create_product")) == 0'}}
+        %i{ "ng-class": "{'icon-chevron-down': active, 'icon-chevron-right': !active}", "ng-hide": 'count((entries | entriesFilterValid:"create_product")) == 0' }
       %div.header-icon.success
         %i.fa.fa-check-circle
       %div.header-count
@@ -50,13 +50,13 @@
           {{ count((entries | entriesFilterValid:"create_product")) }}
       %div.header-description
         = t('admin.product_import.import.products_to_create')
-    %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"create_product")) == 0'}}
+    %div.panel-content{ "ng-hide": '!active || count((entries | entriesFilterValid:"create_product")) == 0' }
       = render 'entries_table', entries: 'create_product'
 
-  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', hide: 'count((entries | entriesFilterValid:"update_product")) == 0'}}
-    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count((entries | entriesFilterValid:"update_product"))}'}}
+  %div.panel-section{ "ng-controller": 'DropdownPanelsCtrl', "ng-hide": 'count((entries | entriesFilterValid:"update_product")) == 0' }
+    %div.panel-header{ "ng-click": 'togglePanel()', "ng-class": '{active: active && count((entries | entriesFilterValid:"update_product"))}' }
       %div.header-caret
-        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count((entries | entriesFilterValid:"update_product")) == 0'}}
+        %i{ "ng-class": "{'icon-chevron-down': active, 'icon-chevron-right': !active}", "ng-hide": 'count((entries | entriesFilterValid:"update_product")) == 0' }
       %div.header-icon.success
         %i.fa.fa-check-circle
       %div.header-count
@@ -64,13 +64,13 @@
           {{ count((entries | entriesFilterValid:"update_product")) }}
       %div.header-description
         = t('admin.product_import.import.products_to_update')
-    %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"update_product")) == 0'}}
+    %div.panel-content{ "ng-hide": '!active || count((entries | entriesFilterValid:"update_product")) == 0' }
       = render 'entries_table', entries: 'update_product'
 
-  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', hide: 'count((entries | entriesFilterValid:"create_inventory")) == 0'}}
-    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count((entries | entriesFilterValid:"create_inventory"))}'}}
+  %div.panel-section{ "ng-controller": 'DropdownPanelsCtrl', "ng-hide": 'count((entries | entriesFilterValid:"create_inventory")) == 0' }
+    %div.panel-header{ "ng-click": 'togglePanel()', "ng-class": '{active: active && count((entries | entriesFilterValid:"create_inventory"))}' }
       %div.header-caret
-        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count((entries | entriesFilterValid:"create_inventory")) == 0'}}
+        %i{ "ng-class": "{'icon-chevron-down': active, 'icon-chevron-right': !active}", "ng-hide": 'count((entries | entriesFilterValid:"create_inventory")) == 0' }
       %div.header-icon.success
         %i.fa.fa-check-circle
       %div.header-count
@@ -78,13 +78,13 @@
           {{ count((entries | entriesFilterValid:"create_inventory")) }}
       %div.header-description
         = t('admin.product_import.import.inventory_to_create')
-    %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"create_inventory")) == 0'}}
+    %div.panel-content{ "ng-hide": '!active || count((entries | entriesFilterValid:"create_inventory")) == 0' }
       = render 'entries_table', entries: 'create_inventory'
 
-  %div.panel-section{ng: {controller: 'DropdownPanelsCtrl', hide: 'count((entries | entriesFilterValid:"update_inventory")) == 0'}}
-    %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active && count((entries | entriesFilterValid:"update_inventory"))}'}}
+  %div.panel-section{ "ng-controller": 'DropdownPanelsCtrl', "ng-hide": 'count((entries | entriesFilterValid:"update_inventory")) == 0' }
+    %div.panel-header{ "ng-click": 'togglePanel()', "ng-class": '{active: active && count((entries | entriesFilterValid:"update_inventory"))}' }
       %div.header-caret
-        %i{ng: {class: "{'icon-chevron-down': active, 'icon-chevron-right': !active}", hide: 'count((entries | entriesFilterValid:"update_inventory")) == 0'}}
+        %i{ "ng-class": "{'icon-chevron-down': active, 'icon-chevron-right': !active}", "ng-hide": 'count((entries | entriesFilterValid:"update_inventory")) == 0' }
       %div.header-icon.success
         %i.fa.fa-check-circle
       %div.header-count
@@ -92,10 +92,10 @@
           {{ count((entries | entriesFilterValid:"update_inventory")) }}
       %div.header-description
         = t('admin.product_import.import.inventory_to_update')
-    %div.panel-content{ng: {hide: '!active || count((entries | entriesFilterValid:"update_inventory")) == 0'}}
+    %div.panel-content{ "ng-hide": '!active || count((entries | entriesFilterValid:"update_inventory")) == 0' }
       = render 'entries_table', entries: 'update_inventory'
 
-  %div.panel-section{ng: {controller: 'ImportOptionsFormCtrl', hide: 'resetTotal == 0'}}
+  %div.panel-section{ "ng-controller": 'ImportOptionsFormCtrl', "ng-hide": 'resetTotal == 0' }
     %div.panel-header
       %div.header-caret
       %div.header-icon.info

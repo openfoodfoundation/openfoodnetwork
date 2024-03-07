@@ -1,15 +1,15 @@
-%hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'hub_id && products.length > 0' } }
-.controls.sixteen.columns.alpha.omega{ ng: { show: 'hub_id && products.length > 0' } }
+%hr.divider.sixteen.columns.alpha.omega{ "ng-show": 'hub_id && products.length > 0' }
+.controls.sixteen.columns.alpha.omega{ "ng-show": 'hub_id && products.length > 0' }
   .eight.columns.alpha
     = render 'admin/shared/bulk_actions_dropdown'
     = render 'admin/shared/views_dropdown'
-    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.inventory.visible' } , data: { powertip: "#{t('admin.variant_overrides.index.inventory_powertip')}" } }
-    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.hidden.visible' } , data: { powertip: "#{t('admin.variant_overrides.index.hidden_powertip')}" } }
-    %span.text-big.with-tip.icon-question-sign{ ng: { show: 'views.new.visible' } , data: { powertip: "#{t('admin.variant_overrides.index.new_powertip')}" } }
+    %span.text-big.with-tip.icon-question-sign{ data: { powertip: "#{t('admin.variant_overrides.index.inventory_powertip')}" }, "ng-show": 'views.inventory.visible' }
+    %span.text-big.with-tip.icon-question-sign{ data: { powertip: "#{t('admin.variant_overrides.index.hidden_powertip')}" }, "ng-show": 'views.hidden.visible' }
+    %span.text-big.with-tip.icon-question-sign{ data: { powertip: "#{t('admin.variant_overrides.index.new_powertip')}" }, "ng-show": 'views.new.visible' }
   .four.columns &nbsp;
-  .four.columns.omega{ ng: { show: 'views.new.visible' } }
-    %button.fullwidth{ type: 'button', ng: { click: "selectView('inventory')" } }
+  .four.columns.omega{ "ng-show": 'views.new.visible' }
+    %button.fullwidth{ type: 'button', "ng-click": "selectView('inventory')" }
       %i.icon-chevron-left
       = t('.back_to_my_inventory')
-  .four.columns.omega{ng: { show: 'views.inventory.visible' } }
+  .four.columns.omega{ "ng-show": 'views.inventory.visible' }
     %columns-dropdown{ action: "#{controller_name}_#{action_name}" }

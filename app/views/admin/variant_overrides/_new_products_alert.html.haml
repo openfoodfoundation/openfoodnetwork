@@ -1,5 +1,3 @@
-%div{ ng: { show: '(newProductCount = (products | hubPermissions:hubPermissions:hub_id | newInventoryProducts:hub_id).length) > 0 && !views.new.visible && !alertDismissed' } }
+%div{ "ng-show": '(newProductCount = (products | hubPermissions:hubPermissions:hub_id | newInventoryProducts:hub_id).length) > 0 && !views.new.visible && !alertDismissed' }
   %hr.divider.sixteen.columns.alpha.omega
-  %alert-row{ message: "#{t('admin.variant_overrides.index.new_products_alert_message', new_product_count: '{{ newProductCount }}')}",
-    dismissed: "alertDismissed",
-    button: { text: "#{t('admin.variant_overrides.index.review_now')}", action: "selectView('new')" } }
+  %alert-row{ message: "#{t('admin.variant_overrides.index.new_products_alert_message', new_product_count: '{{ newProductCount }}')}", dismissed: "alertDismissed", "button-text": "#{t('admin.variant_overrides.index.review_now')}", "button-action": "selectView('new')" }

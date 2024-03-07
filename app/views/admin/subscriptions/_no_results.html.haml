@@ -1,7 +1,7 @@
-%div.margin-top-30.text-center{ ng: { show: 'shop_id && !RequestMonitor.loading && filteredSubscriptions.length == 0' } }
-  .no-results{ ng: { show: '!filtersApplied()' } }
+%div.margin-top-30.text-center{ "ng-show": 'shop_id && !RequestMonitor.loading && filteredSubscriptions.length == 0' }
+  .no-results{ "ng-show": '!filtersApplied()' }
     %h1.margin-bottom-20=t('.no_subscriptions')
     %span.text-big=t('.why_dont_you_add_one')
 
-  .no-results{ ng: { show: 'filtersApplied()' } }
+  .no-results{ "ng-show": 'filtersApplied()' }
     %h1=t('.no_matching_subscriptions')

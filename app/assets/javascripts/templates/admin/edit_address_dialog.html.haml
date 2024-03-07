@@ -1,12 +1,12 @@
 #edit-address-dialog
   %h2 {{ addressType === 'bill_address' ?  "#{t('admin.customers.index.edit_bill_address')}" : "#{t('admin.customers.index.edit_ship_address')}" }}
-  %form{ name: 'edit_address_form', novalidate: true, ng: { submit: 'updateAddress()'}}
+  %form{ name: 'edit_address_form', novalidate: true, "ng-submit": 'updateAddress()' }
     .row
       {{ 'admin.customers.index.required_fileds' | t }}
       (
       %span.required *
       )
-    .error{ ng: { repeat: "error in errors", bind: "error" } }
+    .error{ "ng-repeat": "error in errors", "ng-bind": "error" }
 
     %table.no-borders
       %tr
@@ -14,61 +14,55 @@
           {{ 'first_name' | t }}
           %span.required *
         %td
-          %input{ type: 'text', name: 'firstname', required: true, ng: { model: 'address.firstname'} }
+          %input{ type: 'text', name: 'firstname', required: true, "ng-model": 'address.firstname' }
       %tr
         %td
           {{ 'last_name' | t }}
           %span.required *
         %td
-          %input{ type: 'text', name: 'lastname', required: true, ng: { model: 'address.lastname'} }
+          %input{ type: 'text', name: 'lastname', required: true, "ng-model": 'address.lastname' }
       %tr
         %td
           {{ 'address' | t }}
           %span.required *
         %td
-          %input{ type: 'text', name: 'address1', required: true, ng: { model: 'address.address1'} }
+          %input{ type: 'text', name: 'address1', required: true, "ng-model": 'address.address1' }
       %tr
         %td
           {{ 'address2' | t }}
         %td
-          %input{ type: 'text', name: 'address2', ng: { model: 'address.address2'} }
+          %input{ type: 'text', name: 'address2', "ng-model": 'address.address2' }
       %tr
         %td
           {{ 'city' | t }}
           %span.required *
         %td
-          %input{ type: 'text', name: 'city', required: true, ng: { model: 'address.city'} }
+          %input{ type: 'text', name: 'city', required: true, "ng-model": 'address.city' }
       %tr
         %td
           {{ 'postcode' | t }}
           %span.required *
         %td
-          %input{ type: 'text', name: 'zipcode', required: true, ng: { model: 'address.zipcode'} }
+          %input{ type: 'text', name: 'zipcode', required: true, "ng-model": 'address.zipcode' }
       %tr
         %td
           {{ 'country' | t }}
           %span.required *
         %td
-          %input.ofn-select2.fullwidth#country_id{ type: 'number',
-          name: 'country_id', required: true,
-          placeholder: "{{ 'admin.customers.index.select_country' | t }}",
-          data: 'availableCountries', ng: { model: 'address.country_id' } }
+          %input.ofn-select2.fullwidth#country_id{ type: 'number', name: 'country_id', required: true, placeholder: "{{ 'admin.customers.index.select_country' | t }}", data: 'availableCountries', "ng-model": 'address.country_id' }
       %tr
         %td
           {{ 'state' | t }}
           %span.required *
         %td
-          %input.ofn-select2.fullwidth#state_id{ type: 'number',
-          name: 'state_id', required: true,
-          placeholder: "{{ 'admin.customers.index.select_state' | t }}",
-          data: 'states', ng: { model: 'address.state_id' } }
+          %input.ofn-select2.fullwidth#state_id{ type: 'number', name: 'state_id', required: true, placeholder: "{{ 'admin.customers.index.select_state' | t }}", data: 'states', "ng-model": 'address.state_id' }
 
       %tr
         %td
           {{ 'phone' | t }}
           %span.required *
         %td
-          %input{ type: 'text', name: 'phone', required: true, ng: { model: 'address.phone'} }
+          %input{ type: 'text', name: 'phone', required: true, "ng-model": 'address.phone' }
 
     .text-center
       %input.button.red.icon-plus{ type: 'submit', value: t('admin.customers.index.update_address')}

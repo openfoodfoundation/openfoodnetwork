@@ -11,5 +11,5 @@
         {{ 'legal.cookies_banner.cookies_policy_link' | t}}
 
   .large-3.columns
-    %button{ng: { controller:"CookiesBannerCtrl", click: "acceptCookies()" }}
+    %button{ "ng-controller": "CookiesBannerCtrl", "ng-click": "acceptCookies()" }
       {{ 'legal.cookies_banner.cookies_accept_button' | t}}

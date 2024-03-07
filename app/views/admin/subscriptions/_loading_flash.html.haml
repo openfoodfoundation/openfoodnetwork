@@ -1,4 +1,4 @@
-%div.sixteen.columns.alpha.omega#loading{ ng: { cloak: true, if: 'shop_id && RequestMonitor.loading' } }
+%div.sixteen.columns.alpha.omega#loading{ "ng-cloak": true, "ng-if": 'shop_id && RequestMonitor.loading' }
   = render partial: "components/admin_spinner"
   %h1
     = t('.loading')

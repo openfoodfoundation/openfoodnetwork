@@ -1,15 +1,15 @@
 = render :partial => "spree/admin/variants/autocomplete", :formats => :js
 %script{ type: "text/ng-template", id: "admin/panels/subscription_products.html" }
-  %form{ name: 'subscription_form', ng: { controller: 'ProductsPanelController' } }
+  %form{ name: 'subscription_form', "ng-controller": 'ProductsPanelController' }
     %div{ style: 'width: 90%; margin: auto;' }
       = render 'products'
-      %a.button.update.fullwidth{ ng: { class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
-        %span{ ng: {hide: "saved() || saving" } }
+      %a.button.update.fullwidth{ "ng-class": "{disabled: saved() && !saving, saving: saving}", "ng-click": "save()" }
+        %span{ "ng-hide": "saved() || saving" }
           = t('.save')
           %i.icon-save
-        %span{ ng: {show: "saved() && !saving" } }
+        %span{ "ng-show": "saved() && !saving" }
           = t('.saved')
           %i.icon-ok-sign
-        %span{ ng: {show: "saving" } }
+        %span{ "ng-show": "saving" }
           = t('.saving')
           %i.icon-refresh

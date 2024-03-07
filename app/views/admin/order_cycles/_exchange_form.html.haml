@@ -1,4 +1,4 @@
-%tr{ ng: { class: "'#{type} #{type}-{{ exchange.enterprise_id }}'" } }
+%tr{ "ng-class": "'#{type} #{type}-{{ exchange.enterprise_id }}'" }
   %td{:class => "#{type}_name"} {{ enterprises[exchange.enterprise_id].name }}
   %td.products.panel-toggle.text-center{ name: "products" }
     {{ exchangeSelectedVariants(exchange) }} / {{ exchangeTotalVariants(exchange) }}
@@ -7,7 +7,7 @@
     %td.receival-details
       = text_field_tag 'order_cycle_incoming_exchange_{{ $index }}_receival_instructions', '', 'id' => 'order_cycle_incoming_exchange_{{ $index }}_receival_instructions', 'placeholder' => t('.receival_instructions_placeholder'), 'ng-model' => 'exchange.receival_instructions'
   - if type == 'distributor'
-    %td.tags.panel-toggle.text-center{ name: "tags", ng: { if: 'enterprises[exchange.enterprise_id].managed || order_cycle.viewing_as_coordinator' } }
+    %td.tags.panel-toggle.text-center{ name: "tags", "ng-if": 'enterprises[exchange.enterprise_id].managed || order_cycle.viewing_as_coordinator' }
       {{ exchange.tags.length }}
     %td.collection-details
       = text_field_tag 'order_cycle_outgoing_exchange_{{ $index }}_pickup_time', '', 'ng-init' => 'setPickupTimeFieldDirty($index, exchange.pickup_time)', 'id' => 'order_cycle_outgoing_exchange_{{ $index }}_pickup_time', 'required' => 'required', 'placeholder' => t('.pickup_time_placeholder'), 'ng-model' => 'exchange.pickup_time', 'ng-disabled' => '!enterprises[exchange.enterprise_id].managed && !order_cycle.viewing_as_coordinator', 'maxlength' => 35
@@ -16,7 +16,7 @@
       = text_field_tag 'order_cycle_outgoing_exchange_{{ $index }}_pickup_instructions', '', 'id' => 'order_cycle_outgoing_exchange_{{ $index }}_pickup_instructions', 'placeholder' => t('.pickup_instructions_placeholder'), 'ng-model' => 'exchange.pickup_instructions', 'ng-disabled' => '!enterprises[exchange.enterprise_id].managed && !order_cycle.viewing_as_coordinator'
       %span.icon-question-sign{'ofn-with-tip' => t('.pickup_instructions_tip')}
   %td.fees
-    %ol{ ng: { show: 'enterprises[exchange.enterprise_id].managed || order_cycle.viewing_as_coordinator' } }
+    %ol{ "ng-show": 'enterprises[exchange.enterprise_id].managed || order_cycle.viewing_as_coordinator' }
       %li{'ng-repeat' => 'enterprise_fee in exchange.enterprise_fees'}
         = select_tag 'order_cycle_{{ exchangeDirection(exchange) }}_exchange_{{ $parent.$index }}_enterprise_fees_{{ $index }}_enterprise_id', nil, {'id' => 'order_cycle_{{ exchangeDirection(exchange) }}_exchange_{{ $parent.$index }}_enterprise_fees_{{ $index }}_enterprise_id', 'ng-model' => 'enterprise_fee.enterprise_id', 'ng-options' => 'enterprise.id as enterprise.name for enterprise in enterprisesWithFees()'}
 

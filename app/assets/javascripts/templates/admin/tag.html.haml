@@ -1,8 +1,8 @@
 .tag-template
   %div
-    %span.tag-with-rules{ ng: { if: "data.rules" }, "ofn-with-tip" => "{{ 'admin.tag_has_rules' | t:{num: data.rules} }}" }
+    %span.tag-with-rules{ "ofn-with-tip": "{{ 'admin.tag_has_rules' | t:{num: data.rules} }}", "ng-if": "data.rules" }
       {{$getDisplayText()}}
-    %span{ ng: { if: "!data.rules" } }
+    %span{ "ng-if": "!data.rules" }
       {{$getDisplayText()}}
-    %a.remove-button{ ng: {click: "$removeTag()"} }
+    %a.remove-button{ "ng-click": "$removeTag()" }
       &#10006;

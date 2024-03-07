@@ -1,6 +1,6 @@
-.row.enterprise_producer_panel{ ng: { controller: 'indexProducerPanelCtrl' } }
+.row.enterprise_producer_panel{ "ng-controller": 'indexProducerPanelCtrl' }
   .alpha.eight.columns
-    .info{ ng: { show: "enterprise.is_primary_producer==true" } }
+    .info{ "ng-show": "enterprise.is_primary_producer==true" }
       %h3
         {{ 'js.admin.panels.enterprise_producer.producer' | t }}
       %p
@@ -8,7 +8,7 @@
       %p
         {{ 'js.admin.panels.enterprise_producer.producer_text2' | t }}
 
-    .info{ ng: { show: "enterprise.is_primary_producer==false" } }
+    .info{ "ng-show": "enterprise.is_primary_producer==false" }
       %h3
         {{ 'js.admin.panels.enterprise_producer.non_producer' | t }}
       %p
@@ -17,7 +17,7 @@
         {{ 'js.admin.panels.enterprise_producer.non_producer_text2' | t }}
 
   .omega.eight.columns
-    %a.button.selector.producer{ ng: { click: 'enterprise.owned && changeToProducer()', class: "{selected: enterprise.is_primary_producer==true, disabled: !enterprise.owned}" } }
+    %a.button.selector.producer{ "ng-click": 'enterprise.owned && changeToProducer()', "ng-class": "{selected: enterprise.is_primary_producer==true, disabled: !enterprise.owned}" }
       .top
         %h3
           {{ 'js.admin.panels.enterprise_producer.producer' | t }}
@@ -26,7 +26,7 @@
       .bottom
         {{ 'js.admin.panels.enterprise_producer.producer_example' | t }}
 
-    %a.button.selector.non-producer{ ng: { click: 'enterprise.owned && changeToNonProducer()', class: "{selected: enterprise.is_primary_producer==false, disabled: !enterprise.owned}" } }
+    %a.button.selector.non-producer{ "ng-click": 'enterprise.owned && changeToNonProducer()', "ng-class": "{selected: enterprise.is_primary_producer==false, disabled: !enterprise.owned}" }
       .top
         %h3
           {{ 'js.admin.panels.enterprise_producer.non_producer' | t }}
@@ -35,13 +35,13 @@
       .bottom
         {{ 'js.admin.panels.enterprise_producer.non_producer_example' | t }}
 
-    %a.button.update.fullwidth{ ng: { show: "enterprise.owned", class: "{disabled: saved() && !saving, saving: saving}", click: "save()" } }
-      %span{ ng: {hide: "saved() || saving" } }
+    %a.button.update.fullwidth{ "ng-show": "enterprise.owned", "ng-class": "{disabled: saved() && !saving, saving: saving}", "ng-click": "save()" }
+      %span{ "ng-hide": "saved() || saving" }
         {{ 'js.admin.panels.save' | t }}
         %i.icon-save
-      %span{ ng: {show: "saved() && !saving" } }
+      %span{ "ng-show": "saved() && !saving" }
         {{ 'js.admin.panels.saved' | t }}
         %i.icon-ok-sign
-      %span{ ng: {show: "saving" } }
+      %span{ "ng-show": "saving" }
         {{ 'js.admin.panels.saving' | t }}
         %i.icon-refresh

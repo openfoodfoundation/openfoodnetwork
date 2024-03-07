@@ -1,10 +1,2 @@
-%tags-input{ template: 'admin/tag.html',
-  "placeholder" => t('admin.order_cycles.form.add_a_tag'),
-  ng: { model: 'object[tagsAttr]', class: "{'limit-reached': limitReached}"},
-  on: { tag: { added: 'tagAdded($tag)', removed:'tagRemoved()' } } }
-  %auto-complete{ ng: { if: "findTags" }, source: "findTags({query: $query})",
-                 template: "admin/tag_autocomplete.html",
-                 "min-length" => "0",
-                 "load-on-focus" => "true",
-                 "load-on-empty" => "true",
-                 "max-results-to-show" => "32"}
+%tags-input{ template: 'admin/tag.html', placeholder: t('admin.order_cycles.form.add_a_tag'), "ng-model": 'object[tagsAttr]', "ng-class": "{'limit-reached': limitReached}", "on-tag-added": 'tagAdded($tag)', "on-tag-removed": 'tagRemoved()' }
+  %auto-complete{ source: "findTags({query: $query})", template: "admin/tag_autocomplete.html", "min-length": "0", "load-on-focus": "true", "load-on-empty": "true", "max-results-to-show": "32", "ng-if": "findTags" }

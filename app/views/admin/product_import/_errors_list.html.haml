@@ -1,9 +1,9 @@
-%div.import-errors{ng: {controller: 'ImportFeedbackCtrl', repeat: "(line_number, entry ) in (entries | entriesFilterValid:'invalid')"}}
+%div.import-errors{ "ng-controller": 'ImportFeedbackCtrl', "ng-repeat": "(line_number, entry ) in (entries | entriesFilterValid:'invalid')" }
   %p.line
     %strong
       #{t('admin.product_import.import.item_line')} {{line_number}}:
     %span {{entry.attributes.name}}
-    %span{ng: {if: "entry.attributes.display_name"}}
+    %span{ "ng-if": "entry.attributes.display_name" }
       ( {{entry.attributes.display_name}} )
-  %p.error{ng: {repeat: "(attribute, error) in entry.errors", show: "ignore_fields.indexOf(attribute) < 0" }}
+  %p.error{ "ng-repeat": "(attribute, error) in entry.errors", "ng-show": "ignore_fields.indexOf(attribute) < 0" }
     &nbsp;-&nbsp; {{error}}

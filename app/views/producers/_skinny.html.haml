@@ -4,14 +4,14 @@
       .row.vertical-align-middle
         .columns.small-12
           %a.is_distributor{"ng-href" => "{{::producer.path}}", "ng-attr-target" => "{{ embedded_layout ? '_blank' : undefined}}", "data-is-link" => "true"}
-            %i{ng: {class: "::producer.producer_icon_font"}}
+            %i{ "ng-class": "::producer.producer_icon_font" }
             %span.margin-top
               %strong{"ng-bind" => "::producer.name"}
 
     %span.producer-name{"ng-if" => "::!producer.is_distributor" }
       .row.vertical-align-middle
         .columns.small-12
-          %i{ng: {class: "::producer.producer_icon_font"}}
+          %i{ "ng-class": "::producer.producer_icon_font" }
           %span.margin-top
             %strong{"ng-bind" => "::producer.name"}
 

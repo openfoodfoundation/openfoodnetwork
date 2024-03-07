@@ -8,9 +8,9 @@
           %h5
             = t('.by_default')
           %i.text-big.icon-question-sign{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "tag_rule_help_modal" }
-  .no_rules{ ng: { show: "defaultTagGroup.rules.length == 0" } }
+  .no_rules{ "ng-show": "defaultTagGroup.rules.length == 0" }
     = t('.no_rules_yet')
-  .tag_rule{ ng: { repeat: "rule in defaultTagGroup.rules" } }
+  .tag_rule{ "ng-repeat": "rule in defaultTagGroup.rules" }
   .add_rule.text-center
     %input.button.icon-plus{ type: 'button', value: t('.add_new_button'), "add-new-rule-to" => "addNewRuleTo", "tag-group" => "defaultTagGroup", "new-tag-rule-dialog" => true }
 

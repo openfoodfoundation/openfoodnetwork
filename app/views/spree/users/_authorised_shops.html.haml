@@ -5,13 +5,7 @@
   %tr
     %th= t(".shop_name")
     %th= t(".allow_charges?")
-  %tr.customer{ id: "customer{{ customer.id }}", ng: { repeat: "customer in customers" } }
-    %td.shop{ ng: { bind: 'shopsByID[customer.enterprise_id].name' } }
+  %tr.customer{ id: "customer{{ customer.id }}", "ng-repeat": "customer in customers" }
+    %td.shop{ "ng-bind": 'shopsByID[customer.enterprise_id].name' }
     %td.allow_charges{ tooltip: "{{ hasOneDefaultSavedCards() ? null : \'" + t('.no_default_saved_cards_tooltip') + "\' }}" }
-      %input{ type: 'checkbox',
-        name: 'allow_charges',
-        ng: { model: 'customer.allow_charges',
-          change: 'customer.update()',
-          disabled: "!hasOneDefaultSavedCards()",
-          "true-value" => "true",
-          "false-value" => "false" } }
+      %input{ type: 'checkbox', name: 'allow_charges', "ng-model": 'customer.allow_charges', "ng-change": 'customer.update()', "ng-disabled": "!hasOneDefaultSavedCards()", "ng-true-value": "true", "ng-false-value": "false" }

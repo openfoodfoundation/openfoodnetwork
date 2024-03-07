@@ -17,9 +17,9 @@
   - if @shopfront_layout == 'embedded'
     = render partial: 'shop/blocked_cookies'
 
-  .alert-box.changeable-orders-alert.info.animate-show{ ng: { show: "alert.visible && alert.html", cloak: true } }
-    %span{ ng: { bind: { html: "alert.html" } } }
-    %a.close{ ng: { click: "alert.close()" } } &times;
+  .alert-box.changeable-orders-alert.info.animate-show{ "ng-show": "alert.visible && alert.html", "ng-cloak": true }
+    %span{ "ng-bind-html": "alert.html" }
+    %a.close{ "ng-click": "alert.close()" } &times;
 
   - content_for :order_cycle_form do
     = render partial: "change_order_cycle"

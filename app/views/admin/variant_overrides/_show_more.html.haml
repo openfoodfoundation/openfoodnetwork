@@ -1,4 +1,4 @@
-.text-center{ ng: { show: "filteredProducts.length > productLimit" } }
-  %input{ type: 'button', value: t(:show_more), ng: { click: 'productLimit = productLimit + 10' } }
+.text-center{ "ng-show": "filteredProducts.length > productLimit" }
+  %input{ type: 'button', value: t(:show_more), "ng-click": 'productLimit = productLimit + 10' }
 
-  %input{ type: 'button', value: "#{t(:show_all)} ({{ filteredProducts.length - productLimit }}  More)", ng: { click: 'productLimit = filteredProducts.length' } }
+  %input{ type: 'button', value: "#{t(:show_all)} ({{ filteredProducts.length - productLimit }}  More)", "ng-click": 'productLimit = filteredProducts.length' }
