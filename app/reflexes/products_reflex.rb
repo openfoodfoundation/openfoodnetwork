@@ -116,11 +116,11 @@ class ProductsReflex < ApplicationReflex
                              producer_options: producers, producer_id: @producer_id,
                              category_options: categories, category_id: @category_id,
                              flashes: flash })
-    ).broadcast
+    )
 
     cable_ready.replace_state(
       url: current_url,
-    ).broadcast_later
+    )
 
     morph :nothing
   end
@@ -133,7 +133,7 @@ class ProductsReflex < ApplicationReflex
     cable_ready.replace(
       selector: "#products-form",
       html: render(partial: "admin/products_v3/table", locals:)
-    ).broadcast
+    )
     morph :nothing
 
     # dunno why this doesn't work.
