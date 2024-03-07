@@ -82,7 +82,7 @@ describe "spree/admin/orders/invoice.html.haml" do
 
     render
     expect(rendered).to have_content "Shipping: Pickup"
-    expect(rendered).to_not have_content adas_address_display
+    expect(rendered).not_to have_content adas_address_display
   end
 
   it "displays order note on invoice when note is given" do

@@ -182,7 +182,7 @@ module Admin
                                customer: { email: 'new.email@gmail.com' }
             expect(response).to redirect_to unauthorized_path
             expect(assigns(:customer)).to eq nil
-            expect(customer.email).to_not eq 'new.email@gmail.com'
+            expect(customer.email).not_to eq 'new.email@gmail.com'
           end
         end
       end

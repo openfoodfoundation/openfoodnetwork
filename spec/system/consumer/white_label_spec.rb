@@ -381,7 +381,7 @@ describe 'White label setting' do
         shared_examples "shows the right link on the logo" do
           it "shows the white label logo link" do
             within ".nav-logo .ofn-logo" do
-              expect(page).to_not have_selector "a[href='/']"
+              expect(page).not_to have_selector "a[href='/']"
               expect(page).to have_selector "a[href*='https://www.example.com']"
             end
           end

@@ -44,7 +44,7 @@ describe "Order Management" do
       it "allows the user to see the details" do
         # Cannot load the page without token
         visit order_path(order)
-        expect(page).to_not be_confirmed_order_page
+        expect(page).not_to be_confirmed_order_page
 
         # Can load the page with token
         visit order_path(order, order_token: order.token)
@@ -87,7 +87,7 @@ describe "Order Management" do
       it "allows the user to see order details after login" do
         # Cannot load the page without signing in
         visit order_path(order)
-        expect(page).to_not be_confirmed_order_page
+        expect(page).not_to be_confirmed_order_page
 
         # Can load the page after signing in
         fill_in_and_submit_login_form user

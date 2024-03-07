@@ -246,13 +246,13 @@ describe "full-page cart" do
 
             # Quantity field clearly marked as invalid and "Update" button is not highlighted
             expect(page).to have_selector "#order_line_items_attributes_0_quantity.ng-invalid-stock"
-            expect(page).to_not have_selector "#update-button.alert"
+            expect(page).not_to have_selector "#update-button.alert"
 
             fill_in "order_line_items_attributes_0_quantity", with: 4
 
             # Quantity field not marked as invalid and "Update" button is
             # highlighted after correction
-            expect(page).to_not have_selector(
+            expect(page).not_to have_selector(
               "#order_line_items_attributes_0_quantity.ng-invalid-stock"
             )
             expect(page).to have_selector "#update-button.alert"
@@ -260,8 +260,8 @@ describe "full-page cart" do
             click_button 'Update'
 
             # "Continue Shopping" and "Checkout" buttons are not disabled after cart is updated
-            expect(page).to_not have_selector "a.continue-shopping[disabled=disabled]"
-            expect(page).to_not have_selector "a#checkout-link[disabled=disabled]"
+            expect(page).not_to have_selector "a.continue-shopping[disabled=disabled]"
+            expect(page).not_to have_selector "a#checkout-link[disabled=disabled]"
           end
         end
       end
@@ -318,7 +318,7 @@ describe "full-page cart" do
         end
 
         it "doesn't throw an error" do
-          expect{ visit main_app.cart_path }.to_not raise_error
+          expect{ visit main_app.cart_path }.not_to raise_error
         end
       end
     end

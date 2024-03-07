@@ -35,14 +35,14 @@ describe Spree::OrderMailer do
     end
 
     it "doesn't aggressively escape double quotes body" do
-      expect(email.body).to_not include("&quot;")
+      expect(email.body).not_to include("&quot;")
     end
 
     it "accepts an order id as an alternative to an Order object" do
       expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
       expect {
         described_class.confirm_email_for_customer(order.id).deliver_now
-      }.to_not raise_error
+      }.not_to raise_error
     end
 
     it "display the OFN header by default" do
@@ -55,7 +55,7 @@ describe Spree::OrderMailer do
       end
 
       it 'does not display the OFN navigation' do
-        expect(email.body).to_not include(ContentConfig.url_for(:footer_logo))
+        expect(email.body).not_to include(ContentConfig.url_for(:footer_logo))
       end
     end
   end
@@ -91,7 +91,7 @@ describe Spree::OrderMailer do
       expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
       expect {
         Spree::OrderMailer.cancel_email(order.id).deliver_now
-      }.to_not raise_error
+      }.not_to raise_error
     end
   end
 
@@ -115,11 +115,11 @@ describe Spree::OrderMailer do
     let!(:cancel_email) { Spree::OrderMailer.cancel_email(order) }
 
     specify do
-      expect(confirmation_email.body).to_not include("Ineligible Adjustment")
+      expect(confirmation_email.body).not_to include("Ineligible Adjustment")
     end
 
     specify do
-      expect(cancel_email.body).to_not include("Ineligible Adjustment")
+      expect(cancel_email.body).not_to include("Ineligible Adjustment")
     end
   end
 
@@ -241,7 +241,7 @@ describe Spree::OrderMailer do
         expect(renderer).to receive(:render_to_string).with(order, nil).and_return("invoice")
         expect {
           email.deliver_now
-        }.to_not raise_error
+        }.not_to raise_error
         expect(deliveries.count).to eq(1)
         expect(deliveries.first.attachments.count).to eq(1)
         expect(deliveries.first.attachments.first.filename).to eq(attachment_filename)

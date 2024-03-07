@@ -38,7 +38,7 @@ describe "Shops caching", caching: true do
 
         visit shops_path
 
-        expect(page).to_not have_content "New Name" # Displayed name is unchanged
+        expect(page).not_to have_content "New Name" # Displayed name is unchanged
       end
 
       # A while later...

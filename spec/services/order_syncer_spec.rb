@@ -171,7 +171,7 @@ describe OrderSyncer do
         it "updates all bill_address attrs and ship_address names + phone" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
-          expect(syncer.order_update_issues.keys).to_not include order.id
+          expect(syncer.order_update_issues.keys).not_to include order.id
           order.reload;
           expect(order.bill_address.firstname).to eq "Bill"
           expect(order.bill_address.lastname).to eq bill_address_attrs["lastname"]
@@ -216,7 +216,7 @@ describe OrderSyncer do
         it "only updates bill_address attrs" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
-          expect(syncer.order_update_issues.keys).to_not include order.id
+          expect(syncer.order_update_issues.keys).not_to include order.id
           order.reload;
           expect(order.bill_address.firstname).to eq "Bill"
           expect(order.bill_address.lastname).to eq bill_address_attrs["lastname"]
@@ -278,7 +278,7 @@ describe OrderSyncer do
       it "does not change the ship address" do
         subscription.assign_attributes(params)
         expect(syncer.sync!).to be true
-        expect(syncer.order_update_issues.keys).to_not include order.id
+        expect(syncer.order_update_issues.keys).not_to include order.id
         order.reload;
         expect(order.ship_address.firstname).to eq bill_address_attrs["firstname"]
         expect(order.ship_address.lastname).to eq bill_address_attrs["lastname"]
@@ -355,7 +355,7 @@ describe OrderSyncer do
         it "updates ship_address attrs" do
           subscription.assign_attributes(params)
           expect(syncer.sync!).to be true
-          expect(syncer.order_update_issues.keys).to_not include order.id
+          expect(syncer.order_update_issues.keys).not_to include order.id
           order.reload;
           expect(order.ship_address.firstname).to eq "Ship"
           expect(order.ship_address.lastname).to eq ship_address_attrs["lastname"]

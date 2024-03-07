@@ -81,7 +81,7 @@ describe Admin::SubscriptionsController, type: :controller do
             expect(json_response.count).to be 1
             ids = json_response.map{ |so| so['id'] }
             expect(ids).to include subscription2.id
-            expect(ids).to_not include subscription.id
+            expect(ids).not_to include subscription.id
           end
         end
       end
@@ -134,7 +134,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
       context 'when I submit insufficient params' do
         it 'returns errors' do
-          expect{ spree_post :create, params }.to_not change{ Subscription.count }
+          expect{ spree_post :create, params }.not_to change{ Subscription.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method',
                                                           'shipping_method', 'begins_at'
@@ -168,7 +168,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         it 'returns errors' do
-          expect{ spree_post :create, params }.to_not change{ Subscription.count }
+          expect{ spree_post :create, params }.not_to change{ Subscription.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method',
                                                           'shipping_method', 'ends_at'
@@ -197,7 +197,7 @@ describe Admin::SubscriptionsController, type: :controller do
 
         context 'where the specified variants are not available from the shop' do
           it 'returns an error' do
-            expect{ spree_post :create, params }.to_not change{ Subscription.count }
+            expect{ spree_post :create, params }.not_to change{ Subscription.count }
             json_response = JSON.parse(response.body)
             expect(json_response['errors']['subscription_line_items'])
               .to eq ["#{variant.product.name} - #{variant.full_name} " \
@@ -343,7 +343,7 @@ describe Admin::SubscriptionsController, type: :controller do
         end
 
         it 'returns errors' do
-          expect{ spree_post :update, params }.to_not change{ Subscription.count }
+          expect{ spree_post :update, params }.not_to change{ Subscription.count }
           json_response = JSON.parse(response.body)
           expect(json_response['errors'].keys).to include 'payment_method', 'shipping_method'
           subscription.reload
@@ -387,7 +387,7 @@ describe Admin::SubscriptionsController, type: :controller do
           context 'where the specified variants are not available from the shop' do
             it 'returns an error' do
               expect{ spree_post :update, params }
-                .to_not change{ subscription.subscription_line_items.count }
+                .not_to change{ subscription.subscription_line_items.count }
               json_response = JSON.parse(response.body)
               expect(json_response['errors']['subscription_line_items'])
                 .to eq ["#{product2.name} - #{variant2.full_name} " \
@@ -478,7 +478,7 @@ describe Admin::SubscriptionsController, type: :controller do
               it 'renders the cancelled subscription as json, and does not cancel the open order' do
                 spree_put :cancel, params
                 json_response = JSON.parse(response.body)
-                expect(json_response['canceled_at']).to_not be nil
+                expect(json_response['canceled_at']).not_to be nil
                 expect(json_response['id']).to eq subscription.id
                 expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'complete'
@@ -498,7 +498,7 @@ describe Admin::SubscriptionsController, type: :controller do
               it 'renders the cancelled subscription as json, and cancels the open order' do
                 spree_put :cancel, params
                 json_response = JSON.parse(response.body)
-                expect(json_response['canceled_at']).to_not be nil
+                expect(json_response['canceled_at']).not_to be nil
                 expect(json_response['id']).to eq subscription.id
                 expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'canceled'
@@ -512,7 +512,7 @@ describe Admin::SubscriptionsController, type: :controller do
             it 'renders the cancelled subscription as json' do
               spree_put :cancel, params
               json_response = JSON.parse(response.body)
-              expect(json_response['canceled_at']).to_not be nil
+              expect(json_response['canceled_at']).not_to be nil
               expect(json_response['id']).to eq subscription.id
               expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
             end
@@ -582,7 +582,7 @@ describe Admin::SubscriptionsController, type: :controller do
               it 'renders the paused subscription as json, and does not cancel the open order' do
                 spree_put :pause, params
                 json_response = JSON.parse(response.body)
-                expect(json_response['paused_at']).to_not be nil
+                expect(json_response['paused_at']).not_to be nil
                 expect(json_response['id']).to eq subscription.id
                 expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'complete'
@@ -602,7 +602,7 @@ describe Admin::SubscriptionsController, type: :controller do
               it 'renders the paused subscription as json, and cancels the open order' do
                 spree_put :pause, params
                 json_response = JSON.parse(response.body)
-                expect(json_response['paused_at']).to_not be nil
+                expect(json_response['paused_at']).not_to be nil
                 expect(json_response['id']).to eq subscription.id
                 expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
                 expect(order.reload.state).to eq 'canceled'
@@ -616,7 +616,7 @@ describe Admin::SubscriptionsController, type: :controller do
             it 'renders the paused subscription as json' do
               spree_put :pause, params
               json_response = JSON.parse(response.body)
-              expect(json_response['paused_at']).to_not be nil
+              expect(json_response['paused_at']).not_to be nil
               expect(json_response['id']).to eq subscription.id
               expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
             end
@@ -708,7 +708,7 @@ describe Admin::SubscriptionsController, type: :controller do
                   expect(json_response['id']).to eq subscription.id
                   expect(subscription.reload.paused_at).to be nil
                   expect(order.reload.state).to eq 'canceled'
-                  expect(proxy_order.reload.canceled_at).to_not be nil
+                  expect(proxy_order.reload.canceled_at).not_to be nil
                 end
               end
             end
@@ -771,7 +771,7 @@ describe Admin::SubscriptionsController, type: :controller do
       it "only loads Stripe and Cash payment methods" do
         controller.send(:load_form_data)
         expect(assigns(:payment_methods)).to include payment_method, stripe
-        expect(assigns(:payment_methods)).to_not include paypal
+        expect(assigns(:payment_methods)).not_to include paypal
       end
     end
   end

@@ -15,7 +15,7 @@ describe OrderCycle do
 
   it 'should not be valid when open date is after close date' do
     oc = build(:simple_order_cycle, orders_open_at: Time.zone.now, orders_close_at: 1.minute.ago)
-    expect(oc).to_not be_valid
+    expect(oc).not_to be_valid
   end
 
   it "has a coordinator and associated fees" do
@@ -246,7 +246,7 @@ describe OrderCycle do
           it "does not consider soft-deleted variants to be currently distributed in the oc" do
             p2_v.delete
 
-            expect(oc.variants_distributed_by(d1)).to_not include p2_v
+            expect(oc.variants_distributed_by(d1)).not_to include p2_v
           end
         end
       end
@@ -564,12 +564,12 @@ describe OrderCycle do
 
     it "it does not reset opened_at if open date is changed to be earlier" do
       expect{ oc.update!(orders_open_at: 3.days.ago) }
-        .to_not change { oc.opened_at }
+        .not_to change { oc.opened_at }
     end
 
     it "it does not reset opened_at if open date does not change" do
       expect{ oc.update!(orders_close_at: 1.day.from_now) }
-        .to_not change { oc.opened_at }
+        .not_to change { oc.opened_at }
     end
   end
 
@@ -580,21 +580,21 @@ describe OrderCycle do
     }
 
     it "reset processed_at if close date change in future" do
-      expect(oc.processed_at).to_not be_nil
+      expect(oc.processed_at).not_to be_nil
       oc.update!(orders_close_at: 1.week.from_now)
       expect(oc.processed_at).to be_nil
     end
 
     it "it does not reset processed_at if close date is changed to be earlier" do
-      expect(oc.processed_at).to_not be_nil
+      expect(oc.processed_at).not_to be_nil
       oc.update!(orders_close_at: 2.days.ago)
-      expect(oc.processed_at).to_not be_nil
+      expect(oc.processed_at).not_to be_nil
     end
 
     it "it does not reset processed_at if close date does not change" do
-      expect(oc.processed_at).to_not be_nil
+      expect(oc.processed_at).not_to be_nil
       oc.update!(orders_open_at: 2.weeks.ago)
-      expect(oc.processed_at).to_not be_nil
+      expect(oc.processed_at).not_to be_nil
     end
   end
 

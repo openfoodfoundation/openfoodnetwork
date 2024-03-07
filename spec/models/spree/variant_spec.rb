@@ -37,7 +37,7 @@ describe Spree::Variant do
         expect(variant.tax_category).to eq default
         expect {
           variant.tax_category = nil
-        }.to_not change {
+        }.not_to change {
           variant.tax_category
         }
         expect(variant).to be_valid
@@ -358,7 +358,7 @@ describe Spree::Variant do
 
           it "lists any variants that are not listed as visible=false" do
             expect(variants).to include new_variant, visible_variant
-            expect(variants).to_not include hidden_variant
+            expect(variants).not_to include hidden_variant
           end
 
           context "when inventory items exist for other enterprises" do
@@ -379,7 +379,7 @@ describe Spree::Variant do
 
             it "lists any variants not listed as visible=false only for the relevant enterprise" do
               expect(variants).to include new_variant, visible_variant
-              expect(variants).to_not include hidden_variant
+              expect(variants).not_to include hidden_variant
             end
           end
         end
@@ -390,7 +390,7 @@ describe Spree::Variant do
 
         it "lists any variants that are listed as visible=true" do
           expect(variants).to include visible_variant
-          expect(variants).to_not include new_variant, hidden_variant
+          expect(variants).not_to include new_variant, hidden_variant
         end
       end
     end
@@ -415,7 +415,7 @@ describe Spree::Variant do
       it 'shows variants produced by the enterprise and any producers granting P-OC' do
         stockable_variants = Spree::Variant.stockable_by(shop)
         expect(stockable_variants).to include v1, v2
-        expect(stockable_variants).to_not include v3
+        expect(stockable_variants).not_to include v3
       end
     end
   end

@@ -19,3 +19,6 @@ Capybara/NegationMatcher:
 RSpec/ExpectChange:
   Enabled: true
   EnforcedStyle: block
+
+RSpec/NotToNot:
+  Enabled: true

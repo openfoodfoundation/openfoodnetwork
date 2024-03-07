@@ -172,7 +172,7 @@ describe Api::V0::VariantsController, type: :controller do
       variant = product.variants.first
       spree_delete :destroy, id: variant.to_param
 
-      expect(variant.reload).to_not be_deleted
+      expect(variant.reload).not_to be_deleted
       expect(assigns(:variant).errors[:product]).to include "must have at least one variant"
     end
   end

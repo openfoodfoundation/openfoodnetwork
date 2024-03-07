@@ -115,7 +115,7 @@ describe '
         # Order 2 and 3 should show, but not 4
         expect(page).to have_content order2.number
         expect(page).to have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order4.number
       end
 
       it "filter by distributors" do
@@ -126,7 +126,7 @@ describe '
 
         # Order 2 and 4 should show, but not 3
         expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
+        expect(page).not_to have_content order3.number
         expect(page).to have_content order4.number
       end
 
@@ -138,7 +138,7 @@ describe '
         page.find('.filter-actions .button[type=submit]').click
 
         # Order 3 and 4 should show, but not 2
-        expect(page).to_not have_content order2.number
+        expect(page).not_to have_content order2.number
         expect(page).to have_content order3.number
         expect(page).to have_content order4.number
       end
@@ -149,9 +149,9 @@ describe '
         page.find('.filter-actions .button[type=submit]').click
 
         # Order 3 should show, but not 2 and 4
-        expect(page).to_not have_content order2.number
+        expect(page).not_to have_content order2.number
         expect(page).to have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order4.number
       end
 
       it "filter by customer first and last names" do
@@ -161,8 +161,8 @@ describe '
         page.find('.filter-actions .button[type=submit]').click
         # Order 2 should show, but not 3 and 4
         expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order3.number
+        expect(page).not_to have_content order4.number
 
         find("#clear_filters_button").click
         # filtering by last name
@@ -170,8 +170,8 @@ describe '
         fill_in "Last name begins with", with: billing_address4.lastname
         page.find('.filter-actions .button[type=submit]').click
         # Order 4 should show, but not 2 and 3
-        expect(page).to_not have_content order2.number
-        expect(page).to_not have_content order3.number
+        expect(page).not_to have_content order2.number
+        expect(page).not_to have_content order3.number
         expect(page).to have_content order4.number
 
         find("#clear_filters_button").click
@@ -194,16 +194,16 @@ describe '
         page.find('.filter-actions .button[type=submit]').click
         # Order 2 should show, but not 3 and 5
         expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order3.number
+        expect(page).not_to have_content order4.number
 
         find("#clear_filters_button").click
 
         tomselect_search_and_select "Signed, sealed, delivered", from: 'shipping_method_id'
         page.find('.filter-actions .button[type=submit]').click
         # Order 4 should show, but not 2 and 3
-        expect(page).to_not have_content order2.number
-        expect(page).to_not have_content order3.number
+        expect(page).not_to have_content order2.number
+        expect(page).not_to have_content order3.number
         expect(page).to have_content order4.number
       end
 
@@ -214,8 +214,8 @@ describe '
 
         # Order 2 should show, but not 3 and 4
         expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order3.number
+        expect(page).not_to have_content order4.number
       end
 
       it "filter by order state" do
@@ -236,10 +236,10 @@ describe '
 
         # Order 2 should show, but not 3 and 4
         expect(page).to have_content order.number
-        expect(page).to_not have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
-        expect(page).to_not have_content order5.number
+        expect(page).not_to have_content order2.number
+        expect(page).not_to have_content order3.number
+        expect(page).not_to have_content order4.number
+        expect(page).not_to have_content order5.number
       end
     end
 
@@ -496,11 +496,11 @@ describe '
         page.find("#listing_orders thead th:first-child input[type=checkbox]").trigger("click")
         expect(page.find(
                  "#listing_orders tbody tr td:first-child input[type=checkbox]"
-               )).to_not be_checked
+               )).not_to be_checked
         # disables print invoices button not clickable
         expect { find("span.icon-reorder", text: "ACTIONS").click }
           .to raise_error(Capybara::Cuprite::MouseEventFailed)
-        expect(page).to_not have_content "Print Invoices"
+        expect(page).not_to have_content "Print Invoices"
       end
     end
 
@@ -645,7 +645,7 @@ describe '
             uncheck "Send a cancellation email to the customer"
             expect {
               find_button("Cancel").click # Cancels the cancel action
-            }.to_not enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+            }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
           end
 
           page.find("span.icon-reorder", text: "ACTIONS").click
@@ -656,7 +656,7 @@ describe '
           within ".reveal-modal" do
             expect {
               find_button("Confirm").click # Confirms the cancel action
-            }.to_not enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+            }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
           end
 
           expect(page).to have_content("CANCELLED", count: 2)
@@ -697,7 +697,7 @@ describe '
           within ".reveal-modal" do
             expect {
               find_button("Confirm").click
-            }.to_not enqueue_job(ActionMailer::MailDeliveryJob)
+            }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
           end
         end
       end

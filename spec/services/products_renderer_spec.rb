@@ -195,13 +195,13 @@ describe ProductsRenderer do
 
     it "scopes variants to distribution" do
       expect(variants[p.id]).to include v1
-      expect(variants[p.id]).to_not include v2
+      expect(variants[p.id]).not_to include v2
     end
 
     it "does not render variants that have been hidden by the hub" do
       # but does render 'new' variants, ie. v1
       expect(variants[p.id]).to include v1, v3
-      expect(variants[p.id]).to_not include v4
+      expect(variants[p.id]).not_to include v4
     end
 
     context "when hub opts to only see variants in its inventory" do
@@ -212,7 +212,7 @@ describe ProductsRenderer do
       it "doesn't render variants that haven't been explicitly added to inventory for the hub" do
         # but does render 'new' variants, ie. v1
         expect(variants[p.id]).to include v3
-        expect(variants[p.id]).to_not include v1, v4
+        expect(variants[p.id]).not_to include v1, v4
       end
     end
   end

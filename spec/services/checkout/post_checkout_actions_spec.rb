@@ -22,7 +22,7 @@ describe Checkout::PostCheckoutActions do
       it "sets customer's terms_and_conditions to the current time if terms have been accepted" do
         params = { order: { terms_and_conditions_accepted: true } }
         postCheckoutActions.success(params, current_user)
-        expect(order.customer.terms_and_conditions_accepted_at).to_not be_nil
+        expect(order.customer.terms_and_conditions_accepted_at).not_to be_nil
       end
     end
 

@@ -75,7 +75,7 @@ module Spree
             it "is not valid" do
               line_item.quantity = 999
               validator.validate(line_item)
-              expect(line_item).to_not be_valid
+              expect(line_item).not_to be_valid
             end
           end
         end

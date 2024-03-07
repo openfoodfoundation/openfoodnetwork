@@ -63,7 +63,7 @@ describe Customer, type: :model do
       c1 = Customer.create(enterprise:, email: non_existing_email, user: user1)
       expect(c1.user).to eq user1
       expect(c1.email).to eq non_existing_email
-      expect(c1.email).to_not eq user1.email
+      expect(c1.email).not_to eq user1.email
 
       c2 = Customer.create(enterprise:, email: user2.email)
       expect(c2.user).to eq user2

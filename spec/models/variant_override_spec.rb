@@ -20,7 +20,7 @@ describe VariantOverride do
     }
 
     it "ignores variant_overrides with revoked_permissions by default" do
-      expect(VariantOverride.all).to_not include vo3
+      expect(VariantOverride.all).not_to include vo3
       expect(VariantOverride.unscoped).to include vo3
     end
 
@@ -141,7 +141,7 @@ describe VariantOverride do
       end
 
       it "soft-deletes the price" do
-        expect(price_object.reload.deleted_at).to_not be_nil
+        expect(price_object.reload.deleted_at).not_to be_nil
       end
 
       it "can access the soft-deleted price" do

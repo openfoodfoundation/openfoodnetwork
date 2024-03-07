@@ -42,7 +42,7 @@ describe "Packing Reports" do
       end
 
       it "does not fetch line items for cancelled orders" do
-        expect(report_contents).to_not include line_item2.product.name
+        expect(report_contents).not_to include line_item2.product.name
       end
     end
 
@@ -103,7 +103,7 @@ describe "Packing Reports" do
         context "where an order contains items from multiple suppliers" do
           it "only shows line items the current user supplies" do
             expect(report_contents).to include line_item2.product.name
-            expect(report_contents).to_not include line_item3.product.name
+            expect(report_contents).not_to include line_item3.product.name
           end
         end
       end
@@ -126,7 +126,7 @@ describe "Packing Reports" do
 
       it "only shows line items distributed by enterprises managed by the current user" do
         expect(report_contents).to include line_item.product.name
-        expect(report_contents).to_not include line_item3.product.name
+        expect(report_contents).not_to include line_item3.product.name
       end
 
       context "filtering results" do
@@ -148,7 +148,7 @@ describe "Packing Reports" do
 
           it "only shows results from the selected order cycle" do
             expect(report_contents).to include line_item.product.name
-            expect(report_contents).to_not include line_item4.product.name
+            expect(report_contents).not_to include line_item4.product.name
           end
         end
 
@@ -157,7 +157,7 @@ describe "Packing Reports" do
 
           it "only shows results from the selected supplier" do
             expect(report_contents).to include line_item.product.name
-            expect(report_contents).to_not include line_item4.product.name
+            expect(report_contents).not_to include line_item4.product.name
           end
         end
       end

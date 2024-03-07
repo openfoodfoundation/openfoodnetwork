@@ -16,7 +16,7 @@ describe "Connected Apps", feature: :connected_apps, vcr: true do
     # removing one day.
     Flipper.disable(:connected_apps)
     visit edit_admin_enterprise_path(enterprise)
-    expect(page).to_not have_content "CONNECTED APPS"
+    expect(page).not_to have_content "CONNECTED APPS"
 
     Flipper.enable(:connected_apps, enterprise.owner)
     visit edit_admin_enterprise_path(enterprise)
@@ -36,18 +36,18 @@ describe "Connected Apps", feature: :connected_apps, vcr: true do
     expect(page).to have_content "Discover Regenerative"
 
     click_button "Allow data sharing"
-    expect(page).to_not have_button "Allow data sharing"
+    expect(page).not_to have_button "Allow data sharing"
     expect(page).to have_button "Loading", disabled: true
 
     perform_enqueued_jobs(only: ConnectAppJob)
-    expect(page).to_not have_button "Loading", disabled: true
+    expect(page).not_to have_button "Loading", disabled: true
     expect(page).to have_content "account is connected"
     expect(page).to have_link "Manage listing"
 
     click_button "Stop sharing"
     expect(page).to have_button "Allow data sharing"
-    expect(page).to_not have_button "Stop sharing"
-    expect(page).to_not have_content "account is connected"
-    expect(page).to_not have_link "Manage listing"
+    expect(page).not_to have_button "Stop sharing"
+    expect(page).not_to have_content "account is connected"
+    expect(page).not_to have_link "Manage listing"
   end
 end

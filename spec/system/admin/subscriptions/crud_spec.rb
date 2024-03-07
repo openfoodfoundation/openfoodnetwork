@@ -371,7 +371,7 @@ describe 'Subscriptions' do
               expect{
                 click_button('Create Subscription')
                 expect(page).to have_content 'Please add at least one product'
-              }.to_not change { Subscription.count }
+              }.not_to change { Subscription.count }
             end
 
             context 'and adding a new product' do

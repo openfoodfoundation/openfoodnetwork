@@ -161,7 +161,7 @@ describe ProductImport::ProductImporter do
       expect(carrots.variants.first.unit_value).to eq 500
       expect(carrots.variant_unit).to eq 'weight'
       expect(carrots.variant_unit_scale).to eq 1
-      expect(carrots.variants.first.on_demand).to_not eq true
+      expect(carrots.variants.first.on_demand).not_to eq true
       expect(carrots.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       potatoes = Spree::Product.find_by(name: 'Potatoes')
@@ -171,7 +171,7 @@ describe ProductImport::ProductImporter do
       expect(potatoes.variants.first.unit_value).to eq 2000
       expect(potatoes.variant_unit).to eq 'weight'
       expect(potatoes.variant_unit_scale).to eq 1000
-      expect(potatoes.variants.first.on_demand).to_not eq true
+      expect(potatoes.variants.first.on_demand).not_to eq true
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       pea_soup = Spree::Product.find_by(name: 'Pea Soup')
@@ -181,7 +181,7 @@ describe ProductImport::ProductImporter do
       expect(pea_soup.variants.first.unit_value).to eq 0.75
       expect(pea_soup.variant_unit).to eq 'volume'
       expect(pea_soup.variant_unit_scale).to eq 0.001
-      expect(pea_soup.variants.first.on_demand).to_not eq true
+      expect(pea_soup.variants.first.on_demand).not_to eq true
       expect(pea_soup.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       salad = Spree::Product.find_by(name: 'Salad')
@@ -191,7 +191,7 @@ describe ProductImport::ProductImporter do
       expect(salad.variants.first.unit_value).to eq 1
       expect(salad.variant_unit).to eq 'items'
       expect(salad.variant_unit_scale).to eq nil
-      expect(salad.variants.first.on_demand).to_not eq true
+      expect(salad.variants.first.on_demand).not_to eq true
       expect(salad.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
       buns = Spree::Product.find_by(name: 'Hot Cross Buns')
@@ -550,7 +550,7 @@ describe ProductImport::ProductImporter do
 
       beetroot = Spree::Product.find_by(name: 'Beetroot').variants.first
       expect(beetroot.price).to eq 3.50
-      expect(beetroot.on_demand).to_not eq true
+      expect(beetroot.on_demand).not_to eq true
 
       tomato = Spree::Product.find_by(name: 'Tomato').variants.first
       expect(tomato.price).to eq 5.50

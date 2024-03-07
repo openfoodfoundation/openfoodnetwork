@@ -33,7 +33,7 @@ describe OrderFeesHandler do
 
     it "skips per-order fee adjustments for orders that don't have an order cycle" do
       allow(service).to receive(:order_cycle) { nil }
-      expect(calculator).to_not receive(:create_order_adjustments_for)
+      expect(calculator).not_to receive(:create_order_adjustments_for)
 
       service.create_order_fees!
     end

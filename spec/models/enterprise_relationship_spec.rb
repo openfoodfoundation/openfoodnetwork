@@ -196,9 +196,9 @@ describe EnterpriseRelationship do
             before { er.destroy }
             it "should set permission_revoked_at to the current time " \
                "for all variant overrides of the relationship" do
-              expect(vo1.reload.permission_revoked_at).to_not be_nil
-              expect(vo2.reload.permission_revoked_at).to_not be_nil
-              expect(vo2.reload.permission_revoked_at).to_not be_nil
+              expect(vo1.reload.permission_revoked_at).not_to be_nil
+              expect(vo2.reload.permission_revoked_at).not_to be_nil
+              expect(vo2.reload.permission_revoked_at).not_to be_nil
             end
           end
         end
@@ -207,8 +207,8 @@ describe EnterpriseRelationship do
           before { er.permissions_list = [:add_to_order_cycles]; er.save! }
           it "should set permission_revoked_at to the current time " \
              "for all relevant variant overrides" do
-            expect(vo1.reload.permission_revoked_at).to_not be_nil
-            expect(vo2.reload.permission_revoked_at).to_not be_nil
+            expect(vo1.reload.permission_revoked_at).not_to be_nil
+            expect(vo2.reload.permission_revoked_at).not_to be_nil
           end
 
           it "should not affect other variant overrides" do
@@ -277,7 +277,7 @@ describe EnterpriseRelationship do
           end
 
           it "should not affect other variant overrides" do
-            expect(vo3.reload.permission_revoked_at).to_not be_nil
+            expect(vo3.reload.permission_revoked_at).not_to be_nil
           end
         end
 
@@ -285,9 +285,9 @@ describe EnterpriseRelationship do
           before { er.permissions_list = [:add_to_order_cycles, :manage_products]; er.save! }
 
           it "should have no effect on existing variant_overrides" do
-            expect(vo1.reload.permission_revoked_at).to_not be_nil
-            expect(vo2.reload.permission_revoked_at).to_not be_nil
-            expect(vo3.reload.permission_revoked_at).to_not be_nil
+            expect(vo1.reload.permission_revoked_at).not_to be_nil
+            expect(vo2.reload.permission_revoked_at).not_to be_nil
+            expect(vo3.reload.permission_revoked_at).not_to be_nil
           end
         end
       end

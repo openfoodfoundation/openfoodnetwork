@@ -25,7 +25,7 @@ describe ReportJob do
   it "enqueues a job for async processing" do
     expect {
       ReportJob.perform_later(**report_args)
-    }.to_not change { ActiveStorage::Blob.count }
+    }.not_to change { ActiveStorage::Blob.count }
 
     expect {
       perform_enqueued_jobs(only: ReportJob)
@@ -76,7 +76,7 @@ describe ReportJob do
       # rspec-rails: https://github.com/rspec/rspec-rails/issues/2668
       ReportJob.perform_later(**report_args)
       perform_enqueued_jobs(only: ReportJob)
-    }.to_not enqueue_mail
+    }.not_to enqueue_mail
   end
 
   it "rescues errors" do
@@ -87,7 +87,7 @@ describe ReportJob do
 
     expect {
       perform_enqueued_jobs(only: ReportJob)
-    }.to_not raise_error
+    }.not_to raise_error
   end
 
   def expect_csv_report

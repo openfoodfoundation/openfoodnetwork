@@ -24,7 +24,7 @@ describe WebhookEndpointsController, type: :controller do
     it "shows error if parameters not specified" do
       expect {
         spree_post :create, { url: "" }
-      }.to_not change {
+      }.not_to change {
         user.webhook_endpoints.count
       }
 

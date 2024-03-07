@@ -27,7 +27,7 @@ module Spree
         spree_get :index, order_id: order.number
 
         expect(assigns(:collection)).to include adjustment1, adjustment2
-        expect(assigns(:collection)).to_not include adjustment3
+        expect(assigns(:collection)).not_to include adjustment3
       end
 
       it "displays admin adjustments" do
@@ -39,7 +39,7 @@ module Spree
       it "does not display enterprise fee adjustments" do
         spree_get :index, order_id: order.number
 
-        expect(assigns(:collection)).to_not include adjustment4
+        expect(assigns(:collection)).not_to include adjustment4
       end
     end
 
@@ -237,7 +237,7 @@ module Spree
         expect {
           spree_post :create, order_id: order.number,
                               adjustment: { label: "Testing", amount: "110" }
-        }.to_not change { [Adjustment.count, order.reload.total] }
+        }.not_to change { [Adjustment.count, order.reload.total] }
 
         expect(response).to redirect_to spree.admin_order_adjustments_path(order)
       end
@@ -246,7 +246,7 @@ module Spree
         expect {
           spree_put :update, order_id: order.number, id: adjustment.id,
                              adjustment: { label: "Testing", amount: "110" }
-        }.to_not change { [adjustment.reload.amount, order.reload.total] }
+        }.not_to change { [adjustment.reload.amount, order.reload.total] }
 
         expect(response).to redirect_to spree.admin_order_adjustments_path(order)
       end

@@ -57,7 +57,7 @@ describe PlaceProxyOrder do
 
       it "records an issue and ignores it" do
         expect(summarizer).to receive(:record_issue).with(:complete, order).once
-        expect { subject.call }.to_not change { order.reload.state }
+        expect { subject.call }.not_to change { order.reload.state }
         expect(order.payments.first.state).to eq "checkout"
         expect(ActionMailer::Base.deliveries.count).to be 0
       end

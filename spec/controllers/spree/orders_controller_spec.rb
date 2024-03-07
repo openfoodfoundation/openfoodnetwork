@@ -150,7 +150,7 @@ describe Spree::OrdersController, type: :controller do
           spree_registration_path = '/signup'
           ofn_registration_path = '/register'
           get :edit
-          expect(response.body).to_not match spree_registration_path
+          expect(response.body).not_to match spree_registration_path
           expect(response.body).to match ofn_registration_path
         end
       end

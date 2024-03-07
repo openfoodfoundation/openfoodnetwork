@@ -37,7 +37,7 @@ module Admin
           context "where ransack conditions are specified" do
             it "loads order cycles closed within past month, and orders w/o a close_at date" do
               get :index, as: :json
-              expect(assigns(:collection)).to_not include oc1, oc2
+              expect(assigns(:collection)).not_to include oc1, oc2
               expect(assigns(:collection)).to include oc3, oc4
             end
           end
@@ -47,7 +47,7 @@ module Admin
 
             it "loads order cycles closed after specified date, and orders w/o a close_at date" do
               get :index, as: :json, params: { q: }
-              expect(assigns(:collection)).to_not include oc1
+              expect(assigns(:collection)).not_to include oc1
               expect(assigns(:collection)).to include oc2, oc3, oc4
             end
 
@@ -56,7 +56,7 @@ module Admin
 
               it "loads order cycles that meet all conditions" do
                 get :index, format: :json, params: { q: }
-                expect(assigns(:collection)).to_not include oc1, oc2, oc4
+                expect(assigns(:collection)).not_to include oc1, oc2, oc4
                 expect(assigns(:collection)).to include oc3
               end
             end
@@ -415,9 +415,9 @@ module Admin
                     } } }
 
           oc.reload
-          expect(oc.name).to_not eq "Updated Order Cycle"
-          expect(oc.orders_open_at.to_date).to_not eq Date.current - 21.days
-          expect(oc.orders_close_at.to_date).to_not eq Date.current + 21.days
+          expect(oc.name).not_to eq "Updated Order Cycle"
+          expect(oc.orders_open_at.to_date).not_to eq Date.current - 21.days
+          expect(oc.orders_close_at.to_date).not_to eq Date.current + 21.days
         end
       end
     end
@@ -505,8 +505,8 @@ module Admin
             get :destroy, params: { id: cloned.id }
 
             expect(OrderCycle.find_by(id: cloned.id)).to be nil
-            expect(OrderCycle.find_by(id: oc.id)).to_not be nil
-            expect(EnterpriseFee.find_by(id: enterprise_fee1.id)).to_not be nil
+            expect(OrderCycle.find_by(id: oc.id)).not_to be nil
+            expect(EnterpriseFee.find_by(id: enterprise_fee1.id)).not_to be nil
             expect(response).to redirect_to admin_order_cycles_path
           end
         end

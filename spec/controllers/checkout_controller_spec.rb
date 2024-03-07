@@ -148,7 +148,7 @@ describe CheckoutController, type: :controller do
           it "doesn't update default bill address on user" do
             expect {
               put :update, params: params.merge(order: { save_bill_address: "0" })
-            }.to_not change {
+            }.not_to change {
               order.user.reload.bill_address
             }
           end
@@ -163,7 +163,7 @@ describe CheckoutController, type: :controller do
           it "doesn't update default ship address on user" do
             expect {
               put :update, params: params.merge(order: { save_ship_address: "0" })
-            }.to_not change {
+            }.not_to change {
               order.user.reload.ship_address
             }
           end
@@ -196,7 +196,7 @@ describe CheckoutController, type: :controller do
           end
 
           it "doesn't recalculate the voucher adjustment" do
-            expect(service).to_not receive(:update)
+            expect(service).not_to receive(:update)
 
             put(:update, params:)
 

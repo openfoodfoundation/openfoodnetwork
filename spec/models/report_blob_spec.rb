@@ -9,6 +9,6 @@ describe ReportBlob, type: :model do
     expect do
       blob = ReportBlob.create!("customers.html", content)
       content = blob.result
-    end.to_not change { content.encoding }.from(Encoding::UTF_8)
+    end.not_to change { content.encoding }.from(Encoding::UTF_8)
   end
 end

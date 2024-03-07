@@ -147,7 +147,7 @@ describe ProducerMailer, type: :mailer do
     end
 
     it "adds customer names table" do
-      expect(body_as_html(mail).find(".order-summary.customer-order")).to_not be_nil
+      expect(body_as_html(mail).find(".order-summary.customer-order")).not_to be_nil
     end
 
     it "displays last name for each order" do

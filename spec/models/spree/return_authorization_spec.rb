@@ -49,7 +49,7 @@ describe Spree::ReturnAuthorization do
       end
 
       it "should not update order state" do
-        expect{ return_authorization.add_variant(variant.id, 1) }.to_not change{ order.state }
+        expect{ return_authorization.add_variant(variant.id, 1) }.not_to change{ order.state }
       end
     end
   end

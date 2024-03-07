@@ -153,7 +153,7 @@ describe '
 
       # editing to an invalid combination
       select 'Flat Rate (per order)', from: "#{prefix}_calculator_type"
-      expect{ click_button 'Update' }.to_not change { fee.reload.calculator_type }
+      expect{ click_button 'Update' }.not_to change { fee.reload.calculator_type }
       expect(page).to have_content "Inheriting the tax categeory requires a per-item calculator."
     end
   end
