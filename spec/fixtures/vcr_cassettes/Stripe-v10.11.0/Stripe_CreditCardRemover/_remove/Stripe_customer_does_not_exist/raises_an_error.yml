@@ -14,7 +14,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_TdzN26B8oBdaOl","request_duration_ms":716}}'
+      - '{"last_request_metrics":{"request_id":"req_TPXRfe2UMiqWDT","request_duration_ms":714}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -34,7 +34,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:38:33 GMT
+      - Thu, 07 Mar 2024 14:46:04 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -61,11 +61,11 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Idempotency-Key:
-      - 671d4405-6ebf-484d-b246-7948717456a1
+      - 128431ab-43a1-47ed-8056-5a8bbd32168b
       Original-Request:
-      - req_3RgfC1fJkyihKe
+      - req_h8LXdGtSHiZ1sO
       Request-Id:
-      - req_3RgfC1fJkyihKe
+      - req_h8LXdGtSHiZ1sO
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -80,7 +80,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "pm_1Ori5dKuuB1fWySnwL3nl2Fc",
+          "id": "pm_1OriCtKuuB1fWySnxpKefiCn",
           "object": "payment_method",
           "billing_details": {
             "address": {
@@ -121,13 +121,13 @@ http_interactions:
             },
             "wallet": null
           },
-          "created": 1709822313,
+          "created": 1709822763,
           "customer": null,
           "livemode": false,
           "metadata": {},
           "type": "card"
         }
-  recorded_at: Thu, 07 Mar 2024 14:38:33 GMT
+  recorded_at: Thu, 07 Mar 2024 14:46:04 GMT
 - request:
     method: get
     uri: https://api.stripe.com/v1/customers/non_existing_customer_id
@@ -142,7 +142,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_3RgfC1fJkyihKe","request_duration_ms":532}}'
+      - '{"last_request_metrics":{"request_id":"req_h8LXdGtSHiZ1sO","request_duration_ms":540}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -162,7 +162,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:38:33 GMT
+      - Thu, 07 Mar 2024 14:46:04 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -190,7 +190,7 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Request-Id:
-      - req_Y69JiFS9E2QkEo
+      - req_XjCvwiYNgyMGUs
       Stripe-Version:
       - '2023-10-16'
       Vary:
@@ -208,9 +208,9 @@ http_interactions:
             "doc_url": "https://stripe.com/docs/error-codes/resource-missing",
             "message": "No such customer: 'non_existing_customer_id'",
             "param": "id",
-            "request_log_url": "https://dashboard.stripe.com/test/logs/req_Y69JiFS9E2QkEo?t=1709822313",
+            "request_log_url": "https://dashboard.stripe.com/test/logs/req_XjCvwiYNgyMGUs?t=1709822764",
             "type": "invalid_request_error"
           }
         }
-  recorded_at: Thu, 07 Mar 2024 14:38:33 GMT
+  recorded_at: Thu, 07 Mar 2024 14:46:04 GMT
 recorded_with: VCR 6.2.0
