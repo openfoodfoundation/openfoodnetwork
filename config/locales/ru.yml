@@ -3669,8 +3669,6 @@ ru:
     start_date: "Дата начала"
     successfully_removed: "Успешно удалено"
     taxonomy_edit: "Изменить таксономию"
-    taxonomy_tree_error: "Ошибка дерева таксономии"
-    taxonomy_tree_instruction: "Инструкция по дереву таксономии"
     tree: "Дерево"
     updating: "Обновление"
     your_order_is_empty_add_product: "Ваша корзина пуста, пожалуйста, найдите и добавьте товар выше"

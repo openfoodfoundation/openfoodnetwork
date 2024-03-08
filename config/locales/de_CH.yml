@@ -3420,8 +3420,6 @@ de_CH:
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     taxonomy_edit: "Kategorien bearbeiten"
-    taxonomy_tree_error: "Fehler in Struktur der Kategorien"
-    taxonomy_tree_instruction: "Anleitung zur Struktur der Kategorien"
     tree: "Struktur"
     updating: "Aktualisierung"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."

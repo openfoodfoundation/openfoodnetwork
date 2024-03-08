@@ -3612,8 +3612,6 @@ ar:
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
     taxonomy_edit: "التصنيف"
-    taxonomy_tree_error: "خطأ شجرة التصنيف"
-    taxonomy_tree_instruction: "تعليمات شجرة التصنيف"
     tree: "شجرة"
     updating: "تحديث"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"

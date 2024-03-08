@@ -3525,8 +3525,6 @@ it:
     start_date: "Data inizio"
     successfully_removed: "Rimosso con successo"
     taxonomy_edit: "Modifica tassonomia"
-    taxonomy_tree_error: "Errore schema tassonomia"
-    taxonomy_tree_instruction: "Istruzioni schema tassonomia"
     tree: "Schema"
     updating: "In aggiornamento"
     your_order_is_empty_add_product: "Il tuo ordine è vuoto, cerca e aggiungi un prodotto qui sopra"

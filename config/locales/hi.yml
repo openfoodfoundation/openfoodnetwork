@@ -3657,8 +3657,6 @@ hi:
     start_date: "शुरू होने की तिथि"
     successfully_removed: "सफलतापूर्वक हटाया गया"
     taxonomy_edit: "टैक्सोनॉमी एडिट करें"
-    taxonomy_tree_error: "टैक्सोनॉमी ट्री त्रुटि"
-    taxonomy_tree_instruction: "टैक्सोनॉमी ट्री निर्देश"
     tree: "ट्री"
     updating: "अपडेट किया जा रहा है"
     your_order_is_empty_add_product: "आपका ऑर्डर खाली है, कृपया ऊपर दिए गए उत्पाद को सर्च करें और जोड़ें"

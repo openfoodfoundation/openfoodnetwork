@@ -3730,8 +3730,6 @@ cy:
     start_date: "Dyddiad cychwyn"
     successfully_removed: "Llwyddwyd i ddileu"
     taxonomy_edit: "Golygu tacsonomi"
-    taxonomy_tree_error: "Gwall - coeden tacsonomi"
-    taxonomy_tree_instruction: "Cyfarwyddyd - coeden tacsonomi"
     tree: "Coeden"
     updating: "Yn diweddaru"
     your_order_is_empty_add_product: "Mae eich archeb yn wag, chwiliwch am ac ychwanegwch gynnyrch uchod"

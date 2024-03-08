@@ -3046,8 +3046,6 @@ el:
     start_date: "Ημερομηνία έναρξης"
     successfully_removed: "Καταργήθηκε επιτυχώς"
     taxonomy_edit: "Επεξεργασία ταξινόμησης"
-    taxonomy_tree_error: "Σφάλμα δέντρου ταξινόμησης"
-    taxonomy_tree_instruction: "Οδηγίες δέντρων ταξινομίας"
     tree: "Δέντρο"
     updating: "Ενημέρωση"
     your_order_is_empty_add_product: "Η παραγγελία σας είναι κενή, αναζητήστε και προσθέστε ένα προϊόν παραπάνω"

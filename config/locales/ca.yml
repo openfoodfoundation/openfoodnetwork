@@ -3495,8 +3495,6 @@ ca:
     start_date: "Data d'inici"
     successfully_removed: "S'ha suprimit correctament"
     taxonomy_edit: "Edició de taxonomia"
-    taxonomy_tree_error: "Error d'arbre de taxonomia"
-    taxonomy_tree_instruction: "Instrucció d'arbre de taxonomia"
     tree: "Arbre"
     updating: "Actualitzant"
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"

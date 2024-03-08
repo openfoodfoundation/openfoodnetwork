@@ -3445,8 +3445,6 @@ hu:
     start_date: "Kezdő dátum"
     successfully_removed: "Sikeresen eltávolítva"
     taxonomy_edit: "Termék kategória szerkesztés"
-    taxonomy_tree_error: "Termék kategória fa hiba"
-    taxonomy_tree_instruction: "Termék kategória fa"
     tree: "Fa"
     updating: "Frissítés"
     your_order_is_empty_add_product: "Rendelése üres, kérjük keressen és adjon hozzá egy terméket fent"

@@ -3467,8 +3467,6 @@ uk:
     start_date: "Дата початку"
     successfully_removed: "Успішно видалено"
     taxonomy_edit: "Редагування таксономії"
-    taxonomy_tree_error: "Помилка дерева таксономії"
-    taxonomy_tree_instruction: "Інструкція з таксономічного дерева"
     tree: "Дерево"
     updating: "Оновлення"
     your_order_is_empty_add_product: "Ваше замовлення порожнє, знайдіть і додайте продукт вище"

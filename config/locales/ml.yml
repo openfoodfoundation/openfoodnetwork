@@ -3681,8 +3681,6 @@ ml:
     start_date: "ആരംഭിക്കുന്ന തീയതി"
     successfully_removed: "വിജയകരമായി നീക്കം ചെയ്തു"
     taxonomy_edit: "ടാക്സോണമി എഡിറ്റ്"
-    taxonomy_tree_error: "ടാക്സോണമി ട്രീ തകരാർ"
-    taxonomy_tree_instruction: "ടാക്സോണമി ട്രീ നിർദ്ദേശം"
     tree: "ട്രീ"
     updating: "അപ്ഡേറ്റ് ചെയ്യുന്നു"
     your_order_is_empty_add_product: "നിങ്ങളുടെ ഓർഡർ ശൂന്യമാണ്, മുകളിൽ ഒരു ഉൽപ്പന്നം തിരയുകയും ചേർക്കുകയും ചെയ്യുക"

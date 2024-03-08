@@ -3588,8 +3588,6 @@ mr:
     start_date: "प्रारंभ तारीख"
     successfully_removed: "यशस्वीरित्या काढले"
     taxonomy_edit: "वर्गीकरण संपादन"
-    taxonomy_tree_error: "वर्गीकरण वृक्ष त्रुटी"
-    taxonomy_tree_instruction: "वर्गीकरण वृक्ष सूचना"
     tree: "वृक्ष"
     updating: "अपडेट करत आहे"
     your_order_is_empty_add_product: "तुमची ऑर्डर रिकामी आहे, कृपया उत्पादन शोधा आणि वर समाविष्ट करा"

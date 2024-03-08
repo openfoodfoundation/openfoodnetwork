@@ -3243,8 +3243,6 @@ pt_BR:
     start_date: "Data de início"
     successfully_removed: "Removido com Sucesso"
     taxonomy_edit: "Editar Taxonomia"
-    taxonomy_tree_error: "Erro na árvore taxonômica"
-    taxonomy_tree_instruction: "Guia para a árvore taxonômica"
     tree: "Árvore"
     updating: "Atualizando"
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"

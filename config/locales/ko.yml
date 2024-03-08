@@ -3352,8 +3352,6 @@ ko:
     start_date: "시작 날짜"
     successfully_removed: "성공적으로 제거됨"
     taxonomy_edit: "분류법 편집"
-    taxonomy_tree_error: "분류법 트리 오류"
-    taxonomy_tree_instruction: "분류법 트리 소개"
     tree: "트리"
     updating: "업데이트 중"
     your_order_is_empty_add_product: "주문이 비어 있습니다. 위의 제품을 검색하여 추가하십시오."

@@ -1249,7 +1249,7 @@ de_DE:
         sell_your_produce: Verkaufen Sie Ihre eigenen Produkte
         producer_shop_description_text: Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren eigenen Produzentenladen im Open Food Network.
         producer_shop_description_text2: Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie nur oder auch Produkte anderer verkaufen möchten, wählen Sie "Laden".
-        producer_hub: Produzentenladen
+        producer_hub: Laden
         producer_hub_text: Verkaufen Sie eigene Produkte und Produkte anderer
         producer_hub_description_text: Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
         profile: Profil
@@ -3212,7 +3212,7 @@ de_DE:
           producer_shop_text2: >
               Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn
               Sie Produkte anderer verkaufen möchten, wählen Sie "Laden".
-          producer_hub: Produzentenladen
+          producer_hub: Laden
           producer_hub_text1: >
               Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder
               Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil
@@ -3672,8 +3672,6 @@ de_DE:
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     taxonomy_edit: "Kategorien bearbeiten"
-    taxonomy_tree_error: "Fehler in Struktur der Kategorien"
-    taxonomy_tree_instruction: "Anleitung zur Struktur der Kategorien"
     tree: "Struktur"
     updating: "Aktualisierung"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."

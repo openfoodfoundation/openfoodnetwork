@@ -3492,8 +3492,6 @@ es:
     start_date: "Fecha de inicio"
     successfully_removed: "Eliminado con éxito"
     taxonomy_edit: "editar taxonomía"
-    taxonomy_tree_error: "Error del árbol de taxonomía"
-    taxonomy_tree_instruction: "Instrucción del árbol de taxonomía"
     tree: "Árbol"
     updating: "Actualizando"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"

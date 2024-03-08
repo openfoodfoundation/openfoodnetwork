@@ -712,7 +712,7 @@ fr_BE:
         none_saved: n'a pu sauvegarder aucun produit :-(
         line_number: "Ligne %{number} :"
         encoding_error: "Veuillez vérifier la langage de votre fichier source et l'enregistrer avec un encodage UTF-8"
-        unexpected_error: "L'import du produit à provoqué une erreur à l'ouverture du fichier: %{error_message}"
+        unexpected_error: "L'import du produit a provoqué une erreur à l'ouverture du fichier: %{error_message}"
         malformed_csv: "L'import du produit a rencontré une erreur a l'ouverture du fichier:%{error_message}"
       index:
         notice: "Remarque"
