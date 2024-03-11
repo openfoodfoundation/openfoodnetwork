@@ -24,9 +24,9 @@ module Reporting
           # [tax_rate, supplier_id, distributor_id and order_cycle_id]
           report_line_items.list
             .flat_map do |line_item|
-              line_item.tax_rates.map do |tax_rate|
+              line_item.adjustments.eligible.tax.map do |tax_rate|
                 {
-                  tax_rate_id: tax_rate.id,
+                  tax_rate_id: tax_rate.originator_id,
                   line_item:
                 }
               end
