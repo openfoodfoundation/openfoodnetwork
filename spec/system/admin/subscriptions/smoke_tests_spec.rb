@@ -33,7 +33,7 @@ describe 'Subscriptions' do
           expect(page).to have_content "Just a few more steps before you can begin"
 
           # subscriptions are enabled, instructions are not displayed
-          expect(page).to_not have_content 'Under "Shop Preferences", /
+          expect(page).not_to have_content 'Under "Shop Preferences", /
           enable the Subscriptions option'
 
           # other relevant instructions are displayed
@@ -54,7 +54,7 @@ describe 'Subscriptions' do
         end
         it "the subscriptions tab is not visible" do
           expect(page).to have_current_path "/admin/orders"
-          expect(page).to_not have_link "Subscriptions", href: "/admin/subscriptions"
+          expect(page).not_to have_link "Subscriptions", href: "/admin/subscriptions"
         end
       end
     end

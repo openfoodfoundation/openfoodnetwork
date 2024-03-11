@@ -50,7 +50,7 @@ describe "Uploading Terms and Conditions PDF" do
         click_button "Update"
         expect(page).
           to have_content "Enterprise \"#{distributor.name}\" has been successfully updated!"
-        expect(distributor.reload.terms_and_conditions_blob.created_at).to_not eq run_time
+        expect(distributor.reload.terms_and_conditions_blob.created_at).not_to eq run_time
 
         go_to_business_details
         expect(page).to have_selector "a[href*='Terms-of-ServiceUK.pdf']"

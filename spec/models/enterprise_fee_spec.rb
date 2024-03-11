@@ -196,7 +196,7 @@ describe EnterpriseFee do
     end
 
     it "soft-deletes the enterprise fee" do
-      expect(enterprise_fee.deleted_at).to_not be_nil
+      expect(enterprise_fee.deleted_at).not_to be_nil
     end
 
     it "can be accessed by old adjustments" do

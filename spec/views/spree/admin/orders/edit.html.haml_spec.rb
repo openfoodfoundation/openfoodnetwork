@@ -54,8 +54,8 @@ describe "spree/admin/orders/edit.html.haml" do
       it "doesn't display a table of out of stock line items" do
         render
 
-        expect(rendered).to_not have_content "Out of Stock"
-        expect(rendered).to_not have_selector ".insufficient-stock-items",
+        expect(rendered).not_to have_content "Out of Stock"
+        expect(rendered).not_to have_selector ".insufficient-stock-items",
                                               text: out_of_stock_line_item.variant.display_name
       end
     end
@@ -63,7 +63,7 @@ describe "spree/admin/orders/edit.html.haml" do
     it "doesn't display closed associated adjustments" do
       render
 
-      expect(rendered).to_not have_content "Associated adjustment closed"
+      expect(rendered).not_to have_content "Associated adjustment closed"
     end
   end
 
@@ -96,14 +96,14 @@ describe "spree/admin/orders/edit.html.haml" do
       it "doesn't display a table of out of stock line items" do
         render
 
-        expect(rendered).to_not have_content "Out of Stock"
+        expect(rendered).not_to have_content "Out of Stock"
       end
     end
 
     it "doesn't display closed associated adjustments" do
       render
 
-      expect(rendered).to_not have_content "Associated adjustment closed"
+      expect(rendered).not_to have_content "Associated adjustment closed"
     end
   end
 end

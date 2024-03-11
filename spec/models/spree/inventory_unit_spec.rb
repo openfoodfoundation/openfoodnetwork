@@ -29,7 +29,7 @@ describe Spree::InventoryUnit do
     # Regression for Spree #3066
     it "returns modifiable objects" do
       units = Spree::InventoryUnit.backordered_for_stock_item(stock_item)
-      expect { units.first.save! }.to_not raise_error
+      expect { units.first.save! }.not_to raise_error
     end
 
     it "finds inventory units from its stock location " \
@@ -44,7 +44,7 @@ describe Spree::InventoryUnit do
       other_variant_unit.save!
 
       expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item))
-        .to_not include(other_variant_unit)
+        .not_to include(other_variant_unit)
     end
   end
 

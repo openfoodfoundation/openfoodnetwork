@@ -17,7 +17,7 @@ describe BaseController, type: :controller do
     it "doesn't change anything without a user" do
       expect {
         get :index
-      }.to_not change { Spree::Order.count }
+      }.not_to change { Spree::Order.count }
     end
 
     it "creates a new order" do
@@ -36,7 +36,7 @@ describe BaseController, type: :controller do
 
       expect {
         get :index
-      }.to_not change { Spree::Order.count }
+      }.not_to change { Spree::Order.count }
 
       expect(session[:order_id]).to eq last_cart.id
     end
@@ -63,7 +63,7 @@ describe BaseController, type: :controller do
 
       expect {
         get :index
-      }.to_not change { Spree::Order.count }
+      }.not_to change { Spree::Order.count }
 
       expect(current_cart.line_items.count).to eq 0
     end
@@ -89,13 +89,13 @@ describe BaseController, type: :controller do
         get :index
       }.to change { Spree::Order.count }.by(1)
 
-      expect(session[:order_id]).to_not eq just_completed_order.id
-      expect(session[:order_id]).to_not eq last_cart.id
+      expect(session[:order_id]).not_to eq just_completed_order.id
+      expect(session[:order_id]).not_to eq last_cart.id
       expect(controller.current_order.line_items.count).to eq 0
     end
 
     it "doesn't load variant overrides without line items" do
-      expect(VariantOverride).to_not receive(:indexed)
+      expect(VariantOverride).not_to receive(:indexed)
       controller.current_order(true)
     end
   end

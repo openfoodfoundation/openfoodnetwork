@@ -43,7 +43,7 @@ describe StripeAccount do
 
       it "destroys the record" do
         # returns status 200
-        expect(Bugsnag).to_not receive(:notify) # and does not receive Bugsnag notification
+        expect(Bugsnag).not_to receive(:notify) # and does not receive Bugsnag notification
         expect {
           stripe_account.deauthorize_and_destroy
         }.to change {
@@ -58,7 +58,7 @@ describe StripeAccount do
       }
 
       it "Doesn't make a Stripe API disconnection request " do
-        expect(Stripe::OAuth).to_not receive(:deauthorize)
+        expect(Stripe::OAuth).not_to receive(:deauthorize)
         stripe_account.deauthorize_and_destroy
         expect(StripeAccount.all).not_to include(stripe_account)
       end

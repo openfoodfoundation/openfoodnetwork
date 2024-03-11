@@ -84,7 +84,7 @@ module Reporting
               it "excludes enterprises that are not explicitly requested" do
                 results = subject.owners_and_enterprises.to_a.map{ |oae| oae["name"] }
                 expect(results).to include enterprise1.name
-                expect(results).to_not include enterprise2.name
+                expect(results).not_to include enterprise2.name
               end
             end
 
@@ -95,7 +95,7 @@ module Reporting
               it "excludes enterprises that are not explicitly requested" do
                 results = subject.owners_and_enterprises.to_a.map{ |oae| oae["name"] }
                 expect(results).to include enterprise1.name
-                expect(results).to_not include enterprise2.name
+                expect(results).not_to include enterprise2.name
               end
             end
           end
@@ -108,7 +108,7 @@ module Reporting
               it "excludes enterprises that are not explicitly requested" do
                 results = subject.managers_and_enterprises.to_a.map{ |mae| mae["name"] }
                 expect(results).to include enterprise1.name
-                expect(results).to_not include enterprise2.name
+                expect(results).not_to include enterprise2.name
               end
             end
 
@@ -126,7 +126,7 @@ module Reporting
               it "excludes enterprises whose managers are not explicitly requested" do
                 results = subject.managers_and_enterprises.to_a.map{ |mae| mae["name"] }
                 expect(results).to include enterprise1.name
-                expect(results).to_not include enterprise2.name
+                expect(results).not_to include enterprise2.name
               end
             end
           end

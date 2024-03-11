@@ -114,7 +114,7 @@ describe OrderAvailableShippingMethods do
 
         it "applies default action (hide)" do
           expect(available_shipping_methods).to include untagged_sm
-          expect(available_shipping_methods).to_not include tagged_sm
+          expect(available_shipping_methods).not_to include tagged_sm
         end
       end
 
@@ -138,7 +138,7 @@ describe OrderAvailableShippingMethods do
 
           it "applies the default action (hide)" do
             expect(available_shipping_methods).to include untagged_sm
-            expect(available_shipping_methods).to_not include tagged_sm
+            expect(available_shipping_methods).not_to include tagged_sm
           end
         end
       end
@@ -174,7 +174,7 @@ describe OrderAvailableShippingMethods do
 
           it "applies the action (hide)" do
             expect(available_shipping_methods).to include untagged_sm
-            expect(available_shipping_methods).to_not include tagged_sm
+            expect(available_shipping_methods).not_to include tagged_sm
           end
         end
 

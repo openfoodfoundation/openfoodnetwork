@@ -14,7 +14,7 @@ describe ImageImporter do
         Spree::Image.count
       }.by(1)
 
-      expect(product.image).to_not be_nil
+      expect(product.image).not_to be_nil
       expect(product.reload.image.attachment_blob.byte_size).to eq 6274
     end
   end

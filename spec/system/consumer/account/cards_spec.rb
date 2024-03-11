@@ -53,7 +53,7 @@ describe "Credit Cards" do
       within(".card#card#{non_default_card.id}") do
         expect(page).to have_content non_default_card.cc_type.capitalize
         expect(page).to have_content non_default_card.last_digits
-        expect(find_field('default_card')).to_not be_checked
+        expect(find_field('default_card')).not_to be_checked
       end
 
       # Allows switching of default card
@@ -73,7 +73,7 @@ describe "Credit Cards" do
 
       expect(default_card.reload.is_default).to be false
       within(".card#card#{default_card.id}") do
-        expect(find_field('default_card')).to_not be_checked
+        expect(find_field('default_card')).not_to be_checked
       end
       expect(non_default_card.reload.is_default).to be true
 
@@ -94,7 +94,7 @@ describe "Credit Cards" do
 
       # Allows authorisation of card use by shops
       within "tr#customer#{customer.id}" do
-        expect(find_field('allow_charges')).to_not be_checked
+        expect(find_field('allow_charges')).not_to be_checked
         find_field('allow_charges').click
       end
       expect(page).to have_content 'Changes saved.'

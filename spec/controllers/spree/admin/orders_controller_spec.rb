@@ -24,7 +24,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         spree_get :edit, id: order
 
-        expect(response.body).to_not match adjustment.label
+        expect(response.body).not_to match adjustment.label
       end
     end
   end
@@ -204,7 +204,7 @@ describe Spree::Admin::OrdersController, type: :controller do
                 order.reload
 
                 expect(order.all_adjustments.tax.count).to eq 2
-                expect(order.all_adjustments.tax).to_not include legacy_tax_adjustment
+                expect(order.all_adjustments.tax).not_to include legacy_tax_adjustment
                 expect(order.additional_tax_total).to eq 0.5
               end
             end

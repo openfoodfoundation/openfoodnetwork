@@ -25,7 +25,7 @@ describe OrderCycleForm do
         it "returns false" do
           expect do
             expect(form.save).to be false
-          end.to_not change { OrderCycle.count }
+          end.not_to change { OrderCycle.count }
         end
       end
     end
@@ -51,7 +51,7 @@ describe OrderCycleForm do
         it "returns false" do
           expect do
             expect(form.save).to be false
-          end.to_not change{ order_cycle.reload.name }
+          end.not_to change{ order_cycle.reload.name }
         end
       end
 
@@ -101,7 +101,7 @@ describe OrderCycleForm do
         it "associates the order cycle to the schedule" do
           expect(form.save).to be true
           expect(coordinated_order_cycle.reload.schedules).to include coordinated_schedule2
-          expect(coordinated_order_cycle.reload.schedules).to_not include coordinated_schedule
+          expect(coordinated_order_cycle.reload.schedules).not_to include coordinated_schedule
           expect(syncer_mock).to have_received(:sync!)
         end
       end
@@ -112,8 +112,8 @@ describe OrderCycleForm do
         it "ignores the schedule that I don't own" do
           expect(form.save).to be true
           expect(coordinated_order_cycle.reload.schedules).to include coordinated_schedule
-          expect(coordinated_order_cycle.reload.schedules).to_not include uncoordinated_schedule
-          expect(syncer_mock).to_not have_received(:sync!)
+          expect(coordinated_order_cycle.reload.schedules).not_to include uncoordinated_schedule
+          expect(syncer_mock).not_to have_received(:sync!)
         end
       end
 
@@ -123,7 +123,7 @@ describe OrderCycleForm do
         it "ignores the schedule that I don't own" do
           expect(form.save).to be true
           expect(coordinated_order_cycle.reload.schedules).to include coordinated_schedule
-          expect(syncer_mock).to_not have_received(:sync!)
+          expect(syncer_mock).not_to have_received(:sync!)
         end
       end
     end
@@ -256,7 +256,7 @@ describe OrderCycleForm do
               supplier.users.first
             )
 
-            expect{ form.save }.to_not change{ order_cycle.distributor_payment_methods.pluck(:id) }
+            expect{ form.save }.not_to change{ order_cycle.distributor_payment_methods.pluck(:id) }
           end
         end
 
@@ -306,7 +306,7 @@ describe OrderCycleForm do
                 distributor2.users.first
               )
 
-              expect{ form.save }.to_not change{
+              expect{ form.save }.not_to change{
                                            order_cycle.distributor_payment_methods.pluck(:id)
                                          }
             end

@@ -26,11 +26,11 @@ describe 'Terms of Service banner' do
         click_button "Accept Terms of Service"
         admin_user.reload
       end.to change { admin_user.terms_of_service_accepted_at }
-      expect(page).to_not have_content("Terms of Service have been updated")
+      expect(page).not_to have_content("Terms of Service have been updated")
 
       # Check the banner doesn't show again once ToS has been accepted
       page.refresh
-      expect(page).to_not have_content("Terms of Service have been updated")
+      expect(page).not_to have_content("Terms of Service have been updated")
     end
   end
 

@@ -48,7 +48,7 @@ module OpenFoodNetwork
             it "returns enterprises which have granted P-OC to the coordinator" do
               enterprises = permissions.visible_enterprises
               expect(enterprises).to include hub
-              expect(enterprises).to_not include producer
+              expect(enterprises).not_to include producer
             end
           end
 
@@ -56,7 +56,7 @@ module OpenFoodNetwork
             before { allow(coordinator).to receive(:sells) { 'own' } }
             it "returns just the coordinator" do
               enterprises = permissions.visible_enterprises
-              expect(enterprises).to_not include hub, producer
+              expect(enterprises).not_to include hub, producer
             end
           end
         end
@@ -83,7 +83,7 @@ module OpenFoodNetwork
               before { allow(coordinator).to receive(:sells) { 'own' } }
               it "returns just the coordinator" do
                 enterprises = permissions.visible_enterprises
-                expect(enterprises).to_not include hub, producer
+                expect(enterprises).not_to include hub, producer
               end
             end
           end
@@ -91,7 +91,7 @@ module OpenFoodNetwork
           context "where the other enterprises are not in the order cycle" do
             it "returns just the coordinator" do
               enterprises = permissions.visible_enterprises
-              expect(enterprises).to_not include hub, producer
+              expect(enterprises).not_to include hub, producer
             end
           end
         end
@@ -117,7 +117,7 @@ module OpenFoodNetwork
             it "returns my hub" do
               enterprises = permissions.visible_enterprises
               expect(enterprises).to include hub
-              expect(enterprises).to_not include producer, coordinator
+              expect(enterprises).not_to include producer, coordinator
             end
 
             context "and has been granted P-OC by a producer" do
@@ -143,7 +143,7 @@ module OpenFoodNetwork
 
                 it "does not return the producer" do
                   enterprises = permissions.visible_enterprises
-                  expect(enterprises).to_not include producer
+                  expect(enterprises).not_to include producer
                 end
               end
             end
@@ -171,7 +171,7 @@ module OpenFoodNetwork
 
                 it "does not return the producer" do
                   enterprises = permissions.visible_enterprises
-                  expect(enterprises).to_not include producer
+                  expect(enterprises).not_to include producer
                 end
               end
             end
@@ -182,7 +182,7 @@ module OpenFoodNetwork
 
             it "does not return my hub" do
               enterprises = permissions.visible_enterprises
-              expect(enterprises).to_not include hub, producer, coordinator
+              expect(enterprises).not_to include hub, producer, coordinator
             end
           end
         end
@@ -190,7 +190,7 @@ module OpenFoodNetwork
         context "that has not granted P-OC to the coordinator" do
           it "does not return my hub" do
             enterprises = permissions.visible_enterprises
-            expect(enterprises).to_not include hub, producer, coordinator
+            expect(enterprises).not_to include hub, producer, coordinator
           end
 
           context "but is already in the order cycle" do
@@ -202,7 +202,7 @@ module OpenFoodNetwork
             it "returns my hub" do
               enterprises = permissions.visible_enterprises
               expect(enterprises).to include hub
-              expect(enterprises).to_not include producer, coordinator
+              expect(enterprises).not_to include producer, coordinator
             end
 
             context "and distributes variants distributed by an unmanaged & unpermitted producer" do
@@ -214,7 +214,7 @@ module OpenFoodNetwork
               it "returns that producer as well" do
                 enterprises = permissions.visible_enterprises
                 expect(enterprises).to include producer, hub
-                expect(enterprises).to_not include coordinator
+                expect(enterprises).not_to include coordinator
               end
             end
           end
@@ -241,7 +241,7 @@ module OpenFoodNetwork
             it "returns my producer" do
               enterprises = permissions.visible_enterprises
               expect(enterprises).to include producer
-              expect(enterprises).to_not include hub, coordinator
+              expect(enterprises).not_to include hub, coordinator
             end
 
             context "and has been granted P-OC by a hub" do
@@ -259,7 +259,7 @@ module OpenFoodNetwork
                 it "returns the hub as well" do
                   enterprises = permissions.visible_enterprises
                   expect(enterprises).to include producer, hub
-                  expect(enterprises).to_not include coordinator
+                  expect(enterprises).not_to include coordinator
                 end
               end
 
@@ -268,7 +268,7 @@ module OpenFoodNetwork
 
                 it "does not return the hub" do
                   enterprises = permissions.visible_enterprises
-                  expect(enterprises).to_not include hub
+                  expect(enterprises).not_to include hub
                 end
               end
             end
@@ -288,7 +288,7 @@ module OpenFoodNetwork
                 it "returns the hub as well" do
                   enterprises = permissions.visible_enterprises
                   expect(enterprises).to include producer, hub
-                  expect(enterprises).to_not include coordinator
+                  expect(enterprises).not_to include coordinator
                 end
               end
 
@@ -297,7 +297,7 @@ module OpenFoodNetwork
 
                 it "does not return the hub" do
                   enterprises = permissions.visible_enterprises
-                  expect(enterprises).to_not include hub
+                  expect(enterprises).not_to include hub
                 end
               end
             end
@@ -308,7 +308,7 @@ module OpenFoodNetwork
 
             it "does not return my producer" do
               enterprises = permissions.visible_enterprises
-              expect(enterprises).to_not include hub, producer, coordinator
+              expect(enterprises).not_to include hub, producer, coordinator
             end
           end
         end
@@ -316,7 +316,7 @@ module OpenFoodNetwork
         context "which has not granted P-OC to the coordinator" do
           it "does not return my producer" do
             enterprises = permissions.visible_enterprises
-            expect(enterprises).to_not include producer
+            expect(enterprises).not_to include producer
           end
 
           context "but is already in the order cycle" do
@@ -329,7 +329,7 @@ module OpenFoodNetwork
             it "returns my producer" do
               enterprises = permissions.visible_enterprises
               expect(enterprises).to include producer
-              expect(enterprises).to_not include hub, coordinator
+              expect(enterprises).not_to include hub, coordinator
             end
 
             context "and has variants distributed by an outgoing hub" do
@@ -346,7 +346,7 @@ module OpenFoodNetwork
               it "returns that hub as well" do
                 enterprises = permissions.visible_enterprises
                 expect(enterprises).to include producer, hub
-                expect(enterprises).to_not include coordinator
+                expect(enterprises).not_to include coordinator
               end
             end
           end
@@ -527,7 +527,7 @@ module OpenFoodNetwork
           it "returns all variants belonging to the sending producer" do
             visible = permissions.visible_variants_for_incoming_exchanges_from(producer1)
             expect(visible).to include v1
-            expect(visible).to_not include v2
+            expect(visible).not_to include v2
           end
         end
 
@@ -541,7 +541,7 @@ module OpenFoodNetwork
           it "returns all variants belonging to the sending producer" do
             visible = permissions.visible_variants_for_incoming_exchanges_from(producer1)
             expect(visible).to include v1
-            expect(visible).to_not include v2
+            expect(visible).not_to include v2
           end
         end
 
@@ -561,7 +561,7 @@ module OpenFoodNetwork
             it "returns variants produced by that producer only" do
               visible = permissions.visible_variants_for_incoming_exchanges_from(producer1)
               expect(visible).to include v1
-              expect(visible).to_not include v2
+              expect(visible).not_to include v2
             end
           end
 
@@ -570,7 +570,7 @@ module OpenFoodNetwork
 
             it "does not return variants produced by that producer" do
               visible = permissions.visible_variants_for_incoming_exchanges_from(producer1)
-              expect(visible).to_not include v1, v2
+              expect(visible).not_to include v1, v2
             end
           end
         end
@@ -589,7 +589,7 @@ module OpenFoodNetwork
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
             visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
             expect(visible).to include v1
-            expect(visible).to_not include v2
+            expect(visible).not_to include v2
           end
 
           context "where the coordinator produces products" do
@@ -598,14 +598,14 @@ module OpenFoodNetwork
             it "returns any variants produced by the coordinator itself for exchanges w/ 'self'" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(coordinator)
               expect(visible).to include v3
-              expect(visible).to_not include v1, v2
+              expect(visible).not_to include v1, v2
             end
 
             it "does not return coordinator's variants for exchanges with other hubs, " \
                "when permission has not been granted" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
               expect(visible).to include v1
-              expect(visible).to_not include v2, v3
+              expect(visible).not_to include v2, v3
             end
           end
 
@@ -637,7 +637,7 @@ module OpenFoodNetwork
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
             visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
             expect(visible).to include v1
-            expect(visible).to_not include v2
+            expect(visible).not_to include v2
           end
 
           context "where the hub produces products" do
@@ -686,7 +686,7 @@ module OpenFoodNetwork
             it "returns all of my produced variants" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
               expect(visible).to include v1
-              expect(visible).to_not include v2
+              expect(visible).not_to include v2
             end
           end
 
@@ -695,7 +695,7 @@ module OpenFoodNetwork
 
             it "does not return my variants" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
-              expect(visible).to_not include v1, v2
+              expect(visible).not_to include v1, v2
             end
           end
         end
@@ -726,7 +726,7 @@ module OpenFoodNetwork
 
             it "returns those variants that are in the exchange" do
               visible = permissions.visible_variants_for_outgoing_exchanges_to(hub)
-              expect(visible).to_not include v1, v3
+              expect(visible).not_to include v1, v3
               expect(visible).to include v2
             end
           end
@@ -752,7 +752,7 @@ module OpenFoodNetwork
           it "returns all variants belonging to the sending producer" do
             visible = permissions.editable_variants_for_incoming_exchanges_from(producer1)
             expect(visible).to include v1
-            expect(visible).to_not include v2
+            expect(visible).not_to include v2
           end
         end
 
@@ -766,7 +766,7 @@ module OpenFoodNetwork
           it "returns all variants belonging to the sending producer" do
             visible = permissions.editable_variants_for_incoming_exchanges_from(producer1)
             expect(visible).to include v1
-            expect(visible).to_not include v2
+            expect(visible).not_to include v2
           end
         end
 
@@ -779,7 +779,7 @@ module OpenFoodNetwork
 
           it "does not return variants produced by that producer" do
             visible = permissions.editable_variants_for_incoming_exchanges_from(producer1)
-            expect(visible).to_not include v1, v2
+            expect(visible).not_to include v1, v2
           end
         end
       end
@@ -797,7 +797,7 @@ module OpenFoodNetwork
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
             visible = permissions.editable_variants_for_outgoing_exchanges_to(hub)
             expect(visible).to include v1
-            expect(visible).to_not include v2
+            expect(visible).not_to include v2
           end
 
           context "where the coordinator produces products" do
@@ -806,14 +806,14 @@ module OpenFoodNetwork
             it "returns any variants produced by the coordinator itself for exchanges w/ 'self'" do
               visible = permissions.editable_variants_for_outgoing_exchanges_to(coordinator)
               expect(visible).to include v3
-              expect(visible).to_not include v1, v2
+              expect(visible).not_to include v1, v2
             end
 
             it "does not return coordinator's variants for exchanges with other hubs, " \
                "when permission has not been granted" do
               visible = permissions.editable_variants_for_outgoing_exchanges_to(hub)
               expect(visible).to include v1
-              expect(visible).to_not include v2, v3
+              expect(visible).not_to include v2, v3
             end
           end
 
@@ -844,7 +844,7 @@ module OpenFoodNetwork
           it "returns all variants of any producer which has granted the outgoing hub P-OC" do
             visible = permissions.editable_variants_for_outgoing_exchanges_to(hub)
             expect(visible).to include v1
-            expect(visible).to_not include v2
+            expect(visible).not_to include v2
           end
 
           context "where the hub produces products" do
@@ -899,7 +899,7 @@ module OpenFoodNetwork
               it "returns all of my produced variants" do
                 visible = permissions.editable_variants_for_outgoing_exchanges_to(hub)
                 expect(visible).to include v1
-                expect(visible).to_not include v2
+                expect(visible).not_to include v2
               end
             end
 
@@ -908,7 +908,7 @@ module OpenFoodNetwork
 
               it "does not return my variants" do
                 visible = permissions.editable_variants_for_outgoing_exchanges_to(hub)
-                expect(visible).to_not include v1, v2
+                expect(visible).not_to include v1, v2
               end
             end
           end
@@ -918,7 +918,7 @@ module OpenFoodNetwork
 
             it "does not return my variants" do
               visible = permissions.editable_variants_for_outgoing_exchanges_to(hub)
-              expect(visible).to_not include v1, v2
+              expect(visible).not_to include v1, v2
             end
           end
         end
@@ -949,7 +949,7 @@ module OpenFoodNetwork
 
             it "does not return my variants" do
               visible = permissions.editable_variants_for_outgoing_exchanges_to(hub)
-              expect(visible).to_not include v1, v2, v3
+              expect(visible).not_to include v1, v2, v3
             end
           end
         end

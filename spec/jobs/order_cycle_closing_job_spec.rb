@@ -15,8 +15,8 @@ describe OrderCycleClosingJob do
 
   it "sends notifications for recently closed order cycles with automatic notifications enabled" do
     expect(OrderCycleNotificationJob).to receive(:perform_later).with(order_cycle1.id)
-    expect(OrderCycleNotificationJob).to_not receive(:perform_later).with(order_cycle2.id)
-    expect(OrderCycleNotificationJob).to_not receive(:perform_later).with(order_cycle3.id)
+    expect(OrderCycleNotificationJob).not_to receive(:perform_later).with(order_cycle2.id)
+    expect(OrderCycleNotificationJob).not_to receive(:perform_later).with(order_cycle3.id)
 
     OrderCycleClosingJob.perform_now
   end

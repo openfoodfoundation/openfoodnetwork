@@ -62,7 +62,7 @@ describe "As a consumer I want to shop with a distributor" do
         (all_tabs - tabs).each do |tab|
           it "does not show the #{tab} tab" do
             within ".tab-buttons" do
-              expect(page).to_not have_content tab
+              expect(page).not_to have_content tab
             end
           end
         end
@@ -132,8 +132,8 @@ describe "As a consumer I want to shop with a distributor" do
         end
 
         it "does not show the producer modal" do
-          expect(page).to_not have_link supplier.name
-          expect(page).to_not have_selector ".reveal-modal"
+          expect(page).not_to have_link supplier.name
+          expect(page).not_to have_selector ".reveal-modal"
         end
       end
     end
@@ -549,7 +549,7 @@ describe "As a consumer I want to shop with a distributor" do
 
           click_add_to_cart variant
 
-          expect(page).to_not have_selector '.out-of-stock-modal'
+          expect(page).not_to have_selector '.out-of-stock-modal'
         end
 
         context "group buy products" do

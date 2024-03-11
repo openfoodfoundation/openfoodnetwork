@@ -96,7 +96,7 @@ describe Enterprise do
       it "adds new owner to list of managers" do
         expect(e.owner).to eq u1
         expect(e.users).to include u1
-        expect(e.users).to_not include u2
+        expect(e.users).not_to include u2
         e.owner = u2
         e.save!
         e.reload
@@ -132,14 +132,14 @@ describe Enterprise do
 
       it "prevents duplicate names for new records" do
         e = Enterprise.new name: enterprise.name
-        expect(e).to_not be_valid
+        expect(e).not_to be_valid
         expect(e.errors[:name].first).to include enterprise_name_error(owner.email)
       end
 
       it "prevents duplicate names for existing records" do
         e = create(:enterprise, name: 'foo')
         e.name = enterprise.name
-        expect(e).to_not be_valid
+        expect(e).not_to be_valid
         expect(e.errors[:name].first).to include enterprise_name_error(owner.email)
       end
 
@@ -155,27 +155,27 @@ describe Enterprise do
     describe "prevent a wrong instagram link pattern" do
       it "invalidates the instagram attribute https://facebook.com/user" do
         e = build(:enterprise, instagram: 'https://facebook.com/user')
-        expect(e).to_not be_valid
+        expect(e).not_to be_valid
       end
 
       it "invalidates the instagram attribute tagram.com/user" do
         e = build(:enterprise, instagram: 'tagram.com/user')
-        expect(e).to_not be_valid
+        expect(e).not_to be_valid
       end
 
       it "invalidates the instagram attribute https://instagram.com/user/preferences" do
         e = build(:enterprise, instagram: 'https://instagram.com/user/preferences')
-        expect(e).to_not be_valid
+        expect(e).not_to be_valid
       end
 
       it "invalidates the instagram attribute https://www.instagram.com/p/Cpg4McNPyJA/" do
         e = build(:enterprise, instagram: 'https://www.instagram.com/p/Cpg4McNPyJA/')
-        expect(e).to_not be_valid
+        expect(e).not_to be_valid
       end
 
       it "invalidates the instagram attribute https://instagram.com/user-user" do
         e = build(:enterprise, instagram: 'https://instagram.com/user-user')
-        expect(e).to_not be_valid
+        expect(e).not_to be_valid
       end
     end
 
@@ -368,7 +368,7 @@ describe Enterprise do
       it "finds enterprises that have a sells property other than 'unspecified'" do
         activated_enterprises = Enterprise.activated
         expect(activated_enterprises).to include active_enterprise
-        expect(activated_enterprises).to_not include inactive_enterprise
+        expect(activated_enterprises).not_to include inactive_enterprise
       end
     end
 

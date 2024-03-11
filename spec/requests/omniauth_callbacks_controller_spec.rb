@@ -43,7 +43,7 @@ describe '/user/spree_user/auth/openid_connect/callback', type: :request do
     end
 
     it 'fails with bad auth data' do
-      expect { request! }.to_not change { OidcAccount.count }
+      expect { request! }.not_to change { OidcAccount.count }
 
       expect(response.status).to eq(302)
     end

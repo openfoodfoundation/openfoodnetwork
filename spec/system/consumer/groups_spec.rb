@@ -110,10 +110,10 @@ describe 'Groups' do
 
       it "adjusts visibilities of enterprises depending on their status" do
         expect(page).to     have_css('hub', text: d1.name)
-        expect(page).to_not have_css('hub.inactive', text: d1.name)
+        expect(page).not_to have_css('hub.inactive', text: d1.name)
         expect(page).to     have_css('hub', text: d2.name)
-        expect(page).to_not have_css('hub.inactive', text: d2.name)
-        expect(page).to_not have_text d3.name
+        expect(page).not_to have_css('hub.inactive', text: d2.name)
+        expect(page).not_to have_text d3.name
         expect(page).to     have_css('hub.inactive', text: d4.name)
       end
 

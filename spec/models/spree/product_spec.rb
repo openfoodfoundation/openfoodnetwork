@@ -25,7 +25,7 @@ module Spree
         context "#destroy" do
           it "should set deleted_at value" do
             product.destroy
-            expect(product.deleted_at).to_not be_nil
+            expect(product.deleted_at).not_to be_nil
             expect(product.variants.all? { |v| !v.deleted_at.nil? }).to be_truthy
           end
         end
@@ -441,14 +441,14 @@ module Spree
           distributors = Enterprise.where(id: [distributor1.id, distributor2.id]).to_a
 
           expect(Product.in_distributors(distributors)).to include product1, product2, product3
-          expect(Product.in_distributors(distributors)).to_not include product4
+          expect(Product.in_distributors(distributors)).not_to include product4
         end
 
         it "returns distributed products for a given array of enterprise ids" do
           distributors_ids = [distributor1.id, distributor2.id]
 
           expect(Product.in_distributors(distributors_ids)).to include product1, product2, product3
-          expect(Product.in_distributors(distributors_ids)).to_not include product4
+          expect(Product.in_distributors(distributors_ids)).not_to include product4
         end
       end
 
@@ -569,7 +569,7 @@ module Spree
         it "lists any products with variants that are listed as visible=true" do
           expect(products.length).to eq(1)
           expect(products).to include product
-          expect(products).to_not include new_variant.product, hidden_variant.product
+          expect(products).not_to include new_variant.product, hidden_variant.product
         end
       end
 
@@ -591,7 +591,7 @@ module Spree
         it 'shows products produced by the enterprise and any producers granting P-OC' do
           stockable_products = Spree::Product.stockable_by(shop)
           expect(stockable_products).to include p1, p2
-          expect(stockable_products).to_not include p3
+          expect(stockable_products).not_to include p3
         end
       end
 

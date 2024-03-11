@@ -168,7 +168,7 @@ describe Admin::EnterprisesController, type: :controller do
         spree_post :update, update_params
 
         distributor.reload
-        expect(distributor.users).to_not include user
+        expect(distributor.users).not_to include user
       end
 
       it "updates the contact for notifications" do
@@ -190,7 +190,7 @@ describe Admin::EnterprisesController, type: :controller do
         }
 
         expect { spree_post :update, params }.
-          to_not change { distributor.contact }
+          not_to change { distributor.contact }
       end
 
       it "updates enterprise preferences" do
@@ -223,7 +223,7 @@ describe Admin::EnterprisesController, type: :controller do
             expect(Spree::Property.count).to be 1
             expect(ProducerProperty.count).to be 0
             property_names = producer.reload.properties.map(&:name)
-            expect(property_names).to_not include 'a different name'
+            expect(property_names).not_to include 'a different name'
           end
         end
 
@@ -721,7 +721,7 @@ describe Admin::EnterprisesController, type: :controller do
         it "scopes @collection to enterprises editable by the user" do
           get :index, format: :json
           expect(assigns(:collection)).to include enterprise1, enterprise2
-          expect(assigns(:collection)).to_not include enterprise3
+          expect(assigns(:collection)).not_to include enterprise3
         end
       end
     end

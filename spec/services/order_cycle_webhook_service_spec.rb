@@ -22,7 +22,7 @@ describe OrderCycleWebhookService do
       coordinator_user.webhook_endpoints.create!(url: "http://coordinator_user_url")
 
       expect{ OrderCycleWebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
-        .to_not enqueue_job(WebhookDeliveryJob).with("http://coordinator_user_url", any_args)
+        .not_to enqueue_job(WebhookDeliveryJob).with("http://coordinator_user_url", any_args)
     end
 
     context "coordinator owner has endpoint configured" do
@@ -128,7 +128,7 @@ describe OrderCycleWebhookService do
 
         it "doesn't create a webhook payload for supplier owner" do
           expect{ OrderCycleWebhookService.create_webhook_job(order_cycle, "order_cycle.opened") }
-            .to_not enqueue_job(WebhookDeliveryJob).with("http://supplier_owner_url", any_args)
+            .not_to enqueue_job(WebhookDeliveryJob).with("http://supplier_owner_url", any_args)
         end
       end
     end

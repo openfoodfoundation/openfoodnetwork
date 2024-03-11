@@ -129,7 +129,7 @@ describe OrderAvailablePaymentMethods do
 
         it "applies default action (hide)" do
           expect(available_payment_methods).to include untagged_payment_method
-          expect(available_payment_methods).to_not include tagged_payment_method
+          expect(available_payment_methods).not_to include tagged_payment_method
         end
       end
 
@@ -156,7 +156,7 @@ describe OrderAvailablePaymentMethods do
 
           it "applies the default action (hide)" do
             expect(available_payment_methods).to include untagged_payment_method
-            expect(available_payment_methods).to_not include tagged_payment_method
+            expect(available_payment_methods).not_to include tagged_payment_method
           end
         end
       end
@@ -195,7 +195,7 @@ describe OrderAvailablePaymentMethods do
 
           it "applies the action (hide)" do
             expect(available_payment_methods).to include untagged_payment_method
-            expect(available_payment_methods).to_not include tagged_payment_method
+            expect(available_payment_methods).not_to include tagged_payment_method
           end
         end
 

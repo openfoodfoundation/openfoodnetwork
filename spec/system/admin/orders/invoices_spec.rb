@@ -55,7 +55,7 @@ describe '
       context 'order not updated since latest invoice' do
         it 'should not render new invoice button' do
           click_link 'Invoices'
-          expect(page).to_not have_link "Create or Update Invoice"
+          expect(page).not_to have_link "Create or Update Invoice"
         end
       end
 

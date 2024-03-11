@@ -30,7 +30,7 @@ describe OrderCycleDistributedProducts do
 
       it "does not return product" do
         expect(described_class.new(distributor, order_cycle,
-                                   customer).products_relation).to_not include product
+                                   customer).products_relation).not_to include product
       end
     end
 
@@ -42,7 +42,7 @@ describe OrderCycleDistributedProducts do
 
       it "does not return product" do
         expect(described_class.new(distributor, order_cycle,
-                                   customer).products_relation).to_not include product
+                                   customer).products_relation).not_to include product
       end
     end
 
@@ -56,7 +56,7 @@ describe OrderCycleDistributedProducts do
         it "does not return product when variant is out of stock" do
           variant.update_attribute(:on_hand, 0)
           expect(described_class.new(distributor, order_cycle,
-                                     customer).products_relation).to_not include product
+                                     customer).products_relation).not_to include product
         end
       end
 
@@ -67,7 +67,7 @@ describe OrderCycleDistributedProducts do
 
         it "does not return product when an override is out of stock" do
           expect(described_class.new(distributor, order_cycle,
-                                     customer).products_relation).to_not include product
+                                     customer).products_relation).not_to include product
         end
 
         it "returns product when an override is in stock" do
@@ -93,11 +93,11 @@ describe OrderCycleDistributedProducts do
 
     it "returns variants in the oc" do
       expect(variants).to include v1
-      expect(variants).to_not include v2
+      expect(variants).not_to include v2
     end
 
     it "does not return variants where override is out of stock" do
-      expect(variants).to_not include v3
+      expect(variants).not_to include v3
     end
   end
 end

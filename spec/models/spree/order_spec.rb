@@ -34,7 +34,7 @@ describe Spree::Order do
     end
 
     it "can find a line item matching a given variant" do
-      expect(order.find_line_item_by_variant(order.line_items.third.variant)).to_not be_nil
+      expect(order.find_line_item_by_variant(order.line_items.third.variant)).not_to be_nil
       expect(order.find_line_item_by_variant(build(:variant))).to be_nil
     end
   end
@@ -107,7 +107,7 @@ describe Spree::Order do
   context "#create" do
     it "should assign an order number" do
       order = Spree::Order.create
-      expect(order.number).to_not be_nil
+      expect(order.number).not_to be_nil
     end
   end
 
@@ -1012,7 +1012,7 @@ describe Spree::Order do
 
       it "returns only orders which have line items" do
         expect(Spree::Order.not_empty).to include order_with_line_items
-        expect(Spree::Order.not_empty).to_not include order_without_line_items
+        expect(Spree::Order.not_empty).not_to include order_without_line_items
       end
     end
   end
@@ -1041,19 +1041,19 @@ describe Spree::Order do
 
   describe "#customer" do
     it "is not required for new records" do
-      is_expected.to_not validate_presence_of(:customer)
+      is_expected.not_to validate_presence_of(:customer)
     end
 
     it "is not required for new complete orders" do
       order = Spree::Order.new(state: "complete")
 
-      expect(order).to_not validate_presence_of(:customer)
+      expect(order).not_to validate_presence_of(:customer)
     end
 
     it "is not required for existing orders in cart state" do
       order = create(:order)
 
-      expect(order).to_not validate_presence_of(:customer)
+      expect(order).not_to validate_presence_of(:customer)
     end
 
     it "is created for existing orders in complete state" do
@@ -1070,7 +1070,7 @@ describe Spree::Order do
       it "does not create a customer" do
         expect {
           create(:order, distributor:)
-        }.to_not change {
+        }.not_to change {
           Customer.count
         }
       end
@@ -1130,7 +1130,7 @@ describe Spree::Order do
 
         expect {
           other_order.update!(state: "complete")
-        }.to_not change { Customer.count }
+        }.not_to change { Customer.count }
 
         expect(other_order.customer.email).to eq "new@email.org"
         expect(order.customer).to eq other_order.customer
@@ -1334,7 +1334,7 @@ describe Spree::Order do
     let!(:payment) { create(:payment, order:, payment_method:) }
 
     it "does not include the :confirm step" do
-      expect(order.checkout_steps).to_not include "confirm"
+      expect(order.checkout_steps).not_to include "confirm"
     end
   end
 

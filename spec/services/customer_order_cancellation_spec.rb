@@ -25,7 +25,7 @@ describe CustomerOrderCancellation do
 
       CustomerOrderCancellation.new(order).call
 
-      expect(Spree::OrderMailer).to_not have_received(:cancel_email_for_shop)
+      expect(Spree::OrderMailer).not_to have_received(:cancel_email_for_shop)
     end
   end
 end

@@ -35,7 +35,7 @@ module Api
           expect(response.status).to eq 200
           expect(json_response["id"]).to eq enterprise.id
           enterprise.reload
-          expect(enterprise.logo).to_not be_attached
+          expect(enterprise.logo).not_to be_attached
         end
 
         context "when logo does not exist" do

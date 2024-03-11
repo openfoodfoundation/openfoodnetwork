@@ -714,13 +714,13 @@ describe '
 
       visit spree.admin_product_images_path(product)
       expect(page).to have_selector "table.index td img"
-      expect(product.reload.image).to_not be_nil
+      expect(product.reload.image).not_to be_nil
 
       accept_alert do
         page.find('a.delete-resource').click
       end
 
-      expect(page).to_not have_selector "table.index td img"
+      expect(page).not_to have_selector "table.index td img"
       expect(product.reload.image).to be_nil
     end
 

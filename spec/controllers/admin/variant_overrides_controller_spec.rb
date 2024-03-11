@@ -97,7 +97,7 @@ describe Admin::VariantOverridesController, type: :controller do
             it "allows to update other variant overrides" do
               put :bulk_update, as: format, params: { variant_overrides: variant_override_params }
 
-              expect(response).to_not redirect_to unauthorized_path
+              expect(response).not_to redirect_to unauthorized_path
               variant_override.reload
               expect(variant_override.price).to eq 123.45
             end
@@ -193,7 +193,7 @@ describe Admin::VariantOverridesController, type: :controller do
             it "does not reset count_on_hand for variant_overrides not in params" do
               expect {
                 put :bulk_reset, params:
-              }.to_not change{ variant_override3.reload.count_on_hand }
+              }.not_to change{ variant_override3.reload.count_on_hand }
             end
           end
         end

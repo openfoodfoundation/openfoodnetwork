@@ -209,7 +209,7 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
 
         reflex = run_reflex(:bulk_update, params:)
         expect(reflex.get(:error_counts)).to eq({ saved: 1, invalid: 2 })
-        expect(flash).to_not include success: "Changes saved"
+        expect(flash).not_to include success: "Changes saved"
 
         # # WTF
         # expect{ reflex(:bulk_update, params:) }.to broadcast(

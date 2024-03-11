@@ -102,7 +102,7 @@ describe 'Customers' do
                                         text: 'Delete failed: This customer has ' \
                                               'active subscriptions. Cancel them first.'
           click_button "OK"
-        }.to_not change{ Customer.count }
+        }.not_to change{ Customer.count }
 
         expect{
           within "tr#c_#{customer2.id}" do
@@ -153,8 +153,8 @@ describe 'Customers' do
               expect(page).to have_content "$-99.00"
             end
             within "tr#c_#{customer4.id}" do
-              expect(page).to_not have_content "CREDIT OWED"
-              expect(page).to_not have_content "BALANCE DUE"
+              expect(page).not_to have_content "CREDIT OWED"
+              expect(page).not_to have_content "BALANCE DUE"
               expect(page).to have_content "$0.00"
             end
           end
@@ -370,7 +370,7 @@ describe 'Customers' do
           first('#bill-address-link').click
 
           expect(page).to have_content 'Edit Billing Address'
-          expect(page).to_not have_content 'Please input all of the required fields'
+          expect(page).not_to have_content 'Please input all of the required fields'
         end
 
         it 'creates a new shipping address' do
@@ -436,7 +436,7 @@ describe 'Customers' do
               click_button 'Add Customer'
               expect(page).to have_selector "#new-customer-dialog .error",
                                             text: "Please enter a valid email address"
-            }.to_not change{ Customer.of(managed_distributor1).count }
+            }.not_to change{ Customer.of(managed_distributor1).count }
 
             # When an invalid email with domain is used it's checked by "valid_email2" gem #7886
             expect{
@@ -444,7 +444,7 @@ describe 'Customers' do
               click_button 'Add Customer'
               expect(page).to have_selector "#new-customer-dialog .error",
                                             text: "Email is invalid"
-            }.to_not change{ Customer.of(managed_distributor1).count }
+            }.not_to change{ Customer.of(managed_distributor1).count }
 
             # When a new valid email is used
             expect{

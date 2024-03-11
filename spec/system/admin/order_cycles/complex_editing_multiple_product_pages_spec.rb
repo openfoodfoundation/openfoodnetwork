@@ -26,7 +26,7 @@ describe '
       expect(page).to have_selector ".exchange-product-details"
 
       expect(page).to have_content "1 of 2 Variants Loaded"
-      expect(page).to_not have_content new_product.name
+      expect(page).not_to have_content new_product.name
     end
 
     it "load all products" do

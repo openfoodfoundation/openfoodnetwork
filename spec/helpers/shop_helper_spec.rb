@@ -24,7 +24,7 @@ describe ShopHelper, type: :helper do
       end
 
       it "should not return the groups tab" do
-        expect(helper.shop_tabs).to_not include(name: "groups", show: true, title: "Groups")
+        expect(helper.shop_tabs).not_to include(name: "groups", show: true, title: "Groups")
       end
     end
 

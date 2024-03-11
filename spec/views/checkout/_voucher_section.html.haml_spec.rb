@@ -40,7 +40,7 @@ describe "checkout/_voucher_section.html.haml" do
     assign(:order, order)
 
     render
-    expect(rendered).to_not have_content(note)
+    expect(rendered).not_to have_content(note)
   end
 
   def add_voucher(voucher, order)

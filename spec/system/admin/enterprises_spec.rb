@@ -588,7 +588,7 @@ describe '
             expect do
               click_button "Invite"
               expect(page).to have_content "Email is invalid"
-            end.to_not enqueue_job ActionMailer::MailDeliveryJob
+            end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
@@ -600,7 +600,7 @@ describe '
             expect do
               click_button "Invite"
               expect(page).to have_content "User already exists"
-            end.to_not enqueue_job ActionMailer::MailDeliveryJob
+            end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
@@ -698,7 +698,7 @@ describe '
             end
             expect(flash_message).to match(/Logo removed/)
             distributor1.reload
-            expect(distributor1.white_label_logo).to_not be_attached
+            expect(distributor1.white_label_logo).not_to be_attached
           end
 
           shared_examples "edit link with" do |url, result|

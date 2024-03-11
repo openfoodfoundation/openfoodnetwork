@@ -139,7 +139,7 @@ describe '
         expect(page).to have_button("« First", disabled: true)
         expect(page).to have_button("Previous", disabled: true)
         expect(page).to have_button("1", disabled: true)
-        expect(page).to_not have_button("2")
+        expect(page).not_to have_button("2")
         expect(page).to have_button("Next", disabled: true)
         expect(page).to have_button("Last »", disabled: true)
         select2_select "100 per page", from: "autogen4" # should display all 20 line items
@@ -1105,7 +1105,7 @@ describe '
               end
               expect(page).to have_selector "a.delete-line-item", count: 1
               expect(o2.reload.state).to eq("canceled")
-            end.to_not have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+            end.not_to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
 
           it "the user can confirm + wants to send email confirmation : line item is " \
@@ -1123,7 +1123,7 @@ describe '
 
           it "the user can confirm + uncheck the restock option: line item is then deleted and " \
              "order is canceled without retocking" do
-            expect_any_instance_of(Spree::StockLocation).to_not receive(:restock)
+            expect_any_instance_of(Spree::StockLocation).not_to receive(:restock)
             expect do
               within(".modal") do
                 uncheck("Restock Items: return all items to stock")

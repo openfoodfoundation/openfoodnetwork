@@ -16,6 +16,6 @@ describe Spree::TestMailer do
     expect(Spree::User).to receive(:find).with(user.id).and_return(user)
     expect {
       Spree::TestMailer.test_email(user.id).deliver_now
-    }.to_not raise_error
+    }.not_to raise_error
   end
 end

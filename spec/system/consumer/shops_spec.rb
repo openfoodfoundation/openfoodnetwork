@@ -246,7 +246,7 @@ describe 'Shops' do
 
       it "does not show the producer modal" do
         open_enterprise_modal producer
-        expect(page).to_not have_selector(".reveal-modal")
+        expect(page).not_to have_selector(".reveal-modal")
       end
     end
   end

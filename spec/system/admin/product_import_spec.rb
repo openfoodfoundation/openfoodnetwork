@@ -278,11 +278,11 @@ describe "Product Import" do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "3"
-      expect(page).to_not have_selector '.invalid-count'
+      expect(page).not_to have_selector '.invalid-count'
       expect(page).to have_selector '.create-count', text: "3"
-      expect(page).to_not have_selector '.update-count'
-      expect(page).to_not have_selector '.inv-create-count'
-      expect(page).to_not have_selector '.inv-update-count'
+      expect(page).not_to have_selector '.update-count'
+      expect(page).not_to have_selector '.inv-create-count'
+      expect(page).not_to have_selector '.inv-update-count'
 
       save_data
 

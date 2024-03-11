@@ -178,7 +178,7 @@ module OpenFoodNetwork
                                 Enterprise.where(id: [hub, producer2])
                               }
 
-        expect(permissions.variant_override_enterprises_per_hub[hub.id]).to_not include producer2.id
+        expect(permissions.variant_override_enterprises_per_hub[hub.id]).not_to include producer2.id
       end
 
       it "returns itself if self is also a primary producer " \

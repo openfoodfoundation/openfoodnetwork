@@ -57,7 +57,7 @@ module Api
                            q: { ransack_param => "Kangaroo" }
 
         expect(product_ids).to include product1.id
-        expect(product_ids).to_not include product2.id
+        expect(product_ids).not_to include product2.id
       end
 
       context "with variant overrides" do
@@ -84,7 +84,7 @@ module Api
         it "does not return products where the variant overrides are out of stock" do
           api_get :products, id: order_cycle.id, distributor: distributor.id
 
-          expect(product_ids).to_not include product2.id
+          expect(product_ids).not_to include product2.id
         end
       end
 
@@ -99,7 +99,7 @@ module Api
 
           expect(response.status).to eq 200
           expect(product_ids).to eq [product1.id, product2.id]
-          expect(product_ids).to_not include product3.id
+          expect(product_ids).not_to include product3.id
         end
 
         context "with supplier properties" do
@@ -118,7 +118,7 @@ module Api
 
             expect(response.status).to eq 200
             expect(product_ids).to match_array [product1.id, product2.id]
-            expect(product_ids).to_not include product3.id
+            expect(product_ids).not_to include product3.id
           end
         end
       end
@@ -129,7 +129,7 @@ module Api
                              q: { primary_taxon_id_in_any: [taxon2.id] }
 
           expect(product_ids).to include product2.id, product3.id
-          expect(product_ids).to_not include product1.id, product4.id
+          expect(product_ids).not_to include product1.id, product4.id
         end
       end
 
@@ -176,7 +176,7 @@ module Api
 
           api_get :products, id: order_cycle.id, distributor: distributor.id
 
-          expect(product_ids).to_not include product1.id
+          expect(product_ids).not_to include product1.id
         end
 
         it "does not return variants hidden for this specific customer" do
@@ -185,7 +185,7 @@ module Api
 
           api_get :products, id: order_cycle.id, distributor: distributor.id
 
-          expect(product_ids).to_not include product2.id
+          expect(product_ids).not_to include product2.id
         end
 
         it "returns hidden variants made visible for this specific customer" do
@@ -197,7 +197,7 @@ module Api
 
           api_get :products, id: order_cycle.id, distributor: distributor.id
 
-          expect(product_ids).to_not include product1.id
+          expect(product_ids).not_to include product1.id
           expect(product_ids).to include product3.id
         end
       end

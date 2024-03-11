@@ -93,9 +93,9 @@ describe 'Enterprises Index' do
               "#{manager.email} is not permitted to own any more enterprises (limit is 1)."
             )
             second_distributor.reload
-          }.to_not change { second_distributor.owner }
+          }.not_to change { second_distributor.owner }
 
-          expect(second_distributor.owner).to_not eq manager
+          expect(second_distributor.owner).not_to eq manager
         end
 
         def select_new_owner(user, enterprise)

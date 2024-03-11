@@ -283,7 +283,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       expect {
         click_button "Discard changes"
         product_a.reload
-      }.to_not change { product_a.name }
+      }.not_to change { product_a.name }
 
       within row_containing_name("Apples") do
         expect(page).to have_field "Name", with: "Apples" # Changed value wasn't saved
@@ -320,7 +320,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect(page).to have_content "1 product could not be saved"
           expect(page).to have_content "Please review the errors and try again"
           product_a.reload
-        }.to_not change { product_a.name }
+        }.not_to change { product_a.name }
 
         # (there's no identifier displayed, so the user must remember which product it is..)
         within row_containing_name("") do
@@ -345,7 +345,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
           expect(page).to have_content("1 product could not be saved")
           product_a.reload
-        }.to_not change { product_a.name }
+        }.not_to change { product_a.name }
 
         within row_containing_name("") do
           fill_in "Name", with: "Pommes"
@@ -433,7 +433,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             expect(page).to have_content "1 product could not be saved"
             expect(page).to have_content "Please review the errors and try again"
             variant_a1.reload
-          }.to_not change { variant_a1.display_name }
+          }.not_to change { variant_a1.display_name }
 
           # New variant
           within row_containing_name("N" * 256) do
@@ -458,7 +458,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             click_button "Save changes"
 
             variant_a1.reload
-          }.to_not change { variant_a1.display_name }
+          }.not_to change { variant_a1.display_name }
 
           within row_containing_name("N" * 256) do
             fill_in "Name", with: "Nice box"
@@ -552,7 +552,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             expect(page).to have_content "1 product could not be saved"
             expect(page).to have_content "Please review the errors and try again"
             variant_a1.reload
-          }.to_not change { variant_a1.display_name }
+          }.not_to change { variant_a1.display_name }
 
           # New variant
           within row_containing_name("N" * 256) do
@@ -577,7 +577,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             click_button "Save changes"
 
             variant_a1.reload
-          }.to_not change { variant_a1.display_name }
+          }.not_to change { variant_a1.display_name }
 
           within row_containing_name("N" * 256) do
             fill_in "Name", with: "Nice box"
@@ -620,7 +620,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect {
           click_button "Save changes"
           product_a.reload
-        }.to_not change { product_a.name }
+        }.not_to change { product_a.name }
 
         expect(page).not_to have_content("0 product was saved correctly, but")
         expect(page).to have_content("1 product could not be saved")
@@ -724,7 +724,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
           within row_containing_name("Medium box") do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).to_not have_link "Clone", href: spree.clone_admin_product_path(product_a)
+            expect(page).not_to have_link "Clone", href: spree.clone_admin_product_path(product_a)
           end
         end
       end
@@ -736,7 +736,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             input_content = page.find_all('input[type=text]').map(&:value).join
 
             # Products does not include the cloned product.
-            expect(input_content).to_not match /COPY OF Apples/
+            expect(input_content).not_to match /COPY OF Apples/
           end
 
           within row_containing_name("Apples") do
@@ -782,7 +782,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           # to select the default variant
           within default_variant_selector do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).to_not have_css(delete_option_selector)
+            expect(page).not_to have_css(delete_option_selector)
           end
         end
 
@@ -831,7 +831,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(keep_button_selector).click
             end
 
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             expect(page).to have_selector(product_selector)
 
             # Keep Variant
@@ -844,7 +844,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(keep_button_selector).click
             end
 
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             expect(page).to have_selector(variant_selector)
           end
         end
@@ -864,10 +864,10 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(delete_button_selector).click
             end
 
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             # Make sure the products loading spinner is hidden
             wait_for_class('.spinner-overlay', 'hidden')
-            expect(page).to_not have_selector(variant_selector)
+            expect(page).not_to have_selector(variant_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the variant")
               page.find(dismiss_button_selector).click
@@ -882,10 +882,10 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             within modal_selector do
               page.find(delete_button_selector).click
             end
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             # Make sure the products loading spinner is hidden
             wait_for_class('.spinner-overlay', 'hidden')
-            expect(page).to_not have_selector(product_selector)
+            expect(page).not_to have_selector(product_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the product")
             end
@@ -906,7 +906,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(delete_button_selector).click
             end
 
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             sleep(0.5) # delay for loading spinner to complete
             expect(page).to have_selector(variant_selector)
             within error_flash_message_selector do
@@ -923,7 +923,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             within modal_selector do
               page.find(delete_button_selector).click
             end
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             sleep(0.5) # delay for loading spinner to complete
             expect(page).to have_selector(product_selector)
             within error_flash_message_selector do

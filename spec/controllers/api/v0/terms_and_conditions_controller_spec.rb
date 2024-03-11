@@ -29,7 +29,7 @@ module Api
           expect(response.status).to eq 200
           expect(json_response["id"]).to eq enterprise.id
           enterprise.reload
-          expect(enterprise.terms_and_conditions).to_not be_attached
+          expect(enterprise.terms_and_conditions).not_to be_attached
         end
 
         context "when terms and conditions file does not exist" do

@@ -146,7 +146,7 @@ describe Spree::OrderContents do
       end
 
       it "does not update the order's enterprise fees if not complete" do
-        expect(order).to_not receive(:update_order_fees!)
+        expect(order).not_to receive(:update_order_fees!)
 
         subject.update_item(line_item, { quantity: 3 })
       end

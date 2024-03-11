@@ -55,10 +55,10 @@ describe Spree::Ability do
 
     context 'with customer' do
       it 'should not be able to admin' do
-        expect(subject).to_not be_able_to :admin, resource
-        expect(subject).to_not be_able_to :admin, resource_order
-        expect(subject).to_not be_able_to :admin, resource_product
-        expect(subject).to_not be_able_to :admin, resource_user
+        expect(subject).not_to be_able_to :admin, resource
+        expect(subject).not_to be_able_to :admin, resource_order
+        expect(subject).not_to be_able_to :admin, resource_product
+        expect(subject).not_to be_able_to :admin, resource_user
       end
     end
   end

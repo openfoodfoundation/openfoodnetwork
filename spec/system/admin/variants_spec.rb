@@ -167,7 +167,7 @@ describe '
       login_as_admin
       visit spree.edit_admin_product_variant_path(product, variant)
 
-      expect(page).to_not have_field "unit_value_human"
+      expect(page).not_to have_field "unit_value_human"
       expect(page).to have_field "variant_weight"
       expect(page).to have_field "variant_unit_description", with: "foo"
 

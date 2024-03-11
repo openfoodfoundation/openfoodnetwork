@@ -7,7 +7,7 @@ describe Spree::ProductProperty do
     it "should validate length of value" do
       pp = create(:product_property)
       pp.value = "x" * 256
-      expect(pp).to_not be_valid
+      expect(pp).not_to be_valid
     end
   end
 end
