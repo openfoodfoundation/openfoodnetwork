@@ -51,7 +51,7 @@ describe '
       visit admin_report_path(report_type: :customers)
       run_report
       expect(page).to have_content "Späti"
-      expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
+      expect(page).to have_content "First Name Last Name Billing Address Email"
       expect(page).to have_content "Müller"
     end
 
@@ -108,7 +108,7 @@ describe '
 
       click_on "Go"
 
-      expect(page).to have_content "FIRST NAME LAST NAME BILLING ADDRESS EMAIL"
+      expect(page).to have_content "First Name Last Name Billing Address Email"
 
       # Now that we see the report, we need to make sure that it's not replaced
       # by the "loading" spinner when the controller action finishes.
@@ -143,7 +143,7 @@ describe '
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Billing Address", "Email", "Phone", "Hub", "Hub Address",
          "Shipping Method", "Total Number of Orders", "Total incl. tax ($)",
-         "Last completed order date"].map(&:upcase)
+         "Last completed order date"]
       ].sort)
     end
   end
@@ -161,7 +161,7 @@ describe '
       table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Customer Code", "Email", "Phone", "Shipping Method",
-         "Payment Method", "Amount", "Balance"].map(&:upcase)
+         "Payment Method", "Amount", "Balance"]
       ].sort)
     end
 
@@ -173,7 +173,7 @@ describe '
       expect(table.sort).to eq([
         ["First Name", "Last Name", "Hub", "Customer Code", "Delivery Address", "Delivery Postcode",
          "Phone", "Shipping Method", "Payment Method", "Amount", "Balance",
-         "Temp Controlled Items?", "Special Instructions"].map(&:upcase)
+         "Temp Controlled Items?", "Special Instructions"]
       ].sort)
     end
   end
@@ -214,7 +214,6 @@ describe '
                                      'Distributor postcode',
                                      'Shipping Method',
                                      'Shipping instructions']
-                                           .map(&:upcase)
                                   ])
 
       expect(all('table.report__table tbody tr').count).to eq(
@@ -236,7 +235,6 @@ describe '
                                      'Distributor',
                                      'Payment Type',
                                      "Total (%s)" % currency_symbol]
-                                           .map(&:upcase)
                                   ])
 
       expect(all('table.report__table tbody tr').count).to eq(
@@ -386,13 +384,14 @@ describe '
 
       expect(page).to have_content "All products"
       expect(page).to have_content "Inventory (on hand)"
+
       click_link 'All products'
       run_report
       expect(page).to have_content "Supplier"
       expect(page).to have_table_row ["Supplier", "Producer Suburb", "Product",
                                       "Product Properties", "Taxons", "Variant Value", "Price",
                                       "Group Buy Unit Quantity", "Amount", "SKU",
-                                      "On demand?", "On hand"].map(&:upcase)
+                                      "On Demand?", "On Hand"]
       expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
@@ -418,7 +417,7 @@ describe '
 
       expect(page).to have_table_row ['PRODUCT', 'Description', 'Qty', 'Pack Size', 'Unit',
                                       'Unit Price', 'Total', 'GST incl.',
-                                      'Grower and growing method', 'Taxon'].map(&:upcase)
+                                      'Grower and growing method', 'Taxon']
       expect(page).to have_table_row ['Product 2', '100g', '', '100', 'g', '99.0', '', '0',
                                       'Supplier Name (Organic - NASAA 12345)', 'Taxon Name']
     end
@@ -445,7 +444,7 @@ describe '
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
-        ["User", "Relationship", "Enterprise"].map(&:upcase),
+        ["User", "Relationship", "Enterprise"],
         [enterprise1.owner.email, "owns", enterprise1.name],
         [enterprise1.owner.email, "manages", enterprise1.name],
         [enterprise2.owner.email, "owns", enterprise2.name],
@@ -466,7 +465,7 @@ describe '
       table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[0..2] }
 
       expect(table.sort).to eq([
-        ["User", "Relationship", "Enterprise"].map(&:upcase),
+        ["User", "Relationship", "Enterprise"],
         [enterprise1.owner.email, "manages", enterprise3.name]
       ].sort)
     end
@@ -494,7 +493,7 @@ describe '
         "Units Required",
         "Unallocated",
         "Max Quantity Excess"
-      ].map(&:upcase)
+      ]
     end
 
     it "generating Bulk Co-op Allocation report" do
@@ -513,7 +512,7 @@ describe '
         "Total available",
         "Unallocated",
         "Max Quantity Excess"
-      ].map(&:upcase)
+      ]
     end
 
     it "generating Bulk Co-op Packing Sheets report" do
@@ -525,7 +524,7 @@ describe '
         "Product",
         "Variant",
         "Sum Total"
-      ].map(&:upcase)
+      ]
     end
 
     it "generating Bulk Co-op Customer Payments report" do
@@ -538,7 +537,7 @@ describe '
         "Total Cost",
         "Amount Owing",
         "Amount Paid"
-      ].map(&:upcase)
+      ]
     end
   end
 
@@ -735,7 +734,7 @@ describe '
          POCity PORegion POPostalCode POCountry *InvoiceNumber Reference *InvoiceDate
          *DueDate InventoryItemCode *Description *Quantity *UnitAmount Discount *AccountCode
          *TaxType TrackingName1 TrackingOption1 TrackingName2 TrackingOption2 Currency BrandingTheme
-         Paid?).map(&:upcase)
+         Paid?)
     end
 
     def xero_invoice_summary_row(description, amount, tax_type, opts = {})

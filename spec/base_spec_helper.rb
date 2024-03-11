@@ -112,6 +112,11 @@ RSpec.configure do |config|
     Flipper.enable(feature)
   end
 
+  # activate feature toggle admin_style_v3 to use new admin interface and run the build
+  config.before(:suite) do
+    Flipper.enable(:admin_style_v3)
+  end
+
   # Enable caching in any specs tagged with `caching: true`.
   config.around(:each, :caching) do |example|
     caching = ActionController::Base.perform_caching
@@ -240,6 +245,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper
   config.include ReportsHelper
+  config.include TomSelectHelper, type: :system
 
   config.include ViewComponent::TestHelpers, type: :component
 

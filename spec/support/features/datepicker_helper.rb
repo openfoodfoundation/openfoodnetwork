@@ -4,7 +4,7 @@ module Features
   module DatepickerHelper
     def choose_today_from_datepicker
       within(".flatpickr-calendar.open") do
-        find("button", text: "TODAY").click
+        find("button", text: "Today").click
       end
     end
 

@@ -8,6 +8,11 @@ describe "Product Import" do
   include AuthenticationHelper
   include WebHelper
 
+  around do |example|
+    Flipper.disable(:admin_style_v3)
+    example.run
+  end
+
   let!(:admin) { create(:admin_user) }
   let!(:user) { create(:user) }
   let!(:user2) { create(:user) }
@@ -706,9 +711,10 @@ describe "Product Import" do
       save_data
 
       expect(page).to have_selector '.created-count', text: '1'
+
       expect(page).not_to have_selector '.updated-count'
-      expect(page).to have_content "GO TO PRODUCTS PAGE"
-      expect(page).to have_content "UPLOAD ANOTHER FILE"
+      expect(page).to have_content "Go To Products Page".upcase
+      expect(page).to have_content "Upload Another File".upcase
 
       visit spree.admin_products_path
 

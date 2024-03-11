@@ -11,9 +11,114 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     login_as_admin
   end
 
-  it "can see the new product page" do
-    visit admin_products_url
-    expect(page).to have_content "Bulk Edit Products"
+  describe "with no products" do
+    before { visit admin_products_url }
+    it "can see the new product page" do
+      expect(page).to have_content "Bulk Edit Products"
+      expect(page).to have_text "No products found"
+      # displays buttons to add products with the correct links
+      expect(page).to have_link(class: "button", text: "New Product", href: "/admin/products/new")
+      expect(page).to have_link(class: "button", text: "Import multiple products",
+                                href: "/admin/products/import")
+    end
+  end
+
+  describe "using the page" do
+    describe "using column display dropdown" do
+      let(:product) { create(:simple_product) }
+
+      before do
+        pending "Pending implementation, issue #11055"
+        login_as_admin
+        visit spree.admin_products_path
+      end
+
+      it "shows a column display dropdown, which shows a list of columns when clicked" do
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
+
+        toggle_columns /^.{0,1}Producer$/i
+
+        expect(page).not_to have_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
+      end
+    end
+  end
+
+  describe "listing" do
+    let!(:p1) { create(:product) }
+    let!(:p2) { create(:product) }
+
+    before do
+      visit admin_products_url
+    end
+
+    it "displays a list of products" do
+      within ".products" do
+        expect(page).to have_field("_products_0_name", with: p1.name.to_s)
+        expect(page).to have_field("_products_1_name", with: p2.name.to_s)
+      end
+    end
+
+    it "displays a select box for suppliers, with the appropriate supplier selected" do
+      pending( "[BUU] Change producer, unit type, category and tax category #11060" )
+      s1 = FactoryBot.create(:supplier_enterprise)
+      s2 = FactoryBot.create(:supplier_enterprise)
+      s3 = FactoryBot.create(:supplier_enterprise)
+      p1 = FactoryBot.create(:product, supplier: s2)
+      p2 = FactoryBot.create(:product, supplier: s3)
+
+      visit spree.admin_products_path
+
+      expect(page).to have_select "producer_id", with_options: [s1.name, s2.name, s3.name],
+                                                 selected: s2.name
+      expect(page).to have_select "producer_id", with_options: [s1.name, s2.name, s3.name],
+                                                 selected: s3.name
+    end
+
+    context "with several variants" do
+      let!(:variant1) { p1.variants.first }
+      let!(:variant2) { p2.variants.first }
+      let!(:variant3) { create(:variant, product: p2, on_demand: false, on_hand: 4) }
+
+      before do
+        variant1.update!(on_hand: 0, on_demand: true)
+        variant2.update!(on_hand: 16, on_demand: false)
+        visit spree.admin_products_path
+      end
+
+      it "displays an on hand count in a span for each product" do
+        expect(page).to have_content "On demand"
+        expect(page).to_not have_content "20" # does not display the total stock
+        expect(page).to have_content "16" # displays the stock for variant_2
+        expect(page).to have_content "4"  # displays the stock for variant_3
+      end
+    end
+
+    it "displays a select box for the unit of measure for the product's variants" do
+      pending( "[BUU] Change producer, unit type and tax category #11060" )
+      p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1,
+                                      variant_unit_name: '')
+
+      visit spree.admin_products_path
+
+      expect(page).to have_select "variant_unit_with_scale", selected: "Weight (g)"
+    end
+
+    it "displays a text field for the item name when unit is set to 'Items'" do
+      pending( "[BUU] Change producer, unit type and tax category #11060" )
+      p = FactoryBot.create(:product, variant_unit: 'items', variant_unit_scale: nil,
+                                      variant_unit_name: 'packet')
+
+      visit spree.admin_products_path
+
+      expect(page).to have_select "variant_unit_with_scale", selected: "Items"
+      expect(page).to have_field "variant_unit_name", with: "packet"
+    end
   end
 
   describe "sorting" do
@@ -77,7 +182,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
       end
 
@@ -94,7 +199,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect_per_page_to_be 15
         expect_products_count_to_be 1
         search_for "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
       end
 
@@ -104,7 +209,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_name.name
 
@@ -135,7 +240,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         search_by_producer "Producer 1"
 
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect(page).to have_select "producer_id", selected: "Producer 1"
         expect_products_count_to_be 1
       end
@@ -154,7 +259,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         search_by_category "Category 1"
 
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria. Showing 1 to 1."
         expect(page).to have_select "category_id", selected: "Category 1"
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_category.name
@@ -931,6 +1036,151 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             end
           end
         end
+      end
+    end
+  end
+
+  describe "creating a new product" do
+    let!(:stock_location) { create(:stock_location, backorderable_default: false) }
+    let!(:supplier) { create(:supplier_enterprise) }
+    let!(:distributor) { create(:distributor_enterprise) }
+    let!(:shipping_category) { create(:shipping_category) }
+    let!(:taxon) { create(:taxon) }
+
+    before do
+      login_as_admin
+      visit spree.admin_products_path
+    end
+
+    it "creating a new product" do
+      find("a", text: "New Product").click
+      expect(page).to have_content "New Product"
+      fill_in 'product_name', with: 'Big Bag Of Apples'
+      tomselect_select supplier.name, from: 'product[supplier_id]'
+      select_tom_select 'Weight (g)', from: 'product_variant_unit_field'
+      fill_in 'product_unit_value', with: '100'
+      fill_in 'product_price', with: '10.00'
+      # TODO dropdowns below are still using select2:
+      select taxon.name, from: 'product_primary_taxon_id' # ...instead of tom-select
+      select shipping_category.name, from: 'product_shipping_category_id' # ...instead of tom-select
+      click_button 'Create'
+      expect(URI.parse(current_url).path).to eq spree.admin_products_path
+      expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
+      expect(page).to have_field "_products_0_name", with: 'Big Bag Of Apples'
+    end
+  end
+
+  context "creating new variants" do
+    let!(:product) { create(:product, variant_unit: 'weight', variant_unit_scale: 1000) }
+
+    before do
+      pending "Pending implementation, issue #11066"
+
+      login_as_admin
+      visit spree.admin_products_path
+
+      # I should see an add variant button
+      page.find('a.view-variants').click
+    end
+
+    it "handle the default behaviour" do
+      # When I add three variants
+      page.find('a.add-variant').click
+      page.find('a.add-variant').click
+
+      # They should be added, and should not see edit buttons for new variants
+      expect(page).to have_selector "tr.variant", count: 3
+      expect(page).to have_selector "a.edit-variant", count: 1
+
+      # When I remove two, they should be removed
+      accept_alert do
+        page.all('a.delete-variant').first.click
+      end
+      expect(page).to have_selector "tr.variant", count: 2
+      page.all('a.delete-variant').first.click
+      expect(page).to have_selector "tr.variant", count: 1
+
+      # When I fill out variant details and hit update
+      fill_in "variant_display_name", with: "Case of 12 Bottles"
+      fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
+      fill_in "variant_display_as", with: "Case"
+      fill_in "variant_price", with: "4.0"
+      fill_in "variant_on_hand", with: "10"
+
+      click_button 'Save Changes', match: :first
+      expect(page.find("#status-message")).to have_content "Changes saved."
+
+      updated_variant = Spree::Variant.where(deleted_at: nil).last
+      expect(updated_variant.display_name).to eq "Case of 12 Bottles"
+      expect(updated_variant.unit_value).to eq 3000
+      expect(updated_variant.unit_description).to eq "(12x250 mL bottles)"
+      expect(updated_variant.display_as).to eq "Case"
+      expect(updated_variant.price).to eq 4.0
+      expect(updated_variant.on_hand).to eq 10
+
+      # Then I should see edit buttons for the new variant
+      expect(page).to have_selector "a.edit-variant"
+    end
+
+    context "handle the 'on_demand' variant case creation" do
+      let(:v1) { create(:variant, product:, on_hand: 4) }
+      let(:v2) { create(:variant, product:, on_demand: true) }
+      pending("Pending implementation, issue #11066")
+
+      before do
+        product.variants << v1
+        product.variants << v2
+
+        visit spree.admin_products_path
+        page.find('a.view-variants').click
+      end
+
+      it "when variant unit value is: '120'" do
+        within "tr#v_#{v2.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120"
+          fill_in "variant_price", with: "6.66"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message")).to have_content "Changes saved."
+      end
+
+      it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
+        within "tr#v_#{v2.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          fill_in "variant_on_hand", with: "222"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message"))
+          .to have_content "Variant unit value can't be blank Variant unit value is not a number"
+      end
+
+      it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
+        scroll_to(:bottom)
+
+        within "tr#v_#{v2.id}" do
+          page.find(".add-variant").click
+        end
+
+        within "tr#v_-1" do
+          fill_in "variant_unit_value_with_description", with: "120g"
+          fill_in "variant_price", with: "6.66"
+          check "variant_on_demand"
+        end
+
+        click_button 'Save Changes', match: :first
+        expect(page.find("#status-message"))
+          .to have_content "Variant unit value can't be blank Variant unit value is not a number"
       end
     end
   end

@@ -16,9 +16,9 @@ describe "Authentication" do
     fill_in "Email", with: user.email
     fill_in "Password", with: user.password
     click_login_button
-    expect(page).to have_content "DASHBOARD"
+    expect(page).to have_content "Dashboard"
     expect(page).to have_current_path spree.admin_dashboard_path
-    expect(page).not_to have_content "CONFIGURATION"
+    expect(page).not_to have_content "Configuration"
   end
 
   it "viewing my account" do
