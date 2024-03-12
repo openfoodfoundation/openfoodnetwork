@@ -14,14 +14,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_OW0XdLkNysDyJ4","request_duration_ms":351}}'
+      - '{"last_request_metrics":{"request_id":"req_zvZ5rcMjbH8Xnt","request_duration_ms":381}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"10.11.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.5.0-21-generic (buildd@lcy02-amd64-091) (x86_64-linux-gnu-gcc-12
-        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
-        #21~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Feb  9 13:32:52 UTC 2","hostname":"ff-LAT"}'
+      - "<HIDDEN-STRIPE-USER-AGENT>"
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -34,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:48:37 GMT
+      - Tue, 12 Mar 2024 00:44:25 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -56,22 +53,24 @@ http_interactions:
       Referrer-Policy:
       - strict-origin-when-cross-origin
       Request-Id:
-      - req_sUe2DBMA3zp1AX
+      - req_SSmm4AaFsw8Zhp
       Set-Cookie:
       - __Host-session=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT;
         secure; SameSite=None
       - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Fdeauthorize%22%7D;
-        domain=stripe.com; path=/; expires=Fri, 07 Mar 2025 14:48:37 GMT; secure;
+        domain=stripe.com; path=/; expires=Wed, 12 Mar 2025 00:44:25 GMT; secure;
         HttpOnly; SameSite=Lax
-      - machine_identifier=gcNvbXk83YCiQARDPr%2FWm%2Fudz6SKv9ICDs6QwJ%2BcOLcthYISJqSejQCBnFyL6z4tmm0%3D;
-        domain=stripe.com; path=/; expires=Fri, 07 Mar 2025 14:48:37 GMT; secure;
+      - cid=0433e759-4348-455e-8a58-809cae4b0108; domain=stripe.com; path=/; expires=Mon,
+        10 Jun 2024 00:44:25 GMT; secure; SameSite=Lax
+      - machine_identifier=uNKapiqCKO2tGCnD1LyGcPLKhq38hyKbReLquxbNScK2nD5Ccis%2BqpyPtlnePV7aRnQ%3D;
+        domain=stripe.com; path=/; expires=Wed, 12 Mar 2025 00:44:25 GMT; secure;
         HttpOnly; SameSite=Lax
-      - private_machine_identifier=CyeFDR7EsUL%2FgnP8sZJVqU2K66SjmSWNZSj5Z3m7T27TfPoe4Zfary4E%2BDJO54TchVc%3D;
-        domain=stripe.com; path=/; expires=Fri, 07 Mar 2025 14:48:37 GMT; secure;
+      - private_machine_identifier=lZ2jDgxoWxrKQ2xHEnY5mZBYpdMlxiEBE258wqLy6sut%2Bddj8t%2BPuN5gsdwfh2zI7Ew%3D;
+        domain=stripe.com; path=/; expires=Wed, 12 Mar 2025 00:44:25 GMT; secure;
         HttpOnly; SameSite=None
       - site-auth=; domain=stripe.com; path=/; max-age=0; expires=Thu, 01 Jan 1970
         00:00:00 GMT; secure
-      - stripe.csrf=y0Rqn0OuAamx_vu3tHXro2gQYagbh-n8tAoEwxmfGRfSdgSHKpr12BQyNCE4zT2OsDCXaOoHdlHNBZaUVDjBEDw-AYTZVJxlaE_F2HOX9QJfM8Qqpc1dE8PC9Fg5wCti4ygOiUKi8w%3D%3D;
+      - stripe.csrf=AhKjxrkUZ_zSalGGUzAJ4komJ6czJiP3DY0jFovw9d9xOEGc7Noz-3eMFXOOpL3AThecyivhKnc2Bj_vIFo4tDw-AYTZVJw2S8ZoYOES-Zwx2vgIdODPWR3T1YNdWXti8GAQBYlxQw%3D%3D;
         domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
       Stripe-Kill-Route:
       - "[]"
@@ -88,5 +87,5 @@ http_interactions:
           "error": "invalid_client",
           "error_description": "No such application: 'bogus_client_id'"
         }
-  recorded_at: Thu, 07 Mar 2024 14:48:37 GMT
+  recorded_at: Tue, 12 Mar 2024 00:44:25 GMT
 recorded_with: VCR 6.2.0

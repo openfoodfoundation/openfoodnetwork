@@ -16,10 +16,7 @@ http_interactions:
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"10.11.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.5.0-21-generic (buildd@lcy02-amd64-091) (x86_64-linux-gnu-gcc-12
-        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
-        #21~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Feb  9 13:32:52 UTC 2","hostname":"ff-LAT"}'
+      - "<HIDDEN-STRIPE-USER-AGENT>"
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -32,11 +29,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:45:47 GMT
+      - Tue, 12 Mar 2024 00:41:58 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '849'
+      - '850'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -59,11 +56,11 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Idempotency-Key:
-      - 8e5748ab-3c58-4b23-8d5b-850352452784
+      - fa85648c-254d-4bb1-aef1-675ede847193
       Original-Request:
-      - req_vh9S0ImKQkVeFq
+      - req_kGMKWF3QnaSZ2J
       Request-Id:
-      - req_vh9S0ImKQkVeFq
+      - req_kGMKWF3QnaSZ2J
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -78,10 +75,10 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "tok_1OriCcKuuB1fWySnZn4gRVb9",
+          "id": "tok_1OtJPmKuuB1fWySn86nyAha9",
           "object": "token",
           "card": {
-            "id": "card_1OriCcKuuB1fWySn46sgc3Iy",
+            "id": "card_1OtJPmKuuB1fWySnMwt9bUev",
             "object": "card",
             "address_city": null,
             "address_country": null,
@@ -108,19 +105,19 @@ http_interactions:
             "tokenization_method": null,
             "wallet": null
           },
-          "client_ip": "176.79.242.165",
-          "created": 1709822746,
+          "client_ip": "124.188.129.192",
+          "created": 1710204118,
           "livemode": false,
           "type": "card",
           "used": false
         }
-  recorded_at: Thu, 07 Mar 2024 14:45:47 GMT
+  recorded_at: Tue, 12 Mar 2024 00:41:58 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: UTF-8
-      string: email=lesley_torp%40damore.us&source=tok_1OriCcKuuB1fWySnZn4gRVb9
+      string: email=evan%40farrell.com&source=tok_1OtJPmKuuB1fWySn86nyAha9
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/10.11.0
@@ -129,14 +126,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_vh9S0ImKQkVeFq","request_duration_ms":690}}'
+      - '{"last_request_metrics":{"request_id":"req_kGMKWF3QnaSZ2J","request_duration_ms":559}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"10.11.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.5.0-21-generic (buildd@lcy02-amd64-091) (x86_64-linux-gnu-gcc-12
-        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
-        #21~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Feb  9 13:32:52 UTC 2","hostname":"ff-LAT"}'
+      - "<HIDDEN-STRIPE-USER-AGENT>"
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -149,11 +143,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:45:48 GMT
+      - Tue, 12 Mar 2024 00:41:59 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '660'
+      - '655'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -176,11 +170,11 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Idempotency-Key:
-      - e115fea7-6b73-4f24-8e5e-a8be5bb38000
+      - a40c2507-9c3a-400e-ac2e-18728ecefa67
       Original-Request:
-      - req_mhJmCq4VhPMPxf
+      - req_TbrtE7Sb3xxEgI
       Request-Id:
-      - req_mhJmCq4VhPMPxf
+      - req_TbrtE7Sb3xxEgI
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -195,18 +189,18 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "cus_Ph6PPd7ZUMcVe0",
+          "id": "cus_PikvyOJAAyJOVc",
           "object": "customer",
           "address": null,
           "balance": 0,
-          "created": 1709822747,
+          "created": 1710204119,
           "currency": null,
-          "default_source": "card_1OriCcKuuB1fWySn46sgc3Iy",
+          "default_source": "card_1OtJPmKuuB1fWySnMwt9bUev",
           "delinquent": false,
           "description": null,
           "discount": null,
-          "email": "lesley_torp@damore.us",
-          "invoice_prefix": "4AA02C1F",
+          "email": "evan@farrell.com",
+          "invoice_prefix": "D8AE504D",
           "invoice_settings": {
             "custom_fields": null,
             "default_payment_method": null,
@@ -223,10 +217,10 @@ http_interactions:
           "tax_exempt": "none",
           "test_clock": null
         }
-  recorded_at: Thu, 07 Mar 2024 14:45:48 GMT
+  recorded_at: Tue, 12 Mar 2024 00:41:59 GMT
 - request:
     method: get
-    uri: https://api.stripe.com/v1/customers/cus_Ph6PPd7ZUMcVe0/sources?limit=1&object=card
+    uri: https://api.stripe.com/v1/customers/cus_PikvyOJAAyJOVc/sources?limit=1&object=card
     body:
       encoding: US-ASCII
       string: ''
@@ -238,14 +232,11 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_mhJmCq4VhPMPxf","request_duration_ms":1001}}'
+      - '{"last_request_metrics":{"request_id":"req_TbrtE7Sb3xxEgI","request_duration_ms":887}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"10.11.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.5.0-21-generic (buildd@lcy02-amd64-091) (x86_64-linux-gnu-gcc-12
-        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
-        #21~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Feb  9 13:32:52 UTC 2","hostname":"ff-LAT"}'
+      - "<HIDDEN-STRIPE-USER-AGENT>"
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -258,7 +249,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 07 Mar 2024 14:45:48 GMT
+      - Tue, 12 Mar 2024 00:42:00 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -286,7 +277,7 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to=https://q.stripe.com/coop-report
       Request-Id:
-      - req_pKEIlsFmzmlbhI
+      - req_MdZ2Zf3SKYoZ4w
       Stripe-Version:
       - '2023-10-16'
       Vary:
@@ -302,7 +293,7 @@ http_interactions:
           "object": "list",
           "data": [
             {
-              "id": "card_1OriCcKuuB1fWySn46sgc3Iy",
+              "id": "card_1OtJPmKuuB1fWySnMwt9bUev",
               "object": "card",
               "address_city": null,
               "address_country": null,
@@ -314,7 +305,7 @@ http_interactions:
               "address_zip_check": null,
               "brand": "Visa",
               "country": "US",
-              "customer": "cus_Ph6PPd7ZUMcVe0",
+              "customer": "cus_PikvyOJAAyJOVc",
               "cvc_check": "pass",
               "dynamic_last4": null,
               "exp_month": 9,
@@ -329,7 +320,7 @@ http_interactions:
             }
           ],
           "has_more": false,
-          "url": "/v1/customers/cus_Ph6PPd7ZUMcVe0/sources"
+          "url": "/v1/customers/cus_PikvyOJAAyJOVc/sources"
         }
-  recorded_at: Thu, 07 Mar 2024 14:45:48 GMT
+  recorded_at: Tue, 12 Mar 2024 00:42:00 GMT
 recorded_with: VCR 6.2.0
