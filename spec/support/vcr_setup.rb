@@ -16,9 +16,13 @@ VCR.configure do |config|
     STRIPE_ACCOUNT
     STRIPE_CLIENT_ID
     STRIPE_ENDPOINT_SECRET
-    CLIENT_SECRET
-    HOSTNAME
   ].each do |env_var|
     config.filter_sensitive_data("<HIDDEN-#{env_var}>") { ENV.fetch(env_var, nil) }
   end
+  config.filter_sensitive_data('<HIDDEN-STRIPE-USER-AGENT>') { |interaction|
+    interaction.request.headers['X-Stripe-Client-User-Agent']&.public_send(:[], 0)
+  }
+  config.filter_sensitive_data('<HIDDEN-CLIENT-SECRET>') { |interaction|
+    interaction.response.body.match(/"client_secret": "(pi_.+)"/)&.public_send(:[], 1)
+  }
 end
