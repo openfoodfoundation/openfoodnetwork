@@ -20,7 +20,7 @@ class ProductScopeQuery
 
     product_query.
       ransack(query_params_with_defaults).
-      result
+      result(distinct: true)
   end
 
   def find_product
