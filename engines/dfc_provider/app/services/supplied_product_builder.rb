@@ -35,6 +35,7 @@ class SuppliedProductBuilder < DfcBuilder
       end
     else
       product = import_product(supplied_product)
+      product.supplier = supplier
       product.ensure_standard_variant
       product.variants.first
     end
