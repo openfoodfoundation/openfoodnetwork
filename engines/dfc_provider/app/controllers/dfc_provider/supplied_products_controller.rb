@@ -14,7 +14,10 @@ module DfcProvider
 
       return head :bad_request unless supplied_product
 
-      variant = SuppliedProductBuilder.import_variant(supplied_product)
+      variant = SuppliedProductBuilder.import_variant(
+        supplied_product,
+        current_enterprise,
+      )
       product = variant.product
 
       if product.new_record?

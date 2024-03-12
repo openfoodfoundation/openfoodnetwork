@@ -145,7 +145,7 @@ describe SuppliedProductBuilder do
   end
 
   describe ".import_variant" do
-    let(:imported_variant) { builder.import_variant(supplied_product) }
+    let(:imported_variant) { builder.import_variant(supplied_product, supplier) }
     let(:supplied_product) do
       DfcProvider::SuppliedProduct.new(
         "https://example.net/tomato",
@@ -173,7 +173,7 @@ describe SuppliedProductBuilder do
     end
 
     context "with spree_product_id supplied" do
-      let(:imported_variant) { builder.import_variant(supplied_product) }
+      let(:imported_variant) { builder.import_variant(supplied_product, supplier) }
 
       let(:supplied_product) do
         DfcProvider::SuppliedProduct.new(
@@ -213,7 +213,7 @@ describe SuppliedProductBuilder do
     end
 
     context "with spree_product_uri supplied" do
-      let(:imported_variant) { builder.import_variant(supplied_product) }
+      let(:imported_variant) { builder.import_variant(supplied_product, supplier) }
       let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK }
       let!(:new_taxon) {
         create(
@@ -286,7 +286,7 @@ describe SuppliedProductBuilder do
   end
 
   describe ".referenced_spree_product" do
-    let(:result) { builder.referenced_spree_product(supplied_product) }
+    let(:result) { builder.referenced_spree_product(supplied_product, supplier) }
     let(:supplied_product) do
       DfcProvider::SuppliedProduct.new(
         "https://example.net/tomato",
@@ -303,6 +303,15 @@ describe SuppliedProductBuilder do
       supplied_product.spree_product_uri =
         "http://test.host/api/dfc/enterprises/7?spree_product_id=6"
       expect(result).to eq spree_product
+    end
+
+    it "doesn't return a product of another enterprise" do
+      variant.save!
+      create(:product, id: 8, supplier: create(:enterprise))
+
+      supplied_product.spree_product_uri =
+        "http://test.host/api/dfc/enterprises/7?spree_product_id=8"
+      expect(result).to eq nil
     end
 
     it "doesn't return a foreign product referenced by URI" do

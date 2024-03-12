@@ -23,8 +23,8 @@ class SuppliedProductBuilder < DfcBuilder
     )
   end
 
-  def self.import_variant(supplied_product)
-    product = referenced_spree_product(supplied_product)
+  def self.import_variant(supplied_product, supplier)
+    product = referenced_spree_product(supplied_product, supplier)
 
     if product
       Spree::Variant.new(
@@ -40,7 +40,7 @@ class SuppliedProductBuilder < DfcBuilder
     end
   end
 
-  def self.referenced_spree_product(supplied_product)
+  def self.referenced_spree_product(supplied_product, supplier)
     uri = supplied_product.spree_product_uri
     id = supplied_product.spree_product_id
 
@@ -51,9 +51,9 @@ class SuppliedProductBuilder < DfcBuilder
       # Check that the given URI points to us:
       return unless uri == urls.enterprise_url(route.merge(params))
 
-      Spree::Product.find(params["spree_product_id"])
+      supplier.supplied_products.find_by(id: params["spree_product_id"])
     elsif id.present?
-      Spree::Product.find(id)
+      supplier.supplied_products.find_by(id:)
     end
   end
 
