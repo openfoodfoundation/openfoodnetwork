@@ -12,7 +12,7 @@ describe ProductScopeQuery do
 
   before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
 
-  describe 'bulk update' do
+  describe '#bulk_products' do
     let!(:product3) { create(:product, supplier: supplier2) }
 
     it "returns a list of products" do
@@ -28,13 +28,29 @@ describe ProductScopeQuery do
       expect(subject).not_to include(product2, product3)
     end
 
-    it "filters results by product category" do
-      subject = ProductScopeQuery
-        .new(current_api_user, { q: { variants_primary_taxon_id_eq: taxon.id } })
-        .bulk_products
+    describe "by variant category" do
+      it "filters results by product category" do
+        create(:variant, product: product2, primary_taxon: taxon)
 
-      expect(subject).to include(product, product2)
-      expect(subject).not_to include(product3)
+        subject = ProductScopeQuery
+          .new(current_api_user, { q: { variants_primary_taxon_id_eq: taxon.id } })
+          .bulk_products
+
+        expect(subject).to match_array([product, product2])
+        expect(subject).not_to include(product3)
+      end
+
+      context "with mutiple variant in the same category" do
+        it "doesn't duplicate products" do
+          create(:variant, product: product2, primary_taxon: taxon)
+
+          subject = ProductScopeQuery
+            .new(current_api_user, { q: { variants_primary_taxon_id_eq: taxon.id } })
+            .bulk_products
+
+          expect(subject).to match_array([product, product2])
+        end
+      end
     end
 
     it "filters results by import_date" do
