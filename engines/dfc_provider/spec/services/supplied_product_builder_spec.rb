@@ -255,7 +255,7 @@ describe SuppliedProductBuilder do
         end
       end
 
-      context "when doesn't spree_product_uri match the server host" do
+      context "when spree_product_uri doesn't match the server host" do
         let(:supplied_product) do
           DfcProvider::SuppliedProduct.new(
             "https://example.net/tomato",
