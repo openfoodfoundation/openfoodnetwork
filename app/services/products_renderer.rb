@@ -34,12 +34,12 @@ class ProductsRenderer
     return unless order_cycle
 
     @products ||= begin
-      results = distributed_products.
-        products_taxons_relation.
+      results = products_relation.
         order(Arel.sql(products_order))
 
-      filter_and_paginate(results).
-        each { |product| product_scoper.scope(product) } # Scope results with variant_overrides
+      results = filter(results)
+      # Scope results with variant_overrides
+      paginate(results).each { |product| product_scoper.scope(product) }
     end
   end
 
@@ -51,9 +51,37 @@ class ProductsRenderer
     OpenFoodNetwork::EnterpriseFeeCalculator.new distributor, order_cycle
   end
 
-  def filter_and_paginate(query)
-    results = query.ransack(args[:q]).result
+  # TODO refactor this, distributed_products should be able to give use the relation based
+  # on the sorting method, same for ordering. It would prevent the SQL implementation from
+  # leaking here
+  def products_relation
+    if distributor.preferred_shopfront_product_sorting_method == "by_category" &&
+       distributor.preferred_shopfront_taxon_order.present?
+      return distributed_products.products_taxons_relation
+    end
 
+    distributed_products.products_supplier_relation
+  end
+
+  def filter(query)
+    property_ids = args[:q]&.dig("with_variants_supplier_properties")
+
+    if property_ids.present?
+      # We can't search on an association's scope with ransack, a work around is to define
+      # the a scope on the parent (Spree::Product) but because we are joining on "first_variant"
+      # it doesn't work, so we do the filtering manually here
+      results = query.joins('JOIN enterprises ON enterprises.id = first_variant.supplier_id
+                             LEFT OUTER JOIN producer_properties
+                               ON producer_properties.producer_id = enterprises.id').
+        where(producer_properties: { property_id: property_ids })
+
+      return results
+    end
+
+    query.ransack(args[:q]).result
+  end
+
+  def paginate(results)
     _pagy, paginated_results = pagy_arel(
       results,
       page: args[:page] || 1,
@@ -67,12 +95,13 @@ class ProductsRenderer
     OrderCycles::DistributedProductsService.new(distributor, order_cycle, customer)
   end
 
+  # TODO refactor, see above
   def products_order
     if distributor.preferred_shopfront_product_sorting_method == "by_producer" &&
       distributor.preferred_shopfront_producer_order.present?
       order_by_producer = distributor
                             .preferred_shopfront_producer_order
-                            .split(",").map { |id| "spree_products.supplier_id=#{id} DESC" }
+                            .split(",").map { |id| "first_variant.supplier_id=#{id} DESC" }
                             .join(", ")
       "#{order_by_producer}, spree_products.name ASC, spree_products.id ASC"
     elsif distributor.preferred_shopfront_product_sorting_method == "by_category" &&
@@ -86,7 +115,6 @@ class ProductsRenderer
       "spree_products.name ASC, spree_products.id"
     end
   end
-
 
   def variants_for_shop
     @variants_for_shop ||= begin

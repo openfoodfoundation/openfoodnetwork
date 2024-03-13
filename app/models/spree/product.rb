@@ -79,7 +79,7 @@ module Spree
     after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
 
     # -- Scopes
-    scope :with_properties, lambda { |property_ids|
+    scope :with_properties, ->(*property_ids) {
       left_outer_joins(:product_properties).
         where(inherits_properties: true).
         where(spree_product_properties: { property_id: property_ids })

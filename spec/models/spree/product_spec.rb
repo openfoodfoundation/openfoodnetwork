@@ -362,7 +362,7 @@ module Spree
 
         it "returns only products with the wanted property set both on supplier & product itself" do
           expect(
-            Spree::Product.with_properties([wanted_property.id])
+            Spree::Product.with_properties([wanted_property.id, 99_999])
           ).to match_array [product_with_wanted_property]
         end
       end

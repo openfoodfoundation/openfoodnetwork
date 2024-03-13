@@ -15,12 +15,13 @@ RSpec.describe ProductsRenderer do
     let(:fruits_supplier) { create(:supplier_enterprise) }
     let(:cakes_supplier) { create(:supplier_enterprise) }
     let!(:product_apples) {
-      create(:product, name: "apples", primary_taxon_id: fruits.id,
-                       supplier_id: fruits_supplier.id)
+      create(:product, name: "apples", primary_taxon_id: fruits.id, supplier_id: fruits_supplier.id)
     }
     let!(:product_banana_bread) {
-      create(:product, name: "banana bread", primary_taxon_id: cakes.id,
-                       supplier_id: cakes_supplier.id)
+      create(:product, name: "banana bread", variants: [
+               create(:variant, supplier: cakes_supplier, primary_taxon: cakes),
+               create(:variant, supplier: fruits_supplier, primary_taxon: cakes)
+             ])
     }
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,
@@ -68,12 +69,17 @@ RSpec.describe ProductsRenderer do
 
     context "filtering" do
       it "filters products by name_or_meta_keywords_or_variants_display_as_or_" \
-         "variants_display_name_or_supplier_name_cont" do
-        products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, { q: {
-                                                   "#{[:name, :meta_keywords, :variants_display_as,
-                                                       :variants_display_name, :supplier_name]
-                                                   .join('_or_')}_cont": "apples",
-                                                 } })
+         "variants_display_name_or_variants_supplier_name_cont" do
+        params = [:name, :meta_keywords, :variants_display_as, :variants_display_name,
+                  :variants_supplier_name]
+        ransack_param = "#{params.join('_or_')}_cont"
+        products_renderer = ProductsRenderer.new(
+          distributor,
+          order_cycle,
+          customer,
+          { q: { "#{ransack_param}": "apples" } }
+        )
+
         products = products_renderer.send(:products)
         expect(products).to eq([product_apples])
       end
@@ -89,7 +95,7 @@ RSpec.describe ProductsRenderer do
                                                       value: '1', position: 1 })
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer,
                                                    { q: {
-                                                     with_properties: [property_organic.id]
+                                                     with_properties: [property_organic.id, 999]
                                                    } })
           products = products_renderer.send(:products)
           expect(products).to eq([product_apples])
@@ -98,10 +104,10 @@ RSpec.describe ProductsRenderer do
         it "filters products with a producer property" do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer,
-                                                   { q: {
-                                                     with_properties: [property_organic.id]
-                                                   } })
+
+          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
           products = products_renderer.send(:products)
           expect(products).to eq([product_apples, product_cherries])
         end
