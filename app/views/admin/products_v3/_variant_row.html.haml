@@ -9,13 +9,19 @@
   = error_message_on variant, :sku
 %td
   -# empty
-- if variant.persisted?
-  %td.align-right
-    .content= variant.unit_to_display
-- else # until unit component is developed, use a basic input just so we can create new records
-  %td.field
-    = f.number_field :unit_value, 'aria-label': t('admin.products_page.columns.unit')
-    = error_message_on variant, :unit_value
+%td.field
+  = f.button :unit_to_display, 'aria-label': t('admin.products_page.columns.unit') do
+    = variant.unit_to_display # Show the generated summary of unit values
+
+  -# Composite field for unit_value and unit_description
+  -# todo: create a method for value_with_description
+  = f.text_field :unit_value_with_description,
+      value: [number_with_precision(variant.unit_value, precision: nil,strip_insignificant_zeros: true), variant.unit_description].compact_blank.join(" "),
+      'aria-label': t('admin.products_page.columns.unit_value')
+  = error_message_on variant, :unit_value
+
+  = f.label :display_as, t('admin.products_page.columns.display_as')
+  = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(variant).name
 %td.field
   = f.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
   = error_message_on variant, :price
