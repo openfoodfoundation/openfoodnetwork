@@ -42,11 +42,19 @@ module Admin
           'Authorization' => "Bearer #{spree_current_user.oidc_account.token}",
         }
       )
-      response = PrivateAddressCheck.only_public_connections do
+      response = only_public_connections do
         connection.get(url)
       end
 
       response.body
+    end
+
+    def only_public_connections
+      return yield if Rails.env.development?
+
+      PrivateAddressCheck.only_public_connections do
+        yield
+      end
     end
 
     # Most of this code is the same as in the DfcProvider::SuppliedProductsController.
