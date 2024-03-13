@@ -1202,6 +1202,7 @@ fr_CA:
           custom_tab_title: "Titre de l'onglet personnalisé"
           custom_tab_content: "Contenu de l'onglet personnalisé"
         connected_apps:
+          legend: "Connected apps  https://n8n.openfoodnetwork.org.uk/webhook-test/regen/connect-enterprise/can"
           loading: "Chargement en cours"
       actions:
         edit_profile: Paramètres
@@ -1452,6 +1453,7 @@ fr_CA:
           users: "Utilisateurs"
           vouchers: Bon de réduction
           white_label: "Marque blanche"
+          connected_apps: "Connected apps  https://n8n.openfoodnetwork.org.uk/webhook-test/regen/connect-enterprise/can"
         enterprise_group:
           primary_details: "Informations de base"
           users: "Utilisateurs"
