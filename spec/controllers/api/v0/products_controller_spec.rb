@@ -8,10 +8,10 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
 
   let(:supplier) { create(:supplier_enterprise) }
   let(:supplier2) { create(:supplier_enterprise) }
-  let!(:product) { create(:product, supplier:) }
-  let!(:other_product) { create(:product) }
-  let(:product_other_supplier) { create(:product, supplier: supplier2) }
-  let(:product_with_image) { create(:product_with_image, supplier:) }
+  let!(:product) { create(:product, supplier_id: supplier.id) }
+  let!(:other_product) { create(:product, supplier_id: supplier.id) }
+  let(:product_other_supplier) { create(:product, supplier_id: supplier2.id) }
+  let(:product_with_image) { create(:product_with_image, supplier_id: supplier.id) }
   let(:all_attributes) { ["id", "name", "variants"] }
   let(:variants_attributes) {
     ["id", "options_text", "unit_value", "unit_description", "unit_to_display", "on_demand",
@@ -36,7 +36,7 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
     it "gets a single product" do
       product.create_image!(attachment:)
       product.variants.create!(unit_value: "1", unit_description: "thing", price: 1,
-                               primary_taxon: taxon)
+                               primary_taxon: taxon, supplier:)
       product.variants.first.images.create!(attachment:)
       product.set_property("spree", "rocks")
 
@@ -120,7 +120,7 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
       expect(response.status).to eq(422)
       expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       errors = json_response["errors"]
-      expect(errors.keys).to match_array(["name", "supplier", "variant_unit", "price"])
+      expect(errors.keys).to match_array(["name", "variant_unit", "price"])
     end
 
     it "can update a product" do
@@ -228,9 +228,9 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
   describe '#bulk_products' do
     context "as an enterprise user" do
       let!(:taxon) { create(:taxon) }
-      let!(:product2) { create(:product, supplier:, primary_taxon: taxon) }
-      let!(:product3) { create(:product, supplier: supplier2, primary_taxon: taxon) }
-      let!(:product4) { create(:product, supplier: supplier2) }
+      let!(:product2) { create(:product, supplier_id: supplier.id, primary_taxon: taxon) }
+      let!(:product3) { create(:product, supplier_id: supplier2.id, primary_taxon: taxon) }
+      let!(:product4) { create(:product, supplier_id: supplier2.id) }
       let(:current_api_user) { supplier_enterprise_user(supplier) }
 
       before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
@@ -262,7 +262,8 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
       end
 
       it "filters results by supplier" do
-        api_get :bulk_products, { page: 1, per_page: 15, q: { supplier_id_eq: supplier.id } },
+        api_get :bulk_products,
+                { page: 1, per_page: 15, q: { variants_supplier_id_eq: supplier.id } },
                 format: :json
         expect(returned_product_ids).to eq [product2.id, other_product.id, product.id]
       end
