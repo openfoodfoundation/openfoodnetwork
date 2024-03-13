@@ -42,19 +42,19 @@ module Api
       let!(:order5) { create(:order, state: 'cart', completed_at: nil) }
       let!(:line_item1) do
         create(:line_item_with_shipment, order: order1,
-                                         product: create(:product, supplier:))
+                                         product: create(:product, supplier_id: supplier.id))
       end
       let!(:line_item2) do
         create(:line_item_with_shipment, order: order2,
-                                         product: create(:product, supplier:))
+                                         product: create(:product, supplier_id: supplier.id))
       end
       let!(:line_item3) do
         create(:line_item_with_shipment, order: order2,
-                                         product: create(:product, supplier:))
+                                         product: create(:product, supplier_id: supplier.id))
       end
       let!(:line_item4) do
         create(:line_item_with_shipment, order: order3,
-                                         product: create(:product, supplier:))
+                                         product: create(:product, supplier_id: supplier.id))
       end
 
       context 'as a regular user' do
@@ -235,7 +235,7 @@ module Api
 
         it "returns unauthorized, as the order product's supplier owner" do
           allow(controller).to receive(:spree_current_user) {
-                                 order.line_items.first.variant.product.supplier.owner
+                                 order.line_items.first.variant.supplier.owner
                                }
           get :show, params: { id: order.number }
           assert_unauthorized!
