@@ -4,12 +4,12 @@ require 'pagy/extras/arel'
 require 'pagy/extras/items'
 require 'pagy/extras/overflow'
 
-
 # Pagy Variables
 # See https://ddnexus.github.io/pagy/api/pagy#variables
-Pagy::DEFAULT[:items]  = 100
+Pagy::DEFAULT[:items] = 100
 
-# Items extra: Allow the client to request a custom number of items per page with an optional selector UI
+# Items extra: Allow the client to request a custom number of items per page with an optional
+# selector UI
 # See https://ddnexus.github.io/pagy/extras/items
 Pagy::DEFAULT[:items_param] = :per_page
 Pagy::DEFAULT[:max_items]   = 100
