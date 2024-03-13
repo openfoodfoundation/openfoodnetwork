@@ -41,11 +41,11 @@ module Spree
       let!(:taxon1) { create(:taxon) }
       let!(:taxon2) { create(:taxon) }
       let!(:product) { create(:simple_product, primary_taxon: taxon1) }
+      let(:variant) { product.variants.first }
 
-      it "is touched when assignment of primary_taxon on a product changes" do
+      it "is touched when assignment of primary_taxon on a variant changes" do
         expect do
-          product.primary_taxon = taxon2
-          product.save
+          variant.update(primary_taxon: taxon2)
         end.to change { taxon2.reload.updated_at }
       end
     end

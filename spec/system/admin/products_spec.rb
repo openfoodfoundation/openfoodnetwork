@@ -143,7 +143,7 @@ describe '
       expect(product.variants.first.unit_value).to eq(5000)
       expect(product.variants.first.unit_description).to eq("")
       expect(product.variant_unit_name).to eq("")
-      expect(product.primary_taxon_id).to eq(taxon.id)
+      expect(product.variants.first.primary_taxon_id).to eq(taxon.id)
       expect(product.variants.first.price.to_s).to eq('19.99')
       expect(product.on_hand).to eq(5)
       expect(product.variants.first.tax_category_id).to eq(tax_category.id)

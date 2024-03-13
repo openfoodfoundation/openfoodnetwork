@@ -3,13 +3,18 @@
 FactoryBot.define do
   factory :base_product, class: Spree::Product do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
+
+    transient do
+      primary_taxon { nil }
+    end
+
+    primary_taxon_id { |p| (p.primary_taxon || Spree::Taxon.first || create(:taxon)).id }
     description { generate(:random_description) }
     price { 19.99 }
     sku { 'ABC' }
     deleted_at { nil }
 
     supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
-    primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
 
     unit_value { 1 }
     unit_description { '' }
@@ -48,6 +53,7 @@ FactoryBot.define do
       on_demand { false }
       on_hand { 5 }
     end
+
     after(:create) do |product, evaluator|
       product.variants.first.on_demand = evaluator.on_demand
       product.variants.first.on_hand = evaluator.on_hand

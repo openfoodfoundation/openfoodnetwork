@@ -46,16 +46,10 @@ module Sets
     #   variant.update( { price: xx.x } )
     #
     def update_product_attributes(attributes)
-      split_taxon_ids!(attributes)
-
       product = find_model(@collection, attributes[:id])
       return if product.nil?
 
       update_product(product, attributes)
-    end
-
-    def split_taxon_ids!(attributes)
-      attributes[:taxon_ids] = attributes[:taxon_ids].split(',') if attributes[:taxon_ids].present?
     end
 
     def update_product(product, attributes)

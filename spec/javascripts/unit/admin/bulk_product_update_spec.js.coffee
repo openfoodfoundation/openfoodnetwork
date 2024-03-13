@@ -803,8 +803,8 @@ describe "AdminProductEditCtrl", ->
       expect(product).toEqual
         id: 123
         variants: [
-          {id: -1, price: null, unit_value: null, tax_category_id: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null}
-          {id: -2, price: null, unit_value: null, tax_category_id: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null}
+          {id: -1, price: null, unit_value: null, tax_category_id: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null, category_id: null}
+          {id: -2, price: null, unit_value: null, tax_category_id: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null, category_id: null}
         ]
 
     it "shows the variant(s)", ->

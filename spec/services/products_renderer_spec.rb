@@ -162,12 +162,6 @@ describe ProductsRenderer do
       expect(products_renderer.products_json).to include "998.0"
     end
 
-    it "includes the primary taxon" do
-      taxon = create(:taxon)
-      allow_any_instance_of(Spree::Product).to receive(:primary_taxon).and_return taxon
-      expect(products_renderer.products_json).to include taxon.name
-    end
-
     it "loads tag_list for variants" do
       VariantOverride.create(variant:, hub: distributor, tag_list: 'lalala')
       expect(products_renderer.products_json).to include "[\"lalala\"]"

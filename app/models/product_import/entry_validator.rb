@@ -24,7 +24,6 @@ module ProductImport
 
     def self.non_updatable_fields
       {
-        category: :primary_taxon_id,
         description: :description,
         unit_type: :variant_unit_scale,
         variant_unit_name: :variant_unit_name,
@@ -69,7 +68,7 @@ module ProductImport
     def mark_as_new_variant(entry, product_id)
       variant_attributes = entry.assignable_attributes.except(
         'id', 'product_id', 'on_hand', 'on_demand', 'variant_unit', 'variant_unit_name',
-        'variant_unit_scale', 'primary_taxon_id'
+        'variant_unit_scale'
       )
       # Variant needs a product. Product needs to be assigned first in order for
       # delegate to work. name= will fail otherwise.
@@ -398,7 +397,7 @@ module ProductImport
     def mark_as_existing_variant(entry, existing_variant)
       existing_variant.assign_attributes(
         entry.assignable_attributes.except('id', 'product_id', 'variant_unit', 'variant_unit_name',
-                                           'variant_unit_scale', 'primary_taxon_id')
+                                           'variant_unit_scale')
       )
       check_on_hand_nil(entry, existing_variant)
 

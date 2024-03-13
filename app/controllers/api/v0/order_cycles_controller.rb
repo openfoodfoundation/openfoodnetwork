@@ -70,22 +70,7 @@ module Api
       end
 
       def search_params
-        permitted_search_params = params.slice :q, :page, :per_page
-
-        if permitted_search_params.key? :q
-          permitted_search_params[:q].slice!(*permitted_ransack_params)
-        end
-
-        permitted_search_params
-      end
-
-      def permitted_ransack_params
-        [
-          "#{[:name, :meta_keywords, :variants_display_as,
-              :variants_display_name, :supplier_name]
-          .join('_or_')}_cont",
-          :with_properties, :primary_taxon_id_in_any
-        ]
+        params.slice :q, :page, :per_page
       end
 
       def distributor

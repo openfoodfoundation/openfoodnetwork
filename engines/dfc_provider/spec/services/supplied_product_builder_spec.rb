@@ -7,9 +7,8 @@ describe SuppliedProductBuilder do
 
   subject(:builder) { described_class }
   let(:variant) {
-    build(:variant, id: 5).tap do |v|
+    build(:variant, id: 5, primary_taxon: taxon).tap do |v|
       v.product.supplier_id = 7
-      v.product.primary_taxon = taxon
     end
   }
   let(:taxon) {
@@ -116,7 +115,7 @@ describe SuppliedProductBuilder do
       it "assigns the taxon matching the DFC product type" do
         product = builder.import_product(supplied_product)
 
-        expect(product.primary_taxon).to eq(taxon)
+        expect(product.variants.first.primary_taxon).to eq(taxon)
       end
 
       describe "when no matching taxon" do
@@ -125,7 +124,7 @@ describe SuppliedProductBuilder do
         it "set the taxon to nil" do
           product = builder.import_product(supplied_product)
 
-          expect(product.primary_taxon).to be_nil
+          expect(product.variants.first.primary_taxon).to be_nil
         end
       end
     end
