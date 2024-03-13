@@ -11,11 +11,8 @@ module OrderCycles
       @customer = customer
     end
 
-    def products_relation
-      Spree::Product.where(id: stocked_products).group("spree_products.id")
-    end
-
-    # Joins on the first product variant to allow us to filter product by taxon. This is so
+    # TODO refactor products_taxons_relation and products_supplier_relation
+    # Joins on the first product variant to allow us to filter product by taxon.  # This is so
     # enterprise can display product sorted by category in a custom order on their shopfront.
     #
     # Caveat, the category sorting won't work properly if there are multiple variant with different
@@ -29,6 +26,21 @@ module OrderCycles
                ) first_variant ON spree_products.id = first_variant.product_id").
         select("spree_products.*, first_variant.primary_taxon_id").
         group("spree_products.id, first_variant.primary_taxon_id")
+    end
+
+    # Joins on the first product variant to allow us to filter product by supplier. This is so
+    # enterprise can display product sorted by supplier in a custom order on their shopfront.
+    #
+    # Caveat, the supplier sorting won't work properly if there are multiple variant with different
+    # supplier for a given product.
+    #
+    def products_supplier_relation
+      Spree::Product.where(id: stocked_products).
+        joins("LEFT JOIN (SELECT DISTINCT ON(product_id) id, product_id, supplier_id
+                          FROM spree_variants WHERE deleted_at IS NULL) first_variant
+                          ON spree_products.id = first_variant.product_id").
+        select("spree_products.*, first_variant.supplier_id").
+        group("spree_products.id, first_variant.supplier_id")
     end
 
     def variants_relation
