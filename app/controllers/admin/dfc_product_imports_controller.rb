@@ -20,7 +20,7 @@ module Admin
 
       catalog_url = params.require(:catalog_url)
 
-      json_catalog = fetch_catalog(catalog_url)
+      json_catalog = DfcRequest.new(spree_current_user).get(catalog_url)
       graph = DfcIo.import(json_catalog)
 
       # * First step: import all products for given enterprise.
@@ -33,29 +33,6 @@ module Admin
     end
 
     private
-
-    def fetch_catalog(url)
-      connection = Faraday.new(
-        request: { timeout: 30 },
-        headers: {
-          'Content-Type' => 'application/json',
-          'Authorization' => "Bearer #{spree_current_user.oidc_account.token}",
-        }
-      )
-      response = only_public_connections do
-        connection.get(url)
-      end
-
-      response.body
-    end
-
-    def only_public_connections
-      return yield if Rails.env.development?
-
-      PrivateAddressCheck.only_public_connections do
-        yield
-      end
-    end
 
     # Most of this code is the same as in the DfcProvider::SuppliedProductsController.
     def import_product(subject, enterprise)
