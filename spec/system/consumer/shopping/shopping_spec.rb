@@ -11,7 +11,7 @@ describe "As a consumer I want to shop with a distributor" do
 
   describe "Viewing a distributor" do
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-    let(:supplier) { create(:supplier_enterprise) }
+    let(:supplier) { create(:supplier_enterprise, name: 'The small mammals company') }
     let(:oc1) {
       create(:simple_order_cycle, distributors: [distributor],
                                   coordinator: create(:distributor_enterprise),
@@ -291,9 +291,12 @@ describe "As a consumer I want to shop with a distributor" do
 
     describe "after selecting an order cycle with products visible" do
       let(:variant1) { create(:variant, product:, price: 20) }
-      let(:variant2) { create(:variant, product:, price: 30, display_name: "Badgers") }
+      let(:variant2) do
+        create(:variant, product:, price: 30, display_name: "Badgers",
+                         display_as: 'displayedunderthename')
+      end
       let(:product2) {
-        create(:simple_product, supplier:, name: "Meercats", meta_keywords: "Wild")
+        create(:simple_product, supplier:, name: "Meercats", meta_keywords: "Wild Fresh")
       }
       let(:variant3) { create(:variant, product: product2, price: 40, display_name: "Ferrets") }
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
@@ -330,9 +333,11 @@ describe "As a consumer I want to shop with a distributor" do
       end
 
       context "filtering search results" do
-        it "returns no results and clears searches by clicking the clear-link" do
+        before do
           visit shop_path
           sleep(2)
+        end
+        it "returns no results and clears searches by clicking the clear-link" do
           fill_in "search", with: "74576345634XXXXXX"
           expect(page).to have_content "Sorry, no results found"
           expect(page).not_to have_content product2.name
@@ -340,13 +345,39 @@ describe "As a consumer I want to shop with a distributor" do
           expect(page).to have_content("Add", count: 4)
         end
         it "returns results and clears searches by clicking the clear-button" do
-          visit shop_path
-          sleep(2)
           fill_in "search", with: "Meer" # For product named "Meercats"
           expect(page).to have_content product2.name
           expect(page).not_to have_content product.name
           find("a.clear").click # clears search by clicking the X button
           expect(page).to have_content("Add", count: 4)
+        end
+        it "returns results by searching by keyword" do
+          # model: meta_keywords
+          fill_in "search", with: "Wild" # For product named "Meercats"
+          expect(page).to have_content product2.name
+        end
+        it 'returns results by searching by variants display_name' do
+          # model: variant display_name
+          fill_in "search", with: "Ferrets" # For variants named "Ferrets"
+          within('div.pad-top') do
+            expect(page).to have_content product2.variants[1].display_name # Ferrets
+            expect(page).not_to have_content product.variants[2].display_name # not Badgers
+          end
+        end
+        it 'returns results by searching by variants display_name' do
+          # model: variant display_as
+          fill_in "search", with: "displayedunder" # "Badgers"
+          within('div.pad-top') do
+            expect(page).not_to have_content product2.variants[1].display_name # Ferrets
+            expect(page).to have_content product.variants[2].display_name # not Badgers
+          end
+        end
+        it 'returns results by searching by variants display_name' do
+          # model: Enterprise name
+          fill_in "search", with: "Enterp" # Enterprise 1 sells nothing
+          within('p.no-results') do
+            expect(page).to have_content "Sorry, no results found for Enterp"
+          end
         end
       end
 
