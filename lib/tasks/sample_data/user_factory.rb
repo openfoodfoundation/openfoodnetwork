@@ -30,7 +30,7 @@ module SampleData
 
     def create_user(name)
       email = "#{name.downcase.tr(' ', '.')}@example.org"
-      password = Spree::User.friendly_token
+      password = "ofn123"
       log "- #{email}"
       user = Spree::User.create_with(
         password:,
