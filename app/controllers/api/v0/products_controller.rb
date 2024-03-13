@@ -54,7 +54,7 @@ module Api
       end
 
       def overridable
-        @products = product_finder.paged_products_for_producers
+        @products = product_finder.products_for_producers
 
         render_paged_products @products, ::Api::Admin::ProductSimpleSerializer
       end
