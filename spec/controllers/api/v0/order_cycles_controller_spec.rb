@@ -52,7 +52,7 @@ module Api
 
       it "returns products that were searched for" do
         ransack_param = "name_or_meta_keywords_or_variants_display_as_or_" \
-                        "variants_display_name_or_supplier_name_cont"
+                        "variants_display_name_or_variants_supplier_name_cont"
         api_get :products, id: order_cycle.id, distributor: distributor.id,
                            q: { ransack_param => "Kangaroo" }
 
@@ -241,9 +241,12 @@ module Api
 
       context "with producer properties" do
         let!(:property4) { create(:property) }
+        let!(:supplier) { create(:supplier_enterprise) }
         let!(:producer_property) {
-          create(:producer_property, producer_id: product1.supplier.id, property: property4)
+          create(:producer_property, producer_id: supplier.id, property: property4)
         }
+
+        before { product1.variants.first.update(supplier: ) }
 
         it "loads producer properties for distributed products in the order cycle" do
           api_get :properties, id: order_cycle.id, distributor: distributor.id
@@ -260,16 +263,16 @@ module Api
     context "with custom taxon ordering applied and duplicate product names in the order cycle" do
       let!(:supplier) { create(:supplier_enterprise) }
       let!(:product5) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier:)
+        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier_id: supplier.id)
       }
       let!(:product6) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier:)
+        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier_id: supplier.id)
       }
       let!(:product7) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier:)
+        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier_id: supplier.id)
       }
       let!(:product8) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier:)
+        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier_id: supplier.id)
       }
 
       before do
