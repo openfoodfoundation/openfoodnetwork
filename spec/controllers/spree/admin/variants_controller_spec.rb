@@ -12,7 +12,8 @@ module Spree
           let(:product) { create(:product, name: 'Product A') }
           let(:deleted_variant) do
             deleted_variant = product.variants.create(
-              unit_value: "2", price: 1, primary_taxon: create(:taxon)
+              unit_value: "2", price: 1, primary_taxon: create(:taxon),
+              supplier: create(:supplier_enterprise)
             )
             deleted_variant.delete
             deleted_variant
@@ -31,8 +32,9 @@ module Spree
       end
 
       describe "#search" do
-        let!(:p1) { create(:simple_product, name: 'Product 1') }
-        let!(:p2) { create(:simple_product, name: 'Product 2') }
+        let(:supplier) { create(:supplier_enterprise) }
+        let!(:p1) { create(:simple_product, name: 'Product 1', supplier_id: supplier.id) }
+        let!(:p2) { create(:simple_product, name: 'Product 2', supplier_id: supplier.id) }
         let!(:v1) { p1.variants.first }
         let!(:v2) { p2.variants.first }
         let!(:vo) { create(:variant_override, variant: v1, hub: d, count_on_hand: 44) }
