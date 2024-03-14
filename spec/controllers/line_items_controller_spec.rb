@@ -168,7 +168,7 @@ RSpec.describe LineItemsController, type: :controller do
       }
       let(:enterprise_fee) { create(:enterprise_fee, calculator:) }
       let!(:exchange) {
-        create(:exchange, incoming: true, sender: variant1.product.supplier,
+        create(:exchange, incoming: true, sender: variant1.supplier,
                           receiver: order_cycle.coordinator, variants: [variant1, variant2],
                           enterprise_fees: [enterprise_fee])
       }
