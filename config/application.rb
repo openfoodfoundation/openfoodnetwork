@@ -224,7 +224,7 @@ module Openfoodnetwork
     # Apply framework defaults. New recommended defaults are successively added with each Rails version and
     # include the defaults from previous versions. For more info see:
     # https://guides.rubyonrails.org/configuring.html#results-of-config-load-defaults
-    config.load_defaults 6.1
+    config.load_defaults 7.1
     config.action_view.form_with_generates_remote_forms = false
     config.active_record.cache_versioning = false
     config.active_record.has_many_inversing = false
@@ -249,6 +249,7 @@ module Openfoodnetwork
     config.active_storage.content_types_to_serve_as_binary -= ["image/svg+xml"]
     config.active_storage.variable_content_types += ["image/svg+xml"]
     config.active_storage.url_options = config.action_controller.default_url_options
+    config.active_storage.variant_processor = :mini_magick
 
     config.exceptions_app = self.routes
 
