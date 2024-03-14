@@ -337,42 +337,35 @@ describe "As a consumer I want to shop with a distributor" do
           visit shop_path
           sleep(2)
         end
-        it "returns no results and clears searches by clicking the clear-link" do
+        it "returns results when successful" do
           fill_in "search", with: "74576345634XXXXXX"
           expect(page).to have_content "Sorry, no results found"
-          expect(page).not_to have_content product2.name
+          expect(page).not_to have_content 'Meercats'
           click_on "Clear search" # clears search by clicking text
           expect(page).to have_content("Add", count: 4)
-        end
-        it "returns results and clears searches by clicking the clear-button" do
           fill_in "search", with: "Meer" # For product named "Meercats"
-          expect(page).to have_content product2.name
+          expect(page).to have_content 'Meercats'
           expect(page).not_to have_content product.name
           find("a.clear").click # clears search by clicking the X button
           expect(page).to have_content("Add", count: 4)
         end
-        it "returns results by searching by keyword" do
-          # model: meta_keywords
+        it "returns results by looking at different columns in DB" do
+          # by keyword model: meta_keywords
           fill_in "search", with: "Wild" # For product named "Meercats"
-          expect(page).to have_content product2.name
-        end
-        it 'returns results by searching by variants display_name' do
-          # model: variant display_name
+          expect(page).to have_content 'Wild'
+          find("a.clear").click
+          # by variant display name model: variant display_name
           fill_in "search", with: "Ferrets" # For variants named "Ferrets"
           within('div.pad-top') do
-            expect(page).to have_content product2.variants[1].display_name # Ferrets
-            expect(page).not_to have_content product.variants[2].display_name # not Badgers
+            expect(page).to have_content 'Ferrets'
+            expect(page).not_to have_content 'Badgers'
           end
-        end
-        it 'returns results by searching by variants display_name' do
           # model: variant display_as
           fill_in "search", with: "displayedunder" # "Badgers"
           within('div.pad-top') do
-            expect(page).not_to have_content product2.variants[1].display_name # Ferrets
-            expect(page).to have_content product.variants[2].display_name # not Badgers
+            expect(page).not_to have_content 'Ferrets'
+            expect(page).to have_content 'Badgers'
           end
-        end
-        it 'returns results by searching by variants display_name' do
           # model: Enterprise name
           fill_in "search", with: "Enterp" # Enterprise 1 sells nothing
           within('p.no-results') do
