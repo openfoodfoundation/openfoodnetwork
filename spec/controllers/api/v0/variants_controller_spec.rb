@@ -88,9 +88,9 @@ RSpec.describe Api::V0::VariantsController, type: :controller do
   context "as an enterprise user" do
     let(:current_api_user) { create(:user, enterprises: [supplier]) }
     let(:supplier_other) { create(:supplier_enterprise) }
-    let!(:product) { create(:product, supplier:) }
+    let!(:product) { create(:product, supplier_id: supplier.id) }
     let(:variant) { product.variants.first }
-    let(:product_other) { create(:product, supplier: supplier_other) }
+    let(:product_other) { create(:product, supplier_id: supplier_other.id) }
     let(:variant_other) { product_other.variants.first }
 
     context "with a single remaining variant" do
@@ -102,7 +102,7 @@ RSpec.describe Api::V0::VariantsController, type: :controller do
     end
 
     context "with more than one variants" do
-      let(:variant_to_delete) { create(:variant, product:) }
+      let(:variant_to_delete) { create(:variant, product:, supplier:) }
 
       it "deletes a variant" do
         api_delete :destroy, id: variant_to_delete.id
@@ -125,7 +125,7 @@ RSpec.describe Api::V0::VariantsController, type: :controller do
   context "as an administrator" do
     let(:current_api_user) { create(:admin_user) }
 
-    let(:product) { create(:product) }
+    let(:product) { create(:product, supplier_id: create(:supplier_enterprise).id) }
     let(:variant) { product.variants.first }
     let(:taxon) { create(:taxon) }
     let!(:variant2) { create(:variant, product:) }
@@ -144,8 +144,9 @@ RSpec.describe Api::V0::VariantsController, type: :controller do
 
     it "can create a new variant" do
       original_number_of_variants = variant.product.variants.count
-      api_post :create, variant: { sku: "12345", unit_value: "1",
-                                   unit_description: "L", price: "1", primary_taxon_id: taxon.id },
+      api_post :create, variant: { sku: "12345", unit_value: "1", unit_description: "L",
+                                   price: "1",primary_taxon_id: taxon.id,
+                                   supplier_id: variant.supplier.id},
                         product_id: variant.product.id
 
       expect(attributes.all?{ |attr| json_response.include? attr.to_s }).to eq(true)
