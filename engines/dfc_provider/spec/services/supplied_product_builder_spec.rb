@@ -64,14 +64,6 @@ describe SuppliedProductBuilder do
 
         expect(product.productType).to eq soft_drink
       end
-
-      context "when no taxon set" do
-        let(:taxon) { nil }
-
-        it "returns nil" do
-          expect(product.productType).to be_nil
-        end
-      end
     end
 
     it "assigns an image_url type" do
@@ -131,16 +123,6 @@ describe SuppliedProductBuilder do
 
         expect(product.primary_taxon).to eq(taxon)
       end
-
-      describe "when no matching taxon" do
-        let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.DRINK }
-
-        it "set the taxon to nil" do
-          product = builder.import_product(supplied_product)
-
-          expect(product.primary_taxon).to be_nil
-        end
-      end
     end
   end
 
@@ -161,7 +143,10 @@ describe SuppliedProductBuilder do
     let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
 
     it "creates a new Spree::Product and variant" do
+      create(:taxon)
+
       expect(imported_variant).to be_a(Spree::Variant)
+      expect(imported_variant).to be_valid
       expect(imported_variant.id).to be_nil
       expect(imported_variant.semantic_links.size).to eq 1
 
@@ -170,6 +155,7 @@ describe SuppliedProductBuilder do
 
       imported_product = imported_variant.product
       expect(imported_product).to be_a(Spree::Product)
+      expect(imported_product).to be_valid
       expect(imported_product.id).to be_nil
       expect(imported_product.name).to eq("Tomato")
       expect(imported_product.description).to eq("Awesome tomato")

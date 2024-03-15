@@ -90,10 +90,11 @@ class SuppliedProductBuilder < DfcBuilder
   end
 
   def self.taxon(supplied_product)
-    return unless supplied_product.productType
+    dfc_id = supplied_product.productType&.semanticId
 
-    dfc_id = supplied_product.productType.semanticId
-    Spree::Taxon.find_by(dfc_id: )
+    # Every product needs a primary taxon to be valid. So if we don't have
+    # one or can't find it we just take a random one.
+    Spree::Taxon.find_by(dfc_id:) || Spree::Taxon.first
   end
 
   private_class_method :product_type, :taxon
