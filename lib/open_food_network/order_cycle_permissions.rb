@@ -105,9 +105,9 @@ module OpenFoodNetwork
             where("spree_products.id IN (?)", product_ids).pluck(:id).uniq
         end
 
-        ids = managed_permitted_ids | hubs_permitted_ids | hubs_permitting_ids \
-          | producers_permitted_ids | producers_permitting_ids | managed_active_ids \
-          | hubs_active_ids | producers_active_ids
+        ids = managed_permitted_ids | hubs_permitted_ids | hubs_permitting_ids |
+              producers_permitted_ids | producers_permitting_ids |
+              managed_active_ids | hubs_active_ids | producers_active_ids
 
         Enterprise.where(id: ids)
       end
