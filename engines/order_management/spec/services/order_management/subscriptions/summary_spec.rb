@@ -121,7 +121,7 @@ module OrderManagement
 
           it "returns orders specified by unrecorded_ids" do
             expect(orders).to include order1
-            expect(orders).to_not include order2
+            expect(orders).not_to include order2
           end
         end
 
@@ -130,7 +130,7 @@ module OrderManagement
 
           it "returns orders specified by the relevant issue hash" do
             expect(orders).to include order2
-            expect(orders).to_not include order1
+            expect(orders).not_to include order1
           end
         end
       end

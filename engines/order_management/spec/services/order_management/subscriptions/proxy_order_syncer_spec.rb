@@ -10,8 +10,8 @@ module OrderManagement
 
         it "raises an error when initialized with an object
             that is not a Subscription or an ActiveRecord::Relation" do
-          expect{ ProxyOrderSyncer.new(subscription) }.to_not raise_error
-          expect{ ProxyOrderSyncer.new(Subscription.where(id: subscription.id)) }.to_not raise_error
+          expect{ ProxyOrderSyncer.new(subscription) }.not_to raise_error
+          expect{ ProxyOrderSyncer.new(Subscription.where(id: subscription.id)) }.not_to raise_error
           expect{ ProxyOrderSyncer.new("something") }.to raise_error RuntimeError
         end
       end
@@ -70,8 +70,8 @@ module OrderManagement
             let!(:oc) { closed_oc }
 
             it "does not create a new proxy order for that oc" do
-              expect{ subscription.save! }.to_not change { ProxyOrder.count }.from(0)
-              expect(order_cycles).to_not include oc
+              expect{ subscription.save! }.not_to change { ProxyOrder.count }.from(0)
+              expect(order_cycles).not_to include oc
             end
           end
 
@@ -79,8 +79,8 @@ module OrderManagement
             let!(:oc) { open_oc_closes_before_begins_at_oc }
 
             it "does not create a new proxy order for that oc" do
-              expect{ subscription.save! }.to_not change { ProxyOrder.count }.from(0)
-              expect(order_cycles).to_not include oc
+              expect{ subscription.save! }.not_to change { ProxyOrder.count }.from(0)
+              expect(order_cycles).not_to include oc
             end
           end
 
@@ -99,8 +99,8 @@ module OrderManagement
             let!(:oc) { upcoming_closes_before_begins_at_oc }
 
             it "does not create a new proxy order for that oc" do
-              expect{ subscription.save! }.to_not change { ProxyOrder.count }.from(0)
-              expect(order_cycles).to_not include oc
+              expect{ subscription.save! }.not_to change { ProxyOrder.count }.from(0)
+              expect(order_cycles).not_to include oc
             end
           end
 
@@ -130,8 +130,8 @@ module OrderManagement
             let!(:oc) { upcoming_closes_after_ends_at_oc }
 
             it "does not create a new proxy order for that oc" do
-              expect{ subscription.save! }.to_not change { ProxyOrder.count }.from(0)
-              expect(order_cycles).to_not include oc
+              expect{ subscription.save! }.not_to change { ProxyOrder.count }.from(0)
+              expect(order_cycles).not_to include oc
             end
           end
         end
@@ -149,7 +149,7 @@ module OrderManagement
                 context "the oc is closed (ie. closed before opens_at)" do
                   let(:oc) { closed_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -157,7 +157,7 @@ module OrderManagement
                 context "and the schedule includes an open oc that closes before begins_at" do
                   let(:oc) { open_oc_closes_before_begins_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -165,7 +165,7 @@ module OrderManagement
                 context "and the oc is open and closes between begins_at and ends_at" do
                   let(:oc) { open_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -173,7 +173,7 @@ module OrderManagement
                 context "and the oc is upcoming and closes before begins_at" do
                   let(:oc) { upcoming_closes_before_begins_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -181,7 +181,7 @@ module OrderManagement
                 context "and the oc is upcoming and closes on begins_at" do
                   let(:oc) { upcoming_closes_on_begins_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -189,7 +189,7 @@ module OrderManagement
                 context "and the oc is upcoming and closes on ends_at" do
                   let(:oc) { upcoming_closes_on_ends_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -197,7 +197,7 @@ module OrderManagement
                 context "and the oc is upcoming and closes after ends_at" do
                   let(:oc) { upcoming_closes_after_ends_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -209,7 +209,7 @@ module OrderManagement
 
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
 
@@ -218,7 +218,7 @@ module OrderManagement
 
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
 
@@ -238,7 +238,7 @@ module OrderManagement
                     let(:oc) { open_oc }
 
                     it "keeps the proxy order" do
-                      expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                      expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                       expect(proxy_orders).to include proxy_order
                     end
                   end
@@ -247,7 +247,7 @@ module OrderManagement
                     let(:oc) { upcoming_closes_on_begins_at_oc }
 
                     it "keeps the proxy order" do
-                      expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                      expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                       expect(proxy_orders).to include proxy_order
                     end
                   end
@@ -256,7 +256,7 @@ module OrderManagement
                     let(:oc) { upcoming_closes_on_ends_at_oc }
 
                     it "keeps the proxy order" do
-                      expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                      expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                       expect(proxy_orders).to include proxy_order
                     end
                   end
@@ -267,7 +267,7 @@ module OrderManagement
 
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
 
@@ -276,7 +276,7 @@ module OrderManagement
 
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
               end
@@ -297,7 +297,7 @@ module OrderManagement
                 context "the oc is closed (ie. closed before opens_at)" do
                   let(:oc) { closed_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -305,7 +305,7 @@ module OrderManagement
                 context "and the schedule includes an open oc that closes before begins_at" do
                   let(:oc) { open_oc_closes_before_begins_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -313,7 +313,7 @@ module OrderManagement
                 context "and the oc is open and closes between begins_at and ends_at" do
                   let(:oc) { open_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -321,7 +321,7 @@ module OrderManagement
                 context "and the oc is upcoming and closes before begins_at" do
                   let(:oc) { upcoming_closes_before_begins_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -329,7 +329,7 @@ module OrderManagement
                 context "and the oc is upcoming and closes on begins_at" do
                   let(:oc) { upcoming_closes_on_begins_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -337,7 +337,7 @@ module OrderManagement
                 context "and the oc is upcoming and closes on ends_at" do
                   let(:oc) { upcoming_closes_on_ends_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -345,7 +345,7 @@ module OrderManagement
                 context "and the oc is upcoming and closes after ends_at" do
                   let(:oc) { upcoming_closes_after_ends_at_oc }
                   it "keeps the proxy order" do
-                    expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(1)
+                    expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(1)
                     expect(proxy_orders).to include proxy_order
                   end
                 end
@@ -357,7 +357,7 @@ module OrderManagement
                   let(:oc) { closed_oc }
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
 
@@ -366,7 +366,7 @@ module OrderManagement
                   let(:oc) { open_oc }
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
 
@@ -374,7 +374,7 @@ module OrderManagement
                   let(:oc) { upcoming_closes_before_begins_at_oc }
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
 
@@ -382,7 +382,7 @@ module OrderManagement
                   let(:oc) { upcoming_closes_on_begins_at_oc }
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
 
@@ -390,7 +390,7 @@ module OrderManagement
                   let(:oc) { upcoming_closes_on_ends_at_oc }
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
 
@@ -398,7 +398,7 @@ module OrderManagement
                   let(:oc) { upcoming_closes_after_ends_at_oc }
                   it "removes the proxy order" do
                     expect{ syncer.sync! }.to change { ProxyOrder.count }.from(1).to(0)
-                    expect(proxy_orders).to_not include proxy_order
+                    expect(proxy_orders).not_to include proxy_order
                   end
                 end
               end
@@ -421,8 +421,8 @@ module OrderManagement
               let!(:oc) { closed_oc }
 
               it "does not create a new proxy order for that oc" do
-                expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(0)
-                expect(order_cycles).to_not include oc
+                expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(0)
+                expect(order_cycles).not_to include oc
               end
             end
 
@@ -430,8 +430,8 @@ module OrderManagement
               let(:oc) { open_oc_closes_before_begins_at_oc }
 
               it "does not create a new proxy order for that oc" do
-                expect{ subscription.save! }.to_not change { ProxyOrder.count }.from(0)
-                expect(order_cycles).to_not include oc
+                expect{ subscription.save! }.not_to change { ProxyOrder.count }.from(0)
+                expect(order_cycles).not_to include oc
               end
             end
 
@@ -448,8 +448,8 @@ module OrderManagement
               let!(:oc) { upcoming_closes_before_begins_at_oc }
 
               it "does not create a new proxy order for that oc" do
-                expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(0)
-                expect(order_cycles).to_not include oc
+                expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(0)
+                expect(order_cycles).not_to include oc
               end
             end
 
@@ -475,8 +475,8 @@ module OrderManagement
               let!(:oc) { upcoming_closes_after_ends_at_oc }
 
               it "does not create a new proxy order for that oc" do
-                expect{ syncer.sync! }.to_not change { ProxyOrder.count }.from(0)
-                expect(order_cycles).to_not include oc
+                expect{ syncer.sync! }.not_to change { ProxyOrder.count }.from(0)
+                expect(order_cycles).not_to include oc
               end
             end
           end

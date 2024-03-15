@@ -652,11 +652,11 @@ describe '
                 invoice_content = extract_pdf_content
 
                 expect(invoice_content).to have_content("TAX INVOICE", count: 1)
-                expect(invoice_content).to_not have_content(order4.number.to_s)
+                expect(invoice_content).not_to have_content(order4.number.to_s)
                 expect(invoice_content).to have_content(order5.number.to_s)
-                expect(invoice_content).to_not have_content(distributor4.name.to_s)
+                expect(invoice_content).not_to have_content(distributor4.name.to_s)
                 expect(invoice_content).to have_content(distributor5.name.to_s)
-                expect(invoice_content).to_not have_content(order_cycle4.name.to_s)
+                expect(invoice_content).not_to have_content(order_cycle4.name.to_s)
                 expect(invoice_content).to have_content(order_cycle5.name.to_s)
               end
             end
@@ -728,11 +728,11 @@ describe '
                   within ".ofn-drop-down .menu" do
                     expect {
                       page.find("span", text: "Print Invoices").click # Prints invoices in bulk
-                    }.to_not enqueue_job(BulkInvoiceJob)
+                    }.not_to enqueue_job(BulkInvoiceJob)
                   end
 
-                  expect(page).to_not have_content "Compiling Invoices"
-                  expect(page).to_not have_content "Please wait until the PDF is ready " \
+                  expect(page).not_to have_content "Compiling Invoices"
+                  expect(page).not_to have_content "Please wait until the PDF is ready " \
                                                    "before closing this modal."
 
                   expect(page).to have_content "#{

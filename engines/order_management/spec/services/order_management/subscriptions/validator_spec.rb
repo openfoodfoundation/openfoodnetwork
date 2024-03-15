@@ -74,7 +74,7 @@ module OrderManagement
 
             it "adds an error and returns false" do
               expect(validator.valid?).to be false
-              expect(validator.errors[:shipping_method]).to_not be_empty
+              expect(validator.errors[:shipping_method]).not_to be_empty
             end
           end
 
@@ -89,7 +89,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:shipping_method]).to_not be_empty
+                expect(validator.errors[:shipping_method]).not_to be_empty
               end
             end
 
@@ -115,7 +115,7 @@ module OrderManagement
 
             it "adds an error and returns false" do
               expect(validator.valid?).to be false
-              expect(validator.errors[:payment_method]).to_not be_empty
+              expect(validator.errors[:payment_method]).not_to be_empty
             end
           end
 
@@ -130,7 +130,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:payment_method]).to_not be_empty
+                expect(validator.errors[:payment_method]).not_to be_empty
               end
             end
 
@@ -164,7 +164,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:payment_method]).to_not be_empty
+                expect(validator.errors[:payment_method]).not_to be_empty
               end
             end
 
@@ -192,7 +192,7 @@ module OrderManagement
 
             it "adds an error and returns false" do
               expect(validator.valid?).to be false
-              expect(validator.errors[:begins_at]).to_not be_empty
+              expect(validator.errors[:begins_at]).not_to be_empty
             end
           end
 
@@ -213,7 +213,7 @@ module OrderManagement
               let(:ends_at) { Time.zone.today }
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:ends_at]).to_not be_empty
+                expect(validator.errors[:ends_at]).not_to be_empty
               end
             end
 
@@ -221,7 +221,7 @@ module OrderManagement
               let(:ends_at) { Time.zone.today - 1.day }
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:ends_at]).to_not be_empty
+                expect(validator.errors[:ends_at]).not_to be_empty
               end
             end
 
@@ -249,8 +249,8 @@ module OrderManagement
 
             it "adds an error and returns false" do
               expect(validator.valid?).to be false
-              expect(validator.errors[:bill_address]).to_not be_empty
-              expect(validator.errors[:ship_address]).to_not be_empty
+              expect(validator.errors[:bill_address]).not_to be_empty
+              expect(validator.errors[:ship_address]).not_to be_empty
             end
           end
 
@@ -276,7 +276,7 @@ module OrderManagement
 
             it "adds an error and returns false" do
               expect(validator.valid?).to be false
-              expect(validator.errors[:customer]).to_not be_empty
+              expect(validator.errors[:customer]).not_to be_empty
             end
           end
 
@@ -288,7 +288,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:customer]).to_not be_empty
+                expect(validator.errors[:customer]).not_to be_empty
               end
             end
 
@@ -313,7 +313,7 @@ module OrderManagement
 
             it "adds an error and returns false" do
               expect(validator.valid?).to be false
-              expect(validator.errors[:schedule]).to_not be_empty
+              expect(validator.errors[:schedule]).not_to be_empty
             end
           end
 
@@ -325,7 +325,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:schedule]).to_not be_empty
+                expect(validator.errors[:schedule]).not_to be_empty
               end
             end
 
@@ -371,7 +371,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:payment_method]).to_not be_empty
+                expect(validator.errors[:payment_method]).not_to be_empty
               end
             end
 
@@ -383,7 +383,7 @@ module OrderManagement
 
                 it "adds an error and returns false" do
                   expect(validator.valid?).to be false
-                  expect(validator.errors[:payment_method]).to_not be_empty
+                  expect(validator.errors[:payment_method]).not_to be_empty
                 end
               end
 
@@ -395,7 +395,7 @@ module OrderManagement
 
                   it "adds an error and returns false" do
                     expect(validator.valid?).to be false
-                    expect(validator.errors[:payment_method]).to_not be_empty
+                    expect(validator.errors[:payment_method]).not_to be_empty
                   end
                 end
 
@@ -428,7 +428,7 @@ module OrderManagement
 
             it "adds an error and returns false" do
               expect(validator.valid?).to be false
-              expect(validator.errors[:subscription_line_items]).to_not be_empty
+              expect(validator.errors[:subscription_line_items]).not_to be_empty
             end
           end
 
@@ -441,7 +441,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:subscription_line_items]).to_not be_empty
+                expect(validator.errors[:subscription_line_items]).not_to be_empty
               end
             end
 
@@ -468,7 +468,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:subscription_line_items]).to_not be_empty
+                expect(validator.errors[:subscription_line_items]).not_to be_empty
               end
             end
 
@@ -480,7 +480,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:subscription_line_items]).to_not be_empty
+                expect(validator.errors[:subscription_line_items]).not_to be_empty
               end
             end
           end
@@ -538,7 +538,7 @@ module OrderManagement
 
               it "adds an error and returns false" do
                 expect(validator.valid?).to be false
-                expect(validator.errors[:subscription_line_items]).to_not be_empty
+                expect(validator.errors[:subscription_line_items]).not_to be_empty
               end
             end
 
