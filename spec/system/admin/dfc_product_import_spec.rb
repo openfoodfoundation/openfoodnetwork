@@ -7,7 +7,7 @@ describe "DFC Product Import" do
   include AuthorizationHelper
 
   let(:user) { create(:oidc_user, owned_enterprises: [enterprise]) }
-  let(:enterprise) { create(:enterprise) }
+  let(:enterprise) { create(:supplier_enterprise) }
   let(:source_product) { create(:product, supplier: enterprise) }
 
   before do
@@ -20,7 +20,7 @@ describe "DFC Product Import" do
   it "imports from given catalog" do
     visit admin_product_import_path
 
-    fill_in "enterprise_id", with: enterprise.id
+    select enterprise.name, from: "Enterprise"
 
     # We are testing against our own catalog for now but we want to replace
     # this with the URL of another app when available.

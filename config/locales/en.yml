@@ -929,6 +929,11 @@ en:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        title: "Import from DFC catalog"
+        enterprise: "Enterprise"
+        catalog_url: "DFC catalog URL"
+        import: "Import"
       import:
         review: Review
         import: Import
