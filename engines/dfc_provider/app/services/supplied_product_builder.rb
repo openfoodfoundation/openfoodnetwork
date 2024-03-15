@@ -38,6 +38,9 @@ class SuppliedProductBuilder < DfcBuilder
       product.supplier = supplier
       product.ensure_standard_variant
       product.variants.first
+    end.tap do |variant|
+      link = supplied_product.semanticId
+      variant.semantic_links.new(semantic_id: link) if link.present?
     end
   end
 

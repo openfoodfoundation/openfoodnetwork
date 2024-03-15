@@ -163,6 +163,10 @@ describe SuppliedProductBuilder do
     it "creates a new Spree::Product and variant" do
       expect(imported_variant).to be_a(Spree::Variant)
       expect(imported_variant.id).to be_nil
+      expect(imported_variant.semantic_links.size).to eq 1
+
+      link = imported_variant.semantic_links[0]
+      expect(link.semantic_id).to eq "https://example.net/tomato"
 
       imported_product = imported_variant.product
       expect(imported_product).to be_a(Spree::Product)
