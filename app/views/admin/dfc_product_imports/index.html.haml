@@ -1,3 +1,7 @@
-%h2 Importing a DFC product catalog
-%p Imported products:
+- content_for :page_title do
+  #{t(".title")}
+
+= render partial: 'spree/admin/shared/product_sub_menu'
+
+%p= t(".imported_products")
 = @count
