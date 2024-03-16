@@ -6,17 +6,21 @@ require 'stripe/oauth'
 
 module Stripe
   describe AccountConnector do
-    describe "create_account" do
-      let(:user) { create(:user) }
+    describe "create_account", :vcr, :stripe_version do
+      # settings
+
+      # let(:user) { create(:user) } <- replaced by
+      let(:user) { create(:user, email: "apple.producer@example.com") }
+
       let(:enterprise) { create(:enterprise) }
+
+      let(:connector) { AccountConnector.new(user, params) }
+
+      # stubs - to be replaced
+
       let(:payload) { { "junk" => "Ssfs" } }
       let(:state) { JWT.encode(payload, Openfoodnetwork::Application.config.secret_token) }
       let(:params) { { "state" => state } }
-      let(:connector) { AccountConnector.new(user, params) }
-
-      before do
-        Stripe.api_key = "sk_test_12345"
-      end
 
       context "when the connection was cancelled by the user" do
         before do
@@ -58,9 +62,13 @@ module Stripe
             }
 
             before do
-              stub_request(:post, "https://connect.stripe.com/oauth/token").
-                with(body: { "code" => "code", "grant_type" => "authorization_code" }).
-                to_return(status: 200, body: JSON.generate(token_response) )
+              response = Stripe::OAuth.token({
+                                               grant_type: 'authorization_code',
+                                               code: 'ac_123456789',
+                                             })
+              # stub_request(:post, "https://connect.stripe.com/oauth/token").
+              #   with(body: { "code" => "code", "grant_type" => "authorization_code" }).
+              #   to_return(status: 200, body: JSON.generate(token_response) )
             end
 
             context "but the user doesn't manage own or manage the corresponding enterprise" do
