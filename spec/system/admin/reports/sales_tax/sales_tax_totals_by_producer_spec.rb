@@ -70,7 +70,7 @@ describe "Sales Tax Totals By Producer" do
                       ship_address_id: ship_address.id
                     })
 
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
     end
 
     it "generates the report" do
@@ -128,7 +128,7 @@ describe "Sales Tax Totals By Producer" do
                       ship_address_id: ship_address.id
                     })
 
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
     end
 
     it 'generates the report' do
@@ -177,7 +177,7 @@ describe "Sales Tax Totals By Producer" do
                       ship_address_id: ship_address.id
                     })
 
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
     end
     it "generates the report" do
       login_as admin
@@ -353,7 +353,7 @@ describe "Sales Tax Totals By Producer" do
                       ship_address_id: customer1.bill_address_id,
                       customer_id: customer1.id
                     })
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
 
       order2.line_items.create({ variant:, quantity: 1, price: 200 })
       order2.update!({
@@ -361,7 +361,7 @@ describe "Sales Tax Totals By Producer" do
                        ship_address_id: customer2.bill_address_id,
                        customer_id: customer2.id
                      })
-      OrderWorkflow.new(order2).complete!
+      Orders::WorkflowService.new(order2).complete!
       login_as admin
       visit admin_reports_path
       click_on 'Sales Tax Totals By Producer'
