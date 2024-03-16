@@ -616,7 +616,7 @@ describe Spree::Order do
 
   describe "applying enterprise fees" do
     subject { create(:order) }
-    let(:fee_handler) { OrderFeesHandler.new(subject) }
+    let(:fee_handler) { Orders::HandleFeesService.new(subject) }
 
     before do
       allow(subject).to receive(:fee_handler) { fee_handler }
@@ -628,7 +628,7 @@ describe Spree::Order do
       subject.recreate_all_fees!
     end
 
-    it "creates line item and order fee adjustments via OrderFeesHandler" do
+    it "creates line item and order fee adjustments via Orders::HandleFeesService" do
       expect(fee_handler).to receive(:create_line_item_fees!)
       expect(fee_handler).to receive(:create_order_fees!)
       subject.recreate_all_fees!

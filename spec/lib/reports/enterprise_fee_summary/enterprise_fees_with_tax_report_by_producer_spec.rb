@@ -34,7 +34,7 @@ describe Reporting::Reports::EnterpriseFeeSummary::EnterpriseFeesWithTaxReportBy
       shipping_method:, ship_address: create(:address)
     ).tap do |order|
       order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
     end
   }
 

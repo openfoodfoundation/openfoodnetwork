@@ -25,7 +25,7 @@ describe VoucherAdjustmentsController, type: :request do
     order.update!(created_by: user)
 
     order.select_shipping_method shipping_method.id
-    OrderWorkflow.new(order).advance_to_payment
+    Orders::WorkflowService.new(order).advance_to_payment
 
     sign_in user
   end

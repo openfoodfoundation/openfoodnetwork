@@ -11,7 +11,9 @@ module PaymentGateways
     let!(:order) { create(:order_with_totals, distributor:, order_cycle:) }
     let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
 
-    let(:order_cycle_distributed_variants) { instance_double(OrderCycleDistributedVariants) }
+    let(:order_cycle_distributed_variants) {
+      instance_double(OrderCycles::DistributedVariantsService)
+    }
 
     before do
       exchange.variants << order.line_items.first.variant
@@ -305,11 +307,11 @@ completed due to stock issues."
 
         context "with an invalid last payment" do
           let(:payment_intent) { "valid" }
-          let(:finder) { instance_double(OrderPaymentFinder, last_payment: payment) }
+          let(:finder) { instance_double(Orders::FindPaymentService, last_payment: payment) }
 
           before do
             allow(payment).to receive(:response_code).and_return("invalid")
-            allow(OrderPaymentFinder).to receive(:new).with(order).and_return(finder)
+            allow(Orders::FindPaymentService).to receive(:new).with(order).and_return(finder)
             allow(Stripe::PaymentIntentValidator)
               .to receive_message_chain(:new, :call).and_return(payment_intent)
             stub_payment_intent_get_request(payment_intent_id: "valid")

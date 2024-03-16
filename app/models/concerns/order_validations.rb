@@ -15,7 +15,7 @@ module OrderValidations
 
   # Check that line_items in the current order are available from a newly selected distribution
   def products_available_from_new_distribution
-    return if OrderCycleDistributedVariants.new(order_cycle, distributor)
+    return if OrderCycles::DistributedVariantsService.new(order_cycle, distributor)
       .distributes_order_variants?(self)
 
     errors.add(:base, I18n.t(:spree_order_availability_error))

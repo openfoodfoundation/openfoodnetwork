@@ -141,7 +141,7 @@ Metrics/AbcSize:
     - 'lib/open_food_network/order_cycle_permissions.rb'
     - 'lib/spree/core/controller_helpers/order.rb'
     - 'lib/tasks/enterprises.rake'
-    - 'spec/services/order_checkout_restart_spec.rb'
+    - 'spec/services/orders/checkout_restart_service_spec.rb'
 
 # Offense count: 9
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns, inherit_mode.
@@ -200,8 +200,8 @@ Metrics/ClassLength:
     - 'app/serializers/api/cached_enterprise_serializer.rb'
     - 'app/serializers/api/enterprise_shopfront_serializer.rb'
     - 'app/services/cart_service.rb'
-    - 'app/services/order_cycle_form.rb'
-    - 'app/services/order_syncer.rb'
+    - 'app/services/orders/sync_service.rb'
+    - 'app/services/order_cycles/form_service.rb'
     - 'engines/order_management/app/services/order_management/order/updater.rb'
     - 'lib/open_food_network/enterprise_fee_calculator.rb'
     - 'lib/open_food_network/order_cycle_form_applicator.rb'
@@ -397,7 +397,7 @@ Rails/FindEach:
   Exclude:
     - 'app/controllers/admin/order_cycles_controller.rb'
     - 'app/jobs/subscription_confirm_job.rb'
-    - 'app/services/orders_bulk_cancel_service.rb'
+    - 'app/services/orders/bulk_cancel_service.rb'
     - 'app/services/products_renderer.rb'
     - 'lib/tasks/data.rake'
     - 'lib/tasks/subscriptions/debug.rake'
@@ -618,8 +618,8 @@ Rails/TimeZone:
   Exclude:
     - 'app/models/spree/gateway/pay_pal_express.rb'
     - 'spec/controllers/spree/credit_cards_controller_spec.rb'
-    - 'spec/services/customer_order_cancellation_spec.rb'
-    - 'spec/services/order_cycle_webhook_service_spec.rb'
+    - 'spec/services/orders/customer_cancellation_service_spec.rb'
+    - 'spec/services/order_cycles/webhook_service_spec.rb'
 
 # Offense count: 1
 # Configuration parameters: TransactionMethods.

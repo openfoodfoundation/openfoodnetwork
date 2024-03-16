@@ -390,7 +390,7 @@ describe Admin::BulkLineItemsController, type: :controller do
 
       order.shipments.map(&:refresh_rates)
       order.select_shipping_method(shipping_method.id)
-      OrderWorkflow.new(order).advance_to_payment
+      Orders::WorkflowService.new(order).advance_to_payment
       order.finalize!
       order.recreate_all_fees!
       order.create_tax_charge!

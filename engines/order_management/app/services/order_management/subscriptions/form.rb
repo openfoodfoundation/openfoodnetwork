@@ -15,7 +15,7 @@ module OrderManagement
         @options = options
         @estimator = OrderManagement::Subscriptions::Estimator.new(subscription)
         @validator = OrderManagement::Subscriptions::Validator.new(subscription)
-        @order_syncer = OrderSyncer.new(subscription)
+        @order_syncer = Orders::SyncService.new(subscription)
       end
 
       def save

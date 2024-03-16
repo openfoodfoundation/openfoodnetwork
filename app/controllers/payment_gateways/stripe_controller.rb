@@ -79,7 +79,7 @@ module PaymentGateways
     end
 
     def last_payment
-      @last_payment ||= OrderPaymentFinder.new(@order).last_payment
+      @last_payment ||= Orders::FindPaymentService.new(@order).last_payment
     end
 
     def cancel_incomplete_payments

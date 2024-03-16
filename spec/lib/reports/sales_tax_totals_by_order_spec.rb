@@ -80,7 +80,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
     end
 
     it "returns tax amount filtered by tax rate in query_row" do
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
       mock_voucher_adjustment_service
 
       filtered_tax_total = report.filtered_tax_rate_total(query_row)
@@ -94,7 +94,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
   describe "#tax_rate_total" do
     it "returns the tax amount filtered by tax rate in the query_row" do
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
       mock_voucher_adjustment_service
 
       tax_total = report.tax_rate_total(query_row)
@@ -124,7 +124,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
   describe "#total_excl_tax" do
     it "returns the total excluding tax specified in query_row" do
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
       mock_voucher_adjustment_service
 
       total = report.total_excl_tax(query_row)
@@ -152,7 +152,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
   describe "#total_incl_tax" do
     it "returns the total including the tax specified in query_row" do
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
       mock_voucher_adjustment_service
 
       total = report.total_incl_tax(query_row)
@@ -164,7 +164,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
 
   describe "#rules" do
     before do
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
     end
 
     it "returns rules" do
@@ -274,7 +274,7 @@ describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
     VoucherAdjustmentsService.new(order).update
     order.update_totals_and_states
 
-    OrderWorkflow.new(order).complete!
+    Orders::WorkflowService.new(order).complete!
   end
 
   def mock_voucher_adjustment_service(included_tax: 0.0, excluded_tax: 0.0)

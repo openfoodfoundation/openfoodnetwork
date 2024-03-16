@@ -114,8 +114,8 @@ describe PlaceProxyOrder do
 
       order.line_items << build(:line_item)
 
-      order_workflow = instance_double(OrderWorkflow, complete!: true)
-      allow(OrderWorkflow).to receive(:new).with(order).and_return(order_workflow)
+      order_workflow = instance_double(Orders::WorkflowService, complete!: true)
+      allow(Orders::WorkflowService).to receive(:new).with(order).and_return(order_workflow)
     end
 
     context "when no changes are present" do

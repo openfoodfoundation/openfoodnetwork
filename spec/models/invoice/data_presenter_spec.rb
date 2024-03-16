@@ -25,7 +25,7 @@ describe Invoice::DataPresenter do
     let(:presenter){ Invoice::DataPresenter.new(invoice) }
     before do
       order.create_tax_charge!
-      OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
+      Orders::GenerateInvoiceService.new(order).generate_or_update_latest_invoice
     end
 
     it "displays nothing when the line item refer to a non taxable product" do
@@ -53,7 +53,7 @@ describe Invoice::DataPresenter do
         tax_rate_clone.save!
         tax_rate_clone.calculator.save!
         order.create_tax_charge!
-        OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
+        Orders::GenerateInvoiceService.new(order).generate_or_update_latest_invoice
       end
 
       it "displays the tax rate when the line item refer to a taxable product" do
@@ -65,7 +65,7 @@ describe Invoice::DataPresenter do
         before do
           order.line_items.last.tax_category.tax_rates.last.update!(zone: create(:zone))
           order.create_tax_charge!
-          OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
+          Orders::GenerateInvoiceService.new(order).generate_or_update_latest_invoice
         end
 
         it "displays only the tax rates that were applied to the line items" do

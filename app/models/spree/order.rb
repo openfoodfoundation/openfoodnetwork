@@ -652,7 +652,7 @@ module Spree
     end
 
     def fee_handler
-      @fee_handler ||= OrderFeesHandler.new(self)
+      @fee_handler ||= Orders::HandleFeesService.new(self)
     end
 
     def clear_legacy_taxes!
@@ -701,7 +701,7 @@ module Spree
     end
 
     def adjustments_fetcher
-      @adjustments_fetcher ||= OrderAdjustmentsFetcher.new(self)
+      @adjustments_fetcher ||= Orders::FetchAdjustmentsService.new(self)
     end
 
     def skip_payment_for_subscription?

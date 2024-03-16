@@ -83,7 +83,7 @@ describe Admin::ProxyOrdersController, type: :controller do
     before do
       # Processing order to completion
       allow(Spree::OrderMailer).to receive(:cancel_email) { double(:email, deliver_later: true) }
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
       proxy_order.reload
       proxy_order.cancel
       allow(controller).to receive(:spree_current_user) { user }

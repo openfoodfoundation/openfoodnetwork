@@ -154,7 +154,7 @@ class CartService
   end
 
   def check_variant_available_under_distribution(variant)
-    return true if OrderCycleDistributedVariants.new(@order_cycle, @distributor)
+    return true if OrderCycles::DistributedVariantsService.new(@order_cycle, @distributor)
       .available_variants.include? variant
 
     errors.add(:base, I18n.t(:spree_order_populator_availability_error))

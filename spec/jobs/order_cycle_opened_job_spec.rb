@@ -14,14 +14,14 @@ describe OrderCycleOpenedJob do
   }
 
   it "enqueues jobs for recently opened order cycles only" do
-    expect(OrderCycleWebhookService)
+    expect(OrderCycles::WebhookService)
       .to receive(:create_webhook_job).with(oc_opened_now, 'order_cycle.opened')
 
-    expect(OrderCycleWebhookService)
-      .not_to receive(:create_webhook_job).with(oc_opened_before, 'order_cycle.opened')
+    expect(OrderCycles::WebhookService)
+      .to_not receive(:create_webhook_job).with(oc_opened_before, 'order_cycle.opened')
 
-    expect(OrderCycleWebhookService)
-      .not_to receive(:create_webhook_job).with(oc_opening_soon, 'order_cycle.opened')
+    expect(OrderCycles::WebhookService)
+      .to_not receive(:create_webhook_job).with(oc_opening_soon, 'order_cycle.opened')
 
     OrderCycleOpenedJob.perform_now
   end
@@ -41,7 +41,7 @@ describe OrderCycleOpenedJob do
         end
       )
 
-      expect(OrderCycleWebhookService)
+      expect(OrderCycles::WebhookService)
         .to receive(:create_webhook_job).with(oc_opened_now, 'order_cycle.opened').once
 
       # Start two jobs in parallel:
