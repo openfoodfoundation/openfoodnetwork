@@ -18,10 +18,10 @@ describe OrderCycleOpenedJob do
       .to receive(:create_webhook_job).with(oc_opened_now, 'order_cycle.opened')
 
     expect(OrderCycles::WebhookService)
-      .to_not receive(:create_webhook_job).with(oc_opened_before, 'order_cycle.opened')
+      .not_to receive(:create_webhook_job).with(oc_opened_before, 'order_cycle.opened')
 
     expect(OrderCycles::WebhookService)
-      .to_not receive(:create_webhook_job).with(oc_opening_soon, 'order_cycle.opened')
+      .not_to receive(:create_webhook_job).with(oc_opening_soon, 'order_cycle.opened')
 
     OrderCycleOpenedJob.perform_now
   end

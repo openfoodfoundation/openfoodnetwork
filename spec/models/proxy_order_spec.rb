@@ -205,8 +205,8 @@ describe ProxyOrder, type: :model do
       end
 
       it "returns the existing order" do
-        expect(Orders::FactoryService).to_not receive(:new)
-        expect(proxy_order).to_not receive(:save!)
+        expect(Orders::FactoryService).not_to receive(:new)
+        expect(proxy_order).not_to receive(:save!)
         expect(proxy_order.initialise_order!).to eq existing_order
       end
     end

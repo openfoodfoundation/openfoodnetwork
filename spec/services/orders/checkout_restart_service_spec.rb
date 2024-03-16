@@ -8,7 +8,7 @@ describe Orders::CheckoutRestartService do
   describe "#call" do
     context "when the order is already in the 'cart' state" do
       it "does nothing" do
-        expect(order).to_not receive(:restart_checkout!)
+        expect(order).not_to receive(:restart_checkout!)
         Orders::CheckoutRestartService.new(order).call
       end
     end
