@@ -158,6 +158,10 @@ describe Spree::Admin::InvoicesController, type: :controller do
     let(:distributor) { order.distributor }
     let(:params) { { order_id: order.number } }
 
+    before do
+      distributor.update_attribute(:abn, "123412341234")
+    end
+
     context "as a normal user" do
       before { allow(controller).to receive(:spree_current_user) { user } }
 
@@ -192,6 +196,22 @@ describe Spree::Admin::InvoicesController, type: :controller do
           end.to change{ Invoice.count }.by(1)
 
           expect(response).to redirect_to spree.admin_dashboard_path
+        end
+
+        context "distributor didn't set an ABN" do
+          before do
+            distributor.update_attribute(:abn, "")
+          end
+
+          it "should not allow me to generate a new invoice for the order" do
+            expect do
+              spree_get :generate, params
+            end.to change{ Invoice.count }.by(0)
+
+            expect(response).to redirect_to spree.admin_dashboard_path
+            expect(flash[:error])
+              .to eq "#{distributor.name} must have a valid ABN before invoices can be used."
+          end
         end
       end
     end
