@@ -5,12 +5,11 @@ require 'spec_helper'
 describe Admin::StripeAccountsController, type: :controller do
   let(:enterprise) { create(:distributor_enterprise) }
 
-  before do
-    Stripe.client_id = "some_id"
-  end
-
   describe "#connect" do
+    let(:client_id) { ENV.fetch('STRIPE_CLIENT_ID', nil) }
+
     before do
+      Stripe.client_id = client_id
       allow(controller).to receive(:spree_current_user) { enterprise.owner }
     end
 
@@ -21,12 +20,12 @@ describe Admin::StripeAccountsController, type: :controller do
       expect(response).to redirect_to("https://connect.stripe.com/oauth/authorize?" \
                                       "state=eyJhbGciOiJIUzI1NiJ9.eyJlbnRlcnByaXNlX2lkIjoiMSJ9" \
                                       ".jSSFGn0bLhwuiQYK5ORmHWW7aay1l030bcfGwn1JbFg&" \
-                                      "scope=read_write&client_id=some_id&response_type=code")
+                                      "scope=read_write&client_id=#{client_id}&response_type=code")
     end
   end
 
   describe "#destroy" do
-    let(:params) { { format: :json, id: "some_id" } }
+    let(:params) { { format: :json, id: "client_id" } }
 
     context "when the specified stripe account doesn't exist" do
       it "raises an error?" do
@@ -34,8 +33,18 @@ describe Admin::StripeAccountsController, type: :controller do
       end
     end
 
-    context "when the specified stripe account exists" do
-      let(:stripe_account) { create(:stripe_account, enterprise:) }
+    context "when the specified stripe account exists", :vcr, :stripe_version do
+      let(:connected_account) do
+        Stripe::Account.create({
+                                 type: 'standard',
+                                 country: 'AU',
+                                 email: 'jumping.jack@example.com',
+                                 business_type: "non_profit"
+                               })
+      end
+      let(:stripe_account) {
+        create(:stripe_account, enterprise:, stripe_user_id: connected_account.id)
+      }
 
       before do
         # So that we can stub #deauthorize_and_destroy
@@ -83,11 +92,6 @@ describe Admin::StripeAccountsController, type: :controller do
   describe "#status" do
     let(:params) { { format: :json, enterprise_id: enterprise.id } }
 
-    before do
-      Stripe.api_key = "sk_test_12345"
-      allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(false)
-    end
-
     context "when I don't manage the specified enterprise" do
       let(:user) { create(:user) }
 
@@ -125,45 +129,44 @@ describe Admin::StripeAccountsController, type: :controller do
           end
         end
 
-        context "when a stripe account is associated with the specified enterprise" do
+        context "when a stripe account is associated with the specified enterprise", :vcr,
+                :stripe_version do
+          let(:connected_account) do
+            Stripe::Account.create({
+                                     type: 'standard',
+                                     country: 'AU',
+                                     email: 'jumping.jack@example.com',
+                                     business_type: "non_profit"
+                                   })
+          end
           let!(:account) {
-            create(:stripe_account, stripe_user_id: "acc_123", enterprise:)
+            create(:stripe_account, stripe_user_id: connected_account.id, enterprise:)
           }
 
           context "but access has been revoked or does not exist on stripe's servers" do
+            let(:message) {
+              "The provided key 'sk_test_******************************uCJm' " \
+                "does not have access to account 'acct_fake_account' (or that account " \
+                "does not exist). Application access may have been revoked."
+            }
             before do
-              stub_request(:get,
-                           "https://api.stripe.com/v1/accounts/acc_123").to_return(status: 404)
+              account.update(stripe_user_id: "acct_fake_account")
             end
 
             it "returns with a status of 'access_revoked'" do
-              get(:status, params:)
-              json_response = JSON.parse(response.body)
-              expect(json_response["status"]).to eq "access_revoked"
+              expect {
+                response = get(:status, params:)
+              }.to raise_error Stripe::PermissionError, message
             end
           end
 
           context "which is connected" do
-            let(:stripe_account_mock) do
-              {
-                id: "acc_123",
-                business_name: "My Org",
-                charges_enabled: true,
-                some_other_attr: "something"
-              }
-            end
-
-            before do
-              stub_request(:get, "https://api.stripe.com/v1/accounts/acc_123")
-                .to_return(body: JSON.generate(stripe_account_mock))
-            end
-
             it "returns with a status of 'connected'" do
-              get(:status, params:)
+              response = get(:status, params:)
               json_response = JSON.parse(response.body)
               expect(json_response["status"]).to eq "connected"
               # serializes required attrs
-              expect(json_response["business_name"]).to eq "My Org"
+              expect(json_response["charges_enabled"]).to eq false
               # ignores other attrs
               expect(json_response["some_other_attr"]).to be nil
             end
