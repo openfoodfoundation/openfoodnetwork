@@ -74,9 +74,9 @@ module OrderManagement
                 payment_authorize.call!
 
                 expect(order.errors.size).to eq 0
-                expect(PaymentMailer).to_not have_received(:authorize_payment)
-                expect(PaymentMailer).to_not have_received(:authorization_required)
-                expect(mail_mock).to_not have_received(:deliver_now)
+                expect(PaymentMailer).not_to have_received(:authorize_payment)
+                expect(PaymentMailer).not_to have_received(:authorization_required)
+                expect(mail_mock).not_to have_received(:deliver_now)
               end
 
               context "when the processing is off-session (via backoffice/subscription)" do

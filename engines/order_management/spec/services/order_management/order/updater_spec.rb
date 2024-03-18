@@ -237,7 +237,7 @@ module OrderManagement
 
           it "returns paid" do
             updater.update_payment_state
-            expect(order.payment_state).to_not eq("requires_authorization")
+            expect(order.payment_state).not_to eq("requires_authorization")
           end
         end
 
@@ -362,7 +362,7 @@ module OrderManagement
 
           it "cancels unused payments requiring authorization" do
             expect(stripe_payment).to receive(:void_transaction!)
-            expect(cash_payment).to_not receive(:void_transaction!)
+            expect(cash_payment).not_to receive(:void_transaction!)
 
             order.updater.update_payment_state
           end
@@ -416,7 +416,7 @@ module OrderManagement
           it "doesn't touch taxes" do
             allow(order).to receive(:completed?) { false }
 
-            expect(order).to_not receive(:create_tax_charge!)
+            expect(order).not_to receive(:create_tax_charge!)
             updater.__send__(:handle_legacy_taxes)
           end
         end
@@ -439,7 +439,7 @@ module OrderManagement
 
           context "and the order has no legacy taxes" do
             it "leaves taxes untouched" do
-              expect(order).to_not receive(:create_tax_charge!)
+              expect(order).not_to receive(:create_tax_charge!)
 
               updater.__send__(:handle_legacy_taxes)
             end

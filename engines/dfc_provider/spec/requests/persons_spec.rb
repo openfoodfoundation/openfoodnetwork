@@ -26,7 +26,7 @@ describe "Persons", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true
         let(:id) { other_user.id }
 
         run_test! do
-          expect(response.body).to_not include "dfc-b:Person"
+          expect(response.body).not_to include "dfc-b:Person"
         end
       end
     end
