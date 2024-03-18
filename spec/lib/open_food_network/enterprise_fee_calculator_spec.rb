@@ -11,8 +11,8 @@ module OpenFoodNetwork
       let(:coordinator) { create(:distributor_enterprise) }
       let(:distributor) { create(:distributor_enterprise) }
       let(:order_cycle) { create(:simple_order_cycle) }
-      let(:product1) { create(:simple_product, supplier: supplier1, price: 10.00) }
-      let(:product2) { create(:simple_product, supplier: supplier2, price: 20.00) }
+      let(:product1) { create(:simple_product, supplier_id: supplier1.id, price: 10.00) }
+      let(:product2) { create(:simple_product, supplier_id: supplier2.id, price: 20.00) }
 
       describe "calculating fees for a variant" do
         describe "summing all the per-item fees for variant in the specified hub + order cycle" do
