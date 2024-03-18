@@ -256,7 +256,7 @@ describe CheckoutController, type: :controller do
         order.bill_address = address
         order.ship_address = address
         order.select_shipping_method shipping_method.id
-        OrderWorkflow.new(order).advance_to_payment
+        Orders::WorkflowService.new(order).advance_to_payment
       end
 
       context "with incomplete data" do
@@ -387,7 +387,7 @@ describe CheckoutController, type: :controller do
         order.bill_address = address
         order.ship_address = address
         order.select_shipping_method shipping_method.id
-        OrderWorkflow.new(order).advance_to_payment
+        Orders::WorkflowService.new(order).advance_to_payment
 
         order.payments << build(:payment, amount: order.total, payment_method:)
         order.next
@@ -459,7 +459,7 @@ describe CheckoutController, type: :controller do
       allow(order).to receive(:distributor).and_return(distributor)
       order.update(order_cycle:)
 
-      allow(OrderCycleDistributedVariants).to receive(:new).and_return(
+      allow(OrderCycles::DistributedVariantsService).to receive(:new).and_return(
         order_cycle_distributed_variants
       )
     end

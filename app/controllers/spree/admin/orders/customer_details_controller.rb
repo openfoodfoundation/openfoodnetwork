@@ -24,7 +24,7 @@ module Spree
             end
 
             refresh_shipment_rates
-            OrderWorkflow.new(@order).advance_to_payment
+            ::Orders::WorkflowService.new(@order).advance_to_payment
 
             flash[:success] = Spree.t('customer_details_updated')
             redirect_to spree.admin_order_customer_path(@order)

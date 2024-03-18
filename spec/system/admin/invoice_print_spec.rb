@@ -678,7 +678,7 @@ describe '
 
       context "Order has previous invoices" do
         before do
-          OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
+          Orders::GenerateInvoiceService.new(order).generate_or_update_latest_invoice
           first_line_item = order.line_items.first
           order.line_items.first.update(quantity: first_line_item.quantity + 1)
         end

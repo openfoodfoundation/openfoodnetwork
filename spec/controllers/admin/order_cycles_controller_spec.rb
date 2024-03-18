@@ -160,12 +160,12 @@ module Admin
       let(:shop) { create(:distributor_enterprise) }
 
       context "as a manager of a shop" do
-        let(:form_mock) { instance_double(OrderCycleForm) }
+        let(:form_mock) { instance_double(OrderCycles::FormService) }
         let(:params) { { as: :json, order_cycle: {} } }
 
         before do
           controller_login_as_enterprise_user([shop])
-          allow(OrderCycleForm).to receive(:new) { form_mock }
+          allow(OrderCycles::FormService).to receive(:new) { form_mock }
         end
 
         context "when creation is successful" do
@@ -203,10 +203,10 @@ module Admin
     describe "update" do
       let(:order_cycle) { create(:simple_order_cycle) }
       let(:coordinator) { order_cycle.coordinator }
-      let(:form_mock) { instance_double(OrderCycleForm) }
+      let(:form_mock) { instance_double(OrderCycles::FormService) }
 
       before do
-        allow(OrderCycleForm).to receive(:new) { form_mock }
+        allow(OrderCycles::FormService).to receive(:new) { form_mock }
       end
 
       context "as a manager of the coordinator" do
@@ -275,7 +275,7 @@ module Admin
         end
 
         it "can update preference product_selection_from_coordinator_inventory_only" do
-          expect(OrderCycleForm).to receive(:new).
+          expect(OrderCycles::FormService).to receive(:new).
             with(order_cycle,
                  { "preferred_product_selection_from_coordinator_inventory_only" => true },
                  anything) { form_mock }
@@ -288,7 +288,7 @@ module Admin
         end
 
         it "can update preference automatic_notifications" do
-          expect(OrderCycleForm).to receive(:new).
+          expect(OrderCycles::FormService).to receive(:new).
             with(order_cycle,
                  { "automatic_notifications" => true },
                  anything) { form_mock }
@@ -324,7 +324,7 @@ module Admin
           format: :json, id: order_cycle.id, order_cycle: allowed.merge(restricted)
         }
       }
-      let(:form_mock) { instance_double(OrderCycleForm, save: true) }
+      let(:form_mock) { instance_double(OrderCycles::FormService, save: true) }
 
       before { allow(controller).to receive(:spree_current_user) { user } }
 
@@ -333,7 +333,7 @@ module Admin
         let(:expected) { [order_cycle, allowed.merge(restricted), user] }
 
         it "allows me to update exchange information for exchanges, name and dates" do
-          expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
+          expect(OrderCycles::FormService).to receive(:new).with(*expected) { form_mock }
           spree_put :update, params
         end
       end
@@ -343,7 +343,7 @@ module Admin
         let(:expected) { [order_cycle, allowed, user] }
 
         it "allows me to update exchange information for exchanges, but not name or dates" do
-          expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
+          expect(OrderCycles::FormService).to receive(:new).with(*expected) { form_mock }
           spree_put :update, params
         end
       end

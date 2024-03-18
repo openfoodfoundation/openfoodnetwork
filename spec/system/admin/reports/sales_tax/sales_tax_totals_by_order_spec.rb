@@ -100,7 +100,7 @@ describe "Sales Tax Totals By order" do
       # the enterprise fees can be known only when the user selects the variants
       # we'll need to create them by calling recreate_all_fees!
       order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
     end
 
     it "generates the report" do
@@ -166,7 +166,7 @@ describe "Sales Tax Totals By order" do
 
     it "generates the report" do
       order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
 
       visit_sales_tax_totals_by_order
 
@@ -319,7 +319,7 @@ describe "Sales Tax Totals By order" do
 
     before do
       order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
 
       customer2.update!({ first_name: 'c2fname', last_name: 'c2lname', code: 'DEF456' })
       order2.line_items.create({ variant:, quantity: 1, price: 200 })
@@ -331,7 +331,7 @@ describe "Sales Tax Totals By order" do
                        email: 'order2@example.com'
                      })
       order2.recreate_all_fees!
-      OrderWorkflow.new(order2).complete!
+      Orders::WorkflowService.new(order2).complete!
 
       visit_sales_tax_totals_by_order
     end

@@ -21,7 +21,7 @@ module Api
         @shipment.refresh_rates
         @shipment.save!
 
-        OrderWorkflow.new(@order).advance_to_payment if @order.line_items.any?
+        Orders::WorkflowService.new(@order).advance_to_payment if @order.line_items.any?
 
         @order.recreate_all_fees!
 

@@ -25,7 +25,7 @@ describe Checkout::StripeRedirect do
       end
 
       it "authorizes the payment and returns the redirect path" do
-        expect(OrderPaymentFinder).to receive_message_chain(:new, :last_pending_payment).
+        expect(Orders::FindPaymentService).to receive_message_chain(:new, :last_pending_payment).
           and_return(stripe_payment)
 
         expect(OrderManagement::Order::StripeScaPaymentAuthorize).to receive(:new).and_call_original

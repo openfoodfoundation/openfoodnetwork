@@ -33,7 +33,7 @@ module Spree
             return
           end
 
-          OrderWorkflow.new(@order).complete! unless @order.completed?
+          ::Orders::WorkflowService.new(@order).complete! unless @order.completed?
 
           authorize_stripe_sca_payment
           @payment.process_offline!

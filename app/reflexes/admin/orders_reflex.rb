@@ -5,7 +5,7 @@ module Admin
     before_reflex :authorize_order, only: [:capture, :ship]
 
     def capture
-      payment_capture = OrderCaptureService.new(@order)
+      payment_capture = Orders::CaptureService.new(@order)
 
       if payment_capture.call
         cable_ready.replace(selector: dom_id(@order),
@@ -55,7 +55,7 @@ module Admin
     end
 
     def cancel_orders(params)
-      cancelled_orders = OrdersBulkCancelService.new(params, current_user).call
+      cancelled_orders = Orders::BulkCancelService.new(params, current_user).call
 
       cable_ready.dispatch_event(name: "modal:close")
 

@@ -42,7 +42,7 @@ module Spree
     # Patching to redirect to shop if order is empty
     def edit
       @insufficient_stock_lines = @order.insufficient_stock_lines
-      @unavailable_order_variants = OrderCycleDistributedVariants.
+      @unavailable_order_variants = OrderCycles::DistributedVariantsService.
         new(current_order_cycle, current_distributor).unavailable_order_variants(@order)
 
       if @order.line_items.empty?
@@ -102,7 +102,7 @@ module Spree
       @order = Spree::Order.find_by!(number: params[:id])
       authorize! :cancel, @order
 
-      if CustomerOrderCancellation.new(@order).call
+      if Orders::CustomerCancellationService.new(@order).call
         flash[:success] = I18n.t(:orders_your_order_has_been_cancelled)
       else
         flash[:error] = I18n.t(:orders_could_not_cancel)

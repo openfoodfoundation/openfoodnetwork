@@ -36,7 +36,7 @@ module Reporting
       without_editable_line_items = line_items - editable_line_items(line_items)
 
       without_editable_line_items.each do |line_item|
-        OrderDataMasker.new(line_item.order).call
+        Orders::MaskDataService.new(line_item.order).call
       end
 
       line_items

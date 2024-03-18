@@ -18,7 +18,7 @@ module OrderManagement
       private
 
       def create_payment
-        payment = OrderPaymentFinder.new(@order).last_pending_payment
+        payment = Orders::FindPaymentService.new(@order).last_pending_payment
         return payment if payment.present?
 
         @order.payments.create(

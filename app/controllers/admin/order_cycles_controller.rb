@@ -45,7 +45,8 @@ module Admin
     end
 
     def create
-      @order_cycle_form = OrderCycleForm.new(@order_cycle, order_cycle_params, spree_current_user)
+      @order_cycle_form = OrderCycles::FormService.new(@order_cycle, order_cycle_params,
+                                                       spree_current_user)
 
       if @order_cycle_form.save
         flash[:success] = t('.success')
@@ -61,7 +62,8 @@ module Admin
     end
 
     def update
-      @order_cycle_form = OrderCycleForm.new(@order_cycle, order_cycle_params, spree_current_user)
+      @order_cycle_form = OrderCycles::FormService.new(@order_cycle, order_cycle_params,
+                                                       spree_current_user)
 
       if @order_cycle_form.save
         update_nil_subscription_line_items_price_estimate(@order_cycle)

@@ -64,7 +64,7 @@ class ProductsRenderer
   end
 
   def distributed_products
-    OrderCycleDistributedProducts.new(distributor, order_cycle, customer)
+    OrderCycles::DistributedProductsService.new(distributor, order_cycle, customer)
   end
 
   def products_order

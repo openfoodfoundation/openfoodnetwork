@@ -43,7 +43,7 @@ module Reporting
           editable_orders_ids = permissions.editable_orders.select(&:id).map(&:id)
           orders
             .filter { |order| order.in?(editable_orders_ids) }
-            .each { |order| OrderDataMasker.new(order).call }
+            .each { |order| Orders::MaskDataService.new(order).call }
           # Get Line Items
           orders.map(&:line_items).flatten
         end

@@ -58,7 +58,7 @@ class ProxyOrder < ApplicationRecord
   def initialise_order!
     return order if order.present?
 
-    factory = OrderFactory.new(order_attrs, skip_stock_check: true)
+    factory = Orders::FactoryService.new(order_attrs, skip_stock_check: true)
     self.order = factory.create
     save!
     order

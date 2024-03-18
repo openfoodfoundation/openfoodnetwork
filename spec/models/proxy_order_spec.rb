@@ -186,12 +186,12 @@ describe ProxyOrder, type: :model do
 
   describe "initialise_order!" do
     let(:order) { create(:order) }
-    let(:factory) { instance_double(OrderFactory) }
+    let(:factory) { instance_double(Orders::FactoryService) }
     let!(:proxy_order) { create(:proxy_order) }
 
     context "when the order has not already been initialised" do
-      it "creates a new order using the OrderFactory, and returns it" do
-        expect(OrderFactory).to receive(:new) { factory }
+      it "creates a new order using the Orders::FactoryService, and returns it" do
+        expect(Orders::FactoryService).to receive(:new) { factory }
         expect(factory).to receive(:create) { order }
         expect(proxy_order.initialise_order!).to eq order
       end
@@ -205,7 +205,7 @@ describe ProxyOrder, type: :model do
       end
 
       it "returns the existing order" do
-        expect(OrderFactory).not_to receive(:new)
+        expect(Orders::FactoryService).not_to receive(:new)
         expect(proxy_order).not_to receive(:save!)
         expect(proxy_order.initialise_order!).to eq existing_order
       end

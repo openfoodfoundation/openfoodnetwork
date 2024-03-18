@@ -226,12 +226,12 @@ describe Spree::OrderMailer do
                        data: invoice_data_generator.serialize_for_invoice)
     }
 
-    let(:generator){ instance_double(OrderInvoiceGenerator) }
+    let(:generator){ instance_double(Orders::GenerateInvoiceService) }
     let(:renderer){ instance_double(InvoiceRenderer) }
     let(:attachment_filename){ "invoice-#{order.number}.pdf" }
     let(:deliveries){ ActionMailer::Base.deliveries }
     before do
-      allow(OrderInvoiceGenerator).to receive(:new).with(order).and_return(generator)
+      allow(Orders::GenerateInvoiceService).to receive(:new).with(order).and_return(generator)
       allow(InvoiceRenderer).to receive(:new).and_return(renderer)
     end
     context "When invoices feature is not enabled" do

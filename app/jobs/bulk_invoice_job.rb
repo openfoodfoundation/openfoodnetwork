@@ -33,7 +33,7 @@ class BulkInvoiceJob < ApplicationJob
 
   def generate_invoice(order)
     renderer_data = if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, current_user)
-                      OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
+                      Orders::GenerateInvoiceService.new(order).generate_or_update_latest_invoice
                       order.invoices.first.presenter
                     else
                       order

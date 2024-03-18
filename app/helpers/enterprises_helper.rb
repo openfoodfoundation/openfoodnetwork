@@ -12,11 +12,11 @@ module EnterprisesHelper
   end
 
   def available_shipping_methods
-    OrderAvailableShippingMethods.new(current_order, current_customer).to_a
+    Orders::AvailableShippingMethodsService.new(current_order, current_customer).to_a
   end
 
   def available_payment_methods
-    OrderAvailablePaymentMethods.new(current_order, current_customer).to_a
+    Orders::AvailablePaymentMethodsService.new(current_order, current_customer).to_a
   end
 
   def managed_enterprises

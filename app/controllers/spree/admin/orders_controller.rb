@@ -50,7 +50,7 @@ module Spree
           return redirect_to spree.edit_admin_order_path(@order)
         end
 
-        OrderWorkflow.new(@order).advance_to_payment
+        ::Orders::WorkflowService.new(@order).advance_to_payment
 
         if @order.complete?
           redirect_to spree.edit_admin_order_path(@order)
@@ -104,7 +104,7 @@ module Spree
           @order = if params[:invoice_id].present?
                      @order.invoices.find(params[:invoice_id]).presenter
                    else
-                     OrderInvoiceGenerator.new(@order).generate_or_update_latest_invoice
+                     ::Orders::GenerateInvoiceService.new(@order).generate_or_update_latest_invoice
                      @order.invoices.first.presenter
                    end
         end
