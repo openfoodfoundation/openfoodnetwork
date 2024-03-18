@@ -32,5 +32,7 @@ export default class ProductController extends Controller {
       this.variantUnit.value = variant_unit_with_scale;
       this.variantUnitScale.value = "";
     }
+    this.variantUnit.dispatchEvent(new Event("change"));
+    this.variantUnitScale.dispatchEvent(new Event("change"));
   }
 }
