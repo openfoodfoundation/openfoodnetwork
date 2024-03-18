@@ -1,0 +1,91 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://connect.stripe.com/oauth/deauthorize
+    body:
+      encoding: UTF-8
+      string: stripe_user_id=<HIDDEN-STRIPE_ACCOUNT>&client_id=bogus_client_id
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/10.12.0
+      Authorization:
+      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_B79MaIEhVEEPAQ","request_duration_ms":311}}'
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 18 Mar 2024 00:17:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '96'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=0, no-cache, no-store, must-revalidate
+      Content-Security-Policy:
+      - report-uri /csp-report?p=%2Foauth%2Fdeauthorize;block-all-mixed-content;default-src
+        'none' 'report-sample';base-uri 'none';form-action 'none';style-src 'unsafe-inline';frame-ancestors
+        'self';connect-src 'self';img-src 'self' https://b.stripecdn.com
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=https://q.stripe.com/coop-report
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Request-Id:
+      - req_GHrVmVa7FGmpaS
+      Set-Cookie:
+      - __Host-session=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT;
+        secure; SameSite=None
+      - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Fdeauthorize%22%7D;
+        domain=stripe.com; path=/; expires=Tue, 18 Mar 2025 00:17:22 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - cid=2582bbce-6937-4242-8cf6-c4343f511344; domain=stripe.com; path=/; expires=Sun,
+        16 Jun 2024 00:17:22 GMT; secure; SameSite=Lax
+      - machine_identifier=u08LMPqUrD5B1kp1zW091JTX1MYNXe2GXreB9n879fzGcPyBLxvc1GSNLjOs5sUCJgc%3D;
+        domain=stripe.com; path=/; expires=Tue, 18 Mar 2025 00:17:22 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - private_machine_identifier=0RNxLTzWt20%2BdTYyGlYw33oFTzBCS0DcoCPxJ0x4mBQXzB3ZPxI2XLgrMIOu85fwhMI%3D;
+        domain=stripe.com; path=/; expires=Tue, 18 Mar 2025 00:17:22 GMT; secure;
+        HttpOnly; SameSite=None
+      - site-auth=; domain=stripe.com; path=/; max-age=0; expires=Thu, 01 Jan 1970
+        00:00:00 GMT; secure
+      - stripe.csrf=aSus_H8-dkvYjBCLXdh8ntg0xuAW1tkywbt_IwbHZRnT37RbQnHIDIMXzyB345bI1i97FekAm_9ddOCbwUDqrjw-AYTZVJz9GFAUrBpzKH_O3PHD6OAxKYSYiUWLtYNMqKvDFBVQ3g%3D%3D;
+        domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
+      Stripe-Kill-Route:
+      - "[]"
+      Www-Authenticate:
+      - Bearer realm="Stripe"
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "error": "invalid_client",
+          "error_description": "No such application: 'bogus_client_id'"
+        }
+  recorded_at: Mon, 18 Mar 2024 00:17:22 GMT
+recorded_with: VCR 6.2.0
