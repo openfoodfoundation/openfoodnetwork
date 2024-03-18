@@ -22,7 +22,7 @@ module Reporting
           [
             {
               order: [:bill_address],
-              variant: { product: :supplier }
+              variant: [:product, :supplier]
             }
           ]
         end
