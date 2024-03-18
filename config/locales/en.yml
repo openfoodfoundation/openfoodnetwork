@@ -264,6 +264,7 @@ en:
               not_available_to_shop: "is not available to %{shop}"
   card_details: "Card details"
   card_type: "Card type"
+  card_type_is: "Card type is"
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
