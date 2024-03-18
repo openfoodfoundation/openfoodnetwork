@@ -220,7 +220,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(page).to have_field "Name", with: "Large box"
         expect(page).to have_field "SKU", with: "POM-01"
         expect(page).to have_field "Price", with: "10.25"
-        expect(page).to have_css "button[aria-label='On Hand']", text: "6"
+        expect(page).to have_button "On Hand", text: "6"
       end
     end
 
@@ -229,7 +229,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         click_on "On Hand" # activate stock popout
         check "On demand"
 
-        expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
+        expect(page).to have_button "On Hand", text: "On demand"
       end
 
       expect {
@@ -240,7 +240,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       }.to change{ variant_a1.on_demand }.to(true)
 
       within row_containing_name("Medium box") do
-        expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
+        expect(page).to have_button "On Hand", text: "On demand"
       end
     end
 
@@ -399,7 +399,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect(page).to have_field "SKU", with: "APL-02"
           expect(page).to have_field "Price", with: "10.25"
           expect(page).to have_content "1kg"
-          expect(page).to have_css "button[aria-label='On Hand']", text: "3"
+          expect(page).to have_button "On Hand", text: "3"
         end
       end
 
@@ -518,7 +518,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect(page).to have_field "SKU", with: "APL-02"
           expect(page).to have_field "Price", with: "10.25"
           expect(page).to have_content "1kg"
-          expect(page).to have_css "button[aria-label='On Hand']", text: "3"
+          expect(page).to have_button "On Hand", text: "3"
         end
       end
 
