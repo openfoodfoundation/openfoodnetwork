@@ -9,19 +9,20 @@
   = error_message_on variant, :sku
 %td
   -# empty
-%td.field
-  = f.button :unit_to_display, 'aria-label': t('admin.products_page.columns.unit') do
+%td.field.on-hand__wrapper{'data-controller': "popout"}
+  = f.button :unit_to_display, class: "on-hand__button", 'aria-label': t('admin.products_page.columns.unit'), 'data-popout-target': "button" do
     = variant.unit_to_display # Show the generated summary of unit values
-
-  -# Composite field for unit_value and unit_description
-  -# todo: create a method for value_with_description
-  = f.text_field :unit_value_with_description,
-      value: [number_with_precision(variant.unit_value, precision: nil,strip_insignificant_zeros: true), variant.unit_description].compact_blank.join(" "),
-      'aria-label': t('admin.products_page.columns.unit_value')
+  %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
+    .field
+      -# Composite field for unit_value and unit_description
+      -# todo: create a method for value_with_description
+      = f.text_field :unit_value_with_description,
+          value: [number_with_precision(variant.unit_value, precision: nil,strip_insignificant_zeros: true), variant.unit_description].compact_blank.join(" "),
+          'aria-label': t('admin.products_page.columns.unit_value')
+    .field
+      = f.label :display_as, t('admin.products_page.columns.display_as')
+      = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(variant).name
   = error_message_on variant, :unit_value
-
-  = f.label :display_as, t('admin.products_page.columns.display_as')
-  = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(variant).name
 %td.field
   = f.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
   = error_message_on variant, :price
