@@ -226,13 +226,6 @@ module Reporting
 
           join_scope(
             <<~JOIN_STRING
-              LEFT OUTER JOIN spree_products
-                ON (spree_products.id = spree_variants.product_id)
-            JOIN_STRING
-          )
-
-          join_scope(
-            <<~JOIN_STRING
               LEFT OUTER JOIN spree_tax_categories AS product_tax_categories
                 ON (
                   enterprise_fees.inherits_tax_category IS TRUE
@@ -324,7 +317,7 @@ module Reporting
         def filter_by_distribution(params)
           filter_scope(spree_orders: { distributor_id: params.distributor_ids }) \
             if params.distributor_ids.present?
-          filter_scope(spree_products: { supplier_id: params.producer_ids }) \
+          filter_scope(spree_variants: { supplier_id: params.producer_ids }) \
             if params.producer_ids.present?
           filter_scope(spree_orders: { order_cycle_id: params.order_cycle_ids }) \
             if params.order_cycle_ids.present?

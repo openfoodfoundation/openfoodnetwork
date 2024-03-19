@@ -38,7 +38,7 @@ FactoryBot.define do
       trait :with_order_cycle do
         transient do
           order_cycle { create(:order_cycle) }
-          producer { product.supplier }
+          producer { supplier }
           coordinator { create(:distributor_enterprise) }
           distributor { create(:distributor_enterprise) }
           incoming_exchange_fees { [] }
