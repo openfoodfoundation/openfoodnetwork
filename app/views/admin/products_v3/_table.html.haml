@@ -54,7 +54,7 @@
     - products.each_with_index do |product, product_index|
       = form.fields_for("products", product, index: product_index) do |product_form|
         %tbody.relaxed.naked_inputs{ data: { 'record-id': product_form.object.id,
-                                controller: "nested-form",
+                                controller: "nested-form product",
                                 action: 'rails-nested-form:add->bulk-form#registerElements' } }
           %tr
             = render partial: 'product_row', locals: { product:, f: product_form }
