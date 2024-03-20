@@ -7,7 +7,7 @@ namespace :ofn do
       input = request_months
 
       # For each order cycle which was modified within the past 3 months
-      OrderCycle.where('updated_at > ?', Date.current - input.months).each do |order_cycle|
+      OrderCycle.where('updated_at > ?', Date.current - input.months).find_each do |order_cycle|
         # Cycle through the incoming exchanges
         order_cycle.exchanges.incoming.each do |exchange|
           next if exchange.sender == exchange.receiver

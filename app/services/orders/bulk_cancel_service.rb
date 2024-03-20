@@ -10,11 +10,13 @@ module Orders
     end
 
     def call
+      # rubocop:disable Rails/FindEach # .each returns an array, .find_each returns nil
       editable_orders.where(id: @order_ids).each do |order|
         order.send_cancellation_email = @send_cancellation_email
         order.restock_items = @restock_items
         order.cancel
       end
+      # rubocop:enable Rails/FindEach
     end
 
     private

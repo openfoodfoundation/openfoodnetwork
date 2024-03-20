@@ -12,7 +12,7 @@ namespace :ofn do
         puts "Order Cycle #{order_cycle.name}"
         order_cycle.schedules.each do |schedule|
           puts "Schedule #{schedule.name}"
-          Subscription.where(schedule_id: schedule.id).each do |subscription|
+          Subscription.where(schedule_id: schedule.id).find_each do |subscription|
             puts
             puts "Subscription #{subscription.id}"
             puts subscription.shop.name
@@ -23,7 +23,7 @@ namespace :ofn do
             puts "Canceled at #{subscription.canceled_at} and paused at #{subscription.paused_at}"
 
             ProxyOrder.where(order_cycle_id:,
-                             subscription_id: subscription.id).each do |proxy_order|
+                             subscription_id: subscription.id).find_each do |proxy_order|
               puts
               puts "Proxy Order #{proxy_order.id}"
               puts "Canceled at #{proxy_order.canceled_at}"
@@ -42,7 +42,7 @@ namespace :ofn do
                   puts "Source #{payment.source.to_json}"
                 end
                 Spree::LogEntry.where(source_type: "Spree::Payment",
-                                      source_id: payment.id).each do |log_entry|
+                                      source_id: payment.id).find_each do |log_entry|
                   puts "Log Entries found"
                   puts log_entry.details
                 end
