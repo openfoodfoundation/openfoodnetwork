@@ -1,19 +1,11 @@
-<%- if controller_name != 'sessions' %>
-  <%= link_to t(".sign_in"), new_session_path(resource_name) %><br />
-<% end %>
+<%# Override Devise partial
 
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to t(".sign_up"), new_registration_path(resource_name) %><br />
-<% end %>
+While this partial is unused in our app, Devise still renders it during
+password reset and it fails to find `omniauth_authorize_path` which tries
+to call `spree_user_openid_connect_omniauth_authorize_path` on our main app
+while that helper is only defined on `Spree::Core::Engine.routes.url_helpers`.
 
-<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to t(".forgot_your_password"), new_password_path(resource_name) %><br />
-<% end %>
+This is just a workaround and the proper solution would be to include all Spree
+routes in our main Rails app instead of having a separate Spree::Core engine.
 
-<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to t('.didn_t_receive_confirmation_instructions'), new_confirmation_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to t('.didn_t_receive_unlock_instructions'), new_unlock_path(resource_name) %><br />
-<% end %>
+%>
