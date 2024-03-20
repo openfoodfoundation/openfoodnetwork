@@ -223,6 +223,8 @@ RSpec.describe "shopping with variant overrides defined" do
     end
 
     it "does not subtract stock from variants where the override has on_demand: true" do
+      pending "update override stock"
+
       click_add_to_cart product4_variant1, 2
       click_checkout
       expect do

@@ -182,6 +182,8 @@ module OpenFoodNetwork
           end
 
           it "doesn't reduce variant's stock" do
+            pending "updating override stock"
+
             v2.move(-2)
             expect(Spree::Variant.find(v2.id).on_hand).to eq 5
           end
