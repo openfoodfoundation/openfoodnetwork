@@ -391,21 +391,6 @@ Naming/VariableNumber:
     - 'spec/requests/api/orders_spec.rb'
 
 # Offense count: 11
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedMethods, AllowedPatterns.
-# AllowedMethods: order, limit, select, lock
-Rails/FindEach:
-  Exclude:
-    - 'app/controllers/admin/order_cycles_controller.rb'
-    - 'app/jobs/subscription_confirm_job.rb'
-    - 'app/services/orders/bulk_cancel_service.rb'
-    - 'app/services/products_renderer.rb'
-    - 'lib/tasks/data.rake'
-    - 'lib/tasks/subscriptions/debug.rake'
-    - 'spec/system/admin/bulk_order_management_spec.rb'
-    - 'spec/system/admin/enterprise_relationships_spec.rb'
-
-# Offense count: 11
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
 Rails/HasManyOrHasOneDependent:

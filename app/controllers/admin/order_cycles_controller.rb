@@ -100,7 +100,7 @@ module Admin
 
     def update_nil_subscription_line_items_price_estimate(order_cycle)
       order_cycle.schedules.each do |schedule|
-        Subscription.where(schedule_id: schedule.id).each do |subscription|
+        Subscription.where(schedule_id: schedule.id).find_each do |subscription|
           shop = Enterprise.managed_by(spree_current_user).find_by(id: subscription.shop_id)
           fee_calculator = OpenFoodNetwork::EnterpriseFeeCalculator.new(shop, order_cycle)
           subscription.subscription_line_items.nil_price_estimate.each do |line_item|

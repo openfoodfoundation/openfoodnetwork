@@ -23,7 +23,7 @@ class SubscriptionConfirmJob < ApplicationJob
     unconfirmed_proxy_orders.update_all(confirmed_at: Time.zone.now)
 
     # Confirm these proxy orders
-    ProxyOrder.where(id: unconfirmed_proxy_orders_ids).each do |proxy_order|
+    ProxyOrder.where(id: unconfirmed_proxy_orders_ids).find_each do |proxy_order|
       JobLogger.logger.info "Confirming Order for Proxy Order #{proxy_order.id}"
       confirm_order!(proxy_order.order)
     end
