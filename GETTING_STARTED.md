@@ -28,7 +28,7 @@ Fetch the latest version of `master` from `upstream` (ie. the main repo):
 
 This project needs specific ruby/bundler versions as well as node/yarn specific versions. For a local setup you will need:
 
-* Install or change your Ruby version according to the one specified at [.ruby-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.ruby-version) file)
+* Install or change your Ruby version according to the one specified at [.ruby-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.ruby-version) file.
     - To manage versions, it's recommended to use [rbenv](https://github.com/rbenv/rbenv).
 * Install [nodenv](https://github.com/nodenv/nodenv) to ensure the correct [.node-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.node-version) is used.
     - [nodevn](https://github.com/nodenv/nodenv) is recommended as a node version manager.
