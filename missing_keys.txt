@@ -48,8 +48,8 @@
 |  all   | spree.shipment_mailer.base_subject.picked_up_subject                         | app/mailers/spree/shipment_mailer.rb:15                                                            | - exists in en.yml, seems to be a false positive
 |  all   | spree.taxon_edit                                                             | app/views/spree/admin/taxons/edit.html.haml:4                                                      | - missing translation, added key
 |  all   | thank_you_for_your_order                                                     | app/views/spree/orders/show.html.haml:26                                                           | - missing translation, added key
-|  all   | unrecognized_card_type                                                       | app/views/spree/admin/payments/source_forms/_gateway.html.haml:25                                  |
-|  all   | use_new_cc                                                                   | app/views/spree/admin/payments/source_forms/_gateway.html.haml:10                                  |
-|  all   | what_is_this                                                                 | app/views/spree/admin/payments/source_forms/_gateway.html.haml:42                                  |
-|  all   | your_cart_is_empty                                                           | app/views/spree/orders/edit.html.haml:31                                                           |
+|  all   | unrecognized_card_type                                                       | app/views/spree/admin/payments/source_forms/_gateway.html.haml:25                                  | - missing translation, added key
+|  all   | use_new_cc                                                                   | app/views/spree/admin/payments/source_forms/_gateway.html.haml:10                                  | - missing translation, added key
+|  all   | what_is_this                                                                 | app/views/spree/admin/payments/source_forms/_gateway.html.haml:42                                  | - missing translation, added key
+|  all   | your_cart_is_empty                                                           | app/views/spree/orders/edit.html.haml:31                                                           | - missing translation, added key
 +--------+------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------+
