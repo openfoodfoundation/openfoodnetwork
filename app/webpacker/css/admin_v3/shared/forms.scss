@@ -16,9 +16,9 @@ input[type="number"],
 textarea {
   @include border-radius($border-radius);
   padding: ($vpadding-txt - 1px) ($hpadding-txt - 1px); // Minus 1px for border
-  border: 1px solid $lighter-grey;
+  border: 1px solid $color-txt-brd;
   color: $color-txt-text;
-  background-color: $lighter-grey;
+  background-color: $color-txt-bg;
   font-size: 14px;
   line-height: 22px;
 
