@@ -46,7 +46,7 @@
 |  all   | spree.path                                                                   | app/views/spree/admin/taxons/_taxon_table.html.haml:5                                              | - missing translation, added key
 |  all   | spree.remove                                                                 | app/views/spree/admin/taxons/_taxon_table.html.haml:15                                             | - missing translation, added key -> not sure though, where to trigger this missing translation
 |  all   | spree.shipment_mailer.base_subject.picked_up_subject                         | app/mailers/spree/shipment_mailer.rb:15                                                            | - exists in en.yml, seems to be a false positive
-|  all   | spree.taxon_edit                                                             | app/views/spree/admin/taxons/edit.html.haml:4                                                      |
+|  all   | spree.taxon_edit                                                             | app/views/spree/admin/taxons/edit.html.haml:4                                                      | - missing translation, added key
 |  all   | thank_you_for_your_order                                                     | app/views/spree/orders/show.html.haml:26                                                           |
 |  all   | unrecognized_card_type                                                       | app/views/spree/admin/payments/source_forms/_gateway.html.haml:25                                  |
 |  all   | use_new_cc                                                                   | app/views/spree/admin/payments/source_forms/_gateway.html.haml:10                                  |
