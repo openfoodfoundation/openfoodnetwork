@@ -1,10 +1,10 @@
 %td
   -# empty
-%td.field
+%td.field.naked_inputs
   = f.hidden_field :id
   = f.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: variant.product.name
   = error_message_on variant, :display_name
-%td.field
+%td.field.naked_inputs
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on variant, :sku
 %td
@@ -23,7 +23,7 @@
       = f.label :display_as, t('admin.products_page.columns.display_as')
       = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(variant).name
   = error_message_on variant, :unit_value
-%td.field
+%td.field.naked_inputs
   = f.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
   = error_message_on variant, :price
 %td.field.on-hand__wrapper{'data-controller': "popout"}

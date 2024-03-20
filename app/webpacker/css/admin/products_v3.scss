@@ -94,8 +94,10 @@
       }
 
       // "Naked" inputs. Row hover helps reveal them.
-      input:not([type="checkbox"]), .ts-control {
-        background-color: $color-tbl-cell-bg;
+      .naked_inputs {
+        input:not([type="checkbox"]), .ts-control {
+          background-color: $color-tbl-cell-bg;
+        }
       }
 
       // Reveal naked button text when any part of row is hovered
@@ -379,8 +381,12 @@
         }
       }
 
-      input[disabled] {
-        color: transparent; // hide value completely
+      input {
+        height: auto;
+
+        &[disabled] {
+          color: transparent; // hide value completely
+        }
       }
     }
   }
