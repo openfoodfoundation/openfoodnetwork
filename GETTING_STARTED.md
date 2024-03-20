@@ -55,7 +55,7 @@ sudo --login --user=postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PA
 
 This will create the "ofn" user as superuser and allowing it to create databases. If this command fails, check the [troubleshooting section](#creating-the-database) for an alternative.
 
-Next, it is _strongly recommended_ to run the setup script. This script assumes your ruby version manager is [rbenv](https://github.com/rbenv/rbenv). Make sure ruby and node versions match the project requirements and run:
+Next, it is _strongly recommended_ to run the setup script:
 
 ```sh
 ./script/setup
