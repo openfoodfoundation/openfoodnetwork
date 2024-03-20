@@ -249,6 +249,7 @@ module Openfoodnetwork
     config.active_storage.content_types_to_serve_as_binary -= ["image/svg+xml"]
     config.active_storage.variable_content_types += ["image/svg+xml"]
     config.active_storage.url_options = config.action_controller.default_url_options
+    config.active_storage.variant_processor = :mini_magick
 
     config.exceptions_app = self.routes
 
