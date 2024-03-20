@@ -740,7 +740,7 @@ GEM
     state_machines-activerecord (0.9.0)
       activerecord (>= 6.0)
       state_machines-activemodel (>= 0.9.0)
-    stimulus_reflex (3.5.0.rc3)
+    stimulus_reflex (3.5.0.rc4)
       actioncable (>= 5.2, < 8)
       actionpack (>= 5.2, < 8)
       actionview (>= 5.2, < 8)
@@ -951,7 +951,7 @@ DEPENDENCIES
   spring-commands-rspec
   spring-commands-rubocop
   state_machines-activerecord
-  stimulus_reflex (= 3.5.0.rc3)
+  stimulus_reflex (= 3.5.0.rc4)
   stimulus_reflex_testing
   stringex (~> 2.8.5)
   stripe
