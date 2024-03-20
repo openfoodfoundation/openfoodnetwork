@@ -24,7 +24,7 @@ Fetch the latest version of `master` from `upstream` (ie. the main repo):
 
     git fetch upstream master
 
-### Instalation
+### Installation
 
 This project needs specific ruby/bundler versions as well as node/yarn specific versions. For a local setup you will need:
 
