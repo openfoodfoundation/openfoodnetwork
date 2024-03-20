@@ -69,18 +69,11 @@ textarea {
 }
 
 label {
+  display: inline-block;
   font-weight: 600;
   font-size: 85%;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   color: $near-black;
-
-  &.inline {
-    display: inline-block !important;
-  }
-
-  &.block {
-    display: block !important;
-  }
 }
 
 .label-block label {
@@ -105,6 +98,7 @@ span.info {
       display: block;
       font-size: inherit;
       font-weight: normal;
+      margin-bottom: 0;
     }
   }
 
