@@ -8,7 +8,6 @@ module Spree
           class_attribute :next_event_transitions
           class_attribute :previous_states
           class_attribute :checkout_flow
-          class_attribute :checkout_steps
 
           def self.checkout_flow(&block)
             if block_given?
@@ -20,7 +19,6 @@ module Spree
           end
 
           def self.define_state_machine!
-            self.checkout_steps = {}
             self.next_event_transitions = []
             self.previous_states = [:cart]
 
@@ -97,7 +95,6 @@ module Spree
           end
 
           def self.go_to_state(name, options = {})
-            checkout_steps[name] = options
             previous_states.each do |state|
               add_transition({ from: state, to: name }.merge(options))
             end
@@ -112,30 +109,14 @@ module Spree
             @next_event_transitions ||= []
           end
 
-          def self.checkout_steps
-            @checkout_steps ||= {}
-          end
-
           def self.add_transition(options)
             next_event_transitions << { options.delete(:from) => options.delete(:to) }.
               merge(options)
           end
 
-          def checkout_steps
-            steps = self.class.checkout_steps.
-              each_with_object([]) { |(step, options), checkout_steps|
-              next if options.include?(:if) && !options[:if].call(self)
-
-              checkout_steps << step
-            }.map(&:to_s)
-            # Ensure there is always a complete step
-            steps << "complete" unless steps.include?("complete")
-            steps
-          end
-
           def restart_checkout_flow
             update_columns(
-              state: checkout_steps.first,
+              state: "address",
               updated_at: Time.zone.now,
             )
           end

@@ -1325,19 +1325,6 @@ describe Spree::Order do
     end
   end
 
-  describe "determining checkout steps for an order" do
-    let!(:enterprise) { create(:enterprise) }
-    let!(:order) { create(:order, distributor: enterprise) }
-    let!(:payment_method) {
-      create(:stripe_sca_payment_method, distributor_ids: [enterprise.id])
-    }
-    let!(:payment) { create(:payment, order:, payment_method:) }
-
-    it "does not include the :confirm step" do
-      expect(order.checkout_steps).not_to include "confirm"
-    end
-  end
-
   describe "payments" do
     let(:payment_method) { create(:payment_method) }
     let(:shipping_method) { create(:shipping_method) }
