@@ -43,6 +43,8 @@ The following guides will provide OS-specific step-by-step instructions to get t
 
 For those new to Rails, the following tutorial will help get you up to speed with configuring a [Rails environment](http://guides.rubyonrails.org/getting_started.html).
 
+Another way to make it work locally would be using Docker. See the [Docker setup guide](docker/README.md). You will need to setup git and others aditional steps.
+
 ### Get it running
 
 First, you need to create the database user the app will use by manually typing the following in your terminal:
