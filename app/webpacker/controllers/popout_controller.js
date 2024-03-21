@@ -3,6 +3,9 @@ import { Controller } from "stimulus";
 // Allows a form section to "pop out" and show additional options
 export default class PopoutController extends Controller {
   static targets = ["button", "dialog"];
+  static values = {
+    updateDisplay: { Boolean, default: true }
+  }
 
   connect() {
     this.first_input = this.dialogTarget.querySelector("input");
@@ -58,8 +61,11 @@ export default class PopoutController extends Controller {
       }
 
       // Update button to represent any changes
-      this.buttonTarget.innerText = this.#displayValue();
-      this.buttonTarget.innerHTML ||= "&nbsp;"; // (with default space to help with styling)
+      console.log(this.updateDisplayValue);
+      if (this.updateDisplayValue) {
+        this.buttonTarget.innerText = this.#displayValue();
+        this.buttonTarget.innerHTML ||= "&nbsp;"; // (with default space to help with styling)
+      }
       this.buttonTarget.classList.toggle("changed", this.#isChanged());
 
       this.dialogTarget.style.display = "none";

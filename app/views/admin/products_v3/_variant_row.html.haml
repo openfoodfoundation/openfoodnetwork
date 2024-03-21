@@ -9,7 +9,7 @@
   = error_message_on variant, :sku
 %td
   -# empty
-%td.field.on-hand__wrapper{'data-controller': "popout"}
+%td.field.on-hand__wrapper{'data-controller': "popout", 'data-popout-update-display-value': "false"}
   = f.button :unit_to_display, class: "on-hand__button", 'aria-label': t('admin.products_page.columns.unit'), 'data-popout-target': "button" do
     = variant.unit_to_display # Show the generated summary of unit values
   %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
