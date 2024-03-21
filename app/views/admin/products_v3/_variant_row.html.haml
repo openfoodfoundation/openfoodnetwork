@@ -14,7 +14,9 @@
     = variant.unit_to_display # Show the generated summary of unit values
   %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
     .field
-      -# Composite field for unit_value and unit_description
+      -# Show a composite field for unit_value and unit_description
+      = f.hidden_field :unit_value
+      = f.hidden_field :unit_description
       -# todo: create a method for value_with_description
       = f.text_field :unit_value_with_description,
           value: [number_with_precision(variant.unit_value, precision: nil,strip_insignificant_zeros: true), variant.unit_description].compact_blank.join(" "),

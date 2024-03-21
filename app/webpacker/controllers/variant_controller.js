@@ -10,6 +10,8 @@ export default class VariantController extends Controller {
     this.variantUnitScale = product.querySelector('[name$="[variant_unit_scale]"]');
     this.variantUnitName = product.querySelector('[name$="[variant_unit_name]"]');
 
+    this.unitValue = this.element.querySelector('[name$="[unit_value]"]');
+    this.unitDescription = this.element.querySelector('[name$="[unit_description]"]');
     this.unitValueWithDescription = this.element.querySelector(
       '[name$="[unit_value_with_description]"]',
     );
@@ -23,7 +25,7 @@ export default class VariantController extends Controller {
 
     // on unit_value_with_description changed; update unit_value and unit_description
     // on unit_value and/or unit_description changed; update display_as:placeholder and unit_to_display
-    this.unitValueWithDescription.addEventListener("input", this.#unitValueChanged.bind(this), {
+    this.unitValueWithDescription.addEventListener("input", this.#unitChanged.bind(this), {
       passive: true,
     });
 
@@ -42,14 +44,22 @@ export default class VariantController extends Controller {
   #unitChanged(event) {
     //todo: deduplicate events.
     //Hmm in hindsight the logic in product_controller should be inn this controller already. then we can do everything in one event, and store the generated name in an instance variable.
+    this.#extractUnitValues();
     this.#updateUnitDisplay();
   }
 
-  // Extract unit_value and unit_description from unit_value_with_description,
-  // and update hidden fields
-  #unitValueChanged(event) {
-    //todo: deduplicate events.
-    this.#updateUnitDisplay();
+  // Extract unit_value and unit_description
+  #extractUnitValues() {
+    // Extract a number (optional) and text value, separated by a space.
+    const match = this.unitValueWithDescription.value.match(/^([\d\.\,]+(?= |$)|)( |)(.*)$/);
+    if (match) {
+      let unit_value = parseFloat(match[1].replace(",", "."));
+      unit_value = isNaN(unit_value) ? null : unit_value;
+      unit_value *= this.variantUnitScale.value ? this.variantUnitScale.value : 1;
+
+      this.unitValue.value = unit_value;
+      this.unitDescription.value = match[3];
+    }
   }
 
   // Update display_as placeholder and unit_to_display

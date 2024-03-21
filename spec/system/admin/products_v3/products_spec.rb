@@ -186,7 +186,18 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       within row_containing_name("Medium box") do
         fill_in "Name", with: "Large box"
         fill_in "SKU", with: "POM-01"
-        fill_in "Unit", with: "500.1"
+
+        click_on "Unit" # activate popout
+      end
+
+      # Unit popout
+      # TODO: prevent empty value
+      # fill_in "Unit value", with: ""
+      # click_button "Save changes" # attempt to save or close the popout
+      # expect(page).to have_field "Unit value", with: "" # popout is still open
+      fill_in "Unit value", with: "500.1"
+
+      within row_containing_name("Medium box") do
         fill_in "Price", with: "10.25"
 
         click_on "On Hand" # activate popout
@@ -210,7 +221,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         .and change{ product_a.variant_unit_scale }.to(0.001)
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
-        .and change{ variant_a1.unit_value }.to(500.1)
+        .and change{ variant_a1.unit_value }.to(0.5001) # volumes are stored in litres
         .and change{ variant_a1.price }.to(10.25)
         .and change{ variant_a1.on_hand }.to(6)
 
@@ -221,8 +232,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       within row_containing_name("Large box") do
         expect(page).to have_field "Name", with: "Large box"
         expect(page).to have_field "SKU", with: "POM-01"
-        expect(page).to have_field "Unit value", with: "500.1"
-        pending "Units values not handled" # similar to old admin screen
         expect(page).to have_button "Unit", text: "500.1mL"
         expect(page).to have_field "Price", with: "10.25"
         expect(page).to have_button "On Hand", text: "6"
@@ -269,21 +278,44 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       end
     end
 
-    it "saves a custom variant unit display name" do
-      within row_containing_name("Medium box") do
-        fill_in "Display unit as", with: "250g box"
+    describe "Changing unit values" do
+      # This is a rather strange feature, I wonder if anyone actually uses it.
+      it "saves a variant unit description" do
+        within row_containing_name("Medium box") do
+          click_on "Unit" # activate popout
+          fill_in "Unit value", with: "1000 boxed" # 1000 grams
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          variant_a1.reload
+        }.to change{ variant_a1.unit_value }.to(1000)
+          .and change{ variant_a1.unit_description }.to("boxed")
+
+        within row_containing_name("Medium box") do
+          # New value is visible immediately
+          expect(page).to have_button "Unit", text: "1kg boxed"
+        end
       end
 
-      expect {
-        click_button "Save changes"
+      it "saves a custom variant unit display name" do
+        within row_containing_name("Medium box") do
+          fill_in "Display unit as", with: "250g box"
+        end
 
-        expect(page).to have_content "Changes saved"
-        variant_a1.reload
-      }.to change{ variant_a1.unit_to_display }.to("250g box")
+        expect {
+          click_button "Save changes"
 
-      within row_containing_name("Medium box") do
-        expect(page).to have_field "Display unit as", with: "250g box"
-        expect(page).to have_button "Unit", text: "250g box"
+          expect(page).to have_content "Changes saved"
+          variant_a1.reload
+        }.to change{ variant_a1.unit_to_display }.to("250g box")
+
+        within row_containing_name("Medium box") do
+          expect(page).to have_field "Display unit as", with: "250g box"
+          expect(page).to have_button "Unit", text: "250g box"
+        end
       end
     end
 
