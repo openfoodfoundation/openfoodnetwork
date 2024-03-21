@@ -67,6 +67,8 @@ Openfoodnetwork::Application.routes.draw do
     post '/product_import/save_data', to: 'product_import#save_data', as: 'product_import_save_async'
     post '/product_import/reset_absent', to: 'product_import#reset_absent_products', as: 'product_import_reset_async'
 
+    resources :dfc_product_imports, only: [:index]
+
     constraints FeatureToggleConstraint.new(:admin_style_v3) do
       resources :products, to: 'products_v3#index', only: :index do
         patch :bulk_update, on: :collection

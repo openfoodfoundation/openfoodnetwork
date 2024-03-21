@@ -38,6 +38,9 @@ class SuppliedProductBuilder < DfcBuilder
       product.supplier = supplier
       product.ensure_standard_variant
       product.variants.first
+    end.tap do |variant|
+      link = supplied_product.semanticId
+      variant.semantic_links.new(semantic_id: link) if link.present?
     end
   end
 
@@ -87,8 +90,11 @@ class SuppliedProductBuilder < DfcBuilder
   end
 
   def self.taxon(supplied_product)
-    dfc_id = supplied_product.productType.semanticId
-    Spree::Taxon.find_by(dfc_id: )
+    dfc_id = supplied_product.productType&.semanticId
+
+    # Every product needs a primary taxon to be valid. So if we don't have
+    # one or can't find it we just take a random one.
+    Spree::Taxon.find_by(dfc_id:) || Spree::Taxon.first
   end
 
   private_class_method :product_type, :taxon
