@@ -134,6 +134,17 @@ describe Spree::Address do
     end
   end
 
+  context "associations" do
+    it "destroys shipments upon destroy" do
+      address = create(:address)
+      create(:shipment, address:)
+
+      expect {
+        address.destroy
+      }.to raise_error(ActiveRecord::DeleteRestrictionError)
+    end
+  end
+
   context ".default" do
     it "sets up a new record the default country" do
       expect(Spree::Address.default.country).to eq DefaultCountry.country
