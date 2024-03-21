@@ -61,9 +61,8 @@ export default class PopoutController extends Controller {
       }
 
       // Update button to represent any changes
-      console.log(this.updateDisplayValue);
       if (this.updateDisplayValue) {
-        this.buttonTarget.innerText = this.#displayValue();
+        this.buttonTarget.textContent = this.#displayValue();
         this.buttonTarget.innerHTML ||= "&nbsp;"; // (with default space to help with styling)
       }
       this.buttonTarget.classList.toggle("changed", this.#isChanged());
@@ -93,7 +92,7 @@ export default class PopoutController extends Controller {
     let values = this.#enabledDisplayElements().map((element) => {
       if (element.type == "checkbox") {
         if (element.checked && element.labels[0]) {
-          return element.labels[0].innerText;
+          return element.labels[0].textContent.trim();
         }
       } else {
         return element.value;

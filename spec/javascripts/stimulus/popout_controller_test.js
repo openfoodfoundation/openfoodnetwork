@@ -63,14 +63,14 @@ describe("PopoutController", () => {
       input4.click();
 
       expectToBeClosed(dialog);
-      expect(button.innerText).toBe("value1");
+      expect(button.textContent).toBe("value1");
     });
 
     it("closes the dialog when focusing another field (eg with tab)", () => {
       input4.focus();
 
       expectToBeClosed(dialog);
-      expect(button.innerText).toBe("value1");
+      expect(button.textContent).toBe("value1");
     });
 
     it("doesn't close the dialog when focusing internal field", () => {
@@ -83,7 +83,8 @@ describe("PopoutController", () => {
       input2.click();
 
       expectToBeClosed(dialog);
-      expect(button.innerText).toBe("value1");// The checkbox label should be here, but I just couldn't get the test to work with labels. Don't worry, it works in the browser.
+      // and includes the checkbox label
+      expect(button.textContent).toBe("value1,label2");
     });
 
     it("doesn't close the dialog when checkbox is unchecked", () => {
@@ -102,6 +103,14 @@ describe("PopoutController", () => {
       expectToBeShown(dialog);
       // Browser will show a validation message
     });
+
+    it("only shows enabled fields in display summary", () => {
+      input1.disabled = true;
+      input2.click(); // checkbox selected
+
+      expectToBeClosed(dialog);
+      expect(button.textContent).toBe("label2");
+    });
   });
 
   describe("disable update-display", () => {
@@ -110,12 +119,12 @@ describe("PopoutController", () => {
     })
 
     it("doesn't update display value", () => {
-      expect(button.innerText).toBe("On demand");
+      expect(button.textContent).toBe("On demand");
       button.dispatchEvent(new Event("click")); // Dialog is open
       input4.click(); //close dialog
 
       expectToBeClosed(dialog);
-      expect(button.innerText).toBe("On demand");
+      expect(button.textContent).toBe("On demand");
     });
   });
 
