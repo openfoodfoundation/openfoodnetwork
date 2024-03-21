@@ -270,6 +270,18 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           # New scale is visible immediately
           expect(page).to have_button "Unit", text: "1kg"
         end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+        expect(product_a.variant_unit).to eq "weight"
+        expect(product_a.variant_unit_scale).to eq 1000 # kg
+        expect(variant_a1.reload.unit_value).to eq 1000 # 1kg
+
+        within row_containing_name("Medium box") do
+          expect(page).to have_button "Unit", text: "1kg"
+        end
       end
 
       it "saves a custom item unit name" do

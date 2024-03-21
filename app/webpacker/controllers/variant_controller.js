@@ -57,7 +57,7 @@ export default class VariantController extends Controller {
     if (match) {
       let unit_value = parseFloat(match[1].replace(",", "."));
       unit_value = isNaN(unit_value) ? null : unit_value;
-      unit_value *= this.variantUnitScale.value ? this.variantUnitScale.value : 1;
+      unit_value *= this.variantUnitScale.value ? this.variantUnitScale.value : 1; // Normalise to default scale
 
       this.unitValue.value = unit_value;
       this.unitDescription.value = match[3];
