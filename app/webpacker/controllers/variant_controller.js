@@ -1,4 +1,5 @@
 import { Controller } from "stimulus";
+import OptionValueNamer from "js/services/option_value_namer";
 
 // Dynamically update related variant fields
 //
@@ -22,6 +23,7 @@ export default class VariantController extends Controller {
     [this.variantUnit, this.variantUnitScale, this.variantUnitName].forEach((element) => {
       element.addEventListener("change", this.#unitChanged.bind(this), { passive: true });
     });
+    this.variantUnitName.addEventListener("input", this.#unitChanged.bind(this), { passive: true });
 
     // on unit_value_with_description changed; update unit_value and unit_description
     // on unit_value and/or unit_description changed; update display_as:placeholder and unit_to_display
@@ -29,7 +31,8 @@ export default class VariantController extends Controller {
       passive: true,
     });
 
-    // on display_as changed; update unit_to_display (how does this relate to unit_presentation?)
+    // on display_as changed; update unit_to_display
+    // TODO: optimise to avoid unnecessary OptionValueNamer calc
     this.displayAs.addEventListener("input", this.#updateUnitDisplay.bind(this), { passive: true });
   }
 
@@ -42,7 +45,6 @@ export default class VariantController extends Controller {
   // Extract variant_unit and variant_unit_scale from dropdown variant_unit_with_scale,
   // and update hidden product fields
   #unitChanged(event) {
-    //todo: deduplicate events.
     //Hmm in hindsight the logic in product_controller should be inn this controller already. then we can do everything in one event, and store the generated name in an instance variable.
     this.#extractUnitValues();
     this.#updateUnitDisplay();
@@ -64,10 +66,21 @@ export default class VariantController extends Controller {
 
   // Update display_as placeholder and unit_to_display
   #updateUnitDisplay() {
-    // const unitDisplay = OptionValueNamer...
-    const unitDisplay =
-      this.unitValueWithDescription.value + " " + (this.variantUnitName.value || "~g"); //To Remove: DEMO only
+    const unitDisplay = new OptionValueNamer(this.#variant()).name();
     this.displayAs.placeholder = unitDisplay;
     this.unitToDisplay.textContent = this.displayAs.value || unitDisplay;
+  }
+
+  // A representation of the variant model to satisfy OptionValueNamer.
+  #variant() {
+    return {
+      unit_value: parseFloat(this.unitValue.value),
+      unit_description: this.unitDescription.value,
+      product: {
+        variant_unit: this.variantUnit.value,
+        variant_unit_scale: parseFloat(this.variantUnitScale.value),
+        variant_unit_name: this.variantUnitName.value,
+      },
+    };
   }
 }

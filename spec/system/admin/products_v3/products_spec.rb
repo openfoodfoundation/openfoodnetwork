@@ -258,23 +258,38 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       end
     end
 
-    it "saves a custom item unit name" do
-      within row_containing_name("Apples") do
-        tomselect_select "Items", from: "Unit scale"
-        fill_in "Items", with: "box"
+    describe "Changing unit scale" do
+      it "saves unit values using the new scale" do
+        within row_containing_name("Medium box") do
+          expect(page).to have_button "Unit", text: "1g"
+        end
+        within row_containing_name("Apples") do
+          tomselect_select "Weight (kg)", from: "Unit scale"
+        end
+        within row_containing_name("Medium box") do
+          # New scale is visible immediately
+          expect(page).to have_button "Unit", text: "1kg"
+        end
       end
 
-      expect {
-        click_button "Save changes"
+      it "saves a custom item unit name" do
+        within row_containing_name("Apples") do
+          tomselect_select "Items", from: "Unit scale"
+          fill_in "Items", with: "box"
+        end
 
-        expect(page).to have_content "Changes saved"
-        product_a.reload
-      }.to change{ product_a.variant_unit }.to("items")
-        .and change{ product_a.variant_unit_name }.to("box")
+        expect {
+          click_button "Save changes"
 
-      within row_containing_name("Apples") do
-        pending
-        expect(page).to have_content "Items (box)"
+          expect(page).to have_content "Changes saved"
+          product_a.reload
+        }.to change{ product_a.variant_unit }.to("items")
+          .and change{ product_a.variant_unit_name }.to("box")
+
+        within row_containing_name("Apples") do
+          pending "#12005"
+          expect(page).to have_content "Items (box)"
+        end
       end
     end
 
@@ -284,6 +299,10 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         within row_containing_name("Medium box") do
           click_on "Unit" # activate popout
           fill_in "Unit value", with: "1000 boxed" # 1000 grams
+
+          find_field("Price").click # de-activate popout
+          # unit value has been parsed and displayed with unit
+          expect(page).to have_button "Unit", text: "1kg boxed"
         end
 
         expect {
@@ -302,6 +321,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
       it "saves a custom variant unit display name" do
         within row_containing_name("Medium box") do
+          click_on "Unit" # activate popout
           fill_in "Display unit as", with: "250g box"
         end
 
@@ -313,8 +333,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         }.to change{ variant_a1.unit_to_display }.to("250g box")
 
         within row_containing_name("Medium box") do
-          expect(page).to have_field "Display unit as", with: "250g box"
           expect(page).to have_button "Unit", text: "250g box"
+          click_on "Unit"
+          expect(page).to have_field "Display unit as", with: "250g box"
         end
       end
     end
