@@ -68,4 +68,9 @@ FactoryBot.define do
       distributors { [create(:distributor_enterprise_with_tax)] }
     end
   end
+
+  factory :distributor_shipping_method, class: DistributorShippingMethod do
+    shipping_method { FactoryBot.create(:shipping_method) }
+    distributor { FactoryBot.create(:distributor_enterprise) }
+  end
 end

@@ -57,6 +57,35 @@ describe Enterprise do
       expect(EnterpriseRelationship.where(id: [er1, er2])).to be_empty
     end
 
+    it "destroys all distributed_orders upon destroy" do
+      enterprise = create(:distributor_enterprise)
+      order_ids = create_list(:order, 2, distributor: enterprise).map(&:id)
+
+      expect(Spree::Order.where(id: order_ids)).to exist
+      enterprise.destroy
+      expect(Spree::Order.where(id: order_ids)).not_to exist
+    end
+
+    it "destroys all distributor_payment_methods upon destroy" do
+      enterprise = create(:distributor_enterprise)
+      payment_method_ids = create_list(:distributor_payment_method, 2,
+                                       distributor: enterprise).map(&:id)
+
+      expect(DistributorPaymentMethod.where(id: payment_method_ids)).to exist
+      enterprise.destroy
+      expect(DistributorPaymentMethod.where(id: payment_method_ids)).not_to exist
+    end
+
+    it "destroys all distributor_shipping_methods upon destroy" do
+      enterprise = create(:enterprise)
+      shipping_method_ids = create_list(:distributor_shipping_method, 2,
+                                        distributor: enterprise).map(&:id)
+
+      expect(DistributorShippingMethod.where(id: shipping_method_ids)).to exist
+      enterprise.destroy
+      expect(DistributorShippingMethod.where(id: shipping_method_ids)).not_to exist
+    end
+
     describe "relationships to other enterprises" do
       let(:e) { create(:distributor_enterprise) }
       let(:p) { create(:supplier_enterprise) }

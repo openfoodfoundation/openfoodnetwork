@@ -24,4 +24,9 @@ FactoryBot.define do
     distributors { [FactoryBot.create(:stripe_account).enterprise] }
     preferred_enterprise_id { distributors.first.id }
   end
+
+  factory :distributor_payment_method, class: DistributorPaymentMethod do
+    distributor { FactoryBot.create(:distributor_enterprise) }
+    payment_method { FactoryBot.create(:payment_method) }
+  end
 end
