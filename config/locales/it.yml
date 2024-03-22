@@ -766,6 +766,9 @@ it:
         product_categories: Categorie Prodotti
         tax_categories: Categorie imposte
         shipping_categories: Categorie Spedizioni
+      dfc_import_form:
+        enterprise: "Azienda"
+        import: "Importazione"
       import:
         review: Revisione
         import: Importazione

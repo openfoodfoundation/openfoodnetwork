@@ -797,6 +797,9 @@ ru:
         product_categories: Категории Товаров
         tax_categories: Налоговые Категории
         shipping_categories: Категории Доставки
+      dfc_import_form:
+        enterprise: "Предприятие"
+        import: "Импорт"
       import:
         review: Просмотр
         import: Импорт

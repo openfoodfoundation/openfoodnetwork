@@ -810,6 +810,9 @@ pa:
         product_categories: ਉਤਪਾਦ ਸ਼੍ਰੇਣੀਆਂ
         tax_categories: ਟੈਕਸ ਸ਼੍ਰੇਣੀਆਂ
         shipping_categories: ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀਆਂ
+      dfc_import_form:
+        enterprise: "ਐਂਟਰਪ੍ਰਾਈਜ਼"
+        import: "ਇਮਪੋਰਟ"
       import:
         review: ਸਮੀਖਿਆ
         import: ਇਮਪੋਰਟ

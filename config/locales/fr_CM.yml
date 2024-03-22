@@ -666,6 +666,9 @@ fr_CM:
         product_categories: Catégorie Produit
         tax_categories: TVA applicable
         shipping_categories: Conditions de transport
+      dfc_import_form:
+        enterprise: "Entreprise"
+        import: "Importer"
       import:
         review: Vérifier
         import: Importer

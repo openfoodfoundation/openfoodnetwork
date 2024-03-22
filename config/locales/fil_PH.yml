@@ -570,6 +570,9 @@ fil_PH:
         product_categories: kategorya ng produkto
         tax_categories: kategorya ng tax
         shipping_categories: mga kategorya ng pagpapadala
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "ilipat"
       import:
         review: suriin
         import: i-import

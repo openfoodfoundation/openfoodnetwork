@@ -812,6 +812,9 @@ fr_CA:
         product_categories: Catégorie Produit
         tax_categories: Taxe applicable
         shipping_categories: Condition de transport
+      dfc_import_form:
+        enterprise: "Entreprise"
+        import: "Importer"
       import:
         review: Vérifier
         import: Importer

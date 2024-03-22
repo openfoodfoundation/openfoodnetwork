@@ -587,6 +587,9 @@ nl_BE:
         product_categories: Productcategorieën
         tax_categories: Belastingcategorieën
         shipping_categories: Verzendingscategorieën
+      dfc_import_form:
+        enterprise: "Onderneming"
+        import: "Importeren"
       import:
         review: Beoordeling
         import: Importeren

@@ -623,6 +623,9 @@ pt:
         product_categories: Categorias de Produtos
         tax_categories: Categorias de Impostos
         shipping_categories: Categorias de Envio
+      dfc_import_form:
+        enterprise: "Organização"
+        import: "Importar"
       import:
         review: Rever
         import: Importar

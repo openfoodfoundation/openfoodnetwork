@@ -831,6 +831,9 @@ de_DE:
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Lieferkategorien
+      dfc_import_form:
+        enterprise: "Unternehmen"
+        import: "Importieren"
       import:
         review: Überprüfung
         import: Importieren

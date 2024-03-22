@@ -857,6 +857,9 @@ nb:
         product_categories: Produktkategorier
         tax_categories: Avgiftskategorier
         shipping_categories: Fraktkategorier
+      dfc_import_form:
+        enterprise: "Bedrift"
+        import: "Import"
       import:
         review: Anmeldelse
         import: Import

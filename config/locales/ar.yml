@@ -745,6 +745,9 @@ ar:
         product_categories: فئات المنتجات
         tax_categories: فئات الضرائب
         shipping_categories: فئات الشحن
+      dfc_import_form:
+        enterprise: "الشركة"
+        import: "استيراد"
       import:
         review: مراجعة
         import: استيراد

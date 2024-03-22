@@ -509,6 +509,7 @@ en_FR:
         colums: Columns
       columns:
         name: Name
+        unit_scale: Unit scale
         unit: Unit
         price: Price
         producer: Producer
@@ -857,6 +858,9 @@ en_FR:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -3722,6 +3726,8 @@ en_FR:
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
+    taxonomy_tree_error: "There was an error updating the taxonomy tree."
+    taxonomy_tree_instruction: "Right-click on an item to add, rename, remove or edit."
     tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"

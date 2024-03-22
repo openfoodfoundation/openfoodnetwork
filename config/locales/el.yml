@@ -630,6 +630,9 @@ el:
         product_categories: Κατηγορίες προϊόντος
         tax_categories: Κατηγορίες Φορολόγησης
         shipping_categories: Κατηγορίες Μεταφορικών
+      dfc_import_form:
+        enterprise: "Επιχείρηση"
+        import: "Εισαγωγή"
       import:
         review: Αναθεώρηση
         import: Εισαγωγή

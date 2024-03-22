@@ -310,7 +310,7 @@ fr:
       email_registered: "va, dès que vous aurez choisi un type d'entreprise, être créé sur"
       email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre entreprise, de vos produits si vous êtes producteur, et éventuellement de votre boutique. Pour accéder au guide en français, cliquez ici : %{link}"
       userguide: "Guide utilisateur"
-      email_admin_html: "Pour gérez votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
+      email_admin_html: "Pour gérer votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
       admin_panel: "interface d'administration"
       email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}"
       join_community: "Accéder au forum"
@@ -508,6 +508,7 @@ fr:
         colums: Colonnes
       columns:
         name: Nom
+        unit_scale: Échelle d'unité
         unit: Unité
         price: Prix
         producer: Producteur
@@ -769,7 +770,7 @@ fr:
           cancellation_text: "Conserver la variante"
       sort:
         pagination:
-          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
+          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Résultats %{from} à %{to}."
           per_page:
             show: Montrer
             per_page: "%{num} par page"
@@ -857,6 +858,9 @@ fr:
         product_categories: Catégorie Produit
         tax_categories: TVA applicable
         shipping_categories: Conditions de transport
+      dfc_import_form:
+        enterprise: "Entreprise"
+        import: "Importer"
       import:
         review: Vérifier
         import: Importer
@@ -3779,6 +3783,8 @@ fr:
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     taxonomy_edit: "Modifier la taxonomie"
+    taxonomy_tree_error: "Erreur lors de la mise à jour de l'arbre de taxonomie."
+    taxonomy_tree_instruction: "Faites un clic droit sur un article pour ajouter, renommer, supprimer ou modifier."
     tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"

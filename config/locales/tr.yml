@@ -648,6 +648,9 @@ tr:
         product_categories: Ürün Kategorileri
         tax_categories: Vergi Kategorileri
         shipping_categories: Teslimat Kategorileri
+      dfc_import_form:
+        enterprise: "İşletme"
+        import: "Aktar"
       import:
         review: İncele
         import: İçe Aktar

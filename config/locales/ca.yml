@@ -809,6 +809,9 @@ ca:
         product_categories: Tipus de productes
         tax_categories: Tipus d'impostos
         shipping_categories: Tipus d'enviament
+      dfc_import_form:
+        enterprise: "Organització"
+        import: "Importa"
       import:
         review: Revisa
         import: Importa

@@ -822,6 +822,9 @@ mr:
         product_categories: उत्पादन श्रेणी
         tax_categories: कर श्रेणी
         shipping_categories: शिपिंग श्रेण्या
+      dfc_import_form:
+        enterprise: "एंटरप्राइझ"
+        import: "Import करा"
       import:
         review: पुनरावलोकन करा
         import: आयात करा

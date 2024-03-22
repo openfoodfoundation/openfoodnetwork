@@ -733,6 +733,9 @@ uk:
         product_categories: Категорії продуктів
         tax_categories: Податкові категорії
         shipping_categories: Категорії доставки
+      dfc_import_form:
+        enterprise: "Підприємство"
+        import: "Імпорт"
       import:
         review: Огляд
         import: Імпорт

@@ -826,6 +826,9 @@ hi:
         product_categories: उत्पाद श्रेणियां
         tax_categories: टैक्स श्रेणियां
         shipping_categories: शिपिंग श्रेणियां
+      dfc_import_form:
+        enterprise: "एंटरप्राइज़"
+        import: "इम्पोर्ट करें"
       import:
         review: रिव्यू
         import: इम्पोर्ट करें

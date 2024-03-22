@@ -664,6 +664,9 @@ pt_BR:
         product_categories: Categorias de Produtos
         tax_categories: Categorias fiscais
         shipping_categories: Categorias de Remessa
+      dfc_import_form:
+        enterprise: "Iniciativas"
+        import: "Importar"
       import:
         review: Reveja
         import: Importar

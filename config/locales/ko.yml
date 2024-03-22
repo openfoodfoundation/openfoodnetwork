@@ -730,6 +730,9 @@ ko:
         product_categories: 제품 카테고리
         tax_categories: 세금 카테고리
         shipping_categories: 배송 카테고리
+      dfc_import_form:
+        enterprise: "회사"
+        import: "수입"
       import:
         review: 리뷰
         import: 수입

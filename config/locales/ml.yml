@@ -831,6 +831,9 @@ ml:
         product_categories: ഉൽപ്പന്ന വിഭാഗങ്ങൾ
         tax_categories: നികുതി വിഭാഗങ്ങൾ
         shipping_categories: ഷിപ്പിംഗ് വിഭാഗങ്ങൾ
+      dfc_import_form:
+        enterprise: "എന്റർപ്രൈസ്"
+        import: "ഇറക്കുമതി ചെയ്യുക"
       import:
         review: അവലോകനം
         import: ഇറക്കുമതി ചെയ്യുക

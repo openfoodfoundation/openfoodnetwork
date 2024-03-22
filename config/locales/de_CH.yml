@@ -735,6 +735,9 @@ de_CH:
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Lieferkategorien
+      dfc_import_form:
+        enterprise: "Unternehmen"
+        import: "Importieren"
       import:
         review: Überprüfung
         import: Importieren
@@ -881,7 +884,7 @@ de_CH:
           legend: "Adresse"
         business_details:
           legend: "Geschäftsdetails"
-          abn: USt-IdNr.
+          abn: MWST nr.
           abn_placeholder: z. B. DE999999999
           acn: St.-Nr.
           acn_placeholder: z. B. 93815/08152
@@ -1720,7 +1723,7 @@ de_CH:
   invoice_shipping_category_pickup: "Abholen"
   total_excl_tax: "Netto (zzgl. Steuern):"
   total_incl_tax: "GESAMT (inkl. Steuern):"
-  abn: "USt-IdNr.:"
+  abn: "MWST nr."
   acn: "St.-Nr.:"
   invoice_issued_on: "Rechnungsdatum:"
   date_of_transaction: "Bestelldatum:"
@@ -2351,7 +2354,7 @@ de_CH:
         enterprise_long_desc: "Ausführliche Beschreibung (empfohlen)"
         enterprise_long_desc_placeholder: "Erzählen Sie hier die Geschichte Ihres Unternehmens - was macht Sie anders und wunderbar? Wir empfehlen, die Beschreibung unter 600 Zeichen oder 150 Wörtern zu halten."
         enterprise_long_desc_length: "%{num} Zeichen/bis zu 600 empfohlen"
-        enterprise_abn: "USt-IdNr. (optional für Rechnungserstellung)"
+        enterprise_abn: "MWST nr. (optional für Rechnungserstellung)"
         enterprise_abn_placeholder: "z. B. DE999999999"
         enterprise_acn: "St.-Nr. (optional für Rechnungserstellung)"
         enterprise_acn_placeholder: "z. B. 93815/08152"
