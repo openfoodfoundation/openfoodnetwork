@@ -194,6 +194,7 @@ RSpec.configure do |config|
       spree_config.currency = currency
       spree_config.shipping_instructions = true
     end
+    CurrentConfig.clear_all
   end
 
   # Don't validate our invalid test data with expensive network requests.

@@ -186,7 +186,7 @@ module Spree
     end
 
     def currency
-      self[:currency] || Spree::Config[:currency]
+      self[:currency] || CurrentConfig.get(:currency)
     end
 
     def display_item_total
@@ -689,7 +689,7 @@ module Spree
     end
 
     def set_currency
-      self.currency = Spree::Config[:currency] if self[:currency].nil?
+      self.currency = CurrentConfig.get(:currency) if self[:currency].nil?
     end
 
     def using_guest_checkout?

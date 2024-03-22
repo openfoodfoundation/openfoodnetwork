@@ -79,7 +79,7 @@
           %fieldset.available_units.no-border-bottom
             %legend{:align => "center"}= t('admin.available_units')
             .field
-              - available_units = Spree::Config[:available_units].split(",")
+              - available_units = CurrentConfig.get(:available_units).split(",")
               - all_units.each do |unit|
                 - selected = available_units.include?(unit)
                 = preference_field_tag("available_units[#{unit}]", selected, { type: :boolean, selected: selected })

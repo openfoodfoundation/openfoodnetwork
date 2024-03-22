@@ -18,8 +18,8 @@
           %small
             %em= Spree.t(:original_amount, scope: 'paypal', amount: @payment.display_amount)
           %br/
-          - symbol = ::Money.new(1, Spree::Config[:currency]).symbol
-          - if Spree::Config[:currency_symbol_position] == "before"
+          - symbol = ::Money.new(1, CurrentConfig.get(:currency)).symbol
+          - if CurrentConfig.get(:currency_symbol_position) == "before"
             = symbol
             = text_field_tag 'refund_amount', @payment.amount
           - else
