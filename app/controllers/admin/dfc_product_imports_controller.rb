@@ -20,7 +20,7 @@ module Admin
 
       catalog_url = params.require(:catalog_url)
 
-      json_catalog = DfcRequest.new(spree_current_user).get(catalog_url)
+      json_catalog = DfcRequest.new(spree_current_user).call(catalog_url)
       graph = DfcIo.import(json_catalog)
 
       # * First step: import all products for given enterprise.
