@@ -13,12 +13,12 @@ class DfcRequest
     @user = user
   end
 
-  def get(url)
-    response = request(url)
+  def call(url, data = nil)
+    response = request(url, data)
 
-    if response.status != 200 && token_stale?
+    if response.status >= 400 && token_stale?
       refresh_access_token!
-      response = request(url)
+      response = request(url, data)
     end
 
     response.body
@@ -26,9 +26,13 @@ class DfcRequest
 
   private
 
-  def request(url)
+  def request(url, data = nil)
     only_public_connections do
-      connection.get(url)
+      if data
+        connection.post(url, data)
+      else
+        connection.get(url)
+      end
     end
   end
 
