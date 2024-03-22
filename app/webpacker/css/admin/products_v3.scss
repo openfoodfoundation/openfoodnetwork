@@ -19,13 +19,18 @@
     position: relative;
   }
 
-  // Form actions floats over other controls when active
-  .form-actions {
-    position: absolute;
-    top: -1em;
-    left: 0;
-    right: 0;
-    z-index: 1; // Ensure tom-select and .disabled-section are covered
+  #products-form {
+    .form-actions {
+      .container {
+        .status {
+          flex-grow: 1; // Fill space
+        }
+
+        .form-buttons {
+          flex-shrink: 0; // Don't shrink
+        }
+      }
+    }
   }
 
   // Hopefully these rules will be moved to component(s).
@@ -34,16 +39,45 @@
 
     background-color: $color-tbl-bg;
     padding: 4px;
+    padding-top: 0; // Hide border because .form-actions is there. It is added with th padding instead.
     border-collapse: separate; // This is needed for the outer padding. Also should be helpful to give more flexibility of borders between rows.
 
     // Additional horizontal padding to align with input contents
-    thead th.with-input {
-      padding-left: $padding-tbl-cell + $hpadding-txt;
-      padding-right: $padding-tbl-cell + $hpadding-txt;
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 1; // TODO: Cover .popout and .vertical-ellipsis-menu, but only when sticky
+      box-shadow: $box-shadow;
+
+      // Form actions replaces other controls when active
+      // It is part of the table header, to allow for sticky stacking when scrolling.
+      .form-actions-wrapper {
+        padding: 0;
+        overflow: visible;
+        background-color: white;
+      }
+      .form-actions-wrapper2 {
+        position: relative;
+        // Stretch to cover table side borders
+        left: -4px;
+        width: calc(100% + 8px);
+        background-color: white;
+
+        padding: 4px 0;
+      }
+
+      th.with-input {
+        // Additional padding to line up with content of input
+        padding-left: $padding-tbl-cell + $hpadding-txt;
+
+        &.align-right {
+          padding-right: $padding-tbl-cell + $hpadding-txt;
+        }
+      }
     }
 
     // Row hover
-    tr:hover {
+    tbody tr:hover {
       td {
         background-color: $light-grey;
         position: relative;
@@ -57,6 +91,16 @@
           border-left: 4px solid $teal;
           height: 100%;
         }
+      }
+
+      // "Naked" inputs. Row hover helps reveal them.
+      input:not([type="checkbox"]), .ts-control {
+        background-color: $color-tbl-cell-bg;
+      }
+
+      // Reveal naked button text when any part of row is hovered
+      button.naked {
+        color: $color-link;
       }
     }
 
@@ -75,12 +119,14 @@
     }
 
     th {
+      padding-top: $padding-tbl-cell + 4px; // Increase padding to create a top border
       // Clip long content in headers, but allow wrapping
       overflow: hidden;
       text-overflow: clip; // If colums are so small that headers are clipping, ellipsis are more of a hindrance
     }
 
     td {
+      position: relative; // Ensure that overflowing content is covered by the following cell. We don't use overflow: hidden because that messes with the popover.
       background-color: $color-tbl-cell-bg;
     }
 
@@ -96,6 +142,10 @@
 
       td {
         border-bottom: 2px solid $color-tbl-bg;
+
+        &.with-image {
+          padding: 8px;
+        }
       }
 
       tr:first-child td {
@@ -116,29 +166,20 @@
 
     .field {
       padding: 0;
-      margin-bottom: 0.75em;
+    }
+    .multi-field {
+      // Allow wrap with small gap
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
     }
 
     label {
       margin: 0;
     }
 
-    // "Naked" inputs. Row hover helps reveal them.
-    input:not([type="checkbox"]) {
-      background-color: $color-tbl-cell-bg;
-      height: auto;
-      font-size: inherit;
-      font-weight: inherit;
-
-      &:not(:focus):not(.changed):not([disabled]) {
-        border-color: transparent;
-      }
-    }
-
-    .field_with_errors {
-      input {
-        border-color: $color-error;
-      }
+    .ts-control {
+      z-index: 0; // Avoid hovering over thead
     }
   }
 
@@ -162,15 +203,18 @@
   }
 
   #sort {
-    margin-bottom: 1em;
+    margin-top: 3px; // Helps even up with .form-actions when visible
+    margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
 
-  #sort {
     line-height: $btn-relaxed-height;
     height: $btn-relaxed-height;
+
+    &.disabled-section {
+      display: none;
+    }
 
     .with-dropdown {
       display: flex;
@@ -178,29 +222,21 @@
       align-items: center;
       gap: 10px;
     }
+    .per-page {
+      width: 10em;
+    }
   }
 
   #filters {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 20px;
+    display: flex;
+    column-gap: 20px;
     align-items: end;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 
     .query {
-      grid-column: 1 / span 3;
-    }
+      flex-grow: 1;
+      min-width: 15em;
 
-    .producers,
-    .categories {
-    }
-
-    .submit {
-      grid-column: 6 / span 1;
-    }
-
-    .query {
       .search-input {
         width: 100%;
         position: relative;
@@ -234,10 +270,7 @@
 
     .producers,
     .categories {
-      select {
-        width: 150px;
-        height: $btn-relaxed-height;
-      }
+      width: 15em;
     }
 
     .submit {
@@ -327,8 +360,8 @@
 
     &__popout {
       position: absolute;
-      top: -1em;
-      left: -1em;
+      top: -0.6em;
+      left: -0.2em;
       z-index: 1; // Cover below row when hover
       width: 9em;
 
@@ -338,12 +371,42 @@
       border-radius: $border-radius;
       box-shadow: 0px 0px 8px 0px rgba($near-black, 0.25);
 
-      .field:last-child {
-        margin-bottom: 0;
+      .field{
+        margin-bottom: 0.75em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
 
       input[disabled] {
         color: transparent; // hide value completely
+      }
+    }
+  }
+
+  a.image-field {
+    position: relative;
+
+    img {
+      display: block;
+      border-radius: $border-radius;
+    }
+
+    .button {
+      display: none; // to be shown on hover
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    &:hover,
+    &:focus {
+      .button.secondary {
+        display: block;
+        background-color: $color-btn-secondary-hover-bg;
+        color: $color-btn-hover-bg;
+        border-color: $color-btn-hover-border;
       }
     }
   }

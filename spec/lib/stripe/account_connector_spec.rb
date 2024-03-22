@@ -27,7 +27,7 @@ module Stripe
         it "returns false and does not create a new StripeAccount" do
           expect do
             expect(connector.create_account).to be false
-          end.to_not change(StripeAccount, :count)
+          end.not_to change { StripeAccount.count }
         end
       end
 
@@ -36,7 +36,7 @@ module Stripe
           it "raises a StripeError" do
             expect do
               expect{ connector.create_account }.to raise_error StripeError
-            end.to_not change(StripeAccount, :count)
+            end.not_to change { StripeAccount.count }
           end
         end
 
@@ -47,7 +47,7 @@ module Stripe
             it "raises an AccessDenied error" do
               expect do
                 expect{ connector.create_account }.to raise_error CanCan::AccessDenied
-              end.to_not change(StripeAccount, :count)
+              end.not_to change { StripeAccount.count }
             end
           end
 
@@ -68,7 +68,7 @@ module Stripe
                 expect(OAuth).to receive(:deauthorize).with(stripe_user_id: "some_user_id")
                 expect do
                   expect{ connector.create_account }.to raise_error CanCan::AccessDenied
-                end.to_not change(StripeAccount, :count)
+                end.not_to change { StripeAccount.count }
               end
             end
 
@@ -78,12 +78,12 @@ module Stripe
               end
 
               it "raises no errors" do
-                expect(OAuth).to_not receive(:deauthorize)
+                expect(OAuth).not_to receive(:deauthorize)
                 connector.create_account
               end
 
               it "allows creations of a new Stripe Account from the callback params" do
-                expect{ connector.create_account }.to change(StripeAccount, :count).by(1)
+                expect{ connector.create_account }.to change { StripeAccount.count }.by(1)
                 account = StripeAccount.last
                 expect(account.stripe_user_id).to eq "some_user_id"
                 expect(account.stripe_publishable_key).to eq "some_key"
@@ -94,12 +94,12 @@ module Stripe
               let(:user) { enterprise.owner }
 
               it "raises no errors" do
-                expect(OAuth).to_not receive(:deauthorize)
+                expect(OAuth).not_to receive(:deauthorize)
                 connector.create_account
               end
 
               it "allows creations of a new Stripe Account from the callback params" do
-                expect{ connector.create_account }.to change(StripeAccount, :count).by(1)
+                expect{ connector.create_account }.to change { StripeAccount.count }.by(1)
                 account = StripeAccount.last
                 expect(account.stripe_user_id).to eq "some_user_id"
                 expect(account.stripe_publishable_key).to eq "some_key"

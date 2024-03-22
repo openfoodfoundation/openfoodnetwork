@@ -211,7 +211,6 @@ nl_BE:
   cancel_order: "Bestelling annuleren"
   confirm_send_invoice: "Een factuur voor deze bestelling wordt naar de klant gestuurd. Weet u zeker dat u wilt doorgaan?"
   confirm_resend_order_confirmation: "Weet u zeker dat u de orderbevestiging opnieuw wilt verzenden?"
-  must_have_valid_business_number: "%{enterprise_name}moet een geldige ABN hebben voordat facturen kunnen worden verzonden."
   invoice: "Factuur"
   active: "Aktief"
   cancelled: "Geannuleerd"
@@ -338,6 +337,9 @@ nl_BE:
       actions:
         edit: bewerking
         clone: Kloon
+        delete: 'Uitwissen '
+      image:
+        edit: bewerking
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant
@@ -542,6 +544,10 @@ nl_BE:
         categories:
           label: Categorieën
         search: Zoeken
+      table:
+        new_variant: Nieuw variant
+      edit_image:
+        close: achterstevoren
     product_import:
       title: Importeren van producten
       file_not_found: Bestand niet gevonden of kon niet worden geopend
@@ -581,6 +587,9 @@ nl_BE:
         product_categories: Productcategorieën
         tax_categories: Belastingcategorieën
         shipping_categories: Verzendingscategorieën
+      dfc_import_form:
+        enterprise: "Onderneming"
+        import: "Importeren"
       import:
         review: Beoordeling
         import: Importeren
@@ -638,6 +647,7 @@ nl_BE:
         view_products: Ga naar de pagina Producten
         view_inventory: Ga naar de inventarispagina
       product_headings:
+        distributor: Distributeur
         producer: Producent
         sku: SKU
         name: Naam
@@ -911,6 +921,8 @@ nl_BE:
           rate: Percentage
           customers: Klant
           active: Actief?
+        connected_apps:
+          loading: "Aan het opladen"
       actions:
         edit_profile: Instellingen
         properties: Eigenschappen
@@ -1458,6 +1470,8 @@ nl_BE:
   invoice_tax_total: "Totaal BTW:"
   tax_invoice: "FACTUUR"
   tax_total: "BTW Totaal (%{rate}):"
+  invoice_shipping_category_delivery: "Levering"
+  invoice_shipping_category_pickup: "Ophaling"
   total_excl_tax: "Totaal (Excl. BTW):"
   total_incl_tax: "Totaal (Incl. BTW):"
   abn: "Bedrijfsnummer : "
@@ -3482,6 +3496,11 @@ nl_BE:
           email: "E-mail"
           total: "Totaal"
           billing_address_name: "Naam"
+      taxons:
+        form:
+          name: Naam
+          permalink: Permalink
+          description: Beschrijving
       general_settings:
         edit:
           legal_settings: "De legale instelling"

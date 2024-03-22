@@ -104,7 +104,7 @@ describe Spree::UserMailer do
       it 'sends an email' do
         expect do
           Spree::UserMailer.reset_password_instructions(user, nil).deliver_now
-        end.to change(ActionMailer::Base.deliveries, :size).by(1)
+        end.to change { ActionMailer::Base.deliveries.size }.by(1)
       end
     end
   end

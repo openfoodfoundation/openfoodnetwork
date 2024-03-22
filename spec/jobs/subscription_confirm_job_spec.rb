@@ -25,7 +25,7 @@ describe SubscriptionConfirmJob do
     let(:proxy_orders) { job.send(:unconfirmed_proxy_orders) }
 
     before do
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
     end
 
     it "returns proxy orders that meet all of the criteria" do
@@ -44,38 +44,38 @@ describe SubscriptionConfirmJob do
 
     it "ignores proxy orders where the OC closed more than 1 hour ago" do
       proxy_order.update!(order_cycle_id: order_cycle2.id)
-      expect(proxy_orders).to_not include proxy_order
+      expect(proxy_orders).not_to include proxy_order
     end
 
     it "ignores cancelled proxy orders" do
       proxy_order.update!(canceled_at: 5.minutes.ago)
-      expect(proxy_orders).to_not include proxy_order
+      expect(proxy_orders).not_to include proxy_order
     end
 
     it "ignores proxy orders without a completed order" do
       proxy_order.order.completed_at = nil
       proxy_order.order.save!
-      expect(proxy_orders).to_not include proxy_order
+      expect(proxy_orders).not_to include proxy_order
     end
 
     it "ignores proxy orders without an associated order" do
       proxy_order.update!(order_id: nil)
-      expect(proxy_orders).to_not include proxy_order
+      expect(proxy_orders).not_to include proxy_order
     end
 
     it "ignores proxy orders that haven't been placed yet" do
       proxy_order.update!(placed_at: nil)
-      expect(proxy_orders).to_not include proxy_order
+      expect(proxy_orders).not_to include proxy_order
     end
 
     it "ignores proxy orders that have already been confirmed" do
       proxy_order.update!(confirmed_at: 1.second.ago)
-      expect(proxy_orders).to_not include proxy_order
+      expect(proxy_orders).not_to include proxy_order
     end
 
     it "ignores orders that have been cancelled" do
       proxy_order.order.cancel!
-      expect(proxy_orders).to_not include proxy_order
+      expect(proxy_orders).not_to include proxy_order
     end
   end
 
@@ -126,7 +126,7 @@ describe SubscriptionConfirmJob do
        "or updated_at date is within the last hour" do
       order_cycles = job.send(:recently_closed_order_cycles)
       expect(order_cycles).to include order_cycle3, order_cycle4
-      expect(order_cycles).to_not include order_cycle1, order_cycle2, order_cycle5
+      expect(order_cycles).not_to include order_cycle1, order_cycle2, order_cycle5
     end
   end
 
@@ -140,7 +140,7 @@ describe SubscriptionConfirmJob do
     let(:order) { proxy_order.initialise_order! }
 
     before do
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
       allow(job).to receive(:send_confirmation_email).and_call_original
       allow(job).to receive(:send_payment_authorization_emails).and_call_original
       expect(job).to receive(:record_order)
@@ -215,7 +215,7 @@ describe SubscriptionConfirmJob do
 
         it "sends a failed payment email" do
           expect(job).to receive(:send_failed_payment_email)
-          expect(job).to_not receive(:send_confirmation_email)
+          expect(job).not_to receive(:send_confirmation_email)
           job.send(:confirm_order!, order)
         end
       end
@@ -231,21 +231,24 @@ describe SubscriptionConfirmJob do
 
           it "sends a failed payment email" do
             expect(job).to receive(:send_failed_payment_email)
-            expect(job).to_not receive(:send_confirmation_email)
-            expect(job).to_not receive(:send_payment_authorization_emails)
+            expect(job).not_to receive(:send_confirmation_email)
+            expect(job).not_to receive(:send_payment_authorization_emails)
             job.send(:confirm_order!, order)
           end
         end
 
         context "when payments are processed without error" do
           before do
-            expect(payment).to receive(:process_offline!) { true }
-            expect(payment).to receive(:completed?) { true }
+            allow(payment).to receive(:process_offline!) do
+              # Mark payment as complete like it would be if sucessfully processed offline
+              payment.state = "complete"
+              true
+            end
           end
 
           it "sends only a subscription confirm email, no regular confirmation emails" do
             expect{ job.send(:confirm_order!, order) }
-              .to_not have_enqueued_mail(Spree::OrderMailer, :confirm_email_for_customer)
+              .not_to have_enqueued_mail(Spree::OrderMailer, :confirm_email_for_customer)
 
             expect(job).to have_received(:send_confirmation_email).once
           end

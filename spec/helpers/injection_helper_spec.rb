@@ -78,6 +78,6 @@ describe InjectionHelper, type: :helper do
                                  gateway_customer_profile_id: nil)
     injected_cards = helper.inject_saved_credit_cards
     expect(injected_cards).to match "1234"
-    expect(injected_cards).to_not match "4321"
+    expect(injected_cards).not_to match "4321"
   end
 end

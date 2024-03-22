@@ -178,8 +178,8 @@ describe '
     it "displays adjustments" do
       click_link 'Adjustments'
 
-      expect(page).to_not have_selector 'tr a.icon-edit'
-      expect(page).to_not have_selector 'a.icon-plus', text: 'New Adjustment'
+      expect(page).not_to have_selector 'tr a.icon-edit'
+      expect(page).not_to have_selector 'a.icon-plus', text: 'New Adjustment'
     end
   end
 end

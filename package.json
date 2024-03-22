@@ -7,7 +7,6 @@
   },
   "license": "AGPL-3.0",
   "scripts": {
-    "prepare": "husky install",
     "pretty-quick": "pretty-quick"
   },
   "jest": {
@@ -19,36 +18,37 @@
     ]
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.5.3",
-    "@hotwired/turbo": "^7.3.0",
+    "@floating-ui/dom": "^1.6.3",
+    "@hotwired/turbo": "^8.0.4",
     "@rails/webpacker": "5.4.4",
-    "cable_ready": "5.0.2",
+    "cable_ready": "5.0.1",
     "debounced": "^0.0.5",
     "flatpickr": "^4.6.9",
     "foundation-sites": "^5.5.3",
+    "hotkeys-js": "^3.13.7",
     "jquery-ui": "1.13.2",
-    "js-big-decimal": "^2.0.4",
-    "moment": "^2.29.1",
+    "js-big-decimal": "^2.0.7",
+    "moment": "^2.30.1",
     "mrujs": "^1.0.0",
     "select2": "^4.0.13",
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.2.2",
     "stimulus-flatpickr": "^1.4.0",
+    "stimulus-rails-nested-form": "https://github.com/openfoodfoundation/stimulus-rails-nested-form.git#dist",
     "stimulus_reflex": "3.5.0-rc3",
-    "tom-select": "^2.2.3",
-    "trix": "^2.0.8",
+    "tom-select": "^2.3.1",
+    "trix": "^2.0.10",
     "webpack": "~4"
   },
   "devDependencies": {
-    "husky": "^8.0.0",
-    "jasmine-core": "~5.1.1",
+    "jasmine-core": "~5.1.2",
     "jest": "^27.4.7",
-    "karma": "~6.4.2",
+    "karma": "~6.4.3",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coffee-preprocessor": "~1.0.1",
     "karma-jasmine": "~0.3.8",
-    "prettier": "2.8.8",
-    "pretty-quick": "^3.1.3",
+    "prettier": "3.2.4",
+    "pretty-quick": "4.0.0",
     "webpack-dev-server": "~3"
   }
 }

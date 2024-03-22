@@ -98,7 +98,9 @@ module Spree
         options[:class] = (options[:class].to_s + " icon_link with-tip #{icon_name}").strip
         options[:class] += ' no-text' if options[:no_text]
         options[:title] = text if options[:no_text]
+        # rubocop:disable Rails/OutputSafety
         text = options[:no_text] ? '' : raw("<span class='text'>#{text}</span>")
+        # rubocop:enable Rails/OutputSafety
         options.delete(:no_text)
         link_to(text, url, options)
       end
@@ -131,14 +133,14 @@ module Spree
           if html_options[:icon]
             html_options[:class] += " #{html_options[:icon]}"
           end
-          link_to(text_for_button_link(text, html_options), url, html_options)
+          link_to(text, url, html_options)
         end
       end
 
       def text_for_button_link(text, _html_options)
         s = ''
         s << text
-        raw(s)
+        raw(s) # rubocop:disable Rails/OutputSafety
       end
 
       def configurations_sidebar_menu_item(link_text, url, options = {})

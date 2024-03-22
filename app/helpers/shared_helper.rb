@@ -20,6 +20,6 @@ module SharedHelper
   end
 
   def current_shop_products_path
-    "#{main_app.enterprise_shop_path(current_distributor)}#/shop"
+    "#{main_app.enterprise_shop_path(current_distributor)}#/shop_panel"
   end
 end

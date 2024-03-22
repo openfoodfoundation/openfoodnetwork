@@ -11,7 +11,7 @@ module Reporting
             total_excl_vat: proc { |order| order.total - order.total_tax }
           }
           add_key_for_each_rate(result, proc { |rate|
-            proc { |order| OrderTaxAdjustmentsFetcher.new(order).totals.fetch(rate, 0) }
+            proc { |order| Orders::FetchTaxAdjustmentsService.new(order).totals.fetch(rate, 0) }
           })
           other = {
             total_tax: proc { |order| order.total_tax },

@@ -340,6 +340,7 @@ describe '
   context "as an enterprise user" do
     let!(:tax_category) { create(:tax_category) }
     let(:filter) { { producerFilter: 2 } }
+    let(:image_file_path) { Rails.root.join(file_fixture_path, "thinking-cat.jpg") }
 
     before do
       @new_user = create(:user)
@@ -355,32 +356,30 @@ describe '
 
     context "products do not require a tax category" do
       it "creating a new product" do
-        with_products_require_tax_category(false) do
-          visit spree.admin_products_path
-          click_link 'New Product'
+        visit spree.admin_products_path
+        click_link 'New Product'
 
-          fill_in 'product_name', with: 'A new product !!!'
-          fill_in 'product_price', with: '19.99'
+        fill_in 'product_name', with: 'A new product !!!'
+        fill_in 'product_price', with: '19.99'
 
-          expect(page).to have_selector('#product_supplier_id')
-          select 'Another Supplier', from: 'product_supplier_id'
-          select 'Weight (g)', from: 'product_variant_unit_with_scale'
-          fill_in 'product_unit_value', with: '500'
-          select taxon.name, from: "product_primary_taxon_id"
-          select 'None', from: "product_tax_category_id"
+        expect(page).to have_selector('#product_supplier_id')
+        select 'Another Supplier', from: 'product_supplier_id'
+        select 'Weight (g)', from: 'product_variant_unit_with_scale'
+        fill_in 'product_unit_value', with: '500'
+        select taxon.name, from: "product_primary_taxon_id"
+        select 'None', from: "product_tax_category_id"
 
-          # Should only have suppliers listed which the user can manage
-          expect(page).to have_select 'product_supplier_id',
-                                      with_options: [@supplier2.name, @supplier_permitted.name]
-          expect(page).not_to have_select 'product_supplier_id', with_options: [@supplier.name]
+        # Should only have suppliers listed which the user can manage
+        expect(page).to have_select 'product_supplier_id',
+                                    with_options: [@supplier2.name, @supplier_permitted.name]
+        expect(page).not_to have_select 'product_supplier_id', with_options: [@supplier.name]
 
-          click_button 'Create'
+        click_button 'Create'
 
-          expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
-          product = Spree::Product.find_by(name: 'A new product !!!')
-          expect(product.supplier).to eq(@supplier2)
-          expect(product.variants.first.tax_category).to be_nil
-        end
+        expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
+        product = Spree::Product.find_by(name: 'A new product !!!')
+        expect(product.supplier).to eq(@supplier2)
+        expect(product.variants.first.tax_category).to be_nil
       end
     end
 
@@ -627,14 +626,13 @@ describe '
     end
 
     it "upload a new product image including url filters" do
-      file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
       product = create(:simple_product, supplier: @supplier2)
 
       visit spree.admin_product_images_path(product, filter)
 
       page.find('a#new_image_link').click
 
-      attach_file('image_attachment', file_path)
+      attach_file('image_attachment', image_file_path)
       click_button "Create"
 
       uri = URI.parse(current_url)
@@ -680,13 +678,11 @@ describe '
                                          viewable_type: 'Spree::Product', alt: "position 1",
                                          attachment: image, position: 1)
 
-      file_path = Rails.root + "spec/support/fixtures/thinking-cat.jpg"
-
       visit spree.admin_product_images_path(product, filter)
 
       page.find("a.icon-edit").click
 
-      attach_file('image_attachment', file_path)
+      attach_file('image_attachment', image_file_path)
       click_button "Update"
 
       uri = URI.parse(current_url)
@@ -718,13 +714,13 @@ describe '
 
       visit spree.admin_product_images_path(product)
       expect(page).to have_selector "table.index td img"
-      expect(product.reload.image).to_not be_nil
+      expect(product.reload.image).not_to be_nil
 
       accept_alert do
         page.find('a.delete-resource').click
       end
 
-      expect(page).to_not have_selector "table.index td img"
+      expect(page).not_to have_selector "table.index td img"
       expect(product.reload.image).to be_nil
     end
 

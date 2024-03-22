@@ -7,7 +7,18 @@ module Spree
         links = []
         links << cancel_event_link if @order.can_cancel?
         links << resume_event_link if @order.can_resume?
-        links.join('&nbsp;').html_safe
+        links.join('&nbsp;').html_safe # rubocop:disable Rails/OutputSafety
+      end
+
+      def generate_invoice_button(order)
+        if order.distributor.can_invoice?
+          button_link_to t(:create_or_update_invoice), generate_admin_order_invoices_path(@order),
+                         data: { method: 'post' }, icon: 'icon-plus'
+        else
+          button_link_to t(:create_or_update_invoice), "#", data: {
+            confirm: t(:must_have_valid_business_number, enterprise_name: @order.distributor.name)
+          }, icon: 'icon-plus'
+        end
       end
 
       def line_item_shipment_price(line_item, quantity)
@@ -95,10 +106,8 @@ module Spree
 
       def ship_order_link
         { name: t(:ship_order),
-          url: spree.fire_admin_order_path(@order, e: 'ship'),
-          method: 'put',
-          icon: 'icon-truck',
-          confirm: t(:are_you_sure) }
+          url: '#',
+          icon: 'icon-truck' }
       end
 
       def cancel_order_link

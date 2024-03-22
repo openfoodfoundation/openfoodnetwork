@@ -206,7 +206,6 @@ en_PH:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name} must have a valid TIN before invoices can be sent."
   invoice: "Invoice"
   active: "Active"
   cancelled: "Cancelled"
@@ -329,6 +328,9 @@ en_PH:
       actions:
         edit: Edit
         clone: Clone
+        delete: Delete
+      image:
+        edit: Edit
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
@@ -525,6 +527,10 @@ en_PH:
         categories:
           label: Categories
         search: Search
+      table:
+        new_variant: New variant
+      edit_image:
+        close: Back
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -563,6 +569,9 @@ en_PH:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -620,6 +629,7 @@ en_PH:
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: SKU
         name: Name
@@ -886,6 +896,8 @@ en_PH:
         vouchers:
           rate: Rate
           customers: Customer
+        connected_apps:
+          loading: "Loading"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1416,6 +1428,8 @@ en_PH:
   invoice_tax_total: "VAT Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
+  invoice_shipping_category_delivery: "Delivery"
+  invoice_shipping_category_pickup: "Pickup"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
   abn: "TIN:"
@@ -3457,6 +3471,10 @@ en_PH:
           email: "Email"
           total: "Total"
           billing_address_name: "Name"
+      taxons:
+        form:
+          name: Name
+          description: Description
       general_settings:
         edit:
           legal_settings: "Legal Settings"

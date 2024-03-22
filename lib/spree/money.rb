@@ -9,7 +9,7 @@ module Spree
     delegate :cents, to: :money
 
     def initialize(amount, options = {})
-      @money = ::Monetize.parse([amount, (options[:currency] || Spree::Config[:currency])].join)
+      @money = ::Monetize.parse([amount, options[:currency] || Spree::Config[:currency]].join)
 
       if options.key?(:symbol_position)
         options[:format] = position_to_format(options.delete(:symbol_position))
@@ -29,7 +29,7 @@ module Spree
 
     def to_html(options = { html_wrap: true })
       "<span style='white-space: nowrap;'>#{@money.format(@options.merge(options))}</span>"
-        .html_safe
+        .html_safe # rubocop:disable Rails/OutputSafety
     end
 
     def format(options = {})

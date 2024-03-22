@@ -43,7 +43,6 @@ Openfoodnetwork::Application.configure do
 
   # Use a different cache store in production
   config.cache_store = :redis_cache_store, {
-    driver: :hiredis,
     url: ENV.fetch("OFN_REDIS_URL", "redis://localhost:6380/0"),
     reconnect_attempts: 1
   }

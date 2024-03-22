@@ -355,7 +355,6 @@ it:
   cancel_order: "Cancella Ordine"
   confirm_send_invoice: "Verrà mandata al cliente una mail con la conferma di quest'ordine. Sei sicuro di voler continuare?"
   confirm_resend_order_confirmation: "Sei sicuro di voler inviare di nuovo l'email di conferma per l'ordine?"
-  must_have_valid_business_number: "%{enterprise_name} deve avere una partita iva valida per poter emettere fattura."
   invoice: "Conferma d'ordine"
   active: "Attivo"
   cancelled: "Annullato"
@@ -494,6 +493,9 @@ it:
       actions:
         edit: Modifica
         clone: Duplica
+        delete: Annulla
+      image:
+        edit: Modifica
     adjustments:
       skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
     begins_at: Inizia a
@@ -719,6 +721,10 @@ it:
         categories:
           label: categorie
         search: Cerca
+      table:
+        new_variant: Nuova variante
+      edit_image:
+        close: Indietro
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile
@@ -760,6 +766,9 @@ it:
         product_categories: Categorie Prodotti
         tax_categories: Categorie imposte
         shipping_categories: Categorie Spedizioni
+      dfc_import_form:
+        enterprise: "Azienda"
+        import: "Importazione"
       import:
         review: Revisione
         import: Importazione
@@ -817,6 +826,7 @@ it:
         view_products: Vai alla Pagina dei Prodotti
         view_inventory: Vai alla Pagina dell'Inventario
       product_headings:
+        distributor: Distributore
         producer: Produttore
         sku: Codice ID
         name: Nome
@@ -1125,6 +1135,8 @@ it:
           rate: Tariffa
           customers: Cliente
           active: Attivo?
+        connected_apps:
+          loading: "Caricamento"
       actions:
         edit_profile: Impostazioni
         properties: Proprietà
@@ -1473,7 +1485,6 @@ it:
       index:
         title: "Impoostazioni"
         connect: "Collega il tuo profilo"
-        already_connected: "Il tuo profilo è già collegato a questo profilo di autorizzazione DFC"
         view_account: "Per vedere il tuo profilo, vedi:"
     subscriptions:
       index:
@@ -1766,6 +1777,8 @@ it:
   invoice_tax_total: "IVA totale"
   tax_invoice: "Conferma d'ordine"
   tax_total: "Totale IVA %{rate}:"
+  invoice_shipping_category_delivery: "Consegna"
+  invoice_shipping_category_pickup: "Prelievo"
   total_excl_tax: "Totale (IVA escl.):"
   total_incl_tax: "Totale (IVA incl.):"
   abn: "CF:"
@@ -3515,8 +3528,6 @@ it:
     start_date: "Data inizio"
     successfully_removed: "Rimosso con successo"
     taxonomy_edit: "Modifica tassonomia"
-    taxonomy_tree_error: "Errore schema tassonomia"
-    taxonomy_tree_instruction: "Istruzioni schema tassonomia"
     tree: "Schema"
     updating: "In aggiornamento"
     your_order_is_empty_add_product: "Il tuo ordine è vuoto, cerca e aggiungi un prodotto qui sopra"
@@ -4086,6 +4097,11 @@ it:
           email: "Email"
           total: "Totale"
           billing_address_name: "Nome"
+      taxons:
+        form:
+          name: Nome
+          permalink: Permalink
+          description: Descrizione
       general_settings:
         edit:
           legal_settings: "Impostazioni Legali"

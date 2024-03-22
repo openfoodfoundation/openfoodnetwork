@@ -6,7 +6,7 @@
         .five.columns.alpha
           %h3= t('.details')
         .eleven.columns.omega
-          %input#edit-details{ type: "button", value: t(:edit), ng: { click: "setView('details')" } }
+          %input#edit-details{ type: "button", value: t(:edit), "ng-click": "setView('details')" }
       .row
         .five.columns.alpha
           %strong= t('admin.customer')
@@ -35,7 +35,7 @@
         .five.columns.alpha
           %h3= t('.address')
         .eleven.columns.omega
-          %input#edit-address{ type: "button", value: t(:edit), ng: { click: "setView('address')" } }
+          %input#edit-address{ type: "button", value: t(:edit), "ng-click": "setView('address')" }
       .row
         .five.columns.alpha
           %strong= t('admin.bill_address')
@@ -53,7 +53,7 @@
         .five.columns.alpha
           %h3= t('.products')
         .eleven.columns.omega
-          %input#edit-products{ type: "button", value: t(:edit), ng: { click: "setView('products')" } }
+          %input#edit-products{ type: "button", value: t(:edit), "ng-click": "setView('products')" }
       .row
         %table#subscription-line-items.admin-subscription-review-subscription-line-items
           %colgroup
@@ -69,10 +69,10 @@
               %th.total
                 %span= t(:total)
           %tbody
-            %tr.item{ id: "sli_{{$index}}", ng: { repeat: "item in subscription.subscription_line_items | filter:{ _destroy: '!true' }", class: { even: 'even', odd: 'odd' } } }
+            %tr.item{ id: "sli_{{$index}}", "ng-repeat": "item in subscription.subscription_line_items | filter:{ _destroy: '!true' }", "ng-class-even": 'even', "ng-class-odd": 'odd' }
               %td
                 .description {{ item.description }}
-                .not-in-open-and-upcoming-order-cycles-warning{ ng: { if: '!item.in_open_and_upcoming_order_cycles' } }
+                .not-in-open-and-upcoming-order-cycles-warning{ "ng-if": '!item.in_open_and_upcoming_order_cycles' }
                   = t(".no_open_or_upcoming_order_cycle")
               %td.price.align-center {{ item.price_estimate | localizeCurrency }}
               %td.quantity {{ item.quantity }}

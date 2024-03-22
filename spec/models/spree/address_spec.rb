@@ -36,9 +36,9 @@ describe Spree::Address do
       expect(cloned.state_name).to eq original.state_name
       expect(cloned.zipcode).to eq original.zipcode
 
-      expect(cloned.id).to_not eq original.id
-      expect(cloned.created_at).to_not eq original.created_at
-      expect(cloned.updated_at).to_not eq original.updated_at
+      expect(cloned.id).not_to eq original.id
+      expect(cloned.created_at).not_to eq original.created_at
+      expect(cloned.updated_at).not_to eq original.updated_at
     end
   end
 
@@ -74,7 +74,7 @@ describe Spree::Address do
     it "errors when state_name is nil" do
       address.state_name = nil
       address.state = nil
-      expect(address).to_not be_valid
+      expect(address).not_to be_valid
     end
 
     it "full state name is in state_name and country does contain that state" do

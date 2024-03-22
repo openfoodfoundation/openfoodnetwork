@@ -101,8 +101,8 @@ describe "Registration" do
       # Images
       # Upload logo image
       attach_file "image-select", Rails.root.join("spec/fixtures/files/logo.png"), visible: false
-      expect(page).to have_no_css('#image-placeholder .loading')
-      expect(page.find('#image-placeholder img')['src']).to_not be_empty
+      expect(page).not_to have_css('#image-placeholder .loading')
+      expect(page.find('#image-placeholder img')['src']).not_to be_empty
 
       # Move from logo page
       click_button "Continue"
@@ -110,8 +110,8 @@ describe "Registration" do
 
       # Upload promo image
       attach_file "image-select", Rails.root.join("spec/fixtures/files/promo.png"), visible: false
-      expect(page).to have_no_css('#image-placeholder .loading')
-      expect(page.find('#image-placeholder img')['src']).to_not be_empty
+      expect(page).not_to have_css('#image-placeholder .loading')
+      expect(page.find('#image-placeholder img')['src']).not_to be_empty
 
       # Move from promo page
       click_button "Continue"
@@ -255,7 +255,7 @@ describe "Registration" do
         expect(page).to have_selector "input.button.primary[disabled]"
 
         check "accept_terms"
-        expect(page).to have_no_selector "input.button.primary[disabled]"
+        expect(page).not_to have_selector "input.button.primary[disabled]"
 
         click_button "Let's get started!"
         expect(find("div#progress-bar")).to be_visible

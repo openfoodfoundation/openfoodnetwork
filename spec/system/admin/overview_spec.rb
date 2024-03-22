@@ -53,7 +53,7 @@ describe '
 
         it "does not show a products item" do
           visit '/admin'
-          expect(page).to have_no_selector "#products"
+          expect(page).not_to have_selector "#products"
         end
       end
     end

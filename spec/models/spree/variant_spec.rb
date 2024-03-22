@@ -1,11 +1,12 @@
 # frozen_string_literal: false
 
 require 'spec_helper'
-require 'variant_units/option_value_namer'
 require 'spree/localized_number'
 
 describe Spree::Variant do
   subject(:variant) { build(:variant) }
+
+  it { is_expected.to have_many :semantic_links }
 
   context "validations" do
     it "should validate price is greater than 0" do
@@ -24,20 +25,35 @@ describe Spree::Variant do
     end
 
     describe "tax category" do
-      context "when a tax category is required" do
-        it "is invalid when a tax category is not provided" do
-          with_products_require_tax_category(true) do
-            expect(build_stubbed(:variant, tax_category_id: nil)).not_to be_valid
-          end
-        end
+      # `build_stubbed` avoids creating a tax category in the database.
+      subject(:variant) { build_stubbed(:variant) }
+
+      it "is valid when empty by default" do
+        expect(variant.tax_category).to eq nil
+        expect(variant).to be_valid
       end
 
-      context "when a tax category is not required" do
-        it "is valid when a tax category is not provided" do
-          with_products_require_tax_category(false) do
-            expect(build_stubbed(:variant, tax_category_id: nil)).to be_valid
-          end
-        end
+      it "loads the default tax category" do
+        default = create(:tax_category, is_default: true)
+
+        expect(variant.tax_category).to eq default
+        expect {
+          variant.tax_category = nil
+        }.not_to change {
+          variant.tax_category
+        }
+        expect(variant).to be_valid
+      end
+
+      it "doesn't load any tax category" do
+        non_default = create(:tax_category, is_default: false)
+        expect(variant.tax_category).to eq nil
+      end
+
+      context "when a tax category is required" do
+        before { Spree::Config.products_require_tax_category = true }
+
+        it { is_expected.to validate_presence_of :tax_category }
       end
     end
   end
@@ -344,7 +360,7 @@ describe Spree::Variant do
 
           it "lists any variants that are not listed as visible=false" do
             expect(variants).to include new_variant, visible_variant
-            expect(variants).to_not include hidden_variant
+            expect(variants).not_to include hidden_variant
           end
 
           context "when inventory items exist for other enterprises" do
@@ -365,7 +381,7 @@ describe Spree::Variant do
 
             it "lists any variants not listed as visible=false only for the relevant enterprise" do
               expect(variants).to include new_variant, visible_variant
-              expect(variants).to_not include hidden_variant
+              expect(variants).not_to include hidden_variant
             end
           end
         end
@@ -376,7 +392,7 @@ describe Spree::Variant do
 
         it "lists any variants that are listed as visible=true" do
           expect(variants).to include visible_variant
-          expect(variants).to_not include new_variant, hidden_variant
+          expect(variants).not_to include new_variant, hidden_variant
         end
       end
     end
@@ -401,7 +417,7 @@ describe Spree::Variant do
       it 'shows variants produced by the enterprise and any producers granting P-OC' do
         stockable_variants = Spree::Variant.stockable_by(shop)
         expect(stockable_variants).to include v1, v2
-        expect(stockable_variants).to_not include v3
+        expect(stockable_variants).not_to include v3
       end
     end
   end

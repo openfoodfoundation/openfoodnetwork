@@ -9,12 +9,12 @@
         %td.vertical-align-top
           .field
             = label_tag :add_variant_id, t('.name_or_sku')
-            %input#add_variant_id.variant_autocomplete.fullwidth{ type: 'number', ng: { model: 'newItem.variant_id' } }
+            %input#add_variant_id.variant_autocomplete.fullwidth{ type: 'number', "ng-model": 'newItem.variant_id' }
         %td.vertical-align-top
           .field
             = label_tag :add_quantity, t('.quantity')
-            %input#add_quantity.fullwidth{ type: 'number', min: 1, ng: { model: 'newItem.quantity' } }
+            %input#add_quantity.fullwidth{ type: 'number', min: 1, "ng-model": 'newItem.quantity' }
         %td
           .actions
-            %a.icon-plus.button.fullwidth{ href: 'javascript:void(0)', ng: { click: 'addSubscriptionLineItem()' } }
+            %a.icon-plus.button.fullwidth{ href: 'javascript:void(0)', "ng-click": 'addSubscriptionLineItem()' }
               = t('.add')

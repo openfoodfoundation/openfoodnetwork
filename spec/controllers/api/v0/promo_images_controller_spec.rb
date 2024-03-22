@@ -18,7 +18,7 @@ module Api
     }
 
     describe "removing promo image" do
-      let(:image) { Rack::Test::UploadedFile.new(black_logo_file, "image/png") }
+      let(:image) { black_logo_file }
 
       let(:enterprise) { create(:enterprise, owner: enterprise_owner, promo_image: image) }
 
@@ -35,7 +35,7 @@ module Api
           expect(response.status).to eq 200
           expect(json_response["id"]).to eq enterprise.id
           enterprise.reload
-          expect(enterprise.promo_image).to_not be_attached
+          expect(enterprise.promo_image).not_to be_attached
         end
 
         context "when promo image does not exist" do

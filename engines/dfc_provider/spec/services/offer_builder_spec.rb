@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe DfcBuilder do
+describe OfferBuilder do
   let(:variant) { build(:variant) }
 
   describe ".offer" do
@@ -11,7 +11,7 @@ describe DfcBuilder do
       variant.save!
       variant.on_hand = 5
 
-      offer = DfcBuilder.offer(variant)
+      offer = OfferBuilder.build(variant)
 
       expect(offer.stockLimitation).to eq 5
     end
@@ -22,7 +22,7 @@ describe DfcBuilder do
       variant.on_hand = 5
       variant.on_demand = true
 
-      offer = DfcBuilder.offer(variant)
+      offer = OfferBuilder.build(variant)
 
       expect(offer.stockLimitation).to eq nil
     end

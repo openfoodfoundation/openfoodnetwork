@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -61,6 +61,14 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id", "action_name", "column_name"], name: "index_column_prefs_on_user_id_and_action_name_and_column_name", unique: true
+  end
+
+  create_table "connected_apps", force: :cascade do |t|
+    t.bigint "enterprise_id"
+    t.json "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enterprise_id"], name: "index_connected_apps_on_enterprise_id"
   end
 
   create_table "coordinator_fees", id: :serial, force: :cascade do |t|
@@ -300,6 +308,18 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
     t.index ["order_id"], name: "index_invoices_on_order_id"
   end
 
+  create_table "oidc_accounts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "provider"
+    t.string "uid", null: false
+    t.string "token"
+    t.string "refresh_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid"], name: "index_oidc_accounts_on_uid", unique: true
+    t.index ["user_id"], name: "index_oidc_accounts_on_user_id", unique: true
+  end
+
   create_table "order_cycle_schedules", id: :serial, force: :cascade do |t|
     t.integer "order_cycle_id", null: false
     t.integer "schedule_id", null: false
@@ -378,6 +398,14 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
     t.string "name", limit: 255, null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "semantic_links", force: :cascade do |t|
+    t.bigint "variant_id", null: false
+    t.string "semantic_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["variant_id"], name: "index_semantic_links_on_variant_id"
   end
 
   create_table "sessions", id: :serial, force: :cascade do |t|
@@ -873,6 +901,7 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
     t.string "meta_title", limit: 255
     t.string "meta_description", limit: 255
     t.string "meta_keywords", limit: 255
+    t.string "dfc_id"
     t.index ["parent_id"], name: "index_taxons_on_parent_id"
     t.index ["permalink"], name: "index_taxons_on_permalink"
     t.index ["taxonomy_id"], name: "index_taxons_on_taxonomy_id"
@@ -924,6 +953,7 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
     t.boolean "show_api_key_view", default: false, null: false
     t.string "provider"
     t.string "uid"
+    t.datetime "terms_of_service_accepted_at"
     t.index ["confirmation_token"], name: "index_spree_users_on_confirmation_token", unique: true
     t.index ["email"], name: "email_idx_unique", unique: true
     t.index ["persistence_token"], name: "index_users_on_persistence_token"
@@ -1101,6 +1131,7 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adjustment_metadata", "enterprises", name: "adjustment_metadata_enterprise_id_fk"
   add_foreign_key "adjustment_metadata", "spree_adjustments", column: "adjustment_id", name: "adjustment_metadata_adjustment_id_fk", on_delete: :cascade
+  add_foreign_key "connected_apps", "enterprises"
   add_foreign_key "coordinator_fees", "enterprise_fees", name: "coordinator_fees_enterprise_fee_id_fk"
   add_foreign_key "coordinator_fees", "order_cycles", name: "coordinator_fees_order_cycle_id_fk"
   add_foreign_key "custom_tabs", "enterprises", on_delete: :cascade
@@ -1135,6 +1166,7 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
   add_foreign_key "inventory_items", "enterprises"
   add_foreign_key "inventory_items", "spree_variants", column: "variant_id"
   add_foreign_key "invoices", "spree_orders", column: "order_id"
+  add_foreign_key "oidc_accounts", "spree_users", column: "user_id"
   add_foreign_key "order_cycle_schedules", "order_cycles", name: "oc_schedules_order_cycle_id_fk"
   add_foreign_key "order_cycle_schedules", "schedules", name: "oc_schedules_schedule_id_fk"
   add_foreign_key "order_cycles", "enterprises", column: "coordinator_id", name: "order_cycles_coordinator_id_fk"
@@ -1144,6 +1176,7 @@ ActiveRecord::Schema[7.0].define(version: 20231003000823494) do
   add_foreign_key "proxy_orders", "spree_orders", column: "order_id", name: "order_id_fk"
   add_foreign_key "proxy_orders", "subscriptions", name: "proxy_orders_subscription_id_fk"
   add_foreign_key "report_rendering_options", "spree_users", column: "user_id"
+  add_foreign_key "semantic_links", "spree_variants", column: "variant_id"
   add_foreign_key "spree_addresses", "spree_countries", column: "country_id", name: "spree_addresses_country_id_fk"
   add_foreign_key "spree_addresses", "spree_states", column: "state_id", name: "spree_addresses_state_id_fk"
   add_foreign_key "spree_inventory_units", "spree_orders", column: "order_id", name: "spree_inventory_units_order_id_fk", on_delete: :cascade

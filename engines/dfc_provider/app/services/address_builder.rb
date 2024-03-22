@@ -2,12 +2,13 @@
 
 class AddressBuilder < DfcBuilder
   def self.address(address)
-    DataFoodConsortium::Connector::Address.new(
+    DfcProvider::Address.new(
       urls.address_url(address),
       street: address.address1,
       postalCode: address.zipcode,
       city: address.city,
-      country: address.country.name
+      country: address.country.name,
+      region: address.state.name
     )
   end
 end

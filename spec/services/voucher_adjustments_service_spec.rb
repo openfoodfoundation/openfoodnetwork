@@ -264,7 +264,7 @@ describe VoucherAdjustmentsService do
 
     context 'when no order given' do
       it "doesn't blow up" do
-        expect { VoucherAdjustmentsService.new(nil).update }.to_not raise_error
+        expect { VoucherAdjustmentsService.new(nil).update }.not_to raise_error
       end
     end
 
@@ -272,7 +272,7 @@ describe VoucherAdjustmentsService do
       let(:order) { create(:order_with_line_items, line_items_count: 1, distributor: enterprise) }
 
       it "doesn't blow up" do
-        expect { VoucherAdjustmentsService.new(order).update }.to_not raise_error
+        expect { VoucherAdjustmentsService.new(order).update }.not_to raise_error
       end
     end
   end

@@ -9,8 +9,8 @@ require "rails"
   "action_mailer/railtie",
   "active_job/railtie",
   "action_cable/engine",
-  #"action_mailbox/engine",
-  #"action_text/engine",
+  # "action_mailbox/engine",
+  # "action_text/engine",
   "rails/test_unit/railtie",
   "sprockets/railtie" # Disable this after migrating to Webpacker
 ].each do |railtie|
@@ -150,6 +150,7 @@ module Openfoodnetwork
       module ::Reporting; end
       Rails.application.reloader.to_prepare do
         next if defined?(::Reporting) && defined?(::Reporting::Errors)
+
         loader = Zeitwerk::Loader.new
         loader.push_dir("#{Rails.root}/lib/reporting", namespace: ::Reporting)
         loader.enable_reloading
@@ -227,7 +228,9 @@ module Openfoodnetwork
     config.action_view.form_with_generates_remote_forms = false
     config.active_record.cache_versioning = false
     config.active_record.has_many_inversing = false
-    config.active_record.yaml_column_permitted_classes = [BigDecimal, Symbol]
+    config.active_record.yaml_column_permitted_classes = [BigDecimal, Symbol, Time,
+                                                          ActiveSupport::TimeWithZone,
+                                                          ActiveSupport::TimeZone]
 
     config.active_support.escape_html_entities_in_json = true
 
@@ -246,6 +249,7 @@ module Openfoodnetwork
     config.active_storage.content_types_to_serve_as_binary -= ["image/svg+xml"]
     config.active_storage.variable_content_types += ["image/svg+xml"]
     config.active_storage.url_options = config.action_controller.default_url_options
+    config.active_storage.variant_processor = :mini_magick
 
     config.exceptions_app = self.routes
 

@@ -284,7 +284,7 @@ describe Spree::Preferences::Preferable do
         expect(pref_test.preference_cache_key(:pref_test_pref)).to be_nil
 
         pref_test.save
-        expect(pref_test.preference_cache_key(:pref_test_pref)).to_not be_nil
+        expect(pref_test.preference_cache_key(:pref_test_pref)).not_to be_nil
       end
 
       it "but returns default values" do
@@ -314,7 +314,7 @@ describe Spree::Preferences::Preferable do
       @pt1 = PrefTest.new(col: 'aaaa')
       @pt1.id = @pt.id
       @pt1.save!
-      expect(@pt1.get_preference(:pref_test_pref)).to_not eq 'lmn'
+      expect(@pt1.get_preference(:pref_test_pref)).not_to eq 'lmn'
       expect(@pt1.get_preference(:pref_test_pref)).to eq 'abc'
     end
   end

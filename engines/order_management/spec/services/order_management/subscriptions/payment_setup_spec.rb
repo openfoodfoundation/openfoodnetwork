@@ -22,7 +22,7 @@ module OrderManagement
           end
 
           it "creates a new payment on the order" do
-            expect{ payment_setup.call! }.to change(Spree::Payment, :count).by(1)
+            expect{ payment_setup.call! }.to change { Spree::Payment.count }.by(1)
             expect(order.payments.first.amount).to eq 5
           end
         end
@@ -34,7 +34,7 @@ module OrderManagement
             before { allow(order).to receive(:new_outstanding_balance) { 5 } }
 
             it "updates the payment total to reflect the outstanding balance" do
-              expect{ payment_setup.call! }.to change(payment, :amount).from(10).to(5)
+              expect{ payment_setup.call! }.to change { payment.amount }.from(10).to(5)
             end
           end
 
@@ -42,7 +42,7 @@ module OrderManagement
             before { allow(order).to receive(:new_outstanding_balance) { 10 } }
 
             it "does nothing" do
-              expect{ payment_setup.call! }.to_not change(payment, :amount).from(10)
+              expect{ payment_setup.call! }.not_to change { payment.amount }.from(10)
             end
           end
         end

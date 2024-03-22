@@ -61,4 +61,127 @@ describe("ToggleControlController", () => {
       });
     });
   });
+
+  describe("#enableIfPresent", () => {
+    describe("with input", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `<div data-controller="toggle-control">
+          <input id="input" value="" data-action="input->toggle-control#enableIfPresent" />
+          <input id="control" data-toggle-control-target="control">
+        </div>`;
+      });
+
+      it("Enables when input is filled", () => {
+        input.value = "a"
+        input.dispatchEvent(new Event("input"));
+
+        expect(control.disabled).toBe(false);
+      });
+
+      it("Disables when input is emptied", () => {
+        input.value = "test"
+        input.dispatchEvent(new Event("input"));
+
+        input.value = ""
+        input.dispatchEvent(new Event("input"));
+
+        expect(control.disabled).toBe(true);
+      });
+    });
+  });
+
+  describe("#displayIfMatch", () => {
+    describe("with select", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `<div data-controller="toggle-control" data-toggle-control-match-value="items">
+          <select id="select" data-action="change->toggle-control#displayIfMatch" />
+            <option value="items">Items</option>
+            <option value="weight_1">Weight (g)</option>
+          </select>
+          <input id="control" data-toggle-control-target="control">
+        </div>`;
+      });
+
+      it("Shows when match is selected", () => {
+        select.value = "items"
+        select.dispatchEvent(new Event("change"));
+
+        expect(control.style.display).toBe("block");
+      });
+
+      it("Hides when match is not selected", () => {
+        select.value = "weight_1"
+        select.dispatchEvent(new Event("change"));
+
+        expect(control.style.display).toBe("none");
+      });
+    });
+  });
+
+  describe("#toggleDisplay", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `<div data-controller="toggle-control">
+        <span id="button" data-action="click->toggle-control#toggleDisplay" data-toggle-show="true" />
+        <div id="content" data-toggle-control-target="content" >
+          content
+        </div>
+      </div>`;
+    });
+
+    it("toggles the content", () => {
+      const button = document.getElementById("button");
+      const content = document.getElementById("content");
+      expect(content.style.display).toBe("");
+
+      button.click();
+
+      expect(content.style.display).toBe("block");
+    });
+  });
+
+  describe("#toggleAdvancedSettings", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <div data-controller="toggle-control" data-toggle-control-selector-value="#content">
+        <button id="remote-toggle" data-action="click->toggle-control#toggleAdvancedSettings"></button>
+        <button id="remote-toggle-with-chevron" data-action="click->toggle-control#toggleAdvancedSettings">
+        <i class="icon-chevron-down" data-toggle-control-target="chevron"></i>
+        </button>
+        </div>
+        <div id="content">...</div>
+        `;
+    });
+
+    it("clicking a toggle switches the visibility of the :data-remote-toggle-selector element", () => {
+      const button = document.getElementById("remote-toggle");
+      const content = document.getElementById("content");
+      expect(content.style.display).toBe("");
+
+      button.click();
+
+      expect(content.style.display).toBe("none");
+
+      button.click();
+
+      expect(content.style.display).toBe("block");
+    });
+
+    it("clicking a toggle with a chevron icon switches the visibility of content and the direction of the icon", () => {
+      const button = document.getElementById("remote-toggle-with-chevron");
+      const chevron = button.querySelector("i");
+      const content = document.getElementById("content");
+      expect(content.style.display).toBe("");
+      expect(chevron.className).toBe("icon-chevron-down");
+
+      button.click();
+
+      expect(content.style.display).toBe("none");
+      expect(chevron.className).toBe("icon-chevron-up");
+
+      button.click();
+
+      expect(content.style.display).toBe("block");
+      expect(chevron.className).toBe("icon-chevron-down");
+    });
+  });
 });

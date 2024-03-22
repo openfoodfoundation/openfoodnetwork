@@ -33,7 +33,7 @@ describe 'Subscriptions' do
           expect(page).to have_content "Just a few more steps before you can begin"
 
           # subscriptions are enabled, instructions are not displayed
-          expect(page).to_not have_content 'Under "Shop Preferences", /
+          expect(page).not_to have_content 'Under "Shop Preferences", /
           enable the Subscriptions option'
 
           # other relevant instructions are displayed
@@ -54,7 +54,7 @@ describe 'Subscriptions' do
         end
         it "the subscriptions tab is not visible" do
           expect(page).to have_current_path "/admin/orders"
-          expect(page).to_not have_link "Subscriptions", href: "/admin/subscriptions"
+          expect(page).not_to have_link "Subscriptions", href: "/admin/subscriptions"
         end
       end
     end
@@ -183,7 +183,7 @@ describe 'Subscriptions' do
       before do
         visit admin_subscriptions_path
         page.find("#new-subscription").click
-        tomselect_search_and_select shop.name, from: "subscription[shop_id]"
+        tomselect_select shop.name, from: "subscription[shop_id]"
         click_button "Continue"
       end
 
@@ -212,7 +212,7 @@ describe 'Subscriptions' do
         expect {
           click_button "Create Subscription"
           expect(page).to have_current_path admin_subscriptions_path
-        }.to change(Subscription, :count).by(1)
+        }.to change { Subscription.count }.by(1)
 
         # Subscription line items are created
         subscription = Subscription.last

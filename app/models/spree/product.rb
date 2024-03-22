@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'open_food_network/property_merge'
-require 'concerns/product_stock'
 
 # PRODUCTS
 # Products represent an entity for sale in a store.
@@ -189,7 +188,7 @@ module Spree
         .with_permission(:add_to_order_cycle)
         .where(enterprises: { is_primary_producer: true })
         .pluck(:parent_id)
-      return where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
+      where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
     }
 
     scope :active, lambda { where("spree_products.deleted_at IS NULL") }
@@ -286,6 +285,22 @@ module Spree
       variant.tax_category_id = tax_category_id
       variant.shipping_category_id = shipping_category_id
       variants << variant
+    end
+
+    # Format as per WeightsAndMeasures (todo: re-orgnaise maybe after product/variant refactor)
+    def variant_unit_with_scale
+      scale_clean = ActiveSupport::NumberHelper.number_to_rounded(variant_unit_scale,
+                                                                  precision: nil,
+                                                                  strip_insignificant_zeros: true)
+      [variant_unit, scale_clean].compact_blank.join("_")
+    end
+
+    def variant_unit_with_scale=(variant_unit_with_scale)
+      values = variant_unit_with_scale.split("_")
+      assign_attributes(
+        variant_unit: values[0],
+        variant_unit_scale: values[1] || nil
+      )
     end
 
     private

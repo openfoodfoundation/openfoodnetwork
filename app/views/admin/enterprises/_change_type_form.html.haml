@@ -3,13 +3,13 @@
 = form_for @enterprise, url: main_app.register_admin_enterprise_path(@enterprise),
   html: { name: "change_type", id: "change_type", novalidate: true, "ng-app" => "admin.enterprises", "ng-controller"=> 'changeTypeFormCtrl' } do |change_type_form|
   -# Have to use hidden:'true' on this input rather than type:'hidden' as the latter seems to break ngPattern and therefore validation
-  %input{ hidden: "true", name: "sells", ng: { required: true, pattern: "/^(none|own|any)$/", model: 'sells', value: "sells"} }
+  %input{ hidden: "true", name: "sells", "ng-required": true, "ng-pattern": "/^(none|own|any)$/", "ng-model": 'sells', "ng-value": "sells" }
 
   .row
     .options.container
       - if @enterprise.is_primary_producer
         .basic_producer.option.six.columns.alpha
-          %a.full-width.button.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
+          %a.full-width.button.selector{ "ng-click": "sells='none'", "ng-class": "{selected: sells=='none'}" }
             .top
               %h3= t('.producer_profile')
               %p= t('.connect_ofn')
@@ -18,7 +18,7 @@
             = t('.producer_description_text')
 
         .producer_shop.option.six.columns
-          %a.full-width.button.selector{ ng: { click: "sells='own'", class: "{selected: sells=='own'}" } }
+          %a.full-width.button.selector{ "ng-click": "sells='own'", "ng-class": "{selected: sells=='own'}" }
             .top
               %h3= t('.producer_shop')
               %p= t('.sell_your_produce')
@@ -29,7 +29,7 @@
             = t('.producer_shop_description_text2')
 
         .full_hub.option.six.columns.omega
-          %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
+          %a.full-width.button.selector{ "ng-click": "sells='any'", "ng-class": "{selected: sells=='any'}" }
             .top
               %h3= t('.producer_hub')
               %p= t('.producer_hub_text')
@@ -40,7 +40,7 @@
         .two.columns.alpha
           &nbsp;
         .shop_profile.option.six.columns
-          %a.full-width.button.selector{ ng: { click: "sells='none'", class: "{selected: sells=='none'}" } }
+          %a.full-width.button.selector{ "ng-click": "sells='none'", "ng-class": "{selected: sells=='none'}" }
             .top
               %h3= t('.profile')
               %p= t('.get_listing')
@@ -49,7 +49,7 @@
             = t('.profile_description_text')
 
         .full_hub.option.six.columns
-          %a.full-width.button.selector{ ng: { click: "sells='any'", class: "{selected: sells=='any'}" } }
+          %a.full-width.button.selector{ "ng-click": "sells='any'", "ng-class": "{selected: sells=='any'}" }
             .top
               %h3= t('.hub_shop')
               %p= t('.hub_shop_text')
@@ -60,11 +60,11 @@
 
   .row
     .sixteen.columns.alpha
-      %span.error{ ng: { show: "(change_type.sells.$error.required || change_type.sells.$error.pattern) && submitted" } }
+      %span.error{ "ng-show": "(change_type.sells.$error.required || change_type.sells.$error.pattern) && submitted" }
         = t('.choose_option')
       - if @enterprise.sells == 'unspecified'
-        %input.button.big{ type: 'submit', value: t(:select_continue), ng: { click: "submit(change_type)" } }
+        %input.button.big{ type: 'submit', value: t(:select_continue), "ng-click": "submit(change_type)" }
       - else
-        %input.button.big{ type: 'submit', value: t('.change_now'), ng: { click: "submit(change_type)" } }
+        %input.button.big{ type: 'submit', value: t('.change_now'), "ng-click": "submit(change_type)" }
       %br &nbsp;
       %hr

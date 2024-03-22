@@ -56,7 +56,7 @@
 @import "../admin/components/dialogs";
 @import "../admin/components/input";
 @import "../admin/components/jquery_dialog";
-@import "../admin/components/messages";
+@import "components/messages"; // admin_v3
 @import "components/navigation"; // admin_v3
 @import "../admin/components/ng-cloak";
 @import "../admin/components/page_actions";
@@ -87,6 +87,7 @@
 @import "../admin/alert";
 @import "../admin/animations";
 @import "pages/change_type_form"; // admin_v3
+@import "../admin/connected_apps";
 @import "../admin/customers";
 @import "dashboard/dashboard_item"; // admin_v3
 @import "pages/dashboard-single-ent"; // admin_v3
@@ -127,7 +128,8 @@
 @import "~tom-select/src/scss/tom-select.default";
 @import "components/tom_select"; // admin_v3
 
-@import "app/components/help_modal_component/help_modal_component";
-@import "app/components/confirm_modal_component/confirm_modal_component";
+@import "app/components/modal_component/modal_component";
 @import "app/components/vertical_ellipsis_menu/component"; // admin_v3 and only V3
 @import "app/webpacker/css/admin/trix.scss";
+
+@import "terms_of_service_banner"; // admin_v3

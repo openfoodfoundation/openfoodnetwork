@@ -34,7 +34,7 @@ describe Spree::Order do
     end
 
     it "can find a line item matching a given variant" do
-      expect(order.find_line_item_by_variant(order.line_items.third.variant)).to_not be_nil
+      expect(order.find_line_item_by_variant(order.line_items.third.variant)).not_to be_nil
       expect(order.find_line_item_by_variant(build(:variant))).to be_nil
     end
   end
@@ -107,7 +107,7 @@ describe Spree::Order do
   context "#create" do
     it "should assign an order number" do
       order = Spree::Order.create
-      expect(order.number).to_not be_nil
+      expect(order.number).not_to be_nil
     end
   end
 
@@ -616,7 +616,7 @@ describe Spree::Order do
 
   describe "applying enterprise fees" do
     subject { create(:order) }
-    let(:fee_handler) { OrderFeesHandler.new(subject) }
+    let(:fee_handler) { Orders::HandleFeesService.new(subject) }
 
     before do
       allow(subject).to receive(:fee_handler) { fee_handler }
@@ -628,7 +628,7 @@ describe Spree::Order do
       subject.recreate_all_fees!
     end
 
-    it "creates line item and order fee adjustments via OrderFeesHandler" do
+    it "creates line item and order fee adjustments via Orders::HandleFeesService" do
       expect(fee_handler).to receive(:create_line_item_fees!)
       expect(fee_handler).to receive(:create_order_fees!)
       subject.recreate_all_fees!
@@ -1012,7 +1012,7 @@ describe Spree::Order do
 
       it "returns only orders which have line items" do
         expect(Spree::Order.not_empty).to include order_with_line_items
-        expect(Spree::Order.not_empty).to_not include order_without_line_items
+        expect(Spree::Order.not_empty).not_to include order_without_line_items
       end
     end
   end
@@ -1041,19 +1041,19 @@ describe Spree::Order do
 
   describe "#customer" do
     it "is not required for new records" do
-      is_expected.to_not validate_presence_of(:customer)
+      is_expected.not_to validate_presence_of(:customer)
     end
 
     it "is not required for new complete orders" do
       order = Spree::Order.new(state: "complete")
 
-      expect(order).to_not validate_presence_of(:customer)
+      expect(order).not_to validate_presence_of(:customer)
     end
 
     it "is not required for existing orders in cart state" do
       order = create(:order)
 
-      expect(order).to_not validate_presence_of(:customer)
+      expect(order).not_to validate_presence_of(:customer)
     end
 
     it "is created for existing orders in complete state" do
@@ -1070,7 +1070,7 @@ describe Spree::Order do
       it "does not create a customer" do
         expect {
           create(:order, distributor:)
-        }.to_not change {
+        }.not_to change {
           Customer.count
         }
       end
@@ -1130,7 +1130,7 @@ describe Spree::Order do
 
         expect {
           other_order.update!(state: "complete")
-        }.to_not change { Customer.count }
+        }.not_to change { Customer.count }
 
         expect(other_order.customer.email).to eq "new@email.org"
         expect(order.customer).to eq other_order.customer
@@ -1181,7 +1181,7 @@ describe Spree::Order do
     end
 
     it "returns a validation error" do
-      expect{ order.next }.to change(order.errors, :count).from(0).to(1)
+      expect{ order.next }.to change { order.errors.count }.from(0).to(1)
       expect(order.errors.messages[:email]).to eq ['This email address is already registered. ' \
                                                    'Please log in to continue, or go back and ' \
                                                    'use another email address.']
@@ -1334,7 +1334,7 @@ describe Spree::Order do
     let!(:payment) { create(:payment, order:, payment_method:) }
 
     it "does not include the :confirm step" do
-      expect(order.checkout_steps).to_not include "confirm"
+      expect(order.checkout_steps).not_to include "confirm"
     end
   end
 
@@ -1542,6 +1542,54 @@ describe Spree::Order do
       expected_adjustments = Array.new(2) { voucher.create_adjustment(voucher.code, order) }
 
       expect(order.voucher_adjustments).to eq(expected_adjustments)
+    end
+  end
+
+  describe '#applied_voucher_rate' do
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order) { create(:order, user:, distributor:) }
+
+    context 'when the order has no voucher adjustment' do
+      it 'returns the BigDecimal 0 value' do
+        actual = order.applied_voucher_rate
+        expect(actual.class).to eq(BigDecimal)
+        # below expectation gets passed if 0 (Integer) is returned regardless of BigDecimal 0
+        # Hence adding the expectation for the class as well
+        expect(actual).to eq(BigDecimal(0))
+      end
+    end
+
+    context "given that the order has voucher adjustment and pre_discount_total is 20" do
+      before do
+        voucher.create_adjustment(voucher.code, order)
+        allow(order).to receive(:pre_discount_total).and_return(BigDecimal(20))
+      end
+
+      context "when order has voucher_flat_rate adjustment" do
+        let(:voucher) { create(:voucher_flat_rate, enterprise: order.distributor, amount: 10) }
+
+        it 'returns the BigDecimal 0 value' do
+          actual = order.applied_voucher_rate
+          expect(actual.class).to eq(BigDecimal)
+          # below expectation gets passed if 0 (Integer) is returned regardless of BigDecimal 0
+          # Hence adding the expectation for the class as well
+          expect(actual).to eq(-BigDecimal('0.5'))
+        end
+      end
+
+      context "when order has voucher_percentage_rate adjustment" do
+        let(:voucher) do
+          create(:voucher_percentage_rate, enterprise: order.distributor, amount: 10)
+        end
+
+        it 'returns the BigDecimal 0 value' do
+          actual = order.applied_voucher_rate
+          expect(actual.class).to eq(BigDecimal)
+          # below expectation gets passed if 0 (Integer) is returned regardless of BigDecimal 0
+          # Hence adding the expectation for the class as well
+          expect(actual).to eq(-BigDecimal('0.1'))
+        end
+      end
     end
   end
 end

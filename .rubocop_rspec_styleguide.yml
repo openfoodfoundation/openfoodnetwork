@@ -1,0 +1,24 @@
+# OFN styleguide for rubocop-rspec
+# Because there are so many, we will disable by default, and enable rules as needed.
+
+Capybara:
+  Enabled: false
+
+RSpec:
+  Enabled: false
+
+FactoryBot:
+  Enabled: false
+
+# Enabled rules
+
+Capybara/NegationMatcher:
+  Enabled: true
+  EnforcedStyle: not_to
+
+RSpec/ExpectChange:
+  Enabled: true
+  EnforcedStyle: block
+
+RSpec/NotToNot:
+  Enabled: true

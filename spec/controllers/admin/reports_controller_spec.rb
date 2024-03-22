@@ -162,7 +162,7 @@ describe Admin::ReportsController, type: :controller do
         report_types = assigns(:reports).keys
         expect(report_types).to include :orders_and_fulfillment,
                                         :products_and_inventory, :packing # and others
-        expect(report_types).to_not include :sales_tax
+        expect(report_types).not_to include :sales_tax
       end
     end
 
@@ -365,7 +365,7 @@ describe Admin::ReportsController, type: :controller do
         spree_get :show, report_type: :sales_tax, report_subtype: report_type
         expect(response).to have_http_status(:ok)
         expect(resulting_orders_prelim).to include(orderA1, orderB1)
-        expect(resulting_orders_prelim).to_not include(orderA2, orderB2)
+        expect(resulting_orders_prelim).not_to include(orderA2, orderB2)
       end
     end
   end

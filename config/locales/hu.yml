@@ -6,9 +6,22 @@ hu:
       spree/shipping_method: Szállítási Mód
     attributes:
       spree/order/ship_address:
+        address1: "Szállítási cím (utca és házszám)"
+        address2: "Szállítási cím 2. sor"
+        city: "Szállítási cím város"
+        country: "Szállítási cím ország"
         phone: "Telefonszám"
         firstname: "Keresztnév"
         lastname: "Vezetéknév"
+        zipcode: "Szállítási cím irányítószám"
+      spree/order/bill_address:
+        address1: "Számlázási cím (Utca és Házszám)"
+        zipcode: "Számlázási cím Irányítószám"
+        city: "Számlázási cím Város"
+        country: "Számlázási cím Ország"
+        firstname: "Számlázási név Keresztnév"
+        lastname: "Számlázási cím Vezetéknév"
+        phone: Vásárlói telefonszám
       spree/user:
         password: "Jelszó"
         password_confirmation: "Jelszó megerősítése"
@@ -34,6 +47,7 @@ hu:
         shipping_category_id: "Szállítási mód"
         variant_unit: "Változatos egység"
         variant_unit_name: "Változat egység neve"
+        unit_value: "Egység értéke"
       spree/credit_card:
         base: "Hitelkártya"
         number: "Szám"
@@ -253,6 +267,10 @@ hu:
     order_cycle:
       subject: "Rendelési ciklus jelentés a következőhöz: %{producer}"
   provider_settings: "Szolgáltató beállításai"
+  report_mailer:
+    report_ready:
+      subject: "A jelentés kész"
+      heading: "A jelentés letöltésre kész"
   shipment_mailer:
     shipped_email:
       dear_customer: "Tisztelt Ügyfelünk,"
@@ -316,7 +334,6 @@ hu:
   cancel_order: "Megrendelés visszavonása"
   confirm_send_invoice: "Erről a megrendelésről számlát küldünk a vásárlónak. Biztos, hogy akarod folytatni?"
   confirm_resend_order_confirmation: "Biztos, hogy újra el akarja küldeni a rendelést visszaigazoló e-mailt?"
-  must_have_valid_business_number: "%{enterprise_name}-nak érvényes adószámmal kell rendelkeznie a számlák küldéséhez."
   invoice: "Számla"
   active: "Aktív"
   cancelled: "Törölve"
@@ -452,6 +469,9 @@ hu:
       actions:
         edit: Szerkesztés
         clone: Klón
+        delete: Töröl
+      image:
+        edit: Szerkesztés
     adjustments:
       skipped_changing_canceled_order: "A törölt rendelést nem módosíthatja."
     begins_at: 'Kezdete:'
@@ -668,6 +688,13 @@ hu:
       index:
         header:
           title: Termékek tömeges szerkesztése
+      delete_modal:
+        delete_product_modal:
+          heading: "Termék törlése"
+          confirmation_text: "Termék törlése"
+        delete_variant_modal:
+          heading: "Változat törlése"
+          confirmation_text: "Változat törlése"
       sort:
         pagination:
           clear_search: Keresés törlése
@@ -677,6 +704,23 @@ hu:
         categories:
           label: Kategóriák
         search: Keresés
+      table:
+        error_summary:
+          saved:
+            one: "a termék helyesen lett elmentve, de"
+            other: "a termékek helyesen lettek elmentve, de"
+        save: Változások mentése
+        new_variant: Új variáns
+      bulk_update:
+        success: Változtatások mentve
+      edit_image:
+        close: Vissza
+      delete_product:
+        success: Sikeresen törölte a terméket
+        error: A terméket nem lehet törölni
+      delete_variant:
+        success: Sikeresen törölte a terméket
+        error: A változatot nem lehet törölni
     product_import:
       title: Termék importálása
       file_not_found: A fájl nem található vagy nem nyitható meg
@@ -716,6 +760,9 @@ hu:
         product_categories: termék kategóriák
         tax_categories: Adókategóriák
         shipping_categories: Szállítási módok
+      dfc_import_form:
+        enterprise: "Vállalkozás"
+        import: "Importálás"
       import:
         review: Felülvizsgálat
         import: Importálás
@@ -773,6 +820,7 @@ hu:
         view_products: Ugrás a Termékek oldalra
         view_inventory: Ugrás a Leltár oldalra
       product_headings:
+        distributor: Elosztó
         producer: Termelő
         sku: SKU
         name: Név
@@ -1078,6 +1126,8 @@ hu:
           rate: Mérték
           customers: Vevő
           active: Aktív?
+        connected_apps:
+          loading: "Betöltés"
       actions:
         edit_profile: Beállítások
         properties: Tulajdonságok
@@ -1705,6 +1755,8 @@ hu:
   invoice_tax_total: "GST összesen:"
   tax_invoice: "ADÓSZÁMLA"
   tax_total: "Teljes adó (%{rate}):"
+  invoice_shipping_category_delivery: "Szállítás"
+  invoice_shipping_category_pickup: "Átvétel"
   total_excl_tax: "Összesen (adó nélkül):"
   total_incl_tax: "Összesen (adóval együtt):"
   abn: "LÉGI ÚTON SZÁLLÍTOTT:"
@@ -3096,6 +3148,7 @@ hu:
           processing: "feldolgozás"
           void: "üres"
           invalid: "érvénytelen"
+        quantity_unavailable: "Nem áll rendelkezésre elegendő készlet. A tétel nem menthető!"
         quantity_unchanged: "A mennyiség nem változott az előző mennyiséghez képest."
         cancel_the_order_html: "Ez megszakítja a vásárlási folyamatot. Biztosan folytatja?"
         cancel_the_order_send_cancelation_email: "A törlés elküldése a vásárlónak, emailben."
@@ -3434,8 +3487,6 @@ hu:
     start_date: "Kezdő dátum"
     successfully_removed: "Sikeresen eltávolítva"
     taxonomy_edit: "Termék kategória szerkesztés"
-    taxonomy_tree_error: "Termék kategória fa hiba"
-    taxonomy_tree_instruction: "Termék kategória fa"
     tree: "Fa"
     updating: "Frissítés"
     your_order_is_empty_add_product: "Rendelése üres, kérjük keressen és adjon hozzá egy terméket fent"
@@ -3991,6 +4042,11 @@ hu:
           email: "Email"
           total: "Összesen"
           billing_address_name: "Név"
+      taxons:
+        form:
+          name: Név
+          permalink: Permalink
+          description: Leírás
       general_settings:
         edit:
           legal_settings: "Jogi beállítások"

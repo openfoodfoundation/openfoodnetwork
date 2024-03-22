@@ -306,7 +306,6 @@ es_US:
   cancel_order: "Cancelar pedido"
   confirm_send_invoice: "Una factura para esta orde se envió al cliente. ¿Está seguro que quiere continuar?"
   confirm_resend_order_confirmation: "¿Estás seguro que quieres reenviar el correo de confirmación del pedido?"
-  must_have_valid_business_number: "%{enterprise_name} debe tener un NIF válido antes de que las facturas se puedan enviar."
   invoice: "Factura"
   active: "Activo"
   cancelled: "Cancelado"
@@ -442,6 +441,9 @@ es_US:
       actions:
         edit: Editar
         clone: Duplicar
+        delete: Borrar
+      image:
+        edit: Editar
     adjustments:
       skipped_changing_canceled_order: "No puede modificar un pedido cancelado."
     begins_at: Empieza en
@@ -662,6 +664,10 @@ es_US:
         categories:
           label: Categorías
         search: Buscar
+      table:
+        new_variant: Nueva variante
+      edit_image:
+        close: Atrás
     product_import:
       title: Importación de productos
       file_not_found: Archivo no encontrado o no se pudo abrir
@@ -701,6 +707,9 @@ es_US:
         product_categories: Categorías de Producto
         tax_categories: Categorías de impuestos
         shipping_categories: Categorías de envío
+      dfc_import_form:
+        enterprise: "Organización"
+        import: "Importar"
       import:
         review: Revisión
         import: Importar
@@ -758,6 +767,7 @@ es_US:
         view_products: Ir a la página de productos
         view_inventory: Ir a la página de inventario
       product_headings:
+        distributor: Distribuidor
         producer: Productora
         sku: SKU
         name: Nombre
@@ -1050,6 +1060,8 @@ es_US:
           rate: Impuesto
           customers: Consumidora
           active: ¿Activo?
+        connected_apps:
+          loading: "Cargando"
       actions:
         edit_profile: Configuración
         properties: Propiedades
@@ -1618,6 +1630,8 @@ es_US:
   invoice_tax_total: "IVA Total:"
   tax_invoice: "FACTURA DE IMPUESTOS"
   tax_total: "Total impuestos (%{rate}):"
+  invoice_shipping_category_delivery: "Entrega"
+  invoice_shipping_category_pickup: "Recoger"
   total_excl_tax: "Total (Sin Impuestos):"
   total_incl_tax: "Total (Impuestos incl.)"
   abn: "NIF:"
@@ -3839,6 +3853,11 @@ es_US:
           email: "Email"
           total: "Total"
           billing_address_name: "Nombre"
+      taxons:
+        form:
+          name: Nombre
+          permalink: Enlace permanente
+          description: Descripción
       general_settings:
         edit:
           legal_settings: "Configuraciones legales"

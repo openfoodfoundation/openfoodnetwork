@@ -8,7 +8,7 @@ module OrderManagement
       let(:order) { create(:order) }
       let(:updater) { OrderManagement::Order::Updater.new(order) }
 
-      context "updating order totals" do
+      describe "#update_totals" do
         before do
           2.times { create(:line_item, order:, price: 10) }
         end
@@ -19,10 +19,22 @@ module OrderManagement
           updater.update_totals
           expect(order.payment_total).to eq(10)
         end
+      end
+
+      describe "#update_item_total" do
+        before do
+          2.times { create(:line_item, order:, price: 10) }
+        end
 
         it "updates item total" do
           updater.update_item_total
           expect(order.item_total).to eq(20)
+        end
+      end
+
+      describe "#update_adjustment_total" do
+        before do
+          2.times { create(:line_item, order:, price: 10) }
         end
 
         it "updates adjustment totals" do
@@ -40,7 +52,7 @@ module OrderManagement
         end
       end
 
-      context "updating shipment state" do
+      describe "#update_shipment_state" do
         let(:shipment) { build(:shipment) }
 
         before do
@@ -85,18 +97,110 @@ module OrderManagement
         order.state_changed('shipment')
       end
 
-      context "completed order" do
+      describe "#update" do
+        it "updates totals once" do
+          expect(updater).to receive(:update_totals).once
+          updater.update
+        end
+
+        it "updates all adjustments" do
+          expect(updater).to receive(:update_all_adjustments)
+          updater.update
+        end
+
+        context "completed order" do
+          before { allow(order).to receive(:completed?) { true } }
+
+          it "updates payment state" do
+            expect(updater).to receive(:update_payment_state)
+            updater.update
+          end
+
+          it "updates shipment state" do
+            expect(updater).to receive(:update_shipment_state)
+            updater.update
+          end
+
+          context "whith pending payments" do
+            let(:order) { create(:completed_order_with_totals) }
+
+            it "updates pending payments" do
+              payment = create(:payment, order:, amount: order.total)
+
+              # update order so the order total will change
+              update_order_quantity(order)
+              order.payments.reload
+
+              expect { updater.update }.to change { payment.reload.amount }.from(50).to(60)
+            end
+          end
+        end
+
+        context "incompleted order" do
+          before { allow(order).to receive_messages completed?: false }
+
+          it "doesnt update payment state" do
+            expect(updater).not_to receive(:update_payment_state)
+            updater.update
+          end
+
+          it "doesnt update shipment state" do
+            expect(updater).not_to receive(:update_shipment_state)
+            updater.update
+          end
+
+          it "doesnt update the order shipment" do
+            shipment = build(:shipment)
+            allow(order).to receive_messages shipments: [shipment]
+
+            expect(shipment).not_to receive(:update!).with(order)
+            expect(updater).not_to receive(:update_shipments).with(order)
+            updater.update
+          end
+
+          context "with pending payments" do
+            let!(:payment) { create(:payment, order:, amount: order.total) }
+
+            context "with order in payment state" do
+              let(:order) { create(:order_with_totals, state: "payment") }
+
+              it "updates pending payments" do
+                # update order so the order total will change
+                update_order_quantity(order)
+                order.payments.reload
+
+                expect { updater.update }.to change { payment.reload.amount }.from(10).to(20)
+              end
+            end
+
+            context "with order in confirmation state" do
+              let(:order) { create(:order_with_totals, state: "confirmation") }
+
+              it "updates pending payments" do
+                # update order so the order total will change
+                update_order_quantity(order)
+                order.payments.reload
+
+                expect { updater.update }.to change { payment.reload.amount }.from(10).to(20)
+              end
+            end
+
+            context "with order in cart" do
+              let(:order) { create(:order_with_totals) }
+
+              it "doesn't update pending payments" do
+                # update order so the order total will change
+                update_order_quantity(order)
+
+                expect { updater.update }.not_to change { payment.reload.amount }
+              end
+            end
+          end
+        end
+      end
+
+      describe "#update_shipments" do
         before { allow(order).to receive(:completed?) { true } }
-
-        it "updates payment state" do
-          expect(updater).to receive(:update_payment_state)
-          updater.update
-        end
-
-        it "updates shipment state" do
-          expect(updater).to receive(:update_shipment_state)
-          updater.update
-        end
 
         it "updates the order shipment" do
           shipment = build(:shipment)
@@ -105,39 +209,6 @@ module OrderManagement
           expect(shipment).to receive(:update!).with(order)
           updater.update_shipments
         end
-      end
-
-      context "incompleted order" do
-        before { allow(order).to receive_messages completed?: false }
-
-        it "doesnt update payment state" do
-          expect(updater).not_to receive(:update_payment_state)
-          updater.update
-        end
-
-        it "doesnt update shipment state" do
-          expect(updater).not_to receive(:update_shipment_state)
-          updater.update
-        end
-
-        it "doesnt update the order shipment" do
-          shipment = build(:shipment)
-          allow(order).to receive_messages shipments: [shipment]
-
-          expect(shipment).not_to receive(:update!).with(order)
-          expect(updater).not_to receive(:update_shipments).with(order)
-          updater.update
-        end
-      end
-
-      it "updates totals once" do
-        expect(updater).to receive(:update_totals).once
-        updater.update
-      end
-
-      it "updates all adjustments" do
-        expect(updater).to receive(:update_all_adjustments)
-        updater.update
       end
 
       describe "#update_payment_state" do
@@ -166,7 +237,7 @@ module OrderManagement
 
           it "returns paid" do
             updater.update_payment_state
-            expect(order.payment_state).to_not eq("requires_authorization")
+            expect(order.payment_state).not_to eq("requires_authorization")
           end
         end
 
@@ -277,9 +348,28 @@ module OrderManagement
             end
           end
         end
+
+        context "when unused payments records exist which require authorization, " \
+                "but the order is fully paid" do
+          let!(:cash_payment) {
+            build(:payment, state: "completed", amount: order.new_outstanding_balance)
+          }
+          let!(:stripe_payment) { build(:payment, state: "requires_authorization") }
+          before do
+            order.payments << cash_payment
+            order.payments << stripe_payment
+          end
+
+          it "cancels unused payments requiring authorization" do
+            expect(stripe_payment).to receive(:void_transaction!)
+            expect(cash_payment).not_to receive(:void_transaction!)
+
+            order.updater.update_payment_state
+          end
+        end
       end
 
-      context '#shipping_address_from_distributor' do
+      describe '#shipping_address_from_distributor' do
         let(:distributor) { build(:distributor_enterprise) }
         let(:shipment) {
           create(:shipment_with, :shipping_method, shipping_method:)
@@ -313,69 +403,52 @@ module OrderManagement
         end
       end
 
-      describe "updating order totals" do
-        describe "#update_totals_and_states" do
-          it "deals with legacy taxes" do
-            expect(updater).to receive(:handle_legacy_taxes)
+      describe "#update_totals_and_states" do
+        it "deals with legacy taxes" do
+          expect(updater).to receive(:handle_legacy_taxes)
 
-            updater.update_totals_and_states
+          updater.update_totals_and_states
+        end
+      end
+
+      describe "#handle_legacy_taxes" do
+        context "when the order is incomplete" do
+          it "doesn't touch taxes" do
+            allow(order).to receive(:completed?) { false }
+
+            expect(order).not_to receive(:create_tax_charge!)
+            updater.__send__(:handle_legacy_taxes)
           end
         end
 
-        describe "#handle_legacy_taxes" do
-          context "when the order is incomplete" do
-            it "doesn't touch taxes" do
-              allow(order).to receive(:completed?) { false }
+        context "when the order is complete" do
+          before { allow(order).to receive(:completed?) { true } }
 
-              expect(order).to_not receive(:create_tax_charge!)
+          context "and the order has legacy taxes" do
+            let!(:legacy_tax_adjustment) {
+              create(:adjustment, order:, adjustable: order, included: false,
+                                  originator_type: "Spree::TaxRate")
+            }
+
+            it "re-applies order taxes" do
+              expect(order).to receive(:create_tax_charge!)
+
               updater.__send__(:handle_legacy_taxes)
             end
           end
 
-          context "when the order is complete" do
-            before { allow(order).to receive(:completed?) { true } }
+          context "and the order has no legacy taxes" do
+            it "leaves taxes untouched" do
+              expect(order).not_to receive(:create_tax_charge!)
 
-            context "and the order has legacy taxes" do
-              let!(:legacy_tax_adjustment) {
-                create(:adjustment, order:, adjustable: order, included: false,
-                                    originator_type: "Spree::TaxRate")
-              }
-
-              it "re-applies order taxes" do
-                expect(order).to receive(:create_tax_charge!)
-
-                updater.__send__(:handle_legacy_taxes)
-              end
-            end
-
-            context "and the order has no legacy taxes" do
-              it "leaves taxes untouched" do
-                expect(order).to_not receive(:create_tax_charge!)
-
-                updater.__send__(:handle_legacy_taxes)
-              end
+              updater.__send__(:handle_legacy_taxes)
             end
           end
         end
       end
 
-      context "when unused payments records exist which require authorization, " \
-              "but the order is fully paid" do
-        let!(:cash_payment) {
-          build(:payment, state: "completed", amount: order.new_outstanding_balance)
-        }
-        let!(:stripe_payment) { build(:payment, state: "requires_authorization") }
-        before do
-          order.payments << cash_payment
-          order.payments << stripe_payment
-        end
-
-        it "cancels unused payments requiring authorization" do
-          expect(stripe_payment).to receive(:void_transaction!)
-          expect(cash_payment).to_not receive(:void_transaction!)
-
-          order.updater.update_payment_state
-        end
+      def update_order_quantity(order)
+        order.line_items.first.update_attribute(:quantity, 2)
       end
     end
   end

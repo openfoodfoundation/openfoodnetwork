@@ -58,14 +58,14 @@ describe '
       it "displays a list of line items" do
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
-        expect(page).to have_no_selector "tr#li_#{li3.id}"
+        expect(page).not_to have_selector "tr#li_#{li3.id}"
       end
 
       it "displays only line items that are not shipped" do
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
-        expect(page).to have_no_selector "tr#li_#{li4.id}"
-        expect(page).to have_no_selector "tr#li_#{li5.id}"
+        expect(page).not_to have_selector "tr#li_#{li4.id}"
+        expect(page).not_to have_selector "tr#li_#{li5.id}"
       end
 
       it "orders by completion date" do
@@ -139,7 +139,7 @@ describe '
         expect(page).to have_button("« First", disabled: true)
         expect(page).to have_button("Previous", disabled: true)
         expect(page).to have_button("1", disabled: true)
-        expect(page).to_not have_button("2")
+        expect(page).not_to have_button("2")
         expect(page).to have_button("Next", disabled: true)
         expect(page).to have_button("Last »", disabled: true)
         select2_select "100 per page", from: "autogen4" # should display all 20 line items
@@ -437,7 +437,7 @@ describe '
       end
 
       it "adds the class 'ng-dirty' to input elements when value is altered" do
-        expect(page).to have_no_css "input[name='quantity'].ng-dirty"
+        expect(page).not_to have_css "input[name='quantity'].ng-dirty"
         fill_in "quantity", with: 2
         expect(page).to have_css "input[name='quantity'].ng-dirty"
       end
@@ -453,19 +453,19 @@ describe '
 
       context "when acceptable data is sent to the server" do
         it "displays an update button which submits pending changes" do
-          expect(page).to have_no_selector "#save-bar"
+          expect(page).not_to have_selector "#save-bar"
           fill_in "quantity", with: 2
           expect(page).to have_selector "input[name='quantity'].ng-dirty"
           expect(page).to have_selector "#save-bar", text: "You have unsaved changes"
           click_button "Save Changes"
           expect(page).to have_selector "#save-bar", text: "All changes saved"
-          expect(page).to have_no_selector "input[name='quantity'].ng-dirty"
+          expect(page).not_to have_selector "input[name='quantity'].ng-dirty"
         end
       end
 
       context "when unacceptable data is sent to the server" do
         it "displays an update button which submits pending changes" do
-          expect(page).to have_no_selector "#save-bar"
+          expect(page).not_to have_selector "#save-bar"
           line_item = order.line_items.first
           fill_in "quantity", with: line_item.variant.on_hand + line_item.quantity + 10
           expect(page).to have_selector "input[name='quantity'].ng-dirty"
@@ -565,7 +565,7 @@ describe '
         end
 
         it "shows all default columns, except the de-selected column" do
-          expect(page).to have_no_selector "th", text: "PRODUCER"
+          expect(page).not_to have_selector "th", text: "PRODUCER"
           expect(page).to have_selector "th", text: "NAME"
           expect(page).to have_selector "th",
                                         text: 'Completed at'.upcase
@@ -608,7 +608,7 @@ describe '
           select2_select s1.name, from: "supplier_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
         end
 
         it "displays all line items when 'All' is selected from supplier filter" do
@@ -617,7 +617,7 @@ describe '
           select2_select s1.name, from: "supplier_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
           select2_select "All", from: "supplier_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
@@ -657,7 +657,7 @@ describe '
           find(".select2-result-label", text: d1.name.to_s).click
           page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
         end
 
         it "displays all line items when 'All' is selected from distributor filter", retry: 3 do
@@ -666,7 +666,7 @@ describe '
           find("#s2id_distributor_filter .select2-chosen").click
           find(".select2-result-label", text: d1.name.to_s).click
           page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
           # displays orders from all enterprises
           find("#s2id_distributor_filter .select2-chosen").click
           find(".select2-result-label", text: "All").click
@@ -719,9 +719,9 @@ describe '
                                        with_options: OrderCycle.pluck(:name).unshift("All")
           select2_select oc1.name, from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_no_selector "#loading i"
+          expect(page).not_to have_selector "#loading i"
           expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
         end
 
         it "displays all line items when 'All' is selected from order_cycle filter", retry: 3 do
@@ -729,7 +729,7 @@ describe '
           select2_select oc1.name, from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
           select2_select "All", from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
           displays_default_orders
@@ -768,20 +768,20 @@ describe '
           click_on_select2 oc1.name, from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
           click_on_select2 d1.name, from: "distributor_filter"
           click_on_select2 s1.name, from: "supplier_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
           click_on_select2 d2.name, from: "distributor_filter"
           click_on_select2 s2.name, from: "supplier_filter"
           page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_no_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li1.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
           click_on_select2 oc2.name, from: "order_cycle_filter"
           page.find('.filter-actions .button.icon-search').click
-          expect(page).to have_no_selector "tr#li_#{li1.id}"
+          expect(page).not_to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
         end
 
@@ -793,7 +793,7 @@ describe '
           click_on_select2 s1.name, from: "supplier_filter"
           page.find('.filter-actions .button.icon-search').click
           expect(page).to have_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
           page.find('.filter-actions #clear_filters_button').click
           expect(page).to have_selector "div#s2id_order_cycle_filter a.select2-choice", text: "All"
           expect(page).to have_selector "div#s2id_supplier_filter a.select2-choice", text: "All"
@@ -850,7 +850,7 @@ describe '
         expect(page).to have_selector "tr#li_#{li1.id}"
         expect(page).to have_selector "tr#li_#{li2.id}"
         expect(page).to have_selector "tr#li_#{li3.id}"
-        expect(page).to have_no_selector "tr#li_#{li4.id}"
+        expect(page).not_to have_selector "tr#li_#{li4.id}"
 
         find("input.datepicker").click
         select_dates_from_daterangepicker(from, to)
@@ -878,9 +878,9 @@ describe '
           # daterange picker should have changed
           expect(find("input.datepicker").value)
             .to eq "#{today.prev_day(9).strftime('%F')} to #{today.strftime('%F')}"
-          expect(page).to have_no_selector "#save-bar"
+          expect(page).not_to have_selector "#save-bar"
           within("tr#li_#{li2.id} td.quantity") do
-            expect(page).to have_no_selector "input[name=quantity].ng-dirty"
+            expect(page).not_to have_selector "input[name=quantity].ng-dirty"
           end
         end
 
@@ -921,6 +921,7 @@ describe '
         expect(page).to have_selector "tr#li_#{li2.id} input[type='checkbox'][name='bulk']"
       end
 
+      # rubocop:disable Rails/FindEach. # These are Capybara finders
       it "displays a checkbox to which toggles the 'checked' state of all checkboxes" do
         check "toggle_bulk"
         page.all("input[type='checkbox'][name='bulk']").each{ |checkbox|
@@ -931,6 +932,7 @@ describe '
           expect(checkbox.checked?).to be false
         }
       end
+      # rubocop:enable Rails/FindEach
 
       it "displays a bulk action select box with a list of actions" do
         list_of_actions = ['Delete Selected']
@@ -967,8 +969,8 @@ describe '
                 click_on("OK")
               end
               # order 1 should be canceled
-              expect(page).to have_no_selector "tr#li_#{li1.id}"
-              expect(page).to have_no_selector "tr#li_#{li11.id}"
+              expect(page).not_to have_selector "tr#li_#{li1.id}"
+              expect(page).not_to have_selector "tr#li_#{li11.id}"
               expect(o1.reload.state).to eq("canceled")
               # order 2 should not be canceled
               expect(page).to have_selector "tr#li_#{li2.id}"
@@ -992,8 +994,8 @@ describe '
               click_on "OK"
             end
 
-            expect(page).to have_no_selector ".modal"
-            expect(page).to have_no_selector "tr#li_#{li1.id}"
+            expect(page).not_to have_selector ".modal"
+            expect(page).not_to have_selector "tr#li_#{li1.id}"
             expect(page).to have_selector "tr#li_#{li11.id}"
             expect(o1.reload.state).to eq("complete")
           end
@@ -1105,7 +1107,7 @@ describe '
               end
               expect(page).to have_selector "a.delete-line-item", count: 1
               expect(o2.reload.state).to eq("canceled")
-            end.to_not have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+            end.not_to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
           end
 
           it "the user can confirm + wants to send email confirmation : line item is " \
@@ -1123,7 +1125,7 @@ describe '
 
           it "the user can confirm + uncheck the restock option: line item is then deleted and " \
              "order is canceled without retocking" do
-            expect_any_instance_of(Spree::StockLocation).to_not receive(:restock)
+            expect_any_instance_of(Spree::StockLocation).not_to receive(:restock)
             expect do
               within(".modal") do
                 uncheck("Restock Items: return all items to stock")
@@ -1195,8 +1197,8 @@ describe '
         end
 
         it "all line items of the same variant" do
-          expect(page).to have_no_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li1.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
           expect(page).to have_selector "tr#li_#{li3.id}"
           expect(page).to have_selector "tr#li_#{li4.id}"
           expect(page).to have_css("table#listing_orders tbody tr", count: 2)
@@ -1211,7 +1213,7 @@ describe '
         end
 
         it "shows all products and clears group buy box" do
-          expect(page).to have_no_selector "div#group_buy_calculation"
+          expect(page).not_to have_selector "div#group_buy_calculation"
           expect(page).to have_selector "tr#li_#{li1.id}"
           expect(page).to have_selector "tr#li_#{li2.id}"
           expect(page).to have_selector "tr#li_#{li3.id}"
@@ -1226,10 +1228,10 @@ describe '
         end
 
         it "shows only variant filtering by email" do
-          expect(page).to have_no_selector "tr#li_#{li1.id}"
-          expect(page).to have_no_selector "tr#li_#{li2.id}"
+          expect(page).not_to have_selector "tr#li_#{li1.id}"
+          expect(page).not_to have_selector "tr#li_#{li2.id}"
           expect(page).to have_selector "tr#li_#{li3.id}"
-          expect(page).to have_no_selector "tr#li_#{li4.id}"
+          expect(page).not_to have_selector "tr#li_#{li4.id}"
         end
 
         context "clicking 'Clear Filters' button" do
@@ -1285,13 +1287,13 @@ describe '
       visit_bulk_order_management
 
       expect(page).to have_selector "tr#li_#{line_item_distributed.id}"
-      expect(page).to have_no_selector "tr#li_#{line_item_not_distributed.id}"
+      expect(page).not_to have_selector "tr#li_#{line_item_not_distributed.id}"
     end
   end
 
   def visit_bulk_order_management
     visit spree.admin_bulk_order_management_path
-    expect(page).to have_no_text 'Loading orders'
+    expect(page).not_to have_text 'Loading orders'
   end
 
   def displays_default_orders
@@ -1304,7 +1306,7 @@ describe '
       expect(page).to have_selector "tr#li_#{li.id}"
     end
     excluded_line_items.each do |li|
-      expect(page).to have_no_selector "tr#li_#{li.id}"
+      expect(page).not_to have_selector "tr#li_#{li.id}"
     end
   end
 end

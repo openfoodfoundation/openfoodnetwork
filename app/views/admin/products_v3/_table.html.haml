@@ -1,38 +1,51 @@
 = form_with url: bulk_update_admin_products_path, method: :patch, id: "products-form",
             builder: BulkFormBuilder,
-            html: {'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#bulk_update',
-                   'data-controller': "bulk-form", 'data-bulk-form-disable-selector-value': "#sort,#filters",
-                   'data-bulk-form-error-value': defined?(error_counts),
-                  } do |form|
-  %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
-    .container
-      .status.eleven.columns
-        .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
-        - if defined?(error_counts)
-          .error_summary
-            -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
-            = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
-      .form-buttons.five.columns
-        = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
-        = form.submit t('.save'), class: "medium"
+            html: { data: { reflex: 'submit->products#bulk_update', 'reflex-serialize-form': true,
+              controller: "bulk-form", 'bulk-form-disable-selector-value': "#sort,#filters",
+              'bulk-form-error-value': defined?(error_counts),
+              } } do |form|
+  = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
   %table.products
-    %col{ width:"15%" }
-    %col{ width:"5%", style: "max-width:5em" }
-    %col{ width:"8%" }
-    %col{ width:"5%", style: "max-width:5em"}
-    %col{ width:"5%", style: "max-width:5em"}
-    %col{ width:"10%" }= # producer
-    %col{ width:"10%" }
-    %col{ width:"5%" }
-    %col{ width:"5%", style: "max-width:5em" }
-    %col{ width:"5%", style: "max-width:5em" }
+    %colgroup
+      %col{ width:"56" }= #  Img (size + padding)
+      %col= # (grow to fill) Name
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"5%"}
+      %col{ width:"5%"}
+      %col{ width:"10%"}
+      %col{ width:"15%"}= # Producer
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"8%"}= # Actions
     %thead
       %tr
+        %td.form-actions-wrapper{ colspan: 12 }
+          .form-actions-wrapper2
+            %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
+              .container
+                .status
+                  .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
+                  - if defined?(error_counts)
+                    .error_summary
+                      - if error_counts[:saved] > 0
+                        -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
+                        = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
+                      - else 
+                        -# Y products could not be saved correctly. Please review errors and try again
+                        = t('.error_summary.invalid', count: error_counts[:invalid])
+                .form-buttons
+                  = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
+                  = form.submit t('.save'), class: "medium"
+      %tr
+        %th.align-left= # image
         %th.align-left.with-input= t('admin.products_page.columns.name')
-        %th.align-right= t('admin.products_page.columns.sku')
+        %th.align-left.with-input= t('admin.products_page.columns.sku')
+        %th.align-left.with-input= t('admin.products_page.columns.unit_scale')
         %th.align-right= t('admin.products_page.columns.unit')
-        %th.align-right= t('admin.products_page.columns.price')
-        %th.align-right= t('admin.products_page.columns.on_hand')
+        %th.align-left.with-input= t('admin.products_page.columns.price')
+        %th.align-left.with-input= t('admin.products_page.columns.on_hand')
         %th.align-left= t('admin.products_page.columns.producer')
         %th.align-left= t('admin.products_page.columns.category')
         %th.align-left= t('admin.products_page.columns.tax_category')
@@ -40,70 +53,26 @@
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
       = form.fields_for("products", product, index: product_index) do |product_form|
-        %tbody.relaxed{ 'data-record-id': product_form.object.id }
+        %tbody.relaxed.naked_inputs{ data: { 'record-id': product_form.object.id,
+                                controller: "nested-form",
+                                action: 'nested-form:add->bulk-form#registerElements' } }
           %tr
-            %td.field.align-left.header
-              = product_form.hidden_field :id
-              = product_form.text_field :name, 'aria-label': t('admin.products_page.columns.name')
-              = error_message_on product, :name
-            %td.field
-              = product_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
-              = error_message_on product, :sku
-            %td.align-right
-              .content
-                = product.variant_unit.upcase_first
-                / TODO: properly handle custom unit names
-                = WeightsAndMeasures::UNITS[product.variant_unit] && "(" + WeightsAndMeasures::UNITS[product.variant_unit][product.variant_unit_scale]["name"] + ")"
-            %td.align-right
-              -# empty
-            %td.align-right
-              -# empty
-            %td.align-left
-              .content= product.supplier&.name
-            %td.align-left
-              .content= product.primary_taxon&.name
-            %td.align-left
-            %td.align-left
-              .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
-            %td.align-right
-              = render(VerticalEllipsisMenu::Component.new) do
-                = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product)
-                = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product)
+            = render partial: 'product_row', locals: { product:, f: product_form }
 
           - product.variants.each_with_index do |variant, variant_index|
-            = form.fields_for("products][#{product_index}][variants_attributes][", variant, variant_index:) do |variant_form|
+            = form.fields_for("products][#{product_index}][variants_attributes][", variant, index: variant_index) do |variant_form|
               %tr.condensed
-                %td.field
-                  = variant_form.hidden_field :id
-                  = variant_form.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: product.name
-                  = error_message_on variant, :display_name
-                %td.field
-                  = variant_form.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
-                  = error_message_on variant, :sku
-                %td.align-right
-                  .content= variant.unit_to_display
-                %td.field
-                  = variant_form.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
-                  = error_message_on variant, :price
-                %td.field.on-hand__wrapper{'data-controller': "popout"}
-                  %button.on-hand__button{'data-popout-target': "button", 'aria-label': t('admin.products_page.columns.on_hand')}
-                    = variant.on_demand ? t(:on_demand) : variant.on_hand
-                  %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
-                    .field
-                      = variant_form.number_field :on_hand, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: variant_form.object.on_demand
-                      = error_message_on variant, :on_hand
-                    .field.checkbox
-                      = variant_form.label :on_demand do
-                        = variant_form.check_box :on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
-                        = t(:on_demand)
-                %td.align-left
-                  .content= variant.product.supplier&.name # same as product
-                %td.align-left
-                  -# empty
-                %td.align-left
-                  .content= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
-                %td.align-left
-                  -# empty
-                %td.align-right
-                  = render(VerticalEllipsisMenu::Component.new) do
-                    = link_to t('admin.products_page.actions.edit'), edit_admin_product_variant_path(product, variant)
+                = render partial: 'variant_row', locals: { variant:, f: variant_form }
+
+          = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", product.variants.build) do |new_variant_form|
+            %template{ 'data-nested-form-target': "template" }
+              %tr.condensed
+                = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form }
+
+          %tr{ 'data-nested-form-target': "target" }
+          %tr.condensed
+            %td
+            %td{ colspan: 11 }
+              %button.secondary.condensed.naked.icon-plus{ 'data-action': "nested-form#add",
+                                                           'aria-label': t('.new_variant') }
+                =t('.new_variant')

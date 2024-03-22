@@ -13,3 +13,5 @@
 %br
 
 = render 'upload_form'
+
+= render 'dfc_import_form' if spree_current_user.oidc_account.present?

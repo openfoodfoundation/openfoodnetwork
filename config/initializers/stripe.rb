@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Add some additional properties, to allow us to access these
 # properties from the object, rather than calling from ENV directly.
 # This is mostly useful for stubbing when testing, but also feels

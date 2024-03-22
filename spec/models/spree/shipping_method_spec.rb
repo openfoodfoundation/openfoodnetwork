@@ -191,7 +191,7 @@ module Spree
 
       it "soft-deletes when destroy is called" do
         shipping_method.destroy
-        expect(shipping_method.deleted_at).to_not be_blank
+        expect(shipping_method.deleted_at).not_to be_blank
       end
     end
 

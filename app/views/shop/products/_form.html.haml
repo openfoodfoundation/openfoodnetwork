@@ -31,22 +31,22 @@
             .sticky-shop-filters-container.thin-scroll-bar.hide-for-medium-down.large-2.columns
               %h5.filter-header
                 = t(:products_filter_by)
-                %span{ng: {show: 'filtersCount()' }}
+                %span{ "ng-show": 'filtersCount()' }
                   = "({{ filtersCount() }} #{t(:products_filter_selected)})"
               = render partial: "shop/products/filters"
 
-            .expanding-sidebar.shop-filters-sidebar.hide-for-large-up{ng: {show: 'showFilterSidebar', class: "{'shown': showFilterSidebar}"}}
-              .background{ng: {click: 'toggleFilterSidebar()'}}
+            .expanding-sidebar.shop-filters-sidebar.hide-for-large-up{ "ng-show": 'showFilterSidebar', "ng-class": "{'shown': showFilterSidebar}" }
+              .background{ "ng-click": 'toggleFilterSidebar()' }
               .sidebar
                 %h5
                   = t(:products_filter_by)
-                  %span{ng: {show: 'filtersCount()' }}
+                  %span{ "ng-show": 'filtersCount()' }
                     = "({{ filtersCount() }} #{t(:products_filter_selected)})"
 
                 = render partial: "shop/products/filters"
 
                 .sidebar-footer
-                  %button.large.dark.left{type: 'button', ng: {click: 'clearFilters()'}}
+                  %button.large.dark.left{ type: 'button', "ng-click": 'clearFilters()' }
                     = t(:products_filter_clear)
-                  %button.large.bright.right{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
+                  %button.large.bright.right{ type: 'button', "ng-click": 'toggleFilterSidebar()' }
                     = t(:products_filter_done)

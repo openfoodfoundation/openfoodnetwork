@@ -206,7 +206,6 @@ fil_PH:
   cancel_order: "kanselahin ang order"
   confirm_send_invoice: "ang invoice para sa order na ito ay ipapadala sa customer. nais mo bang magpatuloy?"
   confirm_resend_order_confirmation: "nais mo bang ipadala muli ang order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name}ay dapat may valid na TIN bago makapagpadala ng mga invoice"
   invoice: "invoice"
   active: "aktibo"
   cancelled: "kanselado"
@@ -329,6 +328,9 @@ fil_PH:
       actions:
         edit: i-edit
         clone: Gayahin
+        delete: Tanggalin
+      image:
+        edit: i-edit
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
     customer: Customer
@@ -526,6 +528,10 @@ fil_PH:
         categories:
           label: mga kategorya
         search: hanapin
+      table:
+        new_variant: bagong uri
+      edit_image:
+        close: bumalik
     product_import:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '
@@ -564,6 +570,9 @@ fil_PH:
         product_categories: kategorya ng produkto
         tax_categories: kategorya ng tax
         shipping_categories: mga kategorya ng pagpapadala
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "ilipat"
       import:
         review: suriin
         import: i-import
@@ -621,6 +630,7 @@ fil_PH:
         view_products: pumunta sa pahina ng mga produkto
         view_inventory: pumunta sa pahina ng mga imbentaryo
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: SKU
         name: Pangalan
@@ -888,6 +898,8 @@ fil_PH:
         vouchers:
           rate: antas
           customers: Customer
+        connected_apps:
+          loading: "naglo-load"
       actions:
         edit_profile: Settings
         properties: mga katangian
@@ -1418,6 +1430,8 @@ fil_PH:
   invoice_tax_total: "kabuuang GST:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Kabuuang Tax (%{rate}):"
+  invoice_shipping_category_delivery: "pagdeliver"
+  invoice_shipping_category_pickup: "Pickup"
   total_excl_tax: "Kabuuan (Hindi kasama ang tax):"
   total_incl_tax: "Kabuuan (Kasama ang tax):"
   abn: "TIN:"
@@ -3469,6 +3483,10 @@ fil_PH:
           email: "Email"
           total: "kabuuan"
           billing_address_name: "Pangalan"
+      taxons:
+        form:
+          name: Pangalan
+          description: paglalarawan
       general_settings:
         edit:
           legal_settings: "Legal Settings"

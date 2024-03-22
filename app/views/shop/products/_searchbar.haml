@@ -8,11 +8,11 @@
                 placeholder: t(:products_search),
                 "ng-debounce" => "200",
                 "disable-enter-with-blur" => true}
-          %a.clear{type: 'button', ng: {show: 'query', click: 'clearQuery()'}, 'focus-search' => true}
+          %a.clear{ type: 'button', "focus-search": true, "ng-show": 'query', "ng-click": 'clearQuery()' }
             = image_pack_tag "icn-close.png"
 
         .hide-for-large-up
-          %button{type: 'button', ng: {click: 'toggleFilterSidebar()'}}
+          %button{ type: 'button', "ng-click": 'toggleFilterSidebar()' }
             = t(:products_filter_heading)
-            %span{ng: {show: 'filtersCount()' }}
+            %span{ "ng-show": 'filtersCount()' }
               ({{ filtersCount() }})

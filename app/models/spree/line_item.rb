@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'open_food_network/scope_variant_to_hub'
-require 'variant_units/variant_and_line_item_naming'
 
 module Spree
   class LineItem < ApplicationRecord
@@ -194,6 +193,7 @@ module Spree
       adjustments.tax.additional.sum(:amount)
     end
 
+    # Some of the tax rates may not be applicable depending to the order's tax zone
     def tax_rates
       variant&.tax_category&.tax_rates || []
     end
@@ -203,7 +203,7 @@ module Spree
       # so line_item.adjustments returns an empty array
       return 0 if quantity.zero?
 
-      fees = adjustments.enterprise_fee.sum(:amount)
+      fees = enterprise_fee_adjustments.sum(:amount)
 
       (price + (fees / quantity)).round(2)
     end
@@ -240,6 +240,10 @@ module Spree
 
     def scoper
       @scoper ||= OpenFoodNetwork::ScopeVariantToHub.new(order.distributor)
+    end
+
+    def enterprise_fee_adjustments
+      adjustments.enterprise_fee
     end
 
     private

@@ -8,6 +8,7 @@ module Spree
 
     layout 'darkswarm'
 
+    invisible_captcha only: [:create], on_timestamp_spam: :render_alert_timestamp_error_message
     skip_before_action :set_current_order, only: :show
     prepend_before_action :load_object, only: [:show, :edit, :update]
     prepend_before_action :authorize_actions, only: :new
@@ -15,7 +16,7 @@ module Spree
     before_action :set_locale
 
     def show
-      @payments_requiring_action = PaymentsRequiringAction.new(spree_current_user).query
+      @payments_requiring_action = PaymentsRequiringActionQuery.new(spree_current_user).call
       @orders = orders_collection.includes(:line_items)
 
       customers = spree_current_user.customers
@@ -78,7 +79,7 @@ module Spree
     private
 
     def orders_collection
-      CompleteOrdersWithBalance.new(@user).query
+      CompleteOrdersWithBalanceQuery.new(@user).call
     end
 
     def load_object
@@ -100,6 +101,17 @@ module Spree
 
     def user_params
       ::PermittedAttributes::User.new(params).call
+    end
+
+    def render_alert_timestamp_error_message
+      render cable_ready: cable_car.inner_html(
+        "#signup-feedback",
+        partial("layouts/alert",
+                locals: {
+                  type: "alert",
+                  message: InvisibleCaptcha.timestamp_error_message
+                })
+      )
     end
   end
 end

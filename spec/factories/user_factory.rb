@@ -6,10 +6,6 @@ FactoryBot.define do
   end
 
   factory :user, class: Spree::User do
-    transient do
-      enterprises { [] }
-    end
-
     email { generate(:random_email) }
     login { email }
     password { 'secret' }
@@ -22,6 +18,7 @@ FactoryBot.define do
 
     confirmation_sent_at { '1970-01-01 00:00:00' }
     confirmed_at { '1970-01-01 00:00:01' }
+    terms_of_service_accepted_at { 1.hour.ago }
 
     before(:create) do |user, evaluator|
       if evaluator.confirmation_sent_at
@@ -33,24 +30,18 @@ FactoryBot.define do
       end
     end
 
-    after(:create) do |user, proxy|
-      user.spree_roles.clear # Remove admin role
-
-      user.enterprises << proxy.enterprises
+    factory :enterprise_user do
+      enterprises { [build(:enterprise)] }
     end
 
     factory :admin_user do
       spree_roles { [Spree::Role.find_or_create_by!(name: 'admin')] }
-
-      after(:create) do |user|
-        user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
-      end
     end
 
     factory :oidc_user do
-      after(:create) do |user|
-        user.update uid: user.email
-      end
+      oidc_account {
+        OidcAccount.new(provider: "openid_connect", uid: email)
+      }
     end
   end
 end

@@ -329,7 +329,6 @@ uk:
   cancel_order: "Відмінити замовлення"
   confirm_send_invoice: "Рахунок-фактура на це замовлення буде надіслано клієнту. Ви впевнені, що хочете продовжити?"
   confirm_resend_order_confirmation: "Ви впевнені, що хочете повторно надіслати електронний лист із підтвердженням замовлення?"
-  must_have_valid_business_number: "%{enterprise_name} має мати дійсний номер ABN, перш ніж можна буде надсилати рахунки-фактури."
   invoice: "Рахунок-фактура"
   active: "Активний"
   cancelled: "Скасовано"
@@ -465,6 +464,9 @@ uk:
       actions:
         edit: Редагувати
         clone: Клонувати
+        delete: Видалити
+      image:
+        edit: Редагувати
     adjustments:
       skipped_changing_canceled_order: "Ви не можете змінити скасоване замовлення."
     begins_at: Починається о
@@ -688,6 +690,10 @@ uk:
         categories:
           label: Категорії
         search: Пошук
+      table:
+        new_variant: Новий варіант
+      edit_image:
+        close: Назад
     product_import:
       title: Імпорт продукту
       file_not_found: Файл не знайдено або не вдалося відкрити
@@ -727,6 +733,9 @@ uk:
         product_categories: Категорії продуктів
         tax_categories: Податкові категорії
         shipping_categories: Категорії доставки
+      dfc_import_form:
+        enterprise: "Підприємство"
+        import: "Імпорт"
       import:
         review: Огляд
         import: Імпорт
@@ -784,6 +793,7 @@ uk:
         view_products: Перейдіть на сторінку продуктів
         view_inventory: Перейдіть на сторінку інвентаризації
       product_headings:
+        distributor: Дистрибютор
         producer: Виробник
         sku: Артикул
         name: Ім&#39;я
@@ -1092,6 +1102,8 @@ uk:
           rate: Оцінка
           customers: Замовник
           active: Активний?
+        connected_apps:
+          loading: "Завантаження"
       actions:
         edit_profile: Налаштування
         properties: Властивості
@@ -1712,6 +1724,8 @@ uk:
   invoice_tax_total: "Всього ПДВ:"
   tax_invoice: "ПОДАТКОВА НАКЛАДНА"
   tax_total: "Загальний податок (%{rate}):"
+  invoice_shipping_category_delivery: "Доставка"
+  invoice_shipping_category_pickup: "Самовивіз"
   total_excl_tax: "Усього (без податку):"
   total_incl_tax: "Всього (вкл. податок):"
   abn: "ABN:"
@@ -3456,8 +3470,6 @@ uk:
     start_date: "Дата початку"
     successfully_removed: "Успішно видалено"
     taxonomy_edit: "Редагування таксономії"
-    taxonomy_tree_error: "Помилка дерева таксономії"
-    taxonomy_tree_instruction: "Інструкція з таксономічного дерева"
     tree: "Дерево"
     updating: "Оновлення"
     your_order_is_empty_add_product: "Ваше замовлення порожнє, знайдіть і додайте продукт вище"
@@ -4018,6 +4030,11 @@ uk:
           email: "Email"
           total: "Всього"
           billing_address_name: "Ім'я"
+      taxons:
+        form:
+          name: Ім'я
+          permalink: Постійне посилання
+          description: Опис
       general_settings:
         edit:
           legal_settings: "Юридичні налаштування"

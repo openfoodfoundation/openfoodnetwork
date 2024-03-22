@@ -8,7 +8,10 @@
         = Spree.t("shipment_states.#{shipment.state}")
       - if shipment.ready? and can? :update, shipment
         = "-"
-        = link_to t(:ship), '#', :class => 'ship button icon-arrow-right', :data => { 'shipment-number' => shipment.number }
+        %button{"class": "ship button icon-arrow-right","data-controller": "modal-link",
+                "data-action": "click->modal-link#open", "data-modal-link-target-value": dom_id(order, :ship)}= t(:ship)
+        %form
+          = render ShipOrderComponent.new(order: order)
 
   %table.stock-contents.index
     %colgroup

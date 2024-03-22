@@ -258,7 +258,7 @@ describe Spree::Admin::PaymentsController, type: :controller do
       it 'does not process the event' do
         spree_put :fire, params
 
-        expect(payment).to_not receive(:unrecognized_event)
+        expect(payment).not_to receive(:unrecognized_event)
         expect(flash[:error]).to eq('Could not update the payment')
       end
     end

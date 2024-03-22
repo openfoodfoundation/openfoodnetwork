@@ -32,7 +32,7 @@ We also have a [Super Admin Guide][super-admin-guide] to help with configuration
 
 ## Testing
 
-If you'd like to help out with testing, please introduce yourself on the #testing channel on [Slack][slack-invite] and download the [ZenHub browser extension][zenhub] to view the development pipeline. Also, do have a look in our [Welcome New QAs board][welcome-qa] for some good first issues, both on manual and automated testing (RSpec/Capybara).
+If you'd like to help out with testing, please introduce yourself on the #testing channel on [Slack][slack-invite]. Also, do have a look in our [Welcome New QAs board][welcome-qa] for some good first issues, both on manual and automated testing (RSpec/Capybara).
 
 We use [BrowserStack](https://www.browserstack.com/) as a manual testing tool. BrowserStack provides open source projects with unlimited and free of charge accounts. A big thanks to them!
 
@@ -44,7 +44,7 @@ We use [KnapsackPro](https://knapsackpro.com/) for optimal parallelisation of ou
 
 ## Licence
 
-Copyright (c) 2012 - 2022 Open Food Foundation, released under the AGPL licence.
+Copyright (c) 2012 - 2024 Open Food Foundation, released under the AGPL licence.
 
 [survey]: https://docs.google.com/a/eaterprises.com.au/forms/d/1zxR5vSiU9CigJ9cEaC8-eJLgYid8CR8er7PPH9Mc-30/edit#
 [slack-invite]: https://join.slack.com/t/openfoodnetwork/shared_invite/zt-9sjkjdlu-r02kUMP1zbrTgUhZhYPF~A
@@ -53,4 +53,3 @@ Copyright (c) 2012 - 2022 Open Food Foundation, released under the AGPL licence.
 [super-admin-guide]: https://ofn-user-guide.gitbook.io/ofn-super-admin-guide
 [welcome-dev]: https://github.com/orgs/openfoodfoundation/projects/5
 [welcome-qa]: https://github.com/orgs/openfoodfoundation/projects/6
-[zenhub]: https://www.zenhub.com/extension

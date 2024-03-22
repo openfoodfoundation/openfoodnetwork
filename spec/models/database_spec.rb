@@ -60,11 +60,6 @@ RSpec.describe "Database" do
     puts migrations.join("\n")
     puts "\nTo disable this warning, add the class name(s) of the model(s) to models_todo " \
          "in #{__FILE__}"
-
-    return if ENV.fetch("OFN_WRITE_FOREIGN_KEY_MIGRATIONS", false)
-
-    puts "Migrations have not been written to disk. To write migrations to disk, please " \
-         "add OFN_WRITE_FOREIGN_KEY_MIGRATIONS=true to the file .env.test.local"
   end
 
   def process_association(model_class, association)
@@ -104,9 +99,6 @@ RSpec.describe "Database" do
     migration_name = "add_foreign_key_to_#{model_class.table_name}_" \
                      "#{foreign_key_table_name}_#{foreign_key_column}"
     migration_class_name = migration_name.camelize
-    millisecond_timestamp = generate_timestamp
-    migration_file_name = "db/migrate/#{millisecond_timestamp}_" \
-                          "#{migration_name}.rb"
     orphaned_records_query = generate_orphaned_records_query(model_class, foreign_key_table_name,
                                                              foreign_key_column)
 
@@ -122,11 +114,6 @@ RSpec.describe "Database" do
       end
     MIGRATION
 
-    if ENV.fetch("OFN_WRITE_FOREIGN_KEY_MIGRATIONS", false)
-      File.open(migration_file_name, 'w') do |file|
-        file.puts migration
-      end
-    end
     migration
   end
 
@@ -139,21 +126,5 @@ RSpec.describe "Database" do
       # WHERE #{foreign_key_table_name}.id IS NULL
       #   AND #{model_class.table_name}.#{foreign_key_column} IS NOT NULL
     SQL
-  end
-
-  # Generates a unique timestamp.
-  #
-  # We may create multiple migrations within the same second, maybe even millisecond.
-  # So we add precision to milliseconds and increment on conflict.
-  def generate_timestamp
-    @last_creation_time ||= Time.new.utc(0)
-
-    creation_time = Time.now.utc
-    if creation_time <= @last_creation_time
-      creation_time += 0.001.seconds
-    end
-    @last_creation_time = creation_time
-
-    creation_time.utc.strftime('%Y%m%d%H%M%S%L')
   end
 end

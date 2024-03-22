@@ -1,10 +1,10 @@
 %div{ id: @id, "data-controller": "modal #{@controller}", "data-action": "keyup@document->modal#closeIfEscapeKey", "data-#{@controller}-reflex-value": @reflex }
   .reveal-modal-bg.fade{ "data-modal-target": "background", "data-action": "click->modal#close" }
-  .reveal-modal.fade.tiny.help-modal{ "data-modal-target": "modal" }
+  .reveal-modal.fade.tiny.modal-component{ "data-modal-target": "modal" }
     = content
 
     = render @message if @message
 
-    .modal-actions
-      %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: t('js.admin.modals.cancel'), "data-action": "click->modal#close" }
-      %input{ class: "button icon-plus primary", type: 'button', value: t('js.admin.modals.confirm'), "data-action": @confirm_actions, "data-reflex": @confirm_reflexes }
+    %div{ class: "modal-actions #{@actions_alignment_class}" }
+      %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: @cancel_button_text, "data-action": "click->modal#close" }
+      %input{ id: 'modal-confirm-button', class: "button icon-plus #{@confirm_button_class}", type: 'button', value: @confirm_button_text, "data-action": @confirm_actions, "data-reflex": @confirm_reflexes }

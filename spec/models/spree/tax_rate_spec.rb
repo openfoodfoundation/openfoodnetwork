@@ -218,7 +218,7 @@ module Spree
 
           it "should apply adjustments for two tax rates to the order" do
             expect(rate_1).to receive(:adjust)
-            expect(rate_2).to_not receive(:adjust)
+            expect(rate_2).not_to receive(:adjust)
             Spree::TaxRate.adjust(order, line_items)
           end
         end
@@ -234,7 +234,7 @@ module Spree
 
           it "should apply adjustments for two tax rates to the order" do
             expect(rate_1).to receive(:adjust)
-            expect(rate_2).to_not receive(:adjust)
+            expect(rate_2).not_to receive(:adjust)
             Spree::TaxRate.adjust(order, shipments)
           end
         end

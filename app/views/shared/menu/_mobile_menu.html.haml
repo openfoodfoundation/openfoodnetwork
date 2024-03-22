@@ -14,7 +14,7 @@
 
     %section.right{"ng-cloak" => true}
       %span.cart-span{"ng-class" => "{ dirty: Cart.dirty || Cart.empty(), 'pure-dirty': Cart.dirty }"}
-        %a.icon{ng: {click: 'toggleCartSidebar()'}}
+        %a.icon{ "ng-click": 'toggleCartSidebar()' }
           %span
             = t '.cart'
           %span.count

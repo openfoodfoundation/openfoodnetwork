@@ -1,22 +1,6 @@
 // Shipments AJAX API
 
 $(document).ready(function() {
-
-  handle_ship_click = function(){
-    var link = $(this);
-    var shipment_number = link.data('shipment-number');
-    var url = Spree.url( Spree.routes.orders_api + "/" + order_number + "/shipments/" + shipment_number + "/ship.json");
-    $.ajax({
-      type: "PUT",
-      url: url
-    }).done(function( msg ) {
-      window.location.reload();
-    }).error(function( msg ) {
-      console.log(msg);
-    });
-  }
-  $('.admin-order-edit-form a.ship').click(handle_ship_click);
-
   //handle shipping method edit click
   $('a.edit-method').click(toggleMethodEdit);
   $('a.cancel-method').click(toggleMethodEdit);

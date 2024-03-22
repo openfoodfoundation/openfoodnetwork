@@ -124,7 +124,7 @@ describe Spree::Shipment do
           to receive(:new).with(shipment.order).and_return(mock_estimator)
         allow(shipment).to receive_messages(shipping_method: nil)
         expect(shipment.refresh_rates).to eq shipping_rates
-        expect(shipment.reload.selected_shipping_rate).to_not be_nil
+        expect(shipment.reload.selected_shipping_rate).not_to be_nil
       end
 
       it 'should not refresh if shipment is shipped' do
@@ -347,13 +347,14 @@ describe Spree::Shipment do
     it "should update shipped_at timestamp" do
       allow(shipment).to receive(:send_shipped_email)
       shipment.ship!
-      expect(shipment.shipped_at).to_not be_nil
+      expect(shipment.shipped_at).not_to be_nil
       # Ensure value is persisted
       shipment.reload
-      expect(shipment.shipped_at).to_not be_nil
+      expect(shipment.shipped_at).not_to be_nil
     end
 
-    it "should send a shipment email" do
+    it "should send a shipment email if order.send_shipment_email is true" do
+      shipment.order.send_shipment_email = true
       mail_message = double 'Mail::Message'
       shipment_id = nil
       expect(Spree::ShipmentMailer).to receive(:shipped_email) { |*args|

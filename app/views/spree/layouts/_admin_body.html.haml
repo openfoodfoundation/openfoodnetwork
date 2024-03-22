@@ -3,7 +3,7 @@
 = yield :stripe_js
 
 #wrapper
-  .flash-container
+  #flashes
     = render partial: "admin/shared/flashes", locals: { flashes: flash }
 
   = render partial: "spree/layouts/admin/progress_spinner"
@@ -59,6 +59,8 @@
                 %span= yield :sidebar_title
             = yield :sidebar
 
+  = render "admin/terms_of_service_banner" if tos_need_accepting?
+    
 %script
   = raw "Spree.api_key = \"#{spree_current_user.try(:spree_api_key).to_s}\";"
 

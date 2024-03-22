@@ -1,12 +1,12 @@
 %tr.product.even
-  %td.producer{ ng: { show: 'columns.producer.visible', bind: { html: '::producersByID[product.producer_id].name'} } }
-  %td.product{ ng: { show: 'columns.product.visible', bind: '::product.name'} }
-  %td.sku{ ng: { show: 'columns.sku.visible' } }
-  %td.price{ ng: { show: 'columns.price.visible' } }
-  %td.on_hand{ ng: { show: 'columns.on_hand.visible' } }
-  %td.on_demand{ ng: { show: 'columns.on_demand.visible' } }
-  %td.reset{ colspan: 2, ng: { show: 'columns.reset.visible' } }
-  %td.inheritance{ ng: { show: 'columns.inheritance.visible' } }
-  %td.tags{ ng: { show: 'columns.tags.visible' } }
-  %td.visibility{ ng: { show: 'columns.visibility.visible' } }
-  %td.import_date{ ng: { show: 'columns.import_date.visible' } }
+  %td.producer{ "ng-show": 'columns.producer.visible', "ng-bind-html": '::producersByID[product.producer_id].name' }
+  %td.product{ "ng-show": 'columns.product.visible', "ng-bind": '::product.name' }
+  %td.sku{ "ng-show": 'columns.sku.visible' }
+  %td.price{ "ng-show": 'columns.price.visible' }
+  %td.on_hand{ "ng-show": 'columns.on_hand.visible' }
+  %td.on_demand{ "ng-show": 'columns.on_demand.visible' }
+  %td.reset{ colspan: 2, "ng-show": 'columns.reset.visible' }
+  %td.inheritance{ "ng-show": 'columns.inheritance.visible' }
+  %td.tags{ "ng-show": 'columns.tags.visible' }
+  %td.visibility{ "ng-show": 'columns.visibility.visible' }
+  %td.import_date{ "ng-show": 'columns.import_date.visible' }

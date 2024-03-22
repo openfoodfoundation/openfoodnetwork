@@ -8,6 +8,7 @@ module DfcProvider
     protect_from_forgery with: :null_session
 
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
+    rescue_from CanCan::AccessDenied, with: :unauthorized
 
     before_action :check_authorization
 
@@ -16,7 +17,7 @@ module DfcProvider
     private
 
     def check_authorization
-      head :unauthorized if current_user.nil?
+      unauthorized if current_user.nil?
     end
 
     def check_enterprise
@@ -49,6 +50,18 @@ module DfcProvider
 
     def not_found
       head :not_found
+    end
+
+    def unauthorized
+      head :unauthorized
+    end
+
+    def current_ability
+      @current_ability ||= Spree::Ability.new(current_user)
+    end
+
+    def import
+      DfcIo.import(request.body)
     end
   end
 end

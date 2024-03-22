@@ -37,7 +37,7 @@ describe TermsOfService do
       it "should always return true" do
         expect {
           allow(TermsOfServiceFile).to receive(:exists?) { false }
-        }.to_not change {
+        }.not_to change {
           TermsOfService.tos_accepted?(customer)
         }.from(true)
       end

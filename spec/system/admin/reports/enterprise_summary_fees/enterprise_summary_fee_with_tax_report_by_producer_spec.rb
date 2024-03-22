@@ -532,10 +532,10 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             expect(table).to have_content(cost_of_produce2)
             expect(table).to have_content(summary_row2)
 
-            expect(table).to_not have_content(supplier_state_tax1)
-            expect(table).to_not have_content(supplier_country_tax1)
-            expect(table).to_not have_content(cost_of_produce1)
-            expect(table).to_not have_content(summary_row1)
+            expect(table).not_to have_content(supplier_state_tax1)
+            expect(table).not_to have_content(supplier_country_tax1)
+            expect(table).not_to have_content(cost_of_produce1)
+            expect(table).not_to have_content(summary_row1)
           end
 
           it "should filter by fee name" do
@@ -550,19 +550,19 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
 
             expect(table).to have_content(supplier_state_tax1)
             expect(table).to have_content(supplier_country_tax1)
-            expect(table).to_not have_content(distributor_state_tax1)
-            expect(table).to_not have_content(distributor_country_tax1)
-            expect(table).to_not have_content(coordinator_state_tax1)
-            expect(table).to_not have_content(coordinator_country_tax1)
+            expect(table).not_to have_content(distributor_state_tax1)
+            expect(table).not_to have_content(distributor_country_tax1)
+            expect(table).not_to have_content(coordinator_state_tax1)
+            expect(table).not_to have_content(coordinator_country_tax1)
             expect(table).to have_content(cost_of_produce1)
             expect(table).to have_content(summary_row1)
 
             expect(table).to have_content(supplier_state_tax3)
             expect(table).to have_content(supplier_country_tax3)
-            expect(table).to_not have_content(distributor_state_tax3)
-            expect(table).to_not have_content(distributor_country_tax3)
-            expect(table).to_not have_content(coordinator_state_tax3)
-            expect(table).to_not have_content(coordinator_country_tax3)
+            expect(table).not_to have_content(distributor_state_tax3)
+            expect(table).not_to have_content(distributor_country_tax3)
+            expect(table).not_to have_content(coordinator_state_tax3)
+            expect(table).not_to have_content(coordinator_country_tax3)
             expect(table).to have_content(cost_of_produce3)
             expect(table).to have_content(summary_row3)
           end
@@ -577,10 +577,10 @@ describe "Enterprise Summary Fee with Tax Report By Producer" do
             table = page.find("table.report__table tbody")
             expect(table).to have_content(supplier_state_tax1)
             expect(table).to have_content(supplier_country_tax1)
-            expect(table).to_not have_content(distributor_state_tax1)
-            expect(table).to_not have_content(distributor_country_tax1)
-            expect(table).to_not have_content(coordinator_state_tax1)
-            expect(table).to_not have_content(coordinator_country_tax1)
+            expect(table).not_to have_content(distributor_state_tax1)
+            expect(table).not_to have_content(distributor_country_tax1)
+            expect(table).not_to have_content(coordinator_state_tax1)
+            expect(table).not_to have_content(coordinator_country_tax1)
             expect(table).to have_content(cost_of_produce1)
             expect(table).to have_content(summary_row_after_filtering_by_fee_owner)
           end

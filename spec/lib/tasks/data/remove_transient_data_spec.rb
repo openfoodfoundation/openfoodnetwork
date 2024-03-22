@@ -25,7 +25,7 @@ describe RemoveTransientData do
       Spree::LogEntry.create(created_at: retention_period - 1.day)
 
       expect { RemoveTransientData.new.call }
-        .to change(Spree::LogEntry, :count).by(-1)
+        .to change { Spree::LogEntry.count }.by(-1)
     end
 
     it 'deletes sessions older than retention_period' do
@@ -55,9 +55,9 @@ describe RemoveTransientData do
       it 'deletes cart orders and related objects older than retention_period' do
         RemoveTransientData.new.call
 
-        expect{ cart.reload }.to_not raise_error
-        expect{ line_item.reload }.to_not raise_error
-        expect{ adjustment.reload }.to_not raise_error
+        expect{ cart.reload }.not_to raise_error
+        expect{ line_item.reload }.not_to raise_error
+        expect{ adjustment.reload }.not_to raise_error
 
         expect{ old_cart.reload }.to raise_error ActiveRecord::RecordNotFound
         expect{ old_line_item.reload }.to raise_error ActiveRecord::RecordNotFound

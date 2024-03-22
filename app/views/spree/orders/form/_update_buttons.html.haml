@@ -6,7 +6,7 @@
           = t(:order_back_to_cart)
       - else
         .columns.small-12.medium-6
-          = link_to "#{main_app.enterprise_shop_path(@order.distributor)}#/shop", class: "button expand" do
+          = link_to "#{main_app.enterprise_shop_path(@order.distributor)}#/shop_panel", class: "button expand" do
             = t(:order_back_to_store)
         .columns.small-12.medium-6
           - if @order.distributor.website.present?
@@ -23,5 +23,5 @@
     .columns.small-12.medium-3
       = button_tag :class => 'button primary expand', :id => 'update-button', "ng-disabled" => 'update_order_form.$pristine' do
         %i.ofn-i_051-check-big
-        %span{ ng: { show: 'update_order_form.$dirty' } }= t(:save_changes)
-        %span{ ng: { hide: 'update_order_form.$dirty' } }= t(:order_saved)
+        %span{ "ng-show": 'update_order_form.$dirty' }= t(:save_changes)
+        %span{ "ng-hide": 'update_order_form.$dirty' }= t(:order_saved)

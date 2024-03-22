@@ -57,6 +57,10 @@
     &:nth-child(3) {
       padding: 20px;
     }
+
+    .actions {
+      display: none; /* avoid adding new button on old design */
+    }
   }
 }
 

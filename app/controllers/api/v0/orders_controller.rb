@@ -47,7 +47,7 @@ module Api
       def capture
         authorize! :admin, order
 
-        payment_capture = OrderCaptureService.new(order)
+        payment_capture = Orders::CaptureService.new(order)
 
         if payment_capture.call
           render json: order.reload, serializer: Api::Admin::OrderSerializer, status: :ok

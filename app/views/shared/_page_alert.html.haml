@@ -1,6 +1,6 @@
 - if ContentConfig.home_page_alert_html.present?
   .alert-cta
-    %h6= raw ContentConfig.home_page_alert_html
+    %h6= sanitize(ContentConfig.home_page_alert_html, scrubber: TrixScrubber.new)
 
 - else
   = render "shared/register_call"

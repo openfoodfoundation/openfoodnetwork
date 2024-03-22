@@ -44,8 +44,8 @@
         #{t(:enterprise_tos_message)}
         = link_to_platform_terms
       %p.tos-checkbox
-        %input{ type: 'checkbox', name: 'accept_terms', id: 'accept_terms', ng: { model: "tos_accepted" } }
+        %input{ type: 'checkbox', name: 'accept_terms', id: 'accept_terms', "ng-model": "tos_accepted" }
           %label{for: "accept_terms"} #{t(:enterprise_tos_agree)}
 
     .small-12.medium-6.columns
-      %input.button.primary.left{ type: "button", value: "{{'registration.steps.introduction.registration_action' | t}}", ng: { click: "select('details')", disabled: "tos_required && !tos_accepted", model: "tos_accepted"} }
+      %input.button.primary.left{ type: "button", value: "{{'registration.steps.introduction.registration_action' | t}}", "ng-click": "select('details')", "ng-disabled": "tos_required && !tos_accepted", "ng-model": "tos_accepted" }

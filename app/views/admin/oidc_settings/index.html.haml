@@ -7,14 +7,26 @@
   %h2= t(".connect")
   %br
 
-  - if spree_current_user.provider == 'openid_connect' && spree_current_user.uid.present?
-    = t(".already_connected")
-    = spree_current_user.uid
+  - if @account
+    = t(".connected", uid: @account.uid)
     %br
     %br
 
     = t(".view_account")
     = link_to t(".les_communs_link"), "#{ Devise.omniauth_configs[:openid_connect].options[:issuer] }/account"
+    %br
+    %br
+    = button_to t(".disconnect"), admin_oidc_setting_path(@account), method: :delete
+
+    - if @account.refresh_token.blank?
+      %br
+      %br
+      %p= t(".note_expiry")
+      %br
+      %br
+      = button_to t(".refresh"),
+        Spree::Core::Engine.routes.url_helpers.spree_user_openid_connect_omniauth_authorize_path(auth_type: "login"),
+        data: { method: :post, "ujs-navigate": "false" }
 
   - else
     = t(".link_your_account")

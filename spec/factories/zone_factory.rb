@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :zone, class: Spree::Zone do
-    name { generate(:random_string) }
+    sequence(:name) { |n| "#{generate(:random_string)}#{n}" }
     description { generate(:random_string) }
   end
 

@@ -11,9 +11,25 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
       id: 90_000,
       supplier: enterprise, name: "Pesto", description: "Basil Pesto",
       variants: [variant],
+      primary_taxon: taxon
     )
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1) }
+  let(:taxon) {
+    build(
+      :taxon,
+      name: "Processed Vegetable",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#processed-vegetable"
+    )
+  }
+
+  let!(:non_local_vegetable) {
+    create(
+      :taxon,
+      name: "Non Local Vegetable",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#non-local-vegetable"
+    )
+  }
 
   before { login_as user }
 
@@ -28,14 +44,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
 
       parameter name: :supplied_product, in: :body, schema: {
         example: {
-          '@context': {
-            'dfc-b': "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#",
-            'dfc-m': "http://static.datafoodconsortium.org/data/measures.rdf#",
-            'dfc-pt': "http://static.datafoodconsortium.org/data/productTypes.rdf#",
-            'dfc-b:hasUnit': {
-              '@type': "@id"
-            },
-          },
+          '@context': "https://www.datafoodconsortium.org",
           '@id': "http://test.host/api/dfc/enterprises/6201/supplied_products/0",
           '@type': "dfc-b:SuppliedProduct",
           'dfc-b:name': "Apple",
@@ -79,6 +88,11 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
         end
 
         it "creates a product and variant" do |example|
+          # Despite requiring a tax catogory...
+          # https://github.com/openfoodfoundation/openfoodnetwork/issues/11212
+          create(:tax_category, is_default: true)
+          Spree::Config.products_require_tax_category = true
+
           expect { submit_request(example.metadata) }
             .to change { enterprise.supplied_products.count }.by(1)
 
@@ -100,6 +114,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
           product = Spree::Product.find(product_id)
           expect(product.name).to eq "Apple"
           expect(product.variants).to eq [variant]
+          expect(product.primary_taxon).to eq(non_local_vegetable)
 
           # Creates a variant for existing product
           supplied_product[:'ofn:spree_product_id'] = product_id
@@ -127,6 +142,36 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
               '"ofn:spree_product_id":90000'
             )
         end
+
+        context "when supplying spree_product_uri matching the host" do
+          it "creates a variant for the existing product" do |example|
+            supplied_product[:'ofn:spree_product_uri'] =
+              "http://test.host/api/dfc/enterprises/10000?spree_product_id=90000"
+            supplied_product[:'dfc-b:hasQuantity'][:'dfc-b:value'] = 6
+
+            expect {
+              submit_request(example.metadata)
+              product.variants.reload
+            }
+              .to change { product.variants.count }.by(1)
+
+            # Creates a variant for existing product
+            variant_id = json_response["@id"].split("/").last.to_i
+            new_variant = Spree::Variant.find(variant_id)
+            expect(product.variants).to include(new_variant)
+            expect(new_variant.unit_value).to eq 6
+
+            # Insert static value to keep documentation deterministic:
+            response.body.gsub!(
+              "supplied_products/#{variant_id}",
+              "supplied_products/10001"
+            )
+              .gsub!(
+                %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
+                "active_storage/url/logo-white.png",
+              )
+          end
+        end
       end
     end
   end
@@ -146,6 +191,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
         run_test! do
           expect(response.body).to include variant.name
           expect(json_response["ofn:spree_product_id"]).to eq 90_000
+          expect(json_response["dfc-b:hasType"]).to eq("dfc-pt:processed-vegetable")
           expect(json_response["ofn:image"]).to include("logo-white.png")
 
           # Insert static value to keep documentation deterministic:
@@ -165,6 +211,14 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
     end
 
     put "Update SuppliedProduct" do
+      let!(:drink_taxon) {
+        create(
+          :taxon,
+          name: "Drink",
+          dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#drink"
+        )
+      }
+
       consumes "application/json"
 
       parameter name: :supplied_product, in: :body, schema: {
@@ -188,8 +242,9 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
             submit_request(example.metadata)
             variant.reload
           }.to change { variant.description }.to("DFC-Pesto updated")
-            .and change { variant.name }.to("Pesto novo")
+            .and change { variant.display_name }.to("Pesto novo")
             .and change { variant.unit_value }.to(17)
+            .and change { variant.product.primary_taxon }.to(drink_taxon)
         end
       end
     end

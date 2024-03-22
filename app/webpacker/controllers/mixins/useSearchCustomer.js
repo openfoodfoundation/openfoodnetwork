@@ -9,7 +9,7 @@ export const useSearchCustomer = (controller) => {
       fetch("/admin/search/customers.json?" + new URLSearchParams(params))
         .then((response) => response.json())
         .then((json) => {
-          this.items = json;
+          this.items = [...this.items, ...json];
           callback(json);
         })
         .catch((error) => {

@@ -380,7 +380,6 @@ fr_CA:
   cancel_order: "Annuler la commande"
   confirm_send_invoice: "La facture de cette commande va être transmise à l'acheteur. Etes-vous sûr de vouloir continuer ?"
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
-  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
   invoice: "Facture"
   invoices: "Factures"
   file: "fichier"
@@ -523,6 +522,9 @@ fr_CA:
       actions:
         edit: Modifier
         clone: Dupliquer
+        delete: Supprimer
+      image:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence à
@@ -764,10 +766,11 @@ fr_CA:
         changed_summary:
           one: "%{count} produits modifiés"
           other: "%{count} produits modifiés"
-        save: Sauvegarder les changements
         reset: Annuler les changements
-      bulk_update:
-        success: "Produits mis à jour"
+        save: Sauvegarder les changements
+        new_variant: Nouvelle variante
+      edit_image:
+        close: Retour
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -809,6 +812,9 @@ fr_CA:
         product_categories: Catégorie Produit
         tax_categories: Taxe applicable
         shipping_categories: Condition de transport
+      dfc_import_form:
+        enterprise: "Entreprise"
+        import: "Importer"
       import:
         review: Vérifier
         import: Importer
@@ -866,6 +872,7 @@ fr_CA:
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Boutiques
       product_headings:
+        distributor: Hub-distributeur
         producer: Producteur
         sku: Référence Produit
         name: Nom
@@ -1197,6 +1204,9 @@ fr_CA:
           create_custom_tab: "Créer un onglet personnalisé dans la boutique"
           custom_tab_title: "Titre de l'onglet personnalisé"
           custom_tab_content: "Contenu de l'onglet personnalisé"
+        connected_apps:
+          legend: "Connected apps  https://n8n.openfoodnetwork.org.uk/webhook-test/regen/connect-enterprise/can"
+          loading: "Chargement en cours"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1446,6 +1456,7 @@ fr_CA:
           users: "Utilisateurs"
           vouchers: Bon de réduction
           white_label: "Marque blanche"
+          connected_apps: "Connected apps  https://n8n.openfoodnetwork.org.uk/webhook-test/regen/connect-enterprise/can"
         enterprise_group:
           primary_details: "Informations de base"
           users: "Utilisateurs"
@@ -1567,7 +1578,6 @@ fr_CA:
       index:
         title: "OIDC"
         connect: "Connecter votre compte"
-        already_connected: "Votre compte est déjà relié avec cette autorisation :"
         les_communs_link: "Serveur OIDC Les Communs"
         link_your_account: "Vous devez d'abord vous connecter avec le serveur des Communs."
         link_account_button: "Relier votre compte OIDC Les Communs"
@@ -1888,6 +1898,8 @@ fr_CA:
   invoice_tax_total: "Total Taxe :"
   tax_invoice: "FACTURE"
   tax_total: "Total taxe (%{rate}) :"
+  invoice_shipping_category_delivery: "Livraison"
+  invoice_shipping_category_pickup: "Retrait"
   total_excl_tax: "Total HT :"
   total_incl_tax: "Total TTC :"
   abn: "SIRET"
@@ -3669,8 +3681,6 @@ fr_CA:
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     taxonomy_edit: "Modifier la taxonomie"
-    taxonomy_tree_error: "Erreur de l'arbre de toxonomie"
-    taxonomy_tree_instruction: "Consignes pour l'arbre de taxonomie"
     tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
@@ -4251,6 +4261,11 @@ fr_CA:
           email: "Email"
           total: "Total"
           billing_address_name: "Nom"
+      taxons:
+        form:
+          name: Nom
+          permalink: Nom pour URL (sans espace)
+          description: Description
       general_settings:
         edit:
           legal_settings: "Configuration légales"

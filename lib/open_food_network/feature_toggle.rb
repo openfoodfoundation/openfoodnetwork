@@ -32,31 +32,24 @@ module OpenFoodNetwork
       "api_v1" => <<~DESC,
         Enable the new API at <code>/api/v1</code>
       DESC
-      "background_reports" => <<~DESC,
-        Generate reports in a background process to limit memory consumption.
-      DESC
       "match_shipping_categories" => <<~DESC,
         During checkout, show only shipping methods that support <em>all</em>
         shipping categories. Activating this feature for an enterprise owner
         will activate it for all shops of this enterprise.
       DESC
-      "vouchers" => <<~DESC,
-        Add voucher functionality. Voucher can be managed via Enterprise settings.
-        This is activated per enterprise. Enter actors as <code>Enterprise;1234</code>.
-      DESC
       "invoices" => <<~DESC,
         Preserve the state of generated invoices and enable multiple invoice numbers instead of only one live-updating invoice.
+      DESC
+      "connected_apps" => <<~DESC,
+        Enterprise data can be shared with another app.
+        The first example is the Australian Discover Regenerative Portal.
       DESC
     }.freeze
 
     # Features you would like to be enabled to start with.
-    #
-    # Copy features here that were activated in a migration so that new
-    # instances, development and test environments have the feature active.
     ACTIVE_BY_DEFAULT = {
-      "background_reports" => <<~DESC,
-        Generate reports in a background process to limit memory consumption.
-      DESC
+      # Copy features here that were activated in a migration so that new
+      # instances, development and test environments have the feature active.
     }.freeze
 
     def self.setup!

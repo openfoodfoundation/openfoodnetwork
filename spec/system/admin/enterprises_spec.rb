@@ -97,14 +97,15 @@ describe '
     expect(page).to have_checked_field "enterprise_require_login_false"
     expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
     find(:xpath, '//*[@id="enterprise_require_login_true"]').trigger("click")
-    expect(page).to have_no_checked_field "enterprise_require_login_false"
+    expect(page).not_to have_checked_field "enterprise_require_login_false"
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
     accept_alert do
+      scroll_to(:bottom)
       within(".side_menu") { click_link "Users" }
     end
     select2_select user.email, from: 'enterprise_owner_id'
-    expect(page).to have_no_selector '.select2-drop-mask' # Ensure select2 has finished
+    expect(page).not_to have_selector '.select2-drop-mask' # Ensure select2 has finished
 
     accept_alert do
       click_link "About"
@@ -120,43 +121,35 @@ describe '
       click_link "Primary Details"
     end
 
-    # Back navigation loads the tab content
-    page.execute_script('window.history.back()')
-    expect(page).to have_selector '#enterprise_description'
-
-    accept_alert do
-      click_link "Primary Details"
-    end
-
     # Unchecking hides the Properties tab
     uncheck 'enterprise_is_primary_producer'
     choose 'None'
-    expect(page).not_to have_selector "#enterprise_fees"
-    expect(page).not_to have_selector "#payment_methods"
-    expect(page).not_to have_selector "#shipping_methods"
-    expect(page).not_to have_selector "#properties"
+    expect(page).not_to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
+    expect(page).not_to have_selector "[data-test=link_for_properties]"
     # Checking displays the Properties tab
     check 'enterprise_is_primary_producer'
-    expect(page).to have_selector "#enterprise_fees"
-    expect(page).not_to have_selector "#payment_methods"
-    expect(page).not_to have_selector "#shipping_methods"
-    expect(page).to have_selector "#properties"
+    expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
+    expect(page).to have_selector "[data-test=link_for_properties]"
     uncheck 'enterprise_is_primary_producer'
     choose 'Own'
-    expect(page).to have_selector "#enterprise_fees"
-    expect(page).to have_selector "#payment_methods"
-    expect(page).to have_selector "#shipping_methods"
+    expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).to have_selector "[data-test=link_for_shipping_methods]"
     choose 'Any'
-    expect(page).to have_selector "#enterprise_fees"
-    expect(page).to have_selector "#payment_methods"
-    expect(page).to have_selector "#shipping_methods"
+    expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
+    expect(page).to have_selector "[data-test=link_for_payment_methods]"
+    expect(page).to have_selector "[data-test=link_for_shipping_methods]"
 
     page.find("#enterprise_group_ids-ts-control").set(eg1.name)
     page.find("#enterprise_group_ids-ts-dropdown .option.active").click
 
     within(".permalink") do
       link_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"
-      link = find_link(link)
+      link = find_link(link_path)
       expect(link[:href]).to eq link_path
       expect(link[:target]).to eq '_blank'
     end
@@ -255,6 +248,14 @@ describe '
     )
     expect(page).to have_checked_field "enterprise_require_login_true"
     expect(page).to have_checked_field "enterprise_enable_subscriptions_true"
+
+    # Back navigation loads the tab content
+    page.execute_script('window.history.back()')
+    expect(page).to have_selector '#enterprise_description'
+
+    # Forward navigation brings back the previous tab
+    page.execute_script('window.history.forward()')
+    expect(page).to have_content 'This is my shopfront message.'
 
     # Test that the right input alert text is displayed
     accept_alert('Please enter a URL to insert') do
@@ -412,7 +413,7 @@ describe '
           click_button 'Create'
 
           # Then it should show me an error
-          expect(page).to have_no_content 'Enterprise "zzz" has been successfully created!'
+          expect(page).not_to have_content 'Enterprise "zzz" has been successfully created!'
           expect(page).to have_content "#{enterprise_user.email} is not permitted " \
                                        "to own any more enterprises (limit is 1)."
         end
@@ -587,7 +588,7 @@ describe '
             expect do
               click_button "Invite"
               expect(page).to have_content "Email is invalid"
-            end.to_not enqueue_job ActionMailer::MailDeliveryJob
+            end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
@@ -599,7 +600,7 @@ describe '
             expect do
               click_button "Invite"
               expect(page).to have_content "User already exists"
-            end.to_not enqueue_job ActionMailer::MailDeliveryJob
+            end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
@@ -622,9 +623,7 @@ describe '
       before do
         visit edit_admin_enterprise_path(distributor1)
 
-        within(".side_menu") do
-          click_link "White Label"
-        end
+        select_white_label
       end
 
       it "set the hide_ofn_navigation preference for the current shop" do
@@ -635,9 +634,7 @@ describe '
         expect(distributor1.reload.hide_ofn_navigation).to be true
 
         visit edit_admin_enterprise_path(distributor1)
-        within(".side_menu") do
-          click_link "White Label"
-        end
+        select_white_label
 
         uncheck "Hide OFN navigation"
         click_button 'Update'
@@ -654,9 +651,7 @@ describe '
         expect(distributor1.reload.hide_ofn_navigation).to be true
 
         visit edit_admin_enterprise_path(distributor1)
-        within(".side_menu") do
-          click_link "White Label"
-        end
+        select_white_label
 
         expect(page).to have_content "LOGO USED IN SHOPFRONT"
         uncheck "Hide OFN navigation"
@@ -671,9 +666,7 @@ describe '
           distributor1.update_attribute(:hide_ofn_navigation, true)
 
           visit edit_admin_enterprise_path(distributor1)
-          within(".side_menu") do
-            click_link "White Label"
-          end
+          select_white_label
         end
 
         it "can updload the white label logo for the current shop" do
@@ -693,9 +686,7 @@ describe '
             distributor1.update white_label_logo: white_logo_file
 
             visit edit_admin_enterprise_path(distributor1)
-            within(".side_menu") do
-              click_link "White Label"
-            end
+            select_white_label
           end
 
           it "can remove the white label logo for the current shop" do
@@ -707,7 +698,7 @@ describe '
             end
             expect(flash_message).to match(/Logo removed/)
             distributor1.reload
-            expect(distributor1.white_label_logo).to_not be_attached
+            expect(distributor1.white_label_logo).not_to be_attached
           end
 
           shared_examples "edit link with" do |url, result|
@@ -749,9 +740,7 @@ describe '
           expect(distributor1.reload.hide_groups_tab).to be true
 
           visit edit_admin_enterprise_path(distributor1)
-          within(".side_menu") do
-            click_link "White Label"
-          end
+          select_white_label
 
           uncheck "Hide groups tab in shopfront"
           click_button 'Update'
@@ -763,9 +752,7 @@ describe '
         context "creating custom tabs" do
           before do
             visit edit_admin_enterprise_path(distributor1)
-            within(".side_menu") do
-              click_link "White Label"
-            end
+            select_white_label
             check "Create custom tab in shopfront"
           end
 
@@ -787,9 +774,7 @@ describe '
               expect(page).to have_content("Custom tab title can't be blank")
               expect(distributor1.reload.custom_tab).to be_nil
 
-              within(".side_menu") do
-                click_link "White Label"
-              end
+              select_white_label
               expect(page).to have_checked_field "Create custom tab in shopfront"
             end
 
@@ -812,9 +797,7 @@ describe '
             before do
               distributor1.update(custom_tab:)
               visit edit_admin_enterprise_path(distributor1)
-              within(".side_menu") do
-                click_link "White Label"
-              end
+              select_white_label
             end
 
             it "display the custom tab fields with the current values" do
@@ -1091,6 +1074,14 @@ describe '
         expect(enterprise.reload.is_primary_producer).to eq false
         expect(enterprise.reload.sells).to eq('none')
       end
+    end
+  end
+
+  def select_white_label
+    # The savebar sits on top of the bottom menu item until we scroll.
+    scroll_to :bottom
+    within(".side_menu") do
+      click_link "White Label"
     end
   end
 end

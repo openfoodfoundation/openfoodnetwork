@@ -62,14 +62,12 @@ describe "As a consumer, I want to checkout my order" do
       let(:order) { create(:order_ready_for_payment, distributor:) }
 
       context "with one payment method, with a fee" do
-        before do
-          visit checkout_step_path(:payment)
-        end
         it "preselect the payment method if only one is available" do
-          expect(page).to have_checked_field "payment_method_#{payment_with_fee.id}"
-        end
-        it "displays the transaction fee" do
-          expect(page).to have_content("#{payment_with_fee.name} " + with_currency(1.23).to_s)
+          visit checkout_step_path(:payment)
+
+          expect(page).to have_title "Checkout Payment - Open Food Network"
+          expect(page).to have_checked_field "Payment with Fee"
+          expect(page).to have_content "Payment with Fee $1.23"
         end
       end
 
@@ -116,7 +114,7 @@ describe "As a consumer, I want to checkout my order" do
         end
       end
 
-      describe "vouchers", feature: :vouchers do
+      describe "vouchers" do
         context "with no voucher available" do
           before do
             visit checkout_step_path(:payment)
@@ -251,6 +249,25 @@ describe "As a consumer, I want to checkout my order" do
               fill_out_card_details
               click_on "Next - Order summary"
               proceed_to_summary
+            end
+
+            context "when saving card" do
+              it "selects Stripe SCA and proceeds to the summary step" do
+                stub_customers_post_request(email: order.user.email)
+                stub_payment_method_attach_request
+
+                choose pay_method.to_s
+                fill_out_card_details
+                check "Save card for future use"
+
+                click_on "Next - Order summary"
+                proceed_to_summary
+
+                # Verify card has been saved with correct stripe IDs
+                user_credit_card = order.reload.user.credit_cards.first
+                expect(user_credit_card.gateway_payment_profile_id).to eq "pm_123"
+                expect(user_credit_card.gateway_customer_profile_id).to eq "cus_A123"
+              end
             end
           end
         end

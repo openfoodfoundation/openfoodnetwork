@@ -243,7 +243,6 @@ pt:
   cancel_order: "Cancelar Encomenda"
   confirm_send_invoice: "Vai ser enviada uma factura desta encomenda ao consumidor. Tem a certeza que deseja continuar?"
   confirm_resend_order_confirmation: "Tem a certeza que deseja enviar novamente o email de confirmação de encomenda? "
-  must_have_valid_business_number: "%{enterprise_name}tem de ter um NIPC/NIF válido antes de se poder enviar facturas."
   invoice: "Factura"
   active: "Ativo"
   cancelled: "Cancelada"
@@ -375,6 +374,9 @@ pt:
       actions:
         edit: Editar
         clone: Clonar
+        delete: Apagar
+      image:
+        edit: Editar
     begins_at: Começa às
     begins_on: Começa em
     customer: Consumidor/a
@@ -578,6 +580,10 @@ pt:
         categories:
           label: Categorias
         search: Procurar
+      table:
+        new_variant: Nova variante
+      edit_image:
+        close: Voltar
     product_import:
       title: Importação de Produtos
       file_not_found: O ficheiro não foi encontrado ou não pôde ser aberto
@@ -617,6 +623,9 @@ pt:
         product_categories: Categorias de Produtos
         tax_categories: Categorias de Impostos
         shipping_categories: Categorias de Envio
+      dfc_import_form:
+        enterprise: "Organização"
+        import: "Importar"
       import:
         review: Rever
         import: Importar
@@ -674,6 +683,7 @@ pt:
         view_products: Ir para a Página de Produtos
         view_inventory: Ir para a Página de Inventário
       product_headings:
+        distributor: Distribuidor
         producer: Produtor/a
         sku: SKU
         name: Nome
@@ -951,6 +961,8 @@ pt:
           rate: Taxa
           customers: Consumidor
           active: Activo?
+        connected_apps:
+          loading: "A carregar"
       actions:
         edit_profile: Definições
         properties: Propriedades
@@ -1475,6 +1487,8 @@ pt:
   invoice_tax_total: "Total IVA:"
   tax_invoice: "FACTURA FISCAL"
   tax_total: "Total de Impostos (%{rate}):"
+  invoice_shipping_category_delivery: "Entrega"
+  invoice_shipping_category_pickup: "Levantamento"
   total_excl_tax: "Total (excl. imposto):"
   total_incl_tax: "Total (incl. imposto):"
   abn: "NIPC:"
@@ -3447,6 +3461,10 @@ pt:
           email: "Email"
           total: "Total"
           billing_address_name: "Nome"
+      taxons:
+        form:
+          name: Nome
+          description: Descrição
       general_settings:
         edit:
           legal_settings: "Configurações Legais"

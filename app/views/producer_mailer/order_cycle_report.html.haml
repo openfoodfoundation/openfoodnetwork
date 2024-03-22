@@ -20,8 +20,9 @@
       %tr
         %th
           = t :sku
-        %th
-          = t :supplier
+        - if @distributors_pickup_times.many?
+          %th
+            = t :supplier
         %th
           = t :product
         %th.text-right
@@ -36,29 +37,31 @@
       - @grouped_line_items.each_pair do |product_and_full_name, line_items|
         %tr
           %td
-            #{line_items.first.variant.sku}
+            = line_items.first.variant.sku
+          - if @distributors_pickup_times.many?
+            %td
+              = line_items.first.product.supplier.name
           %td
-            #{raw(line_items.first.product.supplier.name)}
-          %td
-            #{raw(product_and_full_name)}
+            = product_and_full_name
           %td.text-right
-            #{line_items.sum(&:quantity)}
+            = line_items.sum(&:quantity)
           %td.text-right
-            #{line_items.first.single_money}
+            = line_items.first.single_money
           %td.text-right
-            #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency) }
+            = Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency)
           %td.tax.text-right
-            #{Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency) }
+            = Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency)
       %tr.total-row
         %td
-        %td
+        - if @distributors_pickup_times.many?
+          %td
         %td
         %td
         %td
         %td.text-right
-          #{@total}
+          = @total
         %td.text-right
-          #{@tax_total}
+          = @tax_total
 - if @customer_line_items
   %p
     = t :producer_mail_order_customer_text
@@ -67,8 +70,9 @@
       %tr
         %th
           = t :sku
-        %th
-          = t :supplier
+        - if @distributors_pickup_times.many?
+          %th
+            = t :supplier
         %th
           = t :product
         %th.text-right
@@ -81,32 +85,34 @@
       - @customer_line_items.each do |line_item|
         %tr
           %td
-            #{line_item[:sku]}
+            = line_item[:sku]
+          - if @distributors_pickup_times.many?
+            %td
+              = line_item[:supplier_name]
           %td
-            #{raw(line_item[:supplier_name])}
-          %td
-            #{raw(line_item[:product_and_full_name])}
+            = line_item[:product_and_full_name]
           %td.text-right
-            #{line_item[:quantity]}
+            = line_item[:quantity]
           %td
-            #{raw(line_item[:first_name])}
+            = line_item[:first_name]
           %td
-            #{raw(line_item[:last_name])}
+            = line_item[:last_name]
 %p
   = t :producer_mail_text_after
 %p
-  #{t(:producer_mail_signoff)},
+  = t(:producer_mail_signoff)
+  ,
   %em
     %p
-      #{@coordinator.name}
+      = @coordinator.name
     %p
       %br
-        #{@coordinator.address.address1}
+        = @coordinator.address.address1
       %br
-        #{@coordinator.address.city}
+        = @coordinator.address.city
       %br
-        #{@coordinator.address.zipcode}
+        = @coordinator.address.zipcode
     %p
-      #{@coordinator.phone}
+      = @coordinator.phone
     %p
-      #{@coordinator.contact.email}
+      = @coordinator.contact.email

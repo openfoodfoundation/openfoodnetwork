@@ -213,7 +213,6 @@ pl:
   cancel_order: "Anuluj zamówienie"
   confirm_send_invoice: "Rachunek do tego zamówienia zostanie wysłany do klienta. Kontynuować?"
   confirm_resend_order_confirmation: "Na pewno ponownie wysłać potwierdzającą wiadomość e-mail?"
-  must_have_valid_business_number: "%{enterprise_name} musi mieć ważny NIP, aby można było wysyłać faktury."
   invoice: "Faktura"
   cancelled: "Anulowane"
   more: "Więcej"
@@ -334,6 +333,9 @@ pl:
       actions:
         edit: Edytuj
         clone: Kopiuj
+        delete: Usuń
+      image:
+        edit: Edytuj
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient
@@ -518,6 +520,8 @@ pl:
         producers:
           label: Producenci
         search: Szukaj
+      edit_image:
+        close: Wstecz
     product_import:
       title: Import produktów
       file_not_found: Nie znaleziono pliku lub nie można go otworzyć
@@ -557,6 +561,9 @@ pl:
         product_categories: Kategorie produktów
         tax_categories: Kategorie podatków
         shipping_categories: Kategorie dostaw
+      dfc_import_form:
+        enterprise: "Podmiot"
+        import: "Import"
       import:
         review: Przejrzyj
         import: Import
@@ -1354,6 +1361,7 @@ pl:
   invoice_tax_total: "Suma podatku VAT:"
   tax_invoice: "FAKTURA PODATKOWA"
   tax_total: "Całkowity podatek (%{rate}):"
+  invoice_shipping_category_pickup: "Odbiór"
   total_excl_tax: "Razem (bez podatku):"
   total_incl_tax: "Razem (z podatkiem):"
   abn: "NIP:"
@@ -3460,6 +3468,10 @@ pl:
           email: "E-mail"
           total: "Razem"
           billing_address_name: "Nazwa"
+      taxons:
+        form:
+          name: Nazwa
+          description: Opis
       general_settings:
         edit:
           legal_settings: "Ustawienia prawne"

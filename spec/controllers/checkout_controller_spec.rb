@@ -148,7 +148,7 @@ describe CheckoutController, type: :controller do
           it "doesn't update default bill address on user" do
             expect {
               put :update, params: params.merge(order: { save_bill_address: "0" })
-            }.to_not change {
+            }.not_to change {
               order.user.reload.bill_address
             }
           end
@@ -163,7 +163,7 @@ describe CheckoutController, type: :controller do
           it "doesn't update default ship address on user" do
             expect {
               put :update, params: params.merge(order: { save_ship_address: "0" })
-            }.to_not change {
+            }.not_to change {
               order.user.reload.ship_address
             }
           end
@@ -196,7 +196,7 @@ describe CheckoutController, type: :controller do
           end
 
           it "doesn't recalculate the voucher adjustment" do
-            expect(service).to_not receive(:update)
+            expect(service).not_to receive(:update)
 
             put(:update, params:)
 
@@ -256,7 +256,7 @@ describe CheckoutController, type: :controller do
         order.bill_address = address
         order.ship_address = address
         order.select_shipping_method shipping_method.id
-        OrderWorkflow.new(order).advance_to_payment
+        Orders::WorkflowService.new(order).advance_to_payment
       end
 
       context "with incomplete data" do
@@ -387,7 +387,7 @@ describe CheckoutController, type: :controller do
         order.bill_address = address
         order.ship_address = address
         order.select_shipping_method shipping_method.id
-        OrderWorkflow.new(order).advance_to_payment
+        Orders::WorkflowService.new(order).advance_to_payment
 
         order.payments << build(:payment, amount: order.total, payment_method:)
         order.next
@@ -459,7 +459,7 @@ describe CheckoutController, type: :controller do
       allow(order).to receive(:distributor).and_return(distributor)
       order.update(order_cycle:)
 
-      allow(OrderCycleDistributedVariants).to receive(:new).and_return(
+      allow(OrderCycles::DistributedVariantsService).to receive(:new).and_return(
         order_cycle_distributed_variants
       )
     end

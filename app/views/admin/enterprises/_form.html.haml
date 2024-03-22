@@ -9,12 +9,6 @@
     %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel" }}
       %legend= t(".#{ item[:name] }.legend")
 
-  - when 'vouchers'
-    - if feature?(:vouchers, spree_current_user, @enterprise)
-      %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel"  }}
-        %legend= t(".#{ item[:form_name] || item[:name] }.legend")
-        = render "admin/enterprises/form/#{ item[:form_name] || item[:name] }", f: f
-
   - else
     %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel"  }}
       %legend= t(".#{ item[:form_name] || item[:name] }.legend")

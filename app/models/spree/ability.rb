@@ -147,7 +147,8 @@ module Spree
       end
       can [:manage_payment_methods,
            :manage_shipping_methods,
-           :manage_enterprise_fees], Enterprise do |enterprise|
+           :manage_enterprise_fees,
+           :manage_connected_apps], Enterprise do |enterprise|
         user.enterprises.include? enterprise
       end
 
@@ -176,7 +177,7 @@ module Spree
 
       can [:admin, :create], :manager_invitation
 
-      can [:admin, :index], :oidc_setting
+      can [:admin, :index, :destroy], :oidc_setting
 
       can [:admin, :create], Voucher
     end
@@ -237,6 +238,8 @@ module Spree
 
       can [:admin, :index, :guide, :import, :save, :save_data,
            :validate_data, :reset_absent_products], ProductImport::ProductImporter
+
+      can [:admin, :index], ::Admin::DfcProductImportsController
 
       # Reports page
       can [:admin, :index, :show], ::Admin::ReportsController

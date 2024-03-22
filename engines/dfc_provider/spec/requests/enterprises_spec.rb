@@ -6,7 +6,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) do
     create(
-      :distributor_enterprise, :with_logo_image,
+      :distributor_enterprise, :with_logo_image, :with_promo_image,
       id: 10_000, owner: user, abn: "123 456", name: "Fred's Farm",
       description: "This is an awesome enterprise",
       contact_name: "Fred Farmer",
@@ -29,6 +29,14 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
       :product_with_image,
       id: 90_000, supplier: enterprise, name: "Apple", description: "Round",
       variants: [variant],
+      primary_taxon: non_local_vegetable
+    )
+  }
+  let(:non_local_vegetable) {
+    build(
+      :taxon,
+      name: "Non Local Vegetable",
+      dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#non-local-vegetable"
     )
   }
   let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, sku: "APP") }
@@ -72,6 +80,9 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
             ).gsub!(
               %r{active_storage/[0-9A-Za-z/=-]*/logo.png},
               "active_storage/url/logo.png",
+            ).gsub!(
+              %r{active_storage/[0-9A-Za-z/=-]*/promo.png},
+              "active_storage/url/promo.png",
             )
           end
         end
@@ -82,7 +93,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
         let(:other_enterprise) { create(:distributor_enterprise) }
 
         run_test! do
-          expect(response.body).to_not include "Apple"
+          expect(response.body).not_to include "Apple"
         end
       end
     end

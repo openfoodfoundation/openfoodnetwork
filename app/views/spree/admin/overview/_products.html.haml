@@ -1,29 +1,26 @@
+- color_class = "warning" unless @product_count.positive?
+- icon_class = @product_count.positive? ? "icon-ok-sign" : "icon-remove-sign"
 %div.dashboard_item.seven.columns.alpha#products
-  %div.header.sixteen.columns.alpha{ :class => "#{@product_count > 0 ? "" : "red"}"}
+  %div.header.sixteen.columns.alpha{class: color_class}
     %h3.ten.columns.alpha
       = t "products"
-    - if @product_count > 0
-      %a.six.columns.omega.icon-plus.button.blue{ href: "#{new_admin_product_path}" }
+    - if @product_count.positive?
+      %a.six.columns.omega.icon-plus.button{ href: new_admin_product_path }
         = t "spree_admin_enterprises_create_new"
     - else
-      %a{ "ofn-with-tip" => "The products that you sell through the Open Food Network." }
+      %a{ "ofn-with-tip" => t(".products_tip") }
         = t "admin.whats_this"
   %div.sixteen.columns.alpha.list
-    - if @product_count > 0
-      %div.sixteen.columns.alpha.list-item
-        %span.thirteen.columns.alpha
-          = t(".active_products", count: @product_count )
-        %span.three.columns.omega
-          %span.icon-ok-sign
-      %a.sixteen.columns.alpha.button.bottom.blue{ href: "#{admin_products_path}" }
-        = t "spree_admin_enterprises_producers_manage_products"
-        %span.icon-arrow-right
-    - else
-      %div.sixteen.columns.alpha.list-item.red
-        %span.thirteen.columns.alpha
-          = t(".active_products", count: @product_count )
-        %span.three.columns.omega
-          %span.icon-remove-sign
-      %a.sixteen.columns.alpha.button.bottom.red{ href: "#{new_admin_product_path}" }
-        = t "spree_admin_enterprises_create_new_product"
-        %span.icon-arrow-right
+    %div.sixteen.columns.alpha.list-item{class: color_class}
+      %span.thirteen.columns.alpha
+        = t(".active_products", count: @product_count)
+      %span.three.columns.omega
+        %span{class: icon_class}
+  - if @product_count.positive?
+    %a.sixteen.columns.alpha.button.bottom{ href: admin_products_path, class: color_class }
+      = t "spree_admin_enterprises_producers_manage_products"
+      %span.icon-arrow-right
+  - else
+    %a.sixteen.columns.alpha.button.bottom{ href: new_admin_product_path, class: color_class }
+      = t "spree_admin_enterprises_create_new_product"
+      %span.icon-arrow-right

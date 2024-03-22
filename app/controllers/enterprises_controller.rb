@@ -70,7 +70,7 @@ class EnterprisesController < BaseController
     order = current_order(true)
 
     # reset_distributor must be called before any call to current_customer or current_distributor
-    order_cart_reset = OrderCartReset.new(order, params[:id])
+    order_cart_reset = Orders::CartResetService.new(order, params[:id])
     order_cart_reset.reset_distributor
     order_cart_reset.reset_other!(spree_current_user, current_customer)
   rescue ActiveRecord::RecordNotFound

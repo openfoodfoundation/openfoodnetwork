@@ -20,7 +20,7 @@ module Spree
       def generate
         @order = Order.find_by(number: params[:order_id])
         authorize! :invoice, @order
-        OrderInvoiceGenerator.new(@order).generate_or_update_latest_invoice
+        ::Orders::GenerateInvoiceService.new(@order).generate_or_update_latest_invoice
         redirect_back(fallback_location: spree.admin_dashboard_path)
       end
 

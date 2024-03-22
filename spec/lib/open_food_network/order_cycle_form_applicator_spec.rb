@@ -185,7 +185,7 @@ module OpenFoodNetwork
           before { allow(applicator).to receive(:manages_coordinator?) { false } }
 
           it "does not destroy any exchanges" do
-            expect(applicator).to_not receive(:with_permission)
+            expect(applicator).not_to receive(:with_permission)
             applicator.send(:destroy_untouched_exchanges)
           end
         end
@@ -238,26 +238,26 @@ module OpenFoodNetwork
           expect(ids).to include v1.id
 
           # Does not add variants that are not editable
-          expect(ids).to_not include v2.id
+          expect(ids).not_to include v2.id
 
           # Keeps existing variants, when they are explicitly mentioned in the request
           expect(ids).to include v3.id
 
           # Removes existing variants that are editable, when they are not mentioned in the request
-          expect(ids).to_not include v4.id
+          expect(ids).not_to include v4.id
 
           # Removes existing variants that are editable, when the request explicitly removes them
-          expect(ids).to_not include v5.id
+          expect(ids).not_to include v5.id
 
           # Keeps existing variants that are not editable
           expect(ids).to include v6.id
 
           # Removes existing variants that are not in an incoming exchange,
           # regardless of whether they are not editable
-          expect(ids).to_not include v7.id, v8.id
+          expect(ids).not_to include v7.id, v8.id
 
           # Does not add variants that are not in an incoming exchange
-          expect(ids).to_not include v9.id
+          expect(ids).not_to include v9.id
         end
       end
 
@@ -300,7 +300,7 @@ module OpenFoodNetwork
           expect(ids).to include v1.id
 
           # Does not add variants that are not editable
-          expect(ids).to_not include v2.id
+          expect(ids).not_to include v2.id
 
           # Keeps existing variants, if they are editable and requested
           expect(ids).to include v3.id
@@ -309,13 +309,13 @@ module OpenFoodNetwork
           expect(ids).to include v4.id
 
           # Removes existing variants that are editable, when the request explicitly removes them
-          expect(ids).to_not include v5.id
+          expect(ids).not_to include v5.id
 
           # Keeps existing variants that are not editable
           expect(ids).to include v6.id
 
           # Removes existing variants that are editable, when they are not mentioned in the request
-          expect(ids).to_not include v7.id
+          expect(ids).not_to include v7.id
         end
       end
 
@@ -500,8 +500,8 @@ module OpenFoodNetwork
             exchange.reload
             expect(exchange.variants).to match_array [variant1, variant3]
             expect(exchange.enterprise_fees).to match_array [enterprise_fee1, enterprise_fee2]
-            expect(exchange.pickup_time).to_not eq 'New Pickup Time'
-            expect(exchange.pickup_instructions).to_not eq 'New Pickup Instructions'
+            expect(exchange.pickup_time).not_to eq 'New Pickup Time'
+            expect(exchange.pickup_instructions).not_to eq 'New Pickup Instructions'
             expect(exchange.tag_list).to eq []
             expect(applicator.send(:touched_exchanges)).to eq [exchange]
           end
@@ -518,7 +518,7 @@ module OpenFoodNetwork
         expect do
           applicator.send(:touched_exchanges=, [])
           applicator.send(:add_exchange, sender.id, receiver.id, incoming)
-        end.to change(Exchange, :count).by(0)
+        end.to change { Exchange.count }.by(0)
       end
 
       it "does not update exchanges it is not permitted to touch" do

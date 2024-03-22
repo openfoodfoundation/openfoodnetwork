@@ -48,7 +48,7 @@ module Stripe
         end
 
         it "does not call the handler method, and returns :unknown" do
-          expect(handler).to_not receive(:some_method)
+          expect(handler).not_to receive(:some_method)
           expect(handler.handle).to be :unknown
         end
       end
@@ -57,7 +57,7 @@ module Stripe
     describe "deauthorize" do
       context "when the event has no 'account' attribute" do
         it "does destroy stripe accounts, returns :ignored" do
-          expect(handler).to_not receive(:destroy_stripe_accounts_linked_to)
+          expect(handler).not_to receive(:destroy_stripe_accounts_linked_to)
           expect(handler.send(:deauthorize)).to be :ignored
         end
       end

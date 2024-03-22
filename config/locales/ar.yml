@@ -334,7 +334,6 @@ ar:
   cancel_order: "الغاء الطلب"
   confirm_send_invoice: "سيتم إرسال فاتورة لهذا الطلب إلى العميل. هل أنت متأكد أنك تريد المتابعة؟"
   confirm_resend_order_confirmation: "هل أنت متأكد من أنك تريد إعادة إرسال رسالة تأكيد الطلب؟"
-  must_have_valid_business_number: "يجب أن يكون %{enterprise_name} على ABN صالح قبل إرسال الفواتير."
   invoice: "فاتورة"
   active: "نشط"
   cancelled: "ألغيت"
@@ -473,6 +472,9 @@ ar:
       actions:
         edit: تعديل
         clone: استنساخ
+        delete: حذف
+      image:
+        edit: تعديل
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند
@@ -698,6 +700,10 @@ ar:
         categories:
           label: التصنيفات
         search: بحث
+      table:
+        new_variant: نوع جديد
+      edit_image:
+        close: عودة
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه
@@ -739,6 +745,9 @@ ar:
         product_categories: فئات المنتجات
         tax_categories: فئات الضرائب
         shipping_categories: فئات الشحن
+      dfc_import_form:
+        enterprise: "الشركة"
+        import: "استيراد"
       import:
         review: مراجعة
         import: استيراد
@@ -796,6 +805,7 @@ ar:
         view_products: الذهاب إلى صفحة المنتجات
         view_inventory: انتقل إلى صفحة المخزون
       product_headings:
+        distributor: الموزع
         producer: المنتج
         sku: SKU
         name: الاسم
@@ -1112,6 +1122,8 @@ ar:
           active: نشيط؟
           add_new: اضف جديد
           no_voucher_yet: لا قسائم حتى الآن
+        connected_apps:
+          loading: "جار التحميل"
       actions:
         edit_profile: الإعدادات
         properties: الخصائص
@@ -1461,7 +1473,6 @@ ar:
       index:
         title: "إعدادات OIDC"
         connect: "اربط حسابك"
-        already_connected: "حسابك مرتبط بالفعل بحساب تفويض DFC هذا:"
         les_communs_link: "خادم معرف Les Communs"
         link_your_account: "تحتاج أولاً إلى ربط حسابك بموفر التفويض الذي تستخدمه DFC (Les Communs Open ID Connect)."
         link_account_button: "اربط حسابك في Les Communs OIDC"
@@ -1777,6 +1788,8 @@ ar:
   invoice_tax_total: "إجمالي ضريبة السلع والخدمات:"
   tax_invoice: "فاتورة ضريبية"
   tax_total: "إجمالي الضريبة (%{rate}):"
+  invoice_shipping_category_delivery: "توصيل"
+  invoice_shipping_category_pickup: "استلام"
   total_excl_tax: "المجموع (باستثناء الضرائب):"
   total_incl_tax: "إجمالي (بما في ذلك الضرائب):"
   abn: "ABN:"
@@ -3602,8 +3615,6 @@ ar:
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
     taxonomy_edit: "التصنيف"
-    taxonomy_tree_error: "خطأ شجرة التصنيف"
-    taxonomy_tree_instruction: "تعليمات شجرة التصنيف"
     tree: "شجرة"
     updating: "تحديث"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
@@ -4176,6 +4187,11 @@ ar:
           email: "البريد الإلكتروني"
           total: "المجموع"
           billing_address_name: "الاسم"
+      taxons:
+        form:
+          name: الاسم
+          permalink: الرابط الثابت
+          description: وصف
       general_settings:
         edit:
           legal_settings: "الإعدادات القانونية"

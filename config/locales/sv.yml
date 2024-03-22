@@ -7,6 +7,8 @@ sv:
     attributes:
       spree/order/ship_address:
         phone: "Telefonnummer"
+        firstname: "Förnamn"
+        lastname: "Efternamn"
       spree/user:
         password: "Lösenord"
       enterprise_fee:
@@ -22,6 +24,9 @@ sv:
         price: "Pris"
         supplier: "Leverantör"
         variant_unit: "Enhet för variant"
+      spree/credit_card:
+        month: "Månad"
+        year: "År"
       variant_override:
         count_on_hand: "På lager"
     errors:
@@ -78,12 +83,11 @@ sv:
   cancel_order: "Ångra beställning"
   confirm_send_invoice: "En faktura på denna beställning kommer att skickas till kunden. Är du säker på att du vill fortsätta? "
   confirm_resend_order_confirmation: "Är du säker på att du vill skicka beställningsbekräftelsen en gång till? "
-  must_have_valid_business_number: "%{enterprise_name} måste ha ett giltigt organisationsnummer innan fakturor kan skickas."
   invoice: "Faktura"
   cancelled: "Avbokad"
   say_no: "Nej"
   say_yes: "Ja"
-  bill_address: Fakturerirngsadress
+  bill_address: Faktureringsadress
   ship_address: Leveransadress
   sort_order_cycles_on_shopfront_by: "Sortera butikens beställningsomgångar efter"
   required_fields: Obligatoriska fält är märkta med en asterisk
@@ -171,6 +175,8 @@ sv:
         tax_category: "Skattekategori"
         inherits_properties: "Ärva egenskaper?"
       actions:
+        edit: Redigera
+      image:
         edit: Redigera
     customer: Kund
     date: Datum
@@ -319,6 +325,8 @@ sv:
         producers:
           label: 'Producenter '
         search: Sök
+      edit_image:
+        close: Backa
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet
@@ -327,7 +335,10 @@ sv:
         could_not_process: "kunde inte hantera filen: ogiltig filtyp"
         blank: kan inte vara blank
         none_saved: sparade inte några produkter
+      dfc_import_form:
+        enterprise: "Företag"
       product_headings:
+        distributor: Distributör
         producer: Producent
         sku: SKU
         name: Namn
@@ -834,6 +845,12 @@ sv:
           label: Land
       shipping_info:
         title: 'Leveransadress '
+    step2:
+      form:
+        card_month:
+          label: Månad
+        card_year:
+          label: År
     step3:
       delivery_details:
         title: Leveransdetaljer
@@ -896,6 +913,8 @@ sv:
   invoice_tax_total: "Summa moms"
   tax_invoice: "SKATTEFAKTURA"
   tax_total: "Summa skatter (%{rate}):"
+  invoice_shipping_category_delivery: "Leverans"
+  invoice_shipping_category_pickup: "Upphämtning"
   total_excl_tax: "Summa (Exkl skatt):"
   total_incl_tax: "Summa (Inkl skatt):"
   abn: "ABN:"
@@ -2129,6 +2148,8 @@ sv:
     account: "Konto"
     billing_address: "Fakturerirngsadress"
     shipping_address: "Leveransadress"
+    first_name: "Förnamn"
+    last_name: "Efternamn"
     city: "Ort"
     country: "Land"
     state: "Region"
@@ -2324,6 +2345,10 @@ sv:
           email: "E-post"
           total: "Summa"
           billing_address_name: "Namn"
+      taxons:
+        form:
+          name: Namn
+          description: Beskrivning
       general_settings:
         edit:
           enterprises_require_tos: "Företag måste acceptera servicevillkoren"

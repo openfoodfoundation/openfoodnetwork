@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'open_food_network/enterprise_fee_calculator'
-require 'variant_units/variant_and_line_item_naming'
-require 'concerns/variant_stock'
 require 'spree/localized_number'
 
 module Spree
@@ -58,6 +56,7 @@ module Spree
     has_many :exchanges, through: :exchange_variants
     has_many :variant_overrides, dependent: :destroy
     has_many :inventory_items, dependent: :destroy
+    has_many :semantic_links, dependent: :delete_all
 
     localize_number :price, :weight
 
@@ -71,7 +70,7 @@ module Spree
       %w(weight volume).include?(variant.product&.variant_unit)
     }
 
-    validates :unit_value, numericality: { greater_than: 0 }
+    validates :unit_value, numericality: { greater_than: 0 }, allow_blank: true
     validates :price, numericality: { greater_than_or_equal_to: 0 }
 
     validates :unit_description, presence: true, if: ->(variant) {
@@ -169,11 +168,7 @@ module Spree
     end
 
     def tax_category
-      if self[:tax_category_id].nil?
-        TaxCategory.find_by(is_default: true)
-      else
-        TaxCategory.find(self[:tax_category_id])
-      end
+      super || TaxCategory.find_by(is_default: true)
     end
 
     def price_with_fees(distributor, order_cycle)

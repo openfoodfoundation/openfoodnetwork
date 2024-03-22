@@ -12,7 +12,7 @@ $base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial,
 // Body base colors
 $color-body-bg:                  $white !default;
 $color-body-text:                $near-black !default;
-$color-headers:                  $dark-blue !default;
+$color-headers:                  $near-black !default;
 $color-link:                     $teal !default;
 $color-link-hover:               $orient !default;
 $color-link-active:              $dark-blue !default;
@@ -25,6 +25,12 @@ $color-success:                  $green !default;
 $color-notice:                   $yellow !default;
 $color-warning:                  $red !default;
 $color-error:                    $red !default;
+$color-flash-success-text:       $white !default;
+$color-flash-success-bg:         $near-black !default;
+$color-flash-notice-text:        $color-body-text !default;
+$color-flash-notice-bg:          $fair-pink !default;
+$color-flash-error-text:         $white !default;
+$color-flash-error-bg:           $color-error !default;
 
 // Table styles
 $color-tbl-bg:                   $light-grey !default;
@@ -34,13 +40,12 @@ $color-tbl-thead-txt:            $color-headers !default;
 $color-tbl-thead-bg:             $light-grey !default;
 $color-tbl-border:               $pale-blue !default;
 $padding-tbl-cell:               12px;
-$padding-tbl-cell-condensed:     10px 12px;
+$padding-tbl-cell-condensed:     4px 12px;
 $padding-tbl-cell-relaxed:       12px 12px;
 
 // Button colors
 $color-btn-bg:                   $teal !default;
 $color-btn-text:                 $white !default;
-$color-btn-shadow:               0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07) !default;
 $color-btn-hover-bg:             $orient !default;
 $color-btn-hover-text:           $white !default;
 $color-btn-hover-border:         $dark-blue !default;
@@ -48,6 +53,8 @@ $color-btn-disabled-bg:          $medium-grey !default;
 $color-btn-disabled-text:        $lighter-grey !default;
 $color-btn-red-bg:               $red !default;
 $color-btn-red-hover-bg:         $roof-terracotta !default;
+$color-btn-secondary-bg:         $white !default;
+$color-btn-secondary-hover-bg:   $mystic !default;
 
 // Actions colors
 $color-action-edit-bg:           very-light($teal) !default;
@@ -66,6 +73,9 @@ $color-action-save-bg:           very-light($color-success, 5  ) !default;
 $color-action-save-brd:          very-light($color-success, 20 ) !default;
 $color-action-mail-bg:           very-light($color-success, 5  ) !default;
 $color-action-mail-brd:          very-light($color-success, 20 ) !default;
+
+// Dropdown styles
+$shadow-dropdown:                0px 0px 8px 0px rgba($near-black, 0.25);
 
 // Select2 select field colors
 $color-sel-bg:                   $lighter-grey !default;
@@ -161,6 +171,7 @@ $h2-size:                        $h3-size + 2 !default;
 $h1-size:                        $h2-size + 2 !default;
 
 $border-radius:                  4px !default;
+$box-shadow:                     0px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px rgba(0, 0, 0, 0.07) !default;
 
 $font-weight-bold:               600 !default;
 $font-weight-normal:             400 !default;
@@ -168,3 +179,8 @@ $font-weight-normal:             400 !default;
 $btn-relaxed-height:             40px !default;
 $btn-regular-height:             32px !default;
 $btn-condensed-height:           26px !default;
+
+// z-index
+//--------------------------------------------------------------
+$tos-banner-z-index: 1001;
+$flash-message-z-index: 1000;

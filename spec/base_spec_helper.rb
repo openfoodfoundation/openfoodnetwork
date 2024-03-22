@@ -50,6 +50,14 @@ end
 FactoryBot.use_parent_strategy = false
 FactoryBot::SyntaxRunner.include FileHelper
 
+# raise I18n exception handler
+I18n.exception_handler = proc do |exception, *_|
+  raise exception.to_exception
+end
+
+# Disable timestamp check for test environment
+InvisibleCaptcha.timestamp_enabled = false
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{Rails.root.join('spec/fixtures')}"
@@ -152,11 +160,21 @@ RSpec.configure do |config|
   #
   config.around(:each, :stripe_version) do |example|
     stripe_version = "Stripe-v#{Stripe::VERSION}"
+    cassette_library_dir, default_cassette_options = nil, nil
+
     VCR.configure do |vcr_config|
-      vcr_config.cassette_library_dir = "spec/fixtures/vcr_cassettes/#{stripe_version}"
+      cassette_library_dir = vcr_config.cassette_library_dir
+      default_cassette_options = vcr_config.default_cassette_options
+      vcr_config.cassette_library_dir += "/#{stripe_version}"
       vcr_config.default_cassette_options = { record: :none } if ENV["CI"]
     end
+
     example.run
+
+    VCR.configure do |vcr_config|
+      vcr_config.cassette_library_dir = cassette_library_dir
+      vcr_config.default_cassette_options = default_cassette_options
+    end
   end
 
   # Geocoding
@@ -216,7 +234,6 @@ RSpec.configure do |config|
   config.include PreferencesHelper
   config.include OpenFoodNetwork::FiltersHelper
   config.include OpenFoodNetwork::EnterpriseGroupsHelper
-  config.include OpenFoodNetwork::ProductsHelper
   config.include OpenFoodNetwork::DistributionHelper
   config.include OpenFoodNetwork::HtmlHelper
   config.include ActionView::Helpers::DateHelper

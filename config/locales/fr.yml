@@ -1,5 +1,8 @@
 fr:
   language_name: "Français"
+  time:
+    formats:
+      long: "%e %b %Y, %-k:%M"
   activerecord:
     models:
       spree/product: Produit
@@ -75,6 +78,10 @@ fr:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Déterminer la catégorie de taxe requiert l'utilisation du calculateur par article. "
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "Echec du chargement. Merci de vérifier que le fichier n'est pas endommagé et réessayer."
         spree/user:
           attributes:
             email:
@@ -303,7 +310,7 @@ fr:
       email_registered: "va, dès que vous aurez choisi un type d'entreprise, être créé sur"
       email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre entreprise, de vos produits si vous êtes producteur, et éventuellement de votre boutique. Pour accéder au guide en français, cliquez ici : %{link}"
       userguide: "Guide utilisateur"
-      email_admin_html: "Pour gérez votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
+      email_admin_html: "Pour gérer votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
       admin_panel: "interface d'administration"
       email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}"
       join_community: "Accéder au forum"
@@ -383,7 +390,7 @@ fr:
   cancel_order: "Annuler la commande"
   confirm_send_invoice: "La facture de cette commande va être transmise au client. Etes-vous sûr de vouloir continuer ?"
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
-  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées."
+  must_have_valid_business_number: "%{enterprise_name} doit avoir un SIRET valide avant que les factures puissent être envoyées. "
   invoice: "Facture"
   invoices: "Factures"
   file: "fichier"
@@ -501,6 +508,7 @@ fr:
         colums: Colonnes
       columns:
         name: Nom
+        unit_scale: Échelle d'unité
         unit: Unité
         price: Prix
         producer: Producteur
@@ -526,6 +534,9 @@ fr:
       actions:
         edit: Modifier
         clone: Dupliquer
+        delete: Supprimer
+      image:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -590,6 +601,9 @@ fr:
     has_n_rules: "a %{num} règles"
     unsaved_confirm_leave: "Des modifications n'ont pas été sauvegardées et seront perdues si vous quittez la page. Souhaitez-vous quitter la page?"
     available_units: "Unités disponibles"
+    terms_of_service_have_been_updated_html: "Les conditions d'utilisation de CoopCircuits ont été mises à jour : %{tos_link}"
+    terms_of_service: Lire les conditions d'utilisation
+    accept_terms_of_service: Accepter les conditions d'utilisation
     shopfront_settings:
       embedded_shopfront_settings: "Paramètres Boutiques Intégrées"
       enable_embedded_shopfronts: "Autoriser l'intégration des boutiques"
@@ -743,16 +757,29 @@ fr:
         header:
           title: Gestion du catalogue produits
         loading: Vos produits sont en cours de chargement
+      delete_modal:
+        delete_product_modal:
+          heading: "Supprimer produit"
+          prompt: "Cette action va supprimer ceci de façon permanente de votre liste."
+          confirmation_text: "Supprimer produit"
+          cancellation_text: "Conserver le produit"
+        delete_variant_modal:
+          heading: "Supprimer la variante"
+          prompt: "Cette action va supprimer ceci de façon permanente de votre liste."
+          confirmation_text: "Supprimer la variante"
+          cancellation_text: "Conserver la variante"
       sort:
         pagination:
-          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
+          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Résultats %{from} à %{to}."
           per_page:
             show: Montrer
             per_page: "%{num} par page"
           clear_search: Annuler la recherche
       filters:
         search_products: Chercher des produits
+        search_for_producers: Rechercher des producteurs
         all_producers: Tous les producteurs
+        search_for_categories: Rechercher des catégories
         all_categories: Toutes les catégories
         producers:
           label: Producteurs
@@ -765,20 +792,31 @@ fr:
         no_products_found_for_search: Aucun produit trouvé avec vos critères de recherche
       table:
         changed_summary:
-          one: "%{count} produits modifiés"
+          one: "%{count} produit modifié"
           other: "%{count} produits modifiés"
         error_summary:
           saved:
             one: "%{count} le produit a été sauvegardé correctement, mais "
             other: "%{count} les produits ont été sauvegardés correctement, mais"
           invalid:
-            one: "Le produit %{count} n'a pas pu être enregistré. Veuillez examiner les erreurs et réessayer."
-            many: "Les produits %{count} n'ont pas pu être enregistrés. Veuillez examiner les erreurs et réessayer."
-            other: "Les produits %{count} n'ont pas pu être enregistrés. Veuillez examiner les erreurs et réessayer."
-        save: Sauvegarder les changements
+            one: "%{count} produit n'a pas pu être sauvegardé. Veuillez examiner les erreurs et réessayer."
+            many: "%{count} produits n'ont pas pu être sauvegardés. Veuillez examiner les erreurs et réessayer."
+            other: "%{count} produits n'ont pas pu être sauvegardés. Veuillez examiner les erreurs et réessayer."
         reset: Annuler les changements
+        save: Sauvegarder les changements
+        new_variant: Nouvelle variante
       bulk_update:
-        success: "Produits mis à jour"
+        success: Changements sauvegardés
+      edit_image:
+        title: Modifier la photo du produit
+        close: Retour
+        upload: Télécharger la photo
+      delete_product:
+        success: Le produit a bien été supprimé
+        error: Le produit n'a pas pu être supprimé
+      delete_variant:
+        success: La variante a bien été supprimée
+        error: La variante n'a pas pu être supprimée
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -820,6 +858,9 @@ fr:
         product_categories: Catégorie Produit
         tax_categories: TVA applicable
         shipping_categories: Conditions de transport
+      dfc_import_form:
+        enterprise: "Entreprise"
+        import: "Importer"
       import:
         review: Vérifier
         import: Importer
@@ -877,6 +918,7 @@ fr:
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Boutiques
       product_headings:
+        distributor: Boutique
         producer: Producteur
         sku: Référence Produit
         name: Nom
@@ -920,7 +962,7 @@ fr:
     orders:
       edit:
         order_sure_want_to: Êtes-vous sûr de vouloir %{event} cette commande ?
-        voucher_tax_included_in_price: "%{label} (taxe inclue dans le bon de promotion)"
+        voucher_tax_included_in_price: "%{label} (taxe inclue dans le bon de réduction)"
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
       bulk_management:
@@ -1023,6 +1065,7 @@ fr:
         images:
           legend: "Images"
           logo: Logo
+          logo_size: "300 x 300 pixels"
           promo_image_placeholder: 'Cette image est affichée dans "A propos"'
           promo_image_note1: 'ATTENTION:'
           promo_image_note2: Votre bannière doit mesurer 1200 x 260, toute image non conforme sera rognée.
@@ -1184,8 +1227,8 @@ fr:
           email_confirmed: "Email confirmé"
           email_not_confirmed: "Email non confirmé"
         vouchers:
-          legend: Bon de réduction
-          voucher_code: Code promo
+          legend: Bons de réduction
+          voucher_code: Code de réduction
           rate: Taux
           label: Nom
           purpose: Raison
@@ -1208,6 +1251,29 @@ fr:
           create_custom_tab: "Créer un onglet personnalisé dans la boutique"
           custom_tab_title: "Titre de l'onglet personnalisé"
           custom_tab_content: "Contenu de l'onglet personnalisé"
+        connected_apps:
+          legend: "Applications connectées"
+          title: "Discover Regenerative"
+          tagline: "Autoriser Discover Regenerative à publier les informations de votre entreprise"
+          enable: "Autoriser le partage de données"
+          disable: "Arrêter le partage"
+          loading: "Chargement en cours"
+          note: |
+              Votre compte Open Food Network est connecté à Discover Regenerative.
+              Ajouter et mettre à jour les informations sur votre liste Discover Regenerative ici.
+          link_label: "Gérer la liste"
+          description_html: |
+              <p>
+              Les producteurs éligibles peuvent mettre en avant leurs références Regenerative,
+              pratiques agricoles et plus à travers le listing du profil.
+              Simplifier comment les acheteurs peuvent trouver les produits regeneratives et se connecter
+              avec des producteurs.
+              </p>
+              <p>
+              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+              target="_blank"><b>En savoir plus sur Discover Regenerative</b>
+              <i class="icon-external-link"></i></a>
+              </p>
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1427,7 +1493,7 @@ fr:
       resume:
         could_not_resume_the_order: La commande n'a pas pu être reprise
     select2:
-      minimal_search_length: Entrez %{count} ou caractères
+      minimal_search_length: Entrez %{count} ou plus de caractères
       searching: Recherche...
       no_matches: Pas de correspondance trouvée
     shared:
@@ -1437,6 +1503,8 @@ fr:
         has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
         has_no_enterprise_fees: "%{enterprise} n'a pas défini de marges et commissions"
+      flashes:
+        dismiss: Masquer
       side_menu:
         enterprise:
           primary_details: "Informations de base"
@@ -1455,8 +1523,9 @@ fr:
           tag_rules: "Règles de tag"
           shop_preferences: "Préférences boutique"
           users: "Gestionnaires"
-          vouchers: Bon de réduction
+          vouchers: Bons de réduction
           white_label: "Marque blanche"
+          connected_apps: "Applications connectées"
         enterprise_group:
           primary_details: "Informations de base"
           users: "Gestionnaires"
@@ -1578,10 +1647,15 @@ fr:
       index:
         title: "OIDC"
         connect: "Connecter votre compte"
-        already_connected: "Votre compte est déjà relié avec cette autorisation :"
+        disconnect: "Déconnecter"
+        connected: "Votre compte est relié à %{uid}."
         les_communs_link: "Serveur OIDC Les Communs"
         link_your_account: "Vous devez d'abord vous connecter avec le serveur des Communs."
         link_account_button: "Relier votre compte OIDC Les Communs"
+        note_expiry: |
+            Les approbations permettant d'accéder aux applications connectées ont expiré. Veuillez rafraîchir
+            la connexion à votre compte pour que toutes les intégrations fonctionnent.
+        refresh: "Rafraichir l'autorisation"
         view_account: "Pour voir votre compte, consultez :"
     subscriptions:
       index:
@@ -1683,9 +1757,9 @@ fr:
         legend: Nouveau bon de réduction
         back: Retour
         save: Sauvegarder
-        voucher_code: Code promo
+        voucher_code: Code de réduction
         voucher_amount: Montant
-        voucher_type: Type de promo
+        voucher_type: Type de réduction
         flat_rate: fixe
         percentage_rate: Pourcentage (%)
     controllers:
@@ -1900,9 +1974,11 @@ fr:
   invoice_column_price_per_unit_without_taxes: "Prix par unité (hors taxe)"
   invoice_column_tax_rate: "TVA applicable"
   invoice_tax_total: "Total TVA :"
+  invoice_cancel_and_replace_invoice: "annule et remplace la facture"
   tax_invoice: "FACTURE"
   tax_total: "Total taxe (%{rate}) :"
-  invoice_shipping_type: "Type :"
+  invoice_shipping_category_delivery: "Livraison"
+  invoice_shipping_category_pickup: "Retrait"
   total_excl_tax: "Total HT :"
   total_incl_tax: "Total TTC :"
   total_all_tax: "total taxe"
@@ -2122,6 +2198,9 @@ fr:
   order_back_to_store: Retour à la boutique
   order_back_to_cart: Retour au panier
   order_back_to_website: Retour vers le site
+  checkout_details_title: Détails de la commande
+  checkout_payment_title: Paiement de la commande
+  checkout_summary_title: Résumé de la commande
   bom_tip: "Utilisez cette page pour modifier les quantités sur plusieurs commandes à la fois. Les produits peuvent aussi être supprimés des commandes si nécessaire."
   unsaved_changes_warning: "Des modifications n'ont pas été enregistrées et seront perdues si vous continuez."
   unsaved_changes_error: "Les champs entourés en rouge contiennent des erreurs."
@@ -2984,6 +3063,8 @@ fr:
   report_header_transaction_fee: Frais de Transaction (TVA non incluse)
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
+  report_header_voucher_label: Label de la réduction
+  report_header_voucher_amount: "Montant de la réduction (%{currency_symbol})"
   report_line_cost_of_produce: 'Coût des produits hors '
   report_line_line_items: produits
   report_header_last_completed_order_date: Date dernière commande
@@ -3702,8 +3783,8 @@ fr:
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     taxonomy_edit: "Modifier la taxonomie"
-    taxonomy_tree_error: "Erreur de l'arbre de toxonomie"
-    taxonomy_tree_instruction: "Consignes pour l'arbre de taxonomie"
+    taxonomy_tree_error: "Erreur lors de la mise à jour de l'arbre de taxonomie."
+    taxonomy_tree_instruction: "Faites un clic droit sur un article pour ajouter, renommer, supprimer ou modifier."
     tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
@@ -3998,6 +4079,9 @@ fr:
         add_product:
           cannot_add_item_to_canceled_order: "Il n'est pas possible d'ajouter des produits sur une commande annulée"
           include_out_of_stock_variants: "Inclure les variantes sans stock"
+        shipment:
+          mark_as_shipped_message_html: "Cette action marque la commande comme livrée.<br />Etes-vous certain de vouloir faire ceci? "
+          mark_as_shipped_label_message: "Envoyer une notification de livraison / distribution par e-mail au client"
         index:
           listing_orders: "Liste des commandes"
           new_order: "Nouvelle commande"
@@ -4056,6 +4140,9 @@ fr:
           line_item_adjustments: "Ajustements sur la ligne produit"
           order_adjustments: "Ajustements sur la commande"
           order_total: "Total Commande"
+      invoices:
+        index:
+          order_has_changed: "La commande a changé depuis la dernière mise à jour de la facture. La facture affichée ici risque donc de ne pas être à jour."
       overview:
         enterprises_header:
           ofn_with_tip: Les Entreprises sont les entités qui organisent des circuits courts et utilisent pour cela CoopCircuits.
@@ -4064,6 +4151,7 @@ fr:
           has_no_payment_methods: "n'a pas de méthode de paiement"
           has_no_shipping_methods: "n'a pas de méthode de livraison"
         products:
+          products_tip: "Les produits que vous vendez via CoopCircuits."
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "Vous avez un produit actif"
@@ -4216,6 +4304,8 @@ fr:
           bulk_unit_size: Quantité totale du lot
         display_as:
           display_as: Unité affichée
+        clone:
+          success: Produit dupliqué
       reports:
         table:
           select_and_search: "Sélectionner les filtres et cliquer sur %{option} pour accéder aux données."
@@ -4285,6 +4375,15 @@ fr:
           email: "Email"
           total: "Total"
           billing_address_name: "Nom"
+      taxons:
+        form:
+          name: Nom
+          permalink: Permalien
+          meta_title: Méta titre
+          meta_description: Méta description
+          meta_keywords: Méta mots clés
+          description: Description
+          dfc_id: URI DFC
       general_settings:
         edit:
           legal_settings: "Configuration légales"
@@ -4594,3 +4693,6 @@ fr:
     pagination:
       next: Suivant
       previous: Précédent
+  invisible_captcha:
+    sentence_for_humans: "Merci de laisser ce champ libre"
+    timestamp_error_message: "S'il vous plaît réessayez après 5 secondes."

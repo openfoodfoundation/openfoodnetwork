@@ -8,6 +8,6 @@
         %p
           = t('.require_login_link_html', login: ('<a data-action="click->login-modal#call">' + t('.login') + '</a>').html_safe)
         %p
-          = t('.require_login_2_html', contact: link_to(t('.contact'), '#contact'), enterprise: current_distributor.name)
+          = t('.require_login_2_html', contact: link_to(t('.contact'), '#contact_panel', data: { action: "tabs-and-panels#activate" }), enterprise: current_distributor.name)
       - else
-        = t('.require_customer_html', contact: link_to(t('.contact'), '#contact'), enterprise: current_distributor.name)
+        = t('.require_customer_html', contact: link_to(t('.contact'), '#contact_panel', data: { action: "tabs-and-panels#activate" }), enterprise: current_distributor.name)

@@ -39,7 +39,7 @@ describe "checking out an order that initially fails", type: :request do
 
   before do
     order_cycle_distributed_variants = double(:order_cycle_distributed_variants)
-    allow(OrderCycleDistributedVariants).to receive(:new)
+    allow(OrderCycles::DistributedVariantsService).to receive(:new)
       .and_return(order_cycle_distributed_variants)
     allow(order_cycle_distributed_variants)
       .to receive(:distributes_order_variants?).and_return(true)

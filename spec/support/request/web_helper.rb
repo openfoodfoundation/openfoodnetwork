@@ -19,7 +19,7 @@ module WebHelper
   end
 
   def flash_message
-    find('.flash', visible: false).text(:all).strip
+    find('.flash .msg', visible: false).text(:all).strip
   end
 
   def handle_js_confirm(accept = true)
@@ -91,17 +91,24 @@ module WebHelper
   end
 
   def tomselect_multiselect(value, options)
-    tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
+    tomselect_wrapper = page.find_field(options[:from]).sibling(".ts-wrapper")
     tomselect_wrapper.find(".ts-control").click
     tomselect_wrapper.find(:css, '.ts-dropdown.multi .ts-dropdown-content .option',
                            text: value).click
   end
 
   def tomselect_search_and_select(value, options)
-    tomselect_wrapper = page.find("[name='#{options[:from]}']").sibling(".ts-wrapper")
+    tomselect_wrapper = page.find_field(options[:from]).sibling(".ts-wrapper")
     tomselect_wrapper.find(".ts-control").click
-    tomselect_wrapper.find(:css, '.ts-dropdown input.dropdown-input').set(value)
+    # Use send_keys as setting the value directly doesn't trigger the search
+    tomselect_wrapper.find(:css, '.ts-dropdown input.dropdown-input').send_keys(value)
+    tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
+  end
+
+  def tomselect_select(value, options)
+    tomselect_wrapper = page.find_field(options[:from]).sibling(".ts-wrapper")
     tomselect_wrapper.find(".ts-control").click
+
     tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
   end
 

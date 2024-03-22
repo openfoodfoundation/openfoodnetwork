@@ -1,5 +1,5 @@
 %script{ type: "text/ng-template", id: "registration/images.html" }
-  .container#registration-images{ 'nv-file-drop' => true, uploader: "imageUploader", options:"{ alias: imageStep }", ng: { controller: "EnterpriseImageCtrl" } }
+  .container#registration-images{ "nv-file-drop": true, uploader: "imageUploader", options: "{ alias: imageStep }", "ng-controller": "EnterpriseImageCtrl" }
     %ng-include{ src: "'registration/steps.html'" }
     .row
       .small-12.columns
@@ -7,17 +7,17 @@
           %h2= t(".headline")
           %h5= t(".description")
 
-    %form{ name: 'images', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "select('social')" } }
-      .row{ ng: { repeat: 'image_step in imageSteps', show: "imageStep == image_step" } }
+    %form{ name: 'images', novalidate: true, "ng-controller": "RegistrationFormCtrl", "ng-submit": "select('social')" }
+      .row{ "ng-repeat": 'image_step in imageSteps', "ng-show": "imageStep == image_step" }
         %ng-include{ src: "'registration/'+ image_step + '.html'" }
 
-      .row.buttons.pad-top{ ng: { if: "imageStep == 'logo'" } }
+      .row.buttons.pad-top{ "ng-if": "imageStep == 'logo'" }
         .small-12.columns
-          %input.button.secondary{ type: "button", value: t(".back"), ng: { click: "select('about')" } }
+          %input.button.secondary{ type: "button", value: t(".back"), "ng-click": "select('about')" }
           &nbsp;
-          %input.button.primary.right{ type: "button", value: t(".continue"), ng: { click: "imageSelect('promo')" } }
+          %input.button.primary.right{ type: "button", value: t(".continue"), "ng-click": "imageSelect('promo')" }
 
-      .row.buttons.pad-top{ ng: { if: "imageStep == 'promo'" } }
+      .row.buttons.pad-top{ "ng-if": "imageStep == 'promo'" }
         .small-12.columns
-          %input.button.secondary{ type: "button", value: t(".back"), ng: { click: "imageSelect('logo')" } }
+          %input.button.secondary{ type: "button", value: t(".back"), "ng-click": "imageSelect('logo')" }
             %input.button.primary.right{ type: "submit", value: t(".continue") }

@@ -307,7 +307,6 @@ en_US:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: " %{enterprise_name}must have a business identifier, Tax ID or W9  before invoices can be sent."
   invoice: "Invoice"
   active: "Active"
   cancelled: "Cancelled"
@@ -443,6 +442,9 @@ en_US:
       actions:
         edit: Edit
         clone: Clone
+        delete: Delete
+      image:
+        edit: Edit
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -664,6 +666,10 @@ en_US:
         categories:
           label: Categories
         search: Search
+      table:
+        new_variant: New variant
+      edit_image:
+        close: Back
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -703,6 +709,9 @@ en_US:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -760,6 +769,7 @@ en_US:
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: SKU
         name: Name
@@ -1051,6 +1061,8 @@ en_US:
           rate: Rate
           customers: Customer
           active: Active?
+        connected_apps:
+          loading: "Loading"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1657,6 +1669,8 @@ en_US:
   invoice_tax_total: "Tax total:"
   tax_invoice: "INVOICE"
   tax_total: "Total tax (%{rate}):"
+  invoice_shipping_category_delivery: "Delivery"
+  invoice_shipping_category_pickup: "Pickup"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
   abn: "License, Certification, or Business ID:"
@@ -3340,8 +3354,6 @@ en_US:
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
-    taxonomy_tree_error: "Taxonomy tree error"
-    taxonomy_tree_instruction: "Taxonomy tree instruction"
     tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your cart is empty, please search for and add a product above"
@@ -3893,6 +3905,11 @@ en_US:
           email: "Email"
           total: "Total"
           billing_address_name: "Name"
+      taxons:
+        form:
+          name: Name
+          permalink: Permalink
+          description: Description
       general_settings:
         edit:
           legal_settings: "Legal Settings"

@@ -78,14 +78,14 @@ describe "Product Import" do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "2"
-      expect(page).to have_no_selector '.invalid-count'
+      expect(page).not_to have_selector '.invalid-count'
       expect(page).to have_selector '.create-count', text: "2"
-      expect(page).to have_no_selector '.update-count'
+      expect(page).not_to have_selector '.update-count'
 
       save_data
 
       expect(page).to have_selector '.created-count', text: '2'
-      expect(page).to have_no_selector '.updated-count'
+      expect(page).not_to have_selector '.updated-count'
 
       carrots = Spree::Product.find_by(name: 'Carrots')
       potatoes = Spree::Product.find_by(name: 'Potatoes')
@@ -126,9 +126,9 @@ describe "Product Import" do
       expect(page).to have_selector '.item-count', text: "4"
       expect(page).to have_selector '.invalid-count', text: "3"
       expect(page).to have_selector ".create-count", text: "1"
-      expect(page).to have_no_selector '.update-count'
+      expect(page).not_to have_selector '.update-count'
 
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
     end
 
     it "displays info about inconsistent variant unit names, within the same product" do
@@ -152,7 +152,7 @@ describe "Product Import" do
                                    "with the same name"
       expect(page).to have_content "Imported file contains invalid entries"
 
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
     end
 
     it "handles saving of named tax and shipping categories" do
@@ -173,12 +173,12 @@ describe "Product Import" do
 
       expect(page).to have_selector '.item-count', text: "1"
       expect(page).to have_selector '.create-count', text: "1"
-      expect(page).to have_no_selector '.update-count'
+      expect(page).not_to have_selector '.update-count'
 
       save_data
 
       expect(page).to have_selector '.created-count', text: '1'
-      expect(page).to have_no_selector '.updated-count'
+      expect(page).not_to have_selector '.updated-count'
 
       carrots = Spree::Product.find_by(name: 'Carrots')
       expect(carrots.variants.first.tax_category).to eq tax_category
@@ -227,8 +227,8 @@ describe "Product Import" do
 
       expect(page).to have_field "product_name", with: carrots.name
       expect(page).to have_field "product_name", with: potatoes.name
-      expect(page).to have_no_field "product_name", with: product.name
-      expect(page).to have_no_field "product_name", with: product2.name
+      expect(page).not_to have_field "product_name", with: product.name
+      expect(page).not_to have_field "product_name", with: product2.name
     end
 
     it "can reset product stock to zero for products not present in the CSV" do
@@ -278,11 +278,11 @@ describe "Product Import" do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "3"
-      expect(page).to_not have_selector '.invalid-count'
+      expect(page).not_to have_selector '.invalid-count'
       expect(page).to have_selector '.create-count', text: "3"
-      expect(page).to_not have_selector '.update-count'
-      expect(page).to_not have_selector '.inv-create-count'
-      expect(page).to_not have_selector '.inv-update-count'
+      expect(page).not_to have_selector '.update-count'
+      expect(page).not_to have_selector '.inv-create-count'
+      expect(page).not_to have_selector '.inv-update-count'
 
       save_data
 
@@ -316,16 +316,16 @@ describe "Product Import" do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "3"
-      expect(page).to have_no_selector '.invalid-count'
-      expect(page).to have_no_selector '.create-count'
-      expect(page).to have_no_selector '.update-count'
+      expect(page).not_to have_selector '.invalid-count'
+      expect(page).not_to have_selector '.create-count'
+      expect(page).not_to have_selector '.update-count'
       expect(page).to have_selector '.inv-create-count', text: "2"
       expect(page).to have_selector '.inv-update-count', text: "1"
 
       save_data
 
-      expect(page).to have_no_selector '.created-count'
-      expect(page).to have_no_selector '.updated-count'
+      expect(page).not_to have_selector '.created-count'
+      expect(page).not_to have_selector '.updated-count'
       expect(page).to have_selector '.inv-created-count', text: '2'
       expect(page).to have_selector '.inv-updated-count', text: '1'
 
@@ -374,7 +374,7 @@ describe "Product Import" do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "1"
-      expect(page).to have_no_selector '.invalid-count'
+      expect(page).not_to have_selector '.invalid-count'
       expect(page).to have_selector '.inv-create-count', text: '1'
 
       save_data
@@ -414,7 +414,7 @@ describe "Product Import" do
         click_button 'Upload'
         proceed_to_validation
         expect(page).to have_selector '.item-count', text: "1"
-        expect(page).to have_no_selector '.invalid-count'
+        expect(page).not_to have_selector '.invalid-count'
         expect(page).to have_selector '.inv-create-count', text: '1'
         save_data
 
@@ -452,7 +452,7 @@ describe "Product Import" do
         expect(page).to have_content "Variant_unit_name must be the same for products " \
                                      "with the same name"
         expect(page).to have_content "Imported file contains invalid entries"
-        expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+        expect(page).not_to have_selector 'input[type=submit][value="Save"]'
 
         visit main_app.admin_inventory_path
 
@@ -482,7 +482,7 @@ describe "Product Import" do
         expect(page).to have_content "line 4: Cabbage - Units incorrect value"
         expect(page).to have_content "line 3: Beans - Units incorrect value"
         expect(page).to have_content "Imported file contains invalid entries"
-        expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+        expect(page).not_to have_selector 'input[type=submit][value="Save"]'
         expect(page).not_to have_content "line 2: Aubergine"
       end
 
@@ -509,7 +509,7 @@ describe "Product Import" do
         expect(page).to have_content "line 4: Cabbage - Price incorrect value"
         expect(page).to have_content "line 3: Beans - Price can't be blank"
         expect(page).to have_content "Imported file contains invalid entries"
-        expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+        expect(page).not_to have_selector 'input[type=submit][value="Save"]'
         expect(page).not_to have_content "line 2: Aubergine"
       end
     end
@@ -541,7 +541,7 @@ describe "Product Import" do
       expect(page)
         .to have_content "line 5: Aubergine - On_hand incorrect value - On_demand incorrect value"
       expect(page).to have_content "Imported file contains invalid entries"
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
       expect(page).not_to have_content "line 2: Beans"
       expect(page).not_to have_content "line 3: Sprouts"
     end
@@ -577,7 +577,7 @@ describe "Product Import" do
       expect(page).to have_content "line 5: Aubergine ( Bag ) - On_hand incorrect value - " \
                                    "On_demand incorrect value"
       expect(page).to have_content "Imported file contains invalid entries"
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
       expect(page).not_to have_content "line 2: Beans"
       expect(page).not_to have_content "line 3: Potatoes"
     end
@@ -611,7 +611,7 @@ describe "Product Import" do
       expect(page).to have_content "line 5: Aubergine ( Bag ) - On_hand incorrect value - " \
                                    "On_demand incorrect value"
       expect(page).to have_content "Imported file contains invalid entries"
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
       expect(page).not_to have_content "line 2: Beans"
       expect(page).not_to have_content "line 3: Sprouts"
     end
@@ -640,7 +640,7 @@ describe "Product Import" do
       expect(page).to have_content "line 3: Sprouts - Count_on_hand must be blank if on demand"
       expect(page).to have_content "line 4: Cabbage - Count_on_hand must be blank if on demand"
       expect(page).to have_content "Imported file contains invalid entries"
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
     end
 
     it "imports lines with all allowed units" do
@@ -663,14 +663,14 @@ describe "Product Import" do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "2"
-      expect(page).to have_no_selector '.invalid-count'
+      expect(page).not_to have_selector '.invalid-count'
       expect(page).to have_selector '.create-count', text: "2"
-      expect(page).to have_no_selector '.update-count'
+      expect(page).not_to have_selector '.update-count'
 
       save_data
 
       expect(page).to have_selector '.created-count', text: '2'
-      expect(page).to have_no_selector '.updated-count'
+      expect(page).not_to have_selector '.updated-count'
 
       visit spree.admin_products_path
 
@@ -699,14 +699,14 @@ describe "Product Import" do
       proceed_to_validation
 
       expect(page).to have_selector '.item-count', text: "1"
-      expect(page).to have_no_selector '.invalid-count'
+      expect(page).not_to have_selector '.invalid-count'
       expect(page).to have_selector '.create-count', text: "1"
-      expect(page).to have_no_selector '.update-count'
+      expect(page).not_to have_selector '.update-count'
 
       save_data
 
       expect(page).to have_selector '.created-count', text: '1'
-      expect(page).to have_no_selector '.updated-count'
+      expect(page).not_to have_selector '.updated-count'
       expect(page).to have_content "GO TO PRODUCTS PAGE"
       expect(page).to have_content "UPLOAD ANOTHER FILE"
 
@@ -739,10 +739,10 @@ describe "Product Import" do
 
       expect(page).to have_selector '.item-count', text: "1"
       expect(page).to have_selector '.invalid-count', text: "1"
-      expect(page).to have_no_selector ".create-count"
-      expect(page).to have_no_selector '.update-count'
+      expect(page).not_to have_selector ".create-count"
+      expect(page).not_to have_selector '.update-count'
 
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
     end
 
     context 'when using other language than English' do
@@ -800,7 +800,7 @@ describe "Product Import" do
       click_button 'Upload'
 
       expect(page).to have_content "Importer could not process file: invalid filetype"
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
       expect(page).to have_content "Select a spreadsheet to upload"
       File.delete('/tmp/test.txt')
     end
@@ -820,9 +820,9 @@ describe "Product Import" do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      expect(page).to have_no_selector '.create-count'
-      expect(page).to have_no_selector '.update-count'
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector '.create-count'
+      expect(page).not_to have_selector '.update-count'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
       File.delete('/tmp/test.csv')
     end
 
@@ -837,9 +837,9 @@ describe "Product Import" do
       attach_file 'file', '/tmp/test.csv'
       click_button 'Upload'
 
-      expect(page).to have_no_selector '.create-count'
-      expect(page).to have_no_selector '.update-count'
-      expect(page).to have_no_selector 'input[type=submit][value="Save"]'
+      expect(page).not_to have_selector '.create-count'
+      expect(page).not_to have_selector '.update-count'
+      expect(page).not_to have_selector 'input[type=submit][value="Save"]'
       expect(flash_message).to match("Product Import encountered a malformed CSV: %s" % '')
 
       File.delete('/tmp/test.csv')
@@ -874,7 +874,7 @@ describe "Product Import" do
       expect(page).to have_selector '.create-count', text: "1"
 
       expect(page.body).to have_content 'you do not have permission'
-      expect(page).to have_no_selector 'a.button.proceed'
+      expect(page).not_to have_selector 'a.button.proceed'
     end
   end
 

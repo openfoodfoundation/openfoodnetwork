@@ -12,7 +12,7 @@ describe Sets::ModelSet do
                               Spree::Country.all,
                               attrs)
 
-      expect { ms.save }.to change(Spree::Country, :count).by(2)
+      expect { ms.save }.to change { Spree::Country.count }.by(2)
 
       expect(Spree::Country.where(name: ["Fantasia", "Utopia"]).count).to eq(2)
     end
@@ -26,7 +26,7 @@ describe Sets::ModelSet do
 
       ms = Sets::ModelSet.new(EnterpriseGroup, EnterpriseGroup.all, attrs)
 
-      expect { ms.save }.to change(EnterpriseGroup, :count).by(0)
+      expect { ms.save }.to change { EnterpriseGroup.count }.by(0)
 
       expect(EnterpriseGroup.where(name: ['e1zz', 'e2yy']).count).to eq(2)
     end
@@ -41,7 +41,7 @@ describe Sets::ModelSet do
       ms = Sets::ModelSet.new(Enterprise, Enterprise.all, attributes, nil,
                               proc { |attrs| attrs['name'] == 'deleteme' })
 
-      expect { ms.save }.to change(Enterprise, :count).by(-1)
+      expect { ms.save }.to change { Enterprise.count }.by(-1)
 
       expect(Enterprise.where(id: e1.id)).to be_empty
       expect(Enterprise.where(id: e2.id)).to be_present
@@ -53,7 +53,7 @@ describe Sets::ModelSet do
       ms = Sets::ModelSet.new(Enterprise, Enterprise.all, attributes, nil,
                               proc { |attrs| attrs[:name] == 'deleteme' })
 
-      expect { ms.save }.to change(Enterprise, :count).by(0)
+      expect { ms.save }.to change { Enterprise.count }.by(0)
     end
 
     describe "errors" do
@@ -79,7 +79,7 @@ describe Sets::ModelSet do
         expect(subject.errors.full_messages).to eq ["Product Name can't be blank"]
 
         expect(subject.invalid).to     include product_a
-        expect(subject.invalid).to_not include product_b
+        expect(subject.invalid).not_to include product_b
       end
     end
   end

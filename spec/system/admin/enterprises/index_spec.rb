@@ -19,8 +19,8 @@ describe 'Enterprises Index' do
         expect(page).to have_select "sets_enterprise_set_collection_attributes_1_sells"
         expect(page).to have_content "Settings"
         expect(page).to have_content "Delete"
-        expect(page).to have_no_content "Payment Methods"
-        expect(page).to have_no_content "Shipping Methods"
+        expect(page).not_to have_content "Payment Methods"
+        expect(page).not_to have_content "Shipping Methods"
         expect(page).to have_content "Enterprise Fees"
       end
 
@@ -93,9 +93,9 @@ describe 'Enterprises Index' do
               "#{manager.email} is not permitted to own any more enterprises (limit is 1)."
             )
             second_distributor.reload
-          }.to_not change { second_distributor.owner }
+          }.not_to change { second_distributor.owner }
 
-          expect(second_distributor.owner).to_not eq manager
+          expect(second_distributor.owner).not_to eq manager
         end
 
         def select_new_owner(user, enterprise)
@@ -149,8 +149,8 @@ describe 'Enterprises Index' do
           expect(page).to have_selector "td.package", text: 'Profile'
         end
 
-        expect(page).to have_no_content "supplier2.name"
-        expect(page).to have_no_content "distributor2.name"
+        expect(page).not_to have_content "supplier2.name"
+        expect(page).not_to have_content "distributor2.name"
 
         expect(find('.js-admin-section-header')).to have_link "New Enterprise"
       end
@@ -164,12 +164,12 @@ describe 'Enterprises Index' do
           expect(page).to have_selector "a.selector.producer.disabled"
           find("a.selector.producer.disabled").click
           expect(page).to have_selector "a.selector.non-producer.selected.disabled"
-          expect(page).to have_no_selector "a.update"
+          expect(page).not_to have_selector "a.update"
           find("td.package").click
           expect(page).to have_selector "a.selector.hub-profile.disabled"
           find("a.selector.hub-profile.disabled").click
           expect(page).to have_selector "a.selector.hub.selected.disabled"
-          expect(page).to have_no_selector "a.update"
+          expect(page).not_to have_selector "a.update"
         end
       end
     end
@@ -194,13 +194,13 @@ describe 'Enterprises Index' do
           # Open the producer panel
           find("td.producer").click
 
-          expect(page).to have_no_selector "a.selector.producer.selected"
+          expect(page).not_to have_selector "a.selector.producer.selected"
           expect(page).to have_selector "a.selector.non-producer.selected"
 
           # Change to a producer
           find("a.selector.producer").click
 
-          expect(page).to have_no_selector "a.selector.non-producer.selected"
+          expect(page).not_to have_selector "a.selector.non-producer.selected"
           expect(page).to have_selector "a.selector.producer.selected"
           expect(page).to have_selector "a.update", text: "SAVE"
 
@@ -212,16 +212,16 @@ describe 'Enterprises Index' do
           # Open the package panel
           find("td.package").click
 
-          expect(page).to have_no_selector "a.selector.producer-profile.selected"
-          expect(page).to have_no_selector "a.selector.producer-shop.selected"
+          expect(page).not_to have_selector "a.selector.producer-profile.selected"
+          expect(page).not_to have_selector "a.selector.producer-shop.selected"
           expect(page).to have_selector "a.selector.producer-hub.selected"
 
           # Change to a producer-shop
           find("a.selector.producer-shop").click
 
-          expect(page).to have_no_selector "a.selector.producer-profile.selected"
+          expect(page).not_to have_selector "a.selector.producer-profile.selected"
           expect(page).to have_selector "a.selector.producer-shop.selected"
-          expect(page).to have_no_selector "a.selector.producer-hub.selected"
+          expect(page).not_to have_selector "a.selector.producer-hub.selected"
           expect(page).to have_selector "a.update", text: "SAVE"
 
           # Save selection

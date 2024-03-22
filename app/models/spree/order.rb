@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/order/checkout'
-require 'open_food_network/enterprise_fee_calculator'
-require 'open_food_network/feature_toggle'
-require 'open_food_network/tag_rule_applicator'
-
 module Spree
   class Order < ApplicationRecord
     include OrderShipment
@@ -32,7 +27,9 @@ module Spree
       go_to_state :complete
     end
 
-    attr_accessor :use_billing, :checkout_processing, :save_bill_address, :save_ship_address
+    attr_accessor :use_billing, :checkout_processing, :save_bill_address,
+                  :save_ship_address
+    attr_writer :send_shipment_email
 
     token_resource
 
@@ -621,6 +618,22 @@ module Spree
       state.in?(["payment", "confirmation"])
     end
 
+    def send_shipment_email
+      return true if @send_shipment_email.nil?
+
+      @send_shipment_email
+    end
+
+    # @return [BigDecimal] The rate of the voucher if applied to the order
+    def applied_voucher_rate
+      # As an order can have only one voucher,
+      # hence using +take+ as each voucher adjustment will have the same voucher
+      return BigDecimal(0) unless (voucher_adjustment = voucher_adjustments.take)
+
+      voucher = voucher_adjustment.originator
+      voucher.rate(self)
+    end
+
     private
 
     def reapply_tax_on_changed_address
@@ -639,7 +652,7 @@ module Spree
     end
 
     def fee_handler
-      @fee_handler ||= OrderFeesHandler.new(self)
+      @fee_handler ||= Orders::HandleFeesService.new(self)
     end
 
     def clear_legacy_taxes!
@@ -688,7 +701,7 @@ module Spree
     end
 
     def adjustments_fetcher
-      @adjustments_fetcher ||= OrderAdjustmentsFetcher.new(self)
+      @adjustments_fetcher ||= Orders::FetchAdjustmentsService.new(self)
     end
 
     def skip_payment_for_subscription?

@@ -128,7 +128,7 @@ class CheckoutController < BaseController
   def advance_order_state
     return if @order.complete?
 
-    OrderWorkflow.new(@order).advance_checkout(raw_params.slice(:shipping_method_id))
+    Orders::WorkflowService.new(@order).advance_checkout(raw_params.slice(:shipping_method_id))
   end
 
   def order_params

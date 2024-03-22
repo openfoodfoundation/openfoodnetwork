@@ -252,7 +252,6 @@ el:
   cancel_order: "Ακύρωση παραγγελίας"
   confirm_send_invoice: "Θα αποσταλεί ένα τιμολόγιο στον πελάτη για αυτή την παραγγελία,θέλετε να συνεχίσετε?"
   confirm_resend_order_confirmation: "Είσαστε βέβαιος ότι θέλετε να ξαναστείλετε email επιβεβαίωσης παραγγελίας?"
-  must_have_valid_business_number: "%{επωνυμία_επιχείρησης} πρέπει να έχει έγκυρο ABN για να αποσταλούν τα τιμολόγια."
   invoice: "Τιμολόγιο"
   more: "Περισσότερα"
   say_no: "Όχι"
@@ -381,6 +380,9 @@ el:
       actions:
         edit: Επεξεργασία
         clone: Κλώνος
+        delete: Διαγραφή
+      image:
+        edit: Επεξεργασία
     adjustments:
       skipped_changing_canceled_order: "Δεν μπορείτε να κάνετε αλλαγή ακυρωμένης παραγγελίας."
     begins_at: Ξεκινάει από
@@ -587,6 +589,8 @@ el:
         producers:
           label: Παραγωγοί
         search: Αναζήτηση
+      edit_image:
+        close: Πίσω
     product_import:
       title: Είσαγωγή Προϊόντος
       file_not_found: Το αρχείο δεν βρέθηκε ή δεν μπόρεσε να φορτωθεί
@@ -626,6 +630,9 @@ el:
         product_categories: Κατηγορίες προϊόντος
         tax_categories: Κατηγορίες Φορολόγησης
         shipping_categories: Κατηγορίες Μεταφορικών
+      dfc_import_form:
+        enterprise: "Επιχείρηση"
+        import: "Εισαγωγή"
       import:
         review: Αναθεώρηση
         import: Εισαγωγή
@@ -683,6 +690,7 @@ el:
         view_products: Μεταβείτε στη σελίδα προϊόντων
         view_inventory: Μετάβαση στη σελίδα αποθέματος
       product_headings:
+        distributor: Διανομέας
         producer: Παραγωγός
         sku: SKU
         name: Όνομα
@@ -3041,8 +3049,6 @@ el:
     start_date: "Ημερομηνία έναρξης"
     successfully_removed: "Καταργήθηκε επιτυχώς"
     taxonomy_edit: "Επεξεργασία ταξινόμησης"
-    taxonomy_tree_error: "Σφάλμα δέντρου ταξινόμησης"
-    taxonomy_tree_instruction: "Οδηγίες δέντρων ταξινομίας"
     tree: "Δέντρο"
     updating: "Ενημέρωση"
     your_order_is_empty_add_product: "Η παραγγελία σας είναι κενή, αναζητήστε και προσθέστε ένα προϊόν παραπάνω"
@@ -3588,6 +3594,10 @@ el:
           email: "Email"
           total: "Σύνολο"
           billing_address_name: "Όνομα"
+      taxons:
+        form:
+          name: Όνομα
+          description: Περιγραφή
       general_settings:
         edit:
           legal_settings: "Νομικές ρυθμίσεις"

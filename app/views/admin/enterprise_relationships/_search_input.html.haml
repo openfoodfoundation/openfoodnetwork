@@ -1,5 +1,5 @@
 %input.search{"ng-model" => "query", "placeholder" => t(:admin_enterprise_relationships_seach_placeholder)}
 
-%label{ng: {repeat: "permission in EnterpriseRelationships.all_permissions"}}
-  %input{type: "checkbox", ng: {click: "$parent.query = toggleKeyword($parent.query, permission)"}}
+%label{ "ng-repeat": "permission in EnterpriseRelationships.all_permissions" }
+  %input{ type: "checkbox", "ng-click": "$parent.query = toggleKeyword($parent.query, permission)" }
   {{ EnterpriseRelationships.permission_presentation(permission) }}

@@ -66,15 +66,16 @@ describe "As a consumer, I want to checkout my order" do
           visit checkout_step_path(:summary)
         end
 
-        it "displays the ship address" do
+        it "displays title and ship address" do
+          expect(page).to have_title "Checkout Summary - Open Food Network"
+
           expect(page).to have_content "Delivery address"
           expect(page).to have_content order.ship_address.address1
           expect(page).to have_content order.ship_address.city
           expect(page).to have_content order.ship_address.zipcode
           expect(page).to have_content order.ship_address.phone
-        end
 
-        it "and not the billing address" do
+          # but not the billing address
           expect(page).not_to have_content order.bill_address.address1
           expect(page).not_to have_content order.bill_address.city
           expect(page).not_to have_content order.bill_address.zipcode
@@ -122,23 +123,17 @@ describe "As a consumer, I want to checkout my order" do
       describe "terms and conditions" do
         let(:customer) { create(:customer, enterprise: order.distributor, user:) }
         let(:tos_url) { "https://example.org/tos" }
-        let(:system_terms_path) { Rails.public_path.join('Terms-of-service.pdf') }
-        let(:shop_terms_path) { Rails.public_path.join('Terms-of-ServiceUK.pdf') }
-        let(:system_terms) {
-          Rack::Test::UploadedFile.new(system_terms_path, "application/pdf")
-        }
-        let(:shop_terms) {
-          Rack::Test::UploadedFile.new(shop_terms_path, "application/pdf")
-        }
+        let(:system_terms) { terms_pdf_file }
+        let(:shop_terms) { terms_pdf_file }
 
         context "when none are required" do
           it "doesn't show checkbox or links" do
             visit checkout_step_path(:summary)
 
             within "#checkout" do
-              expect(page).to_not have_field "order_accept_terms"
-              expect(page).to_not have_link "Terms and Conditions"
-              expect(page).to_not have_link "Terms of service"
+              expect(page).not_to have_field "order_accept_terms"
+              expect(page).not_to have_link "Terms and Conditions"
+              expect(page).not_to have_link "Terms of service"
             end
           end
         end
@@ -151,7 +146,7 @@ describe "As a consumer, I want to checkout my order" do
           describe "when customer has not accepted T&Cs before" do
             it "shows a link to the T&Cs and disables checkout button until terms are accepted" do
               visit checkout_step_path(:summary)
-              expect(page).to have_link "Terms and Conditions", href: /#{shop_terms_path.basename}$/
+              expect(page).to have_link "Terms and Conditions", href: /Terms-of-service\.pdf/
               expect(page).to have_field "order_accept_terms", checked: false
             end
           end
@@ -242,8 +237,8 @@ describe "As a consumer, I want to checkout my order" do
           it "shows links to both terms and all need accepting" do
             visit checkout_step_path(:summary)
 
-            expect(page).to have_link "Terms and Conditions", href: /#{shop_terms_path.basename}$/
-            expect(page).to have_link("Terms of service", href: /Terms-of-service.pdf/, count: 2)
+            expect(page).to have_link "Terms and Conditions", href: /Terms-of-service\.pdf/
+            expect(page).to have_link("Terms of service", href: /Terms-of-service\.pdf/, count: 2)
             expect(page).to have_field "order_accept_terms", checked: false
           end
         end
@@ -352,7 +347,7 @@ describe "As a consumer, I want to checkout my order" do
         order.distributor.save
         visit checkout_step_path(:summary)
 
-        expect(page).to_not have_content("You have an order for this order cycle already.")
+        expect(page).not_to have_content("You have an order for this order cycle already.")
       end
     end
 
@@ -398,8 +393,8 @@ describe "As a consumer, I want to checkout my order" do
 
         it_behaves_like "order confirmation page", "PAID", "50" do
           before do
-            expect(page).to_not have_selector('h5', text: "Credit Owed")
-            expect(page).to_not have_selector('h5', text: "Balance Due")
+            expect(page).not_to have_selector('h5', text: "Credit Owed")
+            expect(page).not_to have_selector('h5', text: "Balance Due")
           end
         end
       end

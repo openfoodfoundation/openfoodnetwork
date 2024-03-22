@@ -193,9 +193,9 @@ en_IN:
   title: "Open Food Network India"
   welcome_to: "Welcome to "
   site_meta_description: "The Open Food Network India software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
-  search_by_name: Search by name, town, State or postcode...
-  producers_join: India producers are now welcome to join Open Food Network India.
-  charges_sales_tax: Charges VAT?
+  search_by_name: Search by name, town, state or PIN code...
+  producers_join: Indian producers are now welcome to join Open Food Network India.
+  charges_sales_tax: Charges GST?
   print_invoice: "Print Invoice"
   print_ticket: "Print Ticket"
   select_ticket_printer: "Select printer for tickets"
@@ -207,7 +207,6 @@ en_IN:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
   invoice: "Invoice"
   active: "Active"
   cancelled: "Cancelled"
@@ -330,6 +329,9 @@ en_IN:
       actions:
         edit: Edit
         clone: Clone
+        delete: Delete
+      image:
+        edit: Edit
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
@@ -533,6 +535,10 @@ en_IN:
         categories:
           label: Categories
         search: Search
+      table:
+        new_variant: New variant
+      edit_image:
+        close: Back
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -572,6 +578,9 @@ en_IN:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -629,6 +638,7 @@ en_IN:
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: Product Code
         name: Name
@@ -897,6 +907,8 @@ en_IN:
           rate: Rate
           customers: Customer
           active: Active?
+        connected_apps:
+          loading: "Loading"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1437,6 +1449,8 @@ en_IN:
   invoice_tax_total: "VAT Total:"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
+  invoice_shipping_category_delivery: "Delivery"
+  invoice_shipping_category_pickup: "Pickup"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
   abn: "Company Number:"
@@ -1485,8 +1499,8 @@ en_IN:
   city: City
   city_placeholder: eg. Newcastle
   state: State
-  postcode: Postcode
-  postcode_placeholder: eg. 3070
+  postcode: PIN Code
+  postcode_placeholder: eg. 400081
   suburb: Suburb
   country: Country
   unauthorized: Unauthorized
@@ -1580,14 +1594,14 @@ en_IN:
       cookies_policy_link: "cookies policy"
       cookies_accept_button: "Accept Cookies"
   home_shop: Shop Now
-  brandstory_headline: "Growing Local Food Online"
-  brandstory_intro: "THE online community helping you to build a successful food enterprise"
-  brandstory_part1: "The Open Food Network software platform allows farmers to sell produce online, at a price that works for them. It has been built specifically for selling food so it can handle tricky measures or stock levels that only food has - a dozen eggs, a bunch of parsley, a whole chicken that varies in weight…"
-  brandstory_part2: "Food Producers, Farmer Producer Organizations (FPO), or Farmer Producer Companies (FPC) can create an online shop, collect payments, and sell through other shops on this platform."
-  brandstory_part3: "Wholesalers, Farmer Producer Organizations (FPO), or Farmer Producer Companies (FPC) can integrate OFN with their existing systems and manage buying groups to supply customers with their produce through our national network of food hubs and shops."
-  brandstory_part4: "Farmer Producer Organizations (FPO), or Farmer Producer Companies (FPC) can bring together producers in their local area to create virtual farmers’ markets, building a resilient local food economy."
-  brandstory_part5_strong: "And what’s just as important as the software itself are the values which underpin it. "
-  brandstory_part6: "If you sell good food - as a farmer, farmer’s market, food co-op, or food hub- then choose software that aligns with your values to build food systems for people and planet, not profit.  By working collectively rather than competitively, we share the costs of developing new software, and we ensure that our project is resilient!"
+  brandstory_headline: "Buy Organic & Local Food."
+  brandstory_intro: "Search for local farmers and food producers."
+  brandstory_part1: "Choose from thousands of farmers and food producers who produce food using sustainable farming methods without any harmful chemicals."
+  brandstory_part2: "When you buy your food from local farmers, you support the local economy."
+  brandstory_part3: "If you are a farmer or food producer and would like to sell your produce online without paying any commission, register on Open Food Network, India today and start selling. Best B2B or B2C online marketplace developed for the farmers."
+  brandstory_part4: "This software is developed by a Not-For-Profit organization to help farmers sell their produce online."
+  brandstory_part5_strong: "We call it Open Foor Network India, or OFN India."
+  brandstory_part6: "If you sell good food - as a farmer, farmers market, food co-op, or food hub- then OFN India is your best option."
   system_headline: "Selling on OFN - 3 easy steps"
   system_step1: "1. Create new account"
   system_step1_text: "Set up your enterprise with a name, description, photos, contact details and social media links."
@@ -1870,7 +1884,7 @@ en_IN:
   sell_hubs_detail: "Set up a profile for your food enterprise or organisation on the OFN. At any time you can upgrade your profile to a multi-producer shop."
   sell_groups_detail: "Set up a tailored directory of enterprises (producers and other food enterprises) for your region or for your organisation."
   sell_user_guide: "Find out more in our user guide."
-  sell_listing_price: "Listing a profile on OFN India is free. Plans for shops and hubs start from as little as ₹100 per month.  For more detail on pricing visit https://about.openfoodindia.org/pricing/ ."
+  sell_listing_price: "Listing a profile on OFN India is free. Plans for shops and hubs start from as little as ₹375 per month.  For more detail on pricing visit https://about.openfoodindia.org/pricing/ ."
   sell_embed: "We collectively budget for new feature development from the international OFN community. This way the huge cost of good software development can be shared. If you want a new feature, chances are someone in France, South Africa, Australia, India or Brazil might want it too! Use the Community Forum to suggest features you'd like to see."
   sell_ask_services: "Ask us about OFN services."
   shops_title: Shops
@@ -2005,18 +2019,18 @@ en_IN:
         producer: "Great! First we need to know a little bit about your farm:"
         enterprise_name_field: "Enterprise Name:"
         producer_name_field: "Farm Name:"
-        producer_name_field_placeholder: "e.g. Charlie's Chilli Farm"
+        producer_name_field_placeholder: "e.g. Prashant Patil's Farm"
         producer_name_field_error: "Sorry, this name has already been taken. Please try another."
         address1_field: "Address line 1:"
-        address1_field_placeholder: "e.g. 123 Apple Drive"
+        address1_field_placeholder: "e.g. Lokmanya Tilak Road"
         address1_field_error: "Please enter an address"
         address2_field: "Address line 2:"
         suburb_field: "Town:"
-        suburb_field_placeholder: "eg. Taunton"
+        suburb_field_placeholder: "eg. Solapur"
         suburb_field_error: "Please enter a postal town"
-        postcode_field: "Postcode:"
-        postcode_field_placeholder: "eg. TA1 TAA"
-        postcode_field_error: "Postcode required"
+        postcode_field: "PIN Code:"
+        postcode_field_placeholder: "eg. 400081"
+        postcode_field_error: "PIN Code required"
         state_field: "State:"
         state_field_error: "State Required"
         country_field: "Country:"
@@ -2083,7 +2097,7 @@ en_IN:
         enterprise_final_step: "Final step!"
         enterprise_social_text: "How can people find %{enterprise} online?"
         website: "Website"
-        website_placeholder: "eg. openfoodnetwork.org.au"
+        website_placeholder: "eg. openfoodnetwork.in"
         facebook: "Facebook"
         facebook_placeholder: "eg. www.facebook.com/PageNameHere"
         linkedin: "LinkedIn"
@@ -3523,6 +3537,10 @@ en_IN:
           email: "Email"
           total: "Total"
           billing_address_name: "Name"
+      taxons:
+        form:
+          name: Name
+          description: Description
       general_settings:
         edit:
           legal_settings: "Legal Settings"

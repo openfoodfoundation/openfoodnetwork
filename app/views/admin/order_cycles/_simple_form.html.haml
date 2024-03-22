@@ -15,9 +15,9 @@
 
 = label_tag t('.products')
 %table.exchanges
-  %tbody{ng: {repeat: "exchange in order_cycle.incoming_exchanges"}}
+  %tbody{ "ng-repeat": "exchange in order_cycle.incoming_exchanges" }
     %tr.products
-      %td{ ng: { include: "'admin/panels/exchange_products_simple.html'" } }
+      %td{ "ng-include": "'admin/panels/exchange_products_simple.html'" }
 
 %br
 = label_tag t('.tags')

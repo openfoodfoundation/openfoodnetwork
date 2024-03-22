@@ -7,7 +7,7 @@ module Reporting
       @order_permissions = order_permissions
       @params = params
       complete_not_canceled_visible_orders =
-        CompleteVisibleOrders.new(order_permissions).query.not_state(:canceled)
+        CompleteVisibleOrdersQuery.new(order_permissions).call.not_state(:canceled)
       @orders_relation = orders_relation || complete_not_canceled_visible_orders
     end
 
@@ -36,7 +36,7 @@ module Reporting
       without_editable_line_items = line_items - editable_line_items(line_items)
 
       without_editable_line_items.each do |line_item|
-        OrderDataMasker.new(line_item.order).call
+        Orders::MaskDataService.new(line_item.order).call
       end
 
       line_items

@@ -115,7 +115,7 @@ describe Admin::SchedulesController, type: :controller do
                                                                       uncoordinated_order_cycle,
                                                                       uncoordinated_order_cycle3
           # coordinated_order_cycle is removed, uncoordinated_order_cycle2 is NOT added
-          expect(coordinated_schedule.reload.order_cycles).to_not include coordinated_order_cycle,
+          expect(coordinated_schedule.reload.order_cycles).not_to include coordinated_order_cycle,
                                                                           uncoordinated_order_cycle2
         end
 
@@ -145,7 +145,7 @@ describe Admin::SchedulesController, type: :controller do
                              schedule: { name: "my awesome schedule" }
           expect(response).to redirect_to unauthorized_path
           expect(assigns(:schedule)).to eq nil
-          expect(coordinated_schedule.name).to_not eq "my awesome schedule"
+          expect(coordinated_schedule.name).not_to eq "my awesome schedule"
         end
       end
     end
@@ -173,7 +173,7 @@ describe Admin::SchedulesController, type: :controller do
 
         context "where no order cycles ids are provided" do
           it "does not allow me to create the schedule" do
-            expect { create_schedule params }.to_not change(Schedule, :count)
+            expect { create_schedule params }.not_to change { Schedule.count }
           end
         end
 
@@ -184,10 +184,10 @@ describe Admin::SchedulesController, type: :controller do
           end
 
           it "allows me to create the schedule, adding only order cycles that I manage" do
-            expect { create_schedule params }.to change(Schedule, :count).by(1)
+            expect { create_schedule params }.to change { Schedule.count }.by(1)
             schedule = Schedule.last
             expect(schedule.order_cycles).to include coordinated_order_cycle
-            expect(schedule.order_cycles).to_not include uncoordinated_order_cycle
+            expect(schedule.order_cycles).not_to include uncoordinated_order_cycle
           end
 
           it "sync proxy orders" do
@@ -205,7 +205,7 @@ describe Admin::SchedulesController, type: :controller do
           end
 
           it "prevents me from creating the schedule" do
-            expect { create_schedule params }.to_not change(Schedule, :count)
+            expect { create_schedule params }.not_to change { Schedule.count }
           end
         end
       end
@@ -218,7 +218,7 @@ describe Admin::SchedulesController, type: :controller do
         end
 
         it "allows me to create a schedule" do
-          expect { create_schedule params }.to change(Schedule, :count).by(1)
+          expect { create_schedule params }.to change { Schedule.count }.by(1)
           schedule = Schedule.last
           expect(schedule.order_cycles).to include coordinated_order_cycle,
                                                    uncoordinated_order_cycle
@@ -249,7 +249,7 @@ describe Admin::SchedulesController, type: :controller do
 
           context "when no dependent subscriptions are present" do
             it "allows me to destroy the schedule" do
-              expect { spree_delete :destroy, params }.to change(Schedule, :count).by(-1)
+              expect { spree_delete :destroy, params }.to change { Schedule.count }.by(-1)
             end
           end
 
@@ -257,7 +257,7 @@ describe Admin::SchedulesController, type: :controller do
             let!(:subscription) { create(:subscription, schedule: coordinated_schedule) }
 
             it "returns an error message and prevents me from deleting the schedule" do
-              expect { spree_delete :destroy, params }.to_not change(Schedule, :count)
+              expect { spree_delete :destroy, params }.not_to change { Schedule.count }
               json_response = JSON.parse(response.body)
               expect(json_response["errors"])
                 .to include 'This schedule cannot be deleted ' \
@@ -270,7 +270,7 @@ describe Admin::SchedulesController, type: :controller do
           before { params.merge!(id: uncoordinated_schedule.id) }
 
           it "prevents me from destroying the schedule" do
-            expect { spree_delete :destroy, params }.to_not change(Schedule, :count)
+            expect { spree_delete :destroy, params }.not_to change { Schedule.count }
           end
         end
       end

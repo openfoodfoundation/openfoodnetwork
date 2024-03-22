@@ -1,40 +1,37 @@
 %fieldset.no-border-bottom#gateway_fields
   %legend{ align: "center"}
     = t(:provider_settings)
-  .preference-settings{ ng: { controller: "StripeController" } }
+  .preference-settings{ "ng-controller": "StripeController" }
     = fields_for :payment_method, @payment_method do |payment_method_form|
       .row
         .alpha.four.columns
           = payment_method_form.label :stripe_account_owner
         .omega.twelve.columns
           - if @stripe_account_holder.nil? || spree_current_user.enterprises.include?(@stripe_account_holder)
-            %input.ofn-select2.fullwidth#payment_method_preferred_enterprise_id{ type: 'number',
-              name: 'payment_method[preferred_enterprise_id]',
-              placeholder: t(".enterprise_select_placeholder"),
-              data: 'shops', ng: { model: 'paymentMethod.preferred_enterprise_id' } }
+            %input.ofn-select2.fullwidth#payment_method_preferred_enterprise_id{ type: 'number', name: 'payment_method[preferred_enterprise_id]', placeholder: t(".enterprise_select_placeholder"), data: 'shops', "ng-model": 'paymentMethod.preferred_enterprise_id' }
           - else
             %strong= Enterprise.find_by(id: @payment_method)&.name
 
-    #stripe-account-status{ ng: { show: "paymentMethod.preferred_enterprise_id" } }
-      .alert-box.warning{ ng: { hide: "stripe_account.status" } }
+    #stripe-account-status{ "ng-show": "paymentMethod.preferred_enterprise_id" }
+      .alert-box.warning{ "ng-hide": "stripe_account.status" }
         = t(".loading_account_information_msg")
 
-      .alert-box.error{ ng: { show: "stripe_account.status == 'stripe_disabled'" } }
+      .alert-box.error{ "ng-show": "stripe_account.status == 'stripe_disabled'" }
         = t(".stripe_disabled_msg")
 
-      .alert-box.error{ ng: { show: "stripe_account.status == 'request_failed'" } }
+      .alert-box.error{ "ng-show": "stripe_account.status == 'request_failed'" }
         = t(".request_failed_msg")
 
-      .alert-box.error{ ng: { show: "stripe_account.status == 'account_missing'" } }
+      .alert-box.error{ "ng-show": "stripe_account.status == 'account_missing'" }
         = t(".account_missing_msg")
-        %a.button{ ng: { href: "{{current_enterprise_stripe_path()}}" }, target: 'blank' }
+        %a.button{ target: 'blank', "ng-href": "{{current_enterprise_stripe_path()}}" }
           = t(".connect_one")
           %i.icon-chevron-right
 
-      .alert-box.error{ ng: { show: "stripe_account.status == 'access_revoked'" } }
+      .alert-box.error{ "ng-show": "stripe_account.status == 'access_revoked'" }
         = t(".access_revoked_msg")
 
-      .alert-box.ok{ ng: { show: "stripe_account.status == 'connected'" } }
+      .alert-box.ok{ "ng-show": "stripe_account.status == 'connected'" }
         .status
           %strong= t(".status") + ":"
           = t(".connected")

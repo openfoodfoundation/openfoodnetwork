@@ -5,7 +5,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
 ruby File.read('.ruby-version').chomp
 
-gem 'dotenv-rails', require: 'dotenv/rails-now' # Load ENV vars before other gems
+gem 'dotenv', require: 'dotenv/load' # Load ENV vars before other gems
 
 gem 'rails'
 
@@ -17,7 +17,7 @@ gem "image_processing"
 gem 'activemerchant', '>= 1.78.0'
 gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
-gem 'ransack', '~> 2.6.0'
+gem 'ransack', '~> 4.1.0'
 gem 'responders'
 gem 'rexml'
 gem 'webpacker', '~> 5'
@@ -74,7 +74,7 @@ gem 'rswag-ui'
 
 gem 'omniauth_openid_connect'
 gem 'omniauth-rails_csrf_protection'
-gem 'openid_connect', '~> 1.3'
+gem 'openid_connect'
 
 gem 'angularjs-rails', '1.8.0'
 gem 'bugsnag'
@@ -93,14 +93,13 @@ gem 'bootsnap', require: false
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'mimemagic', '> 0.3.5'
-gem 'paper_trail', '~> 12.1'
+gem 'paper_trail'
 gem 'rack-rewrite'
 gem 'rack-timeout'
 gem 'roadie-rails'
 
-gem 'hiredis'
 gem 'puma'
-gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
+gem 'redis'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
@@ -143,6 +142,8 @@ gem "private_address_check"
 
 gem 'newrelic_rpm'
 
+gem 'invisible_captcha'
+
 group :production, :staging do
   gem 'sd_notify' # For better Systemd process management. Used by Puma.
 end
@@ -160,6 +161,7 @@ group :test, :development do
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'rspec-retry', require: false
+  gem 'rspec-sql'
   gem 'rswag'
   gem 'shoulda-matchers'
   gem 'stimulus_reflex_testing'
@@ -185,8 +187,10 @@ group :development do
   gem 'rails-erd'
   gem 'rubocop'
   gem 'rubocop-rails'
+  gem 'rubocop-rspec'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'spring-commands-rubocop'
   gem 'web-console'
 
   gem 'rack-mini-profiler', '< 3.0.0'

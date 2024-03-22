@@ -378,7 +378,6 @@ ru:
   cancel_order: "Отменить Заказ"
   confirm_send_invoice: "Счет на этот заказ будет отправлен клиенту. Вы уверены что хотите продолжить?"
   confirm_resend_order_confirmation: "Вы уверены, что хотите повторно отправить письмо с подтверждением заказа?"
-  must_have_valid_business_number: " %{enterprise_name} должен быть указан ИНН перед отправкой счетов."
   invoice: "Счёт"
   invoices: "Счета"
   file: "Файл"
@@ -521,6 +520,9 @@ ru:
       actions:
         edit: Изменить
         clone: Клонировать
+        delete: Удалить
+      image:
+        edit: Изменить
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С
@@ -750,6 +752,10 @@ ru:
       no_products:
         no_products_found: Товары не найдены
         import_products: Импорт нескольких товаров
+      table:
+        new_variant: Новый вариант
+      edit_image:
+        close: Назад
     product_import:
       title: Импорт Товара
       file_not_found: Файл не найден или не может быть открыт
@@ -791,6 +797,9 @@ ru:
         product_categories: Категории Товаров
         tax_categories: Налоговые Категории
         shipping_categories: Категории Доставки
+      dfc_import_form:
+        enterprise: "Предприятие"
+        import: "Импорт"
       import:
         review: Просмотр
         import: Импорт
@@ -848,6 +857,7 @@ ru:
         view_products: Перейти на Страницу Товаров
         view_inventory: Перейти на Страницу Элементов товарной номенклатуры
       product_headings:
+        distributor: Дистрибьютор
         producer: Производитель
         sku: SKU
         name: Название
@@ -1178,6 +1188,8 @@ ru:
           create_custom_tab: "Создать пользовательскую вкладку на витрине магазина"
           custom_tab_title: "Название пользовательской вкладки"
           custom_tab_content: "Контент для пользовательской вкладки"
+        connected_apps:
+          loading: "Загружается"
       actions:
         edit_profile: Настройки
         properties: Свойства
@@ -1546,7 +1558,6 @@ ru:
       index:
         title: "Настройки OIDC"
         connect: "Подключить свою учетную запись"
-        already_connected: "Ваша учетная запись уже связана с этой учетной записью DFC:"
         les_communs_link: "Les Communs Open ID сервер"
         link_your_account: "Сначала вам необходимо связать свою учетную запись с поставщиком авторизации, используемым DFC (Les Communs Open ID Connect)."
         link_account_button: "Свяжите свою учетную запись Les Communs OIDC"
@@ -1868,6 +1879,8 @@ ru:
   invoice_tax_total: "Всего налогов:"
   tax_invoice: "СЧЁТ"
   tax_total: "Всего налога (%{rate}):"
+  invoice_shipping_category_delivery: "Доставка"
+  invoice_shipping_category_pickup: "Самовывоз"
   total_excl_tax: "Всего (Искл. налог):"
   total_incl_tax: "Всего (Вкл. налог):"
   abn: "ИНН"
@@ -3659,8 +3672,6 @@ ru:
     start_date: "Дата начала"
     successfully_removed: "Успешно удалено"
     taxonomy_edit: "Изменить таксономию"
-    taxonomy_tree_error: "Ошибка дерева таксономии"
-    taxonomy_tree_instruction: "Инструкция по дереву таксономии"
     tree: "Дерево"
     updating: "Обновление"
     your_order_is_empty_add_product: "Ваша корзина пуста, пожалуйста, найдите и добавьте товар выше"
@@ -4238,6 +4249,11 @@ ru:
           email: "Email"
           total: "Всего"
           billing_address_name: "Название"
+      taxons:
+        form:
+          name: Название
+          permalink: Постоянная ссылка
+          description: Описание
       general_settings:
         edit:
           legal_settings: "Правовые настройки"

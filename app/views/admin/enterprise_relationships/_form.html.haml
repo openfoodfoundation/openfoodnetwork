@@ -8,7 +8,7 @@
     %select.select2.fullwidth{id: "enterprise_relationship_child_id", "ng-model" => "child_id", "ng-options" => "e.id as e.name for e in Enterprises.all_enterprises"}
   %td
     %label
-      %input{type: "checkbox", ng: {checked: "allPermissionsChecked()", click: "checkAllPermissions()"}}
+      %input{ type: "checkbox", "ng-checked": "allPermissionsChecked()", "ng-click": "checkAllPermissions()" }
         = t 'admin_enterprise_relationships_everything'
     %div{"ng-repeat" => "permission in EnterpriseRelationships.all_permissions"}
       %label

@@ -115,7 +115,7 @@ describe 'White label setting' do
           end
 
           it "hides the OFN navigation" do
-            expect(page).to have_no_selector ofn_navigation
+            expect(page).not_to have_selector ofn_navigation
           end
 
           it_behaves_like "hides the OFN navigation for mobile view as well"
@@ -153,7 +153,7 @@ describe 'White label setting' do
           end
 
           it "hides the OFN navigation" do
-            expect(page).to have_no_selector ofn_navigation
+            expect(page).not_to have_selector ofn_navigation
           end
 
           it_behaves_like "hides the OFN navigation for mobile view as well"
@@ -167,7 +167,7 @@ describe 'White label setting' do
           it "hides the OFN navigation" do
             expect(page).to have_content "Checkout now"
             expect(page).to have_content "Order ready for "
-            expect(page).to have_no_selector ofn_navigation
+            expect(page).not_to have_selector ofn_navigation
           end
 
           it_behaves_like "hides the OFN navigation for mobile view as well"
@@ -186,7 +186,7 @@ describe 'White label setting' do
             end
 
             it "hides the OFN navigation" do
-              expect(page).to have_no_selector ofn_navigation
+              expect(page).not_to have_selector ofn_navigation
             end
           end
         end
@@ -247,7 +247,7 @@ describe 'White label setting' do
 
         it "hides the groups tab" do
           visit main_app.enterprise_shop_path(distributor)
-          expect(page).to have_no_selector "a[href='#groups']"
+          expect(page).not_to have_selector "a[href='#groups']"
         end
       end
 
@@ -381,7 +381,7 @@ describe 'White label setting' do
         shared_examples "shows the right link on the logo" do
           it "shows the white label logo link" do
             within ".nav-logo .ofn-logo" do
-              expect(page).to_not have_selector "a[href='/']"
+              expect(page).not_to have_selector "a[href='/']"
               expect(page).to have_selector "a[href*='https://www.example.com']"
             end
           end

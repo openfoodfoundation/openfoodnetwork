@@ -12,7 +12,7 @@ module OrderManagement
 
       def initialize(order, payment: nil, off_session: false, notify_hub: false)
         @order = order
-        @payment = payment || OrderPaymentFinder.new(order).last_pending_payment
+        @payment = payment || Orders::FindPaymentService.new(order).last_pending_payment
         @off_session = off_session
         @notify_hub = notify_hub
       end

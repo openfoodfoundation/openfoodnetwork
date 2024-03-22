@@ -33,7 +33,7 @@ module Spree
             return
           end
 
-          OrderWorkflow.new(@order).complete! unless @order.completed?
+          ::Orders::WorkflowService.new(@order).complete! unless @order.completed?
 
           authorize_stripe_sca_payment
           @payment.process_offline!
@@ -59,6 +59,8 @@ module Spree
           flash[:error] = t(:cannot_perform_operation)
         end
       rescue StandardError => e
+        logger.error e.message
+        Bugsnag.notify(e)
         flash[:error] = e.message
       ensure
         redirect_to request.referer

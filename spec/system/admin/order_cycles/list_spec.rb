@@ -72,7 +72,7 @@ describe '
     end
 
     # I can load more order_cycles
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
     click_button "Show 30 more days"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
 
@@ -81,9 +81,9 @@ describe '
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     select2_select oc1.suppliers.first.name, from: "involving_filter"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     select2_select "Any Enterprise", from: "involving_filter"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
@@ -95,8 +95,8 @@ describe '
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     fill_in "query", with: oc0.name
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     fill_in "query", with: ''
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
@@ -108,9 +108,9 @@ describe '
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
     select2_select schedule1.name, from: "schedule_filter"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
     select2_select 'Any Schedule', from: "schedule_filter"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"

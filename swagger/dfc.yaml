@@ -64,6 +64,7 @@ paths:
                     dfc-b:hasPostalCode: '20170'
                     dfc-b:hasCity: Herndon
                     dfc-b:hasCountry: Australia
+                    dfc-b:region: Victoria
         '404':
           description: not found
   "/api/dfc/enterprises/{enterprise_id}/catalog_items":
@@ -108,7 +109,7 @@ paths:
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: Apple
+                      dfc-b:name: Apple - 1g
                       dfc-b:description: Red
                       dfc-b:hasType: dfc-pt:non-local-vegetable
                       dfc-b:hasQuantity:
@@ -120,6 +121,7 @@ paths:
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
                       ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                     - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice: 19.99
@@ -236,6 +238,51 @@ paths:
                     "@type": "@id"
                 dfc-b:stockLimitation: '3'
                 dfc-b:sku: new-sku
+  "/api/dfc/enterprise_groups/{enterprise_group_id}/affiliated_by":
+    post:
+      summary: Add enterprise to group
+      parameters:
+      - name: enterprise_group_id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - EnterpriseGroups::AffiliatedBy
+      responses:
+        '201':
+          description: created
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@id": http://test.host/api/dfc/enterprises/10001
+  "/api/dfc/enterprise_groups/{enterprise_group_id}/affiliated_by/{id}":
+    delete:
+      summary: Remove enterprise from group
+      parameters:
+      - name: enterprise_group_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      tags:
+      - EnterpriseGroups::AffiliatedBy
+      responses:
+        '204':
+          description: no content
+        '401':
+          description: unauthorized
   "/api/dfc/enterprise_groups":
     get:
       summary: List groups
@@ -294,6 +341,7 @@ paths:
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
                       dfc-b:hasCountry: Australia
+                      dfc-b:region: Victoria
   "/api/dfc/enterprises/{id}":
     get:
       summary: Show enterprise
@@ -329,7 +377,8 @@ paths:
                       dfc-b:supplies: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       ofn:long_description: "<p>Hello, world!</p><p>This is a paragraph.</p>"
                       ofn:contact_name: Fred Farmer
-                      ofn:logo_url: http://www.example.com/rails/active_storage/url/logo.png
+                      ofn:logo_url: http://test.host/rails/active_storage/url/logo.png
+                      ofn:promo_image_url: http://test.host/rails/active_storage/url/promo.png
                       dfc-b:affiliates: http://test.host/api/dfc/enterprise_groups/60000
                     - "@id": http://test.host/api/dfc/addresses/40000
                       "@type": dfc-b:Address
@@ -337,9 +386,10 @@ paths:
                       dfc-b:hasPostalCode: '20170'
                       dfc-b:hasCity: Herndon
                       dfc-b:hasCountry: Australia
+                      dfc-b:region: Victoria
                     - "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                       "@type": dfc-b:SuppliedProduct
-                      dfc-b:name: Apple
+                      dfc-b:name: Apple - 1g
                       dfc-b:description: Round
                       dfc-b:hasType: dfc-pt:non-local-vegetable
                       dfc-b:hasQuantity:
@@ -351,6 +401,7 @@ paths:
                       dfc-b:usageOrStorageCondition: ''
                       dfc-b:totalTheoreticalStock: 0.0
                       ofn:spree_product_id: 90000
+                      ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                       ofn:image: http://test.host/rails/active_storage/url/logo-white.png
                     - "@id": http://test.host/api/dfc/enterprises/10000/catalog_items/10001
                       "@type": dfc-b:CatalogItem
@@ -364,6 +415,53 @@ paths:
                       dfc-b:URL: https://facebook.com/user
         '404':
           description: not found
+  "/api/dfc/enterprises/{enterprise_id}/offers/{id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Offer
+      tags:
+      - Offers
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                    "@type": dfc-b:Offer
+                    dfc-b:hasPrice: 19.99
+                    dfc-b:stockLimitation: 5
+    put:
+      summary: Update Offer
+      parameters: []
+      tags:
+      - Offers
+      responses:
+        '204':
+          description: success
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                "@context": https://www.datafoodconsortium.org
+                "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
+                "@type": dfc-b:Offer
+                dfc-b:hasPrice: 9.99
+                dfc-b:stockLimitation: 7
   "/api/dfc/persons/{id}":
     get:
       summary: Show person
@@ -444,7 +542,7 @@ paths:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     "@type": dfc-b:SuppliedProduct
-                    dfc-b:name: Apple
+                    dfc-b:name: Pesto - Apple (6g)
                     dfc-b:description: A delicious heritage apple
                     dfc-b:hasType: dfc-pt:non-local-vegetable
                     dfc-b:hasQuantity:
@@ -456,17 +554,14 @@ paths:
                     dfc-b:usageOrStorageCondition: ''
                     dfc-b:totalTheoreticalStock: 0.0
                     ofn:spree_product_id: 90000
+                    ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                    ofn:image: http://test.host/rails/active_storage/url/logo-white.png
       requestBody:
         content:
           application/json:
             schema:
               example:
-                "@context":
-                  dfc-b: http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#
-                  dfc-m: http://static.datafoodconsortium.org/data/measures.rdf#
-                  dfc-pt: http://static.datafoodconsortium.org/data/productTypes.rdf#
-                  dfc-b:hasUnit:
-                    "@type": "@id"
+                "@context": https://www.datafoodconsortium.org
                 "@id": http://test.host/api/dfc/enterprises/6201/supplied_products/0
                 "@type": dfc-b:SuppliedProduct
                 dfc-b:name: Apple
@@ -481,6 +576,7 @@ paths:
                 dfc-b:usageOrStorageCondition: ''
                 dfc-b:totalTheoreticalStock: 0.0
                 ofn:spree_product_id: 90000
+                ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
   "/api/dfc/enterprises/{enterprise_id}/supplied_products/{id}":
     parameters:
     - name: enterprise_id
@@ -508,9 +604,9 @@ paths:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     "@type": dfc-b:SuppliedProduct
-                    dfc-b:name: Pesto
+                    dfc-b:name: Pesto - 1g
                     dfc-b:description: Basil Pesto
-                    dfc-b:hasType: dfc-pt:non-local-vegetable
+                    dfc-b:hasType: dfc-pt:processed-vegetable
                     dfc-b:hasQuantity:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
@@ -520,6 +616,7 @@ paths:
                     dfc-b:usageOrStorageCondition: ''
                     dfc-b:totalTheoreticalStock: 0.0
                     ofn:spree_product_id: 90000
+                    ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                     ofn:image: http://test.host/rails/active_storage/url/logo-white.png
         '404':
           description: not found
@@ -606,7 +703,7 @@ paths:
                   "@type": dfc-b:QuantitativeValue
                   dfc-b:hasUnit: dfc-m:Piece
                   dfc-b:value: 17
-                dfc-b:hasType: dfc-pt:non-local-vegetable
+                dfc-b:hasType: dfc-pt:drink
                 dfc-b:lifetime: ''
                 dfc-b:name: Pesto novo
                 dfc-b:totalTheoreticalStock: 0

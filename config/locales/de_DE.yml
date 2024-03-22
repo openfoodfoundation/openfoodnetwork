@@ -387,7 +387,6 @@ de_DE:
   cancel_order: "Bestellung stornieren"
   confirm_send_invoice: "Eine Rechnung für diese Bestellung wird an den Kunden geschickt. Sind Sie sicher, dass sie fortfahren möchten?"
   confirm_resend_order_confirmation: "Sind Sie sicher, dass Sie die E-Mail-Bestätigung erneut senden wollen?"
-  must_have_valid_business_number: "%{enterprise_name} muss eine gültige Umsatzsteueridentifikationsnummer (USt-IdNr.) haben, bevor Rechnungen gesendet werden können."
   invoice: "Rechnung"
   invoices: "Rechnungen"
   file: "Datei"
@@ -530,6 +529,9 @@ de_DE:
       actions:
         edit: Bearbeiten
         clone: Duplizieren
+        delete: Löschen
+      image:
+        edit: Bearbeiten
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -594,6 +596,9 @@ de_DE:
     has_n_rules: "hat %{num} Regeln"
     unsaved_confirm_leave: "Es gibt ungespeicherte Änderungen auf dieser Seite. Möchten Sie ohne Speichern fortfahren?"
     available_units: "Verfügbare Einheiten"
+    terms_of_service_have_been_updated_html: "Die Nutzungsbedingungen des Open Food Network wurden aktualisiert: %{tos_link} Bitte stimmen Sie den neuen Bedingungen zu, bevor Sie die Plattform weiter verwenden."
+    terms_of_service: Nutzungsbedingungen lesen
+    accept_terms_of_service: Nutzungsbedingungen zustimmen
     shopfront_settings:
       embedded_shopfront_settings: "Einstellungen für eingebettete Gruppen"
       enable_embedded_shopfronts: "Eingebettete Gruppen erlauben"
@@ -778,10 +783,13 @@ de_DE:
           invalid:
             one: "%{count} Produkt konnte nicht gespeichert werden. Bitte überprüfen Sie die Fehler und versuchen Sie es erneut."
             other: "%{count} Produkte konnten nicht gespeichert werden. Bitte überprüfen Sie die Fehler und versuchen Sie es erneut."
-        save: Änderungen speichern
         reset: Änderungen verwerfen
+        save: Änderungen speichern
+        new_variant: Neue Produktvariante
       bulk_update:
-        success: "Produkte erfolgreich aktualisiert"
+        success: Die Änderungen wurden gespeichert.
+      edit_image:
+        close: Zurück
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -823,6 +831,9 @@ de_DE:
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Lieferkategorien
+      dfc_import_form:
+        enterprise: "Unternehmen"
+        import: "Importieren"
       import:
         review: Überprüfung
         import: Importieren
@@ -880,6 +891,7 @@ de_DE:
         view_products: Zur Produktseite
         view_inventory: Zur Katalogseite
       product_headings:
+        distributor: Verteilstelle
         producer: Produzent
         sku: Artikelnummer
         name: Name
@@ -1212,6 +1224,9 @@ de_DE:
           create_custom_tab: "Benutzerdefinierten Reiter im Online-Shop hinzufügen"
           custom_tab_title: "Titel des Reiters"
           custom_tab_content: "Inhalt des Reiters"
+        connected_apps:
+          legend: "Verknüpfte Apps"
+          loading: "Wird geladen ..."
       actions:
         edit_profile: Einstellungen
         properties: Eigenschaften
@@ -1237,7 +1252,7 @@ de_DE:
         sell_your_produce: Verkaufen Sie Ihre eigenen Produkte
         producer_shop_description_text: Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren eigenen Produzentenladen im Open Food Network.
         producer_shop_description_text2: Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie nur oder auch Produkte anderer verkaufen möchten, wählen Sie "Laden".
-        producer_hub: Produzentenladen
+        producer_hub: Laden
         producer_hub_text: Verkaufen Sie eigene Produkte und Produkte anderer
         producer_hub_description_text: Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
         profile: Profil
@@ -1461,6 +1476,7 @@ de_DE:
           users: "Benutzer"
           vouchers: Gutscheine
           white_label: "OFN verbergen"
+          connected_apps: "Verknüpfte Apps"
         enterprise_group:
           primary_details: "Unternehmen"
           users: "Benutzer"
@@ -1581,7 +1597,6 @@ de_DE:
       index:
         title: "OIDC-Einstellungen"
         connect: "Verbinden Sie Ihr Benutzerkonto"
-        already_connected: "Ihr Benutzerkonto ist bereits mit diesem DFC-Autorisierungskonto verbunden:"
         les_communs_link: "Les Communs Open ID-Server"
         link_your_account: "Sie müssen Ihr Benutzerkonto zunächst mit dem von DFC (Les Communs Open ID Connect) verwendeten Autorisierungsanbieter verbinden."
         link_account_button: "Verbinden Sie Ihr Les Communs OIDC-Konto"
@@ -1835,8 +1850,8 @@ de_DE:
   shared:
     mailers:
       powered_by:
-        open_food_network: "Open Food Network"
-        powered_html: "Ermöglicht durch das %{open_food_network}."
+        open_food_network: "E-Mail"
+        powered_html: "Ermöglicht durch das Open Food Network. Schicken Sie uns eine %{open_food_network}."
     menu:
       cart:
         cart: "Warenkorb/Kasse"
@@ -1903,7 +1918,8 @@ de_DE:
   invoice_tax_total: "Umsatzsteuersumme:"
   tax_invoice: "RECHNUNG"
   tax_total: "davon Steuern (%{rate}):"
-  invoice_shipping_type: "Lieferoption:"
+  invoice_shipping_category_delivery: "Lieferoptionen"
+  invoice_shipping_category_pickup: "Abholen"
   total_excl_tax: "Netto (zzgl. Steuern):"
   total_incl_tax: "GESAMT (inkl. Steuern):"
   total_all_tax: "Steuern gesamt:"
@@ -2219,7 +2235,7 @@ de_DE:
   shopping_contact_address: "Adresse"
   shopping_contact_web: "Kontakt"
   shopping_contact_social: "Folgen"
-  shopping_groups_part_of: "Ist Mitglied der Gruppe(n):"
+  shopping_groups_part_of: "ist Mitglied der Gruppe(n):"
   shopping_producers_of_hub: "Produzenten bei %{hub}:"
   enterprises_next_closing: "Nächster Bestellschluss"
   enterprises_currently_open: "Bestellzyklus ist geöffnet"
@@ -3058,7 +3074,7 @@ de_DE:
   enterprise_fees_update_notice: Ihre Gebühren wurden aktualisiert.
   enterprise_register_package_error: "Bitte wählen Sie ein Paket."
   enterprise_register_error: "Die Registrierung für %{enterprise} konnte nicht abgeschlossen werden."
-  enterprise_register_success_notice: "Herzlichen Glückwünsch! Die Registrierung für %{enterprise} ist abgeschlossen!"
+  enterprise_register_success_notice: "Herzlichen Glückwunsch! Die Registrierung für %{enterprise} ist abgeschlossen!"
   enterprise_bulk_update_success_notice: "Unternehmen wurden erfolgreich aktualisiert."
   enterprise_bulk_update_error: 'Das Speichern der Änderungen ist fehlgeschlagen.'
   enterprise_shop_show_error: "Der gesuchte Laden existiert nicht oder ist im Open Food Network inaktiv. Bitte schauen Sie nach anderen Läden!"
@@ -3199,7 +3215,7 @@ de_DE:
           producer_shop_text2: >
               Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn
               Sie Produkte anderer verkaufen möchten, wählen Sie "Laden".
-          producer_hub: Produzentenladen
+          producer_hub: Laden
           producer_hub_text1: >
               Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder
               Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil
@@ -3659,8 +3675,6 @@ de_DE:
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     taxonomy_edit: "Kategorien bearbeiten"
-    taxonomy_tree_error: "Fehler in Struktur der Kategorien"
-    taxonomy_tree_instruction: "Anleitung zur Struktur der Kategorien"
     tree: "Struktur"
     updating: "Aktualisierung"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."
@@ -4242,6 +4256,11 @@ de_DE:
           email: "E-Mail-Adresse"
           total: "Gesamt"
           billing_address_name: "Name"
+      taxons:
+        form:
+          name: Name
+          permalink: Permalink
+          description: Beschreibung
       general_settings:
         edit:
           legal_settings: "Rechtliche Einstellungen"
@@ -4354,7 +4373,7 @@ de_DE:
         picked_up_subject: "Abholbenachrichtigung"
     test_mailer:
       test_email:
-        greeting: "Herzlichen Glückwünsch!"
+        greeting: "Herzlichen Glückwunsch!"
         message: "Wenn Sie diese E-Mail erhalten haben, sind Ihre E-Mail-Einstellungen korrekt."
         subject: "Test-E-Mail"
     order_state:

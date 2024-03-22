@@ -1,6 +1,19 @@
 import { Controller } from "stimulus";
 
-// Manages "changed" state for a form with multiple records
+// Manage "changed" state for a form with multiple records
+//
+// When any elements are changed:
+//  - the element is marked ".changed"
+//  - "actions" element appears
+//  - "changedSummary" element is updated using I18n
+//  - "disableSelector" elements are disabled
+//  - The browser will warn if trying to leave the page
+//
+// Supported element types:
+//  - input[type=text] and similar
+//  - input[type=checkbox]
+//  - select (single) - including tom-select
+//
 export default class BulkFormController extends Controller {
   static targets = ["actions", "changedSummary"];
   static values = {
@@ -13,18 +26,7 @@ export default class BulkFormController extends Controller {
     this.form = this.element;
 
     // Start listening for any changes within the form
-    // this.element.addEventListener('change', this.toggleChanged.bind(this)); // dunno why this doesn't work
-    for (const element of this.form.elements) {
-      element.addEventListener("input", this.toggleChanged.bind(this)); // immediately respond to any change
-
-      // Set up a tree of fields according to their associated record
-      const recordContainer = element.closest("[data-record-id]"); // The JS could be more efficient if this data was added to each element. But I didn't want to pollute the HTML too much.
-      const recordId = recordContainer && recordContainer.dataset.recordId;
-      if (recordId) {
-        this.recordElements[recordId] ||= [];
-        this.recordElements[recordId].push(element);
-      }
-    }
+    this.#registerElements(this.form.elements);
 
     this.toggleFormChanged();
   }
@@ -33,6 +35,15 @@ export default class BulkFormController extends Controller {
     // Make sure to clean up anything that happened outside
     this.#disableOtherElements(false);
     window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
+  }
+
+  // Register any new elements (may be called by another controller after dynamically adding fields)
+  registerElements() {
+    const registeredElements = Object.values(this.recordElements).flat();
+    // Select only elements that haven't been registered yet
+    const newElements = Array.from(this.form.elements).filter(n => !registeredElements.includes(n));
+
+    this.#registerElements(newElements);
   }
 
   toggleChanged(e) {
@@ -50,7 +61,7 @@ export default class BulkFormController extends Controller {
     const formChanged = changedRecordCount > 0 || this.errorValue;
 
     // Show actions
-    this.actionsTarget.classList.toggle("hidden", !formChanged);
+    this.hasActionsTarget && this.actionsTarget.classList.toggle("hidden", !formChanged);
     this.#disableOtherElements(formChanged); // like filters and sorting
 
     // Display number of records changed
@@ -78,6 +89,20 @@ export default class BulkFormController extends Controller {
 
   // private
 
+  #registerElements(elements) {
+    for (const element of elements) {
+      element.addEventListener("input", this.toggleChanged.bind(this)); // immediately respond to any change
+
+      // Set up a tree of fields according to their associated record
+      const recordContainer = element.closest("[data-record-id]"); // The JS could be more efficient if this data was added to each element. But I didn't want to pollute the HTML too much.
+      const recordId = recordContainer && recordContainer.dataset.recordId;
+      if (recordId) {
+        this.recordElements[recordId] ||= [];
+        this.recordElements[recordId].push(element);
+      }
+    }
+  }
+
   #disableOtherElements(disable) {
     if (!this.hasDisableSelectorValue) return;
 
@@ -101,6 +126,11 @@ export default class BulkFormController extends Controller {
   #isChanged(element) {
     if (element.type == "checkbox") {
       return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
+
+    } else if (element.type == "select-one") {
+      const defaultSelected = Array.from(element.options).find((opt)=>opt.hasAttribute('selected'));
+      return element.selectedOptions[0] != defaultSelected;
+
     } else {
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }

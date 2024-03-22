@@ -1,0 +1,80 @@
+.errorExplanation {
+  padding: 10px;
+  border: 1px solid very-light($color-error, 12);
+  background-color: very-light($color-error, 6);
+  border-radius: 3px;
+  color: $color-error;
+  margin-bottom: 15px;
+
+  h2 {
+    font-size: 140%;
+    color: $color-error;
+    margin-bottom: 5px;
+  }
+
+  p {
+    padding: 10px 0;
+  }
+
+  ul {
+    list-style-position: inside;
+
+    li {
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.flash-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: $flash-message-z-index;
+  display: flex;
+  justify-content: center;
+
+  .flash {
+    position: relative;
+    display: flex;
+    align-items: center;
+    bottom: 3.5rem;
+    padding: 0.25rem;
+    min-width: 24rem;
+    max-width: 48.25em;
+    font-weight: 600;
+    background-color: $light-grey;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+
+    &.success {
+      color: $color-flash-success-text;
+      background-color: $color-flash-success-bg;
+    }
+    &.notice {
+      color: $color-flash-notice-text;
+      background-color: $color-flash-notice-bg;
+      border-left: $border-radius solid $red;
+    }
+    &.error {
+      color: $color-flash-error-text;
+      background-color: $color-flash-error-bg;
+    }
+
+    .msg {
+      flex-grow: 1;
+      margin: 0.25rem 0.75rem;
+    }
+  }
+}
+
+.notice:not(.flash) {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: $spree-light-blue;
+  border-radius: $border-radius;
+
+  a {
+    font-weight: bold;
+  }
+}

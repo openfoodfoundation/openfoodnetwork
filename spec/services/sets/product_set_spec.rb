@@ -130,7 +130,7 @@ describe Sets::ProductSet do
             }.to change { product.supplier }.to(producer).
               and change { order_cycle.distributed_variants.count }.by(-1)
 
-            expect(order_cycle.distributed_variants).to_not include product.variants.first
+            expect(order_cycle.distributed_variants).not_to include product.variants.first
           end
         end
       end
@@ -163,7 +163,7 @@ describe Sets::ProductSet do
           expect {
             product_set.save
             product.reload
-          }.to_not change { product.sku }
+          }.not_to change { product.sku }
 
           expect(product_set.saved_count).to be_zero
           expect(product_set.invalid.count).to be_positive
@@ -173,7 +173,7 @@ describe Sets::ProductSet do
           expect {
             product_set.save
             variant.reload
-          }.to_not change { variant.sku }
+          }.not_to change { variant.sku }
         end
 
         it 'assigns the in-memory attributes of the variant' do
@@ -239,7 +239,47 @@ describe Sets::ProductSet do
           let(:variant_attributes) { { sku: "var_sku", display_name: "A" * 256 } } # maximum length
 
           include_examples "nothing saved" do
-            after { expect(variant2.reload.sku).to_not eq "var_sku2" }
+            after { expect(variant2.reload.sku).not_to eq "var_sku2" }
+          end
+        end
+      end
+
+      context "new variant" do
+        let(:variants_attributes) {
+          [
+            { id: product.variants.first.id.to_s }, # default variant unchanged
+            { sku: "new sku", price: "5.00", unit_value: "5" }, # omit ID for new variant
+          ]
+        }
+
+        it "creates new variant" do
+          expect {
+            product_set.save
+            expect(product_set.errors).to be_empty
+          }.to change { product.variants.count }.by(1)
+
+          expect(product.variants.last.sku).to eq "new sku"
+          expect(product.variants.last.price).to eq 5.00
+          expect(product.variants.last.unit_value).to eq 5
+        end
+
+        context "variant has error" do
+          let(:variants_attributes) {
+            [
+              { id: product.variants.first.id.to_s }, # default variant unchanged
+              { sku: "new sku", unit_value: "blah" }, # price missing, unit_value should be number
+            ]
+          }
+
+          include_examples "nothing saved"
+
+          it "logs variant errors" do
+            product_set.save
+            expect(product_set.errors.full_messages).to include(
+              "Variant price is not a number",
+              "Variant price can't be blank",
+              "Variant unit value is not a number"
+            )
           end
         end
       end

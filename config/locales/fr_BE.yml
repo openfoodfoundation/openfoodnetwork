@@ -327,7 +327,6 @@ fr_BE:
   cancel_order: "Annuler la commande"
   confirm_send_invoice: "La facture de cette commande va être transmise au client. Etes-vous sûr de vouloir continuer ?"
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
-  must_have_valid_business_number: "%{enterprise_name} doit avoir un numéro d'entreprise valide avant que les factures puissent être envoyées."
   invoice: "Facture"
   active: "Actif"
   cancelled: "Annulée"
@@ -463,6 +462,9 @@ fr_BE:
       actions:
         edit: Modifier
         clone: Dupliquer
+        delete: Supprimer
+      image:
+        edit: Modifier
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -537,6 +539,7 @@ fr_BE:
       show:
         title: "Fichiers des conditions d'utilisation"
         no_files: "Aucune condition d'utilisation n'a encore été téléchargée."
+        current_terms_html: "Voir le %{tos_link} actuel. Heure de téléchargement : %{datetime} ."
         terms_of_service: "Conditions d'utilisation"
         delete: "Supprimer le fichier"
         confirm_delete: "Voulez-vous vraiment supprimer le fichier actuel des conditions d'utilisation ?"
@@ -684,6 +687,10 @@ fr_BE:
         categories:
           label: Les catégories
         search: Rechercher
+      table:
+        new_variant: Nouvelle variante
+      edit_image:
+        close: Retour
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -705,7 +712,7 @@ fr_BE:
         none_saved: n'a pu sauvegarder aucun produit :-(
         line_number: "Ligne %{number} :"
         encoding_error: "Veuillez vérifier la langage de votre fichier source et l'enregistrer avec un encodage UTF-8"
-        unexpected_error: "L'import du produit à provoqué une erreur à l'ouverture du fichier: %{error_message}"
+        unexpected_error: "L'import du produit a provoqué une erreur à l'ouverture du fichier: %{error_message}"
         malformed_csv: "L'import du produit a rencontré une erreur a l'ouverture du fichier:%{error_message}"
       index:
         notice: "Remarque"
@@ -725,6 +732,9 @@ fr_BE:
         product_categories: Catégorie Produit
         tax_categories: TVA applicable
         shipping_categories: Condition de transport
+      dfc_import_form:
+        enterprise: "Entreprise"
+        import: "Importer"
       import:
         review: Vérifier
         import: Importer
@@ -782,6 +792,7 @@ fr_BE:
         view_products: Aller à la page Produits
         view_inventory: Aller à la page Catalogues Comptoir
       product_headings:
+        distributor: Comptoir
         producer: Producteur·trice
         sku: Référence produit (sku)
         name: Nom
@@ -870,6 +881,7 @@ fr_BE:
           legend: "Adresse"
         business_details:
           legend: "Juridique"
+          upload: 'télécharger'
           abn: Numéro d'entreprise
           abn_placeholder: 'ex: 000 000 000'
           acn: n° TVA
@@ -877,6 +889,7 @@ fr_BE:
           display_invoice_logo: Afficher le logo sur la facture
           invoice_text: Ajouter une mention spécifique en bas des factures
           terms_and_conditions: "Termes et conditions"
+          uploaded_on: "téléchargé à"
           reset_form: "Vider les champs"
           business_address_legend: "Adresse de facturation"
           invoice_item_sorting_legend: "Ordre d'affichage sur facture"
@@ -1000,7 +1013,7 @@ fr_BE:
           enable_subscriptions_false: "Désactivé"
           enable_subscriptions_true: "Activé"
           customer_names_in_reports: "Nom de client dans le rapport"
-          customer_names_tip: "Autoriser vos fourniseur à voir les noms des clients dans le rapport "
+          customer_names_tip: "Autoriser vos fourniseurs à voir les noms des clients dans le rapport "
           customer_names_false: "Désactivé"
           customer_names_true: "Activé"
           shopfront_message: "Message d'accueil comptoir ouvert"
@@ -1099,6 +1112,8 @@ fr_BE:
           create_custom_tab: "Créer un onglet personnalisé dans la vitrine"
           custom_tab_title: "Titre de l'onglet personnalisé"
           custom_tab_content: "Contenu de l'onglet personnalisé"
+        connected_apps:
+          loading: "Chargement en cours"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1305,7 +1320,7 @@ fr_BE:
         cancel: Annuler
         proceed: Continuer
       status:
-        open: ouvrir
+        open: ouvert
         closed: fermé
     producer_properties:
       index:
@@ -1735,6 +1750,8 @@ fr_BE:
   invoice_tax_total: "Total TVA :"
   tax_invoice: "FACTURE"
   tax_total: "Total taxe (%{rate}) :"
+  invoice_shipping_category_delivery: "Livraison"
+  invoice_shipping_category_pickup: "Retrait"
   total_excl_tax: "Total HT :"
   total_incl_tax: "Total TTC :"
   abn: "Numéro d'entreprise : "
@@ -1931,6 +1948,7 @@ fr_BE:
   order_not_paid: NON RÉGLÉ
   order_total: Total commande
   order_payment: "Payer via:"
+  no_payment_required: "Aucun paiement requis"
   order_billing_address: Adresse de facturation
   order_delivery_on: Livraison prévue
   order_delivery_address: Adresse de livraison
@@ -2216,6 +2234,7 @@ fr_BE:
   orders_could_not_cancel: "Désolé, la commande n'a pas pu être annulée"
   orders_cannot_remove_the_final_item: "Impossible de supprimer le dernier produit d'une commande, si vous souhaitez supprimer l'ensemble des produits, veuillez annuler la commande."
   orders_bought_items_notice:
+    one: "Un article supplémentaire est déjà confirmé pour ce cycle de commande"
     few: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
     many: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
     other: "%{count} produits ajoutés ont été confirmés pour ce cycle de vente."
@@ -2503,6 +2522,7 @@ fr_BE:
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous changez le type de calculatrice, vous devez d'abord enregistrer avant de pouvoir modifier les paramètres de la calculatrice"
+  calculator_preferred_unit_error: "doit être en kg ou en lb"
   flat_percent_per_item: "Pourcentage net"
   flat_rate_per_item: "Montant fixe (par article)"
   flat_rate_per_order: "Montant fixe (par commande)"
@@ -2792,6 +2812,7 @@ fr_BE:
   report_header_transaction_fee: Frais de Transaction (TVA non incluse)
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
+  report_line_line_items: Ces articles
   equals: "Egal"
   contains: "contient"
   discount: "Réduction"
@@ -2821,6 +2842,7 @@ fr_BE:
   payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
   payment_method_not_supported: "Ce mode de paiement n'est pas possible. Veuillez en choisir un autre."
   payment_updated: "Paiement mis à jour "
+  action_required: "Action requise"
   tag_rules: "Règles de tag"
   enterprise_fee_whole_order: Commande totale
   enterprise_fee_by_name: "%{name} frais par %{role} %{enterprise_name}"
@@ -2834,6 +2856,7 @@ fr_BE:
   enterprise_name_error: "est déjà utilisé. Si vous êtes le gérant de cette entreprise et que vous souhaitez demander le transfert du compte, ou bien si vous souhaitez distribuer les produits de cette entreprise, merci de contacter le manager actuel du profil à %{email}."
   enterprise_owner_error: "^ %{email} ne peut pas créer de nouvelles entreprises (limite actuelle : %{enterprise_limit} entreprises )."
   enterprise_role_uniqueness_error: "^Ce rôle existe déjà."
+  enterprise_terms_and_conditions_type_error: "Seuls les PDF sont autorisés"
   inventory_item_visibility_error: doit être vrai ou faux
   product_importer_file_error: "erreur : aucun document importé"
   product_importer_spreadsheet_error: "impossible de traiter le fichier : type de fichier invalide"
@@ -2892,6 +2915,7 @@ fr_BE:
     resolve_errors: Veuillez corriger les erreurs suivantes
     more_items: "+ %{count} en plus"
     default_card_updated: La carte bancaire par défaut a été mise à jour
+    default_card_voids_auth: Changer votre carte par défaut supprimera les autorisations existantes des magasins pour la facturer. Vous pouvez réautoriser les magasins après avoir mis à jour la carte par défaut. Souhaitez-vous changer la carte par défaut ?
     cart:
       add_to_cart_failed: >
           Il y a eu un problème pour ajouter ce produit au panier. Il est peut-être
@@ -2928,6 +2952,7 @@ fr_BE:
         terms_and_conditions_info:
           title: "Mise à jour des CGU & CGV"
           message_1: "Les CGV représentent le contrat entre vous, le vendeur, et l'acheteur. Ajouter un fichier ici permet à vos acheteurs de valider ce contrat lors de leur commande sous la forme d'une case à cocher avant la validation du paiement. Pour rappel, la mise en place de CGV est une obligation réglementaire."
+          message_2: "Les acheteurs ne seront tenus d’accepter les conditions générales qu’une seule fois. Cependant, si vous modifiez vos conditions générales, les acheteurs devront à nouveau les accepter avant de pouvoir passer à la caisse."
         terms_and_conditions_warning:
           title: "Mise à jour des CGU & CGV"
           message_1: "Tous vos acheteurs devront les accepter une fois à la validation de la commande. Si vous mettez à jour le fichier, tous vos acheteurs devront les accepter à nouveau lors du paiement."
@@ -3043,6 +3068,8 @@ fr_BE:
           select_all_variants: "Sélectionner toutes %{total_number_of_variants}les variantes"
           variants_loaded: " %{num_of_variants_loaded}de %{total_number_of_variants}variantes chargées"
           loading_variants: "Chargement des variantes"
+          no_variants: "Aucune variante disponible pour ce produit (masquée via les paramètres d'inventaire)."
+          some_variants_hidden: "(Certaines variantes peuvent être masquées via les paramètres d'inventaire)"
       tag_rules:
         shipping_method_tagged_top: "Méthodes d'expédition étiquetées"
         shipping_method_tagged_bottom: "sont:"
@@ -3064,7 +3091,7 @@ fr_BE:
           compiling_invoices: "Compile les factures"
           bulk_invoice_created: "Factures créées"
           bulk_invoice_failed: "La création des factures a échoué"
-          please_wait: "Veuillez attendre que le PDF soit disponible avant de fermé ce dialogue."
+          please_wait: "Veuillez attendre que le PDF soit disponible avant de fermer ce dialogue."
         order_state:
           address: "adresse"
           adjustments: "ajustements"
@@ -3098,6 +3125,7 @@ fr_BE:
           processing: "en traitement"
           void: "faire un avoir"
           invalid: "invalide"
+        quantity_unavailable: "Stock disponible insuffisant. Cet article n'a pas été enregistré!"
         quantity_unchanged: "Quantité inchangée par rapport au montant précédent."
         cancel_the_order_html: "Cela annulera la commande en cours.<br /> Êtes-vous sur de vouloir continuer?"
         cancel_the_order_send_cancelation_email: "Envoyer un e-mail d'annulation au client"
@@ -3226,6 +3254,11 @@ fr_BE:
       signup_or_login: "Commencez par vous inscrire (ou connexion)"
       have_an_account: "Déjà inscrit?"
       action_login: "Se connecter."
+  inflections:
+    item:
+      one: "article"
+      many: "articles"
+      other: "articles"
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, et présentez votre formule quand vous êtes prêt !"
@@ -3497,6 +3530,7 @@ fr_BE:
     inventory_error_flash_for_insufficient_quantity: "Une donnée n'est plus disponible sur votre carte."
     inventory: Catalogue boutique
     zipcode: Code postal
+    weight: Poids (par kg ou lb)
     error_user_destroy_with_orders: "Les utilisateurs avec une commande finalisée ne peuvent pas être supprimés"
     cannot_create_payment_without_payment_methods: "Vous ne pouvez pas créer un paiement pour une commande sans qu'aucun mode de paiement ne soit défini."
     please_define_payment_methods: "Veuillez d'abord définir certains modes de paiement."
@@ -3506,6 +3540,9 @@ fr_BE:
     payment_method: "Méthode de paiement"
     payment_processing_failed: "Le paiement n' a pu être effectué , merci de vérifier les données rentrées"
     sku: "Référence produit"
+    there_are_no_items_for_this_order: "Il n'y a aucun article pour cette commande."
+    order_populator:
+      out_of_stock: '%{item} est en rupture de stock.'
     actions:
       update: "Mettre à jour"
       cancel: "Annuler"
@@ -3762,6 +3799,7 @@ fr_BE:
           paypal:
             no_payment_via_admin_backend: Les payement paypal ne savent pas etre prit dans le Backoffice
       products:
+        image_upload_error: "Veuillez télécharger l'image au format JPG, PNG, GIF, SVG ou WEBP."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -3874,6 +3912,11 @@ fr_BE:
           email: "Email"
           total: "Total"
           billing_address_name: "Nom"
+      taxons:
+        form:
+          name: Nom
+          permalink: permalien
+          description: Description
       general_settings:
         edit:
           legal_settings: "Configuration légales"
@@ -3937,9 +3980,9 @@ fr_BE:
         dont_cancel: "Si vous avez changer d'avis ou souhaiter annuler cette commande contacter nous %{email}"
         order_summary_canceled_html: "<strong>Résumé de la commande #%{number} [ANNULEE]"
         details: "Voici les détails que vous avez commander:"
-        unpaid_order: "Votre commande n'était pas encore payer donc aucun remboursement na été fait."
-        paid_order: "Votre commande était payer donc %{distributor} vous a rembourser le montant totale. "
-        credit_order: "Votre commande était payer donc vous avez eter crediter."
+        unpaid_order: "Votre commande n'était pas encore payée donc aucun remboursement n'a été effectué."
+        paid_order: "Votre commande était payée donc %{distributor} vous a remboursé le montant total. "
+        credit_order: "Votre commande était payée donc vous avez été credité."
         subject: "Annulation de Commande"
       cancel_email_for_shop:
         greeting: "Chère %{name}"
@@ -4017,6 +4060,7 @@ fr_BE:
         past_orders: Commandes Passées
       transactions:
         transaction_history: Historique des Transactions
+        authorisation_required: Autorisation requise
       open_orders:
         order: Commander
         shop: Faire mes courses

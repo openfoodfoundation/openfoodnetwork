@@ -1,8 +1,9 @@
 changelog:
   # Categorise according to what an instance manager needs to know
   categories:
-    # Posted in advance for #instance-managers
-    - title: "User-facing changes 👀"
+    # Add the right label if anything appears in here.
+    # Then re-generate the release notes.
+    - title: "❓❓❓ Uncategorised ❓❓❓"
       labels:
         - '*'
       exclude:
@@ -11,6 +12,12 @@ changelog:
           - dependencies
           - feature toggled
           - technical changes only
+          - user facing changes
+
+    # Posted in advance for #instance-managers
+    - title: "User-facing changes 👀"
+      labels:
+        - user facing changes
 
     - title: "API changes ⚠️"
       labels:

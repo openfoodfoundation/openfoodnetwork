@@ -25,15 +25,17 @@ describe Api::V0::ProductsController, type: :controller do
   end
 
   context "as a normal user" do
+    let(:attachment) { fixture_file_upload("thinking-cat.jpg") }
+
     before do
       allow(current_api_user)
         .to receive(:has_spree_role?).with("admin").and_return(false)
     end
 
     it "gets a single product" do
-      product.create_image!(attachment: image("thinking-cat.jpg"))
+      product.create_image!(attachment:)
       product.variants.create!(unit_value: "1", unit_description: "thing", price: 1)
-      product.variants.first.images.create!(attachment: image("thinking-cat.jpg"))
+      product.variants.first.images.create!(attachment:)
       product.set_property("spree", "rocks")
       api_get :show, id: product.to_param
 
@@ -50,7 +52,20 @@ describe Api::V0::ProductsController, type: :controller do
       expect(response.status).to eq(404)
     end
 
-    include_examples "modifying product actions are restricted"
+    it "cannot create a new product if not an admin" do
+      api_post :create, product: { name: "Brand new product!" }
+      assert_unauthorized!
+    end
+
+    it "cannot update a product" do
+      api_put :update, id: product.to_param, product: { name: "I hacked your store!" }
+      assert_unauthorized!
+    end
+
+    it "cannot delete a product" do
+      api_delete :destroy, id: product.to_param
+      assert_unauthorized!
+    end
   end
 
   context "as an enterprise user" do

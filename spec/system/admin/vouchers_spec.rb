@@ -15,8 +15,6 @@ describe '
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }
 
   before do
-    Flipper.enable(:vouchers, enterprise)
-
     enterprise_user.enterprise_roles.build(enterprise:).save
     login_as enterprise_user
   end

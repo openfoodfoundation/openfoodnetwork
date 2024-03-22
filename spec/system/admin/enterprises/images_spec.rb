@@ -123,6 +123,6 @@ describe "Managing enterprise images" do
   end
 
   def expect_no_preview_image
-    expect(page).to have_no_selector(".image-field-group__preview-image")
+    expect(page).not_to have_selector(".image-field-group__preview-image")
   end
 end

@@ -12,7 +12,7 @@
 %p
   {{ 'legal.cookies_policy.essential_cookies_desc' | t }}
 
-%table{ng: { controller:"CookiesPolicyModalCtrl"}}
+%table{ "ng-controller": "CookiesPolicyModalCtrl" }
   = render_cookie_entry( "_ofn_session_id", "legal.cookies_policy.cookie_session_desc" )
   = render_cookie_entry( "cookies_consent", "legal.cookies_policy.cookie_consent_desc" )
   = render_cookie_entry( "remember_spree_user_token", "legal.cookies_policy.cookie_remember_me_desc" )
@@ -52,7 +52,7 @@
   %p
     {{ 'legal.cookies_policy.statistics_cookies_matomo_desc_html' | t }}
 
-  %table{ng: { controller:"CookiesPolicyModalCtrl"}}
+  %table{ "ng-controller": "CookiesPolicyModalCtrl" }
     = render_cookie_entry( "_pk_ref, _pk_cvar, _pk_id and _pk_ses", "legal.cookies_policy.cookie_matomo_basics_desc" )
     = render_cookie_entry( "_pk_hsr, _pk_cvar, _pk_id and _pk_ses", "legal.cookies_policy.cookie_matomo_heatmap_desc" )
     = render_cookie_entry( "piwik_ignore, _pk_cvar, _pk_id and _pk_ses", "legal.cookies_policy.cookie_matomo_ignore_desc" )

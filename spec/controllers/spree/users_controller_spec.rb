@@ -7,7 +7,7 @@ describe Spree::UsersController, type: :controller do
 
   include AuthenticationHelper
 
-  describe "show" do
+  describe "#show" do
     let!(:u1) { create(:user) }
     let!(:u2) { create(:user) }
     let!(:distributor1) { create(:distributor_enterprise) }
@@ -23,7 +23,7 @@ describe Spree::UsersController, type: :controller do
     let(:orders) { assigns(:orders) }
     let(:shops) { Enterprise.where(id: orders.pluck(:distributor_id)) }
 
-    let(:outstanding_balance) { instance_double(OutstandingBalance) }
+    let(:outstanding_balance_query) { instance_double(OutstandingBalanceQuery) }
 
     before do
       allow(controller).to receive(:spree_current_user) { u1 }
@@ -33,7 +33,7 @@ describe Spree::UsersController, type: :controller do
       get :show
 
       expect(orders).to include d1o1, d1o2
-      expect(orders).to_not include d1_order_for_u2, d1o3, d2o1
+      expect(orders).not_to include d1_order_for_u2, d1o3, d2o1
       expect(shops).to include distributor1
 
       # Doesn't return orders for irrelevant distributors" do
@@ -47,15 +47,15 @@ describe Spree::UsersController, type: :controller do
       expect(orders).not_to include d1o3
     end
 
-    it 'calls OutstandingBalance' do
-      allow(OutstandingBalance).to receive(:new).and_return(outstanding_balance)
-      expect(outstanding_balance).to receive(:query) { Spree::Order.none }
+    it 'calls OutstandingBalanceQuery' do
+      allow(OutstandingBalanceQuery).to receive(:new).and_return(outstanding_balance_query)
+      expect(outstanding_balance_query).to receive(:call) { Spree::Order.none }
 
       spree_get :show
     end
   end
 
-  describe "registered_email" do
+  describe "#registered_email" do
     routes { Openfoodnetwork::Application.routes }
 
     let!(:user) { create(:user) }
@@ -71,16 +71,16 @@ describe Spree::UsersController, type: :controller do
     end
   end
 
-  context '#load_object' do
-    it 'should redirect to signup path if user is not found' do
+  describe '#load_object' do
+    it 'redirects to signup path if user is not found' do
       allow(controller).to receive_messages(spree_current_user: nil)
       put :update, params: { user: { email: 'foobar@example.com' } }
       expect(response).to redirect_to('/login')
     end
   end
 
-  context '#create' do
-    it 'should create a new user' do
+  describe '#create' do
+    it 'creates a new user' do
       post :create,
            params: { user: { email: 'foobar@example.com', password: 'foobar123',
                              password_confirmation: 'foobar123', locale: 'es' } }

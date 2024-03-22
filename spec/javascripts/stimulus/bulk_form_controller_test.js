@@ -36,6 +36,10 @@ describe("BulkFormController", () => {
           <div data-record-id="1">
             <input id="input1a" type="text" value="initial1a">
             <input id="input1b" type="text" value="initial1b">
+            <select id="select1">
+              <option>one</option>
+              <option selected>two</option>
+            </select>
             <button>a button is counted as a form element, but value is undefined</button>
           </div>
           <div data-record-id="2">
@@ -47,7 +51,7 @@ describe("BulkFormController", () => {
     });
 
     describe("marking changed fields", () => {
-      it("onInput", () => {
+      it("input: onInput", () => {
         input1a.value = 'updated1a';
         input1a.dispatchEvent(new Event("input"));
         // Expect only first field to show changed
@@ -59,7 +63,23 @@ describe("BulkFormController", () => {
         input1a.value = 'initial1a';
         input1a.dispatchEvent(new Event("input"));
         expect(input1a.classList).not.toContain('changed');
+      });
 
+      it("select: onInput", () => {
+        // Select a different option (it's the only way in Jest..)
+        select1.options[0].selected = true;
+        select1.options[1].selected = false;
+        select1.dispatchEvent(new Event("input"));
+        // Expect select to show changed
+        expect(input1a.classList).not.toContain('changed');
+        expect(input1b.classList).not.toContain('changed');
+        expect(select1.classList).toContain('changed');
+
+        // Change back to original value
+        select1.options[0].selected = false;
+        select1.options[1].selected = true;
+        select1.dispatchEvent(new Event("input"));
+        expect(select1.classList).not.toContain('changed');
       });
 
       it("multiple fields", () => {
@@ -179,6 +199,48 @@ describe("BulkFormController", () => {
       // Expect actions to remain visible
       expect(actions.classList).not.toContain('hidden');
     });
+  });
+
+  describe("Adding new fields", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <form id="form" data-controller="bulk-form" data-action="custom-event->bulk-form#registerElements",
+          <div data-record-id="1">
+            <input id="input1a" type="text" value="initial1a">
+            <template id="template">
+              <input id="input1b" type="text" value="initial1b">
+            </template>
+          </div>
+          <div data-record-id="2">
+            <input id="input2" type="text" value="initial2">
+          </div>
+          <input type="submit">
+        </form>
+      `;
+    });
+
+    describe("registerElements", () => {
+      beforeEach(() => {
+        // Add new field after controller has initialised
+        input1a.insertAdjacentHTML("afterend", template.innerHTML);
+
+        // Trigger bulk-form#registerElements
+        form.dispatchEvent(new Event("custom-event"));
+      });
+
+      it("onInput", () => {
+        input1b.value = 'updated1b';
+        input1b.dispatchEvent(new Event("input"));
+        // Expect only updated field to show changed
+        expect(input1b.classList).toContain('changed');
+        expect(input2.classList).not.toContain('changed');
+
+        // Change back to original value
+        input1b.value = 'initial1b';
+        input1b.dispatchEvent(new Event("input"));
+        expect(input1b.classList).not.toContain('changed');
+      });
+    })
   });
 
   // unable to test disconnect at this stage

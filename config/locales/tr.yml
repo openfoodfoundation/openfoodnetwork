@@ -247,7 +247,6 @@ tr:
   cancel_order: "Siparişi İptal Et"
   confirm_send_invoice: "Bu siparişin faturası müşteriye gönderilecek. Devam etmek istiyor musunuz?"
   confirm_resend_order_confirmation: "Sipariş onayı e-postasını tekrar göndermek istediğinizden emin misiniz?"
-  must_have_valid_business_number: "Faturaların gönderilebilmesi için %{enterprise_name} adına geçerli bir VKN/TCKN olmalı."
   invoice: "Fatura"
   active: "AKTİF"
   cancelled: "İptal edildi"
@@ -383,6 +382,9 @@ tr:
       actions:
         edit: Düzenle
         clone: Kopyala
+        delete: Sil
+      image:
+        edit: Düzenle
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
@@ -603,6 +605,10 @@ tr:
         categories:
           label: Kategoriler
         search: Ara
+      table:
+        new_variant: Yeni Çeşit
+      edit_image:
+        close: Geri
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı
@@ -642,6 +648,9 @@ tr:
         product_categories: Ürün Kategorileri
         tax_categories: Vergi Kategorileri
         shipping_categories: Teslimat Kategorileri
+      dfc_import_form:
+        enterprise: "İşletme"
+        import: "Aktar"
       import:
         review: İncele
         import: İçe Aktar
@@ -699,6 +708,7 @@ tr:
         view_products: Ürünler Sayfasına Git
         view_inventory: Stok Sayfasına Git
       product_headings:
+        distributor: Dağıtımcı
         producer: ÜRETİCİ
         sku: Stok Kodu
         name: Ad
@@ -979,6 +989,8 @@ tr:
           rate: oran
           customers: Müşteri
           active: AKTİF?
+        connected_apps:
+          loading: "Yükleniyor"
       actions:
         edit_profile: Ayarlar
         properties: ÖZELLİKLER
@@ -1559,6 +1571,8 @@ tr:
   invoice_tax_total: "Toplam KDV:"
   tax_invoice: "VERGİ FATURASI"
   tax_total: "Toplam vergi (%{rate}):"
+  invoice_shipping_category_delivery: "Eve Teslim"
+  invoice_shipping_category_pickup: "Teslimat Noktası"
   total_excl_tax: "Toplam (vergi hariç):"
   total_incl_tax: "Toplam (Vergi dahil):"
   abn: "VKN/TCKN:"
@@ -3230,8 +3244,6 @@ tr:
     start_date: "Başlangıç tarihi"
     successfully_removed: "Başarıyla Kaldırıldı"
     taxonomy_edit: "Kategori düzenleme"
-    taxonomy_tree_error: "Kategori ağacı hatası"
-    taxonomy_tree_instruction: "Kategori ağacı talimatı"
     tree: "Ağaç"
     updating: "Güncelleniyor"
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"
@@ -3782,6 +3794,11 @@ tr:
           email: "E-posta"
           total: "Toplam"
           billing_address_name: "Ad"
+      taxons:
+        form:
+          name: Ad
+          permalink: Permalink
+          description: Açıklama
       general_settings:
         edit:
           legal_settings: "Yasal Ayarlar"

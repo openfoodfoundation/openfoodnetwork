@@ -12,13 +12,15 @@ module Spree
                     id: "#{model}_#{method}_field")
       end
 
-      def error_message_on(object, method, _options = {})
+      def error_message_on(object, method, options = {})
         object = convert_to_model(object)
         obj = object.respond_to?(:errors) ? object : instance_variable_get("@#{object}")
 
         if obj && obj.errors[method].present?
+          # rubocop:disable Rails/OutputSafety
           errors = obj.errors[method].map { |err| h(err) }.join('<br />').html_safe
-          content_tag(:span, errors, class: 'formError')
+          # rubocop:enable Rails/OutputSafety
+          content_tag(:span, errors, class: 'formError', **options)
         else
           ''
         end
@@ -110,12 +112,12 @@ module Spree
 
         object.preferences.keys.map { |key|
           preference_label = form.label("preferred_#{key}",
-                                        Spree.t(key.to_s.gsub("_from_list", "")) + ": ").html_safe
+                                        Spree.t(key.to_s.gsub("_from_list", "")) + ": ")
           preference_field = preference_field_for(
             form,
             "preferred_#{key}",
             { type: object.preference_type(key) }, object
-          ).html_safe
+          )
           { label: preference_label, field: preference_field }
         }
       end

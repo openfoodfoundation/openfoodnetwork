@@ -1,3 +1,7 @@
+- if show_generate_invoice_button?(@order)
+  .alert-box.warning 
+    = t('.order_has_changed')
+
 = render partial: 'spree/admin/shared/order_page_title'
 = render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Invoices' }
 
@@ -7,7 +11,7 @@
 
 - content_for :page_actions do
   - if show_generate_invoice_button?(@order)
-    %li= button_link_to t(:create_or_update_invoice), generate_admin_order_invoices_path(@order), :icon => 'icon-plus', data: { method: 'post' }
+    %li= generate_invoice_button(@order)
   = render partial: 'spree/admin/shared/order_links'
   %li= button_link_to t(:back_to_orders_list), admin_orders_path, :icon => 'icon-arrow-left'
 

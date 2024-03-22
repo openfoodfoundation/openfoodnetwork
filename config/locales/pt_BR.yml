@@ -270,7 +270,6 @@ pt_BR:
   cancel_order: "Cancelar pedido"
   confirm_send_invoice: "Uma fatura desse pedido será enviada ao cliente. Tem certeza que deseja continuar?"
   confirm_resend_order_confirmation: "Tem certeza que deseja enviar novamente o pedido de confirmação do e-mail?"
-  must_have_valid_business_number: "%{enterprise_name} deve ter um CNPJ válido antes que as faturas possam ser enviadas."
   invoice: "Fatura"
   active: "Ativo"
   cancelled: "Cancelado"
@@ -403,6 +402,9 @@ pt_BR:
       actions:
         edit: Editar
         clone: Cópia
+        delete: Deletar
+      image:
+        edit: Editar
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
     begins_at: Começa em
@@ -621,6 +623,8 @@ pt_BR:
         producers:
           label: Produtores
         search: Buscar
+      edit_image:
+        close: Voltar
     product_import:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto
@@ -660,6 +664,9 @@ pt_BR:
         product_categories: Categorias de Produtos
         tax_categories: Categorias fiscais
         shipping_categories: Categorias de Remessa
+      dfc_import_form:
+        enterprise: "Iniciativas"
+        import: "Importar"
       import:
         review: Reveja
         import: Importar
@@ -717,6 +724,7 @@ pt_BR:
         view_products: Ir para a página de produtos
         view_inventory: Ir para a página de inventário
       product_headings:
+        distributor: Distribuidor
         producer: Produtor
         sku: SKU
         name: Nome
@@ -992,6 +1000,8 @@ pt_BR:
         vouchers:
           customers: Consumidor
           active: Ativo?
+        connected_apps:
+          loading: "Carregando"
       actions:
         edit_profile: Configurações
         properties: Propriedades
@@ -1551,6 +1561,8 @@ pt_BR:
   invoice_tax_total: "Total de Imposto sobre Bens e Serviços"
   tax_invoice: "FATURA"
   tax_total: "Total de taxas (%{rate}):"
+  invoice_shipping_category_delivery: "Entrega"
+  invoice_shipping_category_pickup: "Retirada"
   total_excl_tax: "Total (sem imposto):"
   total_incl_tax: "Total (com imposto):"
   abn: "CNPJ:"
@@ -3234,8 +3246,6 @@ pt_BR:
     start_date: "Data de início"
     successfully_removed: "Removido com Sucesso"
     taxonomy_edit: "Editar Taxonomia"
-    taxonomy_tree_error: "Erro na árvore taxonômica"
-    taxonomy_tree_instruction: "Guia para a árvore taxonômica"
     tree: "Árvore"
     updating: "Atualizando"
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"
@@ -3781,6 +3791,11 @@ pt_BR:
           email: "E-mail"
           total: "Total"
           billing_address_name: "Nome"
+      taxons:
+        form:
+          name: Nome
+          permalink: Permalink
+          description: Descrição
       general_settings:
         edit:
           legal_settings: "Configurações de Legislação"

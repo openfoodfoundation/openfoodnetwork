@@ -25,7 +25,7 @@ module Spree
         context "#destroy" do
           it "should set deleted_at value" do
             product.destroy
-            expect(product.deleted_at).to_not be_nil
+            expect(product.deleted_at).not_to be_nil
             expect(product.variants.all? { |v| !v.deleted_at.nil? }).to be_truthy
           end
         end
@@ -42,7 +42,11 @@ module Spree
       let(:product) { create(:product) }
 
       it "should properly assign properties" do
-        product.set_property('the_prop', 'value1')
+        expect {
+          product.set_property('the_prop', 'value1')
+          product.save
+          product.reload
+        }.to change { product.properties.length }.by(1)
         expect(product.property('the_prop')).to eq 'value1'
 
         product.set_property('the_prop', 'value2')
@@ -50,18 +54,14 @@ module Spree
       end
 
       it "should not create duplicate properties when set_property is called" do
+        product.set_property('the_prop', 'value2')
+        product.save
+
         expect {
           product.set_property('the_prop', 'value2')
           product.save
           product.reload
-        }.not_to change(product.properties, :length)
-
-        expect {
-          product.set_property('the_prop_new', 'value')
-          product.save
-          product.reload
-          expect(product.property('the_prop_new')).to eq 'value'
-        }.to change { product.properties.length }.by(1)
+        }.not_to change { product.properties.length }
       end
 
       # Regression test for #2455
@@ -441,14 +441,14 @@ module Spree
           distributors = Enterprise.where(id: [distributor1.id, distributor2.id]).to_a
 
           expect(Product.in_distributors(distributors)).to include product1, product2, product3
-          expect(Product.in_distributors(distributors)).to_not include product4
+          expect(Product.in_distributors(distributors)).not_to include product4
         end
 
         it "returns distributed products for a given array of enterprise ids" do
           distributors_ids = [distributor1.id, distributor2.id]
 
           expect(Product.in_distributors(distributors_ids)).to include product1, product2, product3
-          expect(Product.in_distributors(distributors_ids)).to_not include product4
+          expect(Product.in_distributors(distributors_ids)).not_to include product4
         end
       end
 
@@ -569,7 +569,7 @@ module Spree
         it "lists any products with variants that are listed as visible=true" do
           expect(products.length).to eq(1)
           expect(products).to include product
-          expect(products).to_not include new_variant.product, hidden_variant.product
+          expect(products).not_to include new_variant.product, hidden_variant.product
         end
       end
 
@@ -591,7 +591,7 @@ module Spree
         it 'shows products produced by the enterprise and any producers granting P-OC' do
           stockable_products = Spree::Product.stockable_by(shop)
           expect(stockable_products).to include p1, p2
-          expect(stockable_products).to_not include p3
+          expect(stockable_products).not_to include p3
         end
       end
 

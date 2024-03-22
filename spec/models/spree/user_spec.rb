@@ -52,7 +52,7 @@ describe Spree::User do
       it "enforces the limit on the number of enterprise owned" do
         expect(u2.owned_enterprises.reload).to eq []
         u2.owned_enterprises << e1
-        expect { u2.save! }.to_not raise_error
+        expect { u2.save! }.not_to raise_error
         expect do
           u2.owned_enterprises << e2
           u2.save!
@@ -92,13 +92,13 @@ describe Spree::User do
 
     it "detects emails without @" do
       user.email = "examplemail.com"
-      expect(user).to_not be_valid
+      expect(user).not_to be_valid
       expect(user.errors.messages[:email]).to include "is invalid"
     end
 
     it "detects backslashes at the end" do
       user.email = "example@gmail.com\\\\"
-      expect(user).to_not be_valid
+      expect(user).not_to be_valid
     end
 
     it "is okay with numbers before the @" do
@@ -111,7 +111,7 @@ describe Spree::User do
       # valid, the network requests slow down tests and could make them flaky.
       expect_any_instance_of(ValidEmail2::Address).to receive(:valid_mx?).and_call_original
       user.email = "example@ho020tmail.com"
-      expect(user).to_not be_valid
+      expect(user).not_to be_valid
     end
   end
 
@@ -164,10 +164,10 @@ describe Spree::User do
     describe "as an enterprise user" do
       it "returns a list of users which manage shared enterprises" do
         expect(u1.known_users).to include u1, u2
-        expect(u1.known_users).to_not include u3
+        expect(u1.known_users).not_to include u3
         expect(u2.known_users).to include u1, u2
-        expect(u2.known_users).to_not include u3
-        expect(u3.known_users).to_not include u1, u2, u3
+        expect(u2.known_users).not_to include u3
+        expect(u3.known_users).not_to include u1, u2, u3
       end
     end
 
@@ -266,20 +266,6 @@ describe Spree::User do
       user = Spree::User.new(disabled_at: Time.zone.now)
       user.disabled = '0'
       expect(user.disabled).to be_falsey
-    end
-  end
-
-  describe "#link_from_omniauth" do
-    let!(:user) { create(:user, email: "user@email.com") }
-    let(:auth) { double(:auth, provider: "openid_connect", uid: "user@email.com") }
-
-    it "creates a user without errors" do
-      user.link_from_omniauth(auth)
-
-      expect(user.errors.present?).to be false
-      expect(user.confirmed?).to be true
-      expect(user.provider).to eq "openid_connect"
-      expect(user.uid).to eq "user@email.com"
     end
   end
 end

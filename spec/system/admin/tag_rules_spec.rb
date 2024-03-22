@@ -16,7 +16,7 @@ describe 'Tag Rules' do
     it "allows creation of rules of each type" do
       # Creating a new tag
       expect(page).to have_content 'No tags apply to this enterprise yet'
-      expect(page).to have_no_selector '.customer_tag'
+      expect(page).not_to have_selector '.customer_tag'
       click_button '+ Add A New Tag'
       fill_in_tag "volunteer"
 
@@ -216,39 +216,39 @@ describe 'Tag Rules' do
                        from: "enterprise_tag_rules_attributes_4_preferred_matched_" \
                              "shipping_methods_visibility"
       end
-      #       # Moving the Shipping Methods to top priority
-      #       find(".customer_tag#tg_4 .header", ).drag_to find(".customer_tag#tg_1 .header")
+      # # Moving the Shipping Methods to top priority
+      # find(".customer_tag#tg_4 .header", ).drag_to find(".customer_tag#tg_1 .header")
       #
-      #       click_button 'Update'
+      # click_button 'Update'
       #
-      #       # DEFAULT FilterShippingMethods rule
-      #       expect(default_fsm_tag_rule.reload.preferred_customer_tags).to eq ""
-      #       expect(default_fsm_tag_rule.preferred_shipping_method_tags).to eq "volunteers-only"
-      #       expect(default_fsm_tag_rule.preferred_matched_shipping_methods_visibility).to eq "hidden"
+      # # DEFAULT FilterShippingMethods rule
+      # expect(default_fsm_tag_rule.reload.preferred_customer_tags).to eq ""
+      # expect(default_fsm_tag_rule.preferred_shipping_method_tags).to eq "volunteers-only"
+      # expect(default_fsm_tag_rule.preferred_matched_shipping_methods_visibility).to eq "hidden"
       #
-      #       # FilterShippingMethods rule
-      #       expect(fsm_tag_rule.reload.priority).to eq 1
-      #       expect(fsm_tag_rule.preferred_customer_tags).to eq "volunteer"
-      #       expect(fsm_tag_rule.preferred_shipping_method_tags).to eq "volunteers-only4"
-      #       expect(fsm_tag_rule.preferred_matched_shipping_methods_visibility).to eq "visible"
+      # # FilterShippingMethods rule
+      # expect(fsm_tag_rule.reload.priority).to eq 1
+      # expect(fsm_tag_rule.preferred_customer_tags).to eq "volunteer"
+      # expect(fsm_tag_rule.preferred_shipping_method_tags).to eq "volunteers-only4"
+      # expect(fsm_tag_rule.preferred_matched_shipping_methods_visibility).to eq "visible"
       #
-      #       # FilterProducts rule
-      #       expect(fp_tag_rule.reload.priority).to eq 2
-      #       expect(fp_tag_rule.preferred_customer_tags).to eq "volunteer"
-      #       expect(fp_tag_rule.preferred_variant_tags).to eq "volunteers-only1"
-      #       expect(fp_tag_rule.preferred_matched_variants_visibility).to eq "hidden"
+      # # FilterProducts rule
+      # expect(fp_tag_rule.reload.priority).to eq 2
+      # expect(fp_tag_rule.preferred_customer_tags).to eq "volunteer"
+      # expect(fp_tag_rule.preferred_variant_tags).to eq "volunteers-only1"
+      # expect(fp_tag_rule.preferred_matched_variants_visibility).to eq "hidden"
       #
-      #       # FilterPaymentMethods rule
-      #       expect(fpm_tag_rule.reload.priority).to eq 3
-      #       expect(fpm_tag_rule.preferred_customer_tags).to eq "volunteer"
-      #       expect(fpm_tag_rule.preferred_payment_method_tags).to eq "volunteers-only2"
-      #       expect(fpm_tag_rule.preferred_matched_payment_methods_visibility).to eq "visible"
+      # # FilterPaymentMethods rule
+      # expect(fpm_tag_rule.reload.priority).to eq 3
+      # expect(fpm_tag_rule.preferred_customer_tags).to eq "volunteer"
+      # expect(fpm_tag_rule.preferred_payment_method_tags).to eq "volunteers-only2"
+      # expect(fpm_tag_rule.preferred_matched_payment_methods_visibility).to eq "visible"
       #
-      #       # FilterOrderCycles rule
-      #       expect(foc_tag_rule.reload.priority).to eq 4
-      #       expect(foc_tag_rule.preferred_customer_tags).to eq "volunteer"
-      #       expect(foc_tag_rule.preferred_exchange_tags).to eq "volunteers-only3"
-      #       expect(foc_tag_rule.preferred_matched_order_cycles_visibility).to eq "hidden"
+      # # FilterOrderCycles rule
+      # expect(foc_tag_rule.reload.priority).to eq 4
+      # expect(foc_tag_rule.preferred_customer_tags).to eq "volunteer"
+      # expect(foc_tag_rule.preferred_exchange_tags).to eq "volunteers-only3"
+      # expect(foc_tag_rule.preferred_matched_order_cycles_visibility).to eq "hidden"
     end
   end
 
@@ -271,13 +271,13 @@ describe 'Tag Rules' do
             first("a.delete-tag-rule").click
           end
         end
-        expect(page).to have_no_selector "#tr_1"
+        expect(page).not_to have_selector "#tr_1"
         accept_alert do
           within "#tr_0" do
             first("a.delete-tag-rule").click
           end
         end
-        expect(page).to have_no_selector "#tr_0"
+        expect(page).not_to have_selector "#tr_0"
       end.to change{ TagRule.count }.by(-2)
 
       # After deleting tags, the form is dirty and we need to confirm leaving

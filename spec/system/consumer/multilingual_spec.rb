@@ -27,7 +27,7 @@ describe 'Multilingual' do
       visit root_path
       expect(get_i18n_locale).to eq 'en'
       expect(get_i18n_translation('label_shops')).to eq 'Shops'
-      expect(cookies).to be_empty
+      expect(cookies_name).not_to include('locale')
       expect(page).to have_content 'SHOPS'
 
       visit root_path(locale: 'es')
@@ -102,7 +102,7 @@ describe 'Multilingual' do
 
       it "hides the dropdown language menu" do
         visit root_path
-        expect(page).to have_no_css 'ul.right li.language-switcher.has-dropdown'
+        expect(page).not_to have_css 'ul.right li.language-switcher.has-dropdown'
       end
     end
 

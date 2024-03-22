@@ -12,7 +12,9 @@ module Stripe
     end
 
     def create_customer_from_token
-      token = @payment.source.gateway_payment_profile_id
+      token = ActiveMerchant::Billing::StripeGateway::StripePaymentToken.new(
+        { 'id' => @payment.source.gateway_payment_profile_id }
+      )
       response = @provider.store(token, options)
 
       if response.success?

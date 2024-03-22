@@ -4,31 +4,31 @@
 
 %div.post-save-results
 
-  %p{ng: {show: 'updates.products_created'}}
-    %i.fa{ng: {class: "{'fa-info-circle': updates.products_created == 0, 'fa-check-circle': updates.products_created > 0}"}}
+  %p{ "ng-show": 'updates.products_created' }
+    %i.fa{ "ng-class": "{'fa-info-circle': updates.products_created == 0, 'fa-check-circle': updates.products_created > 0}" }
     %strong.created-count
       {{ updates.products_created }}
     = t('.products_created')
 
-  %p{ng: {show: 'updates.products_updated'}}
-    %i.fa{ng: {class: "{'fa-info-circle': updates.products_updated == 0, 'fa-check-circle': updates.products_updated > 0}"}}
+  %p{ "ng-show": 'updates.products_updated' }
+    %i.fa{ "ng-class": "{'fa-info-circle': updates.products_updated == 0, 'fa-check-circle': updates.products_updated > 0}" }
     %strong.updated-count
       {{ updates.products_updated }}
     = t('.products_updated')
 
-  %p{ng: {show: 'updates.inventory_created'}}
-    %i.fa{ng: {class: "{'fa-info-circle': updates.inventory_created == 0, 'fa-check-circle': updates.inventory_created > 0}"}}
+  %p{ "ng-show": 'updates.inventory_created' }
+    %i.fa{ "ng-class": "{'fa-info-circle': updates.inventory_created == 0, 'fa-check-circle': updates.inventory_created > 0}" }
     %strong.inv-created-count
       {{ updates.inventory_created }}
     = t('.inventory_created')
 
-  %p{ng: {show: 'updates.inventory_updated'}}
-    %i.fa{ng: {class: "{'fa-info-circle': updates.inventory_updated == 0, 'fa-check-circle': updates.inventory_updated > 0}"}}
+  %p{ "ng-show": 'updates.inventory_updated' }
+    %i.fa{ "ng-class": "{'fa-info-circle': updates.inventory_updated == 0, 'fa-check-circle': updates.inventory_updated > 0}" }
     %strong.inv-updated-count
       {{ updates.inventory_updated }}
     = t('.inventory_updated')
 
-  %p{ng: {show: 'updates.products_reset'}}
+  %p{ "ng-show": 'updates.products_reset' }
     %i.fa.fa-info-circle
     %strong.reset-count
       {{ updates.products_reset }}
@@ -39,24 +39,24 @@
 
   %br
 
-    %p{ng: {show: 'update_errors.length == 0'}}
+    %p{ "ng-show": 'update_errors.length == 0' }
       = t('.all_saved')
 
-    %div{ng: {show: 'update_errors.length > 0'}}
+    %div{ "ng-show": 'update_errors.length > 0' }
       %p {{ updated_total }} #{t('.some_saved')}
       %br
 
       %h5= t('.save_errors')
 
-      %p.save-error{ng: {repeat: 'error in update_errors'}}
+      %p.save-error{ "ng-repeat": 'error in update_errors' }
         &nbsp;-&nbsp; {{ error }}
 
   %br
-  %div{ng: {show: 'updated_total > 0'}}
-    %a.button.view{href: main_app.admin_inventory_path, ng: {show: 'updates.inventory_created > 0 || updates.inventory_updated > 0'}}
+  %div{ "ng-show": 'updated_total > 0' }
+    %a.button.view{ href: main_app.admin_inventory_path, "ng-show": 'updates.inventory_created > 0 || updates.inventory_updated > 0' }
       = t('.view_inventory')
 
-    %a.button.view{href: admin_products_path, ng: {show: 'updates.products_created > 0 || updates.products_updated > 0'}}
+    %a.button.view{ href: admin_products_path, "ng-show": 'updates.products_created > 0 || updates.products_updated > 0' }
       = t('.view_products')
 
   %a.button{href: main_app.admin_product_import_path}

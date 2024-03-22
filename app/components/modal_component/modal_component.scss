@@ -1,0 +1,56 @@
+// class name 'modal' is already taken by 'custom-alert' and 'custom-confirm'.
+.modal-component {
+  visibility: visible;
+  position: fixed;
+  top: 3em;
+  min-height: auto; // reset from reveal-modal
+
+  &.in {
+    padding: 1.2rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin-bottom: 0.5em;
+  }
+
+  img {
+    // Ensure image fits in container
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* prevent arrow on selected admin menu item appearing above modal */
+body.modal-open #admin-menu li.selected a::after {
+  z-index: 0;
+}
+
+.modal-actions {
+  display: flex;
+  text-align: center; // Ensure text inside fullwidth buttons are centred on small screens
+
+  &.justify-space-around {
+    justify-content: space-around;
+  }
+
+  &.justify-end {
+    justify-content: flex-end;
+    input[type="button"] {
+      margin: 0 5px;
+    }
+
+    @media only screen and (max-width: 1024px) {
+      flex-direction: column;
+      justify-content: space-around;
+      input[type="button"] {
+        margin: 5px 0;
+      }
+    }
+  }
+}

@@ -99,6 +99,10 @@ en:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Inheriting the tax categeory requires a per-item calculator."
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "failed to load. Please check to ensure the file is not corrupt, and try again."
         spree/user:
           attributes:
             email:
@@ -433,7 +437,7 @@ en:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be sent."
+  must_have_valid_business_number: "%{enterprise_name} must have a valid ABN before invoices can be used."
   invoice: "Invoice"
   invoices: "Invoices"
   file: "File"
@@ -555,6 +559,7 @@ en:
         colums: Columns
       columns:
         name: Name
+        unit_scale: Unit scale
         unit: Unit
         price: Price
         producer: Producer
@@ -580,6 +585,9 @@ en:
       actions:
         edit: Edit
         clone: Clone
+        delete: Delete
+      image:
+        edit: Edit
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     # Common properties / models
@@ -653,6 +661,9 @@ en:
 
     available_units: "Available Units"
 
+    terms_of_service_have_been_updated_html: "Open Food Network's Terms of Service have been updated: %{tos_link}"
+    terms_of_service: Read Terms of Service
+    accept_terms_of_service: Accept Terms of Service
     shopfront_settings:
       embedded_shopfront_settings: "Embedded Shopfront Settings"
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
@@ -746,6 +757,10 @@ en:
         user_guide: User Guide
         map: Map
 
+    dfc_product_imports:
+      index:
+        title: "Importing a DFC product catalog"
+        imported_products: "Imported products:"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -815,6 +830,17 @@ en:
         header:
           title: Bulk Edit Products
         loading: Loading your products
+      delete_modal:
+        delete_product_modal:
+          heading: "Delete product"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete product"
+          cancellation_text: "Keep product"
+        delete_variant_modal:
+          heading: "Delete variant"
+          prompt: "This will permanently remove it from your list."
+          confirmation_text: "Delete variant"
+          cancellation_text: "Keep variant"
       sort:
         pagination:
           total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
@@ -824,7 +850,9 @@ en:
           clear_search: Clear search
       filters:
         search_products: Search for products
+        search_for_producers: Search for producers
         all_producers: All producers
+        search_for_categories: Search for categories
         all_categories: All categories
         producers:
           label: Producers
@@ -849,10 +877,21 @@ en:
           invalid:
             one: "%{count} product could not be saved. Please review the errors and try again."
             other: "%{count} products could not be saved. Please review the errors and try again."
-        save: Save changes
         reset: Discard changes
-      bulk_update: # TODO: fix these
-        success: "Products successfully updated" #TODO: add count
+        save: Save changes
+        new_variant: New variant
+      bulk_update:
+        success: Changes saved
+      edit_image:
+        title: Edit product photo
+        close: Back
+        upload: Upload photo
+      delete_product:
+        success: Successfully deleted the product
+        error: Unable to delete the product
+      delete_variant:
+        success: Successfully deleted the variant
+        error: Unable to delete the variant
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -894,6 +933,11 @@ en:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        title: "Import from DFC catalog"
+        enterprise: "Enterprise"
+        catalog_url: "DFC catalog URL"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -951,6 +995,7 @@ en:
         view_products: Go To Products Page
         view_inventory: Go To Inventory Page
       product_headings:
+        distributor: Distributor
         producer: Producer
         sku: SKU
         name: Name
@@ -1098,6 +1143,7 @@ en:
         images:
           legend: "Images"
           logo: Logo
+          logo_size: "300 x 300 pixels"
           promo_image_placeholder: 'This image is displayed in "About Us"'
           promo_image_note1: 'PLEASE NOTE:'
           promo_image_note2: Any promo image uploaded here will be cropped to 1200 x 260.
@@ -1279,6 +1325,29 @@ en:
           create_custom_tab: "Create custom tab in shopfront"
           custom_tab_title: "Title for custom tab"
           custom_tab_content: "Content for custom tab"
+        connected_apps:
+          legend: "Connected apps"
+          title: "Discover Regenerative"
+          tagline: "Allow Discover Regenerative to publish your enterprise information."
+          enable: "Allow data sharing"
+          disable: "Stop sharing"
+          loading: "Loading"
+          note: |
+            Your Open Food Network account is connected to Discover Regenerative.
+            Add or update information on your Discover Regenerative listing here.
+          link_label: "Manage listing"
+          description_html: |
+            <p>
+            Eligible producers can showcase their regenerative credentials,
+            farming practices and more through a profile listing.
+            Simplifying how buyers can find regenerative produce and connect
+            with producers of interest.
+            </p>
+            <p>
+            <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+            target="_blank"><b>Learn more about Discover Regenerative</b>
+            <i class="icon-external-link"></i></a>
+            </p>
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1510,6 +1579,8 @@ en:
         has_no_payment_methods: "%{enterprise} has no payment methods"
         has_no_shipping_methods: "%{enterprise} has no shipping methods"
         has_no_enterprise_fees: "%{enterprise} has no enterprise fees"
+      flashes:
+        dismiss: Dismiss
       side_menu:
         enterprise:
           primary_details: "Primary Details"
@@ -1530,6 +1601,7 @@ en:
           users: "Users"
           vouchers: Vouchers
           white_label: "White Label"
+          connected_apps: "Connected apps"
         enterprise_group:
           primary_details: "Primary Details"
           users: "Users"
@@ -1650,10 +1722,15 @@ en:
       index:
         title: "OIDC Settings"
         connect: "Connect Your Account"
-        already_connected: "Your account is already linked to this DFC authorization account:"
+        disconnect: "Disconnect"
+        connected: "Your account is linked to %{uid}."
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "You need first to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
         link_account_button: "Link your Les Communs OIDC Account"
+        note_expiry: |
+          Tokens to access connected apps have expired. Please refresh your
+          account connection to keep all integrations working.
+        refresh: "Refresh authorisation"
         view_account: "To view your account, see:"
     subscriptions:
       index:
@@ -1991,9 +2068,11 @@ en:
   invoice_column_price_per_unit_without_taxes: "Price Per unit (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
   invoice_tax_total: "GST Total:"
+  invoice_cancel_and_replace_invoice: "cancels and replaces invoice" 
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
-  invoice_shipping_type: "Type:"
+  invoice_shipping_category_delivery: "Delivery"
+  invoice_shipping_category_pickup: "Pickup"
   total_excl_tax: "Total (Excl. tax):"
   total_incl_tax: "Total (Incl. tax):"
   total_all_tax: "Total tax:"
@@ -2227,6 +2306,9 @@ en:
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
   order_back_to_website: Back To Website
+  checkout_details_title: Checkout Details
+  checkout_payment_title: Checkout Payment
+  checkout_summary_title: Checkout Summary
 
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
 
@@ -3126,6 +3208,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_transaction_fee: Transaction Fee (no tax)
   report_header_total_untaxable_admin: Total untaxable admin adjustments (no tax)
   report_header_total_taxable_admin: Total taxable admin adjustments (tax inclusive)
+  report_header_voucher_label: Voucher Label
+  report_header_voucher_amount: "Voucher Amount (%{currency_symbol})"
   report_line_cost_of_produce: Cost of produce
   report_line_line_items: line items
   report_header_last_completed_order_date: Last completed order date
@@ -3805,8 +3889,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
-    taxonomy_tree_error: "Taxonomy tree error"
-    taxonomy_tree_instruction: "Taxonomy tree instruction"
+    taxonomy_tree_error: "There was an error updating the taxonomy tree."
+    taxonomy_tree_instruction: "Right-click on an item to add, rename, remove or edit."
     tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
@@ -4119,6 +4203,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
           include_out_of_stock_variants: "Include variants with no available stock"
+        shipment:
+          mark_as_shipped_message_html: "This will mark the order as Shipped.<br />Are you sure you want to proceed?"
+          mark_as_shipped_label_message: "Send a shipment/pick up notification email to the customer."
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
@@ -4177,6 +4264,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           line_item_adjustments: "Line Item Adjustments"
           order_adjustments: "Order Adjustments"
           order_total: "Order Total"
+      invoices:
+        index:
+          order_has_changed: "The order has changed since the last invoice update. The invoice shown here might not be up-to-date anymore."
       overview:
         enterprises_header:
           ofn_with_tip: Enterprises are Producers and/or Hubs and are the basic unit of organisation within the Open Food Network.
@@ -4185,6 +4275,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           has_no_payment_methods: "has no payment methods"
           has_no_shipping_methods: "has no shipping methods"
         products:
+          products_tip: "The products that you sell through the Open Food Network."
           active_products:
             zero: "You don't have any active products."
             one: "You have one active product"
@@ -4337,6 +4428,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           bulk_unit_size: Bulk unit size
         display_as:
           display_as: Display As
+        clone:
+          success: Product cloned
       reports:
         table:
           select_and_search: "Select filters and click on %{option} to access your data."
@@ -4406,6 +4499,15 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           email: "Email"
           total: "Total"
           billing_address_name: "Name"
+      taxons:
+        form:
+          name: Name
+          permalink: Permalink
+          meta_title: Meta Title
+          meta_description: Meta Description
+          meta_keywords: Meta Keywords
+          description: Description
+          dfc_id: DFC URI 
       general_settings:
         edit:
           legal_settings: "Legal Settings"
@@ -4701,3 +4803,9 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     pagination:
       next: Next
       previous: Previous
+
+
+  # Gem to prevent bot form submissions
+  invisible_captcha:
+    sentence_for_humans: "Please leave empty"
+    timestamp_error_message: "Please try again after 5 seconds."

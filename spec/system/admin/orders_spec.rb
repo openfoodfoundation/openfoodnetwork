@@ -115,7 +115,7 @@ describe '
         # Order 2 and 3 should show, but not 4
         expect(page).to have_content order2.number
         expect(page).to have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order4.number
       end
 
       it "filter by distributors" do
@@ -126,7 +126,7 @@ describe '
 
         # Order 2 and 4 should show, but not 3
         expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
+        expect(page).not_to have_content order3.number
         expect(page).to have_content order4.number
       end
 
@@ -138,7 +138,7 @@ describe '
         page.find('.filter-actions .button[type=submit]').click
 
         # Order 3 and 4 should show, but not 2
-        expect(page).to_not have_content order2.number
+        expect(page).not_to have_content order2.number
         expect(page).to have_content order3.number
         expect(page).to have_content order4.number
       end
@@ -149,9 +149,9 @@ describe '
         page.find('.filter-actions .button[type=submit]').click
 
         # Order 3 should show, but not 2 and 4
-        expect(page).to_not have_content order2.number
+        expect(page).not_to have_content order2.number
         expect(page).to have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order4.number
       end
 
       it "filter by customer first and last names" do
@@ -161,8 +161,8 @@ describe '
         page.find('.filter-actions .button[type=submit]').click
         # Order 2 should show, but not 3 and 4
         expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order3.number
+        expect(page).not_to have_content order4.number
 
         find("#clear_filters_button").click
         # filtering by last name
@@ -170,8 +170,8 @@ describe '
         fill_in "Last name begins with", with: billing_address4.lastname
         page.find('.filter-actions .button[type=submit]').click
         # Order 4 should show, but not 2 and 3
-        expect(page).to_not have_content order2.number
-        expect(page).to_not have_content order3.number
+        expect(page).not_to have_content order2.number
+        expect(page).not_to have_content order3.number
         expect(page).to have_content order4.number
 
         find("#clear_filters_button").click
@@ -194,16 +194,16 @@ describe '
         page.find('.filter-actions .button[type=submit]').click
         # Order 2 should show, but not 3 and 5
         expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order3.number
+        expect(page).not_to have_content order4.number
 
         find("#clear_filters_button").click
 
         tomselect_search_and_select "Signed, sealed, delivered", from: 'shipping_method_id'
         page.find('.filter-actions .button[type=submit]').click
         # Order 4 should show, but not 2 and 3
-        expect(page).to_not have_content order2.number
-        expect(page).to_not have_content order3.number
+        expect(page).not_to have_content order2.number
+        expect(page).not_to have_content order3.number
         expect(page).to have_content order4.number
       end
 
@@ -214,8 +214,8 @@ describe '
 
         # Order 2 should show, but not 3 and 4
         expect(page).to have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
+        expect(page).not_to have_content order3.number
+        expect(page).not_to have_content order4.number
       end
 
       it "filter by order state" do
@@ -236,10 +236,10 @@ describe '
 
         # Order 2 should show, but not 3 and 4
         expect(page).to have_content order.number
-        expect(page).to_not have_content order2.number
-        expect(page).to_not have_content order3.number
-        expect(page).to_not have_content order4.number
-        expect(page).to_not have_content order5.number
+        expect(page).not_to have_content order2.number
+        expect(page).not_to have_content order3.number
+        expect(page).not_to have_content order4.number
+        expect(page).not_to have_content order5.number
       end
     end
 
@@ -281,7 +281,7 @@ describe '
         # And the same orders are displayed when sorting by name:
         find("th a", text: "NAME").click
 
-        expect(page).to have_no_content order_empty.number
+        expect(page).not_to have_content order_empty.number
         expect(page).to have_content order_not_empty.number
         expect(page).to have_content order_not_empty_no_address.number
       end
@@ -496,10 +496,11 @@ describe '
         page.find("#listing_orders thead th:first-child input[type=checkbox]").trigger("click")
         expect(page.find(
                  "#listing_orders tbody tr td:first-child input[type=checkbox]"
-               )).to_not be_checked
-        # disables print invoices button
-        page.find("span.icon-reorder", text: "ACTIONS").click
-        expect(page).to_not have_content "Print Invoices"
+               )).not_to be_checked
+        # disables print invoices button not clickable
+        expect { find("span.icon-reorder", text: "ACTIONS").click }
+          .to raise_error(Capybara::Cuprite::MouseEventFailed)
+        expect(page).not_to have_content "Print Invoices"
       end
     end
 
@@ -583,10 +584,13 @@ describe '
             reader.pages.map(&:text)
           end
 
+          let(:order4_selector){ "#order_#{order4.id} input[name='bulk_ids[]']" }
+          let(:order5_selector){ "#order_#{order5.id} input[name='bulk_ids[]']" }
+
           shared_examples "can bulk print invoices from 2 orders" do
             it "bulk prints invoices in pdf format" do
-              page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
-              page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
+              page.find(order4_selector).click
+              page.find(order5_selector).click
 
               page.find("span.icon-reorder", text: "ACTIONS").click
               within ".ofn-drop-down .menu" do
@@ -621,10 +625,126 @@ describe '
             end
           end
 
-          it_behaves_like "can bulk print invoices from 2 orders"
+          shared_examples "should ignore the non invoiceable order" do
+            it "bulk prints invoices in pdf format" do
+              page.find(order4_selector).click
+              page.find(order5_selector).click
 
-          context "with legal invoices feature", feature: :invoices do
+              page.find("span.icon-reorder", text: "ACTIONS").click
+              within ".ofn-drop-down .menu" do
+                expect {
+                  page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+                }.to enqueue_job(BulkInvoiceJob).exactly(:once)
+              end
+
+              expect(page).to have_content "Compiling Invoices"
+              expect(page).to have_content "Please wait until the PDF is ready " \
+                                           "before closing this modal."
+
+              perform_enqueued_jobs(only: BulkInvoiceJob)
+
+              expect(page).to have_content "Bulk Invoice created"
+
+              within ".modal-content" do
+                expect(page).to have_link(class: "button", text: "VIEW FILE",
+                                          href: /invoices/)
+
+                invoice_content = extract_pdf_content
+
+                expect(invoice_content).to have_content("TAX INVOICE", count: 1)
+                expect(invoice_content).not_to have_content(order4.number.to_s)
+                expect(invoice_content).to have_content(order5.number.to_s)
+                expect(invoice_content).not_to have_content(distributor4.name.to_s)
+                expect(invoice_content).to have_content(distributor5.name.to_s)
+                expect(invoice_content).not_to have_content(order_cycle4.name.to_s)
+                expect(invoice_content).to have_content(order_cycle5.name.to_s)
+              end
+            end
+          end
+
+          context "ABN is not required" do
+            before do
+              allow(Spree::Config).to receive(:enterprise_number_required_on_invoices?)
+                .and_return false
+            end
             it_behaves_like "can bulk print invoices from 2 orders"
+
+            context "with legal invoices feature", feature: :invoices do
+              it_behaves_like "can bulk print invoices from 2 orders"
+            end
+
+            context "one of the two orders is not invoiceable" do
+              before do
+                order4.cancel!
+              end
+
+              it_behaves_like "should ignore the non invoiceable order"
+              context "with legal invoices feature", feature: :invoices do
+                it_behaves_like "should ignore the non invoiceable order"
+              end
+            end
+          end
+
+          context "ABN is required" do
+            before do
+              allow(Spree::Config).to receive(:enterprise_number_required_on_invoices?)
+                .and_return true
+            end
+            context "All the distributors setup the ABN" do
+              before do
+                order4.distributor.update(abn: "123456789")
+                order5.distributor.update(abn: "987654321")
+              end
+              context "all the orders are invoiceable (completed/resumed)" do
+                it_behaves_like "can bulk print invoices from 2 orders"
+                context "with legal invoices feature", feature: :invoices do
+                  it_behaves_like "can bulk print invoices from 2 orders"
+                end
+              end
+
+              context "one of the two orders is not invoiceable" do
+                before do
+                  order4.cancel!
+                end
+
+                it_behaves_like "should ignore the non invoiceable order"
+                context "with legal invoices feature", feature: :invoices do
+                  it_behaves_like "should ignore the non invoiceable order"
+                end
+              end
+            end
+            context "the distributor of one of the order didn't set the ABN" do
+              before do
+                order4.distributor.update(abn: "123456789")
+                order5.distributor.update(abn: nil)
+              end
+
+              shared_examples "should not print the invoice" do
+                it "should render a warning message" do
+                  page.find(order4_selector).click
+                  page.find(order5_selector).click
+
+                  page.find("span.icon-reorder", text: "ACTIONS").click
+                  within ".ofn-drop-down .menu" do
+                    expect {
+                      page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+                    }.not_to enqueue_job(BulkInvoiceJob)
+                  end
+
+                  expect(page).not_to have_content "Compiling Invoices"
+                  expect(page).not_to have_content "Please wait until the PDF is ready " \
+                                                   "before closing this modal."
+
+                  expect(page).to have_content "#{
+                    order5.distributor.name
+                  } must have a valid ABN before invoices can be used."
+                end
+              end
+              it_behaves_like "should not print the invoice"
+              context "with legal invoices feature", feature: :invoices do
+                it_behaves_like "should not print the invoice"
+              end
+            end
           end
         end
 
@@ -644,7 +764,7 @@ describe '
             uncheck "Send a cancellation email to the customer"
             expect {
               find_button("Cancel").click # Cancels the cancel action
-            }.to_not enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+            }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
           end
 
           page.find("span.icon-reorder", text: "ACTIONS").click
@@ -655,7 +775,7 @@ describe '
           within ".reveal-modal" do
             expect {
               find_button("Confirm").click # Confirms the cancel action
-            }.to_not enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+            }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
           end
 
           expect(page).to have_content("CANCELLED", count: 2)
@@ -696,7 +816,7 @@ describe '
           within ".reveal-modal" do
             expect {
               find_button("Confirm").click
-            }.to_not enqueue_job(ActionMailer::MailDeliveryJob)
+            }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
           end
         end
       end
@@ -746,13 +866,36 @@ describe '
         expect(page).to have_current_path spree.admin_orders_path
       end
 
-      it "ship order from the orders index page" do
+      it "ship order from the orders index page and send email" do
         order.payments.first.capture!
         login_as_admin
         visit spree.admin_orders_path
 
         page.find("button.icon-road").click
 
+        within ".reveal-modal" do
+          expect {
+            find_button("Confirm").click
+          }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
+        end
+        expect(page).to have_css "i.success"
+        expect(order.reload.shipments.any?(&:shipped?)).to be true
+        expect(order.shipment_state).to eq("shipped")
+      end
+
+      it "ship order from the orders index page and do not send email" do
+        order.payments.first.capture!
+        login_as_admin
+        visit spree.admin_orders_path
+
+        page.find("button.icon-road").click
+
+        within ".reveal-modal" do
+          uncheck 'Send a shipment/pick up notification email to the customer.'
+          expect {
+            find_button("Confirm").click
+          }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
+        end
         expect(page).to have_css "i.success"
         expect(order.reload.shipments.any?(&:shipped?)).to be true
         expect(order.shipment_state).to eq("shipped")
@@ -875,15 +1018,15 @@ describe '
       visit spree.admin_orders_path
       expect(page).to have_content complete_order.number
       expect(page).to have_content empty_complete_order.number
-      expect(page).to have_no_content incomplete_order.number
-      expect(page).to have_no_content empty_order.number
+      expect(page).not_to have_content incomplete_order.number
+      expect(page).not_to have_content empty_order.number
 
       uncheck 'Only show complete orders'
       page.find('button[type=submit]').click
 
       expect(page).to have_content complete_order.number
       expect(page).to have_content incomplete_order.number
-      expect(page).to have_no_content empty_order.number
+      expect(page).not_to have_content empty_order.number
     end
   end
 
@@ -911,8 +1054,8 @@ describe '
       fill_in "Order number", with: "R123456"
       tomselect_multiselect order_cycle.name, from: 'q[order_cycle_id_in][]'
       tomselect_multiselect distributor.name, from: 'q[distributor_id_in][]'
-      tomselect_search_and_select shipping_method.name, from: 'shipping_method_id'
-      tomselect_search_and_select "complete", from: 'q[state_eq]'
+      tomselect_select shipping_method.name, from: 'shipping_method_id'
+      tomselect_select "complete", from: 'q[state_eq]'
       fill_in "Email", with: user.email
       fill_in "First name begins with", with: "J"
       fill_in "Last name begins with", with: "D"

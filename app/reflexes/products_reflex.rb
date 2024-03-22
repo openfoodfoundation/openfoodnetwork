@@ -6,20 +6,20 @@ class ProductsReflex < ApplicationReflex
   before_reflex :init_filters_params, :init_pagination_params
 
   def fetch
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   def change_per_page
     @per_page = element.value.to_i
     @page = 1
 
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   def filter
     @page = 1
 
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   def clear_search
@@ -28,7 +28,7 @@ class ProductsReflex < ApplicationReflex
     @category_id = nil
     @page = 1
 
-    fetch_and_render_products
+    fetch_and_render_products_with_flash
   end
 
   def bulk_update
@@ -38,13 +38,52 @@ class ProductsReflex < ApplicationReflex
     @products = product_set.collection # use instance variable mainly for testing
 
     if product_set.save
-      # flash[:success] = with_locale { I18n.t('.success') }
-      # morph_admin_flashes  # ERROR: selector morph type has already been set
+      flash[:success] = I18n.t('admin.products_v3.bulk_update.success')
     elsif product_set.errors.present?
       @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
     end
 
-    render_products_form
+    render_products_form_with_flash
+  end
+
+  def delete_product
+    id = current_id_from_element(element)
+    product = product_finder(id).find_product
+    authorize! :delete, product
+
+    if product.destroy
+      flash[:success] = I18n.t('admin.products_v3.delete_product.success')
+    else
+      flash[:error] = I18n.t('admin.products_v3.delete_product.error')
+    end
+
+    fetch_and_render_products_with_flash
+  end
+
+  def delete_variant
+    id = current_id_from_element(element)
+    variant = Spree::Variant.active.find(id)
+    authorize! :delete, variant
+
+    if VariantDeleter.new.delete(variant)
+      flash[:success] = I18n.t('admin.products_v3.delete_variant.success')
+    else
+      flash[:error] = I18n.t('admin.products_v3.delete_variant.error')
+    end
+
+    fetch_and_render_products_with_flash
+  end
+
+  def edit_image
+    id = current_id_from_element(element)
+    product = product_finder(id).find_product
+    image = product.image
+
+    image = Spree::Image.new(viewable: product) if product.image.blank?
+
+    morph "#modal-component",
+          render(partial: "admin/products_v3/edit_image",
+                 locals: { product:, image:, return_url: url })
   end
 
   private
@@ -64,7 +103,7 @@ class ProductsReflex < ApplicationReflex
     @per_page = element.dataset.perpage || params[:_per_page] || 15
   end
 
-  def fetch_and_render_products
+  def fetch_and_render_products_with_flash
     fetch_products
     render_products
   end
@@ -75,29 +114,30 @@ class ProductsReflex < ApplicationReflex
       html: render(partial: "admin/products_v3/content",
                    locals: { products: @products, pagy: @pagy, search_term: @search_term,
                              producer_options: producers, producer_id: @producer_id,
-                             category_options: categories, category_id: @category_id })
-    ).broadcast
+                             category_options: categories, category_id: @category_id,
+                             flashes: flash })
+    )
 
     cable_ready.replace_state(
       url: current_url,
-    ).broadcast_later
+    )
 
     morph :nothing
   end
 
-  def render_products_form
+  def render_products_form_with_flash
     locals = { products: @products }
     locals[:error_counts] = @error_counts if @error_counts.present?
+    locals[:flashes] = flash if flash.any?
 
     cable_ready.replace(
       selector: "#products-form",
       html: render(partial: "admin/products_v3/table", locals:)
-    ).broadcast
+    )
     morph :nothing
 
-    # dunno why this doesn't work.
-    # morph "#products-form", render(partial: "admin/products_v3/table",
-    #                locals: { products: products })
+    # dunno why this doesn't work. The HTML stops after the first `<col>` element, wtf?!
+    # morph "#products-form", render(partial: "admin/products_v3/table", locals:)
   end
 
   def producers
@@ -194,5 +234,13 @@ class ProductsReflex < ApplicationReflex
   def products_bulk_params
     params.permit(products: ::PermittedAttributes::Product.attributes)
       .to_h.with_indifferent_access
+  end
+
+  def product_finder(id)
+    ProductScopeQuery.new(current_user, { id: })
+  end
+
+  def current_id_from_element(element)
+    element.dataset.current_id
   end
 end

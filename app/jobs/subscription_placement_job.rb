@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'order_management/subscriptions/summarizer'
-
 class SubscriptionPlacementJob < ApplicationJob
   def perform
     proxy_orders.each do |proxy_order|

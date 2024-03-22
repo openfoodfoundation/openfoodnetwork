@@ -1,4 +1,4 @@
 .text-center.page-alert.fixed{ "ofn-page-alert" => true }
   .alert-box
     = render 'shared/page_alert'
-    %a.close{ ng: { click: "close()" } } &times;
+    %a.close{ "ng-click": "close()" } &times;

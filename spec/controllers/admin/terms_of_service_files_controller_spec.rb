@@ -12,12 +12,12 @@ describe Admin::TermsOfServiceFilesController, type: :controller do
 
     it "does not allow deletion" do
       post :destroy
-      expect(TermsOfServiceFile).to_not receive(:current)
+      expect(TermsOfServiceFile).not_to receive(:current)
     end
 
     it "does not allow creation" do
       post :create
-      expect(TermsOfServiceFile).to_not receive(:create!)
+      expect(TermsOfServiceFile).not_to receive(:create!)
     end
   end
 

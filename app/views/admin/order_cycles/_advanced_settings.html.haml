@@ -22,7 +22,7 @@
     .omega.eight.columns
       = f.check_box :automatic_notifications
 
-  .row{ "data-controller": "remote-toggle", "data-remote-toggle-selector-value": "#advanced_settings" }
+  .row{ "data-controller": "toggle-control", "data-toggle-control-selector-value": "#advanced_settings" }
     .sixteen.columns.alpha.omega.text-center
       %input{ type: 'submit', value: t('.save_reload') }
-      %a{ href: "#", "data-action": "click->remote-toggle#toggle" }= t(:close)
+      %a{ href: "#", "data-action": "click->toggle-control#toggleAdvancedSettings" }= t(:close)

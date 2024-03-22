@@ -1,5 +1,5 @@
 %script{ type: "text/ng-template", id: "admin/panels/proxy_orders.html" }
-  %form.margin-top-30{ name: 'subscription_form', ng: { controller: 'OrdersPanelController' } }
+  %form.margin-top-30{ name: 'subscription_form', "ng-controller": 'OrdersPanelController' }
     .row.subscription-orders
       .fourteen.columns.offset-by-one
         %table
@@ -13,14 +13,14 @@
             %th= t('total')
             %th.actions
           %tbody
-            %tr.proxy_order{ :id => "po_{{proxyOrder.id}}", ng: { repeat: 'proxyOrder in subscription.not_closed_proxy_orders' } }
+            %tr.proxy_order{ id: "po_{{proxyOrder.id}}", "ng-repeat": 'proxyOrder in subscription.not_closed_proxy_orders' }
               %td
-                %div{ ng: { bind: "::orderCycleName(proxyOrder.order_cycle_id)" } }
-                %div{ ng: { bind: "::orderCycleCloses(proxyOrder.order_cycle_id)" } }
+                %div{ "ng-bind": "::orderCycleName(proxyOrder.order_cycle_id)" }
+                %div{ "ng-bind": "::orderCycleCloses(proxyOrder.order_cycle_id)" }
               %td.text-center
-                %span.state{ ng: { class: "proxyOrder.state", bind: 'stateText(proxyOrder.state)' } }
-              %td.text-center{ ng: { bind: '(proxyOrder.total || subscription.estimatedTotal()) | localizeCurrency' } }
+                %span.state{ "ng-class": "proxyOrder.state", "ng-bind": 'stateText(proxyOrder.state)' }
+              %td.text-center{ "ng-bind": '(proxyOrder.total || subscription.estimatedTotal()) | localizeCurrency' }
               %td.actions
                 %a.edit-order.icon-edit.no-text{ href: '{{::proxyOrder.edit_path}}', target: '_blank', 'ofn-with-tip' => t(:edit_order), confirm_order_edit: true }
-                %a.cancel-order.icon-remove.no-text{ href: 'javascript:void(0)', ng: { hide: "proxyOrder.state == 'canceled'", click: "cancelOrder(proxyOrder)" }, 'ofn-with-tip' => t(:cancel_order) }
-                %a.resume-order.icon-resume.no-text{ href: 'javascript:void(0)', ng: { show: "proxyOrder.state == 'canceled'", click: "resumeOrder(proxyOrder)" }, 'ofn-with-tip' => t(:resume_order) }
+                %a.cancel-order.icon-remove.no-text{ href: 'javascript:void(0)', "ofn-with-tip": t(:cancel_order), "ng-hide": "proxyOrder.state == 'canceled'", "ng-click": "cancelOrder(proxyOrder)" }
+                %a.resume-order.icon-resume.no-text{ href: 'javascript:void(0)', "ofn-with-tip": t(:resume_order), "ng-show": "proxyOrder.state == 'canceled'", "ng-click": "resumeOrder(proxyOrder)" }

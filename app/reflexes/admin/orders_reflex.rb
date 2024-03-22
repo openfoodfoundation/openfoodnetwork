@@ -5,11 +5,13 @@ module Admin
     before_reflex :authorize_order, only: [:capture, :ship]
 
     def capture
-      payment_capture = OrderCaptureService.new(@order)
+      payment_capture = Orders::CaptureService.new(@order)
 
       if payment_capture.call
-        morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
-                                     locals: { order: @order.reload, success: true })
+        cable_ready.replace(selector: dom_id(@order),
+                            html: render(partial: "spree/admin/orders/table_row",
+                                         locals: { order: @order.reload, success: true }))
+        morph :nothing
       else
         flash[:error] = payment_capture.gateway_error || I18n.t(:payment_processing_failed)
         morph_admin_flashes
@@ -17,7 +19,10 @@ module Admin
     end
 
     def ship
+      @order.send_shipment_email = false unless params[:send_shipment_email]
       if @order.ship
+        return set_param_for_controller if request.url.match?('edit')
+
         morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
                                      locals: { order: @order.reload, success: true })
       else
@@ -27,13 +32,20 @@ module Admin
     end
 
     def bulk_invoice(params)
+      visible_orders = editable_orders.where(id: params[:bulk_ids]).filter(&:invoiceable?)
+      if Spree::Config.enterprise_number_required_on_invoices? &&
+         !all_distributors_can_invoice?(visible_orders)
+        render_business_number_required_error(visible_orders)
+        return
+      end
+
       cable_ready.append(
         selector: "#orders-index",
         html: render(partial: "spree/admin/orders/bulk/invoice_modal")
       ).broadcast
 
       BulkInvoiceJob.perform_later(
-        params[:bulk_ids],
+        visible_orders.pluck(:id),
         "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
         channel: SessionChannel.for_request(request),
         current_user_id: current_user.id
@@ -43,7 +55,7 @@ module Admin
     end
 
     def cancel_orders(params)
-      cancelled_orders = OrdersBulkCancelService.new(params, current_user).call
+      cancelled_orders = Orders::BulkCancelService.new(params, current_user).call
 
       cable_ready.dispatch_event(name: "modal:close")
 
@@ -83,7 +95,8 @@ module Admin
     private
 
     def authorize_order
-      @order = Spree::Order.find_by(id: element.dataset[:id])
+      id = element.dataset[:id] || params[:id]
+      @order = Spree::Order.find_by(id:)
       authorize! :admin, @order
     end
 
@@ -95,6 +108,24 @@ module Admin
 
     def editable_orders
       Permissions::Order.new(current_user).editable_orders
+    end
+
+    def set_param_for_controller
+      params[:id] = @order.number
+    end
+
+    def all_distributors_can_invoice?(orders)
+      distributor_ids = orders.map(&:distributor_id)
+      Enterprise.where(id: distributor_ids, abn: nil).empty?
+    end
+
+    def render_business_number_required_error(orders)
+      distributor_ids = orders.map(&:distributor_id)
+      distributor_names = Enterprise.where(id: distributor_ids, abn: nil).pluck(:name)
+
+      flash[:error] = I18n.t(:must_have_valid_business_number,
+                             enterprise_name: distributor_names.join(", "))
+      morph_admin_flashes
     end
   end
 end

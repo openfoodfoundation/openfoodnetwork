@@ -21,7 +21,9 @@ module Api
         @shipment.refresh_rates
         @shipment.save!
 
-        OrderWorkflow.new(@order).advance_to_payment if @order.line_items.any?
+        Orders::WorkflowService.new(@order).advance_to_payment if @order.line_items.any?
+
+        @order.recreate_all_fees!
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
@@ -82,6 +84,8 @@ module Api
 
         @order.contents.remove(variant, quantity, @shipment, restock_item)
         @shipment.reload if @shipment.persisted?
+
+        @order.recreate_all_fees!
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
