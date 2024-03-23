@@ -4,11 +4,16 @@ module Reporting
   module Reports
     module Packing
       class Product < Base
+        def table_columns
+          Struct.new(:keys).new(
+            [:hub, :supplier, :product, :variant, :customer_code, :first_name,
+             :last_name, :phone, :quantity, :price, :temp_controlled]
+          )
+        end
+
         def columns
           # Reorder default columns
-          super.slice(:hub, :supplier, :product, :variant,
-                      :customer_code, :first_name, :last_name, :phone,
-                      :quantity, :price, :temp_controlled)
+          super.slice(*table_columns.keys)
         end
 
         def rules
