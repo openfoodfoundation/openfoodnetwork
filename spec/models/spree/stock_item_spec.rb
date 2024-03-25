@@ -112,6 +112,10 @@ RSpec.describe Spree::StockItem do
       it "doesnt raise ReadOnlyRecord error" do
         expect { subject.destroy }.not_to raise_error
       end
+
+      it "does not destroy stock_movements when destroyed" do
+        expect { subject.destroy }.not_to change { Spree::StockMovement.count }
+      end
     end
   end
 end
