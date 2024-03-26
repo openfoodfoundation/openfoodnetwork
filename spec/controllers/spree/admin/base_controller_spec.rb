@@ -71,10 +71,9 @@ describe Spree::Admin::BaseController, type: :controller do
 
   describe "determining the name of the serializer to be used" do
     before do
-      class Api::Admin::AllowedPrefixBaseSerializer; end;
-
-      class Api::Admin::BaseSerializer; end;
       allow(controller).to receive(:ams_prefix_whitelist) { [:allowed_prefix] }
+      stub_const('Api::Admin::AllowedPrefixBaseSerializer', Class)
+      stub_const('Api::Admin::BaseSerializer', Class)
     end
 
     context "when a prefix is passed in" do
