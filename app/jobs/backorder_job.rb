@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class BackorderJob < ApplicationJob
+  FDC_BASE_URL =  "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod"
+  FDC_CATALOG_URL = "#{FDC_BASE_URL}/SuppliedProducts".freeze
+  FDC_ORDERS_URL = "#{FDC_BASE_URL}/Orders".freeze
+
+  # The FDC implementation needs special ids for new objects:
+  FDC_NEW_ORDER_URL = "#{FDC_ORDERS_URL}/#".freeze
+  FDC_ORDER_LINES_URL = "#{FDC_ORDERS_URL}/#/OrderLines".freeze
+
   queue_as :default
 
   def self.check_stock(order)
@@ -14,14 +22,85 @@ class BackorderJob < ApplicationJob
       variant.semantic_links.present?
     end
 
+    return if linked_variants.empty?
+
+    # At this point we want to move to the background with perform_later.
+    # But while this is in development I'll perform the backordering
+    # immediately. It should ease debugging for now.
+    place_backorder(order, linked_variants)
+  end
+
+  def self.place_backorder(order, linked_variants)
+    backorder = build_order(order)
+    catalog = load_catalog(order.distributor.owner)
+
+    linked_variants.each_with_index do |variant, index|
+      needed_quantity = -1 * variant.on_hand
+      offer = best_offer(catalog, variant)
+
+      # Order lines are enumerated in the FDC API:
+      line = build_order_line(offer, needed_quantity)
+      line.semanticId = "#{FDC_ORDER_LINES_URL}/#{index}"
+      backorder.lines << line
+    end
+
+    lines = backorder.lines
+    offers = lines.map(&:offer)
+    products = offers.map(&:offeredItem)
+    json = DfcIo.export(backorder, *lines, *offers, *products, build_sale_session)
+
+    api = DfcRequest.new(order.distributor.owner)
+
+    # Create order via POST:
+    api.call(FDC_ORDERS_URL, json)
+
+    # Once we have transformations and know the quantities in bulk products
+    # we will need to increase on_hand by the ordered quantity.
     linked_variants.each do |variant|
-      # needed_quantity = -1 * variant.on_hand
-      # create DFC Order
-      # post order to endpoint
+      variant.on_hand = 0
     end
   end
 
+  # This needs to find an existing order when the API is available.
+  def self.build_order(ofn_order)
+    OrderBuilder.new_order(ofn_order, FDC_NEW_ORDER_URL)
+  end
+
+  def self.build_order_line(offer, quantity)
+    OrderLineBuilder.build(offer, quantity)
+  end
+
+  def self.build_sale_session
+    DataFoodConsortium::Connector::SaleSession.new(
+      "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SalesSession/#",
+      beginDate: "Tue Aug 20 2024 08:02:23 GMT+0000 (Coordinated Universal Time)",
+      endDate: "Tue Aug 27 2024 08:02:23 GMT+0000 (Coordinated Universal Time)",
+    )
+  end
+
+  def self.best_offer(catalog, variant)
+    link = variant.semantic_links[0]
+
+    return unless link
+
+    product = catalog.find { |item| item.semanticId == link.semantic_id }
+    offer_of(product)
+  end
+
+  def self.offer_of(product)
+    product&.catalogItems&.first&.offers&.first&.tap do |offer|
+      # Unfortunately, the imported catalog doesn't provide the reverse link:
+      offer.offeredItem = product
+    end
+  end
+
+  def self.load_catalog(user)
+    api = DfcRequest.new(user)
+    catalog_json = api.call(FDC_CATALOG_URL)
+    DfcIo.import(catalog_json)
+  end
+
   def perform(*args)
-    # Do something later
+    # The ordering logic will live here later.
   end
 end
