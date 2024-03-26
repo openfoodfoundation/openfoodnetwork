@@ -20,7 +20,7 @@
       -# todo: create a method for value_with_description
       = f.text_field :unit_value_with_description,
           value: [number_with_precision(variant.unit_value, precision: nil,strip_insignificant_zeros: true), variant.unit_description].compact_blank.join(" "),
-          'aria-label': t('admin.products_page.columns.unit_value')
+          'aria-label': t('admin.products_page.columns.unit_value'), required: true
     .field
       = f.label :display_as, t('admin.products_page.columns.display_as')
       = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(variant).name
