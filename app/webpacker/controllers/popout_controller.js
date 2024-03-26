@@ -8,8 +8,8 @@ export default class PopoutController extends Controller {
   }
 
   connect() {
-    this.first_input = this.dialogTarget.querySelector("input");
     this.displayElements = Array.from(this.element.querySelectorAll('input:not([type="hidden"]'));
+    this.first_input = this.displayElements[0];
 
     // Show when click or down-arrow on button
     this.buttonTarget.addEventListener("click", this.show.bind(this));
