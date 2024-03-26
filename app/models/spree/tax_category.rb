@@ -6,6 +6,7 @@ module Spree
     validates :name, presence: true, uniqueness: { scope: :deleted_at }
 
     has_many :tax_rates, dependent: :destroy, inverse_of: :tax_category
+    has_many :variants, dependent: :restrict_with_error
 
     before_save :set_default_category
 
