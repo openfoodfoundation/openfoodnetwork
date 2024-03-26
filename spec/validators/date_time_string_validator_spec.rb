@@ -3,14 +3,6 @@
 require "spec_helper"
 
 describe DateTimeStringValidator do
-  class TestModel
-    include ActiveModel::Validations
-
-    attr_accessor :timestamp
-
-    validates :timestamp, date_time_string: true
-  end
-
   describe "internationalization" do
     it "has translation for NOT_STRING_ERROR" do
       expect(described_class.not_string_error).not_to be_blank
@@ -22,7 +14,14 @@ describe DateTimeStringValidator do
   end
 
   describe "validation" do
-    let(:instance) { TestModel.new }
+    let(:instance) do
+      Class.new do
+        include ActiveModel::Validations
+        attr_accessor :timestamp
+
+        validates :timestamp, date_time_string: true
+      end.new
+    end
 
     it "does not add error when nil" do
       instance.timestamp = nil

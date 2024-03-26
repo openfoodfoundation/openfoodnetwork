@@ -11,7 +11,6 @@
 # AllowedMethods: enums
 Lint/ConstantDefinitionInBlock:
   Exclude:
-    - 'spec/validators/date_time_string_validator_spec.rb'
     - 'spec/validators/integer_array_validator_spec.rb'
 
 # Offense count: 2
