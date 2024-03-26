@@ -97,7 +97,7 @@ RSpec.configure do |config|
   end
 
   # Reset all feature toggles to prevent leaking.
-  config.before(:suite) do
+  config.before(:each) do
     Flipper.features.each(&:remove)
     OpenFoodNetwork::FeatureToggle.setup!
   end
