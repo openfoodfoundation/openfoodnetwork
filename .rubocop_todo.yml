@@ -11,7 +11,6 @@
 # AllowedMethods: enums
 Lint/ConstantDefinitionInBlock:
   Exclude:
-    - 'spec/models/spree/gateway_spec.rb'
     - 'spec/models/spree/preferences/configuration_spec.rb'
     - 'spec/models/spree/preferences/preferable_spec.rb'
     - 'spec/validators/date_time_string_validator_spec.rb'
