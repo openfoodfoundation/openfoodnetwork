@@ -60,7 +60,7 @@ module Spree
       @insufficient_stock_lines = []
       @order = order_to_update
       unless @order
-        flash[:error] = t(:order_not_found)
+        flash[:error] = t(:order_not_updated)
         redirect_to(main_app.root_path) && return
       end
 

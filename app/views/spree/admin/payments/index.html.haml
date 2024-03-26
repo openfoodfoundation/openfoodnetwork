@@ -20,5 +20,3 @@
 
 - if @payments.any?
   = render partial: 'list', locals: { payments: @payments }
-- else
-  .alpha.twelve.columns.no-objects-found= t(:order_has_no_payments)
