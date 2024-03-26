@@ -12,7 +12,7 @@ module Api
       delegate :balance_value, to: :object
 
       def balance
-        Spree::Money.new(balance_value, currency: Spree::Config[:currency]).to_s
+        Spree::Money.new(balance_value, currency: CurrentConfig.get(:currency)).to_s
       end
 
       def balance_status
