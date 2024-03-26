@@ -11,7 +11,6 @@
 # AllowedMethods: enums
 Lint/ConstantDefinitionInBlock:
   Exclude:
-    - 'lib/tasks/import_product_images.rake'
     - 'lib/tasks/users.rake'
     - 'spec/controllers/spree/admin/base_controller_spec.rb'
     - 'spec/helpers/serializer_helper_spec.rb'

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
+COLUMNS = %i[producer name image_url].freeze
+
 namespace :ofn do
   namespace :import do
     desc "Importing images for products from CSV"
     task :product_images, [:filename] => [:environment] do |_task, args|
-      COLUMNS = [:producer, :name, :image_url].freeze
-
       puts "Warning: use only with trusted URLs. This script will download whatever it can, " \
            "including local secrets, and expose the file as an image file."
 
