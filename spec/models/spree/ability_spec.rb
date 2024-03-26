@@ -13,8 +13,6 @@ describe Spree::Ability do
     user.spree_roles.clear
   end
 
-  TOKEN = 'token123'
-
   after(:each) {
     user.spree_roles = []
   }
