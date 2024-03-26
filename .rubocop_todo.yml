@@ -390,17 +390,6 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
-# Offense count: 11
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/HasManyOrHasOneDependent:
-  Exclude:
-    - 'app/models/enterprise.rb'
-    - 'app/models/spree/address.rb'
-    - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/tax_rate.rb'
-    - 'app/models/spree/variant.rb'
-
 # Offense count: 26
 # Configuration parameters: Include.
 # Include: app/helpers/**/*.rb
