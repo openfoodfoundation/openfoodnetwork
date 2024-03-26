@@ -3241,10 +3241,10 @@ date-format@^4.0.3:
   resolved "https://registry.yarnpkg.com/date-format/-/date-format-4.0.3.tgz#f63de5dc08dc02efd8ef32bf2a6918e486f35873"
   integrity sha512-7P3FyqDcfeznLZp2b+OMitV9Sz2lUnsT87WaTat9nVwqsBkTzPG3lPLNwW3en6F4pHUiWzr6vb8CLhjdK9bcxQ==
 
-debounced@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/debounced/-/debounced-0.0.5.tgz#e540b6eebfe703d93462711b4f3562ffd101b87f"
-  integrity sha512-8Bgheu1YxQB7ocqYmK2enbLGVoo4nCtu/V6UD/SMDOeV3g2LocG2CrA5oxudlyl79Ja07UiqGdp9pWZoJn52EQ==
+debounced@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/debounced/-/debounced-1.0.0.tgz#f27b755b072a1579843a6a02eaaf8e165d24ff48"
+  integrity sha512-oPEzLE+9mys3GSFWwfstDsDfTuKq8Sqtywulu+ROhqa9ovJQ7/fG3qb0ZBZMXqEitxwvcrjkfQgg77VmjDxNUw==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"

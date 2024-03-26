@@ -23,7 +23,7 @@
     "@rails/webpacker": "5.4.4",
     "@stimulus-components/rails-nested-form": "^5.0.0",
     "cable_ready": "5.0.1",
-    "debounced": "^0.0.5",
+    "debounced": "^1.0.0",
     "flatpickr": "^4.6.9",
     "foundation-sites": "^5.5.3",
     "hotkeys-js": "^3.13.7",
