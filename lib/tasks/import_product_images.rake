@@ -4,15 +4,15 @@ namespace :ofn do
   namespace :import do
     desc "Importing images for products from CSV"
     task :product_images, [:filename] => [:environment] do |_task, args|
-      COLUMNS = [:producer, :name, :image_url].freeze
-
       puts "Warning: use only with trusted URLs. This script will download whatever it can, " \
            "including local secrets, and expose the file as an image file."
 
       raise "Filename required" if args[:filename].blank?
 
+      columns = %i[producer name image_url].freeze
+
       csv = CSV.read(args[:filename], headers: true, header_converters: :symbol)
-      raise "CSV columns reqired: #{COLUMNS.map(&:to_s)}" if (COLUMNS - csv.headers).present?
+      raise "CSV columns reqired: #{columns.map(&:to_s)}" if (columns - csv.headers).present?
 
       csv.each.with_index do |entry, index|
         puts "#{index} #{entry[:producer]}, #{entry[:name]}"
