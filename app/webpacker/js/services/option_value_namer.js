@@ -4,6 +4,7 @@ import VariantUnitManager from "js/services/variant_unit_manager";
 export default class OptionValueNamer {
   constructor(variant) {
     this.variant = variant;
+    this.variantUnitManager = new VariantUnitManager();
   }
 
   name() {
@@ -79,15 +80,15 @@ export default class OptionValueNamer {
     // If there is none available where this is true, use the smallest
     // available unit.
     const product = this.variant.product;
-    const scales = VariantUnitManager.compatibleUnitScales(product.variant_unit_scale, product.variant_unit);
+    const scales = this.variantUnitManager.compatibleUnitScales(product.variant_unit_scale, product.variant_unit);
     const variantUnitValue = this.variant.unit_value;
 
     // sets largestScale = last element in filtered scales array
     const largestScale = scales.filter(s => variantUnitValue / s >= 1).slice(-1)[0];
     if (largestScale) {
-      return [largestScale, VariantUnitManager.getUnitName(largestScale, product.variant_unit)];
+      return [largestScale, this.variantUnitManager.getUnitName(largestScale, product.variant_unit)];
     } else {
-      return [scales[0], VariantUnitManager.getUnitName(scales[0], product.variant_unit)];
+      return [scales[0], this.variantUnitManager.getUnitName(scales[0], product.variant_unit)];
     }
   }
 }
