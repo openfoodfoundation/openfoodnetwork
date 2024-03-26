@@ -2,6 +2,9 @@
 
 require 'spec_helper'
 
+class Api::Admin::AllowedPrefixBaseSerializer; end
+class Api::Admin::BaseSerializer; end
+
 describe Spree::Admin::BaseController, type: :controller do
   controller(Spree::Admin::BaseController) do
     def index
@@ -71,9 +74,6 @@ describe Spree::Admin::BaseController, type: :controller do
 
   describe "determining the name of the serializer to be used" do
     before do
-      class Api::Admin::AllowedPrefixBaseSerializer; end;
-
-      class Api::Admin::BaseSerializer; end;
       allow(controller).to receive(:ams_prefix_whitelist) { [:allowed_prefix] }
     end
 
