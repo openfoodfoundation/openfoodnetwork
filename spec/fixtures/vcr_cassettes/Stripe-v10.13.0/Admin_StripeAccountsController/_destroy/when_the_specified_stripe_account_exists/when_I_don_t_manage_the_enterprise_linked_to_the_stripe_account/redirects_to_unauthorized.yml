@@ -8,20 +8,15 @@ http_interactions:
       string: type=standard&country=AU&email=jumping.jack%40example.com&business_type=non_profit
     headers:
       User-Agent:
-      - Stripe/v1 RubyBindings/10.10.0
+      - Stripe/v1 RubyBindings/10.13.0
       Authorization:
-      - Bearer <HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
       Content-Type:
       - application/x-www-form-urlencoded
-      X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_Kn4sy7JqIW8lyd","request_duration_ms":1966}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"10.10.0","lang":"ruby","lang_version":"3.1.4 p223 (2023-03-30)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
-        version 6.5.0-25-generic (buildd@bos03-amd64-044) (x86_64-linux-gnu-gcc-12
-        (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0, GNU ld (GNU Binutils for Ubuntu) 2.38)
-        #25~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Feb 20 16:09:15 UTC 2","hostname":"ff-LAT"}'
+      - "<HIDDEN-STRIPE-USER-AGENT>"
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -34,7 +29,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Sun, 17 Mar 2024 13:21:10 GMT
+      - Wed, 27 Mar 2024 11:34:59 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -59,13 +54,17 @@ http_interactions:
         default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
         img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
       Cross-Origin-Opener-Policy-Report-Only:
-      - same-origin; report-to=https://q.stripe.com/coop-report
+      - same-origin; report-to="coop"
       Idempotency-Key:
-      - 465ce517-9c88-45fc-a4ae-ec6fea3ed101
+      - f8570e37-5b0d-4cc0-b8a3-b8b9df4d1ffb
       Original-Request:
-      - req_a6vV2cQ3GJ5sRJ
+      - req_e2SoaA4Ghw0gaM
+      Report-To:
+      - '{"group":"coop","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/coop-report"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - coop="https://q.stripe.com/coop-report"
       Request-Id:
-      - req_a6vV2cQ3GJ5sRJ
+      - req_e2SoaA4Ghw0gaM
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -80,7 +79,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "acct_1OvJeD4GSYqMqmpR",
+          "id": "acct_1OyukwQMSSW9Jehj",
           "object": "account",
           "business_profile": {
             "annual_revenue": null,
@@ -125,7 +124,7 @@ http_interactions:
             "type": "application"
           },
           "country": "AU",
-          "created": 1710681669,
+          "created": 1711539299,
           "default_currency": "aud",
           "details_submitted": false,
           "email": "jumping.jack@example.com",
@@ -134,7 +133,7 @@ http_interactions:
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/accounts/acct_1OvJeD4GSYqMqmpR/external_accounts"
+            "url": "/v1/accounts/acct_1OyukwQMSSW9Jehj/external_accounts"
           },
           "future_requirements": {
             "alternatives": [],
@@ -231,5 +230,5 @@ http_interactions:
           },
           "type": "standard"
         }
-  recorded_at: Sun, 17 Mar 2024 13:21:10 GMT
+  recorded_at: Wed, 27 Mar 2024 11:34:59 GMT
 recorded_with: VCR 6.2.0
