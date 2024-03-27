@@ -40,6 +40,7 @@ describe("VariantUnitManager", function() {
       it("returns a sorted set of compatible scales based on the scale and unit type provided", function() {
         expect(subject.compatibleUnitScales(1, "weight")).toEqual([1.0, 1000.0, 1000000.0]);
         expect(subject.compatibleUnitScales(453.6, "weight")).toEqual([28.35, 453.6]);
+        expect(subject.compatibleUnitScales(0.001, "volume")).toEqual([0.001, 1.0, 1000.0]);
       });
     });
   });
