@@ -27,7 +27,7 @@
         - tr_id = spree_dom_id(return_authorization)
         %tr{class: tr_class, id: tr_id}
           %td= return_authorization.number
-          %td= Spree.t('spree.admin.return_authorizations.states.' + return_authorization.state.downcase)
+          %td= Spree.t('admin.return_authorizations.states.' + return_authorization.state.downcase)
           %td= return_authorization.display_amount.to_html
           %td= pretty_time(return_authorization.created_at)
           %td.actions
