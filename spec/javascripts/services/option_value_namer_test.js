@@ -18,6 +18,12 @@ describe("OptionValueNamer", () => {
       namer = new OptionValueNamer(v);
     });
 
+    it("when unit is blank (empty items name)", function() {
+      jest.spyOn(namer, "value_scaled").mockImplementation(() => true);
+      jest.spyOn(namer, "option_value_value_unit").mockImplementation(() => ["value", ""]);
+      expect(namer.name()).toBe("value");
+    });
+
     it("when description is blank", function() {
       v.unit_description = null;
       jest.spyOn(namer, "value_scaled").mockImplementation(() => true);

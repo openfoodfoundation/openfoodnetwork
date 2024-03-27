@@ -13,7 +13,10 @@ export default class OptionValueNamer {
     const name_fields = [];
     if (value && unit) {
       name_fields.push(`${value}${separator}${unit}`);
+    } else if (value) {
+      name_fields.push(value);
     }
+
     if (this.variant.unit_description) {
       name_fields.push(this.variant.unit_description);
     }
