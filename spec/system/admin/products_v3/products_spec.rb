@@ -462,11 +462,15 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         within new_variant_row do
           fill_in "Name", with: "Large box"
           fill_in "SKU", with: "APL-02"
-          fill_in "Unit", with: 1000
+
+          click_on "Unit" # activate popout
+          fill_in "Unit value", with: "1000"
+
           fill_in "Price", with: 10.25
+
           click_on "On Hand" # activate popout
+          fill_in "On Hand", with: "3"
         end
-        fill_in "On Hand", with: "3"
 
         expect {
           click_button "Save changes"
@@ -502,7 +506,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           within new_variant_row do
             fill_in "Name", with: "N" * 256 # too long
             fill_in "SKU", with: "n" * 256
-            fill_in "Unit", with: "" # can't be blank
+            # didn't fill_in "Unit", can't be blank
             fill_in "Price", with: "10.25" # valid
           end
         end
@@ -528,7 +532,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             expect(page).to have_field "Name", with: "N" * 256
             expect(page).to have_field "SKU", with: "n" * 256
             expect(page).to have_content "is too long"
-            expect(page).to have_field "Unit", with: ""
+            expect(page.find_button("Unit")).to have_text "" # have_button selector don't work here
             expect(page).to have_content "can't be blank"
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
           end
@@ -551,7 +555,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           within row_containing_name("N" * 256) do
             fill_in "Name", with: "Nice box"
             fill_in "SKU", with: "APL-02"
-            fill_in "Unit", with: "200"
+
+            click_on "Unit" # activate popout
+            fill_in "Unit value", with: "200"
           end
 
           expect {
