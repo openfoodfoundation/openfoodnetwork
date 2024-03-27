@@ -9,10 +9,10 @@
   = error_message_on variant, :sku
 %td
   -# empty
-%td.field.on-hand__wrapper{'data-controller': "popout", 'data-popout-update-display-value': "false"}
-  = f.button :unit_to_display, class: "on-hand__button", 'aria-label': t('admin.products_page.columns.unit'), 'data-popout-target': "button" do
+%td.field.popout{'data-controller': "popout", 'data-popout-update-display-value': "false"}
+  = f.button :unit_to_display, class: "popout__button", 'aria-label': t('admin.products_page.columns.unit'), 'data-popout-target': "button" do
     = variant.unit_to_display # Show the generated summary of unit values
-  %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
+  %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
     .field
       -# Composite field for unit_value and unit_description
       -# todo: create a method for value_with_description
@@ -26,10 +26,10 @@
 %td.field.naked_inputs
   = f.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
   = error_message_on variant, :price
-%td.field.on-hand__wrapper{'data-controller': "popout"}
-  %button.on-hand__button{'data-popout-target': "button", 'aria-label': t('admin.products_page.columns.on_hand')}
+%td.field.popout{'data-controller': "popout"}
+  %button.popout__button{'data-popout-target': "button", 'aria-label': t('admin.products_page.columns.on_hand')}
     = variant.on_demand ? t(:on_demand) : variant.on_hand
-  %div.on-hand__popout{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
+  %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
     .field
       = f.number_field :on_hand, min: 0, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: f.object.on_demand
       = error_message_on variant, :on_hand
