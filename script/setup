@@ -21,9 +21,13 @@ NO_COLOR='\033[0m'
 RUBY_VERSION=$(cat .ruby-version)
 if command -v rbenv > /dev/null; then
   ./script/rbenv-install.sh
-elif ! ruby --version | grep $RUBY_VERSION > /dev/null; then
+elif command -v rvm > /dev/null; then
+  rvm install $RUBY_VERSION
+fi
+
+if ! ruby --version | grep $RUBY_VERSION > /dev/null; then
   printf "${RED}Open Food Network requires ruby ${RUBY_VERSION}${NO_COLOR}. "
-  printf "Have a look at: https://github.com/rbenv/rbenv\n"
+  printf "Have a look at your ruby version manager: https://github.com/rbenv/rbenv\n or https://rvm.io/"
   exit 1
 fi
 
