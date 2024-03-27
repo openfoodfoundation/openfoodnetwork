@@ -2,19 +2,19 @@
 
 require 'spec_helper'
 
+class Provider
+  def initialize(options); end
+
+  def imaginary_method; end
+end
+
+class TestGateway < Spree::Gateway
+  def provider_class
+    Provider
+  end
+end
+
 describe Spree::Gateway do
-  class Provider
-    def initialize(options); end
-
-    def imaginary_method; end
-  end
-
-  class TestGateway < Spree::Gateway
-    def provider_class
-      Provider
-    end
-  end
-
   it "passes through all arguments on a method_missing call" do
     gateway = TestGateway.new
     expect(gateway.provider).to receive(:imaginary_method).with('foo')

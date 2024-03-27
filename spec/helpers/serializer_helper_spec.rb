@@ -2,13 +2,12 @@
 
 require 'spec_helper'
 
+class ExampleEnterpriseSerializer < ActiveModel::Serializer
+  attributes :id, :name
+end
+
 describe SerializerHelper, type: :helper do
-  let(:serializer) do
-    class ExampleEnterpriseSerializer < ActiveModel::Serializer
-      attributes :id, :name
-    end
-    ExampleEnterpriseSerializer
-  end
+  let(:serializer) { ExampleEnterpriseSerializer }
 
   describe "#required_attributes" do
     it "returns only the attributes from the model that the serializer needs to be queried" do
