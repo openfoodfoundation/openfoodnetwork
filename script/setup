@@ -22,7 +22,7 @@ RUBY_VERSION=$(cat .ruby-version)
 if command -v rbenv > /dev/null; then
   ./script/rbenv-install.sh
 elif command -v rvm > /dev/null; then
-  ./script/rvm-install.sh
+  rvm install $RUBY_VERSION
 fi
 
 if ! ruby --version | grep $RUBY_VERSION > /dev/null; then
