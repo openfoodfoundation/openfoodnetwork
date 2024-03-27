@@ -6,6 +6,8 @@ RSpec.describe UserReflex, type: :reflex do
   let(:current_user) { create(:user) }
   let(:context) { { url: spree.admin_dashboard_url, connection: { current_user: } } }
 
+  before { pending "https://github.com/podia/stimulus_reflex_testing/issues/21" }
+
   describe "#accept_terms_of_services" do
     subject(:reflex) { build_reflex(method_name: :accept_terms_of_services, **context) }
 
