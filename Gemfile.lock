@@ -433,7 +433,7 @@ GEM
       timeout
     net-smtp (0.4.0.1)
       net-protocol
-    newrelic_rpm (9.7.1)
+    newrelic_rpm (9.8.0)
     nio4r (2.7.0)
     nokogiri (1.16.3)
       mini_portile2 (~> 2.8.2)
