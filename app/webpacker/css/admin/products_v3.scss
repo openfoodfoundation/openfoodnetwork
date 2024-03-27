@@ -316,6 +316,8 @@
         padding-left: $border-radius; // Super compact
         padding-right: 1rem; // Retain space for arrow
         height: auto;
+        min-width: 2em;
+        min-height: 1lh; // Line height of parent
 
         &:hover,
         &:active,
@@ -348,6 +350,7 @@
           content: "\f078";
 
           position: absolute;
+          top: 0; // Required for empty buttons
           right: $border-radius;
           font-size: 0.67em;
         }
