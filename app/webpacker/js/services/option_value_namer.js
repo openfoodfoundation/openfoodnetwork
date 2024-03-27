@@ -1,4 +1,4 @@
-import VariantUnitManager from "js/services/variant_unit_manager";
+import VariantUnitManager from "../../js/services/variant_unit_manager";
 
 // Javascript clone of VariantUnits::OptionValueNamer, for bulk product editing.
 export default class OptionValueNamer {
@@ -70,6 +70,7 @@ export default class OptionValueNamer {
 
   option_value_value_unit_scaled() {
     const [unit_scale, unit_name] = this.scale_for_unit_value();
+
     const value = Math.round((this.variant.unit_value / unit_scale) * 100) / 100;
     return [value, unit_name];
   }

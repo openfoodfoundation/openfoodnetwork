@@ -21,7 +21,7 @@ export default class VariantUnitManager {
       .filter(([scale, scaleInfo]) => {
         return scaleInfo['system'] == scaleSystem;
       })
-      .map(([scale, _]) => scale);
+      .map(([scale, _]) => parseFloat(scale));
   }
 
   // private
