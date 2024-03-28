@@ -9,9 +9,9 @@
     %colgroup
       %col{ width:"56" }= #  Img (size + padding)
       %col= # (grow to fill) Name
-      %col{ width:"8%"}
-      %col{ width:"8%"}
       %col{ width:"5%"}
+      %col{ width:"8%"}
+      %col{ width:"8%"}
       %col{ width:"5%"}
       %col{ width:"10%"}
       %col{ width:"15%"}= # Producer
@@ -43,7 +43,7 @@
         %th.align-left.with-input= t('admin.products_page.columns.name')
         %th.align-left.with-input= t('admin.products_page.columns.sku')
         %th.align-left.with-input= t('admin.products_page.columns.unit_scale')
-        %th.align-right= t('admin.products_page.columns.unit')
+        %th.align-left.with-input= t('admin.products_page.columns.unit')
         %th.align-left.with-input= t('admin.products_page.columns.price')
         %th.align-left.with-input= t('admin.products_page.columns.on_hand')
         %th.align-left= t('admin.products_page.columns.producer')
@@ -53,20 +53,20 @@
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
       = form.fields_for("products", product, index: product_index) do |product_form|
-        %tbody.relaxed.naked_inputs{ data: { 'record-id': product_form.object.id,
-                                controller: "nested-form",
+        %tbody.relaxed{ data: { 'record-id': product_form.object.id,
+                                controller: "nested-form product",
                                 action: 'rails-nested-form:add->bulk-form#registerElements' } }
           %tr
             = render partial: 'product_row', locals: { product:, f: product_form }
 
           - product.variants.each_with_index do |variant, variant_index|
             = form.fields_for("products][#{product_index}][variants_attributes][", variant, index: variant_index) do |variant_form|
-              %tr.condensed
+              %tr.condensed{ 'data-controller': "variant" }
                 = render partial: 'variant_row', locals: { variant:, f: variant_form }
 
           = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", product.variants.build) do |new_variant_form|
             %template{ 'data-nested-form-target': "template" }
-              %tr.condensed
+              %tr.condensed{ 'data-controller': "variant" }
                 = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form }
 
           %tr{ 'data-nested-form-target': "target" }

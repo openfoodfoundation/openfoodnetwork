@@ -9,14 +9,6 @@
   "scripts": {
     "pretty-quick": "pretty-quick"
   },
-  "jest": {
-    "testRegex": [
-      "spec/javascripts/.*_test\\.js"
-    ],
-    "transformIgnorePatterns": [
-      "/node_modules/(?!(stimulus)/)"
-    ]
-  },
   "dependencies": {
     "@floating-ui/dom": "^1.6.3",
     "@hotwired/turbo": "^8.0.4",

@@ -186,6 +186,18 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       within row_containing_name("Medium box") do
         fill_in "Name", with: "Large box"
         fill_in "SKU", with: "POM-01"
+
+        click_on "Unit" # activate popout
+      end
+
+      # Unit popout
+      # TODO: prevent empty value
+      fill_in "Unit value", with: ""
+      click_button "Save changes" # attempt to save or close the popout
+      expect(page).to have_field "Unit value", with: "" # popout is still open
+      fill_in "Unit value", with: "500.1"
+
+      within row_containing_name("Medium box") do
         fill_in "Price", with: "10.25"
 
         click_on "On Hand" # activate popout
@@ -209,6 +221,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         .and change{ product_a.variant_unit_scale }.to(0.001)
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
+        .and change{ variant_a1.unit_value }.to(0.5001) # volumes are stored in litres
         .and change{ variant_a1.price }.to(10.25)
         .and change{ variant_a1.on_hand }.to(6)
 
@@ -219,8 +232,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       within row_containing_name("Large box") do
         expect(page).to have_field "Name", with: "Large box"
         expect(page).to have_field "SKU", with: "POM-01"
+        expect(page).to have_button "Unit", text: "500.1mL"
         expect(page).to have_field "Price", with: "10.25"
-        expect(page).to have_css "button[aria-label='On Hand']", text: "6"
+        expect(page).to have_button "On Hand", text: "6"
       end
     end
 
@@ -229,7 +243,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         click_on "On Hand" # activate stock popout
         check "On demand"
 
-        expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
+        expect(page).to have_button "On Hand", text: "On demand"
       end
 
       expect {
@@ -240,27 +254,101 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       }.to change{ variant_a1.on_demand }.to(true)
 
       within row_containing_name("Medium box") do
-        expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
+        expect(page).to have_button "On Hand", text: "On demand"
       end
     end
 
-    it "saves a custom item unit name" do
-      within row_containing_name("Apples") do
-        tomselect_select "Items", from: "Unit scale"
-        fill_in "Items", with: "box"
-      end
+    describe "Changing unit scale" do
+      it "saves unit values using the new scale" do
+        within row_containing_name("Medium box") do
+          expect(page).to have_button "Unit", text: "1g"
+        end
+        within row_containing_name("Apples") do
+          tomselect_select "Weight (kg)", from: "Unit scale"
+        end
+        within row_containing_name("Medium box") do
+          # New scale is visible immediately
+          expect(page).to have_button "Unit", text: "1kg"
+        end
 
-      expect {
         click_button "Save changes"
 
         expect(page).to have_content "Changes saved"
         product_a.reload
-      }.to change{ product_a.variant_unit }.to("items")
-        .and change{ product_a.variant_unit_name }.to("box")
+        expect(product_a.variant_unit).to eq "weight"
+        expect(product_a.variant_unit_scale).to eq 1000 # kg
+        expect(variant_a1.reload.unit_value).to eq 1000 # 1kg
 
-      within row_containing_name("Apples") do
-        pending
-        expect(page).to have_content "Items (box)"
+        within row_containing_name("Medium box") do
+          expect(page).to have_button "Unit", text: "1kg"
+        end
+      end
+
+      it "saves a custom item unit name" do
+        within row_containing_name("Apples") do
+          tomselect_select "Items", from: "Unit scale"
+          fill_in "Items", with: "box"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          product_a.reload
+        }.to change{ product_a.variant_unit }.to("items")
+          .and change{ product_a.variant_unit_name }.to("box")
+
+        within row_containing_name("Apples") do
+          pending "#12005"
+          expect(page).to have_content "Items (box)"
+        end
+      end
+    end
+
+    describe "Changing unit values" do
+      # This is a rather strange feature, I wonder if anyone actually uses it.
+      it "saves a variant unit description" do
+        within row_containing_name("Medium box") do
+          click_on "Unit" # activate popout
+          fill_in "Unit value", with: "1000 boxed" # 1000 grams
+
+          find_field("Price").click # de-activate popout
+          # unit value has been parsed and displayed with unit
+          expect(page).to have_button "Unit", text: "1kg boxed"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          variant_a1.reload
+        }.to change{ variant_a1.unit_value }.to(1000)
+          .and change{ variant_a1.unit_description }.to("boxed")
+
+        within row_containing_name("Medium box") do
+          # New value is visible immediately
+          expect(page).to have_button "Unit", text: "1kg boxed"
+        end
+      end
+
+      it "saves a custom variant unit display name" do
+        within row_containing_name("Medium box") do
+          click_on "Unit" # activate popout
+          fill_in "Display unit as", with: "250g box"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          variant_a1.reload
+        }.to change{ variant_a1.unit_to_display }.to("250g box")
+
+        within row_containing_name("Medium box") do
+          expect(page).to have_button "Unit", text: "250g box"
+          click_on "Unit"
+          expect(page).to have_field "Display unit as", with: "250g box"
+        end
       end
     end
 
@@ -374,11 +462,15 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         within new_variant_row do
           fill_in "Name", with: "Large box"
           fill_in "SKU", with: "APL-02"
-          fill_in "Unit", with: 1000
+
+          click_on "Unit" # activate popout
+          fill_in "Unit value", with: "1000"
+
           fill_in "Price", with: 10.25
+
           click_on "On Hand" # activate popout
+          fill_in "On Hand", with: "3"
         end
-        fill_in "On Hand", with: "3"
 
         expect {
           click_button "Save changes"
@@ -399,7 +491,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect(page).to have_field "SKU", with: "APL-02"
           expect(page).to have_field "Price", with: "10.25"
           expect(page).to have_content "1kg"
-          expect(page).to have_css "button[aria-label='On Hand']", text: "3"
+          expect(page).to have_button "On Hand", text: "3"
         end
       end
 
@@ -414,7 +506,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           within new_variant_row do
             fill_in "Name", with: "N" * 256 # too long
             fill_in "SKU", with: "n" * 256
-            fill_in "Unit", with: "" # can't be blank
+            # didn't fill_in "Unit", can't be blank
             fill_in "Price", with: "10.25" # valid
           end
         end
@@ -440,7 +532,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             expect(page).to have_field "Name", with: "N" * 256
             expect(page).to have_field "SKU", with: "n" * 256
             expect(page).to have_content "is too long"
-            expect(page).to have_field "Unit", with: ""
+            expect(page.find_button("Unit")).to have_text "" # have_button selector don't work here
             expect(page).to have_content "can't be blank"
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
           end
@@ -463,126 +555,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           within row_containing_name("N" * 256) do
             fill_in "Name", with: "Nice box"
             fill_in "SKU", with: "APL-02"
-            fill_in "Unit", with: 200
-          end
 
-          expect {
-            click_button "Save changes"
-
-            expect(page).to have_content "Changes saved"
-            product_a.reload
-          }.to change { product_a.variants.count }.by(1)
-
-          new_variant = product_a.variants.last
-          expect(new_variant.display_name).to eq "Nice box"
-          expect(new_variant.sku).to eq "APL-02"
-          expect(new_variant.price).to eq 10.25
-          expect(new_variant.unit_value).to eq 200
-        end
-      end
-    end
-
-    describe "adding variants" do
-      it "creates a new variant" do
-        click_on "New variant"
-
-        # find empty row for Apples
-        new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
-        expect(new_variant_row).to be_present
-
-        within new_variant_row do
-          fill_in "Name", with: "Large box"
-          fill_in "SKU", with: "APL-02"
-          fill_in "Unit", with: 1000
-          fill_in "Price", with: 10.25
-          click_on "On Hand" # activate popout
-        end
-        fill_in "On Hand", with: "3"
-
-        expect {
-          click_button "Save changes"
-
-          expect(page).to have_content "Changes saved"
-          product_a.reload
-        }.to change { product_a.variants.count }.by(1)
-
-        new_variant = product_a.variants.last
-        expect(new_variant.display_name).to eq "Large box"
-        expect(new_variant.sku).to eq "APL-02"
-        expect(new_variant.price).to eq 10.25
-        expect(new_variant.unit_value).to eq 1000
-        expect(new_variant.on_hand).to eq 3
-
-        within row_containing_name("Large box") do
-          expect(page).to have_field "Name", with: "Large box"
-          expect(page).to have_field "SKU", with: "APL-02"
-          expect(page).to have_field "Price", with: "10.25"
-          expect(page).to have_content "1kg"
-          expect(page).to have_css "button[aria-label='On Hand']", text: "3"
-        end
-      end
-
-      context "with invalid data" do
-        before do
-          click_on "New variant"
-
-          # find empty row for Apples
-          new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
-          expect(new_variant_row).to be_present
-
-          within new_variant_row do
-            fill_in "Name", with: "N" * 256 # too long
-            fill_in "SKU", with: "n" * 256
-            fill_in "Unit", with: "" # can't be blank
-            fill_in "Price", with: "10.25" # valid
-          end
-        end
-
-        it "shows errors for both existing and new variant fields" do
-          # Update existing variant with invalid data too
-          within row_containing_name("Medium box") do
-            fill_in "Name", with: "M" * 256
-            fill_in "SKU", with: "m" * 256
-            fill_in "Price", with: "10.25"
-          end
-
-          expect {
-            click_button "Save changes"
-
-            expect(page).to have_content "1 product could not be saved"
-            expect(page).to have_content "Please review the errors and try again"
-            variant_a1.reload
-          }.not_to change { variant_a1.display_name }
-
-          # New variant
-          within row_containing_name("N" * 256) do
-            expect(page).to have_field "Name", with: "N" * 256
-            expect(page).to have_field "SKU", with: "n" * 256
-            expect(page).to have_content "is too long"
-            expect(page).to have_field "Unit", with: ""
-            expect(page).to have_content "can't be blank"
-            expect(page).to have_field "Price", with: "10.25" # other updated value is retained
-          end
-
-          # Existing variant
-          within row_containing_name("M" * 256) do
-            expect(page).to have_field "Name", with: "M" * 256
-            expect(page).to have_field "SKU", with: "m" * 256
-            expect(page).to have_content "is too long"
-          end
-        end
-
-        it "saves changes after fixing errors" do
-          expect {
-            click_button "Save changes"
-
-            variant_a1.reload
-          }.not_to change { variant_a1.display_name }
-
-          within row_containing_name("N" * 256) do
-            fill_in "Name", with: "Nice box"
-            fill_in "SKU", with: "APL-02"
-            fill_in "Unit", with: "200"
+            click_on "Unit" # activate popout
+            fill_in "Unit value", with: "200"
           end
 
           expect {

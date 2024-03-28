@@ -561,6 +561,8 @@ en:
         name: Name
         unit_scale: Unit scale
         unit: Unit
+        unit_value: Unit value
+        display_as: Display unit as
         price: Price
         producer: Producer
         category: Category

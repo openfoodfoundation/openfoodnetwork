@@ -8,6 +8,9 @@
       %li#new_product_link
         = button_link_to t(:new_product), "/admin/products/new", { :icon => 'icon-plus', :id => 'admin_new_product' }
 
+%script= render partial: "admin/shared/global_var_ofn", formats: :js,
+  locals: { name: :available_units_sorted, value: WeightsAndMeasures.available_units_sorted }
+
 = render partial: 'spree/admin/shared/product_sub_menu'
 
 #products_v3_page{ "data-controller": "products" }
