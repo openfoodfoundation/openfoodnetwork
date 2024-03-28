@@ -185,7 +185,7 @@ GEM
     bullet (7.1.6)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    cable_ready (5.0.1)
+    cable_ready (5.0.3)
       actionpack (>= 5.2)
       actionview (>= 5.2)
       activesupport (>= 5.2)
@@ -732,7 +732,7 @@ GEM
     state_machines-activerecord (0.9.0)
       activerecord (>= 6.0)
       state_machines-activemodel (>= 0.9.0)
-    stimulus_reflex (3.5.0.rc3)
+    stimulus_reflex (3.5.0.rc4)
       actioncable (>= 5.2, < 8)
       actionpack (>= 5.2, < 8)
       actionview (>= 5.2, < 8)
@@ -841,7 +841,7 @@ DEPENDENCIES
   bootsnap
   bugsnag
   bullet
-  cable_ready (= 5.0.1)
+  cable_ready (= 5.0.3)
   cancancan (~> 1.15.0)
   capybara
   catalog!
@@ -943,7 +943,7 @@ DEPENDENCIES
   spring-commands-rspec
   spring-commands-rubocop
   state_machines-activerecord
-  stimulus_reflex (= 3.5.0.rc3)
+  stimulus_reflex (= 3.5.0.rc4)
   stimulus_reflex_testing
   stringex (~> 2.8.5)
   stripe
