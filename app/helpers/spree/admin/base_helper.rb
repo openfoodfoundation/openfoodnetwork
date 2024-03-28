@@ -33,8 +33,6 @@ module Spree
         when :boolean
           hidden_field_tag(name, 0) +
             check_box_tag(name, 1, value, preference_field_options(options))
-        when :string
-          text_field_tag(name, value, preference_field_options(options))
         when :password
           password_field_tag(name, value, preference_field_options(options))
         when :text
@@ -88,8 +86,6 @@ module Spree
             { size: 10, class: 'input_integer', step: :any }
           when :boolean
             {}
-          when :string
-            { size: 10, class: 'input_string fullwidth' }
           when :password
             { size: 10, class: 'password_string fullwidth' }
           when :text
