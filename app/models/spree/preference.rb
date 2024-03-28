@@ -16,9 +16,7 @@ module Spree
     def value
       if self[:value_type].present?
         case self[:value_type].to_sym
-        when :string, :text
-          self[:value].to_s
-        when :password
+        when :string, :text, :password
           self[:value].to_s
         when :decimal
           BigDecimal(self[:value].to_s, exception: false)&.round(2, BigDecimal::ROUND_HALF_UP) ||
