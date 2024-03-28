@@ -8798,10 +8798,10 @@ tr46@^2.1.0:
   dependencies:
     punycode "^2.1.1"
 
-trix@^2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/trix/-/trix-2.0.10.tgz#43f1ff7a94c42f708bd2bad3a2783147c0583698"
-  integrity sha512-a24w8rNVL+g9nDDdiDZwQVQ9AEWiXAmk9r0ZbwimczJi/xlaM+m0d6upAi0vysDNu0HsiYDFS1/VrR7HbX0Aig==
+trix@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.0.tgz#da9daddded6ee0cb2ba5676246bb343e1d45eaab"
+  integrity sha512-TPhgGvIjM1VqcfoR/OQQERRlMDuEw7UBIoGroJGuiTmu5yqk5KqR29ZzPgGIoOJgsqoAgxGUCK92+CRJLoO43Q==
 
 ts-pnp@^1.1.6:
   version "1.2.0"
