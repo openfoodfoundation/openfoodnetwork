@@ -369,10 +369,10 @@ class Enterprise < ApplicationRecord
       :producer_shop # Producer with shopfront and supplies other hubs.
     when "producer_sells_none"
       :producer # Producer only supplies through others.
-    when "non_producer_sells_any"
-      :hub # Hub selling others products in order cycles.
-    when "non_producer_sells_own"
-      :hub # Wholesaler selling through own shopfront? Does this need a separate name or even exist?
+    when "non_producer_sells_any", "non_producer_sells_own"
+      # Hub selling others products in order cycles
+      # Or Wholesaler selling through own shopfront? Does this need a separate name or even exist?
+      :hub
     when "non_producer_sells_none"
       :hub_profile # Hub selling outside the system.
     end
