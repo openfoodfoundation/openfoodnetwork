@@ -1,5 +1,8 @@
 ru:
   language_name: "Русский"
+  time:
+    formats:
+      long: "%B %d, %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Товар
@@ -75,6 +78,10 @@ ru:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Для наследования налоговой категории требуется поэлементный калькулятор."
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "ошибка загрузки. Пожалуйста, проверьте, не поврежден ли файл и повторите попытку."
         spree/user:
           attributes:
             email:
@@ -97,7 +104,9 @@ ru:
             on_demand_but_count_on_hand_set: "должен быть пустым, если по требованию'"
             limited_stock_but_no_count_on_hand: "необходимо указать, поскольку принудительный ограниченный запас"
       messages:
+        confirmation: "не соответствует %{attribute}"
         blank: "не может быть пустым"
+        too_short: "слишком короткий (минимум %{count} символов)"
   errors:
     messages:
       content_type_invalid: "имеет неверный тип контента"
@@ -129,6 +138,7 @@ ru:
     unprocessable_entity:
       title: "Требуемое изменение было отклонено (422)"
       message_html: "<p>Требуемое изменение было отклонено. Возможно, вы пытались изменить что-то, к чему у вас нет доступа.<br><h3> <a href='/' >Вернуться домой</a></h3></p>"
+    stimulus_reflex_error: "Нам очень жаль, но что-то пошло не так.\n\n Возможно, это временная проблема, поэтому повторите попытку или перезагрузите страницу.\n Мы записываем все ошибки и возможно уже работаем над их исправлением.\n Если проблема не устранена или срочная, пожалуйста, свяжитесь с нами."
   stripe:
     error_code:
       incorrect_number: "Номер карты неверный."
@@ -289,6 +299,10 @@ ru:
     integer_array_validator:
       not_array_error: "должен быть массивом"
       invalid_element_error: "должен содержать только правильные целые числа"
+  report_job:
+    report_failed: |
+        Ошибка создания отчета. Возможно, он слишком велик для обработки.
+        Мы рассмотрим эту проблему, но, пожалуйста, сообщите нам, если проблема не исчезнет.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Пожалуйста, подтвердите адрес электронной почты для %{enterprise}"
@@ -378,6 +392,7 @@ ru:
   cancel_order: "Отменить Заказ"
   confirm_send_invoice: "Счет на этот заказ будет отправлен клиенту. Вы уверены что хотите продолжить?"
   confirm_resend_order_confirmation: "Вы уверены, что хотите повторно отправить письмо с подтверждением заказа?"
+  must_have_valid_business_number: "Чтобы можно было использовать счета, %{enterprise_name} должен иметь корректный ИНН."
   invoice: "Счёт"
   invoices: "Счета"
   file: "Файл"
@@ -495,6 +510,7 @@ ru:
         colums: Колонки
       columns:
         name: Название
+        unit_scale: Единицы
         unit: Единица измерения
         price: Цена
         producer: Производитель

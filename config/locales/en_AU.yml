@@ -410,7 +410,7 @@ en_AU:
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
     number_localization:
-      number_localization_settings: "Number Localization Settings"
+      number_localization_settings: "Number Localisation Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
     invoice_settings:
       edit:
@@ -746,7 +746,7 @@ en_AU:
           acn: ACN
           acn_placeholder: eg. 123 456 789
           display_invoice_logo: Display logo in invoices
-          invoice_text: Add customized text at the end of invoices
+          invoice_text: Add customised text at the end of invoices
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"

@@ -310,9 +310,9 @@ fr:
       email_registered: "va, dès que vous aurez choisi un type d'entreprise, être créé sur"
       email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre entreprise, de vos produits si vous êtes producteur, et éventuellement de votre boutique. Pour accéder au guide en français, cliquez ici : %{link}"
       userguide: "Guide utilisateur"
-      email_admin_html: "Pour gérer votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
+      email_admin_html: "Pour gérer votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois après la première vente pour vous permettre de tester notre solution. Vous pouvez faire des \"vraies commandes\" pour tester à condition de les annuler juste après pour ne pas démarrer les 3 mois. Consultez la rubrique \"Nos offres & tarifs\" du site internet pour en connaitre les détails."
       admin_panel: "interface d'administration"
-      email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}"
+      email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}\nSi vous avez besoin d'aide,  nous proposons des démonstrations hebdomadaires en visio, où nous vous présentons la coopérative CoopCircuits, et vous donnons tous les trucs et astuces sur l'outil et ses fonctionnalités. Inscrivez-vous via le lien présent sur la page Aide&FAQ de notre site.\nSi vous préférez un rdv individuel - par téléphone ou visio - n'hésitez-pas à nous proposer un créneau pour vous rappeler \U0001F917"
       join_community: "Accéder au forum"
     invite_manager:
       subject: "%{enterprise} vous a invité comme gestionnaire"
@@ -691,6 +691,10 @@ fr:
         your_content: Votre contenu
         user_guide: Guide utilisateur
         map: Carte
+    dfc_product_imports:
+      index:
+        title: "Importation d'un produit du catalogue DFC"
+        imported_products: "Produits importés :"
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -859,7 +863,9 @@ fr:
         tax_categories: TVA applicable
         shipping_categories: Conditions de transport
       dfc_import_form:
+        title: "Importer depuis le catalogue DFC"
         enterprise: "Entreprise"
+        catalog_url: "URL du catalogue DFC"
         import: "Importer"
       import:
         review: Vérifier
