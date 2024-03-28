@@ -82,7 +82,7 @@ module Spree
           format.html do
             if params.key?(:checkout)
               @order.next_transition.run_callbacks if @order.cart?
-              redirect_to main_app.checkout_step_path(@order.checkout_steps.first)
+              redirect_to main_app.checkout_step_path("address")
             elsif @order.complete?
               redirect_to main_app.order_path(@order)
             else
