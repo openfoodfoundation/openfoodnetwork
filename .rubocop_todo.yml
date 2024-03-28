@@ -23,16 +23,6 @@ Lint/ConstantDefinitionInBlock:
     - 'spec/validators/date_time_string_validator_spec.rb'
     - 'spec/validators/integer_array_validator_spec.rb'
 
-# Offense count: 6
-# Configuration parameters: IgnoreLiteralBranches, IgnoreConstantBranches.
-Lint/DuplicateBranch:
-  Exclude:
-    # - 'app/helpers/spree/admin/base_helper.rb'
-    # - 'app/models/enterprise.rb'
-    # - 'app/models/spree/calculator.rb'
-    # - 'app/models/spree/preference.rb'
-    - 'app/models/spree/preferences/preferable.rb'
-
 # Offense count: 2
 Lint/DuplicateMethods:
   Exclude:
