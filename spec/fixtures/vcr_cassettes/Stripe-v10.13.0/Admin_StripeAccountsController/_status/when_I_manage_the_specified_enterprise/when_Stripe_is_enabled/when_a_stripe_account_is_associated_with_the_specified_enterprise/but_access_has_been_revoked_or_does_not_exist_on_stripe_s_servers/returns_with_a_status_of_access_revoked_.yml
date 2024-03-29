@@ -14,7 +14,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_9OMqL2pNI5AkPo","request_duration_ms":1882}}'
+      - '{"last_request_metrics":{"request_id":"req_tfFx6yqOhyxOEz","request_duration_ms":1044}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 27 Mar 2024 11:35:06 GMT
+      - Fri, 29 Mar 2024 18:53:11 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -58,15 +58,15 @@ http_interactions:
       Cross-Origin-Opener-Policy-Report-Only:
       - same-origin; report-to="coop"
       Idempotency-Key:
-      - c0512a95-e0b8-4071-91c4-7918ada106a9
+      - 04c8a17e-a4e3-4013-829f-a734d08c842f
       Original-Request:
-      - req_HEzsvVrbsxJf8Q
+      - req_3nsCgMKYZfY3Wx
       Report-To:
       - '{"group":"coop","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/coop-report"}],"include_subdomains":true}'
       Reporting-Endpoints:
       - coop="https://q.stripe.com/coop-report"
       Request-Id:
-      - req_HEzsvVrbsxJf8Q
+      - req_3nsCgMKYZfY3Wx
       Stripe-Should-Retry:
       - 'false'
       Stripe-Version:
@@ -81,7 +81,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "id": "acct_1Oyul2QLMfJvTM4q",
+          "id": "acct_1OzkY6QPPCVWPRug",
           "object": "account",
           "business_profile": {
             "annual_revenue": null,
@@ -126,7 +126,7 @@ http_interactions:
             "type": "application"
           },
           "country": "AU",
-          "created": 1711539305,
+          "created": 1711738391,
           "default_currency": "aud",
           "details_submitted": false,
           "email": "jumping.jack@example.com",
@@ -135,7 +135,7 @@ http_interactions:
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/accounts/acct_1Oyul2QLMfJvTM4q/external_accounts"
+            "url": "/v1/accounts/acct_1OzkY6QPPCVWPRug/external_accounts"
           },
           "future_requirements": {
             "alternatives": [],
@@ -232,7 +232,7 @@ http_interactions:
           },
           "type": "standard"
         }
-  recorded_at: Wed, 27 Mar 2024 11:35:06 GMT
+  recorded_at: Fri, 29 Mar 2024 18:53:12 GMT
 - request:
     method: get
     uri: https://api.stripe.com/v1/accounts/acct_fake_account
@@ -247,7 +247,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-Telemetry:
-      - '{"last_request_metrics":{"request_id":"req_HEzsvVrbsxJf8Q","request_duration_ms":1610}}'
+      - '{"last_request_metrics":{"request_id":"req_3nsCgMKYZfY3Wx","request_duration_ms":1860}}'
       Stripe-Version:
       - '2023-10-16'
       X-Stripe-Client-User-Agent:
@@ -264,7 +264,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 27 Mar 2024 11:35:06 GMT
+      - Fri, 29 Mar 2024 18:53:12 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -299,5 +299,87 @@ http_interactions:
             "doc_url": "https://stripe.com/docs/error-codes/account-invalid"
           }
         }
-  recorded_at: Wed, 27 Mar 2024 11:35:06 GMT
+  recorded_at: Fri, 29 Mar 2024 18:53:12 GMT
+- request:
+    method: delete
+    uri: https://api.stripe.com/v1/accounts/acct_1OzkY6QPPCVWPRug
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/10.13.0
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_3nsCgMKYZfY3Wx","request_duration_ms":1860}}'
+      Stripe-Version:
+      - '2023-10-16'
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 29 Mar 2024 18:53:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '77'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET,HEAD,PUT,PATCH,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - report-uri https://q.stripe.com/csp-report?p=v1%2Faccounts%2F%3Aaccount; block-all-mixed-content;
+        default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to="coop"
+      Report-To:
+      - '{"group":"coop","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/coop-report"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - coop="https://q.stripe.com/coop-report"
+      Request-Id:
+      - req_vJuorSL1DL25TZ
+      Stripe-Account:
+      - acct_1OzkY6QPPCVWPRug
+      Stripe-Version:
+      - '2023-10-16'
+      Vary:
+      - Origin
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "acct_1OzkY6QPPCVWPRug",
+          "object": "account",
+          "deleted": true
+        }
+  recorded_at: Fri, 29 Mar 2024 18:53:13 GMT
 recorded_with: VCR 6.2.0

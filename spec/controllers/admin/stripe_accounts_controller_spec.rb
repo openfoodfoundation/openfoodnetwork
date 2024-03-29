@@ -52,6 +52,10 @@ describe Admin::StripeAccountsController, type: :controller do
         params[:id] = stripe_account.id
       end
 
+      after do
+        Stripe::Account.delete(connected_account.id)
+      end
+
       context "when I don't manage the enterprise linked to the stripe account" do
         let(:some_user) { create(:user) }
 
@@ -142,6 +146,10 @@ describe Admin::StripeAccountsController, type: :controller do
           let!(:account) {
             create(:stripe_account, stripe_user_id: connected_account.id, enterprise:)
           }
+
+          after do
+            Stripe::Account.delete(connected_account.id)
+          end
 
           context "but access has been revoked or does not exist on stripe's servers" do
             let(:message) {
