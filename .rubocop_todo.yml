@@ -401,16 +401,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/spree/tax_rate.rb'
     - 'app/models/spree/variant.rb'
 
-# Offense count: 26
-# Configuration parameters: Include.
-# Include: app/helpers/**/*.rb
-Rails/HelperInstanceVariable:
-  Exclude:
-    - 'app/helpers/injection_helper.rb'
-    - 'app/helpers/shared_helper.rb'
-    - 'app/helpers/spree/admin/orders_helper.rb'
-    - 'app/helpers/spree/orders_helper.rb'
-
 # Offense count: 8
 # Configuration parameters: Include.
 # Include: spec/**/*.rb, test/**/*.rb
