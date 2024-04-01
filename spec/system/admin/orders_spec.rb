@@ -503,7 +503,7 @@ RSpec.describe '
         expect(page).not_to have_content "Print Invoices"
       end
     end
-
+    
     context "pagination" do
       before do
         login_as_admin
