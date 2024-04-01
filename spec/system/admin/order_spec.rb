@@ -777,12 +777,8 @@ RSpec.describe '
         it "can edit shipping method" do
           visit spree.edit_admin_order_path(order)
 
-<<<<<<< HEAD
           expect(page).not_to have_content different_shipping_method_for_distributor1.name
-=======
-          expect(page).to_not have_content different_shipping_method_for_distributor1.name
           dismiss_warning
->>>>>>> 2ddec2cff4 (Deals with overlapping elements)
 
           find('.edit-method').click
 
