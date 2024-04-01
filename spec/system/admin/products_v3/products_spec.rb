@@ -132,6 +132,20 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
     it "displays a list of products" do
       within ".products" do
+        # displays table header
+        expect(page).to have_selector "th", text: "Name"
+        expect(page).to have_selector "th", text: "SKU"
+        expect(page).to have_selector "th", text: "Unit scale"
+        expect(page).to have_selector "th", text: "Unit"
+        expect(page).to have_selector "th", text: "Price"
+        expect(page).to have_selector "th", text: "On Hand"
+        expect(page).to have_selector "th", text: "Producer"
+        expect(page).to have_selector "th", text: "Category"
+        expect(page).to have_selector "th", text: "Tax Category"
+        expect(page).to have_selector "th", text: "Inherits Properties?"
+        expect(page).to have_selector "th", text: "Actions"
+
+        # displays product list
         expect(page).to have_field("_products_0_name", with: p1.name.to_s)
         expect(page).to have_field("_products_1_name", with: p2.name.to_s)
       end
