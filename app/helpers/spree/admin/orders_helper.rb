@@ -3,10 +3,10 @@
 module Spree
   module Admin
     module OrdersHelper
-      def event_links
+      def event_links(order)
         links = []
-        links << cancel_event_link if order.can_cancel?
-        links << resume_event_link if order.can_resume?
+        links << cancel_event_link(order) if order.can_cancel?
+        links << resume_event_link(order) if order.can_resume?
         links.join('&nbsp;').html_safe # rubocop:disable Rails/OutputSafety
       end
 
@@ -25,81 +25,78 @@ module Spree
         Spree::Money.new(line_item.price * quantity, currency: line_item.currency)
       end
 
-      def order_links(current_order)
-        @order ||= current_order
+      def order_links(order)
         links = []
-        links << edit_order_link unless action_name == "edit"
-        links.concat(complete_order_links) if order.complete? || order.resumed?
+        links << edit_order_link(order) unless action_name == "edit"
+        links.concat(complete_order_links(order)) if order.complete? || order.resumed?
         links << ship_order_link if order.ready_to_ship?
-        links << cancel_order_link if order.can_cancel?
+        links << cancel_order_link(order) if order.can_cancel?
         links
       end
 
       private
 
-      attr_reader :order
-
-      def complete_order_links
-        [resend_confirmation_link] + invoice_links
+      def complete_order_links(order)
+        [resend_confirmation_link(order)] + invoice_links(order)
       end
 
-      def invoice_links
+      def invoice_links(order)
         return [] unless Spree::Config[:enable_invoices?]
 
-        [send_invoice_link, print_invoice_link]
+        [send_invoice_link(order), print_invoice_link(order)]
       end
 
-      def send_invoice_link
+      def send_invoice_link(order)
         if order.distributor.can_invoice?
-          send_invoice_link_with_url
+          send_invoice_link_with_url(order)
         else
-          send_invoice_link_without_url
+          send_invoice_link_without_url(order)
         end
       end
 
-      def print_invoice_link
+      def print_invoice_link(order)
         if order.distributor.can_invoice?
-          print_invoice_link_with_url
+          print_invoice_link_with_url(order)
         else
-          notify_about_required_enterprise_number
+          notify_about_required_enterprise_number(order)
         end
       end
 
-      def edit_order_link
+      def edit_order_link(order)
         { name: t(:edit_order),
           url: spree.edit_admin_order_path(order),
           icon: 'icon-edit' }
       end
 
-      def resend_confirmation_link
+      def resend_confirmation_link(order)
         { name: t(:resend_confirmation),
           url: spree.resend_admin_order_path(order),
           icon: 'icon-email',
           confirm: t(:confirm_resend_order_confirmation) }
       end
 
-      def send_invoice_link_with_url
+      def send_invoice_link_with_url(order)
         { name: t(:send_invoice),
           url: invoice_admin_order_path(order),
           icon: 'icon-email',
           confirm: t(:confirm_send_invoice) }
       end
 
-      def send_invoice_link_without_url
+      def send_invoice_link_without_url(order)
         { name: t(:send_invoice),
           url: "#",
           icon: 'icon-email',
           confirm: t(:must_have_valid_business_number, enterprise_name: order.distributor.name) }
       end
 
-      def print_invoice_link_with_url
+      def print_invoice_link_with_url(order)
         { name: t(:print_invoice),
           url: spree.print_admin_order_path(order),
           icon: 'icon-print',
           target: "_blank" }
       end
 
-      def notify_about_required_enterprise_number
+      def notify_about_required_enterprise_number(order)
         { name: t(:print_invoice),
           url: "#",
           icon: 'icon-print',
@@ -112,20 +109,20 @@ module Spree
           icon: 'icon-truck' }
       end
 
-      def cancel_order_link
+      def cancel_order_link(order)
         { name: t(:cancel_order),
           url: spree.fire_admin_order_path(order.number, e: 'cancel'),
           icon: 'icon-trash' }
       end
 
-      def cancel_event_link
+      def cancel_event_link(order)
         event_label = I18n.t("cancel", scope: "actions")
         button_link_to(event_label,
                        fire_admin_order_url(order, e: "cancel"),
                        method: :put, icon: "icon-cancel", form_id: "cancel_order_form")
       end
 
-      def resume_event_link
+      def resume_event_link(order)
         event_label = I18n.t("resume", scope: "actions")
         confirm_message = I18n.t("admin.orders.edit.order_sure_want_to", event: event_label)
         button_link_to(event_label,
