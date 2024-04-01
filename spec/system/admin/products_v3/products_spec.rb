@@ -1629,13 +1629,18 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     let!(:product) { create(:product, variant_unit: 'weight', variant_unit_scale: 1000) }
 
     before do
-      pending "Pending implementation, issue #11066"
+      # pending "Pending implementation, issue #11066"
 
       login_as_admin
       visit spree.admin_products_path
 
       # I should see an add variant button
-      page.find('a.view-variants').click
+      # page.find('a.view-variants').click
+    end
+
+    it "hovering over the New variant button displays the text" do
+      find("button.secondary.condensed.naked.icon-plus").hover
+      expect(page).to have_content "New variant"
     end
 
     it "handle the default behaviour" do
