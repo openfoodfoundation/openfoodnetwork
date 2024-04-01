@@ -166,7 +166,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
       it "displays an on hand count in a span for each product" do
         expect(page).to have_content "On demand"
-        expect(page).to_not have_content "20" # does not display the total stock
+        expect(page).not_to have_content "20" # does not display the total stock
         expect(page).to have_content "16" # displays the stock for variant_2
         expect(page).to have_content "4"  # displays the stock for variant_3
       end
