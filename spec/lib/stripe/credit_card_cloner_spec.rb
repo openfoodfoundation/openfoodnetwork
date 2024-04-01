@@ -44,6 +44,10 @@ module Stripe
 
       let(:cloner) { Stripe::CreditCardCloner.new(credit_card, connected_account.id) }
 
+      after do
+        Stripe::Account.delete(connected_account.id)
+      end
+
       context "when called with a card without a customer (one time usage card)" do
         let(:payment_method_id) { pm_card.id }
 
