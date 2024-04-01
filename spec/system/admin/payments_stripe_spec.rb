@@ -192,6 +192,10 @@ describe '
         order.payments << payment
       end
 
+      after do
+        Stripe::Account.delete(connected_account.id)
+      end
+
       it "allows to refund the payment" do
         login_as_admin
         visit spree.admin_order_payments_path order
