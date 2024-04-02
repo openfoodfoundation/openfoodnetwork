@@ -8,7 +8,6 @@ module Api
                  :thumb_url, :variants
 
       has_one :supplier, key: :producer_id, embed: :id
-      has_one :primary_taxon, key: :category_id, embed: :id
 
       def variants
         ActiveModel::ArraySerializer.new(

@@ -28,7 +28,7 @@ describe Api::ProductSerializer do
   it "serializes various attributes" do
     expect(serializer.serializable_hash.keys).to eq [
       :id, :name, :meta_keywords, :group_buy, :notes, :description, :description_html,
-      :properties_with_values, :variants, :primary_taxon, :image, :supplier
+      :properties_with_values, :variants, :image, :supplier
     ]
   end
 

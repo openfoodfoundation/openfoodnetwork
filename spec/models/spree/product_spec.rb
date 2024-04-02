@@ -155,7 +155,6 @@ module Spree
 
     describe "associations" do
       it { is_expected.to belong_to(:supplier).required }
-      it { is_expected.to belong_to(:primary_taxon).required }
     end
 
     describe "validations and defaults" do
@@ -166,10 +165,6 @@ module Spree
       it { is_expected.to validate_presence_of :name }
       it { is_expected.to validate_length_of(:name).is_at_most(255) }
       it { is_expected.to validate_length_of(:sku).is_at_most(255) }
-
-      it "requires a primary taxon" do
-        expect(build(:simple_product, primary_taxon: nil)).not_to be_valid
-      end
 
       context "unit value" do
         it "requires a unit value when variant unit is weight" do
@@ -229,10 +224,11 @@ module Spree
         context "saving a new product" do
           let!(:product){ Spree::Product.new }
           let!(:shipping_category){ create(:shipping_category) }
+          let!(:taxon){ create(:taxon) }
 
           before do
             create(:stock_location)
-            product.primary_taxon = create(:taxon)
+            product.primary_taxon_id = taxon.id
             product.supplier = create(:supplier_enterprise)
             product.name = "Product1"
             product.variant_unit = "weight"
@@ -248,6 +244,7 @@ module Spree
             standard_variant = product.variants.reload.first
             expect(standard_variant.price).to eq 4.27
             expect(standard_variant.shipping_category).to eq shipping_category
+            expect(standard_variant.primary_taxon).to eq taxon
           end
         end
 
@@ -324,7 +321,7 @@ module Spree
       let(:product) { create(:simple_product) }
 
       describe "touching affected enterprises when the product is deleted" do
-        let(:product) { create(:simple_product) }
+        let(:product) { create(:simple_product, supplier: distributor) }
         let(:supplier) { product.supplier }
         let(:distributor) { create(:distributor_enterprise) }
         let!(:oc) {

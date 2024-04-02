@@ -126,7 +126,7 @@ module Api
       context "with taxon filters" do
         it "filters by taxon" do
           api_get :products, id: order_cycle.id, distributor: distributor.id,
-                             q: { primary_taxon_id_in_any: [taxon2.id] }
+                             q: { variants_primary_taxon_id_in_any: [taxon2.id] }
 
           expect(product_ids).to include product2.id, product3.id
           expect(product_ids).not_to include product1.id, product4.id

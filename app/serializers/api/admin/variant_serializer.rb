@@ -8,6 +8,8 @@ module Api
                  :display_as, :display_name, :name_to_display, :variant_overrides_count,
                  :price, :on_demand, :on_hand, :in_stock, :stock_location_id, :stock_location_name
 
+      has_one :primary_taxon, key: :category_id, embed: :id
+
       def name
         if object.full_name.present?
           "#{object.name} - #{object.full_name}"

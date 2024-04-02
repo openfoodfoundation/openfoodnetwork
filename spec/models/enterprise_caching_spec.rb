@@ -12,6 +12,7 @@ describe Enterprise do
 
       describe "with a supplied product" do
         let(:product) { create(:simple_product, supplier: enterprise, primary_taxon_id: taxon.id) }
+        let(:variant) { product.variants.first }
         let(:property) { product.product_properties.last }
         let(:producer_property) { enterprise.producer_properties.last }
 
@@ -20,9 +21,9 @@ describe Enterprise do
           enterprise.set_producer_property 'Biodynamic', 'ASDF 4321'
         end
 
-        it "touches enterprise when a taxon on that product changes" do
+        it "touches enterprise when a taxon on that variant changes" do
           expect {
-            later { product.update(primary_taxon_id: taxon2.id) }
+            later { variant.update(primary_taxon_id: taxon2.id) }
           }.to change { enterprise.reload.updated_at }
         end
 
@@ -47,6 +48,7 @@ describe Enterprise do
 
       describe "with a distributed product" do
         let(:product) { create(:simple_product, primary_taxon_id: taxon.id) }
+        let(:variant) { product.variants.first }
         let(:oc) {
           create(:simple_order_cycle, distributors: [enterprise],
                                       variants: [product.variants.first])
@@ -63,9 +65,9 @@ describe Enterprise do
         context "with an order cycle" do
           before { oc }
 
-          it "touches enterprise when a taxon on that product changes" do
+          it "touches enterprise when a taxon on that variant changes" do
             expect {
-              later { product.update(primary_taxon_id: taxon2.id) }
+              later { variant.update(primary_taxon_id: taxon2.id) }
             }.to change { enterprise.reload.updated_at }
           end
 

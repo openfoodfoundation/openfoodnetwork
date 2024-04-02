@@ -72,6 +72,9 @@ en:
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
         unit_value: "Unit value"
+      spree/variant:
+        primary_taxon: "Product Category"
+        shipping_category_id: "Shipping Category"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -1246,6 +1249,7 @@ en:
           open_date: "Open Date"
           close_date: "Close Date"
           display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_product: "By product"
           shopfront_sort_by_category: "By category"
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"

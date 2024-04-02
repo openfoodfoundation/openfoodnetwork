@@ -42,7 +42,7 @@
 %td.align-left
   .content= variant.product.supplier&.name # same as product
 %td.align-left
-  -# empty
+  .content= variant.primary_taxon&.name
 %td.align-left
   .content= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
 %td.align-left

@@ -13,8 +13,8 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :sku, :display_as, :display_name
-    searchable_associations :product, :default_price
+    searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id
+    searchable_associations :product, :default_price, :primary_taxon
     searchable_scopes :active, :deleted
 
     NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze
@@ -28,6 +28,7 @@ module Spree
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
+    belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
@@ -82,6 +83,7 @@ module Spree
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
     before_validation :convert_variant_weight_to_decimal
+    before_validation :assign_related_taxon, if: ->(v) { v.primary_taxon.blank? }
 
     before_save :assign_units, if: ->(variant) {
       variant.new_record? || variant.changed_attributes.keys.intersection(NAME_FIELDS).any?
@@ -207,6 +209,10 @@ module Spree
     end
 
     private
+
+    def assign_related_taxon
+      self.primary_taxon ||= product.variants.last&.primary_taxon
+    end
 
     def check_currency
       return unless currency.nil?

@@ -152,7 +152,7 @@ class ProductsReflex < ApplicationReflex
 
   def fetch_products
     product_query = OpenFoodNetwork::Permissions.new(current_user)
-      .editable_products.merge(product_scope).ransack(ransack_query).result
+      .editable_products.merge(product_scope).ransack(ransack_query).result(distinct: true)
     @pagy, @products = pagy(product_query.order(:name), items: @per_page, page: @page,
                                                         size: [1, 2, 2, 1])
   end
@@ -173,7 +173,7 @@ class ProductsReflex < ApplicationReflex
     if @search_term.present?
       query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
     end
-    query.merge!(primary_taxon_id_in: @category_id) if @category_id.present?
+    query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
     query
   end
 
