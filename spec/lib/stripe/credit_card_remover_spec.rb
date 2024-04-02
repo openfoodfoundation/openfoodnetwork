@@ -36,6 +36,10 @@ describe Stripe::CreditCardRemover do
 
     let(:cloner) { Stripe::CreditCardCloner.new(credit_card, connected_account.id) }
 
+    after do
+      Stripe::Account.delete(connected_account.id)
+    end
+
     context 'Stripe customer exists' do
       let(:payment_method_id) { pm_card.id }
       let(:customer_id) { customer.id }
