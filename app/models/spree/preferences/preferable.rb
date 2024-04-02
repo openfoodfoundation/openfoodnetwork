@@ -111,9 +111,7 @@ module Spree
 
       def convert_preference_value(value, type)
         case type
-        when :string, :text
-          value.to_s
-        when :password
+        when :string, :text, :password
           value.to_s
         when :decimal
           value = 0 if value.blank?
