@@ -16,12 +16,6 @@ class ProductsReflex < ApplicationReflex
     fetch_and_render_products_with_flash
   end
 
-  def filter
-    @page = 1
-
-    fetch_and_render_products_with_flash
-  end
-
   def clear_search
     @search_term = nil
     @producer_id = nil
@@ -29,21 +23,6 @@ class ProductsReflex < ApplicationReflex
     @page = 1
 
     fetch_and_render_products_with_flash
-  end
-
-  def bulk_update
-    product_set = product_set_from_params
-
-    product_set.collection.each { |p| authorize! :update, p }
-    @products = product_set.collection # use instance variable mainly for testing
-
-    if product_set.save
-      flash[:success] = I18n.t('admin.products_v3.bulk_update.success')
-    elsif product_set.errors.present?
-      @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
-    end
-
-    render_products_form_with_flash
   end
 
   def delete_product

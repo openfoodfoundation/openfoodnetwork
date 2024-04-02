@@ -383,6 +383,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       let!(:product_b) { create(:simple_product, name: "Bananas") }
 
       before do
+        visit admin_products_url
+
         within row_containing_name("Apples") do
           fill_in "Name", with: ""
           fill_in "SKU", with: "A" * 256
@@ -580,6 +582,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       let!(:product_b) { create(:simple_product, name: "Bananas") }
 
       before do
+        visit admin_products_url
+
         within row_containing_name("Apples") do
           fill_in "Name", with: ""
           fill_in "SKU", with: "A" * 256
@@ -741,11 +745,11 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         "tr:has(input[aria-label=Price][value='#{product_a.price}'])"
       }
 
-      before do
-        visit admin_products_url
-      end
-
       describe "Actions columns (delete)" do
+        before do
+          visit admin_products_url
+        end
+
         it "shows an actions menu with a delete link when clicking on icon for product. " \
            "doesn't show delete link for the single variant" do
           within product_selector do
@@ -761,13 +765,14 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           end
         end
 
-        it "shows an actions menu with a delete link when clicking on icon for variant" \
+        it "shows an actions menu with a delete link when clicking on icon for variant " \
            "if have multiple" do
           create(:variant,
                  product: product_a,
                  display_name: "Medium box",
                  sku: "APL-01",
                  price: 5.25)
+          visit admin_products_url
 
           # to select the default variant
           within default_variant_selector do
@@ -796,6 +801,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         context "when 'keep product/variant' is selected" do
           it 'should not delete the product/variant' do
+            visit admin_products_url
+
             # Keep Product
             within product_selector do
               page.find(".vertical-ellipsis-menu").click
@@ -828,6 +835,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           let(:success_flash_message_selector) { "div.flash.success" }
           let(:error_flash_message_selector) { "div.flash.error" }
           it 'should successfully delete the product/variant' do
+            visit admin_products_url
             # Delete Variant
             within variant_selector do
               page.find(".vertical-ellipsis-menu").click
@@ -867,6 +875,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           end
 
           it 'should be failed to delete the product/variant' do
+            visit admin_products_url
             allow_any_instance_of(Spree::Product).to receive(:destroy).and_return(false)
             allow_any_instance_of(Spree::Variant).to receive(:destroy).and_return(false)
 
