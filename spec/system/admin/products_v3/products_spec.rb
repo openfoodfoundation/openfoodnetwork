@@ -369,7 +369,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       product_a.update! sku: "APL-10"
 
       expect {
-        click_button "Discard changes"
+        accept_confirm do
+          click_on "Discard changes"
+        end
         product_a.reload
       }.not_to change { product_a.name }
 

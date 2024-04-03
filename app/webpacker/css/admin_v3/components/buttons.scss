@@ -158,7 +158,8 @@ button:not(.plain):not(.trix-button),
 }
 
 // --- Reset buttons ---
-input[type="reset"] {
+input[type="reset"],
+.reset {
   // Reset button looks like a link, but has a border the same as buttons when active.
   background: none;
   border: 1px solid transparent;
