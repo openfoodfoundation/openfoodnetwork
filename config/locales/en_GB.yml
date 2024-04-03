@@ -48,6 +48,9 @@ en_GB:
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
         unit_value: "Unit value"
+      spree/variant:
+        primary_taxon: "Product Category"
+        shipping_category_id: "Shipping Category"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -75,6 +78,10 @@ en_GB:
       models:
         enterprise_fee:
           inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "failed to load. Please check to ensure the file is not corrupt, and try again."
         spree/user:
           attributes:
             email:
@@ -384,6 +391,7 @@ en_GB:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
+  must_have_valid_business_number: "%{enterprise_name} must have a valid company number or charity number before invoices can be used."
   invoice: "Invoice"
   invoices: "Invoices"
   file: "File"
@@ -501,7 +509,10 @@ en_GB:
         colums: Columns
       columns:
         name: Name
+        unit_scale: Unit scale
         unit: Unit
+        unit_value: Unit value
+        display_as: Display unit as
         price: Price
         producer: Producer
         category: Category
@@ -683,6 +694,9 @@ en_GB:
         your_content: Your content
         user_guide: User Guide
         map: Map
+    dfc_product_imports:
+      index:
+        imported_products: "Imported products:"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -759,6 +773,7 @@ en_GB:
           heading: "Delete variant"
           prompt: "This will permanently remove it from your list."
           confirmation_text: "Delete variant"
+          cancellation_text: "Keep variant"
       sort:
         pagination:
           total_html: "<strong>%{total}products</strong>found for your search criteria. Showing %{from}to%{to}."
@@ -1631,9 +1646,15 @@ en_GB:
       index:
         title: "OIDC Settings"
         connect: "Connect Your Account"
+        disconnect: "Disconnect"
+        connected: "Your account is linked to %{uid}"
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "You need first to link your account with the authorisation provider used by DFC (Les Communs Open ID Connect)."
         link_account_button: "Link your Les Communs OIDC Account"
+        note_expiry: |
+            Tokens to access connected apps have expired. Please refresh your account
+            connection to keep all integrations working.
+        refresh: "Refresh authorisation"
         view_account: "To view your account, see:"
     subscriptions:
       index:
@@ -2176,6 +2197,7 @@ en_GB:
   order_back_to_website: Back To Website
   checkout_details_title: Checkout Details
   checkout_payment_title: Checkout Payment
+  checkout_summary_title: Checkout Summary
   bom_tip: "Use this page to alter product quantities across multiple orders. Products may also be removed from orders entirely, if required."
   unsaved_changes_warning: "Unsaved changes exist and will be lost if you continue."
   unsaved_changes_error: "Fields with red borders contain errors."
@@ -3712,6 +3734,8 @@ en_GB:
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
+    taxonomy_tree_error: "There was an error updating the taxonomy tree."
+    taxonomy_tree_instruction: "Right-click on an item to add, rename, remove or edit."
     tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
@@ -4006,6 +4030,9 @@ en_GB:
         add_product:
           cannot_add_item_to_canceled_order: "Cannot add item to canceled order"
           include_out_of_stock_variants: "Include variants with no available stock"
+        shipment:
+          mark_as_shipped_message_html: "This will mark the order as Shipped.<br />Are you sure you want to proceed?"
+          mark_as_shipped_label_message: "Send a shipment/pick up notification email to the customer."
         index:
           listing_orders: "Listing Orders"
           new_order: "New Order"
@@ -4303,7 +4330,11 @@ en_GB:
         form:
           name: Name
           permalink: Permalink
+          meta_title: Meta Title
+          meta_description: Meta Description
+          meta_keywords: Meta Keywords
           description: Description
+          dfc_id: DFC URI
       general_settings:
         edit:
           legal_settings: "Legal Settings"
@@ -4599,3 +4630,6 @@ en_GB:
     pagination:
       next: Next
       previous: Previous
+  invisible_captcha:
+    sentence_for_humans: "Please leave empty"
+    timestamp_error_message: "Please try again after 5 seconds."

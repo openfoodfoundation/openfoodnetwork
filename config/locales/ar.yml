@@ -48,6 +48,9 @@ ar:
         variant_unit: "وحدة النوع"
         variant_unit_name: "اسم وحدة النوع"
         unit_value: "قيمةالوحدة"
+      spree/variant:
+        primary_taxon: "نوع المنتج "
+        shipping_category_id: "نوع الشحن"
       spree/credit_card:
         base: "بطاقة ائتمان"
         number: "رقم "
@@ -448,6 +451,7 @@ ar:
       columns:
         name: الاسم
         unit: وحدة
+        unit_value: قيمةالوحدة
         price: السعر
         producer: المنتج
         category: الفئة

@@ -48,6 +48,9 @@ hu:
         variant_unit: "Változatos egység"
         variant_unit_name: "Változat egység neve"
         unit_value: "Egység értéke"
+      spree/variant:
+        primary_taxon: "Termékkategória"
+        shipping_category_id: "Szállítási mód"
       spree/credit_card:
         base: "Hitelkártya"
         number: "Szám"
@@ -445,6 +448,7 @@ hu:
       columns:
         name: Név
         unit: Mértékegység
+        unit_value: Egység értéke
         price: Ár
         producer: Termelő
         category: Kategória

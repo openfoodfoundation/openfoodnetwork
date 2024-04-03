@@ -34,6 +34,9 @@ nl_BE:
         shipping_category_id: "Verzendcategorie"
         variant_unit: "Eénheid"
         variant_unit_name: "Variant Unit Name"
+      spree/variant:
+        primary_taxon: "Product categorie"
+        shipping_category_id: "Verzendcategorie"
       spree/credit_card:
         base: "Kredietkaart"
         number: "Nummer"

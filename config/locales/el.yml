@@ -29,6 +29,9 @@ el:
         shipping_category_id: "Κατηγορία μεταφορικών"
         variant_unit: "Μονάδα μέτρησης μεταβλητής"
         variant_unit_name: "Όνομα μεταβλητής"
+      spree/variant:
+        primary_taxon: "Κατηγορία προϊόντων"
+        shipping_category_id: "Κατηγορία μεταφορικών"
       spree/credit_card:
         base: "Κάρτα πιστωτική/χρεωστική"
         number: "Αριθμός"

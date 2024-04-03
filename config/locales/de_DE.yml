@@ -51,6 +51,9 @@ de_DE:
         variant_unit: "Varianteneinheit"
         variant_unit_name: "Name der Varianteneinheit"
         unit_value: "Menge"
+      spree/variant:
+        primary_taxon: "Produktkategorie"
+        shipping_category_id: "Lieferkategorie"
       spree/credit_card:
         base: "Kreditkarte"
         number: "Kreditkartennummer"
@@ -505,6 +508,7 @@ de_DE:
       columns:
         name: Name
         unit: Einheit
+        unit_value: Menge
         price: Preis
         producer: Produzent
         category: Kategorie

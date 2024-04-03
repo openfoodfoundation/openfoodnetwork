@@ -34,6 +34,9 @@ tr:
         shipping_category_id: "TESLİMAT KATEGORİSİ"
         variant_unit: "Çeşit Birimi"
         variant_unit_name: "Çeşit Birim Adı"
+      spree/variant:
+        primary_taxon: "ÜRÜN KATEGORİSİ"
+        shipping_category_id: "TESLİMAT KATEGORİSİ"
       spree/credit_card:
         base: "Kredİ kartı"
         number: "Numara"

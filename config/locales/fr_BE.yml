@@ -48,6 +48,9 @@ fr_BE:
         variant_unit: "Unité de variante"
         variant_unit_name: "Nom de la variante"
         unit_value: "Valeur unitaire"
+      spree/variant:
+        primary_taxon: "Catégorie de Produit"
+        shipping_category_id: "Catégorie de livraison"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -438,6 +441,7 @@ fr_BE:
       columns:
         name: Nom
         unit: Unité
+        unit_value: Valeur unitaire
         price: Prix
         producer: Producteur·trice
         category: Catégorie

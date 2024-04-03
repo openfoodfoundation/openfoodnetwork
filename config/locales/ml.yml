@@ -51,6 +51,9 @@ ml:
         variant_unit: "വേരിയന്റ് യൂണിറ്റ്"
         variant_unit_name: "വേരിയന്റ് യൂണിറ്റിന്റെ പേര്"
         unit_value: "യൂണിറ്റ് മൂല്യം"
+      spree/variant:
+        primary_taxon: "ഉൽപ്പന്ന വിഭാഗം"
+        shipping_category_id: "അയക്കൽ വിഭാഗം"
       spree/credit_card:
         base: "ക്രെഡിറ്റ് കാർഡ്"
         number: "നമ്പർ"
@@ -505,6 +508,7 @@ ml:
       columns:
         name: പേര്
         unit: യൂണിറ്റ്
+        unit_value: യൂണിറ്റ് മൂല്യം
         price: വില
         producer: പ്രൊഡ്യൂസർ
         category: വിഭാഗം

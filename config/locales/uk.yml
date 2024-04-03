@@ -34,6 +34,9 @@ uk:
         shipping_category_id: "Категорія доставки"
         variant_unit: "Варіант одиниці"
         variant_unit_name: "Назва варіанта одиниці"
+      spree/variant:
+        primary_taxon: "Категорія товару"
+        shipping_category_id: "Категорія доставки"
       spree/credit_card:
         base: "Кредитна картка"
         number: "Номер"

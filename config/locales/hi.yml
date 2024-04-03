@@ -51,6 +51,9 @@ hi:
         variant_unit: "वेरिएंट यूनिट"
         variant_unit_name: "वेरिएंट यूनिट का नाम"
         unit_value: "यूनिट वैल्यू"
+      spree/variant:
+        primary_taxon: "उत्पाद की श्रेणी"
+        shipping_category_id: "शिपिंग श्रेणी"
       spree/credit_card:
         base: "क्रेडिट कार्ड"
         number: "नंबर"
@@ -505,6 +508,7 @@ hi:
       columns:
         name: नाम
         unit: यूनिट
+        unit_value: यूनिट वैल्यू
         price: कीमत
         producer: उत्पादक
         category: श्रेणी

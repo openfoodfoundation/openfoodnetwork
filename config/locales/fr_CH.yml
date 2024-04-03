@@ -34,6 +34,9 @@ fr_CH:
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
+      spree/variant:
+        primary_taxon: "Catégorie Produit"
+        shipping_category_id: "Condition de transport"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"

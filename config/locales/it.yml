@@ -48,6 +48,9 @@ it:
         variant_unit: "Unità Variante"
         variant_unit_name: "Nome Unità Variante"
         unit_value: "Valore unità"
+      spree/variant:
+        primary_taxon: "Categoria Prodotto"
+        shipping_category_id: "Categoria Spedizioni"
       spree/credit_card:
         base: "Carta di Credito"
         number: "Numero"
@@ -469,6 +472,7 @@ it:
       columns:
         name: Nome
         unit: Unità
+        unit_value: Valore unità
         price: Prezzo
         producer: Produttore
         category: Categoria

@@ -51,6 +51,9 @@ nb:
         variant_unit: "Variant Enhet"
         variant_unit_name: "Enhetsnavn Variant"
         unit_value: "Enhetsverdi"
+      spree/variant:
+        primary_taxon: "Produktkategori"
+        shipping_category_id: "Leveringskategori"
       spree/credit_card:
         base: "Kredittkort"
         number: "Antall"
@@ -510,6 +513,7 @@ nb:
       columns:
         name: Navn
         unit: Enhet
+        unit_value: Enhetsverdi
         price: Pris
         producer: Produsent
         category: Kategori

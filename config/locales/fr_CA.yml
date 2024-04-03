@@ -48,6 +48,9 @@ fr_CA:
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
         unit_value: "Nb unités"
+      spree/variant:
+        primary_taxon: "Catégorie Produit"
+        shipping_category_id: "Condition de transport"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -498,6 +501,7 @@ fr_CA:
       columns:
         name: Nom
         unit: Unité
+        unit_value: Nb unités
         price: Prix
         producer: Producteur
         category: Catégorie

@@ -1,5 +1,8 @@
 cy:
   language_name: "Cymraeg"
+  time:
+    formats:
+      long: "%B %d, %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Cynnyrch
@@ -48,6 +51,9 @@ cy:
         variant_unit: "Uned Amrywiol"
         variant_unit_name: "Enw Uned Amrywiol"
         unit_value: "Gwerth yr uned"
+      spree/variant:
+        primary_taxon: "Categori Cynnyrch"
+        shipping_category_id: "Categori Anfon"
       spree/credit_card:
         base: "Cerdyn credyd"
         number: "Rhif"
@@ -502,6 +508,7 @@ cy:
       columns:
         name: Enw
         unit: Uned
+        unit_value: Gwerth yr uned
         price: Pris
         producer: Cynhyrchydd
         category: Categori
@@ -4324,6 +4331,9 @@ cy:
         form:
           name: Enw
           permalink: Permalink
+          meta_title: Meta Title
+          meta_description: Meta Description
+          meta_keywords: Meta Keywords
           description: Disgrifiad
       general_settings:
         edit:

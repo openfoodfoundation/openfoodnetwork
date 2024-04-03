@@ -51,6 +51,9 @@ ru:
         variant_unit: "Единица Варианта"
         variant_unit_name: "Название Единицы Варианта"
         unit_value: "Значение товара"
+      spree/variant:
+        primary_taxon: "Категория Товара"
+        shipping_category_id: "Категория Доставки"
       spree/credit_card:
         base: "Кредитная Карта"
         number: "Номер"
@@ -512,6 +515,7 @@ ru:
         name: Название
         unit_scale: Единицы
         unit: Единица измерения
+        unit_value: Значение товара
         price: Цена
         producer: Производитель
         category: Категория

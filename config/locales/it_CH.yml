@@ -34,6 +34,9 @@ it_CH:
         shipping_category_id: "Categoria Spedizioni"
         variant_unit: "Unità Variante"
         variant_unit_name: "Nome Unità Variante"
+      spree/variant:
+        primary_taxon: "Categoria prodotto"
+        shipping_category_id: "Categoria Spedizioni"
       spree/credit_card:
         base: "Carta di Credito"
         number: "Numero"

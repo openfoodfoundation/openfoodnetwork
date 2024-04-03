@@ -48,6 +48,9 @@ ca:
         variant_unit: "Unitat de la variant"
         variant_unit_name: "Nom de la unitat de la variant"
         unit_value: "Valor de la unitat"
+      spree/variant:
+        primary_taxon: "Categoria del producte"
+        shipping_category_id: "Categoria d'enviament"
       spree/credit_card:
         base: "Targeta de crèdit"
         number: "Número"
@@ -475,6 +478,7 @@ ca:
       columns:
         name: Nom
         unit: Unitat
+        unit_value: Valor de la unitat
         price: Preu
         producer: Productora
         category: Categoria

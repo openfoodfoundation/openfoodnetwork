@@ -48,6 +48,9 @@ pa:
         variant_unit: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ"
         variant_unit_name: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ ਦਾ ਨਾਮ"
         unit_value: "ਯੂਨਿਟ ਵੈਲਯੂ"
+      spree/variant:
+        primary_taxon: "ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ"
+        shipping_category_id: "ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀ"
       spree/credit_card:
         base: "ਕਰੇਡਿਟ ਕਾਰਡ"
         number: "ਨੰਬਰ"
@@ -498,6 +501,7 @@ pa:
       columns:
         name: ਨਾਮ
         unit: ਯੂਨਿਟ
+        unit_value: ਯੂਨਿਟ ਵੈਲਯੂ
         price: ਕੀਮਤ
         producer: ਉਤਪਾਦਕ
         category: ਸ਼੍ਰੇਣੀ

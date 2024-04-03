@@ -29,6 +29,9 @@ pl:
         shipping_category_id: "Kategoria dostawy"
         variant_unit: "Jednostka wariantu"
         variant_unit_name: "Nazwa jednostki wariantu"
+      spree/variant:
+        primary_taxon: "Kategoria produktu"
+        shipping_category_id: "Kategoria dostawy"
       spree/credit_card:
         base: "Karta kredytowa"
         number: "Numer zamówienia"

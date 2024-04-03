@@ -32,6 +32,9 @@ fil_PH:
         shipping_category_id: "Kategorya ng Pagpapadala"
         variant_unit: "Yunit ng variant"
         variant_unit_name: "pangalan ng yunit ng variant"
+      spree/variant:
+        primary_taxon: "Kategorya ng Produkto"
+        shipping_category_id: "Kategorya ng Pagpapadala"
       spree/credit_card:
         base: "Credit Card"
         number: "Bilang"

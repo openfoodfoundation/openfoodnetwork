@@ -32,6 +32,9 @@ pt_BR:
         shipping_category_id: "Tipos de Frete"
         variant_unit: "Unidade variante"
         variant_unit_name: "Nome da unidade variante"
+      spree/variant:
+        primary_taxon: "Categoria de Produto"
+        shipping_category_id: "Tipos de Frete"
       spree/credit_card:
         base: "Cartão de Crédito"
         number: "Número"
