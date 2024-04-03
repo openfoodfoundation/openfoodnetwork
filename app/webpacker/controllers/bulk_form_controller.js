@@ -45,7 +45,9 @@ export default class BulkFormController extends Controller {
   registerElements() {
     const registeredElements = Object.values(this.recordElements).flat();
     // Select only elements that haven't been registered yet
-    const newElements = Array.from(this.form.elements).filter(n => !registeredElements.includes(n));
+    const newElements = Array.from(this.form.elements).filter(
+      (n) => !registeredElements.includes(n),
+    );
 
     this.#registerElements(newElements);
   }
@@ -61,7 +63,7 @@ export default class BulkFormController extends Controller {
     // For each record, check if any fields are changed
     // TODO: optimise basd on current state. if field is changed, but form already changed, no need to update (and vice versa)
     const changedRecordCount = Object.values(this.recordElements).filter((elements) =>
-      elements.some(this.#isChanged)
+      elements.some(this.#isChanged),
     ).length;
     this.formChanged = changedRecordCount > 0 || this.errorValue;
 
@@ -79,7 +81,7 @@ export default class BulkFormController extends Controller {
 
   // If form is not being submitted, warn to prevent accidental data loss
   preventLeavingChangedForm(event) {
-    if (this.formChanged && !this.submitting){
+    if (this.formChanged && !this.submitting) {
       // Cancel the event
       event.preventDefault();
       // Chrome requires returnValue to be set, but ignores the value. Other browsers may display
@@ -124,7 +126,7 @@ export default class BulkFormController extends Controller {
 
       forms &&
         forms.forEach((form) =>
-          Array.from(form.elements).forEach((formElement) => (formElement.disabled = disable))
+          Array.from(form.elements).forEach((formElement) => (formElement.disabled = disable)),
         );
     });
   }
@@ -132,11 +134,11 @@ export default class BulkFormController extends Controller {
   #isChanged(element) {
     if (element.type == "checkbox") {
       return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
-
     } else if (element.type == "select-one") {
-      const defaultSelected = Array.from(element.options).find((opt)=>opt.hasAttribute('selected'));
+      const defaultSelected = Array.from(element.options).find((opt) =>
+        opt.hasAttribute("selected"),
+      );
       return element.selectedOptions[0] != defaultSelected;
-
     } else {
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }
