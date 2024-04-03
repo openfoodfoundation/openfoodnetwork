@@ -608,6 +608,37 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(page).to have_content "Please review the errors and try again"
       end
     end
+
+    context "pagination" do
+      let!(:product_a) { create(:simple_product, name: "zucchini") } # appears on p2
+
+      it "retains selected page after saving" do
+        create_products 15 # in addition to product_a
+        visit admin_products_url
+
+        within ".pagination" do
+          click_link "2"
+        end
+
+        within row_containing_name("zucchini") do
+          fill_in "Name", with: "zucchinis"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          product_a.reload
+        }.to change { product_a.name }.to("zucchinis")
+
+        pending "awaiting pagination to be loaded without SR"
+        expect(page).to have_content "Showing 16 to 16" # todo: remove unnecessary duplication
+        expect_page_to_be 2
+        expect_per_page_to_be 15
+        expect_products_count_to_be 1
+        expect(page).to have_css row_containing_name("zucchinis")
+      end
+    end
   end
 
   describe "edit image" do
