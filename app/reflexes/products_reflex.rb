@@ -5,10 +5,6 @@ class ProductsReflex < ApplicationReflex
 
   before_reflex :init_filters_params, :init_pagination_params
 
-  def fetch
-    fetch_and_render_products_with_flash
-  end
-
   def change_per_page
     @per_page = element.value.to_i
     @page = 1

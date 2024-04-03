@@ -5,8 +5,8 @@
               } } do |form|
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
 
-  = hidden_field_tag :_page, @page
-  = hidden_field_tag :_per_page, @per_page
+  = hidden_field_tag :page, @page
+  = hidden_field_tag :per_page, @per_page
 
   %table.products
     %colgroup

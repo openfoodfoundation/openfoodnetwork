@@ -43,8 +43,8 @@ module Admin
 
     def init_pagination_params
       # prority is given to element dataset (if present) over url params
-      @page = params[:_page].presence || 1
-      @per_page = params[:_per_page].presence || 15
+      @page = params[:page].presence || 1
+      @per_page = params[:per_page].presence || 15
     end
 
     def producers

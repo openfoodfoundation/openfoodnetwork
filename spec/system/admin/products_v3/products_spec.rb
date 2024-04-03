@@ -43,7 +43,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       expect(page).to have_selector ".pagination"
       expect_products_count_to_be 15
       within ".pagination" do
-        click_link "2"
+        click_on "2"
       end
 
       expect(page).to have_content "Showing 16 to 16" # todo: remove unnecessary duplication
@@ -86,7 +86,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         visit admin_products_url
 
         within ".pagination" do
-          click_link "2"
+          click_on "2"
         end
 
         expect(page).to have_content "Showing 16 to 16"
@@ -617,9 +617,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         visit admin_products_url
 
         within ".pagination" do
-          click_link "2"
+          click_on "2"
         end
-
         within row_containing_name("zucchini") do
           fill_in "Name", with: "zucchinis"
         end
@@ -631,7 +630,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           product_a.reload
         }.to change { product_a.name }.to("zucchinis")
 
-        pending "awaiting pagination to be loaded without SR"
         expect(page).to have_content "Showing 16 to 16" # todo: remove unnecessary duplication
         expect_page_to_be 2
         expect_per_page_to_be 15
@@ -959,7 +957,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   def expect_page_to_be(page_number)
-    expect(page).to have_selector ".pagination span.page.current", text: page_number.to_s
+    expect(page).to have_selector ".pagination .page.current", text: page_number.to_s
   end
 
   def expect_per_page_to_be(per_page)

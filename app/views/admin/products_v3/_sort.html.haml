@@ -2,8 +2,11 @@
   %div
     = t(".pagination.total_html", total: pagy.count, from: pagy.from, to: pagy.to)
     - if search_term.present? || producer_id.present? || category_id.present?
-      %a{ href: "#", class: "button disruptive" }
+      %a{ href: url_for(per_page: @per_page, page: @page), class: "button disruptive" }
         = t(".pagination.clear_search")  
   %form.with-dropdown
     = t(".pagination.per_page.show")
-    = select_tag :per_page, options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy.items), class: "no-input per-page", data: { reflex: "change->products#change_per_page", controller: "tom-select", "tom-select-options-value": '{ "plugins": [] }'}
+    = select_tag :per_page,
+        options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy.items),
+        class: "no-input per-page",
+        data: { controller: "tom-select search", action: "change->search#changePerPage", "tom-select-options-value": '{ "plugins": [] }'}
