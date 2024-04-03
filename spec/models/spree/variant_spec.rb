@@ -11,7 +11,7 @@ describe Spree::Variant do
   context "validations" do
     it "should validate price is greater than 0" do
       variant.price = -1
-      expect(variant).to be_invalid
+      expect(variant).not_to be_valid
     end
 
     it "should validate price is 0" do
@@ -21,7 +21,7 @@ describe Spree::Variant do
 
     it "should validate unit_value is greater than 0" do
       variant.unit_value = 0
-      expect(variant).to be_invalid
+      expect(variant).not_to be_valid
     end
 
     describe "tax category" do

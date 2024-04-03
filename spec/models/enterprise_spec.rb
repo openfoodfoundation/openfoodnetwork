@@ -260,18 +260,18 @@ describe Enterprise do
 
       it "commas at the beginning and end are disallowed" do
         enterprise = build(:enterprise, preferred_shopfront_taxon_order: ",1,2,3")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
         enterprise = build(:enterprise, preferred_shopfront_taxon_order: "1,2,3,")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
       end
 
       it "any other characters are invalid" do
         enterprise = build(:enterprise, preferred_shopfront_taxon_order: "a1,2,3")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
         enterprise = build(:enterprise, preferred_shopfront_taxon_order: ".1,2,3")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
         enterprise = build(:enterprise, preferred_shopfront_taxon_order: " 1,2,3")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
       end
     end
 
@@ -295,18 +295,18 @@ describe Enterprise do
 
       it "commas at the beginning and end are disallowed" do
         enterprise = build(:enterprise, preferred_shopfront_producer_order: ",1,2,3")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
         enterprise = build(:enterprise, preferred_shopfront_producer_order: "1,2,3,")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
       end
 
       it "any other characters are invalid" do
         enterprise = build(:enterprise, preferred_shopfront_producer_order: "a1,2,3")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
         enterprise = build(:enterprise, preferred_shopfront_producer_order: ".1,2,3")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
         enterprise = build(:enterprise, preferred_shopfront_producer_order: " 1,2,3")
-        expect(enterprise).to be_invalid
+        expect(enterprise).not_to be_valid
       end
     end
 
@@ -336,7 +336,7 @@ describe Enterprise do
 
       it "does not validate if URL is invalid and can't be infered" do
         e = build(:enterprise, white_label_logo_link: 'with spaces')
-        expect(e).to be_invalid
+        expect(e).not_to be_valid
       end
     end
   end

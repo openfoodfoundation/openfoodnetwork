@@ -598,16 +598,6 @@ RSpecRails/InferredSpecType:
     - 'spec/requests/voucher_adjustments_spec.rb'
     - 'spec/routing/stripe_spec.rb'
 
-# Offense count: 14
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: not_to, be_invalid
-RSpecRails/NegationBeValid:
-  Exclude:
-    - 'spec/models/enterprise_spec.rb'
-    - 'spec/models/spree/product_spec.rb'
-    - 'spec/models/spree/variant_spec.rb'
-
 # Offense count: 11
 # Configuration parameters: Include.
 # Include: app/models/**/*.rb
