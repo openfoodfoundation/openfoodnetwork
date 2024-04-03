@@ -23,18 +23,22 @@ export default class BulkFormController extends Controller {
   recordElements = {};
 
   connect() {
+    this.submitting = false;
     this.form = this.element;
 
     // Start listening for any changes within the form
     this.#registerElements(this.form.elements);
 
     this.toggleFormChanged();
+
+    this.form.addEventListener("submit", this.#registerSubmit.bind(this));
+    window.addEventListener("beforeunload", this.preventLeavingChangedForm.bind(this));
   }
 
   disconnect() {
     // Make sure to clean up anything that happened outside
     this.#disableOtherElements(false);
-    window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
+    window.removeEventListener("beforeunload", this.preventLeavingChangedForm.bind(this));
   }
 
   // Register any new elements (may be called by another controller after dynamically adding fields)
@@ -59,11 +63,11 @@ export default class BulkFormController extends Controller {
     const changedRecordCount = Object.values(this.recordElements).filter((elements) =>
       elements.some(this.#isChanged)
     ).length;
-    const formChanged = changedRecordCount > 0 || this.errorValue;
+    this.formChanged = changedRecordCount > 0 || this.errorValue;
 
     // Show actions
-    this.hasActionsTarget && this.actionsTarget.classList.toggle("hidden", !formChanged);
-    this.#disableOtherElements(formChanged); // like filters and sorting
+    this.hasActionsTarget && this.actionsTarget.classList.toggle("hidden", !this.formChanged);
+    this.#disableOtherElements(this.formChanged); // like filters and sorting
 
     // Display number of records changed
     const key = this.hasChangedSummaryTarget && this.changedSummaryTarget.dataset.translationKey;
@@ -71,24 +75,25 @@ export default class BulkFormController extends Controller {
       // TODO: save processing and only run if changedRecordCount has changed.
       this.changedSummaryTarget.textContent = I18n.t(key, { count: changedRecordCount });
     }
+  }
 
-    // Prevent accidental data loss
-    if (formChanged) {
-      window.addEventListener("beforeunload", this.preventLeavingBulkForm); // TOFIX: what if it has laredy been added? we can optimise above to avoid this
-    } else {
-      window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
+  // If form is not being submitted, warn to prevent accidental data loss
+  preventLeavingChangedForm(event) {
+    if (this.formChanged && !this.submitting){
+      // Cancel the event
+      event.preventDefault();
+      // Chrome requires returnValue to be set, but ignores the value. Other browsers may display
+      // this if provided, but let's not create a new translation key, and keep the behaviour
+      // consistent.
+      event.returnValue = "";
     }
   }
 
-  preventLeavingBulkForm(e) {
-    // Cancel the event
-    e.preventDefault();
-    // Chrome requires returnValue to be set. Other browsers may display this if provided, but let's
-    // not create a new translation key, and keep the behaviour consistent.
-    e.returnValue = "";
-  }
-
   // private
+
+  #registerSubmit() {
+    this.submitting = true;
+  }
 
   #registerElements(elements) {
     for (const element of elements) {
