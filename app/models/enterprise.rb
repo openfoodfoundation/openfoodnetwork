@@ -45,25 +45,29 @@ class Enterprise < ApplicationRecord
   has_many :supplied_variants, through: :supplied_products, source: :variants
   has_many :distributed_orders, class_name: 'Spree::Order',
                                 foreign_key: 'distributor_id',
-                                dependent: :destroy
+                                dependent: :restrict_with_exception
   belongs_to :address, class_name: 'Spree::Address'
   belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy
-  has_many :enterprise_fees, dependent: nil # paranoid association is deleted in a before_destroy
+  has_many :enterprise_fees, dependent: :restrict_with_exception
   has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
   belongs_to :owner, class_name: 'Spree::User',
                      inverse_of: :owned_enterprises
   has_many :distributor_payment_methods,
-           inverse_of: :distributor, foreign_key: :distributor_id, dependent: :destroy
+           inverse_of: :distributor,
+           foreign_key: :distributor_id,
+           dependent: :restrict_with_exception
   has_many :distributor_shipping_methods,
-           inverse_of: :distributor, foreign_key: :distributor_id, dependent: :destroy
+           inverse_of: :distributor,
+           foreign_key: :distributor_id,
+           dependent: :restrict_with_exception
   has_many :payment_methods, through: :distributor_payment_methods
   has_many :shipping_methods, through: :distributor_shipping_methods
   has_many :customers, dependent: :destroy
   has_many :inventory_items, dependent: :destroy
   has_many :tag_rules, dependent: :destroy
   has_one :stripe_account, dependent: :destroy
-  has_many :vouchers, dependent: nil # paranoid association is deleted in a before_destroy
+  has_many :vouchers, dependent: :restrict_with_exception
   has_many :connected_apps, dependent: :destroy
   has_one :custom_tab, dependent: :destroy
 
@@ -130,8 +134,6 @@ class Enterprise < ApplicationRecord
 
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
-  before_destroy :delete_all_enterprise_fees
-  before_destroy :delete_all_vouchers
 
   after_rollback :restore_permalink
   after_touch :touch_distributors
@@ -589,13 +591,5 @@ class Enterprise < ApplicationRecord
     Enterprise.distributing_products(supplied_products.select(:id)).
       where.not(enterprises: { id: }).
       update_all(updated_at: Time.zone.now)
-  end
-
-  def delete_all_enterprise_fees
-    enterprise_fees.each(&:really_destroy!)
-  end
-
-  def delete_all_vouchers
-    vouchers.each(&:really_destroy!)
   end
 end
