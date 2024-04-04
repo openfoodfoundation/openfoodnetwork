@@ -22,7 +22,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
     expect{
       visit admin_products_url
-    }.to query_database 416.times # goodness me. Remember this includes user session updates etc.
+    }.to query_database 243.times # Remember this includes user session updates etc.
   end
 
   describe "sorting" do
