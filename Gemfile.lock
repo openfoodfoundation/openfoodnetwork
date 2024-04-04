@@ -359,7 +359,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
-    json (2.7.1)
+    json (2.7.2)
     json-canonicalization (1.0.0)
     json-jwt (1.16.6)
       activesupport (>= 4.2)
