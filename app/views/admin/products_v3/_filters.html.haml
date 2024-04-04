@@ -1,6 +1,6 @@
 = form_with url: admin_products_path, id: "filters", method: :get, data: { remote: false, "search-target": "form" } do
-  = hidden_field_tag :page, @page, class: "page"
-  = hidden_field_tag :per_page, @per_page, class: "per-page"
+  = hidden_field_tag :page, nil, class: "page"
+  = hidden_field_tag :per_page, nil, class: "per-page"
 
   .query
     .search-input
