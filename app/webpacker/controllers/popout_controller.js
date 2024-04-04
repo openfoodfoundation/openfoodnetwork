@@ -73,7 +73,9 @@ export default class PopoutController extends Controller {
   }
 
   closeIfOutside(e) {
-    if (!this.dialogTarget.contains(e.target)) {
+    // Note that we need to ignore the clicked button. Even though the listener was only just
+    // registered, it still fires sometimes for some unkown reason.
+    if (!this.dialogTarget.contains(e.target) && !this.buttonTarget.contains(e.target)) {
       this.close();
     }
   }
