@@ -238,7 +238,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    datafoodconsortium-connector (1.0.0.pre.alpha.10)
+    datafoodconsortium-connector (1.0.0.pre.alpha.11)
       virtual_assembly-semantizer (~> 1.0, >= 1.0.5)
     date (3.3.4)
     debug (1.9.2)
