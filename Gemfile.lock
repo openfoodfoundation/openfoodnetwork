@@ -384,7 +384,7 @@ GEM
       activesupport (>= 4.2)
     jwt (2.8.1)
       base64
-    knapsack_pro (6.0.4)
+    knapsack_pro (7.0.1)
       rake
     language_server-protocol (3.17.0.3)
     launchy (3.0.0)
@@ -568,7 +568,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
-    rake (13.1.0)
+    rake (13.2.0)
     ransack (4.1.1)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
