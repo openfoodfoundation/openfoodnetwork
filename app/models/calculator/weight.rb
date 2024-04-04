@@ -10,7 +10,7 @@ module Calculator
     end
 
     def set_preference(name, value)
-      if name == :unit_from_list && !["kg", "lb"].include?(value)
+      if name == :unit_from_list && ["kg", "lb"].exclude?(value)
         calculable.errors.add(:preferred_unit_from_list, I18n.t(:calculator_preferred_unit_error))
       else
         __send__ self.class.preference_setter_method(name), value

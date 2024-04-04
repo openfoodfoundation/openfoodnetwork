@@ -8,7 +8,7 @@ RSpec::Matchers.define :have_table_row do |row|
 
   match_when_negated do |node|
     @row = row
-    !rows_under(node).include? row # Robust check of columns
+    rows_under(node).exclude? row # Robust check of columns
   end
 
   failure_message do |text|
