@@ -273,7 +273,7 @@ module Spree
           product.variant_unit_name = nil
           product.variant_unit_scale = nil
 
-          expect(product).to be_invalid
+          expect(product).not_to be_valid
         end
 
         it "requires a unit scale when variant unit is weight" do
