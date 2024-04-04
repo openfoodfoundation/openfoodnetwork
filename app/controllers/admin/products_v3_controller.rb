@@ -72,7 +72,7 @@ module Admin
                 Spree::Product.active
               end
 
-      scope.includes(product_query_includes)
+      scope.includes(product_query_includes).distinct
     end
 
     def ransack_query
