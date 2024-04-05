@@ -8,7 +8,7 @@ RSpec.describe ConnectAppJob, type: :job do
   let(:app) { ConnectedApp.new(enterprise: ) }
   let(:enterprise) { build(:enterprise, id: 3, owner: user) }
   let(:user) { build(:user, spree_api_key: "12345") }
-  let(:url) { "https://n8n.openfoodnetwork.org.uk/webhook/regen/connect-enterprise" }
+  let(:url) { "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise" }
 
   it "sends a semantic id and access token" do
     stub_request(:post, url).to_return(body: '{}')
