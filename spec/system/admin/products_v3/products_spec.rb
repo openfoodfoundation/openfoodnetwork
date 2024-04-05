@@ -485,6 +485,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(new_variant.price).to eq 10.25
         expect(new_variant.unit_value).to eq 1000
         expect(new_variant.on_hand).to eq 3
+        expect(new_variant.tax_category_id).to be_nil
 
         within row_containing_name("Large box") do
           expect(page).to have_field "Name", with: "Large box"
@@ -492,6 +493,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect(page).to have_field "Price", with: "10.25"
           expect(page).to have_content "1kg"
           expect(page).to have_button "On Hand", text: "3"
+          within tax_category_column do
+            expect(page).to have_content "None"
+          end
         end
       end
 
@@ -961,5 +965,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
   def expect_page_to_have_image(url)
     expect(page).to have_selector("img[src$='#{url}']")
+  end
+
+  def tax_category_column
+    @tax_category_column ||= 'td:nth-child(10)'
   end
 end
