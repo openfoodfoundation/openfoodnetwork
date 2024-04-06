@@ -16,14 +16,14 @@ module Admin
       authorize! :destroy, stripe_account
 
       if stripe_account.deauthorize_and_destroy
-        flash[:success] = "Stripe account disconnected."
+        flash[:success] = I18n.t('stripe.success_code.disconnected')
       else
-        flash[:error] = "Failed to disconnect Stripe."
+        flash[:error] = I18n.t('stripe.error_code.disconnect_failure')
       end
 
       redirect_to main_app.edit_admin_enterprise_path(stripe_account.enterprise)
     rescue ActiveRecord::RecordNotFound
-      flash[:error] = "Failed to disconnect Stripe."
+      flash[:error] = I18n.t('stripe.error_code.disconnect_failure')
       redirect_to spree.admin_dashboard_path
     end
 
