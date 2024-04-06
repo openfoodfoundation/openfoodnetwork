@@ -8,29 +8,6 @@ describe Reporting::LineItems do
   # This object lets us add some test coverage despite the very deep coupling between the class
   # under test and the various objects it depends on. Other more common moking strategies where very
   # hard.
-  class FakeOrderPermissions
-    def initialize(line_items, orders_relation)
-      @relations = Spree::LineItem.where(id: line_items.map(&:id))
-      @orders_relation = orders_relation
-    end
-
-    def visible_line_items
-      relations
-    end
-
-    def editable_line_items
-      line_item = FactoryBot.create(:line_item)
-      Spree::LineItem.where(id: line_item.id)
-    end
-
-    def visible_orders
-      orders_relation
-    end
-
-    private
-
-    attr_reader :relations, :orders_relation
-  end
 
   describe '#list' do
     let!(:order) do
@@ -76,4 +53,28 @@ describe Reporting::LineItems do
       end
     end
   end
+end
+
+class FakeOrderPermissions
+  def initialize(line_items, orders_relation)
+    @relations = Spree::LineItem.where(id: line_items.map(&:id))
+    @orders_relation = orders_relation
+  end
+
+  def visible_line_items
+    relations
+  end
+
+  def editable_line_items
+    line_item = FactoryBot.create(:line_item)
+    Spree::LineItem.where(id: line_item.id)
+  end
+
+  def visible_orders
+    orders_relation
+  end
+
+  private
+
+  attr_reader :relations, :orders_relation
 end

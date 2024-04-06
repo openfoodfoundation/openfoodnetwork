@@ -11,7 +11,6 @@
 # AllowedMethods: enums
 Lint/ConstantDefinitionInBlock:
   Exclude:
-    - 'spec/lib/reports/line_items_spec.rb'
     - 'spec/models/spree/ability_spec.rb'
     - 'spec/models/spree/gateway_spec.rb'
     - 'spec/models/spree/preferences/configuration_spec.rb'
