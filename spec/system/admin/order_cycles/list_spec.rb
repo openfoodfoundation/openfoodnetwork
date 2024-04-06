@@ -133,9 +133,9 @@ describe '
     }
 
     around(:each) do |spec|
-      I18n.locale = :pt
-      spec.run
-      I18n.locale = :en
+      I18n.with_locale(:pt) do
+        spec.run
+      end
     end
 
     context 'using datetimepickers' do

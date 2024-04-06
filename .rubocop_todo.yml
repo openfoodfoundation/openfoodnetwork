@@ -576,16 +576,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/spree/tax_rate.rb'
     - 'app/models/spree/variant.rb'
 
-# Offense count: 8
-# Configuration parameters: Include.
-# Include: spec/**/*.rb, test/**/*.rb
-Rails/I18nLocaleAssignment:
-  Exclude:
-    - 'spec/controllers/user_registrations_controller_spec.rb'
-    - 'spec/helpers/i18n_helper_spec.rb'
-    - 'spec/models/spree/variant_spec.rb'
-    - 'spec/system/admin/order_cycles/list_spec.rb'
-
 # Offense count: 3
 Rails/I18nLocaleTexts:
   Exclude:

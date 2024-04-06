@@ -51,12 +51,13 @@ describe UserRegistrationsController, type: :controller do
       original_i18n_locale = I18n.locale
       original_locale_cookie = cookies[:locale]
 
-      cookies[:locale] = "pt"
-      post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
-      expect(assigns[:user].locale).to eq("pt")
-
-      I18n.locale = original_i18n_locale
-      cookies[:locale] = original_locale_cookie
+      # changes to +I18n.locale+ will only persist within the +with_locale+ block
+      I18n.with_locale(original_i18n_locale) do
+        cookies[:locale] = "pt"
+        post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
+        expect(assigns[:user].locale).to eq("pt")
+        cookies[:locale] = original_locale_cookie
+      end
     end
   end
 end

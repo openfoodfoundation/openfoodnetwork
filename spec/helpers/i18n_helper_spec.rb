@@ -15,9 +15,10 @@ describe I18nHelper, type: :helper do
   # have to restore I18n.locale for unit tests that don't call the helper, but
   # rely on translated strings.
   around do |example|
-    locale = I18n.locale
-    example.run
-    I18n.locale = locale
+    original_locale = I18n.locale
+    I18n.with_locale(original_locale) do
+      example.run
+    end
   end
 
   context "as guest" do
