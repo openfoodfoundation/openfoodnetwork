@@ -4,10 +4,9 @@ require 'spec_helper'
 
 describe SerializerHelper, type: :helper do
   let(:serializer) do
-    class ExampleEnterpriseSerializer < ActiveModel::Serializer
-      attributes :id, :name
-    end
-    ExampleEnterpriseSerializer
+    Object.const_set("ExampleEnterpriseSerializer", Class.new(ActiveModel::Serializer)).tap { |o|
+      o.attributes :id, :name
+    }
   end
 
   describe "#required_attributes" do
