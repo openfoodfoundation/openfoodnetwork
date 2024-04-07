@@ -3,14 +3,6 @@
 require "spec_helper"
 
 describe DateTimeStringValidator do
-  class TestModel
-    include ActiveModel::Validations
-
-    attr_accessor :timestamp
-
-    validates :timestamp, date_time_string: true
-  end
-
   describe "internationalization" do
     it "has translation for NOT_STRING_ERROR" do
       expect(described_class.not_string_error).not_to be_blank
@@ -57,4 +49,12 @@ describe DateTimeStringValidator do
       expect(instance.errors[:timestamp]).to eq([described_class.invalid_format_error])
     end
   end
+end
+
+class TestModel
+  include ActiveModel::Validations
+
+  attr_accessor :timestamp
+
+  validates :timestamp, date_time_string: true
 end

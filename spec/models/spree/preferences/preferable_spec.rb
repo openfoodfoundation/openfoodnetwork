@@ -3,27 +3,10 @@
 require 'spec_helper'
 
 describe Spree::Preferences::Preferable do
-  before :all do
-    class A
-      include Spree::Preferences::Preferable
-      attr_reader :id
-
-      def initialize
-        @id = rand(999)
-      end
-
-      preference :color, :string, default: 'green', description: "My Favorite Color"
-    end
-
-    class B < A
-      preference :flavor, :string
-    end
-  end
-
   before :each do
-    @a = A.new
+    @a = SettingsA.new
     allow(@a).to receive_messages(persisted?: true)
-    @b = B.new
+    @b = SettingsB.new
     allow(@b).to receive_messages(persisted?: true)
 
     # ensure we're persisting as that is the default
@@ -114,7 +97,7 @@ describe Spree::Preferences::Preferable do
     it "builds a hash of preferences" do
       @b.preferred_flavor = :strawberry
       expect(@b.preferences[:flavor]).to eq 'strawberry'
-      expect(@b.preferences[:color]).to eq 'green' # default from A
+      expect(@b.preferences[:color]).to eq 'green' # default from SettingsA
     end
 
     context "database fallback" do
@@ -136,7 +119,7 @@ describe Spree::Preferences::Preferable do
 
     context "converts integer preferences to integer values" do
       before do
-        A.preference :is_integer, :integer
+        SettingsA.preference :is_integer, :integer
       end
 
       it "with strings" do
@@ -150,7 +133,7 @@ describe Spree::Preferences::Preferable do
 
     context "converts decimal preferences to BigDecimal values" do
       before do
-        A.preference :if_decimal, :decimal
+        SettingsA.preference :if_decimal, :decimal
       end
 
       it "returns a BigDecimal" do
@@ -176,7 +159,7 @@ describe Spree::Preferences::Preferable do
 
     context "converts boolean preferences to boolean values" do
       before do
-        A.preference :is_boolean, :boolean, default: true
+        SettingsA.preference :is_boolean, :boolean, default: true
       end
 
       it "with strings" do
@@ -208,8 +191,8 @@ describe Spree::Preferences::Preferable do
 
     context "converts any preferences to any values" do
       before do
-        A.preference :product_ids, :any, default: []
-        A.preference :product_attributes, :any, default: {}
+        SettingsA.preference :product_ids, :any, default: []
+        SettingsA.preference :product_attributes, :any, default: {}
       end
 
       it "with array" do
@@ -229,26 +212,9 @@ describe Spree::Preferences::Preferable do
 
   describe "persisted preferables" do
     before(:all) do
-      class CreatePrefTest < ActiveRecord::Migration[4.2]
-        def self.up
-          create_table :pref_tests do |t|
-            t.string :col
-          end
-        end
-
-        def self.down
-          drop_table :pref_tests
-        end
-      end
-
       @migration_verbosity = ActiveRecord::Migration.verbose
       ActiveRecord::Migration.verbose = false
       CreatePrefTest.migrate(:up)
-
-      class PrefTest < ApplicationRecord
-        preference :pref_test_pref, :string, default: 'abc'
-        preference :pref_test_any, :any, default: []
-      end
     end
 
     after(:all) do
@@ -324,10 +290,42 @@ describe Spree::Preferences::Preferable do
   end
 
   it "can add and remove preferences" do
-    A.preference :test_temp, :boolean, default: true
+    SettingsA.preference :test_temp, :boolean, default: true
     expect(@a.preferred_test_temp).to be_truthy
-    A.remove_preference :test_temp
+    SettingsA.remove_preference :test_temp
     expect(@a.has_preference?(:test_temp)).to be_falsy
     expect(@a.respond_to?(:preferred_test_temp)).to be_falsy
   end
+end
+
+class SettingsA
+  include Spree::Preferences::Preferable
+  attr_reader :id
+
+  def initialize
+    @id = rand(999)
+  end
+
+  preference :color, :string, default: 'green', description: "My Favorite Color"
+end
+
+class SettingsB < SettingsA
+  preference :flavor, :string
+end
+
+class CreatePrefTest < ActiveRecord::Migration[4.2]
+  def self.up
+    create_table :pref_tests do |t|
+      t.string :col
+    end
+  end
+
+  def self.down
+    drop_table :pref_tests
+  end
+end
+
+class PrefTest < ApplicationRecord
+  preference :pref_test_pref, :string, default: 'abc'
+  preference :pref_test_any, :any, default: []
 end
