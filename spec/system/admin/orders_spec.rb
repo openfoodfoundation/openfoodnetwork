@@ -685,8 +685,6 @@ describe '
 
                 invoice_content = extract_pdf_content
 
-                surnames = [order2.name.gsub(/.* /, ""), order3.name.gsub(/.* /, ""),
-                            order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort
                 expect(
                   invoice_content
                 ).to match(/#{surnames[0]}.*#{surnames[1]}.*#{surnames[2]}.*#{surnames[3]}/m)
@@ -706,13 +704,34 @@ describe '
               it_behaves_like "can bulk print invoices from 2 orders"
             end
             context "ordering by customer name" do
-              before do
-                pending("#12340")
-                page.find('a', text: "NAME").click # orders alphabetically (asc)
-                sleep(1) # waits for column sorting
-                page.find('#selectAll').click
+              context "ascending" do
+                let!(:surnames) {
+                  [order2.name.gsub(/.* /, ""), order3.name.gsub(/.* /, ""),
+                   order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort
+                }
+                before do
+                  pending("#12340")
+                  page.find('a', text: "NAME").click # orders alphabetically (asc)
+                  sleep(0.5) # waits for column sorting
+                  page.find('#selectAll').click
+                end
+                it_behaves_like "prints invoices accordering to column ordering"
               end
-              it_behaves_like "prints invoices accordering to column ordering"
+              context "descending" do
+                let!(:surnames) {
+                  [order2.name.gsub(/.* /, ""), order3.name.gsub(/.* /, ""),
+                   order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort.reverse
+                }
+                before do
+                  pending("#12340")
+                  page.find('a', text: "NAME").click # orders alphabetically (asc)
+                  sleep(0.5) # waits for column sorting
+                  page.find('a', text: "NAME").click # orders alphabetically (desc)
+                  sleep(0.5) # waits for column sorting
+                  page.find('#selectAll').click
+                end
+                it_behaves_like "prints invoices accordering to column ordering"
+              end
             end
             context "one of the two orders is not invoiceable" do
               before do
