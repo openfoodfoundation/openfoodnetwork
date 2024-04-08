@@ -65,7 +65,7 @@ module Reporting
         end
 
         def producer_name(variant)
-          variant.product.supplier.name
+          variant.supplier.name
         end
 
         def certification(variant)
