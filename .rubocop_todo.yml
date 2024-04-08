@@ -28,12 +28,6 @@ Lint/DuplicateMethods:
   Exclude:
     - 'lib/discourse/single_sign_on.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/DuplicateRequire:
-  Exclude:
-    - 'spec/lib/open_food_network/scope_variants_to_search_spec.rb'
-
 # Offense count: 16
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
