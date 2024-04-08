@@ -38,8 +38,8 @@ class Exchange < ApplicationRecord
   scope :outgoing, -> { where(incoming: false) }
   scope :from_enterprise, lambda { |enterprise| where(sender_id: enterprise) }
   scope :to_enterprise, lambda { |enterprise| where(receiver_id: enterprise) }
-  scope :from_enterprises, lambda { |enterprises| where('exchanges.sender_id IN (?)', enterprises) }
-  scope :to_enterprises, lambda { |enterprises| where('exchanges.receiver_id IN (?)', enterprises) }
+  scope :from_enterprises, lambda { |enterprises| where(exchanges: { sender_id: enterprises }) }
+  scope :to_enterprises, lambda { |enterprises| where(exchanges: { receiver_id: enterprises }) }
   scope :involving, lambda { |enterprises|
     where('exchanges.receiver_id IN (?) OR exchanges.sender_id IN (?)', enterprises, enterprises).
       select('DISTINCT exchanges.*')
@@ -48,7 +48,7 @@ class Exchange < ApplicationRecord
     where('exchanges.incoming OR exchanges.receiver_id = ?', distributor)
   }
   scope :with_variant, lambda { |variant|
-    joins(:exchange_variants).where('exchange_variants.variant_id = ?', variant)
+    joins(:exchange_variants).where(exchange_variants: { variant_id: variant })
   }
   scope :with_any_variant, lambda { |variant_ids|
     joins(:exchange_variants).
@@ -57,7 +57,7 @@ class Exchange < ApplicationRecord
   }
   scope :with_product, lambda { |product|
     joins(:exchange_variants).
-      where('exchange_variants.variant_id IN (?)', product.variants.select(&:id))
+      where(exchange_variants: { variant_id: product.variants.select(&:id) })
   }
   scope :by_enterprise_name, -> {
     joins('INNER JOIN enterprises AS sender   ON (sender.id   = exchanges.sender_id)').

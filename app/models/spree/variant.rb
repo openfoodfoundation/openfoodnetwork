@@ -101,7 +101,7 @@ module Spree
     scope :in_order_cycle, lambda { |order_cycle|
       with_order_cycles_inner.
         merge(Exchange.outgoing).
-        where('order_cycles.id = ?', order_cycle).
+        where(order_cycles: { id: order_cycle }).
         select('DISTINCT spree_variants.*')
     }
 
@@ -113,8 +113,8 @@ module Spree
     }
 
     scope :for_distribution, lambda { |order_cycle, distributor|
-      where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor).
-        select(&:id))
+      where(spree_variants: { id: order_cycle.variants_distributed_by(distributor).
+        select(&:id) })
     }
 
     scope :visible_for, lambda { |enterprise|
@@ -161,12 +161,12 @@ module Spree
     def self.active(currency = nil)
       # "where(id:" is necessary so that the returned relation has no includes
       # The relation without includes will not be readonly and allow updates on it
-      where("spree_variants.id in (?)", joins(:prices).
+      where(spree_variants: { id: joins(:prices).
                                           where(deleted_at: nil).
                                           where('spree_prices.currency' =>
                                             currency || CurrentConfig.get(:currency)).
                                           where.not(spree_prices: { amount: nil }).
-                                          select("spree_variants.id"))
+                                          select("spree_variants.id") })
     end
 
     def tax_category
