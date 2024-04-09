@@ -94,7 +94,7 @@ module ProductImport
       units = UnitConverter.new(attrs)
 
       units.converted_attributes.each do |attr, value|
-        if respond_to?("#{attr}=") && !NON_PRODUCT_ATTRIBUTES.include?(attr)
+        if respond_to?("#{attr}=") && NON_PRODUCT_ATTRIBUTES.exclude?(attr)
           public_send("#{attr}=", value)
         end
       end

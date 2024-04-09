@@ -662,16 +662,6 @@ Rails/LexicallyScopedActionFilter:
     - 'app/controllers/spree/admin/zones_controller.rb'
     - 'app/controllers/spree/users_controller.rb'
 
-# Offense count: 5
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/NegateInclude:
-  Exclude:
-    - 'app/controllers/admin/resource_controller.rb'
-    - 'app/models/calculator/weight.rb'
-    - 'app/models/product_import/spreadsheet_entry.rb'
-    - 'lib/spree/localized_number.rb'
-    - 'spec/support/matchers/table_matchers.rb'
-
 # Offense count: 32
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/Pluck:

@@ -77,7 +77,7 @@ module Spree
     private
 
     def non_activerecord_attribute?(attribute)
-      table_exists? && !column_names.include?(attribute.to_s)
+      table_exists? && column_names.exclude?(attribute.to_s)
     rescue ::ActiveRecord::NoDatabaseError
       # This class is now loaded during `rake db:create` (since Rails 5.2), and not only does the
       # table not exist, but the database does not even exist yet, and throws a fatal error.

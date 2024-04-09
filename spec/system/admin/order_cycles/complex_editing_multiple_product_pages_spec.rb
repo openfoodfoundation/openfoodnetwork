@@ -36,9 +36,9 @@ describe '
     end
 
     it "select all products" do
-      # replace with scroll_to method when upgrading to Capybara >= 3.13.0
       checkbox_id = "order_cycle_incoming_exchange_0_select_all_variants"
-      page.execute_script("document.getElementById('#{checkbox_id}').scrollIntoView()")
+      elmnt = find_field(id: checkbox_id)
+      scroll_to(elmnt, align: :top)
       check checkbox_id
 
       expect_all_products_loaded
