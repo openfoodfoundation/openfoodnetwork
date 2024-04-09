@@ -6,23 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 16
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: enums
-Lint/ConstantDefinitionInBlock:
-  Exclude:
-    - 'lib/tasks/import_product_images.rake'
-    - 'lib/tasks/users.rake'
-    - 'spec/controllers/spree/admin/base_controller_spec.rb'
-    - 'spec/helpers/serializer_helper_spec.rb'
-    - 'spec/lib/reports/line_items_spec.rb'
-    - 'spec/models/spree/ability_spec.rb'
-    - 'spec/models/spree/gateway_spec.rb'
-    - 'spec/models/spree/preferences/configuration_spec.rb'
-    - 'spec/models/spree/preferences/preferable_spec.rb'
-    - 'spec/validators/date_time_string_validator_spec.rb'
-    - 'spec/validators/integer_array_validator_spec.rb'
-
 # Offense count: 2
 Lint/DuplicateMethods:
   Exclude:
