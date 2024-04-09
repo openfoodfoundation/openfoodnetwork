@@ -12,7 +12,7 @@ module Discourse
              :suppress_welcome_message].freeze
     NONCE_EXPIRY_TIME = 10.minutes
 
-    attr_accessor(*ACCESSORS, :sso_secret, :sso_url)
+    attr_accessor(*ACCESSORS)
 
     def self.sso_secret
       raise "sso_secret not implemented on class, be sure to set it on instance"

@@ -23,11 +23,6 @@ Lint/ConstantDefinitionInBlock:
     - 'spec/validators/date_time_string_validator_spec.rb'
     - 'spec/validators/integer_array_validator_spec.rb'
 
-# Offense count: 2
-Lint/DuplicateMethods:
-  Exclude:
-    - 'lib/discourse/single_sign_on.rb'
-
 # Offense count: 16
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
