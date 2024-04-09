@@ -66,6 +66,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   describe "search" do
+    # TODO: explicitly test with multiple products, to ensure incorrect products don't show.
+    # TODO: test with  multiple variants, to ensure distinct query reponse
     context "product has searchable term" do
       # create a product with a name that can be searched
       let!(:product_by_name) { create(:simple_product, name: "searchable product") }
