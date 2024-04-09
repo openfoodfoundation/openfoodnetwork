@@ -59,12 +59,13 @@ describe Spree::Variant do
   end
 
   context "price parsing" do
-    before(:each) do
+    around(:each) do |spec|
       default_locale = I18n.default_locale
       I18n.with_locale(default_locale) do
         I18n.backend.store_translations(:de,
                                         { number: { currency: { format: { delimiter: '.',
                                                                           separator: ',' } } } })
+        spec.run
       end
     end
 
