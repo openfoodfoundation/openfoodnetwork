@@ -584,6 +584,23 @@ describe '
             reader.pages.map(&:text)
           end
 
+          def print_all_invoices
+            page.find("span.icon-reorder", text: "ACTIONS").click
+            within ".ofn-drop-down .menu" do
+              expect {
+                page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+              }.to enqueue_job(BulkInvoiceJob).exactly(:once)
+            end
+
+            expect(page).to have_content "Compiling Invoices"
+            expect(page).to have_content "Please wait until the PDF is ready " \
+                                         "before closing this modal."
+
+            perform_enqueued_jobs(only: BulkInvoiceJob)
+
+            expect(page).to have_content "Bulk Invoice created"
+          end
+
           let(:order4_selector){ "#order_#{order4.id} input[name='bulk_ids[]']" }
           let(:order5_selector){ "#order_#{order5.id} input[name='bulk_ids[]']" }
 
@@ -662,36 +679,6 @@ describe '
             end
           end
 
-          shared_examples "prints invoices accordering to column ordering" do
-            it "bulk prints invoices in pdf format" do
-              page.find("span.icon-reorder", text: "ACTIONS").click
-              within ".ofn-drop-down .menu" do
-                expect {
-                  page.find("span", text: "Print Invoices").click # Prints invoices in bulk
-                }.to enqueue_job(BulkInvoiceJob).exactly(:once)
-              end
-
-              expect(page).to have_content "Compiling Invoices"
-              expect(page).to have_content "Please wait until the PDF is ready " \
-                                           "before closing this modal."
-
-              perform_enqueued_jobs(only: BulkInvoiceJob)
-
-              expect(page).to have_content "Bulk Invoice created"
-
-              within ".modal-content" do
-                expect(page).to have_link(class: "button", text: "VIEW FILE",
-                                          href: /invoices/)
-
-                invoice_content = extract_pdf_content
-
-                expect(
-                  invoice_content.join
-                ).to match(/#{surnames[0]}.*#{surnames[1]}.*#{surnames[2]}.*#{surnames[3]}/m)
-              end
-            end
-          end
-
           context "ABN is not required" do
             before do
               allow(Spree::Config).to receive(:enterprise_number_required_on_invoices?)
@@ -703,34 +690,7 @@ describe '
             context "with legal invoices feature", feature: :invoices do
               it_behaves_like "can bulk print invoices from 2 orders"
             end
-            context "ordering by customer name" do
-              context "ascending" do
-                let!(:surnames) {
-                  [order2.name.gsub(/.* /, ""), order3.name.gsub(/.* /, ""),
-                   order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort
-                }
-                before do
-                  page.find('a', text: "NAME").click # orders alphabetically (asc)
-                  sleep(0.5) # waits for column sorting
-                  page.find('#selectAll').click
-                end
-                it_behaves_like "prints invoices accordering to column ordering"
-              end
-              context "descending" do
-                let!(:surnames) {
-                  [order2.name.gsub(/.* /, ""), order3.name.gsub(/.* /, ""),
-                   order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort.reverse
-                }
-                before do
-                  page.find('a', text: "NAME").click # orders alphabetically (asc)
-                  sleep(0.5) # waits for column sorting
-                  page.find('a', text: "NAME").click # orders alphabetically (desc)
-                  sleep(0.5) # waits for column sorting
-                  page.find('#selectAll').click
-                end
-                it_behaves_like "prints invoices accordering to column ordering"
-              end
-            end
+
             context "one of the two orders is not invoiceable" do
               before do
                 order4.cancel!
@@ -739,6 +699,51 @@ describe '
               it_behaves_like "should ignore the non invoiceable order"
               context "with legal invoices feature", feature: :invoices do
                 it_behaves_like "should ignore the non invoiceable order"
+              end
+            end
+
+            context "ordering by customer name" do
+              context "ascending" do
+                let!(:surnames) {
+                  [order2.name.gsub(/.* /, ""), order3.name.gsub(/.* /, ""),
+                   order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort
+                }
+                it "orders by customer name ascending" do
+                  page.find('a', text: "NAME").click # orders alphabetically (asc)
+                  sleep(0.5) # waits for column sorting
+
+                  page.find("#selectAll").click
+
+                  print_all_invoices
+
+                  invoice_content = extract_pdf_content
+
+                  expect(
+                    invoice_content.join
+                  ).to match(/#{surnames[0]}.*#{surnames[1]}.*#{surnames[2]}.*#{surnames[3]}/m)
+                end
+              end
+              context "descending" do
+                let!(:surnames) {
+                  [order2.name.gsub(/.* /, ""), order3.name.gsub(/.* /, ""),
+                   order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort.reverse
+                }
+                it "order by customer name descending" do
+                  page.find('a', text: "NAME").click # orders alphabetically (asc)
+                  sleep(0.5) # waits for column sorting
+                  page.find('a', text: "NAME").click # orders alphabetically (desc)
+                  sleep(0.5) # waits for column sorting
+
+                  page.find("#selectAll").click
+
+                  print_all_invoices
+
+                  invoice_content = extract_pdf_content
+
+                  expect(
+                    invoice_content.join
+                  ).to match(/#{surnames[0]}.*#{surnames[1]}.*#{surnames[2]}.*#{surnames[3]}/m)
+                end
               end
             end
           end
