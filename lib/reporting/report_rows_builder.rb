@@ -78,12 +78,11 @@ module Reporting
     end
 
     def group_and_sort(rule, remaining_rules, datas)
-      result = []
       groups = group_data_with_rule(datas, rule)
       sorted_groups = sort_groups_with_rule(groups, rule)
 
-      sorted_groups.each do |group_value, group_datas|
-        result << {
+      sorted_groups.map do |group_value, group_datas|
+        {
           is_group: true,
           header: @builder.build_header(rule, group_value, group_datas),
           header_class: rule[:header_class],
@@ -92,7 +91,6 @@ module Reporting
           data: build_tree(group_datas, remaining_rules)
         }
       end
-      result
     end
 
     def group_data_with_rule(datas, rule)
