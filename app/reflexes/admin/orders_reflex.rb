@@ -33,10 +33,17 @@ module Admin
 
     def bulk_invoice(params)
       visible_orders = editable_orders.invoiceable.where(id: params[:bulk_ids])
-      if Spree::Config.enterprise_number_required_on_invoices? &&
-         !all_distributors_can_invoice?(visible_orders)
-        render_business_number_required_error(visible_orders)
-        return
+
+      if Spree::Config.enterprise_number_required_on_invoices?
+        distributors_without_abn = Enterprise.where(
+          id: visible_orders.select(:distributor_id),
+          abn: nil,
+        )
+
+        if distributors_without_abn.exists?
+          render_business_number_required_error(distributors_without_abn)
+          return
+        end
       end
 
       cable_ready.append(
@@ -124,9 +131,8 @@ module Admin
       Enterprise.where(id: distributor_ids, abn: nil).empty?
     end
 
-    def render_business_number_required_error(orders)
-      distributor_ids = orders.map(&:distributor_id)
-      distributor_names = Enterprise.where(id: distributor_ids, abn: nil).pluck(:name)
+    def render_business_number_required_error(distributors)
+      distributor_names = distributors.pluck(:name)
 
       flash[:error] = I18n.t(:must_have_valid_business_number,
                              enterprise_name: distributor_names.join(", "))
