@@ -686,7 +686,7 @@ describe '
                 invoice_content = extract_pdf_content
 
                 expect(
-                  invoice_content
+                  invoice_content.join
                 ).to match(/#{surnames[0]}.*#{surnames[1]}.*#{surnames[2]}.*#{surnames[3]}/m)
               end
             end
