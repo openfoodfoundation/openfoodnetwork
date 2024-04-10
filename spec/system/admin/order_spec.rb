@@ -952,7 +952,6 @@ describe '
             }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
           end
 
-          save_screenshot('~/hello.png')
           expect(order.reload.shipped?).to be true
           expect(page).to have_text 'SHIPPED'
         end
