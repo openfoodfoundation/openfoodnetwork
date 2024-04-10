@@ -4,7 +4,7 @@ class ConnectAppJob < ApplicationJob
   include CableReady::Broadcaster
 
   def perform(app, token, channel: nil)
-    url = "https://n8n.openfoodnetwork.org.uk/webhook/regen/connect-enterprise"
+    url = I18n.t("connect_app.url")
     event = "connect-app"
     enterprise = app.enterprise
     payload = {

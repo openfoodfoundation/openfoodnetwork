@@ -265,6 +265,8 @@ en:
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   additional_information: "Additional Information"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
