@@ -848,13 +848,6 @@ en:
           prompt: "This will permanently remove it from your list."
           confirmation_text: "Delete variant"
           cancellation_text: "Keep variant"
-      sort:
-        pagination:
-          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
-          per_page:
-            show: Show
-            per_page: "%{num} per page"
-          clear_search: Clear search
       filters:
         search_products: Search for products
         search_for_producers: Search for producers
@@ -866,7 +859,13 @@ en:
         categories:
           label: Categories
         search: Search
-      content:
+      sort:
+        pagination:
+          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
+          per_page:
+            show: Show
+            per_page: "%{num} per page"
+          clear_search: Clear search
       no_products:
         no_products_found: No products found
         import_products: Import multiple products

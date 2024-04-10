@@ -1,10 +1,13 @@
-= form_with url: bulk_update_admin_products_path, method: :patch, id: "products-form",
+= form_with url: bulk_update_admin_products_path, method: :post, id: "products-form",
             builder: BulkFormBuilder,
-            html: { data: { reflex: 'submit->products#bulk_update', 'reflex-serialize-form': true,
-              controller: "bulk-form", 'bulk-form-disable-selector-value': "#sort,#filters",
-              'bulk-form-error-value': defined?(error_counts),
+            html: { data: { controller: "bulk-form", 'bulk-form-disable-selector-value': "#sort,#filters",
+              'bulk-form-error-value': defined?(@error_counts),
               } } do |form|
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
+
+  = hidden_field_tag :page, @page
+  = hidden_field_tag :per_page, @per_page
+
   %table.products
     %colgroup
       %col{ width:"56" }= #  Img (size + padding)
@@ -23,20 +26,21 @@
       %tr
         %td.form-actions-wrapper{ colspan: 12 }
           .form-actions-wrapper2
-            %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
+            %fieldset.form-actions{ class: ("hidden" unless defined?(@error_counts)), 'data-bulk-form-target': "actions" }
               .container
                 .status
                   .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
-                  - if defined?(error_counts)
+                  - if defined?(@error_counts)
                     .error_summary
-                      - if error_counts[:saved] > 0
+                      - if @error_counts[:saved] > 0
                         -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
-                        = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
+                        = t('.error_summary.saved', count: @error_counts[:saved]) + t('.error_summary.invalid', count: @error_counts[:invalid])
                       - else 
                         -# Y products could not be saved correctly. Please review errors and try again
-                        = t('.error_summary.invalid', count: error_counts[:invalid])
+                        = t('.error_summary.invalid', count: @error_counts[:invalid])
                 .form-buttons
-                  = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
+                  %a.button.reset.medium{ href: admin_products_path(page: @page, per_page: @per_page) }
+                    = t('.reset')
                   = form.submit t('.save'), class: "medium"
       %tr
         %th.align-left= # image
