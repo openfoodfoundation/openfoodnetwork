@@ -718,7 +718,7 @@ GEM
     spreadsheet_architect (5.0.0)
       caxlsx (>= 3.3.0, < 4)
       rodf (>= 1.0.0, < 2)
-    spring (4.1.3)
+    spring (4.2.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     spring-commands-rubocop (0.4.0)
