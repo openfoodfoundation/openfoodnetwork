@@ -7,9 +7,14 @@ class BulkInvoiceJob < ApplicationJob
 
   def perform(order_ids, filepath, options = {})
     @options = options
-    orders = sorted_orders(order_ids)
-    orders.filter!(&:invoiceable?) if OpenFoodNetwork::FeatureToggle.enabled?(:invoices,
-                                                                              current_user)
+
+    orders = Spree::Order.where(id: order_ids)
+
+    if OpenFoodNetwork::FeatureToggle.enabled?(:invoices, current_user)
+      orders = orders.invoiceable
+    end
+
+    orders = sort_orders(orders, order_ids)
     orders.each(&method(:generate_invoice))
 
     ensure_directory_exists filepath
@@ -22,9 +27,9 @@ class BulkInvoiceJob < ApplicationJob
   private
 
   # Ensures the records are returned in the same order the ids were originally given in
-  def sorted_orders(order_ids)
-    orders_by_id = Spree::Order.where(id: order_ids).to_a.index_by(&:id)
-    order_ids.map { |id| orders_by_id[id.to_i] }
+  def sort_orders(orders, order_ids)
+    orders_by_id = orders.to_a.index_by(&:id)
+    order_ids.map { |id| orders_by_id[id.to_i] }.compact
   end
 
   def renderer

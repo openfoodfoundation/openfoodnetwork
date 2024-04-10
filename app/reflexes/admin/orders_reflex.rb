@@ -32,7 +32,7 @@ module Admin
     end
 
     def bulk_invoice(params)
-      visible_orders = editable_orders.where(id: params[:bulk_ids]).filter(&:invoiceable?)
+      visible_orders = editable_orders.invoiceable.where(id: params[:bulk_ids])
       if Spree::Config.enterprise_number_required_on_invoices? &&
          !all_distributors_can_invoice?(visible_orders)
         render_business_number_required_error(visible_orders)
@@ -87,8 +87,8 @@ module Admin
 
     def send_invoices(params)
       count = 0
-      editable_orders.where(id: params[:bulk_ids]).find_each do |o|
-        next unless o.distributor.can_invoice? && o.invoiceable?
+      editable_orders.invoiceable.where(id: params[:bulk_ids]).find_each do |o|
+        next unless o.distributor.can_invoice?
 
         Spree::OrderMailer.invoice_email(o.id, current_user_id: current_user.id).deliver_later
         count += 1
