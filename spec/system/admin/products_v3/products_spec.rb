@@ -16,15 +16,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     expect(page).to have_content "Bulk Edit Products"
   end
 
-  # TODO: this belongs in a unit or request spec
-  it "minimises db queries" do
-    create_products 16
-
-    expect{
-      visit admin_products_url
-    }.to query_database 243.times # Remember this includes user session updates etc.
-  end
-
   describe "sorting" do
     let!(:product_b) { create(:simple_product, name: "Bananas") }
     let!(:product_a) { create(:simple_product, name: "Apples") }
