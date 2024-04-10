@@ -44,8 +44,13 @@ module Admin
         html: render(partial: "spree/admin/orders/bulk/invoice_modal")
       ).broadcast
 
+      # Preserve order of bulk_ids.
+      # The ids are supplied in the sequence of the orders screen and may be
+      # sorted, for example by last name of the customer.
+      visible_order_ids = params[:bulk_ids].map(&:to_i) & visible_orders.pluck(:id)
+
       BulkInvoiceJob.perform_later(
-        visible_orders.pluck(:id),
+        visible_order_ids,
         "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
         channel: SessionChannel.for_request(request),
         current_user_id: current_user.id

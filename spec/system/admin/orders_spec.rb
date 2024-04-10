@@ -710,7 +710,6 @@ describe '
                    order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort
                 }
                 before do
-                  pending("#12340")
                   page.find('a', text: "NAME").click # orders alphabetically (asc)
                   sleep(0.5) # waits for column sorting
                   page.find('#selectAll').click
@@ -723,7 +722,6 @@ describe '
                    order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort.reverse
                 }
                 before do
-                  pending("#12340")
                   page.find('a', text: "NAME").click # orders alphabetically (asc)
                   sleep(0.5) # waits for column sorting
                   page.find('a', text: "NAME").click # orders alphabetically (desc)
