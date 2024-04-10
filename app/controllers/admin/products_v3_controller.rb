@@ -81,7 +81,7 @@ module Admin
       if @search_term.present?
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
-      query.merge!(primary_taxon_id_in: @category_id) if @category_id.present?
+      query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
       query
     end
 
