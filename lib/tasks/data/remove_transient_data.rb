@@ -38,6 +38,6 @@ class RemoveTransientData
     # Carts with failed payments are ignored, as they contain potentially useful data
     Spree::Order.
       joins("LEFT OUTER JOIN spree_payments ON spree_orders.id = spree_payments.order_id").
-      where("spree_payments.id IS NULL")
+      where(spree_payments: { id: nil })
   end
 end

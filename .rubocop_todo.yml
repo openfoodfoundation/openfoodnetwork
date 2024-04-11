@@ -773,38 +773,6 @@ Rails/UnusedRenderContent:
     - 'app/controllers/api/v0/taxons_controller.rb'
     - 'app/controllers/api/v0/variants_controller.rb'
 
-# Offense count: 54
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/WhereEquals:
-  Exclude:
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/mailers/producer_mailer.rb'
-    - 'app/models/enterprise.rb'
-    - 'app/models/enterprise_fee.rb'
-    - 'app/models/enterprise_group.rb'
-    - 'app/models/enterprise_relationship.rb'
-    - 'app/models/exchange.rb'
-    - 'app/models/order_cycle.rb'
-    - 'app/models/product_import/entry_processor.rb'
-    - 'app/models/proxy_order.rb'
-    - 'app/models/schedule.rb'
-    - 'app/models/spree/line_item.rb'
-    - 'app/models/spree/order.rb'
-    - 'app/models/spree/payment_method.rb'
-    - 'app/models/spree/product.rb'
-    - 'app/models/spree/shipping_method.rb'
-    - 'app/models/spree/variant.rb'
-    - 'app/models/subscription.rb'
-    - 'app/serializers/api/enterprise_shopfront_serializer.rb'
-    - 'app/serializers/api/order_serializer.rb'
-    - 'lib/open_food_network/enterprise_fee_calculator.rb'
-    - 'lib/open_food_network/order_cycle_permissions.rb'
-    - 'lib/reporting/reports/products_and_inventory/base.rb'
-    - 'lib/tasks/data.rake'
-    - 'lib/tasks/data/anonymize_data.rake'
-    - 'lib/tasks/data/remove_transient_data.rb'
-    - 'spec/services/product_tag_rules_filterer_spec.rb'
-
 # Offense count: 8
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.

@@ -141,7 +141,7 @@ module Spree
       if user.has_spree_role?('admin')
         where(nil)
       else
-        where('spree_orders.distributor_id IN (?)', user.enterprises.select(&:id))
+        where(spree_orders: { distributor_id: user.enterprises.select(&:id) })
       end
     }
 

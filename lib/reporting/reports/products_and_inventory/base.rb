@@ -59,7 +59,7 @@ module Reporting
 
         def filter_to_supplier(variants)
           if params[:supplier_id].to_i > 0
-            variants.where("spree_products.supplier_id = ?", params[:supplier_id])
+            variants.where(spree_products: { supplier_id: params[:supplier_id] })
           else
             variants
           end

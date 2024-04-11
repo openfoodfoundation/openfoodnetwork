@@ -18,7 +18,7 @@ describe ProductTagRulesFilterer do
     }
     let(:customer) { create(:customer, enterprise: distributor) }
     let(:variants_relation) {
-      Spree::Variant.joins(:product).where("spree_products.supplier_id = ?", distributor.id)
+      Spree::Variant.joins(:product).where(spree_products: { supplier_id: distributor.id })
     }
     let(:default_hide_rule) {
       create(:filter_products_tag_rule,

@@ -44,7 +44,7 @@ namespace :ofn do
       Spree::User.update_all("email = concat(id, '_ofn_user@example.com'),
                               login = concat(id, '_ofn_user@example.com'),
                               unconfirmed_email = concat(id, '_ofn_user@example.com')")
-      Customer.where("user_id IS NULL")
+      Customer.where(user_id: nil)
         .update_all("email = concat(id, '_ofn_customer@example.com'),
                      name = concat('Customer Number ', id, ' (without connected User)')")
       Customer.where.not(user_id: nil)

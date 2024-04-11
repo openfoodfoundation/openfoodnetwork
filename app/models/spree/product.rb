@@ -159,7 +159,7 @@ module Spree
     scope :in_order_cycle, lambda { |order_cycle|
       with_order_cycles_inner.
         merge(Exchange.outgoing).
-        where('order_cycles.id = ?', order_cycle)
+        where(order_cycles: { id: order_cycle })
     }
 
     scope :in_an_active_order_cycle, lambda {
@@ -176,7 +176,7 @@ module Spree
       if user.has_spree_role?('admin')
         where(nil)
       else
-        where('supplier_id IN (?)', user.enterprises.select("enterprises.id"))
+        where(supplier_id: user.enterprises.select("enterprises.id"))
       end
     }
 
@@ -187,10 +187,10 @@ module Spree
         .with_permission(:add_to_order_cycle)
         .where(enterprises: { is_primary_producer: true })
         .pluck(:parent_id)
-      where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
+      where(spree_products: { supplier_id: [enterprise.id] | permitted_producer_ids })
     }
 
-    scope :active, lambda { where("spree_products.deleted_at IS NULL") }
+    scope :active, lambda { where(spree_products: { deleted_at: nil }) }
 
     def self.group_by_products_id
       group(column_names.map { |col_name| "#{table_name}.#{col_name}" })
@@ -265,8 +265,8 @@ module Spree
         touch_distributors
 
         ExchangeVariant.
-          where('exchange_variants.variant_id IN (?)', variants.with_deleted.
-          select(:id)).destroy_all
+          where(exchange_variants: { variant_id: variants.with_deleted.
+          select(:id) }).destroy_all
 
         yield
       end
