@@ -194,15 +194,6 @@ describe '
 
   private
 
-  def wait_for_edit_form_to_load_order_cycle(order_cycle)
-    expect(page).to have_field "order_cycle_name", with: order_cycle.name
-  end
-
-  def select_incoming_variant(supplier, exchange_no, variant)
-    page.find("table.exchanges tr.supplier-#{supplier.id} td.products").click
-    check "order_cycle_incoming_exchange_#{exchange_no}_variants_#{variant.id}"
-  end
-
   def date_warning_msg(nbr = 1)
     "This order cycle is linked to %d open subscription orders. Changing this date now will not " \
     "affect any orders which have already been placed, but should be avoided if possible. " \

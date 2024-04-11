@@ -48,16 +48,9 @@ describe UserRegistrationsController, type: :controller do
     end
 
     it "sets user.locale from cookie on create" do
-      original_i18n_locale = I18n.locale
-      original_locale_cookie = cookies[:locale]
-
-      # changes to +I18n.locale+ will only persist within the +with_locale+ block
-      I18n.with_locale(original_i18n_locale) do
-        cookies[:locale] = "pt"
-        post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
-        expect(assigns[:user].locale).to eq("pt")
-        cookies[:locale] = original_locale_cookie
-      end
+      cookies[:locale] = "pt"
+      post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
+      expect(assigns[:user].locale).to eq("pt")
     end
   end
 end
