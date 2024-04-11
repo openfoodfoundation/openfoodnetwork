@@ -96,6 +96,11 @@ RSpec.configure do |config|
     expectations.syntax = :expect
   end
 
+  # Reset locale for all specs.
+  config.around(:each) do |example|
+    I18n.with_locale(:en) { example.run }
+  end
+
   # Reset all feature toggles to prevent leaking.
   config.before(:suite) do
     Flipper.features.each(&:remove)

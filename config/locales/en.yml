@@ -235,6 +235,9 @@ en:
       transaction_not_allowed: "The card has been declined for an unknown reason."
       try_again_later: "The card has been declined for an unknown reason."
       withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      disconnect_failure: "Failed to disconnect Stripe."
+    success_code:
+      disconnected: "Stripe account disconnected."
 
   activemodel:
     errors:
