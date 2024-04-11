@@ -574,33 +574,6 @@ describe '
         end
 
         context "can bulk print invoices" do
-          def extract_pdf_content
-            # Extract last part of invoice URL
-            link = page.find(class: "button", text: "VIEW FILE")
-            filename = link[:href].match %r{/invoices/.*}
-
-            # Load invoice temp file directly instead of downloading
-            reader = PDF::Reader.new("tmp/#{filename}.pdf")
-            reader.pages.map(&:text)
-          end
-
-          def print_all_invoices
-            page.find("span.icon-reorder", text: "ACTIONS").click
-            within ".ofn-drop-down .menu" do
-              expect {
-                page.find("span", text: "Print Invoices").click # Prints invoices in bulk
-              }.to enqueue_job(BulkInvoiceJob).exactly(:once)
-            end
-
-            expect(page).to have_content "Compiling Invoices"
-            expect(page).to have_content "Please wait until the PDF is ready " \
-                                         "before closing this modal."
-
-            perform_enqueued_jobs(only: BulkInvoiceJob)
-
-            expect(page).to have_content "Bulk Invoice created"
-          end
-
           let(:order4_selector){ "#order_#{order4.id} input[name='bulk_ids[]']" }
           let(:order5_selector){ "#order_#{order5.id} input[name='bulk_ids[]']" }
 
@@ -1157,5 +1130,31 @@ describe '
       expect(find_field("Last name begins with").value).to be_empty
       expect(find("input.datepicker").value).to be_empty
     end
+  end
+  def extract_pdf_content
+    # Extract last part of invoice URL
+    link = page.find(class: "button", text: "VIEW FILE")
+    filename = link[:href].match %r{/invoices/.*}
+
+    # Load invoice temp file directly instead of downloading
+    reader = PDF::Reader.new("tmp/#{filename}.pdf")
+    reader.pages.map(&:text)
+  end
+
+  def print_all_invoices
+    page.find("span.icon-reorder", text: "ACTIONS").click
+    within ".ofn-drop-down .menu" do
+      expect {
+        page.find("span", text: "Print Invoices").click # Prints invoices in bulk
+      }.to enqueue_job(BulkInvoiceJob).exactly(:once)
+    end
+
+    expect(page).to have_content "Compiling Invoices"
+    expect(page).to have_content "Please wait until the PDF is ready " \
+                                 "before closing this modal."
+
+    perform_enqueued_jobs(only: BulkInvoiceJob)
+
+    expect(page).to have_content "Bulk Invoice created"
   end
 end
