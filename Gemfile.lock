@@ -433,7 +433,7 @@ GEM
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.4.0.1)
+    net-smtp (0.5.0)
       net-protocol
     newrelic_rpm (9.8.0)
     nio4r (2.7.0)
@@ -769,7 +769,7 @@ GEM
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
     uri (0.13.0)
-    valid_email2 (5.2.1)
+    valid_email2 (5.2.3)
       activemodel (>= 3.2)
       mail (~> 2.5)
     validate_url (1.0.15)
