@@ -1,4 +1,8 @@
 %turbo-frame#products-content
+  .spinner-overlay{ "data-controller": "loading", "data-products-target": "loading", class: "hidden" }
+    .spinner-container
+      .spinner
+      = t('.loading')
   .container
     .sixteen.columns
       = render partial: 'admin/shared/flashes', locals: { flashes: } if defined? flashes

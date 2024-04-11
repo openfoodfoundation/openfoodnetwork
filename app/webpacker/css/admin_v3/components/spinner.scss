@@ -6,6 +6,11 @@
   min-height: 200px;
   background: rgba(255, 255, 255, 0.8);
   z-index: 2;
+
+  // Show when inside a loading Turbo Frame
+  turbo-frame[aria-busy="true"] > & {
+    display: flex;
+  }
 }
 
 .spinner-container {
@@ -28,7 +33,9 @@
     height: 56px;
     border-radius: 50%;
     border: 9px solid $teal;
-    animation: spinner-bulqg1 0.8s infinite linear alternate, spinner-oaa3wk 1.6s infinite linear;
+    animation:
+      spinner-bulqg1 0.8s infinite linear alternate,
+      spinner-oaa3wk 1.6s infinite linear;
   }
 }
 

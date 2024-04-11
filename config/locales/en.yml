@@ -844,6 +844,7 @@ en:
       index:
         header:
           title: Bulk Edit Products
+      content:
         loading: Loading your products
       delete_modal:
         delete_product_modal:
