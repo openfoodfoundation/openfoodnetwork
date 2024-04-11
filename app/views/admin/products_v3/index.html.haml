@@ -13,7 +13,7 @@
 
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-#products_v3_page{ "data-controller": "products" }
+#products_v3_page{ "data-controller": "products", 'data-turbo': true }
   .spinner-overlay{ "data-controller": "loading", "data-products-target": "loading", class: "hidden" }
     .spinner-container
       .spinner

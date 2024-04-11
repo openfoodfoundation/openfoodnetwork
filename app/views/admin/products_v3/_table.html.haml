@@ -1,6 +1,6 @@
 = form_with url: bulk_update_admin_products_path, method: :post, id: "products-form",
             builder: BulkFormBuilder,
-            html: { data: { controller: "bulk-form", 'bulk-form-disable-selector-value': "#sort,#filters",
+            html: { data: { remote: true, controller: "bulk-form", 'bulk-form-disable-selector-value': "#sort,#filters",
               'bulk-form-error-value': defined?(@error_counts),
               } } do |form|
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
