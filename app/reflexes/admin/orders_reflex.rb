@@ -126,11 +126,6 @@ module Admin
       params[:id] = @order.number
     end
 
-    def all_distributors_can_invoice?(orders)
-      distributor_ids = orders.map(&:distributor_id)
-      Enterprise.where(id: distributor_ids, abn: nil).empty?
-    end
-
     def render_business_number_required_error(distributors)
       distributor_names = distributors.pluck(:name)
 
