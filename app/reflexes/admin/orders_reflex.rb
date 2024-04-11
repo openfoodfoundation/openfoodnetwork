@@ -32,11 +32,18 @@ module Admin
     end
 
     def bulk_invoice(params)
-      visible_orders = editable_orders.where(id: params[:bulk_ids]).filter(&:invoiceable?)
-      if Spree::Config.enterprise_number_required_on_invoices? &&
-         !all_distributors_can_invoice?(visible_orders)
-        render_business_number_required_error(visible_orders)
-        return
+      visible_orders = editable_orders.invoiceable.where(id: params[:bulk_ids])
+
+      if Spree::Config.enterprise_number_required_on_invoices?
+        distributors_without_abn = Enterprise.where(
+          id: visible_orders.select(:distributor_id),
+          abn: nil,
+        )
+
+        if distributors_without_abn.exists?
+          render_business_number_required_error(distributors_without_abn)
+          return
+        end
       end
 
       cable_ready.append(
@@ -44,8 +51,13 @@ module Admin
         html: render(partial: "spree/admin/orders/bulk/invoice_modal")
       ).broadcast
 
+      # Preserve order of bulk_ids.
+      # The ids are supplied in the sequence of the orders screen and may be
+      # sorted, for example by last name of the customer.
+      visible_order_ids = params[:bulk_ids].map(&:to_i) & visible_orders.pluck(:id)
+
       BulkInvoiceJob.perform_later(
-        visible_orders.pluck(:id),
+        visible_order_ids,
         "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
         channel: SessionChannel.for_request(request),
         current_user_id: current_user.id
@@ -82,8 +94,8 @@ module Admin
 
     def send_invoices(params)
       count = 0
-      editable_orders.where(id: params[:bulk_ids]).find_each do |o|
-        next unless o.distributor.can_invoice? && o.invoiceable?
+      editable_orders.invoiceable.where(id: params[:bulk_ids]).find_each do |o|
+        next unless o.distributor.can_invoice?
 
         Spree::OrderMailer.invoice_email(o.id, current_user_id: current_user.id).deliver_later
         count += 1
@@ -114,14 +126,8 @@ module Admin
       params[:id] = @order.number
     end
 
-    def all_distributors_can_invoice?(orders)
-      distributor_ids = orders.map(&:distributor_id)
-      Enterprise.where(id: distributor_ids, abn: nil).empty?
-    end
-
-    def render_business_number_required_error(orders)
-      distributor_ids = orders.map(&:distributor_id)
-      distributor_names = Enterprise.where(id: distributor_ids, abn: nil).pluck(:name)
+    def render_business_number_required_error(distributors)
+      distributor_names = distributors.pluck(:name)
 
       flash[:error] = I18n.t(:must_have_valid_business_number,
                              enterprise_name: distributor_names.join(", "))
