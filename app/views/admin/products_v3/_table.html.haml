@@ -7,6 +7,9 @@
 
   = hidden_field_tag :page, @page
   = hidden_field_tag :per_page, @per_page
+  = hidden_field_tag :search_term, @search_term
+  = hidden_field_tag :producer_id, @producer_id
+  = hidden_field_tag :category_id, @category_id
 
   %table.products
     %colgroup
@@ -39,7 +42,7 @@
                         -# Y products could not be saved correctly. Please review errors and try again
                         = t('.error_summary.invalid', count: @error_counts[:invalid])
                 .form-buttons
-                  %a.button.reset.medium{ href: admin_products_path(page: @page, per_page: @per_page) }
+                  %a.button.reset.medium{ href: admin_products_path(page: @page, per_page: @per_page, search_term: @search_term, producer_id: @producer_id, category_id: @category_id) }
                     = t('.reset')
                   = form.submit t('.save'), class: "medium"
       %tr
