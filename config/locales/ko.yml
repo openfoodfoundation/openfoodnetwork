@@ -681,15 +681,15 @@ ko:
       index:
         header:
           title: 제품 대량 편집
-      sort:
-        pagination:
-          clear_search: 검색 지우기
       filters:
         producers:
           label: 생산자들
         categories:
           label: 카테고리
         search: 탐색
+      sort:
+        pagination:
+          clear_search: 검색 지우기
       table:
         new_variant: 새로운 변경사항
       edit_image:

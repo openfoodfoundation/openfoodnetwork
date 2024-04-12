@@ -752,13 +752,6 @@ mr:
         header:
           title: मोठ्या प्रमाणात उत्पादने संपादित करा
         loading: तुमची उत्पादने लोड करत आहे
-      sort:
-        pagination:
-          total_html: "तुमच्या शोध निकषांसाठी <strong>%{total} उत्पादने</strong> आढळली. %{from} ते %{to} दाखवत आहे."
-          per_page:
-            show: दाखवा
-            per_page: "%{num} प्रति पृष्ठ"
-          clear_search: सर्च क्लिअर करा
       filters:
         search_products: उत्पादने शोधा
         all_producers: सर्व उत्पादक
@@ -768,6 +761,13 @@ mr:
         categories:
           label: श्रेण्या
         search: शोधा
+      sort:
+        pagination:
+          total_html: "तुमच्या शोध निकषांसाठी <strong>%{total} उत्पादने</strong> आढळली. %{from} ते %{to} दाखवत आहे."
+          per_page:
+            show: दाखवा
+            per_page: "%{num} प्रति पृष्ठ"
+          clear_search: सर्च क्लिअर करा
       no_products:
         no_products_found: कोणतीही उत्पादने आढळली नाहीत
         import_products: अनेक उत्पादने आयात करा

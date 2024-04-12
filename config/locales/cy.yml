@@ -767,13 +767,6 @@ cy:
           prompt: "Caiff ei ddileu’n barhaol o’ch rhestr."
           confirmation_text: "Dileu amrywiolyn"
           cancellation_text: "Cadw amrywiolyn"
-      sort:
-        pagination:
-          total_html: "<strong>%{total}Cafwyd hyd i </strong> cynnyrch ar gyfer eich meini prawf chwilio. Yn dangos %{from} i %{to}."
-          per_page:
-            show: Dangos
-            per_page: "%{num} fesul tudalen"
-          clear_search: Clirio'r chwiliad
       filters:
         search_products: Chwilio am gynnyrch
         search_for_producers: Chwilio am gynhyrchwyr
@@ -785,6 +778,13 @@ cy:
         categories:
           label: Categorïau
         search: Chwilio
+      sort:
+        pagination:
+          total_html: "<strong>%{total}Cafwyd hyd i </strong> cynnyrch ar gyfer eich meini prawf chwilio. Yn dangos %{from} i %{to}."
+          per_page:
+            show: Dangos
+            per_page: "%{num} fesul tudalen"
+          clear_search: Clirio'r chwiliad
       no_products:
         no_products_found: Ni chafwyd hyd i gynnyrch
         import_products: Mewnforio cynnyrch lluosog

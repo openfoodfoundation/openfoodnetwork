@@ -619,13 +619,13 @@ pt_BR:
       index:
         header:
           title: Editar Produtos em Atacado
-      sort:
-        pagination:
-          clear_search: Nova busca
       filters:
         producers:
           label: Produtores
         search: Buscar
+      sort:
+        pagination:
+          clear_search: Nova busca
       edit_image:
         close: Voltar
     product_import:

@@ -695,15 +695,15 @@ ar:
       index:
         header:
           title: تحرير المنتجات بالجملة
-      sort:
-        pagination:
-          clear_search: مسح البحث
       filters:
         producers:
           label: المنتجين
         categories:
           label: التصنيفات
         search: بحث
+      sort:
+        pagination:
+          clear_search: مسح البحث
       table:
         new_variant: نوع جديد
       edit_image:

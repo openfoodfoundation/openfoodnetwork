@@ -737,13 +737,6 @@ ca:
           prompt: "Això l'eliminarà permanentment de la vostra llista."
           confirmation_text: "Suprimeix la variant"
           cancellation_text: "Mantenir la variant"
-      sort:
-        pagination:
-          total_html: "<strong>%{total} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
-          per_page:
-            show: Mostra
-            per_page: "%{num} per pàgina"
-          clear_search: Esborra la cerca
       filters:
         search_products: Cerca de productes
         search_for_producers: Cercar productors
@@ -755,6 +748,13 @@ ca:
         categories:
           label: Categories
         search: Cerca
+      sort:
+        pagination:
+          total_html: "<strong>%{total} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
+          per_page:
+            show: Mostra
+            per_page: "%{num} per pàgina"
+          clear_search: Esborra la cerca
       no_products:
         no_products_found: No hem trobat productes
       table:

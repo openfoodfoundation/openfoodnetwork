@@ -695,15 +695,15 @@ es:
         header:
           title: Editar varios Productos
         loading: Cargando tus productos
-      sort:
-        pagination:
-          clear_search: Limpiar la búsqueda
       filters:
         producers:
           label: Productoras
         categories:
           label: Categorías
         search: Buscar
+      sort:
+        pagination:
+          clear_search: Limpiar la búsqueda
       no_products:
         no_products_found: No se encontraron productos
         import_products: Importar varios productos

@@ -682,15 +682,15 @@ fr_BE:
       index:
         header:
           title: Gestion du catalogue produits
-      sort:
-        pagination:
-          clear_search: Effacer recherche
       filters:
         producers:
           label: Producteur·trice·s
         categories:
           label: Les catégories
         search: Rechercher
+      sort:
+        pagination:
+          clear_search: Effacer recherche
       table:
         new_variant: Nouvelle variante
       edit_image:

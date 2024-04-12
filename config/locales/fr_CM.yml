@@ -617,15 +617,15 @@ fr_CM:
       index:
         header:
           title: Gestion du catalogue produits
-      sort:
-        pagination:
-          clear_search: Annuler la recherche
       filters:
         producers:
           label: Producteurs
         categories:
           label: Conditions de transport
         search: Rechercher
+      sort:
+        pagination:
+          clear_search: Annuler la recherche
       table:
         new_variant: Nouvelle variante
       edit_image:

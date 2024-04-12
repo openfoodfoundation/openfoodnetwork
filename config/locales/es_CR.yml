@@ -686,15 +686,15 @@ es_CR:
       index:
         header:
           title: Editar productos por volumen
-      sort:
-        pagination:
-          clear_search: Borrar búsqueda
       filters:
         producers:
           label: Productores
         categories:
           label: Categorías
         search: Buscar
+      sort:
+        pagination:
+          clear_search: Borrar búsqueda
       table:
         new_variant: Nueva variante
       edit_image:

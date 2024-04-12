@@ -699,15 +699,15 @@ hu:
         delete_variant_modal:
           heading: "Változat törlése"
           confirmation_text: "Változat törlése"
-      sort:
-        pagination:
-          clear_search: Keresés törlése
       filters:
         producers:
           label: Termelők
         categories:
           label: Kategóriák
         search: Keresés
+      sort:
+        pagination:
+          clear_search: Keresés törlése
       table:
         error_summary:
           saved:

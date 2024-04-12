@@ -194,6 +194,9 @@ fr:
       transaction_not_allowed: "La carte a été refusée pour une raison inconnue."
       try_again_later: "La carte a été refusée pour une raison inconnue."
       withdrawal_count_limit_exceeded: "L'acheteur a dépassé son plafond de carte bancaire."
+      disconnect_failure: "Déconnecter Stripe a échoué."
+    success_code:
+      disconnected: "Le compte Stripe est déconnecté."
   activemodel:
     errors:
       messages:
@@ -223,6 +226,8 @@ fr:
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
   additional_information: "Informations additionnelles"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -777,13 +782,6 @@ fr:
           prompt: "Cette action va supprimer ceci de façon permanente de votre liste."
           confirmation_text: "Supprimer la variante"
           cancellation_text: "Conserver la variante"
-      sort:
-        pagination:
-          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Résultats %{from} à %{to}."
-          per_page:
-            show: Montrer
-            per_page: "%{num} par page"
-          clear_search: Annuler la recherche
       filters:
         search_products: Chercher des produits
         search_for_producers: Rechercher des producteurs
@@ -795,6 +793,13 @@ fr:
         categories:
           label: Conditions de transport
         search: Rechercher
+      sort:
+        pagination:
+          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Résultats %{from} à %{to}."
+          per_page:
+            show: Montrer
+            per_page: "%{num} par page"
+          clear_search: Annuler la recherche
       no_products:
         no_products_found: Pas de produits trouvés
         import_products: Importer plusieurs produits
@@ -1181,6 +1186,7 @@ fr:
           open_date: "Date d'ouverture"
           close_date: "Date de fermeture"
           display_ordering_in_shopfront: "Ordre d'affichage sur la boutique en ligne :"
+          shopfront_sort_by_product: "Par produit"
           shopfront_sort_by_category: "Par catégorie"
           shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"

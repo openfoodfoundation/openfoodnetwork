@@ -658,15 +658,15 @@ es_US:
       index:
         header:
           title: Editar varios Productos
-      sort:
-        pagination:
-          clear_search: Limpiar la búsqueda
       filters:
         producers:
           label: Productoras
         categories:
           label: Categorías
         search: Buscar
+      sort:
+        pagination:
+          clear_search: Limpiar la búsqueda
       table:
         new_variant: Nueva variante
       edit_image:

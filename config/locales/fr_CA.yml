@@ -746,13 +746,6 @@ fr_CA:
         header:
           title: Gestion du catalogue produits
         loading: Vos produits sont en cours de chargement
-      sort:
-        pagination:
-          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
-          per_page:
-            show: Montrer
-            per_page: "%{num} par page"
-          clear_search: Annuler la recherche
       filters:
         search_products: Chercher des produits
         all_producers: Tous les producteurs
@@ -762,6 +755,13 @@ fr_CA:
         categories:
           label: Conditions de transport
         search: Chercher
+      sort:
+        pagination:
+          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
+          per_page:
+            show: Montrer
+            per_page: "%{num} par page"
+          clear_search: Annuler la recherche
       no_products:
         no_products_found: Pas de produits trouvés
         import_products: Importer plusieurs produits

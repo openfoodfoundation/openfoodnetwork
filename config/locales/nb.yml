@@ -772,13 +772,6 @@ nb:
           prompt: "Dette vil fjerne den permanent fra listen din."
           confirmation_text: "Slett variant"
           cancellation_text: "Behold variant"
-      sort:
-        pagination:
-          total_html: "<strong>%{total} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
-          per_page:
-            show: Vis
-            per_page: "%{num} per side"
-          clear_search: Tøm søk
       filters:
         search_products: Søk etter produkter
         search_for_producers: Søk etter produsenter
@@ -790,6 +783,13 @@ nb:
         categories:
           label: Kategorier
         search: Søk
+      sort:
+        pagination:
+          total_html: "<strong>%{total} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
+          per_page:
+            show: Vis
+            per_page: "%{num} per side"
+          clear_search: Tøm søk
       no_products:
         no_products_found: Ingen produkter funnet
         import_products: Importer flere produkter

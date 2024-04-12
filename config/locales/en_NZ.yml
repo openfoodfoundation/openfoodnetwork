@@ -682,15 +682,15 @@ en_NZ:
       index:
         header:
           title: Bulk Edit Products
-      sort:
-        pagination:
-          clear_search: Clear search
       filters:
         producers:
           label: Producers
         categories:
           label: Categories
         search: Search
+      sort:
+        pagination:
+          clear_search: Clear search
       table:
         new_variant: New variant
       edit_image:
