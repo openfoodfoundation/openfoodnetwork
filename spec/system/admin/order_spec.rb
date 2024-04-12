@@ -1006,6 +1006,30 @@ describe '
           it_behaves_like "ship order from dropdown", "Invoices"
           it_behaves_like "ship order from dropdown", "Return Authorizations"
         end
+
+        context 'when not on the Order Details sub section' do
+          before do
+            click_link 'Customer Details'
+          end
+          it 'can ship order too' do
+            find('.ofn-drop-down').click
+            click_link 'Ship Order'
+
+            within ".reveal-modal" do
+              expect(page).to have_checked_field('Send a shipment/pick up ' \
+                                                 'notification email to the customer.')
+              # no test of enqueued job since it can cause failures
+              # if the remainder of the spec is too fasr
+              find_button('Confirm').click
+            end
+
+            # the best & easiest way to close the modal without calling all the JS
+            find_button("Cancel").click
+            expect(order.reload.shipped?).to be true
+            click_link('Order Details')
+            expect(page).to have_text 'SHIPPED'
+          end
+        end
       end
 
       context "when an included variant has been deleted" do
