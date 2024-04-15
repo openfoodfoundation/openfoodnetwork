@@ -87,14 +87,16 @@ module Admin
 
     # Optimise by pre-loading required columns
     def product_query_includes
-      # TODO: add other fields used in columns? (eg supplier: [:name])
       [
-        # variants: [
-        #   :default_price,
-        #   :stock_locations,
-        #   :stock_items,
-        #   :variant_overrides
-        # ]
+        :image,
+        :supplier,
+        { variants: [
+          :default_price,
+          :primary_taxon,
+          :product,
+          :stock_items,
+          :tax_category,
+        ] },
       ]
     end
 
