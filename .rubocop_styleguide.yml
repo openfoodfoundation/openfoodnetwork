@@ -3,7 +3,6 @@
 # These are the rules we agreed upon and we work towards.
 AllCops:
   NewCops: enable
-  SuggestExtensions: false
   Exclude:
     - bin/**/*
     - db/**/*
