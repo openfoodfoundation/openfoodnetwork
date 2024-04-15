@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe "Packing Reports" do
-  include AuthenticationHelper
-
   describe "fetching orders" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:order_cycle) { create(:simple_order_cycle) }
@@ -56,12 +54,20 @@ RSpec.describe "Packing Reports" do
                                              ship_address: create(:address))
       }
       let(:line_item2) {
-        build(:line_item_with_shipment,
-              product: create(:simple_product, name: "visible", supplier: supplier1))
+        build(
+          :line_item_with_shipment,
+          variant: create(
+            :variant, supplier: supplier1, product: create(:simple_product, name: "visible")
+          )
+        )
       }
       let(:line_item3) {
-        build(:line_item_with_shipment,
-              product: create(:simple_product, name: "not visible", supplier: supplier2))
+        build(
+          :line_item_with_shipment,
+          variant: create(
+            :variant, supplier: supplier2, product: create(:simple_product, name: "not visible")
+          )
+        )
       }
 
       before do
@@ -140,7 +146,7 @@ RSpec.describe "Packing Reports" do
         before do
           order4.line_items << line_item4
           order4.finalize!
-          line_item4.variant.product.update(supplier: create(:supplier_enterprise))
+          line_item4.variant.update(supplier: create(:supplier_enterprise))
         end
 
         context "filtering by order cycle" do
