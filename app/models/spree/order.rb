@@ -8,8 +8,6 @@ module Spree
     include Balance
     include SetUnusedAddressFields
 
-    self.belongs_to_required_by_default = false
-
     searchable_attributes :number, :state, :shipment_state, :payment_state, :distributor_id,
                           :order_cycle_id, :email, :total, :customer_id
     searchable_associations :shipping_method, :bill_address, :distributor
@@ -33,13 +31,13 @@ module Spree
 
     token_resource
 
-    belongs_to :user, class_name: "Spree::User"
-    belongs_to :created_by, class_name: "Spree::User"
+    belongs_to :user, class_name: "Spree::User", optional: true
+    belongs_to :created_by, class_name: "Spree::User", optional: true
 
-    belongs_to :bill_address, class_name: 'Spree::Address'
+    belongs_to :bill_address, class_name: 'Spree::Address', optional: true
     alias_attribute :billing_address, :bill_address
 
-    belongs_to :ship_address, class_name: 'Spree::Address'
+    belongs_to :ship_address, class_name: 'Spree::Address', optional: true
     alias_attribute :shipping_address, :ship_address
 
     has_many :state_changes, as: :stateful, dependent: :destroy
@@ -70,9 +68,9 @@ module Spree
              dependent: :destroy
     has_many :invoices, dependent: :restrict_with_exception
 
-    belongs_to :order_cycle
-    belongs_to :distributor, class_name: 'Enterprise'
-    belongs_to :customer
+    belongs_to :order_cycle, optional: true
+    belongs_to :distributor, class_name: 'Enterprise', optional: true
+    belongs_to :customer, optional: true
     has_one :proxy_order, dependent: :destroy
     has_one :subscription, through: :proxy_order
 

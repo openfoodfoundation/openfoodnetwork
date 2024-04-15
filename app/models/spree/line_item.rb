@@ -7,19 +7,17 @@ module Spree
     include VariantUnits::VariantAndLineItemNaming
     include LineItemStockChanges
 
-    self.belongs_to_required_by_default = false
-
     searchable_attributes :price, :quantity, :order_id, :variant_id, :tax_category_id
     searchable_associations :order, :order_cycle, :variant, :product, :supplier, :tax_category
     searchable_scopes :with_tax, :without_tax
 
-    belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items
+    belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, optional: true
     has_one :order_cycle, through: :order
 
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant"
     has_one :product, through: :variant
     has_one :supplier, through: :product
-    belongs_to :tax_category, class_name: "Spree::TaxCategory"
+    belongs_to :tax_category, class_name: "Spree::TaxCategory", optional: true
 
     has_many :adjustments, as: :adjustable, dependent: :destroy
 
@@ -28,7 +26,6 @@ module Spree
     before_validation :copy_tax_category
     before_validation :copy_dimensions
 
-    validates :variant, presence: true
     validates :quantity, numericality: {
       only_integer: true,
       greater_than: -1,

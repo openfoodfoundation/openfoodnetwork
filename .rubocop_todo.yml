@@ -660,27 +660,6 @@ Rails/RedundantActiveRecordAllMethod:
     - 'app/models/spree/variant.rb'
     - 'spec/system/admin/product_import_spec.rb'
 
-# Offense count: 20
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/RedundantPresenceValidationOnBelongsTo:
-  Exclude:
-    - 'app/models/enterprise_fee.rb'
-    - 'app/models/exchange.rb'
-    - 'app/models/inventory_item.rb'
-    - 'app/models/order_cycle.rb'
-    - 'app/models/spree/address.rb'
-    - 'app/models/spree/line_item.rb'
-    - 'app/models/spree/order.rb'
-    - 'app/models/spree/product_property.rb'
-    - 'app/models/spree/return_authorization.rb'
-    - 'app/models/spree/state.rb'
-    - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/stock_movement.rb'
-    - 'app/models/spree/tax_rate.rb'
-    - 'app/models/subscription_line_item.rb'
-    - 'app/models/tag_rule.rb'
-    - 'app/models/variant_override.rb'
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RelativeDateConstant:

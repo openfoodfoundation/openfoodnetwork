@@ -5,11 +5,11 @@ require 'spec_helper'
 describe SubscriptionLineItem, model: true do
   describe "validations" do
     it "requires a subscription" do
-      expect(subject).to validate_presence_of :subscription
+      expect(subject).to belong_to :subscription
     end
 
     it "requires a variant" do
-      expect(subject).to validate_presence_of :variant
+      expect(subject).to belong_to :variant
     end
 
     it "requires a integer for quantity" do
