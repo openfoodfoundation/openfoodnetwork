@@ -20,17 +20,19 @@
           buildInputs = [
             pkgs.ruby
             pkgs.bundler
+            pkgs.gcc
             pkgs.postgresql_16_jit
             pkgs.nodejs_21
             pkgs.redis
+            pkgs.rubyPackages.prism
             pkgs.shared-mime-info
             pkgs.libyaml
             pkgs.yarn
           ] ;
-          shellHook = pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
-            export CPATH=$(xcrun --sdk macosx --show-sdk-path)/usr/include
+        #   shellHook = pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
+        #     export CPATH=$(xcrun --sdk macosx --show-sdk-path)/usr/include
 
-          '';
+        #   '';
         };
       });
     in outputs // {};

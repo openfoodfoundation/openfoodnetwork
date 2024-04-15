@@ -182,6 +182,13 @@ GEM
     base64 (0.2.0)
     bcp47_spec (0.2.1)
     bcrypt (3.1.20)
+    better_html (2.1.1)
+      actionview (>= 6.0)
+      activesupport (>= 6.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      parser (>= 2.4)
+      smart_properties
     bigdecimal (3.0.2)
     bindata (2.5.0)
     bindex (0.8.1)
@@ -232,6 +239,7 @@ GEM
       ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
+    constant_resolver (0.2.0)
     crack (1.0.0)
       bigdecimal
       rexml
@@ -486,6 +494,17 @@ GEM
       validate_url
       webfinger (~> 2.0)
     orm_adapter (0.5.0)
+    packwerk (3.2.0)
+      activesupport (>= 6.0)
+      ast
+      better_html
+      bundler
+      constant_resolver (>= 0.2.0)
+      parallel
+      parser
+      prism (>= 0.24.0)
+      sorbet-runtime (>= 0.5.9914)
+      zeitwerk (>= 2.6.1)
     pagy (5.10.1)
       activesupport
     paper_trail (15.1.0)
@@ -509,6 +528,7 @@ GEM
       ruby-rc4
       ttfunk
     pg (1.2.3)
+    prism (0.25.0)
     private_address_check (0.5.0)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -734,6 +754,8 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
+    smart_properties (1.17.0)
+    sorbet-runtime (0.5.11346)
     spreadsheet_architect (5.0.0)
       caxlsx (>= 3.3.0, < 4)
       rodf (>= 1.0.0, < 2)
@@ -926,6 +948,7 @@ DEPENDENCIES
   omniauth_openid_connect
   openid_connect
   order_management!
+  packwerk
   pagy (~> 5.1)
   paper_trail
   paranoia (~> 2.4)
