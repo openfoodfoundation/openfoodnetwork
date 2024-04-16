@@ -3,6 +3,9 @@
 require 'spec_helper'
 
 describe PaymentsController, type: :controller do
+    let!(:user) { create(:user) }
+    let!(:order) { create(:order, user: user) }
+    let!(:payment) { create(:payment, order: order) }
     
     describe "testing redirect_to_authorize" do
         context "when user isn't logged in" do
@@ -13,8 +16,8 @@ describe PaymentsController, type: :controller do
             end
         end
     
-    context "when user is logged in" do
-    
+        context "when user is logged in" do
+        
+        end
     end
-
 end
