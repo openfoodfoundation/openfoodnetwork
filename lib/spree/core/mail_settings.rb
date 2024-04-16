@@ -20,9 +20,7 @@ module Spree
       private
 
       def mail_server_settings
-        settings = basic_settings.merge(user_credentials)
-
-        settings.merge(enable_starttls_auto: secure_connection?)
+        basic_settings.merge(user_credentials)
       end
 
       def user_credentials
@@ -31,10 +29,13 @@ module Spree
       end
 
       def basic_settings
-        { address: Config.mail_host,
+        {
+          address: Config.mail_host,
           domain: Config.mail_domain,
           port: Config.mail_port,
-          authentication: }
+          authentication:,
+          enable_starttls_auto: secure_connection?,
+        }
       end
 
       def authentication
