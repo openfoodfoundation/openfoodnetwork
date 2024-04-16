@@ -1692,12 +1692,11 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         product.variants << v2
 
         visit spree.admin_products_path
-        page.find('a.view-variants').click
       end
 
       it "when variant unit value is: '120'" do
         within "tr#v_#{v2.id}" do
-          page.find(".add-variant").click
+          find("button.secondary.condensed.naked.icon-plus").click
         end
 
         within "tr#v_-1" do
@@ -1711,7 +1710,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
       it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
         within "tr#v_#{v2.id}" do
-          page.find(".add-variant").click
+          find("button.secondary.condensed.naked.icon-plus").click
         end
 
         within "tr#v_-1" do
@@ -1729,7 +1728,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         scroll_to(:bottom)
 
         within "tr#v_#{v2.id}" do
-          page.find(".add-variant").click
+          find("button.secondary.condensed.naked.icon-plus").click
         end
 
         within "tr#v_-1" do
