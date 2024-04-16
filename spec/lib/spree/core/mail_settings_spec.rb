@@ -23,7 +23,7 @@ module Spree
           it { expect(ActionMailer::Base.smtp_settings[:address]).to eq "smtp.example.com" }
           it { expect(ActionMailer::Base.smtp_settings[:domain]).to eq "example.com" }
           it { expect(ActionMailer::Base.smtp_settings[:port]).to eq 123 }
-          it { expect(ActionMailer::Base.smtp_settings[:authentication]).to eq "None" }
+          it { expect(ActionMailer::Base.smtp_settings[:authentication]).to eq nil }
           it { expect(ActionMailer::Base.smtp_settings[:enable_starttls_auto]).to be_truthy }
 
           it "doesnt touch user name config" do

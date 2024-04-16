@@ -38,7 +38,13 @@ module Spree
         { address: Config.mail_host,
           domain: Config.mail_domain,
           port: Config.mail_port,
-          authentication: Config.mail_auth_type }
+          authentication: }
+      end
+
+      def authentication
+        return unless need_authentication?
+
+        Config.mail_auth_type.presence
       end
 
       def need_authentication?
