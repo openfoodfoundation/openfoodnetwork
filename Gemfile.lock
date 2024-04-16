@@ -629,7 +629,7 @@ GEM
       rspec-support (~> 3.13)
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
-    rspec-sql (0.0.1)
+    rspec-sql (0.0.2)
       activesupport
       rspec
     rspec-support (3.13.1)
