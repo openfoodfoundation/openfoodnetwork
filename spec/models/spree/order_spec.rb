@@ -140,23 +140,6 @@ describe Spree::Order do
     end
   end
 
-  context "#invoiceable?" do
-    it "should return true if the order is completed" do
-      allow(order).to receive_messages(complete?: true)
-      expect(order.invoiceable?).to be_truthy
-    end
-
-    it "should return true if the order is resumed" do
-      allow(order).to receive_messages(resumed?: true)
-      expect(order.invoiceable?).to be_truthy
-    end
-
-    it "should return false if the order is neither completed nor resumed" do
-      allow(order).to receive_messages(complete?: false, resumed?: false)
-      expect(order.invoiceable?).to be_falsy
-    end
-  end
-
   context '#changes_allowed?' do
     let(:order) { create(:order_ready_for_details) }
     let(:complete) { true }
@@ -997,6 +980,19 @@ describe Spree::Order do
   end
 
   describe "scopes" do
+    describe "invoiceable" do
+      it "finds only active orders" do
+        order_complete = create(:order, state: :complete)
+        order_canceled = create(:order, state: :canceled)
+        order_resumed = create(:order, state: :resumed)
+
+        expect(Spree::Order.invoiceable).to match_array [
+          order_complete,
+          order_resumed,
+        ]
+      end
+    end
+
     describe "not_state" do
       it "finds only orders not in specified state" do
         o = FactoryBot.create(:completed_order_with_totals,
@@ -1322,19 +1318,6 @@ describe Spree::Order do
         expect(order.finalised_line_items)
           .to match_array(prev_order.line_items + prev_order2.line_items)
       end
-    end
-  end
-
-  describe "determining checkout steps for an order" do
-    let!(:enterprise) { create(:enterprise) }
-    let!(:order) { create(:order, distributor: enterprise) }
-    let!(:payment_method) {
-      create(:stripe_sca_payment_method, distributor_ids: [enterprise.id])
-    }
-    let!(:payment) { create(:payment, order:, payment_method:) }
-
-    it "does not include the :confirm step" do
-      expect(order.checkout_steps).not_to include "confirm"
     end
   end
 

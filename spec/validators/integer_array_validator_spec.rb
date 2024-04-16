@@ -3,14 +3,6 @@
 require "spec_helper"
 
 describe IntegerArrayValidator do
-  class TestModel
-    include ActiveModel::Validations
-
-    attr_accessor :ids
-
-    validates :ids, integer_array: true
-  end
-
   describe "internationalization" do
     it "has translation for NOT_ARRAY_ERROR" do
       expect(described_class.not_array_error).not_to be_blank
@@ -22,7 +14,14 @@ describe IntegerArrayValidator do
   end
 
   describe "validation" do
-    let(:instance) { TestModel.new }
+    let(:instance) do
+      Class.new do
+        include ActiveModel::Validations
+        attr_accessor :ids
+
+        validates :ids, integer_array: true
+      end.new
+    end
 
     it "does not add error when nil" do
       instance.ids = nil

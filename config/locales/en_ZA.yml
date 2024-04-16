@@ -525,15 +525,15 @@ en_ZA:
       index:
         header:
           title: Bulk Edit Products
-      sort:
-        pagination:
-          clear_search: Clear search
       filters:
         producers:
           label: Pricing
         categories:
           label: Categories
         search: Search
+      sort:
+        pagination:
+          clear_search: Clear search
       table:
         new_variant: New variant
       edit_image:

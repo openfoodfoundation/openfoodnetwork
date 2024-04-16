@@ -43,7 +43,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       expect(page).to have_selector ".pagination"
       expect_products_count_to_be 15
       within ".pagination" do
-        click_link "2"
+        click_on "2"
       end
 
       expect(page).to have_content "Showing 16 to 16" # todo: remove unnecessary duplication
@@ -66,6 +66,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   describe "search" do
+    # TODO: explicitly test with multiple products, to ensure incorrect products don't show.
+    # TODO: test with  multiple variants, to ensure distinct query reponse
     context "product has searchable term" do
       # create a product with a name that can be searched
       let!(:product_by_name) { create(:simple_product, name: "searchable product") }
@@ -86,7 +88,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         visit admin_products_url
 
         within ".pagination" do
-          click_link "2"
+          click_on "2"
         end
 
         expect(page).to have_content "Showing 16 to 16"
@@ -369,7 +371,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       product_a.update! sku: "APL-10"
 
       expect {
-        click_button "Discard changes"
+        accept_confirm do
+          click_on "Discard changes"
+        end
         product_a.reload
       }.not_to change { product_a.name }
 
@@ -383,6 +387,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       let!(:product_b) { create(:simple_product, name: "Bananas") }
 
       before do
+        visit admin_products_url
+
         within row_containing_name("Apples") do
           fill_in "Name", with: ""
           fill_in "SKU", with: "A" * 256
@@ -580,6 +586,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       let!(:product_b) { create(:simple_product, name: "Bananas") }
 
       before do
+        visit admin_products_url
+
         within row_containing_name("Apples") do
           fill_in "Name", with: ""
           fill_in "SKU", with: "A" * 256
@@ -600,6 +608,35 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(page).not_to have_content("0 product was saved correctly, but")
         expect(page).to have_content("1 product could not be saved")
         expect(page).to have_content "Please review the errors and try again"
+      end
+    end
+
+    context "pagination" do
+      let!(:product_a) { create(:simple_product, name: "zucchini") } # appears on p2
+
+      it "retains selected page after saving" do
+        create_products 15 # in addition to product_a
+        visit admin_products_url
+
+        within ".pagination" do
+          click_on "2"
+        end
+        within row_containing_name("zucchini") do
+          fill_in "Name", with: "zucchinis"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          product_a.reload
+        }.to change { product_a.name }.to("zucchinis")
+
+        expect(page).to have_content "Showing 16 to 16" # todo: remove unnecessary duplication
+        expect_page_to_be 2
+        expect_per_page_to_be 15
+        expect_products_count_to_be 1
+        expect(page).to have_css row_containing_name("zucchinis")
       end
     end
   end
@@ -741,11 +778,11 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         "tr:has(input[aria-label=Price][value='#{product_a.price}'])"
       }
 
-      before do
-        visit admin_products_url
-      end
-
       describe "Actions columns (delete)" do
+        before do
+          visit admin_products_url
+        end
+
         it "shows an actions menu with a delete link when clicking on icon for product. " \
            "doesn't show delete link for the single variant" do
           within product_selector do
@@ -761,13 +798,14 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           end
         end
 
-        it "shows an actions menu with a delete link when clicking on icon for variant" \
+        it "shows an actions menu with a delete link when clicking on icon for variant " \
            "if have multiple" do
           create(:variant,
                  product: product_a,
                  display_name: "Medium box",
                  sku: "APL-01",
                  price: 5.25)
+          visit admin_products_url
 
           # to select the default variant
           within default_variant_selector do
@@ -796,6 +834,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         context "when 'keep product/variant' is selected" do
           it 'should not delete the product/variant' do
+            visit admin_products_url
+
             # Keep Product
             within product_selector do
               page.find(".vertical-ellipsis-menu").click
@@ -828,6 +868,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           let(:success_flash_message_selector) { "div.flash.success" }
           let(:error_flash_message_selector) { "div.flash.error" }
           it 'should successfully delete the product/variant' do
+            visit admin_products_url
             # Delete Variant
             within variant_selector do
               page.find(".vertical-ellipsis-menu").click
@@ -867,6 +908,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           end
 
           it 'should be failed to delete the product/variant' do
+            visit admin_products_url
             allow_any_instance_of(Spree::Product).to receive(:destroy).and_return(false)
             allow_any_instance_of(Spree::Variant).to receive(:destroy).and_return(false)
 
@@ -917,7 +959,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   def expect_page_to_be(page_number)
-    expect(page).to have_selector ".pagination span.page.current", text: page_number.to_s
+    expect(page).to have_selector ".pagination .page.current", text: page_number.to_s
   end
 
   def expect_per_page_to_be(per_page)

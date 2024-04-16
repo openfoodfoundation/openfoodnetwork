@@ -6,8 +6,6 @@ export default class extends ApplicationController {
 
   connect() {
     super.connect();
-    // Fetch the products on page load
-    this.stimulate("Products#fetch");
   }
 
   beforeReflex() {

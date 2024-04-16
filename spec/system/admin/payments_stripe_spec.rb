@@ -205,7 +205,7 @@ describe '
 
         page.find('a.icon-void').click
 
-        expect(page).to have_content "VOID"
+        expect(page).to have_content "VOID", wait: 4
         expect(payment.reload.state).to eq "void"
       end
     end

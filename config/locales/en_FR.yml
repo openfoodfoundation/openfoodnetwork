@@ -194,6 +194,9 @@ en_FR:
       transaction_not_allowed: "The card has been declined for an unknown reason."
       try_again_later: "The card has been declined for an unknown reason."
       withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      disconnect_failure: "Failed to disconnect Stripe."
+    success_code:
+      disconnected: "Stripe account disconnected."
   activemodel:
     errors:
       messages:
@@ -223,6 +226,8 @@ en_FR:
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   additional_information: "Additional Information"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -778,13 +783,6 @@ en_FR:
           prompt: "This will permanently remove it from your list."
           confirmation_text: "Delete variant"
           cancellation_text: "Keep variant"
-      sort:
-        pagination:
-          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
-          per_page:
-            show: Show
-            per_page: "%{num} per page"
-          clear_search: Clear search
       filters:
         search_products: Search for products
         search_for_producers: Search for producers
@@ -796,6 +794,13 @@ en_FR:
         categories:
           label: Categories
         search: Search
+      sort:
+        pagination:
+          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
+          per_page:
+            show: Show
+            per_page: "%{num} per page"
+          clear_search: Clear search
       no_products:
         no_products_found: No products found
         import_products: Import multiple products
@@ -1180,6 +1185,7 @@ en_FR:
           open_date: "Open Date"
           close_date: "Close Date"
           display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_product: "By product"
           shopfront_sort_by_category: "By category"
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"

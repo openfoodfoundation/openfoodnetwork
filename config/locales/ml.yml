@@ -756,13 +756,6 @@ ml:
         header:
           title: ഉൽപ്പന്നങ്ങൾ മൊത്തമായി തിരുത്തുക
         loading: നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ ലോഡ് ചെയ്യുന്നു
-      sort:
-        pagination:
-          total_html: "നിങ്ങളുടെ തിരയൽ മാനദണ്ഡങ്ങൾക്കനുസരിച്ച് <strong>%{total} ഉൽപ്പന്നങ്ങൾ</strong> കണ്ടെത്തി. %{from} മുതൽ %{to} വരെ കാണിക്കുന്നു."
-          per_page:
-            show: കാണിക്കുക
-            per_page: "ഓരോ പേജിലും %{num}"
-          clear_search: തിരയൽ മായ്‌ക്കുക
       filters:
         search_products: ഉൽപ്പന്നങ്ങൾക്കായി തിരയുക
         all_producers: എല്ലാ പ്രൊഡ്യൂസേഴ്‌സും
@@ -772,6 +765,13 @@ ml:
         categories:
           label: വിഭാഗങ്ങൾ
         search: തിരയുക
+      sort:
+        pagination:
+          total_html: "നിങ്ങളുടെ തിരയൽ മാനദണ്ഡങ്ങൾക്കനുസരിച്ച് <strong>%{total} ഉൽപ്പന്നങ്ങൾ</strong> കണ്ടെത്തി. %{from} മുതൽ %{to} വരെ കാണിക്കുന്നു."
+          per_page:
+            show: കാണിക്കുക
+            per_page: "ഓരോ പേജിലും %{num}"
+          clear_search: തിരയൽ മായ്‌ക്കുക
       no_products:
         no_products_found: ഉൽപ്പന്നങ്ങളൊന്നും കണ്ടെത്തിയില്ല
         import_products: ഒന്നിലധികം ഉൽപ്പന്നങ്ങൾ ഇറക്കുമതി ചെയ്യുക

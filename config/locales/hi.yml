@@ -753,13 +753,6 @@ hi:
         header:
           title: बल्क उत्पाद एडिट करें
         loading: अपने उत्पादों को लोड कर रहा है
-      sort:
-        pagination:
-          total_html: "<strong>%{total} उत्पाद</strong> आपके सर्च क्राइटेरिया के लिए मिले। %{from} से %{to} दिखा रहा है।"
-          per_page:
-            show: दिखाएं
-            per_page: "%{num} प्रति पेज"
-          clear_search: सर्च साफ़ करें
       filters:
         search_products: उत्पादों के लिए सर्च करें
         all_producers: सभी उत्पादक
@@ -769,6 +762,13 @@ hi:
         categories:
           label: श्रेणियां
         search: सर्च
+      sort:
+        pagination:
+          total_html: "<strong>%{total} उत्पाद</strong> आपके सर्च क्राइटेरिया के लिए मिले। %{from} से %{to} दिखा रहा है।"
+          per_page:
+            show: दिखाएं
+            per_page: "%{num} प्रति पेज"
+          clear_search: सर्च साफ़ करें
       no_products:
         no_products_found: कोई उत्पाद नहीं मिला
         import_products: कई उत्पाद इम्पोर्ट करें

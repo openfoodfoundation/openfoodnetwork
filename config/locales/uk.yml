@@ -684,15 +684,15 @@ uk:
       index:
         header:
           title: Масове редагування продуктів
-      sort:
-        pagination:
-          clear_search: Очистити пошук
       filters:
         producers:
           label: Виробники
         categories:
           label: Категорії
         search: Пошук
+      sort:
+        pagination:
+          clear_search: Очистити пошук
       table:
         new_variant: Новий варіант
       edit_image:

@@ -756,13 +756,6 @@ de_DE:
         header:
           title: Produkte verwalten
         loading: Produkte werden geladen...
-      sort:
-        pagination:
-          total_html: "<strong>%{total} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
-          per_page:
-            show: Zeige
-            per_page: "%{num} pro Seite"
-          clear_search: Suche zurücksetzen
       filters:
         search_products: Nach Produkten suchen
         all_producers: Alle Produzenten
@@ -772,6 +765,13 @@ de_DE:
         categories:
           label: Lieferkategorien
         search: Suche
+      sort:
+        pagination:
+          total_html: "<strong>%{total} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
+          per_page:
+            show: Zeige
+            per_page: "%{num} pro Seite"
+          clear_search: Suche zurücksetzen
       no_products:
         no_products_found: Keine Produkte gefunden.
         import_products: Produkte importieren
@@ -2887,7 +2887,7 @@ de_DE:
   report_header_billing_state: Rechnungsadresse Bundesland
   report_header_incoming_transport: Eingehender Transport
   report_header_special_instructions: Besondere Hinweise
-  report_header_order_number: Bestell-Nummer
+  report_header_order_number: Bestellnummer
   report_header_date: Datum
   report_header_confirmation_date: Bestätigungsdatum
   report_header_tags: Stichwörter
@@ -2962,7 +2962,7 @@ de_DE:
   report_header_units_required: Benötigte Einheiten
   report_header_remainder: Rest
   report_header_order_date: Bestelldatum
-  report_header_order_id: Bestell-Nummer
+  report_header_order_id: Bestellnummer
   report_header_item_name: Produktname
   report_header_temp_controlled_items: Temperaturüberwachte Produkte?
   report_header_customer_name: Kundenname
@@ -3086,7 +3086,7 @@ de_DE:
   order_cycles_no_permission_to_coordinate_error: "Keines Ihrer Unternehmen ist berechtigt, einen Bestellzyklus zu koordinieren."
   order_cycles_no_permission_to_create_error: "Sie sind nicht berechtigt, einen von diesem Unternehmen koordinierten Bestellzyklus zu erstellen."
   order_cycle_closed: "Der von Ihnen ausgewählte Bestellzyklus wurde gerade geschlossen. Bitte versuchen Sie es später noch einmal!"
-  back_to_orders_list: "Zurück zur Bestellliste"
+  back_to_orders_list: "Zurück zur Bestellübersicht"
   no_orders_found: "Keine Bestellungen gefunden."
   order_information: "Bestellinformationen"
   new_payment: "Neue Zahlung"
@@ -3522,7 +3522,7 @@ de_DE:
       other: "Schalen"
     piece:
       one: "Stück"
-      other: "Stücke"
+      other: "Stück"
     pot:
       one: "Topf"
       other: "Töpfe"
@@ -3685,7 +3685,7 @@ de_DE:
     add_product: "Produkt hinzufügen"
     name_or_sku: "Produktname oder Artikelnummer (geben Sie mindestens die ersten 3 Zeichen des Produktnamens ein)"
     resend: "Erneut senden"
-    back_to_orders_list: "Zurück zur Bestellliste"
+    back_to_orders_list: "Zurück zur Bestellübersicht"
     back_to_payments_list: "Zurück zur Zahlungsliste"
     return_authorizations: "Retouren"
     cannot_create_returns: "Retouren können nicht erstellt werden, da für diese Bestellung keine Lieferung bestätigt wurde."
@@ -3938,7 +3938,7 @@ de_DE:
         index:
           new_return_authorization: "Neue Retour"
           return_authorizations: "Retouren"
-          back_to_orders_list: "Zurück zur Bestellliste"
+          back_to_orders_list: "Zurück zur Bestellübersicht"
           rma_number: "RMA-Nummer"
           status: "Status"
           amount: "Betrag"

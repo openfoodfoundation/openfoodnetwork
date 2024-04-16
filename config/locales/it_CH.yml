@@ -658,15 +658,15 @@ it_CH:
       index:
         header:
           title: Modifica prodotti tabella
-      sort:
-        pagination:
-          clear_search: Pulisci ricerca
       filters:
         producers:
           label: Produttori
         categories:
           label: categorie
         search: Cerca
+      sort:
+        pagination:
+          clear_search: Pulisci ricerca
       table:
         new_variant: Nuova variante
       edit_image:

@@ -56,7 +56,7 @@ module ProductImport
           else
             Spree::Variant.
               joins(:product).
-              where('spree_products.supplier_id IN (?)', enterprise_id).
+              where(spree_products: { supplier_id: enterprise_id }).
               count
           end
 

@@ -6,33 +6,10 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 16
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: enums
-Lint/ConstantDefinitionInBlock:
-  Exclude:
-    - 'lib/tasks/import_product_images.rake'
-    - 'lib/tasks/users.rake'
-    - 'spec/controllers/spree/admin/base_controller_spec.rb'
-    - 'spec/helpers/serializer_helper_spec.rb'
-    - 'spec/lib/reports/line_items_spec.rb'
-    - 'spec/models/spree/ability_spec.rb'
-    - 'spec/models/spree/gateway_spec.rb'
-    - 'spec/models/spree/preferences/configuration_spec.rb'
-    - 'spec/models/spree/preferences/preferable_spec.rb'
-    - 'spec/validators/date_time_string_validator_spec.rb'
-    - 'spec/validators/integer_array_validator_spec.rb'
-
 # Offense count: 2
 Lint/DuplicateMethods:
   Exclude:
     - 'lib/discourse/single_sign_on.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/DuplicateRequire:
-  Exclude:
-    - 'spec/lib/open_food_network/scope_variants_to_search_spec.rb'
 
 # Offense count: 16
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
@@ -599,31 +576,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/spree/tax_rate.rb'
     - 'app/models/spree/variant.rb'
 
-# Offense count: 26
-# Configuration parameters: Include.
-# Include: app/helpers/**/*.rb
-Rails/HelperInstanceVariable:
-  Exclude:
-    - 'app/helpers/injection_helper.rb'
-    - 'app/helpers/shared_helper.rb'
-    - 'app/helpers/spree/admin/orders_helper.rb'
-    - 'app/helpers/spree/orders_helper.rb'
-
-# Offense count: 8
-# Configuration parameters: Include.
-# Include: spec/**/*.rb, test/**/*.rb
-Rails/I18nLocaleAssignment:
-  Exclude:
-    - 'spec/controllers/user_registrations_controller_spec.rb'
-    - 'spec/helpers/i18n_helper_spec.rb'
-    - 'spec/models/spree/variant_spec.rb'
-    - 'spec/system/admin/order_cycles/list_spec.rb'
-
-# Offense count: 3
-Rails/I18nLocaleTexts:
-  Exclude:
-    - 'app/controllers/admin/stripe_accounts_controller.rb'
-
 # Offense count: 22
 # Configuration parameters: IgnoreScopes, Include.
 # Include: app/models/**/*.rb
@@ -667,16 +619,6 @@ Rails/LexicallyScopedActionFilter:
     - 'app/controllers/spree/admin/users_controller.rb'
     - 'app/controllers/spree/admin/zones_controller.rb'
     - 'app/controllers/spree/users_controller.rb'
-
-# Offense count: 5
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/NegateInclude:
-  Exclude:
-    - 'app/controllers/admin/resource_controller.rb'
-    - 'app/models/calculator/weight.rb'
-    - 'app/models/product_import/spreadsheet_entry.rb'
-    - 'lib/spree/localized_number.rb'
-    - 'spec/support/matchers/table_matchers.rb'
 
 # Offense count: 32
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -830,38 +772,6 @@ Rails/UnusedRenderContent:
     - 'app/controllers/api/v0/products_controller.rb'
     - 'app/controllers/api/v0/taxons_controller.rb'
     - 'app/controllers/api/v0/variants_controller.rb'
-
-# Offense count: 54
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/WhereEquals:
-  Exclude:
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/mailers/producer_mailer.rb'
-    - 'app/models/enterprise.rb'
-    - 'app/models/enterprise_fee.rb'
-    - 'app/models/enterprise_group.rb'
-    - 'app/models/enterprise_relationship.rb'
-    - 'app/models/exchange.rb'
-    - 'app/models/order_cycle.rb'
-    - 'app/models/product_import/entry_processor.rb'
-    - 'app/models/proxy_order.rb'
-    - 'app/models/schedule.rb'
-    - 'app/models/spree/line_item.rb'
-    - 'app/models/spree/order.rb'
-    - 'app/models/spree/payment_method.rb'
-    - 'app/models/spree/product.rb'
-    - 'app/models/spree/shipping_method.rb'
-    - 'app/models/spree/variant.rb'
-    - 'app/models/subscription.rb'
-    - 'app/serializers/api/enterprise_shopfront_serializer.rb'
-    - 'app/serializers/api/order_serializer.rb'
-    - 'lib/open_food_network/enterprise_fee_calculator.rb'
-    - 'lib/open_food_network/order_cycle_permissions.rb'
-    - 'lib/reporting/reports/products_and_inventory/base.rb'
-    - 'lib/tasks/data.rake'
-    - 'lib/tasks/data/anonymize_data.rake'
-    - 'lib/tasks/data/remove_transient_data.rb'
-    - 'spec/services/product_tag_rules_filterer_spec.rb'
 
 # Offense count: 8
 # This cop supports unsafe autocorrection (--autocorrect-all).

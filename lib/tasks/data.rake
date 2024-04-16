@@ -46,11 +46,13 @@ namespace :ofn do
           end
 
           # For each variant in the exchange
-          products = Spree::Product.joins(:variants).where(
-            'spree_variants.id IN (?)', exchange.variants
-          ).pluck(:id).uniq
-          producers = Enterprise.joins(:supplied_products).where("spree_products.id IN (?)",
-                                                                 products).distinct
+          products = Spree::Product.joins(:variants)
+            .where(spree_variants: { id: exchange.variants })
+            .pluck(:id)
+            .uniq
+          producers = Enterprise.joins(:supplied_products)
+            .where(spree_products: { id: products })
+            .distinct
           producers.each do |producer|
             next if producer == exchange.receiver
 

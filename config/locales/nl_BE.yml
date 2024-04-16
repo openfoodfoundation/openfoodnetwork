@@ -538,15 +538,15 @@ nl_BE:
       index:
         header:
           title: Beheer van de productencatalogus
-      sort:
-        pagination:
-          clear_search: Verwijder zoektermen
       filters:
         producers:
           label: Producenten
         categories:
           label: Categorieën
         search: Zoeken
+      sort:
+        pagination:
+          clear_search: Verwijder zoektermen
       table:
         new_variant: Nieuw variant
       edit_image:

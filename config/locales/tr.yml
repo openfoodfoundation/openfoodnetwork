@@ -599,15 +599,15 @@ tr:
       index:
         header:
           title: Ürünleri Toplu Düzenleme
-      sort:
-        pagination:
-          clear_search: Aramayı temizle
       filters:
         producers:
           label: ÜRETİCİLER
         categories:
           label: Kategoriler
         search: Ara
+      sort:
+        pagination:
+          clear_search: Aramayı temizle
       table:
         new_variant: Yeni Çeşit
       edit_image:

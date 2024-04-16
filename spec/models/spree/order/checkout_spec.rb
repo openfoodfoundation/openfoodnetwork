@@ -6,22 +6,6 @@ describe Spree::Order::Checkout do
   let(:order) { Spree::Order.new }
 
   context "with default state machine" do
-    context "#checkout_steps" do
-      context "when payment not required" do
-        before { allow(order).to receive_messages payment_required?: false }
-        specify do
-          expect(order.checkout_steps).to eq %w(address delivery confirmation complete)
-        end
-      end
-
-      context "when payment required" do
-        before { allow(order).to receive_messages payment_required?: true }
-        specify do
-          expect(order.checkout_steps).to eq %w(address delivery payment confirmation complete)
-        end
-      end
-    end
-
     it "starts out at cart" do
       expect(order.state).to eq "cart"
     end

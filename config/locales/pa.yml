@@ -745,13 +745,6 @@ pa:
         header:
           title: ਥੋਕ ਸੰਪਾਦਿਤ ਉਤਪਾਦ
         loading: ਤੁਹਾਡੇ ਉਤਪਾਦ ਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ
-      sort:
-        pagination:
-          total_html: "ਤੁਹਾਡੇ ਖੋਜ ਮਾਪਦੰਡ ਲਈ <strong>%{total} ਉਤਪਾਦ</strong> ਮਿਲੇ ਹਨ। %{from} ਤੋਂ %{to} ਦਿਖਾ ਰਹੇ ਹਨ।"
-          per_page:
-            show: ਵਿਖਾਓ
-            per_page: "%{num} ਪ੍ਰਤੀ ਪੇਜ"
-          clear_search: ਖੋਜ ਮਿਟਾਓ
       filters:
         search_products: ਉਤਪਾਦਾਂ ਦੀ ਖੋਜ ਕਰੋ
         all_producers: ਸਾਰੇ ਉਤਪਾਦਕ
@@ -761,6 +754,13 @@ pa:
         categories:
           label: ਸ਼੍ਰੇਣੀਆਂ
         search: ਖੋਜੋ
+      sort:
+        pagination:
+          total_html: "ਤੁਹਾਡੇ ਖੋਜ ਮਾਪਦੰਡ ਲਈ <strong>%{total} ਉਤਪਾਦ</strong> ਮਿਲੇ ਹਨ। %{from} ਤੋਂ %{to} ਦਿਖਾ ਰਹੇ ਹਨ।"
+          per_page:
+            show: ਵਿਖਾਓ
+            per_page: "%{num} ਪ੍ਰਤੀ ਪੇਜ"
+          clear_search: ਖੋਜ ਮਿਟਾਓ
       no_products:
         no_products_found: ਕੋਈ ਉਤਪਾਦ ਨਹੀਂ ਲੱਭੇ
         import_products: ਇੱਕ ਤੋਂ ਜ਼ਿਆਦਾ ਉਤਪਾਦ ਇਮਪੋਰਟ ਕਰੋ

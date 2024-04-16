@@ -141,7 +141,7 @@ module Spree
       if user.has_spree_role?('admin')
         where(nil)
       else
-        where('spree_orders.distributor_id IN (?)', user.enterprises.select(&:id))
+        where(spree_orders: { distributor_id: user.enterprises.select(&:id) })
       end
     }
 
@@ -165,6 +165,7 @@ module Spree
     scope :finalized, -> { where(state: FINALIZED_STATES) }
     scope :complete, -> { where.not(completed_at: nil) }
     scope :incomplete, -> { where(completed_at: nil) }
+    scope :invoiceable, -> { where(state: [:complete, :resumed]) }
     scope :by_state, lambda { |state| where(state:) }
     scope :not_state, lambda { |state| where.not(state:) }
 
@@ -211,10 +212,6 @@ module Spree
 
     def completed?
       completed_at.present?
-    end
-
-    def invoiceable?
-      complete? || resumed?
     end
 
     # Indicates whether or not the user is allowed to proceed to checkout.

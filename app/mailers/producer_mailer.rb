@@ -52,7 +52,7 @@ class ProducerMailer < ApplicationMailer
   def distributors_pickup_times_for(line_items)
     @order_cycle.distributors.
       joins(:distributed_orders).
-      where("spree_orders.id IN (?)", line_items.map(&:order_id).uniq).
+      where(spree_orders: { id: line_items.map(&:order_id).uniq }).
       map do |distributor|
       [distributor.name, @order_cycle.pickup_time_for(distributor)]
     end
