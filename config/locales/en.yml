@@ -264,6 +264,10 @@ en:
               not_available_to_shop: "is not available to %{shop}"
   card_details: "Card details"
   card_type: "Card type"
+  card_type_is: "Card type is"
+  unrecognized_card_type: "Unrecognized card type"
+  use_new_cc: "Use a new credit card"
+  what_is_this: "What is this?"
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
@@ -712,6 +716,7 @@ en:
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
+        instance_publishable_key: Instance Publishable Key
         account_id: Account ID
         business_name: Business Name
         charges_enabled: Charges Enabled
@@ -2628,6 +2633,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
+  thank_you_for_your_order: "Thank you for your order"
 
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
@@ -3872,6 +3878,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     editing_tax_category: "Editing tax category"
     editing_tax_rate: "Editing tax rate"
     editing_zone: "Editing zone"
+    editing_state: "Editing State"
     expiration: "Expiration"
     invalid_payment_provider: "Invalid payment provider"
     items_cannot_be_shipped: "Items cannot be shipped"
@@ -3883,7 +3890,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     new_taxon: "New taxon"
     new_user: "New user"
     no_pending_payments: "No pending payments"
-    "none": "None"
+    remove: "Remove"
+    none: "None"
     not_found: "Not found"
     notice_messages:
       variant_deleted: "Variant deleted"
@@ -3909,6 +3917,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     resend: "Resend"
     back_to_orders_list: "Back To Orders List"
     back_to_payments_list: "Back To Payments List"
+    back_to_states_list: "Back To States List"
     return_authorizations: "Return Authorizations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
