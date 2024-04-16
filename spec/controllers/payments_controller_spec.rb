@@ -17,7 +17,28 @@ describe PaymentsController, type: :controller do
         end
     
         context "when user is logged in" do
-        
+            before do
+                allow(controller).to receive(:spree_current_user).and_return(user)
+            end
+
+            context "has cvv response message" do
+                before do
+                    allow_any_instance_of(Spree::Payment).to receive(:cvv_response_message).and_return('http://example.com')
+                end
+
+                it "redirects to the CVV response URL" do
+                    get :redirect_to_authorize, params: { id: payment.id }
+                    expect(response).to redirect_to('http://example.com')
+                  end
+                  
+            end
+
+            context "doesn't have cvv response message" do
+                it "redirect to order URL" do
+                    get :redirect_to_authorize, params: { id: payment.id }
+                    expect(response).to redirect_to(order_url(order))
+                end
+            end
         end
     end
 end
