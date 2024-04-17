@@ -33,25 +33,12 @@ export default class BulkFormController extends Controller {
 
     this.form.addEventListener("submit", this.#registerSubmit.bind(this));
     window.addEventListener("beforeunload", this.preventLeavingChangedForm.bind(this));
-    document.addEventListener("turbo:before-visit", this.preventLeavingChangedForm.bind(this));
-
-    // Frustratingly there's no before-frame-visit, and no other events work, so we need to bind to
-    // the frame and listen for any link clicks (maybe other things too).
-    this.turboFrame = this.form.closest("turbo-frame");
-    if(this.turboFrame){
-      this.turboFrame.addEventListener("click", this.preventLeavingChangedForm.bind(this))
-    }
   }
 
   disconnect() {
     // Make sure to clean up anything that happened outside
     this.#disableOtherElements(false);
     window.removeEventListener("beforeunload", this.preventLeavingChangedForm.bind(this));
-    document.removeEventListener("turbo:before-visit", this.preventLeavingChangedForm.bind(this));
-
-    if(this.turboFrame){
-      this.turboFrame.removeEventListener("click", this.preventLeavingChangedForm.bind(this));
-    }
   }
 
   // Register any new elements (may be called by another controller after dynamically adding fields)
@@ -92,21 +79,9 @@ export default class BulkFormController extends Controller {
     }
   }
 
-  // If navigating away from form, warn to prevent accidental data loss
+  // If form is not being submitted, warn to prevent accidental data loss
   preventLeavingChangedForm(event) {
-    const target = event.target;
-    // Ignore non-navigation events (see above)
-    if(this.turboFrame && this.turboFrame.contains(target) && (target.tagName != "A" || target.dataset.turboFrame != "_self")){
-      return;
-    }
-
     if (this.formChanged && !this.submitting) {
-      // If fired by a custom event (eg Turbo), we need to explicitly ask.
-      // This is skipped on beforeunload.
-      if(confirm(I18n.t("are_you_sure"))){
-        return;
-      }
-
       // Cancel the event
       event.preventDefault();
       // Chrome requires returnValue to be set, but ignores the value. Other browsers may display
