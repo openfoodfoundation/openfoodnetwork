@@ -44,7 +44,7 @@
                         -# Y products could not be saved correctly. Please review errors and try again
                         = t('.error_summary.invalid', count: @error_counts[:invalid])
                 .form-buttons
-                  %a.button.reset.medium{ href: admin_products_path(page: @page, per_page: @per_page, search_term: @search_term, producer_id: @producer_id, category_id: @category_id) }
+                  %a.button.reset.medium{ href: admin_products_path(page: @page, per_page: @per_page, search_term: @search_term, producer_id: @producer_id, category_id: @category_id), 'data-turbo': "false" }
                     = t('.reset')
                   = form.submit t('.save'), class: "medium"
       %tr
