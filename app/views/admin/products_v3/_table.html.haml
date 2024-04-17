@@ -1,6 +1,7 @@
 = form_with url: bulk_update_admin_products_path, method: :post, id: "products-form",
             builder: BulkFormBuilder,
-            html: { data: { controller: "bulk-form",
+            html: { data: { 'turbo-frame': "_self",
+              controller: "bulk-form",
               'bulk-form-disable-selector-value': "#sort,#filters",
               'bulk-form-error-value': defined?(@error_counts),
               } } do |form|
