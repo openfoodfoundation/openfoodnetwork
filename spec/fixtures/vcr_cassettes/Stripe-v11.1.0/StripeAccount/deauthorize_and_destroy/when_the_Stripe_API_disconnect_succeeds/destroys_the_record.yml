@@ -1,0 +1,299 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/accounts
+    body:
+      encoding: UTF-8
+      string: type=standard&country=AU&email=jumping.jack%40example.com
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/11.1.0
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_zc8hvLjwOG6Dsw","request_duration_ms":1019}}'
+      Stripe-Version:
+      - '2024-04-10'
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 17 Apr 2024 22:41:02 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3043'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET,HEAD,PUT,PATCH,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, Stripe-Should-Retry, X-Stripe-External-Auth-Required,
+        X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Content-Security-Policy:
+      - report-uri https://q.stripe.com/csp-report?p=v1%2Faccounts; block-all-mixed-content;
+        default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
+        img-src 'self'; script-src 'self' 'report-sample'; style-src 'self'
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to="coop"
+      Idempotency-Key:
+      - e3a2c76a-3783-4d5b-8bd1-0b059c7cc17b
+      Original-Request:
+      - req_y4sp0UmrRilWdn
+      Report-To:
+      - '{"group":"coop","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/coop-report"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - coop="https://q.stripe.com/coop-report"
+      Request-Id:
+      - req_y4sp0UmrRilWdn
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - '2024-04-10'
+      Vary:
+      - Origin
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "acct_1P6hA14CyWKcBaxF",
+          "object": "account",
+          "business_profile": {
+            "annual_revenue": null,
+            "estimated_worker_count": null,
+            "mcc": null,
+            "name": null,
+            "product_description": null,
+            "support_address": null,
+            "support_email": null,
+            "support_phone": null,
+            "support_url": null,
+            "url": null
+          },
+          "business_type": null,
+          "capabilities": {},
+          "charges_enabled": false,
+          "controller": {
+            "is_controller": true,
+            "type": "application"
+          },
+          "country": "AU",
+          "created": 1713393662,
+          "default_currency": "aud",
+          "details_submitted": false,
+          "email": "jumping.jack@example.com",
+          "external_accounts": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/accounts/acct_1P6hA14CyWKcBaxF/external_accounts"
+          },
+          "future_requirements": {
+            "alternatives": [],
+            "current_deadline": null,
+            "currently_due": [],
+            "disabled_reason": null,
+            "errors": [],
+            "eventually_due": [],
+            "past_due": [],
+            "pending_verification": []
+          },
+          "metadata": {},
+          "payouts_enabled": false,
+          "requirements": {
+            "alternatives": [],
+            "current_deadline": null,
+            "currently_due": [
+              "business_profile.product_description",
+              "business_profile.support_phone",
+              "business_profile.url",
+              "external_account",
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
+            ],
+            "disabled_reason": "requirements.past_due",
+            "errors": [],
+            "eventually_due": [
+              "business_profile.product_description",
+              "business_profile.support_phone",
+              "business_profile.url",
+              "external_account",
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
+            ],
+            "past_due": [
+              "external_account",
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
+            ],
+            "pending_verification": []
+          },
+          "settings": {
+            "bacs_debit_payments": {
+              "display_name": null,
+              "service_user_number": null
+            },
+            "branding": {
+              "icon": null,
+              "logo": null,
+              "primary_color": null,
+              "secondary_color": null
+            },
+            "card_issuing": {
+              "tos_acceptance": {
+                "date": null,
+                "ip": null
+              }
+            },
+            "card_payments": {
+              "decline_on": {
+                "avs_failure": false,
+                "cvc_failure": false
+              },
+              "statement_descriptor_prefix": null,
+              "statement_descriptor_prefix_kana": null,
+              "statement_descriptor_prefix_kanji": null
+            },
+            "dashboard": {
+              "display_name": null,
+              "timezone": "Etc/UTC"
+            },
+            "invoices": {
+              "default_account_tax_ids": null
+            },
+            "payments": {
+              "statement_descriptor": null,
+              "statement_descriptor_kana": null,
+              "statement_descriptor_kanji": null
+            },
+            "payouts": {
+              "debit_negative_balances": true,
+              "schedule": {
+                "delay_days": 2,
+                "interval": "daily"
+              },
+              "statement_descriptor": null
+            },
+            "sepa_debit_payments": {}
+          },
+          "tos_acceptance": {
+            "date": null,
+            "ip": null,
+            "user_agent": null
+          },
+          "type": "standard"
+        }
+  recorded_at: Wed, 17 Apr 2024 22:41:03 GMT
+- request:
+    method: post
+    uri: https://connect.stripe.com/oauth/deauthorize
+    body:
+      encoding: UTF-8
+      string: stripe_user_id=acct_1P6hA14CyWKcBaxF&client_id=<HIDDEN-STRIPE_CLIENT_ID>
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/11.1.0
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-Telemetry:
+      - '{"last_request_metrics":{"request_id":"req_y4sp0UmrRilWdn","request_duration_ms":2030}}'
+      Stripe-Version:
+      - '2024-04-10'
+      X-Stripe-Client-User-Agent:
+      - "<HIDDEN-STRIPE-USER-AGENT>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 17 Apr 2024 22:41:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '81'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=0, no-cache, no-store, must-revalidate
+      Content-Security-Policy:
+      - report-uri /csp-report?p=%2Foauth%2Fdeauthorize;block-all-mixed-content;default-src
+        'none' 'report-sample';base-uri 'none';form-action 'none';style-src 'unsafe-inline';frame-ancestors
+        'self';connect-src 'self';img-src 'self' https://b.stripecdn.com
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin-allow-popups; report-to="coop"
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Report-To:
+      - '{"group":"coop","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/coop-report"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - coop="https://q.stripe.com/coop-report"
+      Request-Id:
+      - req_tuOGRA5fMeWcGd
+      Set-Cookie:
+      - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Fdeauthorize%22%7D;
+        domain=stripe.com; path=/; expires=Thu, 17 Apr 2025 22:41:03 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - cid=bf73f2f1-2730-4bfe-b876-eb2a52e4962b; domain=stripe.com; path=/; expires=Tue,
+        16 Jul 2024 22:41:03 GMT; secure; SameSite=Lax
+      - machine_identifier=PlXTX3M37xnhrzfE%2FTYiF1zopgjPNwB%2BbIhFkFQGbea1hcnRQd%2Bnc69or4YgFhmh4kk%3D;
+        domain=stripe.com; path=/; expires=Thu, 17 Apr 2025 22:41:03 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - private_machine_identifier=dnLBg3Z4kBckQs94fSyCCFWmWRjRbJlO5detDWo3Kpbysho0cR%2B%2BEm7sk4bzCTmuTqQ%3D;
+        domain=stripe.com; path=/; expires=Thu, 17 Apr 2025 22:41:03 GMT; secure;
+        HttpOnly; SameSite=None
+      - stripe.csrf=ZVM3UQ2vutPuntBqAZtAvnXXWxcVydPwAZ9KWGkoqXqSIzPNAhcjwh-JqCiVIs9GUx3FOyEHaW4WmhAix-M9Ujw-AYTZVJw3wFcX1VecoxDMwYHHg7CC2d5XmPzDtYpnBy0C0_jQkw%3D%3D;
+        domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
+      Stripe-Kill-Route:
+      - "[]"
+      Stripe-Version:
+      - '2024-04-10'
+      X-Stripe-Routing-Context-Priority-Tier:
+      - api-testmode
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: '{"error":null,"error_description":null,"stripe_user_id":"acct_1P6hA14CyWKcBaxF"}
+
+        '
+  recorded_at: Wed, 17 Apr 2024 22:41:03 GMT
+recorded_with: VCR 6.2.0
