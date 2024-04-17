@@ -59,7 +59,7 @@ Spree::Core::Engine.routes.draw do
 
     resources :products, except: :index do
       member do
-        post :clone
+        get :clone
         get :group_buy_options
         get :seo
       end
