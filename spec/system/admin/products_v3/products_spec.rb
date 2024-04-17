@@ -1629,13 +1629,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     let!(:product) { create(:product, variant_unit: 'weight', variant_unit_scale: 1000) }
 
     before do
-      # pending "Pending implementation, issue #11066"
-
       login_as_admin
       visit spree.admin_products_path
-
-      # I should see an add variant button
-      # page.find('a.view-variants').click
     end
 
     it "hovering over the New variant button displays the text" do
@@ -1644,103 +1639,124 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
 
     it "handle the default behaviour" do
-      # When I add three variants
-      page.find('a.add-variant').click
-      page.find('a.add-variant').click
+      # the product and the default variant is displayed
+      expect(page).to have_selector("input[aria-label=Name][value='#{product.name}']",
+                                    visible: true, count: 1)
+      expect(page).to have_selector("input[aria-label=Name][placeholder='#{product.name}']",
+                                    visible: false, count: 1)
 
-      # They should be added, and should not see edit buttons for new variants
-      expect(page).to have_selector "tr.variant", count: 3
-      expect(page).to have_selector "a.edit-variant", count: 1
-
-      # When I remove two, they should be removed
-      accept_alert do
-        page.all('a.delete-variant').first.click
-      end
-      expect(page).to have_selector "tr.variant", count: 2
-      page.all('a.delete-variant').first.click
-      expect(page).to have_selector "tr.variant", count: 1
+      # when a second variant is added, the number of lines increases
+      expect {
+        find("button.secondary.condensed.naked.icon-plus").click
+      }.to change{
+      page.all("input[aria-label=Name][placeholder='#{product.name}']", visible: false).count
+      }.from(1).to(2)
 
       # When I fill out variant details and hit update
-      fill_in "variant_display_name", with: "Case of 12 Bottles"
-      fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
-      fill_in "variant_display_as", with: "Case"
-      fill_in "variant_price", with: "4.0"
-      fill_in "variant_on_hand", with: "10"
+      within page.all("tr.condensed")[1] do # selects second variant row
+        find('input[id$="_sku"]').fill_in with: "345"
+        find('input[id$="_display_name"]').fill_in with: "Small bag"
+        find('button[id$="unit_to_display"]').click # opens the unit value pop out
+        find('input[id$="_unit_value_with_description"]').fill_in with: "0.002"
+        find('input[id$="_display_as"]').fill_in with: "2 grams"
+        find('button[aria-label="On Hand"]').click
+        find('input[id$="_on_hand"]').fill_in with: "66"
+        find('input[id$="_price"]').fill_in with: "11.1"
+      end
 
-      click_button 'Save Changes', match: :first
-      expect(page.find("#status-message")).to have_content "Changes saved."
+      expect(page).to have_content "1 product modified."
 
-      updated_variant = Spree::Variant.where(deleted_at: nil).last
-      expect(updated_variant.display_name).to eq "Case of 12 Bottles"
-      expect(updated_variant.unit_value).to eq 3000
-      expect(updated_variant.unit_description).to eq "(12x250 mL bottles)"
-      expect(updated_variant.display_as).to eq "Case"
-      expect(updated_variant.price).to eq 4.0
-      expect(updated_variant.on_hand).to eq 10
+      expect {
+        click_on "Save changes"
+      }.to change {
+             Spree::Variant.count
+           }.from(1).to(2)
 
-      # Then I should see edit buttons for the new variant
-      expect(page).to have_selector "a.edit-variant"
+      new_variant = Spree::Variant.where(deleted_at: nil).last
+      expect(new_variant.sku).to eq "345"
+      expect(new_variant.display_name).to eq "Small bag"
+      expect(new_variant.unit_value).to eq 2.0
+      expect(new_variant.display_as).to eq "2 grams"
+      expect(new_variant.unit_presentation).to eq "2 grams"
+      expect(new_variant.price).to eq 11.1
+      expect(new_variant.on_hand).to eq 66
+
+      within ".flash-container" do
+        expect(page).to have_content "Changes saved"
+        click_on "Dismiss"
+        expect(page).not_to have_content "Changes saved"
+      end
+
+      within page.all("tr.condensed")[1] do # selects second variant row
+        page.find('input[id$="_sku"]').fill_in with: "789"
+      end
+
+      accept_confirm do
+        click_on "Discard changes" # does not save chages
+      end
+      expect(page).not_to have_content "Changes saved"
     end
 
-    context "handle the 'on_demand' variant case creation" do
-      let(:v1) { create(:variant, product:, on_hand: 4) }
-      let(:v2) { create(:variant, product:, on_demand: true) }
-      pending("Pending implementation, issue #11066")
+    it "handle the on demand behaviour" do
+      # the product and the default variant is displayed
+      expect(page).to have_selector("input[aria-label=Name][value='#{product.name}']",
+                                    visible: true, count: 1)
+      expect(page).to have_selector("input[aria-label=Name][placeholder='#{product.name}']",
+                                    visible: false, count: 1)
 
-      before do
-        product.variants << v1
-        product.variants << v2
+      # when a second variant is added, the number of lines increases
+      expect {
+        find("button.secondary.condensed.naked.icon-plus").click
+      }.to change{
+      page.all("input[aria-label=Name][placeholder='#{product.name}']", visible: false).count
+      }.from(1).to(2)
 
-        visit spree.admin_products_path
+      # When I fill out variant details and hit update
+      within page.all("tr.condensed")[1] do # selects second variant row
+        find('input[id$="_sku"]').fill_in with: "345"
+        find('input[id$="_display_name"]').fill_in with: "Small bag"
+        find('button[id$="unit_to_display"]').click # opens the unit value pop out
+        find('input[id$="_unit_value_with_description"]').fill_in with: "0.002"
+        find('input[id$="_display_as"]').fill_in with: "2 grams"
+        find('button[aria-label="On Hand"]').click
+        find('input[id$="_on_demand"]').check
+        find('input[id$="_price"]').fill_in with: "11.1"
       end
 
-      it "when variant unit value is: '120'" do
-        within "tr#v_#{v2.id}" do
-          find("button.secondary.condensed.naked.icon-plus").click
-        end
+      expect(page).to have_content "1 product modified."
 
-        within "tr#v_-1" do
-          fill_in "variant_unit_value_with_description", with: "120"
-          fill_in "variant_price", with: "6.66"
-        end
+      expect {
+        click_on "Save changes"
+      }.to change {
+             Spree::Variant.count
+           }.from(1).to(2)
 
-        click_button 'Save Changes', match: :first
-        expect(page.find("#status-message")).to have_content "Changes saved."
+      new_variant = Spree::Variant.where(deleted_at: nil).last
+      expect(new_variant.sku).to eq "345"
+      expect(new_variant.display_name).to eq "Small bag"
+      expect(new_variant.unit_value).to eq 2.0
+      expect(new_variant.display_as).to eq "2 grams"
+      expect(new_variant.unit_presentation).to eq "2 grams"
+      expect(new_variant.price).to eq 11.1
+      expect(new_variant.on_demand).to eq true
+
+      within ".flash-container" do
+        expect(page).to have_content "Changes saved"
+        click_on "Dismiss"
+        expect(page).not_to have_content "Changes saved"
       end
 
-      it "creating a variant with unit value is: '120g' and 'on_hand' filled" do
-        within "tr#v_#{v2.id}" do
-          find("button.secondary.condensed.naked.icon-plus").click
-        end
-
-        within "tr#v_-1" do
-          fill_in "variant_unit_value_with_description", with: "120g"
-          fill_in "variant_price", with: "6.66"
-          fill_in "variant_on_hand", with: "222"
-        end
-
-        click_button 'Save Changes', match: :first
-        expect(page.find("#status-message"))
-          .to have_content "Variant unit value can't be blank Variant unit value is not a number"
+      within page.all("tr.condensed")[1] do # selects second variant row
+        page.find('input[id$="_sku"]').fill_in with: "789"
       end
 
-      it "creating a variant with unit value is: '120g' and 'on_demand' checked" do
-        scroll_to(:bottom)
-
-        within "tr#v_#{v2.id}" do
-          find("button.secondary.condensed.naked.icon-plus").click
-        end
-
-        within "tr#v_-1" do
-          fill_in "variant_unit_value_with_description", with: "120g"
-          fill_in "variant_price", with: "6.66"
-          check "variant_on_demand"
-        end
-
-        click_button 'Save Changes', match: :first
-        expect(page.find("#status-message"))
-          .to have_content "Variant unit value can't be blank Variant unit value is not a number"
+      accept_confirm do
+        click_on "Discard changes" # does not save chages
       end
+      expect(page).not_to have_content "Changes saved"
+    end
+
+    context "handle error messages" do
     end
   end
 
