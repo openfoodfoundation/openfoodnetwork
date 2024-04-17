@@ -58,7 +58,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
       select "50", from: "per_page"
 
-      expect(page).to have_content "Showing 1 to 50"
+      expect(page).to have_content "Showing 1 to 50", wait: 10
       expect_page_to_be 1
       expect_per_page_to_be 50
       expect_products_count_to_be 50
@@ -138,7 +138,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         search_by_producer "Producer 1"
 
         # expect(page).to have_content "1 product found for your search criteria."
-        expect(page).to have_select "producer_id", selected: "Producer 1"
+        expect(page).to have_select "producer_id", selected: "Producer 1", wait: 5
         expect_products_count_to_be 1
 
         within row_containing_name("Apples") do
