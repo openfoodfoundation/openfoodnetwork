@@ -55,7 +55,7 @@ RSpec.describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
   end
 
   before do
-    product.update!(supplier_id: supplier.id)
+    variant.update!(supplier: )
 
     order.update!(
       number: 'ORDER_NUMBER_1',
