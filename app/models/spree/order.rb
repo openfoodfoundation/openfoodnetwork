@@ -694,7 +694,7 @@ module Spree
     end
 
     def registered_email?
-      Spree::User.exists?(email:)
+      Spree::User.where(email:).exists?
     end
 
     def adjustments_fetcher

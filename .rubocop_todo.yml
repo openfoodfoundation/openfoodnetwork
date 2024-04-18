@@ -773,21 +773,6 @@ Rails/UnusedRenderContent:
     - 'app/controllers/api/v0/taxons_controller.rb'
     - 'app/controllers/api/v0/variants_controller.rb'
 
-# Offense count: 8
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: exists, where
-Rails/WhereExists:
-  Exclude:
-    - 'app/controllers/spree/admin/overview_controller.rb'
-    - 'app/controllers/spree/admin/tax_rates_controller.rb'
-    - 'app/controllers/spree/user_sessions_controller.rb'
-    - 'app/models/spree/preferences/store.rb'
-    - 'lib/tasks/sample_data/customer_factory.rb'
-    - 'lib/tasks/sample_data/group_factory.rb'
-    - 'lib/tasks/sample_data/order_cycle_factory.rb'
-    - 'lib/tasks/sample_data/taxon_factory.rb'
-
 # Offense count: 1
 Security/Open:
   Exclude:
