@@ -170,12 +170,6 @@
     .field {
       padding: 0;
     }
-    .multi-field {
-      // Allow wrap with small gap
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3px;
-    }
 
     .ts-control {
       z-index: 0; // Avoid hovering over thead

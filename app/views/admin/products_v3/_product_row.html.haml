@@ -9,7 +9,7 @@
 %td.field.naked_inputs
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on product, :sku
-%td.multi-field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
+%td.field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
   = f.hidden_field :variant_unit
   = f.hidden_field :variant_unit_scale
   = f.select :variant_unit_with_scale,
@@ -27,8 +27,9 @@
   -# empty
 %td.align-right
   -# empty
-%td.align-left
-  .content= product.supplier&.name
+%td.naked_inputs.align-left
+  = f.select :supplier_id, options_for_select(producer_options, product.supplier&.id), {},
+  data: { "controller": "tom-select", 'tom-select-placeholder-value': t('admin.products_v3.filters.search_for_producers')}
 %td.align-left
   -# empty
 %td.align-left
