@@ -1634,130 +1634,83 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
 
     it "hovering over the New variant button displays the text" do
+      page.find('button[aria-label="New variant"]', text: "New variant", visible: false)
       find("button.secondary.condensed.naked.icon-plus").hover
+      page.find('button[aria-label="New variant"]', text: "New variant", visible: true)
       expect(page).to have_content "New variant"
     end
 
-    it "handle the default behaviour" do
-      # the product and the default variant is displayed
-      expect(page).to have_selector("input[aria-label=Name][value='#{product.name}']",
-                                    visible: true, count: 1)
-      expect(page).to have_selector("input[aria-label=Name][placeholder='#{product.name}']",
-                                    visible: false, count: 1)
+    shared_examples "creating a new variant (bulk)" do |stock|
+      it "handles the #{stock} behaviour" do
+        # the product and the default variant is displayed
+        expect(page).to have_selector("input[aria-label=Name][value='#{product.name}']",
+                                      visible: true, count: 1)
+        expect(page).to have_selector("input[aria-label=Name][placeholder='#{product.name}']",
+                                      visible: false, count: 1)
 
-      # when a second variant is added, the number of lines increases
-      expect {
-        find("button.secondary.condensed.naked.icon-plus").click
-      }.to change{
-      page.all("input[aria-label=Name][placeholder='#{product.name}']", visible: false).count
-      }.from(1).to(2)
+        # when a second variant is added, the number of lines increases
+        expect {
+          find("button.secondary.condensed.naked.icon-plus").click
+        }.to change{
+        page.all("input[aria-label=Name][placeholder='#{product.name}']", visible: false).count
+        }.from(1).to(2)
 
-      # When I fill out variant details and hit update
-      within page.all("tr.condensed")[1] do # selects second variant row
-        find('input[id$="_sku"]').fill_in with: "345"
-        find('input[id$="_display_name"]').fill_in with: "Small bag"
-        find('button[id$="unit_to_display"]').click # opens the unit value pop out
-        find('input[id$="_unit_value_with_description"]').fill_in with: "0.002"
-        find('input[id$="_display_as"]').fill_in with: "2 grams"
-        find('button[aria-label="On Hand"]').click
-        find('input[id$="_on_hand"]').fill_in with: "66"
-        find('input[id$="_price"]').fill_in with: "11.1"
-      end
+        # When I fill out variant details and hit update
+        within page.all("tr.condensed")[1] do # selects second variant row
+          find('input[id$="_sku"]').fill_in with: "345"
+          find('input[id$="_display_name"]').fill_in with: "Small bag"
+          find('button[id$="unit_to_display"]').click # opens the unit value pop out
+          find('input[id$="_unit_value_with_description"]').fill_in with: "0.002"
+          find('input[id$="_display_as"]').fill_in with: "2 grams"
+          find('button[aria-label="On Hand"]').click
+          find('input[id$="_price"]').fill_in with: "11.1"
+          if stock == "on_hand"
+            find('input[id$="_on_hand"]').fill_in with: "66"
+          elsif stock == "on_demand"
+            find('input[id$="_on_demand"]').check
+          end
+        end
 
-      expect(page).to have_content "1 product modified."
+        expect(page).to have_content "1 product modified."
 
-      expect {
-        click_on "Save changes"
-      }.to change {
-             Spree::Variant.count
-           }.from(1).to(2)
+        expect {
+          click_on "Save changes"
+        }.to change {
+               Spree::Variant.count
+             }.from(1).to(2)
 
-      new_variant = Spree::Variant.where(deleted_at: nil).last
-      expect(new_variant.sku).to eq "345"
-      expect(new_variant.display_name).to eq "Small bag"
-      expect(new_variant.unit_value).to eq 2.0
-      expect(new_variant.display_as).to eq "2 grams"
-      expect(new_variant.unit_presentation).to eq "2 grams"
-      expect(new_variant.price).to eq 11.1
-      expect(new_variant.on_hand).to eq 66
+        new_variant = Spree::Variant.where(deleted_at: nil).last
+        expect(new_variant.sku).to eq "345"
+        expect(new_variant.display_name).to eq "Small bag"
+        expect(new_variant.unit_value).to eq 2.0
+        expect(new_variant.display_as).to eq "2 grams"
+        expect(new_variant.unit_presentation).to eq "2 grams"
+        expect(new_variant.price).to eq 11.1
+        if stock == "on_hand"
+          expect(new_variant.on_hand).to eq 66
+        elsif stock == "on_demand"
+          expect(new_variant.on_demand).to eq true
+        end
 
-      within ".flash-container" do
-        expect(page).to have_content "Changes saved"
-        click_on "Dismiss"
+        within ".flash-container" do
+          expect(page).to have_content "Changes saved"
+          click_on "Dismiss"
+          expect(page).not_to have_content "Changes saved"
+        end
+
+        within page.all("tr.condensed")[1] do # selects second variant row
+          page.find('input[id$="_sku"]').fill_in with: "789"
+        end
+
+        accept_confirm do
+          click_on "Discard changes" # does not save chages
+        end
         expect(page).not_to have_content "Changes saved"
       end
-
-      within page.all("tr.condensed")[1] do # selects second variant row
-        page.find('input[id$="_sku"]').fill_in with: "789"
-      end
-
-      accept_confirm do
-        click_on "Discard changes" # does not save chages
-      end
-      expect(page).not_to have_content "Changes saved"
     end
 
-    it "handle the on demand behaviour" do
-      # the product and the default variant is displayed
-      expect(page).to have_selector("input[aria-label=Name][value='#{product.name}']",
-                                    visible: true, count: 1)
-      expect(page).to have_selector("input[aria-label=Name][placeholder='#{product.name}']",
-                                    visible: false, count: 1)
-
-      # when a second variant is added, the number of lines increases
-      expect {
-        find("button.secondary.condensed.naked.icon-plus").click
-      }.to change{
-      page.all("input[aria-label=Name][placeholder='#{product.name}']", visible: false).count
-      }.from(1).to(2)
-
-      # When I fill out variant details and hit update
-      within page.all("tr.condensed")[1] do # selects second variant row
-        find('input[id$="_sku"]').fill_in with: "345"
-        find('input[id$="_display_name"]').fill_in with: "Small bag"
-        find('button[id$="unit_to_display"]').click # opens the unit value pop out
-        find('input[id$="_unit_value_with_description"]').fill_in with: "0.002"
-        find('input[id$="_display_as"]').fill_in with: "2 grams"
-        find('button[aria-label="On Hand"]').click
-        find('input[id$="_on_demand"]').check
-        find('input[id$="_price"]').fill_in with: "11.1"
-      end
-
-      expect(page).to have_content "1 product modified."
-
-      expect {
-        click_on "Save changes"
-      }.to change {
-             Spree::Variant.count
-           }.from(1).to(2)
-
-      new_variant = Spree::Variant.where(deleted_at: nil).last
-      expect(new_variant.sku).to eq "345"
-      expect(new_variant.display_name).to eq "Small bag"
-      expect(new_variant.unit_value).to eq 2.0
-      expect(new_variant.display_as).to eq "2 grams"
-      expect(new_variant.unit_presentation).to eq "2 grams"
-      expect(new_variant.price).to eq 11.1
-      expect(new_variant.on_demand).to eq true
-
-      within ".flash-container" do
-        expect(page).to have_content "Changes saved"
-        click_on "Dismiss"
-        expect(page).not_to have_content "Changes saved"
-      end
-
-      within page.all("tr.condensed")[1] do # selects second variant row
-        page.find('input[id$="_sku"]').fill_in with: "789"
-      end
-
-      accept_confirm do
-        click_on "Discard changes" # does not save chages
-      end
-      expect(page).not_to have_content "Changes saved"
-    end
-
-    context "handle error messages" do
-    end
+    it_behaves_like "creating a new variant (bulk)", "on_hand"
+    it_behaves_like "creating a new variant (bulk)", "on_demand"
   end
 
   def create_products(amount)
