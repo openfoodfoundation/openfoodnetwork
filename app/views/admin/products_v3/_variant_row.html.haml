@@ -39,8 +39,9 @@
       = f.label :on_demand do
         = f.check_box :on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
         = t(:on_demand)
-%td.align-left
-  .content= variant.product.supplier&.name # same as product
+- if producer_options.many?
+  %td.align-left
+    .content= variant.product.supplier&.name # same as product
 %td.align-left
   .content= variant.primary_taxon&.name
 %td.align-left

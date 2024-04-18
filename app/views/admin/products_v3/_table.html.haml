@@ -55,7 +55,8 @@
         %th.align-left.with-input= t('admin.products_page.columns.unit')
         %th.align-left.with-input= t('admin.products_page.columns.price')
         %th.align-left.with-input= t('admin.products_page.columns.on_hand')
-        %th.align-left= t('admin.products_page.columns.producer')
+        - if producer_options.many?
+          %th.align-left= t('admin.products_page.columns.producer')
         %th.align-left= t('admin.products_page.columns.category')
         %th.align-left= t('admin.products_page.columns.tax_category')
         %th.align-left= t('admin.products_page.columns.inherits_properties')
@@ -71,17 +72,17 @@
           - product.variants.each_with_index do |variant, variant_index|
             = form.fields_for("products][#{product_index}][variants_attributes][", variant, index: variant_index) do |variant_form|
               %tr.condensed{ 'data-controller': "variant" }
-                = render partial: 'variant_row', locals: { variant:, f: variant_form }
+                = render partial: 'variant_row', locals: { variant:, f: variant_form, producer_options: }
 
           = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", product.variants.build) do |new_variant_form|
             %template{ 'data-nested-form-target': "template" }
               %tr.condensed{ 'data-controller': "variant" }
-                = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form }
+                = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form, producer_options: }
 
           %tr{ 'data-nested-form-target': "target" }
           %tr.condensed
             %td
-            %td{ colspan: 11 }
+            %td{ colspan: producer_options.many? ? 11 : 10 }
               %button.secondary.condensed.naked.icon-plus{ 'data-action': "nested-form#add",
                                                            'aria-label': t('.new_variant') }
                 =t('.new_variant')

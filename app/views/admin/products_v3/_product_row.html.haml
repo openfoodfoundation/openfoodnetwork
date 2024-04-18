@@ -27,9 +27,10 @@
   -# empty
 %td.align-right
   -# empty
-%td.naked_inputs.align-left
-  = f.select :supplier_id, options_for_select(producer_options, product.supplier&.id), {},
-  data: { "controller": "tom-select", 'tom-select-placeholder-value': t('admin.products_v3.filters.search_for_producers')}
+- if producer_options.many?
+  %td.naked_inputs.align-left
+    = f.select :supplier_id, options_for_select(producer_options, product.supplier&.id), {},
+    data: { "controller": "tom-select", 'tom-select-placeholder-value': t('admin.products_v3.filters.search_for_producers')}
 %td.align-left
   -# empty
 %td.align-left
