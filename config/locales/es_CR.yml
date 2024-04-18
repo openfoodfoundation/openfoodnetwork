@@ -3442,6 +3442,7 @@ es_CR:
     new_taxon: "Nuevo taxon"
     new_user: "Nuevo usuari"
     no_pending_payments: "No tiene pagos pendientes"
+    remove: "Eliminar"
     none: "Ninguno"
     not_found: "No encontrado"
     notice_messages:

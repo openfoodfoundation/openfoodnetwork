@@ -3477,6 +3477,7 @@ hu:
     new_taxon: "Új taxon"
     new_user: "Új felhasználó"
     no_pending_payments: "Nincsenek függőben lévő kifizetések"
+    remove: "eltávolítás"
     none: "Egyik sem"
     not_found: "Nem található"
     notice_messages:

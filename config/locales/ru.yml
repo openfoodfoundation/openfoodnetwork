@@ -3775,6 +3775,7 @@ ru:
     new_taxon: "Новая таксономия"
     new_user: "Новый пользователь"
     no_pending_payments: "Нет ожидающих платежей"
+    remove: "Удалить"
     none: "Нет"
     not_found: "Не найден"
     notice_messages:

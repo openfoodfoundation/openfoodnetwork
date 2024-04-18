@@ -3003,6 +3003,7 @@ fil_PH:
     credit: "utang"
     more: "Karagdagang Impormasyon"
     no_pending_payments: "walang nakabinbin na mga bayad"
+    remove: "Tanggalin"
     none: "wala"
     updating: "ina-update"
     your_order_is_empty_add_product: "ang iyong order ay walang laman, humanap at magdagdag ng produkto sa itaas."

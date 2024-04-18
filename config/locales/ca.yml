@@ -3486,6 +3486,7 @@ ca:
     new_taxon: "Nou tàxon"
     new_user: "Nou usuari"
     no_pending_payments: "No hi ha pagaments pendents"
+    remove: "Eliminar"
     none: "Cap"
     not_found: "No trobat"
     notice_messages:

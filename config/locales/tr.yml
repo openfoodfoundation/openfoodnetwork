@@ -3235,6 +3235,7 @@ tr:
     new_taxon: "Yeni kategori"
     new_user: "Yeni kullanıcı"
     no_pending_payments: "Bekleyen ödeme yok"
+    remove: "Kaldır"
     none: "SATIŞ YAPMIYOR"
     not_found: "Bulunamadı"
     notice_messages:

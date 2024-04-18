@@ -3672,6 +3672,7 @@ ml:
     new_taxon: "പുതിയ ടാക്സൺ"
     new_user: "പുതിയ ഉപയോക്താവ്"
     no_pending_payments: "തീർപ്പാക്കാത്ത പേയ്‌മെന്റുകളൊന്നുമില്ല"
+    remove: "നീക്കം ചെയ്യുക"
     none: "ഒന്നുമില്ല"
     not_found: "കണ്ടെത്തിയില്ല"
     notice_messages:

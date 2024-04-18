@@ -3038,6 +3038,7 @@ el:
     new_taxon: "Νέο ταξί"
     new_user: "Νέος χρήστης"
     no_pending_payments: "Δεν υπάρχουν πληρωμές σε εκκρεμότητα"
+    remove: "Αφαίρεση"
     none: "Κανένας"
     not_found: "Δεν βρέθηκε"
     notice_messages:

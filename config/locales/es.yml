@@ -3484,6 +3484,7 @@ es:
     new_taxon: "Nuevo taxón"
     new_user: "Nuevo usuario"
     no_pending_payments: "No tiene pagos pendientes"
+    remove: "Eliminar"
     none: "Ninguno"
     not_found: "No encontrado"
     notice_messages:

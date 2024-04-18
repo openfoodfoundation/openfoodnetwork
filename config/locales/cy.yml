@@ -3724,6 +3724,7 @@ cy:
     new_taxon: "Tacson newydd"
     new_user: "Defnyddiwr newydd"
     no_pending_payments: "Dim taliadau yn yr arfaeth"
+    remove: "Dileu"
     none: "Dim"
     not_found: "Heb ei ganfod"
     notice_messages:

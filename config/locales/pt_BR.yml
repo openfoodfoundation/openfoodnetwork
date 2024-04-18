@@ -3238,6 +3238,7 @@ pt_BR:
     new_taxon: "Nova taxonomia"
     new_user: "Novo usuário"
     no_pending_payments: "Nenhum pagamento pendente"
+    remove: "Remover"
     none: "Nenhum"
     not_found: "Não encontrado"
     notice_messages:
