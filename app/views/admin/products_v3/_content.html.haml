@@ -15,7 +15,7 @@
     .container.results
       .sixteen.columns
         = render partial: 'sort', locals: { pagy: pagy, search_term: search_term, producer_id: producer_id, category_id: category_id }
-        = render partial: 'table', locals: { products:, producer_options:, category_options: }
+        = render partial: 'table', locals: { products:, producer_options:, category_options:, tax_category_options: }
     - if pagy.present? && pagy.pages > 1
       = render partial: 'admin/shared/stimulus_pagination', locals: { pagy: pagy }
   - else

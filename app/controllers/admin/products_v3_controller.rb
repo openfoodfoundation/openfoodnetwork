@@ -7,7 +7,7 @@ module Admin
 
     def index
       fetch_products
-      render "index", locals: { producers:, categories:, flash: }
+      render "index", locals: { producers:, categories:, tax_category_options:, flash: }
     end
 
     def bulk_update
@@ -57,6 +57,10 @@ module Admin
 
     def categories
       Spree::Taxon.order(:name).map { |c| [c.name, c.id] }
+    end
+
+    def tax_category_options
+      Spree::TaxCategory.order(:name).pluck(:name, :id)
     end
 
     def fetch_products
