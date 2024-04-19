@@ -41,7 +41,7 @@
         = t(:on_demand)
 - if producer_options.many?
   %td.align-left
-    .content= variant.product.supplier&.name # same as product
+    -# empty producer name
 %td.align-left
   = f.select :primary_taxon_id, options_for_select(category_options, variant.primary_taxon_id), {},
   data: { "controller": "tom-select", 'tom-select-placeholder-value': t('admin.products_v3.filters.search_for_categories')}
