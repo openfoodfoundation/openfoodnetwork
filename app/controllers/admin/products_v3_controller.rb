@@ -33,6 +33,14 @@ module Admin
       "/admin/products?#{params.to_query}" # todo: fix routing so this can be automaticly generated
     end
 
+    def clone
+      @product = Spree::Product.find(params[:id])
+      @cloned_product = @product.duplicate
+      raise "Clone failed" unless @cloned_product.save
+
+      respond_to(&:turbo_stream)
+    end
+
     private
 
     def init_filters_params

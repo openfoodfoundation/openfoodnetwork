@@ -73,6 +73,7 @@ Openfoodnetwork::Application.routes.draw do
       # This might be easier to arrange once we rename the controller to plain old "products"
       post '/products/bulk_update', to: 'products_v3#bulk_update'
       get '/products', to: 'products_v3#index'
+      post 'products/:id/clone', to: 'products_v3#clone', as: 'clone_product'
     end
 
     resources :variant_overrides do
