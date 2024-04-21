@@ -24,7 +24,8 @@ module Admin
       elsif product_set.errors.present?
         @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
 
-        render "index", status: :unprocessable_entity, locals: { producers:, categories:, flash: }
+        render "index", status: :unprocessable_entity,
+                        locals: { producers:, categories:, tax_category_options:, flash: }
       end
     end
 

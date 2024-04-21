@@ -89,7 +89,7 @@ class ProductsReflex < ApplicationReflex
       html: render(partial: "admin/products_v3/content",
                    locals: { products: @products, pagy: @pagy, search_term: @search_term,
                              producer_options: producers, producer_id: @producer_id,
-                             category_options: categories, category_id: @category_id,
+                             category_options: categories, tax_category_options:, category_id: @category_id,
                              flashes: flash })
     )
 
@@ -123,6 +123,10 @@ class ProductsReflex < ApplicationReflex
 
   def categories
     Spree::Taxon.order(:name).map { |c| [c.name, c.id] }
+  end
+
+  def tax_category_options
+    Spree::TaxCategory.order(:name).pluck(:name, :id)
   end
 
   def fetch_products
