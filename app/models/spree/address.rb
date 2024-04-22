@@ -4,19 +4,17 @@ module Spree
   class Address < ApplicationRecord
     include AddressDisplay
 
-    self.belongs_to_required_by_default = false
-
     searchable_attributes :firstname, :lastname, :phone, :full_name, :full_name_reversed,
                           :full_name_with_comma, :full_name_with_comma_reversed
     searchable_associations :country, :state
 
     belongs_to :country, class_name: "Spree::Country"
-    belongs_to :state, class_name: "Spree::State"
+    belongs_to :state, class_name: "Spree::State", optional: true
 
     has_one :enterprise, dependent: :restrict_with_exception
     has_many :shipments
 
-    validates :address1, :city, :country, :phone, presence: true
+    validates :address1, :city, :phone, presence: true
     validates :company, presence: true, unless: -> { first_name.blank? || last_name.blank? }
     validates :firstname, :lastname, presence: true, if: -> do
       company.blank? || company == 'unused'
