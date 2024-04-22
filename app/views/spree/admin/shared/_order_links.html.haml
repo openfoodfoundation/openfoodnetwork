@@ -1,20 +1,21 @@
 %li.links-dropdown#links-dropdown
-  .ofn-drop-down{"data-controller": "dropdown", "data-action": "click->dropdown#toggle" }
-    %span
-      %i.icon-check
-      = I18n.t 'admin.actions'
-      %i{ "data-dropdown-target": "arrow", "data-expanded-class": "icon-caret-up", "data-collapsed-class": "icon-caret-down" }
-    %div.menu.hidden{"data-dropdown-target": "menu"}
-      - order_links(@order).each do |link|
-        - if link[:name] == t(:ship_order)
-          %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { "modal-link-target-value": dom_id(@order, :ship), "action":  "click->modal-link#open", "controller": "modal-link" } }
-            %span
-              %i{ class: link[:icon] }
-            %span=link[:name]
-        - else
-          %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { method: link[:method], "ujs-navigate": link[:method] ? "false" : "undefined", confirm: link[:confirm] } }
-            %span
-              %i{ class: link[:icon] }
-            %span=link[:name]
+  .ofn-drop-down
+    %details{"data-controller": "dropdown"}
+      %summary
+        %span
+          %i.icon-check
+          = I18n.t 'admin.actions'
+      %div.menu{"data-action": "click->dropdown#closeOnMenu"}
+        - order_links(@order).each do |link|
+          - if link[:name] == t(:ship_order)
+            %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { "modal-link-target-value": dom_id(@order, :ship), "action":  "click->modal-link#open", "controller": "modal-link" } }
+              %span
+                %i{ class: link[:icon] }
+              %span=link[:name]
+          - else
+            %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { method: link[:method], "ujs-navigate": link[:method] ? "false" : "undefined", confirm: link[:confirm] } }
+              %span
+                %i{ class: link[:icon] }
+              %span=link[:name]
 
 = render 'spree/admin/shared/custom-confirm'

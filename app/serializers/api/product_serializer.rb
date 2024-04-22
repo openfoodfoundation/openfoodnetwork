@@ -9,8 +9,6 @@ class Api::ProductSerializer < ActiveModel::Serializer
 
   has_many :variants, serializer: Api::VariantSerializer
 
-  has_one :primary_taxon, serializer: Api::TaxonSerializer
-
   has_one :image, serializer: Api::ImageSerializer
   has_one :supplier, serializer: Api::IdSerializer
 

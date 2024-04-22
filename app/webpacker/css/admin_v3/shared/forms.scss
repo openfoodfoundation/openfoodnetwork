@@ -13,15 +13,25 @@ input[type="date"],
 input[type="datetime"],
 input[type="time"],
 input[type="number"],
-textarea,
-fieldset {
+textarea {
   @include border-radius($border-radius);
   padding: ($vpadding-txt - 1px) ($hpadding-txt - 1px); // Minus 1px for border
-  border: 1px solid $lighter-grey;
+  border: 1px solid $color-txt-brd;
   color: $color-txt-text;
-  background-color: $lighter-grey;
+  background-color: $color-txt-bg;
   font-size: 14px;
   line-height: 22px;
+
+
+  // Appears just like other text on the page.
+  // See table.products tr:hover for example of revealing them
+  .naked_inputs & {
+    background-color: inherit;
+    height: auto;
+    font-size: inherit;
+    font-weight: inherit;
+    border-color: transparent;
+  }
 
   &:focus {
     outline: none;
@@ -59,18 +69,11 @@ textarea {
 }
 
 label {
+  display: inline-block;
   font-weight: 600;
   font-size: 85%;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   color: $near-black;
-
-  &.inline {
-    display: inline-block !important;
-  }
-
-  &.block {
-    display: block !important;
-  }
 }
 
 .label-block label {
@@ -95,6 +98,7 @@ span.info {
       display: block;
       font-size: inherit;
       font-weight: normal;
+      margin-bottom: 0;
     }
   }
 

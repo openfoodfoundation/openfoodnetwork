@@ -51,6 +51,9 @@ mr:
         variant_unit: "व्हेरिएंट युनिट"
         variant_unit_name: "वेरिएंट युनिटचे नाव"
         unit_value: "युनिट मूल्य"
+      spree/variant:
+        primary_taxon: "उत्पादन श्रेणी"
+        shipping_category_id: "शिपिंग श्रेणी"
       spree/credit_card:
         base: "क्रेडीट कार्ड"
         number: "क्रमांक"
@@ -505,6 +508,7 @@ mr:
       columns:
         name: नाव
         unit: युनिट
+        unit_value: युनिट मूल्य
         price: किंमत
         producer: उत्पादक
         category: श्रेणी
@@ -748,13 +752,6 @@ mr:
         header:
           title: मोठ्या प्रमाणात उत्पादने संपादित करा
         loading: तुमची उत्पादने लोड करत आहे
-      sort:
-        pagination:
-          total_html: "तुमच्या शोध निकषांसाठी <strong>%{total} उत्पादने</strong> आढळली. %{from} ते %{to} दाखवत आहे."
-          per_page:
-            show: दाखवा
-            per_page: "%{num} प्रति पृष्ठ"
-          clear_search: सर्च क्लिअर करा
       filters:
         search_products: उत्पादने शोधा
         all_producers: सर्व उत्पादक
@@ -764,6 +761,13 @@ mr:
         categories:
           label: श्रेण्या
         search: शोधा
+      sort:
+        pagination:
+          total_html: "तुमच्या शोध निकषांसाठी <strong>%{total} उत्पादने</strong> आढळली. %{from} ते %{to} दाखवत आहे."
+          per_page:
+            show: दाखवा
+            per_page: "%{num} प्रति पृष्ठ"
+          clear_search: सर्च क्लिअर करा
       no_products:
         no_products_found: कोणतीही उत्पादने आढळली नाहीत
         import_products: अनेक उत्पादने आयात करा
@@ -822,6 +826,9 @@ mr:
         product_categories: उत्पादन श्रेणी
         tax_categories: कर श्रेणी
         shipping_categories: शिपिंग श्रेण्या
+      dfc_import_form:
+        enterprise: "एंटरप्राइझ"
+        import: "Import करा"
       import:
         review: पुनरावलोकन करा
         import: आयात करा
@@ -3588,8 +3595,6 @@ mr:
     start_date: "प्रारंभ तारीख"
     successfully_removed: "यशस्वीरित्या काढले"
     taxonomy_edit: "वर्गीकरण संपादन"
-    taxonomy_tree_error: "वर्गीकरण वृक्ष त्रुटी"
-    taxonomy_tree_instruction: "वर्गीकरण वृक्ष सूचना"
     tree: "वृक्ष"
     updating: "अपडेट करत आहे"
     your_order_is_empty_add_product: "तुमची ऑर्डर रिकामी आहे, कृपया उत्पादन शोधा आणि वर समाविष्ट करा"

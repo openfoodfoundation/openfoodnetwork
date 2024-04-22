@@ -38,7 +38,7 @@ describe "Shops caching", caching: true do
 
         visit shops_path
 
-        expect(page).to_not have_content "New Name" # Displayed name is unchanged
+        expect(page).not_to have_content "New Name" # Displayed name is unchanged
       end
 
       # A while later...
@@ -53,8 +53,9 @@ describe "Shops caching", caching: true do
     let!(:property) { create(:property, presentation: "Cached Property") }
     let!(:property2) { create(:property, presentation: "New Property") }
     let!(:product) {
-      create(:product, primary_taxon: taxon, properties: [property])
+      create(:product, primary_taxon_id: taxon.id, properties: [property])
     }
+    let(:variant) { product.variants.first }
     let(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }
 
     let(:test_domain) {
@@ -92,7 +93,7 @@ describe "Shops caching", caching: true do
         expect(page).to have_content taxon.name
         expect(page).to have_content property.presentation
 
-        product.update_attribute(:primary_taxon, taxon2)
+        variant.update_attribute(:primary_taxon, taxon2)
         product.update_attribute(:properties, [property2])
 
         visit enterprise_shop_path(distributor)

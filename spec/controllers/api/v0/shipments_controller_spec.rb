@@ -194,14 +194,14 @@ describe Api::V0::ShipmentsController, type: :controller do
           expect {
             api_put :add, params.merge(variant_id: existing_variant.to_param)
             expect(response.status).to eq(422)
-          }.to_not change { existing_variant.reload.on_hand }
+          }.not_to change { existing_variant.reload.on_hand }
         end
 
         it "doesn't adjust stock when removing a variant" do
           expect {
             api_put :remove, params.merge(variant_id: existing_variant.to_param)
             expect(response.status).to eq(422)
-          }.to_not change { existing_variant.reload.on_hand }
+          }.not_to change { existing_variant.reload.on_hand }
         end
       end
 
@@ -367,19 +367,29 @@ describe Api::V0::ShipmentsController, type: :controller do
             instance_double(Spree::Order, number: "123", distributor: variant.product.supplier)
           }
           let(:contents) { instance_double(Spree::OrderContents) }
+          let(:fee_order_shipment) {
+            instance_double(Spree::Shipment)
+          }
 
           before do
             allow(Spree::Order).to receive(:find_by!) { fee_order }
-            allow(controller).to receive(:find_and_update_shipment) {}
             allow(controller).to receive(:refuse_changing_cancelled_orders) {}
             allow(fee_order).to receive(:contents) { contents }
-            allow(contents).to receive(:add) {}
+            allow(contents).to receive_messages(add: {}, remove: {})
+            allow(fee_order).to receive_message_chain(:shipments, :find_by!) { fee_order_shipment }
+            allow(fee_order_shipment).to receive_messages(update: nil, reload: nil, persisted?: nil)
             allow(fee_order).to receive(:recreate_all_fees!)
           end
 
           it "recalculates fees for the line item" do
             params[:order_id] = fee_order.number
             spree_put :add, params
+            expect(fee_order).to have_received(:recreate_all_fees!)
+          end
+
+          it "recalculates fees for the line item when qty is decreased" do
+            params[:order_id] = fee_order.number
+            spree_put :remove, params
             expect(fee_order).to have_received(:recreate_all_fees!)
           end
         end

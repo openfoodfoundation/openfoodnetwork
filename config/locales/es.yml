@@ -48,6 +48,9 @@ es:
         variant_unit: "Unidad Variante"
         variant_unit_name: "Nombre de la unidad de la variante"
         unit_value: "Valor unidad"
+      spree/variant:
+        primary_taxon: "categoría del producto"
+        shipping_category_id: "Categoría de envío"
       spree/credit_card:
         base: "Tarjeta de crédito"
         number: "Número"
@@ -449,6 +452,7 @@ es:
       columns:
         name: Nombre
         unit: Unidad
+        unit_value: Valor unidad
         price: Precio
         producer: Productora
         category: Categoría
@@ -691,15 +695,15 @@ es:
         header:
           title: Editar varios Productos
         loading: Cargando tus productos
-      sort:
-        pagination:
-          clear_search: Limpiar la búsqueda
       filters:
         producers:
           label: Productoras
         categories:
           label: Categorías
         search: Buscar
+      sort:
+        pagination:
+          clear_search: Limpiar la búsqueda
       no_products:
         no_products_found: No se encontraron productos
         import_products: Importar varios productos
@@ -748,6 +752,9 @@ es:
         product_categories: Categorías de Producto
         tax_categories: Categorías de impuestos
         shipping_categories: Categorías de envío
+      dfc_import_form:
+        enterprise: "Organización"
+        import: "Importar"
       import:
         review: Revisión
         import: Importar
@@ -3477,6 +3484,7 @@ es:
     new_taxon: "Nuevo taxón"
     new_user: "Nuevo usuario"
     no_pending_payments: "No tiene pagos pendientes"
+    remove: "Eliminar"
     none: "Ninguno"
     not_found: "No encontrado"
     notice_messages:
@@ -3492,8 +3500,6 @@ es:
     start_date: "Fecha de inicio"
     successfully_removed: "Eliminado con éxito"
     taxonomy_edit: "editar taxonomía"
-    taxonomy_tree_error: "Error del árbol de taxonomía"
-    taxonomy_tree_instruction: "Instrucción del árbol de taxonomía"
     tree: "Árbol"
     updating: "Actualizando"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"

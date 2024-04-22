@@ -51,6 +51,9 @@ hi:
         variant_unit: "वेरिएंट यूनिट"
         variant_unit_name: "वेरिएंट यूनिट का नाम"
         unit_value: "यूनिट वैल्यू"
+      spree/variant:
+        primary_taxon: "उत्पाद की श्रेणी"
+        shipping_category_id: "शिपिंग श्रेणी"
       spree/credit_card:
         base: "क्रेडिट कार्ड"
         number: "नंबर"
@@ -505,6 +508,7 @@ hi:
       columns:
         name: नाम
         unit: यूनिट
+        unit_value: यूनिट वैल्यू
         price: कीमत
         producer: उत्पादक
         category: श्रेणी
@@ -749,13 +753,6 @@ hi:
         header:
           title: बल्क उत्पाद एडिट करें
         loading: अपने उत्पादों को लोड कर रहा है
-      sort:
-        pagination:
-          total_html: "<strong>%{total} उत्पाद</strong> आपके सर्च क्राइटेरिया के लिए मिले। %{from} से %{to} दिखा रहा है।"
-          per_page:
-            show: दिखाएं
-            per_page: "%{num} प्रति पेज"
-          clear_search: सर्च साफ़ करें
       filters:
         search_products: उत्पादों के लिए सर्च करें
         all_producers: सभी उत्पादक
@@ -765,6 +762,13 @@ hi:
         categories:
           label: श्रेणियां
         search: सर्च
+      sort:
+        pagination:
+          total_html: "<strong>%{total} उत्पाद</strong> आपके सर्च क्राइटेरिया के लिए मिले। %{from} से %{to} दिखा रहा है।"
+          per_page:
+            show: दिखाएं
+            per_page: "%{num} प्रति पेज"
+          clear_search: सर्च साफ़ करें
       no_products:
         no_products_found: कोई उत्पाद नहीं मिला
         import_products: कई उत्पाद इम्पोर्ट करें
@@ -826,6 +830,9 @@ hi:
         product_categories: उत्पाद श्रेणियां
         tax_categories: टैक्स श्रेणियां
         shipping_categories: शिपिंग श्रेणियां
+      dfc_import_form:
+        enterprise: "एंटरप्राइज़"
+        import: "इम्पोर्ट करें"
       import:
         review: रिव्यू
         import: इम्पोर्ट करें
@@ -3641,6 +3648,7 @@ hi:
     new_taxon: "नया टैक्सोन"
     new_user: "नया यूज़र"
     no_pending_payments: "कोई पेंडिंग भुगतान नहीं"
+    remove: "मिटाएँ"
     none: "कोई नहीं"
     not_found: "नहीं मिला"
     notice_messages:
@@ -3657,8 +3665,6 @@ hi:
     start_date: "शुरू होने की तिथि"
     successfully_removed: "सफलतापूर्वक हटाया गया"
     taxonomy_edit: "टैक्सोनॉमी एडिट करें"
-    taxonomy_tree_error: "टैक्सोनॉमी ट्री त्रुटि"
-    taxonomy_tree_instruction: "टैक्सोनॉमी ट्री निर्देश"
     tree: "ट्री"
     updating: "अपडेट किया जा रहा है"
     your_order_is_empty_add_product: "आपका ऑर्डर खाली है, कृपया ऊपर दिए गए उत्पाद को सर्च करें और जोड़ें"

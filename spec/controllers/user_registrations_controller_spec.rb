@@ -48,15 +48,9 @@ describe UserRegistrationsController, type: :controller do
     end
 
     it "sets user.locale from cookie on create" do
-      original_i18n_locale = I18n.locale
-      original_locale_cookie = cookies[:locale]
-
       cookies[:locale] = "pt"
       post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
       expect(assigns[:user].locale).to eq("pt")
-
-      I18n.locale = original_i18n_locale
-      cookies[:locale] = original_locale_cookie
     end
   end
 end

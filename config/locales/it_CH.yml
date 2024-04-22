@@ -34,6 +34,9 @@ it_CH:
         shipping_category_id: "Categoria Spedizioni"
         variant_unit: "Unità Variante"
         variant_unit_name: "Nome Unità Variante"
+      spree/variant:
+        primary_taxon: "Categoria prodotto"
+        shipping_category_id: "Categoria Spedizioni"
       spree/credit_card:
         base: "Carta di Credito"
         number: "Numero"
@@ -655,15 +658,15 @@ it_CH:
       index:
         header:
           title: Modifica prodotti tabella
-      sort:
-        pagination:
-          clear_search: Pulisci ricerca
       filters:
         producers:
           label: Produttori
         categories:
           label: categorie
         search: Cerca
+      sort:
+        pagination:
+          clear_search: Pulisci ricerca
       table:
         new_variant: Nuova variante
       edit_image:
@@ -707,6 +710,9 @@ it_CH:
         product_categories: Categorie Prodotti
         tax_categories: Categorie imposte
         shipping_categories: Categorie Spedizioni
+      dfc_import_form:
+        enterprise: "Azienda"
+        import: "Importazione"
       import:
         review: Revisione
         import: Importazione
@@ -3372,6 +3378,7 @@ it_CH:
     new_taxon: "Nuova tassonomia"
     new_user: "Nuovo utente"
     no_pending_payments: "Nessun pagamento in sospeso"
+    remove: "Rimuovi"
     none: "Nessuno"
     not_found: "Non trovato"
     notice_messages:
@@ -3386,8 +3393,6 @@ it_CH:
     start_date: "Data inizio"
     successfully_removed: "Rimosso con successo"
     taxonomy_edit: "Modifica tassonomia"
-    taxonomy_tree_error: "Errore schema tassonomia"
-    taxonomy_tree_instruction: "Istruzioni schema tassonomia"
     tree: "Schema"
     updating: "In aggiornamento"
     your_order_is_empty_add_product: "Il tuo ordine è vuoto, cerca e aggiungi un prodotto qui sopra"

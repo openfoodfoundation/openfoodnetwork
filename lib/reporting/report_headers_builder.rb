@@ -11,13 +11,13 @@ module Reporting
 
     def table_headers
       filter = proc { |key| key.to_sym.in?(fields_to_show) }
-      report.columns.keys.filter { |key| filter.call(key) }.map do |key|
+      report.table_columns.keys.filter { |key| filter.call(key) }.map do |key|
         translate_header(key)
       end
     end
 
     def available_headers
-      report.columns.keys.map { |key| [translate_header(key), key] }
+      report.table_columns.keys.map { |key| [translate_header(key), key] }
     end
 
     def fields_to_hide

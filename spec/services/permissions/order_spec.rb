@@ -70,9 +70,9 @@ module Permissions
 
           it "only returns completed, non-cancelled orders within search filter range" do
             expect(permissions.visible_orders).to include order_completed
-            expect(permissions.visible_orders).to_not include order_cancelled
-            expect(permissions.visible_orders).to_not include order_cart
-            expect(permissions.visible_orders).to_not include order_from_last_year
+            expect(permissions.visible_orders).not_to include order_cancelled
+            expect(permissions.visible_orders).not_to include order_cart
+            expect(permissions.visible_orders).not_to include order_from_last_year
           end
         end
       end
@@ -99,7 +99,7 @@ module Permissions
 
         context "which does not contain my products" do
           it "should not let me see the order" do
-            expect(permissions.visible_orders).to_not include order
+            expect(permissions.visible_orders).not_to include order
           end
         end
       end
@@ -113,7 +113,7 @@ module Permissions
         end
 
         it "should not let me see the order" do
-          expect(permissions.visible_orders).to_not include order
+          expect(permissions.visible_orders).not_to include order
         end
       end
     end
@@ -172,7 +172,7 @@ module Permissions
         it "should let me see the line_items pertaining to variants I produce" do
           ps = permissions.visible_line_items
           expect(ps).to include line_item1
-          expect(ps).to_not include line_item2
+          expect(ps).not_to include line_item2
         end
       end
 
@@ -185,7 +185,7 @@ module Permissions
         end
 
         it "should not let me see the line_items" do
-          expect(permissions.visible_line_items).to_not include line_item1, line_item2
+          expect(permissions.visible_line_items).not_to include line_item1, line_item2
         end
       end
 
@@ -205,10 +205,10 @@ module Permissions
         it "only returns line items from completed, " \
            "non-cancelled orders within search filter range" do
           expect(permissions.visible_line_items).to include order_completed.line_items.first
-          expect(permissions.visible_line_items).to_not include order_cancelled.line_items.first
-          expect(permissions.visible_line_items).to_not include order_cart.line_items.first
+          expect(permissions.visible_line_items).not_to include order_cancelled.line_items.first
+          expect(permissions.visible_line_items).not_to include order_cart.line_items.first
           expect(permissions.visible_line_items)
-            .to_not include order_from_last_year.line_items.first
+            .not_to include order_from_last_year.line_items.first
         end
       end
     end

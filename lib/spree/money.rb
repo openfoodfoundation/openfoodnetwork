@@ -9,7 +9,7 @@ module Spree
     delegate :cents, to: :money
 
     def initialize(amount, options = {})
-      @money = ::Monetize.parse([amount, options[:currency] || Spree::Config[:currency]].join)
+      @money = ::Monetize.parse([amount, options[:currency] || CurrentConfig.get(:currency)].join)
 
       if options.key?(:symbol_position)
         options[:format] = position_to_format(options.delete(:symbol_position))
@@ -20,7 +20,7 @@ module Spree
 
     # Return the currency symbol (on its own) for the current default currency
     def self.currency_symbol
-      ::Money.new(0, Spree::Config[:currency]).symbol
+      ::Money.new(0, CurrentConfig.get(:currency)).symbol
     end
 
     def to_s
@@ -44,11 +44,11 @@ module Spree
 
     def defaults
       {
-        with_currency: Spree::Config[:display_currency],
-        no_cents: Spree::Config[:hide_cents],
-        decimal_mark: Spree::Config[:currency_decimal_mark],
-        thousands_separator: Spree::Config[:currency_thousands_separator],
-        format: position_to_format(Spree::Config[:currency_symbol_position])
+        with_currency: CurrentConfig.get(:display_currency),
+        no_cents: CurrentConfig.get(:hide_cents),
+        decimal_mark: CurrentConfig.get(:currency_decimal_mark),
+        thousands_separator: CurrentConfig.get(:currency_thousands_separator),
+        format: position_to_format(CurrentConfig.get(:currency_symbol_position))
       }
     end
 

@@ -48,6 +48,9 @@ pa:
         variant_unit: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ"
         variant_unit_name: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ ਦਾ ਨਾਮ"
         unit_value: "ਯੂਨਿਟ ਵੈਲਯੂ"
+      spree/variant:
+        primary_taxon: "ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ"
+        shipping_category_id: "ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀ"
       spree/credit_card:
         base: "ਕਰੇਡਿਟ ਕਾਰਡ"
         number: "ਨੰਬਰ"
@@ -498,6 +501,7 @@ pa:
       columns:
         name: ਨਾਮ
         unit: ਯੂਨਿਟ
+        unit_value: ਯੂਨਿਟ ਵੈਲਯੂ
         price: ਕੀਮਤ
         producer: ਉਤਪਾਦਕ
         category: ਸ਼੍ਰੇਣੀ
@@ -741,13 +745,6 @@ pa:
         header:
           title: ਥੋਕ ਸੰਪਾਦਿਤ ਉਤਪਾਦ
         loading: ਤੁਹਾਡੇ ਉਤਪਾਦ ਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ
-      sort:
-        pagination:
-          total_html: "ਤੁਹਾਡੇ ਖੋਜ ਮਾਪਦੰਡ ਲਈ <strong>%{total} ਉਤਪਾਦ</strong> ਮਿਲੇ ਹਨ। %{from} ਤੋਂ %{to} ਦਿਖਾ ਰਹੇ ਹਨ।"
-          per_page:
-            show: ਵਿਖਾਓ
-            per_page: "%{num} ਪ੍ਰਤੀ ਪੇਜ"
-          clear_search: ਖੋਜ ਮਿਟਾਓ
       filters:
         search_products: ਉਤਪਾਦਾਂ ਦੀ ਖੋਜ ਕਰੋ
         all_producers: ਸਾਰੇ ਉਤਪਾਦਕ
@@ -757,6 +754,13 @@ pa:
         categories:
           label: ਸ਼੍ਰੇਣੀਆਂ
         search: ਖੋਜੋ
+      sort:
+        pagination:
+          total_html: "ਤੁਹਾਡੇ ਖੋਜ ਮਾਪਦੰਡ ਲਈ <strong>%{total} ਉਤਪਾਦ</strong> ਮਿਲੇ ਹਨ। %{from} ਤੋਂ %{to} ਦਿਖਾ ਰਹੇ ਹਨ।"
+          per_page:
+            show: ਵਿਖਾਓ
+            per_page: "%{num} ਪ੍ਰਤੀ ਪੇਜ"
+          clear_search: ਖੋਜ ਮਿਟਾਓ
       no_products:
         no_products_found: ਕੋਈ ਉਤਪਾਦ ਨਹੀਂ ਲੱਭੇ
         import_products: ਇੱਕ ਤੋਂ ਜ਼ਿਆਦਾ ਉਤਪਾਦ ਇਮਪੋਰਟ ਕਰੋ
@@ -810,6 +814,9 @@ pa:
         product_categories: ਉਤਪਾਦ ਸ਼੍ਰੇਣੀਆਂ
         tax_categories: ਟੈਕਸ ਸ਼੍ਰੇਣੀਆਂ
         shipping_categories: ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀਆਂ
+      dfc_import_form:
+        enterprise: "ਐਂਟਰਪ੍ਰਾਈਜ਼"
+        import: "ਇਮਪੋਰਟ"
       import:
         review: ਸਮੀਖਿਆ
         import: ਇਮਪੋਰਟ
@@ -3535,6 +3542,7 @@ pa:
     new_taxon: "ਨਵਾਂ ਟੈਕਸੋਨ"
     new_user: "ਨਵਾਂ ਉਪਭੋਗਤਾ"
     no_pending_payments: "ਕੋਈ ਬਕਾਇਆ ਭੁਗਤਾਨ ਨਹੀਂ ਹੈ"
+    remove: "Remove"
     none: "ਕੋਈ ਨਹੀਂ"
     not_found: "ਨਹੀਂ ਲਭਿਆ"
     notice_messages:
@@ -3551,8 +3559,6 @@ pa:
     start_date: "ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ"
     successfully_removed: "ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
     taxonomy_edit: "ਟੈਕਸੋਨੌਮੀ ਸੰਪਾਦਨ"
-    taxonomy_tree_error: "ਟੈਕਸੋਨੌਮੀ ਟ੍ਰੀ ਗਲਤੀ"
-    taxonomy_tree_instruction: "ਟੈਕਸੋਨੌਮੀ ਟ੍ਰੀ ਹਿਦਾਇਤ"
     tree: "ਟ੍ਰੀ"
     updating: "ਅੱਪਡੇਟ ਹੋ ਰਿਹਾ ਹੈ"
     your_order_is_empty_add_product: "ਤੁਹਾਡਾ ਆਰਡਰ ਖਾਲੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਉਪਰ ਇੱਕ ਉਤਪਾਦ ਦੀ ਖੋਜ ਕਰੋ ਅਤੇ ਜੋੜੋ"

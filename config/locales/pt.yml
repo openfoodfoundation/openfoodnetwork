@@ -34,6 +34,9 @@ pt:
         shipping_category_id: "Categoria de Envio"
         variant_unit: "Unidade da Variante"
         variant_unit_name: "Nome da Unidade da Variante"
+      spree/variant:
+        primary_taxon: "Categoria de Produto"
+        shipping_category_id: "Categoria de Envio"
       spree/credit_card:
         base: "Cartão de Crédito"
         number: "Número"
@@ -623,6 +626,9 @@ pt:
         product_categories: Categorias de Produtos
         tax_categories: Categorias de Impostos
         shipping_categories: Categorias de Envio
+      dfc_import_form:
+        enterprise: "Organização"
+        import: "Importar"
       import:
         review: Rever
         import: Importar
@@ -3007,6 +3013,7 @@ pt:
     credit: "Crédito"
     more: "Mais"
     no_pending_payments: "Sem pagamentos pendentes"
+    remove: "Remover"
     none: "Nenhum"
     updating: "Atualizando"
     your_order_is_empty_add_product: "A sua encomenda está vazia, por favor procure e adicione um produto em cima"

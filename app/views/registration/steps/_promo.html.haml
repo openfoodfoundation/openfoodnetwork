@@ -35,10 +35,10 @@
         .row.pad-top
           .small-12.columns.center
             #image-placeholder.promo
-              %img{ ng: { show: "imageSrc() && !imageUploader.isUploading", src: '{{ imageSrc() }}' } }
-              .message{ ng: { hide: "imageSrc() || imageUploader.isUploading" } }
+              %img{ "ng-show": "imageSrc() && !imageUploader.isUploading", "ng-src": '{{ imageSrc() }}' }
+              .message{ "ng-hide": "imageSrc() || imageUploader.isUploading" }
                 = t(".promo_image_placeholder")
-              .loading{ ng: { hide: "!imageUploader.isUploading" } }
+              .loading{ "ng-hide": "!imageUploader.isUploading" }
                 = render partial: "components/spinner"
                 %br/
                 = t("registration.steps.images.uploading")

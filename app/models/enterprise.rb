@@ -161,7 +161,7 @@ class Enterprise < ApplicationRecord
   scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
     joins(supplied_products: :variants).
-      where('spree_variants.id IN (?)', variants).
+      where(spree_variants: { id: variants }).
       select('DISTINCT enterprises.*')
   }
 
@@ -205,7 +205,7 @@ class Enterprise < ApplicationRecord
       ").
       joins('INNER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
       joins('INNER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)').
-      where('spree_variants.product_id IN (?)', product_ids).select('DISTINCT enterprises.id')
+      where(spree_variants: { product_id: product_ids }).select('DISTINCT enterprises.id')
 
     where(id: exchanges)
   }
@@ -214,7 +214,7 @@ class Enterprise < ApplicationRecord
     if user.has_spree_role?('admin')
       where(nil)
     else
-      joins(:enterprise_roles).where('enterprise_roles.user_id = ?', user.id)
+      joins(:enterprise_roles).where(enterprise_roles: { user_id: user.id })
     end
   }
 
@@ -369,10 +369,10 @@ class Enterprise < ApplicationRecord
       :producer_shop # Producer with shopfront and supplies other hubs.
     when "producer_sells_none"
       :producer # Producer only supplies through others.
-    when "non_producer_sells_any"
-      :hub # Hub selling others products in order cycles.
-    when "non_producer_sells_own"
-      :hub # Wholesaler selling through own shopfront? Does this need a separate name or even exist?
+    when "non_producer_sells_any", "non_producer_sells_own"
+      # Hub selling others products in order cycles
+      # Or Wholesaler selling through own shopfront? Does this need a separate name or even exist?
+      :hub
     when "non_producer_sells_none"
       :hub_profile # Hub selling outside the system.
     end
@@ -382,7 +382,7 @@ class Enterprise < ApplicationRecord
   def distributed_taxons
     Spree::Taxon.
       joins(:products).
-      where('spree_products.id IN (?)', Spree::Product.in_distributor(self).select(&:id)).
+      where(spree_products: { id: Spree::Product.in_distributor(self).select(&:id) }).
       select('DISTINCT spree_taxons.*')
   end
 
@@ -398,7 +398,7 @@ class Enterprise < ApplicationRecord
   def supplied_taxons
     Spree::Taxon.
       joins(:products).
-      where('spree_products.id IN (?)', Spree::Product.in_supplier(self).select(&:id)).
+      where(spree_products: { id: Spree::Product.in_supplier(self).select(&:id) }).
       select('DISTINCT spree_taxons.*')
   end
 
@@ -472,7 +472,7 @@ class Enterprise < ApplicationRecord
     ExchangeVariant.joins(exchange: :order_cycle)
       .merge(Exchange.outgoing)
       .select("DISTINCT exchange_variants.variant_id, exchanges.receiver_id AS enterprise_id")
-      .where("exchanges.receiver_id = ?", id)
+      .where(exchanges: { receiver_id: id })
       .merge(OrderCycle.active.with_distributor(id))
   end
 

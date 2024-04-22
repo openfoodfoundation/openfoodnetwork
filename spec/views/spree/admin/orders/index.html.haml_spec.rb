@@ -38,7 +38,7 @@ describe "spree/admin/orders/index.html.haml" do
 
       render
 
-      expect(rendered).to_not have_content("Print Invoices")
+      expect(rendered).not_to have_content("Print Invoices")
       expect(rendered).to have_content("Resend Confirmation")
       expect(rendered).to have_content("Cancel Orders")
     end

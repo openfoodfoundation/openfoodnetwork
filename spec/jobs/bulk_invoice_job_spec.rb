@@ -5,45 +5,36 @@ require 'spec_helper'
 describe BulkInvoiceJob do
   subject { BulkInvoiceJob.new(order_ids, "/tmp/file/path") }
 
-  describe "#sorted_orders" do
-    let(:order1) { build(:order, id: 1) }
-    let(:order2) { build(:order, id: 2) }
-    let(:order3) { build(:order, id: 3) }
-    let(:order_ids) { [3, 1, 2] }
-
-    it "returns results in their original order" do
-      expect(Spree::Order).to receive(:where).and_return([order1, order2, order3])
-
-      expect(subject.__send__(:sorted_orders, order_ids)).to eq [order3, order1, order2]
-    end
-  end
-
   context "when invoices are enabled", feature: :invoices do
     describe "#perform" do
       let!(:order1) { create(:shipped_order) }
-      let!(:order2) { create(:order_with_line_items) }
+      let!(:order2) { create(:shipped_order) }
       let!(:order3) { create(:order_ready_to_ship) }
-      let(:order_ids) { [order1.id, order2.id, order3.id] }
+      let(:order_ids) { [order3.id, order1.id, order2.id] }
       let(:path){ "/tmp/file/path.pdf" }
+
       before do
         allow(TermsOfServiceFile).to receive(:current_url).and_return("http://example.com/terms.pdf")
         order3.cancel
         order3.resume
       end
-      it "should generate invoices for invoiceable orders only" do
+
+      it "should generate invoices for given order ids" do
         expect{
           subject.perform(order_ids, path)
         }.to change{ order1.invoices.count }.from(0).to(1)
-          .and change{ order2.invoices.count }.by(0)
+          .and change{ order2.invoices.count }.from(0).to(1)
           .and change{ order3.invoices.count }.from(0).to(1)
 
-        File.open(path, "rb") do |io|
+        pages = File.open(path, "rb") do |io|
           reader = PDF::Reader.new(io)
-          content = reader.pages.map(&:text).join("\n")
-          expect(content).to include(order1.number)
-          expect(content).to include(order3.number)
-          expect(content).not_to include(order2.number)
+          reader.pages.map(&:text)
         end
+
+        # Pages should be in the order of order ids given:
+        expect(pages[0]).to include(order3.number)
+        expect(pages[1]).to include(order1.number)
+        expect(pages[2]).to include(order2.number)
       end
     end
   end

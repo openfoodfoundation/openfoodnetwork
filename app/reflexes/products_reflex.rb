@@ -5,18 +5,8 @@ class ProductsReflex < ApplicationReflex
 
   before_reflex :init_filters_params, :init_pagination_params
 
-  def fetch
-    fetch_and_render_products_with_flash
-  end
-
   def change_per_page
     @per_page = element.value.to_i
-    @page = 1
-
-    fetch_and_render_products_with_flash
-  end
-
-  def filter
     @page = 1
 
     fetch_and_render_products_with_flash
@@ -29,21 +19,6 @@ class ProductsReflex < ApplicationReflex
     @page = 1
 
     fetch_and_render_products_with_flash
-  end
-
-  def bulk_update
-    product_set = product_set_from_params
-
-    product_set.collection.each { |p| authorize! :update, p }
-    @products = product_set.collection # use instance variable mainly for testing
-
-    if product_set.save
-      flash[:success] = I18n.t('admin.products_v3.bulk_update.success')
-    elsif product_set.errors.present?
-      @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
-    end
-
-    render_products_form_with_flash
   end
 
   def delete_product
@@ -116,11 +91,11 @@ class ProductsReflex < ApplicationReflex
                              producer_options: producers, producer_id: @producer_id,
                              category_options: categories, category_id: @category_id,
                              flashes: flash })
-    ).broadcast
+    )
 
     cable_ready.replace_state(
       url: current_url,
-    ).broadcast_later
+    )
 
     morph :nothing
   end
@@ -133,12 +108,11 @@ class ProductsReflex < ApplicationReflex
     cable_ready.replace(
       selector: "#products-form",
       html: render(partial: "admin/products_v3/table", locals:)
-    ).broadcast
+    )
     morph :nothing
 
-    # dunno why this doesn't work.
-    # morph "#products-form", render(partial: "admin/products_v3/table",
-    #                locals: { products: products })
+    # dunno why this doesn't work. The HTML stops after the first `<col>` element, wtf?!
+    # morph "#products-form", render(partial: "admin/products_v3/table", locals:)
   end
 
   def producers
@@ -153,7 +127,7 @@ class ProductsReflex < ApplicationReflex
 
   def fetch_products
     product_query = OpenFoodNetwork::Permissions.new(current_user)
-      .editable_products.merge(product_scope).ransack(ransack_query).result
+      .editable_products.merge(product_scope).ransack(ransack_query).result(distinct: true)
     @pagy, @products = pagy(product_query.order(:name), items: @per_page, page: @page,
                                                         size: [1, 2, 2, 1])
   end
@@ -174,7 +148,7 @@ class ProductsReflex < ApplicationReflex
     if @search_term.present?
       query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
     end
-    query.merge!(primary_taxon_id_in: @category_id) if @category_id.present?
+    query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
     query
   end
 

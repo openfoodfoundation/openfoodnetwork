@@ -43,7 +43,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       expect(page).to have_selector ".pagination"
       expect_products_count_to_be 15
       within ".pagination" do
-        click_link "2"
+        click_on "2"
       end
 
       expect(page).to have_content "Showing 16 to 16" # todo: remove unnecessary duplication
@@ -58,7 +58,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
       select "50", from: "per_page"
 
-      expect(page).to have_content "Showing 1 to 50"
+      expect(page).to have_content "Showing 1 to 50", wait: 10
       expect_page_to_be 1
       expect_per_page_to_be 50
       expect_products_count_to_be 50
@@ -66,6 +66,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   describe "search" do
+    # TODO: explicitly test with multiple products, to ensure incorrect products don't show.
+    # TODO: test with  multiple variants, to ensure distinct query reponse
     context "product has searchable term" do
       # create a product with a name that can be searched
       let!(:product_by_name) { create(:simple_product, name: "searchable product") }
@@ -86,7 +88,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         visit admin_products_url
 
         within ".pagination" do
-          click_link "2"
+          click_on "2"
         end
 
         expect(page).to have_content "Showing 16 to 16"
@@ -128,13 +130,29 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
       # create a product with a different supplier
       let!(:producer) { create(:supplier_enterprise, name: "Producer 1") }
-      let!(:product_by_supplier) { create(:simple_product, supplier: producer) }
+      let!(:product_by_supplier) { create(:simple_product, name: "Apples", supplier: producer) }
 
-      it "can search for a product" do
+      it "can search for and update a product" do
         visit admin_products_url
 
         search_by_producer "Producer 1"
 
+        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_select "producer_id", selected: "Producer 1", wait: 5
+        expect_products_count_to_be 1
+
+        within row_containing_name("Apples") do
+          fill_in "Name", with: "Pommes"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          product_by_supplier.reload
+        }.to change { product_by_supplier.name }.to("Pommes")
+
+        # Search is still applied
         # expect(page).to have_content "1 product found for your search criteria."
         expect(page).to have_select "producer_id", selected: "Producer 1"
         expect_products_count_to_be 1
@@ -169,7 +187,10 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
                   on_demand: false
       }
     }
-    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
+    let!(:product_a) {
+      create(:simple_product, name: "Apples", sku: "APL-00",
+                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+    }
     before do
       visit admin_products_url
     end
@@ -178,10 +199,23 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       within row_containing_name("Apples") do
         fill_in "Name", with: "Pommes"
         fill_in "SKU", with: "POM-00"
+        tomselect_select "Volume (mL)", from: "Unit scale"
       end
       within row_containing_name("Medium box") do
         fill_in "Name", with: "Large box"
         fill_in "SKU", with: "POM-01"
+
+        click_on "Unit" # activate popout
+      end
+
+      # Unit popout
+      # TODO: prevent empty value
+      fill_in "Unit value", with: ""
+      click_button "Save changes" # attempt to save or close the popout
+      expect(page).to have_field "Unit value", with: "" # popout is still open
+      fill_in "Unit value", with: "500.1"
+
+      within row_containing_name("Medium box") do
         fill_in "Price", with: "10.25"
 
         click_on "On Hand" # activate popout
@@ -201,8 +235,11 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         variant_a1.reload
       }.to change { product_a.name }.to("Pommes")
         .and change{ product_a.sku }.to("POM-00")
+        .and change{ product_a.variant_unit }.to("volume")
+        .and change{ product_a.variant_unit_scale }.to(0.001)
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
+        .and change{ variant_a1.unit_value }.to(0.5001) # volumes are stored in litres
         .and change{ variant_a1.price }.to(10.25)
         .and change{ variant_a1.on_hand }.to(6)
 
@@ -213,8 +250,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       within row_containing_name("Large box") do
         expect(page).to have_field "Name", with: "Large box"
         expect(page).to have_field "SKU", with: "POM-01"
+        expect(page).to have_button "Unit", text: "500.1mL"
         expect(page).to have_field "Price", with: "10.25"
-        expect(page).to have_css "button[aria-label='On Hand']", text: "6"
+        expect(page).to have_button "On Hand", text: "6"
       end
     end
 
@@ -223,19 +261,112 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         click_on "On Hand" # activate stock popout
         check "On demand"
 
-        expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
+        expect(page).to have_button "On Hand", text: "On demand"
       end
 
       expect {
         click_button "Save changes"
 
         expect(page).to have_content "Changes saved"
-        product_a.reload
         variant_a1.reload
       }.to change{ variant_a1.on_demand }.to(true)
 
       within row_containing_name("Medium box") do
-        expect(page).to have_css "button[aria-label='On Hand']", text: "On demand"
+        expect(page).to have_button "On Hand", text: "On demand"
+      end
+    end
+
+    describe "Changing unit scale" do
+      it "saves unit values using the new scale" do
+        within row_containing_name("Medium box") do
+          expect(page).to have_button "Unit", text: "1g"
+        end
+        within row_containing_name("Apples") do
+          tomselect_select "Weight (kg)", from: "Unit scale"
+        end
+        within row_containing_name("Medium box") do
+          # New scale is visible immediately
+          expect(page).to have_button "Unit", text: "1kg"
+        end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+        expect(product_a.variant_unit).to eq "weight"
+        expect(product_a.variant_unit_scale).to eq 1000 # kg
+        expect(variant_a1.reload.unit_value).to eq 1000 # 1kg
+
+        within row_containing_name("Medium box") do
+          expect(page).to have_button "Unit", text: "1kg"
+        end
+      end
+
+      it "saves a custom item unit name" do
+        within row_containing_name("Apples") do
+          tomselect_select "Items", from: "Unit scale"
+          fill_in "Items", with: "box"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          product_a.reload
+        }.to change{ product_a.variant_unit }.to("items")
+          .and change{ product_a.variant_unit_name }.to("box")
+
+        within row_containing_name("Apples") do
+          pending "#12005"
+          expect(page).to have_content "Items (box)"
+        end
+      end
+    end
+
+    describe "Changing unit values" do
+      # This is a rather strange feature, I wonder if anyone actually uses it.
+      it "saves a variant unit description" do
+        within row_containing_name("Medium box") do
+          click_on "Unit" # activate popout
+          fill_in "Unit value", with: "1000 boxed" # 1000 grams
+
+          find_field("Price").click # de-activate popout
+          # unit value has been parsed and displayed with unit
+          expect(page).to have_button "Unit", text: "1kg boxed"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          variant_a1.reload
+        }.to change{ variant_a1.unit_value }.to(1000)
+          .and change{ variant_a1.unit_description }.to("boxed")
+
+        within row_containing_name("Medium box") do
+          # New value is visible immediately
+          expect(page).to have_button "Unit", text: "1kg boxed"
+        end
+      end
+
+      it "saves a custom variant unit display name" do
+        within row_containing_name("Medium box") do
+          click_on "Unit" # activate popout
+          fill_in "Display unit as", with: "250g box"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          variant_a1.reload
+        }.to change{ variant_a1.unit_to_display }.to("250g box")
+
+        within row_containing_name("Medium box") do
+          expect(page).to have_button "Unit", text: "250g box"
+          click_on "Unit"
+          expect(page).to have_field "Display unit as", with: "250g box"
+        end
       end
     end
 
@@ -256,9 +387,11 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       product_a.update! sku: "APL-10"
 
       expect {
-        click_button "Discard changes"
+        accept_confirm do
+          click_on "Discard changes"
+        end
         product_a.reload
-      }.to_not change { product_a.name }
+      }.not_to change { product_a.name }
 
       within row_containing_name("Apples") do
         expect(page).to have_field "Name", with: "Apples" # Changed value wasn't saved
@@ -270,6 +403,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       let!(:product_b) { create(:simple_product, name: "Bananas") }
 
       before do
+        visit admin_products_url
+
         within row_containing_name("Apples") do
           fill_in "Name", with: ""
           fill_in "SKU", with: "A" * 256
@@ -295,7 +430,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect(page).to have_content "1 product could not be saved"
           expect(page).to have_content "Please review the errors and try again"
           product_a.reload
-        }.to_not change { product_a.name }
+        }.not_to change { product_a.name }
 
         # (there's no identifier displayed, so the user must remember which product it is..)
         within row_containing_name("") do
@@ -320,7 +455,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
           expect(page).to have_content("1 product could not be saved")
           product_a.reload
-        }.to_not change { product_a.name }
+        }.not_to change { product_a.name }
 
         within row_containing_name("") do
           fill_in "Name", with: "Pommes"
@@ -349,11 +484,15 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         within new_variant_row do
           fill_in "Name", with: "Large box"
           fill_in "SKU", with: "APL-02"
-          fill_in "Unit", with: 1000
+
+          click_on "Unit" # activate popout
+          fill_in "Unit value", with: "1000"
+
           fill_in "Price", with: 10.25
+
           click_on "On Hand" # activate popout
+          fill_in "On Hand", with: "3"
         end
-        fill_in "On Hand", with: "3"
 
         expect {
           click_button "Save changes"
@@ -368,13 +507,17 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(new_variant.price).to eq 10.25
         expect(new_variant.unit_value).to eq 1000
         expect(new_variant.on_hand).to eq 3
+        expect(new_variant.tax_category_id).to be_nil
 
         within row_containing_name("Large box") do
           expect(page).to have_field "Name", with: "Large box"
           expect(page).to have_field "SKU", with: "APL-02"
           expect(page).to have_field "Price", with: "10.25"
           expect(page).to have_content "1kg"
-          expect(page).to have_css "button[aria-label='On Hand']", text: "3"
+          expect(page).to have_button "On Hand", text: "3"
+          within tax_category_column do
+            expect(page).to have_content "None"
+          end
         end
       end
 
@@ -389,7 +532,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           within new_variant_row do
             fill_in "Name", with: "N" * 256 # too long
             fill_in "SKU", with: "n" * 256
-            fill_in "Unit", with: "" # can't be blank
+            # didn't fill_in "Unit", can't be blank
             fill_in "Price", with: "10.25" # valid
           end
         end
@@ -408,14 +551,14 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             expect(page).to have_content "1 product could not be saved"
             expect(page).to have_content "Please review the errors and try again"
             variant_a1.reload
-          }.to_not change { variant_a1.display_name }
+          }.not_to change { variant_a1.display_name }
 
           # New variant
           within row_containing_name("N" * 256) do
             expect(page).to have_field "Name", with: "N" * 256
             expect(page).to have_field "SKU", with: "n" * 256
             expect(page).to have_content "is too long"
-            expect(page).to have_field "Unit", with: ""
+            expect(page.find_button("Unit")).to have_text "" # have_button selector don't work here
             expect(page).to have_content "can't be blank"
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
           end
@@ -433,131 +576,14 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             click_button "Save changes"
 
             variant_a1.reload
-          }.to_not change { variant_a1.display_name }
+          }.not_to change { variant_a1.display_name }
 
           within row_containing_name("N" * 256) do
             fill_in "Name", with: "Nice box"
             fill_in "SKU", with: "APL-02"
-            fill_in "Unit", with: 200
-          end
 
-          expect {
-            click_button "Save changes"
-
-            expect(page).to have_content "Changes saved"
-            product_a.reload
-          }.to change { product_a.variants.count }.by(1)
-
-          new_variant = product_a.variants.last
-          expect(new_variant.display_name).to eq "Nice box"
-          expect(new_variant.sku).to eq "APL-02"
-          expect(new_variant.price).to eq 10.25
-          expect(new_variant.unit_value).to eq 200
-        end
-      end
-    end
-
-    describe "adding variants" do
-      it "creates a new variant" do
-        click_on "New variant"
-
-        # find empty row for Apples
-        new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
-        expect(new_variant_row).to be_present
-
-        within new_variant_row do
-          fill_in "Name", with: "Large box"
-          fill_in "SKU", with: "APL-02"
-          fill_in "Unit", with: 1000
-          fill_in "Price", with: 10.25
-          click_on "On Hand" # activate popout
-        end
-        fill_in "On Hand", with: "3"
-
-        expect {
-          click_button "Save changes"
-
-          expect(page).to have_content "Changes saved"
-          product_a.reload
-        }.to change { product_a.variants.count }.by(1)
-
-        new_variant = product_a.variants.last
-        expect(new_variant.display_name).to eq "Large box"
-        expect(new_variant.sku).to eq "APL-02"
-        expect(new_variant.price).to eq 10.25
-        expect(new_variant.unit_value).to eq 1000
-        expect(new_variant.on_hand).to eq 3
-
-        within row_containing_name("Large box") do
-          expect(page).to have_field "Name", with: "Large box"
-          expect(page).to have_field "SKU", with: "APL-02"
-          expect(page).to have_field "Price", with: "10.25"
-          expect(page).to have_content "1kg"
-          expect(page).to have_css "button[aria-label='On Hand']", text: "3"
-        end
-      end
-
-      context "with invalid data" do
-        before do
-          click_on "New variant"
-
-          # find empty row for Apples
-          new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
-          expect(new_variant_row).to be_present
-
-          within new_variant_row do
-            fill_in "Name", with: "N" * 256 # too long
-            fill_in "SKU", with: "n" * 256
-            fill_in "Unit", with: "" # can't be blank
-            fill_in "Price", with: "10.25" # valid
-          end
-        end
-
-        it "shows errors for both existing and new variant fields" do
-          # Update existing variant with invalid data too
-          within row_containing_name("Medium box") do
-            fill_in "Name", with: "M" * 256
-            fill_in "SKU", with: "m" * 256
-            fill_in "Price", with: "10.25"
-          end
-
-          expect {
-            click_button "Save changes"
-
-            expect(page).to have_content "1 product could not be saved"
-            expect(page).to have_content "Please review the errors and try again"
-            variant_a1.reload
-          }.to_not change { variant_a1.display_name }
-
-          # New variant
-          within row_containing_name("N" * 256) do
-            expect(page).to have_field "Name", with: "N" * 256
-            expect(page).to have_field "SKU", with: "n" * 256
-            expect(page).to have_content "is too long"
-            expect(page).to have_field "Unit", with: ""
-            expect(page).to have_content "can't be blank"
-            expect(page).to have_field "Price", with: "10.25" # other updated value is retained
-          end
-
-          # Existing variant
-          within row_containing_name("M" * 256) do
-            expect(page).to have_field "Name", with: "M" * 256
-            expect(page).to have_field "SKU", with: "m" * 256
-            expect(page).to have_content "is too long"
-          end
-        end
-
-        it "saves changes after fixing errors" do
-          expect {
-            click_button "Save changes"
-
-            variant_a1.reload
-          }.to_not change { variant_a1.display_name }
-
-          within row_containing_name("N" * 256) do
-            fill_in "Name", with: "Nice box"
-            fill_in "SKU", with: "APL-02"
-            fill_in "Unit", with: "200"
+            click_on "Unit" # activate popout
+            fill_in "Unit value", with: "200"
           end
 
           expect {
@@ -580,6 +606,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       let!(:product_b) { create(:simple_product, name: "Bananas") }
 
       before do
+        visit admin_products_url
+
         within row_containing_name("Apples") do
           fill_in "Name", with: ""
           fill_in "SKU", with: "A" * 256
@@ -595,11 +623,40 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect {
           click_button "Save changes"
           product_a.reload
-        }.to_not change { product_a.name }
+        }.not_to change { product_a.name }
 
         expect(page).not_to have_content("0 product was saved correctly, but")
         expect(page).to have_content("1 product could not be saved")
         expect(page).to have_content "Please review the errors and try again"
+      end
+    end
+
+    context "pagination" do
+      let!(:product_a) { create(:simple_product, name: "zucchini") } # appears on p2
+
+      it "retains selected page after saving" do
+        create_products 15 # in addition to product_a
+        visit admin_products_url
+
+        within ".pagination" do
+          click_on "2"
+        end
+        within row_containing_name("zucchini") do
+          fill_in "Name", with: "zucchinis"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          product_a.reload
+        }.to change { product_a.name }.to("zucchinis")
+
+        expect(page).to have_content "Showing 16 to 16" # todo: remove unnecessary duplication
+        expect_page_to_be 2
+        expect_per_page_to_be 15
+        expect_products_count_to_be 1
+        expect(page).to have_css row_containing_name("zucchinis")
       end
     end
   end
@@ -699,7 +756,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
           within row_containing_name("Medium box") do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).to_not have_link "Clone", href: spree.clone_admin_product_path(product_a)
+            expect(page).not_to have_link "Clone", href: spree.clone_admin_product_path(product_a)
           end
         end
       end
@@ -711,7 +768,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             input_content = page.find_all('input[type=text]').map(&:value).join
 
             # Products does not include the cloned product.
-            expect(input_content).to_not match /COPY OF Apples/
+            expect(input_content).not_to match /COPY OF Apples/
           end
 
           within row_containing_name("Apples") do
@@ -741,11 +798,11 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         "tr:has(input[aria-label=Price][value='#{product_a.price}'])"
       }
 
-      before do
-        visit admin_products_url
-      end
-
       describe "Actions columns (delete)" do
+        before do
+          visit admin_products_url
+        end
+
         it "shows an actions menu with a delete link when clicking on icon for product. " \
            "doesn't show delete link for the single variant" do
           within product_selector do
@@ -757,17 +814,18 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           # to select the default variant
           within default_variant_selector do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).to_not have_css(delete_option_selector)
+            expect(page).not_to have_css(delete_option_selector)
           end
         end
 
-        it "shows an actions menu with a delete link when clicking on icon for variant" \
+        it "shows an actions menu with a delete link when clicking on icon for variant " \
            "if have multiple" do
           create(:variant,
                  product: product_a,
                  display_name: "Medium box",
                  sku: "APL-01",
                  price: 5.25)
+          visit admin_products_url
 
           # to select the default variant
           within default_variant_selector do
@@ -796,6 +854,8 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         context "when 'keep product/variant' is selected" do
           it 'should not delete the product/variant' do
+            visit admin_products_url
+
             # Keep Product
             within product_selector do
               page.find(".vertical-ellipsis-menu").click
@@ -806,7 +866,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(keep_button_selector).click
             end
 
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             expect(page).to have_selector(product_selector)
 
             # Keep Variant
@@ -819,7 +879,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(keep_button_selector).click
             end
 
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             expect(page).to have_selector(variant_selector)
           end
         end
@@ -828,6 +888,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           let(:success_flash_message_selector) { "div.flash.success" }
           let(:error_flash_message_selector) { "div.flash.error" }
           it 'should successfully delete the product/variant' do
+            visit admin_products_url
             # Delete Variant
             within variant_selector do
               page.find(".vertical-ellipsis-menu").click
@@ -839,10 +900,10 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(delete_button_selector).click
             end
 
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             # Make sure the products loading spinner is hidden
             wait_for_class('.spinner-overlay', 'hidden')
-            expect(page).to_not have_selector(variant_selector)
+            expect(page).not_to have_selector(variant_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the variant")
               page.find(dismiss_button_selector).click
@@ -857,16 +918,17 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             within modal_selector do
               page.find(delete_button_selector).click
             end
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             # Make sure the products loading spinner is hidden
             wait_for_class('.spinner-overlay', 'hidden')
-            expect(page).to_not have_selector(product_selector)
+            expect(page).not_to have_selector(product_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the product")
             end
           end
 
           it 'should be failed to delete the product/variant' do
+            visit admin_products_url
             allow_any_instance_of(Spree::Product).to receive(:destroy).and_return(false)
             allow_any_instance_of(Spree::Variant).to receive(:destroy).and_return(false)
 
@@ -881,7 +943,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(delete_button_selector).click
             end
 
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             sleep(0.5) # delay for loading spinner to complete
             expect(page).to have_selector(variant_selector)
             within error_flash_message_selector do
@@ -898,7 +960,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             within modal_selector do
               page.find(delete_button_selector).click
             end
-            expect(page).to_not have_selector(modal_selector)
+            expect(page).not_to have_selector(modal_selector)
             sleep(0.5) # delay for loading spinner to complete
             expect(page).to have_selector(product_selector)
             within error_flash_message_selector do
@@ -917,7 +979,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   def expect_page_to_be(page_number)
-    expect(page).to have_selector ".pagination span.page.current", text: page_number.to_s
+    expect(page).to have_selector ".pagination .page.current", text: page_number.to_s
   end
 
   def expect_per_page_to_be(per_page)
@@ -934,13 +996,12 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   def search_by_producer(producer)
-    # TODO: use a helper to more reliably select the tom-select component
-    select producer, from: "producer_id"
+    tomselect_select producer, from: "producer_id"
     click_button "Search"
   end
 
   def search_by_category(category)
-    select category, from: "category_id"
+    tomselect_select category, from: "category_id"
     click_button "Search"
   end
 
@@ -961,5 +1022,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
   def expect_page_to_have_image(url)
     expect(page).to have_selector("img[src$='#{url}']")
+  end
+
+  def tax_category_column
+    @tax_category_column ||= 'td:nth-child(10)'
   end
 end

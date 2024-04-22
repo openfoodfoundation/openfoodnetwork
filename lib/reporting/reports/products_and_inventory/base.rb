@@ -17,7 +17,7 @@ module Reporting
             producer_suburb: proc { |variant| variant.product.supplier.address.city },
             product: proc { |variant| variant.product.name },
             product_properties: proc { |v| v.product.properties.map(&:name).join(", ") },
-            taxons: proc { |variant| variant.product.primary_taxon.name },
+            taxons: proc { |variant| variant.primary_taxon.name },
             variant_value: proc { |variant| variant.full_name },
             price: proc { |variant| variant.price },
             group_buy_unit_quantity: proc { |variant| variant.product.group_buy_unit_size },
@@ -59,7 +59,7 @@ module Reporting
 
         def filter_to_supplier(variants)
           if params[:supplier_id].to_i > 0
-            variants.where("spree_products.supplier_id = ?", params[:supplier_id])
+            variants.where(spree_products: { supplier_id: params[:supplier_id] })
           else
             variants
           end

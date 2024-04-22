@@ -1,4 +1,4 @@
-%div{ ng: { controller: 'enterprisesCtrl' } }
+%div{ "ng-controller": 'enterprisesCtrl' }
   .row{ 'ng-hide' => '!loaded' }
     .controls{ :class => "sixteen columns alpha", :style => "margin-bottom: 15px;" }
       .four.columns.alpha
@@ -15,32 +15,32 @@
   .row{ :class => "sixteen columns alpha", 'ng-show' => 'loaded && filteredEnterprises.length == 0'}
     %h1#no_results= t('.no_enterprises_found')
 
-  .row{ ng: { show: "loaded && filteredEnterprises.length > 0" } }
+  .row{ "ng-show": "loaded && filteredEnterprises.length > 0" }
     %table.index#enterprises
-      %col.name{ width: "28%", ng: { show: 'columns.name.visible' } }
-      %col.producer{ width: "18%", ng: { show: 'columns.producer.visible' }}
-      %col.package{ width: "18%", ng: { show: 'columns.package.visible' }}
-      %col.status{ width: "18%", ng: { show: 'columns.status.visible' }}
-      %col.manage{ width: "18%", ng: { show: 'columns.manage.visible' }}
+      %col.name{ width: "28%", "ng-show": 'columns.name.visible' }
+      %col.producer{ width: "18%", "ng-show": 'columns.producer.visible' }
+      %col.package{ width: "18%", "ng-show": 'columns.package.visible' }
+      %col.status{ width: "18%", "ng-show": 'columns.status.visible' }
+      %col.manage{ width: "18%", "ng-show": 'columns.manage.visible' }
       %thead
-        %tr{ ng: { controller: "ColumnsCtrl" } }
-          %th.name{ ng: { show: 'columns.name.visible' } }=t('admin.name')
-          %th.producer{ ng: { show: 'columns.producer.visible' } }=t('.producer?')
-          %th.package{ ng: { show: 'columns.package.visible' } }=t('.package')
-          %th.status{ ng: { show: 'columns.status.visible' } }=t('.status')
-          %th.manage{ ng: { show: 'columns.manage.visible' } }=t('.manage')
-      %tbody.panel-ctrl{ :id => "e_{{enterprise.id}}", object: "enterprise", ng: { repeat: "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )" } }
-        %tr.enterprise{ ng: { class: { even: "'even'", odd: "'odd'"} } }
-          %td.name{ ng: { show: 'columns.name.visible' } }
-            %span{ ng: { bind: "::enterprise.name" } }
-          %td.producer.panel-toggle.text-center{ ng: { show: 'columns.producer.visible', class: "{error: enterprise.producerError}" }, name: "producer" }
-            %h5{ ng: { bind: "enterprise.producer" } }
-          %td.package.panel-toggle.text-center{ ng: { show: 'columns.package.visible', class: "{error: enterprise.packageError}" }, name: "package" }
-            %h5{ ng: { bind: "enterprise.package" } }
-          %td.status.panel-toggle.text-center{ ng: { show: 'columns.status.visible' }, name: "status" }
-            %i.icon-status{ ng: { class: "enterprise.status" } }
-          %td.manage{ ng: { show: 'columns.manage.visible' } }
-            %a.button.fullwidth{ ng: { href: '{{::enterprise.edit_path}}' } }
+        %tr{ "ng-controller": "ColumnsCtrl" }
+          %th.name{ "ng-show": 'columns.name.visible' }=t('admin.name')
+          %th.producer{ "ng-show": 'columns.producer.visible' }=t('.producer?')
+          %th.package{ "ng-show": 'columns.package.visible' }=t('.package')
+          %th.status{ "ng-show": 'columns.status.visible' }=t('.status')
+          %th.manage{ "ng-show": 'columns.manage.visible' }=t('.manage')
+      %tbody.panel-ctrl{ id: "e_{{enterprise.id}}", object: "enterprise", "ng-repeat": "enterprise in filteredEnterprises = ( allEnterprises | filter:{ name: quickSearch } )" }
+        %tr.enterprise{ "ng-class-even": "'even'", "ng-class-odd": "'odd'" }
+          %td.name{ "ng-show": 'columns.name.visible' }
+            %span{ "ng-bind": "::enterprise.name" }
+          %td.producer.panel-toggle.text-center{ name: "producer", "ng-show": 'columns.producer.visible', "ng-class": "{error: enterprise.producerError}" }
+            %h5{ "ng-bind": "enterprise.producer" }
+          %td.package.panel-toggle.text-center{ name: "package", "ng-show": 'columns.package.visible', "ng-class": "{error: enterprise.packageError}" }
+            %h5{ "ng-bind": "enterprise.package" }
+          %td.status.panel-toggle.text-center{ name: "status", "ng-show": 'columns.status.visible' }
+            %i.icon-status{ "ng-class": "enterprise.status" }
+          %td.manage{ "ng-show": 'columns.manage.visible' }
+            %a.button.fullwidth{ "ng-href": '{{::enterprise.edit_path}}' }
               = t('.manage_link')
               %i.icon-arrow-right
 

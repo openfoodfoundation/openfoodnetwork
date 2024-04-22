@@ -21,7 +21,7 @@ describe Api::Admin::EnterpriseSerializer do
 
       it "includes URLs of image versions" do
         serializer = Api::Admin::EnterpriseSerializer.new(enterprise)
-        expect(serializer.as_json[:logo]).to_not be_blank
+        expect(serializer.as_json[:logo]).not_to be_blank
         expect(serializer.as_json[:logo][:medium]).to match(/logo-black.png/)
       end
     end
@@ -46,7 +46,7 @@ describe Api::Admin::EnterpriseSerializer do
 
       it "includes URLs of image versions" do
         serializer = Api::Admin::EnterpriseSerializer.new(enterprise)
-        expect(serializer.as_json[:promo_image]).to_not be_blank
+        expect(serializer.as_json[:promo_image]).not_to be_blank
         expect(serializer.as_json[:promo_image][:medium]).to match(/logo-black\.png$/)
       end
     end

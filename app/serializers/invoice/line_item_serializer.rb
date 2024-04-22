@@ -6,7 +6,6 @@ class Invoice
                :variant_id, :unit_price_price_and_unit, :unit_presentation,
                :enterprise_fee_additional_tax, :enterprise_fee_included_tax
     has_one :variant, serializer: Invoice::VariantSerializer
-    has_many :tax_rates, serializer: Invoice::TaxRateSerializer
 
     def enterprise_fee_additional_tax
       EnterpriseFeeAdjustments.new(object.enterprise_fee_adjustments).total_additional_tax

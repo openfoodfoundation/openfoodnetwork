@@ -1,15 +1,15 @@
 %h4.modal-title
   = t('js.admin.orders.index.compiling_invoices')
 
-%p.message{ ng: { show: 'message' } }
+%p.message{ "ng-show": 'message' }
   {{message}}
-%p.error{ ng: { show: 'error' } }
+%p.error{ "ng-show": 'error' }
   {{error}}
 
-%img.spinner{ src: image_path("/spinning-circles.svg"), ng: { show: "loading" } }
-%p{ ng: { show: "loading" } }
+%img.spinner{ src: image_path("/spinning-circles.svg"), "ng-show": "loading" }
+%p{ "ng-show": "loading" }
   = t('js.admin.orders.index.please_wait')
 
-%a.button{ target: '_blank', ng: { click: 'showBulkInvoice()', href: '/admin/orders/invoices/{{invoice_id}}', show: "!loading && !error" } }
+%a.button{ target: '_blank', "ng-click": 'showBulkInvoice()', "ng-href": '/admin/orders/invoices/{{invoice_id}}', "ng-show": "!loading && !error" }
   = t('js.admin.orders.index.view_file')
 

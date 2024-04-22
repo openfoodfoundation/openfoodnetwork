@@ -1,5 +1,8 @@
 cy:
   language_name: "Cymraeg"
+  time:
+    formats:
+      long: "%B %d, %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Cynnyrch
@@ -48,6 +51,9 @@ cy:
         variant_unit: "Uned Amrywiol"
         variant_unit_name: "Enw Uned Amrywiol"
         unit_value: "Gwerth yr uned"
+      spree/variant:
+        primary_taxon: "Categori Cynnyrch"
+        shipping_category_id: "Categori Anfon"
       spree/credit_card:
         base: "Cerdyn credyd"
         number: "Rhif"
@@ -502,6 +508,7 @@ cy:
       columns:
         name: Enw
         unit: Uned
+        unit_value: Gwerth yr uned
         price: Pris
         producer: Cynhyrchydd
         category: Categori
@@ -760,13 +767,6 @@ cy:
           prompt: "Caiff ei ddileu’n barhaol o’ch rhestr."
           confirmation_text: "Dileu amrywiolyn"
           cancellation_text: "Cadw amrywiolyn"
-      sort:
-        pagination:
-          total_html: "<strong>%{total}Cafwyd hyd i </strong> cynnyrch ar gyfer eich meini prawf chwilio. Yn dangos %{from} i %{to}."
-          per_page:
-            show: Dangos
-            per_page: "%{num} fesul tudalen"
-          clear_search: Clirio'r chwiliad
       filters:
         search_products: Chwilio am gynnyrch
         search_for_producers: Chwilio am gynhyrchwyr
@@ -778,6 +778,13 @@ cy:
         categories:
           label: Categorïau
         search: Chwilio
+      sort:
+        pagination:
+          total_html: "<strong>%{total}Cafwyd hyd i </strong> cynnyrch ar gyfer eich meini prawf chwilio. Yn dangos %{from} i %{to}."
+          per_page:
+            show: Dangos
+            per_page: "%{num} fesul tudalen"
+          clear_search: Clirio'r chwiliad
       no_products:
         no_products_found: Ni chafwyd hyd i gynnyrch
         import_products: Mewnforio cynnyrch lluosog
@@ -846,6 +853,9 @@ cy:
         product_categories: Categorïau Cynnyrch
         tax_categories: Categorïau Treth
         shipping_categories: Categorïau Cludo
+      dfc_import_form:
+        enterprise: "Menter"
+        import: "Mewnforio"
       import:
         review: Adolygu
         import: Mewnforio
@@ -3714,6 +3724,7 @@ cy:
     new_taxon: "Tacson newydd"
     new_user: "Defnyddiwr newydd"
     no_pending_payments: "Dim taliadau yn yr arfaeth"
+    remove: "Dileu"
     none: "Dim"
     not_found: "Heb ei ganfod"
     notice_messages:
@@ -3730,8 +3741,6 @@ cy:
     start_date: "Dyddiad cychwyn"
     successfully_removed: "Llwyddwyd i ddileu"
     taxonomy_edit: "Golygu tacsonomi"
-    taxonomy_tree_error: "Gwall - coeden tacsonomi"
-    taxonomy_tree_instruction: "Cyfarwyddyd - coeden tacsonomi"
     tree: "Coeden"
     updating: "Yn diweddaru"
     your_order_is_empty_add_product: "Mae eich archeb yn wag, chwiliwch am ac ychwanegwch gynnyrch uchod"
@@ -4323,6 +4332,9 @@ cy:
         form:
           name: Enw
           permalink: Permalink
+          meta_title: Meta Title
+          meta_description: Meta Description
+          meta_keywords: Meta Keywords
           description: Disgrifiad
       general_settings:
         edit:

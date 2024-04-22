@@ -35,7 +35,7 @@ class ProductsRenderer
 
     @products ||= begin
       results = distributed_products.
-        products_relation.
+        products_taxons_relation.
         order(Arel.sql(products_order))
 
       filter_and_paginate(results).
@@ -54,7 +54,7 @@ class ProductsRenderer
   def filter_and_paginate(query)
     results = query.ransack(args[:q]).result
 
-    _pagy, paginated_results = pagy(
+    _pagy, paginated_results = pagy_arel(
       results,
       page: args[:page] || 1,
       items: args[:per_page] || DEFAULT_PER_PAGE
@@ -64,7 +64,7 @@ class ProductsRenderer
   end
 
   def distributed_products
-    OrderCycleDistributedProducts.new(distributor, order_cycle, customer)
+    OrderCycles::DistributedProductsService.new(distributor, order_cycle, customer)
   end
 
   def products_order
@@ -78,7 +78,7 @@ class ProductsRenderer
           distributor.preferred_shopfront_taxon_order.present?
       distributor
         .preferred_shopfront_taxon_order
-        .split(",").map { |id| "spree_products.primary_taxon_id=#{id} DESC" }
+        .split(",").map { |id| "first_variant.primary_taxon_id=#{id} DESC" }
         .join(", ") + ", spree_products.name ASC, spree_products.id ASC"
     else
       "spree_products.name ASC, spree_products.id"
@@ -89,10 +89,12 @@ class ProductsRenderer
     @variants_for_shop ||= begin
       scoper = OpenFoodNetwork::ScopeVariantToHub.new(distributor)
 
+      # rubocop:disable Rails/FindEach # .each returns an array, .find_each returns nil
       distributed_products.variants_relation.
         includes(:default_price, :stock_locations, :product).
         where(product_id: products).
         each { |v| scoper.scope(v) } # Scope results with variant_overrides
+      # rubocop:enable Rails/FindEach
     end
   end
 

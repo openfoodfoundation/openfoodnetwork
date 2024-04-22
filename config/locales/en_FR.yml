@@ -51,6 +51,9 @@ en_FR:
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
         unit_value: "Unit value"
+      spree/variant:
+        primary_taxon: "Product Category"
+        shipping_category_id: "Shipping Category"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -191,6 +194,9 @@ en_FR:
       transaction_not_allowed: "The card has been declined for an unknown reason."
       try_again_later: "The card has been declined for an unknown reason."
       withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      disconnect_failure: "Failed to disconnect Stripe."
+    success_code:
+      disconnected: "Stripe account disconnected."
   activemodel:
     errors:
       messages:
@@ -216,10 +222,16 @@ en_FR:
               not_available_to_shop: "is not available to %{shop}"
   card_details: "Card details"
   card_type: "Card type"
+  card_type_is: "Card type is"
+  unrecognized_card_type: "Unrecognized card type"
+  use_new_cc: "Use a new credit card"
+  what_is_this: "What is this?"
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   additional_information: "Additional Information"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -509,7 +521,10 @@ en_FR:
         colums: Columns
       columns:
         name: Name
+        unit_scale: Unit scale
         unit: Unit
+        unit_value: Unit value
+        display_as: Display unit as
         price: Price
         producer: Producer
         category: Category
@@ -639,6 +654,7 @@ en_FR:
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
+        instance_publishable_key: Instance Publishable Key
         account_id: Account ID
         business_name: Business Name
         charges_enabled: Charges Enabled
@@ -691,6 +707,10 @@ en_FR:
         your_content: Your content
         user_guide: User Guide
         map: Map
+    dfc_product_imports:
+      index:
+        title: "Importing a DFC product catalog"
+        imported_products: "Imported products:"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -768,13 +788,6 @@ en_FR:
           prompt: "This will permanently remove it from your list."
           confirmation_text: "Delete variant"
           cancellation_text: "Keep variant"
-      sort:
-        pagination:
-          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
-          per_page:
-            show: Show
-            per_page: "%{num} per page"
-          clear_search: Clear search
       filters:
         search_products: Search for products
         search_for_producers: Search for producers
@@ -786,6 +799,13 @@ en_FR:
         categories:
           label: Categories
         search: Search
+      sort:
+        pagination:
+          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
+          per_page:
+            show: Show
+            per_page: "%{num} per page"
+          clear_search: Clear search
       no_products:
         no_products_found: No products found
         import_products: Import multiple products
@@ -857,6 +877,11 @@ en_FR:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        title: "Import from DFC catalog"
+        enterprise: "Enterprise"
+        catalog_url: "DFC catalog URL"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -1165,6 +1190,7 @@ en_FR:
           open_date: "Open Date"
           close_date: "Close Date"
           display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_product: "By product"
           shopfront_sort_by_category: "By category"
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
@@ -2471,6 +2497,7 @@ en_FR:
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
+  thank_you_for_your_order: "Thank you for your order"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
   products_cart_distributor_is: "Your distributor for this order is %{name}."
@@ -3695,6 +3722,7 @@ en_FR:
     editing_tax_category: "Editing tax category"
     editing_tax_rate: "Editing tax rate"
     editing_zone: "Editing zone"
+    editing_state: "Editing State"
     expiration: "Expiration"
     invalid_payment_provider: "Invalid payment provider"
     items_cannot_be_shipped: "Items cannot be shipped"
@@ -3706,6 +3734,7 @@ en_FR:
     new_taxon: "New taxon"
     new_user: "New user"
     no_pending_payments: "No pending payments"
+    remove: "Remove"
     none: "None"
     not_found: "Not found"
     notice_messages:
@@ -3722,8 +3751,8 @@ en_FR:
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
-    taxonomy_tree_error: "Taxonomy tree error"
-    taxonomy_tree_instruction: "Taxonomy tree instruction"
+    taxonomy_tree_error: "There was an error updating the taxonomy tree."
+    taxonomy_tree_instruction: "Right-click on an item to add, rename, remove or edit."
     tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
@@ -3732,6 +3761,7 @@ en_FR:
     resend: "Resend"
     back_to_orders_list: "Back To Orders List"
     back_to_payments_list: "Back To Payments List"
+    back_to_states_list: "Back To States List"
     return_authorizations: "Return Authorizations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"

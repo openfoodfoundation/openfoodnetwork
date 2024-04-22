@@ -29,7 +29,7 @@ module Spree
     end
 
     def currency
-      order.nil? ? Spree::Config[:currency] : order.currency
+      order.nil? ? CurrentConfig.get(:currency) : order.currency
     end
 
     def display_amount

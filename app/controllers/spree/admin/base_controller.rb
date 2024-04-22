@@ -26,7 +26,7 @@ module Spree
       def warn_invalid_order_cycles
         return if flash[:notice].present?
 
-        warning = OrderCycleWarning.new(spree_current_user).call
+        warning = OrderCycles::WarningService.new(spree_current_user).call
         flash[:notice] = warning if warning.present?
       end
 

@@ -1,7 +1,7 @@
 = render 'products_panel'
 = render 'orders_panel'
 
-%table.index#subscriptions{ ng: { cloak: true, show: 'shop_id && !RequestMonitor.loading && filteredSubscriptions.length > 0' } }
+%table.index#subscriptions{ "ng-cloak": true, "ng-show": 'shop_id && !RequestMonitor.loading && filteredSubscriptions.length > 0' }
   %col.customer{ width: "20%", 'ng-show' => 'columns.customer.visible' }
   %col.schedule{ width: "20%", 'ng-show' => 'columns.schedule.visible' }
   %col.items{ width: "10%", 'ng-show' => 'columns.items.visible' }
@@ -16,47 +16,47 @@
     %tr
       -# %th.bulk
         -# %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
-      %th.customer{ ng: { show: 'columns.customer.visible' } }
+      %th.customer{ "ng-show": 'columns.customer.visible' }
         = t('admin.customer')
-      %th.schedule{ ng: { show: 'columns.schedule.visible',  } }
+      %th.schedule{ "ng-show": 'columns.schedule.visible' }
         = t('admin.schedule')
-      %th.items{ ng: { show: 'columns.items.visible',  } }
+      %th.items{ "ng-show": 'columns.items.visible' }
         = t('admin.items')
-      %th.orders{ ng: { show: 'columns.orders.visible',  } }
+      %th.orders{ "ng-show": 'columns.orders.visible' }
         = t('orders')
-      %th.status{ ng: { show: 'columns.state.visible',  } }
+      %th.status{ "ng-show": 'columns.state.visible' }
         = t('admin.status_state')
-      %th.begins_on{ ng: { show: 'columns.begins_on.visible',  } }
+      %th.begins_on{ "ng-show": 'columns.begins_on.visible' }
         = t('admin.begins_on')
-      %th.ends_on{ ng: { show: 'columns.ends_on.visible',  } }
+      %th.ends_on{ "ng-show": 'columns.ends_on.visible' }
         = t('admin.ends_on')
-      %th.payment_method{ ng: { show: 'columns.payment_method.visible',  } }
+      %th.payment_method{ "ng-show": 'columns.payment_method.visible' }
         = t('admin.payment_method')
-      %th.shipping_method{ ng: { show: 'columns.shipping_method.visible',  } }
+      %th.shipping_method{ "ng-show": 'columns.shipping_method.visible' }
         = t('admin.shipping_method')
       %th.actions
         &nbsp;
-  %tbody.panel-ctrl{ object: 'subscription', ng: { repeat: "subscription in subscriptions | filter:query as filteredSubscriptions track by subscription.id" } }
-    %tr.subscription{ :id => "so_{{subscription.id}}", ng: { class: { even: "'even'", odd: "'odd'" } } }
-      %td.customer{ ng: { show: 'columns.customer.visible'}}
+  %tbody.panel-ctrl{ object: 'subscription', "ng-repeat": "subscription in subscriptions | filter:query as filteredSubscriptions track by subscription.id" }
+    %tr.subscription{ id: "so_{{subscription.id}}", "ng-class-even": "'even'", "ng-class-odd": "'odd'" }
+      %td.customer{ "ng-show": 'columns.customer.visible' }
         %span{ "ng-bind": '::subscription.customer_email' }
         %br
         %span{ "ng-bind": '::subscription.customer_full_name' }
-      %td.schedule{ ng: { show: 'columns.schedule.visible', bind: '::subscription.schedule_name' } }
-      %td.items.panel-toggle{ name: 'products', ng: { show: 'columns.items.visible' } }
-        %h5{ ng: { bind: 'itemCount(subscription)' } }
-      %td.orders.panel-toggle{ name: 'orders', ng: { show: 'columns.orders.visible' } }
-        %h5{ ng: { bind: 'subscription.not_closed_proxy_orders.length' } }
-      %td.status{ ng: { show: 'columns.state.visible' } }
-        %span.state{ ng: { class: "subscription.state", bind: "'spree.subscription_state.' + subscription.state | t" } }
-      %td.begins_on{ ng: { show: 'columns.begins_on.visible', bind: '::subscription.begins_at' } }
-      %td.ends_on{ ng: { show: 'columns.ends_on.visible', bind: '::subscription.ends_at' } }
-      %td.payment_method{ ng: { show: 'columns.payment_method.visible', bind: '::paymentMethodsByID[subscription.payment_method_id].name' } }
-      %td.shipping_method{ ng: { show: 'columns.shipping_method.visible', bind: '::shippingMethodsByID[subscription.shipping_method_id].name' } }
+      %td.schedule{ "ng-show": 'columns.schedule.visible', "ng-bind": '::subscription.schedule_name' }
+      %td.items.panel-toggle{ name: 'products', "ng-show": 'columns.items.visible' }
+        %h5{ "ng-bind": 'itemCount(subscription)' }
+      %td.orders.panel-toggle{ name: 'orders', "ng-show": 'columns.orders.visible' }
+        %h5{ "ng-bind": 'subscription.not_closed_proxy_orders.length' }
+      %td.status{ "ng-show": 'columns.state.visible' }
+        %span.state{ "ng-class": "subscription.state", "ng-bind": "'spree.subscription_state.' + subscription.state | t" }
+      %td.begins_on{ "ng-show": 'columns.begins_on.visible', "ng-bind": '::subscription.begins_at' }
+      %td.ends_on{ "ng-show": 'columns.ends_on.visible', "ng-bind": '::subscription.ends_at' }
+      %td.payment_method{ "ng-show": 'columns.payment_method.visible', "ng-bind": '::paymentMethodsByID[subscription.payment_method_id].name' }
+      %td.shipping_method{ "ng-show": 'columns.shipping_method.visible', "ng-bind": '::shippingMethodsByID[subscription.shipping_method_id].name' }
       %td.actions
-        %a.edit-subscription.icon-edit.no-text{ ng: { href: '{{subscription.edit_path}}'}, 'ofn-with-tip' => t('.edit_subscription') }
-        %a.pause-subscription.icon-pause.no-text{ ng: { click: 'subscription.pause()', hide: '!!subscription.paused_at' }, 'ofn-with-tip' => t('.pause_subscription') , href: 'javascript:void(0)' }
-        %a.unpause-subscription.icon-play.no-text{ ng: { click: 'subscription.unpause()', show: '!!subscription.paused_at' }, 'ofn-with-tip' => t('.unpause_subscription') , href: 'javascript:void(0)' }
-        %a.cancel-subscription.icon-remove.no-text{ ng: { click: 'subscription.cancel()', hide: '!!subscription.canceled_at'}, 'ofn-with-tip' => t('.cancel_subscription') , href: 'javascript:void(0)' }
+        %a.edit-subscription.icon-edit.no-text{ "ofn-with-tip": t('.edit_subscription'), "ng-href": '{{subscription.edit_path}}' }
+        %a.pause-subscription.icon-pause.no-text{ "ofn-with-tip": t('.pause_subscription'), href: 'javascript:void(0)', "ng-click": 'subscription.pause()', "ng-hide": '!!subscription.paused_at' }
+        %a.unpause-subscription.icon-play.no-text{ "ofn-with-tip": t('.unpause_subscription'), href: 'javascript:void(0)', "ng-click": 'subscription.unpause()', "ng-show": '!!subscription.paused_at' }
+        %a.cancel-subscription.icon-remove.no-text{ "ofn-with-tip": t('.cancel_subscription'), href: 'javascript:void(0)', "ng-click": 'subscription.cancel()', "ng-hide": '!!subscription.canceled_at' }
 
     %tr.panel-row{ object: "subscription", panels: "{products: 'subscription_products', orders: 'proxy_orders'}" }

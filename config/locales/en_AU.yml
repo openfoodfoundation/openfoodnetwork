@@ -33,6 +33,9 @@ en_AU:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/variant:
+        primary_taxon: "Product Category"
+        shipping_category_id: "Shipping Category"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -410,7 +413,7 @@ en_AU:
       enable_embedded_shopfronts: "Enable Embedded Shopfronts"
       embedded_shopfronts_whitelist: "External Domains Whitelist"
     number_localization:
-      number_localization_settings: "Number Localization Settings"
+      number_localization_settings: "Number Localisation Settings"
       enable_localized_number: "Use the international thousand/decimal separator logic"
     invoice_settings:
       edit:
@@ -542,15 +545,15 @@ en_AU:
       index:
         header:
           title: Bulk Edit Products
-      sort:
-        pagination:
-          clear_search: Clear search
       filters:
         producers:
           label: Producers
         categories:
           label: Categories
         search: Search
+      sort:
+        pagination:
+          clear_search: Clear search
       table:
         new_variant: New variant
       edit_image:
@@ -594,6 +597,9 @@ en_AU:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -743,7 +749,7 @@ en_AU:
           acn: ACN
           acn_placeholder: eg. 123 456 789
           display_invoice_logo: Display logo in invoices
-          invoice_text: Add customized text at the end of invoices
+          invoice_text: Add customised text at the end of invoices
           terms_and_conditions: "Terms and Conditions"
           remove_terms_and_conditions: "Remove File"
           uploaded_on: "uploaded on"
@@ -3100,6 +3106,7 @@ en_AU:
     credit: "Credit"
     more: "More"
     no_pending_payments: "No pending payments"
+    remove: "Remove"
     none: "None"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"

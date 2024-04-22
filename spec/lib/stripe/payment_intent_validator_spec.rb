@@ -52,7 +52,7 @@ describe Stripe::PaymentIntentValidator do
             expect {
               result = validator.call
               expect(result).to eq payment_intent_response_body
-            }.to_not raise_error Stripe::StripeError
+            }.not_to raise_error Stripe::StripeError
           end
 
           it "captures the payment" do

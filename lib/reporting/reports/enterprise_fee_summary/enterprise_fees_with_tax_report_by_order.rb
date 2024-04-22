@@ -66,8 +66,8 @@ module Reporting
 
           enterprise_fee_id = arg.first
 
-          EnterpriseFee.exists?(id: enterprise_fee_id,
-                                enterprise_id: ransack_params[:enterprise_fee_owner_id_in] )
+          EnterpriseFee.where(id: enterprise_fee_id,
+                              enterprise_id: ransack_params[:enterprise_fee_owner_id_in] ).exists?
         end
 
         def filter_enterprise_fee_by_id_active?

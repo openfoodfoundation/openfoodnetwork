@@ -175,7 +175,7 @@ module Spree
         Spree::Variant.
           select('DISTINCT spree_variants.import_date').
           joins(:product).
-          where('spree_products.supplier_id IN (?)', editable_enterprises.collect(&:id)).
+          where(spree_products: { supplier_id: editable_enterprises.collect(&:id) }).
           where.not(spree_variants: { import_date: nil }).
           where(spree_variants: { deleted_at: nil }).
           order('spree_variants.import_date DESC')

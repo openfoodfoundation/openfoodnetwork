@@ -19,15 +19,15 @@ end
 
 shared_examples_for 'access denied' do
   it 'should not allow read' do
-    expect(subject).to_not be_able_to(:read, resource)
+    expect(subject).not_to be_able_to(:read, resource)
   end
 
   it 'should not allow create' do
-    expect(subject).to_not be_able_to(:create, resource)
+    expect(subject).not_to be_able_to(:create, resource)
   end
 
   it 'should not allow update' do
-    expect(subject).to_not be_able_to(:update, resource)
+    expect(subject).not_to be_able_to(:update, resource)
   end
 end
 
@@ -40,7 +40,7 @@ end
 
 shared_examples_for 'admin denied' do
   it 'should not allow admin' do
-    expect(subject).to_not be_able_to(:admin, resource)
+    expect(subject).not_to be_able_to(:admin, resource)
   end
 end
 
@@ -52,7 +52,7 @@ end
 
 shared_examples_for 'no index allowed' do
   it 'should not allow index' do
-    expect(subject).to_not be_able_to(:index, resource)
+    expect(subject).not_to be_able_to(:index, resource)
   end
 end
 
@@ -62,25 +62,25 @@ shared_examples_for 'create only' do
   end
 
   it 'should not allow read' do
-    expect(subject).to_not be_able_to(:read, resource)
+    expect(subject).not_to be_able_to(:read, resource)
   end
 
   it 'should not allow update' do
-    expect(subject).to_not be_able_to(:update, resource)
+    expect(subject).not_to be_able_to(:update, resource)
   end
 
   it 'should not allow index' do
-    expect(subject).to_not be_able_to(:index, resource)
+    expect(subject).not_to be_able_to(:index, resource)
   end
 end
 
 shared_examples_for 'read only' do
   it 'should not allow create' do
-    expect(subject).to_not be_able_to(:create, resource)
+    expect(subject).not_to be_able_to(:create, resource)
   end
 
   it 'should not allow update' do
-    expect(subject).to_not be_able_to(:update, resource)
+    expect(subject).not_to be_able_to(:update, resource)
   end
 
   it 'should allow index' do
@@ -90,11 +90,11 @@ end
 
 shared_examples_for 'update only' do
   it 'should not allow create' do
-    expect(subject).to_not be_able_to(:create, resource)
+    expect(subject).not_to be_able_to(:create, resource)
   end
 
   it 'should not allow read' do
-    expect(subject).to_not be_able_to(:read, resource)
+    expect(subject).not_to be_able_to(:read, resource)
   end
 
   it 'should allow update' do
@@ -102,7 +102,7 @@ shared_examples_for 'update only' do
   end
 
   it 'should not allow index' do
-    expect(subject).to_not be_able_to(:index, resource)
+    expect(subject).not_to be_able_to(:index, resource)
   end
 end
 

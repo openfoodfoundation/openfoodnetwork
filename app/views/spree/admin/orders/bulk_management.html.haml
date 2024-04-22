@@ -12,33 +12,33 @@
 = admin_inject_column_preferences module: 'admin.lineItems'
 = admin_inject_available_units
 
-%div{ ng: { controller: 'LineItemsCtrl' }, id: "table-filter" }
+%div{ id: "table-filter", "ng-controller": 'LineItemsCtrl' }
   %fieldset
     %save-bar{ dirty: "bulk_order_form.$dirty", persist: "false" }
-      %input.red{ type: "button", value: "Save Changes", ng: { click: "submit()", disabled: "!bulk_order_form.$dirty" } }
+      %input.red{ type: "button", value: "Save Changes", "ng-click": "submit()", "ng-disabled": "!bulk_order_form.$dirty" }
     %legend{ align: 'center'}= t(:search)
     %div{ :class => "sixteen columns alpha" }
       .quick_search.three.columns.alpha
         %label{ for: 'quick_filter' }
         %br
-        %input.quick-search.fullwidth{ ng: {model: 'query'}, name: "quick_filter", type: 'text', placeholder: t('admin.quick_search'), "ng-keypress" => "$event.keyCode === 13 && fetchResults()" }
+        %input.quick-search.fullwidth{ name: "quick_filter", type: 'text', placeholder: t('admin.quick_search'), "ng-keypress": "$event.keyCode === 13 && fetchResults()", "ng-model": 'query' }
       .one.columns
         &nbsp;
       .filter_select{ :class => "three columns" }
         %label{ :for => 'supplier_filter' }
           = t("admin.producer")
         %br
-        %input#supplier_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'suppliers', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'supplierFilter' } }
+        %input#supplier_filter.ofn-select2.fullwidth{ type: 'number', "min-search": 5, data: 'suppliers', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", "on-selecting": "confirmRefresh", "ng-model": 'supplierFilter' }
       .filter_select{ :class => "three columns" }
         %label{ :for => 'distributor_filter' }
           = t("admin.shop")
         %br
-        %input#distributor_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'distributors', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'distributorFilter' } }
+        %input#distributor_filter.ofn-select2.fullwidth{ type: 'number', "min-search": 5, data: 'distributors', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", "on-selecting": "confirmRefresh", "ng-model": 'distributorFilter' }
       .filter_select{ :class => "three columns" }
         %label{ :for => 'order_cycle_filter' }
           = t("admin.order_cycle")
         %br
-        %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', 'min-search' => 5, data: 'orderCycles', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", on: { selecting: "confirmRefresh" }, ng: { model: 'orderCycleFilter' } }
+        %input#order_cycle_filter.ofn-select2.fullwidth{ type: 'number', "min-search": 5, data: 'orderCycles', placeholder: "#{t(:all)}", blank: "{ id: '', name: '#{t(:all)}' }", "on-selecting": "confirmRefresh", "ng-model": 'orderCycleFilter' }
       .date_filter{class: "three columns"}
         %label
           = t("date_range")
@@ -55,9 +55,9 @@
         %a.button{'ng-click' => 'resetSelectFilters()', "id": "clear_filters_button" }
           =  t(:clear_filters)
 
-  %hr.divider.sixteen.columns.alpha.omega{ ng: { show: 'unitsVariantSelected()' } }
+  %hr.divider.sixteen.columns.alpha.omega{ "ng-show": 'unitsVariantSelected()' }
 
-  %div.sixteen.columns.alpha.omega#group_buy_calculation{ ng: { show: 'unitsVariantSelected()', cloak: true } }
+  %div.sixteen.columns.alpha.omega#group_buy_calculation{ "ng-show": 'unitsVariantSelected()', "ng-cloak": true }
     .one.columns.alpha
     .shared_resource.four.columns.alpha
       %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
@@ -102,7 +102,7 @@
   %hr.divider.sixteen.columns.alpha.omega
   .clear
 
-  %div{ ng: { hide: 'RequestMonitor.loading || line_items.length == 0' }, style: "display: flex; justify-content: flex-start; column-gap: 10px; margin-bottom: 15px" }
+  %div{ style: "display: flex; justify-content: flex-start; column-gap: 10px; margin-bottom: 15px", "ng-hide": 'RequestMonitor.loading || line_items.length == 0' }
     -# This -20px is a hack to make the dropdowns align properly
     %div{ style: "margin-right: -20px;" } 
       = render 'admin/shared/bulk_actions_dropdown'
@@ -118,15 +118,15 @@
     %h1
       = t("admin.orders.bulk_management.loading")
 
-  %div{ class: "sixteen columns alpha", ng: { show: '!RequestMonitor.loading && filteredLineItems.length == 0', cloak: true } }
+  %div{ class: "sixteen columns alpha", "ng-show": '!RequestMonitor.loading && filteredLineItems.length == 0', "ng-cloak": true }
     %h1#no_results
       = t("admin.orders.bulk_management.no_results")
 
-  .margin-bottom-50{ ng: { hide: 'RequestMonitor.loading || filteredLineItems.length == 0', cloak: true } }
+  .margin-bottom-50{ "ng-hide": 'RequestMonitor.loading || filteredLineItems.length == 0', "ng-cloak": true }
     %form{ name: 'bulk_order_form' }
-      %table.index#listing_orders.bulk{ :class => "sixteen columns alpha", ng: { show: "initialized" } }
+      %table.index#listing_orders.bulk{ class: "sixteen columns alpha", "ng-show": "initialized" }
         %thead
-          %tr{ ng: { controller: "ColumnsCtrl" } }
+          %tr{ "ng-controller": "ColumnsCtrl" }
             %th.bulk
               %input{ :type => "checkbox", :name => 'toggle_bulk', 'ng-click' => 'toggleAllCheckboxes()', 'ng-checked' => "allBoxesChecked()" }
             %th.order_no{ 'ng-show' => 'columns.order_no.visible' }
@@ -166,7 +166,7 @@
               = "#{t('admin.price')} (#{Spree::Money.currency_symbol})"
             %th.actions
 
-        %tr.line_item{ ng: { repeat: "line_item in filteredLineItems = ( line_items | orderBy:sorting.predicate:sorting.reverse )", 'class-even' => "'even'", 'class-odd' => "'odd'", attr: { id: "li_{{line_item.id}}" } } }
+        %tr.line_item{ "ng-repeat": "line_item in filteredLineItems = ( line_items | orderBy:sorting.predicate:sorting.reverse )", "ng-class-even": "'even'", "ng-class-odd": "'odd'", "ng-attr-id": "li_{{line_item.id}}" }
           %td.bulk
             %input{ :type => "checkbox", :name => 'bulk', 'ng-model' => 'line_item.checked', 'ignore-dirty' => true }
           %td.order_no{ 'ng-show' => 'columns.order_no.visible' } {{ line_item.order.number }}
@@ -180,17 +180,17 @@
           %td.variant{ 'ng-show' => 'columns.variant.visible' }
             %a{ :href => '#', 'ng-click' => "setSelectedUnitsVariant(line_item.units_product,line_item.units_variant)" } {{ line_item.units_variant.full_name }}
           %td.quantity{ 'ng-show' => 'columns.quantity.visible' }
-            %input.show-dirty{ :type => 'number', :name => 'quantity', :id => 'quantity', ng: { model:  "line_item.quantity", change: "updateOnQuantity(line_item)", required: "true", class: '{"update-error": line_item.errors.quantity}' }, min: 1, step: 1 }
-            %span.error{ ng: { bind: 'line_item.errors.quantity' } }
+            %input.show-dirty{ type: 'number', name: 'quantity', id: 'quantity', min: 1, step: 1, "ng-model": "line_item.quantity", "ng-change": "updateOnQuantity(line_item)", "ng-required": "true", "ng-class": '{"update-error": line_item.errors.quantity}' }
+            %span.error{ "ng-bind": 'line_item.errors.quantity' }
           %td.max{ 'ng-show' => 'columns.max.visible' } {{ line_item.max_quantity }}
           %td.final_weight_volume{ 'ng-show' => 'columns.final_weight_volume.visible' }
-            %input.show-dirty{ type: 'number', step: 'any', :name => 'final_weight_volume', :id => 'final_weight_volume', ng: { model: "line_item.final_weight_volume", readonly: "unitValueLessThanZero(line_item)", change: "weightAdjustedPrice(line_item)", required: "true", class: '{"update-error": line_item.errors.final_weight_volume}' }, min: 0, 'ng-pattern' => '/[0-9]*[.]?[0-9]+/' }
-            %span.error{ ng: { bind: 'line_item.errors.final_weight_volume' } }
+            %input.show-dirty{ type: 'number', step: 'any', name: 'final_weight_volume', id: 'final_weight_volume', min: 0, "ng-pattern": '/[0-9]*[.]?[0-9]+/', "ng-model": "line_item.final_weight_volume", "ng-readonly": "unitValueLessThanZero(line_item)", "ng-change": "weightAdjustedPrice(line_item)", "ng-required": "true", "ng-class": '{"update-error": line_item.errors.final_weight_volume}' }
+            %span.error{ "ng-bind": 'line_item.errors.final_weight_volume' }
           %td.price{ 'ng-show' => 'columns.price.visible' }
-            %input.show-dirty{ :type => 'text', :name => 'price', :id => 'price', :ng => { value: 'line_item.price * line_item.quantity | currency:""', readonly: "true", class: '{"update-error": line_item.errors.price}' } }
-            %span.error{ ng: { bind: 'line_item.errors.price' } }
+            %input.show-dirty{ type: 'text', name: 'price', id: 'price', "ng-value": 'line_item.price * line_item.quantity | currency:""', "ng-readonly": "true", "ng-class": '{"update-error": line_item.errors.price}' }
+            %span.error{ "ng-bind": 'line_item.errors.price' }
           %td.actions
-            %a{ ng: { href: "/admin/orders/{{line_item.order.number}}/edit" }, :class => "edit-order icon-edit no-text", 'confirm-link-click' => 'confirmRefresh()' }
+            %a{ class: "edit-order icon-edit no-text", "confirm-link-click": 'confirmRefresh()', "ng-href": "/admin/orders/{{line_item.order.number}}/edit" }
           %td.actions
             %a{ 'ng-click' => "deleteLineItem(line_item)", :class => "delete-line-item icon-trash no-text" }
 

@@ -48,6 +48,9 @@ ca:
         variant_unit: "Unitat de la variant"
         variant_unit_name: "Nom de la unitat de la variant"
         unit_value: "Valor de la unitat"
+      spree/variant:
+        primary_taxon: "Categoria del producte"
+        shipping_category_id: "Categoria d'enviament"
       spree/credit_card:
         base: "Targeta de crèdit"
         number: "Número"
@@ -475,6 +478,7 @@ ca:
       columns:
         name: Nom
         unit: Unitat
+        unit_value: Valor de la unitat
         price: Preu
         producer: Productora
         category: Categoria
@@ -733,13 +737,6 @@ ca:
           prompt: "Això l'eliminarà permanentment de la vostra llista."
           confirmation_text: "Suprimeix la variant"
           cancellation_text: "Mantenir la variant"
-      sort:
-        pagination:
-          total_html: "<strong>%{total} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
-          per_page:
-            show: Mostra
-            per_page: "%{num} per pàgina"
-          clear_search: Esborra la cerca
       filters:
         search_products: Cerca de productes
         search_for_producers: Cercar productors
@@ -751,6 +748,13 @@ ca:
         categories:
           label: Categories
         search: Cerca
+      sort:
+        pagination:
+          total_html: "<strong>%{total} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
+          per_page:
+            show: Mostra
+            per_page: "%{num} per pàgina"
+          clear_search: Esborra la cerca
       no_products:
         no_products_found: No hem trobat productes
       table:
@@ -809,6 +813,9 @@ ca:
         product_categories: Tipus de productes
         tax_categories: Tipus d'impostos
         shipping_categories: Tipus d'enviament
+      dfc_import_form:
+        enterprise: "Organització"
+        import: "Importa"
       import:
         review: Revisa
         import: Importa
@@ -3479,6 +3486,7 @@ ca:
     new_taxon: "Nou tàxon"
     new_user: "Nou usuari"
     no_pending_payments: "No hi ha pagaments pendents"
+    remove: "Eliminar"
     none: "Cap"
     not_found: "No trobat"
     notice_messages:
@@ -3495,8 +3503,6 @@ ca:
     start_date: "Data d'inici"
     successfully_removed: "S'ha suprimit correctament"
     taxonomy_edit: "Edició de taxonomia"
-    taxonomy_tree_error: "Error d'arbre de taxonomia"
-    taxonomy_tree_instruction: "Instrucció d'arbre de taxonomia"
     tree: "Arbre"
     updating: "Actualitzant"
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"

@@ -14,7 +14,7 @@ module OrderManagement
         when ActiveRecord::Relation
           @subscriptions = subscriptions.not_ended.not_canceled
         else
-          raise "ProxyOrderSyncer must be initialized with " \
+          raise "ProxyOrders::SyncService must be initialized with " \
                 "an instance of Subscription or ActiveRecord::Relation"
         end
       end

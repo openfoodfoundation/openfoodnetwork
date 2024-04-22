@@ -135,7 +135,7 @@ describe "Managing users" do
         visit spree.new_admin_user_path
 
         # shows no confirmation message to start with
-        expect(page).to have_no_text "Email confirmation is pending"
+        expect(page).not_to have_text "Email confirmation is pending"
 
         fill_in "Email", with: "user1@example.org"
         fill_in "Password", with: "user1Secret"

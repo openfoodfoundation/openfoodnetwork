@@ -3,23 +3,22 @@
     %span{ "data-controller": "checked-feedback", "data-checked-feedback-translation-value": "spree.admin.orders.index.selected" }
       = t("spree.admin.orders.index.selected", count: 0)
 
-  %div.plain.ofn-drop-down.disabled{ "data-checked-target": "disable", "data-controller": "dropdown", "data-action": "click->dropdown#toggle" }
-    %span{ class: 'icon-reorder' }
-      ="#{t('admin.actions')}".html_safe
-    %span
-      %i{ "data-dropdown-target": "arrow", "data-expanded-class": "icon-caret-up", "data-collapsed-class": "icon-caret-down" }
-
-    %div.menu{ "data-dropdown-target": "menu" }
-      %div.menu_item
-        %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "resend_confirmation" }
-          = t('spree.admin.orders.index.resend_confirmation')
-      - if Spree::Config[:enable_invoices?]
+  %div.plain.ofn-drop-down.disabled{ "data-checked-target": "disable" }
+    %details{"data-controller": "dropdown"}
+      %summary
+        %span.icon-reorder
+          ="#{t('admin.actions')}".html_safe
+      %div.menu{"data-action": "click->dropdown#closeOnMenu"}
         %div.menu_item
-          %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "send_invoice" }
-            = t('spree.admin.orders.index.send_invoice')
+          %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "resend_confirmation" }
+            = t('spree.admin.orders.index.resend_confirmation')
+        - if Spree::Config[:enable_invoices?]
+          %div.menu_item
+            %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "send_invoice" }
+              = t('spree.admin.orders.index.send_invoice')
+          %div.menu_item
+            %span.name{ "data-controller": "bulk-actions", "data-action": "click->bulk-actions#perform", "data-bulk-actions-reflex-value": "Admin::Orders#bulk_invoice" }
+              = t('spree.admin.orders.index.print_invoices')
         %div.menu_item
-          %span.name{ "data-controller": "bulk-actions", "data-action": "click->bulk-actions#perform", "data-bulk-actions-reflex-value": "Admin::Orders#bulk_invoice" }
-            = t('spree.admin.orders.index.print_invoices')
-      %div.menu_item
-        %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "cancel_orders" }
-          = t('spree.admin.orders.index.cancel_orders')
+          %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "cancel_orders" }
+            = t('spree.admin.orders.index.cancel_orders')

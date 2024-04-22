@@ -8,38 +8,38 @@
           %h2= t(".enterprise_final_step")
           %h5{ "ng-bind" => "'registration.steps.social.enterprise_social_text' | t:{enterprise: enterprise.name}" }
 
-    %form{ name: 'social', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "update('finished',social)" } }
+    %form{ name: 'social', novalidate: true, "ng-controller": "RegistrationFormCtrl", "ng-submit": "update('finished',social)" }
       .row.content
         .small-12.large-7.columns
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_website' }= t(".website")+":"
-                %input.chunky{ id: 'enterprise_website', placeholder: "{{'registration.steps.social.website_placeholder' | t}}", ng: { model: 'enterprise.website' } }
+                %input.chunky{ id: 'enterprise_website', placeholder: "{{'registration.steps.social.website_placeholder' | t}}", "ng-model": 'enterprise.website' }
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_facebook' }= t(".facebook")+":"
-                %input.chunky{ id: 'enterprise_facebook', placeholder: "{{'registration.steps.social.facebook_placeholder' | t}}", ng: { model: 'enterprise.facebook' } }
+                %input.chunky{ id: 'enterprise_facebook', placeholder: "{{'registration.steps.social.facebook_placeholder' | t}}", "ng-model": 'enterprise.facebook' }
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_linkedin' }= t(".linkedin")+":"
-                %input.chunky{ id: 'enterprise_linkedin', placeholder: "{{'registration.steps.social.linkedin_placeholder' | t}}", ng: { model: 'enterprise.linkedin' } }
+                %input.chunky{ id: 'enterprise_linkedin', placeholder: "{{'registration.steps.social.linkedin_placeholder' | t}}", "ng-model": 'enterprise.linkedin' }
         .small-12.large-5.columns
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_twitter' }= t(".twitter")+":"
-                %input.chunky{ id: 'enterprise_twitter', placeholder: "{{'registration.steps.social.twitter_placeholder' | t}}", ng: { model: 'enterprise.twitter' } }
+                %input.chunky{ id: 'enterprise_twitter', placeholder: "{{'registration.steps.social.twitter_placeholder' | t}}", "ng-model": 'enterprise.twitter' }
           .row
             .small-12.columns
               .field
                 %label{ for: 'enterprise_instagram' }= t(".instagram")+":"
-                %input.chunky{ id: 'enterprise_instagram', placeholder: "{{'registration.steps.social.instagram_placeholder' | t}}", ng: { model: 'enterprise.instagram' } }
+                %input.chunky{ id: 'enterprise_instagram', placeholder: "{{'registration.steps.social.instagram_placeholder' | t}}", "ng-model": 'enterprise.instagram' }
                 %span.error.small-12.columns#instagram-error{ style: "display: none" }
 
       .row.buttons
         .small-12.columns
-          %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "select('images')" } }
+          %input.button.secondary{ type: "button", value: "{{'back' | t}}", "ng-click": "select('images')" }
             %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }

@@ -1,5 +1,5 @@
-.joyride-tip-guide.question-mark-tooltip{class: "{{ context }}", ng: {class: "{ in: tt_isOpen, fade: tt_animation }", show: "tt_isOpen"}}
-  .background{ng: {click: "tt_isOpen = false"}}
+.joyride-tip-guide.question-mark-tooltip{ class: "{{ context }}", "ng-class": "{ in: tt_isOpen, fade: tt_animation }", "ng-show": "tt_isOpen" }
+  .background{ "ng-click": "tt_isOpen = false" }
   .joyride-content-wrapper
     {{ key  | t }}
   %span.joyride-nub.bottom

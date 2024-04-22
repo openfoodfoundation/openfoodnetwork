@@ -4,7 +4,7 @@
 - @importer.enterprises_index.each do |name, attrs|
   - if name and attrs[:id] and @importer.permission_by_id?(attrs[:id])
     %div.panel-section.import-settings
-      %div.panel-header{ng: {click: 'togglePanel()', class: '{active: active}'}}
+      %div.panel-header{ "ng-click": 'togglePanel()', "ng-class": '{active: active}' }
         %div.header-icon.success
           %i.fa.fa-check-circle
         %div.header-description

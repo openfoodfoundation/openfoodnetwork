@@ -18,7 +18,7 @@ describe Spree::Admin::SearchController, type: :controller do
 
         it "returns a list of users that I share management of enteprises with" do
           expect(assigns(:users)).to include owner, manager
-          expect(assigns(:users)).to_not include random
+          expect(assigns(:users)).not_to include random
         end
       end
 

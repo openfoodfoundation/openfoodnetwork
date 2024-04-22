@@ -41,8 +41,7 @@ module Spree
         where(nil)
       else
         joins(:distributors).
-          where('distributors_shipping_methods.distributor_id IN (?)',
-                user.enterprises.select(&:id)).
+          where(distributors_shipping_methods: { distributor_id: user.enterprises.select(&:id) }).
           select('DISTINCT spree_shipping_methods.*')
       end
     }
@@ -53,7 +52,7 @@ module Spree
     }
     scope :for_distributor, lambda { |distributor|
       joins(:distributors).
-        where('enterprises.id = ?', distributor)
+        where(enterprises: { id: distributor })
     }
 
     scope :by_name, -> { order('spree_shipping_methods.name ASC') }

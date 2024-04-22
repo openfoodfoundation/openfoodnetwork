@@ -210,7 +210,7 @@ describe '
           end
           expect(page).to have_content "Cannot add item to canceled order"
           expect(order.reload.state).to eq("canceled")
-        end.to_not have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+        end.not_to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
       end
 
       it "and the items are not restocked when the user uncheck the checkbox to restock items" do
@@ -359,7 +359,7 @@ describe '
     within("tr.stock-item", text: order.products.first.name) do
       expect(page).to have_field :quantity, with: max_quantity.to_s
     end
-    expect { item.reload }.to_not change { item.quantity }
+    expect { item.reload }.not_to change { item.quantity }
   end
 
   it "there are infinite items available (variant is on demand)" do
@@ -430,7 +430,7 @@ describe '
         find("button.add_variant").click
       end
 
-      expect(page).to_not have_selector("table.stock-levels")
+      expect(page).not_to have_selector("table.stock-levels")
       expect(page).to have_selector("table.stock-contents")
 
       within("tr.stock-item") do
@@ -719,7 +719,7 @@ describe '
             it "should not display links but a js alert" do
               visit spree.edit_admin_order_path(order)
 
-              find("#links-dropdown .ofn-drop-down").click
+              find("summary", text: "ACTIONS").click
               expect(page).to have_link "Send Invoice", href: "#"
               expect(page).to have_link "Print Invoice", href: "#"
 
@@ -729,7 +729,7 @@ describe '
               expect(message)
                 .to eq "#{distributor1.name} must have a valid ABN before invoices can be used."
 
-              find("#links-dropdown .ofn-drop-down").click
+              find("summary", text: "ACTIONS").click
               message = accept_prompt do
                 click_link "Send Invoice"
               end
@@ -752,7 +752,7 @@ describe '
         it "can edit shipping method" do
           visit spree.edit_admin_order_path(order)
 
-          expect(page).to_not have_content different_shipping_method_for_distributor1.name
+          expect(page).not_to have_content different_shipping_method_for_distributor1.name
 
           find('.edit-method').click
           expect(page).to have_select2('selected_shipping_rate_id',
@@ -857,7 +857,7 @@ describe '
 
       it "can edit and delete tracking number" do
         test_tracking_number = "ABCCBA"
-        expect(page).to_not have_content test_tracking_number
+        expect(page).not_to have_content test_tracking_number
 
         find('.edit-tracking').click
         fill_in "tracking", with: test_tracking_number
@@ -871,18 +871,18 @@ describe '
         # the alert box vanishes and tracking num is still present
         expect(page).to have_content 'Are you sure?'
         find('.cancel').click
-        expect(page).to_not have_content 'Are you sure?'
+        expect(page).not_to have_content 'Are you sure?'
         expect(page).to have_content test_tracking_number
 
         find('.delete-tracking.icon-trash').click
         expect(page).to have_content 'Are you sure?'
         find('.confirm').click
-        expect(page).to_not have_content test_tracking_number
+        expect(page).not_to have_content test_tracking_number
       end
 
       it "can edit and delete note" do
         test_note = "this is a note"
-        expect(page).to_not have_content test_note
+        expect(page).not_to have_content test_note
 
         find('.edit-note.icon-edit').click
         fill_in "note", with: test_note
@@ -896,13 +896,13 @@ describe '
         # the alert box vanishes and note is still present
         expect(page).to have_content 'Are you sure?'
         find('.cancel').click
-        expect(page).to_not have_content 'Are you sure?'
+        expect(page).not_to have_content 'Are you sure?'
         expect(page).to have_content test_note
 
         find('.delete-note.icon-trash').click
         expect(page).to have_content 'Are you sure?'
         find('.confirm').click
-        expect(page).to_not have_content test_note
+        expect(page).not_to have_content test_note
       end
 
       it "viewing shipping fees" do
@@ -949,49 +949,62 @@ describe '
             uncheck 'Send a shipment/pick up notification email to the customer.'
             expect {
               find_button("Confirm").click
-            }.to_not enqueue_job(ActionMailer::MailDeliveryJob)
+            }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
           end
 
-          save_screenshot('~/hello.png')
           expect(order.reload.shipped?).to be true
           expect(page).to have_text 'SHIPPED'
         end
 
-        context "ship order from dropdown" do
-          it "ships the order and sends email" do
-            expect(order.reload.shipped?).to be false
+        shared_examples "ship order from dropdown" do |subpage|
+          context "in the #{subpage}", feature: :invoices do
+            it "ships the order and sends email" do
+              click_on subpage
+              expect(order.reload.shipped?).to be false
 
-            find('.ofn-drop-down').click
-            click_link 'Ship Order'
+              find('.ofn-drop-down').click
+              click_link 'Ship Order'
 
-            within ".reveal-modal" do
-              expect(page).to have_checked_field('Send a shipment/pick up ' \
-                                                 'notification email to the customer.')
-              expect {
-                find_button("Confirm").click
-              }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
+              within ".reveal-modal" do
+                expect(page).to have_checked_field('Send a shipment/pick up ' \
+                                                   'notification email to the customer.')
+                expect {
+                  find_button("Confirm").click
+                }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
+              end
+
+              expect(order.reload.shipped?).to be true
+              expect(page).to have_text 'SHIPPED'
             end
 
-            expect(order.reload.shipped?).to be true
-            expect(page).to have_text 'SHIPPED'
-          end
+            it "ships the order without sending email" do
+              click_on subpage
+              expect(order.reload.shipped?).to be false
 
-          it "ships the order without sending email" do
-            expect(order.reload.shipped?).to be false
+              find('.ofn-drop-down').click
+              click_link 'Ship Order'
 
-            find('.ofn-drop-down').click
-            click_link 'Ship Order'
+              within ".reveal-modal" do
+                uncheck 'Send a shipment/pick up notification email to the customer.'
+                expect {
+                  find_button("Confirm").click
+                }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
+              end
 
-            within ".reveal-modal" do
-              uncheck 'Send a shipment/pick up notification email to the customer.'
-              expect {
-                find_button("Confirm").click
-              }.to_not enqueue_job(ActionMailer::MailDeliveryJob)
+              expect(order.reload.shipped?).to be true
+              expect(page).to have_text 'SHIPPED'
             end
-
-            expect(order.reload.shipped?).to be true
-            expect(page).to have_text 'SHIPPED'
           end
+        end
+
+        it_behaves_like "ship order from dropdown", "Order Details"
+        context "pending examples" do
+          before { pending("#12369") }
+          it_behaves_like "ship order from dropdown", "Customer Details"
+          it_behaves_like "ship order from dropdown", "Payments"
+          it_behaves_like "ship order from dropdown", "Adjustments"
+          it_behaves_like "ship order from dropdown", "Invoices"
+          it_behaves_like "ship order from dropdown", "Return Authorizations"
         end
       end
 
@@ -1012,7 +1025,7 @@ describe '
           order.cancel!
           visit spree.edit_admin_order_path(order)
           within("tr.stock-item", text: order.products.first.name) do
-            expect(page).to_not have_selector("a.edit-item")
+            expect(page).not_to have_selector("a.edit-item")
           end
         end
       end
@@ -1035,12 +1048,12 @@ describe '
             accept_alert 'Are you sure?' do
               find("a.delete-resource").click
             end
-            expect(page).to_not have_content incomplete_order.products.first.name
+            expect(page).not_to have_content incomplete_order.products.first.name
           end
 
           # updates the order and verifies the warning disappears
           click_button 'Update And Recalculate Fees'
-          expect(page).to_not have_content "Out of Stock".upcase
+          expect(page).not_to have_content "Out of Stock".upcase
         end
       end
     end
@@ -1058,11 +1071,11 @@ describe '
       expect(page).to have_selector 'td', text: product.name
 
       expect(page).to have_select2 'order_distributor_id', with_options: [distributor1.name]
-      expect(page).to_not have_select2 'order_distributor_id', with_options: [distributor2.name]
+      expect(page).not_to have_select2 'order_distributor_id', with_options: [distributor2.name]
 
       expect(page).to have_select2 'order_order_cycle_id',
                                    with_options: ["#{order_cycle1.name} (open)"]
-      expect(page).to_not have_select2 'order_order_cycle_id',
+      expect(page).not_to have_select2 'order_order_cycle_id',
                                        with_options: ["#{order_cycle2.name} (open)"]
 
       click_button 'Update'
@@ -1188,8 +1201,8 @@ describe '
             click_link "Create or Update Invoice"
 
             # and disappear after clicking
-            expect(page).to have_no_link "Create or Update Invoice"
-            expect(page).to_not have_content "The order has changed since the last invoice update."
+            expect(page).not_to have_link "Create or Update Invoice"
+            expect(page).not_to have_content "The order has changed since the last invoice update."
 
             # creating an invoice, displays a second row
             expect(page.find("table").text).to have_content(table_contents)

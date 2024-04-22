@@ -6,28 +6,9 @@ This is a general guide to setting up an Open Food Network **development environ
 
 Head to our wiki on [Learning Rails](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Learning-Rails) to find some good starting points.
 
-### Requirements
-
-The fastest way to make it work locally is to use Docker, you only need to setup git, see the [Docker setup guide](docker/README.md).
-Otherwise, for a local setup you will need:
-* Ruby and bundler (check current Ruby version in [.ruby-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.ruby-version) file)
-    - To manage versions, it's recommended to use [rbenv](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/)
-* Node and yarn (check current Node version in [.node-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.node-version) file)
-    - [nodevn](https://github.com/nodenv/nodenv) is recommended.
-* PostgreSQL database
-* Redis (for background jobs)
-* Chrome (for testing)
-
-The following guides will provide OS-specific step-by-step instructions to get these requirements installed:
-- [Ubuntu Setup Guide][ubuntu]
-- [Debian Setup Guide][debian]
-- [OSX Setup Guide][osx]
-
-For those new to Rails, the following tutorial will help get you up to speed with configuring a [Rails environment](http://guides.rubyonrails.org/getting_started.html).
-
 ### Get it
 
-So you have set up your local environment according to the requirements listed above. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), it is a good idea to begin by forking this repo using the `Fork` button in the top-right corner of this screen. You should then be able to use `git clone` to copy your fork onto your local machine:
+If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), it is a good idea to begin by forking this repo using the `Fork` button in the top-right corner of this screen. You should then be able to use `git clone` to copy your fork onto your local machine:
 
     git clone git@github.com:YOUR_GITHUB_USERNAME_HERE/openfoodnetwork.git
 
@@ -43,6 +24,27 @@ Fetch the latest version of `master` from `upstream` (ie. the main repo):
 
     git fetch upstream master
 
+### Installation
+
+This project needs specific ruby/bundler versions as well as node/yarn specific versions. For a local setup you will need:
+
+* Install or change your Ruby version according to the one specified at [.ruby-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.ruby-version) file.
+    - To manage versions, it's recommended to use [rbenv](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/).
+* Install [nodenv](https://github.com/nodenv/nodenv) to ensure the correct [.node-version](https://github.com/openfoodfoundation/openfoodnetwork/blob/master/.node-version) is used.
+    - [nodevn](https://github.com/nodenv/nodenv) is recommended as a node version manager.
+* PostgreSQL database
+* Redis (for background jobs)
+* Chrome (for testing)
+
+The following guides will provide OS-specific step-by-step instructions to get these requirements installed:
+- [Ubuntu Setup Guide][ubuntu]
+- [Debian Setup Guide][debian]
+- [OSX Setup Guide][osx]
+
+For those new to Rails, the following tutorial will help get you up to speed with configuring a [Rails environment](http://guides.rubyonrails.org/getting_started.html).
+
+Another way to make it work locally would be using Docker. See the [Docker setup guide](docker/README.md). 
+
 ### Get it running
 
 First, you need to create the database user the app will use by manually typing the following in your terminal:
@@ -53,7 +55,8 @@ sudo --login --user=postgres psql -c "CREATE USER ofn WITH SUPERUSER CREATEDB PA
 
 This will create the "ofn" user as superuser and allowing it to create databases. If this command fails, check the [troubleshooting section](#creating-the-database) for an alternative.
 
-Next, it is _strongly recommended_ to run the setup script.
+Next, it is _strongly recommended_ to run the setup script:
+
 ```sh
 ./script/setup
 ```

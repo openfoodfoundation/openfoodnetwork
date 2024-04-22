@@ -5,7 +5,7 @@ class OrderCycleOpenedJob < ApplicationJob
   def perform
     ActiveRecord::Base.transaction do
       recently_opened_order_cycles.find_each do |order_cycle|
-        OrderCycleWebhookService.create_webhook_job(order_cycle, 'order_cycle.opened')
+        OrderCycles::WebhookService.create_webhook_job(order_cycle, 'order_cycle.opened')
       end
       mark_as_opened(recently_opened_order_cycles)
     end

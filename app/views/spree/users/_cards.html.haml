@@ -7,18 +7,18 @@
           %button.button.secondary.tiny.help-btn{ "data-controller": "help-modal-link", "data-action": "click->help-modal-link#open", "data-help-modal-link-target-value": "saved_cards_modal" }
             %i.ofn-i_013-help
 
-        .saved_cards{ ng: { show: 'savedCreditCards.length > 0' } }
+        .saved_cards{ "ng-show": 'savedCreditCards.length > 0' }
           = render 'saved_cards'
-        .no_cards{ ng: { hide: 'savedCreditCards.length > 0' } }
+        .no_cards{ "ng-hide": 'savedCreditCards.length > 0' }
           = t(:you_have_no_saved_cards)
-        %button.button.primary{ ng: { click: 'showForm()', hide: 'CreditCard.visible' } }
+        %button.button.primary{ "ng-click": 'showForm()', "ng-hide": 'CreditCard.visible' }
           = t(:add_a_card)
 
       .small-12.medium-6.columns
-        .new_card{ ng: { show: 'CreditCard.visible', class: '{visible: CreditCard.visible}' } }
+        .new_card{ "ng-show": 'CreditCard.visible', "ng-class": '{visible: CreditCard.visible}' }
           %h3= t(:add_new_credit_card)
           = render 'new_card_form'
-        .authorised_shops{ ng: { controller: 'AuthorisedShopsCtrl', hide: 'CreditCard.visible || savedCreditCards.length == 0' } }
+        .authorised_shops{ "ng-controller": 'AuthorisedShopsCtrl', "ng-hide": 'CreditCard.visible || savedCreditCards.length == 0' }
           %h3
             = t('.authorised_shops')
           = render 'authorised_shops'

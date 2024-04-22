@@ -162,12 +162,6 @@ describe ProductsRenderer do
       expect(products_renderer.products_json).to include "998.0"
     end
 
-    it "includes the primary taxon" do
-      taxon = create(:taxon)
-      allow_any_instance_of(Spree::Product).to receive(:primary_taxon).and_return taxon
-      expect(products_renderer.products_json).to include taxon.name
-    end
-
     it "loads tag_list for variants" do
       VariantOverride.create(variant:, hub: distributor, tag_list: 'lalala')
       expect(products_renderer.products_json).to include "[\"lalala\"]"
@@ -195,13 +189,13 @@ describe ProductsRenderer do
 
     it "scopes variants to distribution" do
       expect(variants[p.id]).to include v1
-      expect(variants[p.id]).to_not include v2
+      expect(variants[p.id]).not_to include v2
     end
 
     it "does not render variants that have been hidden by the hub" do
       # but does render 'new' variants, ie. v1
       expect(variants[p.id]).to include v1, v3
-      expect(variants[p.id]).to_not include v4
+      expect(variants[p.id]).not_to include v4
     end
 
     context "when hub opts to only see variants in its inventory" do
@@ -212,7 +206,7 @@ describe ProductsRenderer do
       it "doesn't render variants that haven't been explicitly added to inventory for the hub" do
         # but does render 'new' variants, ie. v1
         expect(variants[p.id]).to include v3
-        expect(variants[p.id]).to_not include v1, v4
+        expect(variants[p.id]).not_to include v1, v4
       end
     end
   end

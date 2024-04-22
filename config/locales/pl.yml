@@ -29,6 +29,9 @@ pl:
         shipping_category_id: "Kategoria dostawy"
         variant_unit: "Jednostka wariantu"
         variant_unit_name: "Nazwa jednostki wariantu"
+      spree/variant:
+        primary_taxon: "Kategoria produktu"
+        shipping_category_id: "Kategoria dostawy"
       spree/credit_card:
         base: "Karta kredytowa"
         number: "Numer zamówienia"
@@ -561,6 +564,9 @@ pl:
         product_categories: Kategorie produktów
         tax_categories: Kategorie podatków
         shipping_categories: Kategorie dostaw
+      dfc_import_form:
+        enterprise: "Podmiot"
+        import: "Import"
       import:
         review: Przejrzyj
         import: Import
@@ -2972,6 +2978,7 @@ pl:
     category: "Kategoria"
     more: "Więcej"
     no_pending_payments: "Brak oczekujących płatności"
+    remove: "Usuń"
     none: "Nic"
     your_order_is_empty_add_product: "Twoje zamówienie jest puste, wyszukaj i dodaj produkt powyżej"
     add_product: "Dodaj produkt"

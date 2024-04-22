@@ -32,7 +32,7 @@ class EnterpriseFee < ApplicationRecord
     if user.has_spree_role?('admin')
       where(nil)
     else
-      where('enterprise_id IN (?)', user.enterprises.select(&:id))
+      where(enterprise_id: user.enterprises.select(&:id))
     end
   }
 
@@ -40,7 +40,7 @@ class EnterpriseFee < ApplicationRecord
     joins(:calculator).where.not(spree_calculators: { type: PER_ORDER_CALCULATORS })
   }
   scope :per_order, lambda {
-    joins(:calculator).where('spree_calculators.type IN (?)', PER_ORDER_CALCULATORS)
+    joins(:calculator).where(spree_calculators: { type: PER_ORDER_CALCULATORS })
   }
 
   def self.clear_all_adjustments(order)

@@ -45,7 +45,7 @@ describe "/admin", type: :request do
 
             get "/admin"
 
-            expect(response.body).to_not include("Terms of Service have been updated")
+            expect(response.body).not_to include("Terms of Service have been updated")
           end
         end
 
@@ -66,7 +66,7 @@ describe "/admin", type: :request do
 
             get "/admin"
 
-            expect(response.body).to_not include("Terms of Service have been updated")
+            expect(response.body).not_to include("Terms of Service have been updated")
           end
         end
 
@@ -79,7 +79,7 @@ describe "/admin", type: :request do
           it "doesn't show accept new ToS banner" do
             get "/admin"
 
-            expect(response.body).to_not include("Terms of Service have been updated")
+            expect(response.body).not_to include("Terms of Service have been updated")
           end
         end
       end

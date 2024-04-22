@@ -1,19 +1,19 @@
 %div
   .center
-    %input.button.primary{ type: "button", value: "{{'registration.steps.details.locate_address' | t}}", ng: { click: "locateAddress()" } }
-  .center{ ng: {if: "latLong"}}
+    %input.button.primary{ type: "button", value: "{{'registration.steps.details.locate_address' | t}}", "ng-click": "locateAddress()" }
+  .center{ "ng-if": "latLong" }
     %strong {{'registration.steps.details.drag_pin' | t}}
     
   .small-12.medium-9.large-12.columns.end
-    .map-container--registration{id: "registration-map", ng: {if: "!!map"}}
+    .map-container--registration{ id: "registration-map", "ng-if": "!!map" }
       %ui-gmap-google-map{ center: "map.center", zoom: "map.zoom"}
         %ui-gmap-marker{idKey: 1, coords: "latLong", options: '{ draggable: true}'}
 
-  .center{ ng: {if: "latLong"}}
+  .center{ "ng-if": "latLong" }
     .field
-      %input{ type: 'checkbox', id: 'confirm_address', name: 'confirm_address', ng: { click: 'toggleAddressConfirmed()' } }
+      %input{ type: 'checkbox', id: 'confirm_address', name: 'confirm_address', "ng-click": 'toggleAddressConfirmed()' }
       %label{ for: 'confirm_address' } {{'registration.steps.details.confirm_address' | t}}
-  .small-12.medium-9.large-12.columns.end{ ng: {if: "latLong"}}
+  .small-12.medium-9.large-12.columns.end{ "ng-if": "latLong" }
     .field
       %strong {{'registration.steps.details.drag_map_marker' | t}}
 

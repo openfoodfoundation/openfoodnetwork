@@ -6,6 +6,10 @@ class SuppliedProductBuilder < DfcBuilder
       enterprise_id: variant.product.supplier_id,
       id: variant.id,
     )
+    product_uri = urls.enterprise_url(
+      variant.product.supplier_id,
+      spree_product_id: variant.product_id
+    )
 
     DfcProvider::SuppliedProduct.new(
       id,
@@ -13,16 +17,16 @@ class SuppliedProductBuilder < DfcBuilder
       description: variant.description,
       productType: product_type(variant),
       quantity: QuantitativeValueBuilder.quantity(variant),
+      spree_product_uri: product_uri,
       spree_product_id: variant.product.id,
       image_url: variant.product&.image&.url(:product)
     )
   end
 
-  def self.import_variant(supplied_product)
-    product_id = supplied_product.spree_product_id
+  def self.import_variant(supplied_product, supplier)
+    product = referenced_spree_product(supplied_product, supplier)
 
-    if product_id.present?
-      product = Spree::Product.find(product_id)
+    if product
       Spree::Variant.new(
         product:,
         price: 0,
@@ -31,8 +35,29 @@ class SuppliedProductBuilder < DfcBuilder
       end
     else
       product = import_product(supplied_product)
+      product.supplier = supplier
       product.ensure_standard_variant
       product.variants.first
+    end.tap do |variant|
+      link = supplied_product.semanticId
+      variant.semantic_links.new(semantic_id: link) if link.present?
+    end
+  end
+
+  def self.referenced_spree_product(supplied_product, supplier)
+    uri = supplied_product.spree_product_uri
+    id = supplied_product.spree_product_id
+
+    if uri.present?
+      route = Rails.application.routes.recognize_path(uri)
+      params = Rack::Utils.parse_nested_query(URI.parse(uri).query)
+
+      # Check that the given URI points to us:
+      return unless uri == urls.enterprise_url(route.merge(params))
+
+      supplier.supplied_products.find_by(id: params["spree_product_id"])
+    elsif id.present?
+      supplier.supplied_products.find_by(id:)
     end
   end
 
@@ -40,33 +65,35 @@ class SuppliedProductBuilder < DfcBuilder
     Spree::Product.new(
       name: supplied_product.name,
       description: supplied_product.description,
-      price: 0, # will be in DFC Offer
-      primary_taxon: taxon(supplied_product)
+      price: 0 # will be in DFC Offer
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
+      product.ensure_standard_variant
+      product.variants.first.primary_taxon = taxon(supplied_product)
     end
   end
 
   def self.apply(supplied_product, variant)
-    variant.product.assign_attributes(
-      description: supplied_product.description,
-      primary_taxon: taxon(supplied_product)
-    )
+    variant.product.assign_attributes(description: supplied_product.description)
 
     variant.display_name = supplied_product.name
+    variant.primary_taxon = taxon(supplied_product)
     QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
     variant.unit_value = variant.product.unit_value
   end
 
   def self.product_type(variant)
-    taxon_dfc_id = variant.product.primary_taxon&.dfc_id
+    taxon_dfc_id = variant.primary_taxon&.dfc_id
 
     DfcProductTypeFactory.for(taxon_dfc_id)
   end
 
   def self.taxon(supplied_product)
-    dfc_id = supplied_product.productType.semanticId
-    Spree::Taxon.find_by(dfc_id: )
+    dfc_id = supplied_product.productType&.semanticId
+
+    # Every product needs a primary taxon to be valid. So if we don't have
+    # one or can't find it we just take a random one.
+    Spree::Taxon.find_by(dfc_id:) || Spree::Taxon.first
   end
 
   private_class_method :product_type, :taxon

@@ -105,7 +105,7 @@ describe "
             expect(page).to have_selector "#v_#{variant_related.id}"
             select2_select producer.name, from: 'producer_filter'
             expect(page).to have_selector "#v_#{variant.id}"
-            expect(page).to have_no_selector "#v_#{variant_related.id}"
+            expect(page).not_to have_selector "#v_#{variant_related.id}"
             select2_select 'All', from: 'producer_filter'
 
             # Filters based on the quick search box
@@ -113,7 +113,7 @@ describe "
             expect(page).to have_selector "#v_#{variant_related.id}"
             fill_in 'query', with: product.name
             expect(page).to have_selector "#v_#{variant.id}"
-            expect(page).to have_no_selector "#v_#{variant_related.id}"
+            expect(page).not_to have_selector "#v_#{variant_related.id}"
             fill_in 'query', with: ''
 
             # Clears the filters
@@ -121,8 +121,8 @@ describe "
             expect(page).to have_selector "tr#v_#{variant_related.id}"
             select2_select producer.name, from: 'producer_filter'
             fill_in 'query', with: product_related.name
-            expect(page).to have_no_selector "tr#v_#{variant.id}"
-            expect(page).to have_no_selector "tr#v_#{variant_related.id}"
+            expect(page).not_to have_selector "tr#v_#{variant.id}"
+            expect(page).not_to have_selector "tr#v_#{variant_related.id}"
             click_button 'Clear All'
             expect(page).to have_selector "tr#v_#{variant.id}"
             expect(page).to have_selector "tr#v_#{variant_related.id}"
@@ -134,17 +134,17 @@ describe "
             within "tr#v_#{variant.id}" do
               click_button 'Hide'
             end
-            expect(page).to have_no_selector "tr#v_#{variant.id}"
+            expect(page).not_to have_selector "tr#v_#{variant.id}"
             expect(page).to have_selector "tr#v_#{variant_related.id}"
             first("div#views-dropdown").click
             first("div#views-dropdown div.menu div.menu_item", text: "Hidden Products").click
             expect(page).to have_selector "tr#v_#{variant.id}"
-            expect(page).to have_no_selector "tr#v_#{variant_related.id}"
+            expect(page).not_to have_selector "tr#v_#{variant_related.id}"
             within "tr#v_#{variant.id}" do
               click_button 'Add'
             end
-            expect(page).to have_no_selector "tr#v_#{variant.id}"
-            expect(page).to have_no_selector "tr#v_#{variant_related.id}"
+            expect(page).not_to have_selector "tr#v_#{variant.id}"
+            expect(page).not_to have_selector "tr#v_#{variant_related.id}"
             first("div#views-dropdown").click
             first("div#views-dropdown div.menu div.menu_item", text: "Inventory Products").click
             expect(page).to have_selector "tr#v_#{variant.id}"
@@ -434,7 +434,7 @@ describe "
               # It does not save the changes.
               click_button 'Save Changes'
               expect(page).to have_content 'must be specified because forcing limited stock'
-              expect(page).to have_no_content 'Changes saved.'
+              expect(page).not_to have_content 'Changes saved.'
 
               vo.reload
               expect(vo.count_on_hand).to eq(1111)
@@ -485,8 +485,8 @@ describe "
 
         it "alerts the user to the presence of new products, and allows them to be added " \
            "or hidden" do
-          expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant1.id}"
-          expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant2.id}"
+          expect(page).not_to have_selector "table#variant-overrides tr#v_#{variant1.id}"
+          expect(page).not_to have_selector "table#variant-overrides tr#v_#{variant2.id}"
 
           expect(page).to have_selector '.alert-row span.message',
                                         text: "There are 1 new products available to add to your " \
@@ -502,17 +502,17 @@ describe "
           within "table#new-products tr#v_#{variant2.id}" do
             click_button 'Hide'
           end
-          expect(page).to have_no_selector "table#new-products tr#v_#{variant1.id}"
-          expect(page).to have_no_selector "table#new-products tr#v_#{variant2.id}"
+          expect(page).not_to have_selector "table#new-products tr#v_#{variant1.id}"
+          expect(page).not_to have_selector "table#new-products tr#v_#{variant2.id}"
           click_button "Back to my inventory"
 
           expect(page).to have_selector "table#variant-overrides tr#v_#{variant1.id}"
-          expect(page).to have_no_selector "table#variant-overrides tr#v_#{variant2.id}"
+          expect(page).not_to have_selector "table#variant-overrides tr#v_#{variant2.id}"
 
           first("div#views-dropdown").click
           first("div#views-dropdown div.menu div.menu_item", text: "Hidden Products").click
 
-          expect(page).to have_no_selector "table#hidden-products tr#v_#{variant1.id}"
+          expect(page).not_to have_selector "table#hidden-products tr#v_#{variant1.id}"
           expect(page).to have_selector "table#hidden-products tr#v_#{variant2.id}"
         end
       end

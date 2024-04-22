@@ -43,7 +43,7 @@ describe OrderShipment do
 
         it "returns nil for empty shipping_method_id" do
           empty_shipping_method_id = ' '
-          expect(shipment.shipping_rates).to_not receive(:find_by)
+          expect(shipment.shipping_rates).not_to receive(:find_by)
             .with(shipping_method_id: empty_shipping_method_id)
 
           expect(order.select_shipping_method(empty_shipping_method_id)).to be_nil

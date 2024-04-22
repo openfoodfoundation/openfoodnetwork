@@ -9,8 +9,8 @@
   %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
     - if @order_cycle.simple?
       - custom_redirect_path = main_app.admin_order_cycles_path
-    %input.red{ type: "button", value: t('.create'), ng: { click: "submit($event, '#{custom_redirect_path}')", disabled: "!order_cycle_form.$dirty || order_cycle_form.$invalid" } }
-    %input{ type: "button", ng: { value: "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", click: "cancel('#{main_app.admin_order_cycles_path}')" } }
+    %input.red{ type: "button", value: t('.create'), "ng-click": "submit($event, '#{custom_redirect_path}')", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
+    %input{ type: "button", "ng-value": "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", "ng-click": "cancel('#{main_app.admin_order_cycles_path}')" }
 
   - if @order_cycle.simple?
     = render 'simple_form', f: f

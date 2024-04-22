@@ -34,6 +34,9 @@ nl_BE:
         shipping_category_id: "Verzendcategorie"
         variant_unit: "Eénheid"
         variant_unit_name: "Variant Unit Name"
+      spree/variant:
+        primary_taxon: "Product categorie"
+        shipping_category_id: "Verzendcategorie"
       spree/credit_card:
         base: "Kredietkaart"
         number: "Nummer"
@@ -535,15 +538,15 @@ nl_BE:
       index:
         header:
           title: Beheer van de productencatalogus
-      sort:
-        pagination:
-          clear_search: Verwijder zoektermen
       filters:
         producers:
           label: Producenten
         categories:
           label: Categorieën
         search: Zoeken
+      sort:
+        pagination:
+          clear_search: Verwijder zoektermen
       table:
         new_variant: Nieuw variant
       edit_image:
@@ -587,6 +590,9 @@ nl_BE:
         product_categories: Productcategorieën
         tax_categories: Belastingcategorieën
         shipping_categories: Verzendingscategorieën
+      dfc_import_form:
+        enterprise: "Onderneming"
+        import: "Importeren"
       import:
         review: Beoordeling
         import: Importeren
@@ -2984,6 +2990,7 @@ nl_BE:
     credit: "Krediet"
     more: "Meer"
     no_pending_payments: "Geen betaling in afhandeling"
+    remove: "Verwijderen"
     none: "Geen enkele"
     updating: "Updatend"
     your_order_is_empty_add_product: "Je bestelling is leeg, gelieve hierboven  een product te zoeken en toe te voegen "

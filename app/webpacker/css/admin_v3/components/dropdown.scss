@@ -47,6 +47,7 @@
 
   &.disabled {
     opacity: 0.5;
+    pointer-events: none;
 
     &:hover {
       cursor: default;
@@ -178,6 +179,32 @@
     .menu_item:hover {
       background-color: #ededed;
     }
+  }
+
+  > details {
+    margin: -7px -15px;
+    padding: 7px 15px;
+  }
+
+  > details > summary {
+    display: inline-block;
+    list-style: none;
+    width: auto;
+    text-transform: uppercase;
+    font-size: 85%;
+    font-weight: 600;
+    margin: -8px -15px;
+    padding: 8px 15px;
+  }
+
+  > details > summary:after {
+    content: "\f0d7";
+    font-family: FontAwesome;
+  }
+
+  > details[open] > summary:after {
+    content: "\f0d8";
+    font-family: FontAwesome;
   }
 }
 

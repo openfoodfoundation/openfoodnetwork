@@ -7,30 +7,30 @@
           %h2= t('registration.steps.introduction.registration_greeting')
           %h5{ "ng-bind" => "'registration.steps.contact.who_is_managing_enterprise' | t:{enterprise: enterprise.name}" }
 
-    %form{ name: 'contact', novalidate: true, ng: { controller: "RegistrationFormCtrl", submit: "selectIfValid('type',contact)" } }
+    %form{ name: 'contact', novalidate: true, "ng-controller": "RegistrationFormCtrl", "ng-submit": "selectIfValid('type',contact)" }
       .row.content
         .small-12.medium-12.large-7.columns
           .row
             .small-12.columns.field
               %label{ for: 'enterprise_contact' }= t(".contact_field")
-              %input.chunky.small-12.columns{ id: 'enterprise_contact', name: 'contact_name', required: true, placeholder: "{{'registration.steps.contact.contact_field_placeholder' | t}}", ng: { model: 'enterprise.contact_name' } }
-              %span.error.small-12.columns{ ng: { show: "contact.contact_name.$error.required && submitted" } }
+              %input.chunky.small-12.columns{ id: 'enterprise_contact', name: 'contact_name', required: true, placeholder: "{{'registration.steps.contact.contact_field_placeholder' | t}}", "ng-model": 'enterprise.contact_name' }
+              %span.error.small-12.columns{ "ng-show": "contact.contact_name.$error.required && submitted" }
                 = t(".contact_field_required")
           .row
             .small-12.columns.field
               %label{ for: 'enterprise_email_address' }= t("admin.enterprises.form.contact.email_address")+":"
-              %input.chunky.small-12.columns{ id: 'enterprise_email_address', name: 'email_address', type: 'email', placeholder: t('admin.enterprises.form.contact.email_address_placeholder'), ng: { model: 'enterprise.email_address' } }
+              %input.chunky.small-12.columns{ id: 'enterprise_email_address', name: 'email_address', type: 'email', placeholder: t('admin.enterprises.form.contact.email_address_placeholder'), "ng-model": 'enterprise.email_address' }
           .row
             .small-12.columns.field
               %label{ for: 'enterprise_phone' }= t(".phone_field")+":"
-              %input.chunky.small-12.columns{ id: 'enterprise_phone', name: 'phone', placeholder: "{{'registration.steps.contact.phone_field_placeholder' | t}}", ng: { model: 'enterprise.phone' } }
+              %input.chunky.small-12.columns{ id: 'enterprise_phone', name: 'phone', placeholder: "{{'registration.steps.contact.phone_field_placeholder' | t}}", "ng-model": 'enterprise.phone' }
           .row
             .small-12.columns.field
               %label{ "for" => 'enterprise_whatsapp_phone', 'data-toggle' => "tooltip", 'title' => "{{'registration.steps.contact.whatsapp_phone_tooltip' | t}}" }= t(".whatsapp_phone_field")+":"
-              %input.chunky.small-12.columns{ id: 'enterprise_whatsapp_phone', name: 'whatsapp_phone', placeholder: "{{'registration.steps.contact.whatsapp_phone_field_placeholder' | t}}", ng: { model: 'enterprise.whatsapp_phone' } }
+              %input.chunky.small-12.columns{ id: 'enterprise_whatsapp_phone', name: 'whatsapp_phone', placeholder: "{{'registration.steps.contact.whatsapp_phone_field_placeholder' | t}}", "ng-model": 'enterprise.whatsapp_phone' }
         .small-12.medium-12.large-5.hide-for-small-only
 
       .row.buttons
         .small-12.columns
-          %input.button.secondary{ type: "button", value: "{{'back' | t}}", ng: { click: "select('details')" } }
+          %input.button.secondary{ type: "button", value: "{{'back' | t}}", "ng-click": "select('details')" }
           %input.button.primary.right{ type: "submit", value: "{{'continue' | t}}" }

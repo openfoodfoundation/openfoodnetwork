@@ -163,7 +163,7 @@ module Spree
     end
 
     def currency
-      order ? order.currency : Spree::Config[:currency]
+      order ? order.currency : CurrentConfig.get(:currency)
     end
 
     def display_cost

@@ -34,6 +34,9 @@ es_US:
         shipping_category_id: "Categoría de envío"
         variant_unit: "Unidad Variante"
         variant_unit_name: "Nombre de la unidad de la variante"
+      spree/variant:
+        primary_taxon: "categoría del producto"
+        shipping_category_id: "Categoría de envío"
       spree/credit_card:
         base: "Tarjeta de crédito"
         number: "Número"
@@ -655,15 +658,15 @@ es_US:
       index:
         header:
           title: Editar varios Productos
-      sort:
-        pagination:
-          clear_search: Limpiar la búsqueda
       filters:
         producers:
           label: Productoras
         categories:
           label: Categorías
         search: Buscar
+      sort:
+        pagination:
+          clear_search: Limpiar la búsqueda
       table:
         new_variant: Nueva variante
       edit_image:
@@ -707,6 +710,9 @@ es_US:
         product_categories: Categorías de Producto
         tax_categories: Categorías de impuestos
         shipping_categories: Categorías de envío
+      dfc_import_form:
+        enterprise: "Organización"
+        import: "Importar"
       import:
         review: Revisión
         import: Importar
@@ -3294,6 +3300,7 @@ es_US:
     new_tax_category: "Nueva categoría de impuestos"
     new_user: "Nuevo usuario"
     no_pending_payments: "No tiene pagos pendientes"
+    remove: "Eliminar"
     none: "Ninguno"
     not_found: "no encontrado"
     notice_messages:

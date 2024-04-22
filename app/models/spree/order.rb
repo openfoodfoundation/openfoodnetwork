@@ -141,7 +141,7 @@ module Spree
       if user.has_spree_role?('admin')
         where(nil)
       else
-        where('spree_orders.distributor_id IN (?)', user.enterprises.select(&:id))
+        where(spree_orders: { distributor_id: user.enterprises.select(&:id) })
       end
     }
 
@@ -165,6 +165,7 @@ module Spree
     scope :finalized, -> { where(state: FINALIZED_STATES) }
     scope :complete, -> { where.not(completed_at: nil) }
     scope :incomplete, -> { where(completed_at: nil) }
+    scope :invoiceable, -> { where(state: [:complete, :resumed]) }
     scope :by_state, lambda { |state| where(state:) }
     scope :not_state, lambda { |state| where.not(state:) }
 
@@ -186,7 +187,7 @@ module Spree
     end
 
     def currency
-      self[:currency] || Spree::Config[:currency]
+      self[:currency] || CurrentConfig.get(:currency)
     end
 
     def display_item_total
@@ -211,10 +212,6 @@ module Spree
 
     def completed?
       completed_at.present?
-    end
-
-    def invoiceable?
-      complete? || resumed?
     end
 
     # Indicates whether or not the user is allowed to proceed to checkout.
@@ -652,7 +649,7 @@ module Spree
     end
 
     def fee_handler
-      @fee_handler ||= OrderFeesHandler.new(self)
+      @fee_handler ||= Orders::HandleFeesService.new(self)
     end
 
     def clear_legacy_taxes!
@@ -689,7 +686,7 @@ module Spree
     end
 
     def set_currency
-      self.currency = Spree::Config[:currency] if self[:currency].nil?
+      self.currency = CurrentConfig.get(:currency) if self[:currency].nil?
     end
 
     def using_guest_checkout?
@@ -697,11 +694,11 @@ module Spree
     end
 
     def registered_email?
-      Spree::User.exists?(email:)
+      Spree::User.where(email:).exists?
     end
 
     def adjustments_fetcher
-      @adjustments_fetcher ||= OrderAdjustmentsFetcher.new(self)
+      @adjustments_fetcher ||= Orders::FetchAdjustmentsService.new(self)
     end
 
     def skip_payment_for_subscription?

@@ -97,7 +97,7 @@ describe '
     expect(page).to have_checked_field "enterprise_require_login_false"
     expect(page).to have_checked_field "enterprise_allow_guest_orders_true"
     find(:xpath, '//*[@id="enterprise_require_login_true"]').trigger("click")
-    expect(page).to have_no_checked_field "enterprise_require_login_false"
+    expect(page).not_to have_checked_field "enterprise_require_login_false"
     # expect(page).to have_checked_field "enterprise_enable_subscriptions_false"
 
     accept_alert do
@@ -105,7 +105,7 @@ describe '
       within(".side_menu") { click_link "Users" }
     end
     select2_select user.email, from: 'enterprise_owner_id'
-    expect(page).to have_no_selector '.select2-drop-mask' # Ensure select2 has finished
+    expect(page).not_to have_selector '.select2-drop-mask' # Ensure select2 has finished
 
     accept_alert do
       click_link "About"
@@ -149,7 +149,7 @@ describe '
 
     within(".permalink") do
       link_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"
-      link = find_link(link)
+      link = find_link(link_path)
       expect(link[:href]).to eq link_path
       expect(link[:target]).to eq '_blank'
     end
@@ -413,7 +413,7 @@ describe '
           click_button 'Create'
 
           # Then it should show me an error
-          expect(page).to have_no_content 'Enterprise "zzz" has been successfully created!'
+          expect(page).not_to have_content 'Enterprise "zzz" has been successfully created!'
           expect(page).to have_content "#{enterprise_user.email} is not permitted " \
                                        "to own any more enterprises (limit is 1)."
         end
@@ -588,7 +588,7 @@ describe '
             expect do
               click_button "Invite"
               expect(page).to have_content "Email is invalid"
-            end.to_not enqueue_job ActionMailer::MailDeliveryJob
+            end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
@@ -600,7 +600,7 @@ describe '
             expect do
               click_button "Invite"
               expect(page).to have_content "User already exists"
-            end.to_not enqueue_job ActionMailer::MailDeliveryJob
+            end.not_to enqueue_job ActionMailer::MailDeliveryJob
           end
         end
 
@@ -698,7 +698,7 @@ describe '
             end
             expect(flash_message).to match(/Logo removed/)
             distributor1.reload
-            expect(distributor1.white_label_logo).to_not be_attached
+            expect(distributor1.white_label_logo).not_to be_attached
           end
 
           shared_examples "edit link with" do |url, result|

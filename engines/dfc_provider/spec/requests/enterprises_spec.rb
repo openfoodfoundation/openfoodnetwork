@@ -93,7 +93,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
         let(:other_enterprise) { create(:distributor_enterprise) }
 
         run_test! do
-          expect(response.body).to_not include "Apple"
+          expect(response.body).not_to include "Apple"
         end
       end
     end

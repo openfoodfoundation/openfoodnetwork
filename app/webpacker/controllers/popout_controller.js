@@ -3,27 +3,26 @@ import { Controller } from "stimulus";
 // Allows a form section to "pop out" and show additional options
 export default class PopoutController extends Controller {
   static targets = ["button", "dialog"];
+  static values = {
+    updateDisplay: { Boolean, default: true }
+  }
 
   connect() {
-    this.first_input = this.dialogTarget.querySelector("input");
     this.displayElements = Array.from(this.element.querySelectorAll('input:not([type="hidden"]'));
+    this.first_input = this.displayElements[0];
 
     // Show when click or down-arrow on button
     this.buttonTarget.addEventListener("click", this.show.bind(this));
     this.buttonTarget.addEventListener("keydown", this.applyKeyAction.bind(this));
 
-    // Close when click or tab outside of dialog. Run async (don't block primary event handlers).
-    this.closeIfOutsideBound = this.closeIfOutside.bind(this); // Store reference for removing listeners later.
-    document.addEventListener("click", this.closeIfOutsideBound, { passive: true });
-    document.addEventListener("focusin", this.closeIfOutsideBound, { passive: true });
+    this.closeIfOutsideBound = this.closeIfOutside.bind(this); // Store reference for managing listeners.
   }
 
   disconnect() {
     // Clean up handlers registered outside the controller element.
     // (jest cleans up document too early)
     if (document) {
-      document.removeEventListener("click", this.closeIfOutsideBound);
-      document.removeEventListener("focusin", this.closeIfOutsideBound);
+      this.#removeGlobalEventListeners();
     }
   }
 
@@ -31,6 +30,9 @@ export default class PopoutController extends Controller {
     this.dialogTarget.style.display = "block";
     this.first_input.focus();
     e.preventDefault();
+
+    // Close when click or tab outside of dialog.
+    this.#addGlobalEventListeners();
   }
 
   // Apply an appropriate action, behaving similar to a dropdown
@@ -58,16 +60,22 @@ export default class PopoutController extends Controller {
       }
 
       // Update button to represent any changes
-      this.buttonTarget.innerText = this.#displayValue();
-      this.buttonTarget.innerHTML ||= "&nbsp;"; // (with default space to help with styling)
+      if (this.updateDisplayValue) {
+        this.buttonTarget.textContent = this.#displayValue();
+        this.buttonTarget.innerHTML ||= "&nbsp;"; // (with default space to help with styling)
+      }
       this.buttonTarget.classList.toggle("changed", this.#isChanged());
 
       this.dialogTarget.style.display = "none";
+
+      this.#removeGlobalEventListeners();
     }
   }
 
   closeIfOutside(e) {
-    if (!this.dialogTarget.contains(e.target)) {
+    // Note that we need to ignore the clicked button. Even though the listener was only just
+    // registered, it still fires sometimes for some unkown reason.
+    if (!this.dialogTarget.contains(e.target) && !this.buttonTarget.contains(e.target)) {
       this.close();
     }
   }
@@ -87,7 +95,7 @@ export default class PopoutController extends Controller {
     let values = this.#enabledDisplayElements().map((element) => {
       if (element.type == "checkbox") {
         if (element.checked && element.labels[0]) {
-          return element.labels[0].innerText;
+          return element.labels[0].textContent.trim();
         }
       } else {
         return element.value;
@@ -103,5 +111,16 @@ export default class PopoutController extends Controller {
 
   #enabledDisplayElements() {
     return this.displayElements.filter((element) => !element.disabled);
+  }
+
+  #addGlobalEventListeners() {
+    // Run async (don't block primary event handlers).
+    document.addEventListener("click", this.closeIfOutsideBound, { passive: true });
+    document.addEventListener("focusin", this.closeIfOutsideBound, { passive: true });
+  }
+
+  #removeGlobalEventListeners() {
+    document.removeEventListener("click", this.closeIfOutsideBound);
+    document.removeEventListener("focusin", this.closeIfOutsideBound);
   }
 }

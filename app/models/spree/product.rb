@@ -28,16 +28,11 @@ module Spree
 
     acts_as_paranoid
 
-    after_create :ensure_standard_variant
-    around_destroy :destruction
-    after_save :update_units
-
-    searchable_attributes :supplier_id, :primary_taxon_id, :meta_keywords, :sku
-    searchable_associations :supplier, :properties, :primary_taxon, :variants
+    searchable_attributes :supplier_id, :meta_keywords, :sku
+    searchable_associations :supplier, :properties, :variants
     searchable_scopes :active, :with_properties
 
     belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
-    belongs_to :primary_taxon, class_name: 'Spree::Taxon', optional: false, touch: true
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
@@ -77,7 +72,11 @@ module Spree
     # Transient attributes used temporarily when creating a new product,
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id,
-                  :shipping_category_id
+                  :shipping_category_id, :primary_taxon_id
+
+    after_create :ensure_standard_variant
+    around_destroy :destruction
+    after_save :update_units
 
     scope :with_properties, ->(*property_ids) {
       left_outer_joins(:product_properties).
@@ -160,7 +159,7 @@ module Spree
     scope :in_order_cycle, lambda { |order_cycle|
       with_order_cycles_inner.
         merge(Exchange.outgoing).
-        where('order_cycles.id = ?', order_cycle)
+        where(order_cycles: { id: order_cycle })
     }
 
     scope :in_an_active_order_cycle, lambda {
@@ -177,7 +176,7 @@ module Spree
       if user.has_spree_role?('admin')
         where(nil)
       else
-        where('supplier_id IN (?)', user.enterprises.select("enterprises.id"))
+        where(supplier_id: user.enterprises.select("enterprises.id"))
       end
     }
 
@@ -188,10 +187,10 @@ module Spree
         .with_permission(:add_to_order_cycle)
         .where(enterprises: { is_primary_producer: true })
         .pluck(:parent_id)
-      where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
+      where(spree_products: { supplier_id: [enterprise.id] | permitted_producer_ids })
     }
 
-    scope :active, lambda { where("spree_products.deleted_at IS NULL") }
+    scope :active, lambda { where(spree_products: { deleted_at: nil }) }
 
     def self.group_by_products_id
       group(column_names.map { |col_name| "#{table_name}.#{col_name}" })
@@ -266,8 +265,8 @@ module Spree
         touch_distributors
 
         ExchangeVariant.
-          where('exchange_variants.variant_id IN (?)', variants.with_deleted.
-          select(:id)).destroy_all
+          where(exchange_variants: { variant_id: variants.with_deleted.
+          select(:id) }).destroy_all
 
         yield
       end
@@ -284,7 +283,24 @@ module Spree
       variant.unit_description = unit_description
       variant.tax_category_id = tax_category_id
       variant.shipping_category_id = shipping_category_id
+      variant.primary_taxon_id = primary_taxon_id
       variants << variant
+    end
+
+    # Format as per WeightsAndMeasures (todo: re-orgnaise maybe after product/variant refactor)
+    def variant_unit_with_scale
+      scale_clean = ActiveSupport::NumberHelper.number_to_rounded(variant_unit_scale,
+                                                                  precision: nil,
+                                                                  strip_insignificant_zeros: true)
+      [variant_unit, scale_clean].compact_blank.join("_")
+    end
+
+    def variant_unit_with_scale=(variant_unit_with_scale)
+      values = variant_unit_with_scale.split("_")
+      assign_attributes(
+        variant_unit: values[0],
+        variant_unit_scale: values[1] || nil
+      )
     end
 
     private

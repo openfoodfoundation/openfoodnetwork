@@ -13,8 +13,8 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :sku, :display_as, :display_name
-    searchable_associations :product, :default_price
+    searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id
+    searchable_associations :product, :default_price, :primary_taxon
     searchable_scopes :active, :deleted
 
     NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze
@@ -28,6 +28,7 @@ module Spree
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
+    belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
@@ -42,7 +43,7 @@ module Spree
     accepts_nested_attributes_for :images
 
     has_one :default_price,
-            -> { with_deleted.where(currency: Spree::Config[:currency]) },
+            -> { with_deleted.where(currency: CurrentConfig.get(:currency)) },
             class_name: 'Spree::Price',
             dependent: :destroy
     has_many :prices,
@@ -56,6 +57,7 @@ module Spree
     has_many :exchanges, through: :exchange_variants
     has_many :variant_overrides, dependent: :destroy
     has_many :inventory_items, dependent: :destroy
+    has_many :semantic_links, dependent: :delete_all
 
     localize_number :price, :weight
 
@@ -81,6 +83,7 @@ module Spree
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
     before_validation :convert_variant_weight_to_decimal
+    before_validation :assign_related_taxon, if: ->(v) { v.primary_taxon.blank? }
 
     before_save :assign_units, if: ->(variant) {
       variant.new_record? || variant.changed_attributes.keys.intersection(NAME_FIELDS).any?
@@ -98,7 +101,7 @@ module Spree
     scope :in_order_cycle, lambda { |order_cycle|
       with_order_cycles_inner.
         merge(Exchange.outgoing).
-        where('order_cycles.id = ?', order_cycle).
+        where(order_cycles: { id: order_cycle }).
         select('DISTINCT spree_variants.*')
     }
 
@@ -110,8 +113,8 @@ module Spree
     }
 
     scope :for_distribution, lambda { |order_cycle, distributor|
-      where('spree_variants.id IN (?)', order_cycle.variants_distributed_by(distributor).
-        select(&:id))
+      where(spree_variants: { id: order_cycle.variants_distributed_by(distributor).
+        select(&:id) })
     }
 
     scope :visible_for, lambda { |enterprise|
@@ -158,12 +161,12 @@ module Spree
     def self.active(currency = nil)
       # "where(id:" is necessary so that the returned relation has no includes
       # The relation without includes will not be readonly and allow updates on it
-      where("spree_variants.id in (?)", joins(:prices).
+      where(spree_variants: { id: joins(:prices).
                                           where(deleted_at: nil).
                                           where('spree_prices.currency' =>
-                                            currency || Spree::Config[:currency]).
+                                            currency || CurrentConfig.get(:currency)).
                                           where.not(spree_prices: { amount: nil }).
-                                          select("spree_variants.id"))
+                                          select("spree_variants.id") })
     end
 
     def tax_category
@@ -207,10 +210,14 @@ module Spree
 
     private
 
+    def assign_related_taxon
+      self.primary_taxon ||= product.variants.last&.primary_taxon
+    end
+
     def check_currency
       return unless currency.nil?
 
-      self.currency = Spree::Config[:currency]
+      self.currency = CurrentConfig.get(:currency)
     end
 
     def save_default_price
@@ -222,7 +229,7 @@ module Spree
     end
 
     def set_cost_currency
-      self.cost_currency = Spree::Config[:currency] if cost_currency.blank?
+      self.cost_currency = CurrentConfig.get(:currency) if cost_currency.blank?
     end
 
     def create_stock_items

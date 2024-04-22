@@ -48,7 +48,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     params = {
       'q[name_cont]': $scope.q.query,
       'q[supplier_id_eq]': $scope.q.producerFilter,
-      'q[primary_taxon_id_eq]': $scope.q.categoryFilter,
+      'q[variants_primary_taxon_id_eq]': $scope.q.categoryFilter,
       'q[s]': $scope.sorting,
       import_date: $scope.q.importDateFilter,
       page: $scope.page,
@@ -136,6 +136,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       on_hand: null
       price: null
       tax_category_id: null
+      category_id: null
     DisplayProperties.setShowVariants product.id, true
 
 
@@ -217,7 +218,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         filters:
           'q[name_cont]': $scope.q.query
           'q[supplier_id_eq]': $scope.q.producerFilter
-          'q[primary_taxon_id_eq]': $scope.q.categoryFilter
+          'q[variants_primary_taxon_id_eq]': $scope.q.categoryFilter
           'q[s]': $scope.sorting
           import_date: $scope.q.importDateFilter
         page: $scope.page
@@ -332,9 +333,6 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("on_demand") and filteredVariants.length == 0 #only update if no variants present
           filteredProduct.on_demand = product.on_demand
           hasUpdatableProperty = true
-        if product.hasOwnProperty("category_id")
-          filteredProduct.primary_taxon_id = product.category_id
-          hasUpdatableProperty = true
         if product.hasOwnProperty("inherits_properties")
           filteredProduct.inherits_properties = product.inherits_properties
           hasUpdatableProperty = true
@@ -374,6 +372,9 @@ filterSubmitVariant = (variant) ->
       hasUpdatableProperty = true
     if variant.hasOwnProperty("tax_category_id")
       filteredVariant.tax_category_id = variant.tax_category_id
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("category_id")
+      filteredVariant.primary_taxon_id = variant.category_id
       hasUpdatableProperty = true
     if variant.hasOwnProperty("display_as")
       filteredVariant.display_as = variant.display_as

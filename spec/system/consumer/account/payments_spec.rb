@@ -38,7 +38,7 @@ describe "Payments requiring action" do
         visit "/account"
 
         find("a", text: /Transactions/i).click
-        expect(page).to_not have_content 'Authorisation Required'
+        expect(page).not_to have_content 'Authorisation Required'
       end
     end
   end

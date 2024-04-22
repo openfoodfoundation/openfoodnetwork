@@ -87,7 +87,7 @@ module Spree
 
         expect(zero_order.payment_state).to eq "paid"
         expect(zero_payment.reload.state).to eq "completed"
-        expect(zero_payment.captured_at).to_not be_nil
+        expect(zero_payment.captured_at).not_to be_nil
       end
     end
 

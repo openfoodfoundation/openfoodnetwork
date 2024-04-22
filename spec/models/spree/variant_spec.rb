@@ -6,10 +6,12 @@ require 'spree/localized_number'
 describe Spree::Variant do
   subject(:variant) { build(:variant) }
 
+  it { is_expected.to have_many :semantic_links }
+
   context "validations" do
     it "should validate price is greater than 0" do
       variant.price = -1
-      expect(variant).to be_invalid
+      expect(variant).not_to be_valid
     end
 
     it "should validate price is 0" do
@@ -19,7 +21,7 @@ describe Spree::Variant do
 
     it "should validate unit_value is greater than 0" do
       variant.unit_value = 0
-      expect(variant).to be_invalid
+      expect(variant).not_to be_valid
     end
 
     describe "tax category" do
@@ -37,7 +39,7 @@ describe Spree::Variant do
         expect(variant.tax_category).to eq default
         expect {
           variant.tax_category = nil
-        }.to_not change {
+        }.not_to change {
           variant.tax_category
         }
         expect(variant).to be_valid
@@ -57,17 +59,6 @@ describe Spree::Variant do
   end
 
   context "price parsing" do
-    before(:each) do
-      I18n.locale = I18n.default_locale
-      I18n.backend.store_translations(:de,
-                                      { number: { currency: { format: { delimiter: '.',
-                                                                        separator: ',' } } } })
-    end
-
-    after do
-      I18n.locale = I18n.default_locale
-    end
-
     context "price=" do
       context "with decimal point" do
         it "captures the proper amount for a formatted price" do
@@ -78,17 +69,19 @@ describe Spree::Variant do
 
       context "with decimal comma" do
         it "captures the proper amount for a formatted price" do
-          I18n.locale = :es
-          variant.price = '1.599,99'
-          expect(variant.price).to eq 1599.99
+          I18n.with_locale(:es) do
+            variant.price = '1.599,99'
+            expect(variant.price).to eq 1599.99
+          end
         end
       end
 
       context "with a numeric price" do
         it "uses the price as is" do
-          I18n.locale = :es
-          variant.price = 1599.99
-          expect(variant.price).to eq 1599.99
+          I18n.with_locale(:es) do
+            variant.price = 1599.99
+            expect(variant.price).to eq 1599.99
+          end
         end
       end
     end
@@ -358,7 +351,7 @@ describe Spree::Variant do
 
           it "lists any variants that are not listed as visible=false" do
             expect(variants).to include new_variant, visible_variant
-            expect(variants).to_not include hidden_variant
+            expect(variants).not_to include hidden_variant
           end
 
           context "when inventory items exist for other enterprises" do
@@ -379,7 +372,7 @@ describe Spree::Variant do
 
             it "lists any variants not listed as visible=false only for the relevant enterprise" do
               expect(variants).to include new_variant, visible_variant
-              expect(variants).to_not include hidden_variant
+              expect(variants).not_to include hidden_variant
             end
           end
         end
@@ -390,7 +383,7 @@ describe Spree::Variant do
 
         it "lists any variants that are listed as visible=true" do
           expect(variants).to include visible_variant
-          expect(variants).to_not include new_variant, hidden_variant
+          expect(variants).not_to include new_variant, hidden_variant
         end
       end
     end
@@ -415,7 +408,7 @@ describe Spree::Variant do
       it 'shows variants produced by the enterprise and any producers granting P-OC' do
         stockable_variants = Spree::Variant.stockable_by(shop)
         expect(stockable_variants).to include v1, v2
-        expect(stockable_variants).to_not include v3
+        expect(stockable_variants).not_to include v3
       end
     end
   end

@@ -5,10 +5,10 @@
       %th #{t('admin.product_import.import.line')}
       - @importer.table_headings.each do |heading|
         %th= heading
-    %tr{ng: {repeat: "(line_number, entry) in (entries | entriesFilterValid:'#{entries}')"}}
+    %tr{ "ng-repeat": "(line_number, entry) in (entries | entriesFilterValid:'#{entries}')" }
       %td
-        %i{ng: {class: "{'fa fa-warning error': (count(entry.errors) > 0), 'fa fa-check-circle success': (count(entry.errors) == 0)}"}}
+        %i{ "ng-class": "{'fa fa-warning error': (count(entry.errors) > 0), 'fa fa-check-circle success': (count(entry.errors) == 0)}" }
       %td
         {{line_number}}
-      %td{ng: {repeat: "(attribute, value) in entry.attributes", class: "{'invalid': attribute_invalid(attribute, line_number)}"}}
+      %td{ "ng-repeat": "(attribute, value) in entry.attributes", "ng-class": "{'invalid': attribute_invalid(attribute, line_number)}" }
         {{value}}

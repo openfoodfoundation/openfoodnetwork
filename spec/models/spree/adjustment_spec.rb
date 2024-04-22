@@ -107,7 +107,7 @@ module Spree
 
         it "is false when adjustment state is open" do
           adjustment.state = "open"
-          expect(adjustment).to_not be_immutable
+          expect(adjustment).not_to be_immutable
         end
       end
 
@@ -119,9 +119,9 @@ module Spree
 
         it "is false when adjustment state isn't finalized" do
           adjustment.state = "closed"
-          expect(adjustment).to_not be_finalized
+          expect(adjustment).not_to be_finalized
           adjustment.state = "open"
-          expect(adjustment).to_not be_finalized
+          expect(adjustment).not_to be_finalized
         end
       end
     end

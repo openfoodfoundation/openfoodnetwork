@@ -32,6 +32,9 @@ en_ZA:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/variant:
+        primary_taxon: "Product Category"
+        shipping_category_id: "Shipping Category"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -522,15 +525,15 @@ en_ZA:
       index:
         header:
           title: Bulk Edit Products
-      sort:
-        pagination:
-          clear_search: Clear search
       filters:
         producers:
           label: Pricing
         categories:
           label: Categories
         search: Search
+      sort:
+        pagination:
+          clear_search: Clear search
       table:
         new_variant: New variant
       edit_image:
@@ -573,6 +576,9 @@ en_ZA:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -2927,6 +2933,7 @@ en_ZA:
     credit: "Credit"
     more: "More"
     no_pending_payments: "No pending payments"
+    remove: "Remove"
     none: "None"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"

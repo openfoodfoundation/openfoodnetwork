@@ -29,7 +29,7 @@ module Reporting
 
         def orders
           search_result = search.result.order(:completed_at)
-          orders = OutstandingBalance.new(search_result).query.select('spree_orders.*')
+          orders = OutstandingBalanceQuery.new(search_result).call.select('spree_orders.*')
 
           filter(orders)
         end

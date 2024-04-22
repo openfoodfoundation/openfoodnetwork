@@ -27,8 +27,6 @@
           = f.text_field :variant_unit_name, {placeholder: t('admin.products.unit_name_placeholder')}
           = f.error_message_on :variant_unit_name
 
-    = render 'spree/admin/products/primary_taxon_form', f: f
-
     = f.field_container :supplier do
       = f.label :supplier, t(:spree_admin_supplier)
       %br

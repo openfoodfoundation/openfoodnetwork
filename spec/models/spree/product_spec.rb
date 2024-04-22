@@ -25,7 +25,7 @@ module Spree
         context "#destroy" do
           it "should set deleted_at value" do
             product.destroy
-            expect(product.deleted_at).to_not be_nil
+            expect(product.deleted_at).not_to be_nil
             expect(product.variants.all? { |v| !v.deleted_at.nil? }).to be_truthy
           end
         end
@@ -155,7 +155,6 @@ module Spree
 
     describe "associations" do
       it { is_expected.to belong_to(:supplier).required }
-      it { is_expected.to belong_to(:primary_taxon).required }
     end
 
     describe "validations and defaults" do
@@ -166,10 +165,6 @@ module Spree
       it { is_expected.to validate_presence_of :name }
       it { is_expected.to validate_length_of(:name).is_at_most(255) }
       it { is_expected.to validate_length_of(:sku).is_at_most(255) }
-
-      it "requires a primary taxon" do
-        expect(build(:simple_product, primary_taxon: nil)).not_to be_valid
-      end
 
       context "unit value" do
         it "requires a unit value when variant unit is weight" do
@@ -229,10 +224,11 @@ module Spree
         context "saving a new product" do
           let!(:product){ Spree::Product.new }
           let!(:shipping_category){ create(:shipping_category) }
+          let!(:taxon){ create(:taxon) }
 
           before do
             create(:stock_location)
-            product.primary_taxon = create(:taxon)
+            product.primary_taxon_id = taxon.id
             product.supplier = create(:supplier_enterprise)
             product.name = "Product1"
             product.variant_unit = "weight"
@@ -248,6 +244,7 @@ module Spree
             standard_variant = product.variants.reload.first
             expect(standard_variant.price).to eq 4.27
             expect(standard_variant.shipping_category).to eq shipping_category
+            expect(standard_variant.primary_taxon).to eq taxon
           end
         end
 
@@ -276,7 +273,7 @@ module Spree
           product.variant_unit_name = nil
           product.variant_unit_scale = nil
 
-          expect(product).to be_invalid
+          expect(product).not_to be_valid
         end
 
         it "requires a unit scale when variant unit is weight" do
@@ -324,7 +321,7 @@ module Spree
       let(:product) { create(:simple_product) }
 
       describe "touching affected enterprises when the product is deleted" do
-        let(:product) { create(:simple_product) }
+        let(:product) { create(:simple_product, supplier: distributor) }
         let(:supplier) { product.supplier }
         let(:distributor) { create(:distributor_enterprise) }
         let!(:oc) {
@@ -441,14 +438,14 @@ module Spree
           distributors = Enterprise.where(id: [distributor1.id, distributor2.id]).to_a
 
           expect(Product.in_distributors(distributors)).to include product1, product2, product3
-          expect(Product.in_distributors(distributors)).to_not include product4
+          expect(Product.in_distributors(distributors)).not_to include product4
         end
 
         it "returns distributed products for a given array of enterprise ids" do
           distributors_ids = [distributor1.id, distributor2.id]
 
           expect(Product.in_distributors(distributors_ids)).to include product1, product2, product3
-          expect(Product.in_distributors(distributors_ids)).to_not include product4
+          expect(Product.in_distributors(distributors_ids)).not_to include product4
         end
       end
 
@@ -569,7 +566,7 @@ module Spree
         it "lists any products with variants that are listed as visible=true" do
           expect(products.length).to eq(1)
           expect(products).to include product
-          expect(products).to_not include new_variant.product, hidden_variant.product
+          expect(products).not_to include new_variant.product, hidden_variant.product
         end
       end
 
@@ -591,7 +588,7 @@ module Spree
         it 'shows products produced by the enterprise and any producers granting P-OC' do
           stockable_products = Spree::Product.stockable_by(shop)
           expect(stockable_products).to include p1, p2
-          expect(stockable_products).to_not include p3
+          expect(stockable_products).not_to include p3
         end
       end
 

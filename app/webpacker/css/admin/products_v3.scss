@@ -1,5 +1,6 @@
 // Customisations for the new Bulk Edit Products page only
-.products_v3_page {
+// Scoped to containing div, because Turbo messes with body classes
+#products_v3_page {
   #content > .row:first-child > .container:first-child {
     // Allow table to extend to full width of available screen space
     // TODO: move this to a generic rule, eg body.full-width{}. Then it can be included on any page.
@@ -67,13 +68,17 @@
       }
 
       th.with-input {
+        // Additional padding to line up with content of input
         padding-left: $padding-tbl-cell + $hpadding-txt;
-        padding-right: $padding-tbl-cell + $hpadding-txt;
+
+        &.align-right {
+          padding-right: $padding-tbl-cell + $hpadding-txt;
+        }
       }
     }
 
     // Row hover
-    tr:hover {
+    tbody tr:hover {
       td {
         background-color: $light-grey;
         position: relative;
@@ -86,6 +91,13 @@
           left: -4px;
           border-left: 4px solid $teal;
           height: 100%;
+        }
+      }
+
+      // "Naked" inputs. Row hover helps reveal them.
+      .naked_inputs {
+        input:not([type="checkbox"]), .ts-control {
+          background-color: $color-tbl-cell-bg;
         }
       }
 
@@ -157,27 +169,16 @@
 
     .field {
       padding: 0;
-      margin-bottom: 0.75em;
+    }
+    .multi-field {
+      // Allow wrap with small gap
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
     }
 
-    label {
-      margin: 0;
-    }
-
-    // "Naked" inputs. Row hover helps reveal them.
-    tbody {
-      input:not([type="checkbox"]) {
-        background-color: $color-tbl-cell-bg;
-        height: auto;
-        font-size: inherit;
-        font-weight: inherit;
-      }
-
-      :not(.field_with_errors) > {
-        input:not([type="checkbox"]):not(:focus):not(.changed):not([disabled]) {
-          border-color: transparent;
-        }
-      }
+    .ts-control {
+      z-index: 0; // Avoid hovering over thead
     }
   }
 
@@ -301,15 +302,13 @@
     }
   }
 
-  // Stock popout widget
-  .on-hand {
-    &__wrapper {
-      position: relative;
-    }
+  // Popout widget (todo: move to separate fiel)
+  .popout {
+    position: relative;
 
     &__button {
       // override button styles
-      &.on-hand__button {
+      &.popout__button {
         background: $color-tbl-cell-bg;
         color: $color-txt-text;
         white-space: nowrap;
@@ -318,6 +317,8 @@
         padding-left: $border-radius; // Super compact
         padding-right: 1rem; // Retain space for arrow
         height: auto;
+        min-width: 2em;
+        min-height: 1lh; // Line height of parent
 
         &:hover,
         &:active,
@@ -350,13 +351,14 @@
           content: "\f078";
 
           position: absolute;
+          top: 0; // Required for empty buttons
           right: $border-radius;
           font-size: 0.67em;
         }
       }
     }
 
-    &__popout {
+    &__container {
       position: absolute;
       top: -0.6em;
       left: -0.2em;
@@ -369,12 +371,20 @@
       border-radius: $border-radius;
       box-shadow: 0px 0px 8px 0px rgba($near-black, 0.25);
 
-      .field:last-child {
-        margin-bottom: 0;
+      .field{
+        margin-bottom: 0.75em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
 
-      input[disabled] {
-        color: transparent; // hide value completely
+      input {
+        height: auto;
+
+        &[disabled] {
+          color: transparent; // hide value completely
+        }
       }
     }
   }

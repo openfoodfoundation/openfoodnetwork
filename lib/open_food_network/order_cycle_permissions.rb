@@ -99,15 +99,15 @@ module OpenFoodNetwork
             ).pluck(:id).uniq
 
           product_ids = Spree::Product.joins(:variants).
-            where("spree_variants.id IN (?)", variant_ids).pluck(:id).uniq
+            where(spree_variants: { id: variant_ids }).pluck(:id).uniq
 
           producers_active_ids = Enterprise.joins(:supplied_products).
-            where("spree_products.id IN (?)", product_ids).pluck(:id).uniq
+            where(spree_products: { id: product_ids }).pluck(:id).uniq
         end
 
-        ids = managed_permitted_ids | hubs_permitted_ids | hubs_permitting_ids \
-          | producers_permitted_ids | producers_permitting_ids | managed_active_ids \
-          | hubs_active_ids | producers_active_ids
+        ids = managed_permitted_ids | hubs_permitted_ids | hubs_permitting_ids |
+              producers_permitted_ids | producers_permitting_ids |
+              managed_active_ids | hubs_active_ids | producers_active_ids
 
         Enterprise.where(id: ids)
       end

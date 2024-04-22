@@ -6,7 +6,7 @@ describe "OIDC Settings" do
   it "requires login" do
     visit admin_oidc_settings_path
     expect(page).to have_button "Login"
-    expect(page).to_not have_button "Link your Les Communs OIDC Account"
+    expect(page).not_to have_button "Link your Les Communs OIDC Account"
   end
 
   describe "with valid login" do
@@ -36,7 +36,7 @@ describe "OIDC Settings" do
 
       expect(page).to have_content "Tokens to access connected apps have expired"
       click_button "Refresh authorisation"
-      expect(page).to_not have_content "Tokens to access connected apps have expired"
+      expect(page).not_to have_content "Tokens to access connected apps have expired"
     end
   end
 end

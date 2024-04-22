@@ -1,5 +1,3 @@
-- content_for :body_class do
-  products_v3_page
 - content_for :page_title do
   = t('.header.title')
 - content_for :page_actions do
@@ -8,15 +6,16 @@
       %li#new_product_link
         = button_link_to t(:new_product), "/admin/products/new", { :icon => 'icon-plus', :id => 'admin_new_product' }
 
+%script= render partial: "admin/shared/global_var_ofn", formats: :js,
+  locals: { name: :available_units_sorted, value: WeightsAndMeasures.available_units_sorted }
+
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-#products_v3_page{ "data-controller": "products" }
-
-  .spinner-overlay{ "data-controller": "loading", "data-products-target": "loading" }
-    .spinner-container
-      .spinner
-      = t('.loading')
-  #products-content
+#products_v3_page{ "data-controller": "products", 'data-turbo': true }
+  = render partial: "content", locals: { products: @products, pagy: @pagy, search_term: @search_term,
+                               producer_options: producers, producer_id: @producer_id,
+                               category_options: categories, category_id: @category_id,
+                               flashes: flash }
   - %w[product variant].each do |object_type|
     = render partial: 'delete_modal', locals: { object_type: }
   #modal-component

@@ -335,6 +335,8 @@ sv:
         could_not_process: "kunde inte hantera filen: ogiltig filtyp"
         blank: kan inte vara blank
         none_saved: sparade inte några produkter
+      dfc_import_form:
+        enterprise: "Företag"
       product_headings:
         distributor: Distributör
         producer: Producent
@@ -2134,6 +2136,7 @@ sv:
     all: "Alla"
     category: "Kategori"
     credit: "Kredit"
+    remove: "Ta bort"
     none: "Ingen"
     updating: "Uppdaterar"
     resend: "Återsänd"

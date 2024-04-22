@@ -68,7 +68,7 @@ angular.module('Darkswarm').controller "ProductsCtrl", ($scope, $sce, $filter, $
       per_page: $scope.per_page,
       'q[name_or_meta_keywords_or_variants_display_as_or_variants_display_name_or_supplier_name_cont]': $scope.query,
       'q[with_properties][]': $scope.activeProperties,
-      'q[primary_taxon_id_in_any][]': $scope.activeTaxons
+      'q[variants_primary_taxon_id_in_any][]': $scope.activeTaxons
     }
 
   $scope.searchKeypress = (e)->

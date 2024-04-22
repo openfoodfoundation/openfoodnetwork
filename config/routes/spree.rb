@@ -110,7 +110,7 @@ Spree::Core::Engine.routes.draw do
       resources :adjustments
       resources :invoices, only: [:index]
       resource :invoices, only: [] do
-        post :generate, to: :generate
+        post :generate
       end
 
       resources :payments do

@@ -28,7 +28,7 @@ FactoryBot.define do
 
         after(:create) do |order, evaluator|
           order.select_shipping_method evaluator.shipping_method.id
-          OrderWorkflow.new(order).advance_to_payment
+          Orders::WorkflowService.new(order).advance_to_payment
         end
 
         factory :order_ready_for_confirmation do

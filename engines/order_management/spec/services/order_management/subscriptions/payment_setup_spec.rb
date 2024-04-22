@@ -42,7 +42,7 @@ module OrderManagement
             before { allow(order).to receive(:new_outstanding_balance) { 10 } }
 
             it "does nothing" do
-              expect{ payment_setup.call! }.to_not change { payment.amount }.from(10)
+              expect{ payment_setup.call! }.not_to change { payment.amount }.from(10)
             end
           end
         end

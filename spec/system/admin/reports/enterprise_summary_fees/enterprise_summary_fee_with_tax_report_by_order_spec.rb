@@ -110,7 +110,7 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
       # independently of the order_cycle.
       # order.reload
       order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
 
       order.customer.update!({
                                first_name: customer_first_name,
@@ -188,7 +188,7 @@ describe "Enterprise Summary Fee with Tax Report By Order" do
                       ship_address_id: ship_address.id
                     })
       order.recreate_all_fees!
-      OrderWorkflow.new(order).complete!
+      Orders::WorkflowService.new(order).complete!
 
       order.customer.update!({
                                first_name: customer_first_name,

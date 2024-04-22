@@ -21,12 +21,11 @@ module Spree
         @order = Order.find_by(number: params[:order_id])
         if @order.distributor.can_invoice?
           authorize! :invoice, @order
-          OrderInvoiceGenerator.new(@order).generate_or_update_latest_invoice
+          ::Orders::GenerateInvoiceService.new(@order).generate_or_update_latest_invoice
         else
           flash[:error] = t(:must_have_valid_business_number,
                             enterprise_name: @order.distributor.name)
         end
-
         redirect_back(fallback_location: spree.admin_dashboard_path)
       end
 

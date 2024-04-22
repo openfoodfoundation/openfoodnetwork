@@ -37,7 +37,7 @@ module Admin
           context "where ransack conditions are specified" do
             it "loads order cycles closed within past month, and orders w/o a close_at date" do
               get :index, as: :json
-              expect(assigns(:collection)).to_not include oc1, oc2
+              expect(assigns(:collection)).not_to include oc1, oc2
               expect(assigns(:collection)).to include oc3, oc4
             end
           end
@@ -47,7 +47,7 @@ module Admin
 
             it "loads order cycles closed after specified date, and orders w/o a close_at date" do
               get :index, as: :json, params: { q: }
-              expect(assigns(:collection)).to_not include oc1
+              expect(assigns(:collection)).not_to include oc1
               expect(assigns(:collection)).to include oc2, oc3, oc4
             end
 
@@ -56,7 +56,7 @@ module Admin
 
               it "loads order cycles that meet all conditions" do
                 get :index, format: :json, params: { q: }
-                expect(assigns(:collection)).to_not include oc1, oc2, oc4
+                expect(assigns(:collection)).not_to include oc1, oc2, oc4
                 expect(assigns(:collection)).to include oc3
               end
             end
@@ -132,9 +132,9 @@ module Admin
           end
 
           it do
-            query_counter = QueryCounter.new
-            get :show, params: { id: order_cycle.id }, as: :json
-            expect(query_counter.queries).to eq(
+            expect {
+              get :show, params: { id: order_cycle.id }, as: :json
+            }.to query_database(
               {
                 select: {
                   enterprise_fees: 3,
@@ -151,7 +151,6 @@ module Admin
                 update: { spree_users: 1 }
               }
             )
-            query_counter.stop
           end
         end
       end
@@ -161,12 +160,12 @@ module Admin
       let(:shop) { create(:distributor_enterprise) }
 
       context "as a manager of a shop" do
-        let(:form_mock) { instance_double(OrderCycleForm) }
+        let(:form_mock) { instance_double(OrderCycles::FormService) }
         let(:params) { { as: :json, order_cycle: {} } }
 
         before do
           controller_login_as_enterprise_user([shop])
-          allow(OrderCycleForm).to receive(:new) { form_mock }
+          allow(OrderCycles::FormService).to receive(:new) { form_mock }
         end
 
         context "when creation is successful" do
@@ -204,10 +203,10 @@ module Admin
     describe "update" do
       let(:order_cycle) { create(:simple_order_cycle) }
       let(:coordinator) { order_cycle.coordinator }
-      let(:form_mock) { instance_double(OrderCycleForm) }
+      let(:form_mock) { instance_double(OrderCycles::FormService) }
 
       before do
-        allow(OrderCycleForm).to receive(:new) { form_mock }
+        allow(OrderCycles::FormService).to receive(:new) { form_mock }
       end
 
       context "as a manager of the coordinator" do
@@ -276,7 +275,7 @@ module Admin
         end
 
         it "can update preference product_selection_from_coordinator_inventory_only" do
-          expect(OrderCycleForm).to receive(:new).
+          expect(OrderCycles::FormService).to receive(:new).
             with(order_cycle,
                  { "preferred_product_selection_from_coordinator_inventory_only" => true },
                  anything) { form_mock }
@@ -289,7 +288,7 @@ module Admin
         end
 
         it "can update preference automatic_notifications" do
-          expect(OrderCycleForm).to receive(:new).
+          expect(OrderCycles::FormService).to receive(:new).
             with(order_cycle,
                  { "automatic_notifications" => true },
                  anything) { form_mock }
@@ -325,7 +324,7 @@ module Admin
           format: :json, id: order_cycle.id, order_cycle: allowed.merge(restricted)
         }
       }
-      let(:form_mock) { instance_double(OrderCycleForm, save: true) }
+      let(:form_mock) { instance_double(OrderCycles::FormService, save: true) }
 
       before { allow(controller).to receive(:spree_current_user) { user } }
 
@@ -334,7 +333,7 @@ module Admin
         let(:expected) { [order_cycle, allowed.merge(restricted), user] }
 
         it "allows me to update exchange information for exchanges, name and dates" do
-          expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
+          expect(OrderCycles::FormService).to receive(:new).with(*expected) { form_mock }
           spree_put :update, params
         end
       end
@@ -344,7 +343,7 @@ module Admin
         let(:expected) { [order_cycle, allowed, user] }
 
         it "allows me to update exchange information for exchanges, but not name or dates" do
-          expect(OrderCycleForm).to receive(:new).with(*expected) { form_mock }
+          expect(OrderCycles::FormService).to receive(:new).with(*expected) { form_mock }
           spree_put :update, params
         end
       end
@@ -416,9 +415,9 @@ module Admin
                     } } }
 
           oc.reload
-          expect(oc.name).to_not eq "Updated Order Cycle"
-          expect(oc.orders_open_at.to_date).to_not eq Date.current - 21.days
-          expect(oc.orders_close_at.to_date).to_not eq Date.current + 21.days
+          expect(oc.name).not_to eq "Updated Order Cycle"
+          expect(oc.orders_open_at.to_date).not_to eq Date.current - 21.days
+          expect(oc.orders_close_at.to_date).not_to eq Date.current + 21.days
         end
       end
     end
@@ -506,8 +505,8 @@ module Admin
             get :destroy, params: { id: cloned.id }
 
             expect(OrderCycle.find_by(id: cloned.id)).to be nil
-            expect(OrderCycle.find_by(id: oc.id)).to_not be nil
-            expect(EnterpriseFee.find_by(id: enterprise_fee1.id)).to_not be nil
+            expect(OrderCycle.find_by(id: oc.id)).not_to be nil
+            expect(EnterpriseFee.find_by(id: enterprise_fee1.id)).not_to be nil
             expect(response).to redirect_to admin_order_cycles_path
           end
         end

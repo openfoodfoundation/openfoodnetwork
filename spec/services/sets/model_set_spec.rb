@@ -79,7 +79,7 @@ describe Sets::ModelSet do
         expect(subject.errors.full_messages).to eq ["Product Name can't be blank"]
 
         expect(subject.invalid).to     include product_a
-        expect(subject.invalid).to_not include product_b
+        expect(subject.invalid).not_to include product_b
       end
     end
   end

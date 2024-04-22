@@ -48,6 +48,9 @@ fr_BE:
         variant_unit: "Unité de variante"
         variant_unit_name: "Nom de la variante"
         unit_value: "Valeur unitaire"
+      spree/variant:
+        primary_taxon: "Catégorie de Produit"
+        shipping_category_id: "Catégorie de livraison"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -438,6 +441,7 @@ fr_BE:
       columns:
         name: Nom
         unit: Unité
+        unit_value: Valeur unitaire
         price: Prix
         producer: Producteur·trice
         category: Catégorie
@@ -678,15 +682,15 @@ fr_BE:
       index:
         header:
           title: Gestion du catalogue produits
-      sort:
-        pagination:
-          clear_search: Effacer recherche
       filters:
         producers:
           label: Producteur·trice·s
         categories:
           label: Les catégories
         search: Rechercher
+      sort:
+        pagination:
+          clear_search: Effacer recherche
       table:
         new_variant: Nouvelle variante
       edit_image:
@@ -712,7 +716,7 @@ fr_BE:
         none_saved: n'a pu sauvegarder aucun produit :-(
         line_number: "Ligne %{number} :"
         encoding_error: "Veuillez vérifier la langage de votre fichier source et l'enregistrer avec un encodage UTF-8"
-        unexpected_error: "L'import du produit à provoqué une erreur à l'ouverture du fichier: %{error_message}"
+        unexpected_error: "L'import du produit a provoqué une erreur à l'ouverture du fichier: %{error_message}"
         malformed_csv: "L'import du produit a rencontré une erreur a l'ouverture du fichier:%{error_message}"
       index:
         notice: "Remarque"
@@ -732,6 +736,9 @@ fr_BE:
         product_categories: Catégorie Produit
         tax_categories: TVA applicable
         shipping_categories: Condition de transport
+      dfc_import_form:
+        enterprise: "Entreprise"
+        import: "Importer"
       import:
         review: Vérifier
         import: Importer
@@ -2519,6 +2526,7 @@ fr_BE:
   calculator: "Calculateur"
   calculator_values: "Valeurs applicables"
   calculator_settings_warning: "Si vous changez le type de calculatrice, vous devez d'abord enregistrer avant de pouvoir modifier les paramètres de la calculatrice"
+  calculator_preferred_unit_error: "doit être en kg ou en lb"
   flat_percent_per_item: "Pourcentage net"
   flat_rate_per_item: "Montant fixe (par article)"
   flat_rate_per_order: "Montant fixe (par commande)"
@@ -3367,6 +3375,7 @@ fr_BE:
     new_adjustment: "Nouvel ajustement"
     new_tax_category: "Nouvelle catégorie de taxe"
     no_pending_payments: "Aucun paiement en attente"
+    remove: "Supprimer"
     none: "Aucun"
     notice_messages:
       variant_deleted: "Variante supprimée"
@@ -3526,6 +3535,7 @@ fr_BE:
     inventory_error_flash_for_insufficient_quantity: "Une donnée n'est plus disponible sur votre carte."
     inventory: Catalogue boutique
     zipcode: Code postal
+    weight: Poids (par kg ou lb)
     error_user_destroy_with_orders: "Les utilisateurs avec une commande finalisée ne peuvent pas être supprimés"
     cannot_create_payment_without_payment_methods: "Vous ne pouvez pas créer un paiement pour une commande sans qu'aucun mode de paiement ne soit défini."
     please_define_payment_methods: "Veuillez d'abord définir certains modes de paiement."

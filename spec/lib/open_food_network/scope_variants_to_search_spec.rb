@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 require 'open_food_network/scope_variants_for_search'
-require 'spec_helper'
 
 describe OpenFoodNetwork::ScopeVariantsForSearch do
   let!(:p1) { create(:simple_product, name: 'Product 1') }
@@ -31,7 +30,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
 
       it "returns all products whose names or SKUs match the query" do
         expect(result).to include v1, v2
-        expect(result).to_not include v3, v4
+        expect(result).not_to include v3, v4
       end
 
       context "matching both product SKUs and variant SKUs" do
@@ -39,7 +38,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
 
         it "returns all variants whose SKU or product's SKU match the query" do
           expect(result).to include v1, v2, v5
-          expect(result).to_not include v3, v4
+          expect(result).not_to include v3, v4
         end
       end
     end
@@ -49,7 +48,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
 
       it "returns all products distributed through that schedule" do
         expect(result).to include v1, v3
-        expect(result).to_not include v2, v4
+        expect(result).not_to include v2, v4
       end
     end
 
@@ -58,7 +57,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
 
       it "returns all products distributed through that order cycle" do
         expect(result).to include v2
-        expect(result).to_not include v1, v3, v4
+        expect(result).not_to include v1, v3, v4
       end
     end
 
@@ -67,7 +66,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
 
       it "returns all products distributed through that distributor" do
         expect(result).to include v4
-        expect(result).to_not include v1, v2, v3
+        expect(result).not_to include v1, v2, v3
       end
 
       context "filtering by stock availability" do
@@ -127,7 +126,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
               distributor1_variant_with_override_on_hand_but_not_on_demand,
               distributor1_variant_with_override_without_stock_level_set_but_producer_in_stock
             )
-            expect(result).to_not include(
+            expect(result).not_to include(
               distributor1_variant_not_backorderable_and_not_on_hand,
               distributor1_variant_with_override_not_on_demand_and_not_on_hand,
               distributor1_variant_with_override_not_in_stock_but_producer_in_stock,
@@ -152,7 +151,7 @@ describe OpenFoodNetwork::ScopeVariantsForSearch do
               distributor1_variant_with_override_not_on_demand_and_not_on_hand,
               distributor1_variant_with_override_not_in_stock_but_producer_in_stock
             )
-            expect(result).to_not include(
+            expect(result).not_to include(
               distributor2_variant_with_override_in_stock
             )
           end

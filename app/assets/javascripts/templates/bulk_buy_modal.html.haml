@@ -22,24 +22,22 @@
     .variant-bulk-buy-quantity-label
       {{ "js.shopfront.bulk_buy_modal.min_quantity" | t }}
     %div
-      %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "add(-1)", disabled: "!canAdd(-1)"}}>
+      %button.bulk-buy-add.variant-quantity{ type: "button", "ng-click": "add(-1)", "ng-disabled": "!canAdd(-1)" }>
         -# U+FF0D Fullwidth Hyphen-Minus
         －
-      %input.bulk-buy.variant-quantity{type: "number", min: "0", max: "{{ available() }}",
-        ng: {model: "variant.line_item.quantity", max: "Infinity"}}>
-      %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "add(1)", disabled: "!canAdd(1)"}}
+      %input.bulk-buy.variant-quantity{ type: "number", min: "0", max: "{{ available() }}", "ng-model": "variant.line_item.quantity", "ng-max": "Infinity" }>
+      %button.bulk-buy-add.variant-quantity{ type: "button", "ng-click": "add(1)", "ng-disabled": "!canAdd(1)" }
         -# U+FF0B Fullwidth Plus Sign
         ＋
   .columns.small-12.medium-6
     .variant-bulk-buy-quantity-label
       {{ "js.shopfront.bulk_buy_modal.max_quantity" | t }}
     %div
-      %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "addMax(-1)", disabled: "!canAddMax(-1)"}}>
+      %button.bulk-buy-add.variant-quantity{ type: "button", "ng-click": "addMax(-1)", "ng-disabled": "!canAddMax(-1)" }>
         -# U+FF0D Fullwidth Hyphen-Minus
         －
-      %input.bulk-buy.variant-quantity{type: "number", min: "0", max: "{{ available() }}",
-        ng: {model: "variant.line_item.max_quantity", max: "Infinity"}}>
-      %button.bulk-buy-add.variant-quantity{type: "button", ng: {click: "addMax(1)", disabled: "!canAddMax(1)"}}
+      %input.bulk-buy.variant-quantity{ type: "number", min: "0", max: "{{ available() }}", "ng-model": "variant.line_item.max_quantity", "ng-max": "Infinity" }>
+      %button.bulk-buy-add.variant-quantity{ type: "button", "ng-click": "addMax(1)", "ng-disabled": "!canAddMax(1)" }
         -# U+FF0B Fullwidth Plus Sign
         ＋
 

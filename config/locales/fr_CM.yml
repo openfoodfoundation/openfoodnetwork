@@ -34,6 +34,9 @@ fr_CM:
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
+      spree/variant:
+        primary_taxon: "Catégorie Produit"
+        shipping_category_id: "Condition de transport"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -614,15 +617,15 @@ fr_CM:
       index:
         header:
           title: Gestion du catalogue produits
-      sort:
-        pagination:
-          clear_search: Annuler la recherche
       filters:
         producers:
           label: Producteurs
         categories:
           label: Conditions de transport
         search: Rechercher
+      sort:
+        pagination:
+          clear_search: Annuler la recherche
       table:
         new_variant: Nouvelle variante
       edit_image:
@@ -666,6 +669,9 @@ fr_CM:
         product_categories: Catégorie Produit
         tax_categories: TVA applicable
         shipping_categories: Conditions de transport
+      dfc_import_form:
+        enterprise: "Entreprise"
+        import: "Importer"
       import:
         review: Vérifier
         import: Importer
@@ -3337,6 +3343,7 @@ fr_CM:
     new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"
     no_pending_payments: "Aucun paiement en attente."
+    remove: "Supprimer"
     none: "Aucun"
     not_found: "Non trouvé"
     notice_messages:
@@ -3351,8 +3358,6 @@ fr_CM:
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     taxonomy_edit: "Modifier la taxonomie"
-    taxonomy_tree_error: "Erreur de l'arbre de toxonomie"
-    taxonomy_tree_instruction: "Consignes pour l'arbre de taxonomie"
     tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"

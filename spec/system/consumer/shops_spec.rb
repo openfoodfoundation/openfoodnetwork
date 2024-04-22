@@ -74,8 +74,8 @@ describe 'Shops' do
     end
 
     it "does not show hubs that are not in an order cycle" do
-      expect(page).to have_no_selector 'hub.inactive'
-      expect(page).to have_no_selector 'hub', text: d2.name
+      expect(page).not_to have_selector 'hub.inactive'
+      expect(page).not_to have_selector 'hub', text: d2.name
     end
 
     it "does not show profiles" do
@@ -246,7 +246,7 @@ describe 'Shops' do
 
       it "does not show the producer modal" do
         open_enterprise_modal producer
-        expect(page).to_not have_selector(".reveal-modal")
+        expect(page).not_to have_selector(".reveal-modal")
       end
     end
   end

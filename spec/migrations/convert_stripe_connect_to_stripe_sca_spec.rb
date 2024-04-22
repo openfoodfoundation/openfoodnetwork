@@ -89,7 +89,7 @@ describe ConvertStripeConnectToStripeSca do
       distributor_ids: [owner.id]
     )
 
-    expect { subject.up }.to_not change { stripe.reload.attributes }
+    expect { subject.up }.not_to change { stripe.reload.attributes }
   end
 
   it "doesn't mess with other payment methods" do
@@ -99,6 +99,6 @@ describe ConvertStripeConnectToStripeSca do
       distributor_ids: [owner.id]
     )
 
-    expect { subject.up }.to_not change { cash.reload.attributes }
+    expect { subject.up }.not_to change { cash.reload.attributes }
   end
 end

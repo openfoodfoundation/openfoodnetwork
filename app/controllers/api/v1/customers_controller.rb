@@ -59,7 +59,7 @@ module Api
 
       def customer
         @customer ||= if action_name == "show"
-                        CustomersWithBalance.new(Customer.where(id: params[:id])).query.first!
+                        CustomersWithBalanceQuery.new(Customer.where(id: params[:id])).call.first!
                       else
                         Customer.find(params[:id])
                       end
@@ -74,7 +74,7 @@ module Api
         customers = customers.where(enterprise_id: params[:enterprise_id]) if params[:enterprise_id]
 
         if @extra_customer_fields.include?(:balance)
-          customers = CustomersWithBalance.new(customers).query
+          customers = CustomersWithBalanceQuery.new(customers).call
         end
 
         customers.ransack(params[:q]).result.order(:id)

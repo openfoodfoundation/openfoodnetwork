@@ -1,13 +1,13 @@
 = render 'admin/variant_overrides/header'
 = render 'admin/variant_overrides/data'
 
-.margin-bottom-50{ ng: { app: 'admin.variantOverrides', controller: 'AdminVariantOverridesCtrl', init: 'initialise()' } }
+.margin-bottom-50{ "ng-app": 'admin.variantOverrides', "ng-controller": 'AdminVariantOverridesCtrl', "ng-init": 'initialise()' }
   = render 'admin/variant_overrides/filters'
   = render 'admin/variant_overrides/new_products_alert'
   = render 'admin/variant_overrides/loading_flash'
   = render 'admin/variant_overrides/controls'
   = render 'admin/variant_overrides/no_results'
-  %div{ ng: { cloak: true, show: 'hub_id && filteredProducts.length > 0' } }
+  %div{ "ng-cloak": true, "ng-show": 'hub_id && filteredProducts.length > 0' }
     = render 'admin/variant_overrides/new_products'
     = render 'admin/variant_overrides/hidden_products'
     = render 'admin/variant_overrides/products'

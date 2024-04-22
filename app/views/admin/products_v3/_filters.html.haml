@@ -1,4 +1,7 @@
-%form{ id: "filters", 'data-reflex-serialize-form': true, 'data-reflex': 'submit->products#filter' }
+= form_with url: admin_products_path, id: "filters", method: :get, data: { "search-target": "form", 'turbo-frame': "_self" } do
+  = hidden_field_tag :page, nil, class: "page"
+  = hidden_field_tag :per_page, nil, class: "per-page"
+
   .query
     .search-input
       = text_field_tag :search_term, search_term, placeholder: t('.search_products')
@@ -15,4 +18,4 @@
       data: { "controller": "tom-select", 'tom-select-placeholder-value': t('.search_for_categories')}
   .submit
     .search-button
-      = button_tag t(".search"), class: "secondary icon-search relaxed"
+      = button_tag t(".search"), class: "secondary icon-search relaxed", name: nil

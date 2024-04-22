@@ -1,0 +1,16 @@
+%h3= t(".title")
+%br
+
+= form_with url: main_app.admin_dfc_product_imports_path, method: :get do |form|
+  = form.label :enterprise_id, t(".enterprise")
+  %span.required *
+  %br
+  = form.select :enterprise_id, options_from_collection_for_select(@producers, :id, :name, @producers.first&.id), { "data-controller": "tom-select", class: "primary" }
+  %br
+  %br
+  = form.label :catalog_url, t(".catalog_url")
+  %br
+  = form.text_field :catalog_url, size: 60
+  %br
+  %br
+  = form.submit t(".import")

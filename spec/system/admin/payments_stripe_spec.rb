@@ -47,7 +47,8 @@ describe '
             click_button "Update"
 
             expect(page).to have_link "StripeSCA"
-            expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "completed"
+            last_payment_state = Orders::FindPaymentService.new(order.reload).last_payment.state
+            expect(last_payment_state).to eq 'completed'
           end
         end
 
@@ -66,7 +67,7 @@ describe '
 
             expect(page).to have_link "StripeSCA"
             expect(page).to have_content "FAILED"
-            expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "failed"
+            expect(Orders::FindPaymentService.new(order.reload).last_payment.state).to eq "failed"
           end
         end
       end
@@ -87,7 +88,7 @@ describe '
 
           expect(page).to have_link "StripeSCA"
           expect(page).to have_content "AUTHORIZATION REQUIRED"
-          expect(OrderPaymentFinder.new(order.reload).last_payment.state)
+          expect(Orders::FindPaymentService.new(order.reload).last_payment.state)
             .to eq "requires_authorization"
         end
       end
@@ -112,7 +113,7 @@ describe '
         click_button "Update"
 
         expect(page).to have_link "StripeSCA"
-        expect(OrderPaymentFinder.new(order.reload).last_payment.state).to eq "completed"
+        expect(Orders::FindPaymentService.new(order.reload).last_payment.state).to eq "completed"
       end
     end
   end
@@ -191,6 +192,10 @@ describe '
         order.payments << payment
       end
 
+      after do
+        Stripe::Account.delete(connected_account.id)
+      end
+
       it "allows to refund the payment" do
         login_as_admin
         visit spree.admin_order_payments_path order
@@ -200,7 +205,7 @@ describe '
 
         page.find('a.icon-void').click
 
-        expect(page).to have_content "VOID"
+        expect(page).to have_content "VOID", wait: 4
         expect(payment.reload.state).to eq "void"
       end
     end

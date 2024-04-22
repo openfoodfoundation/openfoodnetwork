@@ -29,6 +29,9 @@ el:
         shipping_category_id: "Κατηγορία μεταφορικών"
         variant_unit: "Μονάδα μέτρησης μεταβλητής"
         variant_unit_name: "Όνομα μεταβλητής"
+      spree/variant:
+        primary_taxon: "Κατηγορία προϊόντων"
+        shipping_category_id: "Κατηγορία μεταφορικών"
       spree/credit_card:
         base: "Κάρτα πιστωτική/χρεωστική"
         number: "Αριθμός"
@@ -630,6 +633,9 @@ el:
         product_categories: Κατηγορίες προϊόντος
         tax_categories: Κατηγορίες Φορολόγησης
         shipping_categories: Κατηγορίες Μεταφορικών
+      dfc_import_form:
+        enterprise: "Επιχείρηση"
+        import: "Εισαγωγή"
       import:
         review: Αναθεώρηση
         import: Εισαγωγή
@@ -3032,6 +3038,7 @@ el:
     new_taxon: "Νέο ταξί"
     new_user: "Νέος χρήστης"
     no_pending_payments: "Δεν υπάρχουν πληρωμές σε εκκρεμότητα"
+    remove: "Αφαίρεση"
     none: "Κανένας"
     not_found: "Δεν βρέθηκε"
     notice_messages:
@@ -3046,8 +3053,6 @@ el:
     start_date: "Ημερομηνία έναρξης"
     successfully_removed: "Καταργήθηκε επιτυχώς"
     taxonomy_edit: "Επεξεργασία ταξινόμησης"
-    taxonomy_tree_error: "Σφάλμα δέντρου ταξινόμησης"
-    taxonomy_tree_instruction: "Οδηγίες δέντρων ταξινομίας"
     tree: "Δέντρο"
     updating: "Ενημέρωση"
     your_order_is_empty_add_product: "Η παραγγελία σας είναι κενή, αναζητήστε και προσθέστε ένα προϊόν παραπάνω"

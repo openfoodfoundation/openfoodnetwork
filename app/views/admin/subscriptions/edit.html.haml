@@ -4,7 +4,7 @@
 -# - content_for :page_actions do
 -#   %li= button_link_to "Back to subscriptions list", main_app.admin_subscriptions_path, icon: 'icon-arrow-left'
 
-%div{ ng: { app: 'admin.subscriptions', controller: 'SubscriptionController', cloak: true } }
+%div{ "ng-app": 'admin.subscriptions', "ng-controller": 'SubscriptionController', "ng-cloak": true }
   = render 'data'
   = render 'order_update_issues_dialog'
   = render 'form'

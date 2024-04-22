@@ -7,10 +7,11 @@ jobs:
     name: runner / rubocop
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - run: git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
 
@@ -21,6 +22,8 @@ jobs:
           rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile
           reporter: github-pr-check
           level: error
+          filter_mode: nofilter
+          use_bundler: true
           fail_on_error: true
   prettier:
     name: runner / prettier

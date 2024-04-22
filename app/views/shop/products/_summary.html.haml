@@ -10,7 +10,7 @@
       %h3
         %a{"ng-click" => "triggerProductModal()", href: 'javascript:void(0)'}
           %span{"ng-bind" => "::product.name"}
-      .product-description{ng: {"bind-html": "::product.description_html", click: "triggerProductModal()", show: "product.description_html.length"}, "data-controller": "add-blank-to-link"}
+      .product-description{ "data-controller": "add-blank-to-link", "ng-bind-html": "::product.description_html", "ng-click": "triggerProductModal()", "ng-show": "product.description_html.length" }
       %div{ "ng-switch" => "enterprise.visible" }
         .product-producer
           = t :products_from

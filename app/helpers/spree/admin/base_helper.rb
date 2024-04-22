@@ -12,7 +12,7 @@ module Spree
                     id: "#{model}_#{method}_field")
       end
 
-      def error_message_on(object, method, _options = {})
+      def error_message_on(object, method, options = {})
         object = convert_to_model(object)
         obj = object.respond_to?(:errors) ? object : instance_variable_get("@#{object}")
 
@@ -20,7 +20,7 @@ module Spree
           # rubocop:disable Rails/OutputSafety
           errors = obj.errors[method].map { |err| h(err) }.join('<br />').html_safe
           # rubocop:enable Rails/OutputSafety
-          content_tag(:span, errors, class: 'formError')
+          content_tag(:span, errors, class: 'formError', **options)
         else
           ''
         end
@@ -33,8 +33,6 @@ module Spree
         when :boolean
           hidden_field_tag(name, 0) +
             check_box_tag(name, 1, value, preference_field_options(options))
-        when :string
-          text_field_tag(name, value, preference_field_options(options))
         when :password
           password_field_tag(name, value, preference_field_options(options))
         when :text
@@ -88,8 +86,6 @@ module Spree
             { size: 10, class: 'input_integer', step: :any }
           when :boolean
             {}
-          when :string
-            { size: 10, class: 'input_string fullwidth' }
           when :password
             { size: 10, class: 'password_string fullwidth' }
           when :text

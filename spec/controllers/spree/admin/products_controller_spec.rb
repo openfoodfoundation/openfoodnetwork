@@ -93,6 +93,7 @@ describe Spree::Admin::ProductsController, type: :controller do
           variant_unit_name: nil
         )
       end
+      let!(:taxon) { create(:taxon) }
 
       before { controller_login_as_enterprise_user([producer]) }
 
@@ -111,7 +112,8 @@ describe Spree::Admin::ProductsController, type: :controller do
                            "price" => "5.0",
                            "unit_value" => 4,
                            "unit_description" => "",
-                           "display_name" => "name"
+                           "display_name" => "name",
+                           "primary_taxon_id" => taxon.id
                          }
                        ]
                      }
@@ -190,7 +192,7 @@ describe Spree::Admin::ProductsController, type: :controller do
         spree_put :update, id: product, product: { supplier_id: new_producer.id }
 
         expect(product.reload.supplier.id).to eq new_producer.id
-        expect(order_cycle.reload.distributed_variants).to_not include product.variants.first
+        expect(order_cycle.reload.distributed_variants).not_to include product.variants.first
       end
     end
 
@@ -227,7 +229,7 @@ describe Spree::Admin::ProductsController, type: :controller do
             expect(Spree::Property.count).to be 1
             expect(Spree::ProductProperty.count).to be 0
             property_names = product.reload.properties.map(&:name)
-            expect(property_names).to_not include 'a different name'
+            expect(property_names).not_to include 'a different name'
           end
         end
 

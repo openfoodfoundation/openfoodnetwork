@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Gateway::StripeSCA, type: :model do
+describe Spree::Gateway::StripeSCA, :vcr, :stripe_version, type: :model do
   let(:order) { create(:order_ready_for_payment) }
 
   let(:year_valid) { Time.zone.now.year.next }
@@ -46,7 +46,11 @@ describe Spree::Gateway::StripeSCA, type: :model do
                            })
   end
 
-  describe "#purchase", :vcr, :stripe_version do
+  after do
+    Stripe::Account.delete(connected_account.id)
+  end
+
+  describe "#purchase" do
     # Stripe acepts amounts as positive integers representing how much to charge
     # in the smallest currency unit
     let(:capture_amount) { order.total.to_i * 100 } # order total is 10 AUD
@@ -71,7 +75,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
     end
   end
 
-  describe "#void", :vcr, :stripe_version do
+  describe "#void" do
     let(:stripe_test_account) { connected_account.id }
 
     before do
@@ -136,7 +140,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
     end
   end
 
-  describe "#credit", :vcr, :stripe_version do
+  describe "#credit" do
     let(:stripe_test_account) { connected_account.id }
 
     before do
@@ -166,7 +170,7 @@ describe Spree::Gateway::StripeSCA, type: :model do
     end
   end
 
-  describe "#error message", :vcr, :stripe_version do
+  describe "#error message" do
     context "when payment intent state is not in 'requires_capture' state" do
       before do
         payment

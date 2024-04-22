@@ -239,6 +239,8 @@ module Spree
       can [:admin, :index, :guide, :import, :save, :save_data,
            :validate_data, :reset_absent_products], ProductImport::ProductImporter
 
+      can [:admin, :index], ::Admin::DfcProductImportsController
+
       # Reports page
       can [:admin, :index, :show], ::Admin::ReportsController
       can [:admin, :show, :customers, :orders_and_distributors, :group_buys, :payments,

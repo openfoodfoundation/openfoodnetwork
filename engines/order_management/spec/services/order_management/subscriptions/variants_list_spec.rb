@@ -66,7 +66,7 @@ module OrderManagement
             }
 
             it "is not eligible" do
-              expect(described_class.eligible_variants(shop)).to_not include(variant)
+              expect(described_class.eligible_variants(shop)).not_to include(variant)
             end
           end
 
@@ -106,7 +106,7 @@ module OrderManagement
 
         context "if the variant is unrelated" do
           it "is not eligible" do
-            expect(described_class.eligible_variants(shop)).to_not include(variant)
+            expect(described_class.eligible_variants(shop)).not_to include(variant)
           end
         end
       end
@@ -154,7 +154,7 @@ module OrderManagement
 
         context "if the variant is unrelated" do
           it "is false" do
-            expect(described_class).to_not be_in_open_and_upcoming_order_cycles(shop,
+            expect(described_class).not_to be_in_open_and_upcoming_order_cycles(shop,
                                                                                 schedule,
                                                                                 variant)
           end

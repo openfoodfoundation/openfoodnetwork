@@ -159,7 +159,7 @@ module Spree
           it "removes any legacy tax adjustments on order" do
             order.create_tax_charge!
 
-            expect(order.reload.adjustments).to_not include legacy_tax_adjustment
+            expect(order.reload.adjustments).not_to include legacy_tax_adjustment
           end
 
           it "re-applies taxes on individual items" do

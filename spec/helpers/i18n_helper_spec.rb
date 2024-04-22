@@ -10,16 +10,6 @@ describe I18nHelper, type: :helper do
     allow(helper).to receive(:cookies) { cookies }
   end
 
-  # In the real world, the helper is called in every request and sets
-  # I18n.locale to the chosen locale or the default. For testing purposes we
-  # have to restore I18n.locale for unit tests that don't call the helper, but
-  # rely on translated strings.
-  around do |example|
-    locale = I18n.locale
-    example.run
-    I18n.locale = locale
-  end
-
   context "as guest" do
     before do
       allow(helper).to receive(:spree_current_user) { nil }

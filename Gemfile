@@ -161,6 +161,7 @@ group :test, :development do
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'rspec-retry', require: false
+  gem 'rspec-sql'
   gem 'rswag'
   gem 'shoulda-matchers'
   gem 'stimulus_reflex_testing'

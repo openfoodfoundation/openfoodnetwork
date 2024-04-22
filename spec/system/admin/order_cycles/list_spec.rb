@@ -72,7 +72,7 @@ describe '
     end
 
     # I can load more order_cycles
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
     click_button "Show 30 more days"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
 
@@ -81,9 +81,9 @@ describe '
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     select2_select oc1.suppliers.first.name, from: "involving_filter"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     select2_select "Any Enterprise", from: "involving_filter"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
@@ -95,8 +95,8 @@ describe '
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     fill_in "query", with: oc0.name
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     fill_in "query", with: ''
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
@@ -108,9 +108,9 @@ describe '
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
     select2_select schedule1.name, from: "schedule_filter"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc1.id}"
-    expect(page).to have_no_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
+    expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc2.id}"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc3.id}"
     select2_select 'Any Schedule', from: "schedule_filter"
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc0.id}"
@@ -133,9 +133,9 @@ describe '
     }
 
     around(:each) do |spec|
-      I18n.locale = :pt
-      spec.run
-      I18n.locale = :en
+      I18n.with_locale(:pt) do
+        spec.run
+      end
     end
 
     context 'using datetimepickers' do
@@ -193,15 +193,6 @@ describe '
   end
 
   private
-
-  def wait_for_edit_form_to_load_order_cycle(order_cycle)
-    expect(page).to have_field "order_cycle_name", with: order_cycle.name
-  end
-
-  def select_incoming_variant(supplier, exchange_no, variant)
-    page.find("table.exchanges tr.supplier-#{supplier.id} td.products").click
-    check "order_cycle_incoming_exchange_#{exchange_no}_variants_#{variant.id}"
-  end
 
   def date_warning_msg(nbr = 1)
     "This order cycle is linked to %d open subscription orders. Changing this date now will not " \

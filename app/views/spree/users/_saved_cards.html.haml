@@ -5,12 +5,12 @@
     %th= t(:card_expiry_date)
     %th= t('.default?')
     %th= t('.delete?')
-  %tr.card{ id: "card{{ card.id }}", ng: { repeat: "card in savedCreditCards" } }
-    %td.brand{ ng: { bind: '::card.brand' } }
-    %td.number{ ng: { bind: '::card.number' } }
-    %td.expiry{ ng: { bind: '::card.expiry' } }
+  %tr.card{ id: "card{{ card.id }}", "ng-repeat": "card in savedCreditCards" }
+    %td.brand{ "ng-bind": '::card.brand' }
+    %td.number{ "ng-bind": '::card.number' }
+    %td.expiry{ "ng-bind": '::card.expiry' }
     %td.is-default
-      %input{ type: 'radio', name: 'default_card', ng: { model: 'card.is_default', click: 'confirmSetDefault(card, $event)', value: "true"} }
+      %input{ type: 'radio', name: 'default_card', "ng-model": 'card.is_default', "ng-click": 'confirmSetDefault(card, $event)', "ng-value": "true" }
     %td.actions
       %button.tiny.alert.no-margin{ "ng-click": "deleteCard(card.id)" }
         = t(:delete)

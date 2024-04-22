@@ -3,7 +3,6 @@
 # These are the rules we agreed upon and we work towards.
 AllCops:
   NewCops: enable
-  SuggestExtensions: false
   Exclude:
     - bin/**/*
     - db/**/*
@@ -124,6 +123,9 @@ Rails/SkipsModelValidations:
     - update_attribute
     - update_column
     - update_columns
+
+Rails/WhereExists:
+  EnforcedStyle: where # Cf. conversion https://github.com/openfoodfoundation/openfoodnetwork/pull/12363
 
 Style/Documentation:
   Enabled: false

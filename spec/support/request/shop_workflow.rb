@@ -11,7 +11,7 @@ module ShopWorkflow
     within find_body do
       # We ignore visibility in case the cart dropdown is not open.
       within '.cart-sidebar', visible: false do
-        expect(page).to_not have_link "Updating cart...", visible: false
+        expect(page).not_to have_link "Updating cart...", visible: false
       end
     end
   end

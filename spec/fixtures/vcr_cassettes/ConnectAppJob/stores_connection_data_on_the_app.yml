@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://n8n.openfoodnetwork.org.uk/webhook/regen/connect-enterprise
+    uri: https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise
     body:
       encoding: UTF-8
-      string: '{"id":"27bc9d0a-d95c-4a36-9b16-01fdd8a82b51","at":"2023-12-21 14:54:28
-        +1100","event":"connect-app","data":{"@id":"http://test.host/api/dfc/enterprises/3","access_token":"12345"}}'
+      string: '{"id":"c9f0e82a-f200-4c1a-9aa2-3a3a63c7acba","at":"2024-04-05 15:30:57
+        +1100","event":"connect-app","data":{"@id":"http://test.host/api/dfc/enterprises/3","access_token":"<HIDDEN-OPENID_APP_SECRET>"}}'
     headers:
       User-Agent:
       - openfoodnetwork_webhook/1.0
@@ -21,34 +21,24 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - nginx
-      Date:
-      - Thu, 21 Dec 2023 03:54:33 GMT
-      Content-Type:
-      - application/json; charset=utf-8
       Content-Length:
       - '141'
-      Connection:
-      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 05 Apr 2024 04:30:58 GMT
       Etag:
       - W/"8d-Lz10bce6zwT2C429xIkj52OBWyk"
+      Strict-Transport-Security:
+      - max-age=315360000; includeSubDomains; preload
       Vary:
       - Accept-Encoding
-      Strict-Transport-Security:
-      - max-age=63072000
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Download-Options:
-      - noopen
       X-Content-Type-Options:
       - nosniff
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      Referrer-Policy:
-      - same-origin
+      X-Xss-Protection:
+      - 1; mode=block
     body:
       encoding: UTF-8
-      string: '{"link":"https://example.net/update","destroy":"https://n8n.openfoodnetwork.org.uk/webhook/remove-enterprise?id=recjBXXXXXXXXXXXX&key=12345"}'
-  recorded_at: Thu, 21 Dec 2023 03:54:33 GMT
+      string: '{"link":"https://example.net/update","destroy":"https://n8n.openfoodnetwork.org.uk/webhook/remove-enterprise?id=recjBXXXXXXXXXXXX&key=<HIDDEN-OPENID_APP_SECRET>"}'
+  recorded_at: Fri, 05 Apr 2024 04:30:58 GMT
 recorded_with: VCR 6.2.0

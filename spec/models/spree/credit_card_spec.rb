@@ -74,41 +74,41 @@ module Spree
       context "#valid?" do
         it "should validate presence of number" do
           credit_card.attributes = valid_credit_card_attributes.except(:number)
-          expect(credit_card).to_not be_valid
+          expect(credit_card).not_to be_valid
           expect(credit_card.errors[:number]).to eq ["can't be blank"]
         end
 
         it "should validate presence of security code" do
           credit_card.attributes = valid_credit_card_attributes.except(:verification_value)
-          expect(credit_card).to_not be_valid
+          expect(credit_card).not_to be_valid
           expect(credit_card.errors[:verification_value]).to eq ["can't be blank"]
         end
 
         it "should validate expiration is not in the past" do
           credit_card.month = 1.month.ago.month
           credit_card.year = 1.month.ago.year
-          expect(credit_card).to_not be_valid
+          expect(credit_card).not_to be_valid
           expect(credit_card.errors[:base]).to eq ["has expired"]
         end
 
         it "does not run expiration in the past validation if month is not set" do
           credit_card.month = nil
           credit_card.year = Time.zone.now.year
-          expect(credit_card).to_not be_valid
+          expect(credit_card).not_to be_valid
           expect(credit_card.errors[:base]).to be_blank
         end
 
         it "does not run expiration in the past validation if year is not set" do
           credit_card.month = Time.zone.now.month
           credit_card.year = nil
-          expect(credit_card).to_not be_valid
+          expect(credit_card).not_to be_valid
           expect(credit_card.errors[:base]).to be_blank
         end
 
         it "does not run expiration in the past validation if year and month are empty" do
           credit_card.year = ""
           credit_card.month = ""
-          expect(credit_card).to_not be_valid
+          expect(credit_card).not_to be_valid
           expect(credit_card.errors[:card]).to be_blank
         end
 

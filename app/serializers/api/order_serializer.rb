@@ -9,14 +9,14 @@ module Api
 
     has_many :payments, serializer: Api::PaymentSerializer
 
-    # This method relies on `balance_value` as a computed DB column. See `CompleteOrdersWithBalance`
-    # for reference.
+    # This method relies on `balance_value` as a computed DB column.
+    # See `CompleteOrdersWithBalanceQuery` for reference.
     def outstanding_balance
       -object.balance_value
     end
 
     def payments
-      object.payments.joins(:payment_method).where('state IN (?)', %w(completed pending))
+      object.payments.joins(:payment_method).where(state: %w(completed pending))
     end
 
     def shop_id

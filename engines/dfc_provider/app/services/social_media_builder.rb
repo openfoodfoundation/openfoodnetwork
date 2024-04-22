@@ -12,9 +12,15 @@ class SocialMediaBuilder < DfcBuilder
   def self.social_media(enterprise, name)
     return nil unless name.in?(NAMES)
 
-    url =  enterprise.attributes[name]
+    url = enterprise.public_send(name)
 
     return nil if url.blank?
+
+    if name == "instagram"
+      url = "https://www.instagram.com/#{url}/"
+    end
+
+    url = "https://#{url}" unless url.starts_with?(%r{https?://})
 
     DataFoodConsortium::Connector::SocialMedia.new(
       urls.enterprise_social_media_url(enterprise.id, name),

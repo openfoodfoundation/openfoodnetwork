@@ -2,18 +2,27 @@
   %a.image-field{ href: admin_product_images_path(product), data: { controller: "modal", reflex: "click->products#edit_image", "current-id": product.id} }
     = image_tag product.image&.url(:mini) || Spree::Image.default_image_url(:mini), width: 40, height: 40
     .button.secondary.mini= t('admin.products_page.image.edit')
-%td.field.align-left.header
+%td.field.align-left.header.naked_inputs
   = f.hidden_field :id
   = f.text_field :name, 'aria-label': t('admin.products_page.columns.name')
   = error_message_on product, :name
-%td.field
+%td.field.naked_inputs
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on product, :sku
+%td.multi-field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
+  = f.hidden_field :variant_unit
+  = f.hidden_field :variant_unit_scale
+  = f.select :variant_unit_with_scale,
+      options_for_select(WeightsAndMeasures.variant_unit_options, product.variant_unit_with_scale),
+      {},
+      class: "fullwidth no-input",
+      'aria-label': t('admin.products_page.columns.unit_scale'),
+      data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }', action: "change->toggle-control#displayIfMatch"}
+  .field
+    = f.text_field :variant_unit_name, 'aria-label': t('items'), 'data-toggle-control-target': 'control', style: (product.variant_unit == "items" ? "" : "display: none")
+    = error_message_on product, :variant_unit_name, 'data-toggle-control-target': 'control'
 %td.align-right
-  .content
-    = product.variant_unit.upcase_first
-    / TODO: properly handle custom unit names
-    = WeightsAndMeasures::UNITS[product.variant_unit] && "(" + WeightsAndMeasures::UNITS[product.variant_unit][product.variant_unit_scale]["name"] + ")"
+  -# empty
 %td.align-right
   -# empty
 %td.align-right
@@ -21,14 +30,14 @@
 %td.align-left
   .content= product.supplier&.name
 %td.align-left
-  .content= product.primary_taxon&.name
+  -# empty
 %td.align-left
 %td.align-left
   .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
 %td.align-right
   = render(VerticalEllipsisMenu::Component.new) do
-    = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product)
-    = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product)
+    = link_to t('admin.products_page.actions.edit'), edit_admin_product_path(product), 'data-turbo': false
+    = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product), 'data-turbo': false
     %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
         "data-modal-link-target-value": "product-delete-modal", "class": "delete",
         "data-modal-link-modal-dataset-value": {'data-current-id': product.id}.to_json }

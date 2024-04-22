@@ -51,6 +51,9 @@ nb:
         variant_unit: "Variant Enhet"
         variant_unit_name: "Enhetsnavn Variant"
         unit_value: "Enhetsverdi"
+      spree/variant:
+        primary_taxon: "Produktkategori"
+        shipping_category_id: "Leveringskategori"
       spree/credit_card:
         base: "Kredittkort"
         number: "Antall"
@@ -510,6 +513,7 @@ nb:
       columns:
         name: Navn
         unit: Enhet
+        unit_value: Enhetsverdi
         price: Pris
         producer: Produsent
         category: Kategori
@@ -768,13 +772,6 @@ nb:
           prompt: "Dette vil fjerne den permanent fra listen din."
           confirmation_text: "Slett variant"
           cancellation_text: "Behold variant"
-      sort:
-        pagination:
-          total_html: "<strong>%{total} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
-          per_page:
-            show: Vis
-            per_page: "%{num} per side"
-          clear_search: Tøm søk
       filters:
         search_products: Søk etter produkter
         search_for_producers: Søk etter produsenter
@@ -786,6 +783,13 @@ nb:
         categories:
           label: Kategorier
         search: Søk
+      sort:
+        pagination:
+          total_html: "<strong>%{total} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
+          per_page:
+            show: Vis
+            per_page: "%{num} per side"
+          clear_search: Tøm søk
       no_products:
         no_products_found: Ingen produkter funnet
         import_products: Importer flere produkter
@@ -857,6 +861,9 @@ nb:
         product_categories: Produktkategorier
         tax_categories: Avgiftskategorier
         shipping_categories: Fraktkategorier
+      dfc_import_form:
+        enterprise: "Bedrift"
+        import: "Import"
       import:
         review: Anmeldelse
         import: Import
@@ -3703,6 +3710,7 @@ nb:
     new_taxon: "Ny kategori"
     new_user: "Ny bruker"
     no_pending_payments: "Ingen ventende betalinger"
+    remove: "Fjern"
     none: "Ingen"
     not_found: "Ikke funnet"
     notice_messages:
@@ -3719,8 +3727,6 @@ nb:
     start_date: "Startdato"
     successfully_removed: "Fjernet OK"
     taxonomy_edit: "Rediger kategori"
-    taxonomy_tree_error: "Feil i kategoritre"
-    taxonomy_tree_instruction: "Instruksjon for kategoritre"
     tree: "Tre"
     updating: "Oppdaterer"
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"

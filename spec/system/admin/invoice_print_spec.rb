@@ -56,7 +56,7 @@ describe '
         login_as_admin
         visit spree.print_admin_order_path(order, params: url_params)
         convert_pdf_to_page
-        expect(page).to have_no_content 'Payment Description at Checkout'
+        expect(page).not_to have_content 'Payment Description at Checkout'
       end
     end
 
@@ -542,7 +542,7 @@ describe '
           # first line item, no tax
           expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "($12,540.00 / kg)" # unit price
-          expect(page).to have_content "1 1g $12.54 $12.54 0.0% $12.54"
+          expect(page).to have_content "1 1g $12.54 $12.54 $12.54"
           # # second line item, included tax
           expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "($500,150.00 / kg)" # unit price
@@ -645,7 +645,7 @@ describe '
           # first line item, no tax
           expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "($12,540.00 / kg)" # unit price
-          expect(page).to have_content "1 1g $12.54 $12.54 0.0% $12.54"
+          expect(page).to have_content "1 1g $12.54 $12.54 $12.54"
           # second line item, included tax
           expect(page).to have_content Spree::Product.second.name.to_s
           expect(page).to have_content "($500,150.00 / kg)" # unit price
@@ -678,7 +678,7 @@ describe '
 
       context "Order has previous invoices" do
         before do
-          OrderInvoiceGenerator.new(order).generate_or_update_latest_invoice
+          Orders::GenerateInvoiceService.new(order).generate_or_update_latest_invoice
           first_line_item = order.line_items.first
           order.line_items.first.update(quantity: first_line_item.quantity + 1)
         end

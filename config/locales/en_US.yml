@@ -34,6 +34,9 @@ en_US:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/variant:
+        primary_taxon: "Product Category"
+        shipping_category_id: "Shipping Category"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -657,15 +660,15 @@ en_US:
       index:
         header:
           title: Bulk Edit Products
-      sort:
-        pagination:
-          clear_search: Clear search
       filters:
         producers:
           label: Producers
         categories:
           label: Categories
         search: Search
+      sort:
+        pagination:
+          clear_search: Clear search
       table:
         new_variant: New variant
       edit_image:
@@ -709,6 +712,9 @@ en_US:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -3337,6 +3343,7 @@ en_US:
     new_taxon: "New taxon"
     new_user: "New user"
     no_pending_payments: "No pending payments"
+    remove: "Remove"
     none: "None"
     not_found: "Not found"
     notice_messages:
@@ -3351,8 +3358,6 @@ en_US:
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
-    taxonomy_tree_error: "Taxonomy tree error"
-    taxonomy_tree_instruction: "Taxonomy tree instruction"
     tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your cart is empty, please search for and add a product above"

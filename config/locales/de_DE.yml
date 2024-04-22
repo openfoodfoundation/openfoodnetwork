@@ -51,6 +51,9 @@ de_DE:
         variant_unit: "Varianteneinheit"
         variant_unit_name: "Name der Varianteneinheit"
         unit_value: "Menge"
+      spree/variant:
+        primary_taxon: "Produktkategorie"
+        shipping_category_id: "Lieferkategorie"
       spree/credit_card:
         base: "Kreditkarte"
         number: "Kreditkartennummer"
@@ -505,6 +508,7 @@ de_DE:
       columns:
         name: Name
         unit: Einheit
+        unit_value: Menge
         price: Preis
         producer: Produzent
         category: Kategorie
@@ -633,7 +637,7 @@ de_DE:
         configuration_explanation_html: Detaillierte Anweisungen zur Konfiguration der Stripe Connect-Integration finden Sie in der <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>Anleitung</a>.
         status: Status
         ok: OK
-        instance_secret_key: Instanzgeheimschlüssel
+        instance_secret_key: Geheimer Schlüssel der Instanz
         account_id: Konto-ID
         business_name: Unternehmensname
         charges_enabled: Gebühren aktiviert
@@ -752,13 +756,6 @@ de_DE:
         header:
           title: Produkte verwalten
         loading: Produkte werden geladen...
-      sort:
-        pagination:
-          total_html: "<strong>%{total} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
-          per_page:
-            show: Zeige
-            per_page: "%{num} pro Seite"
-          clear_search: Suche zurücksetzen
       filters:
         search_products: Nach Produkten suchen
         all_producers: Alle Produzenten
@@ -768,6 +765,13 @@ de_DE:
         categories:
           label: Lieferkategorien
         search: Suche
+      sort:
+        pagination:
+          total_html: "<strong>%{total} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
+          per_page:
+            show: Zeige
+            per_page: "%{num} pro Seite"
+          clear_search: Suche zurücksetzen
       no_products:
         no_products_found: Keine Produkte gefunden.
         import_products: Produkte importieren
@@ -831,6 +835,9 @@ de_DE:
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Lieferkategorien
+      dfc_import_form:
+        enterprise: "Unternehmen"
+        import: "Importieren"
       import:
         review: Überprüfung
         import: Importieren
@@ -1249,7 +1256,7 @@ de_DE:
         sell_your_produce: Verkaufen Sie Ihre eigenen Produkte
         producer_shop_description_text: Verkaufen Sie Ihre eigenen Produkte direkt an Ihre Kunden durch Ihren eigenen Produzentenladen im Open Food Network.
         producer_shop_description_text2: Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn Sie nur oder auch Produkte anderer verkaufen möchten, wählen Sie "Laden".
-        producer_hub: Produzentenladen
+        producer_hub: Laden
         producer_hub_text: Verkaufen Sie eigene Produkte und Produkte anderer
         producer_hub_description_text: Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil Ihres lokalen Lebensmittelsystems.
         profile: Profil
@@ -2880,7 +2887,7 @@ de_DE:
   report_header_billing_state: Rechnungsadresse Bundesland
   report_header_incoming_transport: Eingehender Transport
   report_header_special_instructions: Besondere Hinweise
-  report_header_order_number: Bestell-Nummer
+  report_header_order_number: Bestellnummer
   report_header_date: Datum
   report_header_confirmation_date: Bestätigungsdatum
   report_header_tags: Stichwörter
@@ -2955,7 +2962,7 @@ de_DE:
   report_header_units_required: Benötigte Einheiten
   report_header_remainder: Rest
   report_header_order_date: Bestelldatum
-  report_header_order_id: Bestell-Nummer
+  report_header_order_id: Bestellnummer
   report_header_item_name: Produktname
   report_header_temp_controlled_items: Temperaturüberwachte Produkte?
   report_header_customer_name: Kundenname
@@ -3079,7 +3086,7 @@ de_DE:
   order_cycles_no_permission_to_coordinate_error: "Keines Ihrer Unternehmen ist berechtigt, einen Bestellzyklus zu koordinieren."
   order_cycles_no_permission_to_create_error: "Sie sind nicht berechtigt, einen von diesem Unternehmen koordinierten Bestellzyklus zu erstellen."
   order_cycle_closed: "Der von Ihnen ausgewählte Bestellzyklus wurde gerade geschlossen. Bitte versuchen Sie es später noch einmal!"
-  back_to_orders_list: "Zurück zur Bestellliste"
+  back_to_orders_list: "Zurück zur Bestellübersicht"
   no_orders_found: "Keine Bestellungen gefunden."
   order_information: "Bestellinformationen"
   new_payment: "Neue Zahlung"
@@ -3212,7 +3219,7 @@ de_DE:
           producer_shop_text2: >
               Ein Produzentenladen ist nur für Ihre eigenen Produkte bestimmt. Wenn
               Sie Produkte anderer verkaufen möchten, wählen Sie "Laden".
-          producer_hub: Produzentenladen
+          producer_hub: Laden
           producer_hub_text1: >
               Verkaufen Sie eigene Produkte und Produkte anderer Produzenten oder
               Läden im Open Food Network. Mit Ihrem Laden sind Sie ein zentraler Bestandteil
@@ -3515,7 +3522,7 @@ de_DE:
       other: "Schalen"
     piece:
       one: "Stück"
-      other: "Stücke"
+      other: "Stück"
     pot:
       one: "Topf"
       other: "Töpfe"
@@ -3656,6 +3663,7 @@ de_DE:
     new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"
     no_pending_payments: "Keine ausstehenden Zahlungen."
+    remove: "Löschen"
     none: "Keine"
     not_found: "Nicht gefunden"
     notice_messages:
@@ -3672,15 +3680,13 @@ de_DE:
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
     taxonomy_edit: "Kategorien bearbeiten"
-    taxonomy_tree_error: "Fehler in Struktur der Kategorien"
-    taxonomy_tree_instruction: "Anleitung zur Struktur der Kategorien"
     tree: "Struktur"
     updating: "Aktualisierung"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."
     add_product: "Produkt hinzufügen"
     name_or_sku: "Produktname oder Artikelnummer (geben Sie mindestens die ersten 3 Zeichen des Produktnamens ein)"
     resend: "Erneut senden"
-    back_to_orders_list: "Zurück zur Bestellliste"
+    back_to_orders_list: "Zurück zur Bestellübersicht"
     back_to_payments_list: "Zurück zur Zahlungsliste"
     return_authorizations: "Retouren"
     cannot_create_returns: "Retouren können nicht erstellt werden, da für diese Bestellung keine Lieferung bestätigt wurde."
@@ -3933,7 +3939,7 @@ de_DE:
         index:
           new_return_authorization: "Neue Retour"
           return_authorizations: "Retouren"
-          back_to_orders_list: "Zurück zur Bestellliste"
+          back_to_orders_list: "Zurück zur Bestellübersicht"
           rma_number: "RMA-Nummer"
           status: "Status"
           amount: "Betrag"

@@ -32,6 +32,9 @@ en_DE:
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
+      spree/variant:
+        primary_taxon: "Product Category"
+        shipping_category_id: "Shipping Category"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -559,6 +562,9 @@ en_DE:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "Import"
       import:
         review: Review
         import: Import
@@ -2862,6 +2868,7 @@ en_DE:
     category: "Category"
     credit: "Credit"
     more: "More"
+    remove: "Remove"
     none: "None"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"

@@ -200,7 +200,7 @@ module Spree
           li3.variant.product.destroy
 
           expect(o.line_items.reload.sorted_by_name_and_unit_value).to eq([li6, li5, li4, li3])
-          expect(o.line_items.sorted_by_name_and_unit_value.to_sql).to_not match "deleted_at"
+          expect(o.line_items.sorted_by_name_and_unit_value.to_sql).not_to match "deleted_at"
         end
       end
 
@@ -340,7 +340,7 @@ module Spree
           it "draws stock from the variant override" do
             expect(vo.reload.count_on_hand).to eq 3
             expect{ line_item.increment!(:quantity) }
-              .to_not change{ Spree::Variant.find(variant.id).on_hand }
+              .not_to change{ Spree::Variant.find(variant.id).on_hand }
             expect(vo.reload.count_on_hand).to eq 2
           end
         end
@@ -367,7 +367,7 @@ module Spree
 
           it "restores stock to the variant override" do
             expect(vo.reload.count_on_hand).to eq 3
-            expect{ line_item.destroy }.to_not change{ Spree::Variant.find(variant.id).on_hand }
+            expect{ line_item.destroy }.not_to change{ Spree::Variant.find(variant.id).on_hand }
             expect(vo.reload.count_on_hand).to eq 4
           end
         end
@@ -458,7 +458,7 @@ module Spree
         end
 
         it "returns false otherwise" do
-          expect(li_no_tax).to_not have_tax
+          expect(li_no_tax).not_to have_tax
         end
       end
 

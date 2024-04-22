@@ -207,7 +207,7 @@ describe '
 
         # I should see only the order cycle I am coordinating
         expect(page).to have_selector "tr.order-cycle-#{oc_user_coordinating.id}"
-        expect(page).to_not have_selector "tr.order-cycle-#{oc_for_other_user.id}"
+        expect(page).not_to have_selector "tr.order-cycle-#{oc_for_other_user.id}"
 
         toggle_columns "Producers", "Shops"
 
@@ -263,7 +263,7 @@ describe '
 
         click_button 'Save and Next'
         expect(page).to have_content 'Your order cycle has been updated.'
-        expect(page).to_not have_content "Loading..."
+        expect(page).not_to have_content "Loading..."
 
         expect(page).to have_select 'new_distributor_id'
         expect(page).not_to have_select 'new_distributor_id',
@@ -578,7 +578,7 @@ describe '
         expect(page).to have_selector "tr.supplier-#{supplier_managed.id}"
         expect(page).to have_selector 'tr.supplier', count: 1
 
-        expect(page).to_not have_content "Loading..."
+        expect(page).not_to have_content "Loading..."
 
         # Open the products list for managed_supplier's incoming exchange
         within "tr.supplier-#{supplier_managed.id}" do
@@ -847,7 +847,7 @@ describe '
     accept_alert do
       first('a.delete-order-cycle').click
     end
-    expect(page).to_not have_selector "tr.order-cycle-#{order_cycle.id}"
+    expect(page).not_to have_selector "tr.order-cycle-#{order_cycle.id}"
   end
 
   private

@@ -1,39 +1,39 @@
-%tr{ class: "order-cycle-{{orderCycle.id}} {{orderCycle.status}}", ng: { repeat: 'orderCycle in orderCycles | schedule:scheduleFilter | involving:involvingFilter | filter:{name: query} track by orderCycle.id' } }
-  %td.name{ ng: { show: 'columns.name.visible' } }
-    %input{ id: 'oc{{::orderCycle.id}}_name', name: 'oc{{::orderCycle.id}}[name]', type: 'text', ng: { model: 'orderCycle.name', disabled: '!orderCycle.viewing_as_coordinator' } }
-  %td.schedules{ ng: { show: 'columns.schedules.visible' } }
-    %span{ ng: { repeat: 'schedule in orderCycle.schedules'} }
+%tr{ class: "order-cycle-{{orderCycle.id}} {{orderCycle.status}}", "ng-repeat": 'orderCycle in orderCycles | schedule:scheduleFilter | involving:involvingFilter | filter:{name: query} track by orderCycle.id' }
+  %td.name{ "ng-show": 'columns.name.visible' }
+    %input{ id: 'oc{{::orderCycle.id}}_name', name: 'oc{{::orderCycle.id}}[name]', type: 'text', "ng-model": 'orderCycle.name', "ng-disabled": '!orderCycle.viewing_as_coordinator' }
+  %td.schedules{ "ng-show": 'columns.schedules.visible' }
+    %span{ "ng-repeat": 'schedule in orderCycle.schedules' }
       %a{ 'schedule-dialog' => true, 'schedule-id' => '{{schedule.id}}' }
         {{ schedule.name + ($last ? '' : ',') }}
-    %span{ ng: { show: 'orderCycle.schedules.length == 0'}} None
-  %td.orders_open_at{ ng: { show: 'columns.open.visible' } }
-    %input.datetimepicker{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at' }, data: { controller: "flatpickr", "flatpickr-enable-time-value": true }, 'change-warning' => 'orderCycle' }
-    %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_open_at'}, disabled: true }
-  %td.orders_close_at{ ng: { show: 'columns.close.visible' } }
-    %input.datetimepicker{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: 'orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at' }, data: { controller: "flatpickr", "flatpickr-enable-time-value": true }, 'change-warning' => 'orderCycle'  }
-    %input{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', ng: { if: '!orderCycle.viewing_as_coordinator', model: 'orderCycle.orders_close_at'}, disabled: true }
+    %span{ "ng-show": 'orderCycle.schedules.length == 0' } None
+  %td.orders_open_at{ "ng-show": 'columns.open.visible' }
+    %input.datetimepicker{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', data: { controller: "flatpickr", "flatpickr-enable-time-value": true }, "change-warning": 'orderCycle', "ng-if": 'orderCycle.viewing_as_coordinator', "ng-model": 'orderCycle.orders_open_at' }
+    %input{ id: 'oc{{::orderCycle.id}}_orders_open_at', name: 'oc{{::orderCycle.id}}[orders_open_at]', type: 'text', disabled: true, "ng-if": '!orderCycle.viewing_as_coordinator', "ng-model": 'orderCycle.orders_open_at' }
+  %td.orders_close_at{ "ng-show": 'columns.close.visible' }
+    %input.datetimepicker{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', data: { controller: "flatpickr", "flatpickr-enable-time-value": true }, "change-warning": 'orderCycle', "ng-if": 'orderCycle.viewing_as_coordinator', "ng-model": 'orderCycle.orders_close_at' }
+    %input{ id: 'oc{{::orderCycle.id}}_orders_close_at', name: 'oc{{::orderCycle.id}}[orders_close_at]', type: 'text', disabled: true, "ng-if": '!orderCycle.viewing_as_coordinator', "ng-model": 'orderCycle.orders_close_at' }
 
   - unless simple_index
-    %td.producers{ ng: { show: 'columns.producers.visible' } }
-      %span{'ofn-with-tip' => '{{ orderCycle.producerNames }}', ng: { show: 'orderCycle.producers.length > 3' } }
+    %td.producers{ "ng-show": 'columns.producers.visible' }
+      %span{ "ofn-with-tip": '{{ orderCycle.producerNames }}', "ng-show": 'orderCycle.producers.length > 3' }
         {{ orderCycle.producers.length }}
         = t('.suppliers')
-      %span{ ng: { hide: 'orderCycle.producers.length > 3', bind: 'orderCycle.producerNames' } }
-    %td.coordinator{ ng: { show: 'columns.coordinator.visible', bind: { html: 'orderCycle.coordinator.name'} } }
-    %td.shops{ ng: { show: 'columns.shops.visible' } }
-      %span{'ofn-with-tip' => '{{ orderCycle.shopNames }}', ng: { show: 'orderCycle.shops.length > 3' } }
+      %span{ "ng-hide": 'orderCycle.producers.length > 3', "ng-bind": 'orderCycle.producerNames' }
+    %td.coordinator{ "ng-show": 'columns.coordinator.visible', "ng-bind-html": 'orderCycle.coordinator.name' }
+    %td.shops{ "ng-show": 'columns.shops.visible' }
+      %span{ "ofn-with-tip": '{{ orderCycle.shopNames }}', "ng-show": 'orderCycle.shops.length > 3' }
         {{ orderCycle.shops.length }}
         = t('.distributors')
-      %span{ ng: { hide: 'orderCycle.shops.length > 3', bind: 'orderCycle.shopNames' } }
+      %span{ "ng-hide": 'orderCycle.shops.length > 3', "ng-bind": 'orderCycle.shopNames' }
 
-  %td.products{ ng: { show: 'columns.products.visible' } }
+  %td.products{ "ng-show": 'columns.products.visible' }
     %span
       {{orderCycle.variant_count}}
       = t('.variants')
 
   %td.actions
-    %a.edit-order-cycle.icon-edit.no-text{ ng: { href: '{{orderCycle.edit_path}}'}, 'ofn-with-tip' => t(:edit) }
-  %td.actions{ ng: { if: 'orderCycle.viewing_as_coordinator' } }
-    %a.clone-order-cycle.icon-copy.no-text{ ng: { href: '{{orderCycle.clone_path}}'}, 'ofn-with-tip' => t(:clone) }
-  %td.actions{ ng: { if: 'orderCycle.deletable && orderCycle.viewing_as_coordinator' }}
-    %a.delete-order-cycle.icon-trash.no-text{ ng: { href: '{{orderCycle.delete_path}}'}, data: { method: 'delete', confirm: t(:are_you_sure), "ujs-navigate": "false" }, 'ofn-with-tip' => t(:remove) }
+    %a.edit-order-cycle.icon-edit.no-text{ "ofn-with-tip": t(:edit), "ng-href": '{{orderCycle.edit_path}}' }
+  %td.actions{ "ng-if": 'orderCycle.viewing_as_coordinator' }
+    %a.clone-order-cycle.icon-copy.no-text{ "ofn-with-tip": t(:clone), "ng-href": '{{orderCycle.clone_path}}' }
+  %td.actions{ "ng-if": 'orderCycle.deletable && orderCycle.viewing_as_coordinator' }
+    %a.delete-order-cycle.icon-trash.no-text{ data: { method: 'delete', confirm: t(:are_you_sure), "ujs-navigate": "false" }, "ofn-with-tip": t(:remove), "ng-href": '{{orderCycle.delete_path}}' }

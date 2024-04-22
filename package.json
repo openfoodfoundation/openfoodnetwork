@@ -9,19 +9,12 @@
   "scripts": {
     "pretty-quick": "pretty-quick"
   },
-  "jest": {
-    "testRegex": [
-      "spec/javascripts/.*_test\\.js"
-    ],
-    "transformIgnorePatterns": [
-      "/node_modules/(?!(stimulus)/)"
-    ]
-  },
   "dependencies": {
     "@floating-ui/dom": "^1.6.3",
-    "@hotwired/turbo": "^8.0.3",
+    "@hotwired/turbo": "^8.0.4",
     "@rails/webpacker": "5.4.4",
-    "cable_ready": "5.0.2",
+    "@stimulus-components/rails-nested-form": "^5.0.0",
+    "cable_ready": "5.0.1",
     "debounced": "^0.0.5",
     "flatpickr": "^4.6.9",
     "foundation-sites": "^5.5.3",
@@ -34,10 +27,9 @@
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.2.2",
     "stimulus-flatpickr": "^1.4.0",
-    "stimulus-rails-nested-form": "https://github.com/openfoodfoundation/stimulus-rails-nested-form.git#dist",
     "stimulus_reflex": "3.5.0-rc3",
     "tom-select": "^2.3.1",
-    "trix": "^2.0.10",
+    "trix": "^2.1.0",
     "webpack": "~4"
   },
   "devDependencies": {

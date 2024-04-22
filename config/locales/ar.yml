@@ -48,6 +48,9 @@ ar:
         variant_unit: "وحدة النوع"
         variant_unit_name: "اسم وحدة النوع"
         unit_value: "قيمةالوحدة"
+      spree/variant:
+        primary_taxon: "نوع المنتج "
+        shipping_category_id: "نوع الشحن"
       spree/credit_card:
         base: "بطاقة ائتمان"
         number: "رقم "
@@ -448,6 +451,7 @@ ar:
       columns:
         name: الاسم
         unit: وحدة
+        unit_value: قيمةالوحدة
         price: السعر
         producer: المنتج
         category: الفئة
@@ -691,15 +695,15 @@ ar:
       index:
         header:
           title: تحرير المنتجات بالجملة
-      sort:
-        pagination:
-          clear_search: مسح البحث
       filters:
         producers:
           label: المنتجين
         categories:
           label: التصنيفات
         search: بحث
+      sort:
+        pagination:
+          clear_search: مسح البحث
       table:
         new_variant: نوع جديد
       edit_image:
@@ -745,6 +749,9 @@ ar:
         product_categories: فئات المنتجات
         tax_categories: فئات الضرائب
         shipping_categories: فئات الشحن
+      dfc_import_form:
+        enterprise: "الشركة"
+        import: "استيراد"
       import:
         review: مراجعة
         import: استيراد
@@ -3596,6 +3603,7 @@ ar:
     new_taxon: "اصنوفة جديدة"
     new_user: "مستخدم جديد"
     no_pending_payments: "لا توجد دفعات معلقة"
+    remove: "إزالة"
     none: "لا شيء"
     not_found: "غير موجود"
     notice_messages:
@@ -3612,8 +3620,6 @@ ar:
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
     taxonomy_edit: "التصنيف"
-    taxonomy_tree_error: "خطأ شجرة التصنيف"
-    taxonomy_tree_instruction: "تعليمات شجرة التصنيف"
     tree: "شجرة"
     updating: "تحديث"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"

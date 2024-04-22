@@ -4,7 +4,7 @@
 = render partial: 'ams_data'
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-.import-wrapper{ng: {app: 'admin.productImport', controller: 'ImportFormCtrl'}}
+.import-wrapper{ "ng-app": 'admin.productImport', "ng-controller": 'ImportFormCtrl' }
 
   - if @importer.item_count == 0
     %h5
@@ -13,14 +13,14 @@
       = t('.none_to_save')
     %br
   - else
-    .settings-section{ng: {show: 'step == "settings"'}}
+    .settings-section{ "ng-show": 'step == "settings"' }
       = render 'import_options' if @importer.table_headings
       %br
-      %a.button.proceed{href: '', ng: {click: 'confirmSettings()'}}
+      %a.button.proceed{ href: '', "ng-click": 'confirmSettings()' }
         = t('.import')
       %a.button{href: main_app.admin_product_import_path} #{t('admin.cancel')}
 
-  .progress-interface{ng: {show: 'step == "import"'}}
+  .progress-interface{ "ng-show": 'step == "import"' }
     %span.filename
       = @original_filename
       %span.percentage
@@ -34,12 +34,12 @@
 
     = render 'import_review' if @importer.table_headings
 
-    %div{ng: {controller: 'ImportFeedbackCtrl', show: 'count((entries | entriesFilterValid:"valid")) > 0'}}
-      %div{ng: {if: 'count((entries | entriesFilterValid:"invalid")) > 0'}}
+    %div{ "ng-controller": 'ImportFeedbackCtrl', "ng-show": 'count((entries | entriesFilterValid:"valid")) > 0' }
+      %div{ "ng-if": 'count((entries | entriesFilterValid:"invalid")) > 0' }
         %br
         %h5= t('admin.product_import.import.some_invalid_entries')
         %p= t('admin.product_import.import.fix_before_import')
-      %div{ng: {show: 'count((entries | entriesFilterValid:"invalid")) == 0'}}
+      %div{ "ng-show": 'count((entries | entriesFilterValid:"invalid")) == 0' }
         %br
         %h5= t('.no_errors')
         %p= t('.save_all_imported?')
@@ -47,22 +47,22 @@
       = hidden_field_tag :filepath, @filepath
       = hidden_field_tag "settings[import_into]", @import_into
 
-      %a.button.proceed{href: '', ng: {show: 'count((entries | entriesFilterValid:"invalid")) == 0', click: 'acceptResults()'}}
+      %a.button.proceed{ href: '', "ng-show": 'count((entries | entriesFilterValid:"invalid")) == 0', "ng-click": 'acceptResults()' }
         = t('.save')
 
       %a.button{href: main_app.admin_product_import_path}= t('admin.cancel')
 
-    %div{ng: {controller: 'ImportFeedbackCtrl', show: 'count((entries | entriesFilterValid:"valid")) == 0'}}
+    %div{ "ng-controller": 'ImportFeedbackCtrl', "ng-show": 'count((entries | entriesFilterValid:"valid")) == 0' }
       %br
       %a.button{href: main_app.admin_product_import_path}= t('admin.cancel')
 
-  .progress-interface{ng: {show: 'step == "save"'}}
+  .progress-interface{ "ng-show": 'step == "save"' }
     %span.filename
       #{t('.save_imported')} ({{ percentage.save }})
     .progress-bar{}
-      %span.progress-track{ng: {style: "{'width': percentage.save }"}}
+      %span.progress-track{ "ng-style": "{'width': percentage.save }" }
     %p.red
       {{ exception }}
 
-  .save-results{ng: {show: 'step == "complete"'}}
+  .save-results{ "ng-show": 'step == "complete"' }
     = render 'save_results'

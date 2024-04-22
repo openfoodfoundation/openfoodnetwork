@@ -47,7 +47,7 @@ describe "/admin/products/:product_id/images", type: :request do
         expect {
           subject
           product.reload
-        }.to_not change{ product.image&.attachment&.filename.to_s }
+        }.not_to change{ product.image&.attachment&.filename.to_s }
 
         pending "error status code"
         expect(response).to be_unprocessable

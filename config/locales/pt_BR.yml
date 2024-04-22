@@ -32,6 +32,9 @@ pt_BR:
         shipping_category_id: "Tipos de Frete"
         variant_unit: "Unidade variante"
         variant_unit_name: "Nome da unidade variante"
+      spree/variant:
+        primary_taxon: "Categoria de Produto"
+        shipping_category_id: "Tipos de Frete"
       spree/credit_card:
         base: "Cartão de Crédito"
         number: "Número"
@@ -616,13 +619,13 @@ pt_BR:
       index:
         header:
           title: Editar Produtos em Atacado
-      sort:
-        pagination:
-          clear_search: Nova busca
       filters:
         producers:
           label: Produtores
         search: Buscar
+      sort:
+        pagination:
+          clear_search: Nova busca
       edit_image:
         close: Voltar
     product_import:
@@ -664,6 +667,9 @@ pt_BR:
         product_categories: Categorias de Produtos
         tax_categories: Categorias fiscais
         shipping_categories: Categorias de Remessa
+      dfc_import_form:
+        enterprise: "Iniciativas"
+        import: "Importar"
       import:
         review: Reveja
         import: Importar
@@ -3232,6 +3238,7 @@ pt_BR:
     new_taxon: "Nova taxonomia"
     new_user: "Novo usuário"
     no_pending_payments: "Nenhum pagamento pendente"
+    remove: "Remover"
     none: "Nenhum"
     not_found: "Não encontrado"
     notice_messages:
@@ -3243,8 +3250,6 @@ pt_BR:
     start_date: "Data de início"
     successfully_removed: "Removido com Sucesso"
     taxonomy_edit: "Editar Taxonomia"
-    taxonomy_tree_error: "Erro na árvore taxonômica"
-    taxonomy_tree_instruction: "Guia para a árvore taxonômica"
     tree: "Árvore"
     updating: "Atualizando"
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"

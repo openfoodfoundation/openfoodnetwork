@@ -27,12 +27,12 @@ class EnterpriseRelationship < ApplicationRecord
     where('parent_id IN (?) OR child_id IN (?)', enterprises.select(&:id), enterprises.select(&:id))
   }
 
-  scope :permitting, ->(enterprise_ids) { where('child_id IN (?)', enterprise_ids) }
-  scope :permitted_by, ->(enterprise_ids) { where('parent_id IN (?)', enterprise_ids) }
+  scope :permitting, ->(enterprise_ids) { where(child_id: enterprise_ids) }
+  scope :permitted_by, ->(enterprise_ids) { where(parent_id: enterprise_ids) }
 
   scope :with_permission, ->(permission) {
     joins(:permissions).
-      where('enterprise_relationship_permissions.name = ?', permission)
+      where(enterprise_relationship_permissions: { name: permission })
   }
 
   scope :by_name, -> { with_enterprises.order('child_enterprises.name, parent_enterprises.name') }
@@ -108,6 +108,6 @@ class EnterpriseRelationship < ApplicationRecord
 
   def child_variant_overrides
     VariantOverride.unscoped.for_hubs(child)
-      .joins(variant: :product).where("spree_products.supplier_id IN (?)", parent)
+      .joins(variant: :product).where(spree_products: { supplier_id: parent })
   end
 end

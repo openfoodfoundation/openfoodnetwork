@@ -5,7 +5,7 @@ module Admin
     before_reflex :authorize_order, only: [:capture, :ship]
 
     def capture
-      payment_capture = OrderCaptureService.new(@order)
+      payment_capture = Orders::CaptureService.new(@order)
 
       if payment_capture.call
         cable_ready.replace(selector: dom_id(@order),
@@ -32,13 +32,32 @@ module Admin
     end
 
     def bulk_invoice(params)
+      visible_orders = editable_orders.invoiceable.where(id: params[:bulk_ids])
+
+      if Spree::Config.enterprise_number_required_on_invoices?
+        distributors_without_abn = Enterprise.where(
+          id: visible_orders.select(:distributor_id),
+          abn: nil,
+        )
+
+        if distributors_without_abn.exists?
+          render_business_number_required_error(distributors_without_abn)
+          return
+        end
+      end
+
       cable_ready.append(
         selector: "#orders-index",
         html: render(partial: "spree/admin/orders/bulk/invoice_modal")
       ).broadcast
 
+      # Preserve order of bulk_ids.
+      # The ids are supplied in the sequence of the orders screen and may be
+      # sorted, for example by last name of the customer.
+      visible_order_ids = params[:bulk_ids].map(&:to_i) & visible_orders.pluck(:id)
+
       BulkInvoiceJob.perform_later(
-        params[:bulk_ids],
+        visible_order_ids,
         "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
         channel: SessionChannel.for_request(request),
         current_user_id: current_user.id
@@ -48,7 +67,7 @@ module Admin
     end
 
     def cancel_orders(params)
-      cancelled_orders = OrdersBulkCancelService.new(params, current_user).call
+      cancelled_orders = Orders::BulkCancelService.new(params, current_user).call
 
       cable_ready.dispatch_event(name: "modal:close")
 
@@ -75,8 +94,8 @@ module Admin
 
     def send_invoices(params)
       count = 0
-      editable_orders.where(id: params[:bulk_ids]).find_each do |o|
-        next unless o.distributor.can_invoice? && o.invoiceable?
+      editable_orders.invoiceable.where(id: params[:bulk_ids]).find_each do |o|
+        next unless o.distributor.can_invoice?
 
         Spree::OrderMailer.invoice_email(o.id, current_user_id: current_user.id).deliver_later
         count += 1
@@ -105,6 +124,14 @@ module Admin
 
     def set_param_for_controller
       params[:id] = @order.number
+    end
+
+    def render_business_number_required_error(distributors)
+      distributor_names = distributors.pluck(:name)
+
+      flash[:error] = I18n.t(:must_have_valid_business_number,
+                             enterprise_name: distributor_names.join(", "))
+      morph_admin_flashes
     end
   end
 end

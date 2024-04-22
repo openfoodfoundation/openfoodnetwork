@@ -34,6 +34,9 @@ tr:
         shipping_category_id: "TESLİMAT KATEGORİSİ"
         variant_unit: "Çeşit Birimi"
         variant_unit_name: "Çeşit Birim Adı"
+      spree/variant:
+        primary_taxon: "ÜRÜN KATEGORİSİ"
+        shipping_category_id: "TESLİMAT KATEGORİSİ"
       spree/credit_card:
         base: "Kredİ kartı"
         number: "Numara"
@@ -596,15 +599,15 @@ tr:
       index:
         header:
           title: Ürünleri Toplu Düzenleme
-      sort:
-        pagination:
-          clear_search: Aramayı temizle
       filters:
         producers:
           label: ÜRETİCİLER
         categories:
           label: Kategoriler
         search: Ara
+      sort:
+        pagination:
+          clear_search: Aramayı temizle
       table:
         new_variant: Yeni Çeşit
       edit_image:
@@ -648,6 +651,9 @@ tr:
         product_categories: Ürün Kategorileri
         tax_categories: Vergi Kategorileri
         shipping_categories: Teslimat Kategorileri
+      dfc_import_form:
+        enterprise: "İşletme"
+        import: "Aktar"
       import:
         review: İncele
         import: İçe Aktar
@@ -3229,6 +3235,7 @@ tr:
     new_taxon: "Yeni kategori"
     new_user: "Yeni kullanıcı"
     no_pending_payments: "Bekleyen ödeme yok"
+    remove: "Kaldır"
     none: "SATIŞ YAPMIYOR"
     not_found: "Bulunamadı"
     notice_messages:
@@ -3241,8 +3248,6 @@ tr:
     start_date: "Başlangıç tarihi"
     successfully_removed: "Başarıyla Kaldırıldı"
     taxonomy_edit: "Kategori düzenleme"
-    taxonomy_tree_error: "Kategori ağacı hatası"
-    taxonomy_tree_instruction: "Kategori ağacı talimatı"
     tree: "Ağaç"
     updating: "Güncelleniyor"
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"

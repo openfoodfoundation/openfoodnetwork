@@ -51,6 +51,9 @@ fr:
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
         unit_value: "Nb unités"
+      spree/variant:
+        primary_taxon: "Catégorie Produit"
+        shipping_category_id: "Condition de transport"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -191,6 +194,9 @@ fr:
       transaction_not_allowed: "La carte a été refusée pour une raison inconnue."
       try_again_later: "La carte a été refusée pour une raison inconnue."
       withdrawal_count_limit_exceeded: "L'acheteur a dépassé son plafond de carte bancaire."
+      disconnect_failure: "Déconnecter Stripe a échoué."
+    success_code:
+      disconnected: "Le compte Stripe est déconnecté."
   activemodel:
     errors:
       messages:
@@ -216,10 +222,16 @@ fr:
               not_available_to_shop: "n'est pas disponible pour %{shop}"
   card_details: "Détalis de la carte"
   card_type: "Type de carte"
+  card_type_is: "Type de carte"
+  unrecognized_card_type: "Type de carte non reconnu"
+  use_new_cc: "Utilisez une nouvelle carte bancaire"
+  what_is_this: "Qu'est-ce que c'est ?"
   cardholder_name: "Titulaire de la carte"
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
   additional_information: "Informations additionnelles"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -310,9 +322,9 @@ fr:
       email_registered: "va, dès que vous aurez choisi un type d'entreprise, être créé sur"
       email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre entreprise, de vos produits si vous êtes producteur, et éventuellement de votre boutique. Pour accéder au guide en français, cliquez ici : %{link}"
       userguide: "Guide utilisateur"
-      email_admin_html: "Pour gérez votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois pour vous permettre de tester notre solution. Au-delà, vous devrez choisir une de nos offres pour continuer à utiliser le service (voir rubrique “nos offres” sur notre site internet)."
+      email_admin_html: "Pour gérer votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois après la première vente pour vous permettre de tester notre solution. Vous pouvez faire des \"vraies commandes\" pour tester à condition de les annuler juste après pour ne pas démarrer les 3 mois. Consultez la rubrique \"Nos offres & tarifs\" du site internet pour en connaître les détails."
       admin_panel: "interface d'administration"
-      email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}"
+      email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}\nSi vous avez besoin d'aide,  nous proposons des démonstrations hebdomadaires en visio, où nous vous présentons la coopérative CoopCircuits, et vous donnons tous les trucs et astuces sur l'outil et ses fonctionnalités. Inscrivez-vous via le lien présent sur la page Aide&FAQ de notre site.\nSi vous préférez un rdv individuel - par téléphone ou visio - n'hésitez-pas à nous proposer un créneau pour vous rappeler \U0001F917"
       join_community: "Accéder au forum"
     invite_manager:
       subject: "%{enterprise} vous a invité comme gestionnaire"
@@ -508,7 +520,10 @@ fr:
         colums: Colonnes
       columns:
         name: Nom
+        unit_scale: Échelle d'unité
         unit: Unité
+        unit_value: Nb unités
+        display_as: 'Afficher l''unité en '
         price: Prix
         producer: Producteur
         category: Catégorie
@@ -638,6 +653,7 @@ fr:
         status: Statut
         ok: Ok
         instance_secret_key: Clé Secrète de l'Instance
+        instance_publishable_key: Clé publique de l'instance
         account_id: Identifiant Compte
         business_name: Nom de l'entreprise
         charges_enabled: Frais activés
@@ -690,6 +706,10 @@ fr:
         your_content: Votre contenu
         user_guide: Guide utilisateur
         map: Carte
+    dfc_product_imports:
+      index:
+        title: "Importation d'un produit du catalogue DFC"
+        imported_products: "Produits importés :"
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -767,13 +787,6 @@ fr:
           prompt: "Cette action va supprimer ceci de façon permanente de votre liste."
           confirmation_text: "Supprimer la variante"
           cancellation_text: "Conserver la variante"
-      sort:
-        pagination:
-          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
-          per_page:
-            show: Montrer
-            per_page: "%{num} par page"
-          clear_search: Annuler la recherche
       filters:
         search_products: Chercher des produits
         search_for_producers: Rechercher des producteurs
@@ -785,6 +798,13 @@ fr:
         categories:
           label: Conditions de transport
         search: Rechercher
+      sort:
+        pagination:
+          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Résultats %{from} à %{to}."
+          per_page:
+            show: Montrer
+            per_page: "%{num} par page"
+          clear_search: Annuler la recherche
       no_products:
         no_products_found: Pas de produits trouvés
         import_products: Importer plusieurs produits
@@ -857,6 +877,11 @@ fr:
         product_categories: Catégorie Produit
         tax_categories: TVA applicable
         shipping_categories: Conditions de transport
+      dfc_import_form:
+        title: "Importer depuis le catalogue DFC"
+        enterprise: "Entreprise"
+        catalog_url: "URL du catalogue DFC"
+        import: "Importer"
       import:
         review: Vérifier
         import: Importer
@@ -1153,7 +1178,7 @@ fr:
               Vous pouvez indiquer ici un message de bienvenue ou un message expliquant
               les particularités de votre boutique. Ce message s'affiche dans l'onglet
               Accueil de votre boutique. Si aucun message n'est affiché, l'onglet
-              Accueil n'apparaitra pas.
+              Accueil n’apparaîtra pas.
           shopfront_message_link_tooltip: "Insérer / modifier un lien"
           shopfront_message_link_prompt: "Veuillez entrer l'URL à insérer"
           shopfront_closed_message: "Message d'accueil ventes terminées"
@@ -1166,6 +1191,7 @@ fr:
           open_date: "Date d'ouverture"
           close_date: "Date de fermeture"
           display_ordering_in_shopfront: "Ordre d'affichage sur la boutique en ligne :"
+          shopfront_sort_by_product: "Par produit"
           shopfront_sort_by_category: "Par catégorie"
           shopfront_sort_by_producer: "Par producteur"
           shopfront_sort_by_category_placeholder: "Catégorie"
@@ -1187,7 +1213,7 @@ fr:
           disconnect: "Déconnecter le compte"
           confirm_modal:
             title: Connecter avec Stripe
-            part1: Stripe est un système de paiement qui permet aux boutiques sur CoopCircuits d'accepter des paiements par carte bancaire de leurs acheteurs.
+            part1: Stripe est un système de paiement en ligne qui permet aux boutiques sur CoopCircuits d'accepter des paiements par carte bancaire de leurs acheteurs.
             part2: Pour utiliser cette fonctionnalité, vous devez connecter votre compte Stripe à CoopCircuits. En cliquant sur "J'accepte" ci-dessous, vous serez redirigé vers le site internet de Stripe, où vous pourrez connecter votre compte existant ou en créer un si vous n'en avez pas encore.
             part3: Cela permettra à CoopCircuits d'accepter en votre nom les paiements par carte de crédit en provenance de vos acheteurs. Veuillez noter que c'est à vous de gérer votre compte Stripe, de payer les frais dus à Stripe et de gérer les éventuels remboursements et le service après vente.
             i_agree: J'accepte
@@ -2476,6 +2502,7 @@ fr:
   orders_bought_already_confirmed: "* déjà confirmé"
   orders_confirm_cancel: "Voulez-vous vraiment annuler cette commande ?"
   order_processed_successfully: "Votre commande a été traitée avec succès"
+  thank_you_for_your_order: "Merci pour votre commande"
   products_cart_distributor_choice: "Distributeur pour votre commande:"
   products_cart_distributor_change: "Vore distributeur pour cette commande sera dorénavant %{name} si vous ajoutez ce produit à votre panier."
   products_cart_distributor_is: "Votre distributeur pour cette commande est %{name}."
@@ -3646,7 +3673,7 @@ fr:
       bulk_coop:
         filters:
           bulk_coop_allocation: "Achats groupés Allocation"
-          bulk_coop_customer_payments: "Achats groupés - Paiement des acheteurs"
+          bulk_coop_customer_payments: "Achats groupés - Paiements des acheteurs"
           bulk_coop_packing_sheets: "Achats groupés - Feuilles de préparation des paniers"
           bulk_coop_supplier_report: "Achats groupés - Totaux par Producteur"
       enterprise_fee_summaries:
@@ -3752,6 +3779,7 @@ fr:
     editing_tax_category: "Modifier une catégorie de taxe"
     editing_tax_rate: "Modifier un taux"
     editing_zone: "Modifier une zone"
+    editing_state: "Modifier département"
     expiration: "Expiration"
     invalid_payment_provider: "Fournisseur de paiement invalide"
     items_cannot_be_shipped: "Les produits ne peuvent pas être envoyés"
@@ -3763,6 +3791,7 @@ fr:
     new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"
     no_pending_payments: "Aucun paiement en attente."
+    remove: "Supprimer"
     none: "Aucun"
     not_found: "Non trouvé"
     notice_messages:
@@ -3779,8 +3808,8 @@ fr:
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
     taxonomy_edit: "Modifier la taxonomie"
-    taxonomy_tree_error: "Erreur de l'arbre de toxonomie"
-    taxonomy_tree_instruction: "Consignes pour l'arbre de taxonomie"
+    taxonomy_tree_error: "Erreur lors de la mise à jour de l'arbre de taxonomie."
+    taxonomy_tree_instruction: "Faites un clic droit sur un article pour ajouter, renommer, supprimer ou modifier."
     tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
@@ -3789,6 +3818,7 @@ fr:
     resend: "Renvoyer"
     back_to_orders_list: "Retour à la liste des commandes"
     back_to_payments_list: "Retour à la liste des paiements"
+    back_to_states_list: "Retour à la liste"
     return_authorizations: "Autorisations de retours"
     cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
     select_stock: "Sélectionner le stock"

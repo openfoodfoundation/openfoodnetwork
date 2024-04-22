@@ -32,6 +32,9 @@ fil_PH:
         shipping_category_id: "Kategorya ng Pagpapadala"
         variant_unit: "Yunit ng variant"
         variant_unit_name: "pangalan ng yunit ng variant"
+      spree/variant:
+        primary_taxon: "Kategorya ng Produkto"
+        shipping_category_id: "Kategorya ng Pagpapadala"
       spree/credit_card:
         base: "Credit Card"
         number: "Bilang"
@@ -570,6 +573,9 @@ fil_PH:
         product_categories: kategorya ng produkto
         tax_categories: kategorya ng tax
         shipping_categories: mga kategorya ng pagpapadala
+      dfc_import_form:
+        enterprise: "Enterprise"
+        import: "ilipat"
       import:
         review: suriin
         import: i-import
@@ -2997,6 +3003,7 @@ fil_PH:
     credit: "utang"
     more: "Karagdagang Impormasyon"
     no_pending_payments: "walang nakabinbin na mga bayad"
+    remove: "Tanggalin"
     none: "wala"
     updating: "ina-update"
     your_order_is_empty_add_product: "ang iyong order ay walang laman, humanap at magdagdag ng produkto sa itaas."

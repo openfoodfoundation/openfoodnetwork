@@ -35,8 +35,8 @@ describe "Darkswarm data caching", caching: true do
 
       visit shops_path
 
-      expect(Spree::Taxon).to_not receive(:all)
-      expect(Spree::Property).to_not receive(:all)
+      expect(Spree::Taxon).not_to receive(:all)
+      expect(Spree::Property).not_to receive(:all)
 
       visit shops_path
     end
@@ -66,7 +66,7 @@ describe "Darkswarm data caching", caching: true do
       visit shops_path
 
       # Wait for /shops page to load properly before checking for new timestamps
-      expect(page).to_not have_selector ".row.filter-box"
+      expect(page).not_to have_selector ".row.filter-box"
 
       taxon_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Taxon)
       expect_cached "views/#{CacheService::FragmentCaching.ams_all_taxons[0]}"
@@ -74,8 +74,8 @@ describe "Darkswarm data caching", caching: true do
       property_timestamp2 = CacheService.latest_timestamp_by_class(Spree::Property)
       expect_cached "views/#{CacheService::FragmentCaching.ams_all_properties[0]}"
 
-      expect(taxon_timestamp1).to_not eq taxon_timestamp2
-      expect(property_timestamp1).to_not eq property_timestamp2
+      expect(taxon_timestamp1).not_to eq taxon_timestamp2
+      expect(property_timestamp1).not_to eq property_timestamp2
 
       toggle_filters
 

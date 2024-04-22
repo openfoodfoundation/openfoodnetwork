@@ -154,7 +154,6 @@ module InjectionHelper
   end
 
   def enterprise_injection_data
-    @enterprise_injection_data ||= OpenFoodNetwork::EnterpriseInjectionData.new
-    { data: @enterprise_injection_data }
+    @enterprise_injection_data ||= { data: OpenFoodNetwork::EnterpriseInjectionData.new }
   end
 end

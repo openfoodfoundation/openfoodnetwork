@@ -165,17 +165,17 @@ class OrderCycle < ApplicationRecord
   def attachable_distributor_payment_methods
     DistributorPaymentMethod.joins(:payment_method).
       merge(Spree::PaymentMethod.available).
-      where("distributor_id IN (?)", distributor_ids)
+      where(distributor_id: distributor_ids)
   end
 
   def attachable_distributor_shipping_methods
     DistributorShippingMethod.joins(:shipping_method).
       merge(Spree::ShippingMethod.frontend).
-      where("distributor_id IN (?)", distributor_ids)
+      where(distributor_id: distributor_ids)
   end
 
   def clone!
-    OrderCycleClone.new(self).create
+    OrderCycles::CloneService.new(self).create
   end
 
   def variants

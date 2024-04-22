@@ -51,6 +51,9 @@ ml:
         variant_unit: "വേരിയന്റ് യൂണിറ്റ്"
         variant_unit_name: "വേരിയന്റ് യൂണിറ്റിന്റെ പേര്"
         unit_value: "യൂണിറ്റ് മൂല്യം"
+      spree/variant:
+        primary_taxon: "ഉൽപ്പന്ന വിഭാഗം"
+        shipping_category_id: "അയക്കൽ വിഭാഗം"
       spree/credit_card:
         base: "ക്രെഡിറ്റ് കാർഡ്"
         number: "നമ്പർ"
@@ -505,6 +508,7 @@ ml:
       columns:
         name: പേര്
         unit: യൂണിറ്റ്
+        unit_value: യൂണിറ്റ് മൂല്യം
         price: വില
         producer: പ്രൊഡ്യൂസർ
         category: വിഭാഗം
@@ -752,13 +756,6 @@ ml:
         header:
           title: ഉൽപ്പന്നങ്ങൾ മൊത്തമായി തിരുത്തുക
         loading: നിങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ ലോഡ് ചെയ്യുന്നു
-      sort:
-        pagination:
-          total_html: "നിങ്ങളുടെ തിരയൽ മാനദണ്ഡങ്ങൾക്കനുസരിച്ച് <strong>%{total} ഉൽപ്പന്നങ്ങൾ</strong> കണ്ടെത്തി. %{from} മുതൽ %{to} വരെ കാണിക്കുന്നു."
-          per_page:
-            show: കാണിക്കുക
-            per_page: "ഓരോ പേജിലും %{num}"
-          clear_search: തിരയൽ മായ്‌ക്കുക
       filters:
         search_products: ഉൽപ്പന്നങ്ങൾക്കായി തിരയുക
         all_producers: എല്ലാ പ്രൊഡ്യൂസേഴ്‌സും
@@ -768,6 +765,13 @@ ml:
         categories:
           label: വിഭാഗങ്ങൾ
         search: തിരയുക
+      sort:
+        pagination:
+          total_html: "നിങ്ങളുടെ തിരയൽ മാനദണ്ഡങ്ങൾക്കനുസരിച്ച് <strong>%{total} ഉൽപ്പന്നങ്ങൾ</strong> കണ്ടെത്തി. %{from} മുതൽ %{to} വരെ കാണിക്കുന്നു."
+          per_page:
+            show: കാണിക്കുക
+            per_page: "ഓരോ പേജിലും %{num}"
+          clear_search: തിരയൽ മായ്‌ക്കുക
       no_products:
         no_products_found: ഉൽപ്പന്നങ്ങളൊന്നും കണ്ടെത്തിയില്ല
         import_products: ഒന്നിലധികം ഉൽപ്പന്നങ്ങൾ ഇറക്കുമതി ചെയ്യുക
@@ -831,6 +835,9 @@ ml:
         product_categories: ഉൽപ്പന്ന വിഭാഗങ്ങൾ
         tax_categories: നികുതി വിഭാഗങ്ങൾ
         shipping_categories: ഷിപ്പിംഗ് വിഭാഗങ്ങൾ
+      dfc_import_form:
+        enterprise: "എന്റർപ്രൈസ്"
+        import: "ഇറക്കുമതി ചെയ്യുക"
       import:
         review: അവലോകനം
         import: ഇറക്കുമതി ചെയ്യുക
@@ -3665,6 +3672,7 @@ ml:
     new_taxon: "പുതിയ ടാക്സൺ"
     new_user: "പുതിയ ഉപയോക്താവ്"
     no_pending_payments: "തീർപ്പാക്കാത്ത പേയ്‌മെന്റുകളൊന്നുമില്ല"
+    remove: "നീക്കം ചെയ്യുക"
     none: "ഒന്നുമില്ല"
     not_found: "കണ്ടെത്തിയില്ല"
     notice_messages:
@@ -3681,8 +3689,6 @@ ml:
     start_date: "ആരംഭിക്കുന്ന തീയതി"
     successfully_removed: "വിജയകരമായി നീക്കം ചെയ്തു"
     taxonomy_edit: "ടാക്സോണമി എഡിറ്റ്"
-    taxonomy_tree_error: "ടാക്സോണമി ട്രീ തകരാർ"
-    taxonomy_tree_instruction: "ടാക്സോണമി ട്രീ നിർദ്ദേശം"
     tree: "ട്രീ"
     updating: "അപ്ഡേറ്റ് ചെയ്യുന്നു"
     your_order_is_empty_add_product: "നിങ്ങളുടെ ഓർഡർ ശൂന്യമാണ്, മുകളിൽ ഒരു ഉൽപ്പന്നം തിരയുകയും ചേർക്കുകയും ചെയ്യുക"

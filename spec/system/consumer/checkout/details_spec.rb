@@ -152,7 +152,7 @@ describe "As a consumer, I want to checkout my order" do
               before do
                 expect {
                   proceed_to_payment
-                }.to_not change {
+                }.not_to change {
                   user.reload.bill_address
                 }
               end
@@ -206,7 +206,7 @@ describe "As a consumer, I want to checkout my order" do
               before do
                 expect {
                   proceed_to_payment
-                }.to_not change {
+                }.not_to change {
                            user.reload.ship_address
                          }
               end

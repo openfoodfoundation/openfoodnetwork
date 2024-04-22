@@ -34,6 +34,9 @@ uk:
         shipping_category_id: "Категорія доставки"
         variant_unit: "Варіант одиниці"
         variant_unit_name: "Назва варіанта одиниці"
+      spree/variant:
+        primary_taxon: "Категорія товару"
+        shipping_category_id: "Категорія доставки"
       spree/credit_card:
         base: "Кредитна картка"
         number: "Номер"
@@ -681,15 +684,15 @@ uk:
       index:
         header:
           title: Масове редагування продуктів
-      sort:
-        pagination:
-          clear_search: Очистити пошук
       filters:
         producers:
           label: Виробники
         categories:
           label: Категорії
         search: Пошук
+      sort:
+        pagination:
+          clear_search: Очистити пошук
       table:
         new_variant: Новий варіант
       edit_image:
@@ -733,6 +736,9 @@ uk:
         product_categories: Категорії продуктів
         tax_categories: Податкові категорії
         shipping_categories: Категорії доставки
+      dfc_import_form:
+        enterprise: "Підприємство"
+        import: "Імпорт"
       import:
         review: Огляд
         import: Імпорт
@@ -3453,6 +3459,7 @@ uk:
     new_taxon: "Новий таксон"
     new_user: "Новий користувач"
     no_pending_payments: "Немає незавершених платежів"
+    remove: "Видалити"
     none: "Жодного"
     not_found: "Не знайдено"
     notice_messages:
@@ -3467,8 +3474,6 @@ uk:
     start_date: "Дата початку"
     successfully_removed: "Успішно видалено"
     taxonomy_edit: "Редагування таксономії"
-    taxonomy_tree_error: "Помилка дерева таксономії"
-    taxonomy_tree_instruction: "Інструкція з таксономічного дерева"
     tree: "Дерево"
     updating: "Оновлення"
     your_order_is_empty_add_product: "Ваше замовлення порожнє, знайдіть і додайте продукт вище"

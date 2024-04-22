@@ -10,11 +10,10 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
       :product_with_image,
       id: 90_000,
       supplier: enterprise, name: "Pesto", description: "Basil Pesto",
-      variants: [variant],
-      primary_taxon: taxon
+      variants: [variant]
     )
   }
-  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1) }
+  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, primary_taxon: taxon) }
   let(:taxon) {
     build(
       :taxon,
@@ -114,7 +113,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
           product = Spree::Product.find(product_id)
           expect(product.name).to eq "Apple"
           expect(product.variants).to eq [variant]
-          expect(product.primary_taxon).to eq(non_local_vegetable)
+          expect(product.variants.first.primary_taxon).to eq(non_local_vegetable)
 
           # Creates a variant for existing product
           supplied_product[:'ofn:spree_product_id'] = product_id
@@ -141,6 +140,36 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
               "\"ofn:spree_product_id\":#{spree_product_id}",
               '"ofn:spree_product_id":90000'
             )
+        end
+
+        context "when supplying spree_product_uri matching the host" do
+          it "creates a variant for the existing product" do |example|
+            supplied_product[:'ofn:spree_product_uri'] =
+              "http://test.host/api/dfc/enterprises/10000?spree_product_id=90000"
+            supplied_product[:'dfc-b:hasQuantity'][:'dfc-b:value'] = 6
+
+            expect {
+              submit_request(example.metadata)
+              product.variants.reload
+            }
+              .to change { product.variants.count }.by(1)
+
+            # Creates a variant for existing product
+            variant_id = json_response["@id"].split("/").last.to_i
+            new_variant = Spree::Variant.find(variant_id)
+            expect(product.variants).to include(new_variant)
+            expect(new_variant.unit_value).to eq 6
+
+            # Insert static value to keep documentation deterministic:
+            response.body.gsub!(
+              "supplied_products/#{variant_id}",
+              "supplied_products/10001"
+            )
+              .gsub!(
+                %r{active_storage/[0-9A-Za-z/=-]*/logo-white.png},
+                "active_storage/url/logo-white.png",
+              )
+          end
         end
       end
     end
@@ -214,7 +243,7 @@ describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswag_auto
           }.to change { variant.description }.to("DFC-Pesto updated")
             .and change { variant.display_name }.to("Pesto novo")
             .and change { variant.unit_value }.to(17)
-            .and change { variant.product.primary_taxon }.to(drink_taxon)
+            .and change { variant.primary_taxon }.to(drink_taxon)
         end
       end
     end

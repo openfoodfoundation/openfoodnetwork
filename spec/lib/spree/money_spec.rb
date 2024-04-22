@@ -24,6 +24,11 @@ describe Spree::Money do
   end
 
   context "with currency" do
+    before do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with("CURRENCY").and_return("USD")
+    end
+
     it "passed in option" do
       money = Spree::Money.new(10, with_currency: true, html_wrap: false)
       expect(money.to_s).to eq("$10.00 USD")
@@ -96,6 +101,9 @@ describe Spree::Money do
         config.currency_symbol_position = :after
         config.display_currency = false
       end
+
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with("CURRENCY").and_return("EUR")
     end
 
     # Regression test for Spree #2634

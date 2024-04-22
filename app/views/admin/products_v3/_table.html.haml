@@ -1,46 +1,58 @@
-= form_with url: bulk_update_admin_products_path, method: :patch, id: "products-form",
+= form_with url: bulk_update_admin_products_path, method: :post, id: "products-form",
             builder: BulkFormBuilder,
-            html: { data: { reflex: 'submit->products#bulk_update', 'reflex-serialize-form': true,
-              controller: "bulk-form", 'bulk-form-disable-selector-value': "#sort,#filters",
-              'bulk-form-error-value': defined?(error_counts),
+            html: { data: { 'turbo-frame': "_self",
+              controller: "bulk-form",
+              'bulk-form-disable-selector-value': "#sort,#filters",
+              'bulk-form-error-value': defined?(@error_counts),
               } } do |form|
   = render(partial: "admin/shared/flashes", locals: { flashes: }) if defined? flashes
+
+  = hidden_field_tag :page, @page
+  = hidden_field_tag :per_page, @per_page
+  = hidden_field_tag :search_term, @search_term
+  = hidden_field_tag :producer_id, @producer_id
+  = hidden_field_tag :category_id, @category_id
+
   %table.products
-    %col{ width:"4%" }
-    %col{ width:"15%" }
-    %col{ width:"5%", style: "max-width:5em" }
-    %col{ width:"8%" }
-    %col{ width:"5%", style: "max-width:5em"}
-    %col{ width:"8%", style: "max-width:5em"}
-    %col{ width:"10%" }= # producer
-    %col{ width:"10%" }
-    %col{ width:"5%" }
-    %col{ width:"5%", style: "max-width:5em" }
-    %col{ width:"5%", style: "max-width:5em" }
+    %colgroup
+      %col{ width:"56" }= #  Img (size + padding)
+      %col= # (grow to fill) Name
+      %col{ width:"5%"}
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"5%"}
+      %col{ width:"10%"}
+      %col{ width:"15%"}= # Producer
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"8%"}
+      %col{ width:"8%"}= # Actions
     %thead
       %tr
-        %td.form-actions-wrapper{ colspan: 11 }
+        %td.form-actions-wrapper{ colspan: 12 }
           .form-actions-wrapper2
-            %fieldset.form-actions{ class: ("hidden" unless defined?(error_counts)), 'data-bulk-form-target': "actions" }
+            %fieldset.form-actions{ class: ("hidden" unless defined?(@error_counts)), 'data-bulk-form-target': "actions" }
               .container
                 .status
                   .modified_summary{ 'data-bulk-form-target': "changedSummary", 'data-translation-key': 'admin.products_v3.table.changed_summary'}
-                  - if defined?(error_counts)
+                  - if defined?(@error_counts)
                     .error_summary
-                      - if error_counts[:saved] > 0
+                      - if @error_counts[:saved] > 0
                         -# X products were saved correctly, but Y products could not be saved correctly. Please review errors and try again
-                        = t('.error_summary.saved', count: error_counts[:saved]) + t('.error_summary.invalid', count: error_counts[:invalid])
+                        = t('.error_summary.saved', count: @error_counts[:saved]) + t('.error_summary.invalid', count: @error_counts[:invalid])
                       - else 
                         -# Y products could not be saved correctly. Please review errors and try again
-                        = t('.error_summary.invalid', count: error_counts[:invalid])
+                        = t('.error_summary.invalid', count: @error_counts[:invalid])
                 .form-buttons
-                  = form.submit t('.reset'), type: :reset, class: "medium", 'data-reflex': 'click->products#fetch'
+                  %a.button.reset.medium{ href: admin_products_path(page: @page, per_page: @per_page, search_term: @search_term, producer_id: @producer_id, category_id: @category_id), 'data-turbo': "false" }
+                    = t('.reset')
                   = form.submit t('.save'), class: "medium"
       %tr
         %th.align-left= # image
         %th.align-left.with-input= t('admin.products_page.columns.name')
         %th.align-left.with-input= t('admin.products_page.columns.sku')
-        %th.align-right= t('admin.products_page.columns.unit')
+        %th.align-left.with-input= t('admin.products_page.columns.unit_scale')
+        %th.align-left.with-input= t('admin.products_page.columns.unit')
         %th.align-left.with-input= t('admin.products_page.columns.price')
         %th.align-left.with-input= t('admin.products_page.columns.on_hand')
         %th.align-left= t('admin.products_page.columns.producer')
@@ -50,25 +62,26 @@
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
       = form.fields_for("products", product, index: product_index) do |product_form|
-        %tbody.relaxed{ data: { 'record-id': product_form.object.id, controller: "nested-form",
-                                action: 'nested-form:add->bulk-form#registerElements' } }
+        %tbody.relaxed{ data: { 'record-id': product_form.object.id,
+                                controller: "nested-form product",
+                                action: 'rails-nested-form:add->bulk-form#registerElements' } }
           %tr
             = render partial: 'product_row', locals: { product:, f: product_form }
 
           - product.variants.each_with_index do |variant, variant_index|
             = form.fields_for("products][#{product_index}][variants_attributes][", variant, index: variant_index) do |variant_form|
-              %tr.condensed
+              %tr.condensed{ 'data-controller': "variant" }
                 = render partial: 'variant_row', locals: { variant:, f: variant_form }
 
           = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", product.variants.build) do |new_variant_form|
             %template{ 'data-nested-form-target': "template" }
-              %tr.condensed
+              %tr.condensed{ 'data-controller': "variant" }
                 = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form }
 
           %tr{ 'data-nested-form-target': "target" }
           %tr.condensed
             %td
-            %td{ colspan: 10 }
+            %td{ colspan: 11 }
               %button.secondary.condensed.naked.icon-plus{ 'data-action': "nested-form#add",
                                                            'aria-label': t('.new_variant') }
                 =t('.new_variant')

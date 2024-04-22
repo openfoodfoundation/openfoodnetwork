@@ -1,6 +1,19 @@
 import { Controller } from "stimulus";
 
-// Manages "changed" state for a form with multiple records
+// Manage "changed" state for a form with multiple records
+//
+// When any elements are changed:
+//  - the element is marked ".changed"
+//  - "actions" element appears
+//  - "changedSummary" element is updated using I18n
+//  - "disableSelector" elements are disabled
+//  - The browser will warn if trying to leave the page
+//
+// Supported element types:
+//  - input[type=text] and similar
+//  - input[type=checkbox]
+//  - select (single) - including tom-select
+//
 export default class BulkFormController extends Controller {
   static targets = ["actions", "changedSummary"];
   static values = {
@@ -10,25 +23,31 @@ export default class BulkFormController extends Controller {
   recordElements = {};
 
   connect() {
+    this.submitting = false;
     this.form = this.element;
 
     // Start listening for any changes within the form
     this.#registerElements(this.form.elements);
 
     this.toggleFormChanged();
+
+    this.form.addEventListener("submit", this.#registerSubmit.bind(this));
+    window.addEventListener("beforeunload", this.preventLeavingChangedForm.bind(this));
   }
 
   disconnect() {
     // Make sure to clean up anything that happened outside
     this.#disableOtherElements(false);
-    window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
+    window.removeEventListener("beforeunload", this.preventLeavingChangedForm.bind(this));
   }
 
   // Register any new elements (may be called by another controller after dynamically adding fields)
   registerElements() {
     const registeredElements = Object.values(this.recordElements).flat();
     // Select only elements that haven't been registered yet
-    const newElements = Array.from(this.form.elements).filter(n => !registeredElements.includes(n));
+    const newElements = Array.from(this.form.elements).filter(
+      (n) => !registeredElements.includes(n),
+    );
 
     this.#registerElements(newElements);
   }
@@ -42,14 +61,15 @@ export default class BulkFormController extends Controller {
 
   toggleFormChanged() {
     // For each record, check if any fields are changed
+    // TODO: optimise basd on current state. if field is changed, but form already changed, no need to update (and vice versa)
     const changedRecordCount = Object.values(this.recordElements).filter((elements) =>
-      elements.some(this.#isChanged)
+      elements.some(this.#isChanged),
     ).length;
-    const formChanged = changedRecordCount > 0 || this.errorValue;
+    this.formChanged = changedRecordCount > 0 || this.errorValue;
 
     // Show actions
-    this.hasActionsTarget && this.actionsTarget.classList.toggle("hidden", !formChanged);
-    this.#disableOtherElements(formChanged); // like filters and sorting
+    this.hasActionsTarget && this.actionsTarget.classList.toggle("hidden", !this.formChanged);
+    this.#disableOtherElements(this.formChanged); // like filters and sorting
 
     // Display number of records changed
     const key = this.hasChangedSummaryTarget && this.changedSummaryTarget.dataset.translationKey;
@@ -57,24 +77,25 @@ export default class BulkFormController extends Controller {
       // TODO: save processing and only run if changedRecordCount has changed.
       this.changedSummaryTarget.textContent = I18n.t(key, { count: changedRecordCount });
     }
+  }
 
-    // Prevent accidental data loss
-    if (formChanged) {
-      window.addEventListener("beforeunload", this.preventLeavingBulkForm);
-    } else {
-      window.removeEventListener("beforeunload", this.preventLeavingBulkForm);
+  // If form is not being submitted, warn to prevent accidental data loss
+  preventLeavingChangedForm(event) {
+    if (this.formChanged && !this.submitting) {
+      // Cancel the event
+      event.preventDefault();
+      // Chrome requires returnValue to be set, but ignores the value. Other browsers may display
+      // this if provided, but let's not create a new translation key, and keep the behaviour
+      // consistent.
+      event.returnValue = "";
     }
   }
 
-  preventLeavingBulkForm(e) {
-    // Cancel the event
-    e.preventDefault();
-    // Chrome requires returnValue to be set. Other browsers may display this if provided, but let's
-    // not create a new translation key, and keep the behaviour consistent.
-    e.returnValue = "";
-  }
-
   // private
+
+  #registerSubmit() {
+    this.submitting = true;
+  }
 
   #registerElements(elements) {
     for (const element of elements) {
@@ -105,7 +126,7 @@ export default class BulkFormController extends Controller {
 
       forms &&
         forms.forEach((form) =>
-          Array.from(form.elements).forEach((formElement) => (formElement.disabled = disable))
+          Array.from(form.elements).forEach((formElement) => (formElement.disabled = disable)),
         );
     });
   }
@@ -113,6 +134,11 @@ export default class BulkFormController extends Controller {
   #isChanged(element) {
     if (element.type == "checkbox") {
       return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
+    } else if (element.type == "select-one") {
+      const defaultSelected = Array.from(element.options).find((opt) =>
+        opt.hasAttribute("selected"),
+      );
+      return element.selectedOptions[0] != defaultSelected;
     } else {
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }

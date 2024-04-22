@@ -85,7 +85,7 @@ module Spree
 
     scope :from_order_cycle, lambda { |order_cycle|
       joins(order: :order_cycle).
-        where('order_cycles.id = ?', order_cycle)
+        where(order_cycles: { id: order_cycle })
     }
 
     # Here we are simply joining the line item to its variant and product
@@ -94,12 +94,12 @@ module Spree
     scope :supplied_by_any, lambda { |enterprises|
       product_ids = Spree::Product.unscoped.where(supplier_id: enterprises).select(:id)
       variant_ids = Spree::Variant.unscoped.where(product_id: product_ids).select(:id)
-      where("spree_line_items.variant_id IN (?)", variant_ids)
+      where(spree_line_items: { variant_id: variant_ids })
     }
 
     scope :with_tax, -> {
       joins(:adjustments).
-        where('spree_adjustments.originator_type = ?', 'Spree::TaxRate').
+        where(spree_adjustments: { originator_type: 'Spree::TaxRate' }).
         select('DISTINCT spree_line_items.*')
     }
 
@@ -110,7 +110,7 @@ module Spree
           ON (spree_adjustments.adjustable_id=spree_line_items.id
             AND spree_adjustments.adjustable_type = 'Spree::LineItem'
             AND spree_adjustments.originator_type='Spree::TaxRate')").
-        where('spree_adjustments.id IS NULL')
+        where(spree_adjustments: { id: nil })
     }
 
     def copy_price
@@ -193,6 +193,7 @@ module Spree
       adjustments.tax.additional.sum(:amount)
     end
 
+    # Some of the tax rates may not be applicable depending to the order's tax zone
     def tax_rates
       variant&.tax_category&.tax_rates || []
     end

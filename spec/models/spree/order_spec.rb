@@ -34,7 +34,7 @@ describe Spree::Order do
     end
 
     it "can find a line item matching a given variant" do
-      expect(order.find_line_item_by_variant(order.line_items.third.variant)).to_not be_nil
+      expect(order.find_line_item_by_variant(order.line_items.third.variant)).not_to be_nil
       expect(order.find_line_item_by_variant(build(:variant))).to be_nil
     end
   end
@@ -107,7 +107,7 @@ describe Spree::Order do
   context "#create" do
     it "should assign an order number" do
       order = Spree::Order.create
-      expect(order.number).to_not be_nil
+      expect(order.number).not_to be_nil
     end
   end
 
@@ -137,23 +137,6 @@ describe Spree::Order do
     it "should be false if the order is neither in the 'complete' nor 'resumed' state" do
       allow(order).to receive_messages(resumed?: false, complete?: false)
       expect(order.can_ship?).to be_falsy
-    end
-  end
-
-  context "#invoiceable?" do
-    it "should return true if the order is completed" do
-      allow(order).to receive_messages(complete?: true)
-      expect(order.invoiceable?).to be_truthy
-    end
-
-    it "should return true if the order is resumed" do
-      allow(order).to receive_messages(resumed?: true)
-      expect(order.invoiceable?).to be_truthy
-    end
-
-    it "should return false if the order is neither completed nor resumed" do
-      allow(order).to receive_messages(complete?: false, resumed?: false)
-      expect(order.invoiceable?).to be_falsy
     end
   end
 
@@ -616,7 +599,7 @@ describe Spree::Order do
 
   describe "applying enterprise fees" do
     subject { create(:order) }
-    let(:fee_handler) { OrderFeesHandler.new(subject) }
+    let(:fee_handler) { Orders::HandleFeesService.new(subject) }
 
     before do
       allow(subject).to receive(:fee_handler) { fee_handler }
@@ -628,7 +611,7 @@ describe Spree::Order do
       subject.recreate_all_fees!
     end
 
-    it "creates line item and order fee adjustments via OrderFeesHandler" do
+    it "creates line item and order fee adjustments via Orders::HandleFeesService" do
       expect(fee_handler).to receive(:create_line_item_fees!)
       expect(fee_handler).to receive(:create_order_fees!)
       subject.recreate_all_fees!
@@ -997,6 +980,19 @@ describe Spree::Order do
   end
 
   describe "scopes" do
+    describe "invoiceable" do
+      it "finds only active orders" do
+        order_complete = create(:order, state: :complete)
+        order_canceled = create(:order, state: :canceled)
+        order_resumed = create(:order, state: :resumed)
+
+        expect(Spree::Order.invoiceable).to match_array [
+          order_complete,
+          order_resumed,
+        ]
+      end
+    end
+
     describe "not_state" do
       it "finds only orders not in specified state" do
         o = FactoryBot.create(:completed_order_with_totals,
@@ -1012,7 +1008,7 @@ describe Spree::Order do
 
       it "returns only orders which have line items" do
         expect(Spree::Order.not_empty).to include order_with_line_items
-        expect(Spree::Order.not_empty).to_not include order_without_line_items
+        expect(Spree::Order.not_empty).not_to include order_without_line_items
       end
     end
   end
@@ -1041,19 +1037,19 @@ describe Spree::Order do
 
   describe "#customer" do
     it "is not required for new records" do
-      is_expected.to_not validate_presence_of(:customer)
+      is_expected.not_to validate_presence_of(:customer)
     end
 
     it "is not required for new complete orders" do
       order = Spree::Order.new(state: "complete")
 
-      expect(order).to_not validate_presence_of(:customer)
+      expect(order).not_to validate_presence_of(:customer)
     end
 
     it "is not required for existing orders in cart state" do
       order = create(:order)
 
-      expect(order).to_not validate_presence_of(:customer)
+      expect(order).not_to validate_presence_of(:customer)
     end
 
     it "is created for existing orders in complete state" do
@@ -1070,7 +1066,7 @@ describe Spree::Order do
       it "does not create a customer" do
         expect {
           create(:order, distributor:)
-        }.to_not change {
+        }.not_to change {
           Customer.count
         }
       end
@@ -1130,7 +1126,7 @@ describe Spree::Order do
 
         expect {
           other_order.update!(state: "complete")
-        }.to_not change { Customer.count }
+        }.not_to change { Customer.count }
 
         expect(other_order.customer.email).to eq "new@email.org"
         expect(order.customer).to eq other_order.customer
@@ -1322,19 +1318,6 @@ describe Spree::Order do
         expect(order.finalised_line_items)
           .to match_array(prev_order.line_items + prev_order2.line_items)
       end
-    end
-  end
-
-  describe "determining checkout steps for an order" do
-    let!(:enterprise) { create(:enterprise) }
-    let!(:order) { create(:order, distributor: enterprise) }
-    let!(:payment_method) {
-      create(:stripe_sca_payment_method, distributor_ids: [enterprise.id])
-    }
-    let!(:payment) { create(:payment, order:, payment_method:) }
-
-    it "does not include the :confirm step" do
-      expect(order.checkout_steps).to_not include "confirm"
     end
   end
 

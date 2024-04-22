@@ -34,6 +34,9 @@ ko:
         shipping_category_id: "전송물품 목록"
         variant_unit: "구성 단위 변경"
         variant_unit_name: "변경된 구성 단위 이름"
+      spree/variant:
+        primary_taxon: "물품 목록"
+        shipping_category_id: "전송물품 목록"
       spree/credit_card:
         base: "신용카드"
         number: "숫자"
@@ -678,15 +681,15 @@ ko:
       index:
         header:
           title: 제품 대량 편집
-      sort:
-        pagination:
-          clear_search: 검색 지우기
       filters:
         producers:
           label: 생산자들
         categories:
           label: 카테고리
         search: 탐색
+      sort:
+        pagination:
+          clear_search: 검색 지우기
       table:
         new_variant: 새로운 변경사항
       edit_image:
@@ -730,6 +733,9 @@ ko:
         product_categories: 제품 카테고리
         tax_categories: 세금 카테고리
         shipping_categories: 배송 카테고리
+      dfc_import_form:
+        enterprise: "회사"
+        import: "수입"
       import:
         review: 리뷰
         import: 수입
@@ -3338,6 +3344,7 @@ ko:
     new_taxon: "새 분류군"
     new_user: "신규 사용자"
     no_pending_payments: "미지금급"
+    remove: "제거"
     none: "아니다"
     not_found: "찾을 수 없습니다"
     notice_messages:
@@ -3352,8 +3359,6 @@ ko:
     start_date: "시작 날짜"
     successfully_removed: "성공적으로 제거됨"
     taxonomy_edit: "분류법 편집"
-    taxonomy_tree_error: "분류법 트리 오류"
-    taxonomy_tree_instruction: "분류법 트리 소개"
     tree: "트리"
     updating: "업데이트 중"
     your_order_is_empty_add_product: "주문이 비어 있습니다. 위의 제품을 검색하여 추가하십시오."

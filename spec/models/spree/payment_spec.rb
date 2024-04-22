@@ -145,7 +145,7 @@ describe Spree::Payment do
 
         it "should call capture if the payment is already authorized" do
           expect(payment).to receive(:capture!)
-          expect(payment).to_not receive(:purchase!)
+          expect(payment).not_to receive(:purchase!)
           payment.process_offline!
         end
       end
@@ -222,7 +222,7 @@ describe Spree::Payment do
           it "should mark payment as failed" do
             allow(payment_method).to receive(:authorize).and_return(failed_response)
             expect(payment).to receive(:failure)
-            expect(payment).to_not receive(:pend)
+            expect(payment).not_to receive(:pend)
             expect {
               payment.authorize!
             }.to raise_error(Spree::Core::GatewayError)
@@ -313,7 +313,7 @@ describe Spree::Payment do
             it "should not make payment complete" do
               allow(payment_method).to receive(:capture).and_return(failed_response)
               expect(payment).to receive(:failure)
-              expect(payment).to_not receive(:complete)
+              expect(payment).not_to receive(:complete)
               expect { payment.capture! }.to raise_error(Spree::Core::GatewayError)
             end
           end
@@ -323,9 +323,9 @@ describe Spree::Payment do
         context "when payment is completed" do
           it "should do nothing" do
             payment = build_stubbed(:payment, :completed)
-            expect(payment).to_not receive(:complete)
-            expect(payment.payment_method).to_not receive(:capture)
-            expect(payment.log_entries).to_not receive(:create)
+            expect(payment).not_to receive(:complete)
+            expect(payment.payment_method).not_to receive(:capture)
+            expect(payment.log_entries).not_to receive(:create)
             payment.capture!
           end
         end
@@ -382,7 +382,7 @@ describe Spree::Payment do
         context "if unsuccessful" do
           it "should not void the payment" do
             allow(payment_method).to receive(:void).and_return(failed_response)
-            expect(payment).to_not receive(:void)
+            expect(payment).not_to receive(:void)
             expect { payment.void_transaction! }.to raise_error(Spree::Core::GatewayError)
           end
         end
@@ -391,7 +391,7 @@ describe Spree::Payment do
         context "if payment is already voided" do
           it "should not void the payment" do
             payment = build_stubbed(:payment, payment_method:, state: 'void')
-            expect(payment.payment_method).to_not receive(:void)
+            expect(payment.payment_method).not_to receive(:void)
             payment.void_transaction!
           end
         end
@@ -570,8 +570,8 @@ describe Spree::Payment do
         payment = build_stubbed(:payment)
         payment.state = 'processing'
 
-        expect(payment).to_not receive(:authorize!)
-        expect(payment).to_not receive(:purchase!)
+        expect(payment).not_to receive(:authorize!)
+        expect(payment).not_to receive(:purchase!)
         expect(payment.process!).to be_nil
       end
     end
@@ -717,7 +717,7 @@ describe Spree::Payment do
           payment_method.distributors << create(:distributor_enterprise)
           payment_method.save!
 
-          expect(payment_method).to_not receive :create_profile
+          expect(payment_method).not_to receive :create_profile
           payment = Spree::Payment.create(
             amount: 100,
             order: create(:order),
@@ -1012,7 +1012,7 @@ describe Spree::Payment do
             expect(payment.adjustment.eligible?).to be false
             expect(payment.adjustment.finalized?).to be true
             expect(order.all_adjustments.payment_fee.count).to eq 1
-            expect(order.all_adjustments.payment_fee.eligible).to_not include payment.adjustment
+            expect(order.all_adjustments.payment_fee.eligible).not_to include payment.adjustment
           end
         end
 
@@ -1031,7 +1031,7 @@ describe Spree::Payment do
             expect(payment.adjustment.eligible?).to be false
             expect(payment.adjustment.finalized?).to be true
             expect(order.all_adjustments.payment_fee.count).to eq 1
-            expect(order.all_adjustments.payment_fee.eligible).to_not include payment.adjustment
+            expect(order.all_adjustments.payment_fee.eligible).not_to include payment.adjustment
           end
         end
 

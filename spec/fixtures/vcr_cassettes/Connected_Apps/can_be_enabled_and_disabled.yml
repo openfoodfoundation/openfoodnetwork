@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://n8n.openfoodnetwork.org.uk/webhook/regen/connect-enterprise
+    uri: https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise
     body:
       encoding: UTF-8
       string: '{"id":"4da377c8-0c8f-4aaa-8f85-f2a218a13d6e","at":"2023-12-14 12:52:53

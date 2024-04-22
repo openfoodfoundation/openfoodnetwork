@@ -1,7 +1,7 @@
 = render 'spree/shared/error_messages', target: @enterprise
 
 = form_for [main_app, :admin, @enterprise_group] do |f|
-  .row{ ng: {app: 'admin.enterprise_groups', controller: 'enterpriseGroupCtrl'}, data: { controller: 'tabs-and-panels', "tabs-and-panels-class-name-value": "selected" } }
+  .row{ data: { controller: 'tabs-and-panels', "tabs-and-panels-class-name-value": "selected" }, "ng-app": 'admin.enterprise_groups', "ng-controller": 'enterpriseGroupCtrl' }
     .sixteen.columns.alpha
       .four.columns.alpha
         = render 'admin/shared/side_menu'

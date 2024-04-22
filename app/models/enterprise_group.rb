@@ -41,7 +41,7 @@ class EnterpriseGroup < ApplicationRecord
     if user.has_spree_role?('admin')
       where(nil)
     else
-      where('owner_id = ?', user.id)
+      where(owner_id: user.id)
     end
   }
 

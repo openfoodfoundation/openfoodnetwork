@@ -11,7 +11,7 @@ describe "As a consumer I want to shop with a distributor" do
 
   describe "Viewing a distributor" do
     let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
-    let(:supplier) { create(:supplier_enterprise) }
+    let(:supplier) { create(:supplier_enterprise, name: 'The small mammals company') }
     let(:oc1) {
       create(:simple_order_cycle, distributors: [distributor],
                                   coordinator: create(:distributor_enterprise),
@@ -62,7 +62,7 @@ describe "As a consumer I want to shop with a distributor" do
         (all_tabs - tabs).each do |tab|
           it "does not show the #{tab} tab" do
             within ".tab-buttons" do
-              expect(page).to_not have_content tab
+              expect(page).not_to have_content tab
             end
           end
         end
@@ -132,8 +132,8 @@ describe "As a consumer I want to shop with a distributor" do
         end
 
         it "does not show the producer modal" do
-          expect(page).to_not have_link supplier.name
-          expect(page).to_not have_selector ".reveal-modal"
+          expect(page).not_to have_link supplier.name
+          expect(page).not_to have_selector ".reveal-modal"
         end
       end
     end
@@ -291,9 +291,12 @@ describe "As a consumer I want to shop with a distributor" do
 
     describe "after selecting an order cycle with products visible" do
       let(:variant1) { create(:variant, product:, price: 20) }
-      let(:variant2) { create(:variant, product:, price: 30, display_name: "Badgers") }
+      let(:variant2) do
+        create(:variant, product:, price: 30, display_name: "Badgers",
+                         display_as: 'displayedunderthename')
+      end
       let(:product2) {
-        create(:simple_product, supplier:, name: "Meercats", meta_keywords: "Wild")
+        create(:simple_product, supplier:, name: "Meercats", meta_keywords: "Wild Fresh")
       }
       let(:variant3) { create(:variant, product: product2, price: 40, display_name: "Ferrets") }
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
@@ -330,23 +333,44 @@ describe "As a consumer I want to shop with a distributor" do
       end
 
       context "filtering search results" do
-        it "returns no results and clears searches by clicking the clear-link" do
+        before do
           visit shop_path
           sleep(2)
+        end
+        it "returns results when successful" do
           fill_in "search", with: "74576345634XXXXXX"
           expect(page).to have_content "Sorry, no results found"
-          expect(page).not_to have_content product2.name
+          expect(page).not_to have_content 'Meercats'
           click_on "Clear search" # clears search by clicking text
           expect(page).to have_content("Add", count: 4)
-        end
-        it "returns results and clears searches by clicking the clear-button" do
-          visit shop_path
-          sleep(2)
           fill_in "search", with: "Meer" # For product named "Meercats"
-          expect(page).to have_content product2.name
+          expect(page).to have_content 'Meercats'
           expect(page).not_to have_content product.name
           find("a.clear").click # clears search by clicking the X button
           expect(page).to have_content("Add", count: 4)
+        end
+        it "returns results by looking at different columns in DB" do
+          # by keyword model: meta_keywords
+          fill_in "search", with: "Wild" # For product named "Meercats"
+          expect(page).to have_content 'Wild'
+          find("a.clear").click
+          # by variant display name model: variant display_name
+          fill_in "search", with: "Ferrets" # For variants named "Ferrets"
+          within('div.pad-top') do
+            expect(page).to have_content 'Ferrets'
+            expect(page).not_to have_content 'Badgers'
+          end
+          # model: variant display_as
+          fill_in "search", with: "displayedunder" # "Badgers"
+          within('div.pad-top') do
+            expect(page).not_to have_content 'Ferrets'
+            expect(page).to have_content 'Badgers'
+          end
+          # model: Enterprise name
+          fill_in "search", with: "Enterp" # Enterprise 1 sells nothing
+          within('p.no-results') do
+            expect(page).to have_content "Sorry, no results found for Enterp"
+          end
         end
       end
 
@@ -531,7 +555,7 @@ describe "As a consumer I want to shop with a distributor" do
           # Update amount in cart
           within_variant(variant) do
             expect(page).to have_button "Add", disabled: true
-            expect(page).to have_no_content "in cart"
+            expect(page).not_to have_content "in cart"
           end
           within_variant(variant2) do
             expect(page).to have_button "Add", disabled: false
@@ -549,7 +573,7 @@ describe "As a consumer I want to shop with a distributor" do
 
           click_add_to_cart variant
 
-          expect(page).to_not have_selector '.out-of-stock-modal'
+          expect(page).not_to have_selector '.out-of-stock-modal'
         end
 
         context "group buy products" do
@@ -578,7 +602,7 @@ describe "As a consumer I want to shop with a distributor" do
             # Update amount in cart
             within_variant(variant) do
               expect(page).to have_button "Add", disabled: true
-              expect(page).to have_no_content "in cart"
+              expect(page).not_to have_content "in cart"
             end
 
             # Update amount available in product list
@@ -703,7 +727,7 @@ describe "As a consumer I want to shop with a distributor" do
           visit shop_path
           expect(page).to have_content "Only approved customers can access this shop."
           expect(page).to have_content "login to proceed"
-          expect(page).to have_no_content product.name
+          expect(page).not_to have_content product.name
           expect(page).not_to have_selector "ordercycle"
         end
       end
@@ -721,7 +745,7 @@ describe "As a consumer I want to shop with a distributor" do
             visit shop_path
             expect(page).to have_content "Only approved customers can access this shop."
             expect(page).to have_content "please contact #{distributor.name}"
-            expect(page).to have_no_content product.name
+            expect(page).not_to have_content product.name
             expect(page).not_to have_selector "ordercycle"
           end
         end
@@ -773,7 +797,7 @@ describe "As a consumer I want to shop with a distributor" do
   end
 
   def shows_products_without_customer_warning
-    expect(page).to have_no_content "This shop is for customers only."
+    expect(page).not_to have_content "This shop is for customers only."
     expect(page).to have_content product.name
   end
 
@@ -789,7 +813,7 @@ describe "As a consumer I want to shop with a distributor" do
     expect(page).to have_selector "#variant-#{variant.id}.out-of-stock"
     within_variant(variant) do
       expect(page).to have_button "Add", disabled: true
-      expect(page).to have_no_content "in cart"
+      expect(page).not_to have_content "in cart"
     end
   end
 end

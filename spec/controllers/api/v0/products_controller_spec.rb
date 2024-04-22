@@ -25,6 +25,7 @@ describe Api::V0::ProductsController, type: :controller do
   end
 
   context "as a normal user" do
+    let(:taxon) { create(:taxon) }
     let(:attachment) { fixture_file_upload("thinking-cat.jpg") }
 
     before do
@@ -34,9 +35,11 @@ describe Api::V0::ProductsController, type: :controller do
 
     it "gets a single product" do
       product.create_image!(attachment:)
-      product.variants.create!(unit_value: "1", unit_description: "thing", price: 1)
+      product.variants.create!(unit_value: "1", unit_description: "thing", price: 1,
+                               primary_taxon: taxon)
       product.variants.first.images.create!(attachment:)
       product.set_property("spree", "rocks")
+
       api_get :show, id: product.to_param
 
       expect(all_attributes.all?{ |attr| json_response.keys.include? attr }).to eq(true)
@@ -117,8 +120,7 @@ describe Api::V0::ProductsController, type: :controller do
       expect(response.status).to eq(422)
       expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       errors = json_response["errors"]
-      expect(errors.keys).to match_array(["name", "primary_taxon", "supplier", "variant_unit",
-                                          "price"])
+      expect(errors.keys).to match_array(["name", "supplier", "variant_unit", "price"])
     end
 
     it "can update a product" do
@@ -266,7 +268,8 @@ describe Api::V0::ProductsController, type: :controller do
       end
 
       it "filters results by product category" do
-        api_get :bulk_products, { page: 1, per_page: 15, q: { primary_taxon_id_eq: taxon.id } },
+        api_get :bulk_products,
+                { page: 1, per_page: 15, q: { variants_primary_taxon_id_eq: taxon.id } },
                 format: :json
         expect(returned_product_ids).to eq [product3.id, product2.id]
       end

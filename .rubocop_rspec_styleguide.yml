@@ -10,12 +10,15 @@ RSpec:
 FactoryBot:
   Enabled: false
 
+# Enabled rules
+
+Capybara/NegationMatcher:
+  Enabled: true
+  EnforcedStyle: not_to
+
 RSpec/ExpectChange:
   Enabled: true
   EnforcedStyle: block
 
-RSpec/MultipleExpectations:
-  Max: 5 # Default 1
-
-RSpec/MultipleMemoizedHelpers:
-  Max: 10 # Default 5
+RSpec/NotToNot:
+  Enabled: true
