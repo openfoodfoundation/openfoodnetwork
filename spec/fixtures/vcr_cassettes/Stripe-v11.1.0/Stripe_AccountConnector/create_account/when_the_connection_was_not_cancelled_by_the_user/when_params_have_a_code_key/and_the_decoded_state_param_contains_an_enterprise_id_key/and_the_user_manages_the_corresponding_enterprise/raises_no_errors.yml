@@ -1,0 +1,182 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://connect.stripe.com/oauth/authorize?api_key=<HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 22 Apr 2024 12:33:12 GMT
+      Content-Type:
+      - text/html;charset=utf-8
+      Content-Length:
+      - '0'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=0, no-cache, no-store, must-revalidate
+      Content-Security-Policy:
+      - 'report-uri /csp-report?p=oauth%2Fauthorize; block-all-mixed-content; default-src
+        ''self'' https://dashboard.stripe.com https://b.stripecdn.com; base-uri ''none'';
+        script-src ''unsafe-hashes'' https://www.google.com/recaptcha/api.js https://www.google.com/recaptcha/enterprise.js
+        https://www.recaptcha.net/recaptcha/enterprise.js https://www.recaptcha.net/recaptcha/
+        https://www.gstatic.com/recaptcha/api2/ https://www.gstatic.com/recaptcha/
+        https://hcaptcha.com https://*.hcaptcha.com ''self'' ''nonce-xCner1pfiNcy8mH8MAtO9w==''
+        ''sha256-47mKTaMaEn1L3m5DAz9muidMqw636xxw7EFAK/YnPdg='' https://js.stripe.com
+        https://dashboard.stripe.com https://connect.stripe.com https://b.stripecdn.com
+        https://connect-js.stripe.com ''report-sample''; frame-src blob: https://*.docusign.net/
+        https://*.docusign.com/ https://connect.finicity.com/ https://connect2.finicity.com/
+        https://int-widgets.moneydesktop.com/ https://widgets.moneydesktop.com/ https://www.google.com/recaptcha/
+        https://www.recaptcha.net/recaptcha/ https://hcaptcha.com https://*.hcaptcha.com
+        ''self'' https://b.stripecdn.com https://connect-js.stripe.com https://js.stripe.com
+        https://files.stripe.com https://pay.stripe.com https://stripe.com https://connect.stripe.com
+        https://marketplace.stripe.com https://dashboard.stripe.com https://support.stripe.com
+        https://support-conversations.stripe.com https://billing.stripe.com https://site-admin.stripe.com
+        https://docs.stripe.com https://stripe-upload-api.s3.us-west-1.amazonaws.com
+        https://stripe-upload-api-ap-south-1.s3.ap-south-1.amazonaws.com/ https://checkout.stripe.com
+        https://climate.stripe.com https://invoice.stripe.com https://verify.stripe.com
+        https://stripe-underwriting-documents.s3.amazonaws.com/; frame-ancestors ''self''
+        https://stripe.com https://dashboard.stripe.com https://billing.stripe.com
+        https://connect.stripe.com https://marketplace.stripe.com https://dashboard-admin.stripe.com
+        https://support-conversations.stripe.com https://docs.stripe.com https://support-admin.corp.stripe.com
+        https://support.stripe.com; form-action ''self'' https://stripe.com https://dashboard.stripe.com
+        https://billing.stripe.com https://connect.stripe.com https://marketplace.stripe.com
+        https://support.stripe.com https://support-admin.corp.stripe.com https://support-conversations.stripe.com
+        https://site-admin.stripe.com https://ldapmanager.corp.stripe.com https://checkout.stripe.com
+        https://docs.stripe.com; connect-src https://dataconnectors-dashboard-upload-us-west-2-prod.s3.us-west-2.amazonaws.com
+        https://hcaptcha.com https://*.hcaptcha.com ''self'' https://qr.stripe.com
+        https://b.stripecdn.com https://errors.stripe.com https://r.stripe.com https://t.stripe.com
+        https://api.stripe.com https://stripe.com https://files.stripe.com wss://stripe-cli.stripe.com/subscribe/
+        wss://stripe-cli-ws-nw.stripe.com/subscribe/ wss://stripecli.stripe.com/subscribe/
+        wss://stripecli-ws-nw.stripe.com/subscribe/ https://c.stripe.dev https://c.stripe.global
+        https://c.stripe.partners https://c.increment.com https://dashboard.stripe.com
+        https://support.stripe.com https://support-conversations.stripe.com https://connect.stripe.com
+        https://marketplace.stripe.com https://billing.stripe.com https://site-admin.stripe.com
+        https://issuing-key.stripe.com/v1/keys https://docs.stripe.com; font-src https://fonts.gstatic.com
+        data: ''self'' https://b.stripecdn.com; style-src https://translate.googleapis.com
+        https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com ''unsafe-inline''
+        https://b.stripecdn.com https://dashboard.stripe.com; child-src ''self'';
+        media-src ''self'' https://b.stripecdn.com; object-src ''self'' https://b.stripecdn.com;
+        worker-src ''self'' https://b.stripecdn.com; img-src https://dashboard.stripe.com
+        https://dashboard-admin.stripe.com https://connect.stripe.com https://t.stripe.com
+        https://b.stripecdn.com data: blob: https://stripe-images.s3.amazonaws.com
+        https://s3.amazonaws.com/stripe-uploads/ https://files.stripe.com https://d1wqzb5bdbcre6.cloudfront.net
+        https://stripe-camo.global.ssl.fastly.net https://stripe-images.s3.us-west-1.amazonaws.com
+        https://stripe-underwriting-documents.s3.us-west-1.amazonaws.com https://prod-identity-product-uploads-us-west-2.s3.us-west-2.amazonaws.com
+        https://prod-identity-product-uploads-us-east-2.s3.us-east-2.amazonaws.com
+        https://checkout.stripe.com https://stripe-upload-api.s3.us-west-1.amazonaws.com
+        https://stripe-paper-checks-images.s3.us-west-2.amazonaws.com https://support-ticket-data-prod.s3.us-west-2.amazonaws.com
+        https://cdn.stripeextensions.com https://issuing-card-assets-us-west-2-prod.s3.us-west-2.amazonaws.com
+        https://qr.stripe.com; manifest-src ''self'''
+      Content-Security-Policy-Report-Only:
+      - 'report-uri /csp-report?p=oauth%2Fauthorize; block-all-mixed-content; default-src
+        ''self'' https://dashboard.stripe.com https://b.stripecdn.com; base-uri ''none'';
+        script-src ''unsafe-hashes'' https://www.google.com/recaptcha/api.js https://www.google.com/recaptcha/enterprise.js
+        https://www.google.com/recaptcha/ https://www.recaptcha.net/recaptcha/enterprise.js
+        https://www.recaptcha.net/recaptcha/ https://www.gstatic.com/recaptcha/api2/
+        https://www.gstatic.com/recaptcha/ https://hcaptcha.com https://*.hcaptcha.com
+        ''self'' ''nonce-xCner1pfiNcy8mH8MAtO9w=='' ''sha256-47mKTaMaEn1L3m5DAz9muidMqw636xxw7EFAK/YnPdg=''
+        https://js.stripe.com https://dashboard.stripe.com https://connect.stripe.com
+        https://b.stripecdn.com https://connect-js.stripe.com ''report-sample''; frame-src
+        blob: https://*.docusign.net/ https://*.docusign.com/ https://connect.finicity.com/
+        https://connect2.finicity.com/ https://int-widgets.moneydesktop.com/ https://widgets.moneydesktop.com/
+        https://www.google.com/recaptcha/ https://www.recaptcha.net/recaptcha/ https://hcaptcha.com
+        https://*.hcaptcha.com ''self'' https://js.stripe.com https://b.stripecdn.com
+        https://connect-js.stripe.com https://files.stripe.com https://pay.stripe.com
+        https://stripe.com https://connect.stripe.com https://dashboard.stripe.com
+        https://marketplace.stripe.com https://support.stripe.com https://support-conversations.stripe.com
+        https://billing.stripe.com https://site-admin.stripe.com https://stripe-upload-api.s3.us-west-1.amazonaws.com
+        https://checkout.stripe.com https://climate.stripe.com https://invoice.stripe.com
+        https://verify.stripe.com https://stripe-underwriting-documents.s3.amazonaws.com/;
+        frame-ancestors ''self'' https://stripe.com https://dashboard.stripe.com https://billing.stripe.com
+        https://connect.stripe.com https://marketplace.stripe.com https://dashboard-admin.stripe.com
+        https://support-conversations.stripe.com https://support-admin.corp.stripe.com
+        https://support.stripe.com; form-action ''self'' https://stripe.com https://dashboard.stripe.com
+        https://billing.stripe.com https://marketplace.stripe.com https://connect.stripe.com
+        https://support.stripe.com https://support-admin.corp.stripe.com https://support-conversations.stripe.com
+        https://site-admin.stripe.com https://ldapmanager.corp.stripe.com; connect-src
+        https://dataconnectors-dashboard-upload-us-west-2-prod.s3.us-west-2.amazonaws.com
+        https://hcaptcha.com https://*.hcaptcha.com ''self'' https://qr.stripe.com
+        https://errors.stripe.com https://r.stripe.com https://t.stripe.com https://api.stripe.com
+        https://files.stripe.com https://b.stripecdn.com wss://stripe-cli.stripe.com/subscribe/
+        wss://stripe-cli-ws-nw.stripe.com/subscribe/ wss://stripecli.stripe.com/subscribe/
+        wss://stripecli-ws-nw.stripe.com/subscribe/ https://stripe.com https://c.stripe.dev
+        https://c.stripe.global https://c.stripe.partners https://c.increment.com
+        https://dashboard.stripe.com https://support.stripe.com https://support-conversations.stripe.com
+        https://connect.stripe.com https://marketplace.stripe.com https://billing.stripe.com
+        https://site-admin.stripe.com https://issuing-key.stripe.com/v1/keys; font-src
+        https://fonts.gstatic.com ''self'' https://b.stripecdn.com; style-src https://translate.googleapis.com
+        https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com ''unsafe-inline''
+        https://b.stripecdn.com https://dashboard.stripe.com; child-src ''self'';
+        media-src ''self'' https://b.stripecdn.com; object-src ''self'' https://b.stripecdn.com;
+        worker-src ''self'' https://b.stripecdn.com; img-src https://dashboard.stripe.com
+        https://dashboard-admin.stripe.com https://connect.stripe.com https://t.stripe.com
+        https://b.stripecdn.com data: blob: https://stripe-images.s3.amazonaws.com
+        https://s3.amazonaws.com/stripe-uploads/ https://files.stripe.com https://d1wqzb5bdbcre6.cloudfront.net
+        https://stripe-camo.global.ssl.fastly.net https://stripe-images.s3.us-west-1.amazonaws.com
+        https://stripe-underwriting-documents.s3.us-west-1.amazonaws.com https://prod-identity-product-uploads-us-west-2.s3.us-west-2.amazonaws.com
+        https://prod-identity-product-uploads-us-east-2.s3.us-east-2.amazonaws.com
+        https://checkout.stripe.com https://stripe-upload-api.s3.us-west-1.amazonaws.com
+        https://stripe-paper-checks-images.s3.us-west-2.amazonaws.com https://support-ticket-data-prod.s3.us-west-2.amazonaws.com
+        https://cdn.stripeextensions.com https://issuing-card-assets-us-west-2-prod.s3.us-west-2.amazonaws.com
+        https://qr.stripe.com; manifest-src ''self'''
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin-allow-popups; report-to="coop"
+      Expires:
+      - '0'
+      Location:
+      - https://connect.stripe.com/oauth/v2/authorize?api_key=<HIDDEN-STRIPE_INSTANCE_SECRET_KEY>
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Report-To:
+      - '{"group":"coop","max_age":8640,"endpoints":[{"url":"https://q.stripe.com/coop-report"}],"include_subdomains":true}'
+      Reporting-Endpoints:
+      - coop="https://q.stripe.com/coop-report"
+      Request-Id:
+      - req_BjLXmFs09fONlI
+      Set-Cookie:
+      - __Host-session=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT;
+        secure; SameSite=None
+      - __stripe_orig_props=%7B%22referrer%22%3A%22%22%2C%22landing%22%3A%22https%3A%2F%2Fconnect.stripe.com%2Foauth%2Fauthorize%3Fapi_key%3D<HIDDEN-STRIPE_INSTANCE_SECRET_KEY>%22%7D;
+        domain=stripe.com; path=/; expires=Tue, 22 Apr 2025 12:33:12 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - machine_identifier=BqvsnX1Vi3ytXx3Ks4PCLx51eonRSSdp2sDL3xa2ZclwhWSuOWtodhQR3nCEe457K1c%3D;
+        domain=stripe.com; path=/; expires=Tue, 22 Apr 2025 12:33:12 GMT; secure;
+        HttpOnly; SameSite=Lax
+      - private_machine_identifier=C0np2rRMzXgjkYeFKUmFPdEcuFABLW8M2bIuD68CTo9lfnltrmdQhGM31AwfDhZoGGs%3D;
+        domain=stripe.com; path=/; expires=Tue, 22 Apr 2025 12:33:12 GMT; secure;
+        HttpOnly; SameSite=None
+      - site-auth=; domain=stripe.com; path=/; max-age=0; expires=Thu, 01 Jan 1970
+        00:00:00 GMT; secure
+      - stripe.csrf=VUtEUbS06GOJNw_-X0r8eCjsYj-AYhWw-eii9IcMZhJQ5IdAXlvx6PXlnJNSDMxsVxUA_cDSbenZm8CFpRU9-Dw-AYTZVJwwBf1TQ4-6adsG8Btg2oKdDvuElmuzksZTisRnys2e8Q%3D%3D;
+        domain=stripe.com; path=/; secure; HttpOnly; SameSite=None
+      Stripe-Kill-Route:
+      - "[]"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Stripe-Routing-Context-Priority-Tier:
+      - livemode
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Mon, 22 Apr 2024 12:33:12 GMT
+recorded_with: VCR 6.2.0

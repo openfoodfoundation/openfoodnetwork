@@ -3,20 +3,20 @@
 require 'spec_helper'
 require 'stripe/account_connector'
 require 'stripe/oauth'
+require 'net/http'
 
 module Stripe
   describe AccountConnector do
     describe "create_account" do
-      let(:user) { create(:user) }
+      let(:user) { create(:user, email: "apple.producer@example.com") }
       let(:enterprise) { create(:enterprise) }
+      let(:client_id) { ENV.fetch('STRIPE_CLIENT_ID', nil) }
+      let(:redirect_uri) { 'localhost' }
+
       let(:payload) { { "junk" => "Ssfs" } }
       let(:state) { JWT.encode(payload, Openfoodnetwork::Application.config.secret_token) }
       let(:params) { { "state" => state } }
       let(:connector) { AccountConnector.new(user, params) }
-
-      before do
-        Stripe.api_key = "sk_test_12345"
-      end
 
       context "when the connection was cancelled by the user" do
         before do
@@ -25,6 +25,7 @@ module Stripe
         end
 
         it "returns false and does not create a new StripeAccount" do
+          binding.pry
           expect do
             expect(connector.create_account).to be false
           end.not_to change { StripeAccount.count }
@@ -51,20 +52,15 @@ module Stripe
             end
           end
 
-          context "and the decoded state param contains an 'enterprise_id' key" do
+          context "and the decoded state param contains an 'enterprise_id' key", :vcr, :stripe_version do
             let(:payload) { { enterprise_id: enterprise.permalink } }
             let(:token_response) {
               { "stripe_user_id" => "some_user_id", "stripe_publishable_key" => "some_key" }
             }
 
-            before do
-              stub_request(:post, "https://connect.stripe.com/oauth/token").
-                with(body: { "code" => "code", "grant_type" => "authorization_code" }).
-                to_return(status: 200, body: JSON.generate(token_response) )
-            end
-
             context "but the user doesn't manage own or manage the corresponding enterprise" do
               it "makes a request to cancel the Stripe connection and raises an error" do
+
                 expect(OAuth).to receive(:deauthorize).with(stripe_user_id: "some_user_id")
                 expect do
                   expect{ connector.create_account }.to raise_error CanCan::AccessDenied
@@ -73,11 +69,21 @@ module Stripe
             end
 
             context "and the user manages the corresponding enterprise" do
+                let(:uri) {
+                 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=#{client_id}&scope=read_write'
+               }
               before do
                 user.enterprise_roles.create(enterprise:)
               end
 
               it "raises no errors" do
+                uri = URI()
+                params = { :api_key => Stripe.api_key }
+                uri.query = URI.encode_www_form(params)
+                res = Net::HTTP.get_response(uri)
+                
+                puts res.body if res.is_a?(Net::HTTPSuccess)
+
                 expect(OAuth).not_to receive(:deauthorize)
                 connector.create_account
               end
@@ -99,6 +105,7 @@ module Stripe
               end
 
               it "allows creations of a new Stripe Account from the callback params" do
+                binding.pry
                 expect{ connector.create_account }.to change { StripeAccount.count }.by(1)
                 account = StripeAccount.last
                 expect(account.stripe_user_id).to eq "some_user_id"
