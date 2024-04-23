@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_22_150502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -258,9 +258,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   end
 
   create_table "exchanges", id: :serial, force: :cascade do |t|
-    t.integer "order_cycle_id"
-    t.integer "sender_id"
-    t.integer "receiver_id"
+    t.integer "order_cycle_id", null: false
+    t.integer "sender_id", null: false
+    t.integer "receiver_id", null: false
     t.text "pickup_time"
     t.text "pickup_instructions"
     t.datetime "created_at", precision: nil, null: false
@@ -330,10 +330,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   end
 
   create_table "order_cycles", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name", limit: 255, null: false
     t.datetime "orders_open_at", precision: nil
     t.datetime "orders_close_at", precision: nil
-    t.integer "coordinator_id"
+    t.integer "coordinator_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "processed_at", precision: nil
@@ -420,15 +420,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   create_table "spree_addresses", id: :serial, force: :cascade do |t|
     t.string "firstname", limit: 255
     t.string "lastname", limit: 255
-    t.string "address1", limit: 255
+    t.string "address1", limit: 255, null: false
     t.string "address2", limit: 255
-    t.string "city", limit: 255
+    t.string "city", limit: 255, null: false
     t.string "zipcode", limit: 255
-    t.string "phone", limit: 255
+    t.string "phone", limit: 255, null: false
     t.string "state_name", limit: 255
     t.string "alternative_phone", limit: 255
     t.integer "state_id"
-    t.integer "country_id"
+    t.integer "country_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "company", limit: 255

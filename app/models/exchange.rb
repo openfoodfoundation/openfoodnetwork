@@ -10,8 +10,6 @@
 # shopfront (outgoing products). But the set of shown products can be smaller
 # than all incoming products.
 class Exchange < ApplicationRecord
-  self.belongs_to_required_by_default = false
-
   acts_as_taggable
 
   belongs_to :order_cycle
@@ -24,7 +22,6 @@ class Exchange < ApplicationRecord
   has_many :exchange_fees, dependent: :destroy
   has_many :enterprise_fees, through: :exchange_fees
 
-  validates :order_cycle, :sender, :receiver, presence: true
   validates :sender_id, uniqueness: { scope: [:order_cycle_id, :receiver_id, :incoming] }
 
   before_destroy :delete_related_exchange_variants, prepend: true
