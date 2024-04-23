@@ -23,7 +23,7 @@ class EnterpriseBuilder < DfcBuilder
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
 
       # The model strips the protocol and we need to add it:
-      websites: [enterprise.website].compact.map { |url| "https://#{url}" },
+      websites: [enterprise.website].compact_blank.map { |url| "https://#{url}" },
     ).tap do |e|
       add_ofn_property(e, "ofn:long_description", enterprise.long_description)
 
