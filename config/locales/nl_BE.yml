@@ -2990,6 +2990,7 @@ nl_BE:
     credit: "Krediet"
     more: "Meer"
     no_pending_payments: "Geen betaling in afhandeling"
+    remove: "Verwijderen"
     none: "Geen enkele"
     updating: "Updatend"
     your_order_is_empty_add_product: "Je bestelling is leeg, gelieve hierboven  een product te zoeken en toe te voegen "

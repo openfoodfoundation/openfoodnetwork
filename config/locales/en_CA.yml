@@ -194,6 +194,9 @@ en_CA:
       transaction_not_allowed: "The card has been declined for an unknown reason."
       try_again_later: "The card has been declined for an unknown reason."
       withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      disconnect_failure: "Failed to disconnecct Stripe."
+    success_code:
+      disconnected: "Stripe account disconnected."
   activemodel:
     errors:
       messages:
@@ -223,6 +226,8 @@ en_CA:
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   additional_information: "Additional information"
+  connect_app:
+    url: "https://n8n.opernfoodnetwork.org/webhook/regen-CAN/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -512,8 +517,10 @@ en_CA:
         colums: Columns
       columns:
         name: Name
+        unit_scale: Unit scale
         unit: Unit
         unit_value: Unit value
+        display_as: Display unit as
         price: Price
         producer: Producer
         category: Category
@@ -695,6 +702,10 @@ en_CA:
         your_content: Your content
         user_guide: User Guide
         map: Map
+    dfc_product_imports:
+      index:
+        title: "Importing a DFC product catalog"
+        imported_products: "Imported products:"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -862,7 +873,9 @@ en_CA:
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
       dfc_import_form:
+        title: "Import from DFC catalog"
         enterprise: "Enterprise"
+        catalog_url: "DFC catalog URL"
         import: "Import"
       import:
         review: Review
@@ -1172,6 +1185,7 @@ en_CA:
           open_date: "Open Date"
           close_date: "Close Date"
           display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_product: "By product"
           shopfront_sort_by_category: "By  category"
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
@@ -1647,9 +1661,15 @@ en_CA:
       index:
         title: "OIDC Settings"
         connect: "Connect Your Account"
+        disconnect: "Disconnect"
+        connected: "Your account is linked to %{uid}."
         les_communs_link: "Les Communs Open ID server"
         link_your_account: "First you need to link your account with the authorization provider used by DFC (Les Communs Open ID Connect)."
         link_account_button: "Link your Les Communs OIDC Account"
+        note_expiry: |
+            Tokens to access connected apps have expired. Please refresh your
+            account connection to keep all integrations working.
+        refresh: "Refresh authorisation"
         view_account: "To view your account, see:"
     subscriptions:
       index:
@@ -3706,6 +3726,7 @@ en_CA:
     new_taxon: "New taxon"
     new_user: "New user"
     no_pending_payments: "No pending payments"
+    remove: "Remove"
     none: "None"
     not_found: "Not found"
     notice_messages:
@@ -3722,6 +3743,8 @@ en_CA:
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
     taxonomy_edit: "Taxonomy edit"
+    taxonomy_tree_error: "There was an error updating the taxonomy tree."
+    taxonomy_tree_instruction: "Right-click on an item to add, rename, remove or edit."
     tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"

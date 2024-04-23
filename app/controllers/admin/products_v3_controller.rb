@@ -18,11 +18,13 @@ module Admin
 
       if product_set.save
         flash[:success] = I18n.t('admin.products_v3.bulk_update.success')
-        redirect_to [:index, { page: @page, per_page: @per_page }]
+        redirect_to [:index,
+                     { page: @page, per_page: @per_page, search_term: @search_term,
+                       producer_id: @producer_id, category_id: @category_id }]
       elsif product_set.errors.present?
         @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
 
-        render "index", locals: { producers:, categories:, flash: }
+        render "index", status: :unprocessable_entity, locals: { producers:, categories:, flash: }
       end
     end
 

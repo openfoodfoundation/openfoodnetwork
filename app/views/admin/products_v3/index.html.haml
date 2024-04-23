@@ -1,5 +1,3 @@
-- content_for :body_class do
-  products_v3_page
 - content_for :page_title do
   = t('.header.title')
 - content_for :page_actions do
@@ -13,12 +11,7 @@
 
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-#products_v3_page{ "data-controller": "products" }
-  .spinner-overlay{ "data-controller": "loading", "data-products-target": "loading", class: "hidden" }
-    .spinner-container
-      .spinner
-      = t('.loading')
-
+#products_v3_page{ "data-controller": "products", 'data-turbo': true }
   = render partial: "content", locals: { products: @products, pagy: @pagy, search_term: @search_term,
                                producer_options: producers, producer_id: @producer_id,
                                category_options: categories, category_id: @category_id,

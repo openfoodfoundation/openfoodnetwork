@@ -3375,6 +3375,7 @@ fr_BE:
     new_adjustment: "Nouvel ajustement"
     new_tax_category: "Nouvelle catégorie de taxe"
     no_pending_payments: "Aucun paiement en attente"
+    remove: "Supprimer"
     none: "Aucun"
     notice_messages:
       variant_deleted: "Variante supprimée"

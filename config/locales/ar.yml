@@ -3603,6 +3603,7 @@ ar:
     new_taxon: "اصنوفة جديدة"
     new_user: "مستخدم جديد"
     no_pending_payments: "لا توجد دفعات معلقة"
+    remove: "إزالة"
     none: "لا شيء"
     not_found: "غير موجود"
     notice_messages:

@@ -956,41 +956,55 @@ describe '
           expect(page).to have_text 'SHIPPED'
         end
 
-        context "ship order from dropdown" do
-          it "ships the order and sends email" do
-            expect(order.reload.shipped?).to be false
+        shared_examples "ship order from dropdown" do |subpage|
+          context "in the #{subpage}", feature: :invoices do
+            it "ships the order and sends email" do
+              click_on subpage
+              expect(order.reload.shipped?).to be false
 
-            find('.ofn-drop-down').click
-            click_link 'Ship Order'
+              find('.ofn-drop-down').click
+              click_link 'Ship Order'
 
-            within ".reveal-modal" do
-              expect(page).to have_checked_field('Send a shipment/pick up ' \
-                                                 'notification email to the customer.')
-              expect {
-                find_button("Confirm").click
-              }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
+              within ".reveal-modal" do
+                expect(page).to have_checked_field('Send a shipment/pick up ' \
+                                                   'notification email to the customer.')
+                expect {
+                  find_button("Confirm").click
+                }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
+              end
+
+              expect(order.reload.shipped?).to be true
+              expect(page).to have_text 'SHIPPED'
             end
 
-            expect(order.reload.shipped?).to be true
-            expect(page).to have_text 'SHIPPED'
-          end
+            it "ships the order without sending email" do
+              click_on subpage
+              expect(order.reload.shipped?).to be false
 
-          it "ships the order without sending email" do
-            expect(order.reload.shipped?).to be false
+              find('.ofn-drop-down').click
+              click_link 'Ship Order'
 
-            find('.ofn-drop-down').click
-            click_link 'Ship Order'
+              within ".reveal-modal" do
+                uncheck 'Send a shipment/pick up notification email to the customer.'
+                expect {
+                  find_button("Confirm").click
+                }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
+              end
 
-            within ".reveal-modal" do
-              uncheck 'Send a shipment/pick up notification email to the customer.'
-              expect {
-                find_button("Confirm").click
-              }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
+              expect(order.reload.shipped?).to be true
+              expect(page).to have_text 'SHIPPED'
             end
-
-            expect(order.reload.shipped?).to be true
-            expect(page).to have_text 'SHIPPED'
           end
+        end
+
+        it_behaves_like "ship order from dropdown", "Order Details"
+        context "pending examples" do
+          before { pending("#12369") }
+          it_behaves_like "ship order from dropdown", "Customer Details"
+          it_behaves_like "ship order from dropdown", "Payments"
+          it_behaves_like "ship order from dropdown", "Adjustments"
+          it_behaves_like "ship order from dropdown", "Invoices"
+          it_behaves_like "ship order from dropdown", "Return Authorizations"
         end
       end
 

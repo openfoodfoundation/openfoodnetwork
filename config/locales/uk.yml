@@ -3459,6 +3459,7 @@ uk:
     new_taxon: "Новий таксон"
     new_user: "Новий користувач"
     no_pending_payments: "Немає незавершених платежів"
+    remove: "Видалити"
     none: "Жодного"
     not_found: "Не знайдено"
     notice_messages:

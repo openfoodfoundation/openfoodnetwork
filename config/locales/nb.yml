@@ -3710,6 +3710,7 @@ nb:
     new_taxon: "Ny kategori"
     new_user: "Ny bruker"
     no_pending_payments: "Ingen ventende betalinger"
+    remove: "Fjern"
     none: "Ingen"
     not_found: "Ikke funnet"
     notice_messages:

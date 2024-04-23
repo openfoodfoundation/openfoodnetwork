@@ -1,3 +1,8 @@
+# Dependabot configuration
+#
+# The `directory` and `schedule.interval` options are mandatory.
+# Most of the configuration here is not used for security updates though.
+
 version: 2
 updates:
 
@@ -5,7 +10,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 10
+
     # Only specific requirements are specified in Gemfile, so don't touch it.
     versioning-strategy: lockfile-only
 
@@ -13,5 +18,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+
     # All versions are specified in package.json, so please update them.
     versioning-strategy: increase

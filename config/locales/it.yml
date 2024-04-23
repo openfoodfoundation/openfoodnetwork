@@ -3516,6 +3516,7 @@ it:
     new_taxon: "Nuova tassonomia"
     new_user: "Nuovo utente"
     no_pending_payments: "Nessun pagamento in sospeso"
+    remove: "Rimuovi"
     none: "Nessuno"
     not_found: "Non trovato"
     notice_messages:

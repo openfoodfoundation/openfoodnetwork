@@ -58,7 +58,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
       select "50", from: "per_page"
 
-      expect(page).to have_content "Showing 1 to 50"
+      expect(page).to have_content "Showing 1 to 50", wait: 10
       expect_page_to_be 1
       expect_per_page_to_be 50
       expect_products_count_to_be 50
@@ -130,13 +130,29 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
       # create a product with a different supplier
       let!(:producer) { create(:supplier_enterprise, name: "Producer 1") }
-      let!(:product_by_supplier) { create(:simple_product, supplier: producer) }
+      let!(:product_by_supplier) { create(:simple_product, name: "Apples", supplier: producer) }
 
-      it "can search for a product" do
+      it "can search for and update a product" do
         visit admin_products_url
 
         search_by_producer "Producer 1"
 
+        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_select "producer_id", selected: "Producer 1", wait: 5
+        expect_products_count_to_be 1
+
+        within row_containing_name("Apples") do
+          fill_in "Name", with: "Pommes"
+        end
+
+        expect {
+          click_button "Save changes"
+
+          expect(page).to have_content "Changes saved"
+          product_by_supplier.reload
+        }.to change { product_by_supplier.name }.to("Pommes")
+
+        # Search is still applied
         # expect(page).to have_content "1 product found for your search criteria."
         expect(page).to have_select "producer_id", selected: "Producer 1"
         expect_products_count_to_be 1
@@ -491,6 +507,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect(new_variant.price).to eq 10.25
         expect(new_variant.unit_value).to eq 1000
         expect(new_variant.on_hand).to eq 3
+        expect(new_variant.tax_category_id).to be_nil
 
         within row_containing_name("Large box") do
           expect(page).to have_field "Name", with: "Large box"
@@ -498,6 +515,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect(page).to have_field "Price", with: "10.25"
           expect(page).to have_content "1kg"
           expect(page).to have_button "On Hand", text: "3"
+          within tax_category_column do
+            expect(page).to have_content "None"
+          end
         end
       end
 
@@ -976,13 +996,12 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   def search_by_producer(producer)
-    # TODO: use a helper to more reliably select the tom-select component
-    select producer, from: "producer_id"
+    tomselect_select producer, from: "producer_id"
     click_button "Search"
   end
 
   def search_by_category(category)
-    select category, from: "category_id"
+    tomselect_select category, from: "category_id"
     click_button "Search"
   end
 
@@ -1003,5 +1022,9 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
   def expect_page_to_have_image(url)
     expect(page).to have_selector("img[src$='#{url}']")
+  end
+
+  def tax_category_column
+    @tax_category_column ||= 'td:nth-child(10)'
   end
 end

@@ -44,7 +44,7 @@
 %td.align-left
   .content= variant.primary_taxon&.name
 %td.align-left
-  .content= variant.tax_category&.name || "None" # TODO: convert to dropdown, else translate hardcoded string.
+  .content= (variant.tax_category_id ? variant.tax_category&.name : t('.none_tax_category')) # TODO: convert to dropdown
 %td.align-left
   -# empty
 %td.align-right

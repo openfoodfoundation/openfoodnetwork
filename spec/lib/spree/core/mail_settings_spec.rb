@@ -2,52 +2,37 @@
 
 require 'spec_helper'
 
-module Spree
-  module Core
-    describe MailSettings do
-      let!(:subject) { MailSettings.new }
-
-      context "overrides appplication defaults" do
-        context "authentication method is none" do
-          before do
-            Config.mail_host = "smtp.example.com"
-            Config.mail_domain = "example.com"
-            Config.mail_port = 123
-            Config.mail_auth_type = MailSettings::SECURE_CONNECTION_TYPES[0]
-            Config.smtp_username = "schof"
-            Config.smtp_password = "hellospree!"
-            Config.secure_connection_type = "TLS"
-            subject.override!
-          end
-
-          it { expect(ActionMailer::Base.smtp_settings[:address]).to eq "smtp.example.com" }
-          it { expect(ActionMailer::Base.smtp_settings[:domain]).to eq "example.com" }
-          it { expect(ActionMailer::Base.smtp_settings[:port]).to eq 123 }
-          it { expect(ActionMailer::Base.smtp_settings[:authentication]).to eq "None" }
-          it { expect(ActionMailer::Base.smtp_settings[:enable_starttls_auto]).to be_truthy }
-
-          it "doesnt touch user name config" do
-            expect(ActionMailer::Base.smtp_settings[:user_name]).to be_nil
-          end
-
-          it "doesnt touch password config" do
-            expect(ActionMailer::Base.smtp_settings[:password]).to be_nil
-          end
-        end
+describe Spree::Core::MailSettings do
+  context "overrides appplication defaults" do
+    context "authentication method is login" do
+      before do
+        Spree::Config.mail_host = "smtp.example.com"
+        Spree::Config.mail_domain = "example.com"
+        Spree::Config.mail_port = 123
+        Spree::Config.mail_auth_type = "login"
+        Spree::Config.smtp_username = "schof"
+        Spree::Config.smtp_password = "hellospree!"
+        Spree::Config.secure_connection_type = "TLS"
+        subject.override!
       end
 
-      context "when mail_auth_type is other than none" do
-        before do
-          Config.mail_auth_type = "login"
-          Config.smtp_username = "schof"
-          Config.smtp_password = "hellospree!"
-          subject.override!
-        end
+      it { expect(ActionMailer::Base.smtp_settings[:address]).to eq "smtp.example.com" }
+      it { expect(ActionMailer::Base.smtp_settings[:domain]).to eq "example.com" }
+      it { expect(ActionMailer::Base.smtp_settings[:port]).to eq 123 }
+      it { expect(ActionMailer::Base.smtp_settings[:authentication]).to eq "login" }
+      it { expect(ActionMailer::Base.smtp_settings[:enable_starttls_auto]).to be_truthy }
+      it { expect(ActionMailer::Base.smtp_settings[:user_name]).to eq "schof" }
+      it { expect(ActionMailer::Base.smtp_settings[:password]).to eq "hellospree!" }
+    end
 
-        context "overrides user credentials" do
-          it { expect(ActionMailer::Base.smtp_settings[:user_name]).to eq "schof" }
-          it { expect(ActionMailer::Base.smtp_settings[:password]).to eq "hellospree!" }
-        end
+    context "authentication method is none" do
+      before do
+        Spree::Config.mail_auth_type = "None"
+        subject.override!
+      end
+
+      it "doesn't store 'None' as auth method" do
+        expect(ActionMailer::Base.smtp_settings[:authentication]).to eq nil
       end
     end
   end

@@ -3013,6 +3013,7 @@ pt:
     credit: "Crédito"
     more: "Mais"
     no_pending_payments: "Sem pagamentos pendentes"
+    remove: "Remover"
     none: "Nenhum"
     updating: "Atualizando"
     your_order_is_empty_add_product: "A sua encomenda está vazia, por favor procure e adicione um produto em cima"

@@ -222,6 +222,10 @@ fr:
               not_available_to_shop: "n'est pas disponible pour %{shop}"
   card_details: "Détalis de la carte"
   card_type: "Type de carte"
+  card_type_is: "Type de carte"
+  unrecognized_card_type: "Type de carte non reconnu"
+  use_new_cc: "Utilisez une nouvelle carte bancaire"
+  what_is_this: "Qu'est-ce que c'est ?"
   cardholder_name: "Titulaire de la carte"
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
@@ -649,6 +653,7 @@ fr:
         status: Statut
         ok: Ok
         instance_secret_key: Clé Secrète de l'Instance
+        instance_publishable_key: Clé publique de l'instance
         account_id: Identifiant Compte
         business_name: Nom de l'entreprise
         charges_enabled: Frais activés
@@ -2497,6 +2502,7 @@ fr:
   orders_bought_already_confirmed: "* déjà confirmé"
   orders_confirm_cancel: "Voulez-vous vraiment annuler cette commande ?"
   order_processed_successfully: "Votre commande a été traitée avec succès"
+  thank_you_for_your_order: "Merci pour votre commande"
   products_cart_distributor_choice: "Distributeur pour votre commande:"
   products_cart_distributor_change: "Vore distributeur pour cette commande sera dorénavant %{name} si vous ajoutez ce produit à votre panier."
   products_cart_distributor_is: "Votre distributeur pour cette commande est %{name}."
@@ -3773,6 +3779,7 @@ fr:
     editing_tax_category: "Modifier une catégorie de taxe"
     editing_tax_rate: "Modifier un taux"
     editing_zone: "Modifier une zone"
+    editing_state: "Modifier département"
     expiration: "Expiration"
     invalid_payment_provider: "Fournisseur de paiement invalide"
     items_cannot_be_shipped: "Les produits ne peuvent pas être envoyés"
@@ -3784,6 +3791,7 @@ fr:
     new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"
     no_pending_payments: "Aucun paiement en attente."
+    remove: "Supprimer"
     none: "Aucun"
     not_found: "Non trouvé"
     notice_messages:
@@ -3810,6 +3818,7 @@ fr:
     resend: "Renvoyer"
     back_to_orders_list: "Retour à la liste des commandes"
     back_to_payments_list: "Retour à la liste des paiements"
+    back_to_states_list: "Retour à la liste"
     return_authorizations: "Autorisations de retours"
     cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
     select_stock: "Sélectionner le stock"

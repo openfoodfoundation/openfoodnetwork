@@ -3300,6 +3300,7 @@ es_US:
     new_tax_category: "Nueva categoría de impuestos"
     new_user: "Nuevo usuario"
     no_pending_payments: "No tiene pagos pendientes"
+    remove: "Eliminar"
     none: "Ninguno"
     not_found: "no encontrado"
     notice_messages:

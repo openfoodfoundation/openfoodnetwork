@@ -3344,6 +3344,7 @@ ko:
     new_taxon: "새 분류군"
     new_user: "신규 사용자"
     no_pending_payments: "미지금급"
+    remove: "제거"
     none: "아니다"
     not_found: "찾을 수 없습니다"
     notice_messages:

@@ -3542,6 +3542,7 @@ pa:
     new_taxon: "ਨਵਾਂ ਟੈਕਸੋਨ"
     new_user: "ਨਵਾਂ ਉਪਭੋਗਤਾ"
     no_pending_payments: "ਕੋਈ ਬਕਾਇਆ ਭੁਗਤਾਨ ਨਹੀਂ ਹੈ"
+    remove: "Remove"
     none: "ਕੋਈ ਨਹੀਂ"
     not_found: "ਨਹੀਂ ਲਭਿਆ"
     notice_messages:

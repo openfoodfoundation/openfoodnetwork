@@ -3412,6 +3412,7 @@ de_CH:
     new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"
     no_pending_payments: "Keine ausstehenden Zahlungen."
+    remove: "Löschen"
     none: "Keine"
     not_found: "Nicht gefunden"
     notice_messages:

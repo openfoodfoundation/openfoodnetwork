@@ -20,29 +20,22 @@ module Spree
       private
 
       def mail_server_settings
-        settings = if need_authentication?
-                     basic_settings.merge(user_credentials)
-                   else
-                     basic_settings
-                   end
-
-        settings.merge(enable_starttls_auto: secure_connection?)
-      end
-
-      def user_credentials
-        { user_name: Config.smtp_username,
-          password: Config.smtp_password }
-      end
-
-      def basic_settings
-        { address: Config.mail_host,
+        {
+          address: Config.mail_host,
           domain: Config.mail_domain,
           port: Config.mail_port,
-          authentication: Config.mail_auth_type }
+          authentication:,
+          enable_starttls_auto: secure_connection?,
+          user_name: Config.smtp_username.presence,
+          password: Config.smtp_password.presence,
+        }
       end
 
-      def need_authentication?
-        Config.mail_auth_type != 'None'
+      def authentication
+        # "None" is an option in the UI but not a real authentication type.
+        # We should remove it from our host configurations but I'm keeping
+        # this check for backwards-compatibility for now.
+        Config.mail_auth_type.presence unless Config.mail_auth_type == "None"
       end
 
       def secure_connection?

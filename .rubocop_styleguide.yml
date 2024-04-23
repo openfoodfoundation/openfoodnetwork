@@ -124,6 +124,9 @@ Rails/SkipsModelValidations:
     - update_column
     - update_columns
 
+Rails/WhereExists:
+  EnforcedStyle: where # Cf. conversion https://github.com/openfoodfoundation/openfoodnetwork/pull/12363
+
 Style/Documentation:
   Enabled: false
 

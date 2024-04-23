@@ -637,7 +637,7 @@ de_DE:
         configuration_explanation_html: Detaillierte Anweisungen zur Konfiguration der Stripe Connect-Integration finden Sie in der <a href='https://github.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>Anleitung</a>.
         status: Status
         ok: OK
-        instance_secret_key: Instanzgeheimschlüssel
+        instance_secret_key: Geheimer Schlüssel der Instanz
         account_id: Konto-ID
         business_name: Unternehmensname
         charges_enabled: Gebühren aktiviert
@@ -3663,6 +3663,7 @@ de_DE:
     new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"
     no_pending_payments: "Keine ausstehenden Zahlungen."
+    remove: "Löschen"
     none: "Keine"
     not_found: "Nicht gefunden"
     notice_messages:

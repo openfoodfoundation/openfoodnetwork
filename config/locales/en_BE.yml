@@ -2859,6 +2859,7 @@ en_BE:
     category: "Category"
     credit: "Credit"
     more: "More"
+    remove: "Remove"
     none: "None"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"

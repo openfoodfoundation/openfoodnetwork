@@ -844,6 +844,7 @@ en:
       index:
         header:
           title: Bulk Edit Products
+      content:
         loading: Loading your products
       delete_modal:
         delete_product_modal:
@@ -906,6 +907,8 @@ en:
       delete_variant:
         success: Successfully deleted the variant
         error: Unable to delete the variant
+      variant_row:
+        none_tax_category: None
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
