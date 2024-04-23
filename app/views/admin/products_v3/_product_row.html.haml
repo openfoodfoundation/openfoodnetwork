@@ -27,13 +27,12 @@
   -# empty
 %td.align-right
   -# empty
-- if producer_options.many?
-  %td.naked_inputs.align-left
-    = render(SearchableDropdownComponent.new(form: f,
-        name: :supplier_id,
-        options: producer_options,
-        selected_option: product.supplier_id,
-        placeholder_value: t('admin.products_v3.filters.search_for_producers')))
+%td.naked_inputs.align-left
+  = render(SearchableDropdownComponent.new(form: f,
+      name: :supplier_id,
+      options: producer_options,
+      selected_option: product.supplier_id,
+      placeholder_value: t('admin.products_v3.filters.search_for_producers')))
 %td.align-left
   -# empty
 %td.align-left

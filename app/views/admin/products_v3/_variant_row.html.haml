@@ -39,9 +39,8 @@
       = f.label :on_demand do
         = f.check_box :on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
         = t(:on_demand)
-- if producer_options.many?
-  %td.align-left
-    -# empty producer name
+%td.align-left
+  -# empty producer name
 %td.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :primary_taxon_id,

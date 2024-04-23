@@ -1030,6 +1030,6 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
   end
 
   def tax_category_column
-    @tax_category_column ||= 'td:nth-child(10)'
+    @tax_category_column ||= '[data-controller="variant"] > td:nth-child(10)'
   end
 end
