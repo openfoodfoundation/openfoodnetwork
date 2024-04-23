@@ -36,6 +36,8 @@ module Admin
     def clone
       @product = Spree::Product.find(params[:id])
       @cloned_product = @product.duplicate
+      @product_index = params[:product_index]
+
       raise "Clone failed" unless @cloned_product.save
 
       respond_to(&:turbo_stream)

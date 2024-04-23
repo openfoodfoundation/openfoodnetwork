@@ -1,2 +1,2 @@
-= turbo_stream.replace "products-content" do
-  %h1= "This is a test."
+= turbo_stream.before "product_#{@product.id}" do
+  %p= "This is a test."

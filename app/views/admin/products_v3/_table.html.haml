@@ -62,6 +62,7 @@
         %th.align-left= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
+<<<<<<< HEAD
       = form.fields_for("products", product, index: product_index) do |product_form|
         %tbody.relaxed{ data: { 'record-id': product_form.object.id,
                                 controller: "nested-form product",
@@ -86,3 +87,6 @@
               %button.secondary.condensed.naked.icon-plus{ 'data-action': "nested-form#add",
                                                            'aria-label': t('.new_variant') }
                 =t('.new_variant')
+=======
+      = render partial: 'product_form', locals: { product:, product_index:, form: }
+>>>>>>> 520db0ebf3 (Making turbo stream work with link_to helpers)
