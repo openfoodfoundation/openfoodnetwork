@@ -150,7 +150,6 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
           fill_in "Name", with: "Pommes"
         end
 
-        pending "#12403"
         expect {
           click_button "Save changes"
 
@@ -179,14 +178,14 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
         search_by_category "Category 1"
 
         # expect(page).to have_content "1 product found for your search criteria."
-        expect(page).to have_select "category_id", selected: "Category 1"
+        expect(page).to have_select "category_id", selected: "Category 1" # fails in dev but not CI
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_category.name
       end
     end
   end
 
-  xdescribe "updating" do # pending #12403
+  describe "updating" do
     let!(:variant_a1) {
       product_a.variants.first.tap{ |v|
         v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
