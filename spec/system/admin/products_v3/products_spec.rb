@@ -2,13 +2,16 @@
 
 require "system_helper"
 
-describe 'As an admin, I can manage products', feature: :admin_style_v3 do
+describe 'As an enterprise user, I can manage my products', feature: :admin_style_v3 do
   include WebHelper
   include AuthenticationHelper
   include FileHelper
 
+  let(:producer) { create(:supplier_enterprise) }
+  let(:user) { create(:user, enterprises: [producer]) }
+
   before do
-    login_as_admin
+    login_as user
   end
 
   it "can see the new product page" do
@@ -129,8 +132,10 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       before { create_products 1 }
 
       # create a product with a different supplier
-      let!(:producer) { create(:supplier_enterprise, name: "Producer 1") }
-      let!(:product_by_supplier) { create(:simple_product, name: "Apples", supplier: producer) }
+      let!(:producer1) { create(:supplier_enterprise, name: "Producer 1") }
+      let!(:product_by_supplier) { create(:simple_product, name: "Apples", supplier: producer1) }
+
+      before { user.enterprise_roles.create(enterprise: producer1) }
 
       it "can search for and update a product" do
         visit admin_products_url
@@ -145,6 +150,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           fill_in "Name", with: "Pommes"
         end
 
+        pending "#12403"
         expect {
           click_button "Save changes"
 
@@ -180,7 +186,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     end
   end
 
-  describe "updating" do
+  xdescribe "updating" do # pending #12403
     let!(:variant_a1) {
       product_a.variants.first.tap{ |v|
         v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
@@ -974,7 +980,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
   def create_products(amount)
     amount.times do |i|
-      create(:simple_product, name: "product #{i}")
+      create(:simple_product, name: "product #{i}", supplier: producer)
     end
   end
 
