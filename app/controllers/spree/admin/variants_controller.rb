@@ -46,7 +46,13 @@ module Spree
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
+        original_supplier_id = @object.supplier_id
+
         if @object.update(permitted_resource_params)
+          if original_supplier_id != @object.supplier_id
+            ExchangeVariantDeleter.new.delete(@object)
+          end
+
           flash[:success] = flash_message_for(@object, :successfully_updated)
           redirect_to spree.admin_product_variants_url(params[:product_id], @url_filters)
         else
@@ -113,6 +119,8 @@ module Spree
       private
 
       def load_data
+        @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
+          managed_product_enterprises.is_primary_producer.by_name
         @tax_categories = TaxCategory.order(:name)
         @shipping_categories = ShippingCategory.order(:name)
       end
