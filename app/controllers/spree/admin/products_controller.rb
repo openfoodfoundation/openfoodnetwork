@@ -27,6 +27,9 @@ module Spree
       end
 
       def new
+        @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
+          managed_product_enterprises.is_primary_producer.by_name
+
         @object.shipping_category_id = DefaultShippingCategory.find_or_create.id
       end
 
@@ -52,14 +55,9 @@ module Spree
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
-        original_supplier_id = @product.supplier_id
         delete_stock_params_and_set_after do
           params[:product] ||= {} if params[:clear_product_properties]
           if @object.update(permitted_resource_params)
-            if original_supplier_id != @product.supplier_id
-              ExchangeVariantDeleter.new.delete(@product)
-            end
-
             flash[:success] = flash_message_for(@object, :successfully_updated)
           end
           redirect_to spree.edit_admin_product_url(@object, @url_filters)
@@ -157,8 +155,6 @@ module Spree
       end
 
       def load_form_data
-        @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
-          managed_product_enterprises.is_primary_producer.by_name
         @taxons = Spree::Taxon.order(:name)
         @import_dates = product_import_dates.uniq.to_json
       end
