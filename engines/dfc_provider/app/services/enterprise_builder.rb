@@ -23,6 +23,9 @@ class EnterpriseBuilder < DfcBuilder
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
       websites: [enterprise.website].compact,
     ).tap do |e|
+      # The model strips the protocol and we need to add it:
+      e.websites = e.websites.map { |url| "https://#{url}" }
+
       add_ofn_property(e, "ofn:long_description", enterprise.long_description)
 
       # This could be expressed as dfc-b:hasMainContact Person with name.
