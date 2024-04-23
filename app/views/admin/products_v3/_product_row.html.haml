@@ -25,13 +25,8 @@
   -# empty
 %td.col-on_hand.align-right
   -# empty
-%td.col-producer.naked_inputs
-  = render(SearchableDropdownComponent.new(form: f,
-      name: :supplier_id,
-      aria_label: t('.producer_field_name'),
-      options: producer_options,
-      selected_option: product.supplier_id,
-      placeholder_value: t('admin.products_v3.filters.search_for_producers')))
+%td.col-on_hand.align-right
+  -# empty
 %td.col-category.align-left
   -# empty
 %td.col-tax_category.align-left

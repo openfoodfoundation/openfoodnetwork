@@ -31,6 +31,59 @@ module Spree
         end
       end
 
+      describe "#update" do
+        let!(:variant) { create(:variant, display_name: "Tomatoes", sku: 123, supplier: producer) }
+        let(:producer) { create(:enterprise) }
+
+        it "updates the variant" do
+          expect {
+            spree_put(
+              :update,
+              id: variant.id,
+              product_id: variant.product.id,
+              variant: { display_name: "Better tomatoes", sku: 456 }
+            )
+            variant.reload
+          }.to change { variant.display_name }.to("Better tomatoes")
+            .and change { variant.sku }.to(456.to_s)
+        end
+
+        context "when updating supplier" do
+          let(:new_producer) { create(:enterprise) }
+
+          it "updates the supplier" do
+            expect {
+              spree_put(
+                :update,
+                id: variant.id,
+                product_id: variant.product.id,
+                variant: { supplier_id: new_producer.id }
+              )
+              variant.reload
+            }.to change { variant.supplier_id }.to(new_producer.id)
+          end
+
+          it "removes associated product from existing Order Cycles" do
+            distributor = create(:distributor_enterprise)
+            order_cycle = create(
+              :simple_order_cycle,
+              variants: [variant],
+              coordinator: distributor,
+              distributors: [distributor]
+            )
+
+            spree_put(
+              :update,
+              id: variant.id,
+              product_id: variant.product.id,
+              variant: { supplier_id: new_producer.id }
+            )
+
+            expect(order_cycle.reload.distributed_variants).to_not include variant
+          end
+        end
+      end
+
       describe "#search" do
         let(:supplier) { create(:supplier_enterprise) }
         let!(:p1) { create(:simple_product, name: 'Product 1', supplier_id: supplier.id) }

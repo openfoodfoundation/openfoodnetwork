@@ -184,6 +184,7 @@ module Spree
           let!(:product){ Spree::Product.new }
           let!(:shipping_category){ create(:shipping_category) }
           let!(:taxon){ create(:taxon) }
+          let(:supplier){ create(:enterprise) }
 
           before do
             create(:stock_location)
@@ -194,15 +195,18 @@ module Spree
             product.unit_value = 1
             product.price = 4.27
             product.shipping_category_id = shipping_category.id
+            product.supplier_id = supplier.id
             product.save!
           end
 
           it "copies properties to the first standard variant" do
             expect(product.variants.reload.length).to eq 1
             standard_variant = product.variants.reload.first
+            expect(standard_variant).to be_valid
             expect(standard_variant.price).to eq 4.27
             expect(standard_variant.shipping_category).to eq shipping_category
             expect(standard_variant.primary_taxon).to eq taxon
+            expect(standard_variant.supplier).to eq supplier
           end
         end
 
