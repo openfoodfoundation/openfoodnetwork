@@ -8,7 +8,7 @@ module Spree
 
     belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'
-    has_many :stock_movements, dependent: nil
+    has_many :stock_movements, dependent: :destroy
 
     validates :stock_location, :variant, presence: true
     validates :variant_id, uniqueness: { scope: [:stock_location_id, :deleted_at] }
