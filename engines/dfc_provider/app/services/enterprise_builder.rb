@@ -21,11 +21,10 @@ class EnterpriseBuilder < DfcBuilder
       localizations: [address],
       phoneNumbers: [enterprise.phone].compact,
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
-      websites: [enterprise.website].compact,
-    ).tap do |e|
-      # The model strips the protocol and we need to add it:
-      e.websites = e.websites.map { |url| "https://#{url}" }
 
+      # The model strips the protocol and we need to add it:
+      websites: [enterprise.website].compact.map { |url| "https://#{url}" },
+    ).tap do |e|
       add_ofn_property(e, "ofn:long_description", enterprise.long_description)
 
       # This could be expressed as dfc-b:hasMainContact Person with name.
