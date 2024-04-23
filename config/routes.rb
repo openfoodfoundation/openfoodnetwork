@@ -54,6 +54,13 @@ Openfoodnetwork::Application.routes.draw do
     end
   end
 
+  # used for payments_controller_spec.rb
+  resources :payments do
+    member do
+      get :redirect_to_authorize
+    end
+  end
+
   resources :line_items, only: [:destroy] do
     get :bought, on: :collection
   end
