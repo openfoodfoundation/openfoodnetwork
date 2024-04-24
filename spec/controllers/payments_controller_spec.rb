@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "/payments/redirect_to_authorize", type: :request do
+describe "/payments/:id/authorize", type: :request do
   let!(:user) { create(:user) }
   let!(:order) { create(:order, user:) }
   let!(:payment) { create(:payment, order:) }
