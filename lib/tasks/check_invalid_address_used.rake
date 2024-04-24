@@ -77,10 +77,18 @@ namespace :ofn do
       )
       address_to_be_deleted = invalid_addresses - address_to_be_fixed
 
-      p "#{address_to_be_deleted.length} addresses can be deleted:"
+      puts "\n\n"
+      puts "#{address_to_be_deleted.length} addresses can be deleted:"
       p address_to_be_deleted
 
-      p "#{address_to_be_fixed.length} addresses need to be fixed:"
+      if address_to_be_deleted.present?
+        puts "\n\n"
+        puts "Run the following code to delete the addresses:"
+        puts "Spree::Address.where(id: #{address_to_be_deleted}).delete_all"
+      end
+
+      puts "\n\n"
+      puts "#{address_to_be_fixed.length} addresses need to be fixed:"
       p address_to_be_fixed
     end
 
