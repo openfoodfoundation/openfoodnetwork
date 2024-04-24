@@ -1,5 +1,9 @@
 Openfoodnetwork::Application.routes.draw do
+  require "sidekiq/web"
 
+  authenticate :spree_user do
+    mount Sidekiq::Web => "/sidekiq"
+  end
   root :to => 'home#index'
 
   # Redirects from old URLs avoid server errors and helps search engines
