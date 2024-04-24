@@ -62,10 +62,13 @@ namespace :ofn do
           "address_id IN(?) OR business_address_id IN(?)", invalid_addresses, invalid_addresses
         )
       enterprise_used_address = enterprises.map do |e|
-        next e.address_id if check_correct_address_id(e.address_id, invalid_addresses)
-
-        e.business_address_id if check_correct_address_id(e.business_address_id, invalid_addresses)
-      end
+        res = []
+        res << e.address_id if check_correct_address_id(e.address_id, invalid_addresses)
+        res << e.business_address_id if check_correct_address_id(
+          e.business_address_id, invalid_addresses
+        )
+        res
+      end.flatten
       p "Enterprises #{enterprise_used_address}"
 
       address_to_be_fixed = customer_used_address.union(
@@ -89,10 +92,11 @@ namespace :ofn do
         .where("bill_address_id in(?) OR ship_address_id in(?)", addresses, addresses)
 
       objects.map do |o|
-        next o.ship_address_id if check_correct_address_id(o.ship_address_id, addresses)
-
-        o.bill_address_id if check_correct_address_id(o.bill_address_id, addresses)
-      end
+        res = []
+        res << o.ship_address_id if check_correct_address_id(o.ship_address_id, addresses)
+        res << o.bill_address_id if check_correct_address_id(o.bill_address_id, addresses)
+        res
+      end.flatten
     end
 
     def check_address(klass, addresses)
