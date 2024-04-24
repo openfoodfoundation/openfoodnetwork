@@ -2,8 +2,6 @@
 
 module Spree
   class ReturnAuthorization < ApplicationRecord
-    self.belongs_to_required_by_default = false
-
     acts_as_paranoid
 
     belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations
@@ -13,7 +11,6 @@ module Spree
     before_save :force_positive_amount
     before_create :generate_number
 
-    validates :order, presence: true
     validates :amount, numericality: true
     validate :must_have_shipped_units
 
