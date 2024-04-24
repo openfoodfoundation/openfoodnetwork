@@ -971,10 +971,10 @@ describe '
                 find_button("Confirm").click
               end
 
-              find_button("Cancel").click # closes modal as it is not automatic
               expect(page).to have_selector('.reveal-modal', visible: false)
               click_link('Order Details') unless subpage == 'Order Details'
 
+              sleep(0.5) # avoid flakyness
               expect(order.reload.shipped?).to be true
               expect(page).to have_text 'SHIPPED'
               expect(ActionMailer::MailDeliveryJob).to have_been_enqueued
@@ -995,9 +995,10 @@ describe '
                 find_button("Confirm").click
               end
 
-              find_button("Cancel").click # closes modal as it is not automatic
               expect(page).to have_selector('.reveal-modal', visible: false)
               click_link('Order Details') unless subpage == 'Order Details'
+
+              sleep(0.5) # avoir flakyness
               expect(order.reload.shipped?).to be true
               expect(page).to have_text 'SHIPPED'
               expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued

@@ -21,7 +21,7 @@ module Admin
     def ship
       @order.send_shipment_email = false unless params[:send_shipment_email]
       if @order.ship
-        return set_param_for_controller if request.url.match?('edit')
+        return set_param_for_controller if Regexp.union(Constants::PATHS).match? request.url
 
         morph dom_id(@order), render(partial: "spree/admin/orders/table_row",
                                      locals: { order: @order.reload, success: true })
@@ -133,5 +133,9 @@ module Admin
                              enterprise_name: distributor_names.join(", "))
       morph_admin_flashes
     end
+  end
+
+  module Constants
+    PATHS = %w[edit customer payments adjustments invoices return_authorizations].freeze
   end
 end
