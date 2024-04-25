@@ -22,3 +22,7 @@ end
 every 4.hours do
   rake 'db2fog:backup' if ENV['S3_BACKUPS_BUCKET']
 end
+
+every 1.day, at: '3am' do
+  rake 'database_backup_on_s3'
+end

@@ -5,7 +5,7 @@ class DatabaseBackupOnS3Worker
 
   def perform
     Rails.logger.info "Starting DatabaseBackupOnS3Service task..."
-    DatabaseBackupOnS3Service.new.call
+    DatabaseBackupOnS3Service.perform_backup
   end
 end
   
