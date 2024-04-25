@@ -14,10 +14,6 @@ module Spree
 
     scope :recent, -> { order('created_at DESC') }
 
-    def readonly?
-      !new_record?
-    end
-
     private
 
     def update_stock_item_quantity

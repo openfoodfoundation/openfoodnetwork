@@ -693,6 +693,8 @@ fr_CH:
         new_variant: Nouvelle variante
       edit_image:
         close: Retour
+      variant_row:
+        none_tax_category: Aucun
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir

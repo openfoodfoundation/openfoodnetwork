@@ -137,7 +137,8 @@ de_DE:
     unprocessable_entity:
       title: "Die gewünschte Änderung wurde abgelehnt (422). "
       message_html: "<p>Die gewünschte Änderung wurde abgelehnt. Vielleicht haben Sie versucht, etwas zu ändern, auf das Sie keinen Zugriff haben.<br><h3> <a href='/' >Zur Startseite zurückkehren</a></h3></p>"
-    stimulus_reflex_error: "Es tut uns leid, etwas ist schief gelaufen. \n\nDies könnte ein vorübergehendes Problem sein. Bitte versuchen Sie es erneut oder laden Sie die Seite neu. \nWir erfassen alle Fehler und arbeiten möglicherweise bereits an einer Lösung. \nWenn das Problem weiterhin besteht oder Ihr Anliegen dringend ist, kontaktieren Sie uns bitte."
+    general_error:
+      message: "Es tut uns leid, etwas ist schief gelaufen. \n\nDies könnte ein vorübergehendes Problem sein. Bitte versuchen Sie es erneut oder laden Sie die Seite neu. \nWir erfassen alle Fehler und arbeiten möglicherweise bereits an einer Lösung. \nWenn das Problem weiterhin besteht oder Ihr Anliegen dringend ist, kontaktieren Sie uns bitte."
   stripe:
     error_code:
       incorrect_number: "Die Kreditkartennummer ist fehlerhaft."
@@ -755,6 +756,7 @@ de_DE:
       index:
         header:
           title: Produkte verwalten
+      content:
         loading: Produkte werden geladen...
       filters:
         search_products: Nach Produkten suchen
@@ -794,6 +796,8 @@ de_DE:
         success: Die Änderungen wurden gespeichert.
       edit_image:
         close: Zurück
+      variant_row:
+        none_tax_category: Nichts
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.

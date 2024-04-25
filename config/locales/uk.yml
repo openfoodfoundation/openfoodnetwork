@@ -697,6 +697,8 @@ uk:
         new_variant: Новий варіант
       edit_image:
         close: Назад
+      variant_row:
+        none_tax_category: Жодного
     product_import:
       title: Імпорт продукту
       file_not_found: Файл не знайдено або не вдалося відкрити

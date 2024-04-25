@@ -47,7 +47,7 @@ export default class extends Controller {
     console.error(reflex + ":\n " + error);
 
     // show error message
-    alert(I18n.t("errors.stimulus_reflex_error"));
+    alert(I18n.t("errors.general_error.message"));
   }
 
   reflexForbidden(element, reflex, noop, reflexId) {

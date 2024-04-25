@@ -525,6 +525,8 @@ pl:
         search: Szukaj
       edit_image:
         close: Wstecz
+      variant_row:
+        none_tax_category: Nic
     product_import:
       title: Import produktów
       file_not_found: Nie znaleziono pliku lub nie można go otworzyć

@@ -141,7 +141,8 @@ fr_CA:
     unprocessable_entity:
       title: "La modification réalisée a été rejetée (erreur 422)"
       message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p> "
-    stimulus_reflex_error: "Nous sommes désolés mais quelque chose s'est mal passé.\n\n C'est un problème temporaire, merci donc de réessayer ou de recharger la page. \nNous enregistrons toutes les erreurs et travaillons sur les améliorations nécessaires.\nSi le problème persiste ou est urgent, merci de nous contacter.\n "
+    general_error:
+      message: "Nous sommes désolés mais quelque chose s'est mal passé.\n\n C'est un problème temporaire, merci donc de réessayer ou de recharger la page. \nNous enregistrons toutes les erreurs et travaillons sur les améliorations nécessaires.\nSi le problème persiste ou est urgent, merci de nous contacter.\n "
   stripe:
     error_code:
       incorrect_number: "e numéro de carte bancaire est incorrect."
@@ -222,12 +223,13 @@ fr_CA:
               not_available_to_shop: "n'est pas disponible pour %{shop}"
   card_details: "Détalis de la carte"
   card_type: "Type de carte"
+  unrecognized_card_type: "Type de carte non reconnu"
   cardholder_name: "Titulaire de la carte"
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
   additional_information: "Informations additionnelles"
   connect_app:
-    url: "https://n8n.openfoodnetwork.org/webhook/regen-CAN/connect-enterprise"
+    url: "https://n8n.openfoodnetwork.org/webhook-test/food-justice/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -771,6 +773,7 @@ fr_CA:
       index:
         header:
           title: Gestion du catalogue produits
+      content:
         loading: Vos produits sont en cours de chargement
       delete_modal:
         delete_product_modal:
@@ -832,6 +835,8 @@ fr_CA:
       delete_variant:
         success: La variante a bien été supprimée
         error: La variante n'a pas pu être supprimée
+      variant_row:
+        none_tax_category: Aucun
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir

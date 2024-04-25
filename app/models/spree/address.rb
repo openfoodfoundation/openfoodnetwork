@@ -12,7 +12,7 @@ module Spree
     belongs_to :state, class_name: "Spree::State", optional: true
 
     has_one :enterprise, dependent: :restrict_with_exception
-    has_many :shipments
+    has_many :shipments, dependent: :restrict_with_exception
 
     validates :address1, :city, :phone, presence: true
     validates :company, presence: true, unless: -> { first_name.blank? || last_name.blank? }

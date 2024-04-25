@@ -694,6 +694,8 @@ ko:
         new_variant: 새로운 변경사항
       edit_image:
         close: 뒤로
+      variant_row:
+        none_tax_category: None
     product_import:
       title: 제품 가져오기
       file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.

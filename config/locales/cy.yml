@@ -137,7 +137,8 @@ cy:
     unprocessable_entity:
       title: "Gwrthodwyd y newid roeddech chi am ei wneud (422)"
       message_html: "<p>Gwrthodwyd y newid roeddech chi am ei wneud. Hwyrach ichi geisio newid rhywbeth nad oes gennych fynediad ato.<br><h3><a href='/' >Ewch yn ôl i’r Hafan.</a></h3></p>"
-    stimulus_reflex_error: "Mae’n ddrwg gennym, ond aeth rhywbeth o’i le. \n\nGall fod yn broblem dros dro, felly gofynnir ichi roi cynnig arall neu ail-lwytho’r dudalen.\n Byddwn yn cofnodi pob gwall, a hwyrach ein bod yn gweithio i’w datrys. \nOs bydd y broblem yn parhau, neu os taw mater brys yw, cysylltwch â ni."
+    general_error:
+      message: "Mae’n ddrwg gennym, ond aeth rhywbeth o’i le. \n\nGall fod yn broblem dros dro, felly gofynnir ichi roi cynnig arall neu ail-lwytho’r dudalen.\n Byddwn yn cofnodi pob gwall, a hwyrach ein bod yn gweithio i’w datrys. \nOs bydd y broblem yn parhau, neu os taw mater brys yw, cysylltwch â ni."
   stripe:
     error_code:
       incorrect_number: "Mae rhif y cerdyn yn anghywir"
@@ -755,6 +756,7 @@ cy:
       index:
         header:
           title: Cynhyrchion Golygu Swmp
+      content:
         loading: Yn llwytho eich cynnyrch
       delete_modal:
         delete_product_modal:
@@ -812,6 +814,8 @@ cy:
       delete_variant:
         success: Llwyddwyd i ddileu’r amrywiolyn
         error: Yn methu dileu’r amrywiolyn
+      variant_row:
+        none_tax_category: Dim
     product_import:
       title: Mewnforio Cynnyrch
       file_not_found: Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor

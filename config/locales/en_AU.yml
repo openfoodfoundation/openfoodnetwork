@@ -558,6 +558,8 @@ en_AU:
         new_variant: New variant
       edit_image:
         close: Back
+      variant_row:
+        none_tax_category: None
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

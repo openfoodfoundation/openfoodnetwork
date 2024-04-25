@@ -535,6 +535,8 @@ fil_PH:
         new_variant: bagong uri
       edit_image:
         close: bumalik
+      variant_row:
+        none_tax_category: wala
     product_import:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '

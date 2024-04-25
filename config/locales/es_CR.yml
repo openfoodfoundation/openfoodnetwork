@@ -699,6 +699,8 @@ es_CR:
         new_variant: Nueva variante
       edit_image:
         close: Atrás
+      variant_row:
+        none_tax_category: Ninguno
     product_import:
       title: Importe de producto
       file_not_found: Archivo no encontrado o no se pudo abrir

@@ -108,7 +108,8 @@ ca:
       message_html: "<b>Si us plau, torna a provar</b> <p>Pot ser un problema temporal. Si us plau, clica al botó de tornar enrere per a tornar a la pantalla anterior o torna a l'<a href='/''>Inici</a> i prova una altra vegada.</p> <b>Ho estem intentant</b> <p>Si has vist aquest problema abans, probablement ja estem assabentats i estem treballant per a solucionar-lo. Registrem tots els errors que apareixen.</p> <b>Contacte de suport</b> <p>Si el problema persisteix o és urgent, si us plau informa'ns. Busca com fer-ho a la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>pàgina Open Food Network Local</a>.</p> <p>Ens ajuda molt que ens proporcionis tants detalls com sigui possible de què estaves fent quan es va aparèixer aquest error.</p>"
     unprocessable_entity:
       message_html: "<p>El canvi que volies va ser rebutjat. Potser heu intentat canviar alguna cosa a la qual no teniu accés.<br><h3> <a href='/' >Tornar a l'inici</a></h3></p>"
-    stimulus_reflex_error: "Ens sap greu, però alguna cosa ha anat malament.\n\n Pot ser que sigui un problema temporal, així que si us plau, torna-ho a provar o torna a carregar la pàgina.\n Enregistrem tots els errors i és possible que estiguem treballant en una solució.\n Si el problema persisteix o és urgent, poseu-vos en contacte amb nosaltres."
+    general_error:
+      message: "Ens sap greu, però alguna cosa ha anat malament.\n\n Pot ser que sigui un problema temporal, així que si us plau, torna-ho a provar o torna a carregar la pàgina.\n Enregistrem tots els errors i és possible que estiguem treballant en una solució.\n Si el problema persisteix o és urgent, poseu-vos en contacte amb nosaltres."
   stripe:
     error_code:
       incorrect_number: "El número de la targeta és incorrecte."
@@ -725,6 +726,7 @@ ca:
       index:
         header:
           title: Edició de productes en bloc
+      content:
         loading: Carregant els vostres productes
       delete_modal:
         delete_product_modal:
@@ -772,6 +774,8 @@ ca:
         success: Canvis guardats
       edit_image:
         close: Enrere
+      variant_row:
+        none_tax_category: Cap
     product_import:
       title: Importació de productes
       file_not_found: No s'ha trobat el fitxer o no s'ha pogut obrir

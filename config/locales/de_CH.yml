@@ -699,6 +699,8 @@ de_CH:
         new_variant: Neue Produktvariante
       edit_image:
         close: Zurück
+      variant_row:
+        none_tax_category: Keine
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
