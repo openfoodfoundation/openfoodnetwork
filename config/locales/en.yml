@@ -175,14 +175,15 @@ en:
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to.
       <br><h3><a href='/' >Return home</a></h3>
       </p>"
-    stimulus_reflex_error: "We're sorry, but something went wrong.
+    general_error:
+      message: "We're sorry, but something went wrong.
 
 
-      This might be a temporary problem, so please try again or reload the page.
+        This might be a temporary problem, so please try again or reload the page.
 
-      We record all errors and may be working on a fix.
+        We record all errors and may be working on a fix.
 
-      If the problem persists or is urgent, please contact us."
+        If the problem persists or is urgent, please contact us."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
