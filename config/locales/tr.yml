@@ -612,6 +612,8 @@ tr:
         new_variant: Yeni Çeşit
       edit_image:
         close: Geri
+      variant_row:
+        none_tax_category: SATIŞ YAPMIYOR
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı

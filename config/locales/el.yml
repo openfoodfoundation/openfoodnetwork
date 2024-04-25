@@ -594,6 +594,8 @@ el:
         search: Αναζήτηση
       edit_image:
         close: Πίσω
+      variant_row:
+        none_tax_category: Κανένας
     product_import:
       title: Είσαγωγή Προϊόντος
       file_not_found: Το αρχείο δεν βρέθηκε ή δεν μπόρεσε να φορτωθεί

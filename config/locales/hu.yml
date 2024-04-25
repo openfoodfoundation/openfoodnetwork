@@ -725,6 +725,8 @@ hu:
       delete_variant:
         success: Sikeresen törölte a terméket
         error: A változatot nem lehet törölni
+      variant_row:
+        none_tax_category: Egyik sem
     product_import:
       title: Termék importálása
       file_not_found: A fájl nem található vagy nem nyitható meg

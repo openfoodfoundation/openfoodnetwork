@@ -628,6 +628,8 @@ pt_BR:
           clear_search: Nova busca
       edit_image:
         close: Voltar
+      variant_row:
+        none_tax_category: Nenhum
     product_import:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto

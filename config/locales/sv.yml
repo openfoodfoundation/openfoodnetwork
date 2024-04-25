@@ -327,6 +327,8 @@ sv:
         search: Sök
       edit_image:
         close: Backa
+      variant_row:
+        none_tax_category: Ingen
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet

@@ -127,7 +127,8 @@ fr_BE:
     unprocessable_entity:
       title: "Le changement que vous souhaitiez a été rejeté (422)"
       message_html: "<p>Le changement que vous souhaitiez a été rejeté. Peut-être avez-vous essayé de modifier quelque chose auquel vous n'avez pas accès.<br><h3> <a href='/' >Retour au précédent</a></h3></p>"
-    stimulus_reflex_error: "Nous sommes désolés, une erreur s'est produite. Il s'agit peut-être d'un problème temporaire, veuillez donc réessayer ou recharger la page. Nous enregistrons toutes les erreurs et travaillons peut-être sur un correctif. Si le problème persiste ou est urgent, veuillez nous contacter."
+    general_error:
+      message: "Nous sommes désolés, une erreur s'est produite. Il s'agit peut-être d'un problème temporaire, veuillez donc réessayer ou recharger la page. Nous enregistrons toutes les erreurs et travaillons peut-être sur un correctif. Si le problème persiste ou est urgent, veuillez nous contacter."
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
@@ -245,6 +246,10 @@ fr_BE:
     integer_array_validator:
       not_array_error: "doit être un array"
       invalid_element_error: "doit contenir uniquement des nombres entiers"
+  report_job:
+    report_failed: |
+        Ce rapport a échoué. C'est peut-être trop lourd à traiter.
+        Nous allons examiner la question, mais n'hésitez pas à nous faire savoir si le problème persiste.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -695,6 +700,8 @@ fr_BE:
         new_variant: Nouvelle variante
       edit_image:
         close: Retour
+      variant_row:
+        none_tax_category: Aucun
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -1114,7 +1121,7 @@ fr_BE:
           white_label_logo_link_label: "Lien pour le logo utilisé en vitrine"
           hide_groups_tab: "Masquer l'onglet des groupes dans la vitrine"
           create_custom_tab: "Créer un onglet personnalisé dans la vitrine"
-          custom_tab_title: "Titre de l'onglet personnalisé"
+          custom_tab_title: "Titre de l'onglet personnalisé (max. 20 caractères)"
           custom_tab_content: "Contenu de l'onglet personnalisé"
         connected_apps:
           loading: "Chargement en cours"
@@ -1587,7 +1594,7 @@ fr_BE:
     enterprise_terms_and_conditions:
       destroy_attachment_does_not_exist: "Le fichier des termes et conditions n'existe pas"
     orders:
-      failed_to_update: "Annulation de la mise à jour la commande"
+      failed_to_update: "Annulation de la mise à jour de la commande"
   checkout:
     failed: "La vente a échouée. Veuillez nous le faire savoir afin que nous puissions traiter votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas pu être finalisée en raison d'un problème de stock."
@@ -3238,7 +3245,7 @@ fr_BE:
     order_cycles:
       create_failure: "La création du cycle de vente a échoué"
       update_success: 'Votre cycle de vente a été mis à jour.'
-      update_failure: "La mise à jour du cycle de vente à échoué"
+      update_failure: "La mise à jour du cycle de vente a échoué"
       no_distributors: Il n'y a pas de distributeur·trice pour ce cycle de vente. Il ne sera pas visible aux acheteur·euse·s tant qu'il n'y aura pas de distributeur·trice. Voulez-vous tout de même sauvegarder ce cycle de vente ?
     enterprises:
       producer: "Producteur·trice"
@@ -3405,6 +3412,7 @@ fr_BE:
     no_tracking_present: "Pas de traçage des données fournies."
     order_total: "Total commande "
     customer_details: "Données client·e"
+    customer_details_updated: "Détails du client mis à jour"
     customer_search: "Recherche client"
     choose_a_customer: "Choisir un client"
     account: "Compte"
@@ -3553,7 +3561,12 @@ fr_BE:
       cancel: "Annuler"
     shared:
       error_messages:
-        there_were_problems_with_the_following_fields: "Il y a u des erreur avec les champs suivant"
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 erreur a empêché la sauvegarde de cet enregistrement :"
+          few: "Les %{count} erreurs ont empêché la sauvegarde de cet enregistrement :"
+          many: "Les %{count} erreurs ont empêché la sauvegarde de cet enregistrement :"
+          other: "Les %{count} erreurs ont empêché la sauvegarde de cet enregistrement :"
+        there_were_problems_with_the_following_fields: "Il y a eu des erreurs concernant les champs suivants"
       payments_list:
         date_time: "Date/Temps"
         amount: "Quantité"

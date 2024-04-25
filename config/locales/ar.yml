@@ -708,6 +708,8 @@ ar:
         new_variant: نوع جديد
       edit_image:
         close: عودة
+      variant_row:
+        none_tax_category: لا شيء
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه

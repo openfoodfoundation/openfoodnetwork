@@ -671,6 +671,8 @@ it_CH:
         new_variant: Nuova variante
       edit_image:
         close: Indietro
+      variant_row:
+        none_tax_category: Nessuno
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile

@@ -141,7 +141,8 @@ nb:
     unprocessable_entity:
       title: "Endringen du ønsket ble avvist (422)"
       message_html: "<p>Endringen du ønsket ble avvist. Kanskje du prøvde å endre noe du ikke har tilgang til.<br><h3> <a href='/' >Vend hjem</a></h3></p>"
-    stimulus_reflex_error: "Vi beklager, men noe gikk galt.\n\nDette kan være et midlertidig problem, så prøv igjen eller last inn siden på nytt.\nVi registrerer alle feil og jobber kanskje med å fikse.\nHvis problemet vedvarer eller haster, vennligst kontakt oss."
+    general_error:
+      message: "Vi beklager, men noe gikk galt.\n\nDette kan være et midlertidig problem, så prøv igjen eller last inn siden på nytt.\nVi registrerer alle feil og jobber kanskje med å fikse.\nHvis problemet vedvarer eller haster, vennligst kontakt oss."
   stripe:
     error_code:
       incorrect_number: "Kortnummeret er feil."
@@ -760,6 +761,7 @@ nb:
       index:
         header:
           title: Endre produkter i bulk
+      content:
         loading: Laster inn produktene dine
       delete_modal:
         delete_product_modal:
@@ -820,6 +822,8 @@ nb:
       delete_variant:
         success: Varianten ble slettet
         error: Kan ikke slette varianten
+      variant_row:
+        none_tax_category: Ingen
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes

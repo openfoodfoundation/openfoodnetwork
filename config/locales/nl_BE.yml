@@ -551,6 +551,8 @@ nl_BE:
         new_variant: Nieuw variant
       edit_image:
         close: achterstevoren
+      variant_row:
+        none_tax_category: Geen enkele
     product_import:
       title: Importeren van producten
       file_not_found: Bestand niet gevonden of kon niet worden geopend

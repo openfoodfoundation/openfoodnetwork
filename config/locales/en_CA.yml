@@ -141,7 +141,8 @@ en_CA:
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to.<br><h3><a href='/' >Return home</a></h3></p>"
-    stimulus_reflex_error: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all erros and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
+    general_error:
+      message: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all erros and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -227,7 +228,7 @@ en_CA:
   customer_instructions: "Customer instructions"
   additional_information: "Additional information"
   connect_app:
-    url: "https://n8n.opernfoodnetwork.org/webhook/regen-CAN/connect-enterprise"
+    url: "https://n8n.opernfoodnetwork.org/webhook-test/regen-CAN/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -771,6 +772,7 @@ en_CA:
       index:
         header:
           title: Bulk Edit Products
+      content:
         loading: Loading your products
       delete_modal:
         delete_product_modal:
@@ -831,6 +833,8 @@ en_CA:
       delete_variant:
         success: Successfully deleted the variant
         error: Unable to delete the variant
+      variant_row:
+        none_tax_category: None
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1269,8 +1273,8 @@ en_CA:
           custom_tab_content: "Content for custom tab"
         connected_apps:
           legend: "Connected apps"
-          title: "Discover Regenerative"
-          tagline: "Allow Discover Regenerative to publish your enterprise information."
+          title: "Discover Food Justice"
+          tagline: "Allow OFN Canada to publish your enterprise information."
           enable: "Allow data sharing"
           disable: "Stop sharing"
           loading: "Loading"
