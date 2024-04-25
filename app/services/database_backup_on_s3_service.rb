@@ -30,7 +30,7 @@ class DatabaseBackupOnS3Service
 
   def upload_to_s3
     s3 = Aws::S3::Resource.new(
-      profile: 'eu2',
+      credentials: Aws::Credentials.new(ENV.fetch('aws_access_key_id', ''), ENV.fetch('aws_secret_access_key', '')),
       endpoint: 'https://eu2.contabostorage.com',
       region: 'eu-west-2',  # Adjust the region if necessary
       force_path_style: true
