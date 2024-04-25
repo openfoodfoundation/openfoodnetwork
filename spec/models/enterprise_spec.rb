@@ -57,6 +57,63 @@ describe Enterprise do
       expect(EnterpriseRelationship.where(id: [er1, er2])).to be_empty
     end
 
+    it "raises a DeleteRestrictionError on destroy if distributed_orders exist" do
+      enterprise = create(:distributor_enterprise)
+      create_list(:order, 2, distributor: enterprise)
+
+      expect do
+        enterprise.destroy
+      end.to raise_error(ActiveRecord::DeleteRestrictionError,
+                         /Cannot delete record because of dependent distributed_orders/)
+        .and change { Spree::Order.count }.by(0)
+    end
+
+    it "raises an DeleteRestrictionError on destroy if distributor_payment_methods exist" do
+      enterprise = create(:distributor_enterprise)
+      create_list(:distributor_payment_method, 2, distributor: enterprise)
+
+      expect do
+        enterprise.destroy
+      end.to raise_error(ActiveRecord::DeleteRestrictionError,
+                         /Cannot delete record because of dependent distributor_payment_methods/)
+        .and change { DistributorPaymentMethod.count }.by(0)
+    end
+
+    it "raises an DeleteRestrictionError on destroy if distributor_shipping_methods exist" do
+      enterprise = create(:distributor_enterprise)
+      create_list(:distributor_shipping_method, 2, distributor: enterprise)
+
+      expect do
+        enterprise.destroy
+      end.to raise_error(ActiveRecord::DeleteRestrictionError,
+                         /Cannot delete record because of dependent distributor_shipping_methods/)
+        .and change { DistributorShippingMethod.count }.by(0)
+    end
+
+    it "does not destroy enterprise_fees upon destroy" do
+      enterprise = create(:enterprise)
+      create_list(:enterprise_fee, 2, enterprise:)
+
+      expect do
+        enterprise.destroy
+      end.to raise_error(ActiveRecord::DeleteRestrictionError,
+                         /Cannot delete record because of dependent enterprise_fees/)
+        .and change { EnterpriseFee.count }.by(0)
+    end
+
+    it "does not destroy vouchers upon destroy" do
+      enterprise = create(:enterprise)
+      (1..2).map do |code|
+        create(:voucher, enterprise:, code: "new code #{code}")
+      end
+
+      expect do
+        enterprise.destroy
+      end.to raise_error(ActiveRecord::DeleteRestrictionError,
+                         /Cannot delete record because of dependent vouchers/)
+        .and change { Voucher.count }.by(0)
+    end
+
     describe "relationships to other enterprises" do
       let(:e) { create(:distributor_enterprise) }
       let(:p) { create(:supplier_enterprise) }

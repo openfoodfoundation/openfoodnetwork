@@ -32,8 +32,8 @@ module Spree
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
-    has_many :inventory_units, inverse_of: :variant
-    has_many :line_items, inverse_of: :variant
+    has_many :inventory_units, inverse_of: :variant, dependent: nil
+    has_many :line_items, inverse_of: :variant, dependent: nil
 
     has_many :stock_items, dependent: :destroy, inverse_of: :variant
     has_many :stock_locations, through: :stock_items
@@ -53,7 +53,7 @@ module Spree
              :currency, :currency=,
              to: :find_or_build_default_price
 
-    has_many :exchange_variants
+    has_many :exchange_variants, dependent: nil
     has_many :exchanges, through: :exchange_variants
     has_many :variant_overrides, dependent: :destroy
     has_many :inventory_items, dependent: :destroy

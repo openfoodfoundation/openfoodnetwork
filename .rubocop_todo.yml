@@ -565,17 +565,6 @@ RSpecRails/InferredSpecType:
     - 'spec/requests/voucher_adjustments_spec.rb'
     - 'spec/routing/stripe_spec.rb'
 
-# Offense count: 11
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/HasManyOrHasOneDependent:
-  Exclude:
-    - 'app/models/enterprise.rb'
-    - 'app/models/spree/address.rb'
-    - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/tax_rate.rb'
-    - 'app/models/spree/variant.rb'
-
 # Offense count: 22
 # Configuration parameters: IgnoreScopes, Include.
 # Include: app/models/**/*.rb
