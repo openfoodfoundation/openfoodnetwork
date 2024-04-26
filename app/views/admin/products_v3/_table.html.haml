@@ -63,6 +63,7 @@
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
 <<<<<<< HEAD
+<<<<<<< HEAD
       = form.fields_for("products", product, index: product_index) do |product_form|
         %tbody.relaxed{ data: { 'record-id': product_form.object.id,
                                 controller: "nested-form product",
@@ -90,3 +91,7 @@
 =======
       = render partial: 'product_form', locals: { product:, product_index:, form: }
 >>>>>>> 520db0ebf3 (Making turbo stream work with link_to helpers)
+=======
+      = form.fields_for("products", product, index: product_index) do |product_form|
+        = render partial: 'product_and_variants', locals: { product:, product_index:, product_form: product_form }
+>>>>>>> 44c7a127b2 (wip)

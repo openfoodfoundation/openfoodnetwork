@@ -36,7 +36,24 @@ module Admin
     def clone
       @product = Spree::Product.find(params[:id])
       @cloned_product = @product.duplicate
-      @product_index = params[:product_index]
+      @product_index = params[:product_index].to_i
+      options = {
+        allow_method_names_outside_object: true,
+        skip_default_ids: false,
+        method: :post,
+        id: "products-form",
+        builder: BulkFormBuilder,
+        html: {
+          data: {
+            "turbo-frame" => "_self",
+            :controller => "bulk-form",
+            "bulk-form-disable-selector-value" => "#sort,#filters",
+            "bulk-form-error-value" => nil
+          }
+        }
+      }
+
+      @product_form = BulkFormBuilder.new(:product, @cloned_product, view_context, options)
 
       raise "Clone failed" unless @cloned_product.save
 

@@ -1,2 +1,7 @@
-= turbo_stream.before "product_#{@product.id}" do
-  %p= "This is a test."
+= turbo_stream.before "products_#{@product.id}" do
+  %tbody.relaxed{ data: { 'record-id': @product_form.object.id,
+                        controller: "nested-form product",
+                        action: 'rails-nested-form:add->bulk-form#registerElements' }, id: "products_#{@cloned_product.id}"}
+    %tr
+      = render partial: 'product_row', locals: { product: @cloned_product, f: @product_form, product_index: @product_index}
+  
