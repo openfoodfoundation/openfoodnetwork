@@ -30,6 +30,7 @@
 %td.naked_inputs.align-left
   = render(SearchableDropdownComponent.new(form: f,
       name: :supplier_id,
+      aria_label: t('.producer_field_name'),
       options: producer_options,
       selected_option: product.supplier_id,
       placeholder_value: t('admin.products_v3.filters.search_for_producers')))

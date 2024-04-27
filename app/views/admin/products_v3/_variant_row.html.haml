@@ -46,6 +46,7 @@
       name: :primary_taxon_id,
       options: category_options,
       selected_option: variant.primary_taxon_id,
+      aria_label: t('.category_field_name'),
       placeholder_value: t('admin.products_v3.filters.search_for_categories')))
 %td.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
@@ -53,6 +54,7 @@
       options: tax_category_options,
       selected_option: variant.tax_category_id,
       include_blank: t('.none_tax_category'),
+      aria_label: t('.tax_category_field_name'),
       placeholder_value: t('.search_for_tax_categories')))
 %td.align-left
   -# empty
