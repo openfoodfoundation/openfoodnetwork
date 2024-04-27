@@ -89,8 +89,8 @@ class ProductsReflex < ApplicationReflex
       html: render(partial: "admin/products_v3/content",
                    locals: { products: @products, pagy: @pagy, search_term: @search_term,
                              producer_options: producers, producer_id: @producer_id,
-                             category_options: categories, tax_category_options:, category_id: @category_id,
-                             flashes: flash })
+                             category_options: categories, tax_category_options:,
+                             category_id: @category_id, flashes: flash })
     )
 
     cable_ready.replace_state(

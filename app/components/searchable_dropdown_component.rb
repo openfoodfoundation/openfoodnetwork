@@ -38,6 +38,6 @@ class SearchableDropdownComponent < ViewComponent::Base
   end
 
   def remove_search_plugin?
-    @should_remove_search_plugin ||= options.count < MINIMUM_OPTIONS_FOR_SEARCH_FILED
+    @remove_search_plugin ||= options.count < MINIMUM_OPTIONS_FOR_SEARCH_FILED
   end
 end
