@@ -684,7 +684,7 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
 
     context "when they are under 11" do
       before do
-        create_list(:supplier_enterprise, 9)
+        create_list(:supplier_enterprise, 9, users: [user])
         create_list(:tax_category, 9)
         create_list(:taxon, 2)
 
@@ -731,7 +731,7 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
 
     context "when they are over 11" do
       before do
-        create_list(:supplier_enterprise, 11)
+        create_list(:supplier_enterprise, 11, users: [user])
         create_list(:tax_category, 11)
         create_list(:taxon, 11)
 
