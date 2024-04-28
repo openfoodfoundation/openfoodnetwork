@@ -752,11 +752,13 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
         end
 
         within row_containing_name(variant_a1.display_name) do
+          sleep(0.1)
           validate_tomselect_with_search!(
             page, "Category",
             category_to_select,
             categories_search_selector
           )
+          sleep(0.1)
           validate_tomselect_with_search!(
             page, "Tax Category",
             tax_category_to_select,
