@@ -55,13 +55,6 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .node-version
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Set up database
         run: |
           bundle exec rake db:create db:schema:load
@@ -122,19 +115,11 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .node-version
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Set up database
         run: |
           bundle exec rake db:create db:schema:load
 
       - name: Run tests
-
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 09476e2ce491c12083df62768667c674
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -148,7 +133,6 @@ jobs:
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/models/**/*_spec.rb}" 
-        
         run: |
           bundle exec rake knapsack_pro:rspec
 
@@ -344,13 +328,6 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .node-version
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Set up database
         run: |
           bundle exec rake db:create db:schema:load
@@ -421,19 +398,11 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .node-version
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Set up database
         run: |
           bundle exec rake db:create db:schema:load
 
       - name: Run tests
-
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: e3b8800198d2d89b70c7edbdd85f8fd8
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -447,8 +416,6 @@ jobs:
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_TEST_FILE_EXCLUDE_PATTERN: "{engines/**/*_spec.rb,spec/models/**/*_spec.rb,spec/controllers/**/*_spec.rb,spec/serializers/**/*_spec.rb,spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/system/**/*_spec.rb}"
-                                            
-        
         run: |
           bundle exec rake knapsack_pro:rspec
 
