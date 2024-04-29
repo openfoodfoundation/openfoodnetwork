@@ -38,10 +38,10 @@ jobs:
         # [n] - where the n is a number of parallel jobs you want to run your tests on.
         # Use a higher number if you have slow tests to split them between more parallel jobs.
         # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [7]
+        ci_node_total: [8]
         # Indexes for parallel jobs (starting from zero).
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [0, 1, 2, 3, 4, 5, 6]
+        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7]
     steps:
       - uses: actions/checkout@v3
 
@@ -54,6 +54,14 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      # JS is required in order for webpacker to compile, in order to render templates containing image urls
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
 
       - name: Set up database
         run: |
@@ -73,58 +81,9 @@ jobs:
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/controllers/**/*_spec.rb}" 
-          KNAPSACK_PRO_TEST_FILE_EXCLUDE_PATTERN: "user_passwords_controller_spec|orders_controller_spec|mail_methods_controller_spec|groups_controller_spec|shops_controller_spec|payments_controller_spec"
         run: |
           git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
           bundle exec rake knapsack_pro:rspec
-
-  # Controllers that render views with css or image links will need webpack
-  controllers_incl_webpack:
-    runs-on: ubuntu-22.04
-    services:
-      postgres:
-        image: postgres:10
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_DB: open_food_network_test
-          POSTGRES_USER: ofn
-          POSTGRES_PASSWORD: f00d
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.4.0
-        with:
-          redis-version: 6
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .node-version
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Set up database
-        run: |
-          bundle exec rake db:create db:schema:load
-
-      - name: Run tests
-        env:
-          # Copied from KNAPSACK_PRO_TEST_FILE_EXCLUDE_PATTERN above
-          INCLUDE_PATTERN: "user_passwords_controller_spec|orders_controller_spec|mail_methods_controller_spec|groups_controller_spec|shops_controller_spec|payments_controller_spec"
-        run: |
-          git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
-          bundle exec rspec spec/controllers/**/*_spec.rb --pattern="$INCLUDE_PATTERN"
 
   models:
     runs-on: ubuntu-22.04
