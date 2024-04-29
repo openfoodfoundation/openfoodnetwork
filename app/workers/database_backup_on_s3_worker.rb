@@ -8,4 +8,3 @@ class DatabaseBackupOnS3Worker
     DatabaseBackupOnS3Service.perform_backup
   end
 end
-  
