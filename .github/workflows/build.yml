@@ -476,16 +476,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.4.0
-        with: 
-          redis-version: 6
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
@@ -493,10 +483,6 @@ jobs:
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Set up database
-        run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
       - name: Run JS tests
         run: bundle exec rake karma:run
 
