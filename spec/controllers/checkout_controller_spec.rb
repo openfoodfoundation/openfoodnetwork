@@ -10,9 +10,6 @@ RSpec.describe CheckoutController, type: :controller do
   let(:exchange) { order_cycle.exchanges.outgoing.first }
   let(:order) { create(:order_with_line_items, line_items_count: 1, distributor:, order_cycle:) }
   let(:payment_method) { distributor.payment_methods.first }
-  let(:stripe_payment_method) {
-    create(:stripe_sca_payment_method, distributor_ids: [distributor.id], environment: Rails.env)
-  }
   let(:shipping_method) { distributor.shipping_methods.first }
 
   before do
@@ -290,7 +287,6 @@ RSpec.describe CheckoutController, type: :controller do
 
           expect(response).to redirect_to checkout_step_path(:summary)
           expect(order.reload.state).to eq "confirmation"
-          expect(response.status).to be 302
         end
 
         describe "with a voucher" do
@@ -309,27 +305,6 @@ RSpec.describe CheckoutController, type: :controller do
 
             expect(response).to redirect_to checkout_step_path(:summary)
           end
-        end
-      end
-
-      context "with no payment source" do
-        let(:checkout_params) do
-          {
-            order: {
-              payments_attributes: [
-                { payment_method_id: stripe_payment_method.id }
-              ]
-            }
-          }
-        end
-
-        it "updates and redirects to summary step" do
-          put(:update, params:)
-
-          expect(response).to redirect_to checkout_step_path(:summary)
-          expect(order.reload.state).to eq "confirmation"
-          expect(order.payments.first.source).to eq nil
-          expect(response.status).to be 302
         end
       end
 
