@@ -64,8 +64,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bundle exec rake db:create db:schema:load
 
       - name: Run tests
         env:
@@ -132,8 +131,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bundle exec rake db:create db:schema:load
 
       - name: Run tests
 
@@ -201,8 +199,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bundle exec rake db:create db:schema:load
 
       - name: Run tests
 
@@ -279,8 +276,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bundle exec rake db:create db:schema:load
 
       - name: Run tests
 
@@ -357,8 +353,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bundle exec rake db:create db:schema:load
 
       - name: Run tests
 
@@ -435,8 +430,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bundle exec rake db:create db:schema:load
 
       - name: Run tests
 
