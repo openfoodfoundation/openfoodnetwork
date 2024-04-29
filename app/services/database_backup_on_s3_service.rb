@@ -24,13 +24,19 @@ class DatabaseBackupOnS3Service
   end
 
   def create_database_dump
-    pg_dump_command = "PGPASSWORD=#{ENV.fetch('OFN_DB_PASSWORD', 'f00d')} pg_dump -Fc -Z9 -U #{ENV.fetch('OFN_DB_USERNAME', 'ofn')} -h #{ENV.fetch('OFN_DB_HOST', 'localhost')} #{ENV.fetch('OFN_DB_NAME', 'openfoodnetwork')} > #{@object_key}"
+    pg_dump_command = "PGPASSWORD=#{ENV.fetch('OFN_DB_PASSWORD',
+                                              'f00d')} pg_dump -Fc -Z9 -U #{ENV.fetch('OFN_DB_USERNAME',
+                                                                                      'ofn')} -h #{ENV.fetch('OFN_DB_HOST',
+                                                                                                             'localhost')} #{ENV.fetch(
+                                                                                                               'OFN_DB_NAME', 'openfoodnetwork'
+                                                                                                             )} > #{@object_key}"
     system(pg_dump_command) or raise "Database dump failed"
   end
 
   def upload_to_s3
     s3 = Aws::S3::Resource.new(
-      credentials: Aws::Credentials.new(ENV.fetch('aws_access_key_id', ''), ENV.fetch('aws_secret_access_key', '')),
+      credentials: Aws::Credentials.new(ENV.fetch('aws_access_key_id', ''),
+                                        ENV.fetch('aws_secret_access_key', '')),
       endpoint: 'https://eu2.contabostorage.com',
       region: 'eu-west-2',  # Adjust the region if necessary
       force_path_style: true
@@ -41,9 +47,9 @@ class DatabaseBackupOnS3Service
   end
 
   def cleanup
-    File.delete(@db_dump_path) if File.exist?(@db_dump_path)
+    FileUtils.rm_f(@db_dump_path)
     Rails.logger.info "Local backup file deleted."
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Failed to delete local backup file: #{e.message}"
   end
 end
