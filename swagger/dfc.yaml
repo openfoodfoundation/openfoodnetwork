@@ -376,7 +376,7 @@ paths:
                       dfc-b:hasAddress: http://test.host/api/dfc/addresses/40000
                       dfc-b:hasPhoneNumber: 0404 444 000 200
                       dfc-b:email: hello@example.org
-                      dfc-b:websitePage: openfoodnetwork.org
+                      dfc-b:websitePage: https://openfoodnetwork.org
                       dfc-b:hasSocialMedia: http://test.host/api/dfc/enterprises/10000/social_medias/facebook
                       dfc-b:logo: ''
                       dfc-b:name: Fred's Farm
