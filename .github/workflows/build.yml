@@ -55,6 +55,14 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      # JS is required in order for webpacker to compile, in order to render templates containing image urls
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Set up database
         run: |
           bundle exec rake db:create db:schema:load
@@ -328,6 +336,14 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Set up database
         run: |
           bundle exec rake db:create db:schema:load
@@ -397,6 +413,14 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
+
+      - name: Install JS dependencies
+        run: yarn install --frozen-lockfile
 
       - name: Set up database
         run: |
