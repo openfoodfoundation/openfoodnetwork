@@ -61,6 +61,13 @@ describe 'Multilingual' do
         expect_menu_and_cookie_in_es
         expect(page).to have_content 'Precio'
       end
+
+      it "visiting checkout as a guest user" do
+        visit checkout_path(locale: 'es')
+
+        expect_menu_and_cookie_in_es
+        expect(page).to have_content 'Iniciar sesión'
+      end
     end
   end
 
