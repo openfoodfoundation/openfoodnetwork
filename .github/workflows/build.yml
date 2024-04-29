@@ -476,6 +476,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # Rails is required for the Karma rake script
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
