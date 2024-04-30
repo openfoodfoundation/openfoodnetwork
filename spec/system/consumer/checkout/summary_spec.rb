@@ -35,6 +35,11 @@ describe "As a consumer, I want to checkout my order" do
     create(:shipping_method, require_ship_address: true,
                              name: "A Free Shipping with required address")
   }
+  let!(:payment_with_fee) {
+    create(:payment_method, distributors: [distributor],
+                            name: "Payment with Fee", description: "Payment with fee",
+                            calculator: Calculator::FlatRate.new(preferred_amount: 1.23))
+  }
 
   before do
     add_enterprise_fee enterprise_fee
@@ -49,6 +54,18 @@ describe "As a consumer, I want to checkout my order" do
     before do
       login_as(user)
       visit checkout_path
+    end
+
+    context "when a line item is out of stock" do
+      before do
+        variant.on_demand = false
+        variant.on_hand = 0
+        variant.save!
+      end
+
+      it "returns me to the cart with an error message" do
+        out_of_stock_check(:summary)
+      end
     end
 
     context "summary step" do

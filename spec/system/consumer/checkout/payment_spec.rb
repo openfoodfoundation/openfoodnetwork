@@ -27,7 +27,6 @@ describe "As a consumer, I want to checkout my order" do
                    ship_address_id: nil, state: "cart",
                    line_items: [create(:line_item, variant:)])
   }
-
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone:, included_in_price: true) }
   let(:fee_tax_category) { create(:tax_category, tax_rates: [fee_tax_rate]) }
   let(:enterprise_fee) { create(:enterprise_fee, amount: 1.23, tax_category: fee_tax_category) }
@@ -56,6 +55,18 @@ describe "As a consumer, I want to checkout my order" do
     before do
       login_as(user)
       visit checkout_path
+    end
+
+    context "when a line item is out of stock" do
+      before do
+        variant.on_demand = false
+        variant.on_hand = 0
+        variant.save!
+      end
+
+      it "returns me to the cart with an error message" do
+        out_of_stock_check(:payment)
+      end
     end
 
     context "payment step" do

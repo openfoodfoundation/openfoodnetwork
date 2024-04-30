@@ -82,6 +82,18 @@ describe "As a consumer, I want to checkout my order" do
       visit checkout_path
     end
 
+    context "when a line item is out of stock" do
+      before do
+        variant.on_demand = false
+        variant.on_hand = 0
+        variant.save!
+      end
+
+      it "returns me to the cart with an error message" do
+        out_of_stock_check(:details)
+      end
+    end
+
     context "when no selecting a shipping method" do
       before do
         fill_out_details
