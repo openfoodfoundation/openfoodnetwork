@@ -10,7 +10,6 @@ module PermittedAttributes
         :display_as, :sku, :group_buy, :group_buy_unit_size,
         :taxon_ids, :primary_taxon_id, :tax_category_id,
         :meta_keywords, :notes, :inherits_properties,
-        :supplier_id,
         { product_properties_attributes: [:id, :property_name, :value],
           variants_attributes: [PermittedAttributes::Variant.attributes],
           image_attributes: [:attachment] }
