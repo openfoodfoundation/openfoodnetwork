@@ -699,22 +699,23 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
         within row_containing_name(product_a.name) do
           validate_tomselect_without_search!(
             page, "Producer",
-            producer_to_select,
             producer_search_selector
           )
+          tomselect_select(producer_to_select, from: "Producer")
         end
 
         within row_containing_name(variant_a1.display_name) do
           validate_tomselect_without_search!(
             page, "Category",
-            category_to_select,
             categories_search_selector
           )
+          tomselect_select(category_to_select, from: "Category")
+
           validate_tomselect_without_search!(
             page, "Tax Category",
-            tax_category_to_select,
             tax_categories_search_selector
           )
+          tomselect_select(tax_category_to_select, from: "Tax Category")
         end
 
         click_button "Save changes"
@@ -746,24 +747,25 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
         within row_containing_name(product_a.name) do
           validate_tomselect_with_search!(
             page, "Producer",
-            producer_to_select,
             producer_search_selector
           )
+          tomselect_search_and_select(producer_to_select, from: "Producer")
         end
 
         within row_containing_name(variant_a1.display_name) do
           sleep(0.1)
           validate_tomselect_with_search!(
             page, "Category",
-            category_to_select,
             categories_search_selector
           )
+          tomselect_search_and_select(category_to_select, from: "Category")
+
           sleep(0.1)
           validate_tomselect_with_search!(
             page, "Tax Category",
-            tax_category_to_select,
             tax_categories_search_selector
           )
+          tomselect_search_and_select(tax_category_to_select, from: "Tax Category")
         end
 
         click_button "Save changes"
@@ -1146,24 +1148,16 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
     @tax_category_column ||= '[data-controller="variant"] > td:nth-child(10)'
   end
 
-  def validate_tomselect_without_search!(page, field_name, value, search_selector)
-    tomselect_wrapper = page.find_field(field_name).sibling(".ts-wrapper")
-    tomselect_wrapper.find(".ts-control").click
-
-    expect(page).not_to have_selector(search_selector)
-
-    tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option',
-                           text: value).click
+  def validate_tomselect_without_search!(page, field_name, search_selector)
+    open_tomselect_to_validate!(page, field_name) do
+      expect(page).not_to have_selector(search_selector)
+    end
   end
 
-  def validate_tomselect_with_search!(page, field_name, value, search_selector)
-    tomselect_wrapper = page.find_field(field_name).sibling(".ts-wrapper")
-    tomselect_wrapper.find(".ts-control").click
-
-    expect(page).to have_selector(search_selector)
-
-    tomselect_wrapper.find(:css, '.ts-dropdown input.dropdown-input').send_keys(value)
-    tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
+  def validate_tomselect_with_search!(page, field_name, search_selector)
+    open_tomselect_to_validate!(page, field_name) do
+      expect(page).to have_selector(search_selector)
+    end
   end
 
   def random_producer(product)

@@ -112,6 +112,20 @@ module WebHelper
     tomselect_wrapper.find(:css, '.ts-dropdown .ts-dropdown-content .option', text: value).click
   end
 
+  def open_tomselect_to_validate!(page, field_name)
+    tomselect_wrapper = page.find_field(field_name).sibling(".ts-wrapper")
+    tomselect_wrapper.find(".ts-control").click # open the dropdown
+
+    raise 'Please pass the block for expectations' unless block_given?
+
+    # execute block containing expectations
+    yield
+
+    tomselect_wrapper.find(
+      '.ts-dropdown .ts-dropdown-content .option.active',
+    ).click # close the dropdown by selecting the already selected value
+  end
+
   def request_monitor_finished(controller = nil)
     page.evaluate_script("#{angular_scope(controller)}.scope().RequestMonitor.loading == false")
   end
