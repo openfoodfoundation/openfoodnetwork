@@ -10,7 +10,7 @@
     "pretty-quick": "pretty-quick"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.6.3",
+    "@floating-ui/dom": "^1.6.4",
     "@hotwired/turbo": "^8.0.4",
     "@rails/webpacker": "5.4.4",
     "@stimulus-components/rails-nested-form": "^5.0.0",
