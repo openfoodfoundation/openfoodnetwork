@@ -2,7 +2,7 @@
 
 class SearchableDropdownComponent < ViewComponent::Base
   REMOVED_SEARCH_PLUGIN = { 'tom-select-options-value': '{ "plugins": [] }' }.freeze
-  MINIMUM_OPTIONS_FOR_SEARCH_FILED = 11 # at least 11 options are required for the search field
+  MINIMUM_OPTIONS_FOR_SEARCH_FIELD = 11 # at least 11 options are required for the search field
 
   def initialize(
     form:,
@@ -38,6 +38,6 @@ class SearchableDropdownComponent < ViewComponent::Base
   end
 
   def remove_search_plugin?
-    @remove_search_plugin ||= options.count < MINIMUM_OPTIONS_FOR_SEARCH_FILED
+    @remove_search_plugin ||= options.count < MINIMUM_OPTIONS_FOR_SEARCH_FIELD
   end
 end
