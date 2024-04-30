@@ -171,6 +171,11 @@
       padding: 0;
     }
 
+    .fullwidth + .field {
+      // Assume wrap, so add small gap
+      margin-top: 3px;
+    }
+
     .ts-control {
       z-index: 0; // Avoid hovering over thead
     }
