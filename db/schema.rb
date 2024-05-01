@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_22_150502) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -674,8 +674,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_22_150502) do
 
   create_table "spree_product_properties", id: :serial, force: :cascade do |t|
     t.string "value", limit: 255
-    t.integer "product_id"
-    t.integer "property_id"
+    t.integer "product_id", null: false
+    t.integer "property_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "position", default: 0
@@ -718,7 +718,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_22_150502) do
     t.string "number", limit: 255
     t.string "state", limit: 255
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
-    t.integer "order_id"
+    t.integer "order_id", null: false
     t.text "reason"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -814,7 +814,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_22_150502) do
   create_table "spree_states", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "abbr", limit: 255
-    t.integer "country_id"
+    t.integer "country_id", null: false
   end
 
   create_table "spree_stock_items", id: :serial, force: :cascade do |t|
