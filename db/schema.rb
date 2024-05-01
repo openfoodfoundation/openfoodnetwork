@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_01_075735) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -818,8 +818,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
   end
 
   create_table "spree_stock_items", id: :serial, force: :cascade do |t|
-    t.integer "stock_location_id"
-    t.integer "variant_id"
+    t.integer "stock_location_id", null: false
+    t.integer "variant_id", null: false
     t.integer "count_on_hand", default: 0, null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -849,8 +849,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
   end
 
   create_table "spree_stock_movements", id: :serial, force: :cascade do |t|
-    t.integer "stock_item_id"
-    t.integer "quantity", default: 0
+    t.integer "stock_item_id", null: false
+    t.integer "quantity", default: 0, null: false
     t.string "action", limit: 255
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
