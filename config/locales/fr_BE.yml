@@ -114,7 +114,7 @@ fr_BE:
       dimension_height_equal_to: "la hauteur doit être égale au pixel %{length} ."
       aspect_ratio_not_square: "doit être une image carrée"
       aspect_ratio_not_portrait: "doit être une image de portrait"
-      aspect_ratio_not_landscape: "doit être une image de paysage"
+      aspect_ratio_not_landscape: "doit être une image en format paysage"
       aspect_ratio_is_not: "doit avoir un rapport hauteur / largeur de %{aspect_ratio}"
       aspect_ratio_unknown: "a un rapport hauteur/largeur inconnu"
       image_not_processable: "n'est pas une image valide"
@@ -337,6 +337,7 @@ fr_BE:
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
   invoice: "Facture"
   active: "Actif"
+  download: "Télécharger"
   cancelled: "Annulée"
   more: "Plus"
   say_no: "Non"
@@ -552,6 +553,7 @@ fr_BE:
         terms_of_service: "Conditions d'utilisation"
         delete: "Supprimer le fichier"
         confirm_delete: "Voulez-vous vraiment supprimer le fichier actuel des conditions d'utilisation ?"
+        attachment: "Pièce jointe"
         create_terms_of_service: "Créer un fichier de conditions d'utilisation"
     number_localization:
       number_localization_settings: "Gestion localisation des nombres"
@@ -676,7 +678,7 @@ fr_BE:
         infinity: "Infinité"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
       back_to_products_list: "Retour à la liste produits"
-      editing_product: "Edition de produits"
+      editing_product: "Éditer le produit"
       tabs:
         product_details: "Détails du produit"
         group_buy_options: "Options d'achat par lot"
@@ -857,6 +859,7 @@ fr_BE:
         order_date: "Complété à "
         max: "Max"
         product_unit: "Produit: Unité"
+        weight_volume: "Poids/Volume (g)"
         ask: "Demander?"
         page_title: "Gestion des commandes"
         actions_delete: "Supprimer la sélection"
@@ -1272,9 +1275,9 @@ fr_BE:
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
         automatic_notifications: Notifications automatiques
-        automatic_notifications_tip: Envoi un email automatiquement à tous les producteurs lorsque le cycle de vente ferme.
+        automatic_notifications_tip: Envoie un email automatiquement à tous les producteurs lorsque le cycle de vente ferme.
         title: Paramétrages avancés
-        choose_product_tip: Vous pouvez limiter les produits entrants et sortants à l'inventaire uniquement%{inventory}.
+        choose_product_tip: Vous pouvez limiter les produits entrants et sortants uniquement à ceux sélectionnés dans le catalogue du comptoir "%{inventory} ".
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue magasin
         preferred_product_selection_from_coordinator_inventory_only_all: Tous les produits disponibles dans les catalogues producteurs
         save_reload: Sauvegarder et rafraichir la page
@@ -1405,11 +1408,14 @@ fr_BE:
       pack_by_customer: Préparation des commandes par Acheteur·euse
       pack_by_supplier: Préparation des commandes par Producteur·trice
       pack_by_product: Préparation des commandes par produit
+      download:
+        button: "Télécharger le rapport"
       show:
         report_taking_longer: >
             Désolé, ce rapport a pris trop de temps à traiter. Il peut contenir beaucoup
             de données ou nous sommes occupés par d'autres rapports. Vous pouvez réessayer
             plus tard.
+        report_link_label: Télécharger le rapport (si disponible)
       revenues_by_hub:
         name: CA par comptoir
         description: CA par comptoir
@@ -1474,7 +1480,7 @@ fr_BE:
         name: "Rapports de préparation des paniers"
     subscriptions:
       index:
-        title: "commandes récurrantes"
+        title: "Commandes récurrentes"
         new: "Nouvel abonnement"
       new:
         title: "Nouvel abonnement"
@@ -1488,7 +1494,7 @@ fr_BE:
       filters:
         query_placeholder: "Recherche par email ..."
       setup_explanation:
-        title: "commandes récurrantes"
+        title: "Commandes récurrentes"
         just_a_few_more_steps: 'Encore quelques étapes avant de pouvoir commencer:'
         enable_subscriptions: "Activez la fonction abonnements pour au moins une de vos comptoirs"
         enable_subscriptions_step_1_html: 1. Allez à %{enterprises_link}, trouvez votre comptoir, et cliquez sur "Gérer"
@@ -1680,9 +1686,10 @@ fr_BE:
       submit: Finaliser la commande
       cancel: Retour à Mode de paiement
     errors:
+      saving_failed: "L'enregistrement a échoué, veuillez mettre à jour les champs en surbrillance."
       terms_not_accepted: Veuillez accepter les termes et conditions
       required: Le champ ne peut pas être vide
-      invalid_number: "s&#39;il vous plaît entrer un numéro de téléphone valide"
+      invalid_number: "S'il vous plaît, entrez un numéro de téléphone valide"
       invalid_email: "Veuillez entrer un email valide"
       select_a_shipping_method: Sélectionnez une méthode d'expédition ou de retrait
       select_a_payment_method: Choisissez une méthode de paiement
@@ -1753,6 +1760,7 @@ fr_BE:
   invoice_column_price: "Prix"
   invoice_column_item: "Produit"
   invoice_column_qty: "Qté"
+  invoice_column_weight_volume: "Poids / Vol."
   invoice_column_unit_price_with_taxes: "Prix unitaire TTC"
   invoice_column_unit_price_without_taxes: "Prix unitaire HT"
   invoice_column_price_with_taxes: "Prix total TTC"
@@ -2449,6 +2457,7 @@ fr_BE:
   shipping_method_destroy_error: "Cette méthode de livraison ne peut pas être supprimée car elle est référencée dans une commande : %{number}."
   fees: "Frais"
   fee_name: "Nom de la commission "
+  fee_owner: "Propriétaire de la commission"
   item_cost: "Coût du produit"
   bulk: "Vrac"
   shop_variant_quantity_min: "min"
@@ -2492,7 +2501,7 @@ fr_BE:
   admin_enterprise_relationships_button_create: "Créer"
   admin_enterprise_relationships_to: "vers"
   admin_enterprise_groups: "Groupes d'entreprises"
-  admin_enterprise_groups_name: "Produit/Variante"
+  admin_enterprise_groups_name: "NOM DU GROUPE"
   admin_enterprise_groups_owner: "Manager principal"
   admin_enterprise_groups_on_front_page: "Sur la page d'accueil?"
   admin_enterprise_groups_enterprise: "Entreprises"
@@ -2517,7 +2526,7 @@ fr_BE:
   supplier: "Fournisseurs"
   product_name: "Nom du Produit"
   product_description: "Description du Produit"
-  permalink: "permalien"
+  permalink: "Permalien : Nom pour URL (sans espace)"
   shipping_categories: "Condition de transport"
   units: "Unité de mesure"
   coordinator: "Coordinateur"
@@ -2770,6 +2779,7 @@ fr_BE:
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
   report_header_weight: Poids
+  report_header_final_weight_volume: Final (Poids/Volume)
   report_header_height: Taille
   report_header_width: largeur
   report_header_depth: profondeur
@@ -2824,6 +2834,11 @@ fr_BE:
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
   report_line_line_items: Ces articles
+  report_header_last_completed_order_date: Date de la dernière commande terminée
+  initial_invoice_number: "Numéro de facture initial"
+  invoice_date: "Date de facture"
+  due_date: "Date d'échéance"
+  account_code: "Code du compte"
   equals: "Egal"
   contains: "contient"
   discount: "Réduction"
@@ -3372,8 +3387,10 @@ fr_BE:
     category: "Catégorie"
     created_successfully: "Créé avec succès"
     credit: "Crédit"
-    editing_tax_category: "Modification de la catégorie de taxe"
-    editing_tax_rate: "Modification du taux de taxe"
+    editing_tax_category: "Éditer la catégorie de taxe"
+    editing_tax_rate: "Éditer le taux de taxe"
+    editing_zone: "Éditer la zone"
+    editing_state: "Éditer la province"
     expiration: "Expiration"
     invalid_payment_provider: "Fournisseur de paiement invalide"
     items_cannot_be_shipped: "Les articles ne peuvent pas être expédiés"
@@ -3387,12 +3404,14 @@ fr_BE:
     notice_messages:
       variant_deleted: "Variante supprimée"
     start_date: "Date de début"
+    taxonomy_tree_instruction: "Faites un clic droit sur un élément pour ajouter, renommer, supprimer ou modifier."
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, merci de chercher et d'ajouter un des produits ci-dessus"
     add_product: "Ajoutez un produit"
     name_or_sku: "Nom ou N° d'article (entrer au moins 4 lettres du nom du produit) "
     resend: "Renvoyer"
     back_to_orders_list: "Retour vers la liste des commandes "
+    back_to_states_list: "Retour à la liste des provinces"
     return_authorizations: "Autorisations de retour"
     cannot_create_returns: "Impossible de créer des retours car cette commande n'a pas d'unités expédiées."
     select_stock: "Selectionner stock"
@@ -3464,7 +3483,7 @@ fr_BE:
     send_mails_as: "Envoyer les mails comme "
     smtp_send_all_emails_as_from_following_address: "Envoyer tous les mails comme de l'adresse suivante."
     send_copy_of_all_mails_to: "Envoyez une copie de tous les mails à "
-    smtp_send_copy_to_this_addresses: "Envoit une copie de tous les mails sortants vers cette adresse. En cas de plusieurs adresses, séparer par une virgule."
+    smtp_send_copy_to_this_addresses: "Envoie une copie de tous les mails sortants vers cette adresse. En cas de plusieurs adresses, séparer par une virgule."
     tax_categories: "TVA applicable"
     listing_tax_categories: "Liste catégories TVA"
     back_to_tax_categories_list: "Retour à la liste des catégories de TVA"
@@ -3488,7 +3507,7 @@ fr_BE:
     listing_countries: "Liste des pays"
     iso_name: "Nom ISO"
     states_required: "Provinces requises"
-    editing_country: "Pays d'édition"
+    editing_country: "Éditer le pays"
     back_to_countries_list: "Retouner vers la liste des pays"
     states: "Provinces"
     abbreviation: "Abréviation"
@@ -3505,6 +3524,7 @@ fr_BE:
     shipping_categories: "Condition de transport"
     new_shipping_category: "Nouvelle catégorie d'expédition "
     back_to_shipping_categories: "Retour vers les catégories d'expédition"
+    editing_shipping_category: "Éditer la catégorie d'expédition"
     name: "Nom"
     description: "Description"
     type: "Catégorie"
@@ -3581,6 +3601,10 @@ fr_BE:
           header:
             store: Aperçu
     admin:
+      mail_methods:
+        send_testmail: "Envoyer un e-mail de test"
+        testmail:
+          error: "Une erreur s'est produite lors de la tentative d'envoi de l'e-mail de test."
       unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       subscriptions:
         number: "N° commande"
@@ -3779,7 +3803,7 @@ fr_BE:
           back_to_payment_methods_list: "Retour à la liste des paiements"
         edit:
           new: "Nouveau"
-          editing_payment_method: "Modification des méthodes de paiement en cours"
+          editing_payment_method: "Éditer les méthodes de paiement"
           back_to_payment_methods_list: "Retour à la liste des paiements"
         stripe_connect:
           enterprise_select_placeholder: Choisir...
@@ -3818,6 +3842,7 @@ fr_BE:
             no_payment_via_admin_backend: Les payement paypal ne savent pas etre prit dans le Backoffice
       products:
         image_upload_error: "Veuillez télécharger l'image au format JPG, PNG, GIF, SVG ou WEBP."
+        image_not_processable: "L’image jointe n’est pas une image valide."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -3879,7 +3904,7 @@ fr_BE:
           search: "Rechercher"
           email: "Email"
         edit:
-          editing_user: "Utilisateur·trice d'édition"
+          editing_user: "Éditer l'utilisateur.rice"
           back_to_users_list: "Retour vers la liste des utilisateur·trice·s"
           general_settings: "Réglages Généraux"
         form:
@@ -3933,7 +3958,7 @@ fr_BE:
       taxons:
         form:
           name: Nom
-          permalink: permalien
+          permalink: 'Permalien : Nom pour URL (sans espace)'
           description: Description
       general_settings:
         edit:
