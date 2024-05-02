@@ -1129,7 +1129,16 @@ ar:
           add_new: اضف جديد
           no_voucher_yet: لا قسائم حتى الآن
         connected_apps:
+          tagline: "By clicking ‘Allow data sharing’, you are sharing data between Open Food Network and the Discover Regenerative Portal, and agreeing to make specific data public on the Portal, which will also be publicly available on the API.\nIMPORTANT: Before you stop sharing and remove your listing, please first contact hello@regenerative.org.au to request a copy of your Discover Regenerative data."
           loading: "جار التحميل"
+          description_html: |
+              <p>
+              Discover Regenerative is a showcase of Australia’s Regenerative Farmers, their produce/products, outcomes and achievements. It simplifies how business-to-business (B2B) / wholesale buyers can find regenerative produce and directly connect with Producers.
+              </p>
+              <p>
+              <a href="https://regenerative.org.au/" target="_blank"><b>Visit Discover Regenerative</b>
+              <i class="icon-external-link"></i></a>
+              </p>
       actions:
         edit_profile: الإعدادات
         properties: الخصائص
