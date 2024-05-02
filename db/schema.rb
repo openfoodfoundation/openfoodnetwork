@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_02_011542) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -101,7 +101,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
     t.datetime "terms_and_conditions_accepted_at", precision: nil
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
-    t.boolean "created_manually", default: false
+    t.boolean "created_manually", default: false, null: false
     t.index ["bill_address_id"], name: "index_customers_on_bill_address_id"
     t.index ["created_manually"], name: "index_customers_on_created_manually"
     t.index ["email"], name: "index_customers_on_email"
@@ -220,9 +220,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
     t.string "email_address", limit: 255
     t.boolean "require_login", default: false, null: false
     t.boolean "allow_guest_orders", default: true, null: false
+    t.boolean "allow_order_changes", default: false, null: false
     t.text "invoice_text"
     t.boolean "display_invoice_logo", default: false
-    t.boolean "allow_order_changes", default: false, null: false
     t.boolean "enable_subscriptions", default: false, null: false
     t.integer "business_address_id"
     t.boolean "show_customer_names_to_suppliers", default: false, null: false
@@ -301,7 +301,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
     t.bigint "order_id"
     t.integer "number"
     t.jsonb "data"
-    t.date "date", default: -> { "CURRENT_TIMESTAMP" }
+    t.date "date", default: -> { "now()" }
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "cancelled", default: false, null: false
@@ -701,6 +701,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
     t.integer "primary_taxon_id"
     t.boolean "inherits_properties", default: true, null: false
     t.string "sku", limit: 255, default: "", null: false
+    t.integer "deleted_by_id"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
     t.index ["name"], name: "index_products_on_name"
     t.index ["primary_taxon_id"], name: "index_spree_products_on_primary_taxon_id"
@@ -1109,7 +1110,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
 
   create_table "vouchers", force: :cascade do |t|
     t.string "code", limit: 255, null: false
-    t.datetime "expiry_date"
+    t.datetime "expiry_date", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "enterprise_id"
@@ -1203,6 +1204,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
   add_foreign_key "spree_products", "spree_shipping_categories", column: "shipping_category_id", name: "spree_products_shipping_category_id_fk"
   add_foreign_key "spree_products", "spree_tax_categories", column: "tax_category_id", name: "spree_products_tax_category_id_fk"
   add_foreign_key "spree_products", "spree_taxons", column: "primary_taxon_id", name: "spree_products_primary_taxon_id_fk"
+  add_foreign_key "spree_products", "spree_users", column: "deleted_by_id"
   add_foreign_key "spree_return_authorizations", "spree_orders", column: "order_id", name: "spree_return_authorizations_order_id_fk"
   add_foreign_key "spree_roles_users", "spree_roles", column: "role_id", name: "spree_roles_users_role_id_fk"
   add_foreign_key "spree_roles_users", "spree_users", column: "user_id", name: "spree_roles_users_user_id_fk"
