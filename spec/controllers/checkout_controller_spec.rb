@@ -308,6 +308,62 @@ RSpec.describe CheckoutController, type: :controller do
         end
       end
 
+      context "with no payment source" do
+        let(:checkout_params) do
+          {
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id:,
+                  source_attributes: {
+                    first_name: "Jane",
+                    last_name: "Doe",
+                    month: "",
+                    year: "",
+                    cc_type: "",
+                    last_digits: "",
+                    gateway_payment_profile_id: ""
+                  }
+                }
+              ]
+            },
+            commit: "Next - Order Summary"
+          }
+        end
+        let(:error_message) {
+          'You must implement payment_source_class method for this gateway.'
+        }
+
+        context "with a cash/check payment method" do
+          let!(:payment_method_id) { payment_method.id }
+
+          it "updates and redirects to summary step" do
+            expect { put(:update, params:) }.to raise_error(RuntimeError, error_message)
+
+            # according to Bugsnag, we should get an error 500
+            expect(response.status).to be 200
+            expect(response).not_to redirect_to checkout_step_path(:summary)
+            expect(order.reload.state).to eq "payment"
+          end
+        end
+
+        context "with a StripeSCA payment method" do
+          let(:stripe_payment_method) {
+            create(:stripe_sca_payment_method, distributor_ids: [distributor.id],
+                                               environment: Rails.env)
+          }
+          let!(:payment_method_id) { stripe_payment_method.id }
+
+          it "updates and redirects to summary step" do
+            expect { put(:update, params:) }.not_to raise_error(RuntimeError)
+
+            expect(response.status).to eq 422
+            expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
+            expect(order.reload.state).to eq "payment"
+          end
+        end
+      end
+
       context "with payment fees" do
         let(:payment_method_with_fee) do
           create(:payment_method, :flat_rate, amount: "1.23", distributors: [distributor])
