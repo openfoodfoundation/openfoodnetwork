@@ -105,6 +105,15 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  # rspec-mocks config goes here. You can use an alternate test double
+  # library (such as bogus or mocha) by changing the `mock_with` option here.
+  config.mock_with :rspec do |mocks|
+    # Prevents you from mocking or stubbing a method that does not exist on
+    # a real object. This is generally recommended, and will default to
+    # `true` in RSpec 4.
+    mocks.verify_partial_doubles = true
+  end
+
   # Reset locale for all specs.
   config.around(:each) do |example|
     I18n.with_locale(:en) { example.run }
@@ -190,11 +199,6 @@ RSpec.configure do |config|
       vcr_config.default_cassette_options = default_cassette_options
     end
   end
-
-  # Geocoding
-  config.before(:each) {
-    allow_any_instance_of(Spree::Address).to receive(:geocode).and_return([1, 1])
-  }
 
   default_country_id = DefaultCountry.id
   checkout_zone = Spree::Config[:checkout_zone]
