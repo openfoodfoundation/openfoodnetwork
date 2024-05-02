@@ -10,6 +10,8 @@ class Enterprise < ApplicationRecord
   WHITE_LABEL_LOGO_SIZES = [:default, :mobile].freeze
   VALID_INSTAGRAM_REGEX = %r{\A[a-zA-Z0-9._]{1,30}([^/-]*)\z}
 
+  default_scope -> { where(removed: false) }
+
   searchable_attributes :sells, :is_primary_producer, :name
   searchable_associations :properties
   searchable_scopes :is_primary_producer, :is_distributor, :is_hub, :activated, :visible,
@@ -433,6 +435,10 @@ class Enterprise < ApplicationRecord
 
   def public?
     visible == "public"
+  end
+
+  def destroy
+    update(removed: true)
   end
 
   protected
