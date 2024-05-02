@@ -5,8 +5,12 @@
 # The configuration is split into three files. Look into those files for more details.
 #
 require:
+  - rubocop-capybara
+  - rubocop-factory_bot
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
+
 inherit_from:
 
   # The automatically generated todo list to ignore all current violations.
