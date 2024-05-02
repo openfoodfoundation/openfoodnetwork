@@ -29,6 +29,7 @@ describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
         subject.run(action_name)
         product.reload
         expect(product.deleted_at).not_to be_nil
+        expect(product.deleted_by).to eq current_user
         expect(flash[:success]).to eq('Successfully deleted the product')
       end
 

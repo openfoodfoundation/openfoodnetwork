@@ -33,6 +33,7 @@ module Spree
     searchable_scopes :active, :with_properties
 
     belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
+    belongs_to :deleted_by, class_name: "Spree::User", optional: true
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
@@ -258,6 +259,11 @@ module Spree
     # Get the most recent import_date of a product's variants
     def import_date
       variants.map(&:import_date).compact.max
+    end
+
+    def destroy(deleted_by: nil)
+      update_attribute(:deleted_by, deleted_by) if deleted_by.present?
+      super()
     end
 
     def destruction

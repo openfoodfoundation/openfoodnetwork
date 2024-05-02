@@ -28,6 +28,12 @@ module Spree
             expect(product.deleted_at).not_to be_nil
             expect(product.variants.all? { |v| !v.deleted_at.nil? }).to be_truthy
           end
+
+          it "should set deleted_by user if provided" do
+            user = create(:user)
+            product.destroy(deleted_by: user)
+            expect(product.reload.deleted_by).to eq user
+          end
         end
       end
 
@@ -340,6 +346,10 @@ module Spree
         it "removes variants from order cycles" do
           expect { product.destroy }.to change { ExchangeVariant.count }
         end
+
+        #todo: it "aborts if exchange variants failed to delete"
+        # expect(product.deleted_at).to be_nil
+        # expect(product.deleted_by).to be_nil
       end
 
       it "updates units when saved change to variant unit" do

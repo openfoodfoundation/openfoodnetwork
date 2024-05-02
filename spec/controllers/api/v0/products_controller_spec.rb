@@ -81,6 +81,7 @@ describe Api::V0::ProductsController, type: :controller do
       expect(response.status).to eq(204)
       expect { product.reload }.not_to raise_error
       expect(product.deleted_at).not_to be_nil
+      expect(product.deleted_by).to eq current_api_user
     end
 
     it "is denied access to deleting another enterprises' product" do

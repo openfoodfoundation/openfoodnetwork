@@ -26,7 +26,7 @@ class ProductsReflex < ApplicationReflex
     product = product_finder(id).find_product
     authorize! :delete, product
 
-    if product.destroy
+    if product.destroy(deleted_by: current_user)
       flash[:success] = I18n.t('admin.products_v3.delete_product.success')
     else
       flash[:error] = I18n.t('admin.products_v3.delete_product.error')
