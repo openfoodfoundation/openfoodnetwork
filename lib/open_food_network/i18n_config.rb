@@ -17,7 +17,7 @@ module OpenFoodNetwork
 
     # All locales that can be accessed by the application, including fallbacks.
     def self.available_locales
-      (selectable_locales + [default_locale]).uniq
+      (selectable_locales + [default_locale, source_locale]).uniq
     end
 
     # The default locale that is used when the user doesn't have a preference.
