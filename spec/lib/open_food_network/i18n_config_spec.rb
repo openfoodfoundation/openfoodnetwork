@@ -77,7 +77,7 @@ module OpenFoodNetwork
       end
 
       it "provides the default available locales" do
-        expect(I18nConfig.available_locales).to eq ["en_GB"]
+        expect(I18nConfig.available_locales).to eq ["en_GB", "en"]
       end
     end
 
@@ -92,7 +92,7 @@ module OpenFoodNetwork
       end
 
       it "provides the default available locales" do
-        expect(I18nConfig.available_locales).to eq ["es", "fr", "de"]
+        expect(I18nConfig.available_locales).to eq ["es", "fr", "de", "en"]
       end
     end
   end
