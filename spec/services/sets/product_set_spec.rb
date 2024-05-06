@@ -93,8 +93,6 @@ RSpec.describe Sets::ProductSet do
       end
 
       context "when the product is in an order cycle" do
-        let(:producer) { create(:enterprise) }
-
         let(:distributor) { create(:distributor_enterprise) }
         let!(:order_cycle) {
           create(:simple_order_cycle, variants: [product.variants.first],
@@ -115,22 +113,6 @@ RSpec.describe Sets::ProductSet do
               and change { order_cycle.distributed_variants.count }.by(0)
 
             expect(order_cycle.distributed_variants).to include product.variants.first
-          end
-        end
-
-        context 'and a different supplier is passed' do
-          let(:collection_hash) do
-            { 0 => { id: product.id, supplier_id: producer.id } }
-          end
-
-          it 'updates the product and removes the product from order cycles' do
-            expect {
-              product_set.save
-              product.reload
-            }.to change { product.supplier }.to(producer).
-              and change { order_cycle.distributed_variants.count }.by(-1)
-
-            expect(order_cycle.distributed_variants).not_to include product.variants.first
           end
         end
       end
@@ -158,7 +140,7 @@ RSpec.describe Sets::ProductSet do
     end
 
     describe "updating a product's variants" do
-      let(:product) { create(:simple_product) }
+      let(:product) { create(:simple_product, supplier_id: create(:supplier_enterprise).id) }
       let(:variant) { product.variants.first }
       let(:product_attributes) { {} }
       let(:variant_attributes) { { sku: "var_sku" } }
@@ -228,6 +210,41 @@ RSpec.describe Sets::ProductSet do
         end
       end
 
+      context "when the variant is in an order cycle" do
+        let(:distributor) { create(:distributor_enterprise) }
+        let!(:order_cycle) {
+          create(:simple_order_cycle, variants: [variant],
+                                      coordinator: distributor,
+                                      distributors: [distributor])
+        }
+        let(:variant_attributes) { { display_name: "New season variant" } }
+
+        it 'updates the variant and keeps it in order cycles' do
+          expect {
+            product_set.save
+            variant.reload
+          }.to change { variant.display_name }.to("New season variant").
+            and change { order_cycle.distributed_variants.count }.by(0)
+
+          expect(order_cycle.distributed_variants).to include variant
+        end
+
+        context 'when supplier is updated' do
+          let(:producer) { create(:supplier_enterprise) }
+          let(:variant_attributes) { { supplier_id: producer.id } }
+
+          it 'updates the variant and removes the variant from order cycles' do
+            expect {
+              product_set.save
+              variant.reload
+            }.to change { variant.supplier }.to(producer).
+              and change { order_cycle.distributed_variants.count }.by(-1)
+
+            expect(order_cycle.distributed_variants).to_not include variant
+          end
+        end
+      end
+
       context "when products attributes are also updated" do
         let(:product_attributes) {
           { sku: "prod_sku" }
@@ -286,9 +303,11 @@ RSpec.describe Sets::ProductSet do
         let(:variants_attributes) {
           [
             { id: product.variants.first.id.to_s }, # default variant unchanged
-            { sku: "new sku", price: "5.00", unit_value: "5" }, # omit ID for new variant
+            # omit ID for new variant
+            { sku: "new sku", price: "5.00", unit_value: "5", supplier_id: supplier.id },
           ]
         }
+        let(:supplier) { create(:supplier_enterprise) }
 
         it "creates new variant" do
           expect {
@@ -305,7 +324,8 @@ RSpec.describe Sets::ProductSet do
           let(:variants_attributes) {
             [
               { id: product.variants.first.id.to_s }, # default variant unchanged
-              { sku: "new sku", unit_value: "blah" }, # price missing, unit_value should be number
+              # price missing, unit_value should be number
+              { sku: "new sku", unit_value: "blah", supplier_id: supplier.id },
             ]
           }
 
