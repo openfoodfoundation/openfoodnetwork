@@ -601,6 +601,7 @@ en:
         edit: Edit
         clone: Clone
         delete: Delete
+        remove: Remove
       image:
         edit: Edit
     adjustments:
