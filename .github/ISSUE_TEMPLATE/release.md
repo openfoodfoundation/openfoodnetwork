@@ -45,7 +45,7 @@ The full process is described at https://github.com/openfoodfoundation/openfoodn
 
 [Ready To Go]: https://github.com/orgs/openfoodfoundation/projects/8?filterQuery=status%3A%22Ready+to+go+%F0%9F%9A%80%22
 [Transifex pull request]: https://github.com/openfoodfoundation/openfoodnetwork/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+head%3Atransifex
-[Draft new release]: https://github.com/openfoodfoundation/openfoodnetwork/releases/new?tag=v&title=v+Code+Name&body=Congrats%0A%0ADescription%0A%0A
+[Draft new release]: https://github.com/openfoodfoundation/openfoodnetwork/releases/new?title=v+Code+Name&body=Congrats%0A%0ADescription%0A%0A
 [releases]: https://github.com/openfoodfoundation/openfoodnetwork/releases
 [#instance-managers]: https://app.slack.com/client/T02G54U79/CG7NJ966B
 [#testing]: https://openfoodnetwork.slack.com/app_redirect?channel=C02TZ6X00
