@@ -338,12 +338,11 @@ RSpec.describe CheckoutController, type: :controller do
           let!(:payment_method_id) { payment_method.id }
 
           it "updates and redirects to summary step" do
-            expect { put(:update, params:) }.to raise_error(RuntimeError, error_message)
+            put(:update, params:)
 
-            # according to Bugsnag, we should get an error 500
-            expect(response.status).to be 200
-            expect(response).not_to redirect_to checkout_step_path(:summary)
-            expect(order.reload.state).to eq "payment"
+            expect(response.status).to be 302
+            expect(response).to redirect_to checkout_step_path(:summary)
+            expect(order.reload.state).to eq "confirmation"
           end
         end
 
