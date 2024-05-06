@@ -23,7 +23,7 @@ module Spree
                        meta_keywords
                        variants_display_as
                        variants_display_name
-                       supplier_name).join('_or_')}_cont".freeze
+                       variants_supplier_name).join('_or_')}_cont".freeze
 
     belongs_to :product, -> { with_deleted }, required: true, touch: true, class_name: 'Spree::Product'
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
