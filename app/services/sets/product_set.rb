@@ -55,8 +55,6 @@ module Sets
     def update_product(product, attributes)
       return false unless update_product_only_attributes(product, attributes)
 
-      ExchangeVariantDeleter.new.delete(product) if product.saved_change_to_supplier_id?
-
       update_product_variants(product, attributes)
     end
 
@@ -107,6 +105,8 @@ module Sets
       if variant.present?
         variant.assign_attributes(variant_attributes.except(:id))
         variant.save if variant.changed?
+
+        ExchangeVariantDeleter.new.delete(variant) if variant.saved_change_to_supplier_id?
       else
         variant = create_variant(product, variant_attributes)
       end
