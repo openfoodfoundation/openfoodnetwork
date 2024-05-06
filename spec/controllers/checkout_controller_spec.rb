@@ -330,9 +330,6 @@ RSpec.describe CheckoutController, type: :controller do
             commit: "Next - Order Summary"
           }
         end
-        let(:error_message) {
-          'You must implement payment_source_class method for this gateway.'
-        }
 
         context "with a cash/check payment method" do
           let!(:payment_method_id) { payment_method.id }
@@ -354,8 +351,7 @@ RSpec.describe CheckoutController, type: :controller do
           let!(:payment_method_id) { stripe_payment_method.id }
 
           it "updates and redirects to summary step" do
-            expect { put(:update, params:) }.not_to raise_error(RuntimeError)
-
+            put(:update, params:)
             expect(response.status).to eq 422
             expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
             expect(order.reload.state).to eq "payment"
