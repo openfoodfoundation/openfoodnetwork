@@ -384,7 +384,7 @@ GEM
       activesupport (>= 4.2)
     jwt (2.8.1)
       base64
-    knapsack_pro (6.0.4)
+    knapsack_pro (7.0.0)
       rake
     language_server-protocol (3.17.0.3)
     launchy (3.0.0)
@@ -890,7 +890,7 @@ DEPENDENCIES
   json_spec (~> 1.1.4)
   jsonapi-serializer
   jwt (~> 2.3)
-  knapsack_pro
+  knapsack_pro (= 7.0.0)
   letter_opener (>= 1.4.1)
   listen
   mime-types

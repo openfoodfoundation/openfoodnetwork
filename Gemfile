@@ -157,7 +157,7 @@ group :test, :development do
   gem "factory_bot_rails", '6.2.0', require: false
   gem 'fuubar', '~> 2.5.1'
   gem 'json_spec', '~> 1.1.4'
-  gem 'knapsack_pro'
+  gem 'knapsack_pro', '7.0.0'
   gem 'letter_opener', '>= 1.4.1'
   gem 'rspec-rails', ">= 3.5.2"
   gem 'rspec-retry', require: false
