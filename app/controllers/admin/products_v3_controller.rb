@@ -149,7 +149,7 @@ module Admin
 
     def ransack_query
       query = {}
-      query.merge!(supplier_id_in: @producer_id) if @producer_id.present?
+      query.merge!(variants_supplier_id_in: @producer_id) if @producer_id.present?
       if @search_term.present?
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
@@ -163,13 +163,13 @@ module Admin
     def product_query_includes
       [
         :image,
-        :supplier,
         { variants: [
           :default_price,
           :primary_taxon,
           :product,
           :stock_items,
           :tax_category,
+          :supplier,
         ] },
       ]
     end

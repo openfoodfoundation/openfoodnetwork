@@ -917,7 +917,6 @@ en:
         search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-      product_row:
         producer_field_name: "Producer"
       clone:
         success: Successfully cloned the product
