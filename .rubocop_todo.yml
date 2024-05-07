@@ -587,27 +587,27 @@ Rails/InverseOf:
 # Offense count: 35
 # Configuration parameters: Include.
 # Include: app/controllers/**/*.rb, app/mailers/**/*.rb
-Rails/LexicallyScopedActionFilter:
-  Exclude:
-    - 'app/controllers/admin/enterprise_groups_controller.rb'
-    - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/admin/order_cycles_controller.rb'
-    - 'app/controllers/admin/producer_properties_controller.rb'
-    - 'app/controllers/admin/product_import_controller.rb'
-    - 'app/controllers/admin/schedules_controller.rb'
-    - 'app/controllers/admin/subscriptions_controller.rb'
-    - 'app/controllers/concerns/checkout_callbacks.rb'
-    - 'app/controllers/registration_controller.rb'
-    - 'app/controllers/spree/admin/adjustments_controller.rb'
-    - 'app/controllers/spree/admin/payment_methods_controller.rb'
-    - 'app/controllers/spree/admin/payments_controller.rb'
-    - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/controllers/spree/admin/return_authorizations_controller.rb'
-    - 'app/controllers/spree/admin/search_controller.rb'
-    - 'app/controllers/spree/admin/shipping_methods_controller.rb'
-    - 'app/controllers/spree/admin/users_controller.rb'
-    - 'app/controllers/spree/admin/zones_controller.rb'
-    - 'app/controllers/spree/users_controller.rb'
+# Rails/LexicallyScopedActionFilter:
+#   Exclude:
+#     - 'app/controllers/admin/enterprise_groups_controller.rb'
+#     - 'app/controllers/admin/enterprises_controller.rb'
+#     - 'app/controllers/admin/order_cycles_controller.rb'
+#     - 'app/controllers/admin/producer_properties_controller.rb'
+#     - 'app/controllers/admin/product_import_controller.rb'
+#     - 'app/controllers/admin/schedules_controller.rb'
+#     - 'app/controllers/admin/subscriptions_controller.rb'
+#     - 'app/controllers/concerns/checkout_callbacks.rb'
+#     - 'app/controllers/registration_controller.rb'
+#     - 'app/controllers/spree/admin/adjustments_controller.rb'
+#     - 'app/controllers/spree/admin/payment_methods_controller.rb'
+#     - 'app/controllers/spree/admin/payments_controller.rb'
+#     - 'app/controllers/spree/admin/products_controller.rb'
+#     - 'app/controllers/spree/admin/return_authorizations_controller.rb'
+#     - 'app/controllers/spree/admin/search_controller.rb'
+#     - 'app/controllers/spree/admin/shipping_methods_controller.rb'
+#     - 'app/controllers/spree/admin/users_controller.rb'
+#     - 'app/controllers/spree/admin/zones_controller.rb'
+#     - 'app/controllers/spree/users_controller.rb'
 
 # Offense count: 32
 # This cop supports unsafe autocorrection (--autocorrect-all).

@@ -7,7 +7,8 @@ module Spree
     belongs_to :payment_method
     belongs_to :user
 
-    has_many :payments, as: :source, dependent: :nullify
+    has_many :payments, as: :source, dependent: :nullify,
+                        inverse_of: :payments
 
     before_save :set_last_digits
 

@@ -5,12 +5,12 @@ module Admin
     include ::OrderCyclesHelper
     include PaperTrailLogging
 
-    prepend_before_action :set_order_cycle_id, only: [:incoming, :outgoing, :checkout_options]
+    prepend_before_action :set_order_cycle_id
     before_action :load_data_for_index, only: :index
     before_action :require_coordinator, only: :new
     before_action :remove_protected_attrs, only: [:update]
     before_action :require_order_cycle_set_params, only: [:bulk_update]
-    around_action :protect_invalid_destroy, only: :destroy
+    around_action :protect_invalid_destroy
 
     def index
       respond_to do |format|

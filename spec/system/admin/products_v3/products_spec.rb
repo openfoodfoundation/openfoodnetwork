@@ -7,8 +7,10 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
   include AuthenticationHelper
   include FileHelper
 
-  let(:producer) { create(:supplier_enterprise) }
-  let(:user) { create(:user, enterprises: [producer]) }
+  # create lot of products
+  70.times do |i|
+    let!(:"product_#{i}") { create(:simple_product, name: "product #{i}") }
+  end
 
   before do
     login_as user

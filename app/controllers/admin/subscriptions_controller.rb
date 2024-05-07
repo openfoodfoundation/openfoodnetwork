@@ -5,7 +5,7 @@ require 'open_food_network/permissions'
 module Admin
   class SubscriptionsController < Admin::ResourceController
     before_action :load_shops, only: [:index]
-    before_action :load_form_data, only: [:new, :edit]
+    before_action :load_form_data, only: [:new]
     before_action :strip_banned_attrs, only: [:update]
     before_action :wrap_nested_attrs, only: [:create, :update]
     before_action :check_for_open_orders, only: [:cancel, :pause]

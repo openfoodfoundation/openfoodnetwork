@@ -4,7 +4,7 @@ require 'roo'
 
 module Admin
   class ProductImportController < Spree::Admin::BaseController
-    before_action :validate_upload_presence, except: %i[index guide validate_data]
+    before_action :validate_upload_presence, except: %i[index validate_data]
 
     def index
       @product_categories = Spree::Taxon.order('name ASC').pluck(:name).uniq

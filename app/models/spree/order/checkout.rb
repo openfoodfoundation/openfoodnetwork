@@ -41,7 +41,7 @@ module Spree
 
               # Persist the state on the order
               after_transition do |order|
-                order.state = order.state
+                order = order.state
                 order.save
               end
 

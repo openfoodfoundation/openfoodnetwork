@@ -46,7 +46,7 @@ module ProductImport
     end
 
     def count_existing_items
-      @spreadsheet_data.enterprises_index.each do |_enterprise_name, attrs|
+      @spreadsheet_data.enterprises_index.each_value do |attrs|
         enterprise_id = attrs[:id]
         next unless enterprise_id && permission_by_id?(enterprise_id)
 

@@ -11,23 +11,23 @@ module Admin
     include Pagy::Backend
 
     # These need to run before #load_resource so that @object is initialised with sanitised values
-    prepend_before_action :override_owner, only: :create
-    prepend_before_action :override_sells, only: :create
+    prepend_before_action :override_owner
+    prepend_before_action :override_sells
 
-    before_action :load_countries, except: [:index, :register, :check_permalink]
+    before_action :load_countries, except: [:index, :register]
     before_action :load_methods_and_fees, only: [:edit, :update]
-    before_action :load_groups, only: [:new, :edit, :update, :create]
-    before_action :load_taxons, only: [:new, :edit, :update, :create]
+    before_action :load_groups, only: [:edit, :update]
+    before_action :load_taxons, only: [:edit, :update]
     before_action :check_can_change_sells, only: :update
     before_action :check_can_change_bulk_sells, only: :bulk_update
     before_action :check_can_change_owner, only: :update
     before_action :check_can_change_bulk_owner, only: :bulk_update
     before_action :check_can_change_managers, only: :update
-    before_action :strip_new_properties, only: [:create, :update]
+    before_action :strip_new_properties, only: [:update]
     before_action :load_properties, only: [:edit, :update]
     before_action :setup_property, only: [:edit]
 
-    after_action  :geocode_address_if_use_geocoder, only: [:create, :update]
+    after_action  :geocode_address_if_use_geocoder, only: [:update]
 
     include OrderCyclesHelper
 
@@ -252,7 +252,7 @@ module Admin
       # methods that are specific to each class do not become available until after the
       # record is persisted. This problem is compounded by the use of calculators.
       @object.transaction do
-        tag_rules_attributes.select{ |_i, attrs| attrs[:type].present? }.each do |_i, attrs|
+        tag_rules_attributes.select{ |attrs| attrs[:type].present? }.each_value do |attrs|
           rule = @object.tag_rules.find_by(id: attrs.delete(:id)) ||
                  attrs[:type].constantize.new(enterprise: @object)
 
@@ -291,7 +291,7 @@ module Admin
     def check_can_change_bulk_sells
       return if spree_current_user.admin?
 
-      params[:sets_enterprise_set][:collection_attributes].each do |_i, enterprise_params|
+      params[:sets_enterprise_set][:collection_attributes].each_value do |enterprise_params|
         unless spree_current_user == Enterprise.find_by(id: enterprise_params[:id]).owner
           enterprise_params.delete :sells
         end
@@ -325,7 +325,7 @@ module Admin
     def check_can_change_bulk_owner
       return if spree_current_user.admin?
 
-      bulk_params[:collection_attributes].each do |_i, enterprise_params|
+      bulk_params[:collection_attributes].each_value do |enterprise_params|
         enterprise_params.delete :owner_id
       end
     end

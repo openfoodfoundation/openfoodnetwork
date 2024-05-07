@@ -12,7 +12,8 @@ class Voucher < ApplicationRecord
   has_many :adjustments,
            as: :originator,
            class_name: 'Spree::Adjustment',
-           dependent: nil
+           dependent: nil,
+           inverse_of: :adjustments
 
   validates :code, presence: true, uniqueness: { scope: :enterprise_id }
 
