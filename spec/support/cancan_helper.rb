@@ -17,7 +17,7 @@ module Spree
           member.merge(i => true)
         }
       end
-      ability_hash.each do |action, _true_or_false|
+      ability_hash.each_key do |action|
         @ability_result[action] = ability.can?(action, target)
       end
 

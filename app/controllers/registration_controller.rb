@@ -9,7 +9,7 @@ class RegistrationController < BaseController
   helper 'map'
 
   before_action :load_spree_api_key, only: [:index]
-  before_action :check_user, except: :authenticate
+  before_action :check_user
 
   def index
     @enterprise_attributes = { sells: 'none' }

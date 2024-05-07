@@ -82,7 +82,7 @@ module Reporting
       sorted_groups = sort_groups_with_rule(groups, rule)
 
       sorted_groups.map do |group_value, group_datas|
-        {
+        result << {
           is_group: true,
           header: @builder.build_header(rule, group_value, group_datas),
           header_class: rule[:header_class],

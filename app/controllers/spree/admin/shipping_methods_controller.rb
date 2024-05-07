@@ -3,11 +3,11 @@
 module Spree
   module Admin
     class ShippingMethodsController < ::Admin::ResourceController
-      before_action :load_data, except: [:index]
-      before_action :set_shipping_category, only: [:create, :update]
-      before_action :set_zones, only: [:create, :update]
-      before_action :load_hubs, only: [:new, :edit, :create, :update]
-      before_action :check_shipping_fee_input, only: [:update]
+      before_action :load_data
+      before_action :set_shipping_category
+      before_action :set_zones
+      before_action :load_hubs, only: [:new]
+      before_action :check_shipping_fee_input
 
       # Sort shipping methods by distributor name
       def collection
@@ -104,7 +104,7 @@ module Spree
 
         return unless shipping_fees
 
-        shipping_fees.each do |_, shipping_amount|
+        shipping_fees.each_value do |shipping_amount|
           unless shipping_amount.nil? || Float(shipping_amount, exception: false)
             flash[:error] = I18n.t(:calculator_preferred_value_error)
             return redirect_to location_after_save

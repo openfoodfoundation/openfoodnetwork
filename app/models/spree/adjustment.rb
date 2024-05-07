@@ -36,7 +36,8 @@ module Spree
     # So we don't need the option `dependent: :destroy` as long as
     # AdjustmentMetadata has no destroy logic itself.
     has_one :metadata, class_name: 'AdjustmentMetadata', dependent: nil
-    has_many :adjustments, as: :adjustable, dependent: :destroy
+    has_many :adjustments, as: :adjustable, dependent: :destroy,
+                           inverse_of: :adjustments
 
     belongs_to :adjustable, polymorphic: true
     belongs_to :originator, -> { with_deleted }, polymorphic: true

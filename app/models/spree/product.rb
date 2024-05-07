@@ -187,7 +187,7 @@ module Spree
         .with_permission(:add_to_order_cycle)
         .where(enterprises: { is_primary_producer: true })
         .pluck(:parent_id)
-      where(spree_products: { supplier_id: [enterprise.id] | permitted_producer_ids })
+      where('spree_products.supplier_id IN (?)', [enterprise.id] | permitted_producer_ids)
     }
 
     scope :active, lambda { where(spree_products: { deleted_at: nil }) }

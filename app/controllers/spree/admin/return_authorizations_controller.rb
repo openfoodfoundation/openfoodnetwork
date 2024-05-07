@@ -5,7 +5,7 @@ module Spree
     class ReturnAuthorizationsController < ::Admin::ResourceController
       belongs_to 'spree/order', find_by: :number
 
-      after_action :associate_inventory_units, only: [:create, :update]
+      after_action :associate_inventory_units
 
       def fire
         @return_authorization.public_send("#{params[:e]}!")

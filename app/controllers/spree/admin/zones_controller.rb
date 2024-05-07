@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class ZonesController < ::Admin::ResourceController
-      before_action :load_data, except: [:index]
+      before_action :load_data
 
       def new
         @zone.zone_members.build

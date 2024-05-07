@@ -4,7 +4,7 @@ module Admin
   class ProducerPropertiesController < Admin::ResourceController
     before_action :load_enterprise
     before_action :load_properties
-    before_action :setup_property, only: [:index]
+    before_action :setup_property
 
     private
 

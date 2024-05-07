@@ -6,7 +6,7 @@ module Spree
       skip_before_action :load_resource, only: [:create, :show_provider_preferences]
       before_action :load_data
       before_action :validate_payment_method_provider, only: [:create]
-      before_action :load_hubs, only: [:new, :edit, :update]
+      before_action :load_hubs, only: [:update]
 
       respond_to :html
 

@@ -36,7 +36,7 @@ module Spree
       end
 
       def reset
-        preferences.each do |name, _value|
+        preferences.each_value do |name|
           set_preference name, preference_default(name)
         end
       end

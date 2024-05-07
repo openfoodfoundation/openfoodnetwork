@@ -5,10 +5,10 @@ module Spree
     class AdjustmentsController < ::Admin::ResourceController
       belongs_to 'spree/order', find_by: :number
 
-      before_action :set_order_id, only: [:create, :update]
-      before_action :skip_changing_canceled_orders, only: [:create, :update]
-      after_action :update_order, only: [:create, :update, :destroy]
-      after_action :apply_tax, only: [:create, :update]
+      before_action :set_order_id
+      before_action :skip_changing_canceled_orders
+      after_action :update_order
+      after_action :apply_tax
 
       private
 

@@ -10,8 +10,8 @@ module Spree
 
     invisible_captcha only: [:create], on_timestamp_spam: :render_alert_timestamp_error_message
     skip_before_action :set_current_order, only: :show
-    prepend_before_action :load_object, only: [:show, :edit, :update]
-    prepend_before_action :authorize_actions, only: :new
+    prepend_before_action :load_object, only: %i[show update]
+    prepend_before_action :authorize_actions
 
     before_action :set_locale
 

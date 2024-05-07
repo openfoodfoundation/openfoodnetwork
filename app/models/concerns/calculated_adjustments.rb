@@ -6,7 +6,8 @@ module CalculatedAdjustments
   extend ActiveSupport::Concern
 
   included do
-    has_one :calculator, as: :calculable, class_name: "Spree::Calculator", dependent: :destroy
+    has_one :calculator, as: :calculable, class_name: "Spree::Calculator", dependent: :destroy,
+                         inverse_of: :calculable
     accepts_nested_attributes_for :calculator
     validates :calculator, presence: true
   end
