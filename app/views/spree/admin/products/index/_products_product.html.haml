@@ -6,7 +6,6 @@
     %a{class: 'image-modal'}
       %img{'ng-src' => '{{ product.thumb_url }}'}
   %td.producer{ 'ng-show' => 'columns.producer.visible' }
-    %select.fullwidth{ "data-controller": "tom-select", 'ng-model' => 'product.producer_id', :name => 'producer_id', 'ofn-track-product' => 'producer_id', 'ng-options' => 'producer.id as producer.name for producer in producers' }
   %td.sku{ 'ng-show' => 'columns.sku.visible' }
     %input{ 'ng-model' => "product.sku", :name => 'product_sku', 'ofn-track-product' => 'sku', :type => 'text' }
   %td.name{ 'ng-show' => 'columns.name.visible' }
