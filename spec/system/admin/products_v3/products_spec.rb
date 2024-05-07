@@ -14,6 +14,10 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
     login_as user
   end
 
+  let(:producer_search_selector) { 'input[placeholder="Search for producers"]' }
+  let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
+  let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
+
   it "can see the new product page" do
     visit admin_products_url
     expect(page).to have_content "Bulk Edit Products"
@@ -666,6 +670,117 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
     end
   end
 
+  describe "Changing producers, category and tax category" do
+    let!(:variant_a1) {
+      product_a.variants.first.tap{ |v|
+        v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
+                  on_demand: false
+      }
+    }
+    let!(:product_a) {
+      create(:simple_product, name: "Apples", sku: "APL-00",
+                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+    }
+
+    context "when they are under 11" do
+      before do
+        create_list(:supplier_enterprise, 9, users: [user])
+        create_list(:tax_category, 9)
+        create_list(:taxon, 2)
+
+        visit admin_products_url
+      end
+
+      it "should not display search input, change the producers, category and tax category" do
+        producer_to_select = random_producer(product_a)
+        category_to_select = random_category(variant_a1)
+        tax_category_to_select = random_tax_category
+
+        within row_containing_name(product_a.name) do
+          validate_tomselect_without_search!(
+            page, "Producer",
+            producer_search_selector
+          )
+          tomselect_select(producer_to_select, from: "Producer")
+        end
+
+        within row_containing_name(variant_a1.display_name) do
+          validate_tomselect_without_search!(
+            page, "Category",
+            categories_search_selector
+          )
+          tomselect_select(category_to_select, from: "Category")
+
+          validate_tomselect_without_search!(
+            page, "Tax Category",
+            tax_categories_search_selector
+          )
+          tomselect_select(tax_category_to_select, from: "Tax Category")
+        end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+        variant_a1.reload
+
+        expect(product_a.supplier.name).to eq(producer_to_select)
+        expect(variant_a1.primary_taxon.name).to eq(category_to_select)
+        expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
+      end
+    end
+
+    context "when they are over 11" do
+      before do
+        create_list(:supplier_enterprise, 11, users: [user])
+        create_list(:tax_category, 11)
+        create_list(:taxon, 11)
+
+        visit admin_products_url
+      end
+
+      it "should display search input, change the producer" do
+        producer_to_select = random_producer(product_a)
+        category_to_select = random_category(variant_a1)
+        tax_category_to_select = random_tax_category
+
+        within row_containing_name(product_a.name) do
+          validate_tomselect_with_search!(
+            page, "Producer",
+            producer_search_selector
+          )
+          tomselect_search_and_select(producer_to_select, from: "Producer")
+        end
+
+        within row_containing_name(variant_a1.display_name) do
+          sleep(0.1)
+          validate_tomselect_with_search!(
+            page, "Category",
+            categories_search_selector
+          )
+          tomselect_search_and_select(category_to_select, from: "Category")
+
+          sleep(0.1)
+          validate_tomselect_with_search!(
+            page, "Tax Category",
+            tax_categories_search_selector
+          )
+          tomselect_search_and_select(tax_category_to_select, from: "Tax Category")
+        end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+        variant_a1.reload
+
+        expect(product_a.supplier.name).to eq(producer_to_select)
+        expect(variant_a1.primary_taxon.name).to eq(category_to_select)
+        expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
+      end
+    end
+  end
+
   describe "edit image" do
     shared_examples "updating image" do
       it "saves product image" do
@@ -1030,6 +1145,35 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
   end
 
   def tax_category_column
-    @tax_category_column ||= 'td:nth-child(10)'
+    @tax_category_column ||= '[data-controller="variant"] > td:nth-child(10)'
+  end
+
+  def validate_tomselect_without_search!(page, field_name, search_selector)
+    open_tomselect_to_validate!(page, field_name) do
+      expect(page).not_to have_selector(search_selector)
+    end
+  end
+
+  def validate_tomselect_with_search!(page, field_name, search_selector)
+    open_tomselect_to_validate!(page, field_name) do
+      expect(page).to have_selector(search_selector)
+    end
+  end
+
+  def random_producer(product)
+    Enterprise.is_primary_producer
+      .where.not(id: product.supplier.id)
+      .pluck(:name).sample
+  end
+
+  def random_category(variant)
+    Spree::Taxon
+      .where.not(id: variant.primary_taxon.id)
+      .pluck(:name).sample
+  end
+
+  def random_tax_category
+    Spree::TaxCategory
+      .pluck(:name).sample
   end
 end

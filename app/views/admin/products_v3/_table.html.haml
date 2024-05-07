@@ -66,17 +66,17 @@
                                 controller: "nested-form product",
                                 action: 'rails-nested-form:add->bulk-form#registerElements' } }
           %tr
-            = render partial: 'product_row', locals: { product:, f: product_form }
+            = render partial: 'product_row', locals: { f: product_form, product:, producer_options: }
 
           - product.variants.each_with_index do |variant, variant_index|
             = form.fields_for("products][#{product_index}][variants_attributes][", variant, index: variant_index) do |variant_form|
               %tr.condensed{ 'data-controller': "variant" }
-                = render partial: 'variant_row', locals: { variant:, f: variant_form }
+                = render partial: 'variant_row', locals: { variant:, f: variant_form, category_options:, tax_category_options: }
 
           = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", product.variants.build) do |new_variant_form|
             %template{ 'data-nested-form-target': "template" }
               %tr.condensed{ 'data-controller': "variant" }
-                = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form }
+                = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form, category_options:, tax_category_options: }
 
           %tr{ 'data-nested-form-target': "target" }
           %tr.condensed

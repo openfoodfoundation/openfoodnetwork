@@ -170,11 +170,10 @@
     .field {
       padding: 0;
     }
-    .multi-field {
-      // Allow wrap with small gap
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3px;
+
+    .fullwidth + .field {
+      // Assume wrap, so add small gap
+      margin-top: 3px;
     }
 
     .ts-control {

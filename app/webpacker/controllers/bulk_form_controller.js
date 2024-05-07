@@ -135,10 +135,17 @@ export default class BulkFormController extends Controller {
     if (element.type == "checkbox") {
       return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
     } else if (element.type == "select-one") {
+      // (weird) Behavior of select element's include_blank option in Rails:
+      //   If a select field has include_blank option selected (its value will be ''),
+      //   its respective option doesn't have the selected attribute
+      //   but selectedOptions have that option present
       const defaultSelected = Array.from(element.options).find((opt) =>
         opt.hasAttribute("selected"),
       );
-      return element.selectedOptions[0] != defaultSelected;
+      const selectedOption = element.selectedOptions[0];
+      const areBothBlank = selectedOption.value === '' && defaultSelected === undefined
+
+      return !areBothBlank && selectedOption !== defaultSelected;
     } else {
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }
