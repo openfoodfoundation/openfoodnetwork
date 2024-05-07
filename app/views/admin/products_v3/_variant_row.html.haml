@@ -68,6 +68,6 @@
             "data-modal-link-modal-dataset-value": {'data-current-id': variant.id}.to_json }
           = t('admin.products_page.actions.delete')
     - else
+      = f.hidden_field :_destroy
       %a{ 'data-action': "nested-form#remove" }
-        = f.hidden_field :_destroy
         = t('admin.products_page.actions.remove')
