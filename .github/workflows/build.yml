@@ -12,6 +12,7 @@ env:
   TIMEZONE: UTC
   COVERAGE: true
   RAILS_ENV: test
+    bundle exec rails webpacker:compile
 
 permissions:
   contents: read
@@ -203,14 +204,14 @@ jobs:
           # if you use Knapsack Pro Queue Mode you must set below env variable
           # to be able to retry CI build and run previously recorded tests
           # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
-          # KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
+          KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
           # RSpec split test files by test examples feature - it's optional
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/admin/**/*_spec.rb}" 
 
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bundle exec rake knapsack_pro:queue:rspec
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -280,14 +281,14 @@ jobs:
           # if you use Knapsack Pro Queue Mode you must set below env variable
           # to be able to retry CI build and run previously recorded tests
           # https://github.com/KnapsackPro/knapsack_pro-ruby#knapsack_pro_fixed_queue_split-remember-queue-split-on-retry-ci-node
-          # KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
+          KNAPSACK_PRO_FIXED_QUEUE_SPLIT: true
           # RSpec split test files by test examples feature - it's optional
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/consumer/**/*_spec.rb}" 
 
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bundle exec rake knapsack_pro:queue:rspec
 
       - name: Archive failed tests screenshots
         if: failure()
