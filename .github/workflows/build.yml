@@ -12,7 +12,6 @@ env:
   TIMEZONE: UTC
   COVERAGE: true
   RAILS_ENV: test
-    bundle exec rails webpacker:compile
 
 permissions:
   contents: read
@@ -194,6 +193,10 @@ jobs:
         run: |
           bundle exec rake db:create db:schema:load
 
+      - name: Webpack compilation
+        run: RAILS_ENV=test bundle exec rails webpacker:compile
+
+
       - name: Run tests
 
         env:
@@ -270,6 +273,9 @@ jobs:
       - name: Set up database
         run: |
           bundle exec rake db:create db:schema:load
+
+      - name: Webpack compilation
+        run: RAILS_ENV=test bundle exec rails webpacker:compile
 
       - name: Run tests
 
