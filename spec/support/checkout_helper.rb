@@ -66,4 +66,12 @@ module CheckoutHelper
     click_on "Complete order"
     expect(page).to have_content "Back To Store"
   end
+
+  def out_of_stock_check(step)
+    visit checkout_step_path(step)
+
+    expect(page).not_to have_selector 'closing', text: "Checkout now"
+    expect(page).to have_selector 'closing', text: "Your shopping cart"
+    expect(page).to have_content "An item in your cart has become unavailable"
+  end
 end

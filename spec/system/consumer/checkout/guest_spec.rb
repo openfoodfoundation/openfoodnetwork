@@ -292,4 +292,30 @@ describe "As a consumer, I want to checkout my order" do
       end
     end
   end
+
+  shared_examples "when a line item is out of stock" do |session, step|
+    context "as a #{session} user" do
+      let(:user) { create(:user) }
+      before do
+        variant.on_demand = false
+        variant.on_hand = 0
+        variant.save!
+
+        if session == "logged"
+          login_as(user)
+        end
+      end
+      it "returns me to the cart with an error message" do
+        out_of_stock_check(step)
+      end
+    end
+  end
+
+  it_behaves_like "when a line item is out of stock", "guest", "details"
+  it_behaves_like "when a line item is out of stock", "guest", "payment"
+  it_behaves_like "when a line item is out of stock", "guest", "summary"
+
+  it_behaves_like "when a line item is out of stock", "logged", "details"
+  it_behaves_like "when a line item is out of stock", "logged", "payment"
+  it_behaves_like "when a line item is out of stock", "logged", "summary"
 end
