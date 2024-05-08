@@ -42,6 +42,9 @@
     = f.radio_button :visible, "public", 'ng-model' => 'Enterprise.visible'
     = f.label :visible, t('.visible'), value: 'public'
   .two.columns
+    = f.radio_button :visible, "private", 'ng-model' => 'Enterprise.visible'
+    = f.label :visible, t('.private'), value: 'private'
+  .two.columns
     = f.radio_button :visible, "only_through_links", 'ng-model' => 'Enterprise.visible'
     = f.label :visible, t('.not_visible'), value: 'only_through_links'
   .four.columns.omega

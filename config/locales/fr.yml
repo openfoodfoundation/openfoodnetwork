@@ -1001,6 +1001,7 @@ fr:
           visible_in_search_tip: "Les boutiques peuvent être <br /> 1. Visibles publiquement, sur la carte de La Belle Orange, la liste des boutiques et les profils boutiques et producteurs. <br /> 2. Invisibles sur la carte et la liste des boutiques, mais référencées sur les profils des boutiques et producteurs de leur réseau. <br /> 3. Complètement invisible (sauf si on dispose du lien)."
           visible: Visible par tous
           not_visible: Cachée
+          private: privée
           hidden: Invisible
         properties:
           legend: "Propriétés / labels"

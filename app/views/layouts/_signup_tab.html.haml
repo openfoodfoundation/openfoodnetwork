@@ -7,6 +7,11 @@
 
     .row
       .large-12.columns
+        = form.label :name, t(:name)
+        = form.text_field :name, { tabindex: 1, "data-login-modal-target": "name", "data-action": "input->login-modal#nameOnInput" }
+        = form.error_message_on :name
+    .row
+      .large-12.columns
         = form.label :email, t(:signup_email)
         = form.email_field :email, { tabindex: 1, "data-login-modal-target": "email", "data-action": "input->login-modal#emailOnInput" }
         = form.error_message_on :email
@@ -20,6 +25,16 @@
         = form.label :password_confirmation, t(:confirm_password)
         = form.password_field :password_confirmation, { tabindex: 3, autocomplete: "off" }
         = form.error_message_on :password_confirmation
+    .row
+      .large-12.columns
+        = form.label :phone, t("registration.steps.contact.phone_field")
+        = form.text_field :phone, placeholder: "{{'registration.steps.contact.phone_field_placeholder' | t}}", ng: { model: 'enterprise.phone' } 
+        = form.error_message_on :phone
+    .row
+      .large-12.columns
+        = form.label :shop_id, t(:shops_title)
+        = form.select :shop_id, Enterprise.pluck(:name, :id), {} 
+        = form.error_message_on :shops
     .row
       .large-12.columns
         = form.submit t(:action_signup), { class: "button primary", tabindex: 4 }

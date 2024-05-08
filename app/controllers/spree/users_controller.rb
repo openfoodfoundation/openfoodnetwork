@@ -46,6 +46,7 @@ module Spree
       @user = Spree::User.new(user_params)
 
       if @user.save
+        create_enterprise_role
         render cable_ready: cable_car.inner_html(
           "#signup-feedback",
           partial("layouts/alert",
@@ -100,6 +101,23 @@ module Spree
 
     def user_params
       ::PermittedAttributes::User.new(params).call
+    end
+
+    def create_enterprise_role
+      enterprise = Enterprise.find(params[:user][:shop_id])
+
+      if enterprise.public?
+        enterprises = Enterprise.joins(:address).where("lower(city) = ?", enterprise.address.city.downcase)
+        enterprises.each do |enterprise|
+          create_enterprise_role_query(enterprise.id)
+        end
+      else
+        create_enterprise_role_query(enterprise.id)
+      end
+    end
+
+    def create_enterprise_role_query(enterprise_id)
+      @user.enterprise_roles.create(enterprise_id: enterprise_id, receives_notifications: true)
     end
   end
 end

@@ -17,7 +17,7 @@ module PermittedAttributes
     def permitted_attributes
       [
         :email, :password, :password_confirmation, :disabled,
-        { webhook_endpoints_attributes: [:id, :url] },
+        :phone, :name, { webhook_endpoints_attributes: [:id, :url] },
       ]
     end
   end

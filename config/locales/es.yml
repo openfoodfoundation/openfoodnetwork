@@ -964,6 +964,7 @@ es:
           visible_in_search: ¿Visible en la búsqueda?
           visible: Pública
           not_visible: Oculto
+          private: privada
           hidden: Ocultar todas las referencias
         properties:
           legend: "Propiedades"

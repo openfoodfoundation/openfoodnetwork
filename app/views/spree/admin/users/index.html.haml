@@ -8,13 +8,17 @@
 
 %table#listing_users.index
   %colgroup
-    %col{ style: "width: 65%" }
+    %col{ style: "width: 25%" }
+    %col{ style: "width: 25%" }
     %col{ style: "width: 20%" }
     %col{ style: "width: 15%" }
   %thead
     %tr
       %th= sort_link [:spree, @search], :email, t(".user"), {}, {title: "users_email_title"}
+      %th= sort_link [:spree, @search], :name, t(".name"), {}, {title: "users_email_title"}
+      %th= sort_link [:spree, @search], :phone, t("registration.steps.contact.phone_field"), {}, {title: "users_email_title"}
       %th= sort_link [:spree, @search], :enterprise_limit, t(".enterprise_limit")
+      %th= sort_link [:spree, @search], :shops, t(".shops_title")
       %th.actions
   %tbody
     - @users.each do |user|
@@ -23,7 +27,13 @@
       - row_class = cycle("odd", "even")
       %tr{id: spree_dom_id(user), class: row_class}
         %td.user_email= link_to user.email, edit_object_url(user)
+        %td.user_phone= user.name
+        %td.user_phone= user.phone
         %td.user_enterprise_limit= user.enterprise_limit
+        %td.user_shops
+          %select{name: "enterprises"}
+            - user.enterprises.each do |enterprise|
+              %option{value: enterprise.id}= enterprise.name
         %td.actions
           = link_to_delete user, no_text: true
 
