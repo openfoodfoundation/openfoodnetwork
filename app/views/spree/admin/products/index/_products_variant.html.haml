@@ -4,7 +4,7 @@
     %a{ :class => "add-variant icon-plus-sign", 'ng-click' => "addVariant(product)", 'ng-show' => "$last", 'ofn-with-tip' => t('.new_variant') }
   %td{ 'ng-show' => 'columns.image.visible' }
   %td{ 'ng-show' => 'columns.producer.visible' }
-    %select.fullwidth{ "data-controller": "tom-select", 'ng-model' => 'variant.producer_id', :name => 'producer_id', 'ofn-track-product' => 'producer_id', 'ng-options' => 'producer.id as producer.name for producer in producers' }
+    %select.fullwidth{ "data-controller": "tom-select", 'ng-model' => 'variant.producer_id', :name => 'producer_id', 'ofn-track-variant' => 'producer_id', 'ng-options' => 'producer.id as producer.name for producer in producers' }
   %td{ 'ng-show' => 'columns.sku.visible' }
     %input{ 'ng-model' => "variant.sku", :name => 'variant_sku', 'ofn-track-variant' => 'sku', :type => 'text' }
   %td{ 'ng-show' => 'columns.name.visible' }

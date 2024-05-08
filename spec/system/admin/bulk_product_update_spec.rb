@@ -30,10 +30,12 @@ RSpec.describe '
       s1 = FactoryBot.create(:supplier_enterprise)
       s2 = FactoryBot.create(:supplier_enterprise)
       s3 = FactoryBot.create(:supplier_enterprise)
-      p1 = FactoryBot.create(:product, supplier: s2)
-      p2 = FactoryBot.create(:product, supplier: s3)
+      p1 = FactoryBot.create(:product, supplier_id: s2.id)
+      p2 = FactoryBot.create(:product, supplier_id: s3.id)
 
       visit spree.admin_products_path
+      # the supplier dropdown is on the variant row, so we expand all for the dropdown to be visible
+      click_expand_all
 
       expect(page).to have_select "producer_id", with_options: [s1.name, s2.name, s3.name],
                                                  selected: s2.name
@@ -214,7 +216,11 @@ RSpec.describe '
   end
 
   context "creating new variants" do
-    let!(:product) { create(:product, variant_unit: 'weight', variant_unit_scale: 1000) }
+    let(:supplier) { create(:supplier_enterprise) }
+    let!(:new_supplier) { create(:supplier_enterprise) }
+    let!(:product) {
+      create(:product, variant_unit: 'weight', variant_unit_scale: 1000, supplier_id: supplier.id)
+    }
 
     before do
       login_as_admin
@@ -242,6 +248,7 @@ RSpec.describe '
       expect(page).to have_selector "tr.variant", count: 1
 
       # When I fill out variant details and hit update
+      select new_supplier.name, from: 'producer_id'
       fill_in "variant_display_name", with: "Case of 12 Bottles"
       fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
       fill_in "variant_display_as", with: "Case"
@@ -258,14 +265,15 @@ RSpec.describe '
       expect(updated_variant.display_as).to eq "Case"
       expect(updated_variant.price).to eq 4.0
       expect(updated_variant.on_hand).to eq 10
+      expect(updated_variant.supplier).to eq new_supplier
 
       # Then I should see edit buttons for the new variant
       expect(page).to have_selector "a.edit-variant"
     end
 
     context "handle the 'on_demand' variant case creation" do
-      let(:v1) { create(:variant, product:, on_hand: 4) }
-      let(:v2) { create(:variant, product:, on_demand: true) }
+      let(:v1) { create(:variant, product:, on_hand: 4, supplier:) }
+      let(:v2) { create(:variant, product:, on_demand: true, supplier:) }
 
       before do
         product.variants << v1
@@ -281,6 +289,7 @@ RSpec.describe '
         end
 
         within "tr#v_-1" do
+          select supplier.name, from: 'producer_id'
           fill_in "variant_unit_value_with_description", with: "120"
           fill_in "variant_price", with: "6.66"
         end
@@ -330,7 +339,7 @@ RSpec.describe '
     s2 = FactoryBot.create(:supplier_enterprise)
     t1 = FactoryBot.create(:taxon)
     t2 = FactoryBot.create(:taxon)
-    p = FactoryBot.create(:product, supplier: s1, variant_unit: 'volume',
+    p = FactoryBot.create(:product, supplier_id: s1.id, variant_unit: 'volume',
                                     variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
 
     login_as_admin
@@ -340,13 +349,11 @@ RSpec.describe '
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
-      expect(page).to have_select "producer_id", selected: s1.name
       expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
       expect(page).to have_checked_field "inherits_properties"
       expect(page).to have_field "product_sku", with: p.sku
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
-      select s2.name, from: 'producer_id'
       select "Weight (kg)", from: "variant_unit_with_scale"
       uncheck "inherits_properties"
       fill_in "product_sku", with: "NEW SKU"
@@ -357,7 +364,6 @@ RSpec.describe '
 
     p.reload
     expect(p.name).to eq "Big Bag Of Potatoes"
-    expect(p.supplier).to eq s2
     expect(p.variant_unit).to eq "weight"
     expect(p.variant_unit_scale).to eq 1000 # Kg
     expect(p.inherits_properties).to be false
@@ -387,7 +393,7 @@ RSpec.describe '
   it "updating a product with variants" do
     s1 = create(:supplier_enterprise)
     s2 = create(:supplier_enterprise)
-    p = create(:product, supplier: s1, variant_unit: 'volume', variant_unit_scale: 0.001,
+    p = create(:product, supplier_id: s1.id, variant_unit: 'volume', variant_unit_scale: 0.001,
                          price: 3.0, unit_value: 0.25, unit_description: '(bottle)' )
     v = p.variants.first
     v.update_attribute(:sku, "VARIANTSKU")
@@ -510,8 +516,8 @@ RSpec.describe '
   it "updating when a filter has been applied" do
     s1 = create(:supplier_enterprise)
     s2 = create(:supplier_enterprise)
-    p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)
-    p2 = FactoryBot.create(:simple_product, name: "product2", supplier: s2)
+    p1 = FactoryBot.create(:simple_product, name: "product1", supplier_id: s1.id)
+    p2 = FactoryBot.create(:simple_product, name: "product2", supplier_id: s2.id)
 
     login_as_admin
     visit spree.admin_products_path
@@ -610,7 +616,7 @@ RSpec.describe '
         expect(page).to have_selector "a.edit-product", count: 2
 
         # Set a filter
-        select2_select p1.supplier.name, from: "producer_filter"
+        select2_select v1.supplier.name, from: "producer_filter"
         apply_filters
 
         within "tr#p_#{p1.id}" do
@@ -619,7 +625,7 @@ RSpec.describe '
 
         uri = URI.parse(current_url)
         expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(
-          v1.product.id, producerFilter: p1.supplier.id
+          v1.product.id, producerFilter: v1.supplier.id
         )
       end
 
@@ -647,7 +653,7 @@ RSpec.describe '
         expect(page).to have_selector "a.edit-variant", count: 2
 
         # Set a filter
-        select2_select p1.supplier.name, from: "producer_filter"
+        select2_select v1.supplier.name, from: "producer_filter"
         apply_filters
 
         within "tr#v_#{v1.id}" do
@@ -656,7 +662,7 @@ RSpec.describe '
 
         uri = URI.parse(current_url)
         expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_variant_path(
-          v1.product.id, v1.id, producerFilter: p1.supplier.id
+          v1.product.id, v1.id, producerFilter: v1.supplier.id
         )
       end
     end
@@ -666,6 +672,7 @@ RSpec.describe '
         p1 = FactoryBot.create(:product, name: "P1")
         p2 = FactoryBot.create(:product, name: "P2")
         p3 = FactoryBot.create(:product, name: "P3")
+        p1_supplier = p1.variants.first.supplier
 
         login_as_admin
         visit spree.admin_products_path
@@ -676,14 +683,16 @@ RSpec.describe '
           find("a.clone-product").click
         end
         expect(page).to have_selector "a.clone-product", count: 4
+        click_expand_all
         expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
-        expect(page).to have_select "producer_id", selected: p1.supplier.name.to_s
+        expect(page).to have_select "producer_id", selected: p1_supplier.name.to_s
 
         visit spree.admin_products_path
 
+        click_expand_all
         expect(page).to have_selector "a.clone-product", count: 4
         expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
-        expect(page).to have_select "producer_id", selected: p1.supplier.name.to_s
+        expect(page).to have_select "producer_id", selected: p1_supplier.name.to_s
       end
     end
   end
@@ -713,8 +722,8 @@ RSpec.describe '
       it "displays basic filtering controls which filter the product list" do
         s1 = create(:supplier_enterprise)
         s2 = create(:supplier_enterprise)
-        p1 = FactoryBot.create(:simple_product, name: "product1", supplier: s1)
-        p2 = FactoryBot.create(:simple_product, name: "product2", supplier: s2)
+        p1 = FactoryBot.create(:simple_product, name: "product1", supplier_id: s1.id)
+        p2 = FactoryBot.create(:simple_product, name: "product2", supplier_id: s2.id)
 
         login_as_admin
         visit spree.admin_products_path
@@ -753,13 +762,13 @@ RSpec.describe '
     let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
     let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
     let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
-    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0) }
-    let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
+    let!(:product_supplied) { create(:product, supplier_id: supplier_managed1.id, price: 10.0) }
+    let!(:product_not_supplied) { create(:product, supplier_id: supplier_unmanaged.id) }
     let!(:product_supplied_permitted) {
-      create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0)
+      create(:product, name: 'Product Permitted', supplier_id: supplier_permitted.id, price: 10.0)
     }
     let(:product_supplied_inactive) {
-      create(:product, supplier: supplier_managed1, price: 10.0)
+      create(:product, supplier_id: supplier_managed1.id, price: 10.0)
     }
 
     let!(:supplier_permitted_relationship) do
@@ -786,6 +795,7 @@ RSpec.describe '
 
     it "shows only suppliers that I manage or have permission to" do
       visit spree.admin_products_path
+      click_expand_all
 
       expect(page)
         .to have_select(
@@ -841,16 +851,16 @@ RSpec.describe '
 
       within "tr#p_#{p.id}" do
         expect(page).to have_field "product_name", with: p.name
-        expect(page).to have_select "producer_id", selected: supplier_permitted.name
 
         fill_in "product_name", with: "Big Bag Of Potatoes"
-        select supplier_managed2.name, from: 'producer_id'
         select "Weight (kg)", from: "variant_unit_with_scale"
 
         find("a.view-variants").click
       end
 
       within "#v_#{v.id}" do
+        expect(page).to have_select "producer_id", selected: supplier_permitted.name
+        select supplier_managed2.name, from: 'producer_id'
         fill_in "variant_price", with: "20"
         fill_in "variant_on_hand", with: "18"
         fill_in "variant_display_as", with: "Big Bag"
@@ -862,9 +872,9 @@ RSpec.describe '
       p.reload
       v.reload
       expect(p.name).to eq "Big Bag Of Potatoes"
-      expect(p.supplier).to eq supplier_managed2
       expect(p.variant_unit).to eq "weight"
       expect(p.variant_unit_scale).to eq 1000 # Kg
+      expect(v.supplier).to eq supplier_managed2
       expect(v.display_as).to eq "Big Bag"
       expect(v.price).to eq 20.0
       expect(v.on_hand).to eq 18
@@ -921,5 +931,9 @@ RSpec.describe '
 
   def apply_filters
     page.find('.button.icon-search').click
+  end
+
+  def click_expand_all
+    find("a", text: "EXPAND ALL").click
   end
 end
