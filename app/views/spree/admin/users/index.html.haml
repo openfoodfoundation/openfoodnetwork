@@ -36,7 +36,8 @@
               %option{value: enterprise.id}= enterprise.name
         %td.actions
           = link_to_delete user, no_text: true
-
+          = link_to edit_object_url(user), class: 'edit-user' do
+            %i.icon-pencil
 - _with_routes Spree::Core::Engine.routes do
   = render partial: 'admin/shared/pagy_links', locals: { pagy: @pagy }
 
