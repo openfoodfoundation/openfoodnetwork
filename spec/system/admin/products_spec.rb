@@ -131,7 +131,6 @@ RSpec.describe '
       expect(current_path).to eq spree.admin_products_path
       expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
       product = Spree::Product.find_by(name: 'A new product !!!')
-      expect(product.supplier).to eq(@supplier)
       expect(product.variant_unit).to eq('weight')
       expect(product.variant_unit_scale).to eq(1000)
       expect(product.variants.first.unit_value).to eq(5000)
@@ -144,7 +143,10 @@ RSpec.describe '
       expect(product.variants.first.shipping_category).to eq(shipping_category)
       expect(product.description).to eq("<div>A description...</div>")
       expect(product.group_buy).to be_falsey
-      expect(product.variants.first.unit_presentation).to eq("5kg")
+
+      variant = product.variants.first
+      expect(variant.unit_presentation).to eq("5kg")
+      expect(variant.supplier).to eq(@supplier)
     end
 
     it "creating an on-demand product" do
@@ -257,10 +259,14 @@ RSpec.describe '
   end
 
   describe "deleting" do
-    let!(:product1) { create(:simple_product, name: 'a product to keep', supplier: @supplier) }
+    let!(:product1) {
+      create(:simple_product, name: 'a product to keep', supplier_id: @supplier.id)
+    }
 
     context 'a simple product' do
-      let!(:product2) { create(:simple_product, name: 'a product to delete', supplier: @supplier) }
+      let!(:product2) {
+        create(:simple_product, name: 'a product to delete', supplier_id: @supplier.id)
+      }
 
       before do
         login_as_admin
@@ -310,7 +316,8 @@ RSpec.describe '
 
   describe 'cloning' do
     let!(:product1) {
-      create(:simple_product, name: 'a weight product', supplier: @supplier, variant_unit: "weight")
+      create(:simple_product, name: 'a weight product', supplier_id: @supplier.id,
+                              variant_unit: "weight")
     }
 
     context 'products' do
@@ -372,25 +379,26 @@ RSpec.describe '
 
         expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
         product = Spree::Product.find_by(name: 'A new product !!!')
-        expect(product.supplier).to eq(@supplier2)
-        expect(product.variants.first.tax_category).to be_nil
+        variant = product.variants.first
+        expect(variant.tax_category).to be_nil
+        expect(variant.supplier).to eq(@supplier2)
       end
     end
 
     it "editing a product" do
-      product = create(:simple_product, name: 'a product', supplier: @supplier2)
+      product = create(:simple_product, name: 'a product', supplier_id: @supplier2.id)
 
       visit spree.edit_admin_product_path product
 
-      select 'Permitted Supplier', from: 'product_supplier_id'
+      fill_in_trix_editor 'product_description', with: 'A description...'
       click_button 'Update'
       expect(flash_message).to eq('Product "a product" has been successfully updated!')
       product.reload
-      expect(product.supplier).to eq(@supplier_permitted)
+      expect(product.description).to eq("<div>A description...</div>")
     end
 
     it "editing a product comming from the bulk product update page with filter" do
-      product = create(:simple_product, name: 'a product', supplier: @supplier2)
+      product = create(:simple_product, name: 'a product', supplier_id: @supplier2.id)
 
       visit spree.edit_admin_product_path(product, filter)
 
@@ -447,7 +455,7 @@ RSpec.describe '
     end
 
     it "editing product group buy options" do
-      product = product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Group Buy Options' }
@@ -463,7 +471,7 @@ RSpec.describe '
     end
 
     it "loading editing product group buy options with url filters" do
-      product = product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       visit spree.group_buy_options_admin_product_path(product, filter)
 
@@ -473,7 +481,7 @@ RSpec.describe '
     end
 
     it "editing product group buy options with url filter" do
-      product = product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       visit spree.group_buy_options_admin_product_path(product, filter)
       choose('product_group_buy_1')
@@ -486,7 +494,7 @@ RSpec.describe '
     end
 
     it "editing product Search" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
       visit spree.edit_admin_product_path product
       within('#sidebar') { click_link 'Search' }
       fill_in 'Product Search Keywords', with: 'Product Search Keywords'
@@ -499,7 +507,7 @@ RSpec.describe '
     end
 
     it "loading editing product Search with url filters" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       visit spree.seo_admin_product_path(product, filter)
 
@@ -509,7 +517,7 @@ RSpec.describe '
     end
 
     it "editing product Search with url filter" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       visit spree.seo_admin_product_path(product, filter)
 
@@ -523,7 +531,7 @@ RSpec.describe '
     end
 
     it "loading product properties page including url filters" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
       visit spree.admin_product_product_properties_path(product, filter)
 
       uri = URI.parse(current_url)
@@ -539,7 +547,7 @@ RSpec.describe '
 
     it "deleting product properties" do
       # Given a product with a property
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
       product.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
@@ -563,7 +571,7 @@ RSpec.describe '
 
     it "deleting product properties including url filters" do
       # Given a product with a property
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
       product.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
@@ -581,7 +589,7 @@ RSpec.describe '
 
     it "adding product properties including url filters" do
       # Given a product
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
       product.set_property('fooprop', 'fooval')
 
       # When I navigate to the product properties page
@@ -598,7 +606,7 @@ RSpec.describe '
     end
 
     it "loading new product image page" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       visit spree.admin_product_images_path(product)
       expect(page).to have_selector ".no-objects-found"
@@ -608,7 +616,7 @@ RSpec.describe '
     end
 
     it "loading new product image page including url filters" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       visit spree.admin_product_images_path(product, filter)
 
@@ -620,7 +628,7 @@ RSpec.describe '
     end
 
     it "upload a new product image including url filters" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       visit spree.admin_product_images_path(product, filter)
 
@@ -634,7 +642,7 @@ RSpec.describe '
     end
 
     it "loading image page including url filter" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       visit spree.admin_product_images_path(product, filter)
 
@@ -645,7 +653,7 @@ RSpec.describe '
     end
 
     it "loading edit product image page including url filter" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
       image = white_logo_file
       image_object = Spree::Image.create(viewable_id: product.id,
                                          viewable_type: 'Spree::Product', alt: "position 1",
@@ -666,7 +674,7 @@ RSpec.describe '
     end
 
     it "updating a product image including url filter" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
       image = white_logo_file
       image_object = Spree::Image.create(viewable_id: product.id,
                                          viewable_type: 'Spree::Product', alt: "position 1",
@@ -685,7 +693,7 @@ RSpec.describe '
 
     it "checks error when creating product image with unsupported format" do
       unsupported_image_file_path = Rails.root.join("README.md").to_s
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
 
       image = white_logo_file
       Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
@@ -701,7 +709,7 @@ RSpec.describe '
     end
 
     it "deleting product images" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
       image = white_logo_file
       Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
                           alt: "position 1", attachment: image, position: 1)
@@ -719,7 +727,7 @@ RSpec.describe '
     end
 
     it "deleting product image including url filter" do
-      product = create(:simple_product, supplier: @supplier2)
+      product = create(:simple_product, supplier_id: @supplier2.id)
       image = white_logo_file
       Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
                           alt: "position 1", attachment: image, position: 1)
@@ -735,7 +743,7 @@ RSpec.describe '
     end
 
     context "editing a product's variant unit scale" do
-      let(:product) { create(:simple_product, name: 'a product', supplier: @supplier2) }
+      let(:product) { create(:simple_product, name: 'a product', supplier_id: @supplier2.id) }
 
       before do
         allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
