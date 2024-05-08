@@ -8,6 +8,7 @@ module Spree
       before_action :setup_property, only: [:index]
 
       def index
+        @supplier = @product.variants.first.supplier
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
       end
 
