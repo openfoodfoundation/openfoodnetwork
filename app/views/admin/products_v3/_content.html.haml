@@ -1,5 +1,5 @@
 %turbo-frame#products-content{ target: "_top", refresh: "morph" }
-  .spinner-overlay.hidden
+  .spinner-overlay{ "data-controller": "loading", "data-products-target": "loading", class: "hidden" }
     .spinner-container
       .spinner
       = t('.loading')
