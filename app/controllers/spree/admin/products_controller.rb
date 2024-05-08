@@ -12,6 +12,7 @@ module Spree
       include EnterprisesHelper
 
       before_action :load_data
+      before_action :load_producers, only: [:index, :new]
       before_action :load_form_data, only: [:index, :new, :create, :edit, :update]
       before_action :load_spree_api_key, only: [:index, :variant_overrides]
       before_action :strip_new_properties, only: [:create, :update]
@@ -27,9 +28,6 @@ module Spree
       end
 
       def new
-        @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
-          managed_product_enterprises.is_primary_producer.by_name
-
         @object.shipping_category_id = DefaultShippingCategory.find_or_create.id
       end
 
@@ -44,6 +42,7 @@ module Spree
             flash[:success] = flash_message_for(@object, :successfully_created)
             redirect_after_save
           else
+            load_producers
             # Re-fill the form with deleted params on product
             @on_hand = request.params[:product][:on_hand]
             @on_demand = request.params[:product][:on_demand]
@@ -157,6 +156,11 @@ module Spree
       def load_form_data
         @taxons = Spree::Taxon.order(:name)
         @import_dates = product_import_dates.uniq.to_json
+      end
+
+      def load_producers
+        @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
+          managed_product_enterprises.is_primary_producer.by_name
       end
 
       def product_import_dates

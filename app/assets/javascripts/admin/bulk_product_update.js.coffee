@@ -47,7 +47,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     removeClearedValues()
     params = {
       'q[name_cont]': $scope.q.query,
-      'q[supplier_id_eq]': $scope.q.producerFilter,
+      'q[variants_supplier_id_eq]': $scope.q.producerFilter,
       'q[variants_primary_taxon_id_eq]': $scope.q.categoryFilter,
       'q[s]': $scope.sorting,
       import_date: $scope.q.importDateFilter,
@@ -217,7 +217,7 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
         products: productsToSubmit
         filters:
           'q[name_cont]': $scope.q.query
-          'q[supplier_id_eq]': $scope.q.producerFilter
+          'q[variants_supplier_id_eq]': $scope.q.producerFilter
           'q[variants_primary_taxon_id_eq]': $scope.q.categoryFilter
           'q[s]': $scope.sorting
           import_date: $scope.q.importDateFilter
@@ -314,9 +314,6 @@ filterSubmitProducts = (productsToFilter) ->
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
           hasUpdatableProperty = true
-        if product.hasOwnProperty("producer_id")
-          filteredProduct.supplier_id = product.producer_id
-          hasUpdatableProperty = true
         if product.hasOwnProperty("price")
           filteredProduct.price = product.price
           hasUpdatableProperty = true
@@ -378,6 +375,9 @@ filterSubmitVariant = (variant) ->
       hasUpdatableProperty = true
     if variant.hasOwnProperty("display_as")
       filteredVariant.display_as = variant.display_as
+      hasUpdatableProperty = true
+    if variant.hasOwnProperty("producer_id")
+      filteredVariant.supplier_id = variant.producer_id
       hasUpdatableProperty = true
   {filteredVariant: filteredVariant, hasUpdatableProperty: hasUpdatableProperty}
 
