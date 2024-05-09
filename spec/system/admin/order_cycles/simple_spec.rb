@@ -399,37 +399,44 @@ describe '
           oc.update prefers_product_selection_from_coordinator_inventory_only: false
         end
 
-        shared_examples "inventory warning" do
-          |inventory_visible, inventory_only, it_description, expect_message|
-          before do
-            # hides/displays variant within coordinator's inventory
-            inventory_item_v1.update!(visible: inventory_visible)
-            # changes coordinator's inventory preferences
-            supplier_managed.update preferred_product_selection_from_inventory_only: inventory_only
+        it "shows a warning when going to 'outgoing products' tab" do
+          # hides/displays variant within coordinator's inventory
+          inventory_item_v1.update!(visible: false)
+          # changes coordinator's inventory preferences
+          supplier_managed.update preferred_product_selection_from_inventory_only: true
+
+          visit edit_admin_order_cycle_path(oc)
+          click_link "Outgoing Products"
+          within "tr.distributor-#{distributor_managed.id}" do
+            page.find("td.products").click
           end
 
-          it "#{it_description} a warning when going to 'outgoing products' tab" do
-            visit edit_admin_order_cycle_path(oc)
-            click_link "Outgoing Products"
-            within "tr.distributor-#{distributor_managed.id}" do
-              page.find("td.products").click
-            end
+          # we need this assertion here to assure there is enough time to
+          # toggle the variant box and evaluate the following assertion
+          expect(page).to have_content product.name.upcase
 
-            # we need this assertion here to assure there is enough time to
-            # toggle the variant box and evaluate the following assertion
-            expect(page).to have_content product.name.upcase
-
-            # iterates between true / false, depending on the test case
-            expectation = expect_message ? :to : :not_to
-            expect(page).public_send(expectation,
-                                     have_content(%(No variant available for this product
-                (hidden via inventory settings)).squish))
-          end
+          expect(page).to have_content "No variant available for this product"
         end
 
-        it_behaves_like "inventory warning", false, true, "shows", true
-        it_behaves_like "inventory warning", false, false, "does not show", false do
-          before { pending("#11851") }
+        it "doesn't show a warning when going to 'outgoing products' tab" do
+          pending("#11851")
+
+          # hides/displays variant within coordinator's inventory
+          inventory_item_v1.update!(visible: false)
+          # changes coordinator's inventory preferences
+          supplier_managed.update preferred_product_selection_from_inventory_only: false
+
+          visit edit_admin_order_cycle_path(oc)
+          click_link "Outgoing Products"
+          within "tr.distributor-#{distributor_managed.id}" do
+            page.find("td.products").click
+          end
+
+          # we need this assertion here to assure there is enough time to
+          # toggle the variant box and evaluate the following assertion
+          expect(page).to have_content product.name.upcase
+
+          expect(page).not_to have_content "No variant available for this product"
         end
       end
 
