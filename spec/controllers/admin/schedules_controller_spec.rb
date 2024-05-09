@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::SchedulesController, type: :controller do
+RSpec.describe Admin::SchedulesController, type: :controller do
   include AuthenticationHelper
 
   describe "index" do

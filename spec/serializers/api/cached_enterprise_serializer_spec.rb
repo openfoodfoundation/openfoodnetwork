@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::CachedEnterpriseSerializer do
+RSpec.describe Api::CachedEnterpriseSerializer do
   let(:cached_enterprise_serializer) { described_class.new(enterprise) }
   let(:enterprise) { create(:enterprise) }
 

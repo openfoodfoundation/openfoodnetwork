@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   module Stock
-    describe Quantifier do
+    RSpec.describe Quantifier do
       let(:quantifier) { Spree::Stock::Quantifier.new(variant) }
       let(:variant) { create(:variant, on_hand: 99) }
 

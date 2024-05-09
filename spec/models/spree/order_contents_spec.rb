@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::OrderContents do
+RSpec.describe Spree::OrderContents do
   let!(:order) { create(:order) }
   let!(:variant) { create(:variant) }
   subject { described_class.new(order) }

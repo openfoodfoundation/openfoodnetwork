@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module Customers
-      describe Base do
+      RSpec.describe Base do
         context "as a site admin" do
           let(:user) do
             user = create(:user)

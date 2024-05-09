@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Calculator::Weight do
+RSpec.describe Calculator::Weight do
   it "computes shipping cost for an order by total weight" do
     variant1 = build_stubbed(:variant, unit_value: 10_000)
     variant2 = build_stubbed(:variant, unit_value: 20_000)

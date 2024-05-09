@@ -5,7 +5,7 @@ require 'spec_helper'
 class Spree::Gateway::Test < Spree::Gateway
 end
 
-describe Spree::PaymentMethod do
+RSpec.describe Spree::PaymentMethod do
   describe ".managed_by scope" do
     subject! { create(:payment_method) }
     let(:owner) { subject.distributors.first.owner }

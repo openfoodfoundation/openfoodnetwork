@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-xdescribe '
+RSpec.xdescribe '
     As an administrator
     I want to create/update complex order cycles with a specific time
 ' do

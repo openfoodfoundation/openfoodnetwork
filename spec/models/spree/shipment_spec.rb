@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'benchmark'
 
-describe Spree::Shipment do
+RSpec.describe Spree::Shipment do
   let(:order) { build(:order) }
   let(:shipping_method) { build(:shipping_method, name: "UPS") }
   let(:shipment) do

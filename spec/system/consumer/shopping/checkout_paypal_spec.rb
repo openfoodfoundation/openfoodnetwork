@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Check out with Paypal" do
+RSpec.describe "Check out with Paypal" do
   include ShopWorkflow
   include CheckoutRequestsHelper
   include AuthenticationHelper

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "Product Import", type: :request do
+RSpec.describe "Product Import", type: :request do
   include AuthenticationHelper
 
   describe "validate_data" do

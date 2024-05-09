@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe EnterprisesController, type: :controller do
+RSpec.describe EnterprisesController, type: :controller do
   describe "shopping for a distributor" do
     let(:user) { create(:user) }
     let(:order) { controller.current_order(true) }

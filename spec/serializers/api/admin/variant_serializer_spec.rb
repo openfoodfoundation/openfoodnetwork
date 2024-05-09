@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::Admin::VariantSerializer do
+RSpec.describe Api::Admin::VariantSerializer do
   let(:variant) { create(:variant) }
 
   it "serializes the variant name" do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe TaxRateFinder do
+RSpec.describe TaxRateFinder do
   describe "getting the corresponding tax rate" do
     let(:amount) { BigDecimal(120) }
     let(:tax_rate) {

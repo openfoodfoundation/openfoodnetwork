@@ -3,7 +3,7 @@
 require 'spec_helper'
 require_relative '../../db/migrate/20240502035220_update_n8n_url'
 
-describe UpdateN8nUrl do
+RSpec.describe UpdateN8nUrl do
   # We may want to move this to a support file if this syntax is useful in
   # other places. Reference:
   # - https://stackoverflow.com/a/34969429/3377535

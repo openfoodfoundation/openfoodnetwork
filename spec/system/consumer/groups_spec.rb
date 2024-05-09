@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Groups' do
+RSpec.describe 'Groups' do
   include AuthenticationHelper
   include UIComponentHelper
 

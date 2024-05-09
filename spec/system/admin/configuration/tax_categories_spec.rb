@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Tax Categories" do
+RSpec.describe "Tax Categories" do
   include AuthenticationHelper
   include WebHelper
 

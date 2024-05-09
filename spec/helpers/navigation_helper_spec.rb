@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    describe NavigationHelper, type: :helper do
+    RSpec.describe NavigationHelper, type: :helper do
       describe "klass_for" do
         it "returns the class when present" do
           expect(helper.klass_for('products')).to eq(Spree::Product)

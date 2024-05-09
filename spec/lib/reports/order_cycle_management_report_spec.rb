@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module OrderCycleManagement
-      describe Base do
+      RSpec.describe Base do
         context "as a site admin" do
           subject { Base.new(user, params) }
           let(:params) { {} }

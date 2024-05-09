@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::ReportsController, type: :controller do
+RSpec.describe Admin::ReportsController, type: :controller do
   # Given two distributors and two suppliers
   let(:bill_address) { create(:address) }
   let(:ship_address) { create(:address) }

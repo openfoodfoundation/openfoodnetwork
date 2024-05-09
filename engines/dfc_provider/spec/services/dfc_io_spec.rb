@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe DfcIo do
+RSpec.describe DfcIo do
   let(:person) do
     DataFoodConsortium::Connector::Person.new("Pete")
   end

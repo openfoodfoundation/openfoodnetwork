@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Schedules' do
+RSpec.describe 'Schedules' do
   include AuthenticationHelper
   include WebHelper
 

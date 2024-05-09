@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe TaxRate do
+  RSpec.describe TaxRate do
     describe "#match" do
       let!(:zone) { create(:zone_with_member) }
       let!(:order) { create(:order, distributor: hub, bill_address: create(:address)) }

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Terms of Service files" do
+RSpec.describe "Terms of Service files" do
   include AuthenticationHelper
 
   describe "as admin" do

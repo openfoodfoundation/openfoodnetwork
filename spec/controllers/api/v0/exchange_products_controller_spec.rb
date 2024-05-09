@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Api
-  describe V0::ExchangeProductsController, type: :controller do
+  RSpec.describe V0::ExchangeProductsController, type: :controller do
     include AuthenticationHelper
 
     let(:order_cycle) { create(:order_cycle) }

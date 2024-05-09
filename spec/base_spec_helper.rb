@@ -124,6 +124,11 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
+  # Limits the available syntax to the non-monkey patched syntax that is
+  # recommended. For more details, see:
+  # https://rspec.info/features/3-12/rspec-core/configuration/zero-monkey-patching-mode/
+  config.disable_monkey_patching!
+
   # Reset locale for all specs.
   config.around(:each) do |example|
     I18n.with_locale(:en) { example.run }

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe MailConfiguration do
+RSpec.describe MailConfiguration do
   describe 'apply!' do
     before do
       allow(Spree::Core::MailSettings).to receive(:init) { true }

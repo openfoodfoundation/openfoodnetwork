@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Orders::HandleFeesService do
+RSpec.describe Orders::HandleFeesService do
   let(:order_cycle) { create(:order_cycle) }
   let(:order) { create(:order_with_line_items, line_items_count: 1, order_cycle:) }
   let(:line_item) { order.line_items.first }

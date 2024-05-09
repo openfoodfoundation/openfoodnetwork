@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Order do
+RSpec.describe Spree::Order do
   let(:order) { build(:order) }
   before do
     Spree::Order.define_state_machine!

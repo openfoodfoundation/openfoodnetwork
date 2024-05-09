@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Api::Admin::OrderSerializer do
+RSpec.describe Api::Admin::OrderSerializer do
   let(:serializer) { described_class.new order }
   let(:order) { build(:order) }
 

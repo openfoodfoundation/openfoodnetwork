@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Subscriptions
-    describe StripePaymentSetup do
+    RSpec.describe StripePaymentSetup do
       let(:order) { create(:order) }
       let(:payment_setup) { OrderManagement::Subscriptions::StripePaymentSetup.new(order) }
 

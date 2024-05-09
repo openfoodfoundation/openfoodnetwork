@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::V0::BaseController do
+RSpec.describe Api::V0::BaseController do
   render_views
   controller(Api::V0::BaseController) do
     skip_authorization_check only: :index

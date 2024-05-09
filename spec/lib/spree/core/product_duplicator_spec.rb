@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Core::ProductDuplicator do
+RSpec.describe Spree::Core::ProductDuplicator do
   let(:product) do
     double 'Product',
            name: "foo",

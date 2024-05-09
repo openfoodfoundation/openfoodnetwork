@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe TermsOfService do
+RSpec.describe TermsOfService do
   let(:customer) { create(:customer) }
   let(:distributor) { create(:distributor_enterprise) }
 

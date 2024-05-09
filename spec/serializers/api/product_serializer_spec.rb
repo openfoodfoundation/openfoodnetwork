@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'open_food_network/enterprise_fee_calculator'
 
-describe Api::ProductSerializer do
+RSpec.describe Api::ProductSerializer do
   include ShopWorkflow
 
   let!(:distributor) { create(:distributor_enterprise) }

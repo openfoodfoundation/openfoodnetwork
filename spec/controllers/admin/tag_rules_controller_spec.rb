@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::TagRulesController, type: :controller do
+RSpec.describe Admin::TagRulesController, type: :controller do
   describe "destroy" do
     context "json" do
       let(:format) { :json }

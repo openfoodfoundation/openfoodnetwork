@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe UserRegistrationsController, type: :controller do
+RSpec.describe UserRegistrationsController, type: :controller do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
   end

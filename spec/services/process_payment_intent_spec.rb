@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ProcessPaymentIntent do
+RSpec.describe ProcessPaymentIntent do
   let(:service) { described_class.new }
 
   describe "processing a payment intent" do

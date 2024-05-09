@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "layouts/registration.html.haml" do
+RSpec.describe "layouts/registration.html.haml" do
   helper InjectionHelper
   helper I18nHelper
   helper ShopHelper

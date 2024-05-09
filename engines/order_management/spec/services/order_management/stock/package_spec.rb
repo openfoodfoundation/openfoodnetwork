@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Stock
-    describe Package do
+    RSpec.describe Package do
       context "base tests" do
         let(:variant) { build(:variant, weight: 25.0) }
         let(:stock_location) { build(:stock_location) }

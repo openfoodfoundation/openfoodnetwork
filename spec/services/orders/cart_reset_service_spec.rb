@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Orders::CartResetService do
+RSpec.describe Orders::CartResetService do
   let(:distributor) { create(:distributor_enterprise) }
   let(:order) { create(:order, :with_line_item, distributor:) }
 

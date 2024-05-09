@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Subscriptions
-    describe ProxyOrderSyncer do
+    RSpec.describe ProxyOrderSyncer do
       describe "initialization" do
         let!(:subscription) { create(:subscription) }
 

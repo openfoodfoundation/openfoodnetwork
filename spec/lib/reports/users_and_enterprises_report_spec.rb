@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module UsersAndEnterprises
-      describe Base do
+      RSpec.describe Base do
         describe "query_result" do
           let!(:owners_and_enterprises) { double(:owners_and_enterprises) }
           let!(:managers_and_enterprises) { double(:managers_and_enterprises) }

@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "enterprise fee summaries" do
+RSpec.describe "enterprise fee summaries" do
   include AuthenticationHelper
   include WebHelper
 

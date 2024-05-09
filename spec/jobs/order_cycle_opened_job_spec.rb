@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycleOpenedJob do
+RSpec.describe OrderCycleOpenedJob do
   let(:oc_opened_before) {
     create(:order_cycle, orders_open_at: 1.hour.ago)
   }

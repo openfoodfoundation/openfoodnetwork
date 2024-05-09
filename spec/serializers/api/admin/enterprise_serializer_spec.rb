@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Api::Admin::EnterpriseSerializer do
+RSpec.describe Api::Admin::EnterpriseSerializer do
   include FileHelper
 
   let(:enterprise) { create(:distributor_enterprise) }

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::ShipmentMailer do
+RSpec.describe Spree::ShipmentMailer do
   let(:shipment) do
     order = build(:order_with_distributor)
     product = build(:product, name: %{The "BEST" product})

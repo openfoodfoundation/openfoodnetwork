@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::OrderMailer do
+RSpec.describe Spree::OrderMailer do
   describe '#confirm_email_for_customer' do
     subject(:email) { described_class.confirm_email_for_customer(order) }
 

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "spree/admin/payment_methods/index.html.haml" do
+RSpec.describe "spree/admin/payment_methods/index.html.haml" do
   include AuthenticationHelper
   helper Spree::Admin::NavigationHelper
   helper Spree::Admin::BaseHelper

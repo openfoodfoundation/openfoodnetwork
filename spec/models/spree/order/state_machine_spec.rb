@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Order do
+RSpec.describe Spree::Order do
   let(:order) { Spree::Order.new }
   before do
     # Ensure state machine has been re-defined correctly

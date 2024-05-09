@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Shops' do
+RSpec.describe 'Shops' do
   include AuthenticationHelper
   include UIComponentHelper
   include WebHelper

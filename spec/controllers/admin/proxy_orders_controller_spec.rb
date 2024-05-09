@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::ProxyOrdersController, type: :controller do
+RSpec.describe Admin::ProxyOrdersController, type: :controller do
   include AuthenticationHelper
 
   describe 'cancel' do

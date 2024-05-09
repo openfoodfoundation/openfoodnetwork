@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::CreditCardsController, type: :controller do
+RSpec.describe Spree::CreditCardsController, type: :controller do
   describe "using VCR", :vcr, :stripe_version do
     let(:user) { create(:user) }
 

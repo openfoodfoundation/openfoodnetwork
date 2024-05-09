@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module ProductsAndInventory
-      describe Base do
+      RSpec.describe Base do
         context "As a site admin" do
           let(:user) do
             user = create(:user)
@@ -264,7 +264,7 @@ module Reporting
         end
       end
 
-      describe AllProducts do
+      RSpec.describe AllProducts do
         let(:user) do
           user = create(:user)
           user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')

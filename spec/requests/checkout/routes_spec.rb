@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'checkout endpoints', type: :request do
+RSpec.describe 'checkout endpoints', type: :request do
   include ShopWorkflow
 
   let!(:shop) { create(:enterprise) }

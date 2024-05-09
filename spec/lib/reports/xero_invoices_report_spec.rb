@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module XeroInvoices
-      describe Base do
+      RSpec.describe Base do
         subject { Base.new user, {} }
 
         let(:user) { create(:user) }

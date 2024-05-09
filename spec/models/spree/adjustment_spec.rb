@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Adjustment do
+  RSpec.describe Adjustment do
     let(:order) { build(:order) }
     let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5) }
 

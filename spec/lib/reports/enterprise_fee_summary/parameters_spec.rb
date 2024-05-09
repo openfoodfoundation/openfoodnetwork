@@ -5,7 +5,7 @@ require "spec_helper"
 module Reporting
   module Reports
     module EnterpriseFeeSummary
-      describe Parameters do
+      RSpec.describe Parameters do
         describe "validation" do
           let(:parameters) { described_class.new }
 

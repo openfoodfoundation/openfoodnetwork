@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
     As an administrator
     I want to list and filter order cycles
 ' do

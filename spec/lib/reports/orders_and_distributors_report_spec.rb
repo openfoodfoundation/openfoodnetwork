@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module OrdersAndDistributors
-      describe Base do
+      RSpec.describe Base do
         describe 'orders and distributors report' do
           it 'should return a header row describing the report' do
             subject = Base.new nil
