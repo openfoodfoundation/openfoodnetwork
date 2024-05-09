@@ -34,11 +34,8 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
 
     it "Should sort products alphabetically by default in ascending order" do
       within products_table do
-        # Gather input values, because page.content doesn't include them.
-        input_content = page.find_all('input[type=text]').map(&:value).join
-
         # Products are in correct order.
-        expect(input_content).to match /Apples.*Bananas/
+        expect(all_input_values).to match /Apples.*Bananas/
       end
     end
 
@@ -50,16 +47,12 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
           # Sort in descending order
           name_header.click
           expect(page).to have_content("Name ▼") # this indicates the re-sorted content has loaded
-
-          input_content = page.find_all('input[type=text]').map(&:value).join
-          expect(input_content).to match /Bananas.*Apples/
+          expect(all_input_values).to match /Bananas.*Apples/
 
           # Sort in ascending order
           name_header.click
           expect(page).to have_content("Name ▲") # this indicates the re-sorted content has loaded
-
-          input_content = page.find_all('input[type=text]').map(&:value).join
-          expect(input_content).to match /Apples.*Bananas/
+          expect(all_input_values).to match /Apples.*Bananas/
         end
       end
     end
@@ -1198,5 +1191,9 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
   def random_tax_category
     Spree::TaxCategory
       .pluck(:name).sample
+  end
+
+  def all_input_values
+    page.find_all('input[type=text]').map(&:value).join
   end
 end
