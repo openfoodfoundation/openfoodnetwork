@@ -42,6 +42,7 @@ module Api
         authorize! :delete, Spree::Product
         @product = product_finder.find_product
         authorize! :delete, @product
+        @product.destroyed_by = current_api_user
         @product.destroy
         render json: @product, serializer: Api::Admin::ProductSerializer, status: :no_content
       end

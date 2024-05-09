@@ -6,6 +6,7 @@ module LogDestroyPerformer
   extend ActiveSupport::Concern
   included do
     attr_accessor :destroyed_by
+
     after_destroy :log_who_destroyed
 
     def log_who_destroyed

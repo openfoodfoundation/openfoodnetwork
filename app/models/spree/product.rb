@@ -23,6 +23,7 @@ require 'open_food_network/property_merge'
 module Spree
   class Product < ApplicationRecord
     include ProductStock
+    include LogDestroyPerformer
 
     self.belongs_to_required_by_default = false
 
