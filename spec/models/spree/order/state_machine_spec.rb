@@ -159,4 +159,44 @@ RSpec.describe Spree::Order do
       end
     end
   end
+
+  # Another regression test for Spree #729
+  context "#resume" do
+    context "resets payment state" do
+      let!(:variant) { build(:variant) }
+      before do
+        allow(order).to receive_messages email: "user@spreecommerce.com"
+        allow(order).to receive_messages allow_cancel?: true
+        allow(order).to receive_messages allow_resume?: true
+        allow(order).to receive_messages line_items:
+                                           [build(:line_item, variant:, quantity: 2)]
+        allow(order.line_items).to receive_messages find_by_variant_id: order.line_items.first
+        order.update(total: 10)
+        order.cancel!
+      end
+
+      it "should set payment state to 'balance due'" do
+        expect {
+          order.resume!
+          order.reload
+        }.to change { order.payment_state }.to("balance_due")
+      end
+
+      it "should set payment state to 'paid'" do
+        expect {
+          order.update(payment_total: 10)
+          order.resume!
+          order.reload
+        }.to change { order.payment_state }.to("paid")
+      end
+
+      it "should set payment state to 'credit owed'" do
+        expect {
+          order.update(payment_total: 20)
+          order.resume!
+          order.reload
+        }.to change { order.payment_state }.to("credit_owed")
+      end
+    end
+  end
 end
