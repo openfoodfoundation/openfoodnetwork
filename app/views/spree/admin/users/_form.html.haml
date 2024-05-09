@@ -4,6 +4,18 @@
       = f.label :email, t(".email")
       = f.email_field :email, class: "fullwidth"
       = error_message_on :user, :email
+    = f.field_container :name do
+      = f.label :name, t(".name")
+      = f.text_field :name, class: "fullwidth"
+      = error_message_on :user, :name
+    = f.field_container :phone do
+      = f.label :phone, t(".phone")
+      = f.phone_field :phone, class: "fullwidth"
+      = error_message_on :user, :phone
+    %label.fullwidth{for: "enterprises"}= t(".shops_title")
+    %select.fullwidth{name: "enterprises", id: "enterprises"}
+      - @user.enterprises.each do |enterprise|
+        %option{value: enterprise.id}= enterprise.name
     .field
       = label_tag nil, t(".roles")
       %ul
