@@ -8,6 +8,7 @@ RSpec.describe "shopping with variant overrides defined" do
   include ShopWorkflow
   include CheckoutRequestsHelper
   include UIComponentHelper
+  include CheckoutHelper
 
   let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let(:producer) { create(:supplier_enterprise) }
@@ -150,14 +151,20 @@ RSpec.describe "shopping with variant overrides defined" do
       expect(page).to have_selector "#edit-cart .grand-total", text: with_currency(122.22)
     end
 
-    pending "prices in the checkout" do
+    context "prices in the checkout" do
       it "shows the correct prices" do
         click_add_to_cart product1_variant1, 2
         click_checkout
+        checkout_as_guest
 
-        expect(page).to have_selector 'form.edit_order .cart-total', text: with_currency(122.22)
-        expect(page).to have_selector 'form.edit_order .shipping', text: with_currency(0.00)
-        expect(page).to have_selector 'form.edit_order .total', text: with_currency(122.22)
+        fill_out_details
+        fill_out_billing_address
+
+        proceed_to_payment
+        proceed_to_summary
+
+        expect(page).to have_selector '.summary-right-line-value', text: with_currency(122.22)
+        expect(page).to have_selector '#order_total', text: with_currency(122.22)
       end
     end
   end
