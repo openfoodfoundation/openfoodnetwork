@@ -247,6 +247,13 @@ class Enterprise < ApplicationRecord
     count(distinct: true)
   end
 
+  # Remove any unsupported HTML.
+  def long_description=(html)
+    super(HtmlSanitizer.sanitize(
+      html, tags: %w[h1 h2 h3 h4 p b i u a], attributes: %w[href target],
+    ))
+  end
+
   def contact
     contact = users.where(enterprise_roles: { receives_notifications: true }).first
     contact || owner
