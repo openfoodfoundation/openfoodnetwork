@@ -31,7 +31,7 @@ namespace :ofn do
 
     def enterprise_header
       ['name', 'description', 'long_description', 'is_primary_producer', 'is_distributor',
-       'contact_name', 'phone', 'email', 'website', 'twitter', 'abn', 'acn', 'pickup_times',
+       'contact_name', 'phone', 'email', 'website', 'twitter', 'abn', 'acn',
        'next_collection_at', 'visible', 'facebook', 'instagram', 'linkedin',
        'address1', 'address2', 'city', 'zipcode', 'state', 'country']
     end
@@ -40,7 +40,7 @@ namespace :ofn do
       [enterprise.name, enterprise.description, enterprise.long_description,
        enterprise.is_primary_producer, enterprise.is_distributor, enterprise.contact_name,
        enterprise.phone, enterprise.email, enterprise.website, enterprise.twitter, enterprise.abn,
-       enterprise.acn, enterprise.pickup_times, enterprise.next_collection_at,
+       enterprise.acn, enterprise.next_collection_at,
        enterprise.visible, enterprise.facebook, enterprise.instagram,
        enterprise.linkedin, enterprise.address.address1, enterprise.address.address2,
        enterprise.address.city, enterprise.address.zipcode, enterprise.address.state_name,
