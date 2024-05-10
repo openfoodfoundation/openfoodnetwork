@@ -95,7 +95,7 @@
         %div.checkout-input{"data-shippingmethod-target": "shippingMethodDescription", "data-shippingmethodid": shipping_method.id , style: "display: #{ship_method_is_selected ? 'block' : 'none'}" }
           #distributor_address.panel
             - if shipping_method.description.present?
-              %span #{shipping_method.description}
+              %span #{simple_format(shipping_method.description)}
               %br/
               %br/
             - if @order.order_cycle.pickup_time_for(@order.distributor)
