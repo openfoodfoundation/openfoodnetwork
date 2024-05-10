@@ -630,6 +630,10 @@ pt_BR:
         close: Voltar
       variant_row:
         none_tax_category: Nenhum
+        category_field_name: "Categoria"
+        tax_category_field_name: "Categoria de taxa"
+      product_row:
+        producer_field_name: "Produtor"
     product_import:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto

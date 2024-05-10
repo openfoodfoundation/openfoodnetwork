@@ -696,6 +696,10 @@ ko:
         close: 뒤로
       variant_row:
         none_tax_category: None
+        category_field_name: "목록"
+        tax_category_field_name: "세금 목록"
+      product_row:
+        producer_field_name: "제공자"
     product_import:
       title: 제품 가져오기
       file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.

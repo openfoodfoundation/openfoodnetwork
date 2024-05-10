@@ -228,7 +228,7 @@ en_CA:
   customer_instructions: "Customer instructions"
   additional_information: "Additional information"
   connect_app:
-    url: "https://n8n.opernfoodnetwork.org/webhook-test/regen-CAN/connect-enterprise"
+    url: "https://n8n.openfoodnetwork.org/webhook/foodjustice/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -835,6 +835,10 @@ en_CA:
         error: Unable to delete the variant
       variant_row:
         none_tax_category: None
+        category_field_name: "Category"
+        tax_category_field_name: "Tax Category"
+      product_row:
+        producer_field_name: "Producer"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1283,15 +1287,12 @@ en_CA:
               Add or update information on your Discover Regenerative listing here.
           link_label: "Manage listing"
           description_html: |
-              <p>
-              Eligible producers can showcase their regenerative credentials,
-              farming practices,  and more through a profile listing.
-              This simplifies how buyers can find regenerative products and connect
-              with producers of interest.
+              <b><p>
+              Eligible producers can showcase call to actions to Volunteer Local, Buy Local, or Donate Local.
+              This simplifies how producers can connect in the Waterloo region around food justice and sovereignty.
               </p>
               <p>
-              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-              target="_blank"><b>Learn more about Discover Regenerative </b>
+              <a href="https://about.openfoodnetwork.ca/project/open-flower-network/" target="_blank">Learn more about the Waterloo Food Commons Project
               <i class="icon-external-link"></i></a>
               </p>
       actions:

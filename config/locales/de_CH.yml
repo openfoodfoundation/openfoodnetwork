@@ -701,6 +701,10 @@ de_CH:
         close: Zurück
       variant_row:
         none_tax_category: Keine
+        category_field_name: "Kategorie"
+        tax_category_field_name: "Steuerkategorie"
+      product_row:
+        producer_field_name: "Produzent"
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.

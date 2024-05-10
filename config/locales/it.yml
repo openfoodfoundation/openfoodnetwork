@@ -731,6 +731,10 @@ it:
         close: Indietro
       variant_row:
         none_tax_category: Nessuno
+        category_field_name: "Categoria"
+        tax_category_field_name: "Categoria d'imposta"
+      product_row:
+        producer_field_name: "Produttore"
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile

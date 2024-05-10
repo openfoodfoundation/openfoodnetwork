@@ -596,6 +596,10 @@ el:
         close: Πίσω
       variant_row:
         none_tax_category: Κανένας
+        category_field_name: "Κατηγορία"
+        tax_category_field_name: "Φορολογική Κατηγορία"
+      product_row:
+        producer_field_name: "Παραγωγός"
     product_import:
       title: Είσαγωγή Προϊόντος
       file_not_found: Το αρχείο δεν βρέθηκε ή δεν μπόρεσε να φορτωθεί

@@ -787,6 +787,9 @@ mr:
         save: बदल जतन करा
       variant_row:
         none_tax_category: कोणतेही नाही
+        category_field_name: "श्रेणी"
+      product_row:
+        producer_field_name: "उत्पादक"
     product_import:
       title: उत्पादन आयात
       file_not_found: फाइल सापडली नाही किंवा उघडता आली नाही

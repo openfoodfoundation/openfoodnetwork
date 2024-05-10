@@ -527,6 +527,10 @@ pl:
         close: Wstecz
       variant_row:
         none_tax_category: Nic
+        category_field_name: "Kategoria"
+        tax_category_field_name: "Kategoria podatku"
+      product_row:
+        producer_field_name: "Producent"
     product_import:
       title: Import produktów
       file_not_found: Nie znaleziono pliku lub nie można go otworzyć

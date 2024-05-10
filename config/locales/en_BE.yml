@@ -521,6 +521,10 @@ en_BE:
         close: Back
       variant_row:
         none_tax_category: None
+        category_field_name: "Category"
+        tax_category_field_name: "Tax Category"
+      product_row:
+        producer_field_name: "Producer"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

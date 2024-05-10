@@ -833,6 +833,10 @@ ru:
         error: Невозможно удалить вариант
       variant_row:
         none_tax_category: Нет
+        category_field_name: "Категория"
+        tax_category_field_name: "Налоговая Категория"
+      product_row:
+        producer_field_name: "Производитель"
     product_import:
       title: Импорт Товара
       file_not_found: Файл не найден или не может быть открыт

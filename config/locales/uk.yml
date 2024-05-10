@@ -699,6 +699,10 @@ uk:
         close: Назад
       variant_row:
         none_tax_category: Жодного
+        category_field_name: "Категорія"
+        tax_category_field_name: "Категорія податку"
+      product_row:
+        producer_field_name: "Виробник"
     product_import:
       title: Імпорт продукту
       file_not_found: Файл не знайдено або не вдалося відкрити

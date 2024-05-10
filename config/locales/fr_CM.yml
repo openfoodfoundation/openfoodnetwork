@@ -632,6 +632,10 @@ fr_CM:
         close: Retour
       variant_row:
         none_tax_category: Aucun
+        category_field_name: "Catégorie"
+        tax_category_field_name: "TVA applicable"
+      product_row:
+        producer_field_name: "Producteur"
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir

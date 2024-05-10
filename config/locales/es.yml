@@ -716,6 +716,10 @@ es:
         close: Atrás
       variant_row:
         none_tax_category: Ninguno
+        category_field_name: "Categoría"
+        tax_category_field_name: "Categoría de impuestos"
+      product_row:
+        producer_field_name: "Productora"
     product_import:
       title: Importación de productos
       file_not_found: Archivo no encontrado o no se pudo abrir

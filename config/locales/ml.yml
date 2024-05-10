@@ -798,6 +798,10 @@ ml:
         close: തിരികെ
       variant_row:
         none_tax_category: ഒന്നുമില്ല
+        category_field_name: "വിഭാഗം"
+        tax_category_field_name: "നികുതി വിഭാഗം"
+      product_row:
+        producer_field_name: "പ്രൊഡ്യൂസർ"
     product_import:
       title: ഉൽപ്പന്ന ഇറക്കുമതി
       file_not_found: ഫയൽ കണ്ടെത്തിയില്ല അല്ലെങ്കിൽ തുറക്കാൻ കഴിഞ്ഞില്ല

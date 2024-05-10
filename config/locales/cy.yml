@@ -816,6 +816,10 @@ cy:
         error: Yn methu dileu’r amrywiolyn
       variant_row:
         none_tax_category: Dim
+        category_field_name: "Categori"
+        tax_category_field_name: "Categori Treth"
+      product_row:
+        producer_field_name: "Cynhyrchydd"
     product_import:
       title: Mewnforio Cynnyrch
       file_not_found: Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor

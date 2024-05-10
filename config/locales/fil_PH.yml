@@ -537,6 +537,10 @@ fil_PH:
         close: bumalik
       variant_row:
         none_tax_category: wala
+        category_field_name: "kategorya"
+        tax_category_field_name: "kategorya ng tax"
+      product_row:
+        producer_field_name: "Producer"
     product_import:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '

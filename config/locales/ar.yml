@@ -710,6 +710,10 @@ ar:
         close: عودة
       variant_row:
         none_tax_category: لا شيء
+        category_field_name: "الفئة"
+        tax_category_field_name: "الفئة الضريبية"
+      product_row:
+        producer_field_name: "المنتج"
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه

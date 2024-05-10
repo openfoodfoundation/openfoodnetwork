@@ -727,6 +727,10 @@ hu:
         error: A változatot nem lehet törölni
       variant_row:
         none_tax_category: Egyik sem
+        category_field_name: "Kategória"
+        tax_category_field_name: "Adókategória"
+      product_row:
+        producer_field_name: "Termelő"
     product_import:
       title: Termék importálása
       file_not_found: A fájl nem található vagy nem nyitható meg

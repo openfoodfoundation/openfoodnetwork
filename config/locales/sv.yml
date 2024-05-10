@@ -329,6 +329,10 @@ sv:
         close: Backa
       variant_row:
         none_tax_category: Ingen
+        category_field_name: "Kategori"
+        tax_category_field_name: "Skattekategori"
+      product_row:
+        producer_field_name: "Producent"
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet

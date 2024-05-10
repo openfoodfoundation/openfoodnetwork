@@ -614,6 +614,10 @@ tr:
         close: Geri
       variant_row:
         none_tax_category: SATIŞ YAPMIYOR
+        category_field_name: "Kategori"
+        tax_category_field_name: "Vergi Kategorisi"
+      product_row:
+        producer_field_name: "ÜRETİCİ"
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı

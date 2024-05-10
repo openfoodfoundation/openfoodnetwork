@@ -837,6 +837,10 @@ fr_CA:
         error: La variante n'a pas pu être supprimée
       variant_row:
         none_tax_category: Aucun
+        category_field_name: "Catégorie"
+        tax_category_field_name: "Type de taxe"
+      product_row:
+        producer_field_name: "Producteur"
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir

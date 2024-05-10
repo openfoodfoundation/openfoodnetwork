@@ -793,6 +793,10 @@ hi:
         close: वापस जाएं
       variant_row:
         none_tax_category: कोई नहीं
+        category_field_name: "श्रेणी"
+        tax_category_field_name: "टैक्स श्रेणी"
+      product_row:
+        producer_field_name: "उत्पादक"
     product_import:
       title: उत्पाद इम्पोर्ट करें
       file_not_found: फ़ाइल नहीं मिली या खोली नहीं जा सकी
