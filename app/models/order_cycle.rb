@@ -253,7 +253,7 @@ class OrderCycle < ApplicationRecord
   end
 
   def pickup_time_for(distributor)
-    exchange_for_distributor(distributor)&.pickup_time || distributor.next_collection_at
+    exchange_for_distributor(distributor)&.pickup_time
   end
 
   def pickup_instructions_for(distributor)

@@ -13,8 +13,6 @@
       %strong
         - if @order.order_cycle
           = pickup_time @order.order_cycle
-        - else
-          = @order.distributor.next_collection_at
 
   - content_for :ordercycle_sidebar do
     .show-for-large-up.large-4.columns
