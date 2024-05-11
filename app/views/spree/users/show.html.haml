@@ -20,6 +20,7 @@
     = render 'cards'
     = render 'transactions'
     = render 'settings'
+    = render 'request_shop'
     = render 'developer_settings' if @user.show_api_key_view
 
   .row.tabset-ctrl#account-tabs{ style: 'margin-bottom: 100px', navigate: 'true', selected: 'orders', prefix: 'account' }
@@ -32,6 +33,8 @@
       %a=t('.tabs.transactions')
     .small.12.medium-2.columns.tab{ name: "settings" }
       %a=t('.tabs.settings')
+    .small.12.medium-2.columns.tab{ name: "request_shop" }
+      %a=t('.tabs.request_a_shop')
     // the api_keys partial is the only content for now, so we have to hide the whole tab for now
     // if there is new content, we will need to handle this inside the developer_settings partial
     - if @user.show_api_key_view

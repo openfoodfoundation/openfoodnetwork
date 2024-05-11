@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_03_111821) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_09_074343) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -927,9 +927,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_03_111821) do
     t.string "uid"
     t.string "phone", limit: 255
     t.string "name"
+    t.string "request_token"
     t.index ["confirmation_token"], name: "index_spree_users_on_confirmation_token", unique: true
     t.index ["email"], name: "email_idx_unique", unique: true
     t.index ["persistence_token"], name: "index_users_on_persistence_token"
+    t.index ["request_token"], name: "index_spree_users_on_request_token", unique: true
   end
 
   create_table "spree_variants", id: :serial, force: :cascade do |t|

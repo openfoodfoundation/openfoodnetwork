@@ -1,0 +1,40 @@
+%script{ type: "text/ng-template", id: "account/request_shop.html" }
+  %select{name: "enterprises", id: "enterprises", style: "width: 50%;", onchange: "showRequestButton()"}
+    %option{value: "", selected: true, disabled: true}= t(".select_an_enterprise")
+    - @enterprises.each do |enterprise|
+      %option{value: enterprise.id}= enterprise.name
+  %button#request-button{type: "button", style: "display:none; margin-left:10px; padding: 10px 20px;", onclick: "submitRequestForm()"}= t(".request")
+
+  :javascript
+    function showRequestButton() {
+      var select = document.getElementById("enterprises");
+      var button = document.getElementById("request-button");
+      if (select.value) {
+        button.style.display = "inline-block";
+        button.dataset.enterpriseId = select.value;
+      } else {
+        button.style.display = "none";
+      }
+    }
+
+    function submitRequestForm() {
+      var button = document.getElementById("request-button");
+      var enterpriseId = button.dataset.enterpriseId;
+      var userId = #{@user.id};
+      var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+      fetch(`/users/${userId}/request_enterprise`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken
+        },
+        body: JSON.stringify({ enterprise_id: enterpriseId })
+      })
+      .then(data => {
+        // handle successful response
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }

@@ -7,6 +7,25 @@
   %p.alert-box
     = t('spree.users.show.unconfirmed_email', unconfirmed_email: @unconfirmed_email)
 
+%div
+  %p
+    = f.label :name, t(:name)
+    %br
+    = f.text_field :name, class: 'title'
+
+  %p
+    = f.label :phone, Spree.t(:phone)
+    %br
+    = f.text_field :phone, class: 'title', placeholder: t("registration.steps.contact.phone_field_placeholder")
+
+%div
+  %p
+    = f.label :enterprises, "Shops"
+    %br
+    %select{name: "enterprises"}
+      - @user.enterprises.each do |enterprise|
+        %option{value: enterprise.id}= enterprise.name
+
 %div{"id" => "password-credentials"}
   %p
     = f.label :password, Spree.t(:password)

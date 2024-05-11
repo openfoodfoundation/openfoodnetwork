@@ -18,6 +18,9 @@ module Spree
     belongs_to :ship_address, class_name: 'Spree::Address'
     belongs_to :bill_address, class_name: 'Spree::Address'
 
+    has_secure_token :request_token
+    before_save :ensure_request_token
+
     has_and_belongs_to_many :spree_roles,
                             join_table: 'spree_roles_users',
                             class_name: "Spree::Role"
@@ -171,6 +174,11 @@ module Spree
     end
 
     private
+
+
+    def ensure_request_token
+      self.request_token ||= SecureRandom.urlsafe_base64
+    end
 
     def check_completed_orders
       raise DestroyWithOrdersError if orders.complete.present?
