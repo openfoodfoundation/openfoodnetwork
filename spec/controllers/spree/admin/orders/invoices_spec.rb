@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::OrdersController, type: :controller do
+RSpec.describe Spree::Admin::OrdersController, type: :controller do
   describe "#invoice" do
     let!(:user) { create(:user) }
     let!(:enterprise_user) { create(:user) }
@@ -106,7 +106,7 @@ describe Spree::Admin::OrdersController, type: :controller do
   end
 end
 
-describe Spree::Admin::InvoicesController, type: :controller do
+RSpec.describe Spree::Admin::InvoicesController, type: :controller do
   describe "#index" do
     let(:user) { create(:user) }
     let(:enterprise_user) { create(:user, enterprises: [create(:enterprise)]) }

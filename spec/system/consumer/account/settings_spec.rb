@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Account Settings" do
+RSpec.describe "Account Settings" do
   include AuthenticationHelper
 
   describe "as a logged in user" do

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Subscriptions
-    describe PaymentSetup do
+    RSpec.describe PaymentSetup do
       let(:order) { create(:order) }
       let(:payment_setup) { OrderManagement::Subscriptions::PaymentSetup.new(order) }
 

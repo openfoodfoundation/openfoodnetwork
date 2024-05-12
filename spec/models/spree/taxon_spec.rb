@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Taxon do
+  RSpec.describe Taxon do
     let(:taxon) { Spree::Taxon.new(name: "Ruby on Rails") }
 
     let(:e) { create(:supplier_enterprise) }

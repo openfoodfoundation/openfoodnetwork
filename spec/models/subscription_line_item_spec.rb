@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe SubscriptionLineItem, model: true do
+RSpec.describe SubscriptionLineItem, model: true do
   describe "validations" do
     it "requires a subscription" do
       expect(subject).to validate_presence_of :subscription

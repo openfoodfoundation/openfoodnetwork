@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::MailMethodsController do
+RSpec.describe Spree::Admin::MailMethodsController do
   include AuthenticationHelper
 
   before { controller_login_as_admin }

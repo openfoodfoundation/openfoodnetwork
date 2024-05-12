@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe CheckoutController, type: :controller do
+RSpec.describe CheckoutController, type: :controller do
   let(:user) { order.user }
   let(:address) { create(:address) }
   let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }

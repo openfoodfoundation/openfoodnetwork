@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe AdjustmentMetadata do
+RSpec.describe AdjustmentMetadata do
   it { is_expected.to belong_to(:adjustment).required }
   it { is_expected.to belong_to(:enterprise).required }
 

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Mail Methods" do
+RSpec.describe "Mail Methods" do
   include AuthenticationHelper
 
   before do

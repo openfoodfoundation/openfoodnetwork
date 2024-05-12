@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe CartService do
+RSpec.describe CartService do
   let(:order) { double(:order, id: 123) }
   let(:currency) { "EUR" }
   let(:params) { {} }

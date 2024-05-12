@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Api
-  describe V0::EnterpriseFeesController, type: :controller do
+  RSpec.describe V0::EnterpriseFeesController, type: :controller do
     include AuthenticationHelper
 
     let!(:unreferenced_fee) { create(:enterprise_fee) }

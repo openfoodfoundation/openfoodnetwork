@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::V0::TaxonsController do
+RSpec.describe Api::V0::TaxonsController do
   render_views
 
   let(:taxonomy) { create(:taxonomy) }

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Api
-  describe V0::StatesController do
+  RSpec.describe V0::StatesController do
     render_views
 
     let!(:state) { create(:state, name: "Victoria") }

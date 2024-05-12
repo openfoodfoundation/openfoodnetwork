@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Payment do
+RSpec.describe Spree::Payment do
   context 'original specs from Spree' do
     before { Stripe.api_key = "sk_test_12345" }
     let(:order) { create(:order) }

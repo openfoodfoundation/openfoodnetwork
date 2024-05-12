@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Orders::FindPaymentService do
+RSpec.describe Orders::FindPaymentService do
   let(:order) { create(:order_with_distributor) }
   let(:finder) { Orders::FindPaymentService.new(order) }
 

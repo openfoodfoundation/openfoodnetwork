@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::V0::ShopsController, type: :controller do
+RSpec.describe Api::V0::ShopsController, type: :controller do
   include AuthenticationHelper
   render_views
 

@@ -5,7 +5,7 @@ require 'spec_helper'
 # Its pretty difficult to test this module in isolation b/c it needs to work in conjunction
 #   with an actual class that extends ActiveRecord::Base and has a corresponding table in the DB.
 #   So we'll just test it using Order and ShippingMethod. These classes are including the module.
-describe CalculatedAdjustments do
+RSpec.describe CalculatedAdjustments do
   let(:calculator) { build(:calculator) }
   let(:tax_rate) { Spree::TaxRate.new(calculator:) }
 

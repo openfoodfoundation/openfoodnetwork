@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe FeatureToggleConstraint do
+RSpec.describe FeatureToggleConstraint do
   subject { described_class.new("baking") }
   let(:request) { double(env:) }
   let(:env) { {} }

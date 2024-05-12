@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::OrdersHelper, type: :helper do
+RSpec.describe Spree::OrdersHelper, type: :helper do
   describe "#changeable_orders" do
     let(:complete_orders) { double(:complete_orders, where: "some_orders") }
 

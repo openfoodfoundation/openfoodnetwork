@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "General Settings" do
+RSpec.describe "General Settings" do
   include AuthenticationHelper
 
   before do

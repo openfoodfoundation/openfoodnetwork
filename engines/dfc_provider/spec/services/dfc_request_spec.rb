@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe DfcRequest do
+RSpec.describe DfcRequest do
   subject(:api) { DfcRequest.new(user) }
 
   let(:user) { build(:oidc_user) }

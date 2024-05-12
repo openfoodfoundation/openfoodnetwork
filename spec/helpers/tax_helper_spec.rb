@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe TaxHelper, type: :helper do
+RSpec.describe TaxHelper, type: :helper do
   let(:line_item) { create(:line_item) }
   let(:line_item2) { create(:line_item) }
   let(:line_item3) { create(:line_item) }

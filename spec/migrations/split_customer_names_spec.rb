@@ -3,7 +3,7 @@
 require 'spec_helper'
 require_relative '../../db/migrate/20220105085730_migrate_customers_data'
 
-describe MigrateCustomersData do
+RSpec.describe MigrateCustomersData do
   let!(:customer1) {
     create(:customer, name: "Timmy Test", first_name: "", last_name: "", bill_address: nil)
   }

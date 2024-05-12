@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe InvoiceRenderer do
+RSpec.describe InvoiceRenderer do
   include Spree::PaymentMethodsHelper
 
   let(:service) { described_class.new }

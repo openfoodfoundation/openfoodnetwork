@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe ProductStock do
+RSpec.describe ProductStock do
   let(:product) { create(:simple_product) }
 
   context "when product has one variant" do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Taxonomy do
+RSpec.describe Spree::Taxonomy do
   context "#destroy" do
     before do
       @taxonomy = create(:taxonomy)

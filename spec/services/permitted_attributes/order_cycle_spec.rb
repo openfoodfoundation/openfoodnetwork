@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module PermittedAttributes
-  describe OrderCycle do
+  RSpec.describe OrderCycle do
     let(:oc_permitted_attributes) { PermittedAttributes::OrderCycle.new(params) }
 
     describe "with basic attributes" do

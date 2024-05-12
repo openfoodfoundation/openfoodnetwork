@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe DfcLoader do
+RSpec.describe DfcLoader do
   it "prepares the DFC Connector to provide DFC object classes for export" do
     tomato = DataFoodConsortium::Connector::SuppliedProduct.new(
       "https://openfoodnetwork.org/tomato",

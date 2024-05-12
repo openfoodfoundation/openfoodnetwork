@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "checking out an order that initially fails", type: :request do
+RSpec.describe "checking out an order that initially fails", type: :request do
   include ShopWorkflow
 
   let!(:shop) { create(:enterprise) }

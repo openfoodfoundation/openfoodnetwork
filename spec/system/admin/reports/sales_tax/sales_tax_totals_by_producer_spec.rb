@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Sales Tax Totals By Producer" do
+RSpec.describe "Sales Tax Totals By Producer" do
   #  Scenario 1: added tax
   #  1 producer
   #  1 distributor

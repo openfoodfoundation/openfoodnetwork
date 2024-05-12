@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::TermsOfServiceFilesController, type: :controller do
+RSpec.describe Admin::TermsOfServiceFilesController, type: :controller do
   context "a non-admin user" do
     let(:user) { create(:user) }
 

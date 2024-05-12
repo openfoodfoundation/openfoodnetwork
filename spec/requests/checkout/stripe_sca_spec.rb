@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "checking out an order with a Stripe SCA payment method", type: :request do
+RSpec.describe "checking out an order with a Stripe SCA payment method", type: :request do
   include ShopWorkflow
   include AuthenticationHelper
   include OpenFoodNetwork::ApiHelper

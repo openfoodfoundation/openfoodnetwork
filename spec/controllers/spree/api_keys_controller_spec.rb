@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::ApiKeysController, type: :controller, performance: true do
+RSpec.describe Spree::ApiKeysController, type: :controller, performance: true do
   routes { Spree::Core::Engine.routes }
 
   include AuthenticationHelper

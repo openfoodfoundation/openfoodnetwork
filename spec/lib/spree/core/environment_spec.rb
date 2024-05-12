@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Core::Environment do
+RSpec.describe Spree::Core::Environment do
   # Our version doesn't add any features we could test.
   # So we just check that our file is loaded correctly.
   let(:our_file) { Rails.root.join("lib/spree/core/environment.rb").to_s }

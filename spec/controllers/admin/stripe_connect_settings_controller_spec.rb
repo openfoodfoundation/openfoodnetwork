@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::StripeConnectSettingsController, type: :controller do
+RSpec.describe Admin::StripeConnectSettingsController, type: :controller do
   let(:user) { create(:user) }
   let(:admin) { create(:admin_user) }
 

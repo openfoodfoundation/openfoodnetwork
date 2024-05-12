@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::InventoryItemsController, type: :controller do
+RSpec.describe Admin::InventoryItemsController, type: :controller do
   describe "create" do
     context "json" do
       let(:format) { :json }

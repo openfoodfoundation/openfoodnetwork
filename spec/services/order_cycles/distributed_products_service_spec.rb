@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycles::DistributedProductsService do
+RSpec.describe OrderCycles::DistributedProductsService do
   describe "#products_relation" do
     let(:distributor) { create(:distributor_enterprise) }
     let(:product) { create(:product) }

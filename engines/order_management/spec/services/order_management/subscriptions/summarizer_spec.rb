@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Subscriptions
-    describe Summarizer do
+    RSpec.describe Summarizer do
       let(:order) { create(:order) }
       let(:summarizer) { OrderManagement::Subscriptions::Summarizer.new }
 

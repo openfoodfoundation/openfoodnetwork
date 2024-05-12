@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe SubscriptionConfirmJob do
+RSpec.describe SubscriptionConfirmJob do
   let(:job) { SubscriptionConfirmJob.new }
 
   describe "finding proxy_orders that are ready to be confirmed" do

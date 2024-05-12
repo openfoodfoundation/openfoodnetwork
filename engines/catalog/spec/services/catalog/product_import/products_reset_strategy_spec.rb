@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Catalog
   module ProductImport
-    describe ProductsResetStrategy do
+    RSpec.describe ProductsResetStrategy do
       let(:products_reset) { described_class.new(excluded_items_ids) }
 
       describe '#reset' do

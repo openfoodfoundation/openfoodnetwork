@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'open_food_network/address_finder'
 
 module OpenFoodNetwork
-  describe AddressFinder do
+  RSpec.describe AddressFinder do
     let(:email) { 'test@example.com' }
 
     describe "initialisation" do

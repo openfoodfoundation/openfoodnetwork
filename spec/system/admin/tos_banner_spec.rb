@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Terms of Service banner' do
+RSpec.describe 'Terms of Service banner' do
   include AuthenticationHelper
   include FileHelper
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Zone do
+RSpec.describe Spree::Zone do
   context "#match" do
     let(:country_zone) { create(:zone, name: 'CountryZone') }
     let(:country) do

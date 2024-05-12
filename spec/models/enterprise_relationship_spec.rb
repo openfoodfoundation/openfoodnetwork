@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe EnterpriseRelationship do
+RSpec.describe EnterpriseRelationship do
   describe "scopes" do
     let(:e1)  { create(:enterprise, name: 'A') }
     let(:e2)  { create(:enterprise, name: 'B') }

@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'stripe/oauth'
 
-describe StripeAccount do
+RSpec.describe StripeAccount do
   describe "deauthorize_and_destroy", :vcr, :stripe_version do
     let!(:enterprise) { create(:enterprise) }
     let!(:enterprise2) { create(:enterprise) }

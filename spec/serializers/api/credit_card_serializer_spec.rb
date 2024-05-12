@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::CreditCardSerializer do
+RSpec.describe Api::CreditCardSerializer do
   let(:card) { create(:credit_card) }
   let(:serializer) { Api::CreditCardSerializer.new card }
 

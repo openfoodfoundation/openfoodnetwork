@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycles::FormService do
+RSpec.describe OrderCycles::FormService do
   describe "save" do
     describe "creating a new order cycle from params" do
       let(:shop) { create(:enterprise) }

@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'stripe/webhook_handler'
 
 module Stripe
-  describe WebhookHandler do
+  RSpec.describe WebhookHandler do
     let(:event) { double(:event, type: 'some.event') }
     let(:handler) { WebhookHandler.new(event) }
 

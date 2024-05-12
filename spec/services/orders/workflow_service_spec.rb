@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Orders::WorkflowService do
+RSpec.describe Orders::WorkflowService do
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:order) do
     create(:order_with_totals_and_distribution, distributor:,

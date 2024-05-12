@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Gateway::StripeSCA, :vcr, :stripe_version, type: :model do
+RSpec.describe Spree::Gateway::StripeSCA, :vcr, :stripe_version, type: :model do
   let(:order) { create(:order_ready_for_payment) }
 
   let(:year_valid) { Time.zone.now.year.next }

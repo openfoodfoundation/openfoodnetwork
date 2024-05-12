@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Invoice::DataPresenter do
+RSpec.describe Invoice::DataPresenter do
   context "#display_date" do
     let(:invoice) { double(:invoice, date: '2023-08-01') }
 

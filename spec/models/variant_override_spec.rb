@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe VariantOverride do
+RSpec.describe VariantOverride do
   let(:variant) { create(:variant) }
   let(:hub)     { create(:distributor_enterprise) }
 

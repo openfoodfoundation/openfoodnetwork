@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Subscriptions
-    describe Form do
+    RSpec.describe Form do
       describe "creating a new subscription" do
         let!(:shop) { create(:distributor_enterprise) }
         let!(:customer) { create(:customer, enterprise: shop) }

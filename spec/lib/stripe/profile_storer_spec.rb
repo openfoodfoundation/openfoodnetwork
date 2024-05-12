@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Stripe
-  describe ProfileStorer do
+  RSpec.describe ProfileStorer do
     include StripeStubs
 
     describe "create_customer_from_token", :vcr, :stripe_version do

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
     As an entreprise user
     I want to manage vouchers
 ' do

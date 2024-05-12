@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::TaxonsController do
+RSpec.describe Spree::Admin::TaxonsController do
   render_views
 
   let(:taxonomy) { create(:taxonomy) }

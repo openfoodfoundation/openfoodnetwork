@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "/payments/:id/authorize" do
+RSpec.describe "/payments/:id/authorize" do
   let!(:user) { create(:user) }
   let!(:order) { create(:order, user:) }
   let!(:payment) { create(:payment, order:) }

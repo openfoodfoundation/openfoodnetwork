@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Admin::OrdersHelper, type: :helper do
+RSpec.describe Admin::OrdersHelper, type: :helper do
   describe "#order_adjustments_for_display" do
     let(:order) { create(:order) }
     let(:service) { instance_double(VoucherAdjustmentsService, voucher_included_tax:) }

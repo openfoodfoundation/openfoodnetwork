@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Calculator do
+  RSpec.describe Calculator do
     let(:calculator) { Spree::Calculator.new }
     let!(:enterprise) { create(:enterprise) }
     let!(:order) { create(:order) }

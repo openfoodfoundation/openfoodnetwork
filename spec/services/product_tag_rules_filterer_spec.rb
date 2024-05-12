@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe ProductTagRulesFilterer do
+RSpec.describe ProductTagRulesFilterer do
   describe "filtering by tag rules" do
     let!(:distributor) { create(:distributor_enterprise) }
     let(:product) { create(:product, supplier: distributor) }

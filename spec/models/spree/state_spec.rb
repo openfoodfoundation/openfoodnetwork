@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::State do
+RSpec.describe Spree::State do
   before(:all) do
     Spree::State.destroy_all
   end
