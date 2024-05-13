@@ -308,6 +308,57 @@ RSpec.describe CheckoutController, type: :controller do
         end
       end
 
+      context "with no payment source" do
+        let(:checkout_params) do
+          {
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id:,
+                  source_attributes: {
+                    first_name: "Jane",
+                    last_name: "Doe",
+                    month: "",
+                    year: "",
+                    cc_type: "",
+                    last_digits: "",
+                    gateway_payment_profile_id: ""
+                  }
+                }
+              ]
+            },
+            commit: "Next - Order Summary"
+          }
+        end
+
+        context "with a cash/check payment method" do
+          let!(:payment_method_id) { payment_method.id }
+
+          it "updates and redirects to summary step" do
+            put(:update, params:)
+
+            expect(response.status).to be 302
+            expect(response).to redirect_to checkout_step_path(:summary)
+            expect(order.reload.state).to eq "confirmation"
+          end
+        end
+
+        context "with a StripeSCA payment method" do
+          let(:stripe_payment_method) {
+            create(:stripe_sca_payment_method, distributor_ids: [distributor.id],
+                                               environment: Rails.env)
+          }
+          let!(:payment_method_id) { stripe_payment_method.id }
+
+          it "updates and redirects to summary step" do
+            put(:update, params:)
+            expect(response.status).to eq 422
+            expect(flash[:error]).to match "Saving failed, please update the highlighted fields."
+            expect(order.reload.state).to eq "payment"
+          end
+        end
+      end
+
       context "with payment fees" do
         let(:payment_method_with_fee) do
           create(:payment_method, :flat_rate, amount: "1.23", distributors: [distributor])
