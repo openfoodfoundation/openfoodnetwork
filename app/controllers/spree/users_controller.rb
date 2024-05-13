@@ -13,6 +13,7 @@ module Spree
     prepend_before_action :authorize_actions, only: :new
 
     before_action :set_locale
+    before_action :load_enterprises, only: [:edit, :update, :show]
 
     def show
       @payments_requiring_action = PaymentsRequiringAction.new(spree_current_user).query
@@ -76,7 +77,36 @@ module Spree
       end
     end
 
+    def approve_enterprise_request
+      user = User.find_by(request_token: params[:token])
+      if user          
+        enterprise = Enterprise.find(params[:enterprise_id])
+        user.enterprises << enterprise unless user.enterprises.include?(enterprise)
+        user.update(request_token: nil)                
+        RequestMailer.approval_notification(user.email, "Enterprise #{enterprise.name} successfully assigned.")
+      else
+        RequestMailer.approval_notification(user.email, "Invalid or expired token.")
+      end
+    end
+
+    def request_enterprise
+      
+      user = User.find(params[:user_id])
+      enterprise = Enterprise.find(params[:enterprise_id])
+
+      if user.request_token.blank?
+        user.request_token = SecureRandom.urlsafe_base64
+        user.save!
+      end        
+      RequestMailer.request_email(user, enterprise, user.request_token).deliver_now
+      flash.now[:success] = "Request email sent."
+    end
+
     private
+
+    def load_enterprises       
+      @enterprises = Enterprise.where.not(id: @user.enterprise_ids).where(visible: "private")
+    end
 
     def orders_collection
       CompleteOrdersWithBalance.new(@user).query
