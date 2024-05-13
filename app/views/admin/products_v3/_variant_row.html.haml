@@ -69,5 +69,5 @@
           = t('admin.products_page.actions.delete')
     - else
       = f.hidden_field :_destroy
-      %a{ 'data-action': "nested-form#remove" }
+      %a{ 'data-action': "nested-form#remove bulk-form#remove", class: 'delete', 'data-temp_id': f.field_id(:remove_link) }
         = t('admin.products_page.actions.remove')
