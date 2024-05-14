@@ -14,7 +14,7 @@
     "@hotwired/turbo": "^8.0.4",
     "@rails/webpacker": "5.4.4",
     "@stimulus-components/rails-nested-form": "^5.0.0",
-    "cable_ready": "5.0.1",
+    "cable_ready": "5.0.4",
     "debounced": "^0.0.5",
     "flatpickr": "^4.6.9",
     "foundation-sites": "^5.5.3",
@@ -27,7 +27,7 @@
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.2.2",
     "stimulus-flatpickr": "^1.4.0",
-    "stimulus_reflex": "3.5.0-rc4",
+    "stimulus_reflex": "3.5.0",
     "tom-select": "^2.3.1",
     "trix": "^2.1.1",
     "webpack": "~4"
