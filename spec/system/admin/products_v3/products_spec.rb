@@ -735,6 +735,22 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
           expect(new_variant.price).to eq 10.25
           expect(new_variant.unit_value).to eq 200
         end
+
+        it "removes unsaved record" do
+          click_button "Save changes"
+
+          expect(page).to have_text("1 product could not be saved.")
+
+          within row_containing_name("N" * 256) do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+
+          # Now that invalid variant is removed, we can proceed to save
+          click_button "Save changes"
+          expect(page).not_to have_text("1 product could not be saved.")
+          expect(page).not_to have_css('form.disabled-section#filters')
+        end
       end
     end
 
