@@ -4,7 +4,14 @@ class ShopsController < BaseController
   layout 'darkswarm'
 
   def index
-    user_enterprises = spree_current_user.enterprises
+    return unless spree_current_user.present?
+    
+    user_enterprises = spree_current_user.enterprises.activated
+    .visible
+    .is_distributor
+    .includes(address: [:state, :country])
+    .includes(:properties)
+    .includes(supplied_products: :properties)
 
     @enterprises = Set.new
 
@@ -25,6 +32,5 @@ class ShopsController < BaseController
         end
       end
     end
-    @enterprises.merge(ShopsListService.new.open_shops)
   end
 end
