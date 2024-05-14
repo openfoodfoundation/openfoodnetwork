@@ -12,9 +12,9 @@ RSpec.describe HtmlSanitizer do
   end
 
   it "keeps supported tags" do
-    html = "Hello <b>alert</b>!"
+    html = "Hello <b>alert</b>! <br>How are you?"
     expect(subject.sanitize(html))
-      .to eq "Hello <b>alert</b>!"
+      .to eq "Hello <b>alert</b>! <br>How are you?"
   end
 
   it "keeps supported attributes" do
