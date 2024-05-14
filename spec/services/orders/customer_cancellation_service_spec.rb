@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Orders::CustomerCancellationService do
+RSpec.describe Orders::CustomerCancellationService do
   let(:mail_mock) { double(:mailer_mock, deliver_later: true) }
   before do
     allow(Spree::OrderMailer).to receive(:cancel_email_for_shop) { mail_mock }

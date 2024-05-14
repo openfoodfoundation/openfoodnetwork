@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe RaisingParameters do
+RSpec.describe RaisingParameters do
   describe "Parameters" do
     let(:params) do
       RaisingParameters::Parameters.new(

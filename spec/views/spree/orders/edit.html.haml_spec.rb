@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "spree/orders/edit.html.haml" do
+RSpec.describe "spree/orders/edit.html.haml" do
   helper InjectionHelper
   helper ShopHelper
   helper ApplicationHelper

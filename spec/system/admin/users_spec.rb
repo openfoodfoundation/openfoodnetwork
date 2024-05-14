@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Managing users" do
+RSpec.describe "Managing users" do
   include AuthenticationHelper
 
   context "as super-admin" do

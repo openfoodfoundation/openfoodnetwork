@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe DfcBuilder do
+RSpec.describe DfcBuilder do
   let(:variant) { build(:variant) }
 
   describe ".catalog_item" do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ExtraFields do
+RSpec.describe ExtraFields do
   let(:dummy_controller) { Api::V1::BaseController.new.extend ExtraFields }
 
   describe "#invalid_query_param" do

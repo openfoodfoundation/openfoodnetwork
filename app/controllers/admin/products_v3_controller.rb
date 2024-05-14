@@ -48,6 +48,7 @@ module Admin
       # prority is given to element dataset (if present) over url params
       @page = params[:page].presence || 1
       @per_page = params[:per_page].presence || 15
+      @q = params.permit(q: {})[:q] || { s: 'name asc' }
     end
 
     def producers
@@ -89,6 +90,8 @@ module Admin
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
       query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
+      query.merge!(@q) if @q
+
       query
     end
 

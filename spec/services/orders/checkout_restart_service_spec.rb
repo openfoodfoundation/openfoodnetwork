@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Orders::CheckoutRestartService do
+RSpec.describe Orders::CheckoutRestartService do
   let(:order) { create(:order_with_distributor) }
 
   describe "#call" do

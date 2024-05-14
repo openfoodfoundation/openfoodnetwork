@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe ShippingMethod do
+  RSpec.describe ShippingMethod do
     it "is valid when built from factory" do
       expect(
         build(

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Vouchers::PercentageRate do
+RSpec.describe Vouchers::PercentageRate do
   describe 'validations' do
     subject { build(:voucher_percentage_rate) }
 

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Cookies", caching: true do
+RSpec.describe "Cookies", caching: true do
   describe "banner" do
     # keeps banner toggle config unchanged
     around do |example|

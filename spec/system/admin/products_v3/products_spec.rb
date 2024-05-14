@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe 'As an enterprise user, I can manage my products', feature: :admin_style_v3 do
+RSpec.describe 'As an enterprise user, I can manage my products', feature: :admin_style_v3 do
   include WebHelper
   include AuthenticationHelper
   include FileHelper
@@ -28,18 +28,34 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
   describe "sorting" do
     let!(:product_b) { create(:simple_product, name: "Bananas") }
     let!(:product_a) { create(:simple_product, name: "Apples") }
+    let(:products_table) { "table.products" }
 
     before do
       visit admin_products_url
     end
 
-    it "Should sort products alphabetically by default" do
-      within "table.products" do
-        # Gather input values, because page.content doesn't include them.
-        input_content = page.find_all('input[type=text]').map(&:value).join
-
+    it "Should sort products alphabetically by default in ascending order" do
+      within products_table do
         # Products are in correct order.
-        expect(input_content).to match /Apples.*Bananas/
+        expect(all_input_values).to match /Apples.*Bananas/
+      end
+    end
+
+    context "when clicked on 'Name' column header" do
+      it "Should sort products alphabetically in descending/ascending order" do
+        within products_table do
+          name_header = page.find('th > a[data-column="name"]')
+
+          # Sort in descending order
+          name_header.click
+          expect(page).to have_content("Name ▼") # this indicates the re-sorted content has loaded
+          expect(all_input_values).to match /Bananas.*Apples/
+
+          # Sort in ascending order
+          name_header.click
+          expect(page).to have_content("Name ▲") # this indicates the re-sorted content has loaded
+          expect(all_input_values).to match /Apples.*Bananas/
+        end
       end
     end
   end
@@ -1177,5 +1193,9 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
   def random_tax_category
     Spree::TaxCategory
       .pluck(:name).sample
+  end
+
+  def all_input_values
+    page.find_all('input[type=text]').map(&:value).join
   end
 end

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe VariantsStockLevels do
+RSpec.describe VariantsStockLevels do
   let(:order) { create(:order) }
 
   let!(:line_item) do

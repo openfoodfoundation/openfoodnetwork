@@ -49,7 +49,8 @@
                   = form.submit t('.save'), class: "medium"
       %tr
         %th.align-left= # image
-        %th.align-left.with-input= t('admin.products_page.columns.name')
+        = render partial: 'spree/admin/shared/stimulus_sortable_header', 
+            locals: { column: :name, sorted: params.dig(:q, :s), default: 'name asc' }
         %th.align-left.with-input= t('admin.products_page.columns.sku')
         %th.align-left.with-input= t('admin.products_page.columns.unit_scale')
         %th.align-left.with-input= t('admin.products_page.columns.unit')

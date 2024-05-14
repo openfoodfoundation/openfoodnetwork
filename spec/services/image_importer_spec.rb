@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ImageImporter do
+RSpec.describe ImageImporter do
   let(:url) { Rails.root.join("spec/fixtures/files/logo.png").to_s }
   let(:product) { create(:product) }
 

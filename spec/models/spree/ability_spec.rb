@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'cancan/matchers'
 require 'support/ability_helpers'
 
-describe Spree::Ability do
+RSpec.describe Spree::Ability do
   let(:user) { create(:user) }
   let(:subject) { Spree::Ability.new(user) }
   let(:token) { nil }

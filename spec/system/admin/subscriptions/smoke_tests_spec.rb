@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Subscriptions' do
+RSpec.describe 'Subscriptions' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper

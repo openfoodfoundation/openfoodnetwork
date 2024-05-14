@@ -7,7 +7,7 @@ module Spree
     preference :password, :string, default: "password"
   end
 
-  describe Admin::PaymentMethodsController, type: :controller do
+  RSpec.describe Admin::PaymentMethodsController, type: :controller do
     let(:user) {
       create(:user, enterprises: [create(:distributor_enterprise)])
     }

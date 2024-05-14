@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Preference do
+RSpec.describe Spree::Preference do
   it "should require a key" do
     @preference = Spree::Preference.new
     @preference.key = :test

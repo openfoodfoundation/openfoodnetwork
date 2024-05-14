@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe AddressTransformation do
+RSpec.describe AddressTransformation do
   include AddressTransformation
 
   describe "#transform_address!" do

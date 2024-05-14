@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe IntegerArrayValidator do
+RSpec.describe IntegerArrayValidator do
   describe "internationalization" do
     it "has translation for NOT_ARRAY_ERROR" do
       expect(described_class.not_array_error).not_to be_blank

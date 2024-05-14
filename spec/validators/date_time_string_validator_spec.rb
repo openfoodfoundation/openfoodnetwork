@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe DateTimeStringValidator do
+RSpec.describe DateTimeStringValidator do
   describe "internationalization" do
     it "has translation for NOT_STRING_ERROR" do
       expect(described_class.not_string_error).not_to be_blank

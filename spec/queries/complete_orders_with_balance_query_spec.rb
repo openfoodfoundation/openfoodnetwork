@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe CompleteOrdersWithBalanceQuery do
+RSpec.describe CompleteOrdersWithBalanceQuery do
   subject(:result) { described_class.new(user).call }
 
   describe '#call' do

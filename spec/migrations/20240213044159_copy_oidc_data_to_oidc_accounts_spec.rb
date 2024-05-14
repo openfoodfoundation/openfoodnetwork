@@ -3,7 +3,7 @@
 require 'spec_helper'
 require_relative '../../db/migrate/20240213044159_copy_oidc_data_to_oidc_accounts'
 
-describe CopyOidcDataToOidcAccounts do
+RSpec.describe CopyOidcDataToOidcAccounts do
   describe "up" do
     let!(:user) { create(:user) }
     let!(:oidc_user) {

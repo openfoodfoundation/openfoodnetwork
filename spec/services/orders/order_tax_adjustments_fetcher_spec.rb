@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Orders::FetchTaxAdjustmentsService do
+RSpec.describe Orders::FetchTaxAdjustmentsService do
   describe "#totals" do
     let(:zone) { create(:zone_with_member) }
     let(:coordinator) { create(:distributor_enterprise, charges_sales_tax: true) }

@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "User password confirm/reset page" do
+RSpec.describe "User password confirm/reset page" do
   include UIComponentHelper
 
   let(:email) { "test@example.org" }

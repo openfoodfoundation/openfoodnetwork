@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe GroupsController, type: :controller do
+RSpec.describe GroupsController, type: :controller do
   render_views
 
   let!(:enterprise) { create(:distributor_enterprise) }

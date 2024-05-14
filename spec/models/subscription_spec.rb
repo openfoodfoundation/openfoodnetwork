@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Subscription, type: :model do
+RSpec.describe Subscription, type: :model do
   describe "associations" do
     it { expect(subject).to belong_to(:shop).optional }
     it { expect(subject).to belong_to(:customer).optional }

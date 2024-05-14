@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Address do
+RSpec.describe Spree::Address do
   let(:address) { build(:address) }
   let(:enterprise_address) { build(:address, enterprise: build(:enterprise)) }
 

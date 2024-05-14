@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Api
-  describe V0::OrderCyclesController, type: :controller do
+  RSpec.describe V0::OrderCyclesController, type: :controller do
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
     let!(:exchange) { order_cycle.exchanges.to_enterprises(distributor).outgoing.first }

@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe SocialMediaBuilder do
+RSpec.describe SocialMediaBuilder do
   let(:enterprise) do
     create(
       :enterprise,

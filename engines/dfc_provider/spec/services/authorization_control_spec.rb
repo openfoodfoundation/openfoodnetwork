@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe AuthorizationControl do
+RSpec.describe AuthorizationControl do
   include AuthorizationHelper
 
   let(:user) { create(:oidc_user) }

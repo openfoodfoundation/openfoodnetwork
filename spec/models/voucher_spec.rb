@@ -7,7 +7,7 @@ module Vouchers
   class TestVoucher < Voucher; end
 end
 
-describe Voucher do
+RSpec.describe Voucher do
   let(:enterprise) { build(:enterprise) }
 
   describe 'associations' do

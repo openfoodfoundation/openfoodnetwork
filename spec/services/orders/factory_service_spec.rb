@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Orders::FactoryService do
+RSpec.describe Orders::FactoryService do
   let(:variant1) { create(:variant, price: 5.0) }
   let(:variant2) { create(:variant, price: 7.0) }
   let(:user) { create(:user) }

@@ -3,7 +3,7 @@
 require 'system_helper'
 require_relative '../../../engines/dfc_provider/spec/support/authorization_helper'
 
-describe "DFC Product Import" do
+RSpec.describe "DFC Product Import" do
   include AuthorizationHelper
 
   let(:user) { create(:oidc_user, owned_enterprises: [enterprise]) }

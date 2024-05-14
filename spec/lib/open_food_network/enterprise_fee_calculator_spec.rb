@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'open_food_network/enterprise_fee_calculator'
 
 module OpenFoodNetwork
-  describe EnterpriseFeeCalculator do
+  RSpec.describe EnterpriseFeeCalculator do
     describe "integration" do
       let(:supplier1)    { create(:supplier_enterprise) }
       let(:supplier2)    { create(:supplier_enterprise) }

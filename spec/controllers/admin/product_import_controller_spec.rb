@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::ProductImportController, type: :controller do
+RSpec.describe Admin::ProductImportController, type: :controller do
   describe 'validate_file_path' do
     context 'file extension' do
       it 'should authorize csv extension' do

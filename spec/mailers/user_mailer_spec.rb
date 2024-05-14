@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::UserMailer do
+RSpec.describe Spree::UserMailer do
   let(:user) { build(:user) }
 
   describe '#signup_confirmation' do

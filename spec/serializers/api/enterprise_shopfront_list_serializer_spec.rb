@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::EnterpriseShopfrontListSerializer do
+RSpec.describe Api::EnterpriseShopfrontListSerializer do
   let(:enterprise) { create(:distributor_enterprise) }
   let(:serializer) {
     Api::EnterpriseShopfrontListSerializer.new enterprise

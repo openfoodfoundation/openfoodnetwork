@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "
+RSpec.describe "
   As a site administrator
   I want to configure the site content
 " do

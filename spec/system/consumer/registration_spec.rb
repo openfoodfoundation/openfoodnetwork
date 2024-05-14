@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Registration" do
+RSpec.describe "Registration" do
   include AuthenticationHelper
   include WebHelper
 

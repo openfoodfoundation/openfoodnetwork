@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
+RSpec.describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
   subject(:report) { Reporting::Reports::SalesTax::SalesTaxTotalsByOrder.new(user, {}) }
 
   let(:user) { create(:user) }

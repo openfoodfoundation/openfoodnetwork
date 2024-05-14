@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe OfferBuilder do
+RSpec.describe OfferBuilder do
   let(:variant) { build(:variant) }
 
   describe ".offer" do

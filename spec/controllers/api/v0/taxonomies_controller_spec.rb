@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Api
-  describe V0::TaxonomiesController do
+  RSpec.describe V0::TaxonomiesController do
     render_views
 
     let(:taxonomy) { create(:taxonomy) }

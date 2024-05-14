@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe QuantitativeValueBuilder do
+RSpec.describe QuantitativeValueBuilder do
   subject(:builder) { described_class }
   let(:variant) { build(:variant, product:) }
   let(:product) { build(:product, name: "Apple") }

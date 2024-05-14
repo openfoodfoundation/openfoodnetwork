@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Preferences::Store do
+RSpec.describe Spree::Preferences::Store do
   before :each do
     @store = Spree::Preferences::StoreInstance.new
   end

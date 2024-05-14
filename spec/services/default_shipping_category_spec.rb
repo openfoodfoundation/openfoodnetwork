@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe DefaultShippingCategory do
+RSpec.describe DefaultShippingCategory do
   describe '.create!' do
     it "names the location 'Default'" do
       shipping_category = described_class.create!

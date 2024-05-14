@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'open_food_network/order_cycle_permissions'
 
-describe Api::Admin::ExchangeSerializer do
+RSpec.describe Api::Admin::ExchangeSerializer do
   let(:v1) { create(:variant) }
   let(:v2) { create(:variant) }
   let(:v3) { create(:variant) }

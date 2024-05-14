@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe HeartbeatJob do
+RSpec.describe HeartbeatJob do
   context "with time frozen" do
     let(:run_time) { Time.zone.local(2016, 4, 13, 13, 0, 0) }
 

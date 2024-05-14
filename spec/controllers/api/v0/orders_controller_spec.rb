@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Api
-  describe V0::OrdersController, type: :controller do
+  RSpec.describe V0::OrdersController, type: :controller do
     include AuthenticationHelper
     render_views
 

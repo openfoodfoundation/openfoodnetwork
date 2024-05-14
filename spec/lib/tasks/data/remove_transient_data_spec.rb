@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'tasks/data/remove_transient_data'
 
-describe RemoveTransientData do
+RSpec.describe RemoveTransientData do
   describe '#call' do
     let(:retention_period) { RemoveTransientData::RETENTION_PERIOD }
 

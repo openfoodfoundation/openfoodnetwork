@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'open_food_network/permissions'
 
 module OpenFoodNetwork
-  describe Permissions do
+  RSpec.describe Permissions do
     let(:user) { double(:user) }
     let(:permissions) { Permissions.new(user) }
     let(:permission) { 'one' }

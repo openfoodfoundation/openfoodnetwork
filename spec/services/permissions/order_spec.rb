@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Permissions
-  describe Order do
+  RSpec.describe Order do
     let(:user) { double(:user) }
     let(:permissions) { Permissions::Order.new(user) }
     let!(:basic_permissions) { OpenFoodNetwork::Permissions.new(user) }

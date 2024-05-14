@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module VariantUnits
-  describe OptionValueNamer do
+  RSpec.describe OptionValueNamer do
     describe "generating option value name" do
       let(:v) { Spree::Variant.new }
       let(:p) { Spree::Product.new }

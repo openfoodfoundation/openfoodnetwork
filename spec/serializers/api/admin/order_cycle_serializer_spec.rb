@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Api::Admin::OrderCycleSerializer do
+RSpec.describe Api::Admin::OrderCycleSerializer do
   let(:order_cycle) { create(:order_cycle) }
   let(:serializer) {
     Api::Admin::OrderCycleSerializer.new order_cycle,

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Admin::AdjustmentsController, type: :controller do
+  RSpec.describe Admin::AdjustmentsController, type: :controller do
     include AuthenticationHelper
 
     before { controller_login_as_admin }

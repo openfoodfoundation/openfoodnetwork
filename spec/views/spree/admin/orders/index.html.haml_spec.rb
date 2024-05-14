@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "spree/admin/orders/index.html.haml" do
+RSpec.describe "spree/admin/orders/index.html.haml" do
   helper Spree::Admin::NavigationHelper
   helper EnterprisesHelper
 

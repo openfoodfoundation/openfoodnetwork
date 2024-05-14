@@ -2,7 +2,7 @@
 
 require "swagger_helper"
 
-describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :api_v1 do
+RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :api_v1 do
   let!(:enterprise1) { create(:enterprise, name: "The Farm") }
   let!(:enterprise2) { create(:enterprise) }
   let!(:enterprise3) { create(:enterprise) }

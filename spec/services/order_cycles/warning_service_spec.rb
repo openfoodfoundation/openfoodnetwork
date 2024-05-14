@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycles::WarningService do
+RSpec.describe OrderCycles::WarningService do
   let(:user) { create(:user) }
   let(:subject) { OrderCycles::WarningService }
   let!(:distributor) { create(:enterprise, owner: user) }

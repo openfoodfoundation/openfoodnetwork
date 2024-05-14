@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe TagRule::FilterProducts, type: :model do
+RSpec.describe TagRule::FilterProducts, type: :model do
   let!(:tag_rule) { build_stubbed(:filter_products_tag_rule) }
 
   describe "determining whether tags match for a given variant" do

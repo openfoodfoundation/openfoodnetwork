@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ProductFilters do
+RSpec.describe ProductFilters do
   describe "extract" do
     it "should return a hash including only key from ProductFilters::PRODUCT_FILTERS" do
       params = { 'id' => 20, 'producerFilter' => 2, 'categoryFilter' => 5 }

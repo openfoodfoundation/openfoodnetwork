@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Money do
+RSpec.describe Spree::Money do
   include PreferencesHelper
 
   before do

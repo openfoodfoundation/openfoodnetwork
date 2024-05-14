@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
+RSpec.describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
   include AuthenticationHelper
 
   describe "#update" do

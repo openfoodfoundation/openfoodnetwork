@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Sales Tax Totals By order" do
+RSpec.describe "Sales Tax Totals By order" do
   #  Scenarion 1: added tax
   #  1 producer
   #  1 distributor

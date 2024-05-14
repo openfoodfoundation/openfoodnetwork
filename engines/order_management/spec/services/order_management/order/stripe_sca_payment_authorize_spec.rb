@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Order
-    describe StripeScaPaymentAuthorize do
+    RSpec.describe StripeScaPaymentAuthorize do
       let(:order) { create(:order) }
       let(:payment_authorize) {
         OrderManagement::Order::StripeScaPaymentAuthorize.new(order)

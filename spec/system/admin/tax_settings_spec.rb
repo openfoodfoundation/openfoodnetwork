@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Account and Billing Settings' do
+RSpec.describe 'Account and Billing Settings' do
   include AuthenticationHelper
   include WebHelper
 

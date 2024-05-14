@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe VoucherAdjustmentsController, type: :request do
+RSpec.describe VoucherAdjustmentsController, type: :request do
   let(:user) { order.user }
   let(:address) { create(:address) }
   let(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }

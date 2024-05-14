@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::BaseHelper do
+RSpec.describe Spree::BaseHelper do
   include Spree::BaseHelper
 
   context "available_countries" do

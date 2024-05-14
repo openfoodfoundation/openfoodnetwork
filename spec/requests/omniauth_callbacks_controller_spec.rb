@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 # Devise calls OmniauthCallbacksController for OpenID Connect callbacks.
-describe '/user/spree_user/auth/openid_connect/callback', type: :request do
+RSpec.describe '/user/spree_user/auth/openid_connect/callback', type: :request do
   include AuthenticationHelper
 
   let(:user) { create(:user) }

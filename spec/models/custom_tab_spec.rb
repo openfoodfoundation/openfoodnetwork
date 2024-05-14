@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe CustomTab do
+RSpec.describe CustomTab do
   describe 'associations' do
     it { is_expected.to belong_to(:enterprise).required }
   end

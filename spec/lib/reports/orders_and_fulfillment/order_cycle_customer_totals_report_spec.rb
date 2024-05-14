@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
+RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotals do
   let!(:distributor) { create(:distributor_enterprise, name: "Apple Market") }
   let!(:customer) { create(:customer, enterprise: distributor, user:, code: "JHN") }
   let(:user) { create(:user, email: "john@example.net") }

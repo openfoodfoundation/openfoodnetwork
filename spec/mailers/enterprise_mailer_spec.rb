@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe EnterpriseMailer do
+RSpec.describe EnterpriseMailer do
   let!(:enterprise) { create(:enterprise) }
   let!(:user) { create(:user) }
 

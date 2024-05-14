@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Reporting::LineItems do
+RSpec.describe Reporting::LineItems do
   # This object lets us add some test coverage despite the very deep coupling between the class
   # under test and the various objects it depends on. Other more common moking strategies where very
   # hard.

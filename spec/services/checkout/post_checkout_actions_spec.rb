@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Checkout::PostCheckoutActions do
+RSpec.describe Checkout::PostCheckoutActions do
   let(:order) { create(:order_with_distributor) }
   let(:postCheckoutActions) { Checkout::PostCheckoutActions.new(order) }
 

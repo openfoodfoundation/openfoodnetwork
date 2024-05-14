@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe DfcProductTypeFactory do
+RSpec.describe DfcProductTypeFactory do
   describe ".for" do
     let(:dfc_id) {
       "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#drink"

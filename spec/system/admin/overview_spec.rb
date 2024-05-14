@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
   As a backend user
   I want to be given information about the state of my enterprises, products and order cycles
 ' do

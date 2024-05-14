@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "shopping with variant overrides defined" do
+RSpec.describe "shopping with variant overrides defined" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow

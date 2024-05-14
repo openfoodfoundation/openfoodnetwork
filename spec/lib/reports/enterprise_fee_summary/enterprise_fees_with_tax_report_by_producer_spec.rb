@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Reporting::Reports::EnterpriseFeeSummary::EnterpriseFeesWithTaxReportByProducer do
+RSpec.describe Reporting::Reports::EnterpriseFeeSummary::EnterpriseFeesWithTaxReportByProducer do
   let(:current_user) { create(:admin_user) }
 
   let(:enterprise) {

@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'rake'
 
-describe 'sample_data.rake' do
+RSpec.describe 'sample_data.rake' do
   before(:all) do
     Rake.application.rake_require 'tasks/sample_data'
     Rake::Task.define_task(:environment)

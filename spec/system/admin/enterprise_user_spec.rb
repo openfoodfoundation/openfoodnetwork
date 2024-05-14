@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe '
+RSpec.describe '
     As a Super User
     I want to setup users to manage an enterprise
 ' do

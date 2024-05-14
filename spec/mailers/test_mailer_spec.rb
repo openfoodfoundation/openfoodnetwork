@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::TestMailer do
+RSpec.describe Spree::TestMailer do
   let(:user) { create(:user) }
 
   context ":from not set explicitly" do

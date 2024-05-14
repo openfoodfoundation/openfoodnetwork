@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ProductImport::Settings do
+RSpec.describe ProductImport::Settings do
   let(:settings) { described_class.new(import_settings) }
 
   describe '#defaults' do

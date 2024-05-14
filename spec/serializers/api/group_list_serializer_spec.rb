@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::GroupListSerializer do
+RSpec.describe Api::GroupListSerializer do
   let!(:group) { create(:enterprise_group) }
   let!(:producer) { create(:supplier_enterprise) }
 

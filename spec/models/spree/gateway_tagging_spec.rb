@@ -8,7 +8,7 @@ require "spec_helper"
 #
 # This spec tests several descendants for their taggability. The tests are in
 # a separate file, because they cover one aspect of several classes.
-shared_examples "taggable" do |expected_taggable_type|
+RSpec.shared_examples "taggable" do |expected_taggable_type|
   it "provides a tag list" do
     expect(subject.tag_list).to eq []
   end
@@ -22,7 +22,7 @@ shared_examples "taggable" do |expected_taggable_type|
 end
 
 module Spree
-  describe "PaymentMethod and descendants" do
+  RSpec.describe "PaymentMethod and descendants" do
     let(:shop) { create(:enterprise) }
     let(:valid_subject) do
       # Supply required parameters so that it can be saved to attach taggings.

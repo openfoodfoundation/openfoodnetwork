@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module OpenFoodNetwork
-  describe PropertyMerge do
+  RSpec.describe PropertyMerge do
     let(:property) { create(:property, presentation: 'One') }
     let(:duplicate_property) { create(:property, presentation: 'One') }
     let(:different_property) { create(:property, presentation: 'Two') }

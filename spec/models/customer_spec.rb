@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Customer, type: :model do
+RSpec.describe Customer, type: :model do
   it { is_expected.to belong_to(:enterprise).required }
   it { is_expected.to belong_to(:user).optional }
   it { is_expected.to belong_to(:bill_address).optional }

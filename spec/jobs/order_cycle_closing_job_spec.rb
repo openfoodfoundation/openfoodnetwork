@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycleClosingJob do
+RSpec.describe OrderCycleClosingJob do
   let(:order_cycle1) {
     create(:order_cycle, automatic_notifications: true, orders_close_at: 1.minute.ago)
   }

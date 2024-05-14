@@ -6,7 +6,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module BulkCoop
-      describe Base do
+      RSpec.describe Base do
         subject { Base.new user, params }
         let(:user) { create(:admin_user) }
 

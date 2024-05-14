@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe LineItem do
+  RSpec.describe LineItem do
     let(:order) { create :order_with_line_items, line_items_count: 1 }
     let(:line_item) { order.line_items.first }
 
@@ -803,7 +803,7 @@ module Spree
     end
   end
 
-  describe "searching with ransack" do
+  RSpec.describe "searching with ransack" do
     let(:order_cycle1) { create(:order_cycle) }
     let(:order_cycle2) { create(:order_cycle) }
     let(:product1) { create(:product, supplier: create(:supplier_enterprise)) }

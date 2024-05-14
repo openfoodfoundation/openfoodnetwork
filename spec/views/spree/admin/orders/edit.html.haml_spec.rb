@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "spree/admin/orders/edit.html.haml" do
+RSpec.describe "spree/admin/orders/edit.html.haml" do
   helper Spree::BaseHelper # required to make pretty_time work
   helper Spree::Admin::NavigationHelper
   helper Admin::InjectionHelper

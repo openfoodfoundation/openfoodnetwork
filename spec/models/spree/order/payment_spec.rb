@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::Order do
+  RSpec.describe Spree::Order do
     before { Stripe.api_key = "sk_test_12345" }
     let(:order) { build(:order) }
     let(:updater) { OrderManagement::Order::Updater.new(order) }

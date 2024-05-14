@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::ReturnAuthorization do
+RSpec.describe Spree::ReturnAuthorization do
   let(:order) { create(:shipped_order) }
   let(:variant) { order.shipments.first.inventory_units.first.variant }
   let(:return_authorization) { Spree::ReturnAuthorization.new(order:) }

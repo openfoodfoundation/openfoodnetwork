@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
+RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleSupplierTotals do
   let!(:distributor) { create(:distributor_enterprise) }
 
   let!(:order) do

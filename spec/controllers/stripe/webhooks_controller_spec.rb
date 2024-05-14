@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Stripe::WebhooksController, type: :controller do
+RSpec.describe Stripe::WebhooksController, type: :controller do
   describe "#create" do
     let(:params) do
       {

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycles::DistributedVariantsService do
+RSpec.describe OrderCycles::DistributedVariantsService do
   let(:order) { double(:order) }
   let(:distributor) { double(:distributor) }
   let(:order_cycle) { double(:order_cycle) }

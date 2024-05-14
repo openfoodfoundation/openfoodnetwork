@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'haml_up'
 
-describe HamlUp, skip: !Gem::Dependency.new("", "~> 5.2").match?("", Haml::VERSION) do
+RSpec.describe HamlUp, skip: !Gem::Dependency.new("", "~> 5.2").match?("", Haml::VERSION) do
   describe "#rewrite_template" do
     it "preserves a simple template" do
       original = "%p This is a paragraph"

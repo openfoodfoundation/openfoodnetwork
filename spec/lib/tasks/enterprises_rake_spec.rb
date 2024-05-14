@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'rake'
 
-describe 'enterprises.rake' do
+RSpec.describe 'enterprises.rake' do
   before(:all) do
     Rake.application.rake_require("tasks/enterprises")
     Rake::Task.define_task(:environment)

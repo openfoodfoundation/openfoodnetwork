@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Gateway do
+RSpec.describe Spree::Gateway do
   let(:test_gateway) do
     Class.new(Spree::Gateway) do
       def provider_class

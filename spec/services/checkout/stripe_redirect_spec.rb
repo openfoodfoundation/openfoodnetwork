@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Checkout::StripeRedirect do
+RSpec.describe Checkout::StripeRedirect do
   describe '#path' do
     let(:order) { create(:order) }
     let(:service) { Checkout::StripeRedirect.new(payment_method, order) }

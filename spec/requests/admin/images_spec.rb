@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "/admin/products/:product_id/images", type: :request do
+RSpec.describe "/admin/products/:product_id/images", type: :request do
   include AuthenticationHelper
 
   let!(:product) { create(:product) }

@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module ProductsAndInventory
-      describe LettuceShare do
+      RSpec.describe LettuceShare do
         let(:user) { create(:user) }
         let(:report) { LettuceShare.new(user) }
         let(:variant) { create(:variant) }

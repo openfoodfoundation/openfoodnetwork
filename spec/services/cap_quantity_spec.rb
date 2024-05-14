@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe CapQuantity do
+RSpec.describe CapQuantity do
   describe "checking that line items are available to purchase" do
     let(:order_cycle) { create(:simple_order_cycle) }
     let(:shop) { order_cycle.coordinator }

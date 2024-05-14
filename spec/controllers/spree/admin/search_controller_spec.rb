@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::SearchController, type: :controller do
+RSpec.describe Spree::Admin::SearchController, type: :controller do
   context "Distributor Enterprise User" do
     let!(:owner) { create(:user, email: "test1@email.com" ) }
     let!(:manager) { create(:user, email: "test2@email.com" ) }

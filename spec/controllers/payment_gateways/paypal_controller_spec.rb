@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module PaymentGateways
-  describe PaypalController, type: :controller do
+  RSpec.describe PaypalController, type: :controller do
     context '#cancel' do
       it 'redirects back to checkout' do
         expect(get(:cancel)).to redirect_to checkout_path

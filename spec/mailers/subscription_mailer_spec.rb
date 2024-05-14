@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe SubscriptionMailer, type: :mailer do
+RSpec.describe SubscriptionMailer, type: :mailer do
   include ActionView::Helpers::SanitizeHelper
 
   describe '#placement_email' do

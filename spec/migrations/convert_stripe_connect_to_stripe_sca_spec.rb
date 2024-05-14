@@ -12,7 +12,7 @@ module Spree
   end
 end
 
-describe ConvertStripeConnectToStripeSca do
+RSpec.describe ConvertStripeConnectToStripeSca do
   let(:owner) { create(:distributor_enterprise) }
   let(:new_owner) { create(:distributor_enterprise) }
   let(:old_stripe_connect) {

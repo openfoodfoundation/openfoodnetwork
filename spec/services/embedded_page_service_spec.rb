@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe EmbeddedPageService do
+RSpec.describe EmbeddedPageService do
   let(:enterprise_slug) { 'test-enterprise' }
   let(:params) {
     { controller: 'enterprises', action: 'shop', id: enterprise_slug, embedded_shopfront: true }

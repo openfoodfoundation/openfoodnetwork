@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'shipping methods' do
+RSpec.describe 'shipping methods' do
   include WebHelper
   include AuthenticationHelper
 

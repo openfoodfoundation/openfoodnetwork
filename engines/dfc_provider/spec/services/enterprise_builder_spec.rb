@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe EnterpriseBuilder do
+RSpec.describe EnterpriseBuilder do
   subject(:builder) { described_class }
   let(:enterprise) {
     build(

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycles::CloneService do
+RSpec.describe OrderCycles::CloneService do
   describe "#create" do
     it "clones the order cycle" do
       coordinator = create(:enterprise);

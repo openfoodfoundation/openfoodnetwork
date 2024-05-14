@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Developer Settings" do
+RSpec.describe "Developer Settings" do
   include AuthenticationHelper
   include WebHelper
 

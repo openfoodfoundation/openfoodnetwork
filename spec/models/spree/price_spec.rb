@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Price do
+  RSpec.describe Price do
     let(:variant) { create(:variant) }
     let(:price) { variant.default_price }
 

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 require Rails.root.join('db/migrate/20221208150521_update_enterprise_instagram_links.rb')
 
-describe UpdateEnterpriseInstagramLinks do
+RSpec.describe UpdateEnterpriseInstagramLinks do
   let!(:enterprise1) { create(:enterprise, instagram: "https://www.instagram.com/happyfarm") }
 
   let!(:enterprise2) { create(:enterprise, instagram: "@happyfarm") }

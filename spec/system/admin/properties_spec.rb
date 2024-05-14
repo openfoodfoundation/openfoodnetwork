@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe '
+RSpec.describe '
     As an admin
     I want to manage product properties
 ' do

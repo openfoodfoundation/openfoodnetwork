@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycles::WebhookService do
+RSpec.describe OrderCycles::WebhookService do
   let(:order_cycle) {
     create(
       :simple_order_cycle,

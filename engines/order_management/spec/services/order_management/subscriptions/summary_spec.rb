@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Subscriptions
-    describe Summary do
+    RSpec.describe Summary do
       let(:summary) { OrderManagement::Subscriptions::Summary.new(123) }
 
       describe "#initialize" do

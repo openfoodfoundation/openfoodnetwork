@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::VariantOverridesController, type: :controller do
+RSpec.describe Admin::VariantOverridesController, type: :controller do
   describe "bulk_update" do
     context "json" do
       let(:format) { :json }

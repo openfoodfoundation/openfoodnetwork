@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'open_food_network/permissions'
 
-describe ProductImport::ProductImporter do
+RSpec.describe ProductImport::ProductImporter do
   let!(:admin) { create(:admin_user) }
   let!(:user) { create(:user) }
   let!(:user2) { create(:user) }

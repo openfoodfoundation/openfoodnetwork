@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycle do
+RSpec.describe OrderCycle do
   it "should be valid when built from factory" do
     expect(build(:simple_order_cycle)).to be_valid
   end

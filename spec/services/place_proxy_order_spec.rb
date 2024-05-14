@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe PlaceProxyOrder do
+RSpec.describe PlaceProxyOrder do
   include ActiveSupport::Testing::TimeHelpers
 
   subject { described_class.new(proxy_order, summarizer, logger, stock_changes_loader) }

@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'spree/localized_number'
 
-describe Spree::Variant do
+RSpec.describe Spree::Variant do
   subject(:variant) { build(:variant) }
 
   it { is_expected.to have_many :semantic_links }

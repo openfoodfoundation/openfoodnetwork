@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Core::MailSettings do
+RSpec.describe Spree::Core::MailSettings do
   context "overrides appplication defaults" do
     context "authentication method is login" do
       before do

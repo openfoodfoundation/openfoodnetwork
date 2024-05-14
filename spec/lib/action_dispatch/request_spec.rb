@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ActionDispatch::Request do
+RSpec.describe ActionDispatch::Request do
   it "strips nils from arrays" do
     expect(parse_query_parameters('key[]=value&key[]')).to eq({ "key" => ["value"] })
   end

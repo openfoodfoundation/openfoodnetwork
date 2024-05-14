@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ReportMailer do
+RSpec.describe ReportMailer do
   describe "#report_ready" do
     subject(:email) {
       ReportMailer.with(

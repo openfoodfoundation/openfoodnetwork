@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Connected Apps", feature: :connected_apps, vcr: true do
+RSpec.describe "Connected Apps", feature: :connected_apps, vcr: true do
   let(:enterprise) { create(:enterprise) }
 
   before do

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Tax Rates" do
+RSpec.describe "Tax Rates" do
   include AuthenticationHelper
 
   let!(:calculator) { create(:calculator_per_item, calculable: create(:order)) }

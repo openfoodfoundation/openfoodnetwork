@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Packing Reports" do
+RSpec.describe "Packing Reports" do
   include AuthenticationHelper
   include WebHelper
 

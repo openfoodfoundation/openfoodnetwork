@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Address do
+RSpec.describe Spree::Address do
   describe "clone" do
     it "creates a copy of the address with the exception of the id, " \
        "updated_at and created_at attributes" do

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   module Stock
-    describe AvailabilityValidator do
+    RSpec.describe AvailabilityValidator do
       let(:validator) { AvailabilityValidator.new({}) }
 
       context "line item without existing inventory units" do

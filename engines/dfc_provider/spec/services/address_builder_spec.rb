@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe AddressBuilder do
+RSpec.describe AddressBuilder do
   subject(:result) { described_class.address(address) }
   let(:address) {
     build(

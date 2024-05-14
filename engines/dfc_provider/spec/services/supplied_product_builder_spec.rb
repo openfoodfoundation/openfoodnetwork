@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe SuppliedProductBuilder do
+RSpec.describe SuppliedProductBuilder do
   include FileHelper
 
   subject(:builder) { described_class }

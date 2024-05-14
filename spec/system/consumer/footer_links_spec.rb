@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Footer Links" do
+RSpec.describe "Footer Links" do
   describe "policy link" do
     it "showing" do
       visit root_path

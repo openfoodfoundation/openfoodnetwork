@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module PaymentGateways
-  describe StripeController, type: :controller do
+  RSpec.describe StripeController, type: :controller do
     include StripeStubs
 
     let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }

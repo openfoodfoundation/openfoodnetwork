@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::UserSessionsController, type: :controller do
+RSpec.describe Spree::UserSessionsController, type: :controller do
   let(:user) { create(:user) }
 
   before do

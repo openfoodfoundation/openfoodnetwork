@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'tasks/data/truncate_data'
 
-describe TruncateData do
+RSpec.describe TruncateData do
   describe '#call' do
     before do
       allow(Spree::ReturnAuthorization).to receive(:delete_all)

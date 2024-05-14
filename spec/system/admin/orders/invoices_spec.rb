@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
  As an administrator
  I want to manage invoices for an order
 ', feature: :invoices do

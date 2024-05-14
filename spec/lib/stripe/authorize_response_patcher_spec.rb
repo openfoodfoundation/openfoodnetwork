@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Stripe
-  describe AuthorizeResponsePatcher do
+  RSpec.describe AuthorizeResponsePatcher do
     describe "#call!" do
       let(:patcher) { Stripe::AuthorizeResponsePatcher.new(response) }
       let(:params) { {} }

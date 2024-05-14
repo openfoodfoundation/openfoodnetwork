@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Subscriptions
-    describe Estimator do
+    RSpec.describe Estimator do
       describe "estimating prices for subscription line items" do
         let!(:subscription) { create(:subscription, with_items: true) }
         let!(:sli1) { subscription.subscription_line_items.first }

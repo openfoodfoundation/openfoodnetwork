@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'open_food_network/enterprise_fee_applicator'
 
 module OpenFoodNetwork
-  describe EnterpriseFeeApplicator do
+  RSpec.describe EnterpriseFeeApplicator do
     let(:line_item) { create(:line_item, variant: target_variant) }
     let(:inherits_tax) { true }
     let(:enterprise_fee) {

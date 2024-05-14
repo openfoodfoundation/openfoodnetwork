@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Order do
+RSpec.describe Spree::Order do
   let(:user) { build(:user, email: "spree@example.com") }
   let(:order) { build(:order, user:) }
 
@@ -258,7 +258,6 @@ describe Spree::Order do
     end
 
     it "should freeze all adjustments" do
-      allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
       adjustments = double
       allow(order).to receive_messages all_adjustments: adjustments
       expect(adjustments).to receive(:update_all).with(state: 'closed')
@@ -440,8 +439,6 @@ describe Spree::Order do
   context "empty!" do
     it "should clear out all line items and adjustments" do
       order = build(:order)
-      allow(order).to receive_messages(line_items: line_items = [])
-      allow(order).to receive_messages(adjustments: adjustments = [])
       expect(order.line_items).to receive(:destroy_all)
       expect(order.all_adjustments).to receive(:destroy_all)
 

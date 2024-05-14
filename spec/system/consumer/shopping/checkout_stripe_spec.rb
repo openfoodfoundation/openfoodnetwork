@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Check out with Stripe" do
+RSpec.describe "Check out with Stripe" do
   include AuthenticationHelper
   include ShopWorkflow
   include CheckoutRequestsHelper

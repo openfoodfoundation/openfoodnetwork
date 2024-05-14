@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Payments requiring action" do
+RSpec.describe "Payments requiring action" do
   include AuthenticationHelper
 
   describe "as a logged in user" do

@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Customers' do
+RSpec.describe 'Customers' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper

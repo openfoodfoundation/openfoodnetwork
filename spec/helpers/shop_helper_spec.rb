@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
 require 'spec_helper'
-describe ShopHelper, type: :helper do
+RSpec.describe ShopHelper, type: :helper do
   describe "shop_tabs" do
     context "distributor with groups" do
       let(:group) { create(:enterprise_group) }

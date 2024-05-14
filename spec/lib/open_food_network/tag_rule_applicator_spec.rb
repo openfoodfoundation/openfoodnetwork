@@ -4,7 +4,7 @@ require 'open_food_network/tag_rule_applicator'
 require 'spec_helper'
 
 module OpenFoodNetwork
-  describe TagRuleApplicator do
+  RSpec.describe TagRuleApplicator do
     let!(:enterprise) { create(:distributor_enterprise) }
     let!(:oc_tag_rule) {
       create(:filter_order_cycles_tag_rule, enterprise:, priority: 6,

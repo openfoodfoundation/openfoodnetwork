@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "admin/products_v3/_filters.html.haml" do
+RSpec.describe "admin/products_v3/_filters.html.haml" do
   subject { render }
 
   let(:locals) do

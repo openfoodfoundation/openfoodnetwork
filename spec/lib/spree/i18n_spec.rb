@@ -3,7 +3,7 @@
 require 'rspec/expectations'
 require 'spree/i18n'
 
-describe "i18n" do
+RSpec.describe "i18n" do
   before do
     I18n.backend.store_translations(
       :en,

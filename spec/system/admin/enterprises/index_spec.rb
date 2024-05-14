@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Enterprises Index' do
+RSpec.describe 'Enterprises Index' do
   include WebHelper
   include AuthenticationHelper
 

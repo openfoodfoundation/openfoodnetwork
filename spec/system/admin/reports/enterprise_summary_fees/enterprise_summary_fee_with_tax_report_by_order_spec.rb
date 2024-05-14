@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Enterprise Summary Fee with Tax Report By Order" do
+RSpec.describe "Enterprise Summary Fee with Tax Report By Order" do
   #   1 order cycle the has:
   #     - coordinator fees price 20
   #     - incoming exchange fees 15

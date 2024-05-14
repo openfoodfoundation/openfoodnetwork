@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe '
+RSpec.describe '
     As an administrator
     I want to create and edit orders
 ' do

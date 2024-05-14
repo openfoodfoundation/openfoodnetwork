@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Orders::AvailablePaymentMethodsService do
+RSpec.describe Orders::AvailablePaymentMethodsService do
   context "when the order has no current_distributor" do
     it "returns an empty array" do
       order_cycle = create(:sells_own_order_cycle)

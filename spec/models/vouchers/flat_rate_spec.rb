@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Vouchers::FlatRate do
+RSpec.describe Vouchers::FlatRate do
   describe 'validations' do
     subject { build(:voucher_flat_rate) }
 

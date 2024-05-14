@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::Order do
+  RSpec.describe Spree::Order do
     let(:order) { build(:order) }
 
     context "#tax_zone" do

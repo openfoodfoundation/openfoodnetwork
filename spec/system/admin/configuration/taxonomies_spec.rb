@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Taxonomies" do
+RSpec.describe "Taxonomies" do
   include AuthenticationHelper
   include WebHelper
 

@@ -2,7 +2,7 @@
 
 require 'swagger_helper'
 
-describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
+RSpec.describe 'api/v0/orders', swagger_doc: 'v0.yaml', type: :request do
   path '/api/v0/orders' do
     get('list orders') do
       tags 'Orders'

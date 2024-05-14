@@ -4,7 +4,7 @@ require 'spec_helper'
 
 class TestHelper < ActionView::Base; end
 
-describe BulkFormBuilder do
+RSpec.describe BulkFormBuilder do
   describe '#text_field' do
     let(:product) { create(:product) }
     let(:form) { BulkFormBuilder.new(:product, product, self, {}) }

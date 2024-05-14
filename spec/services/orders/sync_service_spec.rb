@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Orders::SyncService do
+RSpec.describe Orders::SyncService do
   describe "updating the shipping method" do
     let!(:subscription) { create(:subscription, with_items: true, with_proxy_orders: true) }
     let!(:order) { subscription.proxy_orders.first.initialise_order! }

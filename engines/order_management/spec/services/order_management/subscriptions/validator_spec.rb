@@ -4,7 +4,7 @@ require "spec_helper"
 
 module OrderManagement
   module Subscriptions
-    describe Validator do
+    RSpec.describe Validator do
       let(:owner) { create(:user) }
       let(:shop) { create(:enterprise, name: "Shop", owner:) }
 

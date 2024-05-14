@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe CustomersWithBalanceQuery do
+RSpec.describe CustomersWithBalanceQuery do
   subject(:result) { described_class.new(Customer.where(id: customers)).call }
 
   describe '#call' do

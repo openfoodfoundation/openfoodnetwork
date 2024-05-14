@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe PaypalItemsBuilder do
+RSpec.describe PaypalItemsBuilder do
   let(:order) { create(:completed_order_with_fees) }
   let(:service) { described_class.new(order) }
   let(:items) { described_class.new(order).call }

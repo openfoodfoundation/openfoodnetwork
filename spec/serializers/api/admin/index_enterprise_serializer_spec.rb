@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::Admin::IndexEnterpriseSerializer do
+RSpec.describe Api::Admin::IndexEnterpriseSerializer do
   let(:enterprise) { create(:distributor_enterprise) }
   context "when spree_current_user is a manager" do
     let(:user) { create(:user) }

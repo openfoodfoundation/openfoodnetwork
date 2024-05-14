@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
     As a consumer
     I want to see a list of producers
     So that I can shop at hubs distributing their products

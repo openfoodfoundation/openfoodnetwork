@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe UrlGenerator do
+RSpec.describe UrlGenerator do
   subject { UrlGenerator }
 
   describe "#to_url" do

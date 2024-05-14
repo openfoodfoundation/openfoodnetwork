@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Orders::MaskDataService do
+RSpec.describe Orders::MaskDataService do
   describe '#call' do
     let(:distributor) { create(:enterprise) }
     let(:order) { create(:order, distributor:, ship_address: create(:address)) }

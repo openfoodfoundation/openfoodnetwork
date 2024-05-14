@@ -16,7 +16,7 @@ module Reporting
   end
 end
 
-describe Reporting::ReportLoader do
+RSpec.describe Reporting::ReportLoader do
   let(:service) { Reporting::ReportLoader.new(*arguments) }
   let(:report_base_class) { Reporting::Reports::Bananas::Base }
   let(:report_subtypes) { ["green", "yellow"] }

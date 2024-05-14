@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   module Admin
-    describe ShippingCategoriesController, type: :controller do
+    RSpec.describe ShippingCategoriesController, type: :controller do
       include AuthenticationHelper
 
       describe "#create and #update" do

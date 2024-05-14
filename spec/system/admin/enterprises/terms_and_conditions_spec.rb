@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Uploading Terms and Conditions PDF" do
+RSpec.describe "Uploading Terms and Conditions PDF" do
   include AuthenticationHelper
   include FileHelper
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ShopsController, type: :controller do
+RSpec.describe ShopsController, type: :controller do
   include WebHelper
   render_views
 

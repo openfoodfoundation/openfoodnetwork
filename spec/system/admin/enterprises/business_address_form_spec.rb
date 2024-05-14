@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Business Address" do
+RSpec.describe "Business Address" do
   include WebHelper
   include AuthenticationHelper
 

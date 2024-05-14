@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Tag Rules' do
+RSpec.describe 'Tag Rules' do
   include AuthenticationHelper
   include WebHelper
 
