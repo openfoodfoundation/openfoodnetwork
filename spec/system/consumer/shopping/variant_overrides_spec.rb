@@ -169,11 +169,9 @@ RSpec.describe "shopping with variant overrides defined" do
     end
   end
 
-  pending "creating orders" do
+  describe "creating orders" do
     it "creates the order with the correct prices" do
       click_add_to_cart product1_variant1, 2
-      click_checkout
-
       complete_checkout
 
       o = Spree::Order.complete.last
@@ -235,32 +233,17 @@ RSpec.describe "shopping with variant overrides defined" do
   private
 
   def complete_checkout
+    click_checkout
+
     checkout_as_guest
 
-    within "#details" do
-      fill_in "First Name", with: "Some"
-      fill_in "Last Name", with: "One"
-      fill_in "Email", with: "test@example.com"
-      fill_in "Phone", with: "0456789012"
-    end
+    fill_out_details
+    fill_out_billing_address
 
-    within "#billing" do
-      fill_in "Address", with: "123 Street"
-      select "Australia", from: "Country"
-      select "Victoria", from: "State"
-      fill_in "City", with: "Melbourne"
-      fill_in "Postcode", with: "3066"
-    end
+    proceed_to_payment
+    proceed_to_summary
 
-    within "#shipping" do
-      choose sm.name
-    end
-
-    within "#payment" do
-      choose pm.name
-    end
-
-    place_order
+    click_on "Complete order"
     expect(page).to have_content "Your order has been processed successfully"
   end
 
