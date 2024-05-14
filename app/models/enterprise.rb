@@ -249,9 +249,7 @@ class Enterprise < ApplicationRecord
 
   # Remove any unsupported HTML.
   def long_description=(html)
-    super(HtmlSanitizer.sanitize(
-      html, tags: %w[h1 h2 h3 h4 p b i u a], attributes: %w[href target],
-    ))
+    super(HtmlSanitizer.sanitize(html))
   end
 
   def contact
