@@ -76,8 +76,8 @@
 
           = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", product.variants.build) do |new_variant_form|
             %template{ 'data-nested-form-target': "template" }
-              %tr.condensed{ 'data-controller': "variant", 'class': "nested-form-wrapper" }
-                = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form, category_options:, tax_category_options: }
+              %tr.condensed{ 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': "true" }
+                = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form, category_options:, tax_category_options:  }
 
           %tr{ 'data-nested-form-target': "target" }
           %tr.condensed

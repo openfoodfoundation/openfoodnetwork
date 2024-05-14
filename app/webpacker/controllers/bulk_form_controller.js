@@ -118,11 +118,6 @@ export default class BulkFormController extends Controller {
     this.recordElements[recordId]
       .splice(elmntsToDelete[0], elmntsToDelete[elmntsToDelete.length - 1] - elmntsToDelete[0] + 1);
     this.toggleFormChanged();
-
-    // Otherwise, elements within tr may be re-added to recordElements.
-    // With the nested-form-wrapper(stimulus components) class added to a tr.
-    let tr = document.querySelector('.nested-form-wrapper[style="display: none;"]')
-    tr.remove();
   }
 
   // private
