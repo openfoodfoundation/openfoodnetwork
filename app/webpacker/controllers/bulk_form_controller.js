@@ -91,35 +91,6 @@ export default class BulkFormController extends Controller {
     }
   }
 
-  // Removes tr from DOM as well as corresponding elmnts from recordElement
-  // when clicking on 'Remove' button. For not persisted rows removed by
-  // stimulus components lib.
-  remove(event) {
-    // We need the temp id for the newly non persisted variant
-    let elmnt = event.target;
-    const recordContainer = elmnt.closest("[data-record-id]");
-    let recordId = recordContainer.dataset.recordId;
-    let elmnt_temp_id = elmnt.dataset.temp_id;
-    const re = /([0-9]*)_remove_link/;
-    let temp_id = elmnt_temp_id.match(re)[1]
-
-    // Store indexes and not elements
-    let elmntsToDelete = [];
-    this.recordElements[recordId].forEach((item, index) => {
-      if ((item.id).includes(temp_id)) {
-        elmntsToDelete.push(index);
-      }
-    });
-
-
-    // Want to delete ary.last - ary.first ie from to first up to last index
-    // In this way, we also delete unnecessary elements without reference to temp variant(id)
-    // like buttons but nonetheless part of the elements to be removed.
-    this.recordElements[recordId]
-      .splice(elmntsToDelete[0], elmntsToDelete[elmntsToDelete.length - 1] - elmntsToDelete[0] + 1);
-    this.toggleFormChanged();
-  }
-
   // private
 
   #registerSubmit() {
@@ -161,8 +132,12 @@ export default class BulkFormController extends Controller {
   }
 
   #isChanged(element) {
-    if (element.type == "checkbox") {
+    if(!element.isConnected) {
+      return false;
+
+    } else if (element.type == "checkbox") {
       return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
+
     } else if (element.type == "select-one") {
       // (weird) Behavior of select element's include_blank option in Rails:
       //   If a select field has include_blank option selected (its value will be ''),
@@ -175,6 +150,7 @@ export default class BulkFormController extends Controller {
       const areBothBlank = selectedOption.value === '' && defaultSelected === undefined
 
       return !areBothBlank && selectedOption !== defaultSelected;
+
     } else {
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }
