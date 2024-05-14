@@ -4,16 +4,12 @@ class ShopsController < BaseController
   layout 'darkswarm'
 
   def index
+    @enterprises = ShopsListService.new.open_shops
     return unless spree_current_user.present?
     
-    user_enterprises = spree_current_user.enterprises.activated
-    .visible
-    .is_distributor
-    .includes(address: [:state, :country])
-    .includes(:properties)
-    .includes(supplied_products: :properties)
+    user_enterprises = spree_current_user.enterprises
 
-    @enterprises = Set.new
+    @grouped_enterprises = Set.new
 
     user_enterprises.each do |enterprise|
       # Find all groups of the current enterprise
@@ -26,11 +22,13 @@ class ShopsController < BaseController
 
         # If the user's enterprise is private, include only public enterprises
         if enterprise.visible == 'private'
-          @enterprises.merge(enterprises)
+          @grouped_enterprises.merge(enterprises)
         else
-          @enterprises.merge(group.enterprises)
+          @grouped_enterprises.merge(group.enterprises)
         end
       end
     end
+
+    @grouped_enterprises = @grouped_enterprises.to_a
   end
 end
