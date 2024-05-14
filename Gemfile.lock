@@ -17,6 +17,14 @@ GIT
       sass-rails
       thor (>= 0.14)
 
+GIT
+  remote: https://github.com/podia/stimulus_reflex_testing.git
+  revision: abac2ee34de347c589795b4d1a8e83e0baafb201
+  branch: main
+  specs:
+    stimulus_reflex_testing (0.3.1)
+      stimulus_reflex (>= 3.3.0)
+
 PATH
   remote: engines/catalog
   specs:
@@ -750,8 +758,6 @@ GEM
       rack (>= 2, < 4)
       railties (>= 5.2, < 8)
       redis (>= 4.0, < 6.0)
-    stimulus_reflex_testing (0.3.0)
-      stimulus_reflex (>= 3.3.0)
     stringex (2.8.6)
     stringio (3.1.0)
     stripe (11.1.0)
@@ -952,7 +958,7 @@ DEPENDENCIES
   spring-commands-rubocop
   state_machines-activerecord
   stimulus_reflex (= 3.5.0.rc4)
-  stimulus_reflex_testing
+  stimulus_reflex_testing!
   stringex (~> 2.8.5)
   stripe
   timecop

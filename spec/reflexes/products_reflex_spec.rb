@@ -10,7 +10,7 @@ RSpec.describe ProductsReflex, type: :reflex, feature: :admin_style_v3 do
   let(:flash) { {} }
 
   before do
-    pending "https://github.com/podia/stimulus_reflex_testing/issues/21"
+    pending "fix spec"
     # Mock flash, because stimulus_reflex_testing doesn't support sessions
     allow_any_instance_of(described_class).to receive(:flash).and_return(flash)
   end

@@ -164,7 +164,7 @@ group :test, :development do
   gem 'rspec-sql'
   gem 'rswag'
   gem 'shoulda-matchers'
-  gem 'stimulus_reflex_testing'
+  gem 'stimulus_reflex_testing', github: "podia/stimulus_reflex_testing", branch: :main
   gem 'timecop'
 end
 
