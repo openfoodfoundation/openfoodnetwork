@@ -134,17 +134,17 @@ RSpec.describe "
             within "tr#v_#{variant.id}" do
               click_button 'Hide'
             end
-            expect(page).to have_no_selector "tr#v_#{variant.id}"
+            expect(page).not_to have_selector "tr#v_#{variant.id}"
             expect(page).to have_selector "tr#v_#{variant_related.id}"
             first("div#views-dropdown").click
             first("div#views-dropdown div.menu div.menu_item", text: "Hidden Products").click
             expect(page).to have_selector "tr#v_#{variant.id}"
-            expect(page).to have_no_selector "tr#v_#{variant_related.id}"
+            expect(page).not_to have_selector "tr#v_#{variant_related.id}"
             within "tr#v_#{variant.id}" do
               click_button 'Add'
             end
-            expect(page).to have_no_selector "tr#v_#{variant.id}"
-            expect(page).to have_no_selector "tr#v_#{variant_related.id}"
+            expect(page).not_to have_selector "tr#v_#{variant.id}"
+            expect(page).not_to have_selector "tr#v_#{variant_related.id}"
             first("div#views-dropdown").click
             first("div#views-dropdown div.menu div.menu_item", text: "Inventory Products").click
             expect(page).to have_selector "tr#v_#{variant.id}"
@@ -502,8 +502,8 @@ RSpec.describe "
           within "table#new-products tr#v_#{variant2.id}" do
             click_button 'Hide'
           end
-          expect(page).to have_no_selector "table#new-products tr#v_#{variant1.id}"
-          expect(page).to have_no_selector "table#new-products tr#v_#{variant2.id}"
+          expect(page).not_to have_selector "table#new-products tr#v_#{variant1.id}"
+          expect(page).not_to have_selector "table#new-products tr#v_#{variant2.id}"
           click_button "Back to my inventory"
 
           expect(page).to have_selector "table#variant-overrides tr#v_#{variant1.id}"
