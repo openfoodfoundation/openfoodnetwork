@@ -55,6 +55,7 @@ export default class BulkFormController extends Controller {
   toggleChanged(e) {
     const element = e.target;
     element.classList.toggle("changed", this.#isChanged(element));
+    element.closest("tr").classList.toggle("changed", this.#isChanged(element));
 
     this.toggleFormChanged();
   }

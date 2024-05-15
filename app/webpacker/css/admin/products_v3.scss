@@ -107,6 +107,23 @@
       }
     }
 
+    // Row modified
+    tbody tr.changed {
+      td {
+        position: relative;
+
+        // Left border
+        &:first-child:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -4px;
+          border-left: 4px solid $color-txt-changed-brd;
+          height: 100%;
+        }
+      }
+    }
+
     th,
     td {
       vertical-align: top;
