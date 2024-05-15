@@ -74,9 +74,9 @@ module Spree
                   :shipping_category_id, :primary_taxon_id, :supplier_id
 
     after_create :ensure_standard_variant
+    after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
     around_destroy :destruction
     after_save :update_units
-    after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
 
     # -- Scopes
     scope :with_properties, ->(*property_ids) {
@@ -319,7 +319,13 @@ module Spree
     def update_units
       return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
 
-      variants.each(&:update_units)
+      variants.each do |v|
+        if v.persisted?
+          v.update_units
+        else
+          v.assign_units
+        end
+      end
     end
 
     def touch_supplier

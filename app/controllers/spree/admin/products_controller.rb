@@ -173,12 +173,10 @@ module Spree
 
       def product_import_dates_query
         Spree::Variant.
-          select('DISTINCT spree_variants.import_date').
-          joins(:product).
-          where(spree_products: { supplier_id: editable_enterprises.collect(&:id) }).
+          select('import_date').distinct.
+          where(supplier_id: editable_enterprises.collect(&:id)).
           where.not(spree_variants: { import_date: nil }).
-          where(spree_variants: { deleted_at: nil }).
-          order('spree_variants.import_date DESC')
+          order('import_date DESC')
       end
 
       def strip_new_properties

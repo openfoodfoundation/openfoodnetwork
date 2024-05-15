@@ -227,11 +227,13 @@ module ProductImport
       # Ensure attributes are correctly copied to a new product's variant
       variant = product.variants.first
       variant.display_name = entry.display_name if entry.display_name
-      variant.on_demand = entry.on_demand if entry.on_demand
-      variant.on_hand = entry.on_hand if entry.on_hand
       variant.import_date = @import_time
       variant.supplier_id = entry.producer_id
       variant.save
+
+      # on_demand and on_hand require a stock level, which is created after the variant is created
+      variant.on_demand = entry.on_demand if entry.on_demand
+      variant.on_hand = entry.on_hand if entry.on_hand
     end
   end
 end
