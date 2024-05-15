@@ -34,6 +34,15 @@ module Spree
           expect(helper.klass_for('Inventory')).to eq(VariantOverride)
         end
       end
+
+      describe "tab" do
+        it "includes translated value" do
+          # todo: mock translation?
+          expect(helper.tab(:oidc_settings)).to include "OIDC Settings"
+        end
+
+        it "transforms untranslated value"
+      end
     end
   end
 end
