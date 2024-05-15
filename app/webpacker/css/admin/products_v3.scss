@@ -124,6 +124,23 @@
       }
     }
 
+    // Row error
+    tbody tr:has(.field_with_errors) {
+      td {
+        position: relative;
+
+        // Left border
+        &:first-child:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -4px;
+          border-left: 4px solid $color-error;
+          height: 100%;
+        }
+      }
+    }
+
     th,
     td {
       vertical-align: top;
