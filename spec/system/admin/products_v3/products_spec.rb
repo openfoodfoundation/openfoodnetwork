@@ -216,6 +216,16 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       create(:simple_product, name: "Apples", sku: "APL-00",
                               variant_unit: "weight", variant_unit_scale: 1) # Grams
     }
+    let(:variant_b1) {
+      product_b.variants.first.tap{ |v|
+        v.update! display_name: "Medium box", sku: "TMT-01", price: 5, on_hand: 5,
+                  on_demand: false
+      }
+    }
+    let(:product_b) {
+      create(:simple_product, name: "Tomatoes", sku: "TMT-01",
+                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+    }
     before do
       visit admin_products_url
     end
@@ -546,6 +556,107 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         end
       end
 
+      it 'removes a newly added not persisted variant' do
+        click_on "New variant"
+        new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        within new_variant_row do
+          fill_in "Name", with: "Large box"
+          fill_in "SKU", with: "APL-02"
+          expect(page).to have_field("Name", placeholder: "Apples", with: "Large box")
+        end
+
+        expect(page).to have_text("1 product modified.")
+        expect(page).to have_css('form.disabled-section#filters') # ie search/sort disabled
+
+        within new_variant_row do
+          page.find(".vertical-ellipsis-menu").click
+          page.find('a', text: 'Remove').click
+        end
+
+        expect(page).not_to have_field("Name", placeholder: "Apples", with: "Large box")
+        expect(page).not_to have_text("1 product modified.")
+        expect(page).not_to have_css('form.disabled-section#filters')
+      end
+
+      it "removes newly added not persistent Variants one at a time" do
+        click_on "New variant"
+
+        first_new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        within first_new_variant_row do
+          fill_in "Name", with: "Large box"
+        end
+
+        click_on "New variant"
+        second_new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        within second_new_variant_row do
+          fill_in "Name", with: "Huge box"
+        end
+
+        expect(page).to have_text("1 product modified.")
+        expect(page).to have_css('form.disabled-section#filters')
+
+        within first_new_variant_row do
+          page.find(".vertical-ellipsis-menu").click
+          page.find('a', text: 'Remove').click
+        end
+
+        expect(page).to have_text("1 product modified.")
+
+        within second_new_variant_row do
+          page.find(".vertical-ellipsis-menu").click
+          page.find('a', text: 'Remove').click
+        end
+        # Only when all non persistent variants are gone that product is non modified
+        expect(page).not_to have_text("1 product modified.")
+        expect(page).not_to have_css('form.disabled-section#filters')
+      end
+
+      context "With 2 products" do
+        before do
+          variant_b1
+          # To add 2nd product on page
+          page.refresh
+        end
+
+        it "removes newly added Variants across products" do
+          click_on "New variant"
+          apples_new_variant_row =
+            find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+          within apples_new_variant_row do
+            fill_in "Name", with: "Large box"
+          end
+
+          tomatoes_part = page.all('tbody')[1]
+          within tomatoes_part do
+            click_on "New variant"
+          end
+          tomatoes_new_variant_row =
+            find_field("Name", placeholder: "Tomatoes", with: "").ancestor("tr")
+          within tomatoes_new_variant_row do
+            fill_in "Name", with: "Huge box"
+          end
+          expect(page).to have_text("2 products modified.")
+          expect(page).to have_css('form.disabled-section#filters') # ie search/sort disabled
+
+          within apples_new_variant_row do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+          # New variant for apples is no more, expect only 1 modified product
+          expect(page).to have_text("1 product modified.")
+          # search/sort still disabled
+          expect(page).to have_css('form.disabled-section#filters')
+
+          within tomatoes_new_variant_row do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+          # Back to page without any alteration
+          expect(page).not_to have_text("1 product modified.")
+          expect(page).not_to have_css('form.disabled-section#filters')
+        end
+      end
+
       context "with invalid data" do
         before do
           click_on "New variant"
@@ -623,6 +734,22 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
           expect(new_variant.sku).to eq "APL-02"
           expect(new_variant.price).to eq 10.25
           expect(new_variant.unit_value).to eq 200
+        end
+
+        it "removes unsaved record" do
+          click_button "Save changes"
+
+          expect(page).to have_text("1 product could not be saved.")
+
+          within row_containing_name("N" * 256) do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+
+          # Now that invalid variant is removed, we can proceed to save
+          click_button "Save changes"
+          expect(page).not_to have_text("1 product could not be saved.")
+          expect(page).not_to have_css('form.disabled-section#filters')
         end
       end
     end
