@@ -22,6 +22,8 @@ Spree::Core::Engine.routes.draw do
 
   resources :api_keys, :only => [:create, :destroy]
   resources :users, :only => [:edit, :update]
+  get '/user/approve_enterprise_request', to: 'users#approve_enterprise_request'
+  post '/user/request_enterprise', to: 'users#request_enterprise'
 
   devise_scope :spree_user do
     post '/login' => 'user_sessions#create', :as => :create_new_session

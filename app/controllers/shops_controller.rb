@@ -23,8 +23,9 @@ class ShopsController < BaseController
         # If the user's enterprise is private, include only public enterprises
         if enterprise.visible == 'private'
           @grouped_enterprises.merge(enterprises)
+          @grouped_enterprises.merge([enterprise])
         else
-          @grouped_enterprises.merge(group.enterprises)
+          @grouped_enterprises.merge(enterprises)
         end
       end
     end

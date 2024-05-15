@@ -90,16 +90,16 @@ module Spree
     end
 
     def request_enterprise
-      
-      user = User.find(params[:user_id])
-      enterprise = Enterprise.find(params[:enterprise_id])
-
-      if user.request_token.blank?
-        user.request_token = SecureRandom.urlsafe_base64
-        user.save!
-      end        
-      RequestMailer.request_email(user, enterprise, user.request_token).deliver_now
-      flash.now[:success] = "Request email sent."
+      if params[:enterprises].present?
+        user = User.find(params[:user_id])
+        enterprise = Enterprise.find(params[:enterprises])
+        request_token      
+        RequestMailer.request_email(user, enterprise, user.request_token).deliver_now
+        flash.now[:success] = "Request email sent."
+        redirect_to spree.account_url, notice: "Request email has been sent successfully."
+      else
+        redirect_to spree.account_url, notice: "Please select an enterprise to request."
+      end
     end
 
     private
@@ -133,14 +133,23 @@ module Spree
       ::PermittedAttributes::User.new(params).call
     end
 
+    def private_shop_access(user, enterprise)
+      request_token(user)
+      RequestMailer.request_email(user, enterprise, user.request_token).deliver_now
+    end
+
+    def request_token(user)
+      if user.request_token.blank?
+        user.request_token = SecureRandom.urlsafe_base64
+        user.save!
+      end
+    end
+
     def create_enterprise_role
       enterprise = Enterprise.find(params[:user][:shop_id])
 
-      if enterprise.public?
-        enterprises = Enterprise.joins(:address).where("lower(city) = ?", enterprise.address.city.downcase)
-        enterprises.each do |enterprise|
-          create_enterprise_role_query(enterprise.id)
-        end
+      if enterprise.private?
+        private_shop_access(@user, enterprise)
       else
         create_enterprise_role_query(enterprise.id)
       end

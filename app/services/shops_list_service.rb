@@ -14,7 +14,6 @@ class ShopsListService
   def shops_list
     Enterprise
       .activated
-      .visible
       .is_distributor
       .includes(address: [:state, :country])
       .includes(:properties)

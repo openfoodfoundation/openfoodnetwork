@@ -113,10 +113,7 @@ Openfoodnetwork::Application.routes.draw do
   post 'embedded_shopfront/enable', to: 'application#enable_embedded_styles'
   post 'embedded_shopfront/disable', to: 'application#disable_embedded_styles'
 
-  resources :users do
-    get 'approve_enterprise_request', to: 'spree/users#approve_enterprise_request', as: 'approve_enterprise_request'
-    post 'request_enterprise', to: 'spree/users#request_enterprise', as: 'request_enterprise'
-  end
+  resources :users
 
   resources :enterprises do
     collection do
