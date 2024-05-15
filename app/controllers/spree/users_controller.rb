@@ -93,7 +93,7 @@ module Spree
       if params[:enterprises].present?
         user = User.find(params[:user_id])
         enterprise = Enterprise.find(params[:enterprises])
-        request_token      
+        request_token(user)
         RequestMailer.request_email(user, enterprise, user.request_token).deliver_now
         flash.now[:success] = "Request email sent."
         redirect_to spree.account_url, notice: "Request email has been sent successfully."
