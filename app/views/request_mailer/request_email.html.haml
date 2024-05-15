@@ -1,19 +1,19 @@
 %p
-  Hello,
+  Bonjour,
 
 %p
   = @user.email.present? ? @user.email : email
-  has requested access to
+  a demandé l'accès à
   = @enterprise.name
 
 %p
-  Click the link below to approve the request:
+  Cliquer sur le lien ci-dessous pour autoriser l'inscription:
 
 %p
-  = link_to 'Approve Request', user_approve_enterprise_request_url(user_id: @user.id, token: @token, enterprise_id: @enterprise.id)
+  = link_to 'Autoriser accès au groupe privé', spree.user_approve_enterprise_request_url(user_id: @user.id, token: @token, enterprise_id: @enterprise.id)
 
 %p
-  Thank you,
+  Merci.
 
 %p
   LA BELLE ORANGE

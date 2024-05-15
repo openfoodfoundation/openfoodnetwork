@@ -437,6 +437,10 @@ class Enterprise < ApplicationRecord
     visible == "public"
   end
 
+  def private?
+    visible == "private"
+  end
+
   def destroy
     update(removed: true)
   end
