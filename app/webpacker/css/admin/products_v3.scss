@@ -67,6 +67,16 @@
         padding: 4px 0;
       }
 
+      // Left border on main header row
+      &:last-child th:first-child:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -4px;
+        border-left: 4px solid $color-tbl-bg;
+        height: 100%;
+      }
+
       th.with-input {
         // Additional padding to line up with content of input
         padding-left: $padding-tbl-cell + $hpadding-txt;
