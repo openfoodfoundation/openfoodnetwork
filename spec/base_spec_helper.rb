@@ -32,7 +32,7 @@ require 'webmock/rspec'
 WebMock.enable!
 WebMock.disable_net_connect!(
   allow_localhost: true,
-  allow: ['chromedriver.storage.googleapis.com', 'api.knapsackpro.com']
+  allow: ['chromedriver.storage.googleapis.com']
 )
 
 # Requires supporting ruby files with custom matchers and macros, etc,
