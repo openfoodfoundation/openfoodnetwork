@@ -6,16 +6,14 @@
       %p= t ".tagline"
     %div
       - if enterprise.connected_apps.empty?
-        %button{ data: {reflex: "click->Admin::ConnectedApp#create", enterprise_id: enterprise.id} }
-          = t ".enable"
+        = button_to t(".enable"), admin_enterprise_connected_apps_path(enterprise.id), method: :post
       - elsif enterprise.connected_apps.connecting.present?
         %button{ disabled: true }
           %i.spinner.fa.fa-spin.fa-circle-o-notch
           &nbsp;
           = t ".loading"
       - else
-        %button{ data: {reflex: "click->Admin::ConnectedApp#destroy", enterprise_id: enterprise.id} }
-          = t ".disable"
+        = button_to t(".disable"), admin_enterprise_connected_app_path(0, enterprise_id: enterprise.id), method: :delete
 
   .connected-app__connection
     - if enterprise.connected_apps.ready.present?
