@@ -164,6 +164,7 @@ Metrics/ClassLength:
     - 'app/models/spree/user.rb'
     - 'app/models/spree/variant.rb'
     - 'app/models/spree/zone.rb'
+    - 'app/reflexes/admin/orders_reflex.rb'
     - 'app/reflexes/products_reflex.rb'
     - 'app/serializers/api/cached_enterprise_serializer.rb'
     - 'app/serializers/api/enterprise_shopfront_serializer.rb'

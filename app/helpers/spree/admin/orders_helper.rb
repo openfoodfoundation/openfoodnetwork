@@ -34,6 +34,10 @@ module Spree
         links
       end
 
+      def order_shipment_ready?(order)
+        order.ready_to_ship?
+      end
+
       private
 
       def complete_order_links(order)

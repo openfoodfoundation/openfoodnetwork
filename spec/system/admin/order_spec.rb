@@ -968,13 +968,19 @@ RSpec.describe '
               within ".reveal-modal" do
                 expect(page).to have_checked_field('Send a shipment/pick up ' \
                                                    'notification email to the customer.')
-                expect {
-                  find_button("Confirm").click
-                }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
+                find_button("Confirm").click
               end
 
+              expect(page).to have_selector('.reveal-modal', visible: false)
+              click_link('Order Details') unless subpage == 'Order Details'
+
+              sleep(0.5) # avoid flakyness
               expect(order.reload.shipped?).to be true
               expect(page).to have_text 'SHIPPED'
+              expect(ActionMailer::MailDeliveryJob).to have_been_enqueued
+                .exactly(:once)
+                .with("Spree::ShipmentMailer", "shipped_email", "deliver_now",
+                      { args: [order.shipment.id, { delivery: true }] })
             end
 
             it "ships the order without sending email" do
@@ -986,26 +992,27 @@ RSpec.describe '
 
               within ".reveal-modal" do
                 uncheck 'Send a shipment/pick up notification email to the customer.'
-                expect {
-                  find_button("Confirm").click
-                }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
+                find_button("Confirm").click
               end
 
+              expect(page).to have_selector('.reveal-modal', visible: false)
+              click_link('Order Details') unless subpage == 'Order Details'
+
+              sleep(0.5) # avoir flakyness
               expect(order.reload.shipped?).to be true
               expect(page).to have_text 'SHIPPED'
+              expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued
+                .with(array_including("Spree::ShipmentMailer"))
             end
           end
         end
 
         it_behaves_like "ship order from dropdown", "Order Details"
-        context "pending examples" do
-          before { pending("#12369") }
-          it_behaves_like "ship order from dropdown", "Customer Details"
-          it_behaves_like "ship order from dropdown", "Payments"
-          it_behaves_like "ship order from dropdown", "Adjustments"
-          it_behaves_like "ship order from dropdown", "Invoices"
-          it_behaves_like "ship order from dropdown", "Return Authorizations"
-        end
+        it_behaves_like "ship order from dropdown", "Customer Details"
+        it_behaves_like "ship order from dropdown", "Payments"
+        it_behaves_like "ship order from dropdown", "Adjustments"
+        it_behaves_like "ship order from dropdown", "Invoices"
+        it_behaves_like "ship order from dropdown", "Return Authorizations"
       end
 
       context "when an included variant has been deleted" do
