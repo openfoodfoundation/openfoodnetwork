@@ -34,6 +34,7 @@ Openfoodnetwork::Application.configure do
 
   # Use https in email links
   config.action_mailer.default_url_options = { protocol: 'https' }
+  config.action_mailer.delivery_method = :mailjet
 
   # Set log level (default is :debug in Rails 4)
   config.log_level = :info

@@ -7,7 +7,7 @@ class RequestMailer < ApplicationMailer
     @token = token
     return if @user.email.blank?
 
-    mail(to: ENV['FRUITS_EMAIL'], from: @user.email,
+    mail(to: ENV['FRUITS_EMAIL'], from: ENV['FRUITS_EMAIL_SUPPORT'],
          subject: 'Enterprise Access Request')
   end
 
@@ -15,7 +15,7 @@ class RequestMailer < ApplicationMailer
     @message = message
     return if user_email.blank?
 
-    mail(to: user_email, from: ENV['FRUITS_EMAIL'],
+    mail(to: user_email, from: ENV['FRUITS_EMAIL_SUPPORT'],
          subject: 'Enterprise Approval Notification')
   end
 end
