@@ -134,6 +134,7 @@ class Enterprise < ApplicationRecord
 
   scope :by_name, -> { order('name') }
   scope :visible, -> { where(visible: "public") }
+  scope :public_or_private, -> { where(visible: ["public", "private"]) }
   scope :not_hidden, -> { where.not(visible: "hidden") }
   scope :activated, -> { where("sells != 'unspecified'") }
   scope :ready_for_checkout, lambda {

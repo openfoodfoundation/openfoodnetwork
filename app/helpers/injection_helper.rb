@@ -42,7 +42,7 @@ module InjectionHelper
 
     inject_json_array(
       "enterprises",
-      Enterprise.activated.visible.select(select_only).includes(address: [:state, :country]).all,
+      Enterprise.activated.public_or_private.select(select_only).includes(address: [:state, :country]).all,
       Api::EnterpriseShopfrontListSerializer
     )
   end
