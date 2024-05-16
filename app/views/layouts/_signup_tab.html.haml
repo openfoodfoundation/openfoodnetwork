@@ -33,7 +33,7 @@
     .row
       .large-12.columns
         = form.label :shop_id, t(:shops_title)
-        = form.select :shop_id, Enterprise.pluck(:name, :id), {} 
+        = form.select :shop_id, Enterprise.order(:name).pluck(:name, :id), {} 
         = form.error_message_on :shops
     .row
       .large-12.columns
