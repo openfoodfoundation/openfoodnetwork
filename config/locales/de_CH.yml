@@ -471,6 +471,7 @@ de_CH:
         edit: Bearbeiten
         clone: Duplizieren
         delete: Löschen
+        remove: Löschen
       image:
         edit: Bearbeiten
     adjustments:
@@ -3664,6 +3665,10 @@ de_CH:
         enterprise_relationships: "Berechtigungen"
         customers: "Kunden"
         groups: "Gruppen"
+        overview: "Einführung"
+        product_import: "Importieren"
+        enterprise_roles: "Rollen"
+        payment_methods: "Zahlungsarten"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Übernahme der Eigenschaften von %{supplier} (ausser oben überschrieben)?"

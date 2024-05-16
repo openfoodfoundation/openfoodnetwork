@@ -223,6 +223,10 @@ en_CA:
               not_available_to_shop: "is not available to %{shop}"
   card_details: "Card details"
   card_type: "Card type"
+  card_type_is: "Card type is"
+  unrecognized_card_type: "Unrecognized card type"
+  use_new_cc: "Use a new credit card"
+  what_is_this: "What is this?"
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
@@ -547,6 +551,7 @@ en_CA:
         edit: Edit
         clone: Clone
         delete: Delete
+        remove: Remove
       image:
         edit: Edit
     adjustments:
@@ -651,6 +656,7 @@ en_CA:
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
+        instance_publishable_key: Instance Publishable Key
         account_id: Account ID
         business_name: Business Name
         charges_enabled: Charges Enabled
@@ -835,6 +841,7 @@ en_CA:
         error: Unable to delete the variant
       variant_row:
         none_tax_category: None
+        search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
       product_row:
@@ -2497,6 +2504,7 @@ en_CA:
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
+  thank_you_for_your_order: "Thank you for your order"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
   products_cart_distributor_is: "Your distributor for this order is %{name}."
@@ -3720,6 +3728,7 @@ en_CA:
     editing_tax_category: "Editing tax category"
     editing_tax_rate: "Editing tax rate"
     editing_zone: "Editing zone"
+    editing_state: "Editing Province"
     expiration: "Expiration"
     invalid_payment_provider: "Invalid payment provider"
     items_cannot_be_shipped: "Items cannot be shipped"
@@ -3758,6 +3767,7 @@ en_CA:
     resend: "Resend"
     back_to_orders_list: "Back to Orders List"
     back_to_payments_list: "Back To Payments List"
+    back_to_states_list: "Back To Provinces List"
     return_authorizations: "Return Authoriations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units"
     select_stock: "Select stock"
@@ -3987,6 +3997,10 @@ en_CA:
         customers: "Customers"
         groups: "Groups"
         oidc_settings: "OIDC Settings"
+        overview: "Overview"
+        product_import: "Import"
+        enterprise_roles: "Roles"
+        payment_methods: "Payment Methods"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"

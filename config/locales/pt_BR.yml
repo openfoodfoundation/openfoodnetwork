@@ -406,6 +406,7 @@ pt_BR:
         edit: Editar
         clone: Cópia
         delete: Deletar
+        remove: Remover
       image:
         edit: Editar
     adjustments:
@@ -3487,6 +3488,10 @@ pt_BR:
         enterprise_relationships: "Permissões"
         customers: "Compradores"
         groups: "Grupos"
+        overview: "Visão geral"
+        product_import: "Importar"
+        enterprise_roles: "Funções"
+        payment_methods: "Métodos de pagamento"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Herdar propriedades de %{supplier}? (a menos que substituído acima)"

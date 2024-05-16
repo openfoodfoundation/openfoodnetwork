@@ -478,6 +478,7 @@ es:
         edit: Editar
         clone: Duplicar
         delete: Borrar
+        remove: Eliminar
       image:
         edit: Editar
     adjustments:
@@ -3738,6 +3739,10 @@ es:
         enterprise_relationships: "Permisos"
         customers: "Consumidoras"
         groups: "Redes"
+        overview: "Visión general"
+        product_import: "Importar"
+        enterprise_roles: "Roles"
+        payment_methods: "Métodos de Pago"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"

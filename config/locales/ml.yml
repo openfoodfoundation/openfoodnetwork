@@ -535,6 +535,7 @@ ml:
         edit: എഡിറ്റ് ചെയ്യുക
         clone: ക്ലോൺ
         delete: ഡിലീറ്റ് ചെയ്യുക
+        remove: നീക്കം ചെയ്യുക
       image:
         edit: എഡിറ്റ് ചെയ്യുക
     adjustments:
@@ -3934,6 +3935,10 @@ ml:
         customers: "ഉപഭോക്താക്കൾ"
         groups: "ഗ്രൂപ്പുകൾ"
         oidc_settings: "ഓഐഡിസി ക്രമീകരണങ്ങൾ"
+        overview: "അവലോകനം"
+        product_import: "ഇറക്കുമതി ചെയ്യുക"
+        enterprise_roles: "കർത്തവ്യങ്ങൾ"
+        payment_methods: "പേയ്മെന്റ് രീതികൾ"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "%{supplier} ൽ നിന്ന് പ്രോപ്പർട്ടികൾ അവകാശമാക്കണോ? (മുകളിൽ അസാധുവായില്ലെങ്കിൽ)"

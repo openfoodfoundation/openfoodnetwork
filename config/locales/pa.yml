@@ -528,6 +528,7 @@ pa:
         edit: ਸੰਪਾਦਿਤ ਕਰੋ
         clone: ਕਲੋਨ
         delete: ਹਟਾਓ
+        remove: Remove
       image:
         edit: ਸੰਪਾਦਿਤ ਕਰੋ
     adjustments:
@@ -3804,6 +3805,10 @@ pa:
         customers: "ਗਾਹਕ"
         groups: "ਸਮੂਹ"
         oidc_settings: "OIDC ਸੈਟਿੰਗਾਂ"
+        overview: "ਸੰਖੇਪ ਜਾਣਕਾਰੀ"
+        product_import: "ਇਮਪੋਰਟ"
+        enterprise_roles: "ਭੂਮਿਕਾਵਾਂ"
+        payment_methods: "ਭੁਗਤਾਨ ਦੇ ਢੰਗ"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "%{supplier} ਤੋਂ ਪ੍ਰੋਪੇਰਟੀਜ਼ ਅਪਣਾਓ? (ਜਦੋਂ ਤੱਕ ਕਿ ਉਪਰ ਓਵਰਰਾਈਡ ਨਾ ਕੀਤਾ ਗਿਆ ਹੋਵੇ)"

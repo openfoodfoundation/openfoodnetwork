@@ -498,6 +498,7 @@ it:
         edit: Modifica
         clone: Duplica
         delete: Annulla
+        remove: Rimuovi
       image:
         edit: Modifica
     adjustments:
@@ -3774,6 +3775,10 @@ it:
         customers: "Clienti"
         groups: "Reti"
         oidc_settings: "Impoostazioni"
+        overview: "Panoramica"
+        product_import: "Importazione"
+        enterprise_roles: "Ruoli"
+        payment_methods: "Metodi di Pagamento"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Eredita le proprietà da %{supplier}? (se non sovrascritto)"

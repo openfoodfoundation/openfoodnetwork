@@ -468,6 +468,7 @@ uk:
         edit: Редагувати
         clone: Клонувати
         delete: Видалити
+        remove: Видалити
       image:
         edit: Редагувати
     adjustments:
@@ -3711,6 +3712,10 @@ uk:
         enterprise_relationships: "Дозволи"
         customers: "Клієнти"
         groups: "Групи"
+        overview: "Огляд"
+        product_import: "Імпорт"
+        enterprise_roles: "Ролі"
+        payment_methods: "Методи оплати"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Успадкувати властивості від %{supplier}? (якщо не перевизначено вище)"

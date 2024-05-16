@@ -386,6 +386,7 @@ tr:
         edit: Düzenle
         clone: Kopyala
         delete: Sil
+        remove: Kaldır
       image:
         edit: Düzenle
     adjustments:
@@ -3485,6 +3486,10 @@ tr:
         enterprise_relationships: "İZİNLER"
         customers: "MÜŞTERİLER"
         groups: "AĞLAR"
+        overview: "genel bakış"
+        product_import: "Aktar"
+        enterprise_roles: "Roller"
+        payment_methods: "ÖDEME YÖNTEMLERİ"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Özellikler %{supplier}'den devralınsın mı? (yukarıda geçersiz kılınmadıkça)"

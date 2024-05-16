@@ -474,6 +474,7 @@ hu:
         edit: Szerkesztés
         clone: Klón
         delete: Töröl
+        remove: eltávolítás
       image:
         edit: Szerkesztés
     adjustments:
@@ -3730,6 +3731,10 @@ hu:
         enterprise_relationships: "Engedélyek"
         customers: "Ügyfelek"
         groups: "Csoportok"
+        overview: "Áttekintés"
+        product_import: "Importálás"
+        enterprise_roles: "Szerepek"
+        payment_methods: "fizetési módok"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Tulajdonságokat örököl a következőtől: %{supplier}? (hacsak nincs felülírva)"

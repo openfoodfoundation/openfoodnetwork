@@ -384,6 +384,7 @@ el:
         edit: Επεξεργασία
         clone: Κλώνος
         delete: Διαγραφή
+        remove: Αφαίρεση
       image:
         edit: Επεξεργασία
     adjustments:
@@ -3290,6 +3291,8 @@ el:
         enterprise_relationships: "Άδειες"
         customers: "Πελάτες"
         groups: "Ομάδες"
+        product_import: "Εισαγωγή"
+        payment_methods: "Τρόποι πληρωμής"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Κληρονομεί ιδιότητες από %{supplier}; (εκτός αν παρακαμφθεί παραπάνω)"

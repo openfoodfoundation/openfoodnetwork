@@ -535,6 +535,7 @@ cy:
         edit: Golygu
         clone: Clôn
         delete: Dileu
+        remove: Dileu
       image:
         edit: Golygu
     adjustments:
@@ -3986,6 +3987,10 @@ cy:
         customers: "Cwsmeriaid"
         groups: "Grwpiau"
         oidc_settings: "OIDC Settings"
+        overview: "Trosolwg"
+        product_import: "Mewnforio"
+        enterprise_roles: "Rolau"
+        payment_methods: "Dulliau Talu"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Etifeddu eiddo gan %{supplier}? (oni bai ei fod yn cael ei ddiystyru uchod)"

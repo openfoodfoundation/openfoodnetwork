@@ -477,6 +477,7 @@ ar:
         edit: تعديل
         clone: استنساخ
         delete: حذف
+        remove: إزالة
       image:
         edit: تعديل
     adjustments:
@@ -3870,6 +3871,10 @@ ar:
         customers: "العملاء"
         groups: "مجموعات"
         oidc_settings: "إعدادات OIDC"
+        overview: "نظرة عامة"
+        product_import: "استيراد"
+        enterprise_roles: "الأدوار"
+        payment_methods: "طرق الدفع"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "وراثة الخصائص من %{supplier}؟ (ما لم يتم تجاوزه أعلاه)"

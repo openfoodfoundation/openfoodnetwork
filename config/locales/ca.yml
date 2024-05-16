@@ -505,6 +505,7 @@ ca:
         edit: Editar
         clone: Clonar
         delete: Suprimir
+        remove: Eliminar
       image:
         edit: Editar
     adjustments:
@@ -3744,6 +3745,10 @@ ca:
         enterprise_relationships: "Permisos"
         customers: "Consumidores"
         groups: "Grups"
+        overview: "Visió general"
+        product_import: "Importa"
+        enterprise_roles: "Rols"
+        payment_methods: "Mètodes de Pagament"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "heredar propietats de %{supplier}? (llevat que es sobreescrigui a dalt)"

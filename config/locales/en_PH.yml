@@ -332,6 +332,7 @@ en_PH:
         edit: Edit
         clone: Clone
         delete: Delete
+        remove: Remove
       image:
         edit: Edit
     begins_at: Begins At
@@ -3194,6 +3195,10 @@ en_PH:
         enterprise_relationships: "Permissions"
         customers: "Customers"
         groups: "Groups"
+        overview: "Overview"
+        product_import: "Import"
+        enterprise_roles: "Roles"
+        payment_methods: "Payment Methods"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"

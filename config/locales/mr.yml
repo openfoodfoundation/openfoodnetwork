@@ -3837,6 +3837,8 @@ mr:
         customers: "ग्राहक"
         groups: "गट"
         oidc_settings: "OIDC सेटिंग्ज"
+        product_import: "Import करा"
+        payment_methods: "पेमेंट पद्धती"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "%{supplier} कडून गुणधर्म मिळवायचे? (वर ओव्हरराईड केल्याशिवाय)"

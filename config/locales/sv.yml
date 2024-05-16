@@ -176,6 +176,7 @@ sv:
         inherits_properties: "Ärva egenskaper?"
       actions:
         edit: Redigera
+        remove: Ta bort
       image:
         edit: Redigera
     customer: Kund
@@ -2212,6 +2213,9 @@ sv:
         enterprises: "Företag"
         customers: "Kunder"
         groups: "Grupper"
+        overview: "Översikt"
+        enterprise_roles: "Uppgifter"
+        payment_methods: "Betalningssätt"
       properties:
         index:
           properties: "Egenskaper"

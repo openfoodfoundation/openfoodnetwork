@@ -535,6 +535,7 @@ hi:
         edit: एडिट करें
         clone: क्लोन
         delete: हटाएं
+        remove: मिटाएँ
       image:
         edit: एडिट करें
     adjustments:
@@ -3910,6 +3911,10 @@ hi:
         customers: "ग्राहक"
         groups: "ग्रुप्स"
         oidc_settings: "OIDC सेटिंग्स"
+        overview: "अवलोकन"
+        product_import: "इम्पोर्ट करें"
+        enterprise_roles: "भूमिकाएँ"
+        payment_methods: "भुगतान की विधियाँ"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "%{supplier} से प्रॉपर्टीज़ इन्हेरिट करें? (जब तक कि ऊपर ओवरराइड न किया गया हो)"

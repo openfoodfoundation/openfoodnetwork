@@ -550,6 +550,7 @@ fr:
         edit: Modifier
         clone: Dupliquer
         delete: Supprimer
+        remove: Supprimer
       image:
         edit: Modifier
     adjustments:
@@ -4057,6 +4058,10 @@ fr:
         customers: "Acheteurs"
         groups: "Groupes"
         oidc_settings: "OIDC"
+        overview: "Aperçu"
+        product_import: "Importer"
+        enterprise_roles: "Roles"
+        payment_methods: "Méthodes de paiement"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
