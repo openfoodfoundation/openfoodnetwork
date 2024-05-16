@@ -120,7 +120,7 @@ module Spree
       end
 
       def load_roles
-        @roles = Spree::Role.where(nil)
+        @roles = Spree::Role.select('DISTINCT ON (name) *')
       end
 
       def new_email_unconfirmed?

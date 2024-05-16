@@ -4397,6 +4397,7 @@ fr:
           cards: Cartes bancaires
           transactions: Achats
           settings: Paramètres
+          request_a_shop: inscription à un group privé
         unconfirmed_email: "Attente de validation pour l'email: %{unconfirmed_email}. Votre adresse email sera mise à jour quand le nouvel email aura été confirmé."
       orders:
         open_orders: Commandes Ouvertes
