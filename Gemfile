@@ -19,7 +19,6 @@ gem 'angular-rails-templates', '>= 0.3.0'
 gem 'awesome_nested_set'
 gem 'ransack', '~> 4.1.0'
 gem 'responders'
-gem 'rexml'
 gem 'webpacker', '~> 5'
 
 gem 'i18n'

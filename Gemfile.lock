@@ -933,7 +933,6 @@ DEPENDENCIES
   redcarpet
   redis
   responders
-  rexml
   roadie-rails
   roo
   rspec-rails (>= 3.5.2)
