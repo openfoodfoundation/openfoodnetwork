@@ -55,6 +55,30 @@ RSpec.describe '
       expect(page).to have_content "Müller"
     end
 
+    it "requires confirmation to display big reports" do
+      # Mock data is much faster and accurate than creating many orders:
+      allow_any_instance_of(Reporting::Reports::Customers::Base)
+        .to receive(:columns).and_return(
+          {
+            first_name: proc { |_| "Little Bobby Tables " * (10**5) }, # 2 MB
+          }
+        )
+
+      # We still need an order for the report to render a row:
+      create(:completed_order_with_totals)
+
+      login_as_admin
+      visit admin_report_path(report_type: :customers)
+      run_report
+
+      expect(page).to have_content "This report is big"
+      expect(page).not_to have_content "Little Bobby Tables"
+
+      click_on "Display anyway"
+      expect(page).to have_content "FIRST NAME"
+      expect(page).to have_content "Little Bobby Tables"
+    end
+
     it "displays a friendly timeout message and offers download" do
       login_as_admin
       visit admin_report_path(report_type: :customers)
