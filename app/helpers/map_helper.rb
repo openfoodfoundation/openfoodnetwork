@@ -2,7 +2,9 @@
 
 module MapHelper
   def using_google_maps?
-    ENV["GOOGLE_MAPS_API_KEY"].present? || google_maps_configured_with_geocoder_api_key?
+    !ContentConfig.open_street_map_enabled && (
+      ENV["GOOGLE_MAPS_API_KEY"].present? || google_maps_configured_with_geocoder_api_key?
+    )
   end
 
   private
