@@ -14,17 +14,14 @@ end
 
 module Spree
   class TaxRate < ApplicationRecord
-    self.belongs_to_required_by_default = false
-
     acts_as_paranoid
     include CalculatedAdjustments
 
-    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
+    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
     belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
     has_many :adjustments, as: :originator, dependent: nil
 
     validates :amount, presence: true, numericality: true
-    validates :tax_category, presence: true
     validates_with DefaultTaxZoneValidator
 
     scope :by_zone, ->(zone) { where(zone_id: zone) }

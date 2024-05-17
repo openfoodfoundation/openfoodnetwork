@@ -6,15 +6,11 @@ class VariantOverride < ApplicationRecord
   extend Spree::LocalizedNumber
   include StockSettingsOverrideValidation
 
-  self.belongs_to_required_by_default = false
-
   acts_as_taggable
 
   belongs_to :hub, class_name: 'Enterprise'
   belongs_to :variant, class_name: 'Spree::Variant'
 
-  validates :hub, presence: true
-  validates :variant, presence: true
   # Default stock can be nil, indicating stock should not be reset or zero, meaning reset to zero.
   # Need to ensure this can be set by the user.
   validates :default_stock, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
