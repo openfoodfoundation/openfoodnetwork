@@ -1,0 +1,18 @@
+%div{ data: {
+    controller: "open-street-map",
+    "open-street-map-default-latitude-value": ContentConfig.open_street_map_default_latitude,
+    "open-street-map-default-longitude-value": ContentConfig.open_street_map_default_longitude,
+    "open-street-map-provider-name-value": ContentConfig.open_street_map_provider_name,
+    "open-street-map-provider-options-value": ContentConfig.open_street_map_provider_options
+    }
+  }
+  .center
+    %input.button.primary{ data: { action: "click->open-street-map#locateAddress" }, type: "button", value: "{{'registration.steps.details.locate_address' | t}}" }
+  .center{ data: { "open-street-map-target": "dragPinNote" }, style: "display: none" }
+    %strong {{'registration.steps.details.drag_pin' | t}}
+  #open-street-map.map-container--registration
+
+  .center{ data: { "open-street-map-target": "confirmAddressField" }, style: "display: none" }
+    .field
+      %input{ type: 'checkbox', id: 'confirm_address', name: 'confirm_address', "ng-click": 'toggleAddressConfirmed()' }
+      %label{ for: 'confirm_address' } {{'registration.steps.details.confirm_address' | t}}
