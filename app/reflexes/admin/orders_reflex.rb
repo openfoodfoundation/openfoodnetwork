@@ -146,7 +146,7 @@ module Admin
     def distributors_without_abn(orders)
       Enterprise.where(
         id: orders.select(:distributor_id),
-        abn: [nil,""],
+        abn: [nil, ""],
       )
     end
   end
