@@ -6,11 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
-Lint/DuplicateMethods:
-  Exclude:
-    - 'lib/discourse/single_sign_on.rb'
-
 # Offense count: 16
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
@@ -104,7 +99,6 @@ Metrics/AbcSize:
     - 'app/models/spree/order/checkout.rb'
     - 'app/models/spree/preferences/preferable_class_methods.rb'
     - 'app/models/spree/return_authorization.rb'
-    - 'lib/discourse/single_sign_on.rb'
     - 'lib/open_food_network/order_cycle_form_applicator.rb'
     - 'lib/open_food_network/order_cycle_permissions.rb'
     - 'lib/spree/core/controller_helpers/order.rb'
@@ -205,7 +199,6 @@ Metrics/CyclomaticComplexity:
     - 'app/models/spree/tax_rate.rb'
     - 'app/models/spree/variant.rb'
     - 'app/models/spree/zone.rb'
-    - 'lib/discourse/single_sign_on.rb'
     - 'lib/open_food_network/enterprise_issue_validator.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
     - 'lib/spree/core/controller_helpers/order.rb'
@@ -227,7 +220,6 @@ Metrics/MethodLength:
     - 'app/models/spree/order/checkout.rb'
     - 'app/models/spree/payment/processing.rb'
     - 'app/models/spree/preferences/preferable_class_methods.rb'
-    - 'lib/discourse/single_sign_on.rb'
     - 'lib/open_food_network/order_cycle_form_applicator.rb'
     - 'lib/open_food_network/order_cycle_permissions.rb'
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
@@ -1013,7 +1005,6 @@ Style/SlicingWithRange:
     - 'app/helpers/spree/admin/navigation_helper.rb'
     - 'app/services/embedded_page_service.rb'
     - 'engines/order_management/app/services/order_management/subscriptions/validator.rb'
-    - 'lib/discourse/single_sign_on.rb'
 
 # Offense count: 25
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -1021,7 +1012,6 @@ Style/SlicingWithRange:
 Style/StringConcatenation:
   Exclude:
     - 'app/controllers/admin/stripe_connect_settings_controller.rb'
-    - 'app/helpers/discourse_helper.rb'
     - 'app/helpers/enterprises_helper.rb'
     - 'app/helpers/spree/admin/base_helper.rb'
     - 'app/mailers/spree/user_mailer.rb'
