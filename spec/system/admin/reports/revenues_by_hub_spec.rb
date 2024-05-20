@@ -42,8 +42,7 @@ RSpec.describe "Revenues By Hub Reports" do
   let(:distributor3) { create(:enterprise, name: "Hub 3", owner:) }
   let(:owner) { create(:user, email: 'email@email.com') }
   let(:order_cycle) { create(:simple_order_cycle) }
-  let(:product) { create(:product, supplier:) }
-  let(:supplier) { create(:supplier_enterprise) }
+  let(:product) { create(:product) }
   let(:voucher2) { create(:voucher_flat_rate, code: 'code', enterprise: distributor2, amount: 10) }
   let(:voucher3) { create(:voucher_flat_rate, code: 'code', enterprise: distributor3, amount: 10) }
 
