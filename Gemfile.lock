@@ -600,7 +600,8 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.6)
+    rexml (3.2.8)
+      strscan (>= 3.0.9)
     roadie (5.2.1)
       css_parser (~> 1.4)
       nokogiri (~> 1.15)
@@ -758,6 +759,7 @@ GEM
     stringex (2.8.6)
     stringio (3.1.0)
     stripe (11.1.0)
+    strscan (3.1.0)
     swd (2.0.3)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
@@ -931,7 +933,6 @@ DEPENDENCIES
   redcarpet
   redis
   responders
-  rexml
   roadie-rails
   roo
   rspec-rails (>= 3.5.2)
