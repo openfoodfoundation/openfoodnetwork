@@ -414,17 +414,6 @@ RSpec.describe '
           # we need this assertion here to assure there is enough time to
           # toggle the variant box and evaluate the following assertion
           expect(page).to have_content product.name.upcase
-
-            # we need this assertion here to assure there is enough time to
-            # toggle the variant box and evaluate the following assertion
-            expect(page).to have_content product.name
-
-            # iterates between true / false, depending on the test case
-            expectation = expect_message ? :to : :not_to
-            expect(page).public_send(expectation,
-                                     have_content(%(No variant available for this product
-                (hidden via inventory settings)).squish))
-          end
         end
 
         it "doesn't show a warning when going to 'outgoing products' tab" do

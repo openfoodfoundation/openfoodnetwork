@@ -1652,7 +1652,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         expect {
           find("button.secondary.condensed.naked.icon-plus").click
         }.to change{
-        page.all("input[aria-label=Name][placeholder='#{product.name}']", visible: false).count
+          page.all("input[aria-label=Name][placeholder='#{product.name}']", visible: false).count
         }.from(1).to(2)
 
         # When I fill out variant details and hit update
