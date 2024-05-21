@@ -122,7 +122,7 @@ RSpec.describe 'Subscriptions' do
         # update orders close
         find('#order_cycle_orders_close_at').click
 
-        select_datetime_from_datepicker Time.zone.at(Time.zone.local(2040, 10, 24, 17, 0o0, 0o0))
+        select_datetime_from_datepicker Time.zone.at(1.month.from_now)
         find("body").send_keys(:escape)
 
         click_button 'Save'
