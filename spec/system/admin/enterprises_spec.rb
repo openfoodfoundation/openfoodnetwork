@@ -501,7 +501,7 @@ RSpec.describe '
                                     orders_close_at: 2.days.from_now)
       }
       let(:product) {
-        create(:simple_product, supplier: supplier1, primary_taxon: taxon,
+        create(:simple_product, supplier_id: supplier1.id, primary_taxon: taxon,
                                 properties: [property], name: "Beans")
       }
       let(:variant) { product.variants.first }
