@@ -146,10 +146,8 @@ RSpec.describe '
       create(:payment_method,
              distributors: [distributor_managed, distributor_unmanaged, distributor_permitted])
     }
-    let!(:product_managed) { create(:product, supplier: supplier_managed) }
-    let!(:variant_managed) { product_managed.variants.first }
-    let!(:product_permitted) { create(:product, supplier: supplier_permitted) }
-    let!(:variant_permitted) { product_permitted.variants.first }
+    let!(:variant_managed) { create(:variant, supplier: supplier_managed) }
+    let!(:variant_permitted) { create(:variant, supplier: supplier_permitted) }
     let!(:schedule) {
       create(:schedule, name: 'Schedule1',
                         order_cycles: [
@@ -185,12 +183,12 @@ RSpec.describe '
 
     context "that is a manager of the coordinator" do
       before do
-        @new_user = create(:user)
-        @new_user.enterprise_roles.build(enterprise: supplier_managed).save
-        @new_user.enterprise_roles.build(enterprise: distributor_managed).save
-        @new_user.enterprise_roles.build(enterprise: other_distributor_managed).save
+        new_user = create(:user)
+        new_user.enterprise_roles.build(enterprise: supplier_managed).save
+        new_user.enterprise_roles.build(enterprise: distributor_managed).save
+        new_user.enterprise_roles.build(enterprise: other_distributor_managed).save
 
-        login_as @new_user
+        login_as new_user
       end
 
       it "viewing a list of order cycles I am coordinating" do
@@ -375,8 +373,7 @@ RSpec.describe '
                                       distributors: [distributor_managed],
                                       name: 'Order Cycle 1' )
         end
-        let(:product) { create(:product, supplier: supplier_managed) }
-        let(:v1) { create(:variant, product: ) }
+        let(:v1) { create(:variant, supplier: supplier_managed) }
         let(:inventory_item_v1) {
           create(:inventory_item, enterprise: distributor_managed, variant: v1, visible: false)
         }
@@ -413,7 +410,7 @@ RSpec.describe '
 
           # we need this assertion here to assure there is enough time to
           # toggle the variant box and evaluate the following assertion
-          expect(page).to have_content product.name
+          expect(page).to have_content v1.product.name
         end
 
         it "doesn't show a warning when going to 'outgoing products' tab" do
@@ -432,7 +429,7 @@ RSpec.describe '
 
           # we need this assertion here to assure there is enough time to
           # toggle the variant box and evaluate the following assertion
-          expect(page).to have_content product.name
+          expect(page).to have_content v1.product.name
 
           expect(page).not_to have_content "No variant available for this product"
         end
@@ -469,8 +466,8 @@ RSpec.describe '
                       distributor_permitted,
                       distributor_unmanaged
                     ], name: 'Order Cycle 1')
-        v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
-        v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
+        v1 = create(:variant, supplier: supplier_managed)
+        v2 = create(:variant, supplier: supplier_managed)
 
         # Incoming exchange
         ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed,
@@ -554,8 +551,8 @@ RSpec.describe '
                       distributor_permitted,
                       distributor_unmanaged
                     ], name: 'Order Cycle 1')
-        v1 = create(:variant, product: create(:product, supplier: supplier_managed) )
-        v2 = create(:variant, product: create(:product, supplier: supplier_managed) )
+        v1 = create(:variant, supplier: supplier_managed)
+        v2 = create(:variant, supplier: supplier_managed)
 
         # Incoming exchange
         ex_in = oc.exchanges.where(sender_id: supplier_managed, receiver_id: distributor_managed,
@@ -620,9 +617,9 @@ RSpec.describe '
   describe "simplified interface for enterprise users selling only their own produce" do
     let(:user) { create(:user) }
     let(:enterprise) { create(:enterprise, is_primary_producer: true, sells: 'own') }
-    let!(:p1) { create(:simple_product, supplier: enterprise) }
-    let!(:p2) { create(:simple_product, supplier: enterprise) }
-    let!(:p3) { create(:simple_product, supplier: enterprise) }
+    let!(:p1) { create(:product, supplier_id: enterprise.id) }
+    let!(:p2) { create(:product, supplier_id: enterprise.id) }
+    let!(:p3) { create(:product, supplier_id: enterprise.id) }
     let!(:v1) { p1.variants.first }
     let!(:v2) { p2.variants.first }
     let!(:v3) { p3.variants.first }
