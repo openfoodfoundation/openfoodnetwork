@@ -56,6 +56,7 @@
       include_blank: t('.none_tax_category'),
       aria_label: t('.tax_category_field_name'),
       placeholder_value: t('.search_for_tax_categories')))
+  = error_message_on variant, :tax_category
 %td.align-left
   -# empty
 %td.align-right
