@@ -174,13 +174,13 @@ RSpec.describe '
       let!(:s1) { create(:supplier_enterprise) }
       let!(:s2) { create(:supplier_enterprise) }
       let!(:li1) {
-        create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1))
+        create(:line_item_with_shipment, order: o1, variant: create(:variant, supplier: s1))
       }
       let!(:li2) {
-        create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2))
+        create(:line_item_with_shipment, order: o2, variant: create(:variant, supplier: s2))
       }
       let!(:li3) {
-        create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s2))
+        create(:line_item_with_shipment, order: o2, variant: create(:variant, supplier: s2))
       }
 
       before :each do
@@ -195,7 +195,7 @@ RSpec.describe '
       end
 
       it "by supplier name" do
-        fill_in "quick_filter", with: li1.product.supplier.name
+        fill_in "quick_filter", with: li1.variant.supplier.name
         page.find('.filter-actions .button.icon-search').click
 
         expect_line_items_results [li1], [li2, li3]
@@ -327,8 +327,8 @@ RSpec.describe '
 
       it "displays a column for producer" do
         expect(page).to have_selector "th.producer", text: "Producer"
-        expect(page).to have_selector "td.producer", text: li1.product.supplier.name
-        expect(page).to have_selector "td.producer", text: li2.product.supplier.name
+        expect(page).to have_selector "td.producer", text: li1.supplier.name
+        expect(page).to have_selector "td.producer", text: li2.supplier.name
       end
 
       it "displays a column for variant description, which shows only product name " \
@@ -586,10 +586,10 @@ RSpec.describe '
                                           order_cycle: create(:simple_order_cycle) )
         }
         let!(:li1) {
-          create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1) )
+          create(:line_item_with_shipment, order: o1, variant: create(:variant, supplier: s1) )
         }
         let!(:li2) {
-          create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s2) )
+          create(:line_item_with_shipment, order: o1, variant: create(:variant, supplier: s2) )
         }
 
         before :each do
@@ -743,8 +743,9 @@ RSpec.describe '
         let!(:d2) { create(:distributor_enterprise) }
         let!(:oc1) { create(:simple_order_cycle, suppliers: [s1], distributors: [d1] ) }
         let!(:oc2) { create(:simple_order_cycle, suppliers: [s2], distributors: [d2] ) }
-        let!(:p1) { create(:product, supplier: s1) }
-        let!(:p2) { create(:product, supplier: s2) }
+        let!(:v1) { create(:variant, supplier: s1) }
+        let!(:v2) { create(:variant, supplier: s2) }
+
         let!(:o1) {
           create(:order_with_distributor, state: 'complete', shipment_state: 'ready',
                                           completed_at: Time.zone.now, distributor: d1,
@@ -755,8 +756,8 @@ RSpec.describe '
                                           completed_at: Time.zone.now, distributor: d2,
                                           order_cycle: oc2 )
         }
-        let!(:li1) { create(:line_item_with_shipment, order: o1, product: p1 ) }
-        let!(:li2) { create(:line_item_with_shipment, order: o2, product: p2 ) }
+        let!(:li1) { create(:line_item_with_shipment, order: o1, variant: v1 ) }
+        let!(:li2) { create(:line_item_with_shipment, order: o2, variant: v2 ) }
 
         before :each do
           visit_bulk_order_management
@@ -1262,18 +1263,18 @@ RSpec.describe '
                                       completed_at: Time.zone.now, distributor: d2 )
     }
     let!(:line_item_distributed) {
-      create(:line_item_with_shipment, order: o1, product: create(:product, supplier: s1) )
+      create(:line_item_with_shipment, order: o1, variant: create(:variant, supplier: s1) )
     }
     let!(:line_item_not_distributed) {
-      create(:line_item_with_shipment, order: o2, product: create(:product, supplier: s1) )
+      create(:line_item_with_shipment, order: o2, variant: create(:variant, supplier: s1) )
     }
 
     before(:each) do
-      @enterprise_user = create(:user)
-      @enterprise_user.enterprise_roles.build(enterprise: s1).save
-      @enterprise_user.enterprise_roles.build(enterprise: d1).save
+      enterprise_user = create(:user)
+      enterprise_user.enterprise_roles.build(enterprise: s1).save
+      enterprise_user.enterprise_roles.build(enterprise: d1).save
 
-      login_as @enterprise_user
+      login_as enterprise_user
     end
 
     it "displays a Bulk Management Tab under the Orders item" do

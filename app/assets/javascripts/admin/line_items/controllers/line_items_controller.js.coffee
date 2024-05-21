@@ -27,7 +27,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     "order_bill_address_full_name_reversed",
     "order_bill_address_full_name_with_comma",
     "order_bill_address_full_name_with_comma_reversed",
-    "variant_product_supplier_name",
+    "variant_supplier_name",
     "order_email",
     "order_number",
     "product_name"].join("_or_") + "_cont"
@@ -81,7 +81,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       "q[order_shipment_state_not_eq]": "shipped",
       "q[order_completed_at_not_null]": "true",
       "q[order_distributor_id_eq]": $scope.distributorFilter,
-      "q[variant_product_supplier_id_eq]": $scope.supplierFilter,
+      "q[variant_supplier_id_eq]": $scope.supplierFilter,
       "q[order_order_cycle_id_eq]": $scope.orderCycleFilter,
       "q[order_completed_at_gteq]": if formattedStartDate then formattedStartDate else undefined,
       "q[order_completed_at_lt]": if formattedEndDate then formattedEndDate else undefined,
@@ -105,7 +105,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
       Dereferencer.dereferenceAttr $scope.line_items, "supplier", Enterprises.byID
       $scope.loadOrders()
       RequestMonitor.load $q.all([$scope.orders.$promise]).then ->
-        Dereferencer.dereferenceAttr $scope.line_items, "order", Orders.byID  
+        Dereferencer.dereferenceAttr $scope.line_items, "order", Orders.byID
         Dereferencer.dereferenceAttr $scope.orders, "distributor", Enterprises.byID
         Dereferencer.dereferenceAttr $scope.orders, "order_cycle", OrderCycles.byID
         $scope.bulk_order_form.$setPristine()
@@ -133,7 +133,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     return $http(
       method: 'GET'
       url: "/admin/orders/#{order.number}/fire?e=cancel&send_cancellation_email=#{sendEmailCancellation}&restock_items=#{restock_items}")
-  
+
   $scope.deleteLineItem = (lineItem) ->
     if lineItem.order.item_count == 1
       ofnCancelOrderAlert((confirm, sendEmailCancellation, restock_items) ->
@@ -167,7 +167,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
               $scope.cancelOrder(order, sendEmailCancellation, restock_items).then(-> $scope.refreshData())
             else
               Promise.all(LineItems.delete(item) for item in items).then(-> $scope.refreshData())
-      , "js.admin.deleting_item_will_cancel_order")   
+      , "js.admin.deleting_item_will_cancel_order")
     else
       ofnDeleteLineItemsAlert(() ->
         Promise.all(LineItems.delete(item) for item in lineItemsToDelete).then(-> $scope.refreshData())
@@ -199,7 +199,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     $scope.refreshData()
 
   $scope.getLineItemScale = (lineItem) ->
-    if lineItem.units_product && lineItem.units_variant && (lineItem.units_product.variant_unit == "weight" || lineItem.units_product.variant_unit == "volume") 
+    if lineItem.units_product && lineItem.units_variant && (lineItem.units_product.variant_unit == "weight" || lineItem.units_product.variant_unit == "volume")
       lineItem.units_product.variant_unit_scale
     else
       1
@@ -252,7 +252,7 @@ angular.module("admin.lineItems").controller 'LineItemsCtrl', ($scope, $timeout,
     scale = $scope.getScale(unitsProduct, unitsVariant)
     if scale
       $scope.getFormattedValueWithUnitName(value, unitsProduct, unitsVariant, scale)
-    else 
+    else
       ''
 
   $scope.fulfilled = (sumOfUnitValues) ->
