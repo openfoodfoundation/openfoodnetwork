@@ -61,13 +61,13 @@ RSpec.describe 'Subscriptions' do
 
     describe "with an inactive order cycle" do
       let!(:customer) { create(:customer, enterprise: shop) }
-      let!(:product1) { create(:product, supplier: shop) }
-      let!(:product2) { create(:product, supplier: shop) }
+      let!(:product1) { create(:product, supplier_id: shop.id) }
+      let!(:product2) { create(:product, supplier_id: shop.id) }
       let!(:variant1) {
-        create(:variant, product: product1, unit_value: '100', price: 12.00)
+        create(:variant, product: product1, unit_value: '100', price: 12.00, supplier: shop)
       }
       let!(:variant2) {
-        create(:variant, product: product2, unit_value: '1000', price: 6.00)
+        create(:variant, product: product2, unit_value: '1000', price: 6.00, supplier: shop)
       }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) {
@@ -146,19 +146,24 @@ RSpec.describe 'Subscriptions' do
     describe "allowed variants" do
       let!(:customer) { create(:customer, enterprise: shop) }
       let!(:credit_card) { create(:stored_credit_card, user: customer.user) }
-      let!(:shop_product) { create(:product, supplier: shop) }
-      let!(:shop_product2) { create(:product, supplier: shop) }
-      let!(:shop_variant) { create(:variant, product: shop_product, unit_value: "2000") }
-      let!(:shop_variant2) { create(:variant, product: shop_product2, unit_value: "1000") }
+      let!(:shop_product) { create(:product, supplier_id: shop.id) }
+      let!(:shop_product2) { create(:product, supplier_id: shop.id) }
+      let!(:shop_variant) {
+        create(:variant, product: shop_product, unit_value: "2000", supplier: shop)
+      }
+      let!(:shop_variant2) {
+        create(:variant, product: shop_product2, unit_value: "1000", supplier: shop)
+      }
       let!(:permitted_supplier) do
         create(:supplier_enterprise).tap do |supplier|
           create(:enterprise_relationship, child: shop, parent: supplier,
                                            permissions_list: [:add_to_order_cycle])
         end
       end
-      let!(:permitted_supplier_product) { create(:product, supplier: permitted_supplier) }
+      let!(:permitted_supplier_product) { create(:product, supplier_id: permitted_supplier.id) }
       let!(:permitted_supplier_variant) {
-        create(:variant, product: permitted_supplier_product, unit_value: "2000")
+        create(:variant, product: permitted_supplier_product, unit_value: "2000",
+                         supplier: permitted_supplier)
       }
       let!(:incoming_exchange_product) { create(:product) }
       let!(:incoming_exchange_variant) do
