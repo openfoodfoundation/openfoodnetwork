@@ -35,6 +35,8 @@ Openfoodnetwork::Application.routes.draw do
         patch :register
       end
 
+      resources :connected_apps, only: [:create, :destroy]
+
       resources :producer_properties do
         post :update_positions, on: :collection
       end
