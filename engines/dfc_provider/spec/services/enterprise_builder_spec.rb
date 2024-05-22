@@ -5,7 +5,7 @@ require_relative "../spec_helper"
 RSpec.describe EnterpriseBuilder do
   subject(:builder) { described_class }
   let(:enterprise) {
-    build(
+    create(
       :enterprise,
       id: 10_000, name: "Fabi's Farm",
       description: "The place where stuff grows", abn: "123 456 789 0",
@@ -13,7 +13,7 @@ RSpec.describe EnterpriseBuilder do
     )
   }
   let(:variant) {
-    create(:product, supplier: enterprise, name: "Apple").variants.first
+    create(:product, supplier_id: enterprise.id, name: "Apple").variants.first
   }
 
   describe ".enterprise" do

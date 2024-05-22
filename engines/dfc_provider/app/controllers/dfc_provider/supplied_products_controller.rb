@@ -20,8 +20,12 @@ module DfcProvider
       )
       product = variant.product
 
+      if variant.new_record?
+        variant.supplier = current_enterprise
+        variant.save!
+      end
+
       product.save! if product.new_record?
-      variant.save! if variant.new_record?
 
       supplied_product = SuppliedProductBuilder.supplied_product(variant)
       render json: DfcIo.export(supplied_product)
