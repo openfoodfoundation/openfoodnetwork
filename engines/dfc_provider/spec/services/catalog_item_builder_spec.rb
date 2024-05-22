@@ -8,7 +8,7 @@ RSpec.describe DfcBuilder do
   describe ".catalog_item" do
     it "assigns a semantic id" do
       variant.id = 5
-      variant.product.supplier_id = 7
+      variant.supplier_id = 7
 
       item = DfcBuilder.catalog_item(variant)
 
@@ -19,7 +19,7 @@ RSpec.describe DfcBuilder do
 
     it "refers to a supplied product" do
       variant.id = 5
-      variant.product.supplier_id = 7
+      variant.supplier_id = 7
 
       item = DfcBuilder.catalog_item(variant)
 

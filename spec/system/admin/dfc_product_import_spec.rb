@@ -8,7 +8,7 @@ RSpec.describe "DFC Product Import" do
 
   let(:user) { create(:oidc_user, owned_enterprises: [enterprise]) }
   let(:enterprise) { create(:supplier_enterprise) }
-  let(:source_product) { create(:product, supplier: enterprise) }
+  let(:source_product) { create(:product, supplier_id: enterprise.id) }
 
   before do
     login_as user
