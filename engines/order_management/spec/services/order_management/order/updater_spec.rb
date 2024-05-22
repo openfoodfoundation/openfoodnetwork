@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Order
-    describe Updater do
+    RSpec.describe Updater do
       let(:order) { create(:order) }
       let(:updater) { OrderManagement::Order::Updater.new(order) }
 

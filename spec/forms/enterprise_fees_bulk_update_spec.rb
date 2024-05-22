@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe EnterpriseFeesBulkUpdate do
+RSpec.describe EnterpriseFeesBulkUpdate do
   describe "error reporting" do
     let(:enterprise_fee) { build_stubbed(:enterprise_fee) }
     let(:base_attributes) do

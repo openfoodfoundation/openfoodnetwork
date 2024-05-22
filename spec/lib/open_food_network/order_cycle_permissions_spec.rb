@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'open_food_network/order_cycle_permissions'
 
 module OpenFoodNetwork
-  describe OrderCyclePermissions do
+  RSpec.describe OrderCyclePermissions do
     let(:coordinator) { create(:distributor_enterprise) }
     let(:hub) { create(:distributor_enterprise) }
     let(:producer) { create(:supplier_enterprise) }

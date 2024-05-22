@@ -4,7 +4,7 @@ require 'open_food_network/referer_parser'
 require 'spec_helper'
 
 module OpenFoodNetwork
-  describe RefererParser do
+  RSpec.describe RefererParser do
     it "handles requests without referer" do
       expect(RefererParser.path(nil)).to be_nil
     end

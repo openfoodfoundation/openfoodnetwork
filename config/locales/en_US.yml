@@ -446,6 +446,7 @@ en_US:
         edit: Edit
         clone: Clone
         delete: Delete
+        remove: Remove
       image:
         edit: Edit
     adjustments:
@@ -675,6 +676,10 @@ en_US:
         close: Back
       variant_row:
         none_tax_category: None
+        category_field_name: "Category"
+        tax_category_field_name: "Tax Category"
+      product_row:
+        producer_field_name: "Producer"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -3591,6 +3596,10 @@ en_US:
         enterprise_relationships: "Permissions"
         customers: "Customers"
         groups: "Groups"
+        overview: "Overview"
+        product_import: "Import"
+        enterprise_roles: "Roles"
+        payment_methods: "Payment Methods"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"

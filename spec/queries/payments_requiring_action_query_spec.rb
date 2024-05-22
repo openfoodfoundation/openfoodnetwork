@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe PaymentsRequiringActionQuery do
+RSpec.describe PaymentsRequiringActionQuery do
   subject(:result) { described_class.new(user).call }
 
   let(:user) { create(:user) }

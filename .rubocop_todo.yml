@@ -164,6 +164,7 @@ Metrics/ClassLength:
     - 'app/models/spree/user.rb'
     - 'app/models/spree/variant.rb'
     - 'app/models/spree/zone.rb'
+    - 'app/reflexes/admin/orders_reflex.rb'
     - 'app/reflexes/products_reflex.rb'
     - 'app/serializers/api/cached_enterprise_serializer.rb'
     - 'app/serializers/api/enterprise_shopfront_serializer.rb'
@@ -649,14 +650,12 @@ Rails/RedundantActiveRecordAllMethod:
     - 'app/models/spree/variant.rb'
     - 'spec/system/admin/product_import_spec.rb'
 
-# Offense count: 11
+# Offense count: 9
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RedundantPresenceValidationOnBelongsTo:
   Exclude:
     - 'app/models/spree/line_item.rb'
     - 'app/models/spree/order.rb'
-    - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/stock_movement.rb'
     - 'app/models/spree/tax_rate.rb'
     - 'app/models/subscription_line_item.rb'
     - 'app/models/tag_rule.rb'

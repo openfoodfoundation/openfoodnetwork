@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Enterprise do
+RSpec.describe Enterprise do
   describe "sending emails" do
     describe "on creation" do
       let!(:user) { create(:user) }
@@ -395,6 +395,18 @@ describe Enterprise do
         e = build(:enterprise, white_label_logo_link: 'with spaces')
         expect(e).not_to be_valid
       end
+    end
+  end
+
+  describe "serialisation" do
+    it "sanitises HTML in long_description" do
+      subject.long_description = "Hello <script>alert</script> dearest <b>monster</b>."
+      expect(subject.long_description).to eq "Hello alert dearest <b>monster</b>."
+    end
+
+    it "sanitises existing HTML in long_description" do
+      subject[:long_description] = "Hello <script>alert</script> dearest <b>monster</b>."
+      expect(subject.long_description).to eq "Hello alert dearest <b>monster</b>."
     end
   end
 

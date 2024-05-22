@@ -787,6 +787,9 @@ mr:
         save: बदल जतन करा
       variant_row:
         none_tax_category: कोणतेही नाही
+        category_field_name: "श्रेणी"
+      product_row:
+        producer_field_name: "उत्पादक"
     product_import:
       title: उत्पादन आयात
       file_not_found: फाइल सापडली नाही किंवा उघडता आली नाही
@@ -3834,6 +3837,8 @@ mr:
         customers: "ग्राहक"
         groups: "गट"
         oidc_settings: "OIDC सेटिंग्ज"
+        product_import: "Import करा"
+        payment_methods: "पेमेंट पद्धती"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "%{supplier} कडून गुणधर्म मिळवायचे? (वर ओव्हरराईड केल्याशिवाय)"

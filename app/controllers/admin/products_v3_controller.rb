@@ -7,7 +7,7 @@ module Admin
 
     def index
       fetch_products
-      render "index", locals: { producers:, categories:, flash: }
+      render "index", locals: { producers:, categories:, tax_category_options:, flash: }
     end
 
     def bulk_update
@@ -24,7 +24,8 @@ module Admin
       elsif product_set.errors.present?
         @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
 
-        render "index", status: :unprocessable_entity, locals: { producers:, categories:, flash: }
+        render "index", status: :unprocessable_entity,
+                        locals: { producers:, categories:, tax_category_options:, flash: }
       end
     end
 
@@ -47,6 +48,7 @@ module Admin
       # prority is given to element dataset (if present) over url params
       @page = params[:page].presence || 1
       @per_page = params[:per_page].presence || 15
+      @q = params.permit(q: {})[:q] || { s: 'name asc' }
     end
 
     def producers
@@ -57,6 +59,10 @@ module Admin
 
     def categories
       Spree::Taxon.order(:name).map { |c| [c.name, c.id] }
+    end
+
+    def tax_category_options
+      Spree::TaxCategory.order(:name).pluck(:name, :id)
     end
 
     def fetch_products
@@ -84,6 +90,8 @@ module Admin
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
       query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
+      query.merge!(@q) if @q
+
       query
     end
 

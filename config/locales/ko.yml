@@ -468,6 +468,7 @@ ko:
         edit: 편집
         clone: 복사
         delete: 삭제
+        remove: 제거
       image:
         edit: 편집
     adjustments:
@@ -696,6 +697,10 @@ ko:
         close: 뒤로
       variant_row:
         none_tax_category: None
+        category_field_name: "목록"
+        tax_category_field_name: "세금 목록"
+      product_row:
+        producer_field_name: "제공자"
     product_import:
       title: 제품 가져오기
       file_not_found: 파일을 찾을 수 없거나 열 수 없습니다.
@@ -3592,6 +3597,10 @@ ko:
         enterprise_relationships: "사용 권한"
         customers: "소비자"
         groups: "그룹"
+        overview: "개요"
+        product_import: "수입"
+        enterprise_roles: "역할"
+        payment_methods: "결제 방법"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "%{supplier} 속성을 상속하시겠습니까? (위에서 재정의하지 않는 경우)"

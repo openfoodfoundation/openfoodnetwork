@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe TermsOfServiceFile do
+RSpec.describe TermsOfServiceFile do
   include FileHelper
 
   let(:upload) { terms_pdf_file }

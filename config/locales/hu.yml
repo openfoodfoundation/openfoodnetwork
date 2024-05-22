@@ -474,6 +474,7 @@ hu:
         edit: Szerkesztés
         clone: Klón
         delete: Töröl
+        remove: eltávolítás
       image:
         edit: Szerkesztés
     adjustments:
@@ -727,6 +728,10 @@ hu:
         error: A változatot nem lehet törölni
       variant_row:
         none_tax_category: Egyik sem
+        category_field_name: "Kategória"
+        tax_category_field_name: "Adókategória"
+      product_row:
+        producer_field_name: "Termelő"
     product_import:
       title: Termék importálása
       file_not_found: A fájl nem található vagy nem nyitható meg
@@ -3726,6 +3731,10 @@ hu:
         enterprise_relationships: "Engedélyek"
         customers: "Ügyfelek"
         groups: "Csoportok"
+        overview: "Áttekintés"
+        product_import: "Importálás"
+        enterprise_roles: "Szerepek"
+        payment_methods: "fizetési módok"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Tulajdonságokat örököl a következőtől: %{supplier}? (hacsak nincs felülírva)"

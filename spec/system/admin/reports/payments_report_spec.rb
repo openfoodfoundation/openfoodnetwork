@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Payments Reports" do
+RSpec.describe "Payments Reports" do
   include AuthenticationHelper
 
   let(:order) do

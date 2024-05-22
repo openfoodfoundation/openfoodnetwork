@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'White label setting' do
+RSpec.describe 'White label setting' do
   include AuthenticationHelper
   include ShopWorkflow
   include FileHelper

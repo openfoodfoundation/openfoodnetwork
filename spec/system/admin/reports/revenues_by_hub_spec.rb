@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Revenues By Hub Reports" do
+RSpec.describe "Revenues By Hub Reports" do
   include AuthenticationHelper
 
   let(:order) do

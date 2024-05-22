@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Managing enterprise images" do
+RSpec.describe "Managing enterprise images" do
   include WebHelper
   include FileHelper
   include AuthenticationHelper

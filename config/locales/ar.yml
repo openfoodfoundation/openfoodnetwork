@@ -477,6 +477,7 @@ ar:
         edit: تعديل
         clone: استنساخ
         delete: حذف
+        remove: إزالة
       image:
         edit: تعديل
     adjustments:
@@ -710,6 +711,10 @@ ar:
         close: عودة
       variant_row:
         none_tax_category: لا شيء
+        category_field_name: "الفئة"
+        tax_category_field_name: "الفئة الضريبية"
+      product_row:
+        producer_field_name: "المنتج"
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه
@@ -3866,6 +3871,10 @@ ar:
         customers: "العملاء"
         groups: "مجموعات"
         oidc_settings: "إعدادات OIDC"
+        overview: "نظرة عامة"
+        product_import: "استيراد"
+        enterprise_roles: "الأدوار"
+        payment_methods: "طرق الدفع"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "وراثة الخصائص من %{supplier}؟ (ما لم يتم تجاوزه أعلاه)"

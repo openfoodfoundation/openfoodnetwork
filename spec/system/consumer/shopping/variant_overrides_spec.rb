@@ -2,12 +2,13 @@
 
 require 'system_helper'
 
-describe "shopping with variant overrides defined" do
+RSpec.describe "shopping with variant overrides defined" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow
   include CheckoutRequestsHelper
   include UIComponentHelper
+  include CheckoutHelper
 
   let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let(:producer) { create(:supplier_enterprise) }
@@ -150,23 +151,27 @@ describe "shopping with variant overrides defined" do
       expect(page).to have_selector "#edit-cart .grand-total", text: with_currency(122.22)
     end
 
-    pending "prices in the checkout" do
+    context "prices in the checkout" do
       it "shows the correct prices" do
         click_add_to_cart product1_variant1, 2
         click_checkout
+        checkout_as_guest
 
-        expect(page).to have_selector 'form.edit_order .cart-total', text: with_currency(122.22)
-        expect(page).to have_selector 'form.edit_order .shipping', text: with_currency(0.00)
-        expect(page).to have_selector 'form.edit_order .total', text: with_currency(122.22)
+        fill_out_details
+        fill_out_billing_address
+
+        proceed_to_payment
+        proceed_to_summary
+
+        expect(page).to have_selector '.summary-right-line-value', text: with_currency(122.22)
+        expect(page).to have_selector '#order_total', text: with_currency(122.22)
       end
     end
   end
 
-  pending "creating orders" do
+  describe "creating orders" do
     it "creates the order with the correct prices" do
       click_add_to_cart product1_variant1, 2
-      click_checkout
-
       complete_checkout
 
       o = Spree::Order.complete.last
@@ -228,32 +233,17 @@ describe "shopping with variant overrides defined" do
   private
 
   def complete_checkout
+    click_checkout
+
     checkout_as_guest
 
-    within "#details" do
-      fill_in "First Name", with: "Some"
-      fill_in "Last Name", with: "One"
-      fill_in "Email", with: "test@example.com"
-      fill_in "Phone", with: "0456789012"
-    end
+    fill_out_details
+    fill_out_billing_address
 
-    within "#billing" do
-      fill_in "Address", with: "123 Street"
-      select "Australia", from: "Country"
-      select "Victoria", from: "State"
-      fill_in "City", with: "Melbourne"
-      fill_in "Postcode", with: "3066"
-    end
+    proceed_to_payment
+    proceed_to_summary
 
-    within "#shipping" do
-      choose sm.name
-    end
-
-    within "#payment" do
-      choose pm.name
-    end
-
-    place_order
+    click_on "Complete order"
     expect(page).to have_content "Your order has been processed successfully"
   end
 

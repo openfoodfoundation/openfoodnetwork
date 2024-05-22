@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
+RSpec.describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
   let(:report_module) { Reporting::Reports::EnterpriseFeeSummary }
 
   # Basic data.

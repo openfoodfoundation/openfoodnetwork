@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe 'Multilingual' do
+RSpec.describe 'Multilingual' do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow

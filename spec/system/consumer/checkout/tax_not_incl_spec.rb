@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "As a consumer, I want to see adjustment breakdown" do
+RSpec.describe "As a consumer, I want to see adjustment breakdown" do
   include ShopWorkflow
   include CheckoutHelper
   include CheckoutRequestsHelper

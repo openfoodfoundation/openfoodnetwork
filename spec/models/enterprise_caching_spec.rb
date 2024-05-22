@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Enterprise do
+RSpec.describe Enterprise do
   context "key-based caching invalidation" do
     describe "is touched when a(n)" do
       let(:enterprise) { create(:distributor_enterprise) }

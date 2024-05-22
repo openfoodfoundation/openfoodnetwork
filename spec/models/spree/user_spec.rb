@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::User do
+RSpec.describe Spree::User do
   describe "associations" do
     it { is_expected.to have_many(:owned_enterprises) }
     it { is_expected.to have_many(:webhook_endpoints).dependent(:destroy) }

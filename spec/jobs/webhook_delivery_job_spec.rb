@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe WebhookDeliveryJob do
+RSpec.describe WebhookDeliveryJob do
   subject { WebhookDeliveryJob.new(url, event, data) }
   let(:url) { 'https://test/endpoint' }
   let(:event) { 'order_cycle.opened' }

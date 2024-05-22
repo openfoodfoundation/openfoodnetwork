@@ -468,6 +468,7 @@ uk:
         edit: Редагувати
         clone: Клонувати
         delete: Видалити
+        remove: Видалити
       image:
         edit: Редагувати
     adjustments:
@@ -699,6 +700,10 @@ uk:
         close: Назад
       variant_row:
         none_tax_category: Жодного
+        category_field_name: "Категорія"
+        tax_category_field_name: "Категорія податку"
+      product_row:
+        producer_field_name: "Виробник"
     product_import:
       title: Імпорт продукту
       file_not_found: Файл не знайдено або не вдалося відкрити
@@ -3707,6 +3712,10 @@ uk:
         enterprise_relationships: "Дозволи"
         customers: "Клієнти"
         groups: "Групи"
+        overview: "Огляд"
+        product_import: "Імпорт"
+        enterprise_roles: "Ролі"
+        payment_methods: "Методи оплати"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Успадкувати властивості від %{supplier}? (якщо не перевизначено вище)"

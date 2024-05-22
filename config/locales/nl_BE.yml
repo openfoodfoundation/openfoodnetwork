@@ -341,6 +341,7 @@ nl_BE:
         edit: bewerking
         clone: Kloon
         delete: 'Uitwissen '
+        remove: Verwijderen
       image:
         edit: bewerking
     begins_at: Begint Bij
@@ -553,6 +554,10 @@ nl_BE:
         close: achterstevoren
       variant_row:
         none_tax_category: Geen enkele
+        category_field_name: "Categorie"
+        tax_category_field_name: "Belastingcategorie"
+      product_row:
+        producer_field_name: "Producent"
     product_import:
       title: Importeren van producten
       file_not_found: Bestand niet gevonden of kon niet worden geopend
@@ -3198,6 +3203,10 @@ nl_BE:
         enterprise_relationships: "Toelatingen"
         customers: "Klanten"
         groups: "Groepen"
+        overview: "Overzicht"
+        product_import: "Importeren"
+        enterprise_roles: "Rollen"
+        payment_methods: "Betalingsmethode"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "De kenmerken van 1%{supplier} krijgen ? (niet ter toepassing in geval van invoer van de vervanging)"

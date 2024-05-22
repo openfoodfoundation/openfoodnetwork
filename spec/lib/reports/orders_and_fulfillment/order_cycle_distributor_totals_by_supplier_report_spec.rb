@@ -5,7 +5,7 @@ require 'spec_helper'
 module Reporting
   module Reports
     module OrdersAndFulfillment
-      describe OrderCycleDistributorTotalsBySupplier do
+      RSpec.describe OrderCycleDistributorTotalsBySupplier do
         let!(:distributor) { create(:distributor_enterprise) }
 
         let!(:order) do

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Web
-  describe CookiesPolicyHelper, type: :helper do
+  RSpec.describe CookiesPolicyHelper, type: :helper do
     # keeps global state unchanged
     around do |example|
       original_locale = I18n.locale

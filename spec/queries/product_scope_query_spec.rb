@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ProductScopeQuery do
+RSpec.describe ProductScopeQuery do
   let!(:taxon) { create(:taxon) }
   let(:supplier) { create(:supplier_enterprise) }
   let(:supplier2) { create(:supplier_enterprise) }

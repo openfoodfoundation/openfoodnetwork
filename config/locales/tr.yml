@@ -386,6 +386,7 @@ tr:
         edit: Düzenle
         clone: Kopyala
         delete: Sil
+        remove: Kaldır
       image:
         edit: Düzenle
     adjustments:
@@ -614,6 +615,10 @@ tr:
         close: Geri
       variant_row:
         none_tax_category: SATIŞ YAPMIYOR
+        category_field_name: "Kategori"
+        tax_category_field_name: "Vergi Kategorisi"
+      product_row:
+        producer_field_name: "ÜRETİCİ"
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı
@@ -3481,6 +3486,10 @@ tr:
         enterprise_relationships: "İZİNLER"
         customers: "MÜŞTERİLER"
         groups: "AĞLAR"
+        overview: "genel bakış"
+        product_import: "Aktar"
+        enterprise_roles: "Roller"
+        payment_methods: "ÖDEME YÖNTEMLERİ"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Özellikler %{supplier}'den devralınsın mı? (yukarıda geçersiz kılınmadıkça)"

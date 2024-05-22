@@ -5,7 +5,7 @@ require "spec_helper"
 module Reporting
   module Reports
     module EnterpriseFeeSummary
-      describe Authorizer do
+      RSpec.describe Authorizer do
         let(:user) { create(:user) }
 
         let(:parameters) { Parameters.new(params) }

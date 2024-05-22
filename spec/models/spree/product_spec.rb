@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'spree/core/product_duplicator'
 
 module Spree
-  describe Product do
+  RSpec.describe Product do
     context 'product instance' do
       let(:product) { create(:product) }
 
@@ -750,7 +750,7 @@ module Spree
     end
   end
 
-  describe "product import" do
+  RSpec.describe "product import" do
     describe "finding the most recent import date of the variants" do
       let!(:product) { create(:product) }
 

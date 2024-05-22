@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe 'As an enterprise user, I can manage my products', feature: :admin_style_v3 do
+RSpec.describe 'As an enterprise user, I can manage my products', feature: :admin_style_v3 do
   include WebHelper
   include AuthenticationHelper
   include FileHelper
@@ -14,6 +14,10 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
     login_as user
   end
 
+  let(:producer_search_selector) { 'input[placeholder="Search for producers"]' }
+  let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
+  let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
+
   it "can see the new product page" do
     visit admin_products_url
     expect(page).to have_content "Bulk Edit Products"
@@ -22,18 +26,34 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
   describe "sorting" do
     let!(:product_b) { create(:simple_product, name: "Bananas") }
     let!(:product_a) { create(:simple_product, name: "Apples") }
+    let(:products_table) { "table.products" }
 
     before do
       visit admin_products_url
     end
 
-    it "Should sort products alphabetically by default" do
-      within "table.products" do
-        # Gather input values, because page.content doesn't include them.
-        input_content = page.find_all('input[type=text]').map(&:value).join
-
+    it "Should sort products alphabetically by default in ascending order" do
+      within products_table do
         # Products are in correct order.
-        expect(input_content).to match /Apples.*Bananas/
+        expect(all_input_values).to match /Apples.*Bananas/
+      end
+    end
+
+    context "when clicked on 'Name' column header" do
+      it "Should sort products alphabetically in descending/ascending order" do
+        within products_table do
+          name_header = page.find('th > a[data-column="name"]')
+
+          # Sort in descending order
+          name_header.click
+          expect(page).to have_content("Name ▼") # this indicates the re-sorted content has loaded
+          expect(all_input_values).to match /Bananas.*Apples/
+
+          # Sort in ascending order
+          name_header.click
+          expect(page).to have_content("Name ▲") # this indicates the re-sorted content has loaded
+          expect(all_input_values).to match /Apples.*Bananas/
+        end
       end
     end
   end
@@ -194,6 +214,16 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
     }
     let!(:product_a) {
       create(:simple_product, name: "Apples", sku: "APL-00",
+                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+    }
+    let(:variant_b1) {
+      product_b.variants.first.tap{ |v|
+        v.update! display_name: "Medium box", sku: "TMT-01", price: 5, on_hand: 5,
+                  on_demand: false
+      }
+    }
+    let(:product_b) {
+      create(:simple_product, name: "Tomatoes", sku: "TMT-01",
                               variant_unit: "weight", variant_unit_scale: 1) # Grams
     }
     before do
@@ -526,6 +556,107 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
         end
       end
 
+      it 'removes a newly added not persisted variant' do
+        click_on "New variant"
+        new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        within new_variant_row do
+          fill_in "Name", with: "Large box"
+          fill_in "SKU", with: "APL-02"
+          expect(page).to have_field("Name", placeholder: "Apples", with: "Large box")
+        end
+
+        expect(page).to have_text("1 product modified.")
+        expect(page).to have_css('form.disabled-section#filters') # ie search/sort disabled
+
+        within new_variant_row do
+          page.find(".vertical-ellipsis-menu").click
+          page.find('a', text: 'Remove').click
+        end
+
+        expect(page).not_to have_field("Name", placeholder: "Apples", with: "Large box")
+        expect(page).not_to have_text("1 product modified.")
+        expect(page).not_to have_css('form.disabled-section#filters')
+      end
+
+      it "removes newly added not persistent Variants one at a time" do
+        click_on "New variant"
+
+        first_new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        within first_new_variant_row do
+          fill_in "Name", with: "Large box"
+        end
+
+        click_on "New variant"
+        second_new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        within second_new_variant_row do
+          fill_in "Name", with: "Huge box"
+        end
+
+        expect(page).to have_text("1 product modified.")
+        expect(page).to have_css('form.disabled-section#filters')
+
+        within first_new_variant_row do
+          page.find(".vertical-ellipsis-menu").click
+          page.find('a', text: 'Remove').click
+        end
+
+        expect(page).to have_text("1 product modified.")
+
+        within second_new_variant_row do
+          page.find(".vertical-ellipsis-menu").click
+          page.find('a', text: 'Remove').click
+        end
+        # Only when all non persistent variants are gone that product is non modified
+        expect(page).not_to have_text("1 product modified.")
+        expect(page).not_to have_css('form.disabled-section#filters')
+      end
+
+      context "With 2 products" do
+        before do
+          variant_b1
+          # To add 2nd product on page
+          page.refresh
+        end
+
+        it "removes newly added Variants across products" do
+          click_on "New variant"
+          apples_new_variant_row =
+            find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+          within apples_new_variant_row do
+            fill_in "Name", with: "Large box"
+          end
+
+          tomatoes_part = page.all('tbody')[1]
+          within tomatoes_part do
+            click_on "New variant"
+          end
+          tomatoes_new_variant_row =
+            find_field("Name", placeholder: "Tomatoes", with: "").ancestor("tr")
+          within tomatoes_new_variant_row do
+            fill_in "Name", with: "Huge box"
+          end
+          expect(page).to have_text("2 products modified.")
+          expect(page).to have_css('form.disabled-section#filters') # ie search/sort disabled
+
+          within apples_new_variant_row do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+          # New variant for apples is no more, expect only 1 modified product
+          expect(page).to have_text("1 product modified.")
+          # search/sort still disabled
+          expect(page).to have_css('form.disabled-section#filters')
+
+          within tomatoes_new_variant_row do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+          # Back to page without any alteration
+          expect(page).not_to have_text("1 product modified.")
+          expect(page).not_to have_css('form.disabled-section#filters')
+        end
+      end
+
       context "with invalid data" do
         before do
           click_on "New variant"
@@ -604,6 +735,22 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
           expect(new_variant.price).to eq 10.25
           expect(new_variant.unit_value).to eq 200
         end
+
+        it "removes unsaved record" do
+          click_button "Save changes"
+
+          expect(page).to have_text("1 product could not be saved.")
+
+          within row_containing_name("N" * 256) do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+
+          # Now that invalid variant is removed, we can proceed to save
+          click_button "Save changes"
+          expect(page).not_to have_text("1 product could not be saved.")
+          expect(page).not_to have_css('form.disabled-section#filters')
+        end
       end
     end
 
@@ -662,6 +809,117 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
         expect_per_page_to_be 15
         expect_products_count_to_be 1
         expect(page).to have_css row_containing_name("zucchinis")
+      end
+    end
+  end
+
+  describe "Changing producers, category and tax category" do
+    let!(:variant_a1) {
+      product_a.variants.first.tap{ |v|
+        v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
+                  on_demand: false
+      }
+    }
+    let!(:product_a) {
+      create(:simple_product, name: "Apples", sku: "APL-00",
+                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+    }
+
+    context "when they are under 11" do
+      before do
+        create_list(:supplier_enterprise, 9, users: [user])
+        create_list(:tax_category, 9)
+        create_list(:taxon, 2)
+
+        visit admin_products_url
+      end
+
+      it "should not display search input, change the producers, category and tax category" do
+        producer_to_select = random_producer(product_a)
+        category_to_select = random_category(variant_a1)
+        tax_category_to_select = random_tax_category
+
+        within row_containing_name(product_a.name) do
+          validate_tomselect_without_search!(
+            page, "Producer",
+            producer_search_selector
+          )
+          tomselect_select(producer_to_select, from: "Producer")
+        end
+
+        within row_containing_name(variant_a1.display_name) do
+          validate_tomselect_without_search!(
+            page, "Category",
+            categories_search_selector
+          )
+          tomselect_select(category_to_select, from: "Category")
+
+          validate_tomselect_without_search!(
+            page, "Tax Category",
+            tax_categories_search_selector
+          )
+          tomselect_select(tax_category_to_select, from: "Tax Category")
+        end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+        variant_a1.reload
+
+        expect(product_a.supplier.name).to eq(producer_to_select)
+        expect(variant_a1.primary_taxon.name).to eq(category_to_select)
+        expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
+      end
+    end
+
+    context "when they are over 11" do
+      before do
+        create_list(:supplier_enterprise, 11, users: [user])
+        create_list(:tax_category, 11)
+        create_list(:taxon, 11)
+
+        visit admin_products_url
+      end
+
+      it "should display search input, change the producer" do
+        producer_to_select = random_producer(product_a)
+        category_to_select = random_category(variant_a1)
+        tax_category_to_select = random_tax_category
+
+        within row_containing_name(product_a.name) do
+          validate_tomselect_with_search!(
+            page, "Producer",
+            producer_search_selector
+          )
+          tomselect_search_and_select(producer_to_select, from: "Producer")
+        end
+
+        within row_containing_name(variant_a1.display_name) do
+          sleep(0.1)
+          validate_tomselect_with_search!(
+            page, "Category",
+            categories_search_selector
+          )
+          tomselect_search_and_select(category_to_select, from: "Category")
+
+          sleep(0.1)
+          validate_tomselect_with_search!(
+            page, "Tax Category",
+            tax_categories_search_selector
+          )
+          tomselect_search_and_select(tax_category_to_select, from: "Tax Category")
+        end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+        variant_a1.reload
+
+        expect(product_a.supplier.name).to eq(producer_to_select)
+        expect(variant_a1.primary_taxon.name).to eq(category_to_select)
+        expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
       end
     end
   end
@@ -1030,6 +1288,39 @@ describe 'As an enterprise user, I can manage my products', feature: :admin_styl
   end
 
   def tax_category_column
-    @tax_category_column ||= 'td:nth-child(10)'
+    @tax_category_column ||= '[data-controller="variant"] > td:nth-child(10)'
+  end
+
+  def validate_tomselect_without_search!(page, field_name, search_selector)
+    open_tomselect_to_validate!(page, field_name) do
+      expect(page).not_to have_selector(search_selector)
+    end
+  end
+
+  def validate_tomselect_with_search!(page, field_name, search_selector)
+    open_tomselect_to_validate!(page, field_name) do
+      expect(page).to have_selector(search_selector)
+    end
+  end
+
+  def random_producer(product)
+    Enterprise.is_primary_producer
+      .where.not(id: product.supplier.id)
+      .pluck(:name).sample
+  end
+
+  def random_category(variant)
+    Spree::Taxon
+      .where.not(id: variant.primary_taxon.id)
+      .pluck(:name).sample
+  end
+
+  def random_tax_category
+    Spree::TaxCategory
+      .pluck(:name).sample
+  end
+
+  def all_input_values
+    page.find_all('input[type=text]').map(&:value).join
   end
 end

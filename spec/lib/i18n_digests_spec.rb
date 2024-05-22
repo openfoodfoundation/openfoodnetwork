@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe I18nDigests do
+RSpec.describe I18nDigests do
   describe "#build_digests" do
     let(:available_locales) { ["en", "es"] }
     let(:md5_hex_regex) { /([a-f0-9]){10}/ }

@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe '
+RSpec.describe '
     As an admin
     I want to set a supplier and distributor(s) for a product
 ' do

@@ -25,6 +25,10 @@ module Spree
         ActiveMerchant::Billing::Response.new(true, "", {}, {})
       end
 
+      def payment_source_class
+        nil
+      end
+
       def source_required?
         false
       end

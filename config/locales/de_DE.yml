@@ -535,6 +535,7 @@ de_DE:
         edit: Bearbeiten
         clone: Duplizieren
         delete: Löschen
+        remove: Löschen
       image:
         edit: Bearbeiten
     adjustments:
@@ -798,6 +799,10 @@ de_DE:
         close: Zurück
       variant_row:
         none_tax_category: Nichts
+        category_field_name: "Kategorie"
+        tax_category_field_name: "Steuerkategorie"
+      product_row:
+        producer_field_name: "Produzent"
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -3921,6 +3926,10 @@ de_DE:
         customers: "Kunden"
         groups: "Gruppen"
         oidc_settings: "OIDC-Einstellungen"
+        overview: "Einführung"
+        product_import: "Importieren"
+        enterprise_roles: "Rollen"
+        payment_methods: "Zahlungsarten"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Übernahme der Eigenschaften von %{supplier} (außer oben überschrieben)?"

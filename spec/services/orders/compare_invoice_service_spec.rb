@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-shared_examples "attribute changes - payment total" do |boolean, type|
+RSpec.shared_examples "attribute changes - payment total" do |boolean, type|
   before do
     Spree::Order.where(id: order.id).update_all(payment_total: order.payment_total + 10)
   end
@@ -13,7 +13,7 @@ shared_examples "attribute changes - payment total" do |boolean, type|
   end
 end
 
-shared_examples "attribute changes - order total" do |boolean, type|
+RSpec.shared_examples "attribute changes - order total" do |boolean, type|
   before do
     Spree::Order.where(id: order.id).update_all(total: order.total + 10)
   end
@@ -24,7 +24,7 @@ shared_examples "attribute changes - order total" do |boolean, type|
   end
 end
 
-shared_examples "attribute changes - order state: cancelled" do |boolean, type|
+RSpec.shared_examples "attribute changes - order state: cancelled" do |boolean, type|
   before do
     order.cancel!
   end
@@ -35,7 +35,7 @@ shared_examples "attribute changes - order state: cancelled" do |boolean, type|
   end
 end
 
-shared_examples "attribute changes - tax total changes" do |boolean, type, included_boolean|
+RSpec.shared_examples "attribute changes - tax total changes" do |boolean, type, included_boolean|
   let(:order) do
     create(:order_with_taxes, product_price: 110, tax_rate_amount: 0.1,
                               included_in_price: included_boolean)
@@ -58,7 +58,7 @@ shared_examples "attribute changes - tax total changes" do |boolean, type, inclu
   end
 end
 
-shared_examples "attribute changes - shipping method" do |boolean, type|
+RSpec.shared_examples "attribute changes - shipping method" do |boolean, type|
   let(:shipping_method) { create(:shipping_method) }
 
   before do
@@ -71,13 +71,13 @@ shared_examples "attribute changes - shipping method" do |boolean, type|
   end
 end
 
-shared_examples "no attribute changes" do
+RSpec.shared_examples "no attribute changes" do
   it "returns false if no attribute has changed" do
     expect(subject).to be false
   end
 end
 
-shared_examples "attribute changes - special insctructions" do |boolean, type|
+RSpec.shared_examples "attribute changes - special insctructions" do |boolean, type|
   before do
     order.update!(special_instructions: "A very special insctruction.")
   end
@@ -86,7 +86,7 @@ shared_examples "attribute changes - special insctructions" do |boolean, type|
   end
 end
 
-shared_examples "attribute changes - note" do |boolean, type|
+RSpec.shared_examples "attribute changes - note" do |boolean, type|
   before do
     order.update!(note: "THIS IS A NEW NOTE")
   end
@@ -95,7 +95,8 @@ shared_examples "attribute changes - note" do |boolean, type|
   end
 end
 
-shared_examples "associated attribute changes - adjustments (create/delete)" do |boolean, type|
+RSpec.shared_examples "associated attribute changes - adjustments (create/delete)" do
+  |boolean, type|
   context "creating an adjustment" do
     before { order.adjustments << create(:adjustment, order:) }
     it "returns #{boolean} if a #{type} attribute changes" do
@@ -111,7 +112,7 @@ shared_examples "associated attribute changes - adjustments (create/delete)" do 
   end
 end
 
-shared_examples "associated attribute changes - adjustments (edit amount)" do |boolean, type|
+RSpec.shared_examples "associated attribute changes - adjustments (edit amount)" do |boolean, type|
   context "with an existing adjustments" do
     context "editing the amount" do
       before { order.all_adjustments.first.update!(amount: 123) }
@@ -122,7 +123,7 @@ shared_examples "associated attribute changes - adjustments (edit amount)" do |b
   end
 end
 
-shared_examples "associated attribute changes - adjustments (edit label)" do |boolean, type|
+RSpec.shared_examples "associated attribute changes - adjustments (edit label)" do |boolean, type|
   context "adjustment changes" do
     context "editing the label" do
       before { order.all_adjustments.first.update!(label: "It's a new label") }
@@ -133,7 +134,7 @@ shared_examples "associated attribute changes - adjustments (edit label)" do |bo
   end
 end
 
-shared_examples "associated attribute changes - line items" do |boolean, type|
+RSpec.shared_examples "associated attribute changes - line items" do |boolean, type|
   context "line item changes" do
     let(:line_item){ order.line_items.first }
     context "on quantitity" do
@@ -154,7 +155,7 @@ shared_examples "associated attribute changes - line items" do |boolean, type|
   end
 end
 
-shared_examples "associated attribute changes - bill address" do |boolean, type|
+RSpec.shared_examples "associated attribute changes - bill address" do |boolean, type|
   context "bill address - a #{type}" do
     let(:bill_address) { Spree::Address.where(id: order.bill_address_id) }
     it "first name" do
@@ -207,7 +208,7 @@ shared_examples "associated attribute changes - bill address" do |boolean, type|
   end
 end
 
-shared_examples "associated attribute changes - ship address" do |boolean, type|
+RSpec.shared_examples "associated attribute changes - ship address" do |boolean, type|
   context "ship address - a #{type}" do
     let(:ship_address) { Spree::Address.where(id: order.ship_address_id) }
     it "first name" do
@@ -260,7 +261,7 @@ shared_examples "associated attribute changes - ship address" do |boolean, type|
   end
 end
 
-shared_examples "associated attribute changes - payments" do |boolean, type|
+RSpec.shared_examples "associated attribute changes - payments" do |boolean, type|
   context "payment changes on" do
     let(:payment) { create(:payment, order_id: order.id) }
     context "amount" do
@@ -284,7 +285,7 @@ shared_examples "associated attribute changes - payments" do |boolean, type|
   end
 end
 
-shared_examples "attribute changes - payment state" do |boolean, type|
+RSpec.shared_examples "attribute changes - payment state" do |boolean, type|
   let(:payment) { order.payments.first }
   context "payment changes on" do
     context "state" do
@@ -299,7 +300,7 @@ shared_examples "attribute changes - payment state" do |boolean, type|
   end
 end
 
-describe Orders::CompareInvoiceService do
+RSpec.describe Orders::CompareInvoiceService do
   let!(:invoice){
     create(:invoice,
            order:,

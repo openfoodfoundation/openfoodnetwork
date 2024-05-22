@@ -3,7 +3,7 @@
 # test a single endpoint to make sure the redirects are working as intended.
 require 'spec_helper'
 
-describe 'Orders Cycles endpoint', type: :request do
+RSpec.describe 'Orders Cycles endpoint', type: :request do
   let(:distributor) { create(:distributor_enterprise) }
   let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
 

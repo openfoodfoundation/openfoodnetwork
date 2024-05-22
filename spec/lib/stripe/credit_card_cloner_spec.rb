@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'stripe/credit_card_cloner'
 
 module Stripe
-  describe CreditCardCloner do
+  RSpec.describe CreditCardCloner do
     let!(:user) { create(:user, email: "apple.customer@example.com") }
     let!(:enterprise) { create(:enterprise) }
 

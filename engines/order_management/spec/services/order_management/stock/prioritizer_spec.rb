@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Stock
-    describe Prioritizer do
+    RSpec.describe Prioritizer do
       let(:order) { create(:order_with_line_items, line_items_count: 2) }
       let(:stock_location) { build(:stock_location) }
       let(:variant1) { order.line_items[0].variant }

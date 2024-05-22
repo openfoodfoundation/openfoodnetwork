@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Asset do
+RSpec.describe Spree::Asset do
   describe "#viewable" do
     it "touches association" do
       product = create(:product)

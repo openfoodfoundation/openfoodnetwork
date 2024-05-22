@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::UsersController do
+RSpec.describe Spree::Admin::UsersController do
   context '#authorize_admin' do
     let(:user) { create(:user) }
     let(:test_user) { create(:user) }

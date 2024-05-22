@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'rake'
 
-describe 'truncate_data.rake' do
+RSpec.describe 'truncate_data.rake' do
   describe ':truncate' do
     context 'when months_to_keep is specified' do
       it 'truncates order cycles closed earlier than months_to_keep months ago' do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OidcAccount, type: :model do
+RSpec.describe OidcAccount, type: :model do
   describe "associations and validations" do
     subject {
       OidcAccount.new(

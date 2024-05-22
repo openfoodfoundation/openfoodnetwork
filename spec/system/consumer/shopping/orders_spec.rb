@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Order Management" do
+RSpec.describe "Order Management" do
   include AuthenticationHelper
 
   describe "viewing a completed order" do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe FilePathSanitizer do
+RSpec.describe FilePathSanitizer do
   let(:folder_path){ '/tmp/product_import123' }
   let(:file_path) { "#{folder_path}/import.csv" }
 

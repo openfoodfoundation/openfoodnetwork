@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Credit Cards" do
+RSpec.describe "Credit Cards" do
   include AuthenticationHelper
   include StripeHelper
   include StripeStubs

@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "As a consumer, I want to checkout my order" do
+RSpec.describe "As a consumer, I want to checkout my order" do
   include ShopWorkflow
   include CheckoutHelper
   include FileHelper

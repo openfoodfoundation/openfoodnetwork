@@ -95,6 +95,7 @@ fr_BE:
             on_demand_but_count_on_hand_set: "doit être vide si à la demande"
             limited_stock_but_no_count_on_hand: "doit être spécifié car le stock limité est forcé"
       messages:
+        confirmation: "ne correspond pas à %{attribute}"
         blank: "Champ obligatoire"
   errors:
     messages:
@@ -113,7 +114,7 @@ fr_BE:
       dimension_width_equal_to: "la largeur doit être égale au pixel %{length} ."
       dimension_height_equal_to: "la hauteur doit être égale au pixel %{length} ."
       aspect_ratio_not_square: "doit être une image carrée"
-      aspect_ratio_not_portrait: "doit être une image de portrait"
+      aspect_ratio_not_portrait: "doit être une image en format portrait"
       aspect_ratio_not_landscape: "doit être une image en format paysage"
       aspect_ratio_is_not: "doit avoir un rapport hauteur / largeur de %{aspect_ratio}"
       aspect_ratio_unknown: "a un rapport hauteur/largeur inconnu"
@@ -215,6 +216,7 @@ fr_BE:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
         unknown_error: "Une erreur s'est glissée lors de la création de votre compte. Vérifiez votre adresse email et recommencez."
     failure:
+      disabled: "Votre compte a été désactivé. Veuillez contacter un administrateur pour résoudre ce problème."
       invalid: |
           Email / mot de passe incorrect.
           Créez votre compte ou réinitialisez votre mot de passe.
@@ -234,6 +236,8 @@ fr_BE:
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
+    tax_rate:
+      included_in_price: "Inclus dans le prix"
   open_street_map_enabled: "Open Street Map activé"
   resume_order: "Reprendre la commande"
   sku: "Référence produit"
@@ -272,6 +276,8 @@ fr_BE:
     report_ready:
       subject: "Rapport prêt"
       heading: "Rapport prêt à télécharger"
+      intro: |
+          Le lien ci-dessous expirera après une semaine.
   shipment_mailer:
     shipped_email:
       dear_customer: "Cher Client,"
@@ -406,7 +412,7 @@ fr_BE:
   copy: Copier
   change_my_password: "Changer mon mot de passe"
   update_password: "Mise à jour du mot de passe"
-  password_confirmation: confirmation du mot de passe
+  password_confirmation: Confirmation du mot de passe
   reset_password_token: Réinitialisation du mot de passe
   expired: a expiré, veuillez en demander un nouveau
   back_to_payments_list: "Retour à la liste des paiements"
@@ -448,6 +454,7 @@ fr_BE:
         name: Nom
         unit: Unité
         unit_value: Valeur unitaire
+        display_as: Unité d'affichage comme
         price: Prix
         producer: Producteur·trice
         category: Catégorie
@@ -473,6 +480,7 @@ fr_BE:
         edit: Modifier
         clone: Dupliquer
         delete: Supprimer
+        remove: Supprimer
       image:
         edit: Modifier
     adjustments:
@@ -588,6 +596,7 @@ fr_BE:
         matomo_tag_manager_url: "URL de l'instance sur Matomo"
         info_html: "Matomo est un site web est une application mobile analytique . Vous pouvez heberger matomo sur place ou heberger dans le cloud. Voyez <a href='http://matomo.org' target='_blank'>matomo.org</a> pour plus d'information."
         config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
+        config_instructions_tag_manager_html: "La définition de l'URL de Matomo Tag Manager active la fonctionnalité \"Matomo Tag Manager\". Cet outil vous permet de configurer des événements d'analyse. L'URL de Matomo Tag Manager est copiée à partir de la section \"Code d'installation\" de Matomo Tag Manager. Assurez-vous de sélectionner le bon conteneur et le bon environnement, car ces options modifient l'URL."
     customers:
       index:
         new_customer: "Nouvel acheteur"
@@ -704,6 +713,10 @@ fr_BE:
         close: Retour
       variant_row:
         none_tax_category: Aucun
+        category_field_name: "Catégorie"
+        tax_category_field_name: "TVA applicable"
+      product_row:
+        producer_field_name: "Producteur·trice"
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -1580,6 +1593,8 @@ fr_BE:
         voucher_code: Code du bon d'achat
         voucher_amount: Quantité
         voucher_type: Type de bon d'achat
+        flat_rate: Montant fixe
+        percentage_rate: Pourcentage (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
@@ -2065,6 +2080,7 @@ fr_BE:
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
+  producer_mail_order_customer_text: "Voici un récapitulatif des commandes regroupées par clients"
   shopping_oc_closed: Le comptoir est actuellement fermé
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez directement le comptoir pour voir si nous pouvons accepter une commande tardive)."
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
@@ -2735,6 +2751,7 @@ fr_BE:
   report_header_total_tax: "Total TVA (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
+  report_header_total_orders: "Nombre total de commandes"
   report_header_enterprise: Entreprise
   report_header_enterprise_fee_name: Nom
   report_header_enterprise_fee_type: Catégorie
@@ -3543,8 +3560,8 @@ fr_BE:
     amount: "Quantité"
     currency: "Devise"
     first_item: "Coût du premier article "
-    additional_item: "Coût d'objet supplémentaire"
-    max_items: "Articles maximum"
+    additional_item: "Coût supplémentaire par article"
+    max_items: "Nb d'articles maximum (au delà duquel il n'y a plus de coût supplémentaire)"
     minimal_amount: "Montant minimal"
     normal_amount: "Montant normal"
     discount_amount: "Montant de la remise"
@@ -3626,6 +3643,10 @@ fr_BE:
         enterprise_relationships: "Permissions"
         customers: "Acheteur·euse·s"
         groups: "Groupes"
+        overview: "Aperçu"
+        product_import: "Importer"
+        enterprise_roles: "Roles"
+        payment_methods: "Méthodes de paiement"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
@@ -4151,6 +4172,8 @@ fr_BE:
       shipment:
         cannot_ready: "Impossible de préparer l'expédition."
       invalid_taxonomy_id: "Id taxonomique invalide."
+    unit: unité
+    per_unit: Montant par unité
   datetime:
     distance_in_words:
       about_x_hours:

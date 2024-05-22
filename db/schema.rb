@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_10_041114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -204,11 +204,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
     t.string "abn", limit: 255
     t.string "acn", limit: 255
     t.integer "address_id"
-    t.text "pickup_times"
     t.string "next_collection_at", limit: 255
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.text "distributor_info"
     t.string "facebook", limit: 255
     t.string "instagram", limit: 255
     t.string "linkedin", limit: 255
@@ -282,7 +280,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
   create_table "flipper_gates", id: :serial, force: :cascade do |t|
     t.string "feature_key", null: false
     t.string "key", null: false
-    t.string "value"
+    t.text "value"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
@@ -818,8 +816,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
   end
 
   create_table "spree_stock_items", id: :serial, force: :cascade do |t|
-    t.integer "stock_location_id"
-    t.integer "variant_id"
+    t.integer "stock_location_id", null: false
+    t.integer "variant_id", null: false
     t.integer "count_on_hand", default: 0, null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -849,8 +847,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_075133) do
   end
 
   create_table "spree_stock_movements", id: :serial, force: :cascade do |t|
-    t.integer "stock_item_id"
-    t.integer "quantity", default: 0
+    t.integer "stock_item_id", null: false
+    t.integer "quantity", default: 0, null: false
     t.string "action", limit: 255
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false

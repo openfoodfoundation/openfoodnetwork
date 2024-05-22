@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Sets::ProductSet do
+RSpec.describe Sets::ProductSet do
   describe '#save' do
     let(:product_set) do
       described_class.new(collection_attributes: collection_hash)

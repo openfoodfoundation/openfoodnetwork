@@ -535,6 +535,7 @@ hi:
         edit: एडिट करें
         clone: क्लोन
         delete: हटाएं
+        remove: मिटाएँ
       image:
         edit: एडिट करें
     adjustments:
@@ -793,6 +794,10 @@ hi:
         close: वापस जाएं
       variant_row:
         none_tax_category: कोई नहीं
+        category_field_name: "श्रेणी"
+        tax_category_field_name: "टैक्स श्रेणी"
+      product_row:
+        producer_field_name: "उत्पादक"
     product_import:
       title: उत्पाद इम्पोर्ट करें
       file_not_found: फ़ाइल नहीं मिली या खोली नहीं जा सकी
@@ -3906,6 +3911,10 @@ hi:
         customers: "ग्राहक"
         groups: "ग्रुप्स"
         oidc_settings: "OIDC सेटिंग्स"
+        overview: "अवलोकन"
+        product_import: "इम्पोर्ट करें"
+        enterprise_roles: "भूमिकाएँ"
+        payment_methods: "भुगतान की विधियाँ"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "%{supplier} से प्रॉपर्टीज़ इन्हेरिट करें? (जब तक कि ऊपर ओवरराइड न किया गया हो)"

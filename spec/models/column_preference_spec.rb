@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ColumnPreference, type: :model do
+RSpec.describe ColumnPreference, type: :model do
   subject {
     ColumnPreference.new(
       user:, action_name: :customers_index, column_name: :email

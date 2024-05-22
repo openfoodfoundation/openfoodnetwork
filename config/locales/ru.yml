@@ -543,6 +543,7 @@ ru:
         edit: Изменить
         clone: Клонировать
         delete: Удалить
+        remove: Удалить
       image:
         edit: Изменить
     adjustments:
@@ -833,6 +834,10 @@ ru:
         error: Невозможно удалить вариант
       variant_row:
         none_tax_category: Нет
+        category_field_name: "Категория"
+        tax_category_field_name: "Налоговая Категория"
+      product_row:
+        producer_field_name: "Производитель"
     product_import:
       title: Импорт Товара
       file_not_found: Файл не найден или не может быть открыт
@@ -4035,6 +4040,10 @@ ru:
         customers: "Клиенты"
         groups: "Группы"
         oidc_settings: "Настройки OIDC"
+        overview: "Введение"
+        product_import: "Импорт"
+        enterprise_roles: "Роли"
+        payment_methods: "Способы Оплаты"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Наследовать свойства от %{supplier}? (если не отменено выше)"

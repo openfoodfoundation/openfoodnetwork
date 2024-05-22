@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe EnterpriseGroup do
+RSpec.describe EnterpriseGroup do
   describe "associations" do
     subject { build(:enterprise_group) }
 

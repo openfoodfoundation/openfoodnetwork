@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module OrderManagement
   module Stock
-    describe Packer do
+    RSpec.describe Packer do
       let(:distributor) { create(:distributor_enterprise) }
       let(:order) { create(:order_with_line_items, line_items_count: 5, distributor:) }
       let(:stock_location) { create(:stock_location) }

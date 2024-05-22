@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe "Shops caching", caching: true do
+RSpec.describe "Shops caching", caching: true do
   include WebHelper
   include UIComponentHelper
 

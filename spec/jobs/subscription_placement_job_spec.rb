@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe SubscriptionPlacementJob do
+RSpec.describe SubscriptionPlacementJob do
   include ActiveSupport::Testing::TimeHelpers
 
   let(:job) { SubscriptionPlacementJob.new }

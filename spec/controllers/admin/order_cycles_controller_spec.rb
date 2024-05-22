@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Admin
-  describe OrderCyclesController, type: :controller do
+  RSpec.describe OrderCyclesController, type: :controller do
     let!(:distributor_owner) { create(:user) }
 
     before do

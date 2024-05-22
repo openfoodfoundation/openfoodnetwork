@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Authentication" do
+RSpec.describe "Authentication" do
   include UIComponentHelper
   include AuthenticationHelper
   include WebHelper

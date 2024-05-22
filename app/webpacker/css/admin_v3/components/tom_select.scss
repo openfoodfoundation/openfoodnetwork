@@ -194,6 +194,13 @@
   }
 }
 
+// Errors
+.field_with_errors .ts-wrapper {
+  .ts-control {
+    border-color: $color-error;
+  }
+}
+
 // Display as "changed" if sibling select is marked as changed.
 select.changed + .ts-wrapper {
   &.single, &.multi {

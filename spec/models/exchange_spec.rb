@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Exchange do
+RSpec.describe Exchange do
   it "should be valid when built from factory" do
     expect(build(:exchange)).to be_valid
   end

@@ -467,6 +467,7 @@ fr_CH:
         edit: Modifier
         clone: Dupliquer
         delete: Supprimer
+        remove: Supprimer
       image:
         edit: Modifier
     adjustments:
@@ -695,6 +696,10 @@ fr_CH:
         close: Retour
       variant_row:
         none_tax_category: Aucun
+        category_field_name: "Catégorie"
+        tax_category_field_name: "TVA applicable"
+      product_row:
+        producer_field_name: "Producteur"
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -3697,6 +3702,10 @@ fr_CH:
         enterprise_relationships: "Permissions"
         customers: "Acheteurs"
         groups: "Groupes"
+        overview: "Aperçu"
+        product_import: "Importer"
+        enterprise_roles: "Roles"
+        payment_methods: "Méthodes de paiement"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"

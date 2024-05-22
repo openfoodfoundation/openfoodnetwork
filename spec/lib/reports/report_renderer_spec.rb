@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Reporting::ReportRenderer do
+RSpec.describe Reporting::ReportRenderer do
   let(:data) {
     [
       { "id" => 1, "name" => "carrots", "quantity" => 3 },

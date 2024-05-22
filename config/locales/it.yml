@@ -498,6 +498,7 @@ it:
         edit: Modifica
         clone: Duplica
         delete: Annulla
+        remove: Rimuovi
       image:
         edit: Modifica
     adjustments:
@@ -731,6 +732,10 @@ it:
         close: Indietro
       variant_row:
         none_tax_category: Nessuno
+        category_field_name: "Categoria"
+        tax_category_field_name: "Categoria d'imposta"
+      product_row:
+        producer_field_name: "Produttore"
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile
@@ -3770,6 +3775,10 @@ it:
         customers: "Clienti"
         groups: "Reti"
         oidc_settings: "Impoostazioni"
+        overview: "Panoramica"
+        product_import: "Importazione"
+        enterprise_roles: "Ruoli"
+        payment_methods: "Metodi di Pagamento"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Eredita le proprietà da %{supplier}? (se non sovrascritto)"

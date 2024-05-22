@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Calculator::FlatPercentItemTotal do
+RSpec.describe Calculator::FlatPercentItemTotal do
   let(:calculator) { Calculator::FlatPercentItemTotal.new }
   let(:line_item) { build_stubbed(:line_item, price: 10, quantity: 1) }
 
