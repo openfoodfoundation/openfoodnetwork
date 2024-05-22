@@ -49,18 +49,6 @@ class ProductsReflex < ApplicationReflex
     fetch_and_render_products_with_flash
   end
 
-  def edit_image
-    id = current_id_from_element(element)
-    product = product_finder(id).find_product
-    image = product.image
-
-    image = Spree::Image.new(viewable: product) if product.image.blank?
-
-    morph "#modal-component",
-          render(partial: "admin/products_v3/edit_image",
-                 locals: { product:, image:, return_url: url })
-  end
-
   private
 
   def init_filters_params

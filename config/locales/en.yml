@@ -899,10 +899,6 @@ en:
         new_variant: New variant
       bulk_update:
         success: Changes saved
-      edit_image:
-        title: Edit product photo
-        close: Back
-        upload: Upload photo
       delete_product:
         success: Successfully deleted the product
         error: Unable to delete the product
@@ -4148,6 +4144,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       must_be_int: "must be an integer"
 
     admin:
+      images:
+        edit:
+          title: Edit product photo
+          close: Back
+          upload: Upload photo
       mail_methods:
         send_testmail: "Send test email"
         testmail:
