@@ -16,13 +16,14 @@ RSpec.describe ProducerMailer, type: :mailer do
   let(:d1) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:d2) { create(:distributor_enterprise) }
   let(:p1) {
-    create(:product, name: "Zebra", price: 12.34, supplier: s1, tax_category_id: tax_category.id)
+    create(:product, name: "Zebra", price: 12.34, supplier_id: s1.id,
+                     tax_category_id: tax_category.id)
   }
-  let(:p2) { create(:product, name: "Aardvark", price: 23.45, supplier: s2) }
-  let(:p3) { create(:product, name: "Banana", price: 34.56, supplier: s1) }
-  let(:p4) { create(:product, name: "coffee", price: 45.67, supplier: s1) }
-  let(:p5) { create(:product, name: "Daffodil", price: 56.78, supplier: s1) }
-  let(:p6) { create(:product, name: "Eggs", price: 67.89, supplier: s1) }
+  let(:p2) { create(:product, name: "Aardvark", price: 23.45, supplier_id: s2.id) }
+  let(:p3) { create(:product, name: "Banana", price: 34.56, supplier_id: s1.id) }
+  let(:p4) { create(:product, name: "coffee", price: 45.67, supplier_id: s1.id) }
+  let(:p5) { create(:product, name: "Daffodil", price: 56.78, supplier_id: s1.id) }
+  let(:p6) { create(:product, name: "Eggs", price: 67.89, supplier_id: s1.id) }
   let(:order_cycle) { create(:simple_order_cycle) }
   let!(:incoming_exchange) {
     order_cycle.exchanges.create! sender: s1, receiver: d1, incoming: true,

@@ -40,7 +40,7 @@
             = line_items.first.variant.sku
           - if @distributors_pickup_times.many?
             %td
-              = line_items.first.product.supplier.name
+              = line_items.first.variant.supplier.name
           %td
             = product_and_full_name
           %td.text-right

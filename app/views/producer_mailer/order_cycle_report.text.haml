@@ -15,7 +15,7 @@ Orders summary
 = t :producer_mail_order_text
 \
 - @grouped_line_items.each_pair do |product_and_full_name, line_items|
-  #{line_items.first.variant.sku} - #{raw(line_items.first.product.supplier.name)} - #{raw(product_and_full_name)} (QTY: #{line_items.sum(&:quantity)}) @ #{line_items.first.single_money} = #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency)}
+  #{line_items.first.variant.sku} - #{raw(line_items.first.variant.supplier.name)} - #{raw(product_and_full_name)} (QTY: #{line_items.sum(&:quantity)}) @ #{line_items.first.single_money} = #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency)}
 \
 \
 #{t :total}: #{@total}
