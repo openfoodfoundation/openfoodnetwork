@@ -1117,7 +1117,7 @@
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus-webpack-helpers/-/stimulus-webpack-helpers-1.0.1.tgz#4cd74487adeca576c9865ac2b9fe5cb20cef16dd"
   integrity sha512-wa/zupVG0eWxRYJjC1IiPBdt3Lruv0RqGN+/DTMmUWUyMAEB27KXmVY6a8YpUVTM7QwVuaLNGW4EqDgrS2upXQ==
 
-"@hotwired/stimulus@^3", "@hotwired/stimulus@^3.2.2":
+"@hotwired/stimulus@^3", "@hotwired/stimulus@^3.2", "@hotwired/stimulus@^3.2.2":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.2.tgz#071aab59c600fed95b97939e605ff261a4251608"
   integrity sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==
@@ -2444,10 +2444,10 @@ bytes@3.1.2:
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.2.tgz#8b0beeb98605adf1b128fa4386403c009e0221a5"
   integrity sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==
 
-cable_ready@5.0.1, cable_ready@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/cable_ready/-/cable_ready-5.0.1.tgz#1cef5991cf7a064d09971ed7d87c614dec2ee1e1"
-  integrity sha512-+t9rKTgYwW5XBx113y97qC8MNEtBZZL84Isdec23HWvjMx0icOQsMzHJE75ycjevgjACTeWZqjRcCdtCHxgZ9g==
+cable_ready@5.0.5, cable_ready@^5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/cable_ready/-/cable_ready-5.0.5.tgz#45dd12ae5b3c5c53a1b42c10785e79ff87a5be22"
+  integrity sha512-qPC6zaI8h59BzMH3MxtpuMC+H33VJTA2eVddL6fZSWz01jJ2Y3okld01oYWQoKwE2yle/tvHbyuhoKxD4mhEuw==
   dependencies:
     morphdom "2.6.1"
 
@@ -8373,14 +8373,14 @@ stimulus@^3.2.2:
     "@hotwired/stimulus" "^3.2.2"
     "@hotwired/stimulus-webpack-helpers" "^1.0.0"
 
-stimulus_reflex@3.5.0-rc3:
-  version "3.5.0-rc3"
-  resolved "https://registry.yarnpkg.com/stimulus_reflex/-/stimulus_reflex-3.5.0-rc3.tgz#21196b2a42f48ea7f1fad54f8443d09a95c320a5"
-  integrity sha512-KSRDgGkU4aA77yw1b0W0oP7Ag+SB6Aa36BdcBJTpacU2W0bm9Fz1a0o9ynD+YAWK6AUyJ0gR20wXLvBvBGpnpg==
+stimulus_reflex@3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/stimulus_reflex/-/stimulus_reflex-3.5.1.tgz#fb9c548667e01b8dc7141187c73abfe1aa25472a"
+  integrity sha512-Bwsuerfh8ca6kp7MKlUgzYAmeflqoBzSpb25M4i+h3FsmAfPl4rUNN6T8v1d6JPqAPAVQRUL/wtDHumLtpETFw==
   dependencies:
     "@hotwired/stimulus" "^3"
     "@rails/actioncable" "^6 || ^7"
-    cable_ready "^5.0.0"
+    cable_ready "^5.0.5"
 
 stream-browserify@^2.0.1:
   version "2.0.2"
