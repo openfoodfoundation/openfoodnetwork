@@ -9,11 +9,13 @@ RSpec.describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml", rswa
     create(
       :product_with_image,
       id: 90_000,
-      supplier: enterprise, name: "Pesto", description: "Basil Pesto",
+      name: "Pesto", description: "Basil Pesto",
       variants: [variant]
     )
   }
-  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, primary_taxon: taxon) }
+  let(:variant) {
+    build(:base_variant, id: 10_001, unit_value: 1, primary_taxon: taxon, supplier: enterprise)
+  }
   let(:taxon) {
     build(
       :taxon,
