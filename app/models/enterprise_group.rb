@@ -74,6 +74,16 @@ class EnterpriseGroup < ApplicationRecord
     permalink
   end
 
+  # Remove any unsupported HTML.
+  def long_description
+    HtmlSanitizer.sanitize(super)
+  end
+
+  # Remove any unsupported HTML.
+  def long_description=(html)
+    super(HtmlSanitizer.sanitize(html))
+  end
+
   private
 
   def sanitize_permalink
