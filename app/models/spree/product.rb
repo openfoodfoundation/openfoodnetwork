@@ -329,6 +329,8 @@ module Spree
     end
 
     def touch_supplier
+      return if variants.empty?
+
       # Assume the product supplier is the supplier of the first variant
       # Will breack if product has mutiple variants with different supplier
       variants.first.supplier.touch

@@ -11,15 +11,14 @@ RSpec.describe Enterprise do
       let(:supplier2) { create(:supplier_enterprise) }
 
       describe "with a supplied product" do
-        let(:product) { create(:simple_product, primary_taxon_id: taxon.id) }
+        let(:product) {
+          create(:simple_product, primary_taxon_id: taxon.id, supplier_id: enterprise.id)
+        }
         let(:property) { product.product_properties.last }
         let(:producer_property) { enterprise.producer_properties.last }
-        let(:variant) { create(:variant, product:, supplier: enterprise) }
+        let(:variant) { product.variants.first }
 
         before do
-          product.variants = []
-          product.variants <<  variant
-
           product.set_property 'Organic', 'NASAA 12345'
           enterprise.set_producer_property 'Biodynamic', 'ASDF 4321'
         end

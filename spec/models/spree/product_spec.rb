@@ -283,7 +283,6 @@ module Spree
       let(:product) { create(:simple_product) }
 
       describe "touching affected enterprises when the product is deleted" do
-        let(:product) { create(:simple_product) }
         let(:supplier) { create(:supplier_enterprise) }
         let(:distributor) { create(:distributor_enterprise) }
         let!(:oc) {
@@ -308,17 +307,31 @@ module Spree
       end
 
       describe "after updating primary taxon" do
-        let(:product) { create(:simple_product) }
+        let(:product) { create(:simple_product, supplier_id: supplier.id) }
         let(:supplier) { create(:supplier_enterprise) }
         let(:new_taxon) { create(:taxon) }
 
-        before do
-          product.variants = []
-          product.variants << create(:variant, product:, supplier:)
-        end
-
         it "touches the supplier" do
           expect { product.update(primary_taxon_id: new_taxon.id) }
+            .to change { supplier.reload.updated_at }
+        end
+
+        context "when product has no variant" do
+          it "doesn't blow up" do
+            product.variants = []
+            product.save!
+
+            expect { product.update(primary_taxon_id: new_taxon.id) }.to_not raise_error
+          end
+        end
+      end
+
+      describe "after touching the product" do
+        let(:product) { create(:simple_product, supplier_id: supplier.id) }
+        let(:supplier) { create(:supplier_enterprise) }
+
+        it "touches the supplier" do
+          expect { product.touch }
             .to change { supplier.reload.updated_at }
         end
       end
