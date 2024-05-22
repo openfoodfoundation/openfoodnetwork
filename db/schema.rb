@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_01_075735) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_10_041114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -204,11 +204,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_01_075735) do
     t.string "abn", limit: 255
     t.string "acn", limit: 255
     t.integer "address_id"
-    t.text "pickup_times"
     t.string "next_collection_at", limit: 255
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.text "distributor_info"
     t.string "facebook", limit: 255
     t.string "instagram", limit: 255
     t.string "linkedin", limit: 255
