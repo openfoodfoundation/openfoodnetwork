@@ -5,9 +5,9 @@
     -# Display image in the same way it appears in the shopfront popup
     %p= image_tag @image.persisted? ? @image.url(:large) : Spree::Image.default_image_url(:large), width: 433, height: 433
 
-    -# Submit to controller
+    -# Submit as turbo stream to avoid full page reload. But turbo is ignoring it??!!
     = form_for [:admin, @product, @image],
-        html: { multipart: true }, data: { controller: "form" } do |f|
+        html: { multipart: true }, data: { controller: "form", 'turbo-stream': true } do |f|
       %input{ type: :hidden, name: :return_url, value: request.referer }
       = f.hidden_field :viewable_id, value: @product.id
 
@@ -15,4 +15,4 @@
         %input{ class: "secondary relaxed", type: 'button', value: t('.close'), "data-action": "click->modal#close" }
         -# label.button provides a handy shortcut to open the file selector on click. Unfortunately this trick isn't keyboard accessible though..
         = f.label :attachment, t(".upload"), class: "button primary relaxed icon-upload-alt"
-        = f.file_field :attachment, accept: "image/*", style: "display: none", "data-action": "change->form#submit"
+        = f.file_field :attachment, accept: "image/*", style: "display: none", "data-action": "change->form#submit change->modal#close"

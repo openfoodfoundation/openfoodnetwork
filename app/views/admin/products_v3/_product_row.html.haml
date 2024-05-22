@@ -1,7 +1,5 @@
 %td.with-image{ id: "image-#{product.id}" }
-  %a.image-field{ href: product_image_form_path(product), 'data-turbo-stream': true }
-    = image_tag product.image&.url(:mini) || Spree::Image.default_image_url(:mini), width: 40, height: 40
-    .button.secondary.mini= t('admin.products_page.image.edit')
+  = render partial: "product_image", locals: { product: }
 %td.field.align-left.header.naked_inputs
   = f.hidden_field :id
   = f.text_field :name, 'aria-label': t('admin.products_page.columns.name')

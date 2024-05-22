@@ -3,6 +3,8 @@
 module Spree
   module Admin
     class ImagesController < ::Admin::ResourceController
+      helper ::Admin::ProductsHelper
+
       # This will make resource controller redirect correctly after deleting product images.
       # This can be removed after upgrading to Spree 2.1.
       # See here https://github.com/spree/spree/commit/334a011d2b8e16355e4ae77ae07cd93f7cbc8fd1
@@ -50,7 +52,11 @@ module Spree
 
         if @object.update(permitted_resource_params)
           flash[:success] = flash_message_for(@object, :successfully_updated)
-          redirect_to location_after_save
+
+          respond_with do |format|
+            format.html { redirect_to location_after_save }
+            format.turbo_stream
+          end
         else
           respond_with(@object)
         end
