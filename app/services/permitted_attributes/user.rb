@@ -18,6 +18,7 @@ module PermittedAttributes
       [
         :email, :password, :password_confirmation, :disabled,
         :phone, :name, { webhook_endpoints_attributes: [:id, :url] },
+        enterprise_ids: []
       ]
     end
   end
