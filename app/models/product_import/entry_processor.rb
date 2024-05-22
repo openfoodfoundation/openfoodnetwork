@@ -54,10 +54,7 @@ module ProductImport
           if settings.importing_into_inventory?
             VariantOverride.for_hubs([enterprise_id]).count
           else
-            Spree::Variant.
-              joins(:product).
-              where(spree_products: { supplier_id: enterprise_id }).
-              count
+            Spree::Variant.where(supplier_id: enterprise_id).count
           end
 
         @enterprise_products[enterprise_id] = products_count
