@@ -12,10 +12,10 @@
       = f.label :phone, t(".phone")
       = f.phone_field :phone, class: "fullwidth"
       = error_message_on :user, :phone
-    %label.fullwidth{for: "enterprises"}= t(".shops_title")
-    %select.fullwidth{name: "enterprises", id: "enterprises"}
-      - @user.enterprises.each do |enterprise|
-        %option{value: enterprise.id}= enterprise.name
+    = f.field_container :enterprise_ids do
+      = f.label :enterprise_ids, t(".shops_title")
+      %br/
+      = f.collection_select :enterprise_ids, Enterprise.all, :id, :name, { selected: @user.enterprise_ids }, { class: "select2 fullwidth", multiple: true }
     .field
       = label_tag nil, t(".roles")
       %ul
