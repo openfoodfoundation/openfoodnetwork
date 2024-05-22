@@ -95,7 +95,7 @@
         %div.checkout-input{"data-shippingmethod-target": "shippingMethodDescription", "data-shippingmethodid": shipping_method.id , style: "display: #{ship_method_is_selected ? 'block' : 'none'}" }
           #distributor_address.panel
             - if shipping_method.description.present?
-              %span #{shipping_method.description}
+              = simple_format(html_escape(shipping_method.description))
 
       = f.error_message_on :shipping_method, standalone: true
 

@@ -102,8 +102,8 @@ gem 'redis'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
-gem "cable_ready", "5.0.1"
-gem "stimulus_reflex", "3.5.0.rc3"
+gem "cable_ready"
+gem "stimulus_reflex"
 
 gem 'combine_pdf'
 gem 'wicked_pdf'
@@ -163,7 +163,7 @@ group :test, :development do
   gem 'rspec-sql'
   gem 'rswag'
   gem 'shoulda-matchers'
-  gem 'stimulus_reflex_testing'
+  gem 'stimulus_reflex_testing', github: "podia/stimulus_reflex_testing", branch: :main
   gem 'timecop'
 end
 
