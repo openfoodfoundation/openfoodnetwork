@@ -5,13 +5,12 @@ class ShopsController < BaseController
 
   def index
     @enterprises = ShopsListService.new.open_shops
-    return unless spree_current_user.present?
     
-    user_enterprises = spree_current_user.enterprises
+    user_enterprises = spree_current_user&.enterprises
 
     @grouped_enterprises = Set.new
 
-    user_enterprises.each do |enterprise|
+    user_enterprises&.each do |enterprise|
       # Find all groups of the current enterprise
       groups = enterprise.groups
 
