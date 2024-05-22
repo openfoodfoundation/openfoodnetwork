@@ -29,7 +29,7 @@ RSpec.describe "As a consumer, I want to see adjustment breakdown" do
   let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
   let(:supplier) { create(:supplier_enterprise) }
   let!(:product_with_tax) {
-    create(:simple_product, supplier:, price: 10, tax_category_id: tax_category.id)
+    create(:simple_product, supplier_id: supplier.id, price: 10, tax_category_id: tax_category.id)
   }
   let!(:variant_with_tax) { product_with_tax.variants.first }
   let!(:order_cycle) {
