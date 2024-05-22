@@ -17,7 +17,10 @@ module Spree
       def new
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
-        render layout: !request.xhr?
+        respond_with do |format|
+          format.turbo_stream { render :edit }
+          format.all { render layout: !request.xhr? }
+        end
       end
 
       def edit
