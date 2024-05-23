@@ -2,7 +2,6 @@
 
 class ShopsController < BaseController
   layout 'darkswarm'
-  before_action :require_login, only: [:index]
 
   def index
     @enterprises = ShopsListService.new.open_shops
@@ -31,14 +30,6 @@ class ShopsController < BaseController
     end
 
     @grouped_enterprises = @grouped_enterprises.to_a
-  end
-
-  def require_login
-    unless spree_user_signed_in?
-      respond_to do |format|
-        format.html { redirect_to "/#/login" }
-      end
-    end
   end
 
 end

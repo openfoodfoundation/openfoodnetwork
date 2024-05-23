@@ -6,7 +6,7 @@ module ShopHelper
   end
 
   def require_customer?
-    @require_customer ||= current_distributor.require_login? && !user_is_related_to_distributor?
+    @require_customer ||= (current_distributor.require_login? && !user_is_related_to_distributor?) || !spree_current_user.present?
   end
 
   def user_is_related_to_distributor?
