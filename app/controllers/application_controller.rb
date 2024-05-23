@@ -28,7 +28,6 @@ class ApplicationController < ActionController::Base
   helper 'injection'
   helper 'markdown'
   helper 'footer_links'
-  helper 'discourse'
   helper 'checkout'
   helper 'link'
   helper 'terms_and_conditions'
