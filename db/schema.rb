@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_10_041114) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_17_121235) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -869,7 +869,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_10_041114) do
   create_table "spree_tax_rates", id: :serial, force: :cascade do |t|
     t.decimal "amount", precision: 8, scale: 5
     t.integer "zone_id"
-    t.integer "tax_category_id"
+    t.integer "tax_category_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "included_in_price", default: false
