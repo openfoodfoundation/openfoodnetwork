@@ -204,7 +204,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_17_121235) do
     t.string "abn", limit: 255
     t.string "acn", limit: 255
     t.integer "address_id"
-    t.string "next_collection_at", limit: 255
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "facebook", limit: 255
