@@ -5,9 +5,10 @@
     -# Display image in the same way it appears in the shopfront popup
     %p= image_tag @image.persisted? ? @image.url(:large) : Spree::Image.default_image_url(:large), width: 433, height: 433
 
-    -# Submit as turbo stream to avoid full page reload. But turbo is ignoring it??!!
+    -# Submit as turbo stream to avoid full page reload.
+    -# TODO: show loading indicator.
     = form_for [:admin, @product, @image],
-        html: { multipart: true }, data: { controller: "form", 'turbo-stream': true } do |f|
+        html: { multipart: true }, data: { controller: "form" } do |f|
       %input{ type: :hidden, name: :return_url, value: request.referer }
       = f.hidden_field :viewable_id, value: @product.id
 
