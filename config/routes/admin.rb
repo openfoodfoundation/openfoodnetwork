@@ -75,6 +75,8 @@ Openfoodnetwork::Application.routes.draw do
       # This might be easier to arrange once we rename the controller to plain old "products"
       post '/products/bulk_update', to: 'products_v3#bulk_update'
       get '/products', to: 'products_v3#index'
+      # we already have DELETE admin/products/:id here
+      delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
     end
 
     resources :variant_overrides do
