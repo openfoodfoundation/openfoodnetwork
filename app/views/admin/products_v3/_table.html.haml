@@ -63,7 +63,7 @@
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
       = form.fields_for("products", product, index: product_index) do |product_form|
-        %tbody.relaxed{ data: { 'record-id': product_form.object.id,
+        %tbody.relaxed{ id: dom_id(product), data: { 'record-id': product_form.object.id,
                                 controller: "nested-form product",
                                 action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:remove->bulk-form#toggleFormChanged' } }
           %tr
