@@ -32,19 +32,19 @@ module Admin
     end
 
     def destroy
-      @product = ProductScopeQuery.new(
+      @record = ProductScopeQuery.new(
         spree_current_user,
         { id: params[:id] }
       ).find_product
 
-      if @product.destroy
+      if @record.destroy
         flash[:success] = I18n.t('admin.products_v3.delete_product.success')
       else
         flash[:error] = I18n.t('admin.products_v3.delete_product.error')
       end
 
       respond_with do |format|
-        format.turbo_stream
+        format.turbo_stream { render :destroy_product_variant }
       end
 
       # using flash with turbo stream doesn't clear it because the page is not refreshed.
