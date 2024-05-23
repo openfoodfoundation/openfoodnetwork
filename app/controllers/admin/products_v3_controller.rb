@@ -31,6 +31,14 @@ module Admin
       end
     end
 
+    # will update this in further commits
+    def destroy
+      @product = Spree::Product.find(params[:id])
+      respond_with do |format|
+        format.turbo_stream
+      end
+    end
+
     def index_url(params)
       "/admin/products?#{params.to_query}" # todo: fix routing so this can be automaticly generated
     end
