@@ -52,6 +52,23 @@ module Admin
       flash.discard
     end
 
+    def destroy_variant
+      @record = Spree::Variant.active.find(params[:id])
+      authorize! :delete, @record
+
+      if VariantDeleter.new.delete(@record)
+        flash[:success] = I18n.t('admin.products_v3.delete_variant.success')
+      else
+        flash[:error] = I18n.t('admin.products_v3.delete_variant.error')
+      end
+
+      respond_with do |format|
+        format.turbo_stream { render :destroy_product_variant }
+      end
+
+      flash.discard
+    end
+
     def index_url(params)
       "/admin/products?#{params.to_query}" # todo: fix routing so this can be automaticly generated
     end

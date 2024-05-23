@@ -43,5 +43,5 @@
     = link_to t('admin.products_page.actions.clone'), clone_admin_product_path(product), 'data-turbo': false
     %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
         "data-modal-link-target-value": "product-delete-modal", "class": "delete",
-        "data-modal-link-modal-dataset-value": {'data-current-id': product.id, 'data-path': admin_product_destroy_path(product)}.to_json }
+        "data-modal-link-modal-dataset-value": {'data-path': admin_product_destroy_path(product)}.to_json }
       = t('admin.products_page.actions.delete')
