@@ -15,7 +15,7 @@
     = f.field_container :enterprise_ids do
       = f.label :enterprise_ids, t(".shops_title")
       %br/
-      = f.collection_select :enterprise_ids, Enterprise.all, :id, :name, { selected: @user.enterprise_ids }, { class: "select2 fullwidth", multiple: true }
+      = f.collection_select :enterprise_ids, Enterprise.order(:name), :id, :name, { selected: @user.enterprise_ids }, { class: "select2 fullwidth", multiple: true }
     .field
       = label_tag nil, t(".roles")
       %ul

@@ -31,4 +31,5 @@ class ShopsController < BaseController
 
     @grouped_enterprises = @grouped_enterprises.to_a
   end
+
 end

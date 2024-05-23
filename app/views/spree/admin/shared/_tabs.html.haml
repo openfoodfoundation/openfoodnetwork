@@ -5,7 +5,7 @@
 = tab :reports, url: main_app.admin_reports_path, icon: 'icon-file'
 = tab :general_settings, :mail_methods, :tax_categories, :tax_rates, :tax_settings, :zones, :countries, :states, :payment_methods, :taxonomies, :shipping_methods, :shipping_categories, :enterprise_fees, :contents, :invoice_settings, :matomo_settings, :stripe_connect_settings, label: 'configuration', icon: 'icon-wrench', url: edit_admin_general_settings_path
 = tab :enterprises, :enterprise_relationships, :vouchers, :oidc_settings, url: main_app.admin_enterprises_path
-= tab :customers, url: main_app.admin_customers_path
+-# = tab :customers, url: main_app.admin_customers_path
 = tab :enterprise_groups, url: main_app.admin_enterprise_groups_path, label: 'groups'
 - if can? :admin, Spree::User
   = tab(:users, url: spree.admin_users_path, icon: 'icon-user')

@@ -63,7 +63,7 @@ module Admin
       editable_orders.where(id: params[:bulk_ids]).find_each do |order|
         next unless can? :resend, order
 
-        Spree::OrderMailer.confirm_email_for_customer(order.id, true).deliver_later
+        # Spree::OrderMailer.confirm_email_for_customer(order.id, true).deliver_later
       end
 
       success("admin.resend_confirmation_emails_feedback", params[:bulk_ids].count)
