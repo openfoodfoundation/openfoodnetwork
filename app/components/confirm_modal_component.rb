@@ -12,7 +12,8 @@ class ConfirmModalComponent < ModalComponent
     confirm_button_class: :primary,
     confirm_button_text: I18n.t('js.admin.modals.confirm'),
     cancel_button_text: I18n.t('js.admin.modals.cancel'),
-    actions_alignment_class: 'justify-space-around'
+    actions_alignment_class: 'justify-space-around',
+    confirm_submit_method: nil
   )
     super(id:, close_button: true)
     @confirm_actions = confirm_actions
@@ -24,6 +25,7 @@ class ConfirmModalComponent < ModalComponent
     @confirm_button_text = confirm_button_text
     @cancel_button_text = cancel_button_text
     @actions_alignment_class = actions_alignment_class
+    @confirm_submit_method = confirm_submit_method
   end
 
   private
