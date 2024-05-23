@@ -1357,6 +1357,7 @@ en:
           enable: "Allow data sharing"
           disable: "Stop sharing"
           loading: "Loading"
+          need_to_be_manager: "Only managers can connect apps."
           note: |
             Your Open Food Network account is connected to Discover Regenerative.
             Add or update information on your Discover Regenerative listing here.
