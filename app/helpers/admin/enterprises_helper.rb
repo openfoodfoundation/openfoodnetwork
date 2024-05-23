@@ -14,7 +14,7 @@ module Admin
       producers.size == 1 ? producers.first.id : nil
     end
 
-    def can_connect_apps?(enterprise)
+    def managed_by_user?(enterprise)
       enterprise.in?(spree_current_user.enterprises)
     end
 
