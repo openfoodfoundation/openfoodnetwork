@@ -31,12 +31,25 @@ module Admin
       end
     end
 
-    # will update this in further commits
     def destroy
-      @product = Spree::Product.find(params[:id])
+      @product = ProductScopeQuery.new(
+        spree_current_user,
+        { id: params[:id] }
+      ).find_product
+
+      if @product.destroy
+        flash[:success] = I18n.t('admin.products_v3.delete_product.success')
+      else
+        flash[:error] = I18n.t('admin.products_v3.delete_product.error')
+      end
+
       respond_with do |format|
         format.turbo_stream
       end
+
+      # using flash with turbo stream doesn't clear it because the page is not refreshed.
+      # so upon refreshing the page, the flash message appears again
+      flash.discard
     end
 
     def index_url(params)
