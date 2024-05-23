@@ -105,6 +105,8 @@ gem 'sidekiq-scheduler'
 gem "cable_ready"
 gem "stimulus_reflex"
 
+gem "turbo-rails"
+
 gem 'combine_pdf'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
