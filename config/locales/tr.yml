@@ -611,8 +611,6 @@ tr:
           clear_search: Aramayı temizle
       table:
         new_variant: Yeni Çeşit
-      edit_image:
-        close: Geri
       variant_row:
         none_tax_category: SATIŞ YAPMIYOR
         category_field_name: "Kategori"
@@ -1670,7 +1668,6 @@ tr:
   label_account: "Hesap"
   label_more: "Daha fazla göster"
   label_less: "Daha az göster"
-  label_notices: "Uyarılar"
   cart_items: "Ürünler"
   cart_headline: "Alışveriş sepetiniz"
   total: "Toplam"
@@ -3460,6 +3457,9 @@ tr:
     validation:
       must_be_int: "tam sayı olmak zorunda"
     admin:
+      images:
+        edit:
+          close: Geri
       mail_methods:
         send_testmail: "Deneme e-postası gönder"
         testmail:

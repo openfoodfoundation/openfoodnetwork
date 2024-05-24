@@ -586,8 +586,6 @@ pt:
         search: Procurar
       table:
         new_variant: Nova variante
-      edit_image:
-        close: Voltar
       variant_row:
         none_tax_category: Nenhum
         category_field_name: "Categoria"
@@ -1580,7 +1578,6 @@ pt:
   label_account: "Conta"
   label_more: "Mostrar mais"
   label_less: "Mostrar menos"
-  label_notices: "Avisos"
   cart_items: "itens"
   cart_headline: "O seu carrinho de compras"
   total: "Total"
@@ -3175,6 +3172,9 @@ pt:
           header:
             store: Loja
     admin:
+      images:
+        edit:
+          close: Voltar
       subscriptions:
         number: "Número"
       tab:

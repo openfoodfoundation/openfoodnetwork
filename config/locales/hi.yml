@@ -790,8 +790,6 @@ hi:
         reset: परिवर्तनों को अस्वीकार करें
         save: परिवर्तन सेव करें
         new_variant: नया वैरिएंट
-      edit_image:
-        close: वापस जाएं
       variant_row:
         none_tax_category: कोई नहीं
         category_field_name: "श्रेणी"
@@ -2014,7 +2012,6 @@ hi:
   label_account: "अकाउंट"
   label_more: "और दिखाएं"
   label_less: "कम दिखाएं"
-  label_notices: "नोटिस"
   cart_items: "आइटम्स"
   cart_headline: "आपका शॉपिंग कार्ट"
   total: "कुल"
@@ -3884,6 +3881,9 @@ hi:
     validation:
       must_be_int: "पूर्णांक होना ही चाहिए"
     admin:
+      images:
+        edit:
+          close: वापस जाएं
       mail_methods:
         send_testmail: "टेस्ट ईमेल भेजें"
         testmail:

@@ -773,8 +773,6 @@ ca:
         new_variant: Nova variant
       bulk_update:
         success: Canvis guardats
-      edit_image:
-        close: Enrere
       variant_row:
         none_tax_category: Cap
         category_field_name: "Categoria"
@@ -1906,7 +1904,6 @@ ca:
   label_account: "Compte"
   label_more: "Mostrar més"
   label_less: "Mostra menys"
-  label_notices: "Avisos"
   cart_items: "articles"
   cart_headline: "La teva cistella"
   total: "Total"
@@ -3719,6 +3716,9 @@ ca:
     validation:
       must_be_int: "ha de ser un nombre enter"
     admin:
+      images:
+        edit:
+          close: Enrere
       mail_methods:
         send_testmail: "Enviar correu electrònic de prova"
         testmail:

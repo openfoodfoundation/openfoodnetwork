@@ -822,10 +822,6 @@ ru:
         new_variant: Новый вариант
       bulk_update:
         success: Изменения сохранены
-      edit_image:
-        title: Изменить фотографию товара
-        close: Назад
-        upload: Загрузить фото
       delete_product:
         success: Товар успешно удален
         error: Невозможно удалить товар
@@ -2082,7 +2078,6 @@ ru:
   label_account: "Профиль"
   label_more: "Показать больше"
   label_less: "Показать меньше"
-  label_notices: "Уведомления"
   cart_items: "позиции"
   cart_headline: "Ваша корзина"
   total: "Всего"
@@ -4013,6 +4008,11 @@ ru:
     validation:
       must_be_int: "должно быть целым числом"
     admin:
+      images:
+        edit:
+          title: Изменить фотографию товара
+          close: Назад
+          upload: Загрузить фото
       mail_methods:
         send_testmail: "Отправить тестовое письмо"
         testmail:

@@ -326,8 +326,6 @@ sv:
         producers:
           label: 'Producenter '
         search: Sök
-      edit_image:
-        close: Backa
       variant_row:
         none_tax_category: Ingen
         category_field_name: "Kategori"
@@ -991,7 +989,6 @@ sv:
   label_account: "Konto"
   label_more: "Visa mer"
   label_less: "Visa mindre"
-  label_notices: "Anmälan"
   cart_headline: "Din varukorg"
   total: "Summa "
   cart_updating: "Uppdatera din varukorg"
@@ -2200,6 +2197,9 @@ sv:
       messages:
         blank: "kan inte vara blank"
     admin:
+      images:
+        edit:
+          close: Backa
       tab:
         dashboard: "Panel"
         bulk_order_management: "Hantera flera beställningar"

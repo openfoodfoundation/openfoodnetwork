@@ -541,8 +541,6 @@ en_IN:
           clear_search: Clear search
       table:
         new_variant: New variant
-      edit_image:
-        close: Back
       variant_row:
         none_tax_category: None
         category_field_name: "Category"
@@ -1542,7 +1540,6 @@ en_IN:
   label_account: "Account"
   label_more: "Show more"
   label_less: "Show less"
-  label_notices: "Community Forum"
   cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
@@ -3229,6 +3226,9 @@ en_IN:
           header:
             store: Store
     admin:
+      images:
+        edit:
+          close: Back
       subscriptions:
         number: "Number"
       tab:

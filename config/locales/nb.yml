@@ -829,10 +829,6 @@ nb:
         new_variant: Ny variant
       bulk_update:
         success: Endringer lagret
-      edit_image:
-        title: Rediger produktbilde
-        close: Tilbake
-        upload: Last opp bilde
       delete_product:
         success: Produktet ble slettet
         error: Kan ikke slette produktet
@@ -2094,7 +2090,6 @@ nb:
   label_account: "Konto"
   label_more: "Vis mer"
   label_less: "Vis mindre"
-  label_notices: "Meldinger"
   cart_items: "Elementer"
   cart_headline: "Din handlekurv"
   total: "Sum"
@@ -3970,6 +3965,11 @@ nb:
     validation:
       must_be_int: "må være et heltall"
     admin:
+      images:
+        edit:
+          title: Rediger produktbilde
+          close: Tilbake
+          upload: Last opp bilde
       mail_methods:
         send_testmail: "Send test-epost"
         testmail:

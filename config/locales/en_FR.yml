@@ -829,10 +829,6 @@ en_FR:
         new_variant: New variant
       bulk_update:
         success: Changes saved
-      edit_image:
-        title: Edit product photo
-        close: Back
-        upload: Upload photo
       delete_product:
         success: Successfully deleted the product
         error: Unable to delete the product
@@ -2095,7 +2091,6 @@ en_FR:
   label_account: "Account"
   label_more: "Show more"
   label_less: "Show less"
-  label_notices: "Notices"
   cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
@@ -3974,6 +3969,11 @@ en_FR:
     validation:
       must_be_int: "must be an integer"
     admin:
+      images:
+        edit:
+          title: Edit product photo
+          close: Back
+          upload: Upload photo
       mail_methods:
         send_testmail: "Send test email"
         testmail:

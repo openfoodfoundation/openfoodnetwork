@@ -1941,7 +1941,6 @@ mr:
   label_account: "खाते"
   label_more: "अजून दाखवा"
   label_less: "कमी दाखवा"
-  label_notices: "नोटीस"
   cart_items: "वस्तू"
   cart_headline: "तुमची शॉपिंग कार्ट"
   total: "एकूण"

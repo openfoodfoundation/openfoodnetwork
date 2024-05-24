@@ -707,8 +707,6 @@ ar:
           clear_search: مسح البحث
       table:
         new_variant: نوع جديد
-      edit_image:
-        close: عودة
       variant_row:
         none_tax_category: لا شيء
         category_field_name: "الفئة"
@@ -1897,7 +1895,6 @@ ar:
   label_account: "الحساب"
   label_more: "أظهر المزيد"
   label_less: "عرض أقل"
-  label_notices: "إشعارات"
   cart_items: "العناصر"
   cart_headline: "سلة التسوق الخاصة بك"
   total: "مجموع"
@@ -3844,6 +3841,9 @@ ar:
     validation:
       must_be_int: "يجب أن يكون رقما صحيحا"
     admin:
+      images:
+        edit:
+          close: عودة
       mail_methods:
         send_testmail: "إرسال بريد إلكتروني تجريبي"
         testmail:

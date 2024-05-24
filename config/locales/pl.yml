@@ -524,8 +524,6 @@ pl:
         producers:
           label: Producenci
         search: Szukaj
-      edit_image:
-        close: Wstecz
       variant_row:
         none_tax_category: Nic
         category_field_name: "Kategoria"
@@ -1453,7 +1451,6 @@ pl:
   label_account: "Konto"
   label_more: "Pokaż więcej"
   label_less: "Pokaż mniej"
-  label_notices: "Powiadomienia"
   cart_items: "przedmiotów"
   cart_headline: "Twój Koszyk"
   total: "Razem"
@@ -3166,6 +3163,9 @@ pl:
           header:
             store: Sklep
     admin:
+      images:
+        edit:
+          close: Wstecz
       subscriptions:
         number: "Numer zamówienia"
       tab:

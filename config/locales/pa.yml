@@ -774,8 +774,6 @@ pa:
         new_variant: ਨਵਾਂ ਵੇਰੀਐਂਟ
       bulk_update:
         success: ਬਦਲਾਵ ਸੇਵ ਕੀਤੇ ਗਏ।'
-      edit_image:
-        close: ਵਾਪਸ
       variant_row:
         none_tax_category: ਕੋਈ ਨਹੀਂ
         category_field_name: "ਸ਼੍ਰੇਣੀ"
@@ -1989,7 +1987,6 @@ pa:
   label_account: "ਖਾਤਾ"
   label_more: "ਹੋਰ ਵਿਖਾਓ"
   label_less: "ਘੱਟ ਵਿਖਾਓ"
-  label_notices: "ਨੋਟਿਸ"
   cart_items: "ਆਈਟਮਾਂ"
   cart_headline: "ਤੁਹਾਡਾ ਸ਼ਾਪਿੰਗ ਕਾਰਟ"
   total: "ਕੁੱਲ"
@@ -3778,6 +3775,9 @@ pa:
     validation:
       must_be_int: "ਇੱਕ ਪੂਰਨ ਅੰਕ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ"
     admin:
+      images:
+        edit:
+          close: ਵਾਪਸ
       mail_methods:
         send_testmail: "ਟੈਸਟ ਈਮੇਲ ਭੇਜੋ"
         testmail:

@@ -627,8 +627,6 @@ pt_BR:
       sort:
         pagination:
           clear_search: Nova busca
-      edit_image:
-        close: Voltar
       variant_row:
         none_tax_category: Nenhum
         category_field_name: "Categoria"
@@ -1660,7 +1658,6 @@ pt_BR:
   label_account: "Conta"
   label_more: "Mostrar mais"
   label_less: "Mostrar menos"
-  label_notices: "Avisos"
   cart_items: "itens"
   cart_headline: "seu carrinho de compras"
   total: "Total"
@@ -3462,6 +3459,9 @@ pt_BR:
     validation:
       must_be_int: "deve ser um número integral "
     admin:
+      images:
+        edit:
+          close: Voltar
       mail_methods:
         send_testmail: "Enviar email de teste"
         testmail:

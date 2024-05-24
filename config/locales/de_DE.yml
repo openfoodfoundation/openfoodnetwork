@@ -795,8 +795,6 @@ de_DE:
         new_variant: Neue Produktvariante
       bulk_update:
         success: Die Änderungen wurden gespeichert.
-      edit_image:
-        close: Zurück
       variant_row:
         none_tax_category: Nichts
         category_field_name: "Kategorie"
@@ -2022,7 +2020,6 @@ de_DE:
   label_account: "Konto"
   label_more: "Mehr anzeigen"
   label_less: "Weniger anzeigen"
-  label_notices: "Ankündigungen"
   cart_items: "Artikel"
   cart_headline: "Ihr Warenkorb"
   total: "Summe"
@@ -3899,6 +3896,9 @@ de_DE:
     validation:
       must_be_int: "muss eine ganze Zahl sein"
     admin:
+      images:
+        edit:
+          close: Zurück
       mail_methods:
         send_testmail: "Test-E-Mail senden"
         testmail:

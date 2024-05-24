@@ -713,8 +713,6 @@ es:
         reset: Desechar Cambios
         save: Guardar Cambios
         new_variant: Nueva variante
-      edit_image:
-        close: Atrás
       variant_row:
         none_tax_category: Ninguno
         category_field_name: "Categoría"
@@ -1868,7 +1866,6 @@ es:
   label_account: "Cuenta"
   label_more: "Mostrar más"
   label_less: "Mostrar menos"
-  label_notices: "Noticias"
   cart_items: "elementos"
   cart_headline: "Su carrito de compras"
   total: "Total"
@@ -3713,6 +3710,9 @@ es:
     validation:
       must_be_int: "debe ser un entero"
     admin:
+      images:
+        edit:
+          close: Atrás
       mail_methods:
         send_testmail: "Enviar correo electrónico de prueba"
         testmail:

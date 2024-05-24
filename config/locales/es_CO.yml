@@ -561,8 +561,6 @@ es_CO:
         search: Buscar
       table:
         new_variant: Nueva variante
-      edit_image:
-        close: Atrás
       variant_row:
         none_tax_category: Ninguno
         category_field_name: "Categoría"
@@ -1570,7 +1568,6 @@ es_CO:
   label_account: "Cuenta"
   label_more: "Mostrar más"
   label_less: "Mostrar menos"
-  label_notices: "Noticias"
   cart_items: "Elementos"
   cart_headline: "Su carrito de compras"
   total: "Total"
@@ -3285,6 +3282,9 @@ es_CO:
           header:
             store: Tienda
     admin:
+      images:
+        edit:
+          close: Atrás
       subscriptions:
         number: "Número"
       tab:

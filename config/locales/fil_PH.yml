@@ -534,8 +534,6 @@ fil_PH:
         search: hanapin
       table:
         new_variant: bagong uri
-      edit_image:
-        close: bumalik
       variant_row:
         none_tax_category: wala
         category_field_name: "kategorya"
@@ -1523,7 +1521,6 @@ fil_PH:
   label_account: "Account"
   label_more: "ipakita ang iba pa"
   label_less: "huwag ipakita ang lahat"
-  label_notices: "mga abiso"
   cart_items: "mga item"
   cart_headline: "Ang iyong shopping cart"
   total: "kabuuan"
@@ -3187,6 +3184,9 @@ fil_PH:
           header:
             store: tindahan
     admin:
+      images:
+        edit:
+          close: bumalik
       subscriptions:
         number: "Bilang"
       tab:

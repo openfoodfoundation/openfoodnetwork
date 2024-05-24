@@ -698,8 +698,6 @@ es_CR:
           clear_search: Borrar búsqueda
       table:
         new_variant: Nueva variante
-      edit_image:
-        close: Atrás
       variant_row:
         none_tax_category: Ninguno
         category_field_name: "Categoría"
@@ -1825,7 +1823,6 @@ es_CR:
   label_account: "Cuenta"
   label_more: "Mostrar más"
   label_less: "Mostrar menos"
-  label_notices: "Noticias"
   cart_items: "Elementos"
   cart_headline: "Su carrito de compras"
   total: "Total"
@@ -3631,6 +3628,9 @@ es_CR:
           header:
             store: Tienda
     admin:
+      images:
+        edit:
+          close: Atrás
       unit_price_tooltip: "El precio unitario aumenta la transparencia al permitir que sus clientes comparen fácilmente los precios entre diferentes productos y tamaños de empaque. Tenga en cuenta que el precio unitario final que se muestra en la tienda puede diferir, ya que incluye impuestos y tarifas."
       subscriptions:
         number: "Número"

@@ -805,10 +805,6 @@ cy:
         new_variant: Amrywiolyn newydd
       bulk_update:
         success: Cadwyd y newidiadau
-      edit_image:
-        title: Golygu llun y cynnyrch
-        close: Yn ôl
-        upload: Lanlwytho llun
       delete_product:
         success: Llwyddwyd i ddileu’r cynnyrch
         error: Yn methu dileu’r cynnyrch
@@ -2039,7 +2035,6 @@ cy:
   label_account: "Cyfrif"
   label_more: "Dangos mwy"
   label_less: "Dangos llai"
-  label_notices: "Hysbysiadau"
   cart_items: "eitemau"
   cart_headline: "Eich troli siopa"
   total: "Cyfanswm"
@@ -3960,6 +3955,11 @@ cy:
     validation:
       must_be_int: "mae'n rhaid cael cyfanrif"
     admin:
+      images:
+        edit:
+          title: Golygu llun y cynnyrch
+          close: Yn ôl
+          upload: Lanlwytho llun
       mail_methods:
         send_testmail: "Anfon ebost prawf"
         testmail:

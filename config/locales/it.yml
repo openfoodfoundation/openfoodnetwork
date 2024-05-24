@@ -728,8 +728,6 @@ it:
           clear_search: Pulisci ricerca
       table:
         new_variant: Nuova variante
-      edit_image:
-        close: Indietro
       variant_row:
         none_tax_category: Nessuno
         category_field_name: "Categoria"
@@ -1877,7 +1875,6 @@ it:
   label_account: "Account"
   label_more: "Mostra di più"
   label_less: "Mostra meno"
-  label_notices: "Avvisi"
   cart_items: "articoli"
   cart_headline: "Il tuo carrello"
   total: "Totale"
@@ -3748,6 +3745,9 @@ it:
     validation:
       must_be_int: "deve essere un numero intero"
     admin:
+      images:
+        edit:
+          close: Indietro
       mail_methods:
         send_testmail: "Invia mail prova"
         testmail:

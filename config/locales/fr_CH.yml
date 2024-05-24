@@ -692,8 +692,6 @@ fr_CH:
           clear_search: Annuler la recherche
       table:
         new_variant: Nouvelle variante
-      edit_image:
-        close: Retour
       variant_row:
         none_tax_category: Aucun
         category_field_name: "Catégorie"
@@ -1811,7 +1809,6 @@ fr_CH:
   label_account: "Compte"
   label_more: "Afficher plus"
   label_less: "Masquer"
-  label_notices: "Informations"
   cart_items: "Produits"
   cart_headline: "Votre panier"
   total: "Total"
@@ -3676,6 +3673,9 @@ fr_CH:
     validation:
       must_be_int: "doit être un entier"
     admin:
+      images:
+        edit:
+          close: Retour
       mail_methods:
         send_testmail: "Envoyer un e-mail de test"
         testmail:

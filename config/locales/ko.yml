@@ -693,8 +693,6 @@ ko:
           clear_search: 검색 지우기
       table:
         new_variant: 새로운 변경사항
-      edit_image:
-        close: 뒤로
       variant_row:
         none_tax_category: None
         category_field_name: "목록"
@@ -1805,7 +1803,6 @@ ko:
   label_account: "계정"
   label_more: "더 보기"
   label_less: "적게 표시"
-  label_notices: "공지사항"
   cart_items: "항목"
   cart_headline: "당신의 쇼핑 카트"
   total: "총합"
@@ -3571,6 +3568,9 @@ ko:
     validation:
       must_be_int: "정수여야 합니다"
     admin:
+      images:
+        edit:
+          close: 뒤로
       mail_methods:
         send_testmail: "테스트 이메일 보내기"
         testmail:

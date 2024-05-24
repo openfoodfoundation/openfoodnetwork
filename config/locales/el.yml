@@ -593,8 +593,6 @@ el:
         producers:
           label: Παραγωγοί
         search: Αναζήτηση
-      edit_image:
-        close: Πίσω
       variant_row:
         none_tax_category: Κανένας
         category_field_name: "Κατηγορία"
@@ -1568,7 +1566,6 @@ el:
   label_account: "Λογαριασμός"
   label_more: "Εμφάνισε κι άλλα"
   label_less: "Εμφάνισε λιγότερα"
-  label_notices: "Ειδοποίηση"
   cart_items: "προϊόντα"
   cart_headline: "Το καλάθι αγορών σου"
   total: "Σύνολο"
@@ -3265,6 +3262,9 @@ el:
     validation:
       must_be_int: "πρέπει να είναι ακέραιος"
     admin:
+      images:
+        edit:
+          close: Πίσω
       mail_methods:
         send_testmail: "Αποστολή δοκιμαστικού email"
         testmail:

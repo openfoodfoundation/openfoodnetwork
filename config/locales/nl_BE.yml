@@ -550,8 +550,6 @@ nl_BE:
           clear_search: Verwijder zoektermen
       table:
         new_variant: Nieuw variant
-      edit_image:
-        close: achterstevoren
       variant_row:
         none_tax_category: Geen enkele
         category_field_name: "Categorie"
@@ -1422,8 +1420,8 @@ nl_BE:
       cart_sidebar:
         checkout: "Kassa"
         edit_cart: "Winkelwagen aanpassen"
-        items_in_cart_singular: "%{num}items in uw winkelkwagentje"
-        items_in_cart_plural: "%{num}items in uw winkelkwagentje"
+        items_in_cart_singular: "%{num} items in uw winkelwagentje"
+        items_in_cart_plural: "%{num} items in uw winkelwagentje"
         close: "Sluit"
         cart_empty: "Uw winkelwagen is leeg"
         take_me_shopping: "Neem me shoppen!"
@@ -1563,7 +1561,6 @@ nl_BE:
   label_account: "Account"
   label_more: "Toon meer"
   label_less: "Toon minder"
-  label_notices: "Info"
   cart_items: "Artikels"
   cart_headline: "Je winkelwagentje"
   total: "Totaal"
@@ -3183,6 +3180,9 @@ nl_BE:
           header:
             store: Zicht koper
     admin:
+      images:
+        edit:
+          close: achterstevoren
       subscriptions:
         number: "Nummer"
       tab:

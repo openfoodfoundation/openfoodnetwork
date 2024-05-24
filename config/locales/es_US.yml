@@ -670,8 +670,6 @@ es_US:
           clear_search: Limpiar la búsqueda
       table:
         new_variant: Nueva variante
-      edit_image:
-        close: Atrás
       variant_row:
         none_tax_category: Ninguno
         category_field_name: "Categoría"
@@ -1726,7 +1724,6 @@ es_US:
   label_account: "Cuenta"
   label_more: "Mostrar más"
   label_less: "Mostrar menos"
-  label_notices: "Noticias"
   cart_items: "elementos"
   cart_headline: "Su carrito de compras"
   total: "Total"
@@ -3521,6 +3518,9 @@ es_US:
     validation:
       must_be_int: "debe ser un entero"
     admin:
+      images:
+        edit:
+          close: Atrás
       mail_methods:
         send_testmail: "Enviar email de prueba"
         testmail:

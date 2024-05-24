@@ -795,8 +795,6 @@ ml:
         new_variant: പുതിയ വേരിയന്റ്
       bulk_update:
         success: മാറ്റങ്ങൾ സേവ് ചെയ്തു.
-      edit_image:
-        close: തിരികെ
       variant_row:
         none_tax_category: ഒന്നുമില്ല
         category_field_name: "വിഭാഗം"
@@ -2027,7 +2025,6 @@ ml:
   label_account: "അക്കൗണ്ട്"
   label_more: "കൂടുതൽ കാണിക്കുക"
   label_less: "കുറച്ചുമാത്രം കാണിക്കുക"
-  label_notices: "അറിയിപ്പുകൾ"
   cart_items: "ഇനങ്ങൾ"
   cart_headline: "നിങ്ങളുടെ ഷോപ്പിംഗ് കാർട്ട്"
   total: "ആകെ"
@@ -3908,6 +3905,9 @@ ml:
     validation:
       must_be_int: "ഒരു പൂർണ്ണസംഖ്യ ആയിരിക്കണം"
     admin:
+      images:
+        edit:
+          close: തിരികെ
       mail_methods:
         send_testmail: "ടെസ്റ്റ് ഇമെയിൽ അയയ്ക്കുക"
         testmail:

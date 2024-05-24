@@ -829,10 +829,6 @@ fr:
         new_variant: Nouvelle variante
       bulk_update:
         success: Changements sauvegardés
-      edit_image:
-        title: Modifier la photo du produit
-        close: Retour
-        upload: Télécharger la photo
       delete_product:
         success: Le produit a bien été supprimé
         error: Le produit n'a pas pu être supprimé
@@ -2100,7 +2096,6 @@ fr:
   label_account: "Compte"
   label_more: "Afficher plus"
   label_less: "Masquer"
-  label_notices: "Informations"
   cart_items: "Produits"
   cart_headline: "Votre panier"
   total: "Total"
@@ -4031,6 +4026,11 @@ fr:
     validation:
       must_be_int: "doit être un entier"
     admin:
+      images:
+        edit:
+          title: Modifier la photo du produit
+          close: Retour
+          upload: Télécharger la photo
       mail_methods:
         send_testmail: "Envoyer un e-mail de test"
         testmail:

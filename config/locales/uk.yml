@@ -696,8 +696,6 @@ uk:
           clear_search: Очистити пошук
       table:
         new_variant: Новий варіант
-      edit_image:
-        close: Назад
       variant_row:
         none_tax_category: Жодного
         category_field_name: "Категорія"
@@ -1823,7 +1821,6 @@ uk:
   label_account: "Обліковий запис"
   label_more: "Показати більше"
   label_less: "Показувати менше"
-  label_notices: "Повідомлення"
   cart_items: "Товари"
   cart_headline: "Ваш кошик для покупок"
   total: "Всього"
@@ -3686,6 +3683,9 @@ uk:
     validation:
       must_be_int: "має бути цілим числом"
     admin:
+      images:
+        edit:
+          close: Назад
       mail_methods:
         send_testmail: "Надіслати тестовий електронний лист"
         testmail:

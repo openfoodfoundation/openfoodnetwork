@@ -698,8 +698,6 @@ de_CH:
         no_products_found: Keine Produkte gefunden.
       table:
         new_variant: Neue Produktvariante
-      edit_image:
-        close: Zurück
       variant_row:
         none_tax_category: Keine
         category_field_name: "Kategorie"
@@ -1736,6 +1734,7 @@ de_CH:
   abn: "MWST nr."
   acn: "St.-Nr.:"
   invoice_issued_on: "Rechnungsdatum:"
+  order_number: "Bestellnummer:"
   date_of_transaction: "Bestelldatum:"
   menu_1_title: "Einkaufen"
   menu_1_url: "/shops"
@@ -1818,7 +1817,6 @@ de_CH:
   label_account: "Konto"
   label_more: "Mehr anzeigen"
   label_less: "Weniger anzeigen"
-  label_notices: "Ankündigungen"
   cart_items: "Artikel"
   cart_headline: "Ihr Warenkorb"
   total: "Summe"
@@ -2691,6 +2689,7 @@ de_CH:
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
   report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
+  report_header_total_orders: "Anzahl der Bestellungen"
   report_header_enterprise: Unternehmen
   report_header_enterprise_fee_name: Name
   report_header_enterprise_fee_type: Art
@@ -3639,6 +3638,9 @@ de_CH:
     validation:
       must_be_int: "muss eine ganze Zahl sein"
     admin:
+      images:
+        edit:
+          close: Zurück
       mail_methods:
         send_testmail: "Test-E-Mail senden"
         testmail:
@@ -3758,6 +3760,7 @@ de_CH:
           from: "Von"
           to: "Rechnungsempfänger"
           shipping: "Lieferung"
+          order_number: "Bestellnummer"
           payments_list:
             date_time: "Datum/Uhrzeit"
             payment_method: "Zahlungsart"

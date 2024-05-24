@@ -533,8 +533,6 @@ en_PH:
         search: Search
       table:
         new_variant: New variant
-      edit_image:
-        close: Back
       variant_row:
         none_tax_category: None
         category_field_name: "Category"
@@ -1521,7 +1519,6 @@ en_PH:
   label_account: "Account"
   label_more: "Show more"
   label_less: "Show less"
-  label_notices: "Notices"
   cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
@@ -3175,6 +3172,9 @@ en_PH:
           header:
             store: Store
     admin:
+      images:
+        edit:
+          close: Back
       subscriptions:
         number: "Number"
       tab:
