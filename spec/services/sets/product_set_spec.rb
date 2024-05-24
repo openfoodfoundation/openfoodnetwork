@@ -134,6 +134,27 @@ RSpec.describe Sets::ProductSet do
           end
         end
       end
+
+      context "when product attributes are not changed" do
+        let(:collection_hash) {
+          { 0 => { id: product.id, name: product.name } }
+        }
+
+        it 'returns true' do
+          is_expected.to eq true
+        end
+
+        it 'does not increase saved_count' do
+          subject
+          expect(product_set.saved_count).to eq 0
+        end
+
+        it 'does not update any product by calling save' do
+          expect_any_instance_of(Spree::Product).not_to receive(:save)
+
+          subject
+        end
+      end
     end
 
     describe "updating a product's variants" do
@@ -188,6 +209,23 @@ RSpec.describe Sets::ProductSet do
         let(:variant_attributes) { { sku: "var_sku", display_name: "A" * 256 } } # maximum length
 
         include_examples "nothing saved"
+      end
+
+      context "when attributes are not changed" do
+        let(:variant_attributes) { { sku: variant.sku } }
+
+        before { variant }
+
+        it 'updates product by calling save' do
+          expect_any_instance_of(Spree::Variant).not_to receive(:save)
+
+          subject
+        end
+
+        it 'does not increase saved_count' do
+          subject
+          expect(product_set.saved_count).to eq 0
+        end
       end
 
       context "when products attributes are also updated" do
