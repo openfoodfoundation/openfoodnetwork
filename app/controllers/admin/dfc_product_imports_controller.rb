@@ -20,7 +20,7 @@ module Admin
 
       catalog_url = params.require(:catalog_url)
 
-      json_catalog = DfcRequest.new(spree_current_user).call(catalog_url)
+      json_catalog = fetch_catalog(catalog_url)
       graph = DfcIo.import(json_catalog)
 
       # * First step: import all products for given enterprise.
@@ -33,6 +33,16 @@ module Admin
     end
 
     private
+
+    def fetch_catalog(url)
+      if url =~ /food-data-collaboration/
+        fdc_json = FdcRequest.new(spree_current_user).call(url)
+        fdc_message = JSON.parse(fdc_json)
+        fdc_message["products"]
+      else
+        DfcRequest.new(spree_current_user).call(url)
+      end
+    end
 
     # Most of this code is the same as in the DfcProvider::SuppliedProductsController.
     def import_product(subject, enterprise)
