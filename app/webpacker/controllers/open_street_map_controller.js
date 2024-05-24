@@ -71,6 +71,11 @@ export default class extends Controller {
   }
 
   #displayMap() {
+    // Don't initialise map in test environment because that could possibly abuse OSM tile servers
+    if(process.env.RAILS_ENV == "test") {
+      return false;
+    }
+
     this.map = L.map('open-street-map')
     L.tileLayer.provider(this.providerNameValue, this.providerOptionsValue).addTo(this.map)
     this.map.setView([this.defaultLatitudeValue, this.defaultLongitudeValue], this.zoomLevel)
