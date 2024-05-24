@@ -304,6 +304,16 @@ module Spree
       )
     end
 
+    # Remove any unsupported HTML.
+    def description
+      Rails::HTML::SafeListSanitizer.new.sanitize(super)
+    end
+
+    # # Remove any unsupported HTML.
+    def description=(html)
+      super(Rails::HTML::SafeListSanitizer.new.sanitize(html))
+    end
+
     private
 
     def update_units
