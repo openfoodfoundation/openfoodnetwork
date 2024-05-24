@@ -650,14 +650,12 @@ Rails/RedundantActiveRecordAllMethod:
     - 'app/models/spree/variant.rb'
     - 'spec/system/admin/product_import_spec.rb'
 
-# Offense count: 7
+# Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RedundantPresenceValidationOnBelongsTo:
   Exclude:
     - 'app/models/spree/line_item.rb'
     - 'app/models/spree/order.rb'
-    - 'app/models/subscription_line_item.rb'
-    - 'app/models/tag_rule.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
