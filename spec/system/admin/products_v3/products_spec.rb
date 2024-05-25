@@ -208,11 +208,13 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
   end
 
   describe "search" do
-    # TODO: explicitly test with multiple products, to ensure incorrect products don't show.
-    # TODO: test with  multiple variants, to ensure distinct query reponse
     context "product has searchable term" do
       # create a product with a name that can be searched
       let!(:product_by_name) { create(:simple_product, name: "searchable product") }
+      let!(:variant_a) {
+        create(:variant, product_id: product_by_name.id, display_name: "Medium box")
+      }
+      let!(:variant_b) { create(:variant, product_id: product_by_name.id, display_name: "Big box") }
 
       it "can search for a product" do
         create_products 1
@@ -221,7 +223,39 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria."
+        expect_products_count_to_be 1
+      end
+
+      it "with multiple products" do
+        create_products 2
+        visit admin_products_url
+
+        # returns no results, if the product does not exist
+        search_for "a product which does not exist"
+
+        expect(page).to have_field "search_term", with: "a product which does not exist"
+        expect(page).to have_content "No products found for your search criteria"
+        expect_products_count_to_be 0
+
+        # returns the existing product
+        search_for "searchable product"
+
+        expect(page).to have_field "search_term", with: "searchable product"
+        expect(page).to have_content "1 products found for your search criteria."
+        expect_products_count_to_be 1
+      end
+
+      it "can search variant names" do
+        create_products 1
+        visit admin_products_url
+
+        expect_products_count_to_be 2
+
+        search_for "Big box"
+
+        expect(page).to have_field "search_term", with: "Big box"
+        expect(page).to have_content "1 products found for your search criteria."
         expect_products_count_to_be 1
       end
 
@@ -238,7 +272,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         expect_per_page_to_be 15
         expect_products_count_to_be 1
         search_for "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria."
         expect_products_count_to_be 1
       end
 
@@ -248,7 +282,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria."
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_name.name
 
