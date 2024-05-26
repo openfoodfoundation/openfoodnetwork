@@ -77,6 +77,7 @@ module Spree
     after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
     around_destroy :destruction
     after_save :update_units
+    after_touch :touch_supplier
 
     # -- Scopes
     scope :with_properties, ->(*property_ids) {
@@ -333,7 +334,12 @@ module Spree
 
       # Assume the product supplier is the supplier of the first variant
       # Will breack if product has mutiple variants with different supplier
-      variants.first.supplier.touch
+      first_variant = variants.first
+
+      # The variant is invalid if no supplier is present, but this method can be triggered when
+      # importing product. In this scenario the variant has not been updated with the supplier yet
+      # hence the check.
+      first_variant.supplier.touch if first_variant.supplier.present?
     end
 
     def touch_distributors
