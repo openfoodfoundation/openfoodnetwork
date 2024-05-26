@@ -334,6 +334,14 @@ module Spree
           expect { product.touch }
             .to change { supplier.reload.updated_at }
         end
+
+        context "when the first variant is missing supplier" do
+          it "doesn't blow up" do
+            product.variants.first.update_attribute(:supplier_id, nil)
+
+            expect { product.touch }.to_not raise_error
+          end
+        end
       end
 
       it "updates units when saved change to variant unit" do
