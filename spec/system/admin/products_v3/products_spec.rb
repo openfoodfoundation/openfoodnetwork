@@ -85,22 +85,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
     end
 
-    it "displays a select box for suppliers, with the appropriate supplier selected" do
-      pending( "[BUU] Change producer, unit type, category and tax category #11060" )
-      s1 = FactoryBot.create(:supplier_enterprise)
-      s2 = FactoryBot.create(:supplier_enterprise)
-      s3 = FactoryBot.create(:supplier_enterprise)
-      p1 = FactoryBot.create(:product, supplier: s2)
-      p2 = FactoryBot.create(:product, supplier: s3)
-
-      visit spree.admin_products_path
-
-      expect(page).to have_select "producer_id", with_options: [s1.name, s2.name, s3.name],
-                                                 selected: s2.name
-      expect(page).to have_select "producer_id", with_options: [s1.name, s2.name, s3.name],
-                                                 selected: s3.name
-    end
-
     context "with several variants" do
       let!(:variant1) { p1.variants.first }
       let!(:variant2) { p2.variants.first }
@@ -397,7 +381,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
 
       # Unit popout
-      # TODO: prevent empty value
       fill_in "Unit value", with: ""
       click_button "Save changes" # attempt to save or close the popout
       expect(page).to have_field "Unit value", with: "" # popout is still open
