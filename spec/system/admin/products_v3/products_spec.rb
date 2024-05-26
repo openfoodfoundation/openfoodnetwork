@@ -1196,6 +1196,9 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       let(:default_variant_selector) {
         "tr:has(input[aria-label=Price][value='#{product_a.price}'])"
       }
+      let(:link_edit_variant) {
+        "/admin/products/#{Spree::Product.first.id}/variants/#{Spree::Variant.first.id}/edit"
+      }
 
       describe "Actions columns (delete)" do
         before do
@@ -1203,6 +1206,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         end
 
         it "shows an actions menu with a delete link when clicking on icon for product. " \
+           "shows link to clone and edit the product;" \
            "doesn't show delete link for the single variant" do
           within product_selector do
             page.find(".vertical-ellipsis-menu").click
@@ -1213,6 +1217,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
           # to select the default variant
           within default_variant_selector do
             page.find(".vertical-ellipsis-menu").click
+            expect(page).to have_link "Edit", href: link_edit_variant
             expect(page).not_to have_css(delete_option_selector)
           end
         end
@@ -1224,17 +1229,21 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
                  display_name: "Medium box",
                  sku: "APL-01",
                  price: 5.25)
+          link_edit_variant2 =
+            "/admin/products/#{Spree::Product.first.id}/variants/#{Spree::Variant.second.id}/edit"
           visit admin_products_url
 
           # to select the default variant
           within default_variant_selector do
             page.find(".vertical-ellipsis-menu").click
+            expect(page).to have_link "Edit", href: link_edit_variant
             expect(page).to have_css(delete_option_selector)
           end
           page.find("div#content").click # to close the vertical actions menu
 
           within variant_selector do
             page.find(".vertical-ellipsis-menu").click
+            expect(page).to have_link "Edit", href: link_edit_variant2
             expect(page).to have_css(delete_option_selector)
           end
         end
