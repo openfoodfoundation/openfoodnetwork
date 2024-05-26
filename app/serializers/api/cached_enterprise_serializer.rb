@@ -77,45 +77,19 @@ module Api
       end
     end
 
-    # This results in 3 queries per enterprise
     def distributed_properties
       return [] unless active
 
-      (distributed_product_properties + distributed_producer_properties).uniq do |property_object|
-        property_object.property.presentation
-      end
-    end
-
-    def distributed_product_properties
-      return [] unless active
-
-      properties = Spree::Property
-        .joins(products: { variants: { exchanges: :order_cycle } })
-        .merge(Exchange.outgoing)
-        .merge(Exchange.to_enterprise(enterprise))
-        .select('DISTINCT spree_properties.*')
-
-      return properties.merge(OrderCycle.active) if active
-
-      properties
-    end
-
-    def distributed_producer_properties
-      return [] unless active
-
-      properties = Spree::Property
-        .joins(
-          producer_properties: {
-            producer: { supplied_products: { variants: { exchanges: :order_cycle } } }
-          }
+      Spree::Property
+        .left_outer_joins(
+          products: {variants: {exchanges: :order_cycle}},
+          producers: {supplied_products: {variants: {exchanges: :order_cycle}}}
         )
         .merge(Exchange.outgoing)
         .merge(Exchange.to_enterprise(enterprise))
-        .select('DISTINCT spree_properties.*')
-
-      return properties.merge(OrderCycle.active) if active
-
-      properties
+        .distinct
+        .merge(OrderCycle.active)
+        .uniq { |property_object| property_object.property.presentation }
     end
 
     def active
