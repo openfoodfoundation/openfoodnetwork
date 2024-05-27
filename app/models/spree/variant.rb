@@ -199,6 +199,11 @@ module Spree
       price_in(currency).try(:amount)
     end
 
+    def changed?
+      # Changes to price are saved after_save
+      super || default_price.changed?
+    end
+
     # can_supply? is implemented in VariantStock
     def in_stock?(quantity = 1)
       can_supply?(quantity)
