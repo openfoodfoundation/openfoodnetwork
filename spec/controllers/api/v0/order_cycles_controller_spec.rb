@@ -107,14 +107,15 @@ module Api
           let!(:supplier) { create(:supplier_enterprise, properties: [supplier_property]) }
 
           before do
-            product1.update!(supplier:)
-            product2.update!(supplier:)
-            product3.update!(supplier:, inherits_properties: false)
+            product1.variants.first.update!(supplier:)
+            product2.variants.first.update!(supplier:)
+            product3.update!(inherits_properties: false)
+            product3.variants.first.update!(supplier:)
           end
 
           it "filter out the product that don't inherits from supplier properties" do
             api_get :products, id: order_cycle.id, distributor: distributor.id,
-                               q: { with_properties: [supplier_property.id] }
+                               q: { with_variants_supplier_properties: [supplier_property.id] }
 
             expect(response.status).to eq 200
             expect(product_ids).to match_array [product1.id, product2.id]
@@ -263,16 +264,20 @@ module Api
     context "with custom taxon ordering applied and duplicate product names in the order cycle" do
       let!(:supplier) { create(:supplier_enterprise) }
       let!(:product5) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier_id: supplier.id)
+        create(:product, name: "Duplicate name", primary_taxon_id: taxon3.id,
+                         supplier_id: supplier.id)
       }
       let!(:product6) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon3, supplier_id: supplier.id)
+        create(:product, name: "Duplicate name", primary_taxon_id: taxon3.id,
+                         supplier_id: supplier.id)
       }
       let!(:product7) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier_id: supplier.id)
+        create(:product, name: "Duplicate name", primary_taxon_id: taxon2.id,
+                         supplier_id: supplier.id)
       }
       let!(:product8) {
-        create(:product, name: "Duplicate name", primary_taxon: taxon2, supplier_id: supplier.id)
+        create(:product, name: "Duplicate name", primary_taxon_id: taxon2.id,
+                         supplier_id: supplier.id)
       }
 
       before do

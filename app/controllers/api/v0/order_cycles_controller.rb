@@ -86,8 +86,9 @@ module Api
       end
 
       def distributed_products
-        OrderCycles::DistributedProductsService.new(distributor, order_cycle,
-                                                    customer).products_relation
+        OrderCycles::DistributedProductsService.new(
+          distributor, order_cycle, customer
+        ).products_supplier_relation.pluck(:id)
       end
     end
   end
