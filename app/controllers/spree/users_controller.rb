@@ -145,18 +145,22 @@ module Spree
       end
     end
 
-    def create_enterprise_role
+    def create_enterprise_role      
       enterprise = Enterprise.find(params[:user][:shop_id])
 
       if enterprise.private?
         private_shop_access(@user, enterprise)
       else
-        create_enterprise_role_query(enterprise.id)
+        # create_enterprise_role_query(enterprise.id)        
+        enterprise = Enterprise.find(enterprise.id)
+        @user.enterprises << enterprise unless @user.enterprises.include?(enterprise)
       end
     end
 
-    def create_enterprise_role_query(enterprise_id)
-      @user.enterprise_roles.create(enterprise_id: enterprise_id, receives_notifications: true)
-    end
+    # def create_enterprise_role_query(enterprise_id)
+    #   # @user.enterprise_roles.create(enterprise_id: enterprise_id, receives_notifications: true)
+    #   enterprise = Enterprise.find(enterprise_id)
+    #   user.enterprises << enterprise unless user.enterprises.include?(enterprise)
+    # end
   end
 end

@@ -3,8 +3,8 @@
   = form_for Spree::User.new, :url => spree.user_request_enterprise_path(@user), :method => :post do |f|
     = hidden_field_tag :user_id, @user.id
     %select{name: "enterprises", id: "enterprises", style: "width: 50%;", onchange: "showRequestButton()"}
-      %option{value: "", selected: true, disabled: true}= t(".select_an_enterprise")
+      %option{value: "", selected: true, disabled: true}= t('select_an_enterprise')
       - @enterprises.each do |enterprise|
         %option{value: enterprise.id}= enterprise.name
     %p
-      = f.submit "Request", :class => 'button primary'
+      = f.submit t('request'), :class => 'button primary'

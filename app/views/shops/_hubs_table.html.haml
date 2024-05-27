@@ -9,6 +9,3 @@
         = render 'fat'
 
     = render 'shared/components/enterprise_no_results', enterprises: "#{enterprises}Filtered"
-
-:javascript
-  window.groupedEnterprises = #{raw @grouped_enterprises.to_json};
