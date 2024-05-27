@@ -17,9 +17,6 @@ export default class extends Controller {
       const modalId = this.targetValue;
       const moodalConfirmButtonQuery = `#${modalId} #modal-confirm-button`;
       const confirmButton = document.querySelector(moodalConfirmButtonQuery);
-
-      this.#setPathToFormAction(confirmButton);
-
       Object.keys(this.modalDatasetValue).forEach((datasetKey) => {
         confirmButton.setAttribute(datasetKey, this.modalDatasetValue[datasetKey]);
       });
@@ -32,17 +29,5 @@ export default class extends Controller {
 
   getIdentifier() {
     return "modal";
-  }
-
-  #setPathToFormAction(confirmButton) {
-    const isSubmitButton = confirmButton.type === 'submit';
-    const path = this.modalDatasetValue['data-path'];
-
-    if(isSubmitButton && path){
-      const form = confirmButton.parentElement;
-      form.setAttribute('action', path);
-
-      delete this.modalDatasetValue['data-path'];
-    }
   }
 }

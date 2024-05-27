@@ -66,7 +66,7 @@
       - if variant.product.variants.size > 1
         %a{ "data-controller": "modal-link", "data-action": "click->modal-link#setModalDataSetOnConfirm click->modal-link#open",
             "data-modal-link-target-value": "variant-delete-modal", "class": "delete",
-            "data-modal-link-modal-dataset-value": {'data-path': admin_destroy_variant_path(variant)}.to_json }
+            "data-modal-link-modal-dataset-value": {'data-delete-path': admin_destroy_variant_path(variant)}.to_json }
           = t('admin.products_page.actions.delete')
     - else
       %a{ 'data-action': "nested-form#remove", class: 'delete' }
