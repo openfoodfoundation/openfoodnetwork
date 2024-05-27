@@ -106,7 +106,7 @@ module Sets
       variant = find_model(product.variants, variant_attributes[:id])
       if variant.present?
         variant.assign_attributes(variant_attributes.except(:id))
-        variant.update(variant_attributes.except(:id)) if variant.changed?
+        variant.save if variant.changed?
       else
         variant = create_variant(product, variant_attributes)
       end
