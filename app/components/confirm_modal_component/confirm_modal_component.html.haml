@@ -7,9 +7,4 @@
 
     %div{ class: "modal-actions #{@actions_alignment_class}" }
       %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: @cancel_button_text, "data-action": "click->modal#close" }
-      - # TODO: This if block needs to be removed when we completely get rid of Reflex
-      - # The button's form action will be dynamically set when the modal is opened via modal-link-controller
-      - if @confirm_submit_method
-        = button_to @confirm_button_text, '', id: 'modal-confirm-button', method: @confirm_submit_method, data: { action: @confirm_actions }
-      - else
-        %input{ id: 'modal-confirm-button', class: "button icon-plus #{@confirm_button_class}", type: 'button', value: @confirm_button_text, "data-action": @confirm_actions, "data-reflex": @confirm_reflexes }
+      %input{ id: 'modal-confirm-button', class: "button icon-plus #{@confirm_button_class}", type: 'button', value: @confirm_button_text, "data-action": @confirm_actions, "data-reflex": @confirm_reflexes }
