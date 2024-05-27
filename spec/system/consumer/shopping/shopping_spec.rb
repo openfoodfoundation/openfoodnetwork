@@ -392,7 +392,6 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           create(:simple_product, supplier_id: supplier.id, inherits_properties: false)
         }
 
-        # TODO properties
         before do
           add_variant_to_order_cycle(exchange, product3.variants.first)
           property = create(:property, presentation: 'certified')
