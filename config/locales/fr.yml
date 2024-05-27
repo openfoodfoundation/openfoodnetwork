@@ -413,6 +413,8 @@ fr:
   change_my_password: "Changer mon mot de passe"
   update_password: "Mettre à jour le mot de passe"
   password_confirmation: Confirmation de mot de passe
+  select_an_enterprise: Sélectionner un groupe
+  request: Envoyer
   reset_password_token: La demande de réinitialisation du mot de passe
   expired: a expiré, veuillez faire une nouvelle demande.
   back_to_payments_list: "Retour à la liste des paiements"
@@ -4397,7 +4399,7 @@ fr:
           cards: Cartes bancaires
           transactions: Achats
           settings: Paramètres
-          request_a_shop: inscription à un group privé
+          request_a_shop: inscription à un groupe privé
         unconfirmed_email: "Attente de validation pour l'email: %{unconfirmed_email}. Votre adresse email sera mise à jour quand le nouvel email aura été confirmé."
       orders:
         open_orders: Commandes Ouvertes
