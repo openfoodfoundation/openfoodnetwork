@@ -58,6 +58,28 @@ RSpec.describe Spree::Variant do
     end
   end
 
+  describe "#changed?" do
+    subject(:variant) { create(:variant) }
+
+    it { is_expected.not_to be_changed }
+
+    it "is changed when basic fields are changed" do
+      subject.display_name = "blah"
+      expect(subject).to be_changed
+    end
+
+    describe "default_price" do
+      it "price" do
+        subject.price = 100
+        expect(subject).to be_changed
+      end
+      it "currency" do
+        subject.currency = "USD"
+        expect(subject).to be_changed
+      end
+    end
+  end
+
   context "price parsing" do
     context "price=" do
       context "with decimal point" do
