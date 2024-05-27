@@ -99,6 +99,59 @@ describe("BulkFormController", () => {
         expect(input1b.classList).not.toContain('changed');
         expect(input2.classList).toContain('changed');
       });
+
+      describe("select not include_blank", () => {
+        beforeEach(() => {
+          document.body.innerHTML = `
+            <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
+              <div data-record-id="1">
+                <select id="select1">
+                  <option value="1">one</option>
+                  <option value="2">two</option>
+                </select>
+              </div>
+              <input type="submit">
+            </form>
+          `;
+        });
+
+        it("shows as changed", () => {
+          // Expect select to show changed (select-one always has something selected)
+          expect(select1.classList).toContain('changed');
+
+          // Change selection
+          select1.options[0].selected = false;
+          select1.options[1].selected = true;
+          select1.dispatchEvent(new Event("input"));
+          expect(select1.classList).toContain('changed');
+        });
+      });
+
+      describe("select-one with include_blank", () => {
+        beforeEach(() => {
+          document.body.innerHTML = `
+            <form data-controller="bulk-form" data-bulk-form-disable-selector-value="#disable1,#disable2">
+              <div data-record-id="1">
+                <select id="select1">
+                  <option value="">blank</option>
+                  <option value="1">one</option>
+                </select>
+              </div>
+              <input type="submit">
+            </form>
+          `;
+        });
+
+        it("does not show as changed", () => {
+          expect(select1.classList).not.toContain('changed');
+
+          // Change selection
+          select1.options[0].selected = false;
+          select1.options[1].selected = true;
+          select1.dispatchEvent(new Event("input"));
+          expect(select1.classList).toContain('changed');
+        });
+      });
     })
 
     describe("activating sections, and showing a summary", () => {

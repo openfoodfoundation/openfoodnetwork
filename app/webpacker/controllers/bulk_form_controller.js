@@ -63,7 +63,7 @@ export default class BulkFormController extends Controller {
     // For each record, check if any fields are changed
     // TODO: optimise basd on current state. if field is changed, but form already changed, no need to update (and vice versa)
     const changedRecordCount = Object.values(this.recordElements).filter((elements) =>
-      elements.some(this.#isChanged),
+      elements.some(this.#checkIsChanged.bind(this)),
     ).length;
     this.formChanged = changedRecordCount > 0 || this.errorValue;
 
@@ -131,11 +131,17 @@ export default class BulkFormController extends Controller {
     });
   }
 
-  #isChanged(element) {
-    if(!element.isConnected) {
-      return false;
+  // Check if changed, and mark with class if it is.
+  #checkIsChanged(element) {
+    if(!element.isConnected) return false;
 
-    } else if (element.type == "checkbox") {
+    const changed = this.#isChanged(element);
+    element.classList.toggle("changed", changed);
+    return changed;
+  }
+
+  #isChanged(element) {
+     if (element.type == "checkbox") {
       return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
 
     } else if (element.type == "select-one") {
