@@ -17,7 +17,7 @@ module Api
         @earliest_closing_times = []
 
         serialized_closed_shops = ActiveModel::ArraySerializer.new(
-          ShopsListService.new.closed_shops,
+          ShopsListService.new.closed_shops(spree_current_user),
           each_serializer: Api::EnterpriseSerializer,
           data: OpenFoodNetwork::EnterpriseInjectionData.new
         )

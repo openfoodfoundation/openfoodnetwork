@@ -228,6 +228,31 @@ class Enterprise < ApplicationRecord
       ", one, others)
   }
 
+  def self.grouped_enterprises_for_user(user)
+    return Enterprise.none unless user
+  
+    user_enterprises = user.enterprises
+    grouped_enterprises = Set.new
+  
+    user_enterprises.each do |enterprise|
+      groups = enterprise.groups
+  
+      groups.each do |group|
+        enterprises = group.enterprises.where(visible: 'public')
+  
+        if enterprise.visible == 'private'
+          grouped_enterprises.merge(enterprises)
+          grouped_enterprises.add(enterprise)
+        else
+          grouped_enterprises.merge(enterprises)
+        end
+      end
+    end
+  
+    Enterprise.where(id: grouped_enterprises.map(&:id))
+  end
+
+
   def business_address_empty?(attributes)
     attributes_exists = attributes['id'].present?
     attributes_empty = attributes.slice(:company, :address1, :city, :phone,

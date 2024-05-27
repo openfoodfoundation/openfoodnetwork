@@ -13,7 +13,7 @@
 
   %ul.dropdown
 
-    - if admin_user? or enterprise_user?
+    - if admin_user?
       %li
         %a{href: spree.admin_dashboard_path, target:'_blank'}
           %i.ofn-i_021-tools
