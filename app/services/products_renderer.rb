@@ -73,7 +73,8 @@ class ProductsRenderer
       results = query.joins('JOIN enterprises ON enterprises.id = first_variant.supplier_id
                              LEFT OUTER JOIN producer_properties
                                ON producer_properties.producer_id = enterprises.id').
-        where(producer_properties: { property_id: property_ids })
+        where(producer_properties: { property_id: property_ids }).
+        where(inherits_properties: true)
 
       return results
     end
