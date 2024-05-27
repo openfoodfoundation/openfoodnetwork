@@ -16,8 +16,8 @@
       key: "'js.shopfront.unit_price_tooltip'"}
       {{ variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ variant.unit_price_unit }}
 
-  .medium-2.large-2.columns.total-price
-    %span{"ng-class" => "{filled: variant.line_item.total_price}"}
-      {{ variant.line_item.total_price | localizeCurrency }}
+  -# .medium-2.large-2.columns.total-price
+  -#   %span{"ng-class" => "{filled: variant.line_item.total_price}"}
+  -#     {{ variant.line_item.total_price | localizeCurrency }}
   = render partial: "shop/products/shop_variant_no_group_buy"
   = render partial: "shop/products/shop_variant_with_group_buy"

@@ -492,6 +492,7 @@ en:
   change_my_password: "Change my password"
   update_password: "Update password"
   password_confirmation: Password Confirmation
+  request: Request
   reset_password_token: Reset password token
   expired: has expired, please request a new one
   back_to_payments_list: "Back to Payments List"
@@ -2027,7 +2028,7 @@ en:
   system_step1: "1. Search"
   system_step1_text: "Search our diverse, independent shops for seasonal local food. Search by neighbourhood and food category, or whether you prefer delivery or pickup."
   system_step2: "2. Shop"
-  system_step2_text: "Transform your transactions with affordable local food from diverse producers and hubs. Know the stories behind your food and the people who make it!"
+  system_step2_text: "Order online to support the Andalusian producers in our network."
   system_step3: "3. Pick-up / Delivery"
   system_step3_text: "Hang on for your delivery, or visit your producer or hub for a more personal connection with your food. Food shopping as diverse as nature intended it."
 
