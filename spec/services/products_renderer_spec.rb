@@ -15,21 +15,24 @@ RSpec.describe ProductsRenderer do
     let(:fruits_supplier) { create(:supplier_enterprise) }
     let(:cakes_supplier) { create(:supplier_enterprise) }
     let!(:product_apples) {
-      create(:product, name: "apples", primary_taxon_id: fruits.id, supplier_id: fruits_supplier.id)
+      create(:product, name: "apples", primary_taxon_id: fruits.id,
+                       supplier_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_banana_bread) {
-      create(:product, name: "banana bread", variants: [
-               create(:variant, supplier: cakes_supplier, primary_taxon: cakes),
-               create(:variant, supplier: fruits_supplier, primary_taxon: cakes)
-             ])
+      create(:product, name: "banana bread", inherits_properties: true,
+                       variants: [
+                         create(:variant, supplier: cakes_supplier, primary_taxon: cakes),
+                         create(:variant, supplier: fruits_supplier, primary_taxon: cakes)
+                       ]
+            )
     }
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,
-                       supplier_id: fruits_supplier.id)
+                       supplier_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_doughnuts) {
       create(:product, name: "doughnuts", primary_taxon_id: cakes.id,
-                       supplier_id: cakes_supplier.id)
+                       supplier_id: cakes_supplier.id, inherits_properties: true)
     }
 
     before do
@@ -110,6 +113,20 @@ RSpec.describe ProductsRenderer do
 
           products = products_renderer.send(:products)
           expect(products).to eq([product_apples, product_cherries])
+        end
+
+        it "filters out products with inherits_properties set to false" do
+          product_cherries.update!(inherits_properties: false)
+          product_banana_bread.update!(inherits_properties: false)
+
+          fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
+                                                        value: '1', position: 1 })
+
+          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
+          products = products_renderer.send(:products)
+          expect(products).to eq([product_apples])
         end
 
         it "filters products with property when sorting is enabled" do
