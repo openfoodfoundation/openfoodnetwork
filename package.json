@@ -28,7 +28,7 @@
     "shortcut-buttons-flatpickr": "^0.4.0",
     "stimulus": "^3.2.2",
     "stimulus-flatpickr": "^1.4.0",
-    "stimulus_reflex": "3.5.1",
+    "stimulus_reflex": "3.5.2",
     "tom-select": "^2.3.1",
     "trix": "^2.1.1",
     "webpack": "~4"

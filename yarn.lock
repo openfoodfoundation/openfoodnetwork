@@ -8373,10 +8373,10 @@ stimulus@^3.2.2:
     "@hotwired/stimulus" "^3.2.2"
     "@hotwired/stimulus-webpack-helpers" "^1.0.0"
 
-stimulus_reflex@3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/stimulus_reflex/-/stimulus_reflex-3.5.1.tgz#fb9c548667e01b8dc7141187c73abfe1aa25472a"
-  integrity sha512-Bwsuerfh8ca6kp7MKlUgzYAmeflqoBzSpb25M4i+h3FsmAfPl4rUNN6T8v1d6JPqAPAVQRUL/wtDHumLtpETFw==
+stimulus_reflex@3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/stimulus_reflex/-/stimulus_reflex-3.5.2.tgz#04d4f7a39c092902df29348ad0984333232f37dd"
+  integrity sha512-Mx3G16aydlm5UcmPYRg8vdR0r71ykyfxxPStjZkxmEqEVWWxbH5rTWwTTTS08GvGIf1lqcIwl/r2tkiX2qLKaA==
   dependencies:
     "@hotwired/stimulus" "^3"
     "@rails/actioncable" "^6 || ^7"
