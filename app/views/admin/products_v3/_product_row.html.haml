@@ -1,3 +1,5 @@
+%template{ id: "producer_options"}
+  = options_for_select(producer_options, product.supplier_id)
 %td.with-image{ id: "image-#{product.id}" }
   = render partial: "product_image", locals: { product: }
 %td.field.align-left.header.naked_inputs
@@ -26,12 +28,13 @@
 %td.align-right
   -# empty
 %td.naked_inputs
-  = render(SearchableDropdownComponent.new(form: f,
-      name: :supplier_id,
-      aria_label: t('.producer_field_name'),
-      options: producer_options,
-      selected_option: product.supplier_id,
-      placeholder_value: t('admin.products_v3.filters.search_for_producers')))
+  = f.select :supplier_id,
+    options_for_select([producer_options.find{ |option| option[1] == product.supplier_id }], product.supplier_id),
+    {},
+    class: "fullwidth no-input",
+    'aria-label': t('.producer_field_name'),
+    data: { "controller": "producers-select",
+      "producers-select-placeholder-value": t('admin.products_v3.filters.search_for_producers')}
 %td.align-left
   -# empty
 %td.align-left
