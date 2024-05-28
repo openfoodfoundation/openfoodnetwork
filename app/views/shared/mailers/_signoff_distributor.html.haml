@@ -2,17 +2,27 @@
 %p
   = t('.signoff')
   %br
-  #{@order.distributor.contact_name}
+  = @order.distributor.contact_name
   %br
   %br
   = @order.distributor.name
   %br
-  = @order.distributor.phone || ""
-  %br
-  %a{:href => "mailto:#{order_reply_email(@order)}", :target => "_blank"}
-    = order_reply_email(@order)
-  %br
-  = @order.distributor.website || ""
-  %br
-  = @order.distributor.instagram || ""
-
+  - if @order.distributor.phone.present?
+    %img{src: image_path("/map_icons/social-logos/phone.png"), style: "width: 24px; position: relative; top: 7px;" }
+    = @order.distributor.phone
+  %p.signoff_icons
+    %a.ofn-i_050-mail-circle{:href => "mailto:#{order_reply_email(@order)}", :target => "_blank"}
+    - if @order.distributor.website.present?
+      %a.ofn-i_049-web{:href => "http://#{@order.distributor.website}", :target => "_blank"}
+    - if @order.distributor.instagram.present?
+      %a.ofn-i_043-instagram{:href => "http://instagram.com/#{@order.distributor.instagram}", :target => "_blank"}
+    - if @order.distributor.facebook.present?
+      %a.ofn-i_044-facebook{:href => "http://#{@order.distributor.facebook}", :target => "_blank"}
+    - if @order.distributor.linkedin.present?
+      %a.ofn-i_042-linkedin{:href => "http://#{@order.distributor.linkedin}", :target => "_blank"}
+    - if @order.distributor.twitter.present?
+      %a.ofn-i_image{:href => "http://x.com/#{@order.distributor.twitter}", :target => "_blank"}
+        %img{src: image_path("/map_icons/social-logos/x.png"), style: "width: 24px; position: relative; top: 1.5px;" }
+    - if @order.distributor.whatsapp_phone.present?
+      %a.ofn-i_image{:href => @order.distributor.whatsapp_url, :target => "_blank" }
+        %img{src: image_path("/map_icons/social-logos/whatsapp.png"), style: "width: 24px; position: relative; top: 1.5px;" }

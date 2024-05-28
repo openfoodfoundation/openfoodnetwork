@@ -1,16 +1,26 @@
+%br
 %p
   = t('.signoff')
+  %br
+  = @coordinator.contact_name
+  %br
+  %br
+  = @coordinator.name
   %em
-    %p
-      = @coordinator.name
-    %p
-      %br
-        = @coordinator.address.address1
-      %br
-        = @coordinator.address.city
-      %br
-        = @coordinator.address.zipcode
-    %p
-      = @coordinator.phone
-    %p
-      = @coordinator.contact.email
+    %br
+    = @coordinator.address.address1
+    %br
+    = @coordinator.address.city
+    = @coordinator.address.zipcode
+
+  - if @coordinator.phone.present?
+    %br
+    %img{src: image_path("/map_icons/social-logos/phone.png"), style: "width: 24px; position: relative; top: 7px;" }
+    = @coordinator.phone
+
+  - if @coordinator.contact.email.present?
+    %p.signoff_icons
+      %a.ofn-i_050-mail-circle{:href => "mailto:#{@coordinator.contact.email}", :target => "_blank"}
+      %span.signoff{style: "position: relative; top: -5px;" }
+        = @coordinator.contact.email
+      }

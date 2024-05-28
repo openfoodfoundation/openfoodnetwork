@@ -78,13 +78,17 @@ p.footer, p.footer_icons a {
   color: #999;
 }
 
-p.footer_icons {
+p.signoff_icons, p.footer_icons {
   font-size: 0px;
 
   a {
     text-decoration: none;
     margin-right: 5px;
   }
+}
+
+p.signoff_icons a:not(.ofn-i_image) {
+  font-size: 24px;
 }
 
 p.footer_icons a:not(.ofn-i_image) {
@@ -313,7 +317,7 @@ h6 {
   margin: 0 !important;
 }
 
-p, ul {
+p, ul, span.signoff {
   margin-bottom: 10px;
   font-weight: normal;
   font-size: 14px;
