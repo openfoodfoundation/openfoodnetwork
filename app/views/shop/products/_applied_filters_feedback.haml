@@ -1,10 +1,12 @@
 = cache_with_locale do
-  %span{ "ng-show" => "query && ( appliedPropertiesList() || appliedTaxonsList() )" }
+  %span{ "ng-show" => "query && ( appliedPropertiesList() || appliedProducerPropertiesList() || appliedTaxonsList() )" }
     = t :products_filters_in
-
   %span.applied-properties{'ng-bind-html' => 'appliedPropertiesList()'}
+  %span{ "ng-show" => "appliedPropertiesList() && appliedProducerPropertiesList()" }
+    = t :products_or
+  %span.applied-properties{'ng-bind-html' => 'appliedProducerPropertiesList()'}
 
-  %span{ "ng-show" => "appliedPropertiesList() && appliedTaxonsList()" }
+  %span{ "ng-show" => "(appliedPropertiesList() || appliedProducerPropertiesList()) && appliedTaxonsList()" }
     = t :products_and
 
   %span.applied-taxons{'ng-bind-html' => 'appliedTaxonsList()'}
