@@ -1,6 +1,5 @@
 - # @record can either be Product or Variant
 - unless flash[:error]
 	= turbo_stream.remove(dom_id(@record))
--# Without +formats+ option here, by default render is trying to render the equivalant turbo stream
--# It's strange that it works just fine if I remove the +unless+ above
-= render(partial: 'admin/shared/flashes', locals: { flashes: flash }, formats: [:html])
+= turbo_stream.append "flashes" do
+	= render(partial: 'admin/shared/flashes', locals: { flashes: flash })
