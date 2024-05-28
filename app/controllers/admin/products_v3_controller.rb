@@ -39,19 +39,15 @@ module Admin
 
       status = :ok
       if @record.destroy
-        flash[:success] = I18n.t('admin.products_v3.delete_product.success')
+        flash.now[:success] = I18n.t('admin.products_v3.delete_product.success')
       else
-        flash[:error] = I18n.t('admin.products_v3.delete_product.error')
+        flash.now[:error] = I18n.t('admin.products_v3.delete_product.error')
         status = :internal_server_error
       end
 
       respond_with do |format|
         format.turbo_stream { render :destroy_product_variant, status: }
       end
-
-      # using flash with turbo stream doesn't clear it because the page is not refreshed.
-      # so upon refreshing the page, the flash message appears again
-      flash.discard
     end
 
     def destroy_variant
@@ -60,17 +56,15 @@ module Admin
 
       status = :ok
       if VariantDeleter.new.delete(@record)
-        flash[:success] = I18n.t('admin.products_v3.delete_variant.success')
+        flash.now[:success] = I18n.t('admin.products_v3.delete_variant.success')
       else
-        flash[:error] = I18n.t('admin.products_v3.delete_variant.error')
+        flash.now[:error] = I18n.t('admin.products_v3.delete_variant.error')
         status = :internal_server_error
       end
 
       respond_with do |format|
         format.turbo_stream { render :destroy_product_variant, status: }
       end
-
-      flash.discard
     end
 
     def index_url(params)
