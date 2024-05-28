@@ -239,25 +239,24 @@ module Api
         expect(json_response.length).to be 2
         expect(properties).to include property1.presentation, property2.presentation
       end
+    end
 
-      context "with producer properties" do
-        let!(:property4) { create(:property) }
-        let!(:supplier) { create(:supplier_enterprise) }
-        let!(:producer_property) {
-          create(:producer_property, producer_id: supplier.id, property: property4)
-        }
+    describe "#producer_properties" do
+      let!(:property4) { create(:property) }
+      let!(:supplier) { create(:supplier_enterprise) }
+      let!(:producer_property) {
+        create(:producer_property, producer_id: supplier.id, property: property4)
+      }
 
-        before { product1.variants.first.update(supplier: ) }
+      before { product1.variants.first.update(supplier: ) }
 
-        it "loads producer properties for distributed products in the order cycle" do
-          api_get :properties, id: order_cycle.id, distributor: distributor.id
+      it "loads producer properties for distributed products in the order cycle" do
+        api_get :producer_properties, id: order_cycle.id, distributor: distributor.id
 
-          properties = json_response.pluck(:name)
+        properties = json_response.pluck(:name)
 
-          expect(json_response.length).to be 3
-          expect(properties).to include property1.presentation, property2.presentation,
-                                        producer_property.property.presentation
-        end
+        expect(json_response.length).to be 1
+        expect(properties).to include producer_property.property.presentation
       end
     end
 
