@@ -39,10 +39,10 @@ module InjectionHelper
 
   def inject_enterprise_shopfront_list
     select_only = required_attributes Enterprise, Api::EnterpriseShopfrontListSerializer
-
+    grouped_enterprises = Enterprise.grouped_enterprises_for_user(spree_current_user).select(select_only).includes(address: [:state, :country])
     inject_json_array(
       "enterprises",
-      Enterprise.activated.public_or_private.select(select_only).includes(address: [:state, :country]).all,
+      grouped_enterprises,
       Api::EnterpriseShopfrontListSerializer
     )
   end
