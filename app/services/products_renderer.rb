@@ -64,26 +64,43 @@ class ProductsRenderer
   end
 
   def filter(query)
-    property_ids = args[:q]&.dig("with_variants_supplier_properties")
+    supplier_properties = args[:q]&.slice("with_variants_supplier_properties")
 
-    if property_ids.present?
+    ransack_results = query.ransack(args[:q]).result.to_a
+
+    return ransack_results if supplier_properties.blank?
+
+    with_properties = args[:q]&.dig("with_properties")
+    supplier_properties_results = []
+
+    if supplier_properties.present?
       # We can't search on an association's scope with ransack, a work around is to define
       # the a scope on the parent (Spree::Product) but because we are joining on "first_variant"
-      # it doesn't work, so we do the filtering manually here
-      results = query.joins('JOIN enterprises ON enterprises.id = first_variant.supplier_id
-                             LEFT OUTER JOIN producer_properties
-                               ON producer_properties.producer_id = enterprises.id').
-        where(producer_properties: { property_id: property_ids }).
+      # to get the supplier it doesn't work, so we do the filtering manually here
+      # see:
+      #   OrderCycleDistributedProducts#products_supplier_relation
+      #   OrderCycleDistributedProducts#supplier_property_join
+      supplier_property_ids = supplier_properties["with_variants_supplier_properties"]
+      supplier_properties_results = distributed_products.supplier_property_join(query).
+        where(producer_properties: { property_id: supplier_property_ids }).
         where(inherits_properties: true)
-
-      return results
     end
 
-    query.ransack(args[:q]).result
+    if supplier_properties_results.present? && with_properties.present?
+      # apply "OR" between property search
+      return ransack_results | supplier_properties_results
+    end
+
+    # Intersect the result to apply "AND" with other search criteria
+    return ransack_results.intersection(supplier_properties_results) \
+      unless supplier_properties_results.empty?
+
+    # We should get here but just in case we return the ransack results
+    ransack_results
   end
 
   def paginate(results)
-    _pagy, paginated_results = pagy_arel(
+    _pagy, paginated_results = pagy_array(
       results,
       page: args[:page] || 1,
       items: args[:per_page] || DEFAULT_PER_PAGE

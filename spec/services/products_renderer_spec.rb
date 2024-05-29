@@ -115,6 +115,46 @@ RSpec.describe ProductsRenderer do
           expect(products).to eq([product_apples, product_cherries])
         end
 
+        # TODO this is a bit flaky due to banana bread having two supplier
+        it "filters products with a product property or a producer property" do
+          cakes_supplier.producer_properties.create!({ property_id: property_organic.id,
+                                                       value: '1', position: 1 })
+          product_apples.product_properties.create!({ property_id: property_conventional.id,
+                                                      value: '1', position: 1 })
+
+          search_param = { q:
+            {
+              "with_variants_supplier_properties" => [property_organic.id],
+              "with_properties" => [property_conventional.id]
+            } }
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
+          products = products_renderer.send(:products)
+          expect(products).to eq([product_apples, product_banana_bread, product_doughnuts])
+        end
+
+        it "filters product with property and taxon set" do
+          stone_fruit = create(:taxon, name: "Stone fruit")
+          product_peach =
+            create(:product, name: "peach", primary_taxon_id: stone_fruit.id,
+                             supplier_id: fruits_supplier.id, inherits_properties: true)
+
+          fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
+                                                        value: '1', position: 1 })
+          exchange.variants << product_peach.variants.first
+
+          search_param = { q:
+            {
+              "with_variants_supplier_properties" => [property_organic.id],
+              "variants_primary_taxon_id_in_any" => [stone_fruit.id],
+            } }
+
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
+          products = products_renderer.send(:products)
+          expect(products).to eq([product_peach])
+        end
+
         it "filters out products with inherits_properties set to false" do
           product_cherries.update!(inherits_properties: false)
           product_banana_bread.update!(inherits_properties: false)
