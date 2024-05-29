@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'pagy/extras/arel'
+require 'pagy/extras/array'
 require 'pagy/extras/items'
 require 'pagy/extras/overflow'
 
