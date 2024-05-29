@@ -82,10 +82,11 @@ module Spree
       if user          
         enterprise = Enterprise.find(params[:enterprise_id])
         user.enterprises << enterprise unless user.enterprises.include?(enterprise)
-        user.update(request_token: nil)                
+        user.update(request_token: nil)
+        @message = "Enterprise #{enterprise.name} successfully assigned."           
         RequestMailer.approval_notification(user.email, "Enterprise #{enterprise.name} successfully assigned.")
       else
-        RequestMailer.approval_notification(user.email, "Invalid or expired token.")
+        @message = "Invalid or expired token."
       end
     end
 
