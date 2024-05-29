@@ -43,6 +43,13 @@ module OrderCycles
         group("spree_products.id, first_variant.supplier_id")
     end
 
+    def supplier_property_join(query)
+      query.joins("
+        JOIN enterprises ON enterprises.id = first_variant.supplier_id
+        LEFT OUTER JOIN producer_properties ON producer_properties.producer_id = enterprises.id
+      ")
+    end
+
     def variants_relation
       order_cycle.
         variants_distributed_by(distributor).
