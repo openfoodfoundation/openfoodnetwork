@@ -2,7 +2,7 @@
   Bonjour,
 
 %p
-  = @user.email.present? ? @user.email : email
+  = @user.email.present? ? @user.email : @user.name
   a demandé l'accès à
   = @enterprise.name
 
