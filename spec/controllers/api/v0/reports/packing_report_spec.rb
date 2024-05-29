@@ -53,8 +53,10 @@ RSpec.describe Api::V0::ReportsController, type: :controller do
   private
 
   def report_output(order, user_type)
-    results = order.line_items.map do |line_item|
-      __send__("#{user_type}_report_row", line_item)
+    results = []
+
+    order.line_items.map do |line_item|
+      results << __send__("#{user_type}_report_row", line_item)
     end
   end
 

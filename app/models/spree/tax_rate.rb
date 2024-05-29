@@ -19,7 +19,7 @@ module Spree
 
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
     belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
-    has_many :adjustments, as: :originator, dependent: nil
+    has_many :adjustments, as: :originator, dependent: true
 
     validates :amount, presence: true, numericality: true
     validates_with DefaultTaxZoneValidator

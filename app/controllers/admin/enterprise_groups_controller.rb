@@ -3,7 +3,7 @@
 module Admin
   class EnterpriseGroupsController < Admin::ResourceController
     before_action :load_data, except: :index
-    before_action :load_object_data, only: [:new, :edit, :create, :update]
+    before_action :load_object_data
 
     def index
       @enterprise_groups = @enterprise_groups.managed_by(spree_current_user)

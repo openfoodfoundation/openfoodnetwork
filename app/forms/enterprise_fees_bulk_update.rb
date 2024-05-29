@@ -30,7 +30,7 @@ class EnterpriseFeesBulkUpdate
   private
 
   def check_enterprise_fee_input
-    enterprise_fee_bulk_params['collection_attributes'].each do |_, fee_row|
+    enterprise_fee_bulk_params['collection_attributes'].each_value do |fee_row|
       enterprise_fees = fee_row['calculator_attributes']&.slice(
         :preferred_flat_percent, :preferred_amount,
         :preferred_first_item, :preferred_additional_item,
@@ -40,7 +40,7 @@ class EnterpriseFeesBulkUpdate
 
       next unless enterprise_fees
 
-      enterprise_fees.each do |_, enterprise_amount|
+      enterprise_fees.each_value do |enterprise_amount|
         unless enterprise_amount.nil? || Float(enterprise_amount, exception: false)
           @errors.add(:base, I18n.t(:calculator_preferred_value_error))
         end
@@ -49,7 +49,7 @@ class EnterpriseFeesBulkUpdate
   end
 
   def check_calculators_compatibility_with_taxes
-    enterprise_fee_bulk_params['collection_attributes'].each do |_, enterprise_fee|
+    enterprise_fee_bulk_params['collection_attributes'].each_value do |enterprise_fee|
       next unless enterprise_fee['inherits_tax_category'] == "true"
       next unless EnterpriseFee::PER_ORDER_CALCULATORS.include?(enterprise_fee['calculator_type'])
 

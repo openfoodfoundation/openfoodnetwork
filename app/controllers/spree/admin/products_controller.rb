@@ -13,7 +13,7 @@ module Spree
 
       before_action :load_data
       before_action :load_form_data, only: [:index, :new, :create, :edit, :update]
-      before_action :load_spree_api_key, only: [:index, :variant_overrides]
+      before_action :load_spree_api_key, only: [:index]
       before_action :strip_new_properties, only: [:create, :update]
 
       def index

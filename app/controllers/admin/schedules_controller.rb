@@ -7,7 +7,7 @@ module Admin
     include PaperTrailLogging
 
     before_action :adapt_params, only: [:update]
-    before_action :check_dependent_subscriptions, only: [:destroy]
+    before_action :check_dependent_subscriptions
 
     after_action :sync_subscriptions_for_update, only: :update
 
