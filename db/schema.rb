@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_17_121235) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_29_081209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -541,8 +541,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_17_121235) do
   end
 
   create_table "spree_line_items", id: :serial, force: :cascade do |t|
-    t.integer "order_id"
-    t.integer "variant_id"
+    t.integer "order_id", null: false
+    t.integer "variant_id", null: false
     t.integer "quantity", null: false
     t.decimal "price", precision: 10, scale: 2, null: false
     t.datetime "created_at", precision: nil, null: false
