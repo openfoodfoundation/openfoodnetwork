@@ -2874,7 +2874,8 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   last_name_begins_with: "Last name begins with"
   shipping_method: "Shipping method"
   new_order: "New Order"
-
+  enterprise_assigned: "Registration request accepted."
+  token_expired: "Invalid or expired token."
   enterprise_tos_link: "Enterprise Terms of Service link"
   enterprise_tos_message: "We want to work with people that share our aims and values. As such we ask new enterprises to agree to our "
   enterprise_tos_agree: "I agree to the above Terms of Service"

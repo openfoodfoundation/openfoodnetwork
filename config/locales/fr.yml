@@ -425,6 +425,8 @@ fr:
   shipping_category: "Condition de transport"
   height: "Hauteur"
   width: "Largeur"
+  enterprise_assigned: "Demande d'inscription acceptée."
+  token_expired: "Jeton invalide ou expiré."
   depth: "Profondeur"
   payment_could_not_process: "Le paiement n'a pas pu être traité"
   payment_could_not_complete: "Le paiement n'a pas pu être finalisé"
