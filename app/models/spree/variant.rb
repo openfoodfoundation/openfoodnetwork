@@ -200,7 +200,7 @@ module Spree
     end
 
     def changed?
-      # Changes to price are saved after_save
+      # We consider the variant changed if associated price is changed (it is saved after_save)
       super || default_price.changed?
     end
 
