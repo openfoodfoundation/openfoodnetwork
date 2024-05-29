@@ -80,8 +80,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         expect(page).to have_selector "th", text: "Actions"
 
         # displays product list
-        expect(page).to have_field("_products_0_name", with: p1.name.to_s)
-        expect(page).to have_field("_products_1_name", with: p2.name.to_s)
+        expect(page).to have_selector row_containing_name(p1.name.to_s)
+        expect(page).to have_selector row_containing_name(p2.name.to_s)
       end
     end
 
