@@ -94,7 +94,7 @@ hu:
         blank: "nem lehet üres"
   errors:
     messages:
-      file_size_out_of_range: "a 1%{file_size} mérete nem esik bele a kívánt tartományba"
+      file_size_out_of_range: "a %{file_size} mérete nem esik bele a kívánt tartományba"
       limit_out_of_range: "az összmenyiség kívül esik a megengedett tartományon"
       image_metadata_missing: "nem használható kép"
       aspect_ratio_not_square: "négyzet alakú képnek kell lennie"
@@ -177,6 +177,7 @@ hu:
               not_available_to_shop: "nem érhető el a %{shop} számára"
   card_details: "A kártya adatai"
   card_type: "Kártyatípus"
+  what_is_this: "Mi ez?"
   cardholder_name: "Kártyatulajdonos neve"
   community_forum_url: "A közösségi fórum URL-je"
   customer_instructions: "Vevői utasítások"
@@ -367,7 +368,7 @@ hu:
   show_more: Mutass többet
   show_all: Mutasd az összeset
   show_all_with_more: "Az összes megjelenítése (további %{num})"
-  cancel: Vissza
+  cancel: Törlés
   edit: Szerkesztés
   clone: Klón
   distributors: Forgalmazók
@@ -425,7 +426,7 @@ hu:
   back_to_payments_list: "Vissza a fizetési listához"
   maestro_or_solo_cards: "Maestro/Solo kártyák"
   backordered: "Hátrarendelt"
-  on_hand: "Készlet"
+  on_hand: "Raktáron"
   on hand: "Készlet"
   ship: "Szállítás"
   shipping_category: "Szállítási mód"
@@ -437,8 +438,8 @@ hu:
   actions:
     create_and_add_another: "Hozz létre és adj hozzá egy másikat"
     create: "Létrehozás"
-    cancel: "Vissza"
-    resume: "Vissza"
+    cancel: "Törlés"
+    resume: "Folytatás"
     save: "Mentés"
     edit: "Szerkesztés"
     update: "Frissítés"
@@ -465,8 +466,8 @@ hu:
         price: Ár
         producer: Termelő
         category: Kategória
-        sku: SKU
-        on_hand: "Készlet"
+        sku: SKU kód
+        on_hand: "Raktáron"
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
         inherits_properties: "Megörökli az tulajdonságokat?"
@@ -477,8 +478,8 @@ hu:
         price: Ár
         producer: Termelő
         category: Kategória
-        sku: SKU
-        on_hand: "Készlet"
+        sku: SKU kód
+        on_hand: "Raktáron"
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
         inherits_properties: "Megörökli az tulajdonságokat?"
@@ -487,7 +488,7 @@ hu:
         edit: Szerkesztés
         clone: Klón
         delete: Töröl
-        remove: eltávolítás
+        remove: Eltávolítás
       image:
         edit: Szerkesztés
     adjustments:
@@ -537,7 +538,7 @@ hu:
     clear_filters: Szűrők törlése
     clear: Törlés
     save: Mentés
-    cancel: Vissza
+    cancel: Törlés
     back: Vissza
     show_more: Mutass többet
     show_n_more: 'További %{num} '
@@ -552,7 +553,7 @@ hu:
     tag_has_rules: "Meglévő szabályok ehhez a címkéhez: %{num}"
     has_one_rule: "egy szabálya van"
     has_n_rules: "%{num} szabálya van"
-    unsaved_confirm_leave: "Ezen az oldalon vannak nem mentett módosítások. Folytatás mentés nélkül?"
+    unsaved_confirm_leave: "Ezen az oldalon vannak nem mentett módosítások. Folytatod mentés nélkül?"
     available_units: "Rendelkezésre álló egységek"
     shopfront_settings:
       embedded_shopfront_settings: "Beágyazott kirakatbeállítások"
@@ -727,8 +728,8 @@ hu:
       table:
         error_summary:
           saved:
-            one: "a termék helyesen lett elmentve, de"
-            other: "a termékek helyesen lettek elmentve, de"
+            one: "%{count}termék helyesen lett elmentve, de"
+            other: "%{count} termékek helyesen lettek elmentve, de"
         save: Változások mentése
         new_variant: Új variáns
       bulk_update:
@@ -737,7 +738,7 @@ hu:
         success: Sikeresen törölte a terméket
         error: A terméket nem lehet törölni
       delete_variant:
-        success: Sikeresen törölte a terméket
+        success: Sikeresen törölte a termék változatot
         error: A változatot nem lehet törölni
       variant_row:
         none_tax_category: Egyik sem
@@ -955,22 +956,22 @@ hu:
         business_address:
           company_legal_name: A cég hivatalos neve
           company_placeholder: Példa Inc.
-          address1: Legális cím
+          address1: Hivatalos cím
           address1_placeholder: 123 High St.
           address2: Cím (folyt.)
-          legal_phone_number: Jogi telefonszám
+          legal_phone_number: Hivatalos telefonszám
           phone_placeholder: "98 123 4565"
           select_country: "Válassz országot"
-          select_state: "Válaszd az Állam lehetőséget"
+          select_state: "Válassz államot"
         contact:
           legend: "Kapcsolat"
           name: Név
-          name_placeholder: például. Gustav Plum
+          name_placeholder: pl. Példa János
           email_address: Nyilvános e-mail cím
-          email_address_placeholder: például. inquiries@fresh-food.com
+          email_address_placeholder: például kapcsolat@frisszoldseg.hu
           email_address_tip: "Ez az e-mail cím megjelenik nyilvános profilodban"
           phone: Telefon
-          phone_placeholder: például. 98 7654 3210
+          phone_placeholder: például 98 7654 3210
           whatsapp_phone: WhatsApp telefonszám
           whatsapp_phone_placeholder: pl. +36-20-123-45-67
           whatsapp_phone_tip: "A telefonszám a nyilvános profilodban látszódni fog mint WhatsApp link."
@@ -1115,7 +1116,7 @@ hu:
             part2: Ennek a funkciónak a használatához," csatlakoztatnod kell a Stripe-fiókját az OFN-hez. Az alábbi „Elfogadom” gombra kattintva átirányítod Önt a Stripe webhelyére, ahol meglévő Stripe fiókot csatlakoztathatsz, vagy hozz létre egy újat, ha még nem rendelkezel ilyennel.
             part3: Ez lehetővé teszi, hogy az Open Food Network elfogadja az ügyfelek hitelkártyás fizetését az Ön nevében. Felhívjuk figyelmét, hogy saját Stripe-fiókot kell fenntartania"," fizesse ki a Stripe által felszámított díjakat, és maga kezelje a visszaterheléseket és az ügyfélszolgálatot.
             i_agree: Egyetértek
-            cancel: Vissza
+            cancel: Törlés
         tag_rules:
           legend: "Címkeszabályok"
           default_rules:
@@ -1233,21 +1234,21 @@ hu:
         loading: BETÖLTÉS...
       new:
         create: "Létrehozás"
-        cancel: "Megszüntet"
+        cancel: "Törlés"
         back_to_list: "Vissza a listához"
       create:
-        success: 'Rendelési ciklusa létrejött.'''
+        success: 'Rendelési ciklusa létrejött.'
       update:
-        success: 'Megrendelési ciklusa frissült.'''
+        success: 'Megrendelési ciklusa frissült.'
       clone:
-        success: "Rendelési ciklusát %{name} klónozták."
+        success: "Rendelési ciklusát %{name} klónozásra került."
       notify_producers:
         success: 'A termelőknek küldendő e-mailek sorba kerültek küldés céljából.'
       edit:
         save: "Mentés"
         save_and_next: "Mentés és Tovább"
         next: "Következő"
-        cancel: "Megszüntet"
+        cancel: "Törlés"
         back_to_list: "Vissza a listához"
         save_and_back_to_list: "Mentés és Vissza a listához"
         choose_products_from: "Válasszon termékeket a következők közül:"
@@ -1262,7 +1263,7 @@ hu:
         save: "Mentés"
         save_and_next: "Mentés és Tovább"
         next: "Következő"
-        cancel: "Vissza"
+        cancel: "Törlés"
         back_to_list: "Vissza a listához"
       outgoing:
         outgoing: "Kimenő"
@@ -1275,11 +1276,11 @@ hu:
         previous: "Előző"
         save: "Mentés"
         save_and_next: "Mentés és Tovább"
-        cancel: "Vissza"
+        cancel: "Törlés"
         back_to_list: "Vissza a listához"
       checkout_options:
         back_end: "Csak back office"
-        cancel: "Vissza"
+        cancel: "Törlés"
         checkout_options: "Fizetési lehetőségek"
         distributor: "Elosztó"
         no_payment_methods: Ebben a rendelési ciklusban minden forgalmazónak szüksége van legalább egy fizetési módra.
@@ -1364,7 +1365,7 @@ hu:
         no_data: Hm, valami elromlott. Nem található rendelési ciklus adat.
       date_warning:
         msg: Ez a rendelési ciklus %{n} nyitott előfizetéses megrendeléshez kapcsolódik. A dátum módosítása nem érinti a már leadott rendeléseket, de lehetőség szerint kerülni kell. Biztosan folytatja?
-        cancel: Vissza
+        cancel: Törlés
         proceed: Folytassa
       status:
         undated: keltezetlen
@@ -1568,7 +1569,7 @@ hu:
         no_open_or_upcoming_order_cycle: "Nincs közelgő rendelési ciklus"
       products_panel:
         save: "MENTÉS"
-        saving: "MEGTAKARÍTÁS"
+        saving: "MENTÉS"
         saved: "MENTETT"
       product_already_in_order: Ez a termék már felkerült a rendelésre. Kérjük, módosítsa közvetlenül a mennyiséget.
       stock:
@@ -1627,9 +1628,9 @@ hu:
       failed_to_update: "Nem sikerült frissíteni a rendelést"
   checkout:
     failed: "A fizetés nem sikerült. Kérjük, jelezze felénk, hogy feldolgozhassuk megrendelését."
-    payment_cancelled_due_to_stock: "Fizetés törölve: a pénztár készlethiba miatt nem fejezhető be."
+    payment_cancelled_due_to_stock: "Fizetés törölve: a fizetés készlethiba miatt nem fejezhető be."
     order_not_loaded: "Nem található érvényes rendelés a fizetés feldolgozásához"
-    your_details_without_number: Személyes adatok
+    your_details_without_number: Az adataid
     payment_method_without_number: Fizetési mód
     order_summary_without_number: Megrendelés-összesítő
     already_ordered:
@@ -1673,7 +1674,7 @@ hu:
           label: Kártyaszám
           placeholder: pl. 4242 4242 4242 4242
         card_verification_value:
-          label: CVC
+          label: CVC kód
         card_month:
           label: Hónap
         card_year:
@@ -1717,7 +1718,7 @@ hu:
       invalid_email: "Kérjük valós e-mail címet adjon meg"
       select_a_shipping_method: Válassz szállítási módot!
       select_a_payment_method: Válassz fizetési módot
-      no_shipping_methods_available: Szállítási lehetőségek hiánya miatt a fizetés nem lehetséges. Kérjük, lépjen kapcsolatba az üzlet tulajdonosával.
+      no_shipping_methods_available: Átvételi és szállítási lehetőségek hiánya miatt a fizetés nem lehetséges. Kérjük, lépjen kapcsolatba az üzlet tulajdonosával.
       voucher_not_found: Nem található
   shops:
     hubs:
@@ -1791,6 +1792,7 @@ hu:
   invoice_column_price_without_taxes: "Teljes ár (adó nélkül)"
   invoice_column_tax_rate: "Adókulcs"
   invoice_tax_total: "GST összesen:"
+  invoice_cancel_and_replace_invoice: "érvényteleníti és cseréli a számlát"
   tax_invoice: "ADÓSZÁMLA"
   tax_total: "Teljes adó (%{rate}):"
   invoice_shipping_category_delivery: "Szállítás"
@@ -1943,19 +1945,19 @@ hu:
       cookies_policy_link: "cookie-kra vonatkozó szabályzat"
       cookies_accept_button: "Cookie-k elfogadása"
   home_shop: Tovább a termelőkhöz, átvételi pontokhoz.
-  brandstory_headline: "Helyi, biztonságos élelmiszer."
-  brandstory_intro: "Szolidáris élelmiszerrendszert építünk."
-  brandstory_part1: "Az alapoktól kezdjük. A gazdálkodókkal és termelőkkel, akik készen állnak arra, hogy büszkén és őszintén elmondják történeteiket. A forgalmazókkal, akik készen állnak arra, hogy tisztességesen és becsületesen összekapcsolják az embereket a termékekkel. Azokkal a vásárlókkal, akik hisznek abban, hogy a jobb heti vásárlási döntések komolyan megváltoztathatják a világot."
-  brandstory_part2: "Akkor szükségünk van egy módra, hogy valósággá tegyük. Egy módja annak, hogy mindenkit megerősítsen, aki élelmiszert termeszt, ad el és vásárol. Egy módja annak, hogy elmeséljük az összes történetet, kezeljük az összes logisztikát. Egy módja annak, hogy a tranzakciót minden nap átalakulássá alakítsa."
-  brandstory_part3: "Ezért olyan online piacteret építünk, amely kiegyenlíti a versenyfeltételeket. Átlátszó, így valódi kapcsolatokat hoz létre. Nyílt forráskódú, tehát mindenki tulajdonában van. Régiókra és nemzetekre skálázódik, így az emberek világszerte elindítják a verziókat."
-  brandstory_part4: "Mindenhol működik. Mindent megváltoztat."
-  brandstory_part5_strong: "Nyílt élelmiszerhálózatnak hívjuk."
+  brandstory_headline: "Együtt, az élelem önrendelkezésért!"
+  brandstory_intro: "Közösség által irányított élelmiszerrendszert építünk."
+  brandstory_part1: "Az alapoktól kezdjük. A gazdálkodókkal, akik készen állnak arra, hogy elmondják történeteiket, és akiknek fontos, hogy közösen, egy fenntartható és mindenki számára átlátható, hazai élelemrendszert hozzunk létre.\nA forgalmazókkal, bevásárlóközösségekkel, fogyasztói csoportokkal, akik készen állnak arra, hogy összekapcsolják az embereket a termelőkkel és a termékekkel, és biztosítani szeretnék, hogy a termelők tisztességes díjazásban részesüljenek.\nAzokkal a fogyasztókkal, akik hisznek abban, hogy döntéseik befolyásolják jelenünket és jövőnket."
+  brandstory_part2: "Ahhoz, hogy ezt valósággá tegyük, szükségünk van egy módszerre, ami minden résztvevőt megerősít, aki élelmiszert termeszt, ad el, szervez, tervez, fogyaszt. \nEgy eszközre, amely láthatóvá teszi a gazdákat, a közösségeket, a termesztési módszereket, és képes kezelni a logisztikát. \nEz az Open Food Network platformja, amely országonként saját közösségi irányítás alatt áll, ugyanakkor globális erőforrásainkat összeadva fejlesztjük."
+  brandstory_part3: "Egy olyan piacteret hozunk így létre, amely átlátható, közvetlen kapcsolatokon alapul, láthatóvá teszi a rövid ellátási lánc szemeit.\nKifejezetten az élelmiszerek értékesítésére készült, így képes kezelni a trükkös méréseket vagy készletszinteket, amelyek csak az élelmiszerek esetében fordulnak elő - egy tucat tojás, egy csokor petrezselyem, egy egész csirke, amelynek súlya változó lehet...\nA termelők létrehozhatnak saját profilt, beszedhetik a fizetéseket, a platformon lévő más átadópontokon keresztül is értékesíthetnek, kiszállíthatnak, vagy akár futárszolgálattal is dolgozhatnak.\nA közösségek összefoghatják a helyi termelőket, hogy virtuális termelői piacokat vagy bevásárlóközösségeket hozzanak létre, és ezáltal rugalmas helyi élelmiszer-gazdaságot építsenek"
+  brandstory_part4: "És ami legalább olyan fontos, mint maga a szoftver, azok az értékek, amelyek a szoftver alapját képezik.\nHa élelmiszert értékesítesz – akár mint gazdálkodó, akár mint termelői piac, vagy termelői szövetkezet vagy élelmiszer-központ -, akkor olyan szoftvert válassz, amely összhangban van az értékeiddel, az emberek és a bolygó érdekével, nem pedig a profit érdekében tevékenykedik. "
+  brandstory_part5_strong: "Open Food Network – a Szabad Élelmiszerhálózat"
   brandstory_part6: "Mindannyian szeretjük az ételt. Most már az élelmezési rendszerünket is szerethetjük."
   system_headline: "A vásárlás lépései"
   system_step1: "1. Keresés"
   system_step1_text: "Böngészhetsz közvetlenül a gazdák, vagy a bevásárlóközösségek kínálatában. Kereshetsz a lakhelyed, a termelő, élelmiszertípus, és termesztési mód szerint."
   system_step2: "2. Vásárlás"
-  system_step2_text: "Alakítsd át a fogyasztási szokásaidat! Pakold meg a bevásárlókosarad helyi termelőktől származó termékekkel. Vásárolj olyan élelmiszert, amelynek ismered az eredetét, és tudod hogyan állították elő."
+  system_step2_text: "Alakítsd át a fogyasztási szokásaidat! Pakold meg a bevásárlókosarad helyi termelőktől származó termékekkel. Vásárolj olyan élelmiszert, amelynek ismered az eredetét, és tudod, hogyan állították elő."
   system_step3: "3. Átvétel / kiszállítás"
   system_step3_text: "Válaszd a kiszállítást, vagy a személyesebb kapcsolat érdekében keresd fel a termelőt, vagy az átvételi pontot."
   cta_headline: "A jövőnk fenntartható élelmiszerhálózata."
@@ -2007,7 +2009,7 @@ hu:
   order_includes_tax: (adót tartalmaz)
   order_payment_paypal_successful: PayPal-on keresztüli fizetését sikeresen feldolgoztuk.
   order_hub_info: Átvételi pont Info
-  order_back_to_store: Vissza a átvételi pontba
+  order_back_to_store: Vissza az átvételi pontba
   order_back_to_cart: Vissza a kosárba
   order_back_to_website: Vissza az Átadó pont oldalára
   bom_tip: "Ezen az oldalon módosíthatod a termékek mennyiségét több rendelés esetén. Szükség esetén a termékek teljes egészében eltávolíthatók a megrendelésekből."
@@ -2230,20 +2232,20 @@ hu:
   name_or_sku: "NÉV VAGY Cikkszám"
   register_title: Regisztráció
   sell_title: "Regisztráció"
-  sell_headline: "Csatlakozz az Open Food Network-höz!"
+  sell_headline: "Legyél Te is a hálózat tagja!"
   sell_motivation: "Mutasd be termékeidet, tedd elérhetővé a fogyasztók számára."
   sell_producers: "Termelők"
   sell_hubs: "Átvételi pontok"
   sell_groups: "Csoportok"
-  sell_producers_detail: "Hozz létre profilt vállalkozásod számára az OFN-en percek alatt. Bármikor frissítheted profilod egy online áruházra, és közvetlenül ajánlhatod termékeidet a vásárlóknak."
-  sell_hubs_detail: "Hozz létre profilt a vállalkozásod számára az OFN-en. Bármikor frissítheted egy többtermelős átvételi pontra."
-  sell_groups_detail: "Hozz létre egy személyre szabott cégjegyzéket (termelők és egyéb élelmiszeripari vállalkozások) régiója vagy szervezete számára."
-  sell_user_guide: "Tudjon meg többet használati útmutatónkban."
-  sell_listing_price: "A listázás az OFN-en ingyenes. Egy üzlet megnyitása és működtetése az OFN-en ingyenes havi 500 USD-ig. Ha többet ad el, akkor az árbevétel 1%-a és 3%-a között választhatja meg közösségi hozzájárulását. Az árakkal kapcsolatos további részletekért keresse fel a Szoftverplatform részt a felső menü Névjegy linkjén keresztül."
+  sell_producers_detail: "Őstermelő, kistermelő, családi gazdálkodó, vagy épp kisválllalkozás vagy? Hozz létre termelői profilt az OFN-en percek alatt. Bármikor frissítheted profilod egy online áruházra, és közvetlenül ajánlhatod termékeidet a fogyasztóknak."
+  sell_hubs_detail: "Bevásárlóközösséget indítanál? Vagy csak összefognál a termelőtársakkal és közösen szólítanátok meg a fogyasztókat? Hozz létre új profilt, vagy bármikor frissítheted a profilodat egy többtermelős átvételi pontra."
+  sell_groups_detail: "Hozz létre egy személyre szabott jegyzéket (termelők és egyéb élelmiszeripari vállalkozások) régiója vagy szervezete számára."
+  sell_user_guide: "Tudj meg többet használati útmutatónkból."
+  sell_listing_price: "A termelői regisztráció az OFN-en ingyenes, és az is marad. A platformon történő értékesítés volumenétől függően azonban közösségi hozzájárulást kérünk, a szoftver üzemeltetéshez és IT support biztosításához . \nRészletek hamarosan. "
   sell_embed: "Ezenkívül beágyazhatunk egy OFN üzletet saját, személyre szabott webhelyébe, vagy személyre szabott helyi élelmiszer-hálózati webhelyet készíthetünk az Ön régiójában."
-  sell_ask_services: "Kérdezzen minket az OFN szolgáltatásairól."
+  sell_ask_services: "Kérdezz bátran egyéb szolgáltatásainkról. "
   shops_title: Átadópontok
-  shops_headline: Bevásárlás, másképpen.
+  shops_headline: Bevásárlás újragondolva.
   shops_text: Rendelési ciklusokban dolgozunk. A növénytermesztés, az állattenyésztés, az élelem előállítása ciklikus folyamat. Így nálunk az áruátadás is ciklusokban történik, pont ahogy a növények is hétről hétre, és eltérő ütemben fejlődnek. Ha lezárt rendelési ciklust találsz valahol, nézd meg, ki van-e írva a rendelési ciklus nyitásának időpontja. Ha nem, látogass vissza később az adott termelőhöz, közösséghez.
   shops_signup_title: Regisztrálj átvételi pontként
   shops_signup_headline: Élelmiszer-központok, korlátlan.
@@ -2341,7 +2343,7 @@ hu:
   november: "november"
   december: "december"
   email_not_found: "Az e-mail cím nem található"
-  email_unconfirmed: "A jelszó visszaállítása előtt meg kell erősítenie e-mail címét."
+  email_unconfirmed: "A jelszó visszaállítása előtt meg kell erősítened az e-mail címed."
   email_required: "Meg kell adnia egy e-mail címet"
   logging_in: "Várjon egy kicsit, bejelentkezünk"
   signup_email: "Az email címed"
@@ -2759,7 +2761,7 @@ hu:
   report_header_total_incl_tax: "Összesen, beleértve adó (%{currency_symbol})"
   report_header_enterprise: Vállalkozás
   report_header_enterprise_fee_name: Név
-  report_header_enterprise_fee_type: típus
+  report_header_enterprise_fee_type: Típus
   report_header_enterprise_fee_owner: Tulajdonos
   report_header_customer: Vevő
   report_header_customer_first_name: Keresztnév
@@ -2863,7 +2865,7 @@ hu:
   filter_products: "Termékek szűrése"
   delete_product_variant: "Az utolsó változat nem törölhető!"
   progress: "előrehalad"
-  saving: "Megtakarítás.."
+  saving: "Mentés..."
   success: "siker"
   failure: "kudarc"
   unsaved_changes_confirmation: "A nem mentett módosítások elvesznek. Mindenképp folytatni?"
@@ -2948,7 +2950,7 @@ hu:
     pending: Függőben levő
     shipped: Kiszállított
   js:
-    saving: 'Megtakarítás...'''
+    saving: 'Mentés...'
     changes_saved: 'Változtatások elmentve.'''
     authorising: "Engedélyezés..."
     save_changes_first: Először mentse a változtatásokat.
@@ -2980,7 +2982,7 @@ hu:
         got_it: "Megvan"
         close: "Bezárás"
         continue: "Tovább"
-        cancel: "Vissza"
+        cancel: "Törlés"
         invite: "Meghívás"
         invite_title: "Nem regisztrált felhasználó meghívása"
         tag_rule_help:
@@ -3014,7 +3016,7 @@ hu:
       panels:
         save: MENTÉS
         saved: MENTETT
-        saving: MEGTAKARÍTÁS
+        saving: MENTÉS
         enterprise_package:
           hub_profile: Átvételi pont profil
           hub_profile_cost: "KÖLTSÉG: MINDIG INGYENES"
@@ -3269,7 +3271,7 @@ hu:
       no_authorisation: "Nem sikerült felhatalmazást kapnom a módosítások mentésére, így azok mentés nélkül maradnak."
       some_trouble: "Problémáim akadtak a mentésnél: %{errors}"
       changing_on_hand_stock: Változás a kézi készletszinten...
-      stock_reset: A részvények visszaállnak az alapértelmezett értékekre.
+      stock_reset: A készletek visszaállnak az alapértelmezett értékekre.
     tag_rules:
       show_hide_variants: 'Változatok megjelenítése vagy elrejtése a kirakatomban'
       show_hide_shipping: 'Szállítási módok megjelenítése vagy elrejtése fizetéskor'
@@ -3295,7 +3297,7 @@ hu:
       create_failure: "Nem sikerült létrehozni a rendelési ciklust"
       update_success: 'Megrendelési ciklusa frissült.'''
       update_failure: "Nem sikerült frissíteni a rendelési ciklust"
-      no_distributors: Ebben a rendelési ciklusban nincsenek forgalmazók. Ez a rendelési ciklus nem lesz látható az ügyfelek számára, amíg nem ad hozzá egyet. Szeretné folytatni a rendelési ciklus mentését?'
+      no_distributors: Ebben a rendelési ciklusban nincsenek forgalmazók. Ez a rendelési ciklus nem lesz látható az ügyfelek számára, amíg nem adsz hozzá forgalmazót. Szeretnéd folytatni a rendelési ciklus mentését?'
     enterprises:
       producer: "Termelő"
       non_producer: "Nem termelő"
@@ -3509,7 +3511,7 @@ hu:
     new_taxon: "Új taxon"
     new_user: "Új felhasználó"
     no_pending_payments: "Nincsenek függőben lévő kifizetések"
-    remove: "eltávolítás"
+    remove: "Eltávolítás"
     none: "Egyik sem"
     not_found: "Nem található"
     notice_messages:
@@ -3704,7 +3706,7 @@ hu:
       out_of_stock: '%{item} elfogyott.'
     actions:
       update: "Frissítés"
-      cancel: "Vissza"
+      cancel: "Törlés"
     shared:
       error_messages:
         errors_prohibited_this_record_from_being_saved:
@@ -3762,7 +3764,7 @@ hu:
         overview: "Áttekintés"
         product_import: "Importálás"
         enterprise_roles: "Szerepek"
-        payment_methods: "fizetési módok"
+        payment_methods: "Fizetési módok"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Tulajdonságokat örököl a következőtől: %{supplier}? (hacsak nincs felülírva)"
@@ -3837,6 +3839,7 @@ hu:
           results_found: "%{number} találat."
           viewing: "%{start} – %{end} megtekintése."
           print_invoices: "Számlák nyomtatása"
+          cancel_orders: "Rendelések törlése"
           resend_confirmation: "Visszaigazolás újraküldése"
         sortable_header:
           payment_state: "Fizetési állapot"
@@ -3852,7 +3855,7 @@ hu:
           to: "Bill to"
           shipping: "Szállítás"
           payments_list:
-            date_time: "Dátum idő"
+            date_time: "Dátum/idő"
             payment_method: "Fizetési mód"
             amount: "Összeg"
         note:
@@ -4155,16 +4158,16 @@ hu:
         customer_greeting: "Kedves %{name}!"
         instructions_html: "Megrendelését a(z) <strong>%{distributor}</strong>-tól TÖRÖLTE. Kérjük, őrizze meg ezt a törlési információt saját nyilvántartása céljából."
         dont_cancel: "Ha meggondoltad magad, vagy nem szeretnéd lemondani ezt a rendelést, fordulj a %{email}"
-        order_summary_canceled_html: "<strong>Megrendelés összegzése"
+        order_summary_canceled_html: "<strong>Megrendelés összegzése #%{number}[TÖRÖLVE] </strong>"
         details: "Itt vannak a megrendelt termékek részletei:"
-        unpaid_order: "Megrendelését nem fizették ki, így a visszatérítés nem történt"
-        paid_order: "Megrendelésed kifizették, így %{distributor} visszatérítette a teljes összeget"
+        unpaid_order: "Megrendelésed nem lett kifizetve, így visszatérítés nem történt"
+        paid_order: "Megrendelésed fizetésre került, így %{distributor} visszatérítette a teljes összeget"
         credit_order: "Megrendelését kifizették, így jóváírásra került a számláján"
         subject: "Megrendelés törlése"
       cancel_email_for_shop:
         greeting: "Kedves %{name}!"
         subject: "Megrendelés törlése"
-        intro: "Egy ügyfél törölte a"
+        intro: "Egy ügyfél törölte a rendelését #%{number}"
         view_cancelled_order: "A törölt rendelés megtekintése"
       confirm_email:
         subject: "Megrendelés visszaigazolás"
@@ -4286,7 +4289,7 @@ hu:
         items: Tételek
         total: Összesen
         edit: Szerkesztés
-        cancel: Vissza
+        cancel: Törlés
         closed: Zárva
         until: Amíg
       past_orders:
@@ -4334,7 +4337,7 @@ hu:
         spree/payment:
           one: Fizetés
           other: Kifizetések
-    unit: Mértékegység
+    unit: mértékegység
     per_unit: egységenként
   datetime:
     distance_in_words:
