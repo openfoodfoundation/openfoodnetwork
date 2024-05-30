@@ -17,7 +17,7 @@ class ConnectAppJob < ApplicationJob
 
     return unless channel
 
-    selector = "#edit_enterprise_#{enterprise.id} #connected-app-discover-regen"
+    selector = "#connected-app-discover-regen.enterprise_#{enterprise.id}"
     html = ApplicationController.render(
       partial: "admin/enterprises/form/connected_apps",
       locals: { enterprise: },

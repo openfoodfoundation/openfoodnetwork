@@ -13,4 +13,14 @@
 
 = render 'admin/enterprises/form_data'
 
-= render 'admin/enterprises/ng_form', action: 'edit'
+.row{ data: { controller: "tabs-and-panels", "tabs-and-panels-class-name-value": "selected" }}
+  .sixteen.columns.alpha
+    .four.columns.alpha
+      = render 'admin/shared/side_menu'
+    .one.column &nbsp;
+    .eleven.columns.omega.fullwidth_inputs
+      = render 'admin/enterprises/ng_form', action: 'edit'
+
+      %fieldset.alpha.no-border-bottom{ id: "connected_apps_panel", data: { "tabs-and-panels-target": "panel"  }}
+        %legend= t("admin.enterprises.form.connected_apps.legend")
+        = render "admin/enterprises/form/connected_apps", enterprise: @enterprise
