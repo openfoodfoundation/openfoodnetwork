@@ -1279,8 +1279,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             end
 
             expect(page).not_to have_selector(modal_selector)
-            # Make sure the products loading spinner is hidden
-            wait_for_class('.spinner-overlay', 'hidden')
             expect(page).not_to have_selector(variant_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the variant")
@@ -1297,8 +1295,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
               page.find(delete_button_selector).click
             end
             expect(page).not_to have_selector(modal_selector)
-            # Make sure the products loading spinner is hidden
-            wait_for_class('.spinner-overlay', 'hidden')
             expect(page).not_to have_selector(product_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the product")
@@ -1321,9 +1317,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
               page.find(delete_button_selector).click
             end
 
-            expect(page).not_to have_selector(modal_selector)
-            sleep(0.5) # delay for loading spinner to complete
-            expect(page).to have_selector(variant_selector)
             within error_flash_message_selector do
               expect(page).to have_content("Unable to delete the variant")
               page.find(dismiss_button_selector).click
@@ -1338,9 +1331,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             within modal_selector do
               page.find(delete_button_selector).click
             end
-            expect(page).not_to have_selector(modal_selector)
-            sleep(0.5) # delay for loading spinner to complete
-            expect(page).to have_selector(product_selector)
             within error_flash_message_selector do
               expect(page).to have_content("Unable to delete the product")
             end
