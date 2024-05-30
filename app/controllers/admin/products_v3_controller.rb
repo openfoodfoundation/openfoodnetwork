@@ -40,9 +40,9 @@ module Admin
 
       status = :ok
       if @record.destroy
-        flash.now[:success] = I18n.t('admin.products_v3.delete_product.success')
+        flash.now[:success] = t('.delete_product.success')
       else
-        flash.now[:error] = I18n.t('admin.products_v3.delete_product.error')
+        flash.now[:error] = t('.delete_product.error')
         status = :internal_server_error
       end
 
@@ -57,9 +57,9 @@ module Admin
 
       status = :ok
       if VariantDeleter.new.delete(@record)
-        flash.now[:success] = I18n.t('admin.products_v3.delete_variant.success')
+        flash.now[:success] = t('.delete_variant.success')
       else
-        flash.now[:error] = I18n.t('admin.products_v3.delete_variant.error')
+        flash.now[:error] = t('.delete_variant.error')
         status = :internal_server_error
       end
 
