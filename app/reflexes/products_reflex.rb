@@ -174,5 +174,4 @@ class ProductsReflex < ApplicationReflex
     params.permit(products: ::PermittedAttributes::Product.attributes)
       .to_h.with_indifferent_access
   end
-
 end
