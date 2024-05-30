@@ -141,7 +141,7 @@ RSpec.configure do |config|
 
   # Reset locale for all specs.
   config.around(:each) do |example|
-    I18n.with_locale(:en) { example.run }
+    I18n.with_locale(:en_AU) { example.run }
   end
 
   # Reset all feature toggles to prevent leaking.
