@@ -9,6 +9,11 @@
     %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel" }}
       %legend= t(".#{ item[:name] }.legend")
 
+  - when 'connected_apps'
+    -# Don't render this item here in the main form.
+    -# The panel contains its own form and we can't nest forms in forms.
+    -# Otherwise we add multiple authenticity tokens and Rails denies updates.
+
   - else
     %fieldset.alpha.no-border-bottom{ id: "#{item[:name]}_panel", data: { "tabs-and-panels-target": "panel"  }}
       %legend= t(".#{ item[:form_name] || item[:name] }.legend")
