@@ -118,4 +118,16 @@ RSpec.describe EnterpriseGroup do
       end
     end
   end
+
+  describe "serialisation" do
+    it "sanitises HTML in long_description" do
+      subject.long_description = "Hello <script>alert</script> dearest <b>monster</b>."
+      expect(subject.long_description).to eq "Hello alert dearest <b>monster</b>."
+    end
+
+    it "sanitises existing HTML in long_description" do
+      subject[:long_description] = "Hello <script>alert</script> dearest <b>monster</b>."
+      expect(subject.long_description).to eq "Hello alert dearest <b>monster</b>."
+    end
+  end
 end
