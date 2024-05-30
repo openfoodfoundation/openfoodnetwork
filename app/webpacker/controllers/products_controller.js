@@ -54,7 +54,8 @@ export default class extends ApplicationController {
     const elementToBeRemoved = this.#getElementToBeRemoved(deletePath, recordType);
 
     const handleSlideOutAnimationEnd = async () => {
-      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      // in case of test env, we won't be having csrf token
+      const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
       try {
         const response = await fetch(deletePath, {
