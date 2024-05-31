@@ -29,8 +29,8 @@ hu:
       enterprise_fee:
         fee_type: Díjtípus
       spree/order:
-        payment_state: Fizetési állapot
-        shipment_state: Szállítási állapot
+        payment_state: Fizetési státusz
+        shipment_state: Szállítási státusz
         completed_at: 'Elkészült:'
         number: Szám
         state: Ország
@@ -61,6 +61,8 @@ hu:
         orders_close_at: Lezárás dátuma
       variant_override:
         count_on_hand: "Készlet"
+      spree/payment_method/calculator:
+        preferred_additional_item: "További tételek kalkulált költsége:"
       enterprise:
         white_label_logo_link: "A főoldalon használt logo linkje"
     errors:
@@ -92,14 +94,40 @@ hu:
             limited_stock_but_no_count_on_hand: "meg kell adni, mert korlátozott a készlet"
       messages:
         blank: "nem lehet üres"
+        too_short: "túl rövid (minimum %{count}karakter)"
   errors:
     messages:
+      content_type_invalid: "érvénytelen tartalom típus"
       file_size_out_of_range: "a %{file_size} mérete nem esik bele a kívánt tartományba"
       limit_out_of_range: "az összmenyiség kívül esik a megengedett tartományon"
       image_metadata_missing: "nem használható kép"
+      dimension_min_inclusion: "legyen nagyobb vagy egyenlő %{width} x %{height} pixel"
+      dimension_max_inclusion: "legyen kisebb vagy egyenlő %{width} x %{height} pixel"
+      dimension_width_inclusion: "a szélesség nincs %{min} és %{max} pixel közt"
+      dimension_height_inclusion: "magasság nincs %{min} és %{max} pixel között"
+      dimension_width_greater_than_or_equal_to: "a szélesség legyen nagyobb vagy egyenlő %{length} pixel"
+      dimension_height_greater_than_or_equal_to: "a magasság legyen nagyobb vagy egyenlő %{length} pixel"
+      dimension_width_less_than_or_equal_to: "a szélesség legyen kisebb vagy egyenlő %{length} pixel"
+      dimension_height_less_than_or_equal_to: "a magasság legyen kisebb vagy egyenlő %{length} pixel"
+      dimension_width_equal_to: "a szélesség legyen egyenlő %{length} pixel"
+      dimension_height_equal_to: "a magasság legyen egyenlő %{length} pixel"
       aspect_ratio_not_square: "négyzet alakú képnek kell lennie"
       aspect_ratio_not_portrait: "portré képnek kell lennie"
+      aspect_ratio_not_landscape: "fekvő tájolású kép legyen"
+      aspect_ratio_is_not: "%{aspect_ratio} arányú legyen"
+      aspect_ratio_unknown: "ismeretlen arány"
       image_not_processable: "nem használható kép"
+    not_found:
+      title: "A keresett oldal nem található! (404)"
+      message_html: "<b>Kérlek, próbáld újra!</b><p>Ez lehet egy átmeneti probléma. Kérlek, kattints a vissza gombra, hogy visszatérj az előző képernyőre, vagy menj vissza a(z) <a href='/'> Kezdőlap </a> és próbáld újra.</p> <b> Fordulj az Ügyfélszolgálathoz.</b> <p> Ha a probléma továbbra is fennáll, vagy sürgős, kérjük, értesíts minket róla. Elérhetőségeinket a globális <a href='https://openfoodnetwork.org/ofn-local/' target='blank'> Open Food Network helyi oldalán találod</a>. </p> <p> Nagy segítség, ha minél több részletet meg tudsz adni a nem található oldalról.</p>"
+    internal_server_error:
+      title: "Sajnáljuk! Hiba történt (500)"
+      message_html: "<b>Kérjük, próbáld újra. Ez lehet egy átmeneti probléma. Kérjük, kattints a Vissza gombra, hogy visszatérj az előző képernyőre, vagy menjen vissza a <a href='/''> Kezdőlapra </a> és próbáld újra. <p>Dolgozunk rajta <b> <p>Ha már korábban is találkoztál ezzel a problémával, valószínűleg már tudunk róla és dolgozunk a megoldáson. Minden felmerülő hibát rögzítünk. </p><b>Fordulj az Ügyfélszolgálathoz </b> <p> Ha a probléma továbbra is fennáll, vagy sürgős, kérjük, értesíts minket róla. Elérhetőségeinket a  <a href='https://openfoodnetwork.org/ofn-local/' target='blank'> helyi Open Food Network oldalon </a> találod. <p> Nagy segítség, ha minél több részletet meg tudsz adni arról, hogy mit csinált, amikor ez a hiba felmerült.</p>"
+    unprocessable_entity:
+      title: "A művelet nem végrehajtható (422)"
+      message_html: "<p>A művelet nem végrehajtható. Lehet, hogy olyan műveletet szeretnél végrehajtani, amihez nincs jogosultságod. <br><h3><a href='/' > Vissza a Kezdőlapra</a></h3></p>"
+    general_error:
+      message: "Sajnáljuk! Hiba történt.\n\nEz lehet egy átmeneti probléma. Kérjük, próbáld újra, vagy frissítsd az oldalt.\nMinden felmerülő hibát rögzítünk és valószínűleg már dolgozunk rajta.\nHa a probléma továbbra is fennáll, vagy sürgős, kérjük, értesíts minket róla. "
   stripe:
     error_code:
       incorrect_number: "A kártyaszám hibás."
@@ -177,6 +205,7 @@ hu:
               not_available_to_shop: "nem érhető el a %{shop} számára"
   card_details: "A kártya adatai"
   card_type: "Kártyatípus"
+  unrecognized_card_type: "Nem azonosítható kártyatípus"
   what_is_this: "Mi ez?"
   cardholder_name: "Kártyatulajdonos neve"
   community_forum_url: "A közösségi fórum URL-je"
@@ -260,6 +289,10 @@ hu:
     integer_array_validator:
       not_array_error: "tömbnek kell lennie"
       invalid_element_error: "csak érvényes egész számokat tartalmazhat"
+  report_job:
+    report_failed: |
+        Ez a lekérdezés nem sikerült. Lehet, hogy túl nagy a feldolgozáshoz.
+        Megvizsgáljuk, de kérjük, értesíts minket, ha a probléma továbbra is fennáll.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Kérjük, erősítse meg %{enterprise} e-mail címét"
@@ -283,10 +316,13 @@ hu:
     report_ready:
       subject: "A jelentés kész"
       heading: "A jelentés letöltésre kész"
+      intro: |
+          Az alábbi link egy hét múlva érvényét veszti.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Tisztelt Ügyfelünk,"
-      instructions: "Megrendelését kiszállították"
+      instructions: "Megrendelésed kiszállították"
       shipment_summary: "Szállítási összefoglaló"
       subject: "Szállítási értesítés"
       thanks: "Köszönjük csatlakozását."
@@ -411,7 +447,7 @@ hu:
   voucher: Utalvány
   processing_payment: "Fizetés feldolgozása..."
   no_pending_payments: "Nincsenek függőben lévő kifizetések"
-  invalid_payment_state: "Érvénytelen fizetési állapot: %{state}"
+  invalid_payment_state: "Érvénytelen fizetési státusz: %{state}"
   filter_results: Eredmények szűrése
   clear_filters: Szűrők törlése
   quantity: Mennyiség
@@ -455,6 +491,7 @@ hu:
       filters:
         categories:
           title: Kategóriák
+          selected_categories: "%{count}kategóriák kiválasztva"
         producers:
           title: Termelők
           selected_producers: "%{count}termelő kiválasztva"
@@ -555,6 +592,9 @@ hu:
     has_n_rules: "%{num} szabálya van"
     unsaved_confirm_leave: "Ezen az oldalon vannak nem mentett módosítások. Folytatod mentés nélkül?"
     available_units: "Rendelkezésre álló egységek"
+    terms_of_service_have_been_updated_html: "Az Open Food Network Általános Szerződési Feltételek frissítésre kerültek: %{tos_link}"
+    terms_of_service: Olvasd el az Általános Szerződési Feltételeket
+    accept_terms_of_service: Az Általános Szerződési Feltételek elfogadása
     shopfront_settings:
       embedded_shopfront_settings: "Beágyazott kirakatbeállítások"
       enable_embedded_shopfronts: "Beágyazott kirakatok engedélyezése"
@@ -587,7 +627,7 @@ hu:
         stripe_connect_enabled: Engedélyezi az átadópontok számára a fizetés elfogadását a Stripe Connect használatával?
         no_api_key_msg: Ehhez a vállalkozáshoz nem tartozik Stripe-fiók.
         configuration_explanation_html: A Stripe Connect integráció konfigurálására vonatkozó részletes utasításokért, kérjük, <a href='https://gitátvételi pont.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>olvasd el ezt az útmutatót</a>.
-        status: Állapot
+        status: Státusz
         ok: Rendben
         instance_secret_key: Példány titkos kulcsa
         account_id: felhasználónév
@@ -642,6 +682,9 @@ hu:
         your_content: Az Ön tartalma
         user_guide: Használati útmutató
         map: Térkép
+    dfc_product_imports:
+      index:
+        imported_products: "Importált termékek:"
     enterprise_fees:
       index:
         title: "Vállalkozási díjak"
@@ -707,16 +750,23 @@ hu:
       index:
         header:
           title: Termékek tömeges szerkesztése
+      content:
+        loading: Termékeid betöltése
       delete_modal:
         delete_product_modal:
           heading: "Termék törlése"
+          prompt: "Ezzel véglegesen eltávolítod a listáról."
           confirmation_text: "Termék törlése"
+          cancellation_text: "A termék megtartása"
         delete_variant_modal:
           heading: "Változat törlése"
+          prompt: "Ezzel véglegesen eltávolítod a listáról."
           confirmation_text: "Változat törlése"
       filters:
+        search_products: Keresés a termékek között
         search_for_producers: Keresés termelőre
         all_producers: Minden termelő
+        all_categories: Minden kategória
         producers:
           label: Termelők
         categories:
@@ -724,12 +774,22 @@ hu:
         search: Keresés
       sort:
         pagination:
+          per_page:
+            show: Mutasd
           clear_search: Keresés törlése
+      no_products:
+        no_products_found: Nem találtunk termékeket
+        import_products: Több termék importálása
+        no_products_found_for_search: Nem találtunk a keresési feltételeknek megfelelő termékeket
       table:
+        changed_summary:
+          one: "%{count} termék módosítva."
+          other: "%{count} termék módosítva."
         error_summary:
           saved:
             one: "%{count}termék helyesen lett elmentve, de"
             other: "%{count} termékek helyesen lettek elmentve, de"
+        reset: Változások elvetése
         save: Változások mentése
         new_variant: Új variáns
       bulk_update:
@@ -924,7 +984,7 @@ hu:
         new_enterprise: Új vállalkozás
         producer?: "Termelő?"
         package: Csomag
-        status: Állapot
+        status: Státusz
         manage: 'Beállítások:'
       form:
         about_us:
@@ -937,6 +997,7 @@ hu:
           legend: "Cím"
         business_details:
           legend: "Vállalkozás adatai"
+          upload: 'feltöltés'
           abn: LÉGI ÚTON SZÁLLÍTOTT
           abn_placeholder: például. 99 123 456 789
           acn: Adószám
@@ -990,6 +1051,7 @@ hu:
         images:
           legend: "Képek"
           logo: Logó
+          logo_size: "300 x 300 pixel"
           promo_image_placeholder: 'Ez a kép a "Rólunk" részben látható.'
           promo_image_note1: 'FIGYELEM:'''
           promo_image_note2: Minden ide feltöltött promóciós kép 1200 x 260-ra lesz levágva.
@@ -1151,9 +1213,15 @@ hu:
           rate: Mérték
           customers: Vevő
           active: Aktív?
+          add_new: Új hozzáadása
         white_label:
+          remove_logo: "Logo eltávolítása"
+          remove_logo_confirm: "Biztos vagy benne, hogy eltávolítod ezt a logo-t?"
+          remove_logo_success: "Logo eltávolítva"
           white_label_logo_link_label: "A főoldalon használt logo linkje"
         connected_apps:
+          enable: "Adatmegosztás engedélyezése"
+          disable: "Megosztás leállítása"
           loading: "Betöltés"
           description_html: |
               <p>
@@ -1206,7 +1274,7 @@ hu:
         manage_link: Beállítások
         producer?: "Termelő?"
         package: "Csomag"
-        status: "Állapot"
+        status: "Státusz"
       new_form:
         owner: Tulajdonos
         owner_tip: A vállalkozásért felelős elsődleges felhasználó.
@@ -1460,7 +1528,7 @@ hu:
         name: Termékek és készlet
       users_and_enterprises:
         name: Felhasználók és Vállalkozások
-        description: Vállalkozási tulajdonjog és állapot
+        description: Vállalkozási tulajdonjog és státusz
       order_cycle_management:
         name: Rendelési ciklus kezelése
       sales_tax:
@@ -1503,6 +1571,9 @@ hu:
         formatted_data: Formázott adatok
       packing:
         name: "Összekészítési jelentések"
+    oidc_settings:
+      index:
+        title: "OIDC Beállítások"
     subscriptions:
       index:
         title: "Előfizetések"
@@ -1802,6 +1873,7 @@ hu:
   abn: "LÉGI ÚTON SZÁLLÍTOTT:"
   acn: "Adószám:"
   invoice_issued_on: "Kiállított számla:"
+  order_number: "Rendelés sorszáma:"
   date_of_transaction: "A tranzakció dátuma:"
   menu_1_title: "Átadópontok"
   menu_1_url: "/shops"
@@ -2512,8 +2584,8 @@ hu:
   balance: "Egyensúly"
   transaction: "Tranzakció"
   transaction_date: "A dátum #Tranzakció csak a :dátummal való ütközés elkerülése érdekében kulcsfontosságú"
-  payment_state: "Fizetési állapot"
-  shipping_state: "Szállítási állapot"
+  payment_state: "Fizetési státusz"
+  shipping_state: "Szállítási státusz"
   value: "Mennyiség"
   balance_due: "Fizetendő összeg"
   credit: "Hitel"
@@ -2708,7 +2780,7 @@ hu:
   report_header_order_cycle: Rendelési ciklus
   report_header_user: Felhasználó
   report_header_email: Email
-  report_header_status: Állapot
+  report_header_status: Státusz
   report_header_comments: Hozzászólások
   report_header_first_name: Keresztnév
   report_header_last_name: Vezetéknév
@@ -2759,6 +2831,7 @@ hu:
   report_header_total_tax: "Összes adó (%{currency_symbol})"
   report_header_total_excl_tax: "Összesen, kivéve adó (%{currency_symbol})"
   report_header_total_incl_tax: "Összesen, beleértve adó (%{currency_symbol})"
+  report_header_total_orders: "Össz Rendelésszám"
   report_header_enterprise: Vállalkozás
   report_header_enterprise_fee_name: Név
   report_header_enterprise_fee_type: Típus
@@ -2769,6 +2842,7 @@ hu:
   report_header_customer_code: Ügyfélkód
   report_header_product: Termék
   report_header_product_properties: Termék tulajdonságai
+  report_header_product_tax_category: Termék Adó kategóriája
   report_header_quantity: Mennyiség
   report_header_max_quantity: Max Mennyiség
   report_header_variant: Változat
@@ -2797,6 +2871,7 @@ hu:
   report_header_distributor_address: Forgalmazó címe
   report_header_distributor_city: Forgalmazó város
   report_header_distributor_postcode: Forgalmazó irányítószáma
+  report_header_distributor_tax_status: A Forgalmazó Adózási státusza
   report_header_delivery_address: Szállítási cím
   report_header_delivery_postcode: Szállítási irányítószám
   report_header_bulk_unit_size: Tömeges mértékegység
@@ -2818,7 +2893,7 @@ hu:
   report_header_customer_email: Ügyfél e-mail
   report_header_customer_phone: Ügyfél telefon
   report_header_customer_city: Ügyfél városa
-  report_header_payment_state: Fizetési állapot
+  report_header_payment_state: Fizetési státusz
   report_header_payment_type: Fizetési mód
   report_header_item_price: "Tétel (%{currency})"
   report_header_item_fees_price: "Tétel + díjak (%{currency})"
@@ -2854,6 +2929,9 @@ hu:
   report_header_transaction_fee: Tranzakciós díj (adó nélkül)
   report_header_total_untaxable_admin: Összes adózhatatlan rendszergazdai korrekció (adó nélkül)
   report_header_total_taxable_admin: Összes adóköteles rendszergazdai korrekció (adóval együtt)
+  report_line_cost_of_produce: Termékek költsége
+  report_line_line_items: tételsor
+  report_header_last_completed_order_date: Utolsó teljesített rendelés dátuma
   report_xero_configuration: Xero konfiguráció
   initial_invoice_number: "Kezdeti számlaszám"
   invoice_date: "Számla kiállítási dátuma"
@@ -2942,13 +3020,16 @@ hu:
   no_orders_found: "Nem található rendelés"
   order_information: "Rendelési információ"
   new_payment: "Új fizetés"
+  create_or_update_invoice: "Számla Létrehozása vagy Frissítése"
   date_completed: "Teljesítés dátuma"
   amount: "Összeg"
+  invoice_number: "A számla sorszáma"
   invoice_file: "File"
+  invalid_url: "%{url}érvénytelen URL"
   state_names:
     ready: Kész
     pending: Függőben levő
-    shipped: Kiszállított
+    shipped: Kiszállítva
   js:
     saving: 'Mentés...'
     changes_saved: 'Változtatások elmentve.'''
@@ -2980,6 +3061,7 @@ hu:
       deleting_item_will_cancel_order: "Ez a művelet egy vagy több üres rendelést eredményez, amelyek törlésre kerülnek. Szeretné folytatni?"
       modals:
         got_it: "Megvan"
+        confirm: "Megerősítés"
         close: "Bezárás"
         continue: "Tovább"
         cancel: "Törlés"
@@ -3130,6 +3212,8 @@ hu:
           select_all_variants: "Válaszd ki az összes %{total_number_of_variants} változatot"
           variants_loaded: "%{num_of_variants_loaded}/%{total_number_of_variants} változat betöltve"
           loading_variants: "Változatok betöltése"
+          no_variants: "Nincs elérhető termékváltozat ehhez a termékhez (a készletbeállításokban rejtett státuszúak)."
+          some_variants_hidden: "(Egyes termékváltozatok a leltárbeállítások miatt rejtve maradhatnak)"
       tag_rules:
         shipping_method_tagged_top: "Szállítási módok felcímkézve"
         shipping_method_tagged_bottom: "vannak:"
@@ -3172,7 +3256,7 @@ hu:
           partial: "részleges"
           pending: "függőben levő"
           ready: "kész"
-          shipped: "kiszállított"
+          shipped: "kiszállítva"
           canceled: "törölve"
         payment_states:
           balance_due: "fizetendő összeg"
@@ -3475,7 +3559,7 @@ hu:
   account: "fiók"
   logout: "Kijelentkezés"
   date_range: "Időintervallum"
-  status: "állapot"
+  status: "státusz"
   new: "Új"
   start: "Kezdete"
   end: "Vége"
@@ -3484,6 +3568,7 @@ hu:
   previous: "Előző"
   last: "Utolsó"
   spree:
+    order_updated: "Rendelés frissült"
     add_country: "Ország hozzáadása"
     add_state: "Állapot hozzáadása"
     adjustment: "Beállítás"
@@ -3523,9 +3608,12 @@ hu:
     server_error: "Szerver hiba"
     shipping_method_names:
       UPS Ground: "UPS föld"
+      pick_up: "Átvétel a gazdaságban"
     start_date: "Kezdő dátum"
     successfully_removed: "Sikeresen eltávolítva"
     taxonomy_edit: "Termék kategória szerkesztés"
+    taxonomy_tree_error: "Hiba lépett fel a Kategória-fa frissítésében."
+    taxonomy_tree_instruction: "Kattints a jobb gombbal egy elemre a hozzáadáshoz, átnevezéshez, eltávolításhoz vagy szerkesztéshez."
     tree: "Fa"
     updating: "Frissítés"
     your_order_is_empty_add_product: "Rendelése üres, kérjük keressen és adjon hozzá egy terméket fent"
@@ -3535,7 +3623,7 @@ hu:
     back_to_orders_list: "Vissza a rendelési listához"
     back_to_payments_list: "Vissza a fizetési listához"
     return_authorizations: "Visszaküldési engedélyek"
-    cannot_create_returns: "Nem hozható létre visszaküldés, mivel ebben a rendelésben nincsenek kiszállított egységek."
+    cannot_create_returns: "Nem tudsz visszárut létrehozni, mivel a rendelésnek nincsenek kiszállított egységei."
     select_stock: "Válasszon részvényt"
     location: "Elhelyezkedés"
     count_on_hand: "Count On Hand"
@@ -3578,6 +3666,7 @@ hu:
     credit_card: "Hitelkártya"
     new_payment: "Új fizetés"
     capture: "Elfog"
+    capture_and_complete_order: "A rendelés rögzítése és lezárása"
     void: "Üres"
     login: "Belépés"
     password: "Jelszó"
@@ -3604,6 +3693,7 @@ hu:
     display_currency: "Megjelenítési pénznem"
     choose_currency: "válasszon pénznemet"
     mail_method_settings: "Levelezési mód beállításai"
+    mail_settings_notice_html: "<b>Az itt végrehajtott módosítások csak ideiglenesek, </b> hibakeresés céljából történnek, és a jövőben visszaállíthatók. <br>A végleges változtatásokat a biztonsági adatok frissítésével és az <a href='https://github.com/openfoodfoundation/ofn-install'>ofn-install </a>segítségével történő telepítéssel lehet elvégezni. További részletekért forduljon az OFN globális csapatához."
     general: "Tábornok"
     enable_mail_delivery: "Levélkézbesítés engedélyezése"
     send_mails_as: "Levelek küldése másként"
@@ -3646,10 +3736,11 @@ hu:
     shipping_method: "Szállítási Mód"
     shipment: "Szállítás"
     payment: "Fizetés"
-    status: "Állapot"
+    status: "Státusz"
     shipping_categories: "Szállítási módok"
     new_shipping_category: "Új szállítási mód"
     back_to_shipping_categories: "Vissza a szállítási módokhoz"
+    editing_shipping_category: "Szállítási kategória szerkesztése"
     name: "Név"
     description: "Leírás"
     type: "típus"
@@ -3694,7 +3785,7 @@ hu:
     cannot_create_payment_without_payment_methods: "Fizetési módok megadása nélkül nem hozhat létre fizetést egy rendelésre."
     please_define_payment_methods: "Kérjük, először határozzon meg néhány fizetési módot."
     options: "Opciók"
-    has_no_shipped_units: "nincs szállított egysége"
+    has_no_shipped_units: "nincsenek kiszállított egységek"
     successfully_created: '%{resource} sikeresen létrehozva!'
     successfully_updated: '%{resource} sikeresen frissítve!'
     payment_method: "Fizetési mód"
@@ -3719,7 +3810,7 @@ hu:
         date_time: "Dátum idő"
         amount: "Összeg"
         payment_method: "Fizetési mód"
-        payment_state: "Fizetési állapot"
+        payment_state: "Fizetési Státusz"
     errors:
       messages:
         included_price_validation: "nem választható ki, hacsak nem állított be egy alapértelmezett adózónát"
@@ -3734,7 +3825,9 @@ hu:
     admin:
       images:
         edit:
+          title: Termékkép szerkesztése
           close: Vissza
+          upload: Fotó feltöltése
       mail_methods:
         send_testmail: "Küldj teszt e-mailt"
         testmail:
@@ -3761,6 +3854,7 @@ hu:
         enterprise_relationships: "Engedélyek"
         customers: "Ügyfelek"
         groups: "Csoportok"
+        oidc_settings: "OIDC Beállítások"
         overview: "Áttekintés"
         product_import: "Importálás"
         enterprise_roles: "Szerepek"
@@ -3789,9 +3883,9 @@ hu:
           return_authorizations: "Visszaküldési engedélyek"
           back_to_orders_list: "Vissza a rendelési listához"
           rma_number: "RMA szám"
-          status: "Állapot"
+          status: "Státusz"
           amount: "Összeg"
-          cannot_create_returns: "Nem hozható létre visszaküldés, mivel ebben a rendelésben nincsenek kiszállított egységek."
+          cannot_create_returns: "Nem tudsz visszárut létrehozni, mivel a rendelésnek nincsenek kiszállított egységei."
           continue: "Tovább"
         new:
           new_return_authorization: "Új visszaküldési engedély"
@@ -3803,7 +3897,7 @@ hu:
           return_authorization: "Visszaküldési engedély"
         form:
           product: "Termék"
-          quantity_shipped: "Szállított mennyiség"
+          quantity_shipped: "Kiszállított mennyiség"
           quantity_returned: "Visszaadott mennyiség"
           return_quantity: "Visszaküldési mennyiség"
           amount: "Összeg"
@@ -3822,6 +3916,9 @@ hu:
         add_product:
           cannot_add_item_to_canceled_order: "A törölt rendeléshez nem lehet tételt hozzáadni"
           include_out_of_stock_variants: "Tartalmazza azokat a változatokat, amelyeknél nincs raktárkészlet"
+        shipment:
+          mark_as_shipped_message_html: "Ezzel a megrendelést KISZÁLLÍTVA-ként jelölöd meg. Biztos, hogy folytatni szeretnéd?"
+          mark_as_shipped_label_message: "Szállítási/átvételi értesítő e-mail küldése az ügyfélnek."
         index:
           listing_orders: "Megrendelések listája"
           new_order: "Új rend"
@@ -3841,9 +3938,16 @@ hu:
           print_invoices: "Számlák nyomtatása"
           cancel_orders: "Rendelések törlése"
           resend_confirmation: "Visszaigazolás újraküldése"
+          resend_confirmation_confirm_html: "Ezzel újra elküldöd a visszaigazoló e-mailt az ügyfélnek. Biztos, hogy folytatni szeretnéd?"
+          send_invoice: "Számlák kiküldése"
+          send_invoice_confirm_html: "Ez a funkció az összes kiválasztott KÉSZ (státuszú) megrendelésről szóló számlát elküldi a vásárlónak e-mailben. <br> Biztos, hogy folytatni szeretnéd?"
+          selected:
+            zero: "Nincs kiválasztott rendelés"
+            one: "1 rendelés kiválasztva"
+            other: "%{count}rendelés kiválasztva"
         sortable_header:
-          payment_state: "Fizetési állapot"
-          shipment_state: "Szállítási állapot"
+          payment_state: "Fizetési státusz"
+          shipment_state: "Szállítási Státusz"
           completed_at: "Elkészült:"
           number: "Szám"
           state: "Ország"
@@ -3854,9 +3958,12 @@ hu:
           code: "Kód"
           to: "Bill to"
           shipping: "Szállítás"
+          order_number: "Rendelési sorszám"
+          invoice_number: "A számla sorszáma"
           payments_list:
             date_time: "Dátum/idő"
             payment_method: "Fizetési mód"
+            payment_state: "Fizetési Státusz"
             amount: "Összeg"
         note:
           note_label: "Megjegyzés:"
@@ -3869,6 +3976,9 @@ hu:
           line_item_adjustments: "Sorok korrekciói"
           order_adjustments: "Rendelési módosítások"
           order_total: "Rendelés Összesen"
+      invoices:
+        index:
+          order_has_changed: "A rendelés megváltozott a legutóbbi számlafrissítés óta. Előfordulhat, hogy az itt megjelenített számla már nem aktuális."
       overview:
         enterprises_header:
           ofn_with_tip: A termelők, kisvállalkozások, élelmiszer központok, élelmiszer közösségek, termelői piacok az Open Food Network szervezeti egységei.
@@ -3949,7 +4059,7 @@ hu:
           account_missing_msg: Ehhez a vállalkozáshoz nem tartozik Stripe-fiók.
           connect_one: Connect One
           access_revoked_msg: Stripe-fiókhoz való hozzáférést visszavonták," kérjük, csatlakoztassa újra fiókját.
-          status: Állapot
+          status: Státusz
           connected: csatlakoztatva
           account_id: felhasználónév
           business_name: Vállalkozás neve
@@ -3981,6 +4091,7 @@ hu:
           paypal:
             no_payment_via_admin_backend: A Paypal fizetések nem rögzíthetők a Backoffice-ban
       products:
+        image_upload_error: "Kérjük, a képet JPG, PNG, GIF, SVG vagy WEBP formátumban töltsd fel."
         new:
           title: "Új termék"
           new_product: "Új termék"
@@ -4025,11 +4136,16 @@ hu:
           bulk_unit_size: Tömeges mértékegység
         display_as:
           display_as: Megjelenítés mint
+        clone:
+          success: A termék klónozva lett
       reports:
         table:
           select_and_search: "Válaszd ki a szűrőket, és kattintson a %{option} elemre az adatok eléréséhez."
         customer_names_message:
           customer_names_tip: "Ha az Ön által szállított rendeléseknél a vásárlók nevei el vannak rejtve, felveheti a kapcsolatot a forgalmazóval, és megkérdezheti, hogy frissítheti-e átvételi ponti beállításait, hogy beszállítóik megtekinthessék a vásárlók nevét."
+        products_and_inventory:
+          all_products:
+            message: "Felhívjuk a figyelmed arra, hogy a megadott készletszintek csak a beszállítói terméklistákból származnak. Ha a készletmennyiségek kezelésére a Készletnyilvántartást használod, akkor ezeket az értékeket a jelentés nem veszi figyelembe."
       users:
         index:
           listing_users: "Felhasználók listázása"
@@ -4048,6 +4164,7 @@ hu:
           enterprise_limit: "Vállalkozási korlát"
           confirm_password: "Jelszó megerősítése"
           password: "Jelszó"
+          locale: "Nyelv"
         email_confirmation:
           confirmation_pending: "Az e-mail megerősítés függőben van. Megerősítő e-mailt küldtünk a következő címre: %{address}."
       variants:
@@ -4083,9 +4200,9 @@ hu:
           name: "Név"
           number: "Szám"
           completed_at: "Elkészült:"
-          state: "Állapot"
-          payment_state: "Fizetési állapot"
-          shipment_state: "Szállítási állapot"
+          state: "Státusz"
+          payment_state: "Fizetési Státusz"
+          shipment_state: "Szállítási Státusz"
           email: "Email"
           total: "Összesen"
           billing_address_name: "Név"
@@ -4093,7 +4210,11 @@ hu:
         form:
           name: Név
           permalink: Permalink
+          meta_title: Meta Cím (SEO cím)
+          meta_description: Meta Leírás
+          meta_keywords: Meta Kulcsszavak
           description: Leírás
+          dfc_id: DFC URI
       general_settings:
         edit:
           legal_settings: "Jogi beállítások"
@@ -4138,7 +4259,7 @@ hu:
       partial: részleges
       pending: függőben levő
       ready: kész
-      shipped: kiszállított
+      shipped: kiszállítva
       canceled: törölve
     payment_states:
       balance_due: fizetendő összeg
@@ -4197,7 +4318,7 @@ hu:
     shipment_mailer:
       shipped_email:
         dear_customer: "Tisztelt Ügyfelünk,"
-        instructions: "Megrendelését a(z) %{distributor}-tól elküldtük"
+        instructions: "Megrendelésed a(z) %{distributor}-tól elküldtük"
         shipment_summary: "Szállítási összefoglaló"
         subject: "Szállítási értesítés"
         thanks: "Köszönjük üzletét."
@@ -4299,7 +4420,7 @@ hu:
         items: Tételek
         total: Összesen
         paid?: Fizetett?
-        status: Állapot
+        status: Státusz
         completed: Elkészült
         cancelled: Törölve
       saved_cards:
@@ -4391,4 +4512,4 @@ hu:
       previous: Előző
   invisible_captcha:
     sentence_for_humans: "Kérjük hagyja üresen"
-    timestamp_error_message: "Kérjük, próbálja meg 5 másodperc múlva."
+    timestamp_error_message: "Kérjük, próbáld meg 5 másodperc múlva."
