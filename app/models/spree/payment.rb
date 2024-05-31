@@ -155,6 +155,7 @@ module Spree
       if adjustment
         adjustment.originator = payment_method
         adjustment.label = adjustment_label
+        adjustment.amount = payment_method.compute_amount(self)
         adjustment.save
       elsif !processing_refund? && payment_method.present?
         payment_method.create_adjustment(adjustment_label, self, true)
