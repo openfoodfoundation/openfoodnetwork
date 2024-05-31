@@ -306,12 +306,12 @@ module Spree
 
     # Remove any unsupported HTML.
     def description
-      Rails::HTML::SafeListSanitizer.new.sanitize(super)
+      HtmlSanitizer.sanitize(super)
     end
 
-    # # Remove any unsupported HTML.
+    # Remove any unsupported HTML.
     def description=(html)
-      super(Rails::HTML::SafeListSanitizer.new.sanitize(html))
+      super(HtmlSanitizer.sanitize(html))
     end
 
     private
