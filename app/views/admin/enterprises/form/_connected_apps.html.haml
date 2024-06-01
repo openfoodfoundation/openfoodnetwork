@@ -6,7 +6,9 @@
       %p= t ".tagline"
     %div
       - if enterprise.connected_apps.empty?
-        = button_to t(".enable"), admin_enterprise_connected_apps_path(enterprise.id), method: :post
+        = button_to t(".enable"), admin_enterprise_connected_apps_path(enterprise.id), method: :post, disabled: !managed_by_user?(enterprise)
+        -# This is only seen by super-admins:
+        %em= t(".need_to_be_manager") unless managed_by_user?(enterprise)
       - elsif enterprise.connected_apps.connecting.present?
         %button{ disabled: true }
           %i.spinner.fa.fa-spin.fa-circle-o-notch

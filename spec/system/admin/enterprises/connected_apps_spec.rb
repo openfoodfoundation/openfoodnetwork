@@ -50,4 +50,14 @@ RSpec.describe "Connected Apps", feature: :connected_apps, vcr: true do
     expect(page).not_to have_content "account is connected"
     expect(page).not_to have_link "Manage listing"
   end
+
+  it "can't be enabled by non-manager" do
+    login_as create(:admin_user)
+
+    visit "#{edit_admin_enterprise_path(enterprise)}#/connected_apps_panel"
+    expect(page).to have_content "Discover Regenerative"
+
+    expect(page).to have_button("Allow data sharing", disabled: true)
+    expect(page).to have_content "Only managers can connect apps."
+  end
 end
