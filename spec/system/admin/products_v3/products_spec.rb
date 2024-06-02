@@ -103,27 +103,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         expect(page).to have_content "4"  # displays the stock for variant_3
       end
     end
-
-    it "displays a select box for the unit of measure for the product's variants" do
-      pending( "[BUU] Change producer, unit type and tax category #11060" )
-      p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1,
-                                      variant_unit_name: '')
-
-      visit spree.admin_products_path
-
-      expect(page).to have_select "variant_unit_with_scale", selected: "Weight (g)"
-    end
-
-    it "displays a text field for the item name when unit is set to 'Items'" do
-      pending( "[BUU] Change producer, unit type and tax category #11060" )
-      p = FactoryBot.create(:product, variant_unit: 'items', variant_unit_scale: nil,
-                                      variant_unit_name: 'packet')
-
-      visit spree.admin_products_path
-
-      expect(page).to have_select "variant_unit_with_scale", selected: "Items"
-      expect(page).to have_field "variant_unit_name", with: "packet"
-    end
   end
 
   describe "sorting" do
@@ -1203,7 +1182,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         end
 
         it "shows an actions menu with a delete link when clicking on icon for product. " \
-           "shows link to clone and edit the product;" \
            "doesn't show delete link for the single variant" do
           within product_selector do
             page.find(".vertical-ellipsis-menu").click
@@ -1225,8 +1203,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
                  display_name: "Medium box",
                  sku: "APL-01",
                  price: 5.25)
-          link_edit_variant2 =
-            "/admin/products/#{Spree::Product.first.id}/variants/#{Spree::Variant.second.id}/edit"
           visit admin_products_url
 
           # to select the default variant
