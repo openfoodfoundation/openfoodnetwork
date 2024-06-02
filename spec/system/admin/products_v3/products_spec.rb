@@ -18,9 +18,91 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
   let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
   let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
 
-  it "can see the new product page" do
-    visit admin_products_url
-    expect(page).to have_content "Bulk Edit Products"
+  describe "with no products" do
+    before { visit admin_products_url }
+    it "can see the new product page" do
+      expect(page).to have_content "Bulk Edit Products"
+      expect(page).to have_text "No products found"
+      # displays buttons to add products with the correct links
+      expect(page).to have_link(class: "button", text: "New Product", href: "/admin/products/new")
+      expect(page).to have_link(class: "button", text: "Import multiple products",
+                                href: "/admin/products/import")
+    end
+  end
+
+  describe "using the page" do
+    describe "using column display dropdown" do
+      let(:product) { create(:simple_product) }
+
+      before do
+        pending "Pending implementation, issue #11055"
+        login_as_admin
+        visit spree.admin_products_path
+      end
+
+      it "shows a column display dropdown, which shows a list of columns when clicked" do
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
+
+        toggle_columns /^.{0,1}Producer$/i
+
+        expect(page).not_to have_selector "th", text: "PRODUCER"
+        expect(page).to have_selector "th", text: "NAME"
+        expect(page).to have_selector "th", text: "PRICE"
+        expect(page).to have_selector "th", text: "ON HAND"
+      end
+    end
+  end
+
+  describe "listing" do
+    let!(:p1) { create(:product) }
+    let!(:p2) { create(:product) }
+
+    before do
+      visit admin_products_url
+    end
+
+    it "displays a list of products" do
+      within ".products" do
+        # displays table header
+        expect(page).to have_selector "th", text: "Name"
+        expect(page).to have_selector "th", text: "SKU"
+        expect(page).to have_selector "th", text: "Unit scale"
+        expect(page).to have_selector "th", text: "Unit"
+        expect(page).to have_selector "th", text: "Price"
+        expect(page).to have_selector "th", text: "On Hand"
+        expect(page).to have_selector "th", text: "Producer"
+        expect(page).to have_selector "th", text: "Category"
+        expect(page).to have_selector "th", text: "Tax Category"
+        expect(page).to have_selector "th", text: "Inherits Properties?"
+        expect(page).to have_selector "th", text: "Actions"
+
+        # displays product list
+        expect(page).to have_selector row_containing_name(p1.name.to_s)
+        expect(page).to have_selector row_containing_name(p2.name.to_s)
+      end
+    end
+
+    context "with several variants" do
+      let!(:variant1) { p1.variants.first }
+      let!(:variant2) { p2.variants.first }
+      let!(:variant3) { create(:variant, product: p2, on_demand: false, on_hand: 4) }
+
+      before do
+        variant1.update!(on_hand: 0, on_demand: true)
+        variant2.update!(on_hand: 16, on_demand: false)
+        visit spree.admin_products_path
+      end
+
+      it "displays an on hand count in a span for each product" do
+        expect(page).to have_content "On demand"
+        expect(page).not_to have_content "20" # does not display the total stock
+        expect(page).to have_content "16" # displays the stock for variant_2
+        expect(page).to have_content "4"  # displays the stock for variant_3
+      end
+    end
   end
 
   describe "sorting" do
@@ -89,11 +171,13 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
   end
 
   describe "search" do
-    # TODO: explicitly test with multiple products, to ensure incorrect products don't show.
-    # TODO: test with  multiple variants, to ensure distinct query reponse
     context "product has searchable term" do
       # create a product with a name that can be searched
       let!(:product_by_name) { create(:simple_product, name: "searchable product") }
+      let!(:variant_a) {
+        create(:variant, product_id: product_by_name.id, display_name: "Medium box")
+      }
+      let!(:variant_b) { create(:variant, product_id: product_by_name.id, display_name: "Big box") }
 
       it "can search for a product" do
         create_products 1
@@ -102,7 +186,39 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria."
+        expect_products_count_to_be 1
+      end
+
+      it "with multiple products" do
+        create_products 2
+        visit admin_products_url
+
+        # returns no results, if the product does not exist
+        search_for "a product which does not exist"
+
+        expect(page).to have_field "search_term", with: "a product which does not exist"
+        expect(page).to have_content "No products found for your search criteria"
+        expect_products_count_to_be 0
+
+        # returns the existing product
+        search_for "searchable product"
+
+        expect(page).to have_field "search_term", with: "searchable product"
+        expect(page).to have_content "1 products found for your search criteria."
+        expect_products_count_to_be 1
+      end
+
+      it "can search variant names" do
+        create_products 1
+        visit admin_products_url
+
+        expect_products_count_to_be 2
+
+        search_for "Big box"
+
+        expect(page).to have_field "search_term", with: "Big box"
+        expect(page).to have_content "1 products found for your search criteria."
         expect_products_count_to_be 1
       end
 
@@ -119,7 +235,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         expect_per_page_to_be 15
         expect_products_count_to_be 1
         search_for "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria."
         expect_products_count_to_be 1
       end
 
@@ -129,7 +245,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria."
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_name.name
 
@@ -244,7 +360,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
 
       # Unit popout
-      # TODO: prevent empty value
       fill_in "Unit value", with: ""
       click_button "Save changes" # attempt to save or close the popout
       expect(page).to have_field "Unit value", with: "" # popout is still open
