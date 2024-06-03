@@ -230,7 +230,7 @@ GEM
     combine_pdf (1.0.26)
       matrix
       ruby-rc4 (>= 0.1.5)
-    concurrent-ruby (1.2.3)
+    concurrent-ruby (1.3.1)
     connection_pool (2.4.1)
     crack (1.0.0)
       bigdecimal
@@ -263,7 +263,7 @@ GEM
       warden (~> 1.2.3)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
-    devise-i18n (1.12.0)
+    devise-i18n (1.12.1)
       devise (>= 4.9.0)
     devise-token_authenticatable (1.1.0)
       devise (>= 4.0.0, < 5.0.0)
@@ -522,7 +522,7 @@ GEM
       activerecord (>= 4.2)
       railties (>= 4.2)
     raabro (1.4.0)
-    racc (1.7.3)
+    racc (1.8.0)
     rack (2.2.9)
     rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
@@ -843,7 +843,7 @@ GEM
     xml-simple (1.1.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.14)
+    zeitwerk (2.6.15)
 
 PLATFORMS
   ruby
