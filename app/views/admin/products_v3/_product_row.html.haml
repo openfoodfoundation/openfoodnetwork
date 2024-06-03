@@ -1,5 +1,3 @@
-%template{ id: "producer_options"}
-  = options_for_select(producer_options, product.supplier_id)
 %td.with-image{ id: "image-#{product.id}" }
   = render partial: "product_image", locals: { product: }
 %td.field.align-left.header.naked_inputs
