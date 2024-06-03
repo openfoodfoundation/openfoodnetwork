@@ -1061,6 +1061,7 @@ en:
       edit:
         order_sure_want_to: Are you sure you want to %{event} this order?
         voucher_tax_included_in_price: "%{label} (tax included in voucher)"
+        additional_tax_included_in_price: "Tax on fees"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:

@@ -14,6 +14,10 @@ FactoryBot.define do
     preferred_amount { generate(:calculator_amount) }
   end
 
+  factory :calculator_flat_percent_per_item, class: Calculator::FlatPercentPerItem do
+    preferred_flat_percent { generate(:calculator_amount) }
+  end
+
   factory :weight_calculator, class: Calculator::Weight do
     after(:build) { |c|
       c.set_preference(:per_unit, 0.5)
