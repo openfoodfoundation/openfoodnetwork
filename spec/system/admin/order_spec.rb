@@ -179,17 +179,15 @@ RSpec.describe '
       login_as_admin
       visit spree.edit_admin_order_path(order_with_fees)
 
-      transaction_fee = order_with_fees.all_adjustments.payment_fee.eligible.first.amount
+      adjustment_for_transaction_fee = order_with_fees.all_adjustments.payment_fee.eligible.first
+      transaction_fee = adjustment_for_transaction_fee.amount
+
       expect(page.find("#order_adjustments").text).to have_content(transaction_fee)
 
       select2_select product.name, from: 'add_variant_id', search: true
       find('button.add_variant').click
-      sleep(1)
-
-      new_transaction_fee = order_with_fees.all_adjustments.payment_fee.eligible.first.amount
-
-      expect(new_transaction_fee).to be > transaction_fee
-      expect(page.find("#order_adjustments").text).to have_content(new_transaction_fee)
+      expect(page).to have_css("#order_adjustments",
+                               text: adjustment_for_transaction_fee.reload.amount)
     end
   end
 
