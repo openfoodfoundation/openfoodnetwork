@@ -24,7 +24,7 @@ module Admin
 
       [
         AdjustmentData.new(
-          I18n.t("admin.orders.edit.additional_tax_included_in_price"),
+          I18n.t("admin.orders.edit.tax_on_fees"),
           adjustment
         )
       ]
