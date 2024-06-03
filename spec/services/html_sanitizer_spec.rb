@@ -6,14 +6,26 @@ RSpec.describe HtmlSanitizer do
   subject { described_class }
 
   context "when HTML has supported tags" do
-    it "keeps supported tags" do
-      html = "Hello <b>alert</b>! <br>How are you?"
-      expect(subject.sanitize(html))
-        .to eq "Hello <b>alert</b>! <br>How are you?"
+    it "keeps supported regular tags" do
+      supported_tags = %w[h1 h2 h3 h4 div p b i u a strong em del pre blockquote ul ol li figure]
+      supported_tags.each do |tag|
+        html = "<#{tag}>Content</#{tag}>"
+        sanitized_html = subject.sanitize(html)
+        expect(sanitized_html).to eq(html), "Expected '#{tag}' to be preserved."
+      end
+    end
+
+    it "keeps supported void tags" do
+      supported_tags = %w[br hr]
+      supported_tags.each do |tag|
+        html = "<#{tag}>"
+        sanitized_html = subject.sanitize(html)
+        expect(sanitized_html).to eq(html), "Expected '#{tag}' to be preserved."
+      end
     end
 
     it "handles nested tags" do
-      html = '<ul><li>Item 1</li><li><strong>Item 2</strong></li></ul>'
+      html = '<div><ul><li>Item 1</li><li><strong>Item 2</strong></li></ul></div>'
       expect(subject.sanitize(html)).to eq(html)
     end
   end
@@ -44,7 +56,7 @@ RSpec.describe HtmlSanitizer do
       expect(subject.sanitize(html)).to eq ""
     end
 
-    it "removes link tags" do
+    it "removes base tags" do
       html = "<base href='http://phishing-site.com/'>"
       expect(subject.sanitize(html)).to eq ""
     end

@@ -6,7 +6,8 @@
 # We offer an editor which supports certain tags but you can't insert just any
 # HTML, which would be dangerous.
 class HtmlSanitizer
-  ALLOWED_TAGS = %w[h1 h2 h3 h4 p br b i u a strong em del pre blockquote ul ol li hr figure].freeze
+  ALLOWED_TAGS = %w[h1 h2 h3 h4 div p br b i u a strong em del pre blockquote ul ol li hr
+                    figure].freeze
   ALLOWED_ATTRIBUTES = %w[href target].freeze
   ALLOWED_TRIX_DATA_ATTRIBUTES = %w[data-trix-attachment].freeze
 
