@@ -13,3 +13,17 @@
         options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy&.items),
         class: "no-input per-page",
         data: { controller: "tom-select search", action: "change->search#changePerPage", "tom-select-options-value": '{ "plugins": [] }'}
+
+  / Columns dropdown
+  = form_with url: bulk_update_admin_column_preferences_path, method: :put do |f|
+    = hidden_field_tag :action_name, "#{controller_name}_#{action_name}"
+
+    - ColumnPreference.for(spree_current_user, "#{controller_name}_#{action_name}").each do |column_preference|
+      = f.fields_for("column_preferences[]", column_preference) do |cp_form|
+        = cp_form.hidden_field :id
+        = cp_form.hidden_field :column_name
+        %label
+          = cp_form.check_box :visible
+          = t("admin.products_page.columns." + column_preference.column_name)
+
+    = f.submit t('admin.column_save_as_default')

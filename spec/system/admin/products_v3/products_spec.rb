@@ -43,6 +43,11 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       expect(page).to have_selector "th", text: "Price"
       expect(page).to have_selector "th", text: "On Hand"
 
+      uncheck "Name"
+      click_on "Save as default"
+      refresh
+      expect(page).to have_unchecked_field "Name"
+
       pending "Pending implementation, issue #11055"
       toggle_columns /^.{0,1}Producer$/i
 
