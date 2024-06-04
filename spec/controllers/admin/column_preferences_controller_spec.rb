@@ -55,8 +55,8 @@ RSpec.describe Admin::ColumnPreferencesController, type: :controller do
       end
     end
 
-    context "html" do
-      let(:request_format) { :html }
+    context "turbo_stream" do
+      let(:request_format) { :turbo_stream }
       let(:column_preference_params) {
         {
           '0': { id: column_preference.id, column_name: "name", visible: "0" },

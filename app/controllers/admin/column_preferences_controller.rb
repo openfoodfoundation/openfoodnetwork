@@ -10,12 +10,17 @@ module Admin
       if @cp_set.save
         respond_to do |format|
           format.json { render json: @cp_set.collection, each_serializer: Api::Admin::ColumnPreferenceSerializer }
-          format.html { render inline: "saved" } #todo
+          format.turbo_stream {
+            flash.now[:success] = t('.success')
+            render :bulk_update, locals: { action: permitted_params[:action_name] } }
         end
       elsif @cp_set.errors.present?
         respond_to do |format|
           format.json { render json: { errors: @cp_set.errors }, status: :bad_request }
-          format.html { render inline: "errors" } #todo
+          format.turbo_stream {
+            flash.now[:error] = t('.error')
+            render :bulk_update, locals: { action: permitted_params[:action_name] }
+          }
         end
       else
         respond_to do |format|
@@ -42,7 +47,7 @@ module Admin
             each_with_index.map { |cp, i| [i, cp] }]
           collection_attributes.select!{ |_i, cp| cp[:action_name] == permitted_params[:action_name] }
         end
-        format.html do
+        format.all do
           # Inject action name and user ID for each column_preference
           collection_attributes = permitted_params[:column_preferences].to_h.each_value { |cp|
             cp[:action_name] = permitted_params[:action_name]
