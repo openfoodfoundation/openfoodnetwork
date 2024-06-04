@@ -30,29 +30,26 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
   end
 
-  describe "using the page" do
-    describe "using column display dropdown" do
-      let(:product) { create(:simple_product) }
+  describe "column selector" do
+    let!(:product) { create(:simple_product) }
 
-      before do
-        pending "Pending implementation, issue #11055"
-        login_as_admin
-        visit spree.admin_products_path
-      end
+    before do
+      visit admin_products_url
+    end
 
-      it "shows a column display dropdown, which shows a list of columns when clicked" do
-        expect(page).to have_selector "th", text: "NAME"
-        expect(page).to have_selector "th", text: "PRODUCER"
-        expect(page).to have_selector "th", text: "PRICE"
-        expect(page).to have_selector "th", text: "ON HAND"
+    it "shows a column display dropdown, which shows a list of columns when clicked" do
+      expect(page).to have_selector "th", text: "Name"
+      expect(page).to have_selector "th", text: "Producer"
+      expect(page).to have_selector "th", text: "Price"
+      expect(page).to have_selector "th", text: "On Hand"
 
-        toggle_columns /^.{0,1}Producer$/i
+      pending "Pending implementation, issue #11055"
+      toggle_columns /^.{0,1}Producer$/i
 
-        expect(page).not_to have_selector "th", text: "PRODUCER"
-        expect(page).to have_selector "th", text: "NAME"
-        expect(page).to have_selector "th", text: "PRICE"
-        expect(page).to have_selector "th", text: "ON HAND"
-      end
+      expect(page).not_to have_selector "th", text: "Name"
+      expect(page).to have_selector "th",     text: "Producer"
+      expect(page).to have_selector "th",     text: "Price"
+      expect(page).to have_selector "th",     text: "On Hand"
     end
   end
 
@@ -320,6 +317,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
     end
   end
+
+  describe "columns"
 
   describe "updating" do
     let!(:variant_a1) {
