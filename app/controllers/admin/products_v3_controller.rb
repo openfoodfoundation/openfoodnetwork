@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 module Admin
   class ProductsV3Controller < Spree::Admin::BaseController
     helper ProductsHelper
@@ -28,6 +29,42 @@ module Admin
 
         render "index", status: :unprocessable_entity,
                         locals: { producers:, categories:, tax_category_options:, flash: }
+      end
+    end
+
+    def destroy
+      @record = ProductScopeQuery.new(
+        spree_current_user,
+        { id: params[:id] }
+      ).find_product
+
+      status = :ok
+      if @record.destroy
+        flash.now[:success] = t('.delete_product.success')
+      else
+        flash.now[:error] = t('.delete_product.error')
+        status = :internal_server_error
+      end
+
+      respond_with do |format|
+        format.turbo_stream { render :destroy_product_variant, status: }
+      end
+    end
+
+    def destroy_variant
+      @record = Spree::Variant.active.find(params[:id])
+      authorize! :delete, @record
+
+      status = :ok
+      if VariantDeleter.new.delete(@record)
+        flash.now[:success] = t('.delete_variant.success')
+      else
+        flash.now[:error] = t('.delete_variant.error')
+        status = :internal_server_error
+      end
+
+      respond_with do |format|
+        format.turbo_stream { render :destroy_product_variant, status: }
       end
     end
 
@@ -147,3 +184,4 @@ module Admin
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

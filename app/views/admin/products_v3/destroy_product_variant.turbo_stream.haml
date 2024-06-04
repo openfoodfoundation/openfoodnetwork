@@ -1,0 +1,5 @@
+- # @record can either be Product or Variant
+- unless flash[:error]
+	= turbo_stream.remove(dom_id(@record))
+= turbo_stream.append "flashes" do
+	= render(partial: 'admin/shared/flashes', locals: { flashes: flash })

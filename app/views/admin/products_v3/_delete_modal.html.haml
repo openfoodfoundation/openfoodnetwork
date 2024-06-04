@@ -5,8 +5,8 @@
       cancel_button_text: t("#{base_translation_key}.cancellation_text"),
       confirm_button_class: :red,
       actions_alignment_class: 'justify-end',
-      confirm_reflexes: "click->products#delete_#{object_type}",
-      confirm_actions: "click->modal#close",
+      controller: "products",
+      confirm_actions: "click->products#delete_#{object_type} click->modal#close",
     )
 = render delete_modal do
   %h2.margin-bottom-20.black-text
