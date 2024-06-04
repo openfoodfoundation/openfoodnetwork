@@ -6,6 +6,7 @@
 # We offer an editor which supports certain tags but you can't insert just any
 # HTML, which would be dangerous.
 class HtmlSanitizer
+  # div is required by Trix editor
   ALLOWED_TAGS = %w[h1 h2 h3 h4 div p br b i u a strong em del pre blockquote ul ol li hr
                     figure].freeze
   ALLOWED_ATTRIBUTES = %w[href target].freeze
