@@ -22,7 +22,7 @@ module Spree
           include CanCan::ControllerAdditions
           include Spree::Core::ControllerHelpers::Auth
 
-          prepend_view_path Rails.root + "app/views"
+          prepend_view_path "#{Rails.root}app/views"
           append_view_path File.expand_path("../../../app/views", File.dirname(__FILE__))
         end
       end

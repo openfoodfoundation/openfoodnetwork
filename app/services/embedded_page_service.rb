@@ -59,7 +59,7 @@ class EmbeddedPageService
   def set_logout_redirect
     return unless enterprise_slug
 
-    @session[:shopfront_redirect] = '/' + enterprise_slug + '/shop?embedded_shopfront=true'
+    @session[:shopfront_redirect] = "/#{enterprise_slug}/shop?embedded_shopfront=true"
   end
 
   def enterprise_slug
