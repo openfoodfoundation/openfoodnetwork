@@ -7,7 +7,7 @@ module Reporting
         attr_accessor :parameters
 
         def initialize(user, params = {}, render: false)
-          super(user, params, render:)
+          super
         end
 
         def search

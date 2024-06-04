@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     rescue StandardError
       'unknown'
     end}")
-    super(options, response_status)
+    super
   end
 
   def set_checkout_redirect

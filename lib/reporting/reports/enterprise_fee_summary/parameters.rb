@@ -28,7 +28,7 @@ module Reporting
           self.shipping_method_ids = []
           self.payment_method_ids = []
 
-          super(attributes)
+          super
 
           cleanup_arrays
         end
