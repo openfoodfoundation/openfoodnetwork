@@ -664,7 +664,7 @@ module Spree
         before { allow(li).to receive(:product) { p } }
 
         context "when full_name starts with the product name" do
-          before { allow(li).to receive(:full_name) { p.name + " - something" } }
+          before { allow(li).to receive(:full_name) { "#{p.name} - something" } }
 
           it "does not show the product name twice" do
             expect(li.product_and_full_name).to eq('product - something')
