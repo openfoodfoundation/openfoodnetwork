@@ -78,22 +78,20 @@ module OpenFoodNetwork
     end
 
     def products_v3_index_columns
-      # TODO: Use consistent translation keys
-      node = "admin.products_page.columns"
-      {
-        image: { name: I18n.t("admin.image"), visible: true },
-        producer: { name: I18n.t("admin.producer"), visible: true },
-        sku: { name: I18n.t("admin.sku"), visible: false },
-        name: { name: I18n.t("admin.name"),                    visible: true },
-        unit: { name: I18n.t("#{node}.unit"),                  visible: true },
-        price: { name: I18n.t("admin.price"), visible: true },
-        on_hand: { name: I18n.t("admin.on_hand"), visible: true },
-        on_demand: { name: I18n.t("admin.on_demand"), visible: true },
-        category: { name: I18n.t("#{node}.category"), visible: false },
-        tax_category: { name: I18n.t("#{node}.tax_category"), visible: false },
-        inherits_properties: { name: I18n.t("#{node}.inherits_properties"), visible: false },
-        import_date: { name: I18n.t("#{node}.import_date"), visible: false }
-      }
+      I18n.with_options scope: 'admin.products_page.columns' do
+        {
+          image: { name: t(:image), visible: true },
+          name: { name: t(:name), visible: true },
+          sku: { name: t(:sku), visible: false },
+          unit: { name: t(:unit), visible: true },
+          price: { name: t(:price), visible: true },
+          on_hand: { name: t(:on_hand), visible: true },
+          producer: { name: t(:producer), visible: true },
+          category: { name: t(:category), visible: false },
+          tax_category: { name: t(:tax_category), visible: false },
+          inherits_properties: { name: t(:inherits_properties), visible: false },
+        }
+      end
     end
 
     def enterprises_index_columns
