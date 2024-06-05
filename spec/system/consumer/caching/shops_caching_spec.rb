@@ -15,11 +15,6 @@ RSpec.describe "Shops caching", caching: true do
 
   describe "caching enterprises AMS data" do
     it "caches data for all enterprises, with the provided options" do
-      # Trigger lengthy tasks like JS compilation before testing caching:
-      visit shops_path
-      Rails.cache.clear
-
-      # Now run the test, hopefully in a timely manner:
       visit shops_path
 
       key, options = CacheService::FragmentCaching.ams_shops
