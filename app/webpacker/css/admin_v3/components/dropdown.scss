@@ -101,8 +101,6 @@
 
   > span {
     width: auto;
-    text-transform: uppercase;
-    font-size: 85%;
     font-weight: 600;
   }
 
@@ -190,7 +188,6 @@
     display: inline-block;
     list-style: none;
     width: auto;
-    text-transform: uppercase;
     font-size: 85%;
     font-weight: 600;
     margin: -8px -15px;
@@ -212,6 +209,7 @@
   border: 1px solid $lighter-grey;
   background-color: $lighter-grey;
   padding: 0px;
+  line-height: normal;
 
   &:hover {
     border-color: $lighter-grey;
@@ -263,8 +261,12 @@
       cursor: pointer;
       padding-top: 4px;
       padding-bottom: 5px;
-      text-transform: uppercase;
-      font-size: 85%;
+      font-size: inherit;
+
+      // Align checkbox and text
+      & > * {
+        vertical-align: middle;
+      }
     }
   }
 }
