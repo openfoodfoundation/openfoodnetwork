@@ -748,6 +748,18 @@ module Spree
         expect(e.variants.reload).to be_empty
       end
     end
+
+    describe "serialisation" do
+      it "sanitises HTML in description" do
+        subject.description = "Hello <script>alert</script> dearest <b>monster</b>."
+        expect(subject.description).to eq "Hello alert dearest <b>monster</b>."
+      end
+
+      it "sanitises existing HTML in description" do
+        subject[:description] = "Hello <script>alert</script> dearest <b>monster</b>."
+        expect(subject.description).to eq "Hello alert dearest <b>monster</b>."
+      end
+    end
   end
 
   RSpec.describe "product import" do

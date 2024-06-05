@@ -304,6 +304,16 @@ module Spree
       )
     end
 
+    # Remove any unsupported HTML.
+    def description
+      HtmlSanitizer.sanitize(super)
+    end
+
+    # Remove any unsupported HTML.
+    def description=(html)
+      super(HtmlSanitizer.sanitize(html))
+    end
+
     private
 
     def update_units
