@@ -125,8 +125,9 @@ RSpec.describe "Orders And Fulfillment" do
         it "is precise to time of day, not just date" do
           # When I generate a customer report
           # with a timeframe that includes one order but not the other
-          pick_datetime "#q_completed_at_gt", datetime_start1
-          pick_datetime "#q_completed_at_lt", datetime_end
+          find("input.datepicker").click
+          select_dates_from_daterangepicker datetime_start1, datetime_end
+          find(".shortcut-buttons-flatpickr-button").click # closes flatpickr
 
           find("#display_summary_row").set(false) # hides the summary rows
           run_report
@@ -141,7 +142,8 @@ RSpec.describe "Orders And Fulfillment" do
           # 2 rows for order1 + 1 summary row
 
           # setting a time interval to include both orders
-          pick_datetime "#q_completed_at_gt", datetime_start2
+          find("input.datepicker").click
+          select_dates_from_daterangepicker datetime_start2, Time.zone.now
           run_report
           # Then I should see the rows for both orders
           expect(all('table.report__table tbody tr').count).to eq(5)
