@@ -67,11 +67,12 @@ module Sets
 
       product.assign_attributes(product_related_attrs)
 
+      return true unless product.changed?
+
       validate_presence_of_unit_value_in_product(product)
 
-      changed = product.changed?
       success = product.errors.empty? && product.save
-      count_result(success && changed)
+      count_result(success)
       success
     end
 
@@ -104,7 +105,8 @@ module Sets
     def create_or_update_variant(product, variant_attributes)
       variant = find_model(product.variants, variant_attributes[:id])
       if variant.present?
-        variant.update(variant_attributes.except(:id))
+        variant.assign_attributes(variant_attributes.except(:id))
+        variant.save if variant.changed?
       else
         variant = create_variant(product, variant_attributes)
       end

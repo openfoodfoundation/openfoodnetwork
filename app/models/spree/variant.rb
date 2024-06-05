@@ -49,7 +49,7 @@ module Spree
     has_many :prices,
              class_name: 'Spree::Price',
              dependent: :destroy
-    delegate :display_price, :display_amount, :price, :price_changed?, :price=,
+    delegate :display_price, :display_amount, :price, :price=,
              :currency, :currency=,
              to: :find_or_build_default_price
 
@@ -197,6 +197,11 @@ module Spree
 
     def amount_in(currency)
       price_in(currency).try(:amount)
+    end
+
+    def changed?
+      # We consider the variant changed if associated price is changed (it is saved after_save)
+      super || default_price.changed?
     end
 
     # can_supply? is implemented in VariantStock
