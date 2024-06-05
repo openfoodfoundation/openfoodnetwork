@@ -1,4 +1,6 @@
-= form_with url: bulk_update_admin_column_preferences_path, method: :put, id: :bulk_admin_column_preferences_form do |f|
+= form_with url: bulk_update_admin_column_preferences_path, method: :put,
+    id: :bulk_admin_column_preferences_form,
+    html: { 'data-controller': "column-preferences" } do |f|
   = hidden_field_tag :action_name, action
 
   - ColumnPreference.for(spree_current_user, action).each_with_index do |column_preference, index|
@@ -6,7 +8,7 @@
       = cp_form.hidden_field :id
       = cp_form.hidden_field :column_name
       %label
-        = cp_form.check_box :visible
+        = cp_form.check_box :visible, 'data-column-name': column_preference.column_name
         = t("admin.products_page.columns." + column_preference.column_name)
 
   = f.submit t('admin.column_save_as_default')

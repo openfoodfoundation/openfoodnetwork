@@ -15,17 +15,17 @@
 
   %table.products
     %colgroup
-      %col{ width:"56" }= #  Img (size + padding)
-      %col= # (grow to fill) Name
-      %col{ width:"5%"}
-      %col{ width:"8%"}
-      %col{ width:"8%"}
-      %col{ width:"5%"}
-      %col{ width:"10%"}
-      %col{ width:"15%"}= # Producer
-      %col{ width:"8%"}
-      %col{ width:"8%"}
-      %col{ width:"8%"}
+      %col{ width:"56", 'data-column-preferences-name': :image }= # (size + padding)
+      %col{ 'data-column-preferences-name': :name }= # (grow to fill)
+      %col{ width:"5%", 'data-column-preferences-name': :sku }
+      %col{ width:"8%", 'data-column-preferences-name': :unit_scale }
+      %col{ width:"8%", 'data-column-preferences-name': :unit }
+      %col{ width:"5%", 'data-column-preferences-name': :price}
+      %col{ width:"10%", 'data-column-preferences-name': :on_hand}
+      %col{ width:"15%", 'data-column-preferences-name': :producer}
+      %col{ width:"8%", 'data-column-preferences-name': :category}
+      %col{ width:"8%", 'data-column-preferences-name': :tax_category}
+      %col{ width:"8%", 'data-column-preferences-name': :inherits_properties}
       %col{ width:"8%"}= # Actions
     %thead
       %tr

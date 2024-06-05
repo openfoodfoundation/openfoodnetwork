@@ -84,6 +84,7 @@ module OpenFoodNetwork
           name: { name: t(:name), visible: true },
           sku: { name: t(:sku), visible: false },
           unit: { name: t(:unit), visible: true },
+          unit_scale: { name: t(:unit_scale), visible: true },
           price: { name: t(:price), visible: true },
           on_hand: { name: t(:on_hand), visible: true },
           producer: { name: t(:producer), visible: true },

@@ -37,19 +37,22 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       visit admin_products_url
     end
 
-    it "shows a column display dropdown, which shows a list of columns when clicked" do
+    it "hides column and remembers saved preference" do
       expect(page).to have_selector "th", text: "Name"
       expect(page).to have_selector "th", text: "Producer"
       expect(page).to have_selector "th", text: "Price"
       expect(page).to have_selector "th", text: "On Hand"
 
       uncheck "Name"
+
+      expect(page).not_to have_selector "th", text: "Name"
+      expect(page).to have_selector "th",     text: "Producer"
+      expect(page).to have_selector "th",     text: "Price"
+      expect(page).to have_selector "th",     text: "On Hand"
+
       click_on "Save as default"
       refresh
       expect(page).to have_unchecked_field "Name"
-
-      pending "Pending implementation, issue #11055"
-      toggle_columns /^.{0,1}Producer$/i
 
       expect(page).not_to have_selector "th", text: "Name"
       expect(page).to have_selector "th",     text: "Producer"
