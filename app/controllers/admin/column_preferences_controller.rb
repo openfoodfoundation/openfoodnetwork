@@ -18,7 +18,7 @@ module Admin
         respond_to do |format|
           format.json { render json: { errors: @cp_set.errors }, status: :bad_request }
           format.turbo_stream {
-            flash.now[:error] = t('.error')
+            flash.now[:error] = @cp_set.errors.full_messages.to_sentence
             render :bulk_update, locals: { action: permitted_params[:action_name] }
           }
         end
@@ -55,6 +55,7 @@ module Admin
           }
         end
       end
+
       @cp_set = Sets::ColumnPreferenceSet.new(@column_preferences, collection_attributes:)
     end
 

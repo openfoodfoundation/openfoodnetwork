@@ -764,7 +764,6 @@ en:
     column_preferences:
       bulk_update:
         success: "Column preferences saved"
-        error: "Column preferences could not be saved"
     contents:
       edit:
         title: Content
