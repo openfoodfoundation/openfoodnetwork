@@ -1721,6 +1721,48 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         uri = URI.parse(current_url)
         expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
       end
+
+      context "editing a product's variant unit scale" do
+        let(:product) { create(:simple_product, name: 'a product', supplier: @supplier2) }
+
+        before do
+          allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
+          visit spree.edit_admin_product_path product
+        end
+
+        shared_examples 'selecting a unit from dropdown' do |dropdown_option,
+                                                             var_unit:, var_unit_scale:|
+          it 'checks if the dropdown selection is persistent' do
+            select dropdown_option, from: 'product_variant_unit_with_scale'
+            click_button 'Update'
+            expect(flash_message).to eq('Product "a product" has been successfully updated!')
+            product.reload
+            expect(product.variant_unit).to eq(var_unit)
+            expect(page).to have_select('product_variant_unit_with_scale',
+                                        selected: dropdown_option)
+            expect(product.variant_unit_scale).to eq(var_unit_scale)
+          end
+        end
+
+        describe 'a shared example' do
+          it_behaves_like 'selecting a unit from dropdown', 'Weight (g)', var_unit: 'weight',
+                                                                          var_unit_scale: 1
+          it_behaves_like 'selecting a unit from dropdown', 'Weight (kg)', var_unit: 'weight',
+                                                                           var_unit_scale: 1000
+          it_behaves_like 'selecting a unit from dropdown', 'Weight (T)', var_unit: 'weight',
+                                                                          var_unit_scale: 1_000_000
+          it_behaves_like 'selecting a unit from dropdown', 'Weight (oz)', var_unit: 'weight',
+                                                                           var_unit_scale: 28.35
+          it_behaves_like 'selecting a unit from dropdown', 'Weight (lb)', var_unit: 'weight',
+                                                                           var_unit_scale: 453.6
+          it_behaves_like 'selecting a unit from dropdown', 'Volume (mL)', var_unit: 'volume',
+                                                                           var_unit_scale: 0.001
+          it_behaves_like 'selecting a unit from dropdown', 'Volume (L)', var_unit: 'volume',
+                                                                          var_unit_scale: 1
+          it_behaves_like 'selecting a unit from dropdown', 'Volume (kL)', var_unit: 'volume',
+                                                                           var_unit_scale: 1000
+        end
+      end
     end
   end
 
