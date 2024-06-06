@@ -22,6 +22,7 @@ class EnterpriseBuilder < DfcBuilder
       phoneNumbers: [enterprise.phone].compact,
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
       logo: enterprise.logo_url(:small),
+      mainContact: contact(enterprise),
 
       # The model strips the protocol and we need to add it:
       websites: [enterprise.website].compact_blank.map { |url| "https://#{url}" },
@@ -59,5 +60,15 @@ class EnterpriseBuilder < DfcBuilder
         members
       end
     end
+  end
+
+  def self.contact(enterprise)
+    firstName, lastName = enterprise.contact_name&.split(/ ([^ ]+)$/) # rubocop:disable Naming/VariableName
+
+    DataFoodConsortium::Connector::Person.new(
+      urls.enterprise_url(enterprise.id, anchor: "mainContact"),
+      firstName:, # rubocop:disable Naming/VariableName
+      lastName:, # rubocop:disable Naming/VariableName
+    )
   end
 end

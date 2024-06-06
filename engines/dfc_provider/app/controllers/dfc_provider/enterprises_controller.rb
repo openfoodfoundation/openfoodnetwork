@@ -15,6 +15,7 @@ module DfcProvider
 
       render json: DfcIo.export(
         enterprise,
+        enterprise.mainContact,
         *enterprise.localizations,
         *enterprise.suppliedProducts,
         *enterprise.catalogItems,
