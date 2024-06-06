@@ -295,6 +295,6 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
   end
 
   def returned_product_ids
-    json_response['products'].map{ |obj| obj['id'] }
+    json_response['products'].pluck('id')
   end
 end

@@ -82,7 +82,7 @@ module Reporting
               let!(:subject) { Base.new nil, params }
 
               it "excludes enterprises that are not explicitly requested" do
-                results = subject.owners_and_enterprises.to_a.map{ |oae| oae["name"] }
+                results = subject.owners_and_enterprises.to_a.pluck("name")
                 expect(results).to include enterprise1.name
                 expect(results).not_to include enterprise2.name
               end
@@ -93,7 +93,7 @@ module Reporting
               let!(:subject) { Base.new nil, params }
 
               it "excludes enterprises that are not explicitly requested" do
-                results = subject.owners_and_enterprises.to_a.map{ |oae| oae["name"] }
+                results = subject.owners_and_enterprises.to_a.pluck("name")
                 expect(results).to include enterprise1.name
                 expect(results).not_to include enterprise2.name
               end
@@ -106,7 +106,7 @@ module Reporting
               let!(:subject) { Base.new nil, params }
 
               it "excludes enterprises that are not explicitly requested" do
-                results = subject.managers_and_enterprises.to_a.map{ |mae| mae["name"] }
+                results = subject.managers_and_enterprises.to_a.pluck("name")
                 expect(results).to include enterprise1.name
                 expect(results).not_to include enterprise2.name
               end
@@ -124,7 +124,7 @@ module Reporting
               end
 
               it "excludes enterprises whose managers are not explicitly requested" do
-                results = subject.managers_and_enterprises.to_a.map{ |mae| mae["name"] }
+                results = subject.managers_and_enterprises.to_a.pluck("name")
                 expect(results).to include enterprise1.name
                 expect(results).not_to include enterprise2.name
               end
