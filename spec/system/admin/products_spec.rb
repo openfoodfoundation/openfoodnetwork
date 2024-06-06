@@ -690,7 +690,7 @@ RSpec.describe '
     end
 
     it "checks error when creating product image with unsupported format" do
-      unsupported_image_file_path = "#{Rails.root}README.md"
+      unsupported_image_file_path = Rails.root.join("README.md").to_s
       product = create(:simple_product, supplier: @supplier2)
 
       image = white_logo_file
