@@ -1345,13 +1345,14 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       let(:image_file_path) { Rails.root.join(file_fixture_path, "thinking-cat.jpg") }
 
       before do
-        @supplier = create(:supplier_enterprise, name: 'New supplier')
         @distributors = (1..3).map { create(:distributor_enterprise) }
         @enterprise_fees = (0..2).map { |i| create(:enterprise_fee, enterprise: @distributors[i]) }
 
         @new_user = create(:user)
+        @supplier = create(:supplier_enterprise, name: 'New supplier')
         @supplier2 = create(:supplier_enterprise, name: 'Another Supplier')
         @supplier_permitted = create(:supplier_enterprise, name: 'Permitted Supplier')
+        @new_user.enterprise_roles.build(enterprise: @supplier).save
         @new_user.enterprise_roles.build(enterprise: @supplier2).save
         @new_user.enterprise_roles.build(enterprise: @distributors[0]).save
         create(:enterprise_relationship, parent: @supplier_permitted, child: @supplier2,
@@ -1761,6 +1762,246 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
                                                                           var_unit_scale: 1
           it_behaves_like 'selecting a unit from dropdown', 'Volume (kL)', var_unit: 'volume',
                                                                            var_unit_scale: 1000
+        end
+      end
+
+      describe "creating a product" do
+        let!(:taxon) { create(:taxon) }
+        let!(:stock_location) { create(:stock_location, backorderable_default: false) }
+        let!(:shipping_category) { DefaultShippingCategory.find_or_create }
+        let!(:tax_category) { create(:tax_category, name: 'Test Tax Category') }
+
+        it "display all attributes when submitting with error: no name" do
+          visit admin_products_url
+
+          click_link 'New Product'
+
+          select @supplier.name, from: 'product_supplier_id'
+          select "Weight (kg)", from: 'product_variant_unit_with_scale'
+          fill_in 'product_unit_value', with: "5.00 g"
+          assert_selector(:field, placeholder: "5kg g")
+          fill_in 'product_display_as', with: "Big Box of Chocolates"
+          select taxon.name, from: "product_primary_taxon_id"
+          fill_in 'product_price', with: '19.99'
+          fill_in 'product_on_hand', with: 5
+          check 'product_on_demand'
+          select 'Test Tax Category', from: 'product_tax_category_id'
+          fill_in_trix_editor 'product_description', with: 'A description...'
+
+          click_button 'Create'
+
+          expect(page).to have_content "Name can't be blank"
+          expect(page).to have_field 'product_supplier_id', with: @supplier.id
+          expect(page).to have_field 'product_unit_value', with: "5.00 g"
+          expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
+          expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
+          expect(page).to have_field 'product_price', with: '19.99'
+          expect(page).to have_field 'product_on_hand', with: 5
+          expect(page).to have_field 'product_on_demand', checked: true
+          expect(page).to have_field 'product_tax_category_id', with: tax_category.id
+          expect(page.find("#product_description",
+                           visible: false).value).to eq('<div>A description...</div>')
+          expect(page.find("#product_variant_unit_field")).to have_content 'Weight (kg)'
+
+          expect(page).to have_content "Name can't be blank"
+        end
+
+        it "display all attributes when submitting with error: Unit Value must be grater than 0" do
+          login_to_admin_section
+
+          visit spree.new_admin_product_path
+
+          select 'New supplier', from: 'product_supplier_id'
+          fill_in 'product_name', with: "new product name"
+          select "Weight (kg)", from: 'product_variant_unit_with_scale'
+          fill_in 'product_unit_value', with: "0.00 g"
+          assert_selector(:field, placeholder: "0g g")
+          fill_in 'product_display_as', with: "Big Box of Chocolates"
+          select taxon.name, from: "product_primary_taxon_id"
+          fill_in 'product_price', with: '19.99'
+          fill_in 'product_on_hand', with: 5
+          check 'product_on_demand'
+          select 'Test Tax Category', from: 'product_tax_category_id'
+          fill_in_trix_editor 'product_description', with: 'A description...'
+
+          click_button 'Create'
+
+          expect(page).to have_field 'product_name', with: "new product name"
+          expect(page).to have_field 'product_supplier_id', with: @supplier.id
+          expect(page).to have_field 'product_unit_value', with: "0 g"
+          expect(page).to have_field 'product_display_as', with: "Big Box of Chocolates"
+          expect(page).to have_field 'product_primary_taxon_id', with: taxon.id
+          expect(page).to have_field 'product_price', with: '19.99'
+          expect(page).to have_field 'product_on_hand', with: 5
+          expect(page).to have_field 'product_on_demand', checked: true
+          expect(page).to have_field 'product_tax_category_id', with: tax_category.id
+          expect(page.find("#product_description",
+                           visible: false).value).to eq('<div>A description...</div>')
+          expect(page.find("#product_variant_unit_field")).to have_content 'Weight (kg)'
+
+          expect(page).to have_content "Unit value must be greater than 0"
+        end
+
+        it "preserves 'Items' 'Unit Size' selection when submitting with error" do
+          login_to_admin_section
+
+          click_link 'Products'
+          click_link 'New Product'
+
+          select "Items", from: 'product_variant_unit_with_scale'
+
+          click_button 'Create'
+
+          expect(page.find("#product_variant_unit_field")).to have_content 'Items'
+        end
+
+        it "assigning important attributes" do
+          login_to_admin_section
+
+          click_link 'Products'
+          click_link 'New Product'
+
+          expect(find_field('product_shipping_category_id').text).to eq(shipping_category.name)
+
+          select 'New supplier', from: 'product_supplier_id'
+          fill_in 'product_name', with: 'A new product !!!'
+          select "Weight (kg)", from: 'product_variant_unit_with_scale'
+          fill_in 'product_unit_value', with: 5
+          select taxon.name, from: "product_primary_taxon_id"
+          fill_in 'product_price', with: '19.99'
+          fill_in 'product_on_hand', with: 5
+          select 'Test Tax Category', from: 'product_tax_category_id'
+          fill_in_trix_editor 'product_description', with: 'A description...'
+
+          click_button 'Create'
+
+          expect(current_path).to eq spree.admin_products_path
+          expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
+          product = Spree::Product.find_by(name: 'A new product !!!')
+          expect(product.supplier).to eq(@supplier)
+          expect(product.variant_unit).to eq('weight')
+          expect(product.variant_unit_scale).to eq(1000)
+          expect(product.variants.first.unit_value).to eq(5000)
+          expect(product.variants.first.unit_description).to eq("")
+          expect(product.variant_unit_name).to eq("")
+          expect(product.variants.first.primary_taxon_id).to eq(taxon.id)
+          expect(product.variants.first.price.to_s).to eq('19.99')
+          expect(product.on_hand).to eq(5)
+          expect(product.variants.first.tax_category_id).to eq(tax_category.id)
+          expect(product.variants.first.shipping_category).to eq(shipping_category)
+          expect(product.description).to eq("<div>A description...</div>")
+          expect(product.group_buy).to be_falsey
+          expect(product.variants.first.unit_presentation).to eq("5kg")
+        end
+
+        it "creating an on-demand product" do
+          login_as_admin
+          visit spree.admin_products_path
+
+          click_link 'New Product'
+
+          fill_in 'product_name', with: 'Hot Cakes'
+          select 'New supplier', from: 'product_supplier_id'
+          select "Weight (kg)", from: 'product_variant_unit_with_scale'
+          fill_in 'product_unit_value', with: 1
+          select taxon.name, from: "product_primary_taxon_id"
+          fill_in 'product_price', with: '1.99'
+          fill_in 'product_on_hand', with: 0
+          check 'product_on_demand'
+          select 'Test Tax Category', from: 'product_tax_category_id'
+          fill_in_trix_editor 'product_description',
+                              with: 'In demand, and on_demand! The hottest cakes in town.'
+
+          click_button 'Create'
+
+          expect(current_path).to eq spree.admin_products_path
+          product = Spree::Product.find_by(name: 'Hot Cakes')
+          expect(product.variants.count).to eq(1)
+          variant = product.variants.first
+          expect(variant.on_demand).to be true
+        end
+
+        it "creating product with empty unit value" do
+          login_as_admin
+          visit spree.admin_products_path
+
+          click_link 'New Product'
+
+          fill_in 'product_name', with: 'Hot Cakes'
+          select 'New supplier', from: 'product_supplier_id'
+          select "Weight (kg)", from: 'product_variant_unit_with_scale'
+          fill_in "product_unit_value", with: ""
+          select taxon.name, from: "product_primary_taxon_id"
+          fill_in 'product_price', with: '1.99'
+          fill_in 'product_on_hand', with: 0
+          check 'product_on_demand'
+          select 'Test Tax Category', from: 'product_tax_category_id'
+          fill_in_trix_editor 'product_description',
+                              with: 'In demand, and on_demand! The hottest cakes in town.'
+          click_button 'Create'
+
+          expect(current_path).to eq spree.admin_products_path
+          expect(page).to have_content "Unit value is not a number"
+        end
+
+        describe "localization settings" do
+          shared_examples "with different price values" do |localized_number, price|
+            context "when enable_localized_number is set to #{localized_number}" do
+              before do
+                allow(
+                  Spree::Config
+                ).to receive(:enable_localized_number?).and_return(localized_number)
+                login_as_admin
+                visit spree.admin_products_path
+                click_link 'New Product'
+              end
+
+              it "and price is #{price}" do
+                fill_in 'product_name', with: 'Priceless Mangoes'
+                select 'New supplier', from: 'product_supplier_id'
+                select "Weight (kg)", from: 'product_variant_unit_with_scale'
+                fill_in "product_unit_value", with: 1
+                select taxon.name, from: "product_primary_taxon_id"
+                fill_in 'product_price', with: price.to_s
+                fill_in 'product_on_hand', with: 0
+                check 'product_on_demand'
+                select 'Test Tax Category', from: 'product_tax_category_id'
+
+                click_button 'Create'
+
+                expect(current_path).to eq spree.admin_products_path
+
+                if price.eql?("0.0")
+                  product = Spree::Product.find_by(name: 'Priceless Mangoes')
+                  expect(product.variants.count).to eq(1)
+                  variant = product.variants.first
+                  expect(variant.on_demand).to be true
+                  expect(variant.price).to eq 0.0 # a priceless variant gets a zero value by default
+                end
+
+                if price.eql?("")
+                  within "#errorExplanation" do # the banner displays the relevant error
+                    expect(page).to have_content "1 error prohibited this record from being saved:"
+                    expect(page).to have_content "Price is not a number"
+                  end
+                  within "#product_price_field" do # the form highlights the price field
+                    expect(page).to have_content "Price"
+                    expect(page).to have_content "is not a number"
+                  end
+                end
+              end
+            end
+          end
+
+          context "is 0.0" do
+            it_behaves_like "with different price values", false, "0.0"
+            it_behaves_like "with different price values", true, "0.0"
+          end
+
+          context "is empty" do
+            it_behaves_like "with different price values", false, ''
+            it_behaves_like "with different price values", true, ''
+          end
         end
       end
     end
