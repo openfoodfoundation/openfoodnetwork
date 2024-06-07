@@ -1104,6 +1104,7 @@ de_CH:
           email_confirmed: "E-Mail-Adresse bestätigt"
           email_not_confirmed: "E-Mail-Adresse nicht bestätigt"
         vouchers:
+          voucher_code: Gutschein-Code
           rate: Steuersatz
           customers: Kunde
           active: Aktiv?
@@ -1539,6 +1540,7 @@ de_CH:
       new:
         back: Zurück
         save: Speichern
+        voucher_code: Gutschein-Code
         voucher_amount: Betrag
     controllers:
       enterprises:
@@ -1624,6 +1626,10 @@ de_CH:
       explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
       submit: Weiter - Bestellübersicht
       cancel: Zurück - Ihre Daten
+      voucher:
+        apply_voucher: Gutschein einlösen
+        apply: Einlösen
+        placeholder: Gutschein-Code eingeben
     step3:
       delivery_details:
         title: Lieferdetails

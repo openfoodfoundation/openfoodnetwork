@@ -3926,7 +3926,7 @@ de_DE:
         customers: "Kunden"
         groups: "Gruppen"
         oidc_settings: "OIDC-Einstellungen"
-        overview: "Einführung"
+        overview: "Übersicht"
         product_import: "Importieren"
         enterprise_roles: "Rollen"
         payment_methods: "Zahlungsarten"

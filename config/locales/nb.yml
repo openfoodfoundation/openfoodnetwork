@@ -837,6 +837,7 @@ nb:
         error: Kan ikke slette varianten
       variant_row:
         none_tax_category: Ingen
+        search_for_tax_categories: "Søk etter avgiftskategorier"
         category_field_name: "Kategori"
         tax_category_field_name: "Avgiftskategori"
       product_row:
@@ -1284,6 +1285,7 @@ nb:
           enable: "Tillat datadeling"
           disable: "Stopp deling"
           loading: "Laster"
+          need_to_be_manager: "Bare ledere kan koble til apper."
           note: |
               Open Food Network-kontoen din er koblet til Discover Regenerativ.
               Legg til eller oppdater informasjon om Discover Regenerativ-oppføringen din her.
