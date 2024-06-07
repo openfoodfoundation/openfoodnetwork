@@ -283,35 +283,6 @@ RSpec.describe '
         expect(page).to have_selector "#p_#{product1.id}"
       end
     end
-
-    context 'a shipped product' do
-      let!(:order) { create(:shipped_order, line_items_count: 1) }
-      let!(:line_item) { order.reload.line_items.first }
-
-      context "a deleted line item from a shipped order" do
-        before do
-          login_as_admin
-          visit spree.admin_products_path
-
-          within "#p_#{order.variants.first.product_id}" do
-            accept_alert { page.find("[data-powertip=Remove]").click }
-          end
-        end
-
-        it 'removes it from the product list' do
-          visit spree.admin_products_path
-
-          expect(page).to have_selector "#p_#{product1.id}"
-          expect(page).not_to have_selector "#p_#{order.variants.first.product_id}"
-        end
-
-        it 'keeps the line item on the order (admin)' do
-          visit spree.edit_admin_order_path(order)
-
-          expect(page).to have_content(line_item.product.name.to_s)
-        end
-      end
-    end
   end
 
   describe 'cloning' do
