@@ -1336,6 +1336,38 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             end
           end
         end
+
+        context 'a shipped product' do
+          let!(:order) { create(:shipped_order, line_items_count: 1) }
+          let!(:line_item) { order.reload.line_items.first }
+
+          context "a deleted line item from a shipped order" do
+            before do
+              login_as_admin
+              visit admin_products_url
+
+              # Delete Variant
+              within variant_selector do
+                page.find(".vertical-ellipsis-menu").click
+                page.find(delete_option_selector).click
+              end
+
+              delete_button_selector = "input[type=button][value='Delete variant']"
+              within modal_selector do
+                page.find(delete_button_selector).click
+              end
+
+              expect(page).not_to have_selector(modal_selector)
+              expect(page).not_to have_selector(variant_selector)
+            end
+
+            it 'keeps the line item on the order (admin)' do
+              visit spree.edit_admin_order_path(order)
+
+              expect(page).to have_content(line_item.product.name.to_s)
+            end
+          end
+        end
       end
     end
   end
