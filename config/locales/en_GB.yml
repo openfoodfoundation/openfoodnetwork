@@ -2244,7 +2244,7 @@ en_GB:
   email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
-  email_so_payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
+  email_so_payment_success_intro_html: "Your subscription order from <strong>%{distributor}</strong> has been processed. \nIf you chose to pay for your subscription via card, you will now be charged."
   email_so_placement_explainer_html: "This order was automatically created for you."
   email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
   email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
