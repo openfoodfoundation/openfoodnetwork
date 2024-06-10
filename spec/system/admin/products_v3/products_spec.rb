@@ -1381,6 +1381,46 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
   end
 
+  context "as an enterprise manager" do
+    let(:supplier_managed1) { create(:supplier_enterprise, name: 'Supplier Managed 1') }
+    let(:supplier_managed2) { create(:supplier_enterprise, name: 'Supplier Managed 2') }
+    let(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Supplier Unmanaged') }
+    let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
+    let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
+    let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
+    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0) }
+    let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
+    let!(:product_supplied_permitted) {
+      create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0)
+    }
+    let(:product_supplied_inactive) {
+      create(:product, supplier: supplier_managed1, price: 10.0)
+    }
+
+    let!(:supplier_permitted_relationship) do
+      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed1,
+                                       permissions_list: [:manage_products])
+    end
+
+    before do
+      @enterprise_user = create(:user)
+      @enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
+      @enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
+      @enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
+
+      login_as @enterprise_user
+    end
+
+    it "shows only products that I supply" do
+      visit spree.admin_products_path
+
+      # displays permitted product list only
+      expect(page).to have_selector row_containing_name(product_supplied.name)
+      expect(page).to have_selector row_containing_name(product_supplied_permitted.name)
+      expect(page).not_to have_selector row_containing_name(product_not_supplied.name)
+    end
+  end
+
   def create_products(amount)
     amount.times do |i|
       create(:simple_product, name: "product #{i}", supplier: producer)
