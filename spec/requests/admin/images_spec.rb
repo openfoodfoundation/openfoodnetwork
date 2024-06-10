@@ -49,8 +49,6 @@ RSpec.describe "/admin/products/:product_id/images", type: :request do
           product.reload
         }.not_to change{ product.image&.attachment&.filename.to_s }
 
-        pending "error status code"
-        expect(response).to be_unprocessable
         expect(response.body).to include "Attachment has an invalid content type"
       end
     end
