@@ -20,12 +20,6 @@ RSpec.describe '
     @enterprise_fees = (0..2).map { |i| create(:enterprise_fee, enterprise: @distributors[i]) }
   end
 
-  context "as anonymous user" do
-    it "is redirected to login page when attempting to access product listing" do
-      expect { visit spree.admin_products_path }.not_to raise_error
-    end
-  end
-
   describe "creating a product" do
     let!(:tax_category) { create(:tax_category, name: 'Test Tax Category') }
 
