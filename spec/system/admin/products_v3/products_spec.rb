@@ -623,6 +623,15 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
     end
 
+    describe "creating a new product" do
+      it "redirects to the New Product page" do
+        visit admin_products_url
+        expect {
+          click_link("New Product")
+        }.to change { current_path }.to(spree.new_admin_product_path)
+      end
+    end
+
     describe "adding variants" do
       it "creates a new variant" do
         click_on "New variant"
