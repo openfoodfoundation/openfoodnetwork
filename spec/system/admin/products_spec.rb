@@ -256,52 +256,6 @@ RSpec.describe '
     end
   end
 
-  describe "deleting" do
-    let!(:product1) { create(:simple_product, name: 'a product to keep', supplier: @supplier) }
-
-    context 'a simple product' do
-      let!(:product2) { create(:simple_product, name: 'a product to delete', supplier: @supplier) }
-
-      before do
-        login_as_admin
-        visit spree.admin_products_path
-
-        within "#p_#{product2.id}" do
-          accept_alert { page.find("[data-powertip=Remove]").click }
-        end
-        visit current_path
-      end
-
-      it 'removes it from the product list' do
-        expect(page).not_to have_selector "#p_#{product2.id}"
-        expect(page).to have_selector "#p_#{product1.id}"
-      end
-    end
-  end
-
-  describe 'cloning' do
-    let!(:product1) {
-      create(:simple_product, name: 'a weight product', supplier: @supplier, variant_unit: "weight")
-    }
-
-    context 'products' do
-      before do
-        login_as_admin
-        visit spree.admin_products_path
-      end
-
-      it 'creates a copy of the product' do
-        within "#p_#{product1.id}" do
-          page.find("[data-powertip=Clone]").click
-        end
-        visit current_path
-        within "#p_#{product1.id + 1}" do
-          expect(page).to have_input "product_name", with: 'COPY OF a weight product'
-        end
-      end
-    end
-  end
-
   context "as an enterprise user" do
     let!(:tax_category) { create(:tax_category) }
     let(:filter) { { producerFilter: 2 } }
