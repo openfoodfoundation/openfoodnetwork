@@ -662,9 +662,6 @@ RSpec.describe '
     context "editing a product's variant unit scale" do
       let(:product) { create(:simple_product, name: 'a product', supplier: @supplier2) }
 
-      # TODO below -> assertions commented out refer to bug:
-      # https://github.com/openfoodfoundation/openfoodnetwork/issues/7180
-
       before do
         allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
         visit spree.edit_admin_product_path product
