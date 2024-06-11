@@ -1,5 +1,5 @@
 = form_with url: bulk_update_admin_column_preferences_path, method: :put,
-    id: :bulk_admin_column_preferences_form,
+    id: :bulk_admin_column_preferences_form, class: "column-preferences",
     html: { 'data-controller': "column-preferences" } do |f|
   = hidden_field_tag :action_name, action
 

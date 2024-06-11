@@ -214,6 +214,10 @@
       display: none;
     }
 
+    .pagination-description {
+      flex-grow: 1; // Grow to fill space
+    }
+
     .with-dropdown {
       display: flex;
       justify-content: space-between;
@@ -221,7 +225,11 @@
       gap: 10px;
     }
     .per-page {
-      width: 10em;
+      width: 9em;
+    }
+
+    .column-preferences .ofn-drop-down-label {
+      width: 13em;
     }
   }
 
