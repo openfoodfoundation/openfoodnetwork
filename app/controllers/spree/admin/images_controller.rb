@@ -40,10 +40,7 @@ module Spree
 
         redirect_to location_after_save
       rescue ActiveRecord::RecordInvalid => e
-        @errors = e.record.errors.map(&:full_message)
-        respond_to do |format|
-          format.turbo_stream { render :edit }
-        end
+        respond_with_error(e)
       end
 
       def update
@@ -55,10 +52,7 @@ module Spree
 
         redirect_to location_after_save
       rescue ActiveRecord::RecordInvalid => e
-        @errors = e.record.errors.map(&:full_message)
-        respond_with do |format|
-          format.turbo_stream { render :edit }
-        end
+        respond_with_error(e)
       end
 
       def destroy
@@ -107,6 +101,14 @@ module Spree
         params.require(:image).permit(
           :attachment, :viewable_id, :alt
         )
+      end
+
+      def respond_with_error(error)
+        @errors = error.record.errors.map(&:full_message)
+        respond_to do |format|
+          format.html { respond_with(@object) }
+          format.turbo_stream { render :edit }
+        end
       end
     end
   end
