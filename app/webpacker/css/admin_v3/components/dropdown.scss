@@ -179,6 +179,23 @@
     }
   }
 
+  summary:after {
+    content: "\f077";
+    font-family: FontAwesome;
+    font-size: 13px;
+  }
+
+
+  &[open] >,
+  details[open] > {
+    summary:after {
+      content: "\f078";
+      font-family: FontAwesome;
+    }
+  }
+}
+
+.ofn-drop-down:not(.ofn-dropdown-v2) {
   > details {
     margin: -7px -15px;
     padding: 7px 15px;
@@ -188,20 +205,14 @@
     display: inline-block;
     list-style: none;
     width: auto;
-    font-size: 85%;
-    font-weight: 600;
     margin: -8px -15px;
     padding: 8px 15px;
-  }
 
-  > details > summary:after {
-    content: "\f0d7";
-    font-family: FontAwesome;
-  }
-
-  > details[open] > summary:after {
-    content: "\f0d8";
-    font-family: FontAwesome;
+    &:after {
+      position: relative;
+      bottom: 1px;
+      font-size: 12px;
+    }
   }
 }
 
