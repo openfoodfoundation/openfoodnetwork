@@ -1416,6 +1416,28 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       expect(page).to have_selector row_containing_name(product_supplied_permitted.name)
       expect(page).not_to have_selector row_containing_name(product_not_supplied.name)
     end
+
+    it "shows only suppliers that I manage or have permission to" do
+      visit spree.admin_products_path
+
+      within row_containing_name(product_supplied.name) do
+        page.has_select?(
+          '_products_0_supplier_id',
+          options: [
+            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
+          ], selected: supplier_managed1.name
+        )
+      end
+
+      within row_containing_name(product_supplied_permitted.name) do
+        page.has_select?(
+          '_products_0_supplier_id',
+          options: [
+            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
+          ], selected: supplier_managed1.name
+        )
+      end
+    end
   end
 
   def create_products(amount)
