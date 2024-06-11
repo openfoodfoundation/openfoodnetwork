@@ -35,33 +35,28 @@ module Spree
 
         @object.attributes = permitted_resource_params
 
-        if @object.save
-          flash[:success] = flash_message_for(@object, :successfully_created)
-          redirect_to location_after_save
-        else
-          respond_with(@object)
+        @object.save!
+        flash[:success] = flash_message_for(@object, :successfully_created)
+
+        redirect_to location_after_save
+      rescue ActiveRecord::RecordInvalid => e
+        @errors = e.record.errors.map(&:full_message)
+        respond_to do |format|
+          format.turbo_stream { render :edit }
         end
-      rescue ActiveStorage::IntegrityError
-        @object.errors.add :attachment, :integrity_error
-        respond_with(@object)
       end
 
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
         set_viewable
 
-        if @object.update!(permitted_resource_params)
-          flash[:success] = flash_message_for(@object, :successfully_updated)
+        @object.update!(permitted_resource_params)
+        flash[:success] = flash_message_for(@object, :successfully_updated)
 
-          respond_with do |format|
-            format.html { redirect_to location_after_save }
-            format.turbo_stream
-          end
-        end
+        redirect_to location_after_save
       rescue ActiveRecord::RecordInvalid => e
         @errors = e.record.errors.map(&:full_message)
         respond_with do |format|
-          format.html { respond_with(@object) }
           format.turbo_stream { render :edit }
         end
       end

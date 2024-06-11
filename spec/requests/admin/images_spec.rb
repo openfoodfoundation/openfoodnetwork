@@ -55,14 +55,16 @@ RSpec.describe "/admin/products/:product_id/images", type: :request do
   end
 
   describe "POST /admin/products/:product_id/images" do
-    subject { post(spree.admin_product_images_path(product), params:) }
+    subject { post(spree.admin_product_images_path(product), params:, as: :turbo_stream) }
 
     it_behaves_like "updating images"
   end
 
   describe "PATCH /admin/products/:product_id/images/:id" do
     let!(:product) { create(:product_with_image) }
-    subject { patch(spree.admin_product_image_path(product, product.image), params:) }
+    subject {
+      patch(spree.admin_product_image_path(product, product.image), params:, as: :turbo_stream)
+    }
 
     it_behaves_like "updating images"
   end
