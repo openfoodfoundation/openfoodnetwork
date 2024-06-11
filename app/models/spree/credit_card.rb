@@ -30,7 +30,7 @@ module Spree
 
     def expiry=(expiry)
       self[:month], self[:year] = expiry.split(" / ")
-      self[:year] = "20" + self[:year]
+      self[:year] = "20#{self[:year]}"
     end
 
     def number=(num)
