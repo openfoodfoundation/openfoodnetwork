@@ -111,7 +111,7 @@
     top: 100%;
     left: 0px;
     padding: 5px 0px;
-    border: 1px solid #adadad;
+    border-radius: $border-radius;
     background-color: #ffffff;
     box-shadow: 1px 3px 10px #888888;
     z-index: 100;
@@ -278,6 +278,16 @@
       & > * {
         vertical-align: middle;
       }
+    }
+  }
+
+  .actions {
+    margin-top: 5px;
+    margin-right: 15px; // Compensate for scrollbar on menu_items
+    padding: 2px 10px;
+
+    &:hover {
+      background-color: inherit;
     }
   }
 }
