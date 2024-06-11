@@ -1474,6 +1474,18 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       expect(flash_message).to eq 'Product "Big Bag Of Apples" has been successfully created!'
       expect(page).to have_selector row_containing_name('Big Bag Of Apples')
     end
+
+    it "allows me to update a product" do
+      visit spree.admin_products_path
+
+      within row_containing_name(product_supplied.name) do
+        fill_in "Name", with: "Pommes"
+      end
+      click_button "Save changes"
+
+      expect(page).to have_content "Changes saved"
+      expect(page).to have_selector row_containing_name("Pommes")
+    end
   end
 
   def create_products(amount)
