@@ -37,12 +37,25 @@ Layout/MultilineOperationIndentation:
 
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceInsideHashLiteralBraces:
+Layout/EmptyLines:
   Exclude:
-    - 'tmp/stimulus_reflex_installer/working/development.rb'
+    - 'app/services/products_renderer.rb'
+
+# Offense count: 6
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: EnforcedStyle, IndentationWidth.
+# SupportedStyles: aligned, indented, indented_relative_to_receiver
+Layout/MultilineMethodCallIndentation:
+  Exclude:
+    - 'app/services/products_renderer.rb'
+
+# Offense count: 2
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: EnforcedStyle, IndentationWidth.
+# SupportedStyles: aligned, indented
+Layout/MultilineOperationIndentation:
+  Exclude:
+    - 'app/services/products_renderer.rb'
 
 # Offense count: 16
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
