@@ -22,7 +22,7 @@ module FilePreferences
     if has_preference?("#{key}_blob_id")
       :file
     else
-      super(key)
+      super
     end
   end
 

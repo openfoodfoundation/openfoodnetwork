@@ -15,7 +15,7 @@ module Reporting
       end
 
       def selecting(lambda)
-        fields = instance_exec(&lambda).map{ |key, value| value.public_send(:as, key.to_s) }
+        fields = instance_exec(&lambda).map{ |key, value| value.as(key.to_s) }
 
         reflect query.project(*fields)
       end
