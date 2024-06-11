@@ -1438,6 +1438,14 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         )
       end
     end
+
+    it "shows inactive products that I supply" do
+      product_supplied_inactive
+
+      visit spree.admin_products_path
+
+      expect(page).to have_selector row_containing_name(product_supplied_inactive.name)
+    end
   end
 
   def create_products(amount)
