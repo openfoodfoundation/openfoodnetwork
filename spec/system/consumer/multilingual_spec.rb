@@ -104,7 +104,7 @@ RSpec.describe 'Multilingual' do
       let(:supplier) { create(:supplier_enterprise) }
       let(:distributor) { create(:distributor_enterprise, charges_sales_tax: true) }
       let(:product) {
-        create(:taxed_product, supplier:, price: 10, zone:)
+        create(:taxed_product, supplier_id: supplier.id, price: 10, zone:)
       }
       let(:variant) { product.variants.first }
       let!(:order_cycle) {
