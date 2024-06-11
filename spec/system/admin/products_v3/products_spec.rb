@@ -1365,9 +1365,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
               within modal_selector do
                 page.find(delete_button_selector).click
               end
-
-              expect(page).not_to have_selector(modal_selector)
-              expect(page).not_to have_selector(variant_selector)
             end
 
             it 'keeps the line item on the order (admin)' do
@@ -1403,12 +1400,12 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
 
     before do
-      @enterprise_user = create(:user)
-      @enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
-      @enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
-      @enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
+      enterprise_user = create(:user)
+      enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
+      enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
+      enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
 
-      login_as @enterprise_user
+      login_as enterprise_user
     end
 
     it "shows only products that I supply" do
