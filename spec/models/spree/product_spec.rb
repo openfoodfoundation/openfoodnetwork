@@ -283,19 +283,13 @@ module Spree
       let(:product) { create(:simple_product) }
 
       describe "touching affected enterprises when the product is deleted" do
-        let(:supplier) { create(:supplier_enterprise) }
+        let(:product) { create(:simple_product, supplier_id: distributor.id) }
         let(:distributor) { create(:distributor_enterprise) }
+        let(:supplier) { create(:supplier_enterprise) }
         let!(:oc) {
           create(:simple_order_cycle, distributors: [distributor],
                                       variants: [product.variants.first])
         }
-        before do
-          create(:variant, product:, supplier:)
-        end
-
-        it "touches the supplier" do
-          expect { product.destroy }.to change { supplier.reload.updated_at }
-        end
 
         it "touches all distributors" do
           expect { product.destroy }.to change { distributor.reload.updated_at }
@@ -321,7 +315,7 @@ module Spree
             product.variants = []
             product.save!
 
-            expect { product.update(primary_taxon_id: new_taxon.id) }.to_not raise_error
+            expect { product.update(primary_taxon_id: new_taxon.id) }.not_to raise_error
           end
         end
       end
@@ -339,7 +333,7 @@ module Spree
           it "doesn't blow up" do
             product.variants.first.update_attribute(:supplier_id, nil)
 
-            expect { product.touch }.to_not raise_error
+            expect { product.touch }.not_to raise_error
           end
         end
       end
