@@ -180,8 +180,10 @@
   }
 
   summary:after {
-    content: "\f077";
+    content: "\f078";
     font-family: FontAwesome;
+    position: relative;
+    top: 3px;
     font-size: 13px;
   }
 
@@ -189,7 +191,7 @@
   &[open] >,
   details[open] > {
     summary:after {
-      content: "\f078";
+      content: "\f077";
       font-family: FontAwesome;
     }
   }
@@ -210,7 +212,7 @@
 
     &:after {
       position: relative;
-      bottom: 1px;
+      top: -1px;
       font-size: 12px;
     }
   }
@@ -221,8 +223,10 @@
   background-color: $lighter-grey;
   padding: 0px;
   line-height: normal;
+  @include border-radius($border-radius);
 
-  &:hover {
+  &:hover,
+  &.expanded {
     border-color: $lighter-grey;
   }
 
@@ -289,14 +293,5 @@
     &:hover {
       background-color: inherit;
     }
-  }
-}
-
-.ofn-drop-down.ofn-drop-down-v2 {
-  // Add very specific styling here for components that are in transition:
-  // ie. the ones using the two classes above
-  .ofn-drop-down-label {
-    padding-top: 7px;
-    padding-bottom: 7px;
   }
 }
