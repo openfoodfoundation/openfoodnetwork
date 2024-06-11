@@ -256,6 +256,81 @@ RSpec.describe '
     end
   end
 
+  describe "deleting" do
+    let!(:product1) { create(:simple_product, name: 'a product to keep', supplier: @supplier) }
+
+    context 'a simple product' do
+      let!(:product2) { create(:simple_product, name: 'a product to delete', supplier: @supplier) }
+
+      before do
+        login_as_admin
+        visit spree.admin_products_path
+
+        within "#p_#{product2.id}" do
+          accept_alert { page.find("[data-powertip=Remove]").click }
+        end
+        visit current_path
+      end
+
+      it 'removes it from the product list' do
+        expect(page).not_to have_selector "#p_#{product2.id}"
+        expect(page).to have_selector "#p_#{product1.id}"
+      end
+    end
+
+    context 'a shipped product' do
+      let!(:order) { create(:shipped_order, line_items_count: 1) }
+      let!(:line_item) { order.reload.line_items.first }
+
+      context "a deleted line item from a shipped order" do
+        before do
+          login_as_admin
+          visit spree.admin_products_path
+
+          within "#p_#{order.variants.first.product_id}" do
+            accept_alert { page.find("[data-powertip=Remove]").click }
+          end
+        end
+
+        it 'removes it from the product list' do
+          visit spree.admin_products_path
+
+          expect(page).to have_selector "#p_#{product1.id}"
+          expect(page).not_to have_selector "#p_#{order.variants.first.product_id}"
+        end
+
+        it 'keeps the line item on the order (admin)' do
+          visit spree.edit_admin_order_path(order)
+
+          expect(page).to have_content(line_item.product.name.to_s)
+        end
+      end
+    end
+  end
+
+  describe 'cloning' do
+    let!(:product1) {
+      create(:simple_product, name: 'a weight product', supplier: @supplier, variant_unit: "weight")
+    }
+
+    context 'products' do
+      before do
+        login_as_admin
+        visit spree.admin_products_path
+      end
+
+      it 'creates a copy of the product' do
+        within "#p_#{product1.id}" do
+          page.find("[data-powertip=Clone]").click
+        end
+        visit current_path
+        within "#p_#{product1.id + 1}" do
+          expect(page).to have_input "product_name", with: 'COPY OF a weight product'
+        end
+      end
+    end
+  end
+
   context "as an enterprise user" do
     let!(:tax_category) { create(:tax_category) }
     let(:filter) { { producerFilter: 2 } }
