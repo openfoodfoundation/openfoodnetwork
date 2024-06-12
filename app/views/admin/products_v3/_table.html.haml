@@ -13,7 +13,7 @@
   = hidden_field_tag :producer_id, @producer_id
   = hidden_field_tag :category_id, @category_id
 
-  %table.products
+  %table.products{ 'data-column-preferences-target': "table" }
     %colgroup
       %col{ width:"56", 'data-column-preferences-name': :image }= # (size + padding)
       %col{ 'data-column-preferences-name': :name }= # (grow to fill)
