@@ -67,9 +67,9 @@ module Admin
                                                                  order_cycle).visible_enterprises
 
         EnterpriseFee.for_enterprises(enterprises)
-                     .order('enterprise_id', 'fee_type', 'name')
-                     .yield_self { |fees| params[:per_item] ? fees.per_item : fees }
-                     .yield_self { |fees| params[:per_order] ? fees.per_order : fees }
+          .order('enterprise_id', 'fee_type', 'name')
+          .then { |fees| params[:per_item] ? fees.per_item : fees }
+          .then { |fees| params[:per_order] ? fees.per_order : fees }
       else
         collection = EnterpriseFee.managed_by(spree_current_user).order('enterprise_id',
                                                                         'fee_type', 'name')
