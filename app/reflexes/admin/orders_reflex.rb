@@ -33,19 +33,9 @@ module Admin
     end
 
     def bulk_invoice(params)
-      visible_orders = editable_orders.invoiceable.where(id: params[:bulk_ids])
+      visible_orders = bulk_load_orders(params)
 
-      if Spree::Config.enterprise_number_required_on_invoices?
-        distributors_without_abn = Enterprise.where(
-          id: visible_orders.select(:distributor_id),
-          abn: nil,
-        )
-
-        if distributors_without_abn.exists?
-          render_business_number_required_error(distributors_without_abn)
-          return
-        end
-      end
+      return if notify_if_abn_related_issue(visible_orders)
 
       cable_ready.append(
         selector: "#orders-index",
@@ -94,15 +84,15 @@ module Admin
     end
 
     def send_invoices(params)
-      count = 0
-      editable_orders.invoiceable.where(id: params[:bulk_ids]).find_each do |o|
-        next unless o.distributor.can_invoice?
+      orders = bulk_load_orders(params)
 
+      return if notify_if_abn_related_issue(orders)
+
+      orders.each do |o|
         Spree::OrderMailer.invoice_email(o.id, current_user_id: current_user.id).deliver_later
-        count += 1
       end
 
-      success("admin.send_invoice_feedback", count)
+      success("admin.send_invoice_feedback", orders.size)
     end
 
     private
@@ -133,6 +123,31 @@ module Admin
       flash[:error] = I18n.t(:must_have_valid_business_number,
                              enterprise_name: distributor_names.join(", "))
       morph_admin_flashes
+    end
+
+    def bulk_load_orders(params)
+      editable_orders.invoiceable.where(id: params[:bulk_ids])
+    end
+
+    def notify_if_abn_related_issue(orders)
+      return false unless abn_required?
+
+      distributors = distributors_without_abn(orders)
+      return false if distributors.empty?
+
+      render_business_number_required_error(distributors)
+      true
+    end
+
+    def abn_required?
+      Spree::Config.enterprise_number_required_on_invoices?
+    end
+
+    def distributors_without_abn(orders)
+      Enterprise.where(
+        id: orders.select(:distributor_id),
+        abn: [nil, ""],
+      )
     end
   end
 end
