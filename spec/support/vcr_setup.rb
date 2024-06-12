@@ -40,4 +40,9 @@ VCR.configure do |config|
   config.filter_sensitive_data('<HIDDEN-OPENID-TOKEN>') { |interaction|
     interaction.response.body.match(/"refresh_token":"([^"]+)"/)&.public_send(:[], 1)
   }
+
+  # FDC specific parameter:
+  config.filter_sensitive_data('<HIDDEN-OPENID-TOKEN>') { |interaction|
+    interaction.request.body.match(/"accessToken":"([^"]+)"/)&.public_send(:[], 1)
+  }
 end
