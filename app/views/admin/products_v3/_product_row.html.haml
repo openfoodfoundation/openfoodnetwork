@@ -26,12 +26,14 @@
 %td.align-right
   -# empty
 %td.naked_inputs
-  = render(SearchableDropdownComponent.new(form: f,
-      name: :supplier_id,
-      aria_label: t('.producer_field_name'),
-      options: producer_options,
-      selected_option: product.supplier_id,
-      placeholder_value: t('admin.products_v3.filters.search_for_producers')))
+  = f.select :supplier_id,
+    options_for_select([producer_options.find{ |option| option[1] == product.supplier_id }], product.supplier_id),
+    {},
+    class: "fullwidth no-input",
+    'aria-label': t('.producer_field_name'),
+    data: { "controller": "producers-select",
+      "producers-select-placeholder-value": t('admin.products_v3.filters.search_for_producers'),
+      "producers-select-template-id-value": "producer_options" }
 %td.align-left
   -# empty
 %td.align-left

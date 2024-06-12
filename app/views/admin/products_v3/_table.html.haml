@@ -67,6 +67,7 @@
                                 controller: "nested-form product",
                                 action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:remove->bulk-form#toggleFormChanged' } }
           %tr
+            = render partial: 'producer_options_template', locals: { product:, producer_options: }
             = render partial: 'product_row', locals: { f: product_form, product:, producer_options: }
 
           - product.variants.each_with_index do |variant, variant_index|
