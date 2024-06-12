@@ -49,7 +49,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       within ofn_drop_down("Columns") do
         uncheck "Name"
       end
-      # expect(page).not_to have_selector "th", text: "Name" # column is not visible, but capybara doesn't understand yet.
+      expect(page).not_to have_selector "th", text: "Name"
       expect_other_columns_visible
 
       # Preference saved
@@ -62,7 +62,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       within ofn_drop_down("Columns") do
         expect(page).to have_unchecked_field "Name"
       end
-      # expect(page).not_to have_selector "th", text: "Name"
+      expect(page).not_to have_selector "th", text: "Name"
       expect_other_columns_visible
     end
 
