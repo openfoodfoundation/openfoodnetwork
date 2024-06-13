@@ -140,18 +140,6 @@ module Spree
         distinct
     }
 
-    # Products supplied by a given enterprise or distributed via that enterprise through an OC
-    scope :in_supplier_or_distributor, lambda { |enterprise|
-      enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
-
-      with_order_cycles_outer.
-        in_supplier(enterprise).
-        or(
-          where(o_exchanges: { incoming: false, receiver_id: enterprise })
-        ).
-        select('distinct spree_products.*')
-    }
-
     # Products distributed by the given order cycle
     scope :in_order_cycle, lambda { |order_cycle|
       with_order_cycles_inner.
