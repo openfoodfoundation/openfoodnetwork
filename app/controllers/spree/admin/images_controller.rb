@@ -38,7 +38,10 @@ module Spree
         @object.save!
         flash[:success] = flash_message_for(@object, :successfully_created)
 
-        redirect_to location_after_save
+        respond_to do |format|
+          format.html { redirect_to location_after_save }
+          format.turbo_stream { render :update }
+        end
       rescue ActiveRecord::RecordInvalid => e
         respond_with_error(e)
       end
@@ -50,7 +53,10 @@ module Spree
         @object.update!(permitted_resource_params)
         flash[:success] = flash_message_for(@object, :successfully_updated)
 
-        redirect_to location_after_save
+        respond_to do |format|
+          format.html { redirect_to location_after_save }
+          format.turbo_stream
+        end
       rescue ActiveRecord::RecordInvalid => e
         respond_with_error(e)
       end

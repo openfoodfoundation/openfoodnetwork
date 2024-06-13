@@ -11,7 +11,7 @@ RSpec.describe "/admin/products/:product_id/images", type: :request do
     login_as_admin
   end
 
-  shared_examples "updating images" do
+  shared_examples "updating images" do |expected_http_status_code|
     let(:params) do
       {
         image: {
@@ -21,14 +21,16 @@ RSpec.describe "/admin/products/:product_id/images", type: :request do
       }
     end
 
-    it "creates a new image and redirects" do
+    it "creates a new image and redirects unless called by turbo" do
       expect {
         subject
         product.reload
       }.to change{ product.image&.attachment&.filename.to_s }
 
-      expect(response.status).to eq 302
-      expect(response.location).to end_with spree.admin_product_images_path(product)
+      expect(response.status).to eq expected_http_status_code
+      if expected_http_status_code == 302
+        expect(response.location).to end_with spree.admin_product_images_path(product)
+      end
 
       expect(product.image.url(:product)).to end_with "logo.png"
     end
@@ -57,12 +59,13 @@ RSpec.describe "/admin/products/:product_id/images", type: :request do
   describe "POST /admin/products/:product_id/images" do
     subject { post(spree.admin_product_images_path(product), params:) }
 
-    it_behaves_like "updating images"
+    it_behaves_like "updating images", 302
   end
+
   describe "POST /admin/products/:product_id/images with turbo" do
     subject { post(spree.admin_product_images_path(product), params:, as: :turbo_stream) }
 
-    it_behaves_like "updating images"
+    it_behaves_like "updating images", 200
   end
 
   describe "PATCH /admin/products/:product_id/images/:id" do
@@ -71,7 +74,7 @@ RSpec.describe "/admin/products/:product_id/images", type: :request do
       patch(spree.admin_product_image_path(product, product.image), params:)
     }
 
-    it_behaves_like "updating images"
+    it_behaves_like "updating images", 302
   end
 
   describe "PATCH /admin/products/:product_id/images/:id with turbo" do
@@ -80,6 +83,6 @@ RSpec.describe "/admin/products/:product_id/images", type: :request do
       patch(spree.admin_product_image_path(product, product.image), params:, as: :turbo_stream)
     }
 
-    it_behaves_like "updating images"
+    it_behaves_like "updating images", 200
   end
 end
