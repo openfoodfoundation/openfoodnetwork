@@ -15,7 +15,8 @@
 
   %table.products{ 'data-column-preferences-target': "table" }
     %colgroup
-      %col{ 'data-column-preferences-name': :image,      width:"1%", style:"min-width: 56px" }= # (size + padding)
+      -# The `min-width` property works in Chrome but not Firefox.
+      %col{ 'data-column-preferences-name': :image,      width:"56px" }= # (image size + padding)
       %col{ 'data-column-preferences-name': :name,       width:"15%", style:"min-width: 6em" }= #  (grow to fill)
       %col{ 'data-column-preferences-name': :sku,        width:"10%", style:"min-width: 6em" }
       %col{ 'data-column-preferences-name': :unit_scale, width:"8%" }
