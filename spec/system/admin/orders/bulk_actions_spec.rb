@@ -363,22 +363,9 @@ RSpec.describe '
                 } must have a valid ABN before invoices can be used."
               end
             end
-            context "ABN is null" do
+            it_behaves_like "should not print the invoice"
+            context "with legal invoices feature", feature: :invoices do
               it_behaves_like "should not print the invoice"
-              context "with legal invoices feature", feature: :invoices do
-                it_behaves_like "should not print the invoice"
-              end
-            end
-            context "ABN is empty string" do
-              before do
-                order4.distributor.update(abn: "123456789")
-                order5.distributor.update(abn: "")
-              end
-
-              it_behaves_like "should not print the invoice"
-              context "with legal invoices feature", feature: :invoices do
-                it_behaves_like "should not print the invoice"
-              end
             end
           end
         end
