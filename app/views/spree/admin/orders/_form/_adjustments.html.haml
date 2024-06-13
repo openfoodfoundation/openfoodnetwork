@@ -6,7 +6,7 @@
         %tr
           %th= Spree.t('name')
           %th= Spree.t('amount')
-      %tbody.with-border
+      %tbody.with-border#order_adjustments
         - adjustments.each do |adjustment|
           %tr.total
             %td.strong= adjustment.label + ":"
