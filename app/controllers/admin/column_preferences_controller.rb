@@ -17,17 +17,13 @@ module Admin
             render :bulk_update, locals: { action: permitted_params[:action_name] }
           }
         end
-      elsif @cp_set.errors.present?
+      else
         respond_to do |format|
           format.json { render json: { errors: @cp_set.errors }, status: :bad_request }
           format.turbo_stream {
             flash.now[:error] = @cp_set.errors.full_messages.to_sentence
             render :bulk_update, locals: { action: permitted_params[:action_name] }
           }
-        end
-      else
-        respond_to do |format|
-          format.all { render body: nil, status: :internal_server_error }
         end
       end
     end
