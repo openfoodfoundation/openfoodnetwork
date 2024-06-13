@@ -7,8 +7,8 @@ module Admin
     def bulk_update
       @cp_set.collection.each { |cp| authorize! :bulk_update, cp }
 
-      if @cp_set.save
-        respond_to do |format|
+      respond_to do |format|
+        if @cp_set.save
           format.json {
             render json: @cp_set.collection, each_serializer: Api::Admin::ColumnPreferenceSerializer
           }
@@ -16,9 +16,7 @@ module Admin
             flash.now[:success] = t('.success')
             render :bulk_update, locals: { action: permitted_params[:action_name] }
           }
-        end
-      else
-        respond_to do |format|
+        else
           format.json { render json: { errors: @cp_set.errors }, status: :bad_request }
           format.turbo_stream {
             flash.now[:error] = @cp_set.errors.full_messages.to_sentence
