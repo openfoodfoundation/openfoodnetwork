@@ -1419,9 +1419,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
     it "shows only suppliers that I manage or have permission to" do
       visit spree.admin_products_path
-
       within row_containing_name(product_supplied.name) do
-        page.has_select?(
+        expect(page).to have_select(
           '_products_0_supplier_id',
           options: [
             supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
@@ -1430,11 +1429,11 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
 
       within row_containing_name(product_supplied_permitted.name) do
-        page.has_select?(
-          '_products_0_supplier_id',
+        expect(page).to have_select(
+          '_products_1_supplier_id',
           options: [
             supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
-          ], selected: supplier_managed1.name
+          ], selected: supplier_permitted.name
         )
       end
     end
