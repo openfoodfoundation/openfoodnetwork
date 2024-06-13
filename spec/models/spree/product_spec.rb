@@ -471,43 +471,6 @@ module Spree
         end
       end
 
-      describe "in_supplier_or_distributor" do
-        it "shows products in supplier" do
-          s1 = create(:supplier_enterprise)
-          p1 = create(:product, supplier_id: s1.id)
-          create(:variant, product: p1, supplier: s1)
-          s2 = create(:supplier_enterprise)
-          p2 = create(:product, supplier_id: s2.id)
-          create(:variant, product: p2, supplier: s2)
-
-          expect(Product.in_supplier_or_distributor(s1)).to eq([p1])
-        end
-
-        it "shows products in order cycle distribution" do
-          s = create(:supplier_enterprise)
-          d1 = create(:distributor_enterprise)
-          d2 = create(:distributor_enterprise)
-          p1 = create(:product)
-          p2 = create(:product)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d1],
-                                      variants: [p1.variants.first])
-          create(:simple_order_cycle, suppliers: [s], distributors: [d2],
-                                      variants: [p2.variants.first])
-          expect(Product.in_supplier_or_distributor(d1)).to eq([p1])
-        end
-
-        it "shows products in all three without duplicates" do
-          s = create(:supplier_enterprise)
-          d = create(:distributor_enterprise)
-          p = create(:product)
-          create(:variant, product: p, supplier: s)
-
-          create(:simple_order_cycle, suppliers: [s], distributors: [d],
-                                      variants: [p.variants.first])
-          [s, d].each { |e| expect(Product.in_supplier_or_distributor(e)).to eq([p]) }
-        end
-      end
-
       describe "in_order_cycle" do
         it "shows products in order cycle distribution" do
           s = create(:supplier_enterprise)
