@@ -35,30 +35,32 @@ module Spree
 
         @object.attributes = permitted_resource_params
 
-        @object.save!
-        flash[:success] = flash_message_for(@object, :successfully_created)
+        if @object.save
+          flash[:success] = flash_message_for(@object, :successfully_created)
 
-        respond_to do |format|
-          format.html { redirect_to location_after_save }
-          format.turbo_stream { render :update }
+          respond_to do |format|
+            format.html { redirect_to location_after_save }
+            format.turbo_stream { render :update }
+          end
+        else
+          respond_with_error(@object.errors)
         end
-      rescue ActiveRecord::RecordInvalid => e
-        respond_with_error(e)
       end
 
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
         set_viewable
 
-        @object.update!(permitted_resource_params)
-        flash[:success] = flash_message_for(@object, :successfully_updated)
+        if @object.update(permitted_resource_params)
+          flash[:success] = flash_message_for(@object, :successfully_updated)
 
-        respond_to do |format|
-          format.html { redirect_to location_after_save }
-          format.turbo_stream
+          respond_to do |format|
+            format.html { redirect_to location_after_save }
+            format.turbo_stream
+          end
+        else
+          respond_with_error(@object.errors)
         end
-      rescue ActiveRecord::RecordInvalid => e
-        respond_with_error(e)
       end
 
       def destroy
@@ -109,8 +111,8 @@ module Spree
         )
       end
 
-      def respond_with_error(error)
-        @errors = error.record.errors.map(&:full_message)
+      def respond_with_error(errors)
+        @errors = errors.map(&:full_message)
         respond_to do |format|
           format.html { respond_with(@object) }
           format.turbo_stream { render :edit }
