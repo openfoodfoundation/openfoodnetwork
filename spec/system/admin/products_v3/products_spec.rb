@@ -623,6 +623,15 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
     end
 
+    describe "creating a new product" do
+      it "redirects to the New Product page" do
+        visit admin_products_url
+        expect {
+          click_link("New Product")
+        }.to change { current_path }.to(spree.new_admin_product_path)
+      end
+    end
+
     describe "adding variants" do
       it "creates a new variant" do
         click_on "New variant"
@@ -1336,7 +1345,117 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             end
           end
         end
+
+        context 'a shipped product' do
+          let!(:order) { create(:shipped_order, line_items_count: 1) }
+          let!(:line_item) { order.reload.line_items.first }
+
+          context "a deleted line item from a shipped order" do
+            before do
+              login_as_admin
+              visit admin_products_url
+
+              # Delete Variant
+              within variant_selector do
+                page.find(".vertical-ellipsis-menu").click
+                page.find(delete_option_selector).click
+              end
+
+              delete_button_selector = "input[type=button][value='Delete variant']"
+              within modal_selector do
+                page.find(delete_button_selector).click
+              end
+            end
+
+            it 'keeps the line item on the order (admin)' do
+              visit spree.edit_admin_order_path(order)
+
+              expect(page).to have_content(line_item.product.name.to_s)
+            end
+          end
+        end
       end
+    end
+  end
+
+  context "as an enterprise manager" do
+    let(:supplier_managed1) { create(:supplier_enterprise, name: 'Supplier Managed 1') }
+    let(:supplier_managed2) { create(:supplier_enterprise, name: 'Supplier Managed 2') }
+    let(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Supplier Unmanaged') }
+    let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
+    let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
+    let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
+    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0) }
+    let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
+    let!(:product_supplied_permitted) {
+      create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0)
+    }
+    let(:product_supplied_inactive) {
+      create(:product, supplier: supplier_managed1, price: 10.0)
+    }
+
+    let!(:supplier_permitted_relationship) do
+      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed1,
+                                       permissions_list: [:manage_products])
+    end
+
+    before do
+      enterprise_user = create(:user)
+      enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
+      enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
+      enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
+
+      login_as enterprise_user
+    end
+
+    it "shows only products that I supply" do
+      visit spree.admin_products_path
+
+      # displays permitted product list only
+      expect(page).to have_selector row_containing_name(product_supplied.name)
+      expect(page).to have_selector row_containing_name(product_supplied_permitted.name)
+      expect(page).not_to have_selector row_containing_name(product_not_supplied.name)
+    end
+
+    it "shows only suppliers that I manage or have permission to" do
+      visit spree.admin_products_path
+      within row_containing_name(product_supplied.name) do
+        expect(page).to have_select(
+          '_products_0_supplier_id',
+          options: [
+            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
+          ], selected: supplier_managed1.name
+        )
+      end
+
+      within row_containing_name(product_supplied_permitted.name) do
+        expect(page).to have_select(
+          '_products_1_supplier_id',
+          options: [
+            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
+          ], selected: supplier_permitted.name
+        )
+      end
+    end
+
+    it "shows inactive products that I supply" do
+      product_supplied_inactive
+
+      visit spree.admin_products_path
+
+      expect(page).to have_selector row_containing_name(product_supplied_inactive.name)
+    end
+
+    it "allows me to update a product" do
+      visit spree.admin_products_path
+
+      within row_containing_name(product_supplied.name) do
+        fill_in "Name", with: "Pommes"
+      end
+      click_button "Save changes"
+
+      expect(page).to have_content "Changes saved"
+      expect(page).to have_selector row_containing_name("Pommes")
     end
   end
 
