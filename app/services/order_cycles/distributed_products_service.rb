@@ -4,50 +4,19 @@
 # The stock-checking includes on_demand and stock level overrides from variant_overrides.
 
 module OrderCycles
-  class DistributedProductsService
+  class DistributedProductsService # rubocop:disable Metrics/ClassLength
     def initialize(distributor, order_cycle, customer)
       @distributor = distributor
       @order_cycle = order_cycle
       @customer = customer
     end
 
-    # TODO refactor products_taxons_relation and products_supplier_relation
-    # Joins on the first product variant to allow us to filter product by taxon.  # This is so
-    # enterprise can display product sorted by category in a custom order on their shopfront.
-    #
-    # Caveat, the category sorting won't work properly if there are multiple variant with different
-    # category for a given product.
-    #
-    def products_taxons_relation
-      Spree::Product.where(id: stocked_products).
-        joins("LEFT JOIN (
-                 SELECT DISTINCT ON(product_id) id, product_id, primary_taxon_id
-                 FROM spree_variants WHERE deleted_at IS NULL
-               ) first_variant ON spree_products.id = first_variant.product_id").
-        select("spree_products.*, first_variant.primary_taxon_id").
-        group("spree_products.id, first_variant.primary_taxon_id")
-    end
+    def products_relation(supplier_properties: nil)
+      @query = relation_by_sorting(supplier_properties)
 
-    # Joins on the first product variant to allow us to filter product by supplier. This is so
-    # enterprise can display product sorted by supplier in a custom order on their shopfront.
-    #
-    # Caveat, the supplier sorting won't work properly if there are multiple variant with different
-    # supplier for a given product.
-    #
-    def products_supplier_relation
-      Spree::Product.where(id: stocked_products).
-        joins("LEFT JOIN (SELECT DISTINCT ON(product_id) id, product_id, supplier_id
-                          FROM spree_variants WHERE deleted_at IS NULL) first_variant
-                          ON spree_products.id = first_variant.product_id").
-        select("spree_products.*, first_variant.supplier_id").
-        group("spree_products.id, first_variant.supplier_id")
-    end
+      supplier_property_join if supplier_properties.present?
 
-    def supplier_property_join(query)
-      query.joins("
-        JOIN enterprises ON enterprises.id = first_variant.supplier_id
-        LEFT OUTER JOIN producer_properties ON producer_properties.producer_id = enterprises.id
-      ")
+      @query.order(Arel.sql(order))
     end
 
     def variants_relation
@@ -60,6 +29,72 @@ module OrderCycles
     private
 
     attr_reader :distributor, :order_cycle, :customer
+
+    def relation_by_sorting(supplier_properties)
+      query = Spree::Product.where(id: stocked_products)
+
+      if sorting == "by_producer" || supplier_properties.present?
+        # Joins on the first product variant to allow us to filter product by supplier. This is so
+        # enterprise can display product sorted by supplier in a custom order on their shopfront.
+        #
+        # Caveat, the supplier sorting won't work properly if there are multiple variant with
+        # different supplier for a given product.
+        query.
+          joins("LEFT JOIN (SELECT DISTINCT ON(product_id) id, product_id, supplier_id
+                            FROM spree_variants WHERE deleted_at IS NULL) first_variant
+                            ON spree_products.id = first_variant.product_id").
+          select("spree_products.*, first_variant.supplier_id").
+          group("spree_products.id, first_variant.supplier_id")
+      elsif sorting == "by_category"
+        # Joins on the first product variant to allow us to filter product by taxon.  # This is so
+        # enterprise can display product sorted by category in a custom order on their shopfront.
+        #
+        # Caveat, the category sorting won't work properly if there are multiple variant with
+        # different category for a given product.
+        query.
+          joins("LEFT JOIN (
+                   SELECT DISTINCT ON(product_id) id, product_id, primary_taxon_id
+                   FROM spree_variants WHERE deleted_at IS NULL
+                 ) first_variant ON spree_products.id = first_variant.product_id").
+          select("spree_products.*, first_variant.primary_taxon_id").
+          group("spree_products.id, first_variant.primary_taxon_id")
+      else
+        query.group("spree_products.id")
+      end
+    end
+
+    def sorting
+      distributor.preferred_shopfront_product_sorting_method
+    end
+
+    def supplier_property_join
+      @query = @query.joins("
+        JOIN enterprises ON enterprises.id = first_variant.supplier_id
+        LEFT OUTER JOIN producer_properties ON producer_properties.producer_id = enterprises.id
+      ")
+    end
+
+    def order
+      if distributor.preferred_shopfront_product_sorting_method == "by_producer" &&
+         distributor.preferred_shopfront_producer_order.present?
+        order_by_producer = distributor
+          .preferred_shopfront_producer_order
+          .split(",").map { |id| "first_variant.supplier_id=#{id} DESC" }
+          .join(", ")
+
+        "#{order_by_producer}, spree_products.name ASC, spree_products.id ASC"
+      elsif distributor.preferred_shopfront_product_sorting_method == "by_category" &&
+            distributor.preferred_shopfront_taxon_order.present?
+        order_by_category = distributor
+          .preferred_shopfront_taxon_order
+          .split(",").map { |id| "first_variant.primary_taxon_id=#{id} DESC" }
+          .join(", ")
+
+        "#{order_by_category}, spree_products.name ASC, spree_products.id ASC"
+      else
+        "spree_products.name ASC, spree_products.id"
+      end
+    end
 
     def stocked_products
       order_cycle.
