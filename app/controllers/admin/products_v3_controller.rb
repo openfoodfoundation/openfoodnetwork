@@ -70,20 +70,20 @@ module Admin
 
     def clone
       @product = Spree::Product.find(params[:id])
-      @cloned_product = @product.duplicate
       @product_index = params[:product_index].to_i + 1
-
       status = :ok
-      if @cloned_product.save
+
+      begin
+        @cloned_product = @product.duplicate
         flash.now[:success] = t('.success')
-      else
+
+        @producer_options = producers
+        @category_options = categories
+        @tax_category_options = tax_category_options
+      rescue StandardError => _e
         flash.now[:error] = t('.error')
         status = :internal_server_error
       end
-
-      @producer_options = producers
-      @category_options = categories
-      @tax_category_options = tax_category_options
 
       respond_with do |format|
         format.turbo_stream { render :clone, status: }
