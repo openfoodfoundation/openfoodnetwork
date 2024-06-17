@@ -48,7 +48,8 @@ RSpec.describe "
 
     context "when inventory_items exist for variants" do
       let!(:product) {
-        create(:simple_product, supplier_id: producer.id, variant_unit: 'weight', variant_unit_scale: 1)
+        create(:simple_product, supplier_id: producer.id, variant_unit: 'weight',
+                                variant_unit_scale: 1)
       }
       let!(:variant) { create(:variant, product:, unit_value: 1, price: 1.23, on_hand: 12) }
       let!(:inventory_item) { create(:inventory_item, enterprise: hub, variant: ) }
@@ -58,7 +59,8 @@ RSpec.describe "
                                 variant_unit_scale: 1)
       }
       let!(:variant_managed) {
-        create(:variant, product: product_managed, supplier: producer_managed, unit_value: 3, price: 3.65, on_hand: 2)
+        create(:variant, product: product_managed, supplier: producer_managed, unit_value: 3,
+                         price: 3.65, on_hand: 2)
       }
       let!(:inventory_item_managed) {
         create(:inventory_item, enterprise: hub, variant: variant_managed )
@@ -66,7 +68,8 @@ RSpec.describe "
 
       let!(:product_related) { create(:simple_product, supplier_id: producer_related.id) }
       let!(:variant_related) {
-        create(:variant, product: product_related, supplier: producer_related, unit_value: 2, price: 2.34, on_hand: 23)
+        create(:variant, product: product_related, supplier: producer_related, unit_value: 2,
+                         price: 2.34, on_hand: 23)
       }
       let!(:inventory_item_related) {
         create(:inventory_item, enterprise: hub, variant: variant_related )
@@ -476,7 +479,8 @@ RSpec.describe "
 
     describe "when inventory_items do not exist for variants" do
       let!(:product) {
-        create(:simple_product, supplier_id: producer.id, variant_unit: 'weight', variant_unit_scale: 1)
+        create(:simple_product, supplier_id: producer.id, variant_unit: 'weight',
+                                variant_unit_scale: 1)
       }
       let!(:variant1) {
         create(:variant, product:, unit_value: 1, price: 1.23, on_hand: 12)

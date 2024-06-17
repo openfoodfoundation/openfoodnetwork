@@ -45,7 +45,7 @@ class Enterprise < ApplicationRecord
   has_many :distributed_orders, class_name: 'Spree::Order',
                                 foreign_key: 'distributor_id',
                                 dependent: :restrict_with_exception
-  
+
   belongs_to :address, class_name: 'Spree::Address'
   belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy
   has_many :enterprise_fees, dependent: :restrict_with_exception
