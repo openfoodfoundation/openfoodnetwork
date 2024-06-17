@@ -78,6 +78,7 @@ Openfoodnetwork::Application.routes.draw do
       # we already have DELETE admin/products/:id here
       delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
       delete 'products_v3/destroy_variant/:id', to: 'products_v3#destroy_variant', as: 'destroy_variant'
+      post 'clone/:id', to: 'products_v3#clone', as: 'clone_product'
     end
 
     resources :variant_overrides do
