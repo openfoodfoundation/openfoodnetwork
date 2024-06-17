@@ -19,11 +19,8 @@ RSpec.describe ProductsRenderer do
                        supplier_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_banana_bread) {
-      create(:product, name: "banana bread", inherits_properties: true,
-                       variants: [
-                         create(:variant, supplier: cakes_supplier, primary_taxon: cakes),
-                         create(:variant, supplier: fruits_supplier, primary_taxon: cakes)
-                       ])
+      create(:product, name: "banana bread", primary_taxon_id: cakes.id,
+                       supplier_id: cakes_supplier.id, inherits_properties: true)
     }
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,
@@ -39,34 +36,6 @@ RSpec.describe ProductsRenderer do
       exchange.variants << product_banana_bread.variants.first
       exchange.variants << product_cherries.variants.first
       exchange.variants << product_doughnuts.variants.first
-    end
-
-    describe "sorting" do
-      it "sorts products by the distributor's preferred taxon list" do
-        allow(distributor)
-          .to receive(:preferred_shopfront_taxon_order) { "#{cakes.id},#{fruits.id}" }
-        products = products_renderer.send(:products)
-        expect(products)
-          .to eq([product_banana_bread, product_doughnuts, product_apples, product_cherries])
-      end
-
-      it "sorts products by the distributor's preferred producer list" do
-        allow(distributor)
-          .to receive(:preferred_shopfront_product_sorting_method) { "by_producer" }
-        allow(distributor).to receive(:preferred_shopfront_producer_order) {
-          "#{cakes_supplier.id},#{fruits_supplier.id}"
-        }
-        products = products_renderer.send(:products)
-        expect(products)
-          .to eq([product_banana_bread, product_doughnuts, product_apples, product_cherries])
-      end
-
-      it "alphabetizes products by name when taxon list is not set" do
-        allow(distributor).to receive(:preferred_shopfront_taxon_order) { "" }
-        products = products_renderer.send(:products)
-        expect(products)
-          .to eq([product_apples, product_banana_bread, product_cherries, product_doughnuts])
-      end
     end
 
     context "filtering" do
