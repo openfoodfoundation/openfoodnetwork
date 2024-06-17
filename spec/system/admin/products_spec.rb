@@ -670,7 +670,7 @@ RSpec.describe '
 
       it "checks error when creating product image with unsupported format" do
         unsupported_image_file_path = Rails.root.join("README.md").to_s
-        product = create(:simple_product, supplier_id: @supplier2.id)
+        product = create(:simple_product, supplier_id: supplier2.id)
 
         image = white_logo_file
         Spree::Image.create(viewable_id: product.id, viewable_type: 'Spree::Product',
