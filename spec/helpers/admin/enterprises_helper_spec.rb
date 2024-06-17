@@ -23,7 +23,7 @@ RSpec.describe Admin::EnterprisesHelper, type: :helper do
       expect(visible_items.pluck(:name)).to eq %w[
         primary_details address contact social about business_details images
         vouchers enterprise_permissions inventory_settings tag_rules
-        shop_preferences users white_label
+        shop_preferences white_label users
       ]
     end
 
