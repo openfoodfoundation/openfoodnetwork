@@ -15,19 +15,19 @@
 
   %table.products{ 'data-column-preferences-target': "table" }
     %colgroup
-      -# The `min-width` property works in Chrome but not Firefox.
+      -# The `min-width` property works in Chrome but not Firefox so is considered progressive enhancement.
       %col{ 'data-column-preferences-name': :image,      width:"56px" }= # (image size + padding)
-      %col{ 'data-column-preferences-name': :name,       width:"15%", style:"min-width: 6em" }= #  (grow to fill)
-      %col{ 'data-column-preferences-name': :sku,        width:"10%", style:"min-width: 6em" }
+      %col{ 'data-column-preferences-name': :name,       style:"min-width: 6em" }= # (grow to fill)
+      %col{ 'data-column-preferences-name': :sku,        width:"8%", style:"min-width: 6em" }
       %col{ 'data-column-preferences-name': :unit_scale, width:"8%" }
       %col{ 'data-column-preferences-name': :unit,       width:"8%" }
       %col{ 'data-column-preferences-name': :price,      width:"5%", style:"min-width: 5em" }
       %col{ 'data-column-preferences-name': :on_hand,    width:"10%"}
-      %col{ 'data-column-preferences-name': :producer,   width:"15%"}
+      %col{ 'data-column-preferences-name': :producer,   style:"min-width: 6em" }= # (grow to fill)
       %col{ 'data-column-preferences-name': :category,   width:"8%" }
       %col{ 'data-column-preferences-name': :tax_category, width:"8%" }
-      %col{ 'data-column-preferences-name': :inherits_properties, width:"8%" }
-      %col{ width:"1%", style:"min-width: 5em"}= # Actions
+      %col{ 'data-column-preferences-name': :inherits_properties, width:"5%" }
+      %col{ width:"5%", style:"min-width: 3em"}= # Actions
     %thead
       %tr
         %td.form-actions-wrapper{ colspan: 12 }
