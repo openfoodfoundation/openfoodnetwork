@@ -505,7 +505,7 @@ module Spree
       end
 
       describe "by_producer" do
-        it "orders by name" do
+        it "orders by producer name" do
           producer_z = create(:enterprise, name: "z_cooperative")
           producer_a = create(:enterprise, name: "a_cooperative")
           producer_g = create(:enterprise, name: "g_cooperative")
@@ -514,11 +514,7 @@ module Spree
           product2 = create(:product, supplier_id: producer_a.id)
           product3 = create(:product, supplier_id: producer_g.id)
 
-          expect(Product.by_producer).to match_array([
-                                                       product2,
-                                                       product3,
-                                                       product1,
-                                                     ])
+          expect(Product.by_producer).to eq([product2, product3, product1])
         end
       end
 

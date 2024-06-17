@@ -185,9 +185,10 @@ module OpenFoodNetwork
         permitted_variants = variants_from_suppliers(producer_ids)
 
         # PLUS my incoming producers' variants that are already in an outgoing exchange of this hub,
-        #   so things don't break. TODO: Remove this when all P-OC are sorted out
+        #   so things don't break.
+        # TODO: Remove this when all P-OC are sorted out
         active_variants = Spree::Variant.joins(:exchanges).
-          where(exchanges: { receiver: hub, incoming: "false" }, supplier_id: managed_producer_ids)
+          where(exchanges: { receiver: hub, incoming: false }, supplier_id: managed_producer_ids)
 
         Spree::Variant.where(id: permitted_variants | active_variants)
       end
