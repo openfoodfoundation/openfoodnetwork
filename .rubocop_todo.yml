@@ -8,13 +8,6 @@
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EmptyLineBetweenMethodDefs, EmptyLineBetweenClassDefs, EmptyLineBetweenModuleDefs, DefLikeMacros, AllowAdjacentOneLineDefs, NumberOfEmptyLines.
-Layout/EmptyLineBetweenDefs:
-  Exclude:
-    - 'app/services/products_renderer.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLines:
   Exclude:
     - 'app/services/products_renderer.rb'
@@ -108,7 +101,7 @@ Lint/UselessMethodDefinition:
   Exclude:
     - 'app/models/spree/gateway.rb'
 
-# Offense count: 24
+# Offense count: 23
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
@@ -121,7 +114,6 @@ Metrics/AbcSize:
     - 'app/helpers/spree/admin/navigation_helper.rb'
     - 'app/models/enterprise_group.rb'
     - 'app/models/enterprise_relationship.rb'
-    - 'app/models/product_import/entry_processor.rb'
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/address.rb'
     - 'app/models/spree/order/checkout.rb'
@@ -253,7 +245,7 @@ Metrics/MethodLength:
     - 'lib/spree/localized_number.rb'
     - 'lib/tasks/sample_data/product_factory.rb'
 
-# Offense count: 48
+# Offense count: 49
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
   Exclude:
@@ -283,6 +275,7 @@ Metrics/ModuleLength:
     - 'spec/controllers/payment_gateways/stripe_controller_spec.rb'
     - 'spec/controllers/spree/admin/adjustments_controller_spec.rb'
     - 'spec/controllers/spree/admin/payment_methods_controller_spec.rb'
+    - 'spec/controllers/spree/admin/variants_controller_spec.rb'
     - 'spec/lib/open_food_network/address_finder_spec.rb'
     - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
     - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
@@ -893,7 +886,7 @@ Style/ReturnNilInPredicateMethodDefinition:
     - 'app/serializers/api/admin/customer_serializer.rb'
     - 'engines/order_management/app/services/order_management/subscriptions/validator.rb'
 
-# Offense count: 204
+# Offense count: 207
 Style/Send:
   Exclude:
     - 'spec/controllers/admin/subscriptions_controller_spec.rb'
