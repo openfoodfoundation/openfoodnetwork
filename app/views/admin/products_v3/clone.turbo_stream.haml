@@ -6,6 +6,6 @@
               'bulk-form-disable-selector-value': "#sort,#filters",
               'bulk-form-error-value': defined?(@error_counts),
               } } do |form|
-    - product_body = render partial: 'product_variant_row', locals: { form:, product: @cloned_product, product_index: @product_index, producer_options: @producer_options, category_options: @category_options, tax_category_options: @tax_category_options }, formats: :html
+    - product_body = render partial: 'product_variant_row', locals: { form:, product: @cloned_product, product_index: @product_index, producer_options: @producer_options, category_options: @category_options, tax_category_options: @tax_category_options, should_slide_in: true }, formats: :html
 = turbo_stream.before dom_id(@product) do
     = product_body

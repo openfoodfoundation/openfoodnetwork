@@ -79,6 +79,8 @@ export default class extends ApplicationController {
       }
     };
 
+    // remove the clone animation before deleting
+    elementToBeRemoved.classList.remove('slide-in');
     elementToBeRemoved.classList.add('slide-out');
     elementToBeRemoved.addEventListener('animationend', handleSlideOutAnimationEnd);
   };

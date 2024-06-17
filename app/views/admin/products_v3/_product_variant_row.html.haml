@@ -1,7 +1,8 @@
 = form.fields_for("products", product, index: product_index) do |product_form|
   %tbody.relaxed{ id: dom_id(product), data: { 'record-id': product_form.object.id,
                           controller: "nested-form product",
-                          action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:remove->bulk-form#toggleFormChanged' } }
+                          action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:remove->bulk-form#toggleFormChanged' },
+                  class: (defined?(should_slide_in) && should_slide_in) ? 'slide-in' : '' }
     %tr
       = render partial: 'product_row', locals: { f: product_form, product:, producer_options:, product_index: }
 
