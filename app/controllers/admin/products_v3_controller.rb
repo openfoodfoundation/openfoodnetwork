@@ -68,6 +68,21 @@ module Admin
       end
     end
 
+    def clone
+      @product = Spree::Product.find(params[:id])
+      @cloned_product = @product.duplicate
+      @product_index = params[:product_index].to_i + 1
+      status = @cloned_product.save ? :ok : :internal_server_error
+
+      @producer_options = producers
+      @category_options = categories
+      @tax_category_options = tax_category_options
+
+      respond_with do |format|
+        format.turbo_stream { render :clone, status: }
+      end
+    end
+
     def index_url(params)
       "/admin/products?#{params.to_query}" # todo: fix routing so this can be automaticly generated
     end
