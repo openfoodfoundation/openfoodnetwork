@@ -912,6 +912,9 @@ en:
         tax_category_field_name: "Tax Category"
       product_row:
         producer_field_name: "Producer"
+      clone:
+        success: Successfully cloned the product
+        error: Unable to clone the product
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

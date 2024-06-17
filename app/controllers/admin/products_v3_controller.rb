@@ -72,7 +72,14 @@ module Admin
       @product = Spree::Product.find(params[:id])
       @cloned_product = @product.duplicate
       @product_index = params[:product_index].to_i + 1
-      status = @cloned_product.save ? :ok : :internal_server_error
+
+      status = :ok
+      if @cloned_product.save
+        flash.now[:success] = t('.success')
+      else
+        flash.now[:error] = t('.error')
+        status = :internal_server_error
+      end
 
       @producer_options = producers
       @category_options = categories
