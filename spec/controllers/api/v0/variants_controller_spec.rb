@@ -145,8 +145,8 @@ RSpec.describe Api::V0::VariantsController, type: :controller do
     it "can create a new variant" do
       original_number_of_variants = variant.product.variants.count
       api_post :create, variant: { sku: "12345", unit_value: "1", unit_description: "L",
-                                   price: "1",primary_taxon_id: taxon.id,
-                                   supplier_id: variant.supplier.id},
+                                   price: "1", primary_taxon_id: taxon.id,
+                                   supplier_id: variant.supplier.id },
                         product_id: variant.product.id
 
       expect(attributes.all?{ |attr| json_response.include? attr.to_s }).to eq(true)

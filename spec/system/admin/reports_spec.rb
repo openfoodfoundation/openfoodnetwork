@@ -389,7 +389,9 @@ RSpec.describe '
                               supplier_id: supplier.id)
     }
     let(:variant1) { product1.variants.first }
-    let(:variant2) { create(:variant, product: product1, price: 80.0, primary_taxon: taxon, supplier:) }
+    let(:variant2) {
+      create(:variant, product: product1, price: 80.0, primary_taxon: taxon, supplier:)
+    }
     let(:variant3) { product2.variants.first }
 
     before do

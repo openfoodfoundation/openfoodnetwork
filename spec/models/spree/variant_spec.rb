@@ -27,7 +27,7 @@ RSpec.describe Spree::Variant do
       variant = build(:variant, shipping_category: nil)
 
       expect(variant).to be_valid
-      expect(variant.shipping_category).to_not be_nil
+      expect(variant.shipping_category).not_to be_nil
     end
   end
 

@@ -240,7 +240,7 @@ RSpec.describe Sets::ProductSet do
             }.to change { variant.supplier }.to(producer).
               and change { order_cycle.distributed_variants.count }.by(-1)
 
-            expect(order_cycle.distributed_variants).to_not include variant
+            expect(order_cycle.distributed_variants).not_to include variant
           end
         end
       end

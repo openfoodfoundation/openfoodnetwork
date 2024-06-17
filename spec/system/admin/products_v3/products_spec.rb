@@ -488,13 +488,13 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
     let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
     let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
-    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0) }
-    let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
+    let!(:product_supplied) { create(:product, supplier_id: supplier_managed1.id, price: 10.0) }
+    let!(:product_not_supplied) { create(:product, supplier_id: supplier_unmanaged.id) }
     let!(:product_supplied_permitted) {
-      create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0)
+      create(:product, name: 'Product Permitted', supplier_id: supplier_permitted.id, price: 10.0)
     }
     let(:product_supplied_inactive) {
-      create(:product, supplier: supplier_managed1, price: 10.0)
+      create(:product, supplier_id: supplier_managed1.id, price: 10.0)
     }
 
     let!(:supplier_permitted_relationship) do

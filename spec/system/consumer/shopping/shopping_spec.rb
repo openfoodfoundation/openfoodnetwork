@@ -296,7 +296,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
                          display_as: 'displayedunderthename')
       end
       let(:product2) {
-        create(:simple_product, supplier_id: supplier.id, name: "Meercats", meta_keywords: "Wild Fresh")
+        create(:simple_product, supplier_id: supplier.id, name: "Meercats",
+                                meta_keywords: "Wild Fresh")
       }
       let(:variant3) {
         create(:variant, product: product2, supplier:, price: 40, display_name: "Ferrets")
@@ -338,8 +339,8 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
         it "returns results when successful" do
           visit shop_path
           # When we see the Add button, it means product are loaded on the page
-          expect(page).to have_content("Add", count: 4)          
-          
+          expect(page).to have_content("Add", count: 4)
+
           fill_in "search", with: "74576345634XXXXXX"
           expect(page).to have_content "Sorry, no results found"
           expect(page).not_to have_content 'Meercats'

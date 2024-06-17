@@ -79,7 +79,7 @@ module Spree
               variant: { supplier_id: new_producer.id }
             )
 
-            expect(order_cycle.reload.distributed_variants).to_not include variant
+            expect(order_cycle.reload.distributed_variants).not_to include variant
           end
         end
       end

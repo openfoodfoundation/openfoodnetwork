@@ -510,14 +510,14 @@ module Spree
           producer_a = create(:enterprise, name: "a_cooperative")
           producer_g = create(:enterprise, name: "g_cooperative")
 
-          product_1 = create(:product, supplier_id: producer_z.id)
-          product_2 = create(:product, supplier_id: producer_a.id)
-          product_3 = create(:product, supplier_id: producer_g.id)
+          product1 = create(:product, supplier_id: producer_z.id)
+          product2 = create(:product, supplier_id: producer_a.id)
+          product3 = create(:product, supplier_id: producer_g.id)
 
           expect(Product.by_producer).to match_array([
-                                                       product_2,
-                                                       product_3,
-                                                       product_1,
+                                                       product2,
+                                                       product3,
+                                                       product1,
                                                      ])
         end
       end

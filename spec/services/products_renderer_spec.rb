@@ -23,8 +23,7 @@ RSpec.describe ProductsRenderer do
                        variants: [
                          create(:variant, supplier: cakes_supplier, primary_taxon: cakes),
                          create(:variant, supplier: fruits_supplier, primary_taxon: cakes)
-                       ]
-            )
+                       ])
     }
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,

@@ -2,7 +2,8 @@
 
 require 'open_food_network/scope_product_to_hub'
 
-class ProductsRenderer
+
+class ProductsRenderer # rubocop:disable Metrics/ClassLength
   include Pagy::Backend
 
   class NoProducts < RuntimeError; end
@@ -63,7 +64,8 @@ class ProductsRenderer
     distributed_products.products_supplier_relation
   end
 
-  def filter(query)
+  # TODO: refactor to address CyclomaticComplexity
+  def filter(query) # rubocop:disable Metrics/CyclomaticComplexity
     supplier_properties = args[:q]&.slice("with_variants_supplier_properties")
 
     ransack_results = query.ransack(args[:q]).result.to_a
