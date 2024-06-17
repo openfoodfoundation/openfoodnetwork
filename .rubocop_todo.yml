@@ -35,6 +35,15 @@ Layout/MultilineOperationIndentation:
   Exclude:
     - 'app/services/products_renderer.rb'
 
+# Offense count: 4
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
+# SupportedStyles: space, no_space, compact
+# SupportedStylesForEmptyBraces: space, no_space
+Layout/SpaceInsideHashLiteralBraces:
+  Exclude:
+    - 'tmp/stimulus_reflex_installer/working/development.rb'
+
 # Offense count: 16
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
@@ -948,13 +957,6 @@ Style/RedundantAssignment:
 Style/RedundantInitialize:
   Exclude:
     - 'spec/models/spree/gateway_spec.rb'
-
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/RedundantInterpolation:
-  Exclude:
-    - 'lib/tasks/karma.rake'
-    - 'spec/base_spec_helper.rb'
 
 # Offense count: 19
 # This cop supports unsafe autocorrection (--autocorrect-all).
