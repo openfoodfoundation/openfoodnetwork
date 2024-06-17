@@ -838,8 +838,8 @@ RSpec.describe Spree::Variant do
     end
 
     it "touches the supplier" do
-      supplier = create(:supplier_enterprise)
-      variant = create(:variant, supplier:, updated_at: 1.hour.ago)
+      supplier = create(:supplier_enterprise, updated_at: 1.hour.ago)
+      variant = create(:variant, supplier:)
 
       expect { variant.destroy }.to change { supplier.reload.updated_at }
     end
