@@ -222,7 +222,7 @@ module Api
       it "loads taxons for distributed products in the order cycle" do
         api_get :taxons, id: order_cycle.id, distributor: distributor.id
 
-        taxons = json_response.map{ |taxon| taxon['name'] }
+        taxons = json_response.pluck('name')
 
         expect(json_response.length).to be 2
         expect(taxons).to include taxon1.name, taxon2.name
@@ -233,7 +233,7 @@ module Api
       it "loads properties for distributed products in the order cycle" do
         api_get :properties, id: order_cycle.id, distributor: distributor.id
 
-        properties = json_response.map{ |property| property['name'] }
+        properties = json_response.pluck('name')
 
         expect(json_response.length).to be 2
         expect(properties).to include property1.presentation, property2.presentation
@@ -248,7 +248,7 @@ module Api
         it "loads producer properties for distributed products in the order cycle" do
           api_get :properties, id: order_cycle.id, distributor: distributor.id
 
-          properties = json_response.map{ |property| property['name'] }
+          properties = json_response.pluck('name')
 
           expect(json_response.length).to be 3
           expect(properties).to include property1.presentation, property2.presentation,
@@ -301,7 +301,7 @@ module Api
     private
 
     def product_ids
-      json_response.map{ |product| product['id'] }
+      json_response.pluck('id')
     end
   end
 end

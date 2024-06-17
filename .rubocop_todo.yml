@@ -35,6 +35,15 @@ Layout/MultilineOperationIndentation:
   Exclude:
     - 'app/services/products_renderer.rb'
 
+# Offense count: 4
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
+# SupportedStyles: space, no_space, compact
+# SupportedStylesForEmptyBraces: space, no_space
+Layout/SpaceInsideHashLiteralBraces:
+  Exclude:
+    - 'tmp/stimulus_reflex_installer/working/development.rb'
+
 # Offense count: 16
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
@@ -625,26 +634,11 @@ Rails/LexicallyScopedActionFilter:
     - 'app/controllers/spree/admin/zones_controller.rb'
     - 'app/controllers/spree/users_controller.rb'
 
-# Offense count: 32
+# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/Pluck:
   Exclude:
-    - 'app/controllers/admin/variant_overrides_controller.rb'
-    - 'app/services/cart_service.rb'
-    - 'lib/reporting/report_headers_builder.rb'
-    - 'spec/controllers/admin/bulk_line_items_controller_spec.rb'
-    - 'spec/controllers/admin/subscriptions_controller_spec.rb'
-    - 'spec/controllers/api/v0/order_cycles_controller_spec.rb'
-    - 'spec/controllers/api/v0/orders_controller_spec.rb'
-    - 'spec/controllers/api/v0/products_controller_spec.rb'
-    - 'spec/controllers/api/v0/shops_controller_spec.rb'
-    - 'spec/controllers/api/v0/states_controller_spec.rb'
-    - 'spec/controllers/api/v0/taxons_controller_spec.rb'
-    - 'spec/helpers/spree/admin/orders_helper_spec.rb'
     - 'spec/lib/reports/lettuce_share_report_spec.rb'
-    - 'spec/lib/reports/users_and_enterprises_report_spec.rb'
-    - 'spec/serializers/api/admin/for_order_cycle/supplied_product_serializer_spec.rb'
-    - 'spec/support/api_helper.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -810,13 +804,14 @@ Style/ClassAndModuleChildren:
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
 
-# Offense count: 1
+# Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: always, always_true, never
 Style/FrozenStringLiteralComment:
   Exclude:
     - '.simplecov'
+    - 'tmp/stimulus_reflex_installer/working/development.rb'
 
 # Offense count: 6
 # This cop supports unsafe autocorrection (--autocorrect-all).
