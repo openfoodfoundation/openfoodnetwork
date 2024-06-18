@@ -37,13 +37,14 @@ module Spree
 
         if @object.save
           flash[:success] = flash_message_for(@object, :successfully_created)
-          redirect_to location_after_save
+
+          respond_to do |format|
+            format.html { redirect_to location_after_save }
+            format.turbo_stream { render :update }
+          end
         else
-          respond_with(@object)
+          respond_with_error(@object.errors)
         end
-      rescue ActiveStorage::IntegrityError
-        @object.errors.add :attachment, :integrity_error
-        respond_with(@object)
       end
 
       def update
@@ -53,16 +54,13 @@ module Spree
         if @object.update(permitted_resource_params)
           flash[:success] = flash_message_for(@object, :successfully_updated)
 
-          respond_with do |format|
+          respond_to do |format|
             format.html { redirect_to location_after_save }
             format.turbo_stream
           end
         else
-          respond_with(@object)
+          respond_with_error(@object.errors)
         end
-      rescue ActiveStorage::IntegrityError
-        @object.errors.add :attachment, :integrity_error
-        respond_with(@object)
       end
 
       def destroy
@@ -111,6 +109,14 @@ module Spree
         params.require(:image).permit(
           :attachment, :viewable_id, :alt
         )
+      end
+
+      def respond_with_error(errors)
+        @errors = errors.map(&:full_message)
+        respond_to do |format|
+          format.html { respond_with(@object) }
+          format.turbo_stream { render :edit }
+        end
       end
     end
   end
