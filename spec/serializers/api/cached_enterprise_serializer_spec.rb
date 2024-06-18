@@ -13,7 +13,7 @@ RSpec.describe Api::CachedEnterpriseSerializer do
 
     before do
       product = create(:product, properties: [property])
-      enterprise.supplied_products << product
+      enterprise.supplied_variants << product.variants.first
     end
 
     context "when the enterprise is a producer" do
@@ -56,7 +56,7 @@ RSpec.describe Api::CachedEnterpriseSerializer do
 
     before do
       product = create(:product, properties: [property])
-      producer.supplied_products << product
+      producer.supplied_variants << product.variants.first
 
       create(
         :simple_order_cycle,

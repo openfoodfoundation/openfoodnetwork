@@ -27,7 +27,7 @@
           = render partial: 'product_property_fields', locals: { f: pp_form }
 
     = f.check_box :inherits_properties
-    = f.label :inherits_properties, t('.inherits_properties_checkbox_hint', supplier: @product.supplier.name)
+    = f.label :inherits_properties, t('.inherits_properties_checkbox_hint', supplier: @supplier.name)
     %br
     %br
 
@@ -39,7 +39,7 @@
             %th= t('admin.description')
             %th.actions
         %tbody#producer_properties
-          - @product.supplier.producer_properties.each do |producer_property|
+          - @supplier.producer_properties.each do |producer_property|
             %tr
               %td= producer_property.property.presentation
               %td= producer_property.value

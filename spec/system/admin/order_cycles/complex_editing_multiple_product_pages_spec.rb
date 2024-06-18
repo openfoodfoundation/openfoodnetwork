@@ -13,7 +13,7 @@ RSpec.describe '
   describe "editing an order cycle with multiple pages of products" do
     let(:order_cycle) { create(:order_cycle) }
     let(:supplier_enterprise) { order_cycle.exchanges.incoming.first.sender }
-    let!(:new_product) { create(:product, supplier: supplier_enterprise) }
+    let!(:new_product) { create(:product, supplier_id: supplier_enterprise.id) }
 
     before do
       stub_const("#{Api::V0::ExchangeProductsController}::DEFAULT_PER_PAGE", 1)

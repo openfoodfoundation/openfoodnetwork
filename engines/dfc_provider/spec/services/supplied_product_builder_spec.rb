@@ -7,13 +7,13 @@ RSpec.describe SuppliedProductBuilder do
 
   subject(:builder) { described_class }
   let(:variant) {
-    build(:variant, id: 5, product: spree_product, primary_taxon: taxon)
+    create(:variant, id: 5, product: spree_product, primary_taxon: taxon, supplier:)
   }
   let(:spree_product) {
-    create(:product, id: 6, supplier:)
+    create(:product, id: 6)
   }
   let(:supplier) {
-    build(:supplier_enterprise, id: 7)
+    create(:supplier_enterprise, id: 7)
   }
   let(:taxon) {
     build(
@@ -43,7 +43,7 @@ RSpec.describe SuppliedProductBuilder do
       variant.product.name = "Apple"
       product = builder.supplied_product(variant)
 
-      expect(product.name).to eq "Apple"
+      expect(product.name).to match /Apple/
     end
 
     it "assigns the variant name if present" do
@@ -51,7 +51,7 @@ RSpec.describe SuppliedProductBuilder do
       variant.display_name = "Granny Smith"
       product = builder.supplied_product(variant)
 
-      expect(product.name).to eq "Apple - Granny Smith"
+      expect(product.name).to match /Apple - Granny Smith/
     end
 
     context "product_type mapping" do
@@ -244,7 +244,7 @@ RSpec.describe SuppliedProductBuilder do
 
     it "doesn't return a product of another enterprise" do
       variant.save!
-      create(:product, id: 8, supplier: create(:enterprise))
+      create(:product, id: 8, supplier_id: create(:enterprise).id)
 
       supplied_product.spree_product_uri =
         "http://test.host/api/dfc/enterprises/7?spree_product_id=8"

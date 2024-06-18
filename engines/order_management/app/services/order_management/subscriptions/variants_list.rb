@@ -8,15 +8,14 @@ module OrderManagement
       # - Variants of hub
       # - Variants that are in outgoing exchanges where the hub is receiver
       def self.eligible_variants(distributor)
-        variant_conditions = ["spree_products.supplier_id IN (?)",
-                              permitted_producer_ids(distributor)]
+        query = Spree::Variant.where(supplier_id: permitted_producer_ids(distributor))
+
         exchange_variant_ids = outgoing_exchange_variant_ids(distributor)
         if exchange_variant_ids.present?
-          variant_conditions[0] << " OR spree_variants.id IN (?)"
-          variant_conditions << exchange_variant_ids
+          query = query.or(Spree::Variant.where(id: exchange_variant_ids))
         end
 
-        Spree::Variant.joins(:product).where(*variant_conditions)
+        query
       end
 
       def self.in_open_and_upcoming_order_cycles?(distributor, schedule, variant)

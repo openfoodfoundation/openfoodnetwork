@@ -54,10 +54,7 @@ module ProductImport
           if settings.importing_into_inventory?
             VariantOverride.for_hubs([enterprise_id]).count
           else
-            Spree::Variant.
-              joins(:product).
-              where(spree_products: { supplier_id: enterprise_id }).
-              count
+            Spree::Variant.where(supplier_id: enterprise_id).count
           end
 
         @enterprise_products[enterprise_id] = products_count
@@ -169,7 +166,6 @@ module ProductImport
       product.assign_attributes(
         entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
       )
-      product.supplier_id = entry.producer_id
 
       if product.save
         ensure_variant_updated(product, entry)
@@ -228,10 +224,13 @@ module ProductImport
       # Ensure attributes are correctly copied to a new product's variant
       variant = product.variants.first
       variant.display_name = entry.display_name if entry.display_name
+      variant.import_date = @import_time
+      variant.supplier_id = entry.producer_id
+      variant.save
+
+      # on_demand and on_hand require a stock level, which is created after the variant is created
       variant.on_demand = entry.on_demand if entry.on_demand
       variant.on_hand = entry.on_hand if entry.on_hand
-      variant.import_date = @import_time
-      variant.save
     end
   end
 end

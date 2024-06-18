@@ -27,12 +27,6 @@
           = f.text_field :variant_unit_name, {placeholder: t('admin.products.unit_name_placeholder')}
           = f.error_message_on :variant_unit_name
 
-    = f.field_container :supplier do
-      = f.label :supplier, t(:spree_admin_supplier)
-      %br
-      = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2"})
-      = f.error_message_on :supplier
-
     .clear
 
   .clear

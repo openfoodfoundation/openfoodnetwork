@@ -206,13 +206,13 @@ RSpec.describe 'Subscriptions' do
         create(:customer, enterprise: shop, bill_address: address, user: customer_user,
                           allow_charges: true)
       }
-      let!(:test_product) { create(:product, supplier: shop) }
+      let!(:test_product) { create(:product) }
       let!(:test_variant) {
-        create(:variant, product: test_product, unit_value: "100", price: 12.00)
+        create(:variant, product: test_product, unit_value: "100", price: 12.00, supplier: shop)
       }
-      let!(:shop_product) { create(:product, supplier: shop) }
+      let!(:shop_product) { create(:product) }
       let!(:shop_variant) {
-        create(:variant, product: shop_product, unit_value: "1000", price: 6.00)
+        create(:variant, product: shop_product, unit_value: "1000", price: 6.00, supplier: shop)
       }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) {
@@ -448,17 +448,17 @@ RSpec.describe 'Subscriptions' do
 
     context 'editing an existing subscription' do
       let!(:customer) { create(:customer, enterprise: shop) }
-      let!(:product1) { create(:product, supplier: shop) }
-      let!(:product2) { create(:product, supplier: shop) }
-      let!(:product3) { create(:product, supplier: shop) }
+      let!(:product1) { create(:product) }
+      let!(:product2) { create(:product) }
+      let!(:product3) { create(:product) }
       let!(:variant1) {
-        create(:variant, product: product1, unit_value: '100', price: 12.00)
+        create(:variant, product: product1, unit_value: '100', price: 12.00, supplier: shop)
       }
       let!(:variant2) {
-        create(:variant, product: product2, unit_value: '1000', price: 6.00)
+        create(:variant, product: product2, unit_value: '1000', price: 6.00, supplier: shop)
       }
       let!(:variant3) {
-        create(:variant, product: product3, unit_value: '10000', price: 22.00)
+        create(:variant, product: product3, unit_value: '10000', price: 22.00, supplier: shop)
       }
       let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
       let!(:order_cycle) {

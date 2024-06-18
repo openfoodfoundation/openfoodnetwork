@@ -9,11 +9,11 @@ RSpec.describe "Offers", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc:
     create(
       :product,
       id: 90_000,
-      supplier: enterprise, name: "Pesto", description: "Basil Pesto",
+      name: "Pesto", description: "Basil Pesto",
       variants: [variant],
     )
   }
-  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1) }
+  let(:variant) { build(:base_variant, id: 10_001, unit_value: 1, supplier: enterprise) }
 
   before { login_as user }
 

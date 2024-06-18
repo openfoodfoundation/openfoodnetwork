@@ -12,6 +12,7 @@ module Spree
       include EnterprisesHelper
 
       before_action :load_data
+      before_action :load_producers, only: [:index, :new]
       before_action :load_form_data, only: [:index, :new, :create, :edit, :update]
       before_action :load_spree_api_key, only: [:index, :variant_overrides]
       before_action :strip_new_properties, only: [:create, :update]
@@ -41,6 +42,7 @@ module Spree
             flash[:success] = flash_message_for(@object, :successfully_created)
             redirect_after_save
           else
+            load_producers
             # Re-fill the form with deleted params on product
             @on_hand = request.params[:product][:on_hand]
             @on_demand = request.params[:product][:on_demand]
@@ -52,14 +54,9 @@ module Spree
       def update
         @url_filters = ::ProductFilters.new.extract(request.query_parameters)
 
-        original_supplier_id = @product.supplier_id
         delete_stock_params_and_set_after do
           params[:product] ||= {} if params[:clear_product_properties]
           if @object.update(permitted_resource_params)
-            if original_supplier_id != @product.supplier_id
-              ExchangeVariantDeleter.new.delete(@product)
-            end
-
             flash[:success] = flash_message_for(@object, :successfully_updated)
           end
           redirect_to spree.edit_admin_product_url(@object, @url_filters)
@@ -157,10 +154,13 @@ module Spree
       end
 
       def load_form_data
-        @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
-          managed_product_enterprises.is_primary_producer.by_name
         @taxons = Spree::Taxon.order(:name)
         @import_dates = product_import_dates.uniq.to_json
+      end
+
+      def load_producers
+        @producers = OpenFoodNetwork::Permissions.new(spree_current_user).
+          managed_product_enterprises.is_primary_producer.by_name
       end
 
       def product_import_dates
@@ -173,12 +173,10 @@ module Spree
 
       def product_import_dates_query
         Spree::Variant.
-          select('DISTINCT spree_variants.import_date').
-          joins(:product).
-          where(spree_products: { supplier_id: editable_enterprises.collect(&:id) }).
+          select('import_date').distinct.
+          where(supplier_id: editable_enterprises.collect(&:id)).
           where.not(spree_variants: { import_date: nil }).
-          where(spree_variants: { deleted_at: nil }).
-          order('spree_variants.import_date DESC')
+          order('import_date DESC')
       end
 
       def strip_new_properties

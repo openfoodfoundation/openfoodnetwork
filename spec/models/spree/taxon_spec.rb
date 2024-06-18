@@ -11,7 +11,9 @@ module Spree
     let(:t2) { create(:taxon) }
 
     describe "finding all supplied taxons" do
-      let!(:p1) { create(:simple_product, supplier: e, primary_taxon_id: t1.id) }
+      let!(:p1) {
+        create(:simple_product, primary_taxon_id: t1.id, supplier_id: e.id)
+      }
 
       it "finds taxons" do
         expect(Taxon.supplied_taxons).to eq(e.id => Set.new([t1.id]))
@@ -40,7 +42,7 @@ module Spree
     describe "touches" do
       let!(:taxon1) { create(:taxon) }
       let!(:taxon2) { create(:taxon) }
-      let!(:product) { create(:simple_product, primary_taxon: taxon1) }
+      let!(:product) { create(:simple_product, primary_taxon_id: taxon1.id) }
       let(:variant) { product.variants.first }
 
       it "is touched when assignment of primary_taxon on a variant changes" do

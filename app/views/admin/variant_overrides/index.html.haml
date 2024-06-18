@@ -7,6 +7,7 @@
   = render 'admin/variant_overrides/loading_flash'
   = render 'admin/variant_overrides/controls'
   = render 'admin/variant_overrides/no_results'
+  // filteredProducts is defined in admin/variant_overrides/products
   %div{ "ng-cloak": true, "ng-show": 'hub_id && filteredProducts.length > 0' }
     = render 'admin/variant_overrides/new_products'
     = render 'admin/variant_overrides/hidden_products'

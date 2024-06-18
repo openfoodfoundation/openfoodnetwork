@@ -62,26 +62,24 @@ module OpenFoodNetwork
     def editable_products
       return Spree::Product.all if admin?
 
-      Spree::Product.where(supplier_id: @user.enterprises).or(
-        Spree::Product.where(supplier_id: related_enterprises_granting(:manage_products))
+      product_with_variants.where(spree_variants: { supplier_id: @user.enterprises }).or(
+        product_with_variants.where(
+          spree_variants: { supplier_id: related_enterprises_granting(:manage_products) }
+        )
       )
     end
 
     def visible_products
       return Spree::Product.all if admin?
 
-      Spree::Product.where(
-        supplier_id: @user.enterprises
-      ).or(
-        Spree::Product.where(
-          supplier_id: related_enterprises_granting(:manage_products) |
-            related_enterprises_granting(:add_to_order_cycle)
+      product_with_variants.where(spree_variants: { supplier_id: @user.enterprises }).or(
+        product_with_variants.where(
+          spree_variants: {
+            supplier_id: related_enterprises_granting(:manage_products) |
+              related_enterprises_granting(:add_to_order_cycle)
+          }
         )
       )
-    end
-
-    def product_ids_supplied_by(supplier_ids)
-      Spree::Product.where(supplier_id: supplier_ids).select(:id)
     end
 
     def managed_product_enterprises
@@ -175,6 +173,10 @@ module OpenFoodNetwork
 
     def managed_enterprise_products
       Spree::Product.managed_by(@user)
+    end
+
+    def product_with_variants
+      Spree::Product.joins(:variants)
     end
   end
 end

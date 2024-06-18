@@ -10,6 +10,10 @@ module Spree
 
       context '#duplicate' do
         it 'duplicates product' do
+          variant = product.variants.first
+          variant.supplier = create(:supplier_enterprise)
+          variant.save!
+
           clone = product.duplicate
           expect(clone.name).to eq "COPY OF #{product.name}"
           expect(clone.sku).to eq ""
@@ -75,65 +79,6 @@ module Spree
       end
     end
 
-    describe "supplier properties" do
-      subject { create(:product) }
-
-      it "has no supplier properties to start with" do
-        expect(subject.supplier_properties).to eq []
-      end
-
-      it "doesn't include product properties" do
-        subject.set_property("certified", "organic")
-        expect(subject.supplier_properties).to eq []
-      end
-
-      it "includes the supplier's properties" do
-        subject.supplier.set_producer_property("certified", "yes")
-        expect(subject.supplier_properties.map(&:presentation)).to eq ["certified"]
-      end
-    end
-
-    describe ".with_properties scope" do
-      let!(:product_without_wanted_property_on_supplier) {
-        create(:product, supplier: supplier_without_wanted_property)
-      }
-      let!(:product_with_wanted_property_on_supplier) {
-        create(:product, supplier: supplier_with_wanted_property)
-      }
-      let!(:product_with_wanted_property) { create(:product, properties: [wanted_property]) }
-      let!(:product_without_wanted_property_property) {
-        create(:product, properties: [unwanted_property])
-      }
-      let!(:product_with_wanted_property_and_on_supplier) {
-        create(:product, properties: [wanted_property], supplier: supplier_with_wanted_property)
-      }
-      let!(:product_ignoring_property) {
-        create(:product, supplier: supplier_with_wanted_property, inherits_properties: false)
-      }
-      let(:supplier_with_wanted_property) {
-        create(:supplier_enterprise, properties: [wanted_property])
-      }
-      let(:supplier_without_wanted_property) {
-        create(:supplier_enterprise, properties: [unwanted_property])
-      }
-      let(:wanted_property) { create(:property, presentation: 'Certified Organic') }
-      let(:unwanted_property) { create(:property, presentation: 'Latest Hype') }
-
-      it "returns no products without a property id" do
-        expect(Spree::Product.with_properties([])).to eq []
-      end
-
-      it "returns only products with the wanted property set both on supplier & product itself" do
-        expect(
-          Spree::Product.with_properties([wanted_property.id])
-        ).to match_array [
-          product_with_wanted_property_on_supplier,
-          product_with_wanted_property,
-          product_with_wanted_property_and_on_supplier
-        ]
-      end
-    end
-
     describe '#total_on_hand' do
       it 'returns sum of stock items count_on_hand' do
         product = build(:product)
@@ -154,7 +99,14 @@ module Spree
     end
 
     describe "associations" do
-      it { is_expected.to belong_to(:supplier).required }
+      it { is_expected.to have_one(:image) }
+
+      it { is_expected.to have_many(:product_properties) }
+      it { is_expected.to have_many(:properties).through(:product_properties) }
+      it { is_expected.to have_many(:variants) }
+      it { is_expected.to have_many(:prices).through(:variants) }
+      it { is_expected.to have_many(:stock_items).through(:variants) }
+      it { is_expected.to have_many(:variant_images).through(:variants) }
     end
 
     describe "validations and defaults" do
@@ -187,16 +139,14 @@ module Spree
         end
       end
 
-      it "requires a supplier" do
-        expect(build(:simple_product, supplier: nil)).not_to be_valid
-      end
-
       context "when the product has variants" do
         let(:product) do
           product = create(:simple_product)
           create(:variant, product:)
           product.reload
         end
+
+        it { is_expected.to validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
 
         it "requires a unit" do
           product.variant_unit = nil
@@ -225,26 +175,29 @@ module Spree
           let!(:product){ Spree::Product.new }
           let!(:shipping_category){ create(:shipping_category) }
           let!(:taxon){ create(:taxon) }
+          let(:supplier){ create(:enterprise) }
 
           before do
             create(:stock_location)
             product.primary_taxon_id = taxon.id
-            product.supplier = create(:supplier_enterprise)
             product.name = "Product1"
             product.variant_unit = "weight"
             product.variant_unit_scale = 1000
             product.unit_value = 1
             product.price = 4.27
             product.shipping_category_id = shipping_category.id
+            product.supplier_id = supplier.id
             product.save!
           end
 
           it "copies properties to the first standard variant" do
             expect(product.variants.reload.length).to eq 1
             standard_variant = product.variants.reload.first
+            expect(standard_variant).to be_valid
             expect(standard_variant.price).to eq 4.27
             expect(standard_variant.shipping_category).to eq shipping_category
             expect(standard_variant.primary_taxon).to eq taxon
+            expect(standard_variant.supplier).to eq supplier
           end
         end
 
@@ -321,17 +274,13 @@ module Spree
       let(:product) { create(:simple_product) }
 
       describe "touching affected enterprises when the product is deleted" do
-        let(:product) { create(:simple_product, supplier: distributor) }
-        let(:supplier) { product.supplier }
+        let(:product) { create(:simple_product, supplier_id: distributor.id) }
         let(:distributor) { create(:distributor_enterprise) }
+        let(:supplier) { create(:supplier_enterprise) }
         let!(:oc) {
           create(:simple_order_cycle, distributors: [distributor],
                                       variants: [product.variants.first])
         }
-
-        it "touches the supplier" do
-          expect { product.destroy }.to change { supplier.reload.updated_at }
-        end
 
         it "touches all distributors" do
           expect { product.destroy }.to change { distributor.reload.updated_at }
@@ -339,6 +288,44 @@ module Spree
 
         it "removes variants from order cycles" do
           expect { product.destroy }.to change { ExchangeVariant.count }
+        end
+      end
+
+      describe "after updating primary taxon" do
+        let(:product) { create(:simple_product, supplier_id: supplier.id) }
+        let(:supplier) { create(:supplier_enterprise) }
+        let(:new_taxon) { create(:taxon) }
+
+        it "touches the supplier" do
+          expect { product.update(primary_taxon_id: new_taxon.id) }
+            .to change { supplier.reload.updated_at }
+        end
+
+        context "when product has no variant" do
+          it "doesn't blow up" do
+            product.variants = []
+            product.save!
+
+            expect { product.update(primary_taxon_id: new_taxon.id) }.not_to raise_error
+          end
+        end
+      end
+
+      describe "after touching the product" do
+        let(:product) { create(:simple_product, supplier_id: supplier.id) }
+        let(:supplier) { create(:supplier_enterprise) }
+
+        it "touches the supplier" do
+          expect { product.touch }
+            .to change { supplier.reload.updated_at }
+        end
+
+        context "when the first variant is missing supplier" do
+          it "doesn't blow up" do
+            product.variants.first.update_attribute(:supplier_id, nil)
+
+            expect { product.touch }.not_to raise_error
+          end
         end
       end
 
@@ -368,12 +355,38 @@ module Spree
     end
 
     describe "scopes" do
+      describe ".with_properties" do
+        let!(:product_with_wanted_property) { create(:product, properties: [wanted_property]) }
+        let!(:product_without_wanted_property_property) {
+          create(:product, properties: [unwanted_property])
+        }
+        let!(:product_ignoring_property) {
+          create(:product, inherits_properties: false)
+        }
+        let(:wanted_property) { create(:property, presentation: 'Certified Organic') }
+        let(:unwanted_property) { create(:property, presentation: 'Latest Hype') }
+
+        it "returns no products without a property id" do
+          expect(Spree::Product.with_properties([])).to eq []
+        end
+
+        it "returns only products with the wanted property set both on supplier & product itself" do
+          expect(
+            Spree::Product.with_properties([wanted_property.id, 99_999])
+          ).to match_array [product_with_wanted_property]
+        end
+      end
+
       describe "in_supplier" do
         it "shows products in supplier" do
           s1 = create(:supplier_enterprise)
+          p1 = create(:product, supplier_id: s1.id)
+          create(:variant, product: p1, supplier: s1)
+          create(:variant, product: p1, supplier: s1)
           s2 = create(:supplier_enterprise)
-          p1 = create(:product, supplier: s1)
-          p2 = create(:product, supplier: s2)
+          p2 = create(:product, supplier_id: s2.id)
+          create(:variant, product: p2, supplier: s2)
+
           expect(Product.in_supplier(s1)).to eq([p1])
         end
       end
@@ -449,38 +462,6 @@ module Spree
         end
       end
 
-      describe "in_supplier_or_distributor" do
-        it "shows products in supplier" do
-          s1 = create(:supplier_enterprise)
-          s2 = create(:supplier_enterprise)
-          p1 = create(:product, supplier: s1)
-          p2 = create(:product, supplier: s2)
-          expect(Product.in_supplier_or_distributor(s1)).to eq([p1])
-        end
-
-        it "shows products in order cycle distribution" do
-          s = create(:supplier_enterprise)
-          d1 = create(:distributor_enterprise)
-          d2 = create(:distributor_enterprise)
-          p1 = create(:product)
-          p2 = create(:product)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d1],
-                                      variants: [p1.variants.first])
-          create(:simple_order_cycle, suppliers: [s], distributors: [d2],
-                                      variants: [p2.variants.first])
-          expect(Product.in_supplier_or_distributor(d1)).to eq([p1])
-        end
-
-        it "shows products in all three without duplicates" do
-          s = create(:supplier_enterprise)
-          d = create(:distributor_enterprise)
-          p = create(:product, supplier: s)
-          create(:simple_order_cycle, suppliers: [s], distributors: [d],
-                                      variants: [p.variants.first])
-          [s, d].each { |e| expect(Product.in_supplier_or_distributor(e)).to eq([p]) }
-        end
-      end
-
       describe "in_order_cycle" do
         it "shows products in order cycle distribution" do
           s = create(:supplier_enterprise)
@@ -514,31 +495,50 @@ module Spree
         end
       end
 
-      describe "access roles" do
+      describe "by_producer" do
+        it "orders by producer name" do
+          producer_z = create(:enterprise, name: "z_cooperative")
+          producer_a = create(:enterprise, name: "a_cooperative")
+          producer_g = create(:enterprise, name: "g_cooperative")
+
+          product1 = create(:product, supplier_id: producer_z.id)
+          product2 = create(:product, supplier_id: producer_a.id)
+          product3 = create(:product, supplier_id: producer_g.id)
+
+          expect(Product.by_producer).to eq([product2, product3, product1])
+        end
+      end
+
+      describe "managed_by" do
+        let!(:e1) { create(:enterprise) }
+        let!(:e2) { create(:enterprise) }
+        let!(:p1) { create(:product) }
+        let!(:p2) { create(:product) }
+
         before(:each) do
-          @e1 = create(:enterprise)
-          @e2 = create(:enterprise)
-          @p1 = create(:product, supplier: @e1)
-          @p2 = create(:product, supplier: @e2)
+          create(:variant, product: p1, supplier: e1)
+          create(:variant, product: p1, supplier: e2)
         end
 
         it "shows only products for given user" do
           user = create(:user)
           user.spree_roles = []
-          @e1.enterprise_roles.build(user:).save
+          e1.enterprise_roles.build(user:).save
 
           product = Product.managed_by user
+
           expect(product.count).to eq(1)
-          expect(product).to include @p1
+          expect(product).to include p1
         end
 
         it "shows all products for admin user" do
           user = create(:admin_user)
 
           product = Product.managed_by user
+
           expect(product.count).to eq(2)
-          expect(product).to include @p1
-          expect(product).to include @p2
+          expect(product).to include p1
+          expect(product).to include p2
         end
       end
 
@@ -574,11 +574,15 @@ module Spree
         let(:shop) { create(:distributor_enterprise) }
         let(:add_to_oc_producer) { create(:supplier_enterprise) }
         let(:other_producer) { create(:supplier_enterprise) }
-        let!(:p1) { create(:simple_product, supplier: shop ) }
-        let!(:p2) { create(:simple_product, supplier: add_to_oc_producer ) }
-        let!(:p3) { create(:simple_product, supplier: other_producer ) }
+        let(:p1) { create(:simple_product) }
+        let(:p2) { create(:simple_product) }
+        let(:p3) { create(:simple_product) }
 
         before do
+          create(:variant, product: p1, supplier: shop)
+          create(:variant, product: p2, supplier: add_to_oc_producer)
+          create(:variant, product: p3, supplier: other_producer)
+
           create(:enterprise_relationship, parent: add_to_oc_producer, child: shop,
                                            permissions_list: [:add_to_order_cycle])
           create(:enterprise_relationship, parent: other_producer, child: shop,
@@ -604,59 +608,54 @@ module Spree
       end
     end
 
-    describe "properties" do
+    describe "#properties_including_inherited" do
+      let(:product) { create(:simple_product) }
+      let(:supplier) { create(:supplier_enterprise) }
+
+      before do
+        product.variants = []
+        product.variants << create(:variant, product:, supplier:)
+      end
+
       it "returns product properties as a hash" do
-        product = create(:simple_product)
         product.set_property 'Organic Certified', 'NASAA 12345'
         property = product.properties.last
 
         expect(product.properties_including_inherited)
-          .to eq([{ id: property.id, name: "Organic Certified",
-                    value: 'NASAA 12345' }])
+          .to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 12345' }])
       end
 
       it "returns producer properties as a hash" do
-        supplier = create(:supplier_enterprise)
-        product = create(:simple_product, supplier:)
-
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = supplier.properties.last
 
         expect(product.properties_including_inherited)
-          .to eq([{ id: property.id, name: "Organic Certified",
-                    value: 'NASAA 54321' }])
+          .to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 54321' }])
       end
 
       it "overrides producer properties with product properties" do
-        supplier = create(:supplier_enterprise)
-        product = create(:simple_product, supplier:)
-
         product.set_property 'Organic Certified', 'NASAA 12345'
         supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
         property = product.properties.last
 
         expect(product.properties_including_inherited)
-          .to eq([{ id: property.id, name: "Organic Certified",
-                    value: 'NASAA 12345' }])
+          .to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 12345' }])
       end
 
       context "when product has an inherit_properties value set to true" do
-        let(:supplier) { create(:supplier_enterprise) }
-        let(:product) { create(:simple_product, supplier:, inherits_properties: true) }
+        let(:product) { create(:simple_product, inherits_properties: true) }
 
         it "inherits producer properties" do
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
           property = supplier.properties.last
 
           expect(product.properties_including_inherited)
-            .to eq([{ id: property.id, name: "Organic Certified",
-                      value: 'NASAA 54321' }])
+            .to eq([{ id: property.id, name: "Organic Certified", value: 'NASAA 54321' }])
         end
       end
 
       context "when product has an inherit_properties value set to false" do
-        let(:supplier) { create(:supplier_enterprise) }
-        let(:product) { create(:simple_product, supplier:, inherits_properties: false) }
+        let(:product) { create(:simple_product, inherits_properties: false) }
 
         it "does not inherit producer properties" do
           supplier.set_producer_property 'Organic Certified', 'NASAA 54321'
@@ -666,9 +665,6 @@ module Spree
       end
 
       it "sorts by position" do
-        supplier = create(:supplier_enterprise)
-        product = create(:simple_product, supplier:)
-
         pa = Spree::Property.create! name: 'A', presentation: 'A'
         pb = Spree::Property.create! name: 'B', presentation: 'B'
         pc = Spree::Property.create! name: 'C', presentation: 'C'
@@ -734,18 +730,25 @@ module Spree
     end
 
     describe "deletion" do
-      let(:p)  { create(:simple_product) }
-      let(:v)  { create(:variant, product: p) }
-      let(:oc) { create(:simple_order_cycle) }
-      let(:s)  { create(:supplier_enterprise) }
-      let(:e)  {
-        create(:exchange, order_cycle: oc, incoming: true, sender: s, receiver: oc.coordinator)
+      let(:product) { create(:simple_product) }
+      let(:variant) { create(:variant, product:) }
+      let(:order_cycle) { create(:simple_order_cycle) }
+      let(:supplier) { create(:supplier_enterprise) }
+      let(:exchange) {
+        create(
+          :exchange,
+          order_cycle:,
+          incoming: true,
+          sender: supplier,
+          receiver: order_cycle.coordinator
+        )
       }
 
       it "removes all variants from order cycles" do
-        e.variants << v
-        p.destroy
-        expect(e.variants.reload).to be_empty
+        exchange.variants << variant
+
+        product.destroy
+        expect(exchange.variants.reload).to be_empty
       end
     end
 

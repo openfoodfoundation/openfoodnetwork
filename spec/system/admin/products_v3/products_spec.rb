@@ -269,7 +269,9 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
       # create a product with a different supplier
       let!(:producer1) { create(:supplier_enterprise, name: "Producer 1") }
-      let!(:product_by_supplier) { create(:simple_product, name: "Apples", supplier: producer1) }
+      let!(:product_by_supplier) {
+        create(:simple_product, name: "Apples", supplier_id: producer1.id)
+      }
 
       before { user.enterprise_roles.create(enterprise: producer1) }
 
@@ -896,6 +898,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
           fill_in "Name", with: "Bananes"
         end
 
+        # TODO look at product set
         expect {
           click_button "Save changes"
           product_a.reload
@@ -959,11 +962,11 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
 
       it "should not display search input, change the producers, category and tax category" do
-        producer_to_select = random_producer(product_a)
+        producer_to_select = random_producer(variant_a1)
         category_to_select = random_category(variant_a1)
         tax_category_to_select = random_tax_category
 
-        within row_containing_name(product_a.name) do
+        within row_containing_name(variant_a1.display_name) do
           validate_tomselect_without_search!(
             page, "Producer",
             producer_search_selector
@@ -988,10 +991,9 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         click_button "Save changes"
 
         expect(page).to have_content "Changes saved"
-        product_a.reload
-        variant_a1.reload
 
-        expect(product_a.supplier.name).to eq(producer_to_select)
+        variant_a1.reload
+        expect(variant_a1.supplier.name).to eq(producer_to_select)
         expect(variant_a1.primary_taxon.name).to eq(category_to_select)
         expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
       end
@@ -1007,19 +1009,17 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
 
       it "should display search input, change the producer" do
-        producer_to_select = random_producer(product_a)
+        producer_to_select = random_producer(variant_a1)
         category_to_select = random_category(variant_a1)
         tax_category_to_select = random_tax_category
 
-        within row_containing_name(product_a.name) do
+        within row_containing_name(variant_a1.display_name) do
           validate_tomselect_with_search!(
             page, "Producer",
             producer_search_selector
           )
           tomselect_search_and_select(producer_to_select, from: "Producer")
-        end
 
-        within row_containing_name(variant_a1.display_name) do
           sleep(0.1)
           validate_tomselect_with_search!(
             page, "Category",
@@ -1038,10 +1038,9 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         click_button "Save changes"
 
         expect(page).to have_content "Changes saved"
-        product_a.reload
-        variant_a1.reload
 
-        expect(product_a.supplier.name).to eq(producer_to_select)
+        variant_a1.reload
+        expect(variant_a1.supplier.name).to eq(producer_to_select)
         expect(variant_a1.primary_taxon.name).to eq(category_to_select)
         expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
       end
@@ -1171,6 +1170,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
       describe "Cloning product" do
         it "shows the cloned product on page when clicked on the cloned option" do
+          # TODO, variant supplier missing, needs to be copied from variant and not product
           within "table.products" do
             # Gather input values, because page.content doesn't include them.
             input_content = page.find_all('input[type=text]').map(&:value).join
@@ -1406,13 +1406,13 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
     let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
     let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
-    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0) }
-    let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
+    let!(:product_supplied) { create(:product, supplier_id: supplier_managed1.id, price: 10.0) }
+    let!(:product_not_supplied) { create(:product, supplier_id: supplier_unmanaged.id) }
     let!(:product_supplied_permitted) {
-      create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0)
+      create(:product, name: 'Product Permitted', supplier_id: supplier_permitted.id, price: 10.0)
     }
     let(:product_supplied_inactive) {
-      create(:product, supplier: supplier_managed1, price: 10.0)
+      create(:product, supplier_id: supplier_managed1.id, price: 10.0)
     }
 
     let!(:supplier_permitted_relationship) do
@@ -1440,18 +1440,19 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
     it "shows only suppliers that I manage or have permission to" do
       visit spree.admin_products_path
-      within row_containing_name(product_supplied.name) do
+
+      within row_containing_placeholder(product_supplied.name) do
         expect(page).to have_select(
-          '_products_0_supplier_id',
+          '_products_0_variants_attributes_0_supplier_id',
           options: [
             supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
           ], selected: supplier_managed1.name
         )
       end
 
-      within row_containing_name(product_supplied_permitted.name) do
+      within row_containing_placeholder(product_supplied_permitted.name) do
         expect(page).to have_select(
-          '_products_1_supplier_id',
+          '_products_1_variants_attributes_0_supplier_id',
           options: [
             supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
           ], selected: supplier_permitted.name
@@ -1482,7 +1483,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
   def create_products(amount)
     amount.times do |i|
-      create(:simple_product, name: "product #{i}", supplier: producer)
+      create(:simple_product, name: "product #{i}", supplier_id: producer.id)
     end
   end
 
@@ -1520,6 +1521,13 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     "tr:has(input[aria-label=Name][value='#{value}'])"
   end
 
+  # Selector for table row that has an input with a placeholder.
+  # Variant don't have display_name set, so we look for the input with placeholder matching the
+  # product's name to get the variant row
+  def row_containing_placeholder(value)
+    "tr:has(input[aria-label=Name][placeholder='#{value}'])"
+  end
+
   # Wait for an element with the given CSS selector and class to be present
   def wait_for_class(selector, class_name)
     max_wait_time = Capybara.default_max_wait_time
@@ -1548,9 +1556,9 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
   end
 
-  def random_producer(product)
+  def random_producer(variant)
     Enterprise.is_primary_producer
-      .where.not(id: product.supplier.id)
+      .where.not(id: variant.supplier.id)
       .pluck(:name).sample
   end
 

@@ -11,7 +11,7 @@ RSpec.describe 'White label setting' do
   let!(:distributor) { create(:distributor_enterprise, with_payment_and_shipping: true) }
   let!(:shipping_method) { create(:shipping_method, distributors: [distributor]) }
   let(:product) {
-    create(:taxed_product, supplier: create(:supplier_enterprise), price: 10,
+    create(:taxed_product, supplier_id: create(:supplier_enterprise).id, price: 10,
                            zone: create(:zone_with_member), tax_rate_amount: 0.1)
   }
   let!(:order_cycle) {

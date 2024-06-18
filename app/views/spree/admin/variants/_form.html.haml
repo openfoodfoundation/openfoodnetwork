@@ -76,4 +76,8 @@
     = f.label :primary_taxon, t('spree.admin.products.primary_taxon_form.product_category')
     = f.collection_select(:primary_taxon_id, Spree::Taxon.order(:name), :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
 
+  .field
+    = f.label :supplier, t(:spree_admin_supplier)
+    = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
+
 .clear
