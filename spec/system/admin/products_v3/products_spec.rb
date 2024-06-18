@@ -1050,13 +1050,15 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
   describe "edit image" do
     shared_examples "updating image" do
-      it "saves product image" do
+      before do
         visit admin_products_url
 
         within row_containing_name("Apples") do
           click_on "Edit"
         end
+      end
 
+      it "saves product image" do
         within ".reveal-modal" do
           expect(page).to have_content "Edit product photo"
           expect_page_to_have_image(current_img_url)
@@ -1071,6 +1073,25 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
         within row_containing_name("Apples") do
           expect_page_to_have_image('500.jpg')
+        end
+      end
+
+      it 'shows a modal telling not a valid image when uploading wrong type of file' do
+        within ".reveal-modal" do
+          attach_file 'image[attachment]',
+                      Rails.public_path.join('Terms-of-service.pdf'),
+                      visible: false
+          expect(page).to have_content /Attachment is not a valid image/
+          expect(page).to have_content /Attachment has an invalid content type/
+        end
+      end
+
+      it 'shows a modal telling not a valid image when uploading a non valid image file' do
+        within ".reveal-modal" do
+          attach_file 'image[attachment]',
+                      Rails.public_path.join('invalid_image.jpg'),
+                      visible: false
+          expect(page).to have_content /Attachment is not a valid image/
         end
       end
     end
