@@ -636,12 +636,6 @@ Rails/LexicallyScopedActionFilter:
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/Pluck:
-  Exclude:
-    - 'spec/lib/reports/lettuce_share_report_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: conservative, aggressive
 Rails/PluckInWhere:
