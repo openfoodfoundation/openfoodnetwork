@@ -31,7 +31,7 @@ angular.module("admin.indexUtils").factory 'Columns', ($rootScope, $http, $injec
     savePreferences: (action_name) =>
       $http
         method: "PUT"
-        url: "/admin/column_preferences/bulk_update"
+        url: "/admin/column_preferences/bulk_update.json"
         data:
           action_name: action_name
           column_preferences: (preference for column_name, preference of @columns)

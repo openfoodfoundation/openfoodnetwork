@@ -3,10 +3,10 @@
 module AdminHelper
   def toggle_columns(*labels)
     # open dropdown
-    # case insensitive search for "Columns" text
-    find("div#columns-dropdown", text: /columns/i).click
+    columns_dropdown = ofn_drop_down("Columns")
+    columns_dropdown.click
 
-    within "div#columns-dropdown" do
+    within columns_dropdown do
       labels.each do |label|
         # Convert label to case-insensitive regexp if not one already
         label = /#{label}/i unless label.is_a?(Regexp)
@@ -16,6 +16,10 @@ module AdminHelper
     end
 
     # close dropdown
-    find("div#columns-dropdown", text: /columns/i).click
+    columns_dropdown.click
+  end
+
+  def ofn_drop_down(label)
+    find(".ofn-drop-down", text: /#{label}/i)
   end
 end

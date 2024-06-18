@@ -9,5 +9,5 @@
     %div.menu_items
       - @options.each do |option|
         %label.menu_item{ "data-multiple-checked-select-target": "option", "data-value": option[1], "data-label": option[0] }
-          %input.redesigned-input{ type: "checkbox", checked: @selected.include?(option[1]), name: "#{@name}[]", value: option[1] }
-          = option[0]
+          %input{ type: "checkbox", checked: @selected.include?(option[1]), name: "#{@name}[]", value: option[1] }
+          %span= option[0]

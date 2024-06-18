@@ -1,0 +1,23 @@
+= form_with url: bulk_update_admin_column_preferences_path, method: :put,
+    id: :bulk_admin_column_preferences_form, class: "column-preferences",
+    html: { 'data-controller': "column-preferences" } do |f|
+  = hidden_field_tag :action_name, action
+
+  / DC: this makes my Chrome DevTools crash when inspecting the <details> element. If problem continues, we need to use a different method.
+  %details.ofn-drop-down.ofn-drop-down-v2.right{ 'data-controller': "dropdown" }
+    %summary.ofn-drop-down-label
+      = t('admin.columns')
+      %span.icon-caret
+
+    .menu
+      .menu_items
+        - ColumnPreference.for(spree_current_user, action).each_with_index do |column_preference, index|
+          = f.fields_for("column_preferences", column_preference, index:) do |cp_form|
+            = cp_form.hidden_field :id
+            = cp_form.hidden_field :column_name
+            %label.menu_item
+              = cp_form.check_box :visible, 'data-column-name': column_preference.column_name
+              %span= t("admin.products_page.columns." + column_preference.column_name)
+
+      .actions
+        = f.submit t('admin.column_save_as_default'), class: "secondary fullwidth"

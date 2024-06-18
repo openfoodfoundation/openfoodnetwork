@@ -571,6 +571,7 @@ en:
         per_page: "%{count} items per page"
         colums: Columns
       columns:
+        image: Image
         name: Name
         unit_scale: Unit scale
         unit: Unit
@@ -661,7 +662,7 @@ en:
     choose: "Choose..."
     please_select: Please select...
 
-    column_save_as_default: Save As Default
+    column_save_as_default: Save as default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -760,6 +761,9 @@ en:
         balance_due: "Balance Due"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+    column_preferences:
+      bulk_update:
+        success: "Column preferences saved"
     contents:
       edit:
         title: Content

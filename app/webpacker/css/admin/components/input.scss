@@ -6,32 +6,3 @@
     }
   }
 }
-
-input[type="checkbox"].redesigned-input {
-  position: relative;
-  top: 1px;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -o-appearance: none;
-  appearance: none;
-  outline: none;
-  content: none;
-  cursor: pointer;
-
-  &:before {
-    font-family: "FontAwesome";
-    content: "\f00c";
-    font-size: 15px;
-    color: transparent !important;
-    background: transparent !important;
-    display: block;
-    width: 15px;
-    height: 15px;
-    border: 1px solid #809cb1;
-    margin-right: 7px;
-  }
-
-  &:checked:before {
-    color: $color-txt-text !important;
-  }
-}

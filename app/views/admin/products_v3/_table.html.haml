@@ -13,20 +13,21 @@
   = hidden_field_tag :producer_id, @producer_id
   = hidden_field_tag :category_id, @category_id
 
-  %table.products
+  %table.products{ 'data-column-preferences-target': "table" }
     %colgroup
-      %col{ width:"56" }= #  Img (size + padding)
-      %col= # (grow to fill) Name
-      %col{ width:"5%"}
-      %col{ width:"8%"}
-      %col{ width:"8%"}
-      %col{ width:"5%"}
-      %col{ width:"10%"}
-      %col{ width:"15%"}= # Producer
-      %col{ width:"8%"}
-      %col{ width:"8%"}
-      %col{ width:"8%"}
-      %col{ width:"8%"}= # Actions
+      -# The `min-width` property works in Chrome but not Firefox so is considered progressive enhancement.
+      %col.col-image{ width:"56px" }= # (image size + padding)
+      %col.col-name{ style:"min-width: 6em" }= # (grow to fill)
+      %col.col-sku{ width:"8%", style:"min-width: 6em" }
+      %col.col-unit_scale{ width:"8%" }
+      %col.col-unit{ width:"8%" }
+      %col.col-price{ width:"5%", style:"min-width: 5em" }
+      %col.col-on_hand{ width:"10%"}
+      %col.col-producer{ style:"min-width: 6em" }= # (grow to fill)
+      %col.col-category{ width:"8%" }
+      %col.col-tax_category{ width:"8%" }
+      %col.col-inherits_properties{ width:"5%" }
+      %col{ width:"5%", style:"min-width: 3em"}= # Actions
     %thead
       %tr
         %td.form-actions-wrapper{ colspan: 12 }
@@ -48,18 +49,18 @@
                     = t('.reset')
                   = form.submit t('.save'), class: "medium"
       %tr
-        %th.align-left= # image
+        %th.col-image.align-left= # image
         = render partial: 'spree/admin/shared/stimulus_sortable_header',
             locals: { column: :name, sorted: params.dig(:q, :s), default: 'name asc' }
-        %th.align-left.with-input= t('admin.products_page.columns.sku')
-        %th.align-left.with-input= t('admin.products_page.columns.unit_scale')
-        %th.align-left.with-input= t('admin.products_page.columns.unit')
-        %th.align-left.with-input= t('admin.products_page.columns.price')
-        %th.align-left.with-input= t('admin.products_page.columns.on_hand')
-        %th.align-left= t('admin.products_page.columns.producer')
-        %th.align-left= t('admin.products_page.columns.category')
-        %th.align-left= t('admin.products_page.columns.tax_category')
-        %th.align-left= t('admin.products_page.columns.inherits_properties')
+        %th.align-left.col-sku.with-input= t('admin.products_page.columns.sku')
+        %th.align-left.col-unit_scale.with-input= t('admin.products_page.columns.unit_scale')
+        %th.align-left.col-unit.with-input= t('admin.products_page.columns.unit')
+        %th.align-left.col-price.with-input= t('admin.products_page.columns.price')
+        %th.align-left.col-on_hand.with-input= t('admin.products_page.columns.on_hand')
+        %th.align-left.col-producer= t('admin.products_page.columns.producer')
+        %th.align-left.col-category= t('admin.products_page.columns.category')
+        %th.align-left.col-tax_category= t('admin.products_page.columns.tax_category')
+        %th.align-left.col-inherits_properties= t('admin.products_page.columns.inherits_properties')
         %th.align-right= t('admin.products_page.columns.actions')
     - products.each_with_index do |product, product_index|
       = form.fields_for("products", product, index: product_index) do |product_form|
