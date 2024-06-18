@@ -67,6 +67,15 @@ jobs:
         run: |
           bin/rake db:create db:schema:load
 
+      - name: Restore cached public assets
+        id: cache-public-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
+
       - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 864ef557d85ea8e603e086c0387d5154
@@ -84,6 +93,15 @@ jobs:
         run: |
           git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
           bin/rake knapsack_pro:rspec
+
+      - name: Save cached public assets
+        id: cache-public-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
 
   models:
     runs-on: ubuntu-22.04
@@ -127,6 +145,15 @@ jobs:
         run: |
           bin/rake db:create db:schema:load
 
+      - name: Restore cached public assets
+        id: cache-public-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
+
       - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 09476e2ce491c12083df62768667c674
@@ -143,6 +170,15 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/models/**/*_spec.rb}" 
         run: |
           bin/rake knapsack_pro:rspec
+
+      - name: Save cached public assets
+        id: cache-public-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
 
   system_admin:
     runs-on: ubuntu-22.04
@@ -193,8 +229,16 @@ jobs:
         run: |
           bin/rake db:create db:schema:load
 
-      - name: Run tests
+      - name: Restore cached public assets
+        id: cache-public-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
 
+      - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ff2456e64c9f2aa5157eb0daf711d3c3
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -211,6 +255,15 @@ jobs:
 
         run: |
           bin/rake knapsack_pro:queue:rspec
+
+      - name: Save cached public assets
+        id: cache-public-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -269,6 +322,15 @@ jobs:
       - name: Set up database
         run: |
           bin/rake db:create db:schema:load
+
+      - name: Restore cached public assets
+        id: cache-public-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
 
       - name: Run tests
 
@@ -348,8 +410,16 @@ jobs:
         run: |
           bin/rake db:create db:schema:load
 
-      - name: Run tests
+      - name: Restore cached public assets
+        id: cache-public-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
 
+      - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: d6ea7ceb766404ccd016c19aa2c81b1c
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -366,6 +436,15 @@ jobs:
 
         run: |
           bin/rake knapsack_pro:rspec
+
+      - name: Save cached public assets
+        id: cache-public-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -426,6 +505,15 @@ jobs:
         run: |
           bin/rake db:create db:schema:load
 
+      - name: Restore cached public assets
+        id: cache-public-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
+
       - name: Run tests
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: e3b8800198d2d89b70c7edbdd85f8fd8
@@ -442,6 +530,15 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_EXCLUDE_PATTERN: "{engines/**/*_spec.rb,spec/models/**/*_spec.rb,spec/controllers/**/*_spec.rb,spec/serializers/**/*_spec.rb,spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/system/**/*_spec.rb}"
         run: |
           bin/rake knapsack_pro:rspec
+
+      - name: Save cached public assets
+        id: cache-public-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            public/assets
+            public/packs-test
+          key: public
 
   non_knapsack_jest_karma:
     runs-on: ubuntu-22.04
