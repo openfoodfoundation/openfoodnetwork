@@ -38,7 +38,9 @@ module Admin
         { id: params[:id] }
       ).find_product
 
+      @record.destroyed_by = spree_current_user
       status = :ok
+
       if @record.destroy
         flash.now[:success] = t('.delete_product.success')
       else
