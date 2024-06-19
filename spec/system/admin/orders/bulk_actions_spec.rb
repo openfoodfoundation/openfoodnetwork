@@ -373,6 +373,22 @@ RSpec.describe '
                 it_behaves_like "should not print the invoice"
               end
             end
+
+            context "ABN is an empty string" do
+              before do
+                order4.distributor.update(abn: "123456789")
+                order5.distributor.update(abn: "")
+              end
+
+              context "with legal invoices feature disabled" do
+                it_behaves_like "can bulk print invoices from 2 orders"
+              end
+
+              context "with legal invoices feature", feature: :invoices do
+                before { pending("#12373") }
+                it_behaves_like "should not print the invoice"
+              end
+            end
           end
         end
       end
