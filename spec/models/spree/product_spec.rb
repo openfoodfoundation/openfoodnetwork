@@ -10,10 +10,6 @@ module Spree
 
       context '#duplicate' do
         it 'duplicates product' do
-          variant = product.variants.first
-          variant.supplier = create(:supplier_enterprise)
-          variant.save!
-
           clone = product.duplicate
 
           expect(clone).to be_persisted
@@ -390,6 +386,7 @@ module Spree
         it "shows products in supplier" do
           s1 = create(:supplier_enterprise)
           p1 = create(:product, supplier_id: s1.id)
+          # We create two variants to let us test we don't get duplicated product
           create(:variant, product: p1, supplier: s1)
           create(:variant, product: p1, supplier: s1)
           s2 = create(:supplier_enterprise)

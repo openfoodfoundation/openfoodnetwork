@@ -57,7 +57,7 @@ module Spree
       taxons = {}
 
       Spree::Taxon.
-        joins(products: { variants: :supplier }).
+        joins(variants: :supplier).
         select('spree_taxons.*, enterprises.id AS enterprise_id').
         each do |t|
           taxons[t.enterprise_id.to_i] ||= Set.new
