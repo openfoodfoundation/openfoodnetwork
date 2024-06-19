@@ -68,22 +68,25 @@ class ProductsRenderer
   end
 
   def products_order
-    if (distributor.preferred_shopfront_product_sorting_method == "by_producer") &&
-       distributor.preferred_shopfront_producer_order.present?
-      distributor
-        .preferred_shopfront_producer_order
-        .split(",").map { |id| "spree_products.supplier_id=#{id} DESC" }
-        .join(", ") + ", spree_products.name ASC, spree_products.id ASC"
+    if distributor.preferred_shopfront_product_sorting_method == "by_producer" &&
+      distributor.preferred_shopfront_producer_order.present?
+      order_by_producer = distributor
+                            .preferred_shopfront_producer_order
+                            .split(",").map { |id| "spree_products.supplier_id=#{id} DESC" }
+                            .join(", ")
+      "#{order_by_producer}, spree_products.name ASC, spree_products.id ASC"
     elsif distributor.preferred_shopfront_product_sorting_method == "by_category" &&
-          distributor.preferred_shopfront_taxon_order.present?
-      distributor
-        .preferred_shopfront_taxon_order
-        .split(",").map { |id| "first_variant.primary_taxon_id=#{id} DESC" }
-        .join(", ") + ", spree_products.name ASC, spree_products.id ASC"
+      distributor.preferred_shopfront_taxon_order.present?
+      order_by_category = distributor
+                            .preferred_shopfront_taxon_order
+                            .split(",").map { |id| "first_variant.primary_taxon_id=#{id} DESC" }
+                            .join(", ")
+      "#{order_by_category}, spree_products.name ASC, spree_products.id ASC"
     else
       "spree_products.name ASC, spree_products.id"
     end
   end
+
 
   def variants_for_shop
     @variants_for_shop ||= begin

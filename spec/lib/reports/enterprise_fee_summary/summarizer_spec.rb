@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Reporting::Reports::EnterpriseFeeSummary::Summarizer do
+RSpec.describe Reporting::Reports::EnterpriseFeeSummary::Summarizer do
   let(:row) {
     {
       "total_amount" => 1, "payment_method_name" => nil,

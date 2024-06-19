@@ -141,7 +141,8 @@ fr_CA:
     unprocessable_entity:
       title: "La modification réalisée a été rejetée (erreur 422)"
       message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p> "
-    stimulus_reflex_error: "Nous sommes désolés mais quelque chose s'est mal passé.\n\n C'est un problème temporaire, merci donc de réessayer ou de recharger la page. \nNous enregistrons toutes les erreurs et travaillons sur les améliorations nécessaires.\nSi le problème persiste ou est urgent, merci de nous contacter.\n "
+    general_error:
+      message: "Nous sommes désolés mais quelque chose s'est mal passé.\n\n C'est un problème temporaire, merci donc de réessayer ou de recharger la page. \nNous enregistrons toutes les erreurs et travaillons sur les améliorations nécessaires.\nSi le problème persiste ou est urgent, merci de nous contacter.\n "
   stripe:
     error_code:
       incorrect_number: "e numéro de carte bancaire est incorrect."
@@ -222,12 +223,16 @@ fr_CA:
               not_available_to_shop: "n'est pas disponible pour %{shop}"
   card_details: "Détalis de la carte"
   card_type: "Type de carte"
+  card_type_is: "Type de carte"
+  unrecognized_card_type: "Type de carte non reconnu"
+  use_new_cc: "Utilisez une nouvelle carte bancaire"
+  what_is_this: "Qu'est-ce que c'est ?"
   cardholder_name: "Titulaire de la carte"
   community_forum_url: "Lien vers le forum"
   customer_instructions: "Précisions pour l'acheteur"
   additional_information: "Informations additionnelles"
   connect_app:
-    url: "https://n8n.openfoodnetwork.org/webhook/regen-CAN/connect-enterprise"
+    url: "https://n8n.openfoodnetwork.org/webhook-test/food-justice/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -546,6 +551,7 @@ fr_CA:
         edit: Modifier
         clone: Dupliquer
         delete: Supprimer
+        remove: Supprimer
       image:
         edit: Modifier
     adjustments:
@@ -650,6 +656,7 @@ fr_CA:
         status: Statut
         ok: Ok
         instance_secret_key: Clé Secrète de l'Instance
+        instance_publishable_key: Clé publique de l'instance
         account_id: Identifiant Compte
         business_name: Nom de l'entreprise
         charges_enabled: Frais activés
@@ -771,6 +778,7 @@ fr_CA:
       index:
         header:
           title: Gestion du catalogue produits
+      content:
         loading: Vos produits sont en cours de chargement
       delete_modal:
         delete_product_modal:
@@ -822,16 +830,19 @@ fr_CA:
         new_variant: Nouvelle variante
       bulk_update:
         success: Changements sauvegardés
-      edit_image:
-        title: Modifier la photo du produit
-        close: Retour
-        upload: Télécharger la photo
       delete_product:
         success: Le produit a bien été supprimé
         error: Le produit n'a pas pu être supprimé
       delete_variant:
         success: La variante a bien été supprimée
         error: La variante n'a pas pu être supprimée
+      variant_row:
+        none_tax_category: Aucun
+        search_for_tax_categories: "Chercher les catégories de taxes"
+        category_field_name: "Catégorie"
+        tax_category_field_name: "Type de taxe"
+      product_row:
+        producer_field_name: "Producteur"
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -2086,7 +2097,6 @@ fr_CA:
   label_account: "Compte"
   label_more: "Afficher plus"
   label_less: "Masquer"
-  label_notices: "Informations"
   cart_items: "Produits"
   cart_headline: "Votre panier"
   total: "Total"
@@ -2498,6 +2508,7 @@ fr_CA:
   orders_bought_already_confirmed: "* déjà confirmé"
   orders_confirm_cancel: "Voulez-vous vraiment annuler cette commande ?"
   order_processed_successfully: "Votre commande a été traitée avec succès"
+  thank_you_for_your_order: "Merci pour votre commande"
   products_cart_distributor_choice: "Distributeur pour votre commande:"
   products_cart_distributor_change: "Vore distributeur pour cette commande sera dorénavant %{name} si vous ajoutez ce produit à votre panier."
   products_cart_distributor_is: "Votre distributeur pour cette commande est %{name}."
@@ -3758,6 +3769,7 @@ fr_CA:
     editing_tax_category: "Modifier une catégorie de taxe"
     editing_tax_rate: "Modifier un taux"
     editing_zone: "Modifier une zone"
+    editing_state: "Editer la province"
     expiration: "Expiration"
     invalid_payment_provider: "Fournisseur de paiement invalide"
     items_cannot_be_shipped: "Les produits ne peuvent pas être envoyés"
@@ -3796,6 +3808,7 @@ fr_CA:
     resend: "Renvoyer"
     back_to_orders_list: "Retour à la liste des commandes"
     back_to_payments_list: "Retour à la liste des paiements"
+    back_to_states_list: "Retour à la liste des provinces"
     return_authorizations: "Autorisations de retours"
     cannot_create_returns: "Impossible de créer une autorisation de retour car aucun produit n'a été livré pour cette commande."
     select_stock: "Sélectionner le stock"
@@ -3998,6 +4011,11 @@ fr_CA:
     validation:
       must_be_int: "doit être un entier"
     admin:
+      images:
+        edit:
+          title: Modifier la photo du produit
+          close: Retour
+          upload: Télécharger la photo
       mail_methods:
         send_testmail: "Envoyer un e-mail de test"
         testmail:
@@ -4025,6 +4043,10 @@ fr_CA:
         customers: "Acheteurs"
         groups: "Groupes"
         oidc_settings: "OIDC"
+        overview: "Aperçu"
+        product_import: "Importer"
+        enterprise_roles: "Roles"
+        payment_methods: "Méthodes de paiement"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier}? (non applicable si information de remplacement déjà saisie)"

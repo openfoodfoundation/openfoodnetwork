@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe InvoiceDataGenerator do
+RSpec.describe InvoiceDataGenerator do
   describe '#generate' do
     let!(:order) { create(:completed_order_with_fees) }
     let!(:invoice_data_generator){ InvoiceDataGenerator.new(order) }

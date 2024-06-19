@@ -37,7 +37,7 @@ module Admin
 
     def obfuscated_secret_key
       key = Stripe.api_key
-      key.first(8) + "****" + key.last(4)
+      "#{key.first(8)}****#{key.last(4)}"
     end
 
     def settings_params

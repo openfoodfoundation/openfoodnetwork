@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
   As an Administrator
   I want to be able to delete orders in bulk
 ' do

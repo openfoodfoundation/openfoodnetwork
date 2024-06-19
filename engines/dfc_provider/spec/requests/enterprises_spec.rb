@@ -2,7 +2,7 @@
 
 require_relative "../swagger_helper"
 
-describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true do
+RSpec.describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: true do
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) do
     create(
@@ -71,6 +71,7 @@ describe "Enterprises", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc: 
 
             expect(json_response["@graph"][0]).to include(
               "dfc-b:affiliates" => "http://test.host/api/dfc/enterprise_groups/60000",
+              "dfc-b:websitePage" => "https://openfoodnetwork.org",
             )
 
             # Insert static value to keep documentation deterministic:

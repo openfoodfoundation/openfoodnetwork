@@ -77,6 +77,24 @@ module OpenFoodNetwork
       }
     end
 
+    def products_v3_index_columns
+      I18n.with_options scope: 'admin.products_page.columns' do
+        {
+          image: { name: t(:image), visible: true },
+          name: { name: t(:name), visible: true },
+          sku: { name: t(:sku), visible: true },
+          unit: { name: t(:unit), visible: true },
+          unit_scale: { name: t(:unit_scale), visible: true },
+          price: { name: t(:price), visible: true },
+          on_hand: { name: t(:on_hand), visible: true },
+          producer: { name: t(:producer), visible: true },
+          category: { name: t(:category), visible: true },
+          tax_category: { name: t(:tax_category), visible: true },
+          inherits_properties: { name: t(:inherits_properties), visible: true },
+        }
+      end
+    end
+
     def enterprises_index_columns
       node = "admin.enterprises.index"
       {

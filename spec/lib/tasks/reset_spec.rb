@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'rake'
 
-describe "reset.rake" do
+RSpec.describe "reset.rake" do
   before(:all) do
     Rake.application.rake_require("tasks/reset")
     Rake::Task.define_task(:environment)

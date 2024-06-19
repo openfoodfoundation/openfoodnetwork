@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe VariantStock do
+RSpec.describe VariantStock do
   let(:variant) { create(:variant) }
 
   describe '#after_save' do

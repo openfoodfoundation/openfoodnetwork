@@ -1,5 +1,5 @@
-%th
-  %a{ "data-action": "click->search#changeSorting", "data-column": "#{column}", "data-current": sorted.to_s }
+%th{ class: "col-#{column}" }
+  %a{ "data-controller": "search", "data-action": "click->search#changeSorting", "data-column": "#{column}", "data-current": (sorted || default).to_s }
     = t("spree.admin.shared.sortable_header.#{column.to_s}")
 
     - if sorted == "#{column} asc" || sorted.blank? && local_assigns[:default] == "#{column} asc"

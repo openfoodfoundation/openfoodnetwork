@@ -42,8 +42,17 @@ angular.module('Darkswarm').controller "RegistrationCtrl", ($scope, Registration
   $scope.toggleAddressConfirmed = ->
     $scope.addressConfirmed = !$scope.addressConfirmed
     if $scope.addressConfirmed
+      $scope.setLatLongIfUsingOpenStreetMap()
       $scope.enterprise.address.latitude = $scope.latLong.latitude
       $scope.enterprise.address.longitude = $scope.latLong.longitude
     else
       $scope.enterprise.address.latitude = null
       $scope.enterprise.address.longitude = null
+
+  # When OpenStreetMaps is enabled the latitude and longitude are calculated via a Stimulus
+  # controller, so they need to be read from data properties to be accessible here.
+  $scope.setLatLongIfUsingOpenStreetMap = ->
+    openStreetMap = document.getElementById("open-street-map")
+    if !$scope.latLong && openStreetMap && openStreetMap.dataset.latitude && openStreetMap.dataset.longitude
+      $scope.latLong = { latitude: openStreetMap.dataset.latitude, longitude: openStreetMap.dataset.longitude }
+

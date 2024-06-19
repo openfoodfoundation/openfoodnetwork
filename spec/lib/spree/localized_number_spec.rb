@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'spree/localized_number'
 
-describe Spree::LocalizedNumber do
+RSpec.describe Spree::LocalizedNumber do
   describe ".parse" do
     context "with point separator" do
       it "captures the proper amount for a formatted string" do

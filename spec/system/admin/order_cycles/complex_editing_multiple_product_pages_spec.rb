@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe '
+RSpec.describe '
     As an administrator
     I want to manage complex order cycles
 ' do
@@ -36,10 +36,7 @@ describe '
     end
 
     it "select all products" do
-      checkbox_id = "order_cycle_incoming_exchange_0_select_all_variants"
-      elmnt = find_field(id: checkbox_id)
-      scroll_to(elmnt, align: :top)
-      check checkbox_id
+      check "Select All 2 Variants"
 
       expect_all_products_loaded
 

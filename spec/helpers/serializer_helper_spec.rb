@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe SerializerHelper, type: :helper do
+RSpec.describe SerializerHelper, type: :helper do
   let(:serializer) do
     Class.new(ActiveModel::Serializer) do
       attributes :id, :name

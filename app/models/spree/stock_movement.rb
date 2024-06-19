@@ -2,21 +2,14 @@
 
 module Spree
   class StockMovement < ApplicationRecord
-    self.belongs_to_required_by_default = false
-
     belongs_to :stock_item, class_name: 'Spree::StockItem'
-    belongs_to :originator, polymorphic: true
+    belongs_to :originator, polymorphic: true, optional: true
 
     after_create :update_stock_item_quantity
 
-    validates :stock_item, presence: true
     validates :quantity, presence: true
 
     scope :recent, -> { order('created_at DESC') }
-
-    def readonly?
-      !new_record?
-    end
 
     private
 

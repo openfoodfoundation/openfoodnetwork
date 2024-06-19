@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'open_food_network/order_cycle_permissions'
 
-describe WebhookEndpointsController, type: :controller do
+RSpec.describe WebhookEndpointsController, type: :controller do
   let(:user) { create(:admin_user) }
 
   before { allow(controller).to receive(:spree_current_user) { user } }

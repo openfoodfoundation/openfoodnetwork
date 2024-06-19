@@ -332,6 +332,7 @@ fil_PH:
         edit: i-edit
         clone: Gayahin
         delete: Tanggalin
+        remove: Tanggalin
       image:
         edit: i-edit
     begins_at: nagsimula sa
@@ -533,8 +534,12 @@ fil_PH:
         search: hanapin
       table:
         new_variant: bagong uri
-      edit_image:
-        close: bumalik
+      variant_row:
+        none_tax_category: wala
+        category_field_name: "kategorya"
+        tax_category_field_name: "kategorya ng tax"
+      product_row:
+        producer_field_name: "Producer"
     product_import:
       title: paglipat ng produkto
       file_not_found: 'ang file ay hindi mahanap o mabuksan '
@@ -1516,7 +1521,6 @@ fil_PH:
   label_account: "Account"
   label_more: "ipakita ang iba pa"
   label_less: "huwag ipakita ang lahat"
-  label_notices: "mga abiso"
   cart_items: "mga item"
   cart_headline: "Ang iyong shopping cart"
   total: "kabuuan"
@@ -3180,6 +3184,9 @@ fil_PH:
           header:
             store: tindahan
     admin:
+      images:
+        edit:
+          close: bumalik
       subscriptions:
         number: "Bilang"
       tab:
@@ -3200,6 +3207,10 @@ fil_PH:
         enterprise_relationships: "mga pahintulot"
         customers: "mga customer"
         groups: "mga grupo"
+        overview: "pangkalahatang ideya"
+        product_import: "ilipat"
+        enterprise_roles: "mga tungkulin"
+        payment_methods: "Mga Paraan ng Pagbabayad"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "kopyahin ang mga katangian mula sa%{supplier}? (maliban kung napatungan ang nasa itaas)"

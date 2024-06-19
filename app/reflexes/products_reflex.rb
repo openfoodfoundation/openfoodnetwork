@@ -21,46 +21,6 @@ class ProductsReflex < ApplicationReflex
     fetch_and_render_products_with_flash
   end
 
-  def delete_product
-    id = current_id_from_element(element)
-    product = product_finder(id).find_product
-    authorize! :delete, product
-
-    if product.destroy
-      flash[:success] = I18n.t('admin.products_v3.delete_product.success')
-    else
-      flash[:error] = I18n.t('admin.products_v3.delete_product.error')
-    end
-
-    fetch_and_render_products_with_flash
-  end
-
-  def delete_variant
-    id = current_id_from_element(element)
-    variant = Spree::Variant.active.find(id)
-    authorize! :delete, variant
-
-    if VariantDeleter.new.delete(variant)
-      flash[:success] = I18n.t('admin.products_v3.delete_variant.success')
-    else
-      flash[:error] = I18n.t('admin.products_v3.delete_variant.error')
-    end
-
-    fetch_and_render_products_with_flash
-  end
-
-  def edit_image
-    id = current_id_from_element(element)
-    product = product_finder(id).find_product
-    image = product.image
-
-    image = Spree::Image.new(viewable: product) if product.image.blank?
-
-    morph "#modal-component",
-          render(partial: "admin/products_v3/edit_image",
-                 locals: { product:, image:, return_url: url })
-  end
-
   private
 
   def init_filters_params
@@ -89,8 +49,8 @@ class ProductsReflex < ApplicationReflex
       html: render(partial: "admin/products_v3/content",
                    locals: { products: @products, pagy: @pagy, search_term: @search_term,
                              producer_options: producers, producer_id: @producer_id,
-                             category_options: categories, category_id: @category_id,
-                             flashes: flash })
+                             category_options: categories, tax_category_options:,
+                             category_id: @category_id, flashes: flash })
     )
 
     cable_ready.replace_state(
@@ -123,6 +83,10 @@ class ProductsReflex < ApplicationReflex
 
   def categories
     Spree::Taxon.order(:name).map { |c| [c.name, c.id] }
+  end
+
+  def tax_category_options
+    Spree::TaxCategory.order(:name).pluck(:name, :id)
   end
 
   def fetch_products
@@ -209,13 +173,5 @@ class ProductsReflex < ApplicationReflex
   def products_bulk_params
     params.permit(products: ::PermittedAttributes::Product.attributes)
       .to_h.with_indifferent_access
-  end
-
-  def product_finder(id)
-    ProductScopeQuery.new(current_user, { id: })
-  end
-
-  def current_id_from_element(element)
-    element.dataset.current_id
   end
 end

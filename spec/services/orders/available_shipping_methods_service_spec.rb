@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Orders::AvailableShippingMethodsService do
+RSpec.describe Orders::AvailableShippingMethodsService do
   context "when the order has no current_distributor" do
     it "returns an empty array" do
       order_cycle = create(:sells_own_order_cycle)

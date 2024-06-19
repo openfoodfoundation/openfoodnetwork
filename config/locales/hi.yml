@@ -137,7 +137,8 @@ hi:
     unprocessable_entity:
       title: "जो परिवर्तन आप चाहते थे वह नामंजूर कर दिया गया था (422)"
       message_html: "<p>जो परिवर्तन आप चाहते थे वह नामंजूर कर दिया गया था। शायद आपने ऐसा परिवर्तित करने की कोशिश की हो, जिस तक आपका एक्सेस नहीं है। <br><h3><a href='/' >होम पर वापस जाएं</a></h3> </p>"
-    stimulus_reflex_error: "हमें माफ करें, लेकिन कुछ गलत हो गया।\n\nयह एक अस्थायी समस्या हो सकती है, इसलिए कृपया फिर से कोशिश करें या पेज को फिर से लोड करें।\nहम सभी त्रुटियों को रिकॉर्ड करते हैं और सम्भावित है की हम इसे ठीक करने पर काम कर रहे हों।\nयदि समस्या बनी रहती है या अत्यावश्यक है, तो कृपया हमसे संपर्क करें।"
+    general_error:
+      message: "हमें माफ करें, लेकिन कुछ गलत हो गया।\n\nयह एक अस्थायी समस्या हो सकती है, इसलिए कृपया फिर से कोशिश करें या पेज को फिर से लोड करें।\nहम सभी त्रुटियों को रिकॉर्ड करते हैं और सम्भावित है की हम इसे ठीक करने पर काम कर रहे हों।\nयदि समस्या बनी रहती है या अत्यावश्यक है, तो कृपया हमसे संपर्क करें।"
   stripe:
     error_code:
       incorrect_number: "कार्ड नंबर गलत है।"
@@ -534,6 +535,7 @@ hi:
         edit: एडिट करें
         clone: क्लोन
         delete: हटाएं
+        remove: मिटाएँ
       image:
         edit: एडिट करें
     adjustments:
@@ -752,6 +754,7 @@ hi:
       index:
         header:
           title: बल्क उत्पाद एडिट करें
+      content:
         loading: अपने उत्पादों को लोड कर रहा है
       filters:
         search_products: उत्पादों के लिए सर्च करें
@@ -787,8 +790,12 @@ hi:
         reset: परिवर्तनों को अस्वीकार करें
         save: परिवर्तन सेव करें
         new_variant: नया वैरिएंट
-      edit_image:
-        close: वापस जाएं
+      variant_row:
+        none_tax_category: कोई नहीं
+        category_field_name: "श्रेणी"
+        tax_category_field_name: "टैक्स श्रेणी"
+      product_row:
+        producer_field_name: "उत्पादक"
     product_import:
       title: उत्पाद इम्पोर्ट करें
       file_not_found: फ़ाइल नहीं मिली या खोली नहीं जा सकी
@@ -2005,7 +2012,6 @@ hi:
   label_account: "अकाउंट"
   label_more: "और दिखाएं"
   label_less: "कम दिखाएं"
-  label_notices: "नोटिस"
   cart_items: "आइटम्स"
   cart_headline: "आपका शॉपिंग कार्ट"
   total: "कुल"
@@ -3875,6 +3881,9 @@ hi:
     validation:
       must_be_int: "पूर्णांक होना ही चाहिए"
     admin:
+      images:
+        edit:
+          close: वापस जाएं
       mail_methods:
         send_testmail: "टेस्ट ईमेल भेजें"
         testmail:
@@ -3902,6 +3911,10 @@ hi:
         customers: "ग्राहक"
         groups: "ग्रुप्स"
         oidc_settings: "OIDC सेटिंग्स"
+        overview: "अवलोकन"
+        product_import: "इम्पोर्ट करें"
+        enterprise_roles: "भूमिकाएँ"
+        payment_methods: "भुगतान की विधियाँ"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "%{supplier} से प्रॉपर्टीज़ इन्हेरिट करें? (जब तक कि ऊपर ओवरराइड न किया गया हो)"

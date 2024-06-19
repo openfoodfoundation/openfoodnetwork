@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe ExchangeProductsRenderer do
+RSpec.describe ExchangeProductsRenderer do
   let(:order_cycle) { create(:order_cycle) }
   let(:coordinator) { order_cycle.coordinator }
   let(:renderer) { described_class.new(order_cycle, coordinator.owner) }

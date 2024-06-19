@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::VariantSerializer do
+RSpec.describe Api::VariantSerializer do
   subject { Api::VariantSerializer.new variant }
   let(:variant) { create(:variant) }
 

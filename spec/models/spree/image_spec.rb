@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Image do
+  RSpec.describe Image do
     include FileHelper
 
     subject {

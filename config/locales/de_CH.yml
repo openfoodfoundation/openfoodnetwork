@@ -471,6 +471,7 @@ de_CH:
         edit: Bearbeiten
         clone: Duplizieren
         delete: Löschen
+        remove: Löschen
       image:
         edit: Bearbeiten
     adjustments:
@@ -697,8 +698,12 @@ de_CH:
         no_products_found: Keine Produkte gefunden.
       table:
         new_variant: Neue Produktvariante
-      edit_image:
-        close: Zurück
+      variant_row:
+        none_tax_category: Keine
+        category_field_name: "Kategorie"
+        tax_category_field_name: "Steuerkategorie"
+      product_row:
+        producer_field_name: "Produzent"
     product_import:
       title: Produkte importieren
       file_not_found: Die Datei konnte nicht gefunden oder nicht geöffnet werden.
@@ -1099,6 +1104,7 @@ de_CH:
           email_confirmed: "E-Mail-Adresse bestätigt"
           email_not_confirmed: "E-Mail-Adresse nicht bestätigt"
         vouchers:
+          voucher_code: Gutschein-Code
           rate: Steuersatz
           customers: Kunde
           active: Aktiv?
@@ -1534,6 +1540,7 @@ de_CH:
       new:
         back: Zurück
         save: Speichern
+        voucher_code: Gutschein-Code
         voucher_amount: Betrag
     controllers:
       enterprises:
@@ -1619,6 +1626,10 @@ de_CH:
       explaination: Sie können Ihre Bestellung im nächsten Schritt überprüfen und die endgültigen Kosten bestätigen.
       submit: Weiter - Bestellübersicht
       cancel: Zurück - Ihre Daten
+      voucher:
+        apply_voucher: Gutschein einlösen
+        apply: Einlösen
+        placeholder: Gutschein-Code eingeben
     step3:
       delivery_details:
         title: Lieferdetails
@@ -1729,6 +1740,7 @@ de_CH:
   abn: "MWST nr."
   acn: "St.-Nr.:"
   invoice_issued_on: "Rechnungsdatum:"
+  order_number: "Bestellnummer:"
   date_of_transaction: "Bestelldatum:"
   menu_1_title: "Einkaufen"
   menu_1_url: "/shops"
@@ -1811,7 +1823,6 @@ de_CH:
   label_account: "Konto"
   label_more: "Mehr anzeigen"
   label_less: "Weniger anzeigen"
-  label_notices: "Ankündigungen"
   cart_items: "Artikel"
   cart_headline: "Ihr Warenkorb"
   total: "Summe"
@@ -2684,6 +2695,7 @@ de_CH:
   report_header_total_tax: "Summe Steuern (%{currency_symbol})"
   report_header_total_excl_tax: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_tax: "Summe inkl. Steuern (%{currency_symbol})"
+  report_header_total_orders: "Anzahl der Bestellungen"
   report_header_enterprise: Unternehmen
   report_header_enterprise_fee_name: Name
   report_header_enterprise_fee_type: Art
@@ -3632,6 +3644,9 @@ de_CH:
     validation:
       must_be_int: "muss eine ganze Zahl sein"
     admin:
+      images:
+        edit:
+          close: Zurück
       mail_methods:
         send_testmail: "Test-E-Mail senden"
         testmail:
@@ -3658,6 +3673,10 @@ de_CH:
         enterprise_relationships: "Berechtigungen"
         customers: "Kunden"
         groups: "Gruppen"
+        overview: "Einführung"
+        product_import: "Importieren"
+        enterprise_roles: "Rollen"
+        payment_methods: "Zahlungsarten"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Übernahme der Eigenschaften von %{supplier} (ausser oben überschrieben)?"
@@ -3747,6 +3766,7 @@ de_CH:
           from: "Von"
           to: "Rechnungsempfänger"
           shipping: "Lieferung"
+          order_number: "Bestellnummer"
           payments_list:
             date_time: "Datum/Uhrzeit"
             payment_method: "Zahlungsart"

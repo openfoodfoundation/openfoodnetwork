@@ -1,5 +1,5 @@
 #sort
-  %div
+  %div.pagination-description
     - if pagy.present?
       = t(".pagination.total_html", total: pagy.count, from: pagy.from, to: pagy.to)
 
@@ -13,3 +13,6 @@
         options_for_select([15, 25, 50, 100].collect{|i| [t('.pagination.per_page.per_page', num: i), i]}, pagy&.items),
         class: "no-input per-page",
         data: { controller: "tom-select search", action: "change->search#changePerPage", "tom-select-options-value": '{ "plugins": [] }'}
+
+  / Columns dropdown
+  = render partial: "admin/column_preferences/form", locals: { action: "products_v3_index" }

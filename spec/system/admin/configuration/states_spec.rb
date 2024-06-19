@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "States" do
+RSpec.describe "States" do
   include AuthenticationHelper
   include WebHelper
 

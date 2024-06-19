@@ -138,7 +138,8 @@ en_GB:
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' >Return home</a></h3> </p>"
-    stimulus_reflex_error: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all errors and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
+    general_error:
+      message: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all errors and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -538,6 +539,7 @@ en_GB:
         edit: Edit
         clone: Clone
         delete: Delete
+        remove: Remove
       image:
         edit: Edit
     adjustments:
@@ -762,6 +764,7 @@ en_GB:
       index:
         header:
           title: Bulk Edit Products
+      content:
         loading: Loading your products
       delete_modal:
         delete_product_modal:
@@ -809,16 +812,18 @@ en_GB:
         new_variant: New variant
       bulk_update:
         success: Changes saved
-      edit_image:
-        title: Edit product photo
-        close: Back
-        upload: Upload photo
       delete_product:
         success: Successfully deleted the product
         error: Unable to delete the product
       delete_variant:
         success: Successfully deleted the variant
         error: Unable to delete the variant
+      variant_row:
+        none_tax_category: None
+        category_field_name: "Category"
+        tax_category_field_name: "Tax Category"
+      product_row:
+        producer_field_name: "Producer"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -2065,7 +2070,6 @@ en_GB:
   label_account: "Account"
   label_more: "Show more"
   label_less: "Show less"
-  label_notices: "Community Forum"
   cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
@@ -2240,7 +2244,7 @@ en_GB:
   email_so_placement_intro_html: "You have a new order with <strong>%{distributor}</strong>"
   email_so_placement_details_html: "Here are the details of your order for <strong>%{distributor}</strong>:"
   email_so_placement_changes: "Unfortunately, not all products that you requested were available. The original quantities that you requested appear crossed-out below."
-  email_so_payment_success_intro_html: "An automatic payment has been processed for your order from <strong>%{distributor}</strong>."
+  email_so_payment_success_intro_html: "Your subscription order from <strong>%{distributor}</strong> has been processed. \nIf you chose to pay for your subscription via card, you will now be charged."
   email_so_placement_explainer_html: "This order was automatically created for you."
   email_so_edit_true_html: "You can <a href='%{order_url}'>make changes</a> until orders close on %{orders_close_at}."
   email_so_edit_false_html: "You can <a href='%{order_url}'>view details of this order</a> at any time."
@@ -3947,6 +3951,11 @@ en_GB:
     validation:
       must_be_int: "must be an integer"
     admin:
+      images:
+        edit:
+          title: Edit product photo
+          close: Back
+          upload: Upload photo
       mail_methods:
         send_testmail: "Send test email"
         testmail:
@@ -3974,6 +3983,10 @@ en_GB:
         customers: "Customers"
         groups: "Groups"
         oidc_settings: "OIDC Settings"
+        overview: "Overview"
+        product_import: "Import"
+        enterprise_roles: "Roles"
+        payment_methods: "Payment Methods"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"

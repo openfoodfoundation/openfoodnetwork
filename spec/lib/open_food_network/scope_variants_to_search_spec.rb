@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'open_food_network/scope_variants_for_search'
 
-describe OpenFoodNetwork::ScopeVariantsForSearch do
+RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
   let!(:p1) { create(:simple_product, name: 'Product 1') }
   let!(:p2) { create(:simple_product, sku: 'Product 1a') }
   let!(:p3) { create(:simple_product, name: 'Product 3') }

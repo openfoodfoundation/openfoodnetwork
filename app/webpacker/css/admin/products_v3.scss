@@ -96,7 +96,8 @@
 
       // "Naked" inputs. Row hover helps reveal them.
       .naked_inputs {
-        input:not([type="checkbox"]), .ts-control {
+        input:not([type="checkbox"]),
+        .ts-control {
           background-color: $color-tbl-cell-bg;
         }
       }
@@ -170,15 +171,26 @@
     .field {
       padding: 0;
     }
-    .multi-field {
-      // Allow wrap with small gap
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3px;
+
+    .fullwidth + .field {
+      // Assume wrap, so add small gap
+      margin-top: 3px;
     }
 
     .ts-control {
       z-index: 0; // Avoid hovering over thead
+    }
+
+    // Hide columns
+    $columns:
+      "image", "name", "sku", "unit_scale", "unit", "price", "on_hand", "producer", "category",
+      "tax_category", "inherits_properties";
+    @each $col in $columns {
+      &.hide-#{$col} {
+        .col-#{$col} {
+          display: none;
+        }
+      }
     }
   }
 
@@ -215,6 +227,10 @@
       display: none;
     }
 
+    .pagination-description {
+      flex-grow: 1; // Grow to fill space
+    }
+
     .with-dropdown {
       display: flex;
       justify-content: space-between;
@@ -222,7 +238,11 @@
       gap: 10px;
     }
     .per-page {
-      width: 10em;
+      width: 9em;
+    }
+
+    .column-preferences .ofn-drop-down-label {
+      width: 13em;
     }
   }
 
@@ -371,7 +391,7 @@
       border-radius: $border-radius;
       box-shadow: 0px 0px 8px 0px rgba($near-black, 0.25);
 
-      .field{
+      .field {
         margin-bottom: 0.75em;
 
         &:last-child {
@@ -413,5 +433,20 @@
         border-color: $color-btn-hover-border;
       }
     }
+  }
+
+  @keyframes slideOutLeft {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
+
+  .slide-out {
+    animation: slideOutLeft 0.5s forwards;
   }
 }

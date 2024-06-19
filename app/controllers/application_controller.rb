@@ -28,7 +28,6 @@ class ApplicationController < ActionController::Base
   helper 'injection'
   helper 'markdown'
   helper 'footer_links'
-  helper 'discourse'
   helper 'checkout'
   helper 'link'
   helper 'terms_and_conditions'
@@ -61,7 +60,7 @@ class ApplicationController < ActionController::Base
     rescue StandardError
       'unknown'
     end}")
-    super(options, response_status)
+    super
   end
 
   def set_checkout_redirect

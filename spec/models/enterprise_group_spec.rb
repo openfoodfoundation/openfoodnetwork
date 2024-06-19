@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe EnterpriseGroup do
+RSpec.describe EnterpriseGroup do
   describe "associations" do
     subject { build(:enterprise_group) }
 
@@ -116,6 +116,18 @@ describe EnterpriseGroup do
         existing = ["permalink", "permalink1"]
         expect(EnterpriseGroup.find_available_value(existing, "permalink1")).to eq "permalink11"
       end
+    end
+  end
+
+  describe "serialisation" do
+    it "sanitises HTML in long_description" do
+      subject.long_description = "Hello <script>alert</script> dearest <b>monster</b>."
+      expect(subject.long_description).to eq "Hello alert dearest <b>monster</b>."
+    end
+
+    it "sanitises existing HTML in long_description" do
+      subject[:long_description] = "Hello <script>alert</script> dearest <b>monster</b>."
+      expect(subject.long_description).to eq "Hello alert dearest <b>monster</b>."
     end
   end
 end

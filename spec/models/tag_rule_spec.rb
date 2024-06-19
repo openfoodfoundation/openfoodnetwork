@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe TagRule, type: :model do
+RSpec.describe TagRule, type: :model do
   describe "validations" do
     it "requires a enterprise" do
-      expect(subject).to validate_presence_of(:enterprise)
+      expect(subject).to belong_to(:enterprise)
     end
   end
 end

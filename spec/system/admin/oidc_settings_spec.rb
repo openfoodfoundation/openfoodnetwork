@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "OIDC Settings" do
+RSpec.describe "OIDC Settings" do
   it "requires login" do
     visit admin_oidc_settings_path
     expect(page).to have_button "Login"

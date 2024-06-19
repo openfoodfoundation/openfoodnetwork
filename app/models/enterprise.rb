@@ -43,25 +43,31 @@ class Enterprise < ApplicationRecord
                                foreign_key: 'supplier_id',
                                dependent: :destroy
   has_many :supplied_variants, through: :supplied_products, source: :variants
-  has_many :distributed_orders, class_name: 'Spree::Order', foreign_key: 'distributor_id'
+  has_many :distributed_orders, class_name: 'Spree::Order',
+                                foreign_key: 'distributor_id',
+                                dependent: :restrict_with_exception
   belongs_to :address, class_name: 'Spree::Address'
   belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy
-  has_many :enterprise_fees
+  has_many :enterprise_fees, dependent: :restrict_with_exception
   has_many :enterprise_roles, dependent: :destroy
   has_many :users, through: :enterprise_roles
   belongs_to :owner, class_name: 'Spree::User',
                      inverse_of: :owned_enterprises
   has_many :distributor_payment_methods,
-           inverse_of: :distributor, foreign_key: :distributor_id
+           inverse_of: :distributor,
+           foreign_key: :distributor_id,
+           dependent: :restrict_with_exception
   has_many :distributor_shipping_methods,
-           inverse_of: :distributor, foreign_key: :distributor_id
+           inverse_of: :distributor,
+           foreign_key: :distributor_id,
+           dependent: :restrict_with_exception
   has_many :payment_methods, through: :distributor_payment_methods
   has_many :shipping_methods, through: :distributor_shipping_methods
   has_many :customers, dependent: :destroy
   has_many :inventory_items, dependent: :destroy
   has_many :tag_rules, dependent: :destroy
   has_one :stripe_account, dependent: :destroy
-  has_many :vouchers
+  has_many :vouchers, dependent: :restrict_with_exception
   has_many :connected_apps, dependent: :destroy
   has_one :custom_tab, dependent: :destroy
 
@@ -128,6 +134,7 @@ class Enterprise < ApplicationRecord
 
   after_create :set_default_contact
   after_create :relate_to_owners_enterprises
+
   after_rollback :restore_permalink
   after_touch :touch_distributors
   after_create_commit :send_welcome_email
@@ -238,6 +245,16 @@ class Enterprise < ApplicationRecord
   # Force a distinct count to work around relation count issue https://github.com/rails/rails/issues/5554
   def self.distinct_count
     count(distinct: true)
+  end
+
+  # Remove any unsupported HTML.
+  def long_description
+    HtmlSanitizer.sanitize(super)
+  end
+
+  # Remove any unsupported HTML.
+  def long_description=(html)
+    super(HtmlSanitizer.sanitize(html))
   end
 
   def contact
@@ -359,7 +376,7 @@ class Enterprise < ApplicationRecord
   def category
     # Make this crazy logic human readable so we can argue about it sanely.
     cat = is_primary_producer ? "producer_" : "non_producer_"
-    cat << ("sells_" + sells)
+    cat << ("sells_#{sells}")
 
     # Map backend cases to front end cases.
     case cat
@@ -493,7 +510,7 @@ class Enterprise < ApplicationRecord
   end
 
   def correct_whatsapp_url(phone_number)
-    phone_number && ("https://wa.me/" + phone_number.tr('+ ', ''))
+    phone_number && "https://wa.me/#{phone_number.tr('+ ', '')}"
   end
 
   def correct_instagram_url(url)

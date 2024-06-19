@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe QuantitativeValueBuilder do
+RSpec.describe QuantitativeValueBuilder do
   subject(:builder) { described_class }
   let(:variant) { build(:variant, product:) }
   let(:product) { build(:product, name: "Apple") }
@@ -102,6 +102,20 @@ describe QuantitativeValueBuilder do
       expect(product.variant_unit_name).to eq nil
       expect(product.variant_unit_scale).to eq 0.001
       expect(product.unit_value).to eq 0.005
+    end
+
+    it "interpretes values given as a string" do
+      quantity = DataFoodConsortium::Connector::QuantitativeValue.new(
+        unit: quantity_unit.KILOGRAM,
+        value: "0.4",
+      )
+
+      builder.apply(quantity, product)
+
+      expect(product.variant_unit).to eq "weight"
+      expect(product.variant_unit_name).to eq nil
+      expect(product.variant_unit_scale).to eq 1_000
+      expect(product.unit_value).to eq 400
     end
 
     it "knows imperial units" do

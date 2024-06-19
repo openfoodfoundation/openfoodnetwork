@@ -477,6 +477,7 @@ ar:
         edit: تعديل
         clone: استنساخ
         delete: حذف
+        remove: إزالة
       image:
         edit: تعديل
     adjustments:
@@ -706,8 +707,12 @@ ar:
           clear_search: مسح البحث
       table:
         new_variant: نوع جديد
-      edit_image:
-        close: عودة
+      variant_row:
+        none_tax_category: لا شيء
+        category_field_name: "الفئة"
+        tax_category_field_name: "الفئة الضريبية"
+      product_row:
+        producer_field_name: "المنتج"
     product_import:
       title: استيراد المنتج
       file_not_found: لم يتم العثور على الملف أو تعذر فتحه
@@ -1127,7 +1132,16 @@ ar:
           add_new: اضف جديد
           no_voucher_yet: لا قسائم حتى الآن
         connected_apps:
+          tagline: "By clicking ‘Allow data sharing’, you are sharing data between Open Food Network and the Discover Regenerative Portal, and agreeing to make specific data public on the Portal, which will also be publicly available on the API.\nIMPORTANT: Before you stop sharing and remove your listing, please first contact hello@regenerative.org.au to request a copy of your Discover Regenerative data."
           loading: "جار التحميل"
+          description_html: |
+              <p>
+              Discover Regenerative is a showcase of Australia’s Regenerative Farmers, their produce/products, outcomes and achievements. It simplifies how business-to-business (B2B) / wholesale buyers can find regenerative produce and directly connect with Producers.
+              </p>
+              <p>
+              <a href="https://regenerative.org.au/" target="_blank"><b>Visit Discover Regenerative</b>
+              <i class="icon-external-link"></i></a>
+              </p>
       actions:
         edit_profile: الإعدادات
         properties: الخصائص
@@ -1881,7 +1895,6 @@ ar:
   label_account: "الحساب"
   label_more: "أظهر المزيد"
   label_less: "عرض أقل"
-  label_notices: "إشعارات"
   cart_items: "العناصر"
   cart_headline: "سلة التسوق الخاصة بك"
   total: "مجموع"
@@ -3828,6 +3841,9 @@ ar:
     validation:
       must_be_int: "يجب أن يكون رقما صحيحا"
     admin:
+      images:
+        edit:
+          close: عودة
       mail_methods:
         send_testmail: "إرسال بريد إلكتروني تجريبي"
         testmail:
@@ -3855,6 +3871,10 @@ ar:
         customers: "العملاء"
         groups: "مجموعات"
         oidc_settings: "إعدادات OIDC"
+        overview: "نظرة عامة"
+        product_import: "استيراد"
+        enterprise_roles: "الأدوار"
+        payment_methods: "طرق الدفع"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "وراثة الخصائص من %{supplier}؟ (ما لم يتم تجاوزه أعلاه)"

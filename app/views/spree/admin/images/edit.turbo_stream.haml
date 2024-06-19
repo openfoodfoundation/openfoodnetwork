@@ -1,0 +1,25 @@
+= turbo_stream.update "edit_image_modal" do
+  = render ModalComponent.new id: "#modal_edit_product_image", instant: true, close_button: false, modal_class: :fit do
+    %h2= t(".title")
+
+    -# Display image in the same way it appears in the shopfront popup
+    - if defined?(@errors) && !@errors.empty?
+      - @errors.each do |error|
+        %p
+          = error
+    - else
+      %p= image_tag @image.persisted? ? @image.url(:large) : Spree::Image.default_image_url(:large), width: 433, height: 433
+
+
+    -# Submit as turbo stream to avoid full page reload.
+    -# TODO: show loading indicator.
+    = form_for [:admin, @product, @image],
+        html: { multipart: true }, data: { controller: "form" } do |f|
+      %input{ type: :hidden, name: :return_url, value: request.referer }
+      = f.hidden_field :viewable_id, value: @product.id
+
+      .modal-actions.justify-end
+        %input{ class: "secondary relaxed", type: 'button', value: t('.close'), "data-action": "click->modal#close" }
+        -# label.button provides a handy shortcut to open the file selector on click. Unfortunately this trick isn't keyboard accessible though..
+        = f.label :attachment, t(".upload"), class: "button primary relaxed icon-upload-alt"
+        = f.file_field :attachment, accept: "image/*", style: "display: none", "data-action": "change->form#submit change->modal#close"

@@ -141,7 +141,8 @@ ru:
     unprocessable_entity:
       title: "Требуемое изменение было отклонено (422)"
       message_html: "<p>Требуемое изменение было отклонено. Возможно, вы пытались изменить что-то, к чему у вас нет доступа.<br><h3> <a href='/' >Вернуться домой</a></h3></p>"
-    stimulus_reflex_error: "Нам очень жаль, но что-то пошло не так.\n\n Возможно, это временная проблема, поэтому повторите попытку или перезагрузите страницу.\n Мы записываем все ошибки и возможно уже работаем над их исправлением.\n Если проблема не устранена или срочная, пожалуйста, свяжитесь с нами."
+    general_error:
+      message: "Нам очень жаль, но что-то пошло не так.\n\n Возможно, это временная проблема, поэтому повторите попытку или перезагрузите страницу.\n Мы записываем все ошибки и возможно уже работаем над их исправлением.\n Если проблема не устранена или срочная, пожалуйста, свяжитесь с нами."
   stripe:
     error_code:
       incorrect_number: "Номер карты неверный."
@@ -542,6 +543,7 @@ ru:
         edit: Изменить
         clone: Клонировать
         delete: Удалить
+        remove: Удалить
       image:
         edit: Изменить
     adjustments:
@@ -767,6 +769,7 @@ ru:
       index:
         header:
           title: Массовое редактирование товаров
+      content:
         loading: Загрузка ваших товаров
       delete_modal:
         delete_product_modal:
@@ -819,16 +822,18 @@ ru:
         new_variant: Новый вариант
       bulk_update:
         success: Изменения сохранены
-      edit_image:
-        title: Изменить фотографию товара
-        close: Назад
-        upload: Загрузить фото
       delete_product:
         success: Товар успешно удален
         error: Невозможно удалить товар
       delete_variant:
         success: Вариант успешно удален.
         error: Невозможно удалить вариант
+      variant_row:
+        none_tax_category: Нет
+        category_field_name: "Категория"
+        tax_category_field_name: "Налоговая Категория"
+      product_row:
+        producer_field_name: "Производитель"
     product_import:
       title: Импорт Товара
       file_not_found: Файл не найден или не может быть открыт
@@ -2073,7 +2078,6 @@ ru:
   label_account: "Профиль"
   label_more: "Показать больше"
   label_less: "Показать меньше"
-  label_notices: "Уведомления"
   cart_items: "позиции"
   cart_headline: "Ваша корзина"
   total: "Всего"
@@ -4004,6 +4008,11 @@ ru:
     validation:
       must_be_int: "должно быть целым числом"
     admin:
+      images:
+        edit:
+          title: Изменить фотографию товара
+          close: Назад
+          upload: Загрузить фото
       mail_methods:
         send_testmail: "Отправить тестовое письмо"
         testmail:
@@ -4031,6 +4040,10 @@ ru:
         customers: "Клиенты"
         groups: "Группы"
         oidc_settings: "Настройки OIDC"
+        overview: "Введение"
+        product_import: "Импорт"
+        enterprise_roles: "Роли"
+        payment_methods: "Способы Оплаты"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Наследовать свойства от %{supplier}? (если не отменено выше)"

@@ -2,12 +2,9 @@
 
 module Spree
   class ProductProperty < ApplicationRecord
-    self.belongs_to_required_by_default = false
-
     belongs_to :product, class_name: "Spree::Product", touch: true
     belongs_to :property, class_name: 'Spree::Property'
 
-    validates :property, presence: true
     validates :value, length: { maximum: 255 }
 
     default_scope -> { order("#{table_name}.position") }

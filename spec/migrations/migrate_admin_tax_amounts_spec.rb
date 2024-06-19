@@ -3,7 +3,7 @@
 require 'spec_helper'
 require_relative '../../db/migrate/20210617203927_migrate_admin_tax_amounts'
 
-describe MigrateAdminTaxAmounts do
+RSpec.describe MigrateAdminTaxAmounts do
   subject { MigrateAdminTaxAmounts.new }
 
   let(:tax_category10) { create(:tax_category) }

@@ -62,8 +62,7 @@ module Reporting
           ],
           [
             i18n_translate('enterprise_fees_with_tax_report_by_producer'),
-            :enterprise_fees_with_tax_report_by_producer,
-            { deprecated: true }, # Not supported until specific details are finalised.
+            :enterprise_fees_with_tax_report_by_producer
           ],
         ]
       end

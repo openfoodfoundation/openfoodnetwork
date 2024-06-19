@@ -95,6 +95,7 @@ fr_BE:
             on_demand_but_count_on_hand_set: "doit être vide si à la demande"
             limited_stock_but_no_count_on_hand: "doit être spécifié car le stock limité est forcé"
       messages:
+        confirmation: "ne correspond pas à %{attribute}"
         blank: "Champ obligatoire"
   errors:
     messages:
@@ -113,8 +114,8 @@ fr_BE:
       dimension_width_equal_to: "la largeur doit être égale au pixel %{length} ."
       dimension_height_equal_to: "la hauteur doit être égale au pixel %{length} ."
       aspect_ratio_not_square: "doit être une image carrée"
-      aspect_ratio_not_portrait: "doit être une image de portrait"
-      aspect_ratio_not_landscape: "doit être une image de paysage"
+      aspect_ratio_not_portrait: "doit être une image en format portrait"
+      aspect_ratio_not_landscape: "doit être une image en format paysage"
       aspect_ratio_is_not: "doit avoir un rapport hauteur / largeur de %{aspect_ratio}"
       aspect_ratio_unknown: "a un rapport hauteur/largeur inconnu"
       image_not_processable: "n'est pas une image valide"
@@ -127,7 +128,8 @@ fr_BE:
     unprocessable_entity:
       title: "Le changement que vous souhaitiez a été rejeté (422)"
       message_html: "<p>Le changement que vous souhaitiez a été rejeté. Peut-être avez-vous essayé de modifier quelque chose auquel vous n'avez pas accès.<br><h3> <a href='/' >Retour au précédent</a></h3></p>"
-    stimulus_reflex_error: "Nous sommes désolés, une erreur s'est produite. Il s'agit peut-être d'un problème temporaire, veuillez donc réessayer ou recharger la page. Nous enregistrons toutes les erreurs et travaillons peut-être sur un correctif. Si le problème persiste ou est urgent, veuillez nous contacter."
+    general_error:
+      message: "Nous sommes désolés, une erreur s'est produite. Il s'agit peut-être d'un problème temporaire, veuillez donc réessayer ou recharger la page. Nous enregistrons toutes les erreurs et travaillons peut-être sur un correctif. Si le problème persiste ou est urgent, veuillez nous contacter."
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte est incorrect."
@@ -214,6 +216,7 @@ fr_BE:
         signed_up_but_unconfirmed: "Un message avec un lien de confirmation a été envoyé à l'adresse email indiquée. Veuillez cliquer sur ce lien pour activer votre compte."
         unknown_error: "Une erreur s'est glissée lors de la création de votre compte. Vérifiez votre adresse email et recommencez."
     failure:
+      disabled: "Votre compte a été désactivé. Veuillez contacter un administrateur pour résoudre ce problème."
       invalid: |
           Email / mot de passe incorrect.
           Créez votre compte ou réinitialisez votre mot de passe.
@@ -233,6 +236,8 @@ fr_BE:
   models:
     order_cycle:
       cloned_order_cycle_name: "Copie de %{order_cycle}"
+    tax_rate:
+      included_in_price: "Inclus dans le prix"
   open_street_map_enabled: "Open Street Map activé"
   resume_order: "Reprendre la commande"
   sku: "Référence produit"
@@ -245,6 +250,10 @@ fr_BE:
     integer_array_validator:
       not_array_error: "doit être un array"
       invalid_element_error: "doit contenir uniquement des nombres entiers"
+  report_job:
+    report_failed: |
+        Ce rapport a échoué. C'est peut-être trop lourd à traiter.
+        Nous allons examiner la question, mais n'hésitez pas à nous faire savoir si le problème persiste.
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -267,6 +276,8 @@ fr_BE:
     report_ready:
       subject: "Rapport prêt"
       heading: "Rapport prêt à télécharger"
+      intro: |
+          Le lien ci-dessous expirera après une semaine.
   shipment_mailer:
     shipped_email:
       dear_customer: "Cher Client,"
@@ -332,6 +343,7 @@ fr_BE:
   confirm_resend_order_confirmation: "Etes-vous sûr de vouloir renvoyer le mail de confirmation de commande ?"
   invoice: "Facture"
   active: "Actif"
+  download: "Télécharger"
   cancelled: "Annulée"
   more: "Plus"
   say_no: "Non"
@@ -400,7 +412,7 @@ fr_BE:
   copy: Copier
   change_my_password: "Changer mon mot de passe"
   update_password: "Mise à jour du mot de passe"
-  password_confirmation: confirmation du mot de passe
+  password_confirmation: Confirmation du mot de passe
   reset_password_token: Réinitialisation du mot de passe
   expired: a expiré, veuillez en demander un nouveau
   back_to_payments_list: "Retour à la liste des paiements"
@@ -442,6 +454,7 @@ fr_BE:
         name: Nom
         unit: Unité
         unit_value: Valeur unitaire
+        display_as: Unité d'affichage comme
         price: Prix
         producer: Producteur·trice
         category: Catégorie
@@ -467,6 +480,7 @@ fr_BE:
         edit: Modifier
         clone: Dupliquer
         delete: Supprimer
+        remove: Supprimer
       image:
         edit: Modifier
     adjustments:
@@ -547,6 +561,7 @@ fr_BE:
         terms_of_service: "Conditions d'utilisation"
         delete: "Supprimer le fichier"
         confirm_delete: "Voulez-vous vraiment supprimer le fichier actuel des conditions d'utilisation ?"
+        attachment: "Pièce jointe"
         create_terms_of_service: "Créer un fichier de conditions d'utilisation"
     number_localization:
       number_localization_settings: "Gestion localisation des nombres"
@@ -581,6 +596,7 @@ fr_BE:
         matomo_tag_manager_url: "URL de l'instance sur Matomo"
         info_html: "Matomo est un site web est une application mobile analytique . Vous pouvez heberger matomo sur place ou heberger dans le cloud. Voyez <a href='http://matomo.org' target='_blank'>matomo.org</a> pour plus d'information."
         config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
+        config_instructions_tag_manager_html: "La définition de l'URL de Matomo Tag Manager active la fonctionnalité \"Matomo Tag Manager\". Cet outil vous permet de configurer des événements d'analyse. L'URL de Matomo Tag Manager est copiée à partir de la section \"Code d'installation\" de Matomo Tag Manager. Assurez-vous de sélectionner le bon conteneur et le bon environnement, car ces options modifient l'URL."
     customers:
       index:
         new_customer: "Nouvel acheteur"
@@ -671,7 +687,7 @@ fr_BE:
         infinity: "Infinité"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
       back_to_products_list: "Retour à la liste produits"
-      editing_product: "Edition de produits"
+      editing_product: "Éditer le produit"
       tabs:
         product_details: "Détails du produit"
         group_buy_options: "Options d'achat par lot"
@@ -693,8 +709,12 @@ fr_BE:
           clear_search: Effacer recherche
       table:
         new_variant: Nouvelle variante
-      edit_image:
-        close: Retour
+      variant_row:
+        none_tax_category: Aucun
+        category_field_name: "Catégorie"
+        tax_category_field_name: "TVA applicable"
+      product_row:
+        producer_field_name: "Producteur·trice"
     product_import:
       title: Import liste produits
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -850,6 +870,7 @@ fr_BE:
         order_date: "Complété à "
         max: "Max"
         product_unit: "Produit: Unité"
+        weight_volume: "Poids/Volume (g)"
         ask: "Demander?"
         page_title: "Gestion des commandes"
         actions_delete: "Supprimer la sélection"
@@ -1114,7 +1135,7 @@ fr_BE:
           white_label_logo_link_label: "Lien pour le logo utilisé en vitrine"
           hide_groups_tab: "Masquer l'onglet des groupes dans la vitrine"
           create_custom_tab: "Créer un onglet personnalisé dans la vitrine"
-          custom_tab_title: "Titre de l'onglet personnalisé"
+          custom_tab_title: "Titre de l'onglet personnalisé (max. 20 caractères)"
           custom_tab_content: "Contenu de l'onglet personnalisé"
         connected_apps:
           loading: "Chargement en cours"
@@ -1265,9 +1286,9 @@ fr_BE:
         add_distributor: 'Ajouter un distributeur'
       advanced_settings:
         automatic_notifications: Notifications automatiques
-        automatic_notifications_tip: Envoi un email automatiquement à tous les producteurs lorsque le cycle de vente ferme.
+        automatic_notifications_tip: Envoie un email automatiquement à tous les producteurs lorsque le cycle de vente ferme.
         title: Paramétrages avancés
-        choose_product_tip: Vous pouvez limiter les produits entrants et sortants à l'inventaire uniquement%{inventory}.
+        choose_product_tip: Vous pouvez limiter les produits entrants et sortants uniquement à ceux sélectionnés dans le catalogue du comptoir "%{inventory} ".
         preferred_product_selection_from_coordinator_inventory_only_here: Uniquement les produits du catalogue magasin
         preferred_product_selection_from_coordinator_inventory_only_all: Tous les produits disponibles dans les catalogues producteurs
         save_reload: Sauvegarder et rafraichir la page
@@ -1398,11 +1419,14 @@ fr_BE:
       pack_by_customer: Préparation des commandes par Acheteur·euse
       pack_by_supplier: Préparation des commandes par Producteur·trice
       pack_by_product: Préparation des commandes par produit
+      download:
+        button: "Télécharger le rapport"
       show:
         report_taking_longer: >
             Désolé, ce rapport a pris trop de temps à traiter. Il peut contenir beaucoup
             de données ou nous sommes occupés par d'autres rapports. Vous pouvez réessayer
             plus tard.
+        report_link_label: Télécharger le rapport (si disponible)
       revenues_by_hub:
         name: CA par comptoir
         description: CA par comptoir
@@ -1467,7 +1491,7 @@ fr_BE:
         name: "Rapports de préparation des paniers"
     subscriptions:
       index:
-        title: "commandes récurrantes"
+        title: "Commandes récurrentes"
         new: "Nouvel abonnement"
       new:
         title: "Nouvel abonnement"
@@ -1481,7 +1505,7 @@ fr_BE:
       filters:
         query_placeholder: "Recherche par email ..."
       setup_explanation:
-        title: "commandes récurrantes"
+        title: "Commandes récurrentes"
         just_a_few_more_steps: 'Encore quelques étapes avant de pouvoir commencer:'
         enable_subscriptions: "Activez la fonction abonnements pour au moins une de vos comptoirs"
         enable_subscriptions_step_1_html: 1. Allez à %{enterprises_link}, trouvez votre comptoir, et cliquez sur "Gérer"
@@ -1567,6 +1591,8 @@ fr_BE:
         voucher_code: Code du bon d'achat
         voucher_amount: Quantité
         voucher_type: Type de bon d'achat
+        flat_rate: Montant fixe
+        percentage_rate: Pourcentage (%)
     controllers:
       enterprises:
         stripe_connect_cancelled: "La connexion avec Stripe a été annulée"
@@ -1587,7 +1613,7 @@ fr_BE:
     enterprise_terms_and_conditions:
       destroy_attachment_does_not_exist: "Le fichier des termes et conditions n'existe pas"
     orders:
-      failed_to_update: "Annulation de la mise à jour la commande"
+      failed_to_update: "Annulation de la mise à jour de la commande"
   checkout:
     failed: "La vente a échouée. Veuillez nous le faire savoir afin que nous puissions traiter votre commande."
     payment_cancelled_due_to_stock: "Paiement annulé : la commande n'a pas pu être finalisée en raison d'un problème de stock."
@@ -1673,9 +1699,10 @@ fr_BE:
       submit: Finaliser la commande
       cancel: Retour à Mode de paiement
     errors:
+      saving_failed: "L'enregistrement a échoué, veuillez mettre à jour les champs en surbrillance."
       terms_not_accepted: Veuillez accepter les termes et conditions
       required: Le champ ne peut pas être vide
-      invalid_number: "s&#39;il vous plaît entrer un numéro de téléphone valide"
+      invalid_number: "S'il vous plaît, entrez un numéro de téléphone valide"
       invalid_email: "Veuillez entrer un email valide"
       select_a_shipping_method: Sélectionnez une méthode d'expédition ou de retrait
       select_a_payment_method: Choisissez une méthode de paiement
@@ -1746,6 +1773,7 @@ fr_BE:
   invoice_column_price: "Prix"
   invoice_column_item: "Produit"
   invoice_column_qty: "Qté"
+  invoice_column_weight_volume: "Poids / Vol."
   invoice_column_unit_price_with_taxes: "Prix unitaire TTC"
   invoice_column_unit_price_without_taxes: "Prix unitaire HT"
   invoice_column_price_with_taxes: "Prix total TTC"
@@ -1840,7 +1868,6 @@ fr_BE:
   label_account: "Compte"
   label_more: "Afficher plus"
   label_less: "Masquer"
-  label_notices: "Informations"
   cart_items: "Produits"
   cart_headline: "Votre panier"
   total: "Total"
@@ -2050,6 +2077,7 @@ fr_BE:
   producer_mail_order_text: "Voilà la liste et les quantités des produits commandés vous concernant:"
   producer_mail_delivery_instructions: "Modalités de livraison des produits:"
   producer_mail_signoff: "Merci et belle fin de journée!"
+  producer_mail_order_customer_text: "Voici un récapitulatif des commandes regroupées par clients"
   shopping_oc_closed: Le comptoir est actuellement fermé
   shopping_oc_closed_description: "Veuillez attendre l'ouverture du prochain cycle de vente (ou contactez directement le comptoir pour voir si nous pouvons accepter une commande tardive)."
   shopping_oc_last_closed: "Le dernier cycle de vente s'est terminé il y a %{distance_of_time}"
@@ -2442,6 +2470,7 @@ fr_BE:
   shipping_method_destroy_error: "Cette méthode de livraison ne peut pas être supprimée car elle est référencée dans une commande : %{number}."
   fees: "Frais"
   fee_name: "Nom de la commission "
+  fee_owner: "Propriétaire de la commission"
   item_cost: "Coût du produit"
   bulk: "Vrac"
   shop_variant_quantity_min: "min"
@@ -2485,7 +2514,7 @@ fr_BE:
   admin_enterprise_relationships_button_create: "Créer"
   admin_enterprise_relationships_to: "vers"
   admin_enterprise_groups: "Groupes d'entreprises"
-  admin_enterprise_groups_name: "Produit/Variante"
+  admin_enterprise_groups_name: "NOM DU GROUPE"
   admin_enterprise_groups_owner: "Manager principal"
   admin_enterprise_groups_on_front_page: "Sur la page d'accueil?"
   admin_enterprise_groups_enterprise: "Entreprises"
@@ -2510,7 +2539,7 @@ fr_BE:
   supplier: "Fournisseurs"
   product_name: "Nom du Produit"
   product_description: "Description du Produit"
-  permalink: "permalien"
+  permalink: "Permalien : Nom pour URL (sans espace)"
   shipping_categories: "Condition de transport"
   units: "Unité de mesure"
   coordinator: "Coordinateur"
@@ -2719,6 +2748,7 @@ fr_BE:
   report_header_total_tax: "Total TVA (%{currency_symbol})"
   report_header_total_excl_tax: "Total HT (%{currency_symbol})"
   report_header_total_incl_tax: "Total TTC (%{currency_symbol})"
+  report_header_total_orders: "Nombre total de commandes"
   report_header_enterprise: Entreprise
   report_header_enterprise_fee_name: Nom
   report_header_enterprise_fee_type: Catégorie
@@ -2763,6 +2793,7 @@ fr_BE:
   report_header_delivery_postcode: Code Postal Livraison
   report_header_bulk_unit_size: Quantité totale du lot
   report_header_weight: Poids
+  report_header_final_weight_volume: Final (Poids/Volume)
   report_header_height: Taille
   report_header_width: largeur
   report_header_depth: profondeur
@@ -2817,6 +2848,11 @@ fr_BE:
   report_header_total_untaxable_admin: Total ajustements non taxables
   report_header_total_taxable_admin: Total ajustments soumis à TVA (inclut TVA)
   report_line_line_items: Ces articles
+  report_header_last_completed_order_date: Date de la dernière commande terminée
+  initial_invoice_number: "Numéro de facture initial"
+  invoice_date: "Date de facture"
+  due_date: "Date d'échéance"
+  account_code: "Code du compte"
   equals: "Egal"
   contains: "contient"
   discount: "Réduction"
@@ -3238,7 +3274,7 @@ fr_BE:
     order_cycles:
       create_failure: "La création du cycle de vente a échoué"
       update_success: 'Votre cycle de vente a été mis à jour.'
-      update_failure: "La mise à jour du cycle de vente à échoué"
+      update_failure: "La mise à jour du cycle de vente a échoué"
       no_distributors: Il n'y a pas de distributeur·trice pour ce cycle de vente. Il ne sera pas visible aux acheteur·euse·s tant qu'il n'y aura pas de distributeur·trice. Voulez-vous tout de même sauvegarder ce cycle de vente ?
     enterprises:
       producer: "Producteur·trice"
@@ -3365,8 +3401,10 @@ fr_BE:
     category: "Catégorie"
     created_successfully: "Créé avec succès"
     credit: "Crédit"
-    editing_tax_category: "Modification de la catégorie de taxe"
-    editing_tax_rate: "Modification du taux de taxe"
+    editing_tax_category: "Éditer la catégorie de taxe"
+    editing_tax_rate: "Éditer le taux de taxe"
+    editing_zone: "Éditer la zone"
+    editing_state: "Éditer la province"
     expiration: "Expiration"
     invalid_payment_provider: "Fournisseur de paiement invalide"
     items_cannot_be_shipped: "Les articles ne peuvent pas être expédiés"
@@ -3380,12 +3418,14 @@ fr_BE:
     notice_messages:
       variant_deleted: "Variante supprimée"
     start_date: "Date de début"
+    taxonomy_tree_instruction: "Faites un clic droit sur un élément pour ajouter, renommer, supprimer ou modifier."
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, merci de chercher et d'ajouter un des produits ci-dessus"
     add_product: "Ajoutez un produit"
     name_or_sku: "Nom ou N° d'article (entrer au moins 4 lettres du nom du produit) "
     resend: "Renvoyer"
     back_to_orders_list: "Retour vers la liste des commandes "
+    back_to_states_list: "Retour à la liste des provinces"
     return_authorizations: "Autorisations de retour"
     cannot_create_returns: "Impossible de créer des retours car cette commande n'a pas d'unités expédiées."
     select_stock: "Selectionner stock"
@@ -3405,6 +3445,7 @@ fr_BE:
     no_tracking_present: "Pas de traçage des données fournies."
     order_total: "Total commande "
     customer_details: "Données client·e"
+    customer_details_updated: "Détails du client mis à jour"
     customer_search: "Recherche client"
     choose_a_customer: "Choisir un client"
     account: "Compte"
@@ -3456,7 +3497,7 @@ fr_BE:
     send_mails_as: "Envoyer les mails comme "
     smtp_send_all_emails_as_from_following_address: "Envoyer tous les mails comme de l'adresse suivante."
     send_copy_of_all_mails_to: "Envoyez une copie de tous les mails à "
-    smtp_send_copy_to_this_addresses: "Envoit une copie de tous les mails sortants vers cette adresse. En cas de plusieurs adresses, séparer par une virgule."
+    smtp_send_copy_to_this_addresses: "Envoie une copie de tous les mails sortants vers cette adresse. En cas de plusieurs adresses, séparer par une virgule."
     tax_categories: "TVA applicable"
     listing_tax_categories: "Liste catégories TVA"
     back_to_tax_categories_list: "Retour à la liste des catégories de TVA"
@@ -3480,7 +3521,7 @@ fr_BE:
     listing_countries: "Liste des pays"
     iso_name: "Nom ISO"
     states_required: "Provinces requises"
-    editing_country: "Pays d'édition"
+    editing_country: "Éditer le pays"
     back_to_countries_list: "Retouner vers la liste des pays"
     states: "Provinces"
     abbreviation: "Abréviation"
@@ -3497,6 +3538,7 @@ fr_BE:
     shipping_categories: "Condition de transport"
     new_shipping_category: "Nouvelle catégorie d'expédition "
     back_to_shipping_categories: "Retour vers les catégories d'expédition"
+    editing_shipping_category: "Éditer la catégorie d'expédition"
     name: "Nom"
     description: "Description"
     type: "Catégorie"
@@ -3515,8 +3557,8 @@ fr_BE:
     amount: "Quantité"
     currency: "Devise"
     first_item: "Coût du premier article "
-    additional_item: "Coût d'objet supplémentaire"
-    max_items: "Articles maximum"
+    additional_item: "Coût supplémentaire par article"
+    max_items: "Nb d'articles maximum (au delà duquel il n'y a plus de coût supplémentaire)"
     minimal_amount: "Montant minimal"
     normal_amount: "Montant normal"
     discount_amount: "Montant de la remise"
@@ -3553,7 +3595,12 @@ fr_BE:
       cancel: "Annuler"
     shared:
       error_messages:
-        there_were_problems_with_the_following_fields: "Il y a u des erreur avec les champs suivant"
+        errors_prohibited_this_record_from_being_saved:
+          one: "1 erreur a empêché la sauvegarde de cet enregistrement :"
+          few: "Les %{count} erreurs ont empêché la sauvegarde de cet enregistrement :"
+          many: "Les %{count} erreurs ont empêché la sauvegarde de cet enregistrement :"
+          other: "Les %{count} erreurs ont empêché la sauvegarde de cet enregistrement :"
+        there_were_problems_with_the_following_fields: "Il y a eu des erreurs concernant les champs suivants"
       payments_list:
         date_time: "Date/Temps"
         amount: "Quantité"
@@ -3568,6 +3615,13 @@ fr_BE:
           header:
             store: Aperçu
     admin:
+      images:
+        edit:
+          close: Retour
+      mail_methods:
+        send_testmail: "Envoyer un e-mail de test"
+        testmail:
+          error: "Une erreur s'est produite lors de la tentative d'envoi de l'e-mail de test."
       unit_price_tooltip: "Le prix unitaire permet aux acheteurs de comparer les prix entre les produits et/ou les conditionnements. Attention, le prix final observé par l'acheteur peut être différent si des marges et/ou commissions sont appliquées."
       subscriptions:
         number: "N° commande"
@@ -3589,6 +3643,10 @@ fr_BE:
         enterprise_relationships: "Permissions"
         customers: "Acheteur·euse·s"
         groups: "Groupes"
+        overview: "Aperçu"
+        product_import: "Importer"
+        enterprise_roles: "Roles"
+        payment_methods: "Méthodes de paiement"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Hériter des propriétés de %{supplier} ? (non applicable si information de remplacement déjà saisie)"
@@ -3766,7 +3824,7 @@ fr_BE:
           back_to_payment_methods_list: "Retour à la liste des paiements"
         edit:
           new: "Nouveau"
-          editing_payment_method: "Modification des méthodes de paiement en cours"
+          editing_payment_method: "Éditer les méthodes de paiement"
           back_to_payment_methods_list: "Retour à la liste des paiements"
         stripe_connect:
           enterprise_select_placeholder: Choisir...
@@ -3805,6 +3863,7 @@ fr_BE:
             no_payment_via_admin_backend: Les payement paypal ne savent pas etre prit dans le Backoffice
       products:
         image_upload_error: "Veuillez télécharger l'image au format JPG, PNG, GIF, SVG ou WEBP."
+        image_not_processable: "L’image jointe n’est pas une image valide."
         new:
           title: "Nouveau Produit"
           new_product: "Nouveau Produit"
@@ -3866,7 +3925,7 @@ fr_BE:
           search: "Rechercher"
           email: "Email"
         edit:
-          editing_user: "Utilisateur·trice d'édition"
+          editing_user: "Éditer l'utilisateur.rice"
           back_to_users_list: "Retour vers la liste des utilisateur·trice·s"
           general_settings: "Réglages Généraux"
         form:
@@ -3920,7 +3979,7 @@ fr_BE:
       taxons:
         form:
           name: Nom
-          permalink: permalien
+          permalink: 'Permalien : Nom pour URL (sans espace)'
           description: Description
       general_settings:
         edit:
@@ -4113,6 +4172,8 @@ fr_BE:
       shipment:
         cannot_ready: "Impossible de préparer l'expédition."
       invalid_taxonomy_id: "Id taxonomique invalide."
+    unit: unité
+    per_unit: Montant par unité
   datetime:
     distance_in_words:
       about_x_hours:

@@ -7,8 +7,9 @@
 
   .field.align-center
     = hidden_field_tag 'preferences[products_require_tax_category]', '0'
-    = check_box_tag 'preferences[products_require_tax_category]', '1',  Spree::Config[:products_require_tax_category]
-    = label_tag nil, t(:products_require_tax_category)
+    %label
+      = check_box_tag 'preferences[products_require_tax_category]', '1',  Spree::Config[:products_require_tax_category]
+      = t(:products_require_tax_category)
 
   .form-buttons
     = button t(:update), 'icon-refresh'

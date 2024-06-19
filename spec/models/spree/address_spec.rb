@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Address do
+RSpec.describe Spree::Address do
   describe "clone" do
     it "creates a copy of the address with the exception of the id, " \
        "updated_at and created_at attributes" do
@@ -131,6 +131,17 @@ describe Spree::Address do
         address.valid?
         expect(address.errors[:zipcode]).to be_empty
       end
+    end
+  end
+
+  context "associations" do
+    it "destroys shipments upon destroy" do
+      address = create(:address)
+      create(:shipment, address:)
+
+      expect {
+        address.destroy
+      }.to raise_error(ActiveRecord::DeleteRestrictionError)
     end
   end
 

@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'rake'
 
-describe 'users.rake' do
+RSpec.describe 'users.rake' do
   before do
     Rake.application.rake_require 'tasks/users'
     Rake::Task.define_task(:environment)

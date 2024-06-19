@@ -406,6 +406,7 @@ pt_BR:
         edit: Editar
         clone: Cópia
         delete: Deletar
+        remove: Remover
       image:
         edit: Editar
     adjustments:
@@ -626,8 +627,12 @@ pt_BR:
       sort:
         pagination:
           clear_search: Nova busca
-      edit_image:
-        close: Voltar
+      variant_row:
+        none_tax_category: Nenhum
+        category_field_name: "Categoria"
+        tax_category_field_name: "Categoria de taxa"
+      product_row:
+        producer_field_name: "Produtor"
     product_import:
       title: Importação de produtos
       file_not_found: O arquivo não foi encontrado ou não pôde ser aberto
@@ -1653,7 +1658,6 @@ pt_BR:
   label_account: "Conta"
   label_more: "Mostrar mais"
   label_less: "Mostrar menos"
-  label_notices: "Avisos"
   cart_items: "itens"
   cart_headline: "seu carrinho de compras"
   total: "Total"
@@ -3455,6 +3459,9 @@ pt_BR:
     validation:
       must_be_int: "deve ser um número integral "
     admin:
+      images:
+        edit:
+          close: Voltar
       mail_methods:
         send_testmail: "Enviar email de teste"
         testmail:
@@ -3481,6 +3488,10 @@ pt_BR:
         enterprise_relationships: "Permissões"
         customers: "Compradores"
         groups: "Grupos"
+        overview: "Visão geral"
+        product_import: "Importar"
+        enterprise_roles: "Funções"
+        payment_methods: "Métodos de pagamento"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Herdar propriedades de %{supplier}? (a menos que substituído acima)"

@@ -4,7 +4,7 @@ require "spec_helper"
 
 module OrderManagement
   module Subscriptions
-    describe VariantsList do
+    RSpec.describe VariantsList do
       describe "variant eligibility for subscription" do
         let!(:shop) { create(:distributor_enterprise) }
         let!(:producer) { create(:supplier_enterprise) }

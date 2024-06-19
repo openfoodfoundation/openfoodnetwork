@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 module Admin
   class ProductsV3Controller < Spree::Admin::BaseController
+    helper ProductsHelper
+
     before_action :init_filters_params
     before_action :init_pagination_params
 
     def index
       fetch_products
-      render "index", locals: { producers:, categories:, flash: }
+      render "index", locals: { producers:, categories:, tax_category_options:, flash: }
     end
 
     def bulk_update
@@ -24,7 +27,44 @@ module Admin
       elsif product_set.errors.present?
         @error_counts = { saved: product_set.saved_count, invalid: product_set.invalid.count }
 
-        render "index", status: :unprocessable_entity, locals: { producers:, categories:, flash: }
+        render "index", status: :unprocessable_entity,
+                        locals: { producers:, categories:, tax_category_options:, flash: }
+      end
+    end
+
+    def destroy
+      @record = ProductScopeQuery.new(
+        spree_current_user,
+        { id: params[:id] }
+      ).find_product
+
+      status = :ok
+      if @record.destroy
+        flash.now[:success] = t('.delete_product.success')
+      else
+        flash.now[:error] = t('.delete_product.error')
+        status = :internal_server_error
+      end
+
+      respond_with do |format|
+        format.turbo_stream { render :destroy_product_variant, status: }
+      end
+    end
+
+    def destroy_variant
+      @record = Spree::Variant.active.find(params[:id])
+      authorize! :delete, @record
+
+      status = :ok
+      if VariantDeleter.new.delete(@record)
+        flash.now[:success] = t('.delete_variant.success')
+      else
+        flash.now[:error] = t('.delete_variant.error')
+        status = :internal_server_error
+      end
+
+      respond_with do |format|
+        format.turbo_stream { render :destroy_product_variant, status: }
       end
     end
 
@@ -47,6 +87,7 @@ module Admin
       # prority is given to element dataset (if present) over url params
       @page = params[:page].presence || 1
       @per_page = params[:per_page].presence || 15
+      @q = params.permit(q: {})[:q] || { s: 'name asc' }
     end
 
     def producers
@@ -57,6 +98,10 @@ module Admin
 
     def categories
       Spree::Taxon.order(:name).map { |c| [c.name, c.id] }
+    end
+
+    def tax_category_options
+      Spree::TaxCategory.order(:name).pluck(:name, :id)
     end
 
     def fetch_products
@@ -84,6 +129,8 @@ module Admin
         query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
       end
       query.merge!(variants_primary_taxon_id_in: @category_id) if @category_id.present?
+      query.merge!(@q) if @q
+
       query
     end
 
@@ -137,3 +184,4 @@ module Admin
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

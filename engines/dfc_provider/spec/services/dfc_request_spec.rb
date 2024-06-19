@@ -2,7 +2,7 @@
 
 require_relative "../spec_helper"
 
-describe DfcRequest do
+RSpec.describe DfcRequest do
   subject(:api) { DfcRequest.new(user) }
 
   let(:user) { build(:oidc_user) }
@@ -12,7 +12,16 @@ describe DfcRequest do
     stub_request(:get, "http://example.net/api").
       to_return(status: 200, body: '{"@context":"/"}')
 
-    expect(api.get("http://example.net/api")).to eq '{"@context":"/"}'
+    expect(api.call("http://example.net/api")).to eq '{"@context":"/"}'
+  end
+
+  it "posts a DFC document" do
+    json = '{"name":"new season apples"}'
+    stub_request(:post, "http://example.net/api").
+      with(body: json).
+      to_return(status: 201) # Created
+
+    expect(api.call("http://example.net/api", json)).to eq ""
   end
 
   it "refreshes the access token on fail", vcr: true do
@@ -30,7 +39,7 @@ describe DfcRequest do
     account.updated_at = 1.day.ago
 
     expect {
-      api.get("http://example.net/api")
+      api.call("http://example.net/api")
     }.to change {
       account.token
     }.and change {
@@ -44,7 +53,7 @@ describe DfcRequest do
 
     user.oidc_account.updated_at = 1.minute.ago
 
-    expect(api.get("http://example.net/api")).to eq ""
+    expect(api.call("http://example.net/api")).to eq ""
 
     # Trying to reach the OIDC server via network request to refresh the token
     # would raise errors because we didn't setup Webmock or VCR.

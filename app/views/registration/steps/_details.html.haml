@@ -57,7 +57,10 @@
                 %span.error{ "ng-show": "details.state.$error.required && submitted" }
                   = t(".state_field_error")
 
-      = render 'registration/steps/location_map' if using_google_maps?
+      - if using_google_maps?
+        = render 'registration/steps/location_map_google'
+      - elsif ContentConfig.open_street_map_enabled
+        = render 'registration/steps/location_map_osm'
 
       .row.buttons
         .small-12.columns

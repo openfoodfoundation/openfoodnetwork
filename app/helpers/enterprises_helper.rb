@@ -31,7 +31,7 @@ module EnterprisesHelper
 
   def enterprises_options(enterprises)
     enterprises.map { |enterprise|
-      [enterprise.name + ": " + enterprise.address.address1 + ", " + enterprise.address.city,
+      ["#{enterprise.name}: #{enterprise.address.address1}, #{enterprise.address.city}",
        enterprise.id.to_i]
     }
   end

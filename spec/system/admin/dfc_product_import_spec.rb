@@ -3,7 +3,7 @@
 require 'system_helper'
 require_relative '../../../engines/dfc_provider/spec/support/authorization_helper'
 
-describe "DFC Product Import" do
+RSpec.describe "DFC Product Import" do
   include AuthorizationHelper
 
   let(:user) { create(:oidc_user, owned_enterprises: [enterprise]) }
@@ -40,5 +40,28 @@ describe "DFC Product Import" do
 
     expect(page).to have_content "Importing a DFC product catalog"
     expect(page).to have_content "Imported products: 1"
+  end
+
+  it "imports from a FDC catalog", vcr: true do
+    user.oidc_account.update!(
+      uid: "testdfc@protonmail.com",
+      refresh_token: ENV.fetch("OPENID_REFRESH_TOKEN"),
+      updated_at: 1.day.ago,
+    )
+
+    visit admin_product_import_path
+
+    select enterprise.name, from: "Enterprise"
+
+    url = "https://food-data-collaboration-produc-fe870152f634.herokuapp.com/fdc/products?shop=test-hodmedod.myshopify.com"
+    fill_in "catalog_url", with: url
+
+    expect {
+      click_button "Import"
+    }.to change {
+      enterprise.supplied_products.count
+    }
+
+    expect(page).to have_content "Importing a DFC product catalog"
   end
 end

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Preferences::Preferable do
+RSpec.describe Spree::Preferences::Preferable do
   a_class = A =
     Class.new do
       include Spree::Preferences::Preferable

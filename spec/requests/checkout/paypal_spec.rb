@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "checking out an order with a paypal express payment method", type: :request do
+RSpec.describe "checking out an order with a paypal express payment method", type: :request do
   include ShopWorkflow
   include PaypalHelper
 

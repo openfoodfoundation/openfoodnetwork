@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Users & Enterprises reports" do
+RSpec.describe "Users & Enterprises reports" do
   include AuthenticationHelper
 
   before do

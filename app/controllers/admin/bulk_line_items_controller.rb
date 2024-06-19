@@ -35,7 +35,7 @@ module Admin
       order.with_lock do
         if order.contents.update_item(@line_item, line_item_params)
           # No Content, does not trigger ng resource auto-update
-          render body: nil, status: :no_content
+          head :no_content
         else
           render json: { errors: @line_item.errors }, status: :precondition_failed
         end
@@ -49,7 +49,7 @@ module Admin
       authorize! :update, order
 
       order.contents.remove(@line_item.variant)
-      render body: nil, status: :no_content # No Content, does not trigger ng resource auto-update
+      head :no_content # No Content, does not trigger ng resource auto-update
     end
 
     private

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderCycle do
+RSpec.describe OrderCycle do
   it "should be valid when built from factory" do
     expect(build(:simple_order_cycle)).to be_valid
   end
@@ -272,7 +272,7 @@ describe OrderCycle do
       @oc = create(:simple_order_cycle)
 
       @d1 = create(:enterprise)
-      @d2 = create(:enterprise, next_collection_at: '2-8pm Friday')
+      @d2 = create(:enterprise)
 
       @e0 = create(:exchange, order_cycle: @oc, sender: create(:enterprise),
                               receiver: @oc.coordinator, incoming: true)
@@ -291,10 +291,6 @@ describe OrderCycle do
     describe "finding pickup time for a distributor" do
       it "looks up the pickup time on the exchange when present" do
         expect(@oc.pickup_time_for(@d1)).to eq('5pm Tuesday')
-      end
-
-      it "returns the distributor's default collection time otherwise" do
-        expect(@oc.pickup_time_for(@d2)).to eq('2-8pm Friday')
       end
     end
 

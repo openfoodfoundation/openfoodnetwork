@@ -386,6 +386,7 @@ tr:
         edit: Düzenle
         clone: Kopyala
         delete: Sil
+        remove: Kaldır
       image:
         edit: Düzenle
     adjustments:
@@ -610,8 +611,12 @@ tr:
           clear_search: Aramayı temizle
       table:
         new_variant: Yeni Çeşit
-      edit_image:
-        close: Geri
+      variant_row:
+        none_tax_category: SATIŞ YAPMIYOR
+        category_field_name: "Kategori"
+        tax_category_field_name: "Vergi Kategorisi"
+      product_row:
+        producer_field_name: "ÜRETİCİ"
     product_import:
       title: Ürün Aktarımı
       file_not_found: Dosya bulunamadı veya açılamadı
@@ -1663,7 +1668,6 @@ tr:
   label_account: "Hesap"
   label_more: "Daha fazla göster"
   label_less: "Daha az göster"
-  label_notices: "Uyarılar"
   cart_items: "Ürünler"
   cart_headline: "Alışveriş sepetiniz"
   total: "Toplam"
@@ -3453,6 +3457,9 @@ tr:
     validation:
       must_be_int: "tam sayı olmak zorunda"
     admin:
+      images:
+        edit:
+          close: Geri
       mail_methods:
         send_testmail: "Deneme e-postası gönder"
         testmail:
@@ -3479,6 +3486,10 @@ tr:
         enterprise_relationships: "İZİNLER"
         customers: "MÜŞTERİLER"
         groups: "AĞLAR"
+        overview: "genel bakış"
+        product_import: "Aktar"
+        enterprise_roles: "Roller"
+        payment_methods: "ÖDEME YÖNTEMLERİ"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Özellikler %{supplier}'den devralınsın mı? (yukarıda geçersiz kılınmadıkça)"

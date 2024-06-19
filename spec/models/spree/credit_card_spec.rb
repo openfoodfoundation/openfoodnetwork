@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe CreditCard do
+  RSpec.describe CreditCard do
     let(:valid_credit_card_attributes) {
       {
         number: '4111111111111111',

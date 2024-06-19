@@ -4,14 +4,14 @@ require 'spec_helper'
 require 'spree/core/product_duplicator'
 
 module Spree
-  describe Product do
+  RSpec.describe Product do
     context 'product instance' do
       let(:product) { create(:product) }
 
       context '#duplicate' do
         it 'duplicates product' do
           clone = product.duplicate
-          expect(clone.name).to eq 'COPY OF ' + product.name
+          expect(clone.name).to eq "COPY OF #{product.name}"
           expect(clone.sku).to eq ""
           expect(clone.image).to eq product.image
         end
@@ -748,9 +748,21 @@ module Spree
         expect(e.variants.reload).to be_empty
       end
     end
+
+    describe "serialisation" do
+      it "sanitises HTML in description" do
+        subject.description = "Hello <script>alert</script> dearest <b>monster</b>."
+        expect(subject.description).to eq "Hello alert dearest <b>monster</b>."
+      end
+
+      it "sanitises existing HTML in description" do
+        subject[:description] = "Hello <script>alert</script> dearest <b>monster</b>."
+        expect(subject.description).to eq "Hello alert dearest <b>monster</b>."
+      end
+    end
   end
 
-  describe "product import" do
+  RSpec.describe "product import" do
     describe "finding the most recent import date of the variants" do
       let!(:product) { create(:product) }
 

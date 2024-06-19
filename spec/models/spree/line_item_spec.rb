@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe LineItem do
+  RSpec.describe LineItem do
     let(:order) { create :order_with_line_items, line_items_count: 1 }
     let(:line_item) { order.line_items.first }
 
@@ -664,7 +664,7 @@ module Spree
         before { allow(li).to receive(:product) { p } }
 
         context "when full_name starts with the product name" do
-          before { allow(li).to receive(:full_name) { p.name + " - something" } }
+          before { allow(li).to receive(:full_name) { "#{p.name} - something" } }
 
           it "does not show the product name twice" do
             expect(li.product_and_full_name).to eq('product - something')
@@ -803,7 +803,7 @@ module Spree
     end
   end
 
-  describe "searching with ransack" do
+  RSpec.describe "searching with ransack" do
     let(:order_cycle1) { create(:order_cycle) }
     let(:order_cycle2) { create(:order_cycle) }
     let(:product1) { create(:product, supplier: create(:supplier_enterprise)) }

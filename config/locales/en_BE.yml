@@ -320,6 +320,7 @@ en_BE:
         edit: Edit
         clone: Clone
         delete: Delete
+        remove: Remove
       image:
         edit: Edit
     begins_at: Begins At
@@ -517,8 +518,12 @@ en_BE:
         search: Search
       table:
         new_variant: New variant
-      edit_image:
-        close: Back
+      variant_row:
+        none_tax_category: None
+        category_field_name: "Category"
+        tax_category_field_name: "Tax Category"
+      product_row:
+        producer_field_name: "Producer"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1468,7 +1473,6 @@ en_BE:
   label_account: "Account"
   label_more: "Show more"
   label_less: "Show less"
-  label_notices: "Notices"
   cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
@@ -3023,6 +3027,9 @@ en_BE:
           header:
             store: Store
     admin:
+      images:
+        edit:
+          close: Back
       subscriptions:
         number: "Number"
       tab:
@@ -3043,6 +3050,10 @@ en_BE:
         enterprise_relationships: "Permissions"
         customers: "Customers"
         groups: "Groups"
+        overview: "Overview"
+        product_import: "Import"
+        enterprise_roles: "Roles"
+        payment_methods: "Payment Methods"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"

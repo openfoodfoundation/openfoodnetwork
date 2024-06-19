@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Admin::SubscriptionsController, type: :controller do
+RSpec.describe Admin::SubscriptionsController, type: :controller do
   include AuthenticationHelper
 
   describe 'index' do

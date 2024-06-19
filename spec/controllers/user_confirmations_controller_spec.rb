@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe UserConfirmationsController, type: :controller do
+RSpec.describe UserConfirmationsController, type: :controller do
   let!(:user) { create(:user) }
   let!(:confirmed_user) { create(:user, confirmed_at: nil) }
   let!(:unconfirmed_user) { create(:user, confirmed_at: nil) }

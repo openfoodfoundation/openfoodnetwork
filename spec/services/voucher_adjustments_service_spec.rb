@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe VoucherAdjustmentsService do
+RSpec.describe VoucherAdjustmentsService do
   describe '#update' do
     let(:enterprise) { build(:enterprise) }
 

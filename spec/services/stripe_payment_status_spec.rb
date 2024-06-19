@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe StripePaymentStatus, :vcr, :stripe_version do
+RSpec.describe StripePaymentStatus, :vcr, :stripe_version do
   subject { StripePaymentStatus.new(payment) }
 
   let(:credit_card) { create(:credit_card, gateway_payment_profile_id: pm_card.id) }

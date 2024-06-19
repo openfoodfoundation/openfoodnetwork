@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "As a consumer I want to view products" do
+RSpec.describe "As a consumer I want to view products" do
   include AuthenticationHelper
   include WebHelper
   include ShopWorkflow

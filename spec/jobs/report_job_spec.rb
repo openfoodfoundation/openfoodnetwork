@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ReportJob do
+RSpec.describe ReportJob do
   include CableReady::Broadcaster
 
   let(:report_args) {

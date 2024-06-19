@@ -141,7 +141,8 @@ en_CA:
     unprocessable_entity:
       title: "The change you wanted was rejected (422)"
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to.<br><h3><a href='/' >Return home</a></h3></p>"
-    stimulus_reflex_error: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all erros and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
+    general_error:
+      message: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all erros and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -222,12 +223,16 @@ en_CA:
               not_available_to_shop: "is not available to %{shop}"
   card_details: "Card details"
   card_type: "Card type"
+  card_type_is: "Card type is"
+  unrecognized_card_type: "Unrecognized card type"
+  use_new_cc: "Use a new credit card"
+  what_is_this: "What is this?"
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   additional_information: "Additional information"
   connect_app:
-    url: "https://n8n.opernfoodnetwork.org/webhook/regen-CAN/connect-enterprise"
+    url: "https://n8n.openfoodnetwork.org/webhook/foodjustice/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -546,6 +551,7 @@ en_CA:
         edit: Edit
         clone: Clone
         delete: Delete
+        remove: Remove
       image:
         edit: Edit
     adjustments:
@@ -650,6 +656,7 @@ en_CA:
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
+        instance_publishable_key: Instance Publishable Key
         account_id: Account ID
         business_name: Business Name
         charges_enabled: Charges Enabled
@@ -771,6 +778,7 @@ en_CA:
       index:
         header:
           title: Bulk Edit Products
+      content:
         loading: Loading your products
       delete_modal:
         delete_product_modal:
@@ -821,16 +829,19 @@ en_CA:
         new_variant: New variant
       bulk_update:
         success: Changes saved
-      edit_image:
-        title: Edit product photo
-        close: Back
-        upload: Upload photo
       delete_product:
         success: Successfully deleted the product
         error: Unable to delete the product
       delete_variant:
         success: Successfully deleted the variant
         error: Unable to delete the variant
+      variant_row:
+        none_tax_category: None
+        search_for_tax_categories: "Search for tax categories"
+        category_field_name: "Category"
+        tax_category_field_name: "Tax Category"
+      product_row:
+        producer_field_name: "Producer"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1269,8 +1280,8 @@ en_CA:
           custom_tab_content: "Content for custom tab"
         connected_apps:
           legend: "Connected apps"
-          title: "Discover Regenerative"
-          tagline: "Allow Discover Regenerative to publish your enterprise information."
+          title: "Discover Food Justice"
+          tagline: "Allow OFN Canada to publish your enterprise information."
           enable: "Allow data sharing"
           disable: "Stop sharing"
           loading: "Loading"
@@ -1279,15 +1290,12 @@ en_CA:
               Add or update information on your Discover Regenerative listing here.
           link_label: "Manage listing"
           description_html: |
-              <p>
-              Eligible producers can showcase their regenerative credentials,
-              farming practices,  and more through a profile listing.
-              This simplifies how buyers can find regenerative products and connect
-              with producers of interest.
+              <b><p>
+              Eligible producers can showcase call to actions to Volunteer Local, Buy Local, or Donate Local.
+              This simplifies how producers can connect in the Waterloo region around food justice and sovereignty.
               </p>
               <p>
-              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-              target="_blank"><b>Learn more about Discover Regenerative </b>
+              <a href="https://about.openfoodnetwork.ca/project/open-flower-network/" target="_blank">Learn more about the Waterloo Food Commons Project
               <i class="icon-external-link"></i></a>
               </p>
       actions:
@@ -2080,7 +2088,6 @@ en_CA:
   label_account: "Account"
   label_more: "Show more"
   label_less: "Show less"
-  label_notices: "Notices"
   cart_items: "items"
   cart_headline: "Your shopping cart"
   total: "Total"
@@ -2492,6 +2499,7 @@ en_CA:
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
+  thank_you_for_your_order: "Thank you for your order"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
   products_cart_distributor_is: "Your distributor for this order is %{name}."
@@ -3715,6 +3723,7 @@ en_CA:
     editing_tax_category: "Editing tax category"
     editing_tax_rate: "Editing tax rate"
     editing_zone: "Editing zone"
+    editing_state: "Editing Province"
     expiration: "Expiration"
     invalid_payment_provider: "Invalid payment provider"
     items_cannot_be_shipped: "Items cannot be shipped"
@@ -3753,6 +3762,7 @@ en_CA:
     resend: "Resend"
     back_to_orders_list: "Back to Orders List"
     back_to_payments_list: "Back To Payments List"
+    back_to_states_list: "Back To Provinces List"
     return_authorizations: "Return Authoriations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units"
     select_stock: "Select stock"
@@ -3955,6 +3965,11 @@ en_CA:
     validation:
       must_be_int: "must be an integer"
     admin:
+      images:
+        edit:
+          title: Edit product photo
+          close: Back
+          upload: Upload photo
       mail_methods:
         send_testmail: "Send test email"
         testmail:
@@ -3982,6 +3997,10 @@ en_CA:
         customers: "Customers"
         groups: "Groups"
         oidc_settings: "OIDC Settings"
+        overview: "Overview"
+        product_import: "Import"
+        enterprise_roles: "Roles"
+        payment_methods: "Payment Methods"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"

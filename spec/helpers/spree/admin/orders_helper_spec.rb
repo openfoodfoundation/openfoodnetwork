@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::OrdersHelper, type: :helper do
+RSpec.describe Spree::Admin::OrdersHelper, type: :helper do
   describe "#orders_links" do
     let(:order) { double(:order) }
     let(:distributor) { double(:enterprise) }

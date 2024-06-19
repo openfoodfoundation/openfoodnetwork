@@ -94,6 +94,11 @@ FactoryBot.define do
       transient { amount { 1 } }
       calculator { build(:calculator_per_item, preferred_amount: amount) }
     end
+
+    trait :flat_percent_per_item do
+      transient { amount { 1 } }
+      calculator { build(:calculator_flat_percent_per_item, preferred_flat_percent: amount) }
+    end
   end
 
   factory :adjustment_metadata, class: AdjustmentMetadata do

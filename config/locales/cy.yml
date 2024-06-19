@@ -137,7 +137,8 @@ cy:
     unprocessable_entity:
       title: "Gwrthodwyd y newid roeddech chi am ei wneud (422)"
       message_html: "<p>Gwrthodwyd y newid roeddech chi am ei wneud. Hwyrach ichi geisio newid rhywbeth nad oes gennych fynediad ato.<br><h3><a href='/' >Ewch yn ôl i’r Hafan.</a></h3></p>"
-    stimulus_reflex_error: "Mae’n ddrwg gennym, ond aeth rhywbeth o’i le. \n\nGall fod yn broblem dros dro, felly gofynnir ichi roi cynnig arall neu ail-lwytho’r dudalen.\n Byddwn yn cofnodi pob gwall, a hwyrach ein bod yn gweithio i’w datrys. \nOs bydd y broblem yn parhau, neu os taw mater brys yw, cysylltwch â ni."
+    general_error:
+      message: "Mae’n ddrwg gennym, ond aeth rhywbeth o’i le. \n\nGall fod yn broblem dros dro, felly gofynnir ichi roi cynnig arall neu ail-lwytho’r dudalen.\n Byddwn yn cofnodi pob gwall, a hwyrach ein bod yn gweithio i’w datrys. \nOs bydd y broblem yn parhau, neu os taw mater brys yw, cysylltwch â ni."
   stripe:
     error_code:
       incorrect_number: "Mae rhif y cerdyn yn anghywir"
@@ -534,6 +535,7 @@ cy:
         edit: Golygu
         clone: Clôn
         delete: Dileu
+        remove: Dileu
       image:
         edit: Golygu
     adjustments:
@@ -755,6 +757,7 @@ cy:
       index:
         header:
           title: Cynhyrchion Golygu Swmp
+      content:
         loading: Yn llwytho eich cynnyrch
       delete_modal:
         delete_product_modal:
@@ -802,16 +805,18 @@ cy:
         new_variant: Amrywiolyn newydd
       bulk_update:
         success: Cadwyd y newidiadau
-      edit_image:
-        title: Golygu llun y cynnyrch
-        close: Yn ôl
-        upload: Lanlwytho llun
       delete_product:
         success: Llwyddwyd i ddileu’r cynnyrch
         error: Yn methu dileu’r cynnyrch
       delete_variant:
         success: Llwyddwyd i ddileu’r amrywiolyn
         error: Yn methu dileu’r amrywiolyn
+      variant_row:
+        none_tax_category: Dim
+        category_field_name: "Categori"
+        tax_category_field_name: "Categori Treth"
+      product_row:
+        producer_field_name: "Cynhyrchydd"
     product_import:
       title: Mewnforio Cynnyrch
       file_not_found: Ni ddaethpwyd o hyd i ffeil neu ni ellid ei hagor
@@ -2030,7 +2035,6 @@ cy:
   label_account: "Cyfrif"
   label_more: "Dangos mwy"
   label_less: "Dangos llai"
-  label_notices: "Hysbysiadau"
   cart_items: "eitemau"
   cart_headline: "Eich troli siopa"
   total: "Cyfanswm"
@@ -3951,6 +3955,11 @@ cy:
     validation:
       must_be_int: "mae'n rhaid cael cyfanrif"
     admin:
+      images:
+        edit:
+          title: Golygu llun y cynnyrch
+          close: Yn ôl
+          upload: Lanlwytho llun
       mail_methods:
         send_testmail: "Anfon ebost prawf"
         testmail:
@@ -3978,6 +3987,10 @@ cy:
         customers: "Cwsmeriaid"
         groups: "Grwpiau"
         oidc_settings: "OIDC Settings"
+        overview: "Trosolwg"
+        product_import: "Mewnforio"
+        enterprise_roles: "Rolau"
+        payment_methods: "Dulliau Talu"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Etifeddu eiddo gan %{supplier}? (oni bai ei fod yn cael ei ddiystyru uchod)"

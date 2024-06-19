@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Api
-  describe V0::StatusesController, type: :controller do
+  RSpec.describe V0::StatusesController, type: :controller do
     render_views
 
     describe "job queue status" do

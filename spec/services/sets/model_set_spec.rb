@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Sets::ModelSet do
+RSpec.describe Sets::ModelSet do
   describe "updating" do
     it "creates new models" do
       attrs = { collection_attributes: { '1' => { name: "Fantasia", iso_name: "FAN" },

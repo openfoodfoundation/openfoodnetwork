@@ -63,7 +63,7 @@ export default class BulkFormController extends Controller {
     // For each record, check if any fields are changed
     // TODO: optimise basd on current state. if field is changed, but form already changed, no need to update (and vice versa)
     const changedRecordCount = Object.values(this.recordElements).filter((elements) =>
-      elements.some(this.#isChanged),
+      elements.some(this.#checkIsChanged.bind(this)),
     ).length;
     this.formChanged = changedRecordCount > 0 || this.errorValue;
 
@@ -131,14 +131,32 @@ export default class BulkFormController extends Controller {
     });
   }
 
+  // Check if changed, and mark with class if it is.
+  #checkIsChanged(element) {
+    if(!element.isConnected) return false;
+
+    const changed = this.#isChanged(element);
+    element.classList.toggle("changed", changed);
+    return changed;
+  }
+
   #isChanged(element) {
-    if (element.type == "checkbox") {
+     if (element.type == "checkbox") {
       return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
+
     } else if (element.type == "select-one") {
+      // (weird) Behavior of select element's include_blank option in Rails:
+      //   If a select field has include_blank option selected (its value will be ''),
+      //   its respective option doesn't have the selected attribute
+      //   but selectedOptions have that option present
       const defaultSelected = Array.from(element.options).find((opt) =>
         opt.hasAttribute("selected"),
       );
-      return element.selectedOptions[0] != defaultSelected;
+      const selectedOption = element.selectedOptions[0];
+      const areBothBlank = selectedOption.value === '' && defaultSelected === undefined
+
+      return !areBothBlank && selectedOption !== defaultSelected;
+
     } else {
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }

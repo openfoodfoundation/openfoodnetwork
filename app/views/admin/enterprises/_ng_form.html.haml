@@ -11,11 +11,4 @@
     %input.red{ type: "button", value: t(:update), "ng-click": "submit()", "ng-disabled": "!enterprise_form.$dirty" }
     %input{ type: "button", "ng-value": "enterprise_form.$dirty ? '#{t(:cancel)}' : '#{t(:close)}'", "ng-click": "cancel('#{main_app.admin_enterprises_path}')" }
 
-  .row{ data: { 
-    controller: "tabs-and-panels", "tabs-and-panels-class-name-value": "selected" }}
-    .sixteen.columns.alpha
-      .four.columns.alpha
-        = render 'admin/shared/side_menu'
-      .one.column &nbsp;
-      .eleven.columns.omega.fullwidth_inputs
-        = render 'form', f: f
+  = render 'form', f: f

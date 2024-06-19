@@ -468,6 +468,7 @@ es_CR:
         edit: Editar
         clone: Duplicar
         delete: Borrar
+        remove: Eliminar
       image:
         edit: Editar
     adjustments:
@@ -697,8 +698,12 @@ es_CR:
           clear_search: Borrar búsqueda
       table:
         new_variant: Nueva variante
-      edit_image:
-        close: Atrás
+      variant_row:
+        none_tax_category: Ninguno
+        category_field_name: "Categoría"
+        tax_category_field_name: "Categoría de impuestos"
+      product_row:
+        producer_field_name: "Productor"
     product_import:
       title: Importe de producto
       file_not_found: Archivo no encontrado o no se pudo abrir
@@ -1818,7 +1823,6 @@ es_CR:
   label_account: "Cuenta"
   label_more: "Mostrar más"
   label_less: "Mostrar menos"
-  label_notices: "Noticias"
   cart_items: "Elementos"
   cart_headline: "Su carrito de compras"
   total: "Total"
@@ -3624,6 +3628,9 @@ es_CR:
           header:
             store: Tienda
     admin:
+      images:
+        edit:
+          close: Atrás
       unit_price_tooltip: "El precio unitario aumenta la transparencia al permitir que sus clientes comparen fácilmente los precios entre diferentes productos y tamaños de empaque. Tenga en cuenta que el precio unitario final que se muestra en la tienda puede diferir, ya que incluye impuestos y tarifas."
       subscriptions:
         number: "Número"
@@ -3645,6 +3652,10 @@ es_CR:
         enterprise_relationships: "Permisos"
         customers: "Cliente"
         groups: "Grupos"
+        overview: "Vista general"
+        product_import: "Importar"
+        enterprise_roles: "Roles"
+        payment_methods: "Métodos de pago"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"

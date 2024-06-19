@@ -337,6 +337,7 @@ pl:
         edit: Edytuj
         clone: Kopiuj
         delete: Usuń
+        remove: Usuń
       image:
         edit: Edytuj
     begins_at: Początek o
@@ -523,8 +524,12 @@ pl:
         producers:
           label: Producenci
         search: Szukaj
-      edit_image:
-        close: Wstecz
+      variant_row:
+        none_tax_category: Nic
+        category_field_name: "Kategoria"
+        tax_category_field_name: "Kategoria podatku"
+      product_row:
+        producer_field_name: "Producent"
     product_import:
       title: Import produktów
       file_not_found: Nie znaleziono pliku lub nie można go otworzyć
@@ -1446,7 +1451,6 @@ pl:
   label_account: "Konto"
   label_more: "Pokaż więcej"
   label_less: "Pokaż mniej"
-  label_notices: "Powiadomienia"
   cart_items: "przedmiotów"
   cart_headline: "Twój Koszyk"
   total: "Razem"
@@ -3159,6 +3163,9 @@ pl:
           header:
             store: Sklep
     admin:
+      images:
+        edit:
+          close: Wstecz
       subscriptions:
         number: "Numer zamówienia"
       tab:
@@ -3179,6 +3186,8 @@ pl:
         enterprise_relationships: "Uprawnienia"
         customers: "Klienci"
         groups: "Grupy"
+        product_import: "Import"
+        payment_methods: "Metody płatności"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Odziedziczyć właściwości z %{supplier}? (chyba że zastąpiono powyżej)"

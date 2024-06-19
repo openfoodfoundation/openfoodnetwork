@@ -1,6 +1,6 @@
 import "controllers";
 import "channels";
-import "@hotwired/turbo";
+import "../js/turbo";
 import "../js/hotkeys";
 import "../js/mrujs";
 import "../js/matomo";
@@ -17,3 +17,4 @@ import Trix from "trix";
 document.addEventListener("trix-file-accept", (event) => {
   event.preventDefault();
 });
+

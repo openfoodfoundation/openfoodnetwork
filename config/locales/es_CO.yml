@@ -356,6 +356,7 @@ es_CO:
         edit: Editar
         clone: Duplicar
         delete: Borrar
+        remove: Eliminar
       image:
         edit: Editar
     begins_at: Empieza en
@@ -560,8 +561,12 @@ es_CO:
         search: Buscar
       table:
         new_variant: Nueva variante
-      edit_image:
-        close: Atrás
+      variant_row:
+        none_tax_category: Ninguno
+        category_field_name: "Categoría"
+        tax_category_field_name: "Categoría de impuestos"
+      product_row:
+        producer_field_name: "Productor"
     product_import:
       title: Importe de producto
       file_not_found: Archivo no encontrado o no se pudo abrir
@@ -1563,7 +1568,6 @@ es_CO:
   label_account: "Cuenta"
   label_more: "Mostrar más"
   label_less: "Mostrar menos"
-  label_notices: "Noticias"
   cart_items: "Elementos"
   cart_headline: "Su carrito de compras"
   total: "Total"
@@ -3278,6 +3282,9 @@ es_CO:
           header:
             store: Tienda
     admin:
+      images:
+        edit:
+          close: Atrás
       subscriptions:
         number: "Número"
       tab:
@@ -3298,6 +3305,10 @@ es_CO:
         enterprise_relationships: "Permisos"
         customers: "Cliente"
         groups: "Grupos"
+        overview: "Vista general"
+        product_import: "Importar"
+        enterprise_roles: "Roles"
+        payment_methods: "Métodos de Pago"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"

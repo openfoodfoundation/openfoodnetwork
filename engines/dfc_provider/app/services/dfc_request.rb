@@ -13,33 +13,41 @@ class DfcRequest
     @user = user
   end
 
-  def get(url)
-    response = request(url)
+  def call(url, data = nil)
+    response = request(url, data)
 
-    return response.body if response.status == 200
+    if response.status >= 400 && token_stale?
+      refresh_access_token!
+      response = request(url, data)
+    end
 
-    return "" if @user.oidc_account.updated_at > 15.minutes.ago
-
-    refresh_access_token!
-
-    response = request(url)
     response.body
   end
 
   private
 
-  def request(url)
-    connection = Faraday.new(
+  def request(url, data = nil)
+    only_public_connections do
+      if data
+        connection.post(url, data)
+      else
+        connection.get(url)
+      end
+    end
+  end
+
+  def token_stale?
+    @user.oidc_account.updated_at < 15.minutes.ago
+  end
+
+  def connection
+    Faraday.new(
       request: { timeout: 30 },
       headers: {
         'Content-Type' => 'application/json',
         'Authorization' => "Bearer #{@user.oidc_account.token}",
       }
     )
-
-    only_public_connections do
-      connection.get(url)
-    end
   end
 
   def only_public_connections(&)

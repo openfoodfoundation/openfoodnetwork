@@ -19,3 +19,6 @@
               %span=link[:name]
 
 = render 'spree/admin/shared/custom-confirm'
+- if order_shipment_ready?(@order)
+  %form
+    = render ShipOrderComponent.new(order: @order)

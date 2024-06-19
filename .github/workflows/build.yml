@@ -55,6 +55,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      # JS is required in order for webpacker to compile, in order to render templates containing image urls
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
@@ -64,8 +65,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bin/rake db:create db:schema:load
 
       - name: Run tests
         env:
@@ -83,7 +83,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/controllers/**/*_spec.rb}" 
         run: |
           git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
-          bundle exec rake knapsack_pro:rspec
+          bin/rake knapsack_pro:rspec
 
   models:
     runs-on: ubuntu-22.04
@@ -106,10 +106,10 @@ jobs:
         # [n] - where the n is a number of parallel jobs you want to run your tests on.
         # Use a higher number if you have slow tests to split them between more parallel jobs.
         # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [5]
+        ci_node_total: [4]
         # Indexes for parallel jobs (starting from zero).
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [0, 1, 2, 3, 4]
+        ci_node_index: [0, 1, 2, 3]
     steps:
       - uses: actions/checkout@v3
 
@@ -123,20 +123,11 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .node-version
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bin/rake db:create db:schema:load
 
       - name: Run tests
-
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: 09476e2ce491c12083df62768667c674
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -150,9 +141,8 @@ jobs:
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/models/**/*_spec.rb}" 
-        
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bin/rake knapsack_pro:rspec
 
   system_admin:
     runs-on: ubuntu-22.04
@@ -175,10 +165,10 @@ jobs:
         # [n] - where the n is a number of parallel jobs you want to run your tests on.
         # Use a higher number if you have slow tests to split them between more parallel jobs.
         # Remember to update the value of the `ci_node_index` below to (0..n-1).
-        ci_node_total: [13]
+        ci_node_total: [14]
         # Indexes for parallel jobs (starting from zero).
         # E.g. use [0, 1] for 2 parallel jobs, [0, 1, 2] for 3 parallel jobs, etc.
-        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] 
+        ci_node_index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     steps:
       - uses: actions/checkout@v3
 
@@ -201,8 +191,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bin/rake db:create db:schema:load
 
       - name: Run tests
 
@@ -221,7 +210,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/admin/**/*_spec.rb}" 
 
         run: |
-          bundle exec rake knapsack_pro:queue:rspec
+          bin/rake knapsack_pro:queue:rspec
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -279,8 +268,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bin/rake db:create db:schema:load
 
       - name: Run tests
 
@@ -299,7 +287,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/consumer/**/*_spec.rb}" 
 
         run: |
-          bundle exec rake knapsack_pro:queue:rspec
+          bin/rake knapsack_pro:queue:rspec
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -348,6 +336,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
@@ -357,8 +346,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bin/rake db:create db:schema:load
 
       - name: Run tests
 
@@ -377,7 +365,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/serializers/**/*_spec.rb,engines/**/*_spec.rb}"
 
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bin/rake knapsack_pro:rspec
 
       - name: Archive failed tests screenshots
         if: failure()
@@ -426,6 +414,7 @@ jobs:
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      # JS is required in order for webpacker to compile, in order to render templates linking to mail.css
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
@@ -435,11 +424,9 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          bin/rake db:create db:schema:load
 
       - name: Run tests
-
         env:
           KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: e3b8800198d2d89b70c7edbdd85f8fd8
           KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
@@ -453,10 +440,8 @@ jobs:
           # https://knapsackpro.com/faq/question/how-to-split-slow-rspec-test-files-by-test-examples-by-individual-it
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_TEST_FILE_EXCLUDE_PATTERN: "{engines/**/*_spec.rb,spec/models/**/*_spec.rb,spec/controllers/**/*_spec.rb,spec/serializers/**/*_spec.rb,spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/system/**/*_spec.rb}"
-                                            
-        
         run: |
-          bundle exec rake knapsack_pro:rspec
+          bin/rake knapsack_pro:rspec
 
   non_knapsack_jest_karma:
     runs-on: ubuntu-22.04
@@ -476,11 +461,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup redis
-        uses: supercharge/redis-github-action@1.4.0
-        with: 
-          redis-version: 6
-
+      # Rails is required for the Karma rake script
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -493,12 +474,8 @@ jobs:
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Set up database
-        run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
       - name: Run JS tests
-        run: bundle exec rake karma:run
+        run: bin/rake karma:run
 
       - name: Run jest tests
         run: yarn jest

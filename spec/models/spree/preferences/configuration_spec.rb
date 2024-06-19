@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Preferences::Configuration do
+RSpec.describe Spree::Preferences::Configuration do
   let(:config) do
     Class.new(Spree::Preferences::Configuration) do
       preference :color, :string, default: :blue

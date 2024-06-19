@@ -75,7 +75,7 @@ end
 
 module RswagExtension
   def param(args, &)
-    public_send(:let, args) { instance_eval(&) }
+    let(args) { instance_eval(&) }
   end
 end
 Rswag::Specs::ExampleGroupHelpers.prepend RswagExtension

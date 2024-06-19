@@ -176,6 +176,7 @@ sv:
         inherits_properties: "Ärva egenskaper?"
       actions:
         edit: Redigera
+        remove: Ta bort
       image:
         edit: Redigera
     customer: Kund
@@ -325,8 +326,12 @@ sv:
         producers:
           label: 'Producenter '
         search: Sök
-      edit_image:
-        close: Backa
+      variant_row:
+        none_tax_category: Ingen
+        category_field_name: "Kategori"
+        tax_category_field_name: "Skattekategori"
+      product_row:
+        producer_field_name: "Producent"
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
       no_data: Ingen data hittades i kalkylbladet
@@ -984,7 +989,6 @@ sv:
   label_account: "Konto"
   label_more: "Visa mer"
   label_less: "Visa mindre"
-  label_notices: "Anmälan"
   cart_headline: "Din varukorg"
   total: "Summa "
   cart_updating: "Uppdatera din varukorg"
@@ -2193,6 +2197,9 @@ sv:
       messages:
         blank: "kan inte vara blank"
     admin:
+      images:
+        edit:
+          close: Backa
       tab:
         dashboard: "Panel"
         bulk_order_management: "Hantera flera beställningar"
@@ -2206,6 +2213,9 @@ sv:
         enterprises: "Företag"
         customers: "Kunder"
         groups: "Grupper"
+        overview: "Översikt"
+        enterprise_roles: "Uppgifter"
+        payment_methods: "Betalningssätt"
       properties:
         index:
           properties: "Egenskaper"

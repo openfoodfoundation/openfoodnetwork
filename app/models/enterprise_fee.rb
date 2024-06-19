@@ -21,7 +21,6 @@ class EnterpriseFee < ApplicationRecord
 
   validates :fee_type, inclusion: { in: FEE_TYPES }
   validates :name, presence: true
-  validates :enterprise_id, presence: true
 
   before_save :ensure_valid_tax_category_settings
 

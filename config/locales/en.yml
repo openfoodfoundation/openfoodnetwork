@@ -29,6 +29,8 @@ en:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/image:
+        attachment: Attachment
       spree/order/ship_address:
         address1: "Shipping address (Street + House number)"
         address2: "Shipping address line 2"
@@ -175,14 +177,15 @@ en:
       message_html: "<p>The change you wanted was rejected. Maybe you tried to change something you don't have access to.
       <br><h3><a href='/' >Return home</a></h3>
       </p>"
-    stimulus_reflex_error: "We're sorry, but something went wrong.
+    general_error:
+      message: "We're sorry, but something went wrong.
 
 
-      This might be a temporary problem, so please try again or reload the page.
+        This might be a temporary problem, so please try again or reload the page.
 
-      We record all errors and may be working on a fix.
+        We record all errors and may be working on a fix.
 
-      If the problem persists or is urgent, please contact us."
+        If the problem persists or is urgent, please contact us."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -570,6 +573,7 @@ en:
         per_page: "%{count} items per page"
         colums: Columns
       columns:
+        image: Image
         name: Name
         unit_scale: Unit scale
         unit: Unit
@@ -600,6 +604,7 @@ en:
         edit: Edit
         clone: Clone
         delete: Delete
+        remove: Remove
       image:
         edit: Edit
     adjustments:
@@ -659,7 +664,7 @@ en:
     choose: "Choose..."
     please_select: Please select...
 
-    column_save_as_default: Save As Default
+    column_save_as_default: Save as default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -758,6 +763,9 @@ en:
         balance_due: "Balance Due"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+    column_preferences:
+      bulk_update:
+        success: "Column preferences saved"
     contents:
       edit:
         title: Content
@@ -897,10 +905,6 @@ en:
         new_variant: New variant
       bulk_update:
         success: Changes saved
-      edit_image:
-        title: Edit product photo
-        close: Back
-        upload: Upload photo
       delete_product:
         success: Successfully deleted the product
         error: Unable to delete the product
@@ -909,6 +913,11 @@ en:
         error: Unable to delete the variant
       variant_row:
         none_tax_category: None
+        search_for_tax_categories: "Search for tax categories"
+        category_field_name: "Category"
+        tax_category_field_name: "Tax Category"
+      product_row:
+        producer_field_name: "Producer"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1058,6 +1067,7 @@ en:
       edit:
         order_sure_want_to: Are you sure you want to %{event} this order?
         voucher_tax_included_in_price: "%{label} (tax included in voucher)"
+        tax_on_fees: "Tax on fees"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -1350,6 +1360,7 @@ en:
           enable: "Allow data sharing"
           disable: "Stop sharing"
           loading: "Loading"
+          need_to_be_manager: "Only managers can connect apps."
           note: |
             Your Open Food Network account is connected to Discover Regenerative.
             Add or update information on your Discover Regenerative listing here.
@@ -2185,7 +2196,6 @@ en:
   label_account: "Account"
   label_more: "Show more"
   label_less: "Show less"
-  label_notices: "Notices"
 
   cart_items: "items"
   cart_headline: "Your shopping cart"
@@ -4141,6 +4151,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       must_be_int: "must be an integer"
 
     admin:
+      images:
+        edit:
+          title: Edit product photo
+          close: Back
+          upload: Upload photo
       mail_methods:
         send_testmail: "Send test email"
         testmail:
@@ -4168,6 +4183,10 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         customers: "Customers"
         groups: "Groups"
         oidc_settings: "OIDC Settings"
+        overview: "Overview"
+        product_import: "Import"
+        enterprise_roles: "Roles"
+        payment_methods: "Payment Methods"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Inherit properties from %{supplier}? (unless overridden above)"

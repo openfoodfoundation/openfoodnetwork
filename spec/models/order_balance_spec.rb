@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OrderBalance do
+RSpec.describe OrderBalance do
   subject(:order_balance) { described_class.new(order) }
   let(:order) { build(:order) }
   let(:user) { order.user }

@@ -7,7 +7,7 @@ module Reporting
         attr_accessor :permissions
 
         def initialize(user, params = {}, render: false)
-          super(user, params, render:)
+          super
           @permissions = Permissions.new(user)
         end
 

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Admin::EnterprisesHelper, type: :helper do
+RSpec.describe Admin::EnterprisesHelper, type: :helper do
   let(:user) { build(:user) }
 
   before do

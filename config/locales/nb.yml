@@ -141,7 +141,8 @@ nb:
     unprocessable_entity:
       title: "Endringen du ønsket ble avvist (422)"
       message_html: "<p>Endringen du ønsket ble avvist. Kanskje du prøvde å endre noe du ikke har tilgang til.<br><h3> <a href='/' >Vend hjem</a></h3></p>"
-    stimulus_reflex_error: "Vi beklager, men noe gikk galt.\n\nDette kan være et midlertidig problem, så prøv igjen eller last inn siden på nytt.\nVi registrerer alle feil og jobber kanskje med å fikse.\nHvis problemet vedvarer eller haster, vennligst kontakt oss."
+    general_error:
+      message: "Vi beklager, men noe gikk galt.\n\nDette kan være et midlertidig problem, så prøv igjen eller last inn siden på nytt.\nVi registrerer alle feil og jobber kanskje med å fikse.\nHvis problemet vedvarer eller haster, vennligst kontakt oss."
   stripe:
     error_code:
       incorrect_number: "Kortnummeret er feil."
@@ -194,6 +195,9 @@ nb:
       transaction_not_allowed: "Kortet har blitt avvist av ukjent årsak."
       try_again_later: "Kortet har blitt avvist av ukjent årsak."
       withdrawal_count_limit_exceeded: "Kunden har overskredet saldoen eller kredittgrensen som er tilgjengelig på kortet sitt."
+      disconnect_failure: "Kunne ikke koble fra Stripe."
+    success_code:
+      disconnected: "Stripe-kontoen er koblet fra."
   activemodel:
     errors:
       messages:
@@ -219,10 +223,16 @@ nb:
               not_available_to_shop: "er ikke tilgjengelig for %{shop}"
   card_details: "Kortdetaljer"
   card_type: "Korttype"
+  card_type_is: "Korttype er"
+  unrecognized_card_type: "Ukjent korttype"
+  use_new_cc: "Bruk et nytt kredittkort"
+  what_is_this: "Hva er dette?"
   cardholder_name: "Kortholders navn"
   community_forum_url: "URL for diskusjonsforum"
   customer_instructions: "Kundeinstruksjoner"
   additional_information: "Tilleggsinformasjon"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -512,8 +522,10 @@ nb:
         colums: Kolonner
       columns:
         name: Navn
+        unit_scale: Enhetsskala
         unit: Enhet
         unit_value: Enhetsverdi
+        display_as: Vis enhet som
         price: Pris
         producer: Produsent
         category: Kategori
@@ -539,6 +551,7 @@ nb:
         edit: Rediger
         clone: Klon
         delete: Slett
+        remove: Fjern
       image:
         edit: Rediger
     adjustments:
@@ -643,6 +656,7 @@ nb:
         status: Status
         ok: Ok
         instance_secret_key: Instans Secret Key
+        instance_publishable_key: Instans Publiserbar nøkkel
         account_id: Konto-ID
         business_name: Bedriftsnavn
         charges_enabled: Avgifter Aktivert
@@ -695,6 +709,10 @@ nb:
         your_content: Ditt innhold
         user_guide: Brukermanual
         map: Kart
+    dfc_product_imports:
+      index:
+        title: "Importere en DFC-produktkatalog"
+        imported_products: "Importerte produkter:"
     enterprise_fees:
       index:
         title: "Bedriftsavgifter"
@@ -760,6 +778,7 @@ nb:
       index:
         header:
           title: Endre produkter i bulk
+      content:
         loading: Laster inn produktene dine
       delete_modal:
         delete_product_modal:
@@ -810,16 +829,19 @@ nb:
         new_variant: Ny variant
       bulk_update:
         success: Endringer lagret
-      edit_image:
-        title: Rediger produktbilde
-        close: Tilbake
-        upload: Last opp bilde
       delete_product:
         success: Produktet ble slettet
         error: Kan ikke slette produktet
       delete_variant:
         success: Varianten ble slettet
         error: Kan ikke slette varianten
+      variant_row:
+        none_tax_category: Ingen
+        search_for_tax_categories: "Søk etter avgiftskategorier"
+        category_field_name: "Kategori"
+        tax_category_field_name: "Avgiftskategori"
+      product_row:
+        producer_field_name: "Produsent"
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes
@@ -862,7 +884,9 @@ nb:
         tax_categories: Avgiftskategorier
         shipping_categories: Fraktkategorier
       dfc_import_form:
+        title: "Importer fra DFC-katalogen"
         enterprise: "Bedrift"
+        catalog_url: "DFC-katalog-URL"
         import: "Import"
       import:
         review: Anmeldelse
@@ -1172,6 +1196,7 @@ nb:
           open_date: "Åpningsdato"
           close_date: "Stengedato"
           display_ordering_in_shopfront: "Vis sortering i butikken:"
+          shopfront_sort_by_product: "Etter produkt"
           shopfront_sort_by_category: "Etter kategori"
           shopfront_sort_by_producer: "Etter produsent"
           shopfront_sort_by_category_placeholder: "Kategori"
@@ -1260,6 +1285,7 @@ nb:
           enable: "Tillat datadeling"
           disable: "Stopp deling"
           loading: "Laster"
+          need_to_be_manager: "Bare ledere kan koble til apper."
           note: |
               Open Food Network-kontoen din er koblet til Discover Regenerativ.
               Legg til eller oppdater informasjon om Discover Regenerativ-oppføringen din her.
@@ -2066,7 +2092,6 @@ nb:
   label_account: "Konto"
   label_more: "Vis mer"
   label_less: "Vis mindre"
-  label_notices: "Meldinger"
   cart_items: "Elementer"
   cart_headline: "Din handlekurv"
   total: "Sum"
@@ -2478,6 +2503,7 @@ nb:
   orders_bought_already_confirmed: "* allerede bekreftet"
   orders_confirm_cancel: "Er du sikker på at du vil avbryte denne bestillingen?"
   order_processed_successfully: "Behandlingen av din bestilling var vellykket"
+  thank_you_for_your_order: "Takk for din bestilling"
   products_cart_distributor_choice: "Distributør for bestillingen:"
   products_cart_distributor_change: "Din distributør for denne ordren vil bli endret til %{name} hvis du legger til dette produktet i handlekurven din."
   products_cart_distributor_is: "Din distributør for denne ordren er %{name}."
@@ -3699,6 +3725,7 @@ nb:
     editing_tax_category: "Redigering av avgiftskategori"
     editing_tax_rate: "Redigering av avgiftssats"
     editing_zone: "Redigeringssone"
+    editing_state: "Redigerer regioner"
     expiration: "Utløp"
     invalid_payment_provider: "Ugyldig betalingsleverandør"
     items_cannot_be_shipped: "Varer kan ikke sendes"
@@ -3727,6 +3754,8 @@ nb:
     start_date: "Startdato"
     successfully_removed: "Fjernet OK"
     taxonomy_edit: "Rediger kategori"
+    taxonomy_tree_error: "Det oppsto en feil under oppdatering av kategoritreet."
+    taxonomy_tree_instruction: "Høyreklikk på et element for å legge til, gi nytt navn, fjerne eller redigere."
     tree: "Tre"
     updating: "Oppdaterer"
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
@@ -3735,6 +3764,7 @@ nb:
     resend: "Send på nytt"
     back_to_orders_list: "Tilbake til Bestillingsliste"
     back_to_payments_list: "Tilbake til betalingsliste"
+    back_to_states_list: "Tilbake til liste over regioner"
     return_authorizations: "Returautorisasjoner"
     cannot_create_returns: "Kan ikke opprette retur da denne bestillingen ikke har noen sendte elementer."
     select_stock: "Velg lager"
@@ -3937,6 +3967,11 @@ nb:
     validation:
       must_be_int: "må være et heltall"
     admin:
+      images:
+        edit:
+          title: Rediger produktbilde
+          close: Tilbake
+          upload: Last opp bilde
       mail_methods:
         send_testmail: "Send test-epost"
         testmail:
@@ -3964,6 +3999,10 @@ nb:
         customers: "Kunder"
         groups: "Grupper"
         oidc_settings: "OIDC-innstillinger"
+        overview: "Oversikt"
+        product_import: "Import"
+        enterprise_roles: "Roller"
+        payment_methods: "Betalingsmetoder"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Arve egenskaper fra %{supplier}? (med mindre overstyrt over)"

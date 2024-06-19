@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Api::Admin::ProductSerializer do
+RSpec.describe Api::Admin::ProductSerializer do
   let(:product) { create(:simple_product) }
   let(:serializer) { described_class.new(product) }
 

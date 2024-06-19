@@ -35,6 +35,8 @@ Openfoodnetwork::Application.routes.draw do
         patch :register
       end
 
+      resources :connected_apps, only: [:create, :destroy]
+
       resources :producer_properties do
         post :update_positions, on: :collection
       end
@@ -73,6 +75,9 @@ Openfoodnetwork::Application.routes.draw do
       # This might be easier to arrange once we rename the controller to plain old "products"
       post '/products/bulk_update', to: 'products_v3#bulk_update'
       get '/products', to: 'products_v3#index'
+      # we already have DELETE admin/products/:id here
+      delete 'products_v3/:id', to: 'products_v3#destroy', as: 'product_destroy'
+      delete 'products_v3/destroy_variant/:id', to: 'products_v3#destroy_variant', as: 'destroy_variant'
     end
 
     resources :variant_overrides do
@@ -90,7 +95,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resource :contents
 
-    resources :column_preferences, only: [], format: :json do
+    resources :column_preferences, only: [] do
       put :bulk_update, on: :collection
     end
 

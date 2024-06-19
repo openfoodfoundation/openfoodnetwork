@@ -23,6 +23,7 @@ require 'open_food_network/property_merge'
 module Spree
   class Product < ApplicationRecord
     include ProductStock
+    include LogDestroyPerformer
 
     self.belongs_to_required_by_default = false
 
@@ -301,6 +302,16 @@ module Spree
         variant_unit: values[0],
         variant_unit_scale: values[1] || nil
       )
+    end
+
+    # Remove any unsupported HTML.
+    def description
+      HtmlSanitizer.sanitize(super)
+    end
+
+    # Remove any unsupported HTML.
+    def description=(html)
+      super(HtmlSanitizer.sanitize(html))
     end
 
     private

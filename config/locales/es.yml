@@ -478,6 +478,7 @@ es:
         edit: Editar
         clone: Duplicar
         delete: Borrar
+        remove: Eliminar
       image:
         edit: Editar
     adjustments:
@@ -694,6 +695,7 @@ es:
       index:
         header:
           title: Editar varios Productos
+      content:
         loading: Cargando tus productos
       filters:
         producers:
@@ -711,8 +713,12 @@ es:
         reset: Desechar Cambios
         save: Guardar Cambios
         new_variant: Nueva variante
-      edit_image:
-        close: Atrás
+      variant_row:
+        none_tax_category: Ninguno
+        category_field_name: "Categoría"
+        tax_category_field_name: "Categoría de impuestos"
+      product_row:
+        producer_field_name: "Productora"
     product_import:
       title: Importación de productos
       file_not_found: Archivo no encontrado o no se pudo abrir
@@ -1860,7 +1866,6 @@ es:
   label_account: "Cuenta"
   label_more: "Mostrar más"
   label_less: "Mostrar menos"
-  label_notices: "Noticias"
   cart_items: "elementos"
   cart_headline: "Su carrito de compras"
   total: "Total"
@@ -3705,6 +3710,9 @@ es:
     validation:
       must_be_int: "debe ser un entero"
     admin:
+      images:
+        edit:
+          close: Atrás
       mail_methods:
         send_testmail: "Enviar correo electrónico de prueba"
         testmail:
@@ -3731,6 +3739,10 @@ es:
         enterprise_relationships: "Permisos"
         customers: "Consumidoras"
         groups: "Redes"
+        overview: "Visión general"
+        product_import: "Importar"
+        enterprise_roles: "Roles"
+        payment_methods: "Métodos de Pago"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "¿Heredar propiedades desde %{supplier}? (a menos que sea anulado arriba)"

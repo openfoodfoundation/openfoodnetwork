@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe OutstandingBalanceQuery do
+RSpec.describe OutstandingBalanceQuery do
   subject(:query) { described_class.new(relation) }
 
   let(:result) { query.call }

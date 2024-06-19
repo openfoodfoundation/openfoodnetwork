@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe DefaultStockLocation do
+RSpec.describe DefaultStockLocation do
   describe '.find_or_create' do
     context 'when a location named default already exists' do
       let!(:location) do

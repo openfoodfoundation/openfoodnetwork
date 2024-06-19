@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'spree/localized_number'
 
-describe Spree::Variant do
+RSpec.describe Spree::Variant do
   subject(:variant) { build(:variant) }
 
   it { is_expected.to have_many :semantic_links }
@@ -54,6 +54,28 @@ describe Spree::Variant do
         before { Spree::Config.products_require_tax_category = true }
 
         it { is_expected.to validate_presence_of :tax_category }
+      end
+    end
+  end
+
+  describe "#changed?" do
+    subject(:variant) { create(:variant) }
+
+    it { is_expected.not_to be_changed }
+
+    it "is changed when basic fields are changed" do
+      subject.display_name = "blah"
+      expect(subject).to be_changed
+    end
+
+    describe "default_price" do
+      it "price" do
+        subject.price = 100
+        expect(subject).to be_changed
+      end
+      it "currency" do
+        subject.currency = "USD"
+        expect(subject).to be_changed
       end
     end
   end

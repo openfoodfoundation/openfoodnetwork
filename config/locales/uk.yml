@@ -468,6 +468,7 @@ uk:
         edit: Редагувати
         clone: Клонувати
         delete: Видалити
+        remove: Видалити
       image:
         edit: Редагувати
     adjustments:
@@ -695,8 +696,12 @@ uk:
           clear_search: Очистити пошук
       table:
         new_variant: Новий варіант
-      edit_image:
-        close: Назад
+      variant_row:
+        none_tax_category: Жодного
+        category_field_name: "Категорія"
+        tax_category_field_name: "Категорія податку"
+      product_row:
+        producer_field_name: "Виробник"
     product_import:
       title: Імпорт продукту
       file_not_found: Файл не знайдено або не вдалося відкрити
@@ -1816,7 +1821,6 @@ uk:
   label_account: "Обліковий запис"
   label_more: "Показати більше"
   label_less: "Показувати менше"
-  label_notices: "Повідомлення"
   cart_items: "Товари"
   cart_headline: "Ваш кошик для покупок"
   total: "Всього"
@@ -3679,6 +3683,9 @@ uk:
     validation:
       must_be_int: "має бути цілим числом"
     admin:
+      images:
+        edit:
+          close: Назад
       mail_methods:
         send_testmail: "Надіслати тестовий електронний лист"
         testmail:
@@ -3705,6 +3712,10 @@ uk:
         enterprise_relationships: "Дозволи"
         customers: "Клієнти"
         groups: "Групи"
+        overview: "Огляд"
+        product_import: "Імпорт"
+        enterprise_roles: "Ролі"
+        payment_methods: "Методи оплати"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Успадкувати властивості від %{supplier}? (якщо не перевизначено вище)"

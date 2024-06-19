@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Shipping Categories" do
+RSpec.describe "Shipping Categories" do
   include AuthenticationHelper
   include WebHelper
   let(:admin_role) { Spree::Role.find_or_create_by!(name: 'admin') }

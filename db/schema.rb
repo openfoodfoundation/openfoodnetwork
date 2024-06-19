@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_29_081209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -204,11 +204,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
     t.string "abn", limit: 255
     t.string "acn", limit: 255
     t.integer "address_id"
-    t.text "pickup_times"
-    t.string "next_collection_at", limit: 255
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.text "distributor_info"
     t.string "facebook", limit: 255
     t.string "instagram", limit: 255
     t.string "linkedin", limit: 255
@@ -258,9 +255,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   end
 
   create_table "exchanges", id: :serial, force: :cascade do |t|
-    t.integer "order_cycle_id"
-    t.integer "sender_id"
-    t.integer "receiver_id"
+    t.integer "order_cycle_id", null: false
+    t.integer "sender_id", null: false
+    t.integer "receiver_id", null: false
     t.text "pickup_time"
     t.text "pickup_instructions"
     t.datetime "created_at", precision: nil, null: false
@@ -282,7 +279,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   create_table "flipper_gates", id: :serial, force: :cascade do |t|
     t.string "feature_key", null: false
     t.string "key", null: false
-    t.string "value"
+    t.text "value"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
@@ -330,10 +327,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   end
 
   create_table "order_cycles", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name", limit: 255, null: false
     t.datetime "orders_open_at", precision: nil
     t.datetime "orders_close_at", precision: nil
-    t.integer "coordinator_id"
+    t.integer "coordinator_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "processed_at", precision: nil
@@ -420,15 +417,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   create_table "spree_addresses", id: :serial, force: :cascade do |t|
     t.string "firstname", limit: 255
     t.string "lastname", limit: 255
-    t.string "address1", limit: 255
+    t.string "address1", limit: 255, null: false
     t.string "address2", limit: 255
-    t.string "city", limit: 255
+    t.string "city", limit: 255, null: false
     t.string "zipcode", limit: 255
-    t.string "phone", limit: 255
+    t.string "phone", limit: 255, null: false
     t.string "state_name", limit: 255
     t.string "alternative_phone", limit: 255
     t.integer "state_id"
-    t.integer "country_id"
+    t.integer "country_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "company", limit: 255
@@ -544,8 +541,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   end
 
   create_table "spree_line_items", id: :serial, force: :cascade do |t|
-    t.integer "order_id"
-    t.integer "variant_id"
+    t.integer "order_id", null: false
+    t.integer "variant_id", null: false
     t.integer "quantity", null: false
     t.decimal "price", precision: 10, scale: 2, null: false
     t.datetime "created_at", precision: nil, null: false
@@ -674,8 +671,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
 
   create_table "spree_product_properties", id: :serial, force: :cascade do |t|
     t.string "value", limit: 255
-    t.integer "product_id"
-    t.integer "property_id"
+    t.integer "product_id", null: false
+    t.integer "property_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "position", default: 0
@@ -718,7 +715,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
     t.string "number", limit: 255
     t.string "state", limit: 255
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
-    t.integer "order_id"
+    t.integer "order_id", null: false
     t.text "reason"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -814,12 +811,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   create_table "spree_states", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.string "abbr", limit: 255
-    t.integer "country_id"
+    t.integer "country_id", null: false
   end
 
   create_table "spree_stock_items", id: :serial, force: :cascade do |t|
-    t.integer "stock_location_id"
-    t.integer "variant_id"
+    t.integer "stock_location_id", null: false
+    t.integer "variant_id", null: false
     t.integer "count_on_hand", default: 0, null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -849,8 +846,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   end
 
   create_table "spree_stock_movements", id: :serial, force: :cascade do |t|
-    t.integer "stock_item_id"
-    t.integer "quantity", default: 0
+    t.integer "stock_item_id", null: false
+    t.integer "quantity", default: 0, null: false
     t.string "action", limit: 255
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -871,7 +868,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_13_044159) do
   create_table "spree_tax_rates", id: :serial, force: :cascade do |t|
     t.decimal "amount", precision: 8, scale: 5
     t.integer "zone_id"
-    t.integer "tax_category_id"
+    t.integer "tax_category_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "included_in_price", default: false

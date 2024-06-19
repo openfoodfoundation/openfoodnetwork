@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'spree/core/product_duplicator'
 
-describe Api::V0::ProductsController, type: :controller do
+RSpec.describe Api::V0::ProductsController, type: :controller do
   render_views
 
   let(:supplier) { create(:supplier_enterprise) }

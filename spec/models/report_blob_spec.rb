@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe ReportBlob, type: :model do
+RSpec.describe ReportBlob, type: :model do
   it "preserves UTF-8 content" do
     content = "This works. ✓"
 

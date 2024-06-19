@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Order::Checkout do
+RSpec.describe Spree::Order::Checkout do
   let(:order) { Spree::Order.new }
 
   context "with default state machine" do

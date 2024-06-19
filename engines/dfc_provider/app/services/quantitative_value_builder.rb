@@ -33,7 +33,7 @@ class QuantitativeValueBuilder < DfcBuilder
     product.variant_unit = measure
     product.variant_unit_name = unit_name if measure == "items"
     product.variant_unit_scale = unit_scale
-    product.unit_value = quantity.value * unit_scale
+    product.unit_value = quantity.value.to_f * unit_scale
   end
 
   # Map DFC units to OFN fields:

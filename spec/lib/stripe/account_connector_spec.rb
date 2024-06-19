@@ -5,7 +5,7 @@ require 'stripe/account_connector'
 require 'stripe/oauth'
 
 module Stripe
-  describe AccountConnector do
+  RSpec.describe AccountConnector do
     describe "create_account" do
       let(:user) { create(:user) }
       let(:enterprise) { create(:enterprise) }

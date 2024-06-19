@@ -498,6 +498,7 @@ it:
         edit: Modifica
         clone: Duplica
         delete: Annulla
+        remove: Rimuovi
       image:
         edit: Modifica
     adjustments:
@@ -727,8 +728,12 @@ it:
           clear_search: Pulisci ricerca
       table:
         new_variant: Nuova variante
-      edit_image:
-        close: Indietro
+      variant_row:
+        none_tax_category: Nessuno
+        category_field_name: "Categoria"
+        tax_category_field_name: "Categoria d'imposta"
+      product_row:
+        producer_field_name: "Produttore"
     product_import:
       title: Importa prodotto
       file_not_found: Documento non trovato o non disponibile
@@ -1870,7 +1875,6 @@ it:
   label_account: "Account"
   label_more: "Mostra di più"
   label_less: "Mostra meno"
-  label_notices: "Avvisi"
   cart_items: "articoli"
   cart_headline: "Il tuo carrello"
   total: "Totale"
@@ -3741,6 +3745,9 @@ it:
     validation:
       must_be_int: "deve essere un numero intero"
     admin:
+      images:
+        edit:
+          close: Indietro
       mail_methods:
         send_testmail: "Invia mail prova"
         testmail:
@@ -3768,6 +3775,10 @@ it:
         customers: "Clienti"
         groups: "Reti"
         oidc_settings: "Impoostazioni"
+        overview: "Panoramica"
+        product_import: "Importazione"
+        enterprise_roles: "Ruoli"
+        payment_methods: "Metodi di Pagamento"
       product_properties:
         index:
           inherits_properties_checkbox_hint: "Eredita le proprietà da %{supplier}? (se non sovrascritto)"

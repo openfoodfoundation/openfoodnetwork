@@ -2,35 +2,157 @@
 
 require "system_helper"
 
-describe 'As an admin, I can manage products', feature: :admin_style_v3 do
+RSpec.describe 'As an enterprise user, I can manage my products', feature: :admin_style_v3 do
+  include AdminHelper
   include WebHelper
   include AuthenticationHelper
   include FileHelper
 
+  let(:producer) { create(:supplier_enterprise) }
+  let(:user) { create(:user, enterprises: [producer]) }
+
   before do
-    login_as_admin
+    login_as user
   end
 
-  it "can see the new product page" do
-    visit admin_products_url
-    expect(page).to have_content "Bulk Edit Products"
+  let(:producer_search_selector) { 'input[placeholder="Search for producers"]' }
+  let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
+  let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
+
+  describe "with no products" do
+    before { visit admin_products_url }
+    it "can see the new product page" do
+      expect(page).to have_content "Bulk Edit Products"
+      expect(page).to have_text "No products found"
+      # displays buttons to add products with the correct links
+      expect(page).to have_link(class: "button", text: "New Product", href: "/admin/products/new")
+      expect(page).to have_link(class: "button", text: "Import multiple products",
+                                href: "/admin/products/import")
+    end
   end
 
-  describe "sorting" do
-    let!(:product_b) { create(:simple_product, name: "Bananas") }
-    let!(:product_a) { create(:simple_product, name: "Apples") }
+  describe "column selector" do
+    let!(:product) { create(:simple_product) }
 
     before do
       visit admin_products_url
     end
 
-    it "Should sort products alphabetically by default" do
-      within "table.products" do
-        # Gather input values, because page.content doesn't include them.
-        input_content = page.find_all('input[type=text]').map(&:value).join
+    it "hides column and remembers saved preference" do
+      # Name shows by default
+      expect(page).to have_checked_field "Name"
+      expect(page).to have_selector "th", text: "Name"
+      expect_other_columns_visible
 
+      # Name is hidden
+      ofn_drop_down("Columns").click
+      within ofn_drop_down("Columns") do
+        uncheck "Name"
+      end
+      expect(page).not_to have_selector "th", text: "Name"
+      expect_other_columns_visible
+
+      # Preference saved
+      click_on "Save as default"
+      expect(page).to have_content "Column preferences saved"
+      refresh
+
+      # Preference remembered
+      ofn_drop_down("Columns").click
+      within ofn_drop_down("Columns") do
+        expect(page).to have_unchecked_field "Name"
+      end
+      expect(page).not_to have_selector "th", text: "Name"
+      expect_other_columns_visible
+    end
+
+    def expect_other_columns_visible
+      expect(page).to have_selector "th", text: "Producer"
+      expect(page).to have_selector "th", text: "Price"
+      expect(page).to have_selector "th", text: "On Hand"
+    end
+  end
+
+  describe "listing" do
+    let!(:p1) { create(:product) }
+    let!(:p2) { create(:product) }
+
+    before do
+      visit admin_products_url
+    end
+
+    it "displays a list of products" do
+      within ".products" do
+        # displays table header
+        expect(page).to have_selector "th", text: "Name"
+        expect(page).to have_selector "th", text: "SKU"
+        expect(page).to have_selector "th", text: "Unit scale"
+        expect(page).to have_selector "th", text: "Unit"
+        expect(page).to have_selector "th", text: "Price"
+        expect(page).to have_selector "th", text: "On Hand"
+        expect(page).to have_selector "th", text: "Producer"
+        expect(page).to have_selector "th", text: "Category"
+        expect(page).to have_selector "th", text: "Tax Category"
+        expect(page).to have_selector "th", text: "Inherits Properties?"
+        expect(page).to have_selector "th", text: "Actions"
+
+        # displays product list
+        expect(page).to have_selector row_containing_name(p1.name.to_s)
+        expect(page).to have_selector row_containing_name(p2.name.to_s)
+      end
+    end
+
+    context "with several variants" do
+      let!(:variant1) { p1.variants.first }
+      let!(:variant2) { p2.variants.first }
+      let!(:variant3) { create(:variant, product: p2, on_demand: false, on_hand: 4) }
+
+      before do
+        variant1.update!(on_hand: 0, on_demand: true)
+        variant2.update!(on_hand: 16, on_demand: false)
+        visit spree.admin_products_path
+      end
+
+      it "displays an on hand count in a span for each product" do
+        expect(page).to have_content "On demand"
+        expect(page).not_to have_content "20" # does not display the total stock
+        expect(page).to have_content "16" # displays the stock for variant_2
+        expect(page).to have_content "4"  # displays the stock for variant_3
+      end
+    end
+  end
+
+  describe "sorting" do
+    let!(:product_b) { create(:simple_product, name: "Bananas") }
+    let!(:product_a) { create(:simple_product, name: "Apples") }
+    let(:products_table) { "table.products" }
+
+    before do
+      visit admin_products_url
+    end
+
+    it "Should sort products alphabetically by default in ascending order" do
+      within products_table do
         # Products are in correct order.
-        expect(input_content).to match /Apples.*Bananas/
+        expect(all_input_values).to match /Apples.*Bananas/
+      end
+    end
+
+    context "when clicked on 'Name' column header" do
+      it "Should sort products alphabetically in descending/ascending order" do
+        within products_table do
+          name_header = page.find('th > a[data-column="name"]')
+
+          # Sort in descending order
+          name_header.click
+          expect(page).to have_content("Name ▼") # this indicates the re-sorted content has loaded
+          expect(all_input_values).to match /Bananas.*Apples/
+
+          # Sort in ascending order
+          name_header.click
+          expect(page).to have_content("Name ▲") # this indicates the re-sorted content has loaded
+          expect(all_input_values).to match /Apples.*Bananas/
+        end
       end
     end
   end
@@ -66,11 +188,13 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   describe "search" do
-    # TODO: explicitly test with multiple products, to ensure incorrect products don't show.
-    # TODO: test with  multiple variants, to ensure distinct query reponse
     context "product has searchable term" do
       # create a product with a name that can be searched
       let!(:product_by_name) { create(:simple_product, name: "searchable product") }
+      let!(:variant_a) {
+        create(:variant, product_id: product_by_name.id, display_name: "Medium box")
+      }
+      let!(:variant_b) { create(:variant, product_id: product_by_name.id, display_name: "Big box") }
 
       it "can search for a product" do
         create_products 1
@@ -79,7 +203,39 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         search_for "searchable product"
 
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria."
+        expect_products_count_to_be 1
+      end
+
+      it "with multiple products" do
+        create_products 2
+        visit admin_products_url
+
+        # returns no results, if the product does not exist
+        search_for "a product which does not exist"
+
+        expect(page).to have_field "search_term", with: "a product which does not exist"
+        expect(page).to have_content "No products found for your search criteria"
+        expect_products_count_to_be 0
+
+        # returns the existing product
+        search_for "searchable product"
+
+        expect(page).to have_field "search_term", with: "searchable product"
+        expect(page).to have_content "1 products found for your search criteria."
+        expect_products_count_to_be 1
+      end
+
+      it "can search variant names" do
+        create_products 1
+        visit admin_products_url
+
+        expect_products_count_to_be 2
+
+        search_for "Big box"
+
+        expect(page).to have_field "search_term", with: "Big box"
+        expect(page).to have_content "1 products found for your search criteria."
         expect_products_count_to_be 1
       end
 
@@ -96,7 +252,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         expect_per_page_to_be 15
         expect_products_count_to_be 1
         search_for "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria."
         expect_products_count_to_be 1
       end
 
@@ -106,7 +262,7 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         search_for "searchable product"
         expect(page).to have_field "search_term", with: "searchable product"
-        # expect(page).to have_content "1 product found for your search criteria."
+        expect(page).to have_content "1 products found for your search criteria."
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_name.name
 
@@ -129,8 +285,10 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       before { create_products 1 }
 
       # create a product with a different supplier
-      let!(:producer) { create(:supplier_enterprise, name: "Producer 1") }
-      let!(:product_by_supplier) { create(:simple_product, name: "Apples", supplier: producer) }
+      let!(:producer1) { create(:supplier_enterprise, name: "Producer 1") }
+      let!(:product_by_supplier) { create(:simple_product, name: "Apples", supplier: producer1) }
+
+      before { user.enterprise_roles.create(enterprise: producer1) }
 
       it "can search for and update a product" do
         visit admin_products_url
@@ -173,12 +331,14 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
         search_by_category "Category 1"
 
         # expect(page).to have_content "1 product found for your search criteria."
-        expect(page).to have_select "category_id", selected: "Category 1"
+        expect(page).to have_select "category_id", selected: "Category 1" # fails in dev but not CI
         expect_products_count_to_be 1
         expect(page).to have_field "Name", with: product_by_category.name
       end
     end
   end
+
+  describe "columns"
 
   describe "updating" do
     let!(:variant_a1) {
@@ -189,6 +349,16 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     }
     let!(:product_a) {
       create(:simple_product, name: "Apples", sku: "APL-00",
+                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+    }
+    let(:variant_b1) {
+      product_b.variants.first.tap{ |v|
+        v.update! display_name: "Medium box", sku: "TMT-01", price: 5, on_hand: 5,
+                  on_demand: false
+      }
+    }
+    let(:product_b) {
+      create(:simple_product, name: "Tomatoes", sku: "TMT-01",
                               variant_unit: "weight", variant_unit_scale: 1) # Grams
     }
     before do
@@ -209,7 +379,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       end
 
       # Unit popout
-      # TODO: prevent empty value
       fill_in "Unit value", with: ""
       click_button "Save changes" # attempt to save or close the popout
       expect(page).to have_field "Unit value", with: "" # popout is still open
@@ -473,6 +642,15 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
       end
     end
 
+    describe "creating a new product" do
+      it "redirects to the New Product page" do
+        visit admin_products_url
+        expect {
+          click_link("New Product")
+        }.to change { current_path }.to(spree.new_admin_product_path)
+      end
+    end
+
     describe "adding variants" do
       it "creates a new variant" do
         click_on "New variant"
@@ -518,6 +696,107 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           within tax_category_column do
             expect(page).to have_content "None"
           end
+        end
+      end
+
+      it 'removes a newly added not persisted variant' do
+        click_on "New variant"
+        new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        within new_variant_row do
+          fill_in "Name", with: "Large box"
+          fill_in "SKU", with: "APL-02"
+          expect(page).to have_field("Name", placeholder: "Apples", with: "Large box")
+        end
+
+        expect(page).to have_text("1 product modified.")
+        expect(page).to have_css('form.disabled-section#filters') # ie search/sort disabled
+
+        within new_variant_row do
+          page.find(".vertical-ellipsis-menu").click
+          page.find('a', text: 'Remove').click
+        end
+
+        expect(page).not_to have_field("Name", placeholder: "Apples", with: "Large box")
+        expect(page).not_to have_text("1 product modified.")
+        expect(page).not_to have_css('form.disabled-section#filters')
+      end
+
+      it "removes newly added not persistent Variants one at a time" do
+        click_on "New variant"
+
+        first_new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        within first_new_variant_row do
+          fill_in "Name", with: "Large box"
+        end
+
+        click_on "New variant"
+        second_new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        within second_new_variant_row do
+          fill_in "Name", with: "Huge box"
+        end
+
+        expect(page).to have_text("1 product modified.")
+        expect(page).to have_css('form.disabled-section#filters')
+
+        within first_new_variant_row do
+          page.find(".vertical-ellipsis-menu").click
+          page.find('a', text: 'Remove').click
+        end
+
+        expect(page).to have_text("1 product modified.")
+
+        within second_new_variant_row do
+          page.find(".vertical-ellipsis-menu").click
+          page.find('a', text: 'Remove').click
+        end
+        # Only when all non persistent variants are gone that product is non modified
+        expect(page).not_to have_text("1 product modified.")
+        expect(page).not_to have_css('form.disabled-section#filters')
+      end
+
+      context "With 2 products" do
+        before do
+          variant_b1
+          # To add 2nd product on page
+          page.refresh
+        end
+
+        it "removes newly added Variants across products" do
+          click_on "New variant"
+          apples_new_variant_row =
+            find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+          within apples_new_variant_row do
+            fill_in "Name", with: "Large box"
+          end
+
+          tomatoes_part = page.all('tbody')[1]
+          within tomatoes_part do
+            click_on "New variant"
+          end
+          tomatoes_new_variant_row =
+            find_field("Name", placeholder: "Tomatoes", with: "").ancestor("tr")
+          within tomatoes_new_variant_row do
+            fill_in "Name", with: "Huge box"
+          end
+          expect(page).to have_text("2 products modified.")
+          expect(page).to have_css('form.disabled-section#filters') # ie search/sort disabled
+
+          within apples_new_variant_row do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+          # New variant for apples is no more, expect only 1 modified product
+          expect(page).to have_text("1 product modified.")
+          # search/sort still disabled
+          expect(page).to have_css('form.disabled-section#filters')
+
+          within tomatoes_new_variant_row do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+          # Back to page without any alteration
+          expect(page).not_to have_text("1 product modified.")
+          expect(page).not_to have_css('form.disabled-section#filters')
         end
       end
 
@@ -599,6 +878,22 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
           expect(new_variant.price).to eq 10.25
           expect(new_variant.unit_value).to eq 200
         end
+
+        it "removes unsaved record" do
+          click_button "Save changes"
+
+          expect(page).to have_text("1 product could not be saved.")
+
+          within row_containing_name("N" * 256) do
+            page.find(".vertical-ellipsis-menu").click
+            page.find('a', text: 'Remove').click
+          end
+
+          # Now that invalid variant is removed, we can proceed to save
+          click_button "Save changes"
+          expect(page).not_to have_text("1 product could not be saved.")
+          expect(page).not_to have_css('form.disabled-section#filters')
+        end
       end
     end
 
@@ -661,15 +956,128 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     end
   end
 
+  describe "Changing producers, category and tax category" do
+    let!(:variant_a1) {
+      product_a.variants.first.tap{ |v|
+        v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
+                  on_demand: false
+      }
+    }
+    let!(:product_a) {
+      create(:simple_product, name: "Apples", sku: "APL-00",
+                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+    }
+
+    context "when they are under 11" do
+      before do
+        create_list(:supplier_enterprise, 9, users: [user])
+        create_list(:tax_category, 9)
+        create_list(:taxon, 2)
+
+        visit admin_products_url
+      end
+
+      it "should not display search input, change the producers, category and tax category" do
+        producer_to_select = random_producer(product_a)
+        category_to_select = random_category(variant_a1)
+        tax_category_to_select = random_tax_category
+
+        within row_containing_name(product_a.name) do
+          validate_tomselect_without_search!(
+            page, "Producer",
+            producer_search_selector
+          )
+          tomselect_select(producer_to_select, from: "Producer")
+        end
+
+        within row_containing_name(variant_a1.display_name) do
+          validate_tomselect_without_search!(
+            page, "Category",
+            categories_search_selector
+          )
+          tomselect_select(category_to_select, from: "Category")
+
+          validate_tomselect_without_search!(
+            page, "Tax Category",
+            tax_categories_search_selector
+          )
+          tomselect_select(tax_category_to_select, from: "Tax Category")
+        end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+        variant_a1.reload
+
+        expect(product_a.supplier.name).to eq(producer_to_select)
+        expect(variant_a1.primary_taxon.name).to eq(category_to_select)
+        expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
+      end
+    end
+
+    context "when they are over 11" do
+      before do
+        create_list(:supplier_enterprise, 11, users: [user])
+        create_list(:tax_category, 11)
+        create_list(:taxon, 11)
+
+        visit admin_products_url
+      end
+
+      it "should display search input, change the producer" do
+        producer_to_select = random_producer(product_a)
+        category_to_select = random_category(variant_a1)
+        tax_category_to_select = random_tax_category
+
+        within row_containing_name(product_a.name) do
+          validate_tomselect_with_search!(
+            page, "Producer",
+            producer_search_selector
+          )
+          tomselect_search_and_select(producer_to_select, from: "Producer")
+        end
+
+        within row_containing_name(variant_a1.display_name) do
+          sleep(0.1)
+          validate_tomselect_with_search!(
+            page, "Category",
+            categories_search_selector
+          )
+          tomselect_search_and_select(category_to_select, from: "Category")
+
+          sleep(0.1)
+          validate_tomselect_with_search!(
+            page, "Tax Category",
+            tax_categories_search_selector
+          )
+          tomselect_search_and_select(tax_category_to_select, from: "Tax Category")
+        end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Changes saved"
+        product_a.reload
+        variant_a1.reload
+
+        expect(product_a.supplier.name).to eq(producer_to_select)
+        expect(variant_a1.primary_taxon.name).to eq(category_to_select)
+        expect(variant_a1.tax_category.name).to eq(tax_category_to_select)
+      end
+    end
+  end
+
   describe "edit image" do
     shared_examples "updating image" do
-      it "saves product image" do
+      before do
         visit admin_products_url
 
         within row_containing_name("Apples") do
           click_on "Edit"
         end
+      end
 
+      it "saves product image" do
         within ".reveal-modal" do
           expect(page).to have_content "Edit product photo"
           expect_page_to_have_image(current_img_url)
@@ -684,6 +1092,25 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
 
         within row_containing_name("Apples") do
           expect_page_to_have_image('500.jpg')
+        end
+      end
+
+      it 'shows a modal telling not a valid image when uploading wrong type of file' do
+        within ".reveal-modal" do
+          attach_file 'image[attachment]',
+                      Rails.public_path.join('Terms-of-service.pdf'),
+                      visible: false
+          expect(page).to have_content /Attachment is not a valid image/
+          expect(page).to have_content /Attachment has an invalid content type/
+        end
+      end
+
+      it 'shows a modal telling not a valid image when uploading a non valid image file' do
+        within ".reveal-modal" do
+          attach_file 'image[attachment]',
+                      Rails.public_path.join('invalid_image.jpg'),
+                      visible: false
+          expect(page).to have_content /Attachment is not a valid image/
         end
       end
     end
@@ -901,8 +1328,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             end
 
             expect(page).not_to have_selector(modal_selector)
-            # Make sure the products loading spinner is hidden
-            wait_for_class('.spinner-overlay', 'hidden')
             expect(page).not_to have_selector(variant_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the variant")
@@ -919,8 +1344,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(delete_button_selector).click
             end
             expect(page).not_to have_selector(modal_selector)
-            # Make sure the products loading spinner is hidden
-            wait_for_class('.spinner-overlay', 'hidden')
             expect(page).not_to have_selector(product_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the product")
@@ -943,9 +1366,6 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
               page.find(delete_button_selector).click
             end
 
-            expect(page).not_to have_selector(modal_selector)
-            sleep(0.5) # delay for loading spinner to complete
-            expect(page).to have_selector(variant_selector)
             within error_flash_message_selector do
               expect(page).to have_content("Unable to delete the variant")
               page.find(dismiss_button_selector).click
@@ -960,11 +1380,37 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
             within modal_selector do
               page.find(delete_button_selector).click
             end
-            expect(page).not_to have_selector(modal_selector)
-            sleep(0.5) # delay for loading spinner to complete
-            expect(page).to have_selector(product_selector)
             within error_flash_message_selector do
               expect(page).to have_content("Unable to delete the product")
+            end
+          end
+        end
+
+        context 'a shipped product' do
+          let!(:order) { create(:shipped_order, line_items_count: 1) }
+          let!(:line_item) { order.reload.line_items.first }
+
+          context "a deleted line item from a shipped order" do
+            before do
+              login_as_admin
+              visit admin_products_url
+
+              # Delete Variant
+              within variant_selector do
+                page.find(".vertical-ellipsis-menu").click
+                page.find(delete_option_selector).click
+              end
+
+              delete_button_selector = "input[type=button][value='Delete variant']"
+              within modal_selector do
+                page.find(delete_button_selector).click
+              end
+            end
+
+            it 'keeps the line item on the order (admin)' do
+              visit spree.edit_admin_order_path(order)
+
+              expect(page).to have_content(line_item.product.name.to_s)
             end
           end
         end
@@ -972,9 +1418,90 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
     end
   end
 
+  context "as an enterprise manager" do
+    let(:supplier_managed1) { create(:supplier_enterprise, name: 'Supplier Managed 1') }
+    let(:supplier_managed2) { create(:supplier_enterprise, name: 'Supplier Managed 2') }
+    let(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Supplier Unmanaged') }
+    let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
+    let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
+    let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
+    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0) }
+    let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
+    let!(:product_supplied_permitted) {
+      create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0)
+    }
+    let(:product_supplied_inactive) {
+      create(:product, supplier: supplier_managed1, price: 10.0)
+    }
+
+    let!(:supplier_permitted_relationship) do
+      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed1,
+                                       permissions_list: [:manage_products])
+    end
+
+    before do
+      enterprise_user = create(:user)
+      enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
+      enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
+      enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
+
+      login_as enterprise_user
+    end
+
+    it "shows only products that I supply" do
+      visit spree.admin_products_path
+
+      # displays permitted product list only
+      expect(page).to have_selector row_containing_name(product_supplied.name)
+      expect(page).to have_selector row_containing_name(product_supplied_permitted.name)
+      expect(page).not_to have_selector row_containing_name(product_not_supplied.name)
+    end
+
+    it "shows only suppliers that I manage or have permission to" do
+      visit spree.admin_products_path
+      within row_containing_name(product_supplied.name) do
+        expect(page).to have_select(
+          '_products_0_supplier_id',
+          options: [
+            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
+          ], selected: supplier_managed1.name
+        )
+      end
+
+      within row_containing_name(product_supplied_permitted.name) do
+        expect(page).to have_select(
+          '_products_1_supplier_id',
+          options: [
+            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
+          ], selected: supplier_permitted.name
+        )
+      end
+    end
+
+    it "shows inactive products that I supply" do
+      product_supplied_inactive
+
+      visit spree.admin_products_path
+
+      expect(page).to have_selector row_containing_name(product_supplied_inactive.name)
+    end
+
+    it "allows me to update a product" do
+      visit spree.admin_products_path
+
+      within row_containing_name(product_supplied.name) do
+        fill_in "Name", with: "Pommes"
+      end
+      click_button "Save changes"
+
+      expect(page).to have_content "Changes saved"
+      expect(page).to have_selector row_containing_name("Pommes")
+    end
+  end
+
   def create_products(amount)
     amount.times do |i|
-      create(:simple_product, name: "product #{i}")
+      create(:simple_product, name: "product #{i}", supplier: producer)
     end
   end
 
@@ -1025,6 +1552,39 @@ describe 'As an admin, I can manage products', feature: :admin_style_v3 do
   end
 
   def tax_category_column
-    @tax_category_column ||= 'td:nth-child(10)'
+    @tax_category_column ||= '[data-controller="variant"] > td:nth-child(10)'
+  end
+
+  def validate_tomselect_without_search!(page, field_name, search_selector)
+    open_tomselect_to_validate!(page, field_name) do
+      expect(page).not_to have_selector(search_selector)
+    end
+  end
+
+  def validate_tomselect_with_search!(page, field_name, search_selector)
+    open_tomselect_to_validate!(page, field_name) do
+      expect(page).to have_selector(search_selector)
+    end
+  end
+
+  def random_producer(product)
+    Enterprise.is_primary_producer
+      .where.not(id: product.supplier.id)
+      .pluck(:name).sample
+  end
+
+  def random_category(variant)
+    Spree::Taxon
+      .where.not(id: variant.primary_taxon.id)
+      .pluck(:name).sample
+  end
+
+  def random_tax_category
+    Spree::TaxCategory
+      .pluck(:name).sample
+  end
+
+  def all_input_values
+    page.find_all('input[type=text]').map(&:value).join
   end
 end

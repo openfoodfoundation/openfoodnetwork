@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-describe '
+RSpec.describe '
     As an admin
     I want to set a supplier and distributor(s) for a product
 ' do
@@ -18,12 +18,6 @@ describe '
     @supplier = create(:supplier_enterprise, name: 'New supplier')
     @distributors = (1..3).map { create(:distributor_enterprise) }
     @enterprise_fees = (0..2).map { |i| create(:enterprise_fee, enterprise: @distributors[i]) }
-  end
-
-  context "as anonymous user" do
-    it "is redirected to login page when attempting to access product listing" do
-      expect { visit spree.admin_products_path }.not_to raise_error
-    end
   end
 
   describe "creating a product" do
@@ -690,7 +684,7 @@ describe '
     end
 
     it "checks error when creating product image with unsupported format" do
-      unsupported_image_file_path = Rails.root + "README.md"
+      unsupported_image_file_path = Rails.root.join("README.md").to_s
       product = create(:simple_product, supplier: @supplier2)
 
       image = white_logo_file
@@ -742,9 +736,6 @@ describe '
 
     context "editing a product's variant unit scale" do
       let(:product) { create(:simple_product, name: 'a product', supplier: @supplier2) }
-
-      # TODO below -> assertions commented out refer to bug:
-      # https://github.com/openfoodfoundation/openfoodnetwork/issues/7180
 
       before do
         allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe PathChecker do
+RSpec.describe PathChecker do
   describe "#active_path?" do
     let(:view_context) { double("view context") }
 

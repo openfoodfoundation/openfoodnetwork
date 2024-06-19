@@ -1,0 +1,3 @@
+%a.image-field{ href: product_image_form_path(product), 'data-turbo-stream': true }
+  = image_tag product.image&.url(:mini) || Spree::Image.default_image_url(:mini), width: 40, height: 40
+  .button.secondary.mini= t('admin.products_page.image.edit')

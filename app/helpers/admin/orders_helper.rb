@@ -11,7 +11,23 @@ module Admin
     def order_adjustments_for_display(order)
       order.adjustments +
         voucher_included_tax_representations(order) +
+        additional_tax_total_representation(order) +
         order.all_adjustments.payment_fee.eligible
+    end
+
+    def additional_tax_total_representation(order)
+      adjustment = Spree::Adjustment.additional.tax.where(
+        order_id: order.id, adjustable_type: 'Spree::Adjustment'
+      ).sum(:amount)
+
+      return [] unless adjustment != 0
+
+      [
+        AdjustmentData.new(
+          I18n.t("admin.orders.edit.tax_on_fees"),
+          adjustment
+        )
+      ]
     end
 
     def voucher_included_tax_representations(order)

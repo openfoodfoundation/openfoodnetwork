@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe BulkInvoiceJob do
+RSpec.describe BulkInvoiceJob do
   subject { BulkInvoiceJob.new(order_ids, "/tmp/file/path") }
 
   context "when invoices are enabled", feature: :invoices do

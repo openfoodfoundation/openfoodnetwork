@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-describe "Zones" do
+RSpec.describe "Zones" do
   include AuthenticationHelper
   include WebHelper
 
