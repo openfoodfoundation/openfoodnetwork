@@ -579,32 +579,6 @@ module Spree
         end
       end
 
-      describe 'stockable_by' do
-        let(:shop) { create(:distributor_enterprise) }
-        let(:add_to_oc_producer) { create(:supplier_enterprise) }
-        let(:other_producer) { create(:supplier_enterprise) }
-        let(:p1) { create(:simple_product) }
-        let(:p2) { create(:simple_product) }
-        let(:p3) { create(:simple_product) }
-
-        before do
-          create(:variant, product: p1, supplier: shop)
-          create(:variant, product: p2, supplier: add_to_oc_producer)
-          create(:variant, product: p3, supplier: other_producer)
-
-          create(:enterprise_relationship, parent: add_to_oc_producer, child: shop,
-                                           permissions_list: [:add_to_order_cycle])
-          create(:enterprise_relationship, parent: other_producer, child: shop,
-                                           permissions_list: [:manage_products])
-        end
-
-        it 'shows products produced by the enterprise and any producers granting P-OC' do
-          stockable_products = Spree::Product.stockable_by(shop)
-          expect(stockable_products).to include p1, p2
-          expect(stockable_products).not_to include p3
-        end
-      end
-
       describe "imported_on" do
         let!(:v1) { create(:variant, import_date: 1.day.ago) }
         let!(:v2) { create(:variant, import_date: 2.days.ago) }

@@ -448,30 +448,6 @@ RSpec.describe Spree::Variant do
       end
     end
 
-    describe '.stockable_by' do
-      let(:shop) { create(:distributor_enterprise) }
-      let(:add_to_oc_producer) { create(:supplier_enterprise) }
-      let(:other_producer) { create(:supplier_enterprise) }
-      let!(:v1) { create(:variant, product: create(:simple_product), supplier: shop ) }
-      let!(:v2) {
-        create(:variant, product: create(:simple_product), supplier: add_to_oc_producer )
-      }
-      let!(:v3) { create(:variant, product: create(:simple_product), supplier: other_producer ) }
-
-      before do
-        create(:enterprise_relationship, parent: add_to_oc_producer, child: shop,
-                                         permissions_list: [:add_to_order_cycle])
-        create(:enterprise_relationship, parent: other_producer, child: shop,
-                                         permissions_list: [:manage_products])
-      end
-
-      it 'shows variants produced by the enterprise and any producers granting P-OC' do
-        stockable_variants = Spree::Variant.stockable_by(shop)
-        expect(stockable_variants).to include v1, v2
-        expect(stockable_variants).not_to include v3
-      end
-    end
-
     describe ".with_properties" do
       let!(:variant_without_wanted_property_on_supplier) {
         create(:variant, supplier: supplier_without_wanted_property)
