@@ -337,11 +337,6 @@ RSpec.describe '
             end
           end
           context "the distributor of one of the order didn't set the ABN" do
-            before do
-              order4.distributor.update(abn: "123456789")
-              order5.distributor.update(abn: nil)
-            end
-
             shared_examples "should not print the invoice" do
               it "should render a warning message" do
                 page.find(order4_selector).click
@@ -363,9 +358,20 @@ RSpec.describe '
                 } must have a valid ABN before invoices can be used."
               end
             end
-            it_behaves_like "should not print the invoice"
-            context "with legal invoices feature", feature: :invoices do
-              it_behaves_like "should not print the invoice"
+
+            context "ABN is nil" do
+              before do
+                order4.distributor.update(abn: "123456789")
+                order5.distributor.update(abn: nil)
+              end
+
+              context "with legal invoices feature disabled" do
+                it_behaves_like "should not print the invoice"
+              end
+
+              context "with legal invoices feature", feature: :invoices do
+                it_behaves_like "should not print the invoice"
+              end
             end
           end
         end
