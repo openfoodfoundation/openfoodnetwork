@@ -59,6 +59,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+          cache: yarn
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -185,6 +186,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+          cache: yarn
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -262,6 +264,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+          cache: yarn
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -340,6 +343,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+          cache: yarn
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -418,6 +422,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+          cache: yarn
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
@@ -470,6 +475,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: .node-version
+          cache: yarn
 
       - name: Install JS dependencies
         run: yarn install --frozen-lockfile
