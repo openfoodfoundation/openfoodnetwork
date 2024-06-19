@@ -39,13 +39,15 @@ module Reporting
 
         def query_result
           orders = search.result
-          # Mask non editable order details
+
           editable_orders_ids = permissions.editable_orders.select(&:id).map(&:id)
-          orders
-            .filter { |order| order.in?(editable_orders_ids) }
-            .each { |order| Orders::MaskDataService.new(order).call }
+          orders = orders .filter { |order| order.id.in?(editable_orders_ids) }
+
           # Get Line Items
-          orders.map(&:line_items).flatten
+          # Mask non editable order details
+          orders.map(&:line_items).flatten.each do |line_item|
+            Orders::MaskDataService.new(line_item.order).call
+          end
         end
 
         private

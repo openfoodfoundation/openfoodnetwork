@@ -103,6 +103,12 @@ module Reporting
                 expect(table3.size).to eq 0
               end
             end
+
+            context "when Customer name in report is disabled" do
+              it "hides Customer data" do
+                # TODO
+              end
+            end
           end
         end
       end
