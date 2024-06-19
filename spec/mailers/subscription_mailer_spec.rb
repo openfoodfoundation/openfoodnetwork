@@ -41,11 +41,9 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     end
 
     describe "linking to order page" do
-      let(:order_link_href) { "href=\"#{order_url(order)}\"" }
-      let(:order_link_style) { "style='[^']+'" }
-
       let(:shop) { create(:enterprise, allow_order_changes: true) }
 
+      let(:content) { Capybara::Node::Simple.new(body) }
       let(:body) { SubscriptionMailer.deliveries.last.body.encoded }
 
       before { email.deliver_now }
@@ -54,19 +52,16 @@ RSpec.describe SubscriptionMailer, type: :mailer do
         let(:customer) { create(:customer, enterprise: shop) }
 
         it "provides link to make changes" do
-          expect(body).to match %r{<a #{order_link_href} #{order_link_style}>make changes</a>}
-          expect(body).not_to match %r{
-            <a #{order_link_href} #{order_link_style}>view details of this order</a>
-          }
+          expect(content).to have_link "make changes", href: order_url(order)
+          expect(content).not_to have_link "view details of this order", href: order_url(order)
         end
 
         context "when the distributor does not allow changes to the order" do
           let(:shop) { create(:enterprise, allow_order_changes: false) }
 
           it "provides link to view details" do
-            expect(body).not_to match %r{<a #{order_link_href} #{order_link_style}>make changes</a>}
-            expect(body)
-              .to match %r{<a #{order_link_href} #{order_link_style}>view details of this order</a>}
+            expect(content).not_to have_link "make changes", href: order_url(order)
+            expect(content).to have_link "view details of this order", href: order_url(order)
           end
         end
       end
@@ -75,14 +70,14 @@ RSpec.describe SubscriptionMailer, type: :mailer do
         let(:customer) { create(:customer, enterprise: shop, user: nil) }
 
         it "does not provide link" do
-          expect(body).not_to match /#{order_link_href}/
+          expect(body).not_to match order_url(order)
         end
 
         context "when the distributor does not allow changes to the order" do
           let(:shop) { create(:enterprise, allow_order_changes: false) }
 
           it "does not provide link" do
-            expect(body).not_to match /#{order_link_href}/
+            expect(body).not_to match order_url(order)
           end
         end
       end
