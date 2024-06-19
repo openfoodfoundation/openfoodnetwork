@@ -205,14 +205,14 @@ class Enterprise < ApplicationRecord
       select('DISTINCT enterprises.*')
   }
 
-  scope :distributing_products, lambda { |product_ids|
+  scope :distributing_variants, lambda { |variants_ids|
     exchanges = joins("
         INNER JOIN exchanges
-          ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')
+          ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = false)
       ").
       joins('INNER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
       joins('INNER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)').
-      where(spree_variants: { product_id: product_ids }).select('DISTINCT enterprises.id')
+      where(spree_variants: { id: variants_ids }).select('DISTINCT enterprises.id')
 
     where(id: exchanges)
   }
@@ -598,7 +598,7 @@ class Enterprise < ApplicationRecord
   # Touch distributors without them touching their distributors.
   # We avoid an infinite loop and don't need to touch the whole distributor tree.
   def touch_distributors
-    Enterprise.distributing_products(supplied_products.select(:id)).
+    Enterprise.distributing_variants(supplied_variants.select(:id)).
       where.not(enterprises: { id: }).
       update_all(updated_at: Time.zone.now)
   end

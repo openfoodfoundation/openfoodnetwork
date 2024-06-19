@@ -240,8 +240,6 @@ module Spree
 
     def destruction
       transaction do
-        touch_distributors
-
         ExchangeVariant.
           where(exchange_variants: { variant_id: variants.with_deleted.
           select(:id) }).destroy_all
@@ -317,10 +315,6 @@ module Spree
       # importing product. In this scenario the variant has not been updated with the supplier yet
       # hence the check.
       first_variant.supplier.touch if first_variant.supplier.present?
-    end
-
-    def touch_distributors
-      Enterprise.distributing_products(id).each(&:touch)
     end
 
     def validate_image
