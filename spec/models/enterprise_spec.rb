@@ -38,10 +38,11 @@ RSpec.describe Enterprise do
     end
 
     it "destroys supplied variants upon destroy" do
+      pending "Variant are soft deletable, see: https://github.com/openfoodfoundation/openfoodnetwork/issues/2971"
       supplier = create(:supplier_enterprise)
       variant = create(:variant, supplier:)
 
-      variant.destroy
+      supplier.destroy
 
       expect(Spree::Variant.where(id: variant.id)).to be_empty
     end
