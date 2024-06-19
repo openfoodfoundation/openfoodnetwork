@@ -1,24 +1,19 @@
 # frozen_string_literal: true
 
 require 'open_food_network/property_merge'
-# TODO update description
 
 # PRODUCTS
 # Products represent an entity for sale in a store.
 # Products can have variations, called variants
-# Products properties include description, permalink, availability,
-#   shipping category, etc. that do not change by variant.
-#
-# MASTER VARIANT
-# Every product has one master variant, which stores master price and sku, size and weight, etc.
-# Price, SKU, size, weight, etc. are all delegated to the master variant.
-# Contains on_hand inventory levels only when there are no variants for the product.
+# Products properties include description, meta_keywork, etc. that do not change by variant.
 #
 # VARIANTS
-# All variants can access the product properties directly (via reverse delegation).
+# Every product has at least one variant (standard variant), which stores price and  availability,
+# shipping category, sku, size and weight, etc.
+# All variants can access the product name, description, and meta_keyword directly (via reverse
+# delegation).
 # Inventory units are tied to Variant.
-# The master variant can have inventory units, but not option values.
-# All other variants have option values and may have inventory units.
+# All variants have option values and may have inventory units.
 # Sum of on_hand each variant's inventory level determine "on_hand" level for the product.
 #
 module Spree
