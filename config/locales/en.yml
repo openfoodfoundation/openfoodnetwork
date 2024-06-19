@@ -29,6 +29,8 @@ en:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/image:
+        attachment: Attachment
       spree/order/ship_address:
         address1: "Shipping address (Street + House number)"
         address2: "Shipping address line 2"
