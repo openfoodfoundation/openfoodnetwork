@@ -44,7 +44,7 @@ module Api
         authorize! :delete, @variant
 
         VariantDeleter.new.delete(@variant)
-        render json: @variant, serializer: Api::VariantSerializer, status: :no_content
+        head :no_content
       end
 
       private

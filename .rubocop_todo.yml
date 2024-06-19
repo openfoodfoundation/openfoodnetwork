@@ -746,17 +746,6 @@ Rails/UnknownEnv:
   Exclude:
     - 'app/models/spree/app_configuration.rb'
 
-# Offense count: 7
-# Configuration parameters: Severity.
-Rails/UnusedRenderContent:
-  Exclude:
-    - 'app/controllers/admin/bulk_line_items_controller.rb'
-    - 'app/controllers/admin/tag_rules_controller.rb'
-    - 'app/controllers/api/v0/enterprise_fees_controller.rb'
-    - 'app/controllers/api/v0/products_controller.rb'
-    - 'app/controllers/api/v0/taxons_controller.rb'
-    - 'app/controllers/api/v0/variants_controller.rb'
-
 # Offense count: 1
 Security/Open:
   Exclude:
