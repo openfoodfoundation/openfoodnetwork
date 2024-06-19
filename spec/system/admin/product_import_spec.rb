@@ -51,7 +51,7 @@ RSpec.describe "Product Import" do
                               count_on_hand: 96)
   }
 
-  let(:shipping_category_id_str) { Spree::ShippingCategory.all.first.id.to_s }
+  let(:shipping_category_id_str) { Spree::ShippingCategory.first.id.to_s }
 
   describe "when importing products from uploaded file" do
     before do

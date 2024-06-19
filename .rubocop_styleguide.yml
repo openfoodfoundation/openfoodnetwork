@@ -115,6 +115,11 @@ Rails/OutputSafety:
   Exclude:
     - spec/**/*
 
+Rails/RedundantActiveRecordAllMethod:
+  AllowedReceivers:
+    - ActionMailer::Preview
+    - ActiveSupport::TimeZone
+
 Rails/SkipsModelValidations:
   AllowedMethods:
     - touch

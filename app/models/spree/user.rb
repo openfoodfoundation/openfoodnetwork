@@ -96,7 +96,7 @@ module Spree
     end
 
     def build_enterprise_roles
-      Enterprise.all.find_each do |enterprise|
+      Enterprise.find_each do |enterprise|
         unless enterprise_roles.find_by enterprise_id: enterprise.id
           enterprise_roles.build(enterprise:)
         end

@@ -654,17 +654,6 @@ Rails/PluckInWhere:
   Exclude:
     - 'app/models/spree/variant.rb'
 
-# Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedReceivers.
-# AllowedReceivers: ActionMailer::Preview, ActiveSupport::TimeZone
-Rails/RedundantActiveRecordAllMethod:
-  Exclude:
-    - 'app/models/spree/tax_rate.rb'
-    - 'app/models/spree/user.rb'
-    - 'app/models/spree/variant.rb'
-    - 'spec/system/admin/product_import_spec.rb'
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RelativeDateConstant:
