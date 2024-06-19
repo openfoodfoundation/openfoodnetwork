@@ -143,17 +143,6 @@ module Spree
         .where("o_inventory_items.id IS NULL OR o_inventory_items.visible = (?)", true)
     }
 
-    scope :stockable_by, lambda { |enterprise|
-      return where("1=0") if enterprise.blank?
-
-      permitted_producer_ids = EnterpriseRelationship.joins(:parent).permitting(enterprise.id)
-        .with_permission(:add_to_order_cycle)
-        .where(enterprises: { is_primary_producer: true })
-        .pluck(:parent_id)
-
-      where(supplier: [enterprise.id].union(permitted_producer_ids))
-    }
-
     scope :with_properties, lambda { |property_ids|
       left_outer_joins(:supplier_properties).
         where(producer_properties: { property_id: property_ids })

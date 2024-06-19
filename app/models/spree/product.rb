@@ -165,17 +165,6 @@ module Spree
       end
     }
 
-    scope :stockable_by, lambda { |enterprise|
-      return where('1=0') if enterprise.blank?
-
-      permitted_producer_ids = EnterpriseRelationship.joins(:parent).permitting(enterprise.id)
-        .with_permission(:add_to_order_cycle)
-        .where(enterprises: { is_primary_producer: true })
-        .pluck(:parent_id)
-
-      in_supplier([enterprise.id].union(permitted_producer_ids))
-    }
-
     scope :active, lambda { where(spree_products: { deleted_at: nil }) }
 
     def self.group_by_products_id
