@@ -810,7 +810,7 @@ Style/ClassAndModuleChildren:
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
 
-# Offense count: 1
+# Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: always, always_true, never
@@ -947,13 +947,6 @@ Style/RedundantAssignment:
 Style/RedundantInitialize:
   Exclude:
     - 'spec/models/spree/gateway_spec.rb'
-
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/RedundantInterpolation:
-  Exclude:
-    - 'lib/tasks/karma.rake'
-    - 'spec/base_spec_helper.rb'
 
 # Offense count: 19
 # This cop supports unsafe autocorrection (--autocorrect-all).
