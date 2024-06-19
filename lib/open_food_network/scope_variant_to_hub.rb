@@ -43,7 +43,11 @@ module OpenFoodNetwork
       #   - updates variant_override.count_on_hand
       #   - does not create stock_movement
       #   - does not update stock_item.count_on_hand
+      # If it is a variant override with on_demand:
+      #   - don't change stock or call super (super would change the variant's stock)
       def move(quantity, originator = nil)
+        return if @variant_override&.on_demand
+
         if @variant_override&.stock_overridden?
           @variant_override.move_stock! quantity
         else

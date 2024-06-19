@@ -303,8 +303,8 @@ module Spree
           expect(order.shipment.manifest.first.variant).to eq line_item.variant
         end
 
-        it "reduces the variant's stock level" do
-          expect(variant_on_demand.reload.on_hand).to eq(-9)
+        it "does not reduce the variant's stock level" do
+          expect(variant_on_demand.reload.on_hand).to eq 1
         end
 
         it "does not mark inventory units as backorderd" do
