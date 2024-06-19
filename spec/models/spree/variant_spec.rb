@@ -843,6 +843,20 @@ RSpec.describe Spree::Variant do
 
       expect { variant.destroy }.to change { supplier.reload.updated_at }
     end
+
+    it "touches distributors" do
+      variant = create(:variant)
+      updated_at = 1.hour.ago
+      distributor1 = create(:distributor_enterprise, updated_at:)
+      distributor2 = create(:distributor_enterprise, updated_at:)
+
+      create(:simple_order_cycle, distributors: [distributor1], variants: [variant])
+      create(:simple_order_cycle, distributors: [distributor2], variants: [variant])
+
+      expect { variant.destroy }
+        .to change { distributor1.reload.updated_at }
+        .and change { distributor2.reload.updated_at }
+    end
   end
 
   describe "#ensure_unit_value" do

@@ -252,8 +252,16 @@ module Spree
     end
 
     def destruction
-      exchange_variants.reload.destroy_all
-      yield
+      transaction do
+        # Even tough Enterprise will touch associated variant distributors when touched,
+        # the variant will be removed from the exchange by the time it's triggered,
+        # so it won't be able to find the deleted variant's distributors.
+        # This why we do it here
+        touch_distributors
+
+        exchange_variants.reload.destroy_all
+        yield
+      end
     end
 
     def ensure_unit_value
@@ -269,6 +277,10 @@ module Spree
 
     def convert_variant_weight_to_decimal
       self.weight = weight.to_d
+    end
+
+    def touch_distributors
+      Enterprise.distributing_variants(id).each(&:touch)
     end
   end
 end

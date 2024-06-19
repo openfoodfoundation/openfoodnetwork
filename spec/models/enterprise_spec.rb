@@ -412,12 +412,33 @@ RSpec.describe Enterprise do
   end
 
   describe "callbacks" do
-    it "restores permalink to original value when it is changed and invalid" do
-      e1 = create(:enterprise, permalink: "taken")
-      e2 = create(:enterprise, permalink: "not_taken")
-      e2.permalink = "taken"
-      e2.save
-      expect(e2.reload.permalink).to eq "not_taken"
+    describe "restore_permalink" do
+      it "restores permalink to original value when it is changed and invalid" do
+        e1 = create(:enterprise, permalink: "taken")
+        e2 = create(:enterprise, permalink: "not_taken")
+        e2.permalink = "taken"
+        e2.save
+        expect(e2.reload.permalink).to eq "not_taken"
+      end
+    end
+
+    describe "touch_distributors" do
+      it "touches supplied variant distributors" do
+        enterprise = create(:enterprise)
+        variant = create(:variant)
+        enterprise.supplied_variants << variant
+
+        updated_at = 1.hour.ago
+        distributor1 = create(:distributor_enterprise, updated_at:)
+        distributor2 = create(:distributor_enterprise, updated_at:)
+
+        create(:simple_order_cycle, distributors: [distributor1], variants: [variant])
+        create(:simple_order_cycle, distributors: [distributor2], variants: [variant])
+
+        expect { enterprise.touch }
+          .to change { distributor1.reload.updated_at }
+          .and change { distributor2.reload.updated_at }
+      end
     end
   end
 
@@ -595,23 +616,22 @@ RSpec.describe Enterprise do
       end
     end
 
-    describe "distributing_products" do
+    describe "distributing_variants" do
       let(:distributor) { create(:distributor_enterprise) }
-      let(:product) { create(:product) }
+      let(:variant) { create(:variant) }
 
       it "returns enterprises distributing via an order cycle" do
-        order_cycle = create(:simple_order_cycle, distributors: [distributor],
-                                                  variants: [product.variants.first])
-        expect(Enterprise.distributing_products(product.id)).to eq([distributor])
+        order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [variant])
+        expect(Enterprise.distributing_variants(variant.id)).to eq([distributor])
       end
 
       it "does not return duplicate enterprises" do
-        another_product = create(:product)
+        another_variant = create(:variant)
         order_cycle = create(:simple_order_cycle, distributors: [distributor],
-                                                  variants: [product.variants.first,
-                                                             another_product.variants.first])
-        expect(Enterprise.distributing_products([product.id,
-                                                 another_product.id])).to eq([distributor])
+                                                  variants: [variant, another_variant])
+        expect(Enterprise.distributing_variants(
+                 [variant.id, another_variant.id]
+               )).to eq([distributor])
       end
     end
 

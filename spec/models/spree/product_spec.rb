@@ -278,18 +278,13 @@ module Spree
     describe "callbacks" do
       let(:product) { create(:simple_product) }
 
-      describe "touching affected enterprises when the product is deleted" do
+      describe "destroy product" do
         let(:product) { create(:simple_product, supplier_id: distributor.id) }
         let(:distributor) { create(:distributor_enterprise) }
-        let(:supplier) { create(:supplier_enterprise) }
         let!(:oc) {
           create(:simple_order_cycle, distributors: [distributor],
                                       variants: [product.variants.first])
         }
-
-        it "touches all distributors" do
-          expect { product.destroy }.to change { distributor.reload.updated_at }
-        end
 
         it "removes variants from order cycles" do
           expect { product.destroy }.to change { ExchangeVariant.count }
