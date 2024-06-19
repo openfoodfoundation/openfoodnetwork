@@ -15,9 +15,7 @@ class VariantOverride < ApplicationRecord
   # Need to ensure this can be set by the user.
   validates :default_stock, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :count_on_hand, numericality: {
-    greater_than_or_equal_to: 0, unless: :on_demand?
-  }, allow_nil: true
+  validates :count_on_hand, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   default_scope { where(permission_revoked_at: nil) }
 

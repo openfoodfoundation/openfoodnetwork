@@ -112,7 +112,8 @@ module VariantStock
   #
   # This enables us to override this behaviour for variant overrides
   def move(quantity, originator = nil)
-    return if deleted_at
+    # Don't change variant stock if variant is on_demand or has been deleted
+    return if on_demand || deleted_at
 
     raise_error_if_no_stock_item_available
 
