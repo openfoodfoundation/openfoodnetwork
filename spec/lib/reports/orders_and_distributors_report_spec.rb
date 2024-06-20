@@ -136,19 +136,13 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
       it "minimises database queries" do
         subject # build context first
 
-        # surely we can do better than that for each row
         expect { subject.table_rows }.to query_database [
           "Spree::Role Exists?",
           "Spree::Role Exists?",
           "SQL",
           "Spree::LineItem Load",
-          "Spree::Order Load",
-          "Spree::Address Load",
-          "Spree::Payment Load",
           "Spree::PaymentMethod Load",
           "Spree::Calculator Load",
-          "Enterprise Load",
-          "Spree::Address Load",
           "Spree::Shipment Load",
           "Spree::ShippingRate Load",
           "Spree::ShippingMethod Load",
