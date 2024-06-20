@@ -1129,12 +1129,12 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         it "shows an actions menu with a clone link when clicking on icon for product" do
           within row_containing_name("Apples") do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).to have_link "Clone", href: spree.clone_admin_product_path(product_a)
+            expect(page).to have_link "Clone", href: admin_clone_product_path(product_a)
           end
 
           within row_containing_name("Medium box") do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).not_to have_link "Clone", href: spree.clone_admin_product_path(product_a)
+            expect(page).not_to have_link "Clone", href: admin_clone_product_path(product_a)
           end
         end
       end
@@ -1154,7 +1154,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             click_link('Clone')
           end
 
-          expect(page).to have_content "Product cloned"
+          expect(page).to have_content "Successfully cloned the product"
 
           within "table.products" do
             # Gather input values, because page.content doesn't include them.
