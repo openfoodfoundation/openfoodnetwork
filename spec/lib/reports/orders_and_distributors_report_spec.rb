@@ -19,11 +19,13 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
       )
     end
 
-    context 'with completed order' do
+    context 'as a supplier, with completed order' do
       let(:bill_address) { create(:address) }
       let(:distributor) { create(:distributor_enterprise) }
       let(:distributor1) { create(:distributor_enterprise) }
-      let(:product) { create(:product) }
+      let(:supplier) { create(:supplier_enterprise) }
+      let(:user) { create(:admin_user) }
+      let(:product) { create(:product, supplier:) }
       let(:shipping_method) { create(:shipping_method) }
       let(:shipping_instructions) { 'pick up on thursday please!' }
       let(:order) {
@@ -35,7 +37,7 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
       let(:payment_method) { create(:payment_method, distributors: [distributor]) }
       let(:payment) { create(:payment, payment_method:, order:) }
       let(:line_item) { create(:line_item_with_shipment, product:, order:) }
-      subject { described_class.new create(:admin_user) }
+      subject { described_class.new user }
 
       before do
         order.select_shipping_method(shipping_method.id)
@@ -96,6 +98,40 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
                                         { q: { distributor_id_in: [distributor1.id] } })
           table3 = report3.table_rows
           expect(table3.size).to eq 0
+        end
+      end
+
+      context "as a supplier, who has granted P-OC to the distributor" do
+        let(:user) { create(:enterprise_user, enterprises: [supplier]) }
+        let(:bill_address) {
+          create(:address, first_name: "FirstName", last_name: "LastName", phone: "123-456",
+                           city: "City")
+        }
+        let(:row) { subject.table_rows.first }
+
+        before do
+          create(:enterprise_relationship, parent: supplier, child: distributor,
+                                           permissions_list: [:add_to_order_cycle])
+        end
+
+        it "shows line items supplied by my producers, with contact details hidden" do
+          pending '#12559'
+          expect(row).not_to include("FirstName LastName")
+          expect(row).not_to include("123-456", "City", order.email)
+          expect(row[2..5]).to eq ["HIDDEN", "HIDDEN", "", ""]
+        end
+
+        context "where the distributor allows suppliers to see customer names" do
+          before do
+            distributor.update_columns show_customer_names_to_suppliers: true
+          end
+
+          it "shows line items supplied by my producers, with only contact names shown" do
+            expect(row).to include("FirstName LastName")
+            pending '#12559'
+            expect(row).not_to include("123-456", "City", order.email)
+            expect(row[2..5]).to eq [bill_address.full_name, "HIDDEN", "", ""]
+          end
         end
       end
     end
