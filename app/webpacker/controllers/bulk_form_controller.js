@@ -33,12 +33,14 @@ export default class BulkFormController extends Controller {
 
     this.form.addEventListener("submit", this.#registerSubmit.bind(this));
     window.addEventListener("beforeunload", this.preventLeavingChangedForm.bind(this));
+    this.#observeProductsTableRows();
   }
 
   disconnect() {
     // Make sure to clean up anything that happened outside
     this.#disableOtherElements(false);
     window.removeEventListener("beforeunload", this.preventLeavingChangedForm.bind(this));
+    this.productsTableObserver.disconnect();
   }
 
   // Register any new elements (may be called by another controller after dynamically adding fields)
@@ -160,5 +162,35 @@ export default class BulkFormController extends Controller {
     } else {
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }
+  }
+
+  #removeAnimationClasses(productRowElement) {
+    productRowElement.classList.remove('slide-in');
+    productRowElement.removeEventListener('animationend', this.#removeAnimationClasses.bind(this, productRowElement));
+  }
+
+  #observeProductsTableRows() {
+    this.productsTableObserver = new MutationObserver((mutationList, _observer) => {
+      const mutationRecord = mutationList[0];
+
+      if(mutationRecord) {
+        // Right now we are only using it for product clone, so it's always first
+        const productRowElement = mutationRecord.addedNodes[0];
+
+        if (productRowElement) {
+          productRowElement.addEventListener('animationend', this.#removeAnimationClasses.bind(this, productRowElement));
+          // This is equivalent to form.elements.
+          const productRowFormElements = productRowElement.querySelectorAll('input, select, textarea, button');
+          this.#registerElements(productRowFormElements);
+          this.toggleFormChanged();
+        }
+      }
+    });
+
+    const productsTable = document.querySelector('.products');
+    // Above mutation function will trigger,
+    // whenever +products+ table rows (first level children) are mutated i.e. added or removed
+    // right now we are using this for product clone 
+    this.productsTableObserver.observe(productsTable, { childList: true });
   }
 }
