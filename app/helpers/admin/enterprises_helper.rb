@@ -66,8 +66,8 @@ module Admin
         { name: 'inventory_settings', icon_class: "icon-list-ol", show: is_shop },
         { name: 'tag_rules', icon_class: "icon-random", show: is_shop },
         { name: 'shop_preferences', icon_class: "icon-shopping-cart", show: is_shop },
-        { name: 'users', icon_class: "icon-user", show: true },
         { name: 'white_label', icon_class: "icon-leaf", show: true },
+        { name: 'users', icon_class: "icon-user", show: true },
         { name: 'connected_apps', icon_class: "icon-puzzle-piece", show: show_connected_apps },
       ]
     end
