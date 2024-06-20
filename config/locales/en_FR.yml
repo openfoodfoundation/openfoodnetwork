@@ -8,6 +8,8 @@ en_FR:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/image:
+        attachment: Attachment
       spree/order/ship_address:
         address1: "Shipping address (Street + House number)"
         address2: "Address (Street + House Number)"
@@ -521,6 +523,7 @@ en_FR:
         per_page: "%{count} items per page"
         colums: Columns
       columns:
+        image: Image
         name: Name
         unit_scale: Unit scale
         unit: Unit
@@ -607,7 +610,7 @@ en_FR:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
-    column_save_as_default: Save As Default
+    column_save_as_default: Save as default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -696,6 +699,9 @@ en_FR:
         balance_due: "Balance Due"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+    column_preferences:
+      bulk_update:
+        success: "Column preferences saved"
     contents:
       edit:
         title: Content

@@ -441,6 +441,7 @@ ko:
           title: 생산자들
         colums: 열
       columns:
+        image: 사진
         name: 이름
         unit: 단위
         price: 가격
@@ -524,7 +525,6 @@ ko:
     show_n_more: '%{num}를 더 보기'
     choose: "선택..."
     please_select: 선택 해주세요...
-    column_save_as_default: 기본값으로 설정
     columns: 열
     actions: 사용자 응용
     viewing: "보기 : %{current_view_name}"

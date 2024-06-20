@@ -8,6 +8,8 @@ en_CA:
       spree/product: Product
       spree/shipping_method: Shipping/Pick-up Method
     attributes:
+      spree/image:
+        attachment: Attachment
       spree/order/ship_address:
         address1: "Shipping address (House number + Street)"
         address2: "Shipping address line 2"
@@ -521,6 +523,7 @@ en_CA:
         per_page: "%{count} items per page"
         colums: Columns
       columns:
+        image: Image
         name: Name
         unit_scale: Unit scale
         unit: Unit
@@ -607,7 +610,6 @@ en_CA:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
-    column_save_as_default: Save as Default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"

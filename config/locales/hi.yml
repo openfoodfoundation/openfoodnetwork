@@ -8,6 +8,8 @@ hi:
       spree/product: उत्पाद
       spree/shipping_method: शिपिंग की विधि
     attributes:
+      spree/image:
+        attachment: अटैचमेंट
       spree/order/ship_address:
         address1: "शिपिंग पता (गली + मकान नंबर)"
         address2: "शिपिंग पता लाइन 2"
@@ -507,6 +509,7 @@ hi:
         per_page: "%{count} आइटम प्रति पेज"
         colums: कॉलम्स
       columns:
+        image: छवि
         name: नाम
         unit: यूनिट
         unit_value: यूनिट वैल्यू
@@ -591,7 +594,6 @@ hi:
     show_n_more: '%{num} और दिखाएं'
     choose: "चुनें..."
     please_select: कृपया चुनें...
-    column_save_as_default: डिफ़ॉल्ट के रूप में सेव करें
     columns: कॉलम्स
     actions: एक्शन्स
     viewing: "देखना: %{current_view_name}"

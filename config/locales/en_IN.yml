@@ -306,6 +306,7 @@ en_IN:
           title: Producers
         colums: Columns
       columns:
+        image: Image
         name: Name
         unit: Unit
         price: Price
@@ -385,7 +386,6 @@ en_IN:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
-    column_save_as_default: Save As Default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"

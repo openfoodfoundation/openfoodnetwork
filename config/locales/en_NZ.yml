@@ -5,6 +5,8 @@ en_NZ:
       spree/product: Product
       spree/shipping_method: Shipping Method
     attributes:
+      spree/image:
+        attachment: Attachment
       spree/order/ship_address:
         phone: "Phone number"
         firstname: "First name"
@@ -441,6 +443,7 @@ en_NZ:
           title: Producers
         colums: Columns
       columns:
+        image: Image
         name: Name
         unit: Unit
         price: Price
@@ -524,7 +527,6 @@ en_NZ:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
-    column_save_as_default: Save As Default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"

@@ -351,6 +351,7 @@ pt:
           title: Produtores
         colums: Colunas
       columns:
+        image: Imagem
         name: Nome
         unit: Unidade
         price: Preço
@@ -430,7 +431,6 @@ pt:
     show_n_more: Mostrar mais %{num}
     choose: "Escolher..."
     please_select: Por favor seleccione...
-    column_save_as_default: Guardar como Preferência
     columns: Colunas
     actions: Acções
     viewing: "Visualizando: %{current_view_name}"

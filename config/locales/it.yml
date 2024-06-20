@@ -5,6 +5,8 @@ it:
       spree/product: Prodotto
       spree/shipping_method: Metodo di spedizione
     attributes:
+      spree/image:
+        attachment: Allegato
       spree/order/ship_address:
         address1: "Dati di consegna - Indirizzo"
         address2: "Dati di consegna - continuazione indirizzo"
@@ -470,6 +472,7 @@ it:
         per_page: "%{count} articoli per pagina"
         colums: Colonne
       columns:
+        image: Immagine
         name: Nome
         unit: Unità
         unit_value: Valore unità
@@ -554,7 +557,6 @@ it:
     show_n_more: Mostra %{num} di più
     choose: "Scegli..."
     please_select: Seleziona...
-    column_save_as_default: Salva Come Predefinito
     columns: Colonne
     actions: Azioni
     viewing: "Vista: %{current_view_name}"

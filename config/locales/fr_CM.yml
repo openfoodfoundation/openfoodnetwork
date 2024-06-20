@@ -377,6 +377,7 @@ fr_CM:
           title: Producteurs
         colums: Colonnes
       columns:
+        image: Image
         name: Produit/Variante
         unit: Unité
         price: Prix
@@ -460,7 +461,6 @@ fr_CM:
     show_n_more: Montrer + %{num}
     choose: "Choisir..."
     please_select: Veuillez choisir...
-    column_save_as_default: Par défaut
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"

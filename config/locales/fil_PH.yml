@@ -305,6 +305,7 @@ fil_PH:
           title: Mga Producer
         colums: hanay
       columns:
+        image: larawan
         name: Pangalan
         unit: yunit
         price: Presyo
@@ -384,7 +385,6 @@ fil_PH:
     show_n_more: Ipakita%{num}pa
     choose: "pumili..."
     please_select: pumili
-    column_save_as_default: i-save bilang default
     columns: hanay
     actions: mga  kilos
     viewing: "Tinitignan: %{current_view_name}"

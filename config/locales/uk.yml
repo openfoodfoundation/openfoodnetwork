@@ -5,6 +5,8 @@ uk:
       spree/product: Продукт
       spree/shipping_method: Спосіб доставки
     attributes:
+      spree/image:
+        attachment: Вкладення
       spree/order/ship_address:
         phone: "Телефонний номер"
         firstname: "Ім'я"
@@ -441,6 +443,7 @@ uk:
           title: Виробники
         colums: Колонки
       columns:
+        image: Зображення
         name: Ім'я
         unit: Одиниця
         price: Ціна
@@ -524,7 +527,6 @@ uk:
     show_n_more: Показати на%{num} більше
     choose: "Виберіть..."
     please_select: Виберіть будь ласка...
-    column_save_as_default: Зберегти за замовчуванням
     columns: Колонки
     actions: Дії
     viewing: "Перегляд: %{current_view_name}"

@@ -8,6 +8,8 @@ mr:
       spree/product: उत्पादन
       spree/shipping_method: शिपिंग पद्धत
     attributes:
+      spree/image:
+        attachment: ॲटॅचमेंट
       spree/order/ship_address:
         address1: "शिपिंग पत्ता (रस्ता + घर क्रमांक )"
         address2: "शिपिंग पत्ता लाईन 2 "
@@ -589,7 +591,6 @@ mr:
     show_n_more: अधिक %{num} दर्शवा
     choose: "निवडा..."
     please_select: कृपया निवडा...
-    column_save_as_default: डीफॉल्ट म्हणून सेव्ह करा
     columns: स्तंभ
     actions: क्रिया
     viewing: "पहात आहे: %{current_view_name}"

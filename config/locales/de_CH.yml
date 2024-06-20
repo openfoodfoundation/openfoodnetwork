@@ -444,6 +444,7 @@ de_CH:
           title: Unsere Produzenten
         colums: Spalten
       columns:
+        image: Bild
         name: Name
         unit: Einheit
         price: Preis
@@ -527,7 +528,6 @@ de_CH:
     show_n_more: Zeige %{num} weitere
     choose: "Bitte Auswählen ..."
     please_select: Bitte auswählen ...
-    column_save_as_default: Als Standard speichern
     columns: Spalten
     actions: Aktionen
     viewing: "%{current_view_name}"

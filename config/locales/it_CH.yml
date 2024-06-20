@@ -418,6 +418,7 @@ it_CH:
           title: Produttori
         colums: Colonne
       columns:
+        image: Immagine
         name: Nome
         unit: Unità
         price: Prezzo
@@ -501,7 +502,6 @@ it_CH:
     show_n_more: Mostra %{num} di più
     choose: "Scegli..."
     please_select: Seleziona...
-    column_save_as_default: Salva Come Predefinito
     columns: Colonne
     actions: Azioni
     viewing: "Vista: %{current_view_name}"

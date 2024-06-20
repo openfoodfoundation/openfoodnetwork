@@ -5,6 +5,8 @@ ar:
       spree/product: المنتج
       spree/shipping_method: طريقة الشحن
     attributes:
+      spree/image:
+        attachment: المرفقات
       spree/order/ship_address:
         address1: "عنوان الشحن (الشارع + رقم المنزل)"
         address2: "عنوان الشحن 2"
@@ -449,6 +451,7 @@ ar:
         per_page: "%{count} عنصر في كل صفحة"
         colums: أعمدة
       columns:
+        image: الصورة
         name: الاسم
         unit: وحدة
         unit_value: قيمةالوحدة
@@ -533,7 +536,6 @@ ar:
     show_n_more: عرض %{num} أكثر
     choose: "أختر..."
     please_select: الرجاء اختيار ...
-    column_save_as_default: إحفظ كافتراض اساسي
     columns: أعمدة
     actions: أجراءات
     viewing: "عرض: %{current_view_name}"

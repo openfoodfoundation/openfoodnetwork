@@ -5,6 +5,8 @@ es:
       spree/product: Producto
       spree/shipping_method: Método de envío
     attributes:
+      spree/image:
+        attachment: Adjunto
       spree/order/ship_address:
         address1: "Dirección de envío (calle y número)"
         address2: "Dirección de envío linea 2"
@@ -450,6 +452,7 @@ es:
           title: Productoras
         colums: Columnas
       columns:
+        image: Imagen
         name: Nombre
         unit: Unidad
         unit_value: Valor unidad
@@ -534,7 +537,6 @@ es:
     show_n_more: Mostrar %{num} más
     choose: "Escoger..."
     please_select: Por favor selecciona ...
-    column_save_as_default: Guardar por defecto
     columns: Columnas
     actions: Acciones
     viewing: "Viendo: %{current_view_name}"

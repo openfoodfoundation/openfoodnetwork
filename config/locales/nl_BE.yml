@@ -314,6 +314,7 @@ nl_BE:
           title: Producenten
         colums: Kolommen
       columns:
+        image: beeltenis
         name: Naam
         unit: Unit
         price: Prijs
@@ -393,7 +394,6 @@ nl_BE:
     show_n_more: Toon %{num} meer
     choose: "Kies..."
     please_select: Selecteer...
-    column_save_as_default: Opslaan als standaard
     columns: Kolommen
     actions: Acties
     viewing: "Bekijken: %{current_view_name}"

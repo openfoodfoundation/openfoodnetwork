@@ -298,6 +298,7 @@ en_DE:
           title: Producers
         colums: Columns
       columns:
+        image: Image
         name: Name
         unit: Unit
         price: Price
