@@ -115,7 +115,6 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
         end
 
         it "shows line items supplied by my producers, with contact details hidden" do
-          pending '#12559'
           expect(row).not_to include("FirstName LastName")
           expect(row).not_to include("123-456", "City", order.email)
           expect(row[2..5]).to eq ["HIDDEN", "HIDDEN", "", ""]
@@ -128,7 +127,6 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
 
           it "shows line items supplied by my producers, with only contact names shown" do
             expect(row).to include("FirstName LastName")
-            pending '#12559'
             expect(row).not_to include("123-456", "City", order.email)
             expect(row[2..5]).to eq [bill_address.full_name, "HIDDEN", "", ""]
           end
