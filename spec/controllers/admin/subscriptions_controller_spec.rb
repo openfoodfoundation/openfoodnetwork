@@ -69,7 +69,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
           get(:index, params:)
           json_response = JSON.parse(response.body)
           expect(json_response.count).to be 2
-          expect(json_response.map{ |so| so['id'] }).to include subscription.id, subscription2.id
+          expect(json_response.pluck(:id)).to include subscription.id, subscription2.id
         end
 
         context "when ransack predicates are submitted" do
@@ -79,7 +79,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
             get(:index, params:)
             json_response = JSON.parse(response.body)
             expect(json_response.count).to be 1
-            ids = json_response.map{ |so| so['id'] }
+            ids = json_response.pluck(:id)
             expect(ids).to include subscription2.id
             expect(ids).not_to include subscription.id
           end

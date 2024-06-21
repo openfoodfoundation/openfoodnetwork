@@ -50,7 +50,7 @@ class CartService
 
   def indexed_variants(variants_data)
     @indexed_variants ||= begin
-      variant_ids_in_data = variants_data.map{ |v| v[:variant_id] }
+      variant_ids_in_data = variants_data.pluck(:variant_id)
 
       Spree::Variant.with_deleted.where(id: variant_ids_in_data).
         includes(:default_price, :stock_items, :product).
