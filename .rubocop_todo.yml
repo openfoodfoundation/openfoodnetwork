@@ -654,12 +654,6 @@ Rails/PluckInWhere:
   Exclude:
     - 'app/models/spree/variant.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/RelativeDateConstant:
-  Exclude:
-    - 'lib/tasks/data/remove_transient_data.rb'
-
 # Offense count: 56
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Include.
