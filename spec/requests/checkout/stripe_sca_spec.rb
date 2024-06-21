@@ -2,7 +2,8 @@
 
 require 'spec_helper'
 
-RSpec.describe "checking out an order with a Stripe SCA payment method", type: :request do
+RSpec.describe "checking out an order with a Stripe SCA payment method", :vcr, :stripe_version,
+               type: :request do
   include ShopWorkflow
   include AuthenticationHelper
   include OpenFoodNetwork::ApiHelper
@@ -23,10 +24,45 @@ RSpec.describe "checking out an order with a Stripe SCA payment method", type: :
   let!(:line_item) { create(:line_item, price: 12.34) }
   let!(:order) { line_item.order }
   let(:address) { create(:address) }
-  let(:stripe_payment_method) { "pm_123" }
-  let(:customer_id) { "cus_A123" }
+
+  let(:card_number) { 4_242_424_242_424_242 }
+  let(:year_valid) { Time.zone.now.year.next }
+  let(:stripe_payment_method) do
+    Stripe::PaymentMethod.create({
+                                   type: 'card',
+                                   card: {
+                                     number: card_number,
+                                     exp_month: 12,
+                                     exp_year: year_valid,
+                                     cvc: '314',
+                                   },
+                                 })
+  end
+
+  let(:customer) do
+    Stripe::Customer.create({
+                              name: 'Apple Customer',
+                              email: 'apple.customer@example.com',
+                            })
+  end
+  let(:customer_id) { customer.id }
+
   let(:hubs_stripe_payment_method) { "pm_456" }
-  let(:payment_intent_id) { "pi_123" }
+
+  let!(:payment_intent) do
+    Stripe::PaymentIntent.create({
+                                   amount: 100,
+                                   currency: 'eur',
+                                   payment_method: stripe_payment_method.id,
+                                   payment_method_types: ['card'],
+                                   capture_method: 'manual',
+                                 })
+  end
+  let(:payment_intent_id) { payment_intent.id }
+  let(:payment_intent_response_body) {
+    [id: payment_intent.id, status: payment_intent.status]
+  }
+
   let(:stripe_redirect_url) { "http://stripe.com/redirect" }
   let(:payments_attributes) do
     {
@@ -58,7 +94,6 @@ RSpec.describe "checking out an order with a Stripe SCA payment method", type: :
   let(:params) do
     {
       format: :json, order: {
-        shipping_method_id: shipping_method.id,
         payments_attributes: [payments_attributes],
         bill_address_attributes: address.attributes.slice(*allowed_address_attributes),
         ship_address_attributes: address.attributes.slice(*allowed_address_attributes)
@@ -90,7 +125,6 @@ RSpec.describe "checking out an order with a Stripe SCA payment method", type: :
     allow(order_cycle_distributed_variants).to receive(:distributes_order_variants?) { true }
     allow(Stripe).to receive(:publishable_key).and_return("some_token")
     allow(Spree::Config).to receive(:stripe_connect_enabled).and_return(true)
-    Stripe.api_key = "sk_test_12345"
     order.update(distributor_id: enterprise.id, order_cycle_id: order_cycle.id)
     order.reload.update_totals
     set_order order
@@ -116,7 +150,7 @@ RSpec.describe "checking out an order with a Stripe SCA payment method", type: :
     stub_add_metadata_request(payment_method: "pm_456", response: {})
   end
 
-  pending "when the user submits a new card and doesn't request that the card is saved for later" do
+  context "when the user submits a new card and doesn't request that the card is saved for later" do
     let(:hubs_payment_method_response_mock) do
       { status: 200, body: JSON.generate(id: hubs_stripe_payment_method) }
     end
@@ -131,7 +165,7 @@ RSpec.describe "checking out an order with a Stripe SCA payment method", type: :
 
     context "and the payment intent request is successful" do
       it "should process the payment without storing card details" do
-        put(update_checkout_path, params:)
+        put(checkout_update_path(:summary), params:)
 
         expect(json_response["path"]).to eq order_path(order, order_token: order.token)
         expect(order.payments.completed.count).to be 1
