@@ -88,7 +88,7 @@ module Admin
     end
 
     def modified_variant_overrides_ids
-      variant_overrides_params.map { |vo| vo[:id] }
+      variant_overrides_params.pluck(:id)
     end
 
     def collection_actions
