@@ -9,5 +9,14 @@ module Admin
         new_admin_product_image_path(product.id)
       end
     end
+
+    def prepare_new_variant(product)
+      variants = product.variants
+
+      variants.build do |variant|
+        prev_variant = variants.last;
+        variant.unit_value = prev_variant.unit_value
+      end
+    end
   end
 end
