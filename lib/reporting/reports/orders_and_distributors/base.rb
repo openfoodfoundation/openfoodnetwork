@@ -32,18 +32,18 @@ module Reporting
         # rubocop:enable Metrics/AbcSize
 
         def search
-          report_line_items.list(line_item_includes)
+          report_line_items.orders
         end
 
         def query_result
-          search
+          report_line_items.list(line_item_includes)
         end
 
         private
 
         def line_item_includes
           [{ variant: { product: :supplier },
-             order: [:bill_address, :payments, { distributor: :address}] }]
+             order: [:bill_address, :payments, { distributor: :address }] }]
         end
 
         def permissions
