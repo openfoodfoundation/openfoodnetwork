@@ -694,13 +694,6 @@ Rails/UniqueValidationWithoutIndex:
     - 'app/models/spree/zone.rb'
 
 # Offense count: 1
-# Configuration parameters: Severity, Environments.
-# Environments: development, test, production
-Rails/UnknownEnv:
-  Exclude:
-    - 'app/models/spree/app_configuration.rb'
-
-# Offense count: 1
 Security/Open:
   Exclude:
     - 'app/services/image_importer.rb'
