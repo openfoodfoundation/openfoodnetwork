@@ -5,8 +5,6 @@ require 'tasks/data/remove_transient_data'
 
 RSpec.describe RemoveTransientData do
   describe '#call' do
-    let(:retention_period) { RemoveTransientData::RETENTION_PERIOD }
-
     before do
       allow(Spree::StateChange).to receive(:delete_all)
       allow(Spree::LogEntry).to receive(:delete_all)
@@ -14,24 +12,28 @@ RSpec.describe RemoveTransientData do
       allow(Rails.logger).to receive(:info)
     end
 
-    it 'deletes state changes older than rentention_period' do
-      Spree::StateChange.create(created_at: retention_period - 1.day)
+    it 'deletes state changes older than retention period' do
+      remover = RemoveTransientData.new
+      Spree::StateChange.create(created_at: remover.expiration_date - 1.day)
+      remover.call
 
-      RemoveTransientData.new.call
       expect(Spree::StateChange.all).to be_empty
     end
 
-    it 'deletes log entries older than retention_period' do
-      Spree::LogEntry.create(created_at: retention_period - 1.day)
+    it 'deletes log entries older than retention period' do
+      remover = RemoveTransientData.new
+      Spree::LogEntry.create(created_at: remover.expiration_date - 1.day)
 
-      expect { RemoveTransientData.new.call }
+      expect { remover.call }
         .to change { Spree::LogEntry.count }.by(-1)
     end
 
-    it 'deletes sessions older than retention_period' do
-      RemoveTransientData::Session.create(session_id: 1, updated_at: retention_period - 1.day)
+    it 'deletes sessions older than retention period' do
+      remover = RemoveTransientData.new
+      RemoveTransientData::Session.create(session_id: 1,
+                                          updated_at: remover.expiration_date - 1.day)
 
-      RemoveTransientData.new.call
+      remover.call
 
       expect(RemoveTransientData::Session.all).to be_empty
     end
@@ -44,16 +46,13 @@ RSpec.describe RemoveTransientData do
       let!(:line_item) { create(:line_item, order: cart, variant:) }
       let!(:adjustment) { create(:adjustment, order: cart) }
 
-      let!(:old_cart) { create(:order, state: 'cart', updated_at: retention_period - 1.day) }
+      let!(:remover) { RemoveTransientData.new }
+      let!(:old_cart) { create(:order, state: 'cart', updated_at: remover.expiration_date - 1.day) }
       let!(:old_line_item) { create(:line_item, order: old_cart, variant:) }
       let!(:old_adjustment) { create(:adjustment, order: old_cart) }
 
-      before do
-        old_cart.update_columns(updated_at: retention_period - 1.day)
-      end
-
-      it 'deletes cart orders and related objects older than retention_period' do
-        RemoveTransientData.new.call
+      it 'deletes cart orders and related objects older than retention period' do
+        remover.call
 
         expect{ cart.reload }.not_to raise_error
         expect{ line_item.reload }.not_to raise_error

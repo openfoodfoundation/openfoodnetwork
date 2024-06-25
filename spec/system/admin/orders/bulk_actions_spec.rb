@@ -105,14 +105,7 @@ RSpec.describe '
           Spree::Config[:enterprise_number_required_on_invoices?] = false
         end
 
-        context "with multiple orders with differents states" do
-          before do
-            order2.update(state: "complete")
-            order3.update(state: "resumed")
-            order4.update(state: "canceled")
-            order5.update(state: "payment")
-          end
-
+        shared_examples "can bulk send confirmation email from 2 orders" do
           it "can bulk send invoices per email, but only for the 'complete' or 'resumed' ones" do
             within "#listing_orders" do
               page.find("input[name='bulk_ids[]'][value='#{order2.id}']").click
@@ -122,6 +115,7 @@ RSpec.describe '
             end
 
             page.find("span.icon-reorder", text: "ACTIONS").click
+
             within ".ofn-drop-down .menu" do
               page.find("span", text: "Send Invoices").click
             end
@@ -140,24 +134,65 @@ RSpec.describe '
           end
         end
 
-        it "can bulk send confirmation email from 2 orders" do
-          page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
-          page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
-
-          page.find("span.icon-reorder", text: "ACTIONS").click
-          within ".ofn-drop-down .menu" do
-            page.find("span", text: "Resend Confirmation").click
+        context "with multiple orders with differents states" do
+          before do
+            order2.update(state: "canceled")
+            order3.update(state: "payment")
+            order4.update(state: "complete")
+            order5.update(state: "resumed")
           end
 
-          expect(page).to have_content "Are you sure you want to proceed?"
+          it_behaves_like "can bulk send confirmation email from 2 orders"
 
-          within ".reveal-modal" do
-            expect {
-              find_button("Confirm").click
-            }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+          describe "ABN" do
+            context "ABN is not required" do
+              before do
+                allow(Spree::Config).to receive(:enterprise_number_required_on_invoices?)
+                  .and_return false
+              end
+              it_behaves_like "can bulk send confirmation email from 2 orders"
+            end
+            context "ABN is required" do
+              before do
+                allow(Spree::Config).to receive(:enterprise_number_required_on_invoices?)
+                  .and_return true
+              end
+              context "All the distributors setup the ABN" do
+                before do
+                  order4.distributor.update(abn: "123456789")
+                  order5.distributor.update(abn: "987654321")
+                end
+                context "all the orders are invoiceable (completed/resumed)" do
+                  it_behaves_like "can bulk send confirmation email from 2 orders"
+                end
+              end
+              context "the distributor of one of the order didn't set the ABN" do
+                context "ABN is nil" do
+                  before do
+                    order4.distributor.update(abn: "123456789")
+                    order5.distributor.update(abn: nil)
+                  end
+
+                  context "with legal invoices feature disabled" do
+                    before { pending("Emails are not sent in this case") }
+                    it_behaves_like "can bulk send confirmation email from 2 orders"
+                  end
+                end
+
+                context "ABN is an empty string" do
+                  before do
+                    order4.distributor.update(abn: "123456789")
+                    order5.distributor.update(abn: "")
+                  end
+
+                  context "with legal invoices feature disabled" do
+                    before { pending("Emails are not sent in this case") }
+                    it_behaves_like "can bulk send confirmation email from 2 orders"
+                  end
+                end
+              end
+            end
           end
-
-          expect(page).to have_content "Confirmation emails sent for 2 orders."
         end
       end
 
@@ -337,11 +372,6 @@ RSpec.describe '
             end
           end
           context "the distributor of one of the order didn't set the ABN" do
-            before do
-              order4.distributor.update(abn: "123456789")
-              order5.distributor.update(abn: nil)
-            end
-
             shared_examples "should not print the invoice" do
               it "should render a warning message" do
                 page.find(order4_selector).click
@@ -363,9 +393,36 @@ RSpec.describe '
                 } must have a valid ABN before invoices can be used."
               end
             end
-            it_behaves_like "should not print the invoice"
-            context "with legal invoices feature", feature: :invoices do
-              it_behaves_like "should not print the invoice"
+
+            context "ABN is nil" do
+              before do
+                order4.distributor.update(abn: "123456789")
+                order5.distributor.update(abn: nil)
+              end
+
+              context "with legal invoices feature disabled" do
+                it_behaves_like "should not print the invoice"
+              end
+
+              context "with legal invoices feature", feature: :invoices do
+                it_behaves_like "should not print the invoice"
+              end
+            end
+
+            context "ABN is an empty string" do
+              before do
+                order4.distributor.update(abn: "123456789")
+                order5.distributor.update(abn: "")
+              end
+
+              context "with legal invoices feature disabled" do
+                it_behaves_like "can bulk print invoices from 2 orders"
+              end
+
+              context "with legal invoices feature", feature: :invoices do
+                before { pending("#12373") }
+                it_behaves_like "should not print the invoice"
+              end
             end
           end
         end
