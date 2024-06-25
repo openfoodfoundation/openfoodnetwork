@@ -66,16 +66,20 @@ module Admin
         enterprises = OpenFoodNetwork::OrderCyclePermissions.new(spree_current_user,
                                                                  order_cycle).visible_enterprises
 
-        EnterpriseFee.for_enterprises(enterprises)
-          .order('enterprise_id', 'fee_type', 'name')
-          .then { |fees| params[:per_item] ? fees.per_item : fees }
-          .then { |fees| params[:per_order] ? fees.per_order : fees }
+        fees = EnterpriseFee.for_enterprises(enterprises).order('enterprise_id', 'fee_type', 'name')
+        filter_fees(fees)
       else
         collection = EnterpriseFee.managed_by(spree_current_user).order('enterprise_id',
                                                                         'fee_type', 'name')
         collection = collection.for_enterprise(current_enterprise) if current_enterprise
         collection
       end
+    end
+
+    def filter_fees(fees)
+      fees = fees.per_item if params[:per_item]
+      fees = fees.per_order if params[:per_order]
+      fees
     end
 
     def collection_actions
