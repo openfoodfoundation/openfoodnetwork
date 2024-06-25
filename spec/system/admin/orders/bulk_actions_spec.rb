@@ -420,7 +420,6 @@ RSpec.describe '
               end
 
               context "with legal invoices feature", feature: :invoices do
-                before { pending("#12373") }
                 it_behaves_like "should not print the invoice"
               end
             end
