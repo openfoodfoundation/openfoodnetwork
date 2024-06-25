@@ -34,6 +34,8 @@ gem "mime-types" # required by fog
 gem "validates_lengths_from_database"
 gem "valid_email2"
 
+gem 'packwerk'
+
 gem "catalog", path: "./engines/catalog"
 gem 'dfc_provider', path: './engines/dfc_provider'
 gem "order_management", path: "./engines/order_management"
