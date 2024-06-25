@@ -5,7 +5,7 @@ on:
     types: [opened, reopened]
 
 permissions:
-  pull-requests: write
+  contents: read
 
 jobs:
   assign-author:
