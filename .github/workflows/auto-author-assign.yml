@@ -5,10 +5,13 @@ on:
     types: [opened, reopened]
 
 permissions:
-  contents: read
+  pull-requests: write
 
 jobs:
   assign-author:
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'hello world'
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Auto assign author
+        uses: toshimaru/auto-author-assign@v2.1.0
