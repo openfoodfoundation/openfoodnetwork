@@ -146,8 +146,8 @@ module Api
                       as: :json
 
           expect(json_response['orders']
-            .map{ |o| o[:id] }).to eq serialized_orders([order2, order3, order1, order4])
-              .map{ |o| o["id"] }
+            .pluck('id')).to eq serialized_orders([order2, order3, order1, order4])
+              .pluck('id')
         end
 
         context "with an order without billing address" do
@@ -155,25 +155,22 @@ module Api
             create(:order_with_line_items, billing_address: nil, order_cycle:,
                                            distributor:)
           }
+          let(:expected_order_ids) {
+            serialized_orders([order2, order3, order1, order4, order7]).pluck('id')
+          }
 
           it 'can show orders without bill address' do
             get :index, params: { q: {} },
                         as: :json
 
-            expect(json_response['orders']
-              .map{ |o| o[:id] }).to match_array serialized_orders([order2, order3, order1, order4,
-                                                                    order7])
-                .map{ |o|
-                                                   o["id"]
-                                                 }
+            expect(json_response[:orders].pluck(:id)).to match_array(expected_order_ids)
           end
 
           it 'can sort orders by bill_address.lastname' do
             get :index, params: { q: { s: 'bill_address_lastname ASC' } },
                         as: :json
-            expect(json_response['orders']
-              .map{ |o| o[:id] }).to eq serialized_orders([order2, order3, order1, order4, order7])
-                .map{ |o| o["id"] }
+
+            expect(json_response[:orders].pluck(:id)).to eq expected_order_ids
           end
         end
       end

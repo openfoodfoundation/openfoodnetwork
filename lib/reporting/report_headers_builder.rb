@@ -22,7 +22,7 @@ module Reporting
 
     def fields_to_hide
       if report.display_header_row?
-        report.formatted_rules.map { |rule| rule[:fields_used_in_header] }.flatten.compact_blank
+        report.formatted_rules.pluck(:fields_used_in_header).flatten.compact_blank
       else
         []
       end.concat(params_fields_to_hide)
@@ -30,9 +30,10 @@ module Reporting
 
     def fields_to_show
       fields_in_headers = if report.display_header_row?
-                            report.formatted_rules.map { |rule|
-                              rule[:fields_used_in_header]
-                            }.flatten.compact_blank
+                            report.formatted_rules
+                              .pluck(:fields_used_in_header)
+                              .flatten
+                              .compact_blank
                           else
                             []
                           end

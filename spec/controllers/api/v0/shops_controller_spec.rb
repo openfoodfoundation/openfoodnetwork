@@ -37,7 +37,7 @@ RSpec.describe Api::V0::ShopsController, type: :controller do
 
         expect(json_response).not_to match hub.name
 
-        response_ids = json_response.map { |shop| shop['id'] }
+        response_ids = json_response.pluck(:id)
         expect(response_ids).to contain_exactly(closed_hub1.id, closed_hub2.id)
       end
     end
