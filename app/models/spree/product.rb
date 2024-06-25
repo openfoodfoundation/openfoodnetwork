@@ -22,6 +22,7 @@ module Spree
     include LogDestroyPerformer
 
     self.belongs_to_required_by_default = false
+    self.ignored_columns += [:supplier_id]
 
     acts_as_paranoid
 
