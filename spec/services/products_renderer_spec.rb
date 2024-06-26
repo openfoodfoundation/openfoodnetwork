@@ -19,11 +19,8 @@ RSpec.describe ProductsRenderer do
                        supplier_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_banana_bread) {
-      create(:product, name: "banana bread", inherits_properties: true,
-                       variants: [
-                         create(:variant, supplier: cakes_supplier, primary_taxon: cakes),
-                         create(:variant, supplier: fruits_supplier, primary_taxon: cakes)
-                       ])
+      create(:product, name: "banana bread", primary_taxon_id: cakes.id,
+                       supplier_id: cakes_supplier.id, inherits_properties: true)
     }
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,
