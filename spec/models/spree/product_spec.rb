@@ -11,9 +11,17 @@ module Spree
       context '#duplicate' do
         it 'duplicates product' do
           clone = product.duplicate
+
+          expect(clone).to be_persisted
           expect(clone.name).to eq 'COPY OF ' + product.name
           expect(clone.sku).to eq ""
           expect(clone.image).to eq product.image
+        end
+
+        it 'fails to duplicate the product' do
+          pending 'test for all the use cases by which the +product.save+ would return false.'
+          clone = product.duplicate
+          expect(clone).not_to be_persisted
         end
       end
 
