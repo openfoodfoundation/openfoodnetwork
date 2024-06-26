@@ -14,7 +14,7 @@ RSpec.describe Spree::Core::ProductDuplicator do
 
   let(:new_product) do
     double 'New Product',
-           save!: true
+           save: true
   end
 
   let(:property) do
