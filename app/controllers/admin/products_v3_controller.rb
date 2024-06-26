@@ -70,19 +70,20 @@ module Admin
 
     def clone
       @product = Spree::Product.find(params[:id])
-      @product_index = params[:product_index].to_i + 1
       status = :ok
 
       begin
         @cloned_product = @product.duplicate
         flash.now[:success] = t('.success')
 
+        @product_index = "-#{@cloned_product.id}"
         @producer_options = producers
         @category_options = categories
         @tax_category_options = tax_category_options
       rescue StandardError => _e
         flash.now[:error] = t('.error')
         status = :internal_server_error
+        @product_index = "-1" # Create a unique enough index
       end
 
       respond_with do |format|
