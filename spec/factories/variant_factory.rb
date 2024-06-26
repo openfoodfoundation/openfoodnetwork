@@ -10,6 +10,12 @@ FactoryBot.define do
     height { generate(:random_float) }
     width  { generate(:random_float) }
     depth  { generate(:random_float) }
+    unit_value { 1 }
+    unit_description { '' }
+
+    variant_unit { 'weight' }
+    variant_unit_scale { 1 }
+    variant_unit_name { '' }
 
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
     supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
@@ -30,9 +36,6 @@ FactoryBot.define do
         on_demand { false }
         on_hand { 5 }
       end
-
-      unit_value { 1 }
-      unit_description { '' }
 
       after(:create) do |variant, evaluator|
         variant.on_demand = evaluator.on_demand

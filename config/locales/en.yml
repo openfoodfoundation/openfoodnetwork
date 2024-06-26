@@ -70,13 +70,13 @@ en:
         price: "Price"
         primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
-        variant_unit: "Unit Scale"
-        variant_unit_name: "Variant Unit Name"
-        unit_value: "Unit value"
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
         supplier: "Supplier"
+        variant_unit: "Unit Scale"
+        variant_unit_name: "Variant Unit Name"
+        unit_value: "Unit value"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
