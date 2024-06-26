@@ -201,7 +201,6 @@ module Reporting
         # Includes:
         # * Line item
         # * Variant
-        # * Product
         # * Tax category of product, if enterprise fee tells to inherit
         def include_line_item_source_details
           join_scope(
