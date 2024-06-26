@@ -64,12 +64,12 @@ module VariantUnits
 
     def unit_value_attributes
       units = { unit_presentation: option_value_name }
-      units.merge!(variant_unit: product.variant_unit) if has_attribute?(:variant_unit)
+      units.merge!(variant_unit:) if has_attribute?(:variant_unit)
       units
     end
 
     def weight_from_unit_value
-      (unit_value || 0) / 1000 if product.variant_unit == 'weight'
+      (unit_value || 0) / 1000 if variant_unit == 'weight'
     end
 
     private
