@@ -3860,6 +3860,7 @@ ar:
         bulk_order_management: "ادارة طلب الجملة "
         subscriptions: "الاشتراكات"
         products: "منتجات"
+        products_v3: "منتجات"
         option_types: "أنواع الخيارات"
         properties: "الخصائص"
         variant_overrides: "المخزون"

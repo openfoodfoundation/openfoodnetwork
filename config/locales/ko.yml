@@ -3585,6 +3585,7 @@ ko:
         bulk_order_management: "대량 주문 관리"
         subscriptions: "구독"
         products: "생산품"
+        products_v3: "생산품"
         option_types: "옵션 유형"
         properties: "특성"
         variant_overrides: "물품 목록"

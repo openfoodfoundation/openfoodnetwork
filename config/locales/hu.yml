@@ -2298,14 +2298,14 @@ hu:
   products_changes_saved: "Változtatások elmentve."
   products_no_results_html: "Sajnáljuk, nem található találat a következőre: %{query}"
   products_clear_search: "Keresés törlése"
-  search_no_results_html: "Sajnáljuk, nem található eredmény a következőre: %{query}. Próbálkozz másik kereséssel!"
+  search_no_results_html: "Sajnáljuk, nem találtunk Átadópontot/Termelőt a következő kifejezésre: %{query} Próbálkozz másik kereséssel!"
   components_profiles_popover: "profiloknak nincs kirakata az Open Food Network-ben, de lehet, hogy van saját fizikai vagy online átvételi pontjuk máshol"
   components_profiles_show: "Profilok megjelenítése"
   components_filters_nofilters: "Nincsenek szűrők"
   components_filters_clearfilters: "Törölje az összes szűrőt"
   groups_title: Csoportok
-  groups_headline: Bevásárlóközösségek / régiók
-  groups_text: "A termelők és bevásárlóközösségek régió, vagy termelési filozófia szerint csoportokba szerveződhetnek. Keresd fel ezeket a csoportokat, hogy többet megtudhass róluk."
+  groups_headline: Csoportok és régiók
+  groups_text: "Minden termelő egyedi. Minden gazdaság valami mást tud nyújtani. Csoportjaink olyan termelők, csomópontok és forgalmazók kollektívái, akikben van valami közös, mint például a helyszín, a termelői piac vagy a filozófia. Ez könnyebbé teszi számodra az eligazodást. Fedezd fel csoportjainkat, és hagyd, hogy a válogatást elvégezzék helyetted."
   groups_search: "Keresés név vagy kulcsszó"
   groups_no_groups: "Nem található csoport"
   groups_about: "Rólunk"
@@ -3904,6 +3904,7 @@ hu:
         bulk_order_management: "Tömeges megrendelés kezelése"
         subscriptions: "Előfizetések"
         products: "Termékek"
+        products_v3: "Termékek"
         option_types: "Opció típusok"
         properties: "Tulajdonságok"
         variant_overrides: "Leltár"

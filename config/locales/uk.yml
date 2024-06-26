@@ -3702,6 +3702,7 @@ uk:
         bulk_order_management: "Управління гуртовими замовленнями"
         subscriptions: "Підписки"
         products: "Продукти"
+        products_v3: "Продукти"
         option_types: "Типи опціонів"
         properties: "Властивості"
         variant_overrides: "Інвентаризація"

@@ -3195,6 +3195,7 @@ fil_PH:
         bulk_order_management: "Pamamahala sa pangmaramihang order"
         subscriptions: "mga subscription"
         products: "mga produkto"
+        products_v3: "mga produkto"
         option_types: "mga uri ng pagpipilian"
         properties: "mga katangian"
         variant_overrides: "imbentaryo"

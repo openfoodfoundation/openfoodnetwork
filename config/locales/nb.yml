@@ -3988,6 +3988,7 @@ nb:
         bulk_order_management: "Bulk ordrehåndtering"
         subscriptions: "Abonnement"
         products: "Produkter"
+        products_v3: "Produkter"
         option_types: "Valgtyper"
         properties: "Egenskaper"
         variant_overrides: "Varelager"

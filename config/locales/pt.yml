@@ -3183,6 +3183,7 @@ pt:
         bulk_order_management: "Gestão de Encomendas em Massa"
         subscriptions: "Subscrições"
         products: "Produtos"
+        products_v3: "Produtos"
         option_types: "Tipos de Opções"
         properties: "Propriedades"
         variant_overrides: "Inventário"

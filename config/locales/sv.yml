@@ -2204,6 +2204,7 @@ sv:
         dashboard: "Panel"
         bulk_order_management: "Hantera flera beställningar"
         products: "Produkter"
+        products_v3: "Produkter"
         properties: "Egenskaper"
         variant_overrides: "Lager"
         reports: "Rapporter"

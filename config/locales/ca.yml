@@ -3735,6 +3735,7 @@ ca:
         bulk_order_management: "Gestió de comandes en bloc"
         subscriptions: "Subscripcions"
         products: "Productes "
+        products_v3: "Productes "
         option_types: "Tipus d'opcions"
         properties: "Propietats"
         variant_overrides: "Inventari"

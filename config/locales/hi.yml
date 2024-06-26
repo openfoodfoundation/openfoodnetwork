@@ -3900,6 +3900,7 @@ hi:
         bulk_order_management: "बल्क ऑर्डर मैनेजमेंट"
         subscriptions: "सब्सक्रिप्शन्स"
         products: "उत्पाद"
+        products_v3: "उत्पाद"
         option_types: "विकल्प के प्रकार"
         properties: "प्रॉपर्टीज़"
         variant_overrides: "माल सूची"

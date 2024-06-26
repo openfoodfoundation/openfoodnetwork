@@ -3794,6 +3794,7 @@ pa:
         bulk_order_management: "ਥੋਕ ਆਰਡਰ ਪ੍ਰਬੰਧਨ"
         subscriptions: "ਸਬਸਕ੍ਰਿਪਸ਼ਨ"
         products: "ਉਤਪਾਦ"
+        products_v3: "ਉਤਪਾਦ"
         option_types: "ਵਿਕਲਪ ਦੀਆਂ ਕਿਸਮਾਂ"
         properties: "ਪ੍ਰਾਪਰਟੀਜ਼"
         variant_overrides: "ਇਨਵੇਂਟਰੀ"

@@ -3661,6 +3661,7 @@ de_CH:
         bulk_order_management: "Massenbearbeitung von Bestellungen"
         subscriptions: "Abonnements"
         products: "Produkte"
+        products_v3: "Produkte"
         option_types: "Optionstypen"
         properties: "Eigenschaften"
         variant_overrides: "Katalog"

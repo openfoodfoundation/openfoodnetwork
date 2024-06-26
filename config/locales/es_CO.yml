@@ -3293,6 +3293,7 @@ es_CO:
         bulk_order_management: "Gestión de pedidos en bloque"
         subscriptions: "Suscripciones"
         products: "Productos"
+        products_v3: "Productos"
         option_types: "Tipos de opciones"
         properties: "Propiedades"
         variant_overrides: "Inventario"

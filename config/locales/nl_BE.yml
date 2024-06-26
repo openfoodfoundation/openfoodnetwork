@@ -3191,6 +3191,7 @@ nl_BE:
         bulk_order_management: "Beheer van bulkorders"
         subscriptions: "Abonnementen"
         products: "Producten"
+        products_v3: "Producten"
         option_types: "Optietypen"
         properties: "Eigenschappen"
         variant_overrides: "Inventarisatie"

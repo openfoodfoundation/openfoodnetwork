@@ -4029,6 +4029,7 @@ ru:
         bulk_order_management: "Пакетное Управление Заказами"
         subscriptions: "Подписки"
         products: "Товары"
+        products_v3: "Товары"
         option_types: "Типы Опций"
         properties: "Свойства"
         variant_overrides: "Товарная номенклатура"

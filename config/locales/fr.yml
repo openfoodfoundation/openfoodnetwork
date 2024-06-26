@@ -4053,6 +4053,7 @@ fr:
         bulk_order_management: "Gestion des commandes par lot"
         subscriptions: "Abonnements"
         products: "Produits"
+        products_v3: "Produits"
         option_types: "Types d'options"
         properties: "Propriétés / labels"
         variant_overrides: "Catalogue boutique"

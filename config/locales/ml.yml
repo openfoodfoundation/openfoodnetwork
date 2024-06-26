@@ -3924,6 +3924,7 @@ ml:
         bulk_order_management: "ബൾക്ക് ഓർഡർ മാനേജ്മെന്റ്"
         subscriptions: "സബ്സ്ക്രിപ്ഷനുകൾ"
         products: "ഉൽപ്പന്നങ്ങൾ"
+        products_v3: "ഉൽപ്പന്നങ്ങൾ"
         option_types: "ഓപ്ഷൻ തരങ്ങൾ"
         properties: "പ്രോപ്പർട്ടികൾ"
         variant_overrides: "ഇൻവെന്ററി"

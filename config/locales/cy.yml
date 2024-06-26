@@ -3976,6 +3976,7 @@ cy:
         bulk_order_management: "Rheoli Arhcebion Swmp"
         subscriptions: "Tanysgrifiadau"
         products: "Cynnyrch"
+        products_v3: "Cynnyrch"
         option_types: "Mathau Opsiwn"
         properties: "Manylion"
         variant_overrides: "Stocrestr"

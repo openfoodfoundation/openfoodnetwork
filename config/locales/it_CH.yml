@@ -3619,6 +3619,7 @@ it_CH:
         bulk_order_management: "Gentili richieste - vista a tabella"
         subscriptions: "Abbonamenti"
         products: "Prodotti"
+        products_v3: "Prodotti"
         option_types: "Tipi di opzioni"
         properties: "Proprietà"
         variant_overrides: "Inventario"

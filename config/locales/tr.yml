@@ -3474,6 +3474,7 @@ tr:
         bulk_order_management: "TOPLU SİPARİŞ YÖNETİMİ"
         subscriptions: "Üyelikler"
         products: "Ürünler"
+        products_v3: "Ürünler"
         option_types: "Seçenek Türleri"
         properties: "ÖZELLİKLER"
         variant_overrides: "Stok"
