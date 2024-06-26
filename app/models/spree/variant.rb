@@ -229,9 +229,12 @@ module Spree
     # Format as per WeightsAndMeasures
     # TODO test ?
     def variant_unit_with_scale
+      # Our code is based upon English based number formatting with a period `.`
       scale_clean = ActiveSupport::NumberHelper.number_to_rounded(variant_unit_scale,
                                                                   precision: nil,
-                                                                  strip_insignificant_zeros: true)
+                                                                  strip_insignificant_zeros: true,
+                                                                  locale: :en
+                                                                  )
       [variant_unit, scale_clean].compact_blank.join("_")
     end
 
