@@ -1198,19 +1198,30 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             expect(input_content).not_to match /COPY OF Apples/
           end
 
-          within row_containing_name("Apples") do
-            page.find(".vertical-ellipsis-menu").click
-            click_link('Clone')
-          end
+          click_product_clone "Apples"
 
           expect(page).to have_content "Successfully cloned the product"
-
           within "table.products" do
             # Gather input values, because page.content doesn't include them.
             input_content = page.find_all('input[type=text]').map(&:value).join
 
             # Products include the cloned product.
             expect(input_content).to match /COPY OF Apples/
+          end
+        end
+
+        it "fails to clone the product on page when clicked on the cloned option" do
+          # Mock the +save+ method to return fail. That's the only expected fail case
+          allow_any_instance_of(Spree::Product).to receive(:save).and_return(false)
+
+          click_product_clone "Apples"
+
+          expect(page).to have_content "Unable to clone the product"
+          within "table.products" do
+            # Gather input values, because page.content doesn't include them.
+            input_content = page.find_all('input[type=text]').map(&:value).join
+            # Products does not include the cloned product.
+            expect(input_content).not_to match /COPY OF Apples/
           end
         end
       end
@@ -1586,5 +1597,12 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
   def all_input_values
     page.find_all('input[type=text]').map(&:value).join
+  end
+
+  def click_product_clone(product_name)
+    within row_containing_name(product_name) do
+      page.find(".vertical-ellipsis-menu").click
+      click_link('Clone')
+    end
   end
 end
