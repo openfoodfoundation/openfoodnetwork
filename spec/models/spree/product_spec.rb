@@ -13,7 +13,7 @@ module Spree
           clone = product.duplicate
 
           expect(clone).to be_persisted
-          expect(clone.name).to eq 'COPY OF ' + product.name
+          expect(clone.name).to eq "COPY OF #{product.name}"
           expect(clone.sku).to eq ""
           expect(clone.image).to eq product.image
         end
