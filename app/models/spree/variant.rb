@@ -11,6 +11,11 @@ module Spree
 
     self.belongs_to_required_by_default = false
 
+    # 2 not to be persisted attributes to store preferences.
+    # Values to be set via the UI that can be passed by back to UI
+    # in a not yet persisted variant. Setters are below.
+    attr_reader :on_hand_desired, :on_demand_desired
+
     acts_as_paranoid
 
     searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id, :supplier_id
@@ -242,6 +247,15 @@ module Spree
         variant_unit: values[0],
         variant_unit_scale: values[1] || nil
       )
+    end
+
+    # aiming to deal with UI that deals with 0/"0"/1/"1"
+    def on_demand_desired=(val)
+      @on_demand_desired = ActiveModel::Type::Boolean.new.cast(val)
+    end
+
+    def on_hand_desired=(val)
+      @on_hand_desired = ActiveModel::Type::Integer.new.cast(val)
     end
 
     private
