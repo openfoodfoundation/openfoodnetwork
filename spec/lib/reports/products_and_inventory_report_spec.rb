@@ -267,12 +267,10 @@ module Reporting
         let(:report) do
           AllProducts.new user, { fields_to_hide: [] }
         end
-        # Creating a variant directly would create a product with another variant with no supplier
-        # which breaks the test
-        let(:variant) { create(:product).variants.first }
+        let(:variant) { create(:variant, supplier:) }
         let(:supplier) { create(:supplier_enterprise) }
 
-        it "Should return headers" do
+        it "returns headers" do
           expect(report.table_headers).to eq([
                                                "Supplier",
                                                "Producer Suburb",
@@ -289,29 +287,27 @@ module Reporting
                                              ])
         end
 
-        it "Should render 'On demand' when the product is available on demand" do
+        it "renders 'On demand' when the product is available on demand" do
           variant.on_demand = true
           variant.on_hand = 15
-          variant.supplier = supplier
           variant.save!
 
-          first_row = report.table_rows.first
-          on_demand_column = first_row[-2]
-          on_hand_column = first_row[-1]
+          last_row = report.table_rows.last
+          on_demand_column = last_row[-2]
+          on_hand_column = last_row[-1]
 
           expect(on_demand_column).to eq("Yes")
           expect(on_hand_column).to eq("On demand")
         end
 
-        it "Should render the on hand count when the product is not available on demand" do
+        it "renders the on hand count when the product is not available on demand" do
           variant.on_demand = false
           variant.on_hand = 22
-          variant.supplier = supplier
           variant.save!
 
-          first_row = report.table_rows.first
-          on_demand_column = first_row[-2]
-          on_hand_column = first_row[-1]
+          last_row = report.table_rows.last
+          on_demand_column = last_row[-2]
+          on_hand_column = last_row[-1]
 
           expect(on_demand_column).to eq("No")
           expect(on_hand_column).to eq(22)
