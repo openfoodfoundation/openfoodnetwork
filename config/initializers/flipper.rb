@@ -18,7 +18,14 @@ Flipper.configure do |flipper|
   end
 end
 
-Flipper.register(:admins) { |actor| actor.respond_to?(:admin?) && actor.admin? }
+# Groups
+Flipper.register(:admins) do |actor|
+  actor.respond_to?(:admin?) && actor.admin?
+end
+Flipper.register(:new_2024_07_03) do |actor|
+  actor.respond_to?(:created_at?) && actor.created_at >= "2024-07-03".to_time
+end
+
 Flipper::UI.configure do |config|
   config.descriptions_source = ->(_keys) do
     # return has to be hash of {String key => String description}

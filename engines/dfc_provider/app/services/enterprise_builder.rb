@@ -21,6 +21,8 @@ class EnterpriseBuilder < DfcBuilder
       localizations: [address],
       phoneNumbers: [enterprise.phone].compact,
       socialMedias: SocialMediaBuilder.social_medias(enterprise),
+      logo: enterprise.logo_url(:small),
+      mainContact: contact(enterprise),
 
       # The model strips the protocol and we need to add it:
       websites: [enterprise.website].compact_blank.map { |url| "https://#{url}" },
@@ -31,7 +33,9 @@ class EnterpriseBuilder < DfcBuilder
       # But that would require a new endpoint for a single string.
       add_ofn_property(e, "ofn:contact_name", enterprise.contact_name)
 
+      # DEPRECATED: please use the standard `logo` attribute above.
       add_ofn_property(e, "ofn:logo_url", enterprise.logo_url(:small))
+
       add_ofn_property(e, "ofn:promo_image_url", enterprise.promo_image_url(:large))
     end
   end
@@ -56,5 +60,15 @@ class EnterpriseBuilder < DfcBuilder
         members
       end
     end
+  end
+
+  def self.contact(enterprise)
+    firstName, lastName = enterprise.contact_name&.split(/ ([^ ]+)$/) # rubocop:disable Naming/VariableName
+
+    DataFoodConsortium::Connector::Person.new(
+      urls.enterprise_url(enterprise.id, anchor: "mainContact"),
+      firstName:, # rubocop:disable Naming/VariableName
+      lastName:, # rubocop:disable Naming/VariableName
+    )
   end
 end

@@ -96,7 +96,7 @@ Openfoodnetwork::Application.routes.draw do
 
     resource :contents
 
-    resources :column_preferences, only: [], format: :json do
+    resources :column_preferences, only: [] do
       put :bulk_update, on: :collection
     end
 

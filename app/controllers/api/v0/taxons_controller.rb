@@ -55,7 +55,7 @@ module Api
       def destroy
         authorize! :delete, Spree::Taxon
         taxon.destroy
-        render json: taxon, serializer: Api::TaxonSerializer, status: :no_content
+        head :no_content
       end
 
       private

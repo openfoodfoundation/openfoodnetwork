@@ -8,6 +8,8 @@ fr:
       spree/product: Produit
       spree/shipping_method: Option d'expédition
     attributes:
+      spree/image:
+        attachment: Fichier joint
       spree/order/ship_address:
         address1: "Adresse de livraison (Numéro et Rue)"
         address2: "Adresse (Numéro et rue)"
@@ -512,7 +514,7 @@ fr:
       title: Produits
       filters:
         categories:
-          title: Conditions de transport
+          title: Catégories
           selected_categories: "%{count} catégories sélectionnées"
         producers:
           title: Producteurs
@@ -520,9 +522,10 @@ fr:
         per_page: "%{count} éléments par page"
         colums: Colonnes
       columns:
+        image: Image
         name: Nom
-        unit_scale: Échelle d'unité
-        unit: Unité
+        unit_scale: Unité
+        unit: Unité affichée
         unit_value: Nb unités
         display_as: 'Afficher l''unité en '
         price: Prix
@@ -606,7 +609,7 @@ fr:
     show_n_more: Montrer + %{num}
     choose: "Choisir..."
     please_select: Veuillez choisir...
-    column_save_as_default: Par défaut
+    column_save_as_default: Sauvegarder par défaut
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"
@@ -695,6 +698,9 @@ fr:
         balance_due: "Solde dû"
       destroy:
         has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
+    column_preferences:
+      bulk_update:
+        success: "Préférences colonnes sauvegardées"
     contents:
       edit:
         title: Contenu
@@ -799,7 +805,7 @@ fr:
         producers:
           label: Producteurs
         categories:
-          label: Conditions de transport
+          label: Catégories
         search: Rechercher
       sort:
         pagination:
@@ -4047,6 +4053,7 @@ fr:
         bulk_order_management: "Gestion des commandes par lot"
         subscriptions: "Abonnements"
         products: "Produits"
+        products_v3: "Produits"
         option_types: "Types d'options"
         properties: "Propriétés / labels"
         variant_overrides: "Catalogue boutique"

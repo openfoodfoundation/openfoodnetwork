@@ -379,6 +379,7 @@ pt_BR:
           title: Produtores
         colums: Colunas
       columns:
+        image: Imagem
         name: Nome
         unit: Unidade
         price: Preço
@@ -462,7 +463,6 @@ pt_BR:
     show_n_more: 'Mostrar mais %{num} '
     choose: "Escolher..."
     please_select: Por favor selecione...
-    column_save_as_default: Salvar Como Padrão
     columns: Colunas
     actions: Ações
     viewing: "Visualizando: %{current_view_name}"
@@ -3476,6 +3476,7 @@ pt_BR:
         bulk_order_management: "Gestão de Pedidos em Massa"
         subscriptions: "Assinaturas"
         products: "Produtos"
+        products_v3: "Produtos"
         option_types: "Tipos de opção"
         properties: "Propriedades"
         variant_overrides: "Inventário"

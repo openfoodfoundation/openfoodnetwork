@@ -8,6 +8,8 @@ nb:
       spree/product: Produkt
       spree/shipping_method: Leveringsmetode
     attributes:
+      spree/image:
+        attachment: Vedlegg
       spree/order/ship_address:
         address1: "Leveringsadresse (Gate + Husnummer)"
         address2: "Leveringsadresse linje 2"
@@ -521,6 +523,7 @@ nb:
         per_page: "%{count} elementer per side"
         colums: Kolonner
       columns:
+        image: Bilde
         name: Navn
         unit_scale: Enhetsskala
         unit: Enhet
@@ -607,7 +610,6 @@ nb:
     show_n_more: Vis %{num} flere
     choose: "Velg..."
     please_select: Vennligst velg...
-    column_save_as_default: Lagre som Standard
     columns: Kolonner
     actions: Handlinger
     viewing: "Viser: %{current_view_name}"
@@ -3986,6 +3988,7 @@ nb:
         bulk_order_management: "Bulk ordrehåndtering"
         subscriptions: "Abonnement"
         products: "Produkter"
+        products_v3: "Produkter"
         option_types: "Valgtyper"
         properties: "Egenskaper"
         variant_overrides: "Varelager"

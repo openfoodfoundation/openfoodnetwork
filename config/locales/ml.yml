@@ -8,6 +8,8 @@ ml:
       spree/product: ഉൽപ്പന്നം
       spree/shipping_method: ഷിപ്പിംഗ് രീതി
     attributes:
+      spree/image:
+        attachment: അറ്റാച്ച്മെന്റ്
       spree/order/ship_address:
         address1: "ഷിപ്പിംഗ് വിലാസം (തെരുവ് + വീട് നമ്പർ)"
         address2: "ഷിപ്പിംഗ് വിലാസം വരി 2"
@@ -507,6 +509,7 @@ ml:
         per_page: "ഓരോ പേജിലും %{count} ഇനങ്ങൾ"
         colums: നിരകൾ
       columns:
+        image: ചിത്രം
         name: പേര്
         unit: യൂണിറ്റ്
         unit_value: യൂണിറ്റ് മൂല്യം
@@ -591,7 +594,6 @@ ml:
     show_n_more: '%{num} കൂടുതൽ കാണിക്കുക'
     choose: "തിരഞ്ഞെടുക്കുക..."
     please_select: ദയവായി തിരഞ്ഞെടുക്കുക...
-    column_save_as_default: സ്ഥിരസ്ഥിതിയായി സംരക്ഷിക്കുക
     columns: നിരകൾ
     actions: പ്രവർത്തനങ്ങൾ
     viewing: "കാണുന്നത്: %{current_view_name}"
@@ -3922,6 +3924,7 @@ ml:
         bulk_order_management: "ബൾക്ക് ഓർഡർ മാനേജ്മെന്റ്"
         subscriptions: "സബ്സ്ക്രിപ്ഷനുകൾ"
         products: "ഉൽപ്പന്നങ്ങൾ"
+        products_v3: "ഉൽപ്പന്നങ്ങൾ"
         option_types: "ഓപ്ഷൻ തരങ്ങൾ"
         properties: "പ്രോപ്പർട്ടികൾ"
         variant_overrides: "ഇൻവെന്ററി"

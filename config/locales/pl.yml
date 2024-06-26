@@ -312,6 +312,7 @@ pl:
           title: Producenci
         colums: Kulumny
       columns:
+        image: Obraz
         name: Nazwa
         unit: Jednostka
         price: Cena
@@ -387,7 +388,6 @@ pl:
     show_n_more: Pokaż %{num} więcej
     choose: "Wybierz..."
     please_select: Proszę wybrać...
-    column_save_as_default: Zapisz jako domyślny
     columns: Kulumny
     actions: Akcje
     viewing: "Wyświetlanie: %{current_view_name}"

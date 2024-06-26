@@ -5,6 +5,8 @@ pa:
       spree/product: ਉਤਪਾਦ
       spree/shipping_method: ਸ਼ਿਪਿੰਗ ਦਾ ਤਰੀਕਾ
     attributes:
+      spree/image:
+        attachment: ਅਟੈਚਮੈਂਟ
       spree/order/ship_address:
         address1: "ਸ਼ਿਪਿੰਗ ਪਤਾ (ਗਲੀ + ਘਰ ਦਾ ਨੰਬਰ)"
         address2: "ਸ਼ਿਪਿੰਗ ਪਤੇ ਦੀ ਲਾਈਨ 2"
@@ -500,6 +502,7 @@ pa:
         per_page: "ਪ੍ਰਤੀ ਪੰਨਾ %{count} ਆਈਟਮਾਂ"
         colums: ਕਾਲਮ
       columns:
+        image: ਤਸਵੀਰ
         name: ਨਾਮ
         unit: ਯੂਨਿਟ
         unit_value: ਯੂਨਿਟ ਵੈਲਯੂ
@@ -583,7 +586,6 @@ pa:
     show_more: ਹੋਰ ਵਿਖਾਓ
     choose: "ਚੁਣੋ..."
     please_select: ਕਿਰਪਾ ਕਰਕੇ ਚੁਣੋ...
-    column_save_as_default: ਡਿਫੌਲਟ ਦੇ ਤੌਰ ਤੇ ਸੇਵ ਕਰੋ
     columns: ਕਾਲਮ
     actions: ਸੰਪਾਦਿਤ ਕਰੋ
     viewing: "ਵੇਖ ਰਹੇ ਹਾਂ: %{current_view_name}"
@@ -3792,6 +3794,7 @@ pa:
         bulk_order_management: "ਥੋਕ ਆਰਡਰ ਪ੍ਰਬੰਧਨ"
         subscriptions: "ਸਬਸਕ੍ਰਿਪਸ਼ਨ"
         products: "ਉਤਪਾਦ"
+        products_v3: "ਉਤਪਾਦ"
         option_types: "ਵਿਕਲਪ ਦੀਆਂ ਕਿਸਮਾਂ"
         properties: "ਪ੍ਰਾਪਰਟੀਜ਼"
         variant_overrides: "ਇਨਵੇਂਟਰੀ"

@@ -359,6 +359,7 @@ tr:
           title: ÜRETİCİLER
         colums: Sütunlar
       columns:
+        image: Görsel
         name: Ad
         unit: Birim
         price: Fiyat
@@ -442,7 +443,6 @@ tr:
     show_n_more: '%{num} tane daha göster'
     choose: "Seç..."
     please_select: Lütfen seçin...
-    column_save_as_default: Varsayılan Olarak Kaydet
     columns: Sütunlar
     actions: İşlemler
     viewing: "Görüntülenen: %{current_view_name}"
@@ -3474,6 +3474,7 @@ tr:
         bulk_order_management: "TOPLU SİPARİŞ YÖNETİMİ"
         subscriptions: "Üyelikler"
         products: "Ürünler"
+        products_v3: "Ürünler"
         option_types: "Seçenek Türleri"
         properties: "ÖZELLİKLER"
         variant_overrides: "Stok"

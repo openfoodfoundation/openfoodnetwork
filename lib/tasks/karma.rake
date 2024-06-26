@@ -39,6 +39,6 @@ namespace :karma do
 
     I18n::JS::DEFAULT_EXPORT_DIR_PATH.replace('tmp/javascripts')
     I18n::JS.export
-    "#{Rails.root.join(I18n::JS::DEFAULT_EXPORT_DIR_PATH, 'translations.js')}"
+    Rails.root.join(I18n::JS::DEFAULT_EXPORT_DIR_PATH, 'translations.js').to_s
   end
 end

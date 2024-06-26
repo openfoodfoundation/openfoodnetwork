@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
 
+// Close a <details> element when click outside
 export default class extends Controller {
 
   connect() {

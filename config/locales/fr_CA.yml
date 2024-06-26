@@ -8,6 +8,8 @@ fr_CA:
       spree/product: Produit
       spree/shipping_method: Option d'expédition
     attributes:
+      spree/image:
+        attachment: Fichier joint
       spree/order/ship_address:
         address1: "Adresse de livraison (Numéro et Rue)"
         address2: "Adresse (Numéro et rue)"
@@ -521,6 +523,7 @@ fr_CA:
         per_page: "%{count} éléments par page"
         colums: Colonnes
       columns:
+        image: Image
         name: Nom
         unit_scale: Échelle d'unité
         unit: Unité
@@ -607,7 +610,6 @@ fr_CA:
     show_n_more: Montrer %{num} supplémentaires
     choose: "Choisir..."
     please_select: Veuillez choisir...
-    column_save_as_default: Par défaut
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"
@@ -4030,6 +4032,7 @@ fr_CA:
         bulk_order_management: "Gestion des commandes"
         subscriptions: "Abonnements"
         products: "Produits"
+        products_v3: "Produits"
         option_types: "Types d'options"
         properties: "Labels / propriétés"
         variant_overrides: "Catalogue boutique"

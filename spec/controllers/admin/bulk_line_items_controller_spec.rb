@@ -59,15 +59,11 @@ RSpec.describe Admin::BulkLineItemsController, type: :controller do
         end
 
         it "formats final_weight_volume as a float" do
-          expect(json_response['line_items'].map{ |line_item|
-                   line_item['final_weight_volume']
-                 }.all?{ |fwv| fwv.is_a?(Float) }).to eq(true)
+          expect(json_response[:line_items]).to all(include(final_weight_volume: a_kind_of(Float)))
         end
 
         it "returns distributor object with id key" do
-          expect(json_response['line_items'].map{ |line_item|
-                   line_item['supplier']
-                 }.all?{ |d| d.key?('id') }).to eq(true)
+          expect(json_response[:line_items].pluck(:supplier)).to all(include(:id))
         end
       end
 
@@ -460,6 +456,6 @@ RSpec.describe Admin::BulkLineItemsController, type: :controller do
   private
 
   def line_item_ids
-    json_response['line_items'].map{ |line_item| line_item['id'] }
+    json_response['line_items'].pluck(:id)
   end
 end

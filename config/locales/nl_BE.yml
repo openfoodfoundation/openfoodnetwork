@@ -314,6 +314,7 @@ nl_BE:
           title: Producenten
         colums: Kolommen
       columns:
+        image: beeltenis
         name: Naam
         unit: Unit
         price: Prijs
@@ -393,7 +394,6 @@ nl_BE:
     show_n_more: Toon %{num} meer
     choose: "Kies..."
     please_select: Selecteer...
-    column_save_as_default: Opslaan als standaard
     columns: Kolommen
     actions: Acties
     viewing: "Bekijken: %{current_view_name}"
@@ -3191,6 +3191,7 @@ nl_BE:
         bulk_order_management: "Beheer van bulkorders"
         subscriptions: "Abonnementen"
         products: "Producten"
+        products_v3: "Producten"
         option_types: "Optietypen"
         properties: "Eigenschappen"
         variant_overrides: "Inventarisatie"

@@ -418,6 +418,7 @@ it_CH:
           title: Produttori
         colums: Colonne
       columns:
+        image: Immagine
         name: Nome
         unit: Unità
         price: Prezzo
@@ -501,7 +502,6 @@ it_CH:
     show_n_more: Mostra %{num} di più
     choose: "Scegli..."
     please_select: Seleziona...
-    column_save_as_default: Salva Come Predefinito
     columns: Colonne
     actions: Azioni
     viewing: "Vista: %{current_view_name}"
@@ -3619,6 +3619,7 @@ it_CH:
         bulk_order_management: "Gentili richieste - vista a tabella"
         subscriptions: "Abbonamenti"
         products: "Prodotti"
+        products_v3: "Prodotti"
         option_types: "Tipi di opzioni"
         properties: "Proprietà"
         variant_overrides: "Inventario"

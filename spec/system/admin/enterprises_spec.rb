@@ -569,6 +569,7 @@ RSpec.describe '
       before do
         login_as_admin
         visit edit_admin_enterprise_path(distributor1)
+        scroll_to(:bottom)
         within ".side_menu" do
           click_link 'Users'
         end

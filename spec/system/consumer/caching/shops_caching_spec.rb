@@ -14,12 +14,13 @@ RSpec.describe "Shops caching", caching: true do
   }
 
   describe "caching enterprises AMS data" do
-    it "caches data for all enterprises, with the provided options" do
+    before do
       # Trigger lengthy tasks like JS compilation before testing caching:
       visit shops_path
       Rails.cache.clear
+    end
 
-      # Now run the test, hopefully in a timely manner:
+    it "caches data for all enterprises, with the provided options" do
       visit shops_path
 
       key, options = CacheService::FragmentCaching.ams_shops
@@ -73,6 +74,10 @@ RSpec.describe "Shops caching", caching: true do
 
     before do
       exchange.variants << product.variants.first
+
+      # Trigger lengthy tasks like JS compilation before testing caching:
+      visit enterprise_shop_path(distributor)
+      Rails.cache.clear
     end
 
     it "caches rendered response for taxons and properties, with the provided options" do

@@ -1,15 +1,15 @@
-%td
+%td.col-image
   -# empty
-%td.field.naked_inputs
+%td.col-name.field.naked_inputs
   = f.hidden_field :id
   = f.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: variant.product.name
   = error_message_on variant, :display_name
-%td.field.naked_inputs
+%td.col-sku.field.naked_inputs
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on variant, :sku
-%td
+%td.col-unit_scale
   -# empty
-%td.field.popout{'data-controller': "popout", 'data-popout-update-display-value': "false"}
+%td.col-unit.field.popout{'data-controller': "popout", 'data-popout-update-display-value': "false"}
   = f.button :unit_to_display, class: "popout__button", 'aria-label': t('admin.products_page.columns.unit'), 'data-popout-target': "button" do
     = variant.unit_to_display # Show the generated summary of unit values
   %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
@@ -25,10 +25,10 @@
       = f.label :display_as, t('admin.products_page.columns.display_as')
       = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(variant).name
   = error_message_on variant, :unit_value
-%td.field.naked_inputs
+%td.col-price.field.naked_inputs
   = f.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs
   = error_message_on variant, :price
-%td.field.popout{'data-controller': "popout"}
+%td.col-on_hand.field.popout{'data-controller': "popout"}
   %button.popout__button{'data-popout-target': "button", 'aria-label': t('admin.products_page.columns.on_hand')}
     = variant.on_demand ? t(:on_demand) : variant.on_hand
   %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
@@ -39,16 +39,16 @@
       = f.label :on_demand do
         = f.check_box :on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
         = t(:on_demand)
-%td.align-left
+%td.col-producer.align-left
   -# empty producer name
-%td.field.naked_inputs
+%td.col-category.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :primary_taxon_id,
       options: category_options,
       selected_option: variant.primary_taxon_id,
       aria_label: t('.category_field_name'),
       placeholder_value: t('admin.products_v3.filters.search_for_categories')))
-%td.field.naked_inputs
+%td.col-tax_category.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :tax_category_id,
       options: tax_category_options,
@@ -57,7 +57,7 @@
       aria_label: t('.tax_category_field_name'),
       placeholder_value: t('.search_for_tax_categories')))
   = error_message_on variant, :tax_category
-%td.align-left
+%td.col-inherits_properties.align-left
   -# empty
 %td.align-right
   = render(VerticalEllipsisMenu::Component.new) do

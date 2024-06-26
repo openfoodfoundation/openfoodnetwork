@@ -8,6 +8,8 @@ ru:
       spree/product: Товар
       spree/shipping_method: Способ Доставки
     attributes:
+      spree/image:
+        attachment: Вложение
       spree/order/ship_address:
         address1: "Адрес доставки (Улица + Номер дома)"
         address2: "2 строка адреса доставки"
@@ -513,6 +515,7 @@ ru:
         per_page: "%{count} элементов на странице"
         colums: Колонки
       columns:
+        image: Изображение
         name: Название
         unit_scale: Единицы
         unit: Единица измерения
@@ -599,7 +602,6 @@ ru:
     show_n_more: Показать %{num} больше
     choose: "Выбрать..."
     please_select: Пожалуйста выберите...
-    column_save_as_default: Сохранить По Умолчанию
     columns: Колонки
     actions: Действия
     viewing: "Просмотр: %{current_view_name}"
@@ -4027,6 +4029,7 @@ ru:
         bulk_order_management: "Пакетное Управление Заказами"
         subscriptions: "Подписки"
         products: "Товары"
+        products_v3: "Товары"
         option_types: "Типы Опций"
         properties: "Свойства"
         variant_overrides: "Товарная номенклатура"

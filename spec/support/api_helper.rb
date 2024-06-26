@@ -15,7 +15,7 @@ module OpenFoodNetwork
     end
 
     def json_response_ids
-      json_response[:data]&.map{ |item| item["id"] }
+      json_response[:data]&.pluck(:id)
     end
 
     def json_error_detail

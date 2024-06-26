@@ -12,4 +12,16 @@ RSpec.describe CustomTab do
 
     it { is_expected.to validate_length_of(:title).is_at_most(20) }
   end
+
+  describe "serialisation" do
+    it "sanitises HTML in content" do
+      subject.content = "Hello <script>alert</script> dearest <b>monster</b>."
+      expect(subject.content).to eq "Hello alert dearest <b>monster</b>."
+    end
+
+    it "sanitises existing HTML in content" do
+      subject[:content] = "Hello <script>alert</script> dearest <b>monster</b>."
+      expect(subject.content).to eq "Hello alert dearest <b>monster</b>."
+    end
+  end
 end

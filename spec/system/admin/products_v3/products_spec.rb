@@ -3,6 +3,7 @@
 require "system_helper"
 
 RSpec.describe 'As an enterprise user, I can manage my products', feature: :admin_style_v3 do
+  include AdminHelper
   include WebHelper
   include AuthenticationHelper
   include FileHelper
@@ -30,29 +31,45 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     end
   end
 
-  describe "using the page" do
-    describe "using column display dropdown" do
-      let(:product) { create(:simple_product) }
+  describe "column selector" do
+    let!(:product) { create(:simple_product) }
 
-      before do
-        pending "Pending implementation, issue #11055"
-        login_as_admin
-        visit spree.admin_products_path
+    before do
+      visit admin_products_url
+    end
+
+    it "hides column and remembers saved preference" do
+      # Name shows by default
+      expect(page).to have_checked_field "Name"
+      expect(page).to have_selector "th", text: "Name"
+      expect_other_columns_visible
+
+      # Name is hidden
+      ofn_drop_down("Columns").click
+      within ofn_drop_down("Columns") do
+        uncheck "Name"
       end
+      expect(page).not_to have_selector "th", text: "Name"
+      expect_other_columns_visible
 
-      it "shows a column display dropdown, which shows a list of columns when clicked" do
-        expect(page).to have_selector "th", text: "NAME"
-        expect(page).to have_selector "th", text: "PRODUCER"
-        expect(page).to have_selector "th", text: "PRICE"
-        expect(page).to have_selector "th", text: "ON HAND"
+      # Preference saved
+      click_on "Save as default"
+      expect(page).to have_content "Column preferences saved"
+      refresh
 
-        toggle_columns /^.{0,1}Producer$/i
-
-        expect(page).not_to have_selector "th", text: "PRODUCER"
-        expect(page).to have_selector "th", text: "NAME"
-        expect(page).to have_selector "th", text: "PRICE"
-        expect(page).to have_selector "th", text: "ON HAND"
+      # Preference remembered
+      ofn_drop_down("Columns").click
+      within ofn_drop_down("Columns") do
+        expect(page).to have_unchecked_field "Name"
       end
+      expect(page).not_to have_selector "th", text: "Name"
+      expect_other_columns_visible
+    end
+
+    def expect_other_columns_visible
+      expect(page).to have_selector "th", text: "Producer"
+      expect(page).to have_selector "th", text: "Price"
+      expect(page).to have_selector "th", text: "On Hand"
     end
   end
 
@@ -320,6 +337,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
     end
   end
+
+  describe "columns"
 
   describe "updating" do
     let!(:variant_a1) {
@@ -620,6 +639,15 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
           variant_a1.reload
         }.to change { product_a.name }.to("Pommes")
           .and change{ product_a.sku }.to("POM-00")
+      end
+    end
+
+    describe "creating a new product" do
+      it "redirects to the New Product page" do
+        visit admin_products_url
+        expect {
+          click_link("New Product")
+        }.to change { current_path }.to(spree.new_admin_product_path)
       end
     end
 
@@ -1041,13 +1069,15 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
   describe "edit image" do
     shared_examples "updating image" do
-      it "saves product image" do
+      before do
         visit admin_products_url
 
         within row_containing_name("Apples") do
           click_on "Edit"
         end
+      end
 
+      it "saves product image" do
         within ".reveal-modal" do
           expect(page).to have_content "Edit product photo"
           expect_page_to_have_image(current_img_url)
@@ -1062,6 +1092,25 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
         within row_containing_name("Apples") do
           expect_page_to_have_image('500.jpg')
+        end
+      end
+
+      it 'shows a modal telling not a valid image when uploading wrong type of file' do
+        within ".reveal-modal" do
+          attach_file 'image[attachment]',
+                      Rails.public_path.join('Terms-of-service.pdf'),
+                      visible: false
+          expect(page).to have_content /Attachment is not a valid image/
+          expect(page).to have_content /Attachment has an invalid content type/
+        end
+      end
+
+      it 'shows a modal telling not a valid image when uploading a non valid image file' do
+        within ".reveal-modal" do
+          attach_file 'image[attachment]',
+                      Rails.public_path.join('invalid_image.jpg'),
+                      visible: false
+          expect(page).to have_content /Attachment is not a valid image/
         end
       end
     end
@@ -1336,7 +1385,117 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             end
           end
         end
+
+        context 'a shipped product' do
+          let!(:order) { create(:shipped_order, line_items_count: 1) }
+          let!(:line_item) { order.reload.line_items.first }
+
+          context "a deleted line item from a shipped order" do
+            before do
+              login_as_admin
+              visit admin_products_url
+
+              # Delete Variant
+              within variant_selector do
+                page.find(".vertical-ellipsis-menu").click
+                page.find(delete_option_selector).click
+              end
+
+              delete_button_selector = "input[type=button][value='Delete variant']"
+              within modal_selector do
+                page.find(delete_button_selector).click
+              end
+            end
+
+            it 'keeps the line item on the order (admin)' do
+              visit spree.edit_admin_order_path(order)
+
+              expect(page).to have_content(line_item.product.name.to_s)
+            end
+          end
+        end
       end
+    end
+  end
+
+  context "as an enterprise manager" do
+    let(:supplier_managed1) { create(:supplier_enterprise, name: 'Supplier Managed 1') }
+    let(:supplier_managed2) { create(:supplier_enterprise, name: 'Supplier Managed 2') }
+    let(:supplier_unmanaged) { create(:supplier_enterprise, name: 'Supplier Unmanaged') }
+    let(:supplier_permitted) { create(:supplier_enterprise, name: 'Supplier Permitted') }
+    let(:distributor_managed) { create(:distributor_enterprise, name: 'Distributor Managed') }
+    let(:distributor_unmanaged) { create(:distributor_enterprise, name: 'Distributor Unmanaged') }
+    let!(:product_supplied) { create(:product, supplier: supplier_managed1, price: 10.0) }
+    let!(:product_not_supplied) { create(:product, supplier: supplier_unmanaged) }
+    let!(:product_supplied_permitted) {
+      create(:product, name: 'Product Permitted', supplier: supplier_permitted, price: 10.0)
+    }
+    let(:product_supplied_inactive) {
+      create(:product, supplier: supplier_managed1, price: 10.0)
+    }
+
+    let!(:supplier_permitted_relationship) do
+      create(:enterprise_relationship, parent: supplier_permitted, child: supplier_managed1,
+                                       permissions_list: [:manage_products])
+    end
+
+    before do
+      enterprise_user = create(:user)
+      enterprise_user.enterprise_roles.build(enterprise: supplier_managed1).save
+      enterprise_user.enterprise_roles.build(enterprise: supplier_managed2).save
+      enterprise_user.enterprise_roles.build(enterprise: distributor_managed).save
+
+      login_as enterprise_user
+    end
+
+    it "shows only products that I supply" do
+      visit spree.admin_products_path
+
+      # displays permitted product list only
+      expect(page).to have_selector row_containing_name(product_supplied.name)
+      expect(page).to have_selector row_containing_name(product_supplied_permitted.name)
+      expect(page).not_to have_selector row_containing_name(product_not_supplied.name)
+    end
+
+    it "shows only suppliers that I manage or have permission to" do
+      visit spree.admin_products_path
+      within row_containing_name(product_supplied.name) do
+        expect(page).to have_select(
+          '_products_0_supplier_id',
+          options: [
+            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
+          ], selected: supplier_managed1.name
+        )
+      end
+
+      within row_containing_name(product_supplied_permitted.name) do
+        expect(page).to have_select(
+          '_products_1_supplier_id',
+          options: [
+            supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
+          ], selected: supplier_permitted.name
+        )
+      end
+    end
+
+    it "shows inactive products that I supply" do
+      product_supplied_inactive
+
+      visit spree.admin_products_path
+
+      expect(page).to have_selector row_containing_name(product_supplied_inactive.name)
+    end
+
+    it "allows me to update a product" do
+      visit spree.admin_products_path
+
+      within row_containing_name(product_supplied.name) do
+        fill_in "Name", with: "Pommes"
+      end
+      click_button "Save changes"
+
+      expect(page).to have_content "Changes saved"
+      expect(page).to have_selector row_containing_name("Pommes")
     end
   end
 

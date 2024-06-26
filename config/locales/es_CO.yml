@@ -329,6 +329,7 @@ es_CO:
           title: Productoras
         colums: Columnas
       columns:
+        image: Imágen
         name: Nombre
         unit: Unidad
         price: Precio
@@ -408,7 +409,6 @@ es_CO:
     show_n_more: Mostrar %{num} más
     choose: "Escoger..."
     please_select: Por favor selecciona ...
-    column_save_as_default: Guardar por defecto
     columns: Columnas
     actions: Acciones
     viewing: "Viendo: %{current_view_name}"
@@ -3293,6 +3293,7 @@ es_CO:
         bulk_order_management: "Gestión de pedidos en bloque"
         subscriptions: "Suscripciones"
         products: "Productos"
+        products_v3: "Productos"
         option_types: "Tipos de opciones"
         properties: "Propiedades"
         variant_overrides: "Inventario"

@@ -419,6 +419,7 @@ en_US:
           title: Producers
         colums: Columns
       columns:
+        image: Image
         name: Name
         unit: Unit
         price: Price
@@ -502,7 +503,6 @@ en_US:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
-    column_save_as_default: Save As Default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -3584,6 +3584,7 @@ en_US:
         bulk_order_management: "Bulk Order Management"
         subscriptions: "Subscriptions"
         products: "Products"
+        products_v3: "Products"
         option_types: "Option Types"
         properties: "Properties"
         variant_overrides: "Inventory"

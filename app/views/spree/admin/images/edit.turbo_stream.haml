@@ -3,7 +3,13 @@
     %h2= t(".title")
 
     -# Display image in the same way it appears in the shopfront popup
-    %p= image_tag @image.persisted? ? @image.url(:large) : Spree::Image.default_image_url(:large), width: 433, height: 433
+    - if defined?(@errors) && !@errors.empty?
+      - @errors.each do |error|
+        %p
+          = error
+    - else
+      %p= image_tag @image.persisted? ? @image.url(:large) : Spree::Image.default_image_url(:large), width: 433, height: 433
+
 
     -# Submit as turbo stream to avoid full page reload.
     -# TODO: show loading indicator.

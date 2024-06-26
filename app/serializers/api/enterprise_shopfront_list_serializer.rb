@@ -21,7 +21,7 @@ module Api
         producer_shop: "map_003-producer-shop.svg",
         producer: "map_001-producer-only.svg",
       }
-      "/map_icons/" + (icons[enterprise.category] || "map_001-producer-only.svg")
+      "/map_icons/#{icons[enterprise.category] || 'map_001-producer-only.svg'}"
     end
 
     def icon_font

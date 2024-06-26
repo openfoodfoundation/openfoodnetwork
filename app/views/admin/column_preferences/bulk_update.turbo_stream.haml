@@ -1,0 +1,3 @@
+= turbo_stream.replace "bulk_admin_column_preferences_form" do
+  = render partial: "admin/shared/flashes", locals: { flashes: flash } if defined? flash
+  = render partial: 'form', locals: { action: }

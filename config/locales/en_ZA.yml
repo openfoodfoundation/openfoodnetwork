@@ -305,6 +305,7 @@ en_ZA:
           title: Pricing
         colums: Columns
       columns:
+        image: Image
         name: Name
         unit: Unit
         price: Price
@@ -384,7 +385,6 @@ en_ZA:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
-    column_save_as_default: Save As Default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -3113,6 +3113,7 @@ en_ZA:
         bulk_order_management: "Bulk Order Management"
         subscriptions: "Subscriptions"
         products: "Products"
+        products_v3: "Products"
         option_types: "Option Types"
         properties: "Properties"
         variant_overrides: "Inventory"

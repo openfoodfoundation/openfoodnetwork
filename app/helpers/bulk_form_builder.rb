@@ -8,6 +8,6 @@ class BulkFormBuilder < ActionView::Helpers::FormBuilder
       opts[:class] = "#{opts[:class]} changed".strip
     end
 
-    super(field, **opts)
+    super
   end
 end

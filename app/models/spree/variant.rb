@@ -143,7 +143,7 @@ module Spree
       return where("1=0") if enterprise.blank?
 
       joins(:product).
-        where(spree_products: { id: Spree::Product.stockable_by(enterprise).pluck(:id) })
+        where(spree_products: { id: Spree::Product.stockable_by(enterprise).select(:id) })
     }
 
     # Define sope as class method to allow chaining with other scopes filtering id.
@@ -238,7 +238,7 @@ module Spree
     end
 
     def create_stock_items
-      StockLocation.all.find_each do |stock_location|
+      StockLocation.find_each do |stock_location|
         stock_location.propagate_variant(self)
       end
     end

@@ -8,6 +8,8 @@ de_DE:
       spree/product: Produkt
       spree/shipping_method: Lieferoption
     attributes:
+      spree/image:
+        attachment: Datei hochladen
       spree/order/ship_address:
         address1: "Lieferadresse Straße + Hausnummer"
         address2: "Lieferadresse Adresszusatz"
@@ -507,6 +509,7 @@ de_DE:
         per_page: "%{count} Produkte pro Seite"
         colums: Spalten
       columns:
+        image: Bild
         name: Name
         unit: Einheit
         unit_value: Menge
@@ -591,7 +594,6 @@ de_DE:
     show_n_more: Zeige %{num} weitere
     choose: "Bitte Auswählen ..."
     please_select: Bitte auswählen ...
-    column_save_as_default: Als Standard speichern
     columns: Spalten
     actions: Aktionen
     viewing: "%{current_view_name}"
@@ -3913,6 +3915,7 @@ de_DE:
         bulk_order_management: "Massenbearbeitung von Bestellungen"
         subscriptions: "Abonnements"
         products: "Produkte"
+        products_v3: "Produkte"
         option_types: "Optionstypen"
         properties: "Eigenschaften"
         variant_overrides: "Katalog"

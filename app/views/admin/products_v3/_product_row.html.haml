@@ -1,13 +1,13 @@
-%td.with-image{ id: "image-#{product.id}" }
+%td.col-image.with-image{ id: "image-#{product.id}" }
   = render partial: "product_image", locals: { product: }
-%td.field.align-left.header.naked_inputs
+%td.col-name.field.align-left.header.naked_inputs
   = f.hidden_field :id
   = f.text_field :name, 'aria-label': t('admin.products_page.columns.name')
   = error_message_on product, :name
-%td.field.naked_inputs
+%td.col-sku.field.naked_inputs
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on product, :sku
-%td.field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
+%td.col-unit_scale.field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
   = f.hidden_field :variant_unit
   = f.hidden_field :variant_unit_scale
   = f.select :variant_unit_with_scale,
@@ -19,23 +19,23 @@
   .field
     = f.text_field :variant_unit_name, 'aria-label': t('items'), 'data-toggle-control-target': 'control', style: (product.variant_unit == "items" ? "" : "display: none")
     = error_message_on product, :variant_unit_name, 'data-toggle-control-target': 'control'
-%td.align-right
+%td.col-unit.align-right
   -# empty
-%td.align-right
+%td.col-price.align-right
   -# empty
-%td.align-right
+%td.col-on_hand.align-right
   -# empty
-%td.naked_inputs
+%td.col-producer.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :supplier_id,
       aria_label: t('.producer_field_name'),
       options: producer_options,
       selected_option: product.supplier_id,
       placeholder_value: t('admin.products_v3.filters.search_for_producers')))
-%td.align-left
+%td.col-category.align-left
   -# empty
-%td.align-left
-%td.align-left
+%td.col-tax_category.align-left
+%td.col-inherits_properties.align-left
   .content= product.inherits_properties ? 'YES' : 'NO' #TODO: consider using https://github.com/RST-J/human_attribute_values, else use I18n.t (also below)
 %td.align-right
   = render(VerticalEllipsisMenu::Component.new) do

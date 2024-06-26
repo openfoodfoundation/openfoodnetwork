@@ -5,6 +5,25 @@ el:
       spree/product: Προϊόν
       spree/shipping_method: Τρόπος Αποστολής
     attributes:
+      spree/image:
+        attachment: ' Συνημμένο'
+      spree/order/ship_address:
+        address1: "Διεύθυνση αποστολής (Οδός & αριθμός)"
+        address2: "2η διεύθυνση αποστολής"
+        city: "Πόλη/Περιοχή"
+        country: "Χώρα"
+        phone: "Τηλέφωνο"
+        firstname: "Όνομα"
+        lastname: "Επώνυμο"
+        zipcode: "Ταχυδρομικός Κώδικας"
+      spree/order/bill_address:
+        address1: "Διεύθυνση χρέωσης (Οδός και αριθμός)"
+        zipcode: "Ταχυδρομικός Κώδικας "
+        city: "Πόλη/Περιοχή"
+        country: "Χώρα"
+        firstname: "Όνομα"
+        lastname: "Επώνυμο"
+        phone: Τηλέφωνο πελάτη
       spree/user:
         password: "Κωδικός"
         password_confirmation: "Επιβεβαίωση κωδικού"
@@ -23,15 +42,17 @@ el:
         state: Πόλη
         source: Προέλευση
       spree/product:
+        name: "Όνομα Προϊόντος"
         price: "Τιμή"
-        primary_taxon: "Κατηγορία προϊόντων"
+        primary_taxon: "Κατηγορία προϊόντος"
         supplier: "Προμηθευτής"
         shipping_category_id: "Κατηγορία μεταφορικών"
         variant_unit: "Μονάδα μέτρησης μεταβλητής"
         variant_unit_name: "Όνομα μεταβλητής"
+        unit_value: "Τιμή μεταβλητής"
       spree/variant:
-        primary_taxon: "Κατηγορία προϊόντων"
-        shipping_category_id: "Κατηγορία μεταφορικών"
+        primary_taxon: "Κατηγορία προϊόντος"
+        shipping_category_id: "Κατηγορία μεταφοράς"
       spree/credit_card:
         base: "Κάρτα πιστωτική/χρεωστική"
         number: "Αριθμός"
@@ -44,6 +65,10 @@ el:
         count_on_hand: "Στο χέρι"
     errors:
       models:
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "Αδυναμία φόρτωσης. Παρακαλούμε επαληθεύστε τον τύπο και το περιεχόμενο του αρχείου"
         spree/user:
           attributes:
             email:
@@ -66,7 +91,93 @@ el:
             on_demand_but_count_on_hand_set: "πρέπει να παραμείνει κενό αν είναι κατόπιν ζήτησης"
             limited_stock_but_no_count_on_hand: "πρέπει να καθοριστεί επειδή δημιουργεί περιορισμένο απόθεμα"
       messages:
+        confirmation: "δεν ταιριάζει "
         blank: "δεν μπορεί να είναι κενό"
+  errors:
+    messages:
+      content_type_invalid: "περιέχει λανθασμένο τύπο περιεχομένου"
+      limit_out_of_range: "Ο συνολικός αριθμός βρίσκεται εκτός εύρους"
+      image_metadata_missing: "δεν είναι έγκυρη εικόνα"
+      dimension_min_inclusion: "πρέπει να είναι μεγαλύτερο η ίσο με %{width} x %{height} pixels."
+      dimension_max_inclusion: "πρέπει να είναι μικρότερο από ή ίσο με %{width} x %{height} pixels."
+      dimension_width_inclusion: "Το πλάτος δεν είναι μεταξύ %{min} και %{max} pixels."
+      dimension_height_inclusion: "Το ύψος δεν είναι μεταξύ %{min} και %{max} pixels. "
+      dimension_width_greater_than_or_equal_to: "Το πλάτος πρέπει να είναι μεγαλύτερο από η ίσο με %{length} pixels."
+      dimension_height_greater_than_or_equal_to: "Το ύψος πρέπει να είναι μεγαλύτερο από η ίσο με %{length} pixels."
+      dimension_width_less_than_or_equal_to: "Το πλάτος πρέπει να είναι μικρότερο από ή ίσο με %{length} pixels."
+      dimension_height_less_than_or_equal_to: "Το ύψος πρέπει να είναι μικρότερο από η ίσο με %{length} pixels."
+      dimension_width_equal_to: "Το πλάτος πρέπει να είναι ίσο με %{length} pixels."
+      dimension_height_equal_to: "Το ύψος πρέπει να είναι ίσο με %{length} pixels."
+      aspect_ratio_not_square: "πρέπει να είναι τετράγωνη εικόνα. "
+      aspect_ratio_not_portrait: "πρέπει να είναι εικόνα πορτρέτο. "
+      aspect_ratio_not_landscape: "πρέπει να είναι εικόνα τοπίου."
+      aspect_ratio_unknown: "έχει άγνωστη αναλογία απεικόνισης (aspect ratio)."
+      image_not_processable: "δεν είναι έγκυρη εικόνα"
+    not_found:
+      title: "Η συγκεκριμένη σελίδα δεν υπάρχει (404) "
+      message_html: "<b>Παρακαλούμε προσπαθήστε ξανά</b> <p>Πιθανόν να πρόκειται για προσωρινό σφάλμα. Παρακαλούμε επιστρέψτε στην προηγούμενη σελίδα ή πηγαίνετε πίσω στην  <a href='/'>Αρχική σελίδα</a> και προσπαθήστε ξανά.</p> <b>Επικοινωνήστε με την εξυπηρέτηση πελατών</b> <p>Εάν το πρόβλημα παραμένει η επείγει, παρακαλούμε να μας ενημερώσετε. Βρείτε τα στοιχεία επικοινωνίας μας στο <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>. </p><p>Θα μας είναι απόλυτα χρήσιμο το να μας δώσετε όσες περισσότερες πληροφορίες γίνεται αναφορικά με τα στοιχεία της σελίδας που λείπουν.</p>"
+    internal_server_error:
+      title: "Λυπούμαστε. Κάτι πήγε στραβά (500)"
+      message_html: "<b>Παρακαλούμε προσπαθήστε ξανά</b><p>Πιθανόν να πρόκειται για προσωρινό σφάλμα. Παρακαλούμε επιστρέψτε στη προηγούμενη σελίδα η επιστρέψτε πίσω στην <a href='/''>Αρχική</a>και δοκιμάστε ξανά.</p> <b>Το παρακολουθούμε.</b><p>Εάν έχετε παρατηρήσει ξανά το συγκεκριμένο σφάλμα, πιθανόν να το γνωρίζουμε ήδη και να βρισκόμαστε στη διαδικασία επίλυσής του. Καταγράφουμε όλα τα σφάλματα που προκύπτουν. </p> <b> Επικοινωνήστε με την εξυπηρέτηση πελατών</b> <p>Εάν το πρόβλημα παραμένει η επείγει, παρακαλούμε ενημερώστε μας. Μπορείτε να βρείτε τα στοιχεία επικοινωνίας μας στο global <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>Open Food Network Local page</a>.</p> <p>Μας είναι απόλυτα χρήσιμο να μας δώσετε όσες το δυνατό περισσότερες πληροφορίες αναφορικά με το τι ακριβώς κάνατε όταν προέκυψε το σφάλμα.</p>"
+    unprocessable_entity:
+      title: "Η αλλαγή που αιτηθήκατε απορρίφθηκε (422)"
+      message_html: "<p>Η αλλαγή που αιτηθήκατε απορρίφθηκε. Πιθανόν να μην έχετε την απαραίτητη πρόσβαση. <br><h3><a href='/' >Επιστροφή στην αρχική</a></h3></p> "
+    general_error:
+      message: "Λυπούμαστε, κάτι πήγε στραβά.\n\nΠιθανόν να πρόκειται για προσωρινό σφάλμα, οπότε παρακαλώ δοκιμάστε να φορτώσετε τη σελίδα εκ νέου.\nΌλα τα σφάλματα καταγράφονται, και πολύ πιθανόν να βρίσκονται προς επίλυση.\nΕάν το πρόβλημα παραμένει ή επείγει, παρακαλώ επικοινωνήστε μαζί μας."
+  stripe:
+    error_code:
+      incorrect_number: "Ο αριθμός της κάρτας είναι λανθασμένος."
+      invalid_number: "Η κάρτα δεν είναι έγκυρη. "
+      invalid_expiry_month: "Ο μήνας λήξης της κάρτας δεν είναι έγκυρος."
+      invalid_expiry_year: "Η χρονιά λήξης της κάρτας δεν είναι έγκυρη."
+      invalid_cvc: "Ο κωδικός ασφαλέιας (CVV)  της κάρτας δεν είναι έγκυρος."
+      expired_card: "Η κάρτα έχει λήξει."
+      incorrect_cvc: "Ο κωδικός ασφαλέιας (CVV) της κάρτας δεν είναι έγκυρος."
+      incorrect_zip: "Ο ταχυδρομικός κώδικας της κάρτας δεν είναι έγκυρος"
+      card_declined: "Η κάρτα απορρίφθηκε."
+      missing: "Δεν υπάρχει κάρτα πελάτη που έχει χρεωθεί."
+      processing_error: "Παρουσιάστηκε σφάλμα κατά τον έλεγχο της κάρτας."
+      authentication_required: "Η κάρτα απορρίφθηκε καθώς η συναλλαγή απαιτεί αυθεντικοποίηση "
+      approve_with_id: "Η πληρωμή δεν μπορεί να εγκριθεί."
+      call_issuer: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      card_not_supported: "Η κάρτα δεν υποστηρίζει αγορά αυτού του τύπου"
+      card_velocity_exceeded: "Ο πελάτης έχει εξαντλήσει το υπόλοιπο η το όριο πίστωσης της κάρτας."
+      currency_not_supported: "Η κάρτα δεν υποστηρίζει το επιλεγμένο νόμισμα."
+      do_not_honor: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      do_not_try_again: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      duplicate_transaction: "Μια συναλλαγή με ίδιο πόσο και στοιχεία κάρτας υποβλήθηκε πρόσφατα. "
+      fraudulent: "Η πληρωμή απορρίφθηκε από το Stripe, ως ύποπτη για απάτη. "
+      generic_decline: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      incorrect_pin: "Ο κωδικός PIN ειναι λανθασμένος. Αυτός ο κωδικός σφάλματος αφορά μόνο πληρωμές μέσω POS"
+      insufficient_funds: "Το υπόλοιπο της κάρτας δεν επαρκεί για να ολοκληρωθεί η αγορά."
+      invalid_account: "Η κάρτα, η ο συνδεδεμένος σε αυτή λογαριασμός, είναι λάθος. "
+      invalid_amount: "Το ποσό πληρωμής είναι λάθος, η μεγαλύτερο από το μέγιστο επιτρεπόμενο όριο."
+      invalid_pin: "Ο κωδικός PIN ειναι λανθασμένος. Αυτός ο κωδικός σφάλματος αφορά μόνο πληρωμές μέσω POS"
+      issuer_not_available: "Ο ιδιοκτήτης της κάρτας δεν επιβεβαιώθηκε, η συναλλαγή απορρίφθηκε."
+      lost_card: "Η πληρωμή απορρίφθηκε καθώς έχει δηλωθεί απώλεια της κάρτας."
+      merchant_blacklist: "Η πληρωμή απορρίφθηκε καθώς ο χρήστης φαίνεται να έχει αποκλειστεί στο Stripe."
+      new_account_information_available: "Η κάρτα, η ο συνδεδεμένος σε αυτή λογαριασμός, είναι λάθος. "
+      no_action_taken: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      not_permitted: "Η πληρωμή δεν επιτρέπεται."
+      offline_pin_required: "Η κάρτα απορρίφθηκε καθώς απαιτείται εισαγωγή PIN."
+      online_or_offline_pin_required: "Η κάρτα απορρίφθηκε καθώς απαιτείται εισαγωγή PIN."
+      pickup_card: "Η κάρτα δεν μπορεί να χρησιμοποιηθεί για τη πληρωμή (Πιθανόν να έχει δηλωθεί απώλεια η κλοπή της κάρτας)."
+      pin_try_exceeded: "Έχει ξεπεραστεί ο μέγιστος αριθμός προσπαθειών καταχώρησης PIN."
+      reenter_transaction: "Η πληρωμή απορρίφθηκε από τον πάροχο."
+      restricted_card: "Η κάρτα δεν μπορεί να χρησιμοποιηθεί για τη πληρωμή (Πιθανόν να έχει δηλωθεί απώλεια η κλοπή της κάρτας)."
+      revocation_of_all_authorizations: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      revocation_of_authorization: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      security_violation: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      service_not_allowed: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      stolen_card: "Η πληρωμή απορρίφθηκε καθώς έχει δηλωθεί κλοπή για τη συγκεκριμένη κάρτα."
+      stop_payment_order: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      testmode_decline: "Χρησιμοποιήθηκε αριθμός δοκιμαστικής κάρτας Stripe."
+      transaction_not_allowed: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      try_again_later: "Η κάρτα απορρίφθηκε για άγνωστο λόγο."
+      withdrawal_count_limit_exceeded: "Ο πελάτης έχει εξαντλήσει το υπόλοιπο η το όριο πίστωσης της κάρτας."
+      disconnect_failure: "Αποτυχία αποσύνδεσης από το Stripe."
+    success_code:
+      disconnected: "Ο λογαριασμός Stripe αποσυνδέθηκε."
   activemodel:
     errors:
       messages:
@@ -92,9 +203,13 @@ el:
               not_available_to_shop: "δεν είναι διαθέσιμο στο %{shop}"
   card_details: "Λεπτομέρειες κάρτας"
   card_type: "Τύπος κάρτας"
+  card_type_is: "O τύπος της κάρτας είναι "
+  unrecognized_card_type: "Μη συμβατός τύπος κάρτας"
+  use_new_cc: "Χρησιμοποιήστε καινούρια κάρτα."
   cardholder_name: "Όνομα κατόχου"
   community_forum_url: "Σύνδεσμος για το Φόρουμ της Κοινότητας"
   customer_instructions: "Οδηγίες από τον πελάτη"
+  additional_information: "Περισσότερες πληροφορίες"
   devise:
     passwords:
       spree_user:
@@ -115,6 +230,7 @@ el:
         signed_up_but_unconfirmed: "Έχει σταλεί μήνυμα στην ηλεκτρονική σου διεύθυνση με έναν σύνδεσμο ενεργοποίησης. Παρακαλώ ακολούθησε το σύνδεσμο για να ενεργοποιήσεις το λογαριασμό σου."
         unknown_error: "Υπήρξε πρόβλημα κατά τη δημιουργία του λογαριασμού σου. Παρακαλώ έλεγξε τη διεύθυνση ηλεκτρονικού ταχυδρομίου και προσπάθησε ξανά."
     failure:
+      disabled: "Ο λογαριασμός σας έχει απενεργοποιηθεί. Επικοινωνήστε με ένα διαχειριστή για περαιτέρω υποστήριξη."
       invalid: |
           Μη έγκυρο email ή κωδικός πρόσβασης.
           Ίσως χρειάζεται να δημιουργήσετε έναν λογαριασμό ή νέο  κωδικό πρόσβασης.
@@ -122,6 +238,9 @@ el:
       already_registered: "Αυτή η διεύθυνση ηλεκτρονικού ταχυδρομείου είναι ήδη καταχωρημένη.\nΣυνδέσου για να συνεχίσεις ή επέστρεψε στην προηγούμενη σελίδα και χρησιμοποίησε άλλη διεύθυνση ηλεκτρονικού ταχυδρομείου."
     success:
       logged_in_succesfully: "Συνδεθήκατε με επιτυχία"
+    sessions:
+      signed_out: "Επιτυχία αποσύνδεσης."
+      already_signed_out: "Επιτυχία αποσύνδεσης."
     user_passwords:
       spree_user:
         updated_not_active: "Έγινε επαναφορά του κωδικού, αλλά η διέυθυνση ηλεκτρονικού σας ταχυδρομίου δεν έχει επιβεβαιωθεί ακόμη."
@@ -186,6 +305,10 @@ el:
     order_cycle:
       subject: "Καταγραφή κύκλων παραγγελιών για %{producer}"
   provider_settings: "Ρυθμίσεις παρόχου"
+  report_mailer:
+    report_ready:
+      intro: |
+          Ο παρακάτω σύνδεσμος θα λήξει σε μία βδομάδα.
   shipment_mailer:
     shipped_email:
       dear_customer: "Αγαπητέ Πελάτη,"
@@ -256,6 +379,10 @@ el:
   confirm_send_invoice: "Θα αποσταλεί ένα τιμολόγιο στον πελάτη για αυτή την παραγγελία,θέλετε να συνεχίσετε?"
   confirm_resend_order_confirmation: "Είσαστε βέβαιος ότι θέλετε να ξαναστείλετε email επιβεβαίωσης παραγγελίας?"
   invoice: "Τιμολόγιο"
+  invoices: "Αποδείξεις"
+  file: "Αρχείο"
+  download: "Λήψη"
+  cancelled: "Ακυρώθηκε"
   more: "Περισσότερα"
   say_no: "Όχι"
   say_yes: "Nαι"
@@ -311,6 +438,7 @@ el:
   none: Κανένας
   notes: Σημειώσεις
   error: Πρόβλημα
+  voucher: Κουπόνι
   processing_payment: "Επεξεργασία πληρωμής..."
   no_pending_payments: "Δεν υπάρχουν πληρωμές σε εκκρεμότητα"
   invalid_payment_state: "Κατάσταση μη έγκυρης πληρωμής : %{state}"
@@ -355,12 +483,16 @@ el:
     products_page:
       title: Προίόντα
       filters:
+        categories:
+          title: Κατηγορίες
         producers:
           title: Παραγωγοί
         colums: Στήλες
       columns:
+        image: Εικόνα
         name: Όνομα
         unit: Μονάδα
+        unit_value: Τιμή μεταβλητής
         price: Τιμή
         producer: Παραγωγός
         category: Κατηγορία
@@ -369,6 +501,7 @@ el:
         on_demand: "Κατά παραγγελία"
         tax_category: "Φορολογική Κατηγορία"
         inherits_properties: "Διατήρηση Ιδιοτήτων"
+        import_date: "Ημερομηνία καταχώρησης"
         actions: Δράση
       columns_selector:
         unit: Μονάδα
@@ -380,6 +513,7 @@ el:
         on_demand: "Κατά παραγγελία"
         tax_category: "Φορολογική Κατηγορία"
         inherits_properties: "Διατήρηση Ιδιοτήτων"
+        import_date: "Ημερομηνία καταχώρησης"
       actions:
         edit: Επεξεργασία
         clone: Κλώνος
@@ -440,7 +574,7 @@ el:
     show_n_more: Δείξε %{num} ακόμα
     choose: "Επιλογή..."
     please_select: Παρακαλώ επιλέξτε...
-    column_save_as_default: Αποθήκευση ως Προεπιλογή
+    column_save_as_default: Αποθήκευση ως πρότυπο
     columns: Στήλες
     actions: Δράση
     viewing: "Προβολή : %{current_view_name}"
@@ -451,6 +585,9 @@ el:
     has_n_rules: "έχει %{αριθ} κανόνες"
     unsaved_confirm_leave: "Δεν έχουν αποθηκευτεί οι αλλαγές στην σελίδα. Συνέχεια χωρίς αποθήκευση?"
     available_units: "Διαθέσιμες Μονάδες"
+    terms_of_service_have_been_updated_html: "Οι όροι χρήσης του Open Food Network έχουν ανανεωθεί: %{tos_link}"
+    terms_of_service: Διάβασε τους όρους χρήσης
+    accept_terms_of_service: Αποδοχή όρων χρήσης
     shopfront_settings:
       embedded_shopfront_settings: "Ενσωματωμένες Ρυθμίσεις Σελίδας Καταστήματος"
       enable_embedded_shopfronts: "Ενεργοποίηση Ενσωματωμένης Σελίδας Καταστήματος"
@@ -465,6 +602,7 @@ el:
         terms_of_service: "Όροι Χρήσης της Υπηρεσίας"
         delete: "Διαγραφή αρχείου"
         confirm_delete: "Είστε σίγουροι ότι θέλετε να διαγράψετε το παρόν αρχείο με τους Όρους Χρήσης της Υπηρεσίας ;"
+        attachment: " Συνημμένο"
     number_localization:
       number_localization_settings: "Ρυθμίσεις τοπικής προσαρμογής αριθμών"
       enable_localized_number: "Χρησιμοποιήστε το διεθνές διαχωριστικό χιλιάδων/δεκαδικών"
@@ -547,6 +685,8 @@ el:
     enterprise_groups:
       index:
         new_button: Νέα Ομάδα Επιχειρήσεων
+      form_users:
+        users: "Χρήστες"
       form_about:
         about: "Σχετικά"
       form_images:
@@ -589,12 +729,47 @@ el:
         variants: "Παραλλαγές"
         product_properties: "Ιδιότητες Προϊόντος"
     products_v3:
+      index:
+        header:
+          title: Μαζική επεξεργασία προϊόντων
+      content:
+        loading: Φόρτωση των προϊόντων
+      delete_modal:
+        delete_product_modal:
+          heading: "Διαγραφή προϊόντος"
+          prompt: "Θα διαγραφεί μόνιμα από τη λίστα σας."
+          confirmation_text: "Διαγραφή προϊόντος"
+        delete_variant_modal:
+          prompt: "Θα διαγραφεί μόνιμα από τη λίστα σας."
       filters:
+        search_products: Αναζήτηση προϊόντων
+        search_for_producers: 'Αναζήτηση παραγωγών. '
+        all_producers: Όλοι οι παραγωγοί
+        search_for_categories: Αναζήτηση κατηγοριών
+        all_categories: Όλες οι κατηγορίες
         producers:
           label: Παραγωγοί
+        categories:
+          label: Κατηγορίες
         search: Αναζήτηση
+      sort:
+        pagination:
+          clear_search: Εκκαθάριση αναζήτησης
+      no_products:
+        no_products_found: Δεν βρέθηκαν προϊόντα
+        import_products: Καταχώρηση πολλαπλών προϊόντων
+        no_products_found_for_search: Δεν βρέθηκαν προϊόντα σύμφωνα με τα κριτήρια
+      table:
+        reset: 'Απόρριψη αλλαγών '
+        save: Αποθήκευση αλλαγών
+      bulk_update:
+        success: Οι αλλαγές αποθηκεύτηκαν.
+      delete_product:
+        success: Το προϊόν διαγράφηκε επιτυχώς
+        error: Αδυναμία διαγραφής προϊόντος.
       variant_row:
         none_tax_category: Κανένας
+        search_for_tax_categories: "Αναζήτηση φορολογικής κατηγορίας"
         category_field_name: "Κατηγορία"
         tax_category_field_name: "Φορολογική Κατηγορία"
       product_row:
@@ -612,6 +787,7 @@ el:
         no_product: δεν ταιριάζει με κανένα προϊόν στη βάση δεδομένων
         not_found: δεν βρέθηκε στην βάση δεδομένων
         not_updatable: δεν μπορεί να ενημερωθεί για υπάρχοντα προϊόντα μέσω της επιλογής "Εισαγωγή προϊόντων"
+        values_must_be_same: Πρέπει να είναι το ίδιο για προϊόντα με το ίδιο όνομα
         blank: δεν μπορεί να είναι κενό
         products_no_permission: δεν έχετε άδεια διαχείρισης προϊόντων για αυτήν την επιχείρηση
         inventory_no_permission: δεν έχετε άδεια δημιουργίας κατάλογου προϊόντων για αυτόν τον παραγωγό
@@ -763,6 +939,9 @@ el:
         variants_without_unit_value: "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Ορισμένες παραλλαγές δεν έχουν τιμή μονάδας"
         all: "Όλα"
       select_variant: "Επιλέξτε μια παραλλαγή"
+      note:
+        note_label: "Σημείωση:"
+        no_note_present: "Δεν υπάρχει σημείωση."
     enterprise:
       select_outgoing_oc_products_from: Επιλέξτε εξερχόμενα προϊόντα OC από
     enterprises:
@@ -783,6 +962,7 @@ el:
         address:
           legend: "Διεύθυνση"
         business_details:
+          legend: "Λεπτομέρειες επιχείρησης "
           abn: ABN
           abn_placeholder: π.χ. 99 123 456 789
           acn: ACN
@@ -794,6 +974,8 @@ el:
           uploaded_on: "ανέβηκε στις"
           reset_form: "Επαναφορά μορφής"
           business_address_legend: "Διεύθυνση έδρας "
+          sort_items_by_supplier?: 'Ταξινόμηση προΪόντων ανά προμηθευτή; '
+          sort_items_by_supplier_tip: "Όταν ενεργοποιείται, τα προΪόντα θα ταξινομούνται βάσει ονόματος προμηθευτή."
         business_address:
           company_legal_name: Νομικό όνομα εταιρείας
           company_placeholder: Παράδειγμα Inc.
@@ -813,6 +995,8 @@ el:
           email_address_tip: "Αυτή η διεύθυνση ηλεκτρονικού ταχυδρομείου θα εμφανίζεται στο δημόσιο προφίλ σας"
           phone: Τηλέφωνο
           phone_placeholder: π.χ. 210 123 4567
+          whatsapp_phone: 'Αριθμός WhatsApp '
+          whatsapp_phone_placeholder: 'Παράδειγμα: +306986558490'
           website: Ιστότοπος
           website_placeholder: π.χ. www.truffles.com
         enterprise_fees:
@@ -937,6 +1121,7 @@ el:
           add_new_rule: '+ Πρόσθεσε έναν νέο κανόνα'
           add_new_tag: '+ Πρόσθεσε μια νέα ταμπέλα'
         users:
+          legend: "Χρήστες"
           email_confirmation_notice_html: "Η επιβεβαίωση email εκκρεμεί.Σας έχουμε ήδη στείλει επιβεβαίωση email %{email}"
           resend: Ξαναστείλε
           owner: 'Κάτοχος'
@@ -1165,12 +1350,15 @@ el:
           address: "Διεύθυνση"
           contact: "επικοινωνία"
           about: "Σχετικά"
+          business_details: "Λεπτομέρειες επιχείρησης "
           images: "Εικόνες"
           properties: "Ιδιότητες"
           shipping_methods: "Τρόποι αποστολής"
           payment_methods: "Τρόποι πληρωμής"
           enterprise_fees: "Χρεώσεις επιχείρησης"
+          users: "Χρήστες"
         enterprise_group:
+          users: "Χρήστες"
           about: "Σχετικά"
           images: "Εικόνες"
           contact: "επικοινωνία"
@@ -1367,6 +1555,8 @@ el:
       contact_information:
         email:
           label: Email
+        phone:
+          label: Τηλέφωνο
       billing_address:
         first_name:
           label: Όνομα
@@ -2087,6 +2277,7 @@ el:
         contact_field_placeholder: "Όνομα Επικοινωνίας"
         contact_field_required: "Πρέπει να εισαγάγετε μια κύρια επαφή."
         phone_field: "Τηλεφωνικό νούμερο"
+        whatsapp_phone_field: "Αριθμός WhatsApp "
         phone_field_placeholder: "π.χ. (03) 1234 5678"
       type:
         title: "Τύπος"
@@ -2373,6 +2564,7 @@ el:
   report_columns: Στήλες
   report_enterprises: "Επιχειρήσεις"
   report_enterprise_fee: "Ονομασία Χρεώσεων"
+  report_users: "Χρήστες"
   report_tax_rates: Φορολογικοί δείκτες
   report_tax_types: Φορολογικοί τύποι
   report_header_order_cycle: Κύκλος παραγγελίας
@@ -2596,6 +2788,7 @@ el:
   new_payment: "Νέα Πληρωμή"
   date_completed: "Ημερομηνία ολοκλήρωσης"
   amount: "Ποσό"
+  invoice_file: "Αρχείο"
   state_names:
     ready: Ετοιμος
     pending: εκκρεμής
@@ -3279,6 +3472,7 @@ el:
         bulk_order_management: "Διαχείριση Μαζικής Παραγγελίας"
         subscriptions: "Συνδρομές"
         products: "Προίόντα"
+        products_v3: "Προίόντα"
         option_types: "Τύποι επιλογών"
         properties: "Ιδιότητες"
         variant_overrides: "Καταγραφή Εμπορευμάτων"
@@ -3380,6 +3574,9 @@ el:
           payments_list:
             payment_method: "Μέθοδος Πληρωμής"
             amount: "Ποσό"
+        note:
+          note_label: "Σημείωση:"
+          no_note_present: "Δεν υπάρχει σημείωση."
         form:
           distribution_fields:
             title: "Κατανομή"
@@ -3791,6 +3988,7 @@ el:
         total: Σύνολο
         paid?: Επί πληρωμή?
         status: Κατάσταση
+        cancelled: Ακυρώθηκε
       saved_cards:
         default?: Προκαθορισμένο?
         delete?: Διαγράφω?

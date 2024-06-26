@@ -5,6 +5,8 @@ ca:
       spree/product: Producte
       spree/shipping_method: Mètode d'enviament
     attributes:
+      spree/image:
+        attachment: Adjunt
       spree/order/ship_address:
         address1: "Adreça d'enviament (Carrer i número)"
         address2: "2a línia adreça d'enviament "
@@ -477,6 +479,7 @@ ca:
         per_page: "%{count} elements per pàgina"
         colums: Columnes
       columns:
+        image: Imatge
         name: Nom
         unit: Unitat
         unit_value: Valor de la unitat
@@ -561,7 +564,6 @@ ca:
     show_n_more: Mostra %{num} més
     choose: "Tria ..."
     please_select: Seleccioneu ...
-    column_save_as_default: Per defecte
     columns: Columnes
     actions: Accions
     viewing: "Veient: %{current_view_name}"
@@ -3733,6 +3735,7 @@ ca:
         bulk_order_management: "Gestió de comandes en bloc"
         subscriptions: "Subscripcions"
         products: "Productes "
+        products_v3: "Productes "
         option_types: "Tipus d'opcions"
         properties: "Propietats"
         variant_overrides: "Inventari"

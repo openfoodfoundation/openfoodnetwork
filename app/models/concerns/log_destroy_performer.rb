@@ -10,9 +10,12 @@ module LogDestroyPerformer
     after_destroy :log_who_destroyed
 
     def log_who_destroyed
-      return if destroyed_by.nil?
-
-      Rails.logger.info "#{self.class} #{id} deleted by #{destroyed_by.id}"
+      message = if destroyed_by.nil?
+                  "#{self.class} #{id} deleted"
+                else
+                  "#{self.class} #{id} deleted by #{destroyed_by.id} <#{destroyed_by.email}>"
+                end
+      Rails.logger.info message
     end
   end
 end

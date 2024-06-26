@@ -8,6 +8,8 @@ cy:
       spree/product: Cynnyrch
       spree/shipping_method: Dull Anfon
     attributes:
+      spree/image:
+        attachment: Atodiad
       spree/order/ship_address:
         address1: "Cyfeiriad danfon (Stryd a rhif y tŷ)"
         address2: "Cyfeiriad danfon llinell 2"
@@ -507,6 +509,7 @@ cy:
         per_page: "%{count} eitemau fesul tudalen"
         colums: Colofnau
       columns:
+        image: Delwedd
         name: Enw
         unit: Uned
         unit_value: Gwerth yr uned
@@ -591,7 +594,6 @@ cy:
     show_n_more: Dangos %{num} mwy
     choose: "Dewiswch ..."
     please_select: Dewiswch ...
-    column_save_as_default: Cadw fel dewis diofyn
     columns: Colofnau
     actions: Camau gweithredu
     viewing: "Gweld: %{current_view_name}"
@@ -3974,6 +3976,7 @@ cy:
         bulk_order_management: "Rheoli Arhcebion Swmp"
         subscriptions: "Tanysgrifiadau"
         products: "Cynnyrch"
+        products_v3: "Cynnyrch"
         option_types: "Mathau Opsiwn"
         properties: "Manylion"
         variant_overrides: "Stocrestr"
