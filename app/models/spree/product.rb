@@ -22,7 +22,7 @@ module Spree
     include LogDestroyPerformer
 
     self.belongs_to_required_by_default = false
-    self.ignored_columns += [:supplier_id]
+    self.ignored_columns += [:supplier_id, :variant_unit_scale, :variant_unit_name]
 
     acts_as_paranoid
 
@@ -45,16 +45,6 @@ module Spree
 
     validates_lengths_from_database
     validates :name, presence: true
-
-    validates :variant_unit, presence: true
-    validates :unit_value, numericality: {
-      greater_than: 0,
-      if: ->(p) { p.variant_unit.in?(%w(weight volume)) && new_record? }
-    }
-    validates :variant_unit_scale,
-              presence: { if: ->(p) { %w(weight volume).include? p.variant_unit } }
-    validates :variant_unit_name,
-              presence: { if: ->(p) { p.variant_unit == 'items' } }
     validate :validate_image
     validates :price, numericality: { greater_than_or_equal_to: 0, if: ->{ new_record? } }
 
@@ -66,14 +56,14 @@ module Spree
 
     # Transient attributes used temporarily when creating a new product,
     # these values are persisted on the product's variant
-    attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id,
-                  :shipping_category_id, :primary_taxon_id, :supplier_id
+    attr_accessor :price, :display_as, :unit_value, :unit_description, :variant_unit,
+                  :variant_unit_name, :variant_unit_scale, :tax_category_id, :shipping_category_id,
+                  :primary_taxon_id, :supplier_id
 
     after_validation :validate_variant_attrs, on: :create
     after_create :ensure_standard_variant
     after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
     around_destroy :destruction
-    after_save :update_units
     after_touch :touch_supplier
 
     # -- Scopes
@@ -254,30 +244,14 @@ module Spree
       variant.display_as = display_as
       variant.unit_value = unit_value
       variant.unit_description = unit_description
+      variant.variant_unit = variant_unit
+      variant.variant_unit_name = variant_unit_name
+      variant.variant_unit_scale = variant_unit_scale
       variant.tax_category_id = tax_category_id
       variant.shipping_category_id = shipping_category_id
       variant.primary_taxon_id = primary_taxon_id
       variant.supplier_id = supplier_id
       variants << variant
-    end
-
-    # Format as per WeightsAndMeasures (todo: re-orgnaise maybe after product/variant refactor)
-    def variant_unit_with_scale
-      # Our code is based upon English based number formatting with a period `.`
-      scale_clean = ActiveSupport::NumberHelper.number_to_rounded(variant_unit_scale,
-                                                                  precision: nil,
-                                                                  significant: false,
-                                                                  strip_insignificant_zeros: true,
-                                                                  locale: :en)
-      [variant_unit, scale_clean].compact_blank.join("_")
-    end
-
-    def variant_unit_with_scale=(variant_unit_with_scale)
-      values = variant_unit_with_scale.split("_")
-      assign_attributes(
-        variant_unit: values[0],
-        variant_unit_scale: values[1] || nil
-      )
     end
 
     # Remove any unsupported HTML.
@@ -301,18 +275,6 @@ module Spree
       errors.add(:supplier_id, :blank) unless Enterprise.find_by(id: supplier_id)
     end
 
-    def update_units
-      return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
-
-      variants.each do |v|
-        if v.persisted?
-          v.update_units
-        else
-          v.assign_units
-        end
-      end
-    end
-
     def touch_supplier
       return if variants.empty?
 
@@ -324,6 +286,7 @@ module Spree
       # importing product. In this scenario the variant has not been updated with the supplier yet
       # hence the check.
       first_variant.supplier.touch if first_variant.supplier.present?
+
     end
 
     def validate_image
