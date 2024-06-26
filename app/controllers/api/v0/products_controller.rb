@@ -67,6 +67,7 @@ module Api
         authorize! :update, original_product
 
         @product = original_product.duplicate
+        raise 'Failed to clone product' unless @product.persisted?
 
         render json: @product, serializer: Api::Admin::ProductSerializer, status: :created
       end
