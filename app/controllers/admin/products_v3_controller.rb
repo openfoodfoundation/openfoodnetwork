@@ -82,9 +82,9 @@ module Admin
         @producer_options = producers
         @category_options = categories
         @tax_category_options = tax_category_options
-      rescue StandardError => _e
+      rescue ActiveRecord::ActiveRecordError => _e
         flash.now[:error] = t('.error')
-        status = :internal_server_error
+        status = :unprocessable_entity
         @product_index = "-1" # Create a unique enough index
       end
 

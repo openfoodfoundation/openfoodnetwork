@@ -106,7 +106,9 @@ RSpec.describe Spree::Core::ProductDuplicator do
       }
       subject { Spree::Core::ProductDuplicator.new(product).duplicate }
 
-      it "returns an invalid record"
+      it "raises RecordInvalid error" do
+        expect{ subject }.to raise_error(ActiveRecord::RecordInvalid)
+      end
     end
 
     context "invalid variant" do

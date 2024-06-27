@@ -18,10 +18,11 @@ module Spree
           expect(clone.image).to eq product.image
         end
 
-        it 'fails to duplicate the product' do
-          pending 'test for all the use cases by which the +product.save+ would return false.'
-          clone = product.duplicate
-          expect(clone).not_to be_persisted
+        it 'fails to duplicate invalid product' do
+          # Existing product is invalid:
+          product.update_columns(variant_unit: nil)
+
+          expect{ product.duplicate }.to raise_error(ActiveRecord::ActiveRecordError)
         end
       end
 
