@@ -65,7 +65,7 @@ module Spree
     validate :check_currency
     validates :price, numericality: { greater_than_or_equal_to: 0 }, presence: true
     validates :tax_category, presence: true,
-                             if: proc { Spree::Config[:products_require_tax_category] }
+                             if: proc { Spree::Config.products_require_tax_category }
 
     validates :unit_value, presence: true, if: ->(variant) {
       %w(weight volume).include?(variant.product&.variant_unit)

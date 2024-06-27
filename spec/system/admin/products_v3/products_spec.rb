@@ -1210,18 +1210,17 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
           end
         end
 
-        it "fails to clone the product on page when clicked on the cloned option" do
-          # Mock the +save+ method to return fail. That's the only expected fail case
-          allow_any_instance_of(Spree::Product).to receive(:save).and_return(false)
+        it "shows error message when cloning invalid record" do
+          # Existing product is invalid:
+          product_a.update_columns(variant_unit: nil)
 
           click_product_clone "Apples"
 
           expect(page).to have_content "Unable to clone the product"
+
           within "table.products" do
-            # Gather input values, because page.content doesn't include them.
-            input_content = page.find_all('input[type=text]').map(&:value).join
             # Products does not include the cloned product.
-            expect(input_content).not_to match /COPY OF Apples/
+            expect(all_input_values).not_to match /COPY OF Apples/
           end
         end
       end
