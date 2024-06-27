@@ -11,7 +11,7 @@ module Spree
 
       def duplicate
         new_product = duplicate_product
-        new_product.save
+        new_product.save!
         new_product
       end
 
