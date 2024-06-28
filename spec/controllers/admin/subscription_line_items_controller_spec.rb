@@ -38,7 +38,7 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
         context "but no shop_id is provided" do
           it "returns an error" do
             spree_post :build, params
-            expect(JSON.parse(response.body)['errors']).to eq ['Unauthorised']
+            expect(response.parsed_body['errors']).to eq ['Unauthorised']
           end
         end
 
@@ -47,7 +47,7 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
 
           it "returns an error" do
             spree_post :build, params
-            expect(JSON.parse(response.body)['errors']).to eq ['Unauthorised']
+            expect(response.parsed_body['errors']).to eq ['Unauthorised']
           end
         end
 
@@ -59,7 +59,7 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
 
             it "returns an error" do
               spree_post :build, params
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['errors'])
                 .to eq ["#{shop.name} is not permitted to sell the selected product"]
             end
@@ -74,7 +74,7 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
               it "returns a serialized subscription line item without a price estimate" do
                 spree_post :build, params
 
-                json_response = JSON.parse(response.body)
+                json_response = response.parsed_body
                 expect(json_response['price_estimate']).to eq '?'
                 expect(json_response['quantity']).to eq 2
                 expect(json_response['description']).to eq "#{variant.product.name} - 100g"
@@ -87,7 +87,7 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
               it "returns a serialized subscription line item without a price estimate" do
                 spree_post :build, params
 
-                json_response = JSON.parse(response.body)
+                json_response = response.parsed_body
                 expect(json_response['price_estimate']).to eq '?'
                 expect(json_response['quantity']).to eq 2
                 expect(json_response['description']).to eq "#{variant.product.name} - 100g"
@@ -102,7 +102,7 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
                    "based on the variant" do
                   spree_post :build, params
 
-                  json_response = JSON.parse(response.body)
+                  json_response = response.parsed_body
                   expect(json_response['price_estimate']).to eq 18.5
                   expect(json_response['quantity']).to eq 2
                   expect(json_response['description']).to eq "#{variant.product.name} - 100g"
@@ -118,7 +118,7 @@ RSpec.describe Admin::SubscriptionLineItemsController, type: :controller do
                    "based on the override" do
                   spree_post :build, params
 
-                  json_response = JSON.parse(response.body)
+                  json_response = response.parsed_body
                   expect(json_response['price_estimate']).to eq 15.5
                   expect(json_response['quantity']).to eq 2
                   expect(json_response['description']).to eq "#{variant.product.name} - 100g"

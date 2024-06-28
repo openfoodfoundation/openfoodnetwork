@@ -67,7 +67,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
 
         it 'renders the collection as json' do
           get(:index, params:)
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           expect(json_response.count).to be 2
           expect(json_response.pluck('id')).to include subscription.id, subscription2.id
         end
@@ -77,7 +77,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
 
           it "restricts the list of subscriptions" do
             get(:index, params:)
-            json_response = JSON.parse(response.body)
+            json_response = response.parsed_body
             expect(json_response.count).to be 1
             ids = json_response.pluck('id')
             expect(ids).to include subscription2.id
@@ -135,7 +135,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
       context 'when I submit insufficient params' do
         it 'returns errors' do
           expect{ spree_post :create, params }.not_to change{ Subscription.count }
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method',
                                                           'shipping_method', 'begins_at'
         end
@@ -169,7 +169,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
 
         it 'returns errors' do
           expect{ spree_post :create, params }.not_to change{ Subscription.count }
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           expect(json_response['errors'].keys).to include 'schedule', 'customer', 'payment_method',
                                                           'shipping_method', 'ends_at'
         end
@@ -198,7 +198,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
         context 'where the specified variants are not available from the shop' do
           it 'returns an error' do
             expect{ spree_post :create, params }.not_to change{ Subscription.count }
-            json_response = JSON.parse(response.body)
+            json_response = response.parsed_body
             expect(json_response['errors']['subscription_line_items'])
               .to eq ["#{variant.product.name} - #{variant.full_name} " \
                       "is not available from the selected schedule"]
@@ -344,7 +344,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
 
         it 'returns errors' do
           expect{ spree_post :update, params }.not_to change{ Subscription.count }
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           expect(json_response['errors'].keys).to include 'payment_method', 'shipping_method'
           subscription.reload
           expect(subscription.payment_method).to eq payment_method
@@ -388,7 +388,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
             it 'returns an error' do
               expect{ spree_post :update, params }
                 .not_to change{ subscription.subscription_line_items.count }
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['errors']['subscription_line_items'])
                 .to eq ["#{product2.name} - #{variant2.full_name} " \
                         "is not available from the selected schedule"]
@@ -464,7 +464,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
               it "renders an error, asking what to do" do
                 spree_put :cancel, params
                 expect(response.status).to be 409
-                json_response = JSON.parse(response.body)
+                json_response = response.parsed_body
                 expect(json_response['errors']['open_orders'])
                   .to eq 'Some orders for this subscription are currently open. ' \
                          'The customer has already been notified that the order will be placed. ' \
@@ -477,7 +477,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
 
               it 'renders the cancelled subscription as json, and does not cancel the open order' do
                 spree_put :cancel, params
-                json_response = JSON.parse(response.body)
+                json_response = response.parsed_body
                 expect(json_response['canceled_at']).not_to be nil
                 expect(json_response['id']).to eq subscription.id
                 expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
@@ -497,7 +497,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
 
               it 'renders the cancelled subscription as json, and cancels the open order' do
                 spree_put :cancel, params
-                json_response = JSON.parse(response.body)
+                json_response = response.parsed_body
                 expect(json_response['canceled_at']).not_to be nil
                 expect(json_response['id']).to eq subscription.id
                 expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
@@ -511,7 +511,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
           context "when no associated orders are still 'open'" do
             it 'renders the cancelled subscription as json' do
               spree_put :cancel, params
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['canceled_at']).not_to be nil
               expect(json_response['id']).to eq subscription.id
               expect(subscription.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
@@ -568,7 +568,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
               it "renders an error, asking what to do" do
                 spree_put :pause, params
                 expect(response.status).to be 409
-                json_response = JSON.parse(response.body)
+                json_response = response.parsed_body
                 expect(json_response['errors']['open_orders'])
                   .to eq 'Some orders for this subscription are currently open. ' \
                          'The customer has already been notified that the order will be placed. ' \
@@ -581,7 +581,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
 
               it 'renders the paused subscription as json, and does not cancel the open order' do
                 spree_put :pause, params
-                json_response = JSON.parse(response.body)
+                json_response = response.parsed_body
                 expect(json_response['paused_at']).not_to be nil
                 expect(json_response['id']).to eq subscription.id
                 expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
@@ -601,7 +601,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
 
               it 'renders the paused subscription as json, and cancels the open order' do
                 spree_put :pause, params
-                json_response = JSON.parse(response.body)
+                json_response = response.parsed_body
                 expect(json_response['paused_at']).not_to be nil
                 expect(json_response['id']).to eq subscription.id
                 expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
@@ -615,7 +615,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
           context "when no associated orders are still 'open'" do
             it 'renders the paused subscription as json' do
               spree_put :pause, params
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['paused_at']).not_to be nil
               expect(json_response['id']).to eq subscription.id
               expect(subscription.reload.paused_at).to be_within(5.seconds).of Time.zone.now
@@ -673,7 +673,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
             context "when no associated orders are 'canceled'" do
               it 'renders the unpaused subscription as json, leaves the order untouched' do
                 spree_put :unpause, params
-                json_response = JSON.parse(response.body)
+                json_response = response.parsed_body
                 expect(json_response['paused_at']).to be nil
                 expect(json_response['id']).to eq subscription.id
                 expect(subscription.reload.paused_at).to be nil
@@ -691,7 +691,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
                 it "renders a message, informing the user that canceled order can be resumed" do
                   spree_put :unpause, params
                   expect(response.status).to be 409
-                  json_response = JSON.parse(response.body)
+                  json_response = response.parsed_body
                   expect(json_response['errors']['canceled_orders'])
                     .to eq 'Some orders for this subscription can be resumed right now. ' \
                            'You can resume them from the orders dropdown.'
@@ -703,7 +703,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
 
                 it 'renders the unpaused subscription as json, leaves the order untouched' do
                   spree_put :unpause, params
-                  json_response = JSON.parse(response.body)
+                  json_response = response.parsed_body
                   expect(json_response['paused_at']).to be nil
                   expect(json_response['id']).to eq subscription.id
                   expect(subscription.reload.paused_at).to be nil
@@ -717,7 +717,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
           context "when no associated orders are 'complete'" do
             it 'renders the unpaused subscription as json' do
               spree_put :unpause, params
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['paused_at']).to be nil
               expect(json_response['id']).to eq subscription.id
               expect(subscription.reload.paused_at).to be nil

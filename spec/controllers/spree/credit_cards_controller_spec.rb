@@ -96,7 +96,7 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
         it "doesn't save the card locally, and renders a flash error" do
           expect{ spree_post :new_from_token, params }.not_to change { Spree::CreditCard.count }
 
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           flash_message = "There was a problem with your payment information: %s" % 'Bup-bow...'
           expect(json_response["flash"]["error"]).to eq flash_message
         end
@@ -110,7 +110,7 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
 
         it "renders a flash error" do
           spree_put :update, params
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           expect(json_response['flash']['error']).to eq 'Card could not be updated'
         end
       end
@@ -132,7 +132,7 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
           context "when the update completes successfully" do
             it "renders a serialized copy of the updated card" do
               expect{ spree_put :update, params }.to change { card.reload.is_default }.to(true)
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['id']).to eq card.id
               expect(json_response['is_default']).to eq true
             end
@@ -142,7 +142,7 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
             before { params[:credit_card][:month] = 'some illegal month' }
             it "renders an error" do
               spree_put :update, params
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['flash']['error']).to eq 'Card could not be updated'
             end
           end
