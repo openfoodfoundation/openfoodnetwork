@@ -61,6 +61,9 @@ module Admin
     def render_in_background
       cable_ready[ScopedChannel.for_id(params[:uuid])]
         .inner_html(
+          selector: "#report-go",
+          html: helpers.button(t(:go), "report__submit-btn", "submit", disabled: true)
+        ).inner_html(
           selector: "#report-table",
           html: render_to_string(partial: "admin/reports/loading")
         ).scroll_into_view(
