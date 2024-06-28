@@ -70,6 +70,29 @@ module Admin
       end
     end
 
+    def clone
+      @product = Spree::Product.find(params[:id])
+      status = :ok
+
+      begin
+        @cloned_product = @product.duplicate
+        flash.now[:success] = t('.success')
+
+        @product_index = "-#{@cloned_product.id}"
+        @producer_options = producers
+        @category_options = categories
+        @tax_category_options = tax_category_options
+      rescue ActiveRecord::ActiveRecordError => _e
+        flash.now[:error] = t('.error')
+        status = :unprocessable_entity
+        @product_index = "-1" # Create a unique enough index
+      end
+
+      respond_with do |format|
+        format.turbo_stream { render :clone, status: }
+      end
+    end
+
     def index_url(params)
       "/admin/products?#{params.to_query}" # todo: fix routing so this can be automaticly generated
     end

@@ -902,6 +902,7 @@ en:
             other: "%{count} products could not be saved. Please review the errors and try again."
         reset: Discard changes
         save: Save changes
+      product_variant_row:
         new_variant: New variant
       bulk_update:
         success: Changes saved
@@ -918,6 +919,9 @@ en:
         tax_category_field_name: "Tax Category"
       product_row:
         producer_field_name: "Producer"
+      clone:
+        success: Successfully cloned the product
+        error: Unable to clone the product
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

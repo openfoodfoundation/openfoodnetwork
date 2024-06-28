@@ -1178,12 +1178,12 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         it "shows an actions menu with a clone link when clicking on icon for product" do
           within row_containing_name("Apples") do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).to have_link "Clone", href: spree.clone_admin_product_path(product_a)
+            expect(page).to have_link "Clone", href: admin_clone_product_path(product_a)
           end
 
           within row_containing_name("Medium box") do
             page.find(".vertical-ellipsis-menu").click
-            expect(page).not_to have_link "Clone", href: spree.clone_admin_product_path(product_a)
+            expect(page).not_to have_link "Clone", href: admin_clone_product_path(product_a)
           end
         end
       end
@@ -1198,19 +1198,29 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             expect(input_content).not_to match /COPY OF Apples/
           end
 
-          within row_containing_name("Apples") do
-            page.find(".vertical-ellipsis-menu").click
-            click_link('Clone')
-          end
+          click_product_clone "Apples"
 
-          expect(page).to have_content "Product cloned"
-
+          expect(page).to have_content "Successfully cloned the product"
           within "table.products" do
             # Gather input values, because page.content doesn't include them.
             input_content = page.find_all('input[type=text]').map(&:value).join
 
             # Products include the cloned product.
             expect(input_content).to match /COPY OF Apples/
+          end
+        end
+
+        it "shows error message when cloning invalid record" do
+          # Existing product is invalid:
+          product_a.update_columns(variant_unit: nil)
+
+          click_product_clone "Apples"
+
+          expect(page).to have_content "Unable to clone the product"
+
+          within "table.products" do
+            # Products does not include the cloned product.
+            expect(all_input_values).not_to match /COPY OF Apples/
           end
         end
       end
@@ -1586,5 +1596,12 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
   def all_input_values
     page.find_all('input[type=text]').map(&:value).join
+  end
+
+  def click_product_clone(product_name)
+    within row_containing_name(product_name) do
+      page.find(".vertical-ellipsis-menu").click
+      click_link('Clone')
+    end
   end
 end

@@ -11,9 +11,18 @@ module Spree
       context '#duplicate' do
         it 'duplicates product' do
           clone = product.duplicate
+
+          expect(clone).to be_persisted
           expect(clone.name).to eq "COPY OF #{product.name}"
           expect(clone.sku).to eq ""
           expect(clone.image).to eq product.image
+        end
+
+        it 'fails to duplicate invalid product' do
+          # Existing product is invalid:
+          product.update_columns(variant_unit: nil)
+
+          expect{ product.duplicate }.to raise_error(ActiveRecord::ActiveRecordError)
         end
       end
 

@@ -1,0 +1,25 @@
+= form.fields_for("products", product, index: product_index) do |product_form|
+  %tbody.relaxed{ id: dom_id(product), data: { 'record-id': product_form.object.id,
+                          controller: "nested-form product",
+                          action: 'rails-nested-form:add->bulk-form#registerElements rails-nested-form:remove->bulk-form#toggleFormChanged' },
+                  class: (defined?(should_slide_in) && should_slide_in) ? 'slide-in' : '' }
+    %tr
+      = render partial: 'product_row', locals: { f: product_form, product:, producer_options:, product_index: }
+
+    - product.variants.each_with_index do |variant, variant_index|
+      = form.fields_for("products][#{product_index}][variants_attributes][", variant, index: variant_index) do |variant_form|
+        %tr.condensed{ id: dom_id(variant), 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': variant.new_record? ? "true" : false }
+          = render partial: 'variant_row', locals: { variant:, f: variant_form, category_options:, tax_category_options: }
+
+    = form.fields_for("products][#{product_index}][variants_attributes][NEW_RECORD", product.variants.build) do |new_variant_form|
+      %template{ 'data-nested-form-target': "template" }
+        %tr.condensed{ 'data-controller': "variant", 'class': "nested-form-wrapper", 'data-new-record': "true" }
+          = render partial: 'variant_row', locals: { variant: new_variant_form.object, f: new_variant_form, category_options:, tax_category_options:  }
+
+    %tr{ 'data-nested-form-target': "target" }
+    %tr.condensed
+      %td
+      %td{ colspan: 11 }
+        %button.secondary.condensed.naked.icon-plus{ 'data-action': "nested-form#add",
+                                                      'aria-label': t('.new_variant') }
+          =t('.new_variant')
