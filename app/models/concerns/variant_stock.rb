@@ -67,6 +67,18 @@ module VariantStock
     end
   end
 
+  def on_demand_desired_or_current
+    return on_demand_desired if new_record?
+
+    on_demand
+  end
+
+  def on_hand_desired_or_current
+    return on_hand_desired if new_record?
+
+    on_hand
+  end
+
   # Moving Spree::Stock::Quantifier.can_supply? to the variant enables us
   #   to override this behaviour for variant overrides
   # We can have this responsibility here in the variant because there is
