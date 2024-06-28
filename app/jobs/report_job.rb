@@ -53,7 +53,14 @@ class ReportJob < ApplicationJob
   end
 
   def actioncable_content(format, blob)
-    return blob.result if format.to_sym == :html
+    if format.to_sym == :html
+      return blob.result if blob.byte_size < 10**6 # 1 MB
+
+      return render(
+        partial: "admin/reports/display",
+        locals: { file_url: blob.expiring_service_url }
+      )
+    end
 
     render(partial: "admin/reports/download", locals: { file_url: blob.expiring_service_url })
   end

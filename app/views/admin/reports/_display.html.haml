@@ -1,0 +1,5 @@
+.download
+  %p.notice= t ".report_is_big"
+  %p= link_to t(".display_anyway"), file_url, target: "_blank",
+    class: "button icon icon-file",
+    onclick: "(async function (element) { element.outerHTML = await (await fetch(element.href)).text() })(this); return false;"

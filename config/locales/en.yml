@@ -1670,6 +1670,9 @@ en:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      display:
+        report_is_big: "This report is big and may slow down your device."
+        display_anyway: "Display anyway"
       download:
         button: "Download Report"
       show:
