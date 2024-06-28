@@ -625,26 +625,6 @@ Rails/LexicallyScopedActionFilter:
     - 'app/controllers/spree/admin/zones_controller.rb'
     - 'app/controllers/spree/users_controller.rb'
 
-# Offense count: 56
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Include.
-# Include: spec/controllers/**/*.rb, spec/requests/**/*.rb, test/controllers/**/*.rb, test/integration/**/*.rb
-Rails/ResponseParsedBody:
-  Exclude:
-    - 'spec/controllers/admin/bulk_line_items_controller_spec.rb'
-    - 'spec/controllers/admin/customers_controller_spec.rb'
-    - 'spec/controllers/admin/order_cycles_controller_spec.rb'
-    - 'spec/controllers/admin/proxy_orders_controller_spec.rb'
-    - 'spec/controllers/admin/schedules_controller_spec.rb'
-    - 'spec/controllers/admin/stripe_accounts_controller_spec.rb'
-    - 'spec/controllers/admin/subscription_line_items_controller_spec.rb'
-    - 'spec/controllers/admin/subscriptions_controller_spec.rb'
-    - 'spec/controllers/cart_controller_spec.rb'
-    - 'spec/controllers/line_items_controller_spec.rb'
-    - 'spec/controllers/spree/admin/search_controller_spec.rb'
-    - 'spec/controllers/spree/credit_cards_controller_spec.rb'
-    - 'spec/controllers/user_registrations_controller_spec.rb'
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RootPathnameMethods:

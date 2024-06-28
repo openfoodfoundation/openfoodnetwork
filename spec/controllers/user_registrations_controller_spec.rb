@@ -21,7 +21,7 @@ RSpec.describe UserRegistrationsController, type: :controller do
     it "returns validation errors" do
       post :create, xhr: true, params: { spree_user: {}, use_route: :spree }
       expect(response.status).to eq(401)
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json).to eq("email" => ["can't be blank"], "password" => ["can't be blank"])
     end
 
@@ -32,7 +32,7 @@ RSpec.describe UserRegistrationsController, type: :controller do
       post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
 
       expect(response.status).to eq(401)
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json).to eq(
         "message" =>
         'Something went wrong while creating your account. Check your email address and try again.'
@@ -42,7 +42,7 @@ RSpec.describe UserRegistrationsController, type: :controller do
     it "returns 200 when registration succeeds" do
       post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
       expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json).to eq("email" => "test@test.com")
       expect(controller.spree_current_user).to be_nil
     end

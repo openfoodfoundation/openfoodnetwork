@@ -263,7 +263,7 @@ RSpec.describe Admin::BulkLineItemsController, type: :controller do
 
             it 'returns a JSON with the errors' do
               spree_put :update, params
-              expect(JSON.parse(response.body)['errors']).to eq(errors)
+              expect(response.parsed_body['errors']).to eq(errors)
             end
 
             it 'returns a 412 response' do
