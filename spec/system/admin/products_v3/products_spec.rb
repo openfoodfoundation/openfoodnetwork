@@ -934,7 +934,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         click_on "New variant"
       end
 
-      it 'displays the correct value afterwards for On Hand' do
+      it 'displays the correct value afterwards both for On Hand & On demand' do
         within new_variant_row do
           fill_in "Name", with: "Large box"
           click_on "On Hand"
@@ -947,11 +947,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
         within row_containing_name("Large box") do
           expect(page).to have_content "19"
         end
-      end
 
-      it 'displays the correct value afterwards for On demand' do
-        within new_variant_row do
-          fill_in "Name", with: "Large box"
+        within row_containing_name("Large box") do
           click_on "On Hand"
           check "On demand"
         end
