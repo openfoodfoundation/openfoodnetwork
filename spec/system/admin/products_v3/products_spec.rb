@@ -926,6 +926,42 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
     end
 
+    context 'When trying to save an invalid variant with Stock value ' do
+      let(:new_variant_row) { find_field("Name", placeholder: "Apples", with: "").ancestor("tr") }
+
+      before do
+        visit admin_products_url
+        click_on "New variant"
+      end
+
+      it 'displays the correct value afterwards both for On Hand & On demand' do
+        within new_variant_row do
+          fill_in "Name", with: "Large box"
+          click_on "On Hand"
+          fill_in "On Hand", with: "19"
+        end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Please review the errors and try again"
+        within row_containing_name("Large box") do
+          expect(page).to have_content "19"
+        end
+
+        within row_containing_name("Large box") do
+          click_on "On Hand"
+          check "On demand"
+        end
+
+        click_button "Save changes"
+
+        expect(page).to have_content "Please review the errors and try again"
+        within row_containing_name("Large box") do
+          expect(page).to have_content "On demand"
+        end
+      end
+    end
+
     context "pagination" do
       let!(:product_a) { create(:simple_product, name: "zucchini") } # appears on p2
 
