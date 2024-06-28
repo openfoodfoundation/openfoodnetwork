@@ -5,7 +5,7 @@ angular.module('admin.orderCycles')
     order_cycle_id = $location.absUrl().match(/\/admin\/order_cycles\/(\d+)/)[1]
     $scope.order_cycle = OrderCycle.load(order_cycle_id)
     $scope.enterprises = Enterprise.index(order_cycle_id: order_cycle_id)
-    $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: order_cycle_id)
+    $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: order_cycle_id, per_item: true)
 
     $scope.removeCoordinatorFee = ($event, index) ->
       $event.preventDefault()
