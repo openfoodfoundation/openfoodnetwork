@@ -696,10 +696,9 @@ RSpec.describe Spree::Variant do
   end
 
   describe "calculating the price with enterprise fees" do
-    # TODO use instance double
     it "returns the price plus the fees" do
-      distributor = double(:distributor)
-      order_cycle = double(:order_cycle)
+      distributor = instance_double(Enterprise)
+      order_cycle = instance_double(OrderCycle)
 
       variant = Spree::Variant.new price: 100
       expect(variant).to receive(:fees_for).with(distributor, order_cycle) { 23 }
@@ -709,8 +708,8 @@ RSpec.describe Spree::Variant do
 
   describe "calculating the fees" do
     it "delegates to EnterpriseFeeCalculator" do
-      distributor = double(:distributor)
-      order_cycle = double(:order_cycle)
+      distributor = instance_double(Enterprise)
+      order_cycle = instance_double(OrderCycle)
       variant = Spree::Variant.new
 
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator)
@@ -722,10 +721,10 @@ RSpec.describe Spree::Variant do
 
   describe "calculating fees broken down by fee type" do
     it "delegates to EnterpriseFeeCalculator" do
-      distributor = double(:distributor)
-      order_cycle = double(:order_cycle)
+      distributor = instance_double(Enterprise)
+      order_cycle = instance_double(OrderCycle)
       variant = Spree::Variant.new
-      fees = double(:fees)
+      fees = instance_double(EnterpriseFee)
 
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator)
         .to receive(:fees_by_type_for).with(variant) { fees }
