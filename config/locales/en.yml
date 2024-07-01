@@ -902,7 +902,6 @@ en:
             other: "%{count} products could not be saved. Please review the errors and try again."
         reset: Discard changes
         save: Save changes
-        new_variant: New variant
       product_variant_row:
         new_variant: New variant
       bulk_update:
