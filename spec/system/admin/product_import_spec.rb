@@ -8,11 +8,6 @@ RSpec.describe "Product Import" do
   include AuthenticationHelper
   include WebHelper
 
-  around do |example|
-    Flipper.disable(:admin_style_v3)
-    example.run
-  end
-
   let!(:admin) { create(:admin_user) }
   let!(:user) { create(:user) }
   let!(:user2) { create(:user) }
@@ -101,6 +96,8 @@ RSpec.describe "Product Import" do
 
       wait_until { page.find("a.button.view").present? }
 
+      puts "TODO: migrate to v3"
+      Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
       click_link 'Go To Products Page'
 
       expect(page).to have_content 'Bulk Edit Products'
@@ -213,6 +210,8 @@ RSpec.describe "Product Import" do
       potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
+      puts "TODO: migrate to v3"
+      Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
       click_link 'Go To Products Page'
 
       wait_until { page.find("#p_#{carrots.id}").present? }
@@ -713,9 +712,11 @@ RSpec.describe "Product Import" do
       expect(page).to have_selector '.created-count', text: '1'
 
       expect(page).not_to have_selector '.updated-count'
-      expect(page).to have_content "Go To Products Page".upcase
-      expect(page).to have_content "Upload Another File".upcase
+      expect(page).to have_content "Go To Products Page"
+      expect(page).to have_content "Upload Another File"
 
+      puts "TODO: migrate to v3"
+      Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
       visit spree.admin_products_path
 
       within "#p_#{Spree::Product.find_by(name: 'Cupcake').id}" do
@@ -787,7 +788,7 @@ RSpec.describe "Product Import" do
 
           product_headings.each do |heading|
             expect(page).to have_content(
-              I18n.t("admin.product_import.product_headings.#{heading}").upcase
+              I18n.t("admin.product_import.product_headings.#{heading}")
             )
           end
         end
