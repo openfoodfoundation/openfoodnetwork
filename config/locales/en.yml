@@ -3863,7 +3863,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   logout: "Logout"
 
   date_range: "Date Range"
-  status: "status"
+  status: "Status"
   new: "New"
   start: "Start"
   end: "End"
