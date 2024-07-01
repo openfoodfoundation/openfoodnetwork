@@ -1675,9 +1675,13 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
         expect {
           click_on "Save changes"
+          expect(page).to have_content "Changes saved"
         }.to change {
                Spree::Variant.count
              }.from(1).to(2)
+
+        click_on "Dismiss"
+        expect(page).not_to have_content "Changes saved"
 
         new_variant = Spree::Variant.where(deleted_at: nil).last
         expect(new_variant.sku).to eq "345"
@@ -1690,12 +1694,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
           expect(new_variant.on_hand).to eq 66
         elsif stock == "on_demand"
           expect(new_variant.on_demand).to eq true
-        end
-
-        within ".flash-container" do
-          expect(page).to have_content "Changes saved"
-          click_on "Dismiss"
-          expect(page).not_to have_content "Changes saved"
         end
 
         within page.all("tr.condensed")[1] do # selects second variant row
