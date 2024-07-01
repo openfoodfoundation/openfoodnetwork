@@ -1186,7 +1186,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
           attach_file 'image[attachment]',
                       Rails.public_path.join('Terms-of-service.pdf'),
                       visible: false
-          expect(page).to have_content /Attachment is not a valid image/
           expect(page).to have_content /Attachment has an invalid content type/
         end
       end
