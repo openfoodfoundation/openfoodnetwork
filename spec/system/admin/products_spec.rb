@@ -280,11 +280,8 @@ RSpec.describe '
     end
   end
 
-  describe "legacy products page" do
-    around do |example|
-      Flipper.disable(:admin_style_v3)
-      example.run
-    end
+  describe "legacy products page (TODO: migrate/combine specs with v3 specs)" do
+    before { Flipper.disable(:admin_style_v3) }
 
     describe "deleting" do
       let!(:product1) { create(:simple_product, name: 'a product to keep', supplier: @supplier) }

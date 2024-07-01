@@ -237,6 +237,7 @@ RSpec.describe 'Subscriptions' do
         expect(page).to have_selector "#subscription-line-items .item", count: 4
 
         # Delete an existing product
+        puts "TODO: migrate to v3" # but first we need to make the actions menu more accessible.
         Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
         login_as_admin
         visit spree.admin_products_path
