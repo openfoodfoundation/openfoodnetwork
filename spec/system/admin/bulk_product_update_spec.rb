@@ -4,16 +4,13 @@ require 'system_helper'
 
 RSpec.describe '
   As an Administrator
-  I want to be able to manage products in bulk
+  I want to be able to manage products in bulk (with the old Products screen)
 ' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
 
-  around do |example|
-    Flipper.disable(:admin_style_v3)
-    example.run
-  end
+  before { Flipper.disable(:admin_style_v3) }
 
   describe "listing products" do
     before do
