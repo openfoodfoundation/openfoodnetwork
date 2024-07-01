@@ -413,7 +413,7 @@ RSpec.describe '
 
           # we need this assertion here to assure there is enough time to
           # toggle the variant box and evaluate the following assertion
-          expect(page).to have_content product.name.upcase
+          expect(page).to have_content product.name
         end
 
         it "doesn't show a warning when going to 'outgoing products' tab" do
@@ -432,7 +432,7 @@ RSpec.describe '
 
           # we need this assertion here to assure there is enough time to
           # toggle the variant box and evaluate the following assertion
-          expect(page).to have_content product.name.upcase
+          expect(page).to have_content product.name
 
           expect(page).not_to have_content "No variant available for this product"
         end

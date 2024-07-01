@@ -490,7 +490,7 @@ RSpec.describe '
                  "#listing_orders tbody tr td:first-child input[type=checkbox]"
                )).to be_checked
         # enables print invoices button
-        page.find("span.icon-reorder", text: "ACTIONS").click
+        page.find("span.icon-reorder", text: "Actions").click
         expect(page).to have_content "Print Invoices"
         # unselect all orders
         page.find("#listing_orders thead th:first-child input[type=checkbox]").trigger("click")
@@ -498,7 +498,7 @@ RSpec.describe '
                  "#listing_orders tbody tr td:first-child input[type=checkbox]"
                )).not_to be_checked
         # disables print invoices button not clickable
-        expect { find("span.icon-reorder", text: "ACTIONS").click }
+        expect { find("span.icon-reorder", text: "Actions").click }
           .to raise_error(Capybara::Cuprite::MouseEventFailed)
         expect(page).not_to have_content "Print Invoices"
       end

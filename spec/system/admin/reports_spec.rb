@@ -75,7 +75,7 @@ RSpec.describe '
       expect(page).not_to have_content "Little Bobby Tables"
 
       click_on "Display anyway"
-      expect(page).to have_content "FIRST NAME"
+      expect(page).to have_content "First Name"
       expect(page).to have_content "Little Bobby Tables"
     end
 

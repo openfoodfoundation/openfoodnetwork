@@ -109,7 +109,7 @@ RSpec.describe '
     context 'when the order has no invoices' do
       it 'creates an invoice for the order' do
         expect(order.invoices.count).to eq 0
-        page.find("#links-dropdown", text: "ACTIONS").click
+        page.find("#links-dropdown", text: "Actions").click
         click_link "Print Invoice"
         # wait for PDF to open in new window
         new_window = windows.last
@@ -132,7 +132,7 @@ RSpec.describe '
 
         it 'updates the lastest invoice for the order' do
           expect(order.invoices.count).to eq 1
-          page.find("#links-dropdown", text: "ACTIONS").click
+          page.find("#links-dropdown", text: "Actions").click
           click_link "Print Invoice"
           new_window = windows.last
           page.within_window new_window do
@@ -149,7 +149,7 @@ RSpec.describe '
 
         it 'creates a new invoice for the order' do
           expect(order.invoices.count).to eq 1
-          page.find("#links-dropdown", text: "ACTIONS").click
+          page.find("#links-dropdown", text: "Actions").click
           click_link "Print Invoice"
           new_window = windows.last
           page.within_window new_window do
@@ -260,7 +260,7 @@ RSpec.describe "Invoice order states", feature: :invoices do
           "Amount",
           "Status",
           "File",
-        ].join(" ").upcase
+        ].join(" ")
       }
 
       let(:invoice_number){ "#{order.distributor_id}-1" }
