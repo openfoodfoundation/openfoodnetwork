@@ -3,12 +3,11 @@
 class UnitPrice
   def initialize(variant)
     @variant = variant
-    @product = variant.product
   end
 
   def denominator
     # catches any case where unit is not kg, lb, or L.
-    return @variant.unit_value if @product&.variant_unit == "items"
+    return @variant.unit_value if @variant.variant_unit == "items"
 
     case unit
     when "lb"
@@ -23,13 +22,13 @@ class UnitPrice
   def unit
     return "lb" if WeightsAndMeasures.new(@variant).system == "imperial"
 
-    case @product&.variant_unit
+    case @variant.variant_unit
     when "weight"
       "kg"
     when "volume"
       "L"
     else
-      @product.variant_unit_name.presence || I18n.t("item")
+      @variant.variant_unit_name.presence || I18n.t("item")
     end
   end
 end
