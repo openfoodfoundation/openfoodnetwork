@@ -160,60 +160,60 @@ RSpec.describe ProductImport::ProductImporter do
       carrots = Spree::Product.find_by(name: 'Carrots')
       carrots_variant = carrots.variants.first
       expect(carrots.on_hand).to eq 5
-      expect(carrots.variant_unit).to eq 'weight'
-      expect(carrots.variant_unit_scale).to eq 1
 
       expect(carrots_variant.supplier).to eq enterprise
       expect(carrots_variant.price).to eq 3.20
       expect(carrots_variant.unit_value).to eq 500
+      expect(carrots_variant_unit).to eq 'weight'
+      expect(carrots_variant_unit_scale).to eq 1
       expect(carrots_variant.on_demand).not_to eq true
       expect(carrots_variant.import_date).to be_within(1.minute).of Time.zone.now
 
       potatoes = Spree::Product.find_by(name: 'Potatoes')
       potatoes_variant = potatoes.variants.first
       expect(potatoes.on_hand).to eq 6
-      expect(potatoes.variant_unit).to eq 'weight'
-      expect(potatoes.variant_unit_scale).to eq 1000
 
       expect(potatoes_variant.supplier).to eq enterprise
       expect(potatoes_variant.price).to eq 6.50
       expect(potatoes_variant.unit_value).to eq 2000
+      expect(potatoes_variant_unit).to eq 'weight'
+      expect(potatoes_variant_unit_scale).to eq 1000
       expect(potatoes_variant.on_demand).not_to eq true
       expect(potatoes_variant.import_date).to be_within(1.minute).of Time.zone.now
 
       pea_soup = Spree::Product.find_by(name: 'Pea Soup')
       pea_soup_variant = pea_soup.variants.first
       expect(pea_soup.on_hand).to eq 8
-      expect(pea_soup.variant_unit).to eq 'volume'
-      expect(pea_soup.variant_unit_scale).to eq 0.001
 
       expect(pea_soup_variant.supplier).to eq enterprise
       expect(pea_soup_variant.price).to eq 5.50
       expect(pea_soup_variant.unit_value).to eq 0.75
+      expect(pea_soup_variant_unit).to eq 'volume'
+      expect(pea_soup_variant_unit_scale).to eq 0.001
       expect(pea_soup_variant.on_demand).not_to eq true
       expect(pea_soup_variant.import_date).to be_within(1.minute).of Time.zone.now
 
       salad = Spree::Product.find_by(name: 'Salad')
       salad_variant = salad.variants.first
       expect(salad.on_hand).to eq 7
-      expect(salad.variant_unit).to eq 'items'
-      expect(salad.variant_unit_scale).to eq nil
 
       expect(salad_variant.supplier).to eq enterprise
       expect(salad_variant.price).to eq 4.50
       expect(salad_variant.unit_value).to eq 1
+      expect(salad_variant_unit).to eq 'items'
+      expect(salad_variant_unit_scale).to eq nil
       expect(salad_variant.on_demand).not_to eq true
       expect(salad_variant.import_date).to be_within(1.minute).of Time.zone.now
 
       buns = Spree::Product.find_by(name: 'Hot Cross Buns')
       buns_variant = buns.variants.first
       expect(buns.on_hand).to eq 7
-      expect(buns.variant_unit).to eq 'items'
-      expect(buns.variant_unit_scale).to eq nil
 
       expect(buns_variant.supplier).to eq enterprise
       expect(buns_variant.price).to eq 3.50
       expect(buns_variant.unit_value).to eq 1
+      expect(buns_variant_unit).to eq 'items'
+      expect(buns_variant_unit_scale).to eq nil
       expect(buns_variant.on_demand).to eq true
       expect(buns_variant.import_date).to be_within(1.minute).of Time.zone.now
     end
@@ -578,9 +578,12 @@ RSpec.describe ProductImport::ProductImporter do
   describe "updating non-updatable fields on existing products" do
     let(:csv_data) {
       CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type"]
-        csv << ["Beetroot", enterprise3.name, "Vegetables", "5", "3.50", "500", "Kg"]
-        csv << ["Tomato", enterprise3.name, "Vegetables", "6", "5.50", "500", "Kg"]
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "shipping_category"]
+        csv << ["Beetroot", enterprise3.name, "Vegetables", "5", "3.50", "500", "Kg",
+                shipping_category.name]
+        csv << ["Tomato", enterprise3.name, "Vegetables", "6", "5.50", "500", "Kg",
+                shipping_category.name]
       end
     }
     let(:importer) { import_data csv_data }
