@@ -216,8 +216,9 @@ RSpec.describe Spree::Order do
     end
   end
 
-  context "#finalize!" do
-    let(:order) { Spree::Order.create }
+  describe "#finalize!" do
+    subject(:order) { Spree::Order.create }
+
     it "should set completed_at" do
       expect(order).to receive(:touch).with(:completed_at)
       order.finalize!
