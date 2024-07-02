@@ -425,10 +425,6 @@ RSpec.describe '
       within("tbody#e_#{distributor1.id}") { click_link 'Settings' }
 
       fill_in 'enterprise_name', with: 'Eaterprises'
-
-      # Because poltergist does not support form onchange event
-      # We need trigger the change manually
-      page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
       click_button 'Update'
 
       expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully updated!')
@@ -441,10 +437,6 @@ RSpec.describe '
         within("tbody#e_#{distributor3.id}") { click_link 'Settings' }
 
         fill_in 'enterprise_name', with: 'Eaterprises'
-
-        # Because poltergist does not support form onchange event
-        # We need trigger the change manually
-        page.evaluate_script("angular.element(enterprise_form).scope().setFormDirty()")
         click_button 'Update'
 
         expect(flash_message).to eq('Enterprise "Eaterprises" has been successfully updated!')
