@@ -111,6 +111,8 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
                            "on_hand" => 2,
                            "price" => "5.0",
                            "unit_value" => 4,
+                           "variant_unit" => "weight",
+                           "variant_unit_scale" => "1",
                            "unit_description" => "",
                            "display_name" => "name",
                            "primary_taxon_id" => taxon.id,
