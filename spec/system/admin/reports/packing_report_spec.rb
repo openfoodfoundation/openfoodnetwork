@@ -62,7 +62,7 @@ RSpec.describe "Packing Reports" do
         expect(table).to eq([
                               ["Hub", "Customer Code", "First Name", "Last Name", "Supplier",
                                "Product", "Variant", "Weight", "Height", "Width", "Depth",
-                               "Quantity", "TempControlled?"].map(&:upcase)
+                               "Quantity", "TempControlled?"]
                             ])
         expect(page).to have_selector 'table.report__table tbody tr', count: 5 # Totals row/order
 
@@ -80,7 +80,7 @@ RSpec.describe "Packing Reports" do
         rows = find("table.report__table").all("tr")
         table = rows.map { |r| r.all("th,td").map { |c| c.text.strip }[3] }
         expect(table).to eq([
-                              "LAST NAME",
+                              "Last Name",
                               order1.bill_address.lastname,
                               order1.bill_address.lastname,
                               "",
@@ -108,7 +108,7 @@ RSpec.describe "Packing Reports" do
         table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
         expect(table).to eq([
                               ["Hub", "Supplier", "Customer Code", "First Name", "Last Name",
-                               "Product", "Variant", "Quantity", "TempControlled?"].map(&:upcase)
+                               "Product", "Variant", "Quantity", "TempControlled?"]
                             ])
 
         expect(all('table.report__table tbody tr').count).to eq(3) # Totals row per supplier

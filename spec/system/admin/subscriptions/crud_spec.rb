@@ -260,7 +260,7 @@ RSpec.describe 'Subscriptions' do
             choose_today_from_datepicker
             click_button('Next')
 
-            expect(page).to have_content 'BILLING ADDRESS'
+            expect(page).to have_content 'Billing Address'
             # Customer bill address has been pre-loaded
             expect(page).to have_input "bill_address_firstname", with: address.firstname
             expect(page).to have_input "bill_address_lastname", with: address.lastname

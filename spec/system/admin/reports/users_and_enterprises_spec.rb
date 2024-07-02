@@ -16,13 +16,13 @@ RSpec.describe "Users & Enterprises reports" do
     run_report
 
     expect(page.find("table.report__table thead tr").text).to have_content([
-      "USER",
-      "RELATIONSHIP",
-      "ENTERPRISE",
-      "PRODUCER?",
-      "SELLS",
-      "VISIBLE",
-      "CONFIRMATION DATE",
+      "User",
+      "Relationship",
+      "Enterprise",
+      "Producer?",
+      "Sells",
+      "Visible",
+      "Confirmation Date",
       "OFN UID"
     ].join(" "))
 

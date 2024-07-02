@@ -260,7 +260,7 @@ RSpec.describe '
                 expect(page).to have_content "Price is not a number"
               end
               within "#product_price_field" do # the form highlights the price field
-                expect(page).to have_content "PRICE"
+                expect(page).to have_content "Price"
                 expect(page).to have_content "is not a number"
               end
             end
@@ -280,76 +280,83 @@ RSpec.describe '
     end
   end
 
-  describe "deleting" do
-    let!(:product1) { create(:simple_product, name: 'a product to keep', supplier: @supplier) }
+  describe "legacy products page (TODO: migrate/combine specs with v3 specs)" do
+    before { Flipper.disable(:admin_style_v3) }
 
-    context 'a simple product' do
-      let!(:product2) { create(:simple_product, name: 'a product to delete', supplier: @supplier) }
+    describe "deleting" do
+      let!(:product1) { create(:simple_product, name: 'a product to keep', supplier: @supplier) }
 
-      before do
-        login_as_admin
-        visit spree.admin_products_path
+      context 'a simple product' do
+        let!(:product2) {
+          create(:simple_product, name: 'a product to delete', supplier: @supplier)
+        }
 
-        within "#p_#{product2.id}" do
-          accept_alert { page.find("[data-powertip=Remove]").click }
-        end
-        visit current_path
-      end
-
-      it 'removes it from the product list' do
-        expect(page).not_to have_selector "#p_#{product2.id}"
-        expect(page).to have_selector "#p_#{product1.id}"
-      end
-    end
-
-    context 'a shipped product' do
-      let!(:order) { create(:shipped_order, line_items_count: 1) }
-      let!(:line_item) { order.reload.line_items.first }
-
-      context "a deleted line item from a shipped order" do
         before do
           login_as_admin
           visit spree.admin_products_path
 
-          within "#p_#{order.variants.first.product_id}" do
+          within "#p_#{product2.id}" do
             accept_alert { page.find("[data-powertip=Remove]").click }
           end
+          visit current_path
         end
 
         it 'removes it from the product list' do
-          visit spree.admin_products_path
-
+          expect(page).not_to have_selector "#p_#{product2.id}"
           expect(page).to have_selector "#p_#{product1.id}"
-          expect(page).not_to have_selector "#p_#{order.variants.first.product_id}"
         end
+      end
 
-        it 'keeps the line item on the order (admin)' do
-          visit spree.edit_admin_order_path(order)
+      context 'a shipped product' do
+        let!(:order) { create(:shipped_order, line_items_count: 1) }
+        let!(:line_item) { order.reload.line_items.first }
 
-          expect(page).to have_content(line_item.product.name.to_s)
+        context "a deleted line item from a shipped order" do
+          before do
+            login_as_admin
+            visit spree.admin_products_path
+
+            within "#p_#{order.variants.first.product_id}" do
+              accept_alert { page.find("[data-powertip=Remove]").click }
+            end
+          end
+
+          it 'removes it from the product list' do
+            visit spree.admin_products_path
+
+            expect(page).to have_selector "#p_#{product1.id}"
+            expect(page).not_to have_selector "#p_#{order.variants.first.product_id}"
+          end
+
+          it 'keeps the line item on the order (admin)' do
+            visit spree.edit_admin_order_path(order)
+
+            expect(page).to have_content(line_item.product.name.to_s)
+          end
         end
       end
     end
-  end
 
-  describe 'cloning' do
-    let!(:product1) {
-      create(:simple_product, name: 'a weight product', supplier: @supplier, variant_unit: "weight")
-    }
+    describe 'cloning' do
+      let!(:product1) {
+        create(:simple_product, name: 'a weight product', supplier: @supplier,
+                                variant_unit: "weight")
+      }
 
-    context 'products' do
-      before do
-        login_as_admin
-        visit spree.admin_products_path
-      end
-
-      it 'creates a copy of the product' do
-        within "#p_#{product1.id}" do
-          page.find("[data-powertip=Clone]").click
+      context 'products' do
+        before do
+          login_as_admin
+          visit spree.admin_products_path
         end
-        visit current_path
-        within "#p_#{product1.id + 1}" do
-          expect(page).to have_input "product_name", with: 'COPY OF a weight product'
+
+        it 'creates a copy of the product' do
+          within "#p_#{product1.id}" do
+            page.find("[data-powertip=Clone]").click
+          end
+          visit current_path
+          within "#p_#{product1.id + 1}" do
+            expect(page).to have_input "product_name", with: 'COPY OF a weight product'
+          end
         end
       end
     end

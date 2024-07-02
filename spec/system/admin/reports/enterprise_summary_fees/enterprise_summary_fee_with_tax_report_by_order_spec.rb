@@ -15,7 +15,7 @@ RSpec.describe "Enterprise Summary Fee with Tax Report By Order" do
     [
       "Distributor",
       "Order Cycle",
-      "Order Number",
+      "Order number",
       "Name",
       "Type",
       "Owner",
@@ -29,7 +29,7 @@ RSpec.describe "Enterprise Summary Fee with Tax Report By Order" do
       "Last Name",
       "Customer Code",
       "Customer Email"
-    ].join(" ").upcase
+    ].join(" ")
   }
 
   let!(:state_zone){ create(:zone_with_state_member) }

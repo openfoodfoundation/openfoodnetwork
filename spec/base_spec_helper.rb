@@ -148,6 +148,9 @@ RSpec.configure do |config|
   config.before(:each) do
     Flipper.features.each(&:remove)
     OpenFoodNetwork::FeatureToggle.setup!
+
+    # activate feature toggle admin_style_v3 to use new admin interface and run the build
+    Flipper.enable(:admin_style_v3)
   end
 
   config.before(:each, :feature) do |example|
@@ -284,6 +287,7 @@ RSpec.configure do |config|
   config.include OpenFoodNetwork::PerformanceHelper
   config.include ActiveJob::TestHelper
   config.include ReportsHelper
+  config.include TomSelectHelper, type: :system
 
   config.include ViewComponent::TestHelpers, type: :component
 

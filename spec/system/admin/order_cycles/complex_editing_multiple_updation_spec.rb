@@ -16,7 +16,7 @@ RSpec.describe '
 
     # Expect correct values
     expect(page).to have_field('order_cycle_name', with: oc.name)
-    expect(page).to have_content "COORDINATOR #{oc.coordinator.name}"
+    expect(page).to have_content "Coordinator #{oc.coordinator.name}"
     expect(page).to have_button('Save', disabled: true)
     expect(page).to have_button('Save and Next', disabled: true)
 
@@ -34,6 +34,9 @@ RSpec.describe '
     dismiss_confirm "" do
       click_link 'Orders'
     end
+
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
 
     # Click cancel with unsaved changes
     dismiss_confirm "" do
@@ -85,6 +88,9 @@ RSpec.describe '
     login_as_admin
     visit edit_admin_order_cycle_path(oc)
 
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
+
     # Go to incoming step
     click_button 'Next'
 
@@ -105,6 +111,9 @@ RSpec.describe '
     dismiss_confirm "" do
       click_link 'Orders'
     end
+
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
 
     # Click cancel with unsaved changes
     dismiss_confirm "" do
@@ -154,8 +163,14 @@ RSpec.describe '
     login_as_admin
     visit edit_admin_order_cycle_path(oc)
 
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
+
     # Go to incoming step
     click_button 'Next'
+
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
 
     # Go to outgoing step
     click_button 'Next'
@@ -177,6 +192,9 @@ RSpec.describe '
     dismiss_confirm "" do
       click_link 'Orders'
     end
+
+    # Click dismiss on distributor warning
+    click_button 'Dismiss'
 
     # Click cancel with unsaved changes
     dismiss_confirm "" do

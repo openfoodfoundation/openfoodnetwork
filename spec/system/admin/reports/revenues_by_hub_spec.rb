@@ -62,23 +62,23 @@ RSpec.describe "Revenues By Hub Reports" do
       run_report
 
       expect(page.find("table.report__table thead tr").text).to have_content([
-        "HUB",
-        "HUB ID",
-        "HUB BUSINESS NUMBER",
-        "HUB LEGAL NAME",
-        "HUB CONTACT NAME",
-        "HUB PUBLIC EMAIL",
-        "HUB OWNER EMAIL",
-        "HUB PHONE NUMBER",
-        "HUB ADDRESS LINE 1",
-        "HUB ADDRESS LINE 2",
-        "HUB SUBURB",
-        "HUB POSTCODE",
-        "HUB STATE",
-        "TOTAL NUMBER OF ORDERS",
-        "TOTAL EXCL. TAX ($)",
-        "TOTAL TAX ($)",
-        "TOTAL INCL. TAX ($)"
+        "Hub",
+        "Hub ID",
+        "Hub Business Number",
+        "Hub Legal Name",
+        "Hub Contact Name",
+        "Hub Public Email",
+        "Hub Owner Email",
+        "Hub Phone Number",
+        "Hub Address Line 1",
+        "Hub Address Line 2",
+        "Hub Suburb",
+        "Hub Postcode",
+        "Hub State",
+        "Total Number of Orders",
+        "Total excl. tax ($)",
+        "Total Tax ($)",
+        "Total incl. tax ($)"
       ].join(" "))
 
       lines = page.all('table.report__table tbody tr').map(&:text)

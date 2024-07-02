@@ -28,7 +28,7 @@ RSpec.describe '
         visit '/admin'
         expect(page).to have_selector ".dashboard_item h3", text: "Your profile live"
         expect(page).to have_selector ".dashboard_item .button.bottom",
-                                      text: "SEE #{d1.name.upcase} LIVE"
+                                      text: "See #{d1.name} live"
       end
 
       context "when visibilty is set to false" do

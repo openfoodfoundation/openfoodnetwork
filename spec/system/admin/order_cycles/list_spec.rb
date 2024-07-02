@@ -73,7 +73,8 @@ RSpec.describe '
 
     # I can load more order_cycles
     expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
-    click_button "Show 30 more days"
+    trigger_click(:button, "Show 30 more days")
+
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
 
     # I can filter order cycle by involved enterprises
@@ -177,7 +178,7 @@ RSpec.describe '
         within(".flatpickr-calendar.open") do
           expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
           select_datetime_from_datepicker test_value
-          find("button", text: "CLOSE").click
+          find("button", text: "Close").click
         end
 
         # Should no more have opened flatpickr

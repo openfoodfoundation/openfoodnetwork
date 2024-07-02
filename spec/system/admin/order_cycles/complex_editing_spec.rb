@@ -30,9 +30,9 @@ RSpec.describe '
       .to eq(oc.orders_open_at.strftime("%Y-%m-%d %H:%M"))
     expect(page.find('#order_cycle_orders_close_at').value)
       .to eq(oc.orders_close_at.strftime("%Y-%m-%d %H:%M"))
-    expect(page).to have_content "COORDINATOR #{oc.coordinator.name}"
+    expect(page).to have_content "Coordinator #{oc.coordinator.name}"
 
-    click_button 'Next'
+    trigger_click(:button, 'Next')
 
     # And I should see the suppliers
     expect(page).to have_selector 'td.supplier_name', text: oc.suppliers.first.name
@@ -75,7 +75,8 @@ RSpec.describe '
       'order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id',
       selected: supplier.enterprise_fees.first.name
     )
-    click_button 'Next'
+
+    trigger_click(:button, 'Next')
 
     # And I should see the distributors
     expect(page).to have_selector 'td.distributor_name', text: oc.distributors.first.name

@@ -19,10 +19,10 @@ RSpec.describe "Sales Tax Totals By Producer" do
       "Tax Category",
       "Tax Rate Name",
       "Tax Rate",
-      "Total excl. Tax ($)",
+      "Total excl. tax ($)",
       "Tax",
-      "Total incl. Tax ($)"
-    ].join(" ").upcase
+      "Total incl. tax ($)"
+    ].join(" ")
   }
   let!(:state_zone){ create(:zone_with_state_member) }
   let!(:country_zone){ create(:zone_with_member) }

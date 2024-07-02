@@ -347,7 +347,7 @@ RSpec.describe 'Customers' do
         end
 
         it 'updates the existing billing address' do
-          expect(page).to have_content 'BILLING ADDRESS'
+          expect(page).to have_content 'Billing Address'
           first('#bill-address-link').click
           wait_for_modal_fade_in
 
@@ -374,7 +374,7 @@ RSpec.describe 'Customers' do
         end
 
         it 'creates a new shipping address' do
-          expect(page).to have_content 'SHIPPING ADDRESS'
+          expect(page).to have_content 'Shipping Address'
 
           first('#ship-address-link').click
           wait_for_modal_fade_in

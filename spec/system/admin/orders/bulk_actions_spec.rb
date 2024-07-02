@@ -114,7 +114,7 @@ RSpec.describe '
               page.find("input[name='bulk_ids[]'][value='#{order5.id}']").click
             end
 
-            page.find("span.icon-reorder", text: "ACTIONS").click
+            page.find("span.icon-reorder", text: "Actions").click
 
             within ".ofn-drop-down .menu" do
               page.find("span", text: "Send Invoices").click
@@ -205,7 +205,7 @@ RSpec.describe '
             page.find(order4_selector).click
             page.find(order5_selector).click
 
-            page.find("span.icon-reorder", text: "ACTIONS").click
+            page.find("span.icon-reorder", text: "Actions").click
             within ".ofn-drop-down .menu" do
               expect {
                 page.find("span", text: "Print Invoices").click # Prints invoices in bulk
@@ -223,7 +223,7 @@ RSpec.describe '
             expect(page).to have_content "Bulk Invoice created"
 
             within ".modal-content" do
-              expect(page).to have_link(class: "button", text: "VIEW FILE", href: /invoices/)
+              expect(page).to have_link(class: "button", text: "View File", href: /invoices/)
 
               invoice_content = extract_pdf_content
 
@@ -243,7 +243,7 @@ RSpec.describe '
             page.find(order4_selector).click
             page.find(order5_selector).click
 
-            page.find("span.icon-reorder", text: "ACTIONS").click
+            page.find("span.icon-reorder", text: "Actions").click
             within ".ofn-drop-down .menu" do
               expect {
                 page.find("span", text: "Print Invoices").click # Prints invoices in bulk
@@ -259,7 +259,7 @@ RSpec.describe '
             expect(page).to have_content "Bulk Invoice created"
 
             within ".modal-content" do
-              expect(page).to have_link(class: "button", text: "VIEW FILE",
+              expect(page).to have_link(class: "button", text: "View File",
                                         href: /invoices/)
 
               invoice_content = extract_pdf_content
@@ -305,7 +305,7 @@ RSpec.describe '
                  order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort
               }
               it "orders by customer name ascending" do
-                page.find('a', text: "NAME").click # orders alphabetically (asc)
+                page.find('a', text: "Name").click # orders alphabetically (asc)
                 sleep(0.5) # waits for column sorting
 
                 page.find("#selectAll").click
@@ -325,9 +325,9 @@ RSpec.describe '
                  order4.name.gsub(/.* /, ""), order5.name.gsub(/.* /, "")].sort.reverse
               }
               it "order by customer name descending" do
-                page.find('a', text: "NAME").click # orders alphabetically (asc)
+                page.find('a', text: "Name").click # orders alphabetically (asc)
                 sleep(0.5) # waits for column sorting
-                page.find('a', text: "NAME").click # orders alphabetically (desc)
+                page.find('a', text: "Name").click # orders alphabetically (desc)
                 sleep(0.5) # waits for column sorting
 
                 page.find("#selectAll").click
@@ -377,7 +377,7 @@ RSpec.describe '
                 page.find(order4_selector).click
                 page.find(order5_selector).click
 
-                page.find("span.icon-reorder", text: "ACTIONS").click
+                page.find("span.icon-reorder", text: "Actions").click
                 within ".ofn-drop-down .menu" do
                   expect {
                     page.find("span", text: "Print Invoices").click # Prints invoices in bulk
@@ -430,7 +430,7 @@ RSpec.describe '
         page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
         page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
 
-        page.find("span.icon-reorder", text: "ACTIONS").click
+        page.find("span.icon-reorder", text: "Actions").click
         within ".ofn-drop-down .menu" do
           page.find("span", text: "Cancel Orders").click
         end
@@ -445,7 +445,7 @@ RSpec.describe '
           }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
         end
 
-        page.find("span.icon-reorder", text: "ACTIONS").click
+        page.find("span.icon-reorder", text: "Actions").click
         within ".ofn-drop-down .menu" do
           page.find("span", text: "Cancel Orders").click
         end
@@ -484,7 +484,7 @@ RSpec.describe '
         order.update_attribute(:distributor, distributor)
         order.update_attribute(:order_cycle, order_cycle)
 
-        page.find("span.icon-reorder", text: "ACTIONS").click
+        page.find("span.icon-reorder", text: "Actions").click
         within ".ofn-drop-down .menu" do
           page.find("span", text: "Resend Confirmation").click
         end
@@ -502,7 +502,7 @@ RSpec.describe '
 
   def extract_pdf_content
     # Extract last part of invoice URL
-    link = page.find(class: "button", text: "VIEW FILE")
+    link = page.find(class: "button", text: "View File")
     filename = link[:href].match %r{/invoices/.*}
 
     # Load invoice temp file directly instead of downloading
@@ -511,7 +511,7 @@ RSpec.describe '
   end
 
   def print_all_invoices
-    page.find("span.icon-reorder", text: "ACTIONS").click
+    page.find("span.icon-reorder", text: "Actions").click
     within ".ofn-drop-down .menu" do
       expect {
         page.find("span", text: "Print Invoices").click # Prints invoices in bulk

@@ -95,7 +95,6 @@ RSpec.describe "Orders And Fulfillment" do
                                "Billing State",
                                "Order number",
                                "Date"]
-                               .map(&:upcase)
                             ])
       end
 
@@ -278,7 +277,6 @@ RSpec.describe "Orders And Fulfillment" do
                                      "Total Units",
                                      "Curr. Cost per Unit",
                                      "Total Cost"]
-                                     .map(&:upcase)
                                   ])
 
               # displays the producer name in the respective column
@@ -332,7 +330,6 @@ RSpec.describe "Orders And Fulfillment" do
                                      "Total Units",
                                      "Curr. Cost per Unit",
                                      "Total Cost"]
-                                     .map(&:upcase)
                                   ])
 
               # displays the producer name in own row
@@ -368,7 +365,6 @@ RSpec.describe "Orders And Fulfillment" do
                                      "Curr. Cost per Unit",
                                      "Total Cost",
                                      "Shipping Method"]
-                                     .map(&:upcase)
                                   ])
 
               # displays the producer name in the respective column
@@ -416,7 +412,6 @@ RSpec.describe "Orders And Fulfillment" do
                                      "Curr. Cost per Unit",
                                      "Total Cost",
                                      "Shipping Method"]
-                                     .map(&:upcase)
                                   ])
 
               # displays the producer name in own row
@@ -468,7 +463,6 @@ RSpec.describe "Orders And Fulfillment" do
                                    "Total Cost",
                                    "Total Shipping Cost",
                                    "Shipping Method"]
-                                   .map(&:upcase)
                                 ])
 
             # displays the Distributor name in the respective column
@@ -520,7 +514,6 @@ RSpec.describe "Orders And Fulfillment" do
                                    "Total Cost",
                                    "Total Shipping Cost",
                                    "Shipping Method"]
-                                   .map(&:upcase)
                                 ])
 
             # displays the Distributor name in own row
@@ -575,6 +568,7 @@ RSpec.describe "Orders And Fulfillment" do
           it "should store columns to show for every report separately" do
             # Step 1: Update report rendering options on two reports
             click_link report_title
+
             find(columns_dropdown_selector).click
             expect(page).to have_checked_field('Producer')
             expect(page).to have_checked_field('Product')
@@ -584,6 +578,7 @@ RSpec.describe "Orders And Fulfillment" do
 
             click_link "Report"
             click_link second_report_title
+
             find(columns_dropdown_selector).click
             expect(page).to have_checked_field('Producer')
             expect(page).to have_checked_field('Product')
@@ -593,12 +588,14 @@ RSpec.describe "Orders And Fulfillment" do
             # Step 2: check if report rendering options are saved properly
             click_link "Report"
             click_link report_title
+
             find(columns_dropdown_selector).click
             expect(page).to have_unchecked_field('Producer')
             expect(page).to have_unchecked_field('Product')
 
             click_link "Report"
             click_link second_report_title
+
             find(columns_dropdown_selector).click
             expect(page).to have_checked_field('Producer')
             expect(page).to have_unchecked_field('Product')
@@ -629,6 +626,7 @@ RSpec.describe "Orders And Fulfillment" do
         context "Columns to show" do
           it "should store columns after logout" do
             click_link report_title
+
             find(columns_dropdown_selector).click
             expect(page).to have_checked_field('Producer')
             expect(page).to have_checked_field('Product')
@@ -642,6 +640,7 @@ RSpec.describe "Orders And Fulfillment" do
 
             click_link "Report"
             click_link report_title
+
             find(columns_dropdown_selector).click
             expect(page).to have_unchecked_field('Producer')
             expect(page).to have_unchecked_field('Product')

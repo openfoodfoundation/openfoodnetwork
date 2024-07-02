@@ -82,7 +82,7 @@ RSpec.describe "
 
         context "with no overrides" do
           it "displays the list of products with variants" do
-            expect(page).to have_table_row ['PRODUCER', 'PRODUCT', 'PRICE', 'ON HAND', 'ON DEMAND?']
+            expect(page).to have_table_row ['Producer', 'Product', 'Price', 'On Hand', 'On Demand?']
             expect(page).to have_table_row [producer.name, product.name, '', '', '']
             expect(page).to have_input "variant-overrides-#{variant.id}-price", placeholder: '1.23'
             expect(page).to have_input "variant-overrides-#{variant.id}-count_on_hand",
@@ -493,7 +493,7 @@ RSpec.describe "
                                               "inventory."
           click_button "Review Now"
 
-          expect(page).to have_table_row ['PRODUCER', 'PRODUCT', 'VARIANT', 'ADD', 'HIDE']
+          expect(page).to have_table_row ['Producer', 'Product', 'Variant', 'Add', 'Hide']
           expect(page).to have_selector "table#new-products tr#v_#{variant1.id}"
           expect(page).to have_selector "table#new-products tr#v_#{variant2.id}"
           within "table#new-products tr#v_#{variant1.id}" do
