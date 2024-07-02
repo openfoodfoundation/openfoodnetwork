@@ -17,7 +17,7 @@
     = render partial: "rendering_options"
 
     #report-go.actions.filter-actions{ data: { controller: "scoped-channel", "scoped-channel-id-value": request.uuid } }
-      = button t(:go), "report__submit-btn", "submit", "data-disable-with": true 
+      = button t(:go), "report__submit-btn", "submit", "data-disable": true 
 
 .report__header.print-hidden
   - if @report.message.present?
