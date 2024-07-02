@@ -220,8 +220,12 @@ RSpec.describe Spree::Order do
     subject(:order) { Spree::Order.create }
 
     it "should set completed_at" do
-      expect(order).to receive(:touch).with(:completed_at)
-      order.finalize!
+      expect {
+        order.finalize!
+        order.reload
+      }.to change {
+        order.completed_at
+      }.from(nil)
     end
 
     it "should sell inventory units" do
