@@ -228,21 +228,15 @@ RSpec.describe Spree::Order do
       }.from(nil)
     end
 
-    it "should sell inventory units" do
-      shipment = Spree::Shipment.new
-      order.shipments = [shipment]
+    it "updates shipments and decreases stock" do
+      order = create(:order_ready_for_confirmation)
+      shipment = order.shipments.first
+      shipment.update_columns(updated_at: 1.minute.ago)
 
-      expect(shipment).to receive(:update!).with(order)
-      expect(shipment).to receive(:finalize!)
-
-      order.finalize!
-    end
-
-    it "should decrease the stock for each variant in the shipment" do
-      order.shipments.each do |shipment|
-        expect(shipment.stock_location).to receive(:decrease_stock_for_variant)
-      end
-      order.finalize!
+      expect {
+        order.finalize!
+      }.to change { order.variants.first.on_hand }.by(-1)
+        .and change { shipment.updated_at }
     end
 
     it "should change the shipment state to ready if order is paid" do
