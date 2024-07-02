@@ -5,19 +5,15 @@ require 'open_food_network/property_merge'
 # PRODUCTS
 # Products represent an entity for sale in a store.
 # Products can have variations, called variants
-# Products properties include description, permalink, availability,
-#   shipping category, etc. that do not change by variant.
-#
-# MASTER VARIANT
-# Every product has one master variant, which stores master price and sku, size and weight, etc.
-# Price, SKU, size, weight, etc. are all delegated to the master variant.
-# Contains on_hand inventory levels only when there are no variants for the product.
+# Products properties include description, meta_keywork, etc. that do not change by variant.
 #
 # VARIANTS
-# All variants can access the product properties directly (via reverse delegation).
+# Every product has at least one variant (standard variant), which stores price and  availability,
+# shipping category, sku, size and weight, etc.
+# All variants can access the product name, description, and meta_keyword directly (via reverse
+# delegation).
 # Inventory units are tied to Variant.
-# The master variant can have inventory units, but not option values.
-# All other variants have option values and may have inventory units.
+# All variants have option values and may have inventory units.
 # Sum of on_hand each variant's inventory level determine "on_hand" level for the product.
 #
 module Spree
@@ -26,14 +22,13 @@ module Spree
     include LogDestroyPerformer
 
     self.belongs_to_required_by_default = false
+    self.ignored_columns += [:supplier_id]
 
     acts_as_paranoid
 
-    searchable_attributes :supplier_id, :meta_keywords, :sku
-    searchable_associations :supplier, :properties, :variants
+    searchable_attributes :meta_keywords, :sku
+    searchable_associations :properties, :variants
     searchable_scopes :active, :with_properties
-
-    belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
 
@@ -45,7 +40,6 @@ module Spree
     has_many :prices, -> { order('spree_variants.id, currency') }, through: :variants
 
     has_many :stock_items, through: :variants
-    has_many :supplier_properties, through: :supplier, source: :properties
     has_many :variant_images, -> { order(:position) }, source: :images,
                                                        through: :variants
 
@@ -68,28 +62,27 @@ module Spree
     accepts_nested_attributes_for :image
     accepts_nested_attributes_for :product_properties,
                                   allow_destroy: true,
-                                  reject_if: lambda { |pp| pp[:property_name].blank? }
+                                  reject_if: ->(pp) { pp[:property_name].blank? }
 
     # Transient attributes used temporarily when creating a new product,
     # these values are persisted on the product's variant
     attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id,
-                  :shipping_category_id, :primary_taxon_id
+                  :shipping_category_id, :primary_taxon_id, :supplier_id
 
     after_create :ensure_standard_variant
+    after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
     around_destroy :destruction
     after_save :update_units
+    after_touch :touch_supplier
 
+    # -- Scopes
     scope :with_properties, ->(*property_ids) {
       left_outer_joins(:product_properties).
-        left_outer_joins(:supplier_properties).
         where(inherits_properties: true).
-        where(producer_properties: { property_id: property_ids }).
-        or(
-          where(spree_product_properties: { property_id: property_ids })
-        )
+        where(spree_product_properties: { property_id: property_ids })
     }
 
-    scope :with_order_cycles_outer, -> {
+    scope :with_order_cycles_outer, lambda {
       joins("
         LEFT OUTER JOIN spree_variants AS o_spree_variants
           ON (o_spree_variants.product_id = spree_products.id)").
@@ -111,9 +104,7 @@ module Spree
         where(import_date: import_date.all_day))
     }
 
-    scope :with_order_cycles_inner, -> {
-      joins(variants: { exchanges: :order_cycle })
-    }
+    scope :with_order_cycles_inner, -> { joins(variants: { exchanges: :order_cycle }) }
 
     scope :visible_for, lambda { |enterprise|
       joins('
@@ -126,8 +117,9 @@ module Spree
         distinct
     }
 
-    # -- Scopes
-    scope :in_supplier, lambda { |supplier| where(supplier_id: supplier) }
+    scope :in_supplier, lambda { |supplier|
+      distinct.joins(:variants).where(spree_variants: { supplier: })
+    }
 
     # Products distributed via the given distributor through an OC
     scope :in_distributor, lambda { |distributor|
@@ -144,18 +136,6 @@ module Spree
         distinct
     }
 
-    # Products supplied by a given enterprise or distributed via that enterprise through an OC
-    scope :in_supplier_or_distributor, lambda { |enterprise|
-      enterprise = enterprise.respond_to?(:id) ? enterprise.id : enterprise.to_i
-
-      with_order_cycles_outer.
-        where("
-          spree_products.supplier_id = ?
-          OR (o_exchanges.incoming = ? AND o_exchanges.receiver_id = ?)
-        ", enterprise, false, enterprise).
-        select('distinct spree_products.*')
-    }
-
     # Products distributed by the given order cycle
     scope :in_order_cycle, lambda { |order_cycle|
       with_order_cycles_inner.
@@ -170,25 +150,15 @@ module Spree
         where.not(order_cycles: { id: nil })
     }
 
-    scope :by_producer, -> { joins(:supplier).order('enterprises.name') }
-    scope :by_name, -> { order('name') }
+    scope :by_producer, -> { joins(variants: :supplier).order('enterprises.name') }
+    scope :by_name, -> { order('spree_products.name') }
 
     scope :managed_by, lambda { |user|
       if user.has_spree_role?('admin')
         where(nil)
       else
-        where(supplier_id: user.enterprises.select("enterprises.id"))
+        in_supplier(user.enterprises)
       end
-    }
-
-    scope :stockable_by, lambda { |enterprise|
-      return where('1=0') if enterprise.blank?
-
-      permitted_producer_ids = EnterpriseRelationship.joins(:parent).permitting(enterprise.id)
-        .with_permission(:add_to_order_cycle)
-        .where(enterprises: { is_primary_producer: true })
-        .pluck(:parent_id)
-      where(spree_products: { supplier_id: [enterprise.id] | permitted_producer_ids })
     }
 
     scope :active, lambda { where(spree_products: { deleted_at: nil }) }
@@ -236,7 +206,10 @@ module Spree
       ps = product_properties.all
 
       if inherits_properties
-        ps = OpenFoodNetwork::PropertyMerge.merge(ps, supplier.producer_properties)
+        # NOTE: Set the supplier as the first variant supplier. If variants have different supplier,
+        # result might not be correct
+        supplier = variants.first.supplier
+        ps = OpenFoodNetwork::PropertyMerge.merge(ps, supplier&.producer_properties || [])
       end
 
       ps.
@@ -263,8 +236,6 @@ module Spree
 
     def destruction
       transaction do
-        touch_distributors
-
         ExchangeVariant.
           where(exchange_variants: { variant_id: variants.with_deleted.
           select(:id) }).destroy_all
@@ -285,6 +256,7 @@ module Spree
       variant.tax_category_id = tax_category_id
       variant.shipping_category_id = shipping_category_id
       variant.primary_taxon_id = primary_taxon_id
+      variant.supplier_id = supplier_id
       variants << variant
     end
 
@@ -319,11 +291,26 @@ module Spree
     def update_units
       return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
 
-      variants.each(&:update_units)
+      variants.each do |v|
+        if v.persisted?
+          v.update_units
+        else
+          v.assign_units
+        end
+      end
     end
 
-    def touch_distributors
-      Enterprise.distributing_products(id).each(&:touch)
+    def touch_supplier
+      return if variants.empty?
+
+      # Assume the product supplier is the supplier of the first variant
+      # Will breack if product has mutiple variants with different supplier
+      first_variant = variants.first
+
+      # The variant is invalid if no supplier is present, but this method can be triggered when
+      # importing product. In this scenario the variant has not been updated with the supplier yet
+      # hence the check.
+      first_variant.supplier.touch if first_variant.supplier.present?
     end
 
     def validate_image

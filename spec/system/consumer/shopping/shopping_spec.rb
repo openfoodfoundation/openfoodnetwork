@@ -22,7 +22,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
                                   coordinator: create(:distributor_enterprise),
                                   orders_close_at: 3.days.from_now)
     }
-    let(:product) { create(:simple_product, supplier:, meta_keywords: "Domestic") }
+    let(:product) { create(:simple_product, supplier_id: supplier.id, meta_keywords: "Domestic") }
     let(:variant) { product.variants.first }
     let(:order) { create(:order, distributor:) }
 
@@ -260,7 +260,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           context "one having 20 products" do
             before do
               20.times do
-                product = create(:simple_product, supplier:)
+                product = create(:simple_product, supplier_id: supplier.id)
                 add_variant_to_order_cycle(exchange1, product.variants.first)
               end
             end
@@ -275,7 +275,7 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
           context "another having 5 products" do
             before do
               5.times do
-                product = create(:simple_product, supplier:)
+                product = create(:simple_product, supplier_id: supplier.id)
                 add_variant_to_order_cycle(exchange2, product.variants.first)
               end
             end
@@ -296,9 +296,12 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
                          display_as: 'displayedunderthename')
       end
       let(:product2) {
-        create(:simple_product, supplier:, name: "Meercats", meta_keywords: "Wild Fresh")
+        create(:simple_product, supplier_id: supplier.id, name: "Meercats",
+                                meta_keywords: "Wild Fresh")
       }
-      let(:variant3) { create(:variant, product: product2, price: 40, display_name: "Ferrets") }
+      let(:variant3) {
+        create(:variant, product: product2, supplier:, price: 40, display_name: "Ferrets")
+      }
       let(:exchange) { Exchange.find(oc1.exchanges.to_enterprises(distributor).outgoing.first.id) }
 
       before do
@@ -333,39 +336,50 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
       end
 
       context "filtering search results" do
-        before do
-          visit shop_path
-          sleep(2)
-        end
         it "returns results when successful" do
+          visit shop_path
+          # When we see the Add button, it means product are loaded on the page
+          expect(page).to have_content("Add", count: 4)
+
           fill_in "search", with: "74576345634XXXXXX"
           expect(page).to have_content "Sorry, no results found"
           expect(page).not_to have_content 'Meercats'
+
           click_on "Clear search" # clears search by clicking text
           expect(page).to have_content("Add", count: 4)
+
           fill_in "search", with: "Meer" # For product named "Meercats"
           expect(page).to have_content 'Meercats'
           expect(page).not_to have_content product.name
+
           find("a.clear").click # clears search by clicking the X button
           expect(page).to have_content("Add", count: 4)
         end
+
         it "returns results by looking at different columns in DB" do
+          visit shop_path
+          # When we see the Add button, it means product are loaded on the page
+          expect(page).to have_content("Add", count: 4)
+
           # by keyword model: meta_keywords
           fill_in "search", with: "Wild" # For product named "Meercats"
           expect(page).to have_content 'Wild'
           find("a.clear").click
+
           # by variant display name model: variant display_name
           fill_in "search", with: "Ferrets" # For variants named "Ferrets"
           within('div.pad-top') do
             expect(page).to have_content 'Ferrets'
             expect(page).not_to have_content 'Badgers'
           end
+
           # model: variant display_as
           fill_in "search", with: "displayedunder" # "Badgers"
           within('div.pad-top') do
             expect(page).not_to have_content 'Ferrets'
             expect(page).to have_content 'Badgers'
           end
+
           # model: Enterprise name
           fill_in "search", with: "Enterp" # Enterprise 1 sells nothing
           within('p.no-results') do
@@ -375,7 +389,9 @@ RSpec.describe "As a consumer I want to shop with a distributor" do
       end
 
       context "when supplier uses property" do
-        let(:product3) { create(:simple_product, supplier:, inherits_properties: false) }
+        let(:product3) {
+          create(:simple_product, supplier_id: supplier.id, inherits_properties: false)
+        }
 
         before do
           add_variant_to_order_cycle(exchange, product3.variants.first)

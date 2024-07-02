@@ -24,8 +24,8 @@ RSpec.describe 'Groups' do
       let!(:producer1) { create(:supplier_enterprise) }
       let!(:producer2) { create(:supplier_enterprise) }
 
-      let!(:product1) { create(:simple_product, supplier: producer1) }
-      let!(:product2) { create(:simple_product, supplier: producer2) }
+      let!(:product1) { create(:simple_product, supplier_id: producer1.id) }
+      let!(:product2) { create(:simple_product, supplier_id: producer2.id) }
 
       before do
         product1.set_property 'Organic', 'NASAA 12345'
@@ -85,10 +85,10 @@ RSpec.describe 'Groups' do
       let(:d4) {
         create(:distributor_enterprise, with_payment_and_shipping: true, visible: "public")
       }
-      let(:p1) { create(:simple_product, supplier: producer) }
-      let(:p2) { create(:simple_product, supplier: create(:supplier_enterprise)) }
-      let(:p3) { create(:simple_product, supplier: create(:supplier_enterprise)) }
-      let(:p4) { create(:simple_product, supplier: create(:supplier_enterprise)) }
+      let(:p1) { create(:simple_product, supplier_id: producer.id) }
+      let(:p2) { create(:simple_product, supplier_id: create(:supplier_enterprise).id) }
+      let(:p3) { create(:simple_product, supplier_id: create(:supplier_enterprise).id) }
+      let(:p4) { create(:simple_product, supplier_id: create(:supplier_enterprise).id) }
       let(:ex_d1) { order_cycle.exchanges.outgoing.where(receiver_id: d1).first }
       let(:ex_d2) { order_cycle.exchanges.outgoing.where(receiver_id: d2).first }
       let(:ex_d3) { order_cycle.exchanges.outgoing.where(receiver_id: d3).first }

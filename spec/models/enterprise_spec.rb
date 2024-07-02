@@ -37,13 +37,14 @@ RSpec.describe Enterprise do
       expect(EnterpriseRole.where(id: role.id)).to be_empty
     end
 
-    xit "destroys supplied products upon destroy" do
-      s = create(:supplier_enterprise)
-      p = create(:simple_product, supplier: s)
+    it "destroys supplied variants upon destroy" do
+      pending "Variant are soft deletable, see: https://github.com/openfoodfoundation/openfoodnetwork/issues/2971"
+      supplier = create(:supplier_enterprise)
+      variant = create(:variant, supplier:)
 
-      s.destroy
+      supplier.destroy
 
-      expect(Spree::Product.where(id: p.id)).to be_empty
+      expect(Spree::Variant.where(id: variant.id)).to be_empty
     end
 
     it "destroys relationships upon destroy" do
@@ -411,12 +412,33 @@ RSpec.describe Enterprise do
   end
 
   describe "callbacks" do
-    it "restores permalink to original value when it is changed and invalid" do
-      e1 = create(:enterprise, permalink: "taken")
-      e2 = create(:enterprise, permalink: "not_taken")
-      e2.permalink = "taken"
-      e2.save
-      expect(e2.reload.permalink).to eq "not_taken"
+    describe "restore_permalink" do
+      it "restores permalink to original value when it is changed and invalid" do
+        e1 = create(:enterprise, permalink: "taken")
+        e2 = create(:enterprise, permalink: "not_taken")
+        e2.permalink = "taken"
+        e2.save
+        expect(e2.reload.permalink).to eq "not_taken"
+      end
+    end
+
+    describe "touch_distributors" do
+      it "touches supplied variant distributors" do
+        enterprise = create(:enterprise)
+        variant = create(:variant)
+        enterprise.supplied_variants << variant
+
+        updated_at = 1.hour.ago
+        distributor1 = create(:distributor_enterprise, updated_at:)
+        distributor2 = create(:distributor_enterprise, updated_at:)
+
+        create(:simple_order_cycle, distributors: [distributor1], variants: [variant])
+        create(:simple_order_cycle, distributors: [distributor2], variants: [variant])
+
+        expect { enterprise.touch }
+          .to change { distributor1.reload.updated_at }
+          .and change { distributor2.reload.updated_at }
+      end
     end
   end
 
@@ -567,51 +589,49 @@ RSpec.describe Enterprise do
       end
     end
 
-    describe "supplying_variant_in" do
+    describe ".supplying_variant_in" do
       it "finds producers by supply of variant" do
-        s = create(:supplier_enterprise)
-        p = create(:simple_product, supplier: s)
-        v = create(:variant, product: p)
+        supplier = create(:supplier_enterprise)
+        variant = create(:variant, supplier:)
 
-        expect(Enterprise.supplying_variant_in([v])).to eq([s])
+        expect(Enterprise.supplying_variant_in([variant])).to eq([supplier])
       end
 
       it "returns multiple enterprises when given multiple variants" do
-        s1 = create(:supplier_enterprise)
-        s2 = create(:supplier_enterprise)
-        p1 = create(:simple_product, supplier: s1)
-        p2 = create(:simple_product, supplier: s2)
+        supplier1 = create(:supplier_enterprise)
+        supplier2 = create(:supplier_enterprise)
+        variant1 = create(:variant, supplier: supplier1)
+        variant2 = create(:variant, supplier: supplier2)
 
-        expect(Enterprise.supplying_variant_in([p1.variants.first,
-                                                p2.variants.first])).to match_array [s1, s2]
+        expect(Enterprise.supplying_variant_in([variant1, variant2]))
+          .to match_array([supplier1, supplier2])
       end
 
       it "does not return duplicates" do
-        s = create(:supplier_enterprise)
-        p1 = create(:simple_product, supplier: s)
-        p2 = create(:simple_product, supplier: s)
+        supplier = create(:supplier_enterprise)
+        variant1 = create(:variant, supplier:)
+        variant2 = create(:variant, supplier:)
 
-        expect(Enterprise.supplying_variant_in([p1.variants.first, p2.variants.first])).to eq([s])
+        expect(Enterprise.supplying_variant_in([variant1, variant2])).to eq([supplier])
       end
     end
 
-    describe "distributing_products" do
+    describe "distributing_variants" do
       let(:distributor) { create(:distributor_enterprise) }
-      let(:product) { create(:product) }
+      let(:variant) { create(:variant) }
 
       it "returns enterprises distributing via an order cycle" do
-        order_cycle = create(:simple_order_cycle, distributors: [distributor],
-                                                  variants: [product.variants.first])
-        expect(Enterprise.distributing_products(product.id)).to eq([distributor])
+        order_cycle = create(:simple_order_cycle, distributors: [distributor], variants: [variant])
+        expect(Enterprise.distributing_variants(variant.id)).to eq([distributor])
       end
 
       it "does not return duplicate enterprises" do
-        another_product = create(:product)
+        another_variant = create(:variant)
         order_cycle = create(:simple_order_cycle, distributors: [distributor],
-                                                  variants: [product.variants.first,
-                                                             another_product.variants.first])
-        expect(Enterprise.distributing_products([product.id,
-                                                 another_product.id])).to eq([distributor])
+                                                  variants: [variant, another_variant])
+        expect(Enterprise.distributing_variants(
+                 [variant.id, another_variant.id]
+               )).to eq([distributor])
       end
     end
 

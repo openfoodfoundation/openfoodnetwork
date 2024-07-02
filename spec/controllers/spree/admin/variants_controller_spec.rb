@@ -12,7 +12,8 @@ module Spree
           let(:product) { create(:product, name: 'Product A') }
           let(:deleted_variant) do
             deleted_variant = product.variants.create(
-              unit_value: "2", price: 1, primary_taxon: create(:taxon)
+              unit_value: "2", price: 1, primary_taxon: create(:taxon),
+              supplier: create(:supplier_enterprise)
             )
             deleted_variant.delete
             deleted_variant
@@ -30,9 +31,63 @@ module Spree
         end
       end
 
+      describe "#update" do
+        let!(:variant) { create(:variant, display_name: "Tomatoes", sku: 123, supplier: producer) }
+        let(:producer) { create(:enterprise) }
+
+        it "updates the variant" do
+          expect {
+            spree_put(
+              :update,
+              id: variant.id,
+              product_id: variant.product.id,
+              variant: { display_name: "Better tomatoes", sku: 456 }
+            )
+            variant.reload
+          }.to change { variant.display_name }.to("Better tomatoes")
+            .and change { variant.sku }.to(456.to_s)
+        end
+
+        context "when updating supplier" do
+          let(:new_producer) { create(:enterprise) }
+
+          it "updates the supplier" do
+            expect {
+              spree_put(
+                :update,
+                id: variant.id,
+                product_id: variant.product.id,
+                variant: { supplier_id: new_producer.id }
+              )
+              variant.reload
+            }.to change { variant.supplier_id }.to(new_producer.id)
+          end
+
+          it "removes associated product from existing Order Cycles" do
+            distributor = create(:distributor_enterprise)
+            order_cycle = create(
+              :simple_order_cycle,
+              variants: [variant],
+              coordinator: distributor,
+              distributors: [distributor]
+            )
+
+            spree_put(
+              :update,
+              id: variant.id,
+              product_id: variant.product.id,
+              variant: { supplier_id: new_producer.id }
+            )
+
+            expect(order_cycle.reload.distributed_variants).not_to include variant
+          end
+        end
+      end
+
       describe "#search" do
-        let!(:p1) { create(:simple_product, name: 'Product 1') }
-        let!(:p2) { create(:simple_product, name: 'Product 2') }
+        let(:supplier) { create(:supplier_enterprise) }
+        let!(:p1) { create(:simple_product, name: 'Product 1', supplier_id: supplier.id) }
+        let!(:p2) { create(:simple_product, name: 'Product 2', supplier_id: supplier.id) }
         let!(:v1) { p1.variants.first }
         let!(:v2) { p2.variants.first }
         let!(:vo) { create(:variant_override, variant: v1, hub: d, count_on_hand: 44) }

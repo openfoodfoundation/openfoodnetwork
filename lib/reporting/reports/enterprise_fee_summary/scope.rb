@@ -201,7 +201,6 @@ module Reporting
         # Includes:
         # * Line item
         # * Variant
-        # * Product
         # * Tax category of product, if enterprise fee tells to inherit
         def include_line_item_source_details
           join_scope(
@@ -221,13 +220,6 @@ module Reporting
                   spree_adjustments.adjustable_type = 'Spree::LineItem'
                     AND spree_variants.id = spree_line_items.variant_id
                 )
-            JOIN_STRING
-          )
-
-          join_scope(
-            <<~JOIN_STRING
-              LEFT OUTER JOIN spree_products
-                ON (spree_products.id = spree_variants.product_id)
             JOIN_STRING
           )
 
@@ -324,7 +316,7 @@ module Reporting
         def filter_by_distribution(params)
           filter_scope(spree_orders: { distributor_id: params.distributor_ids }) \
             if params.distributor_ids.present?
-          filter_scope(spree_products: { supplier_id: params.producer_ids }) \
+          filter_scope(spree_variants: { supplier_id: params.producer_ids }) \
             if params.producer_ids.present?
           filter_scope(spree_orders: { order_cycle_id: params.order_cycle_ids }) \
             if params.order_cycle_ids.present?

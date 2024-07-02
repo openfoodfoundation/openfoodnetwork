@@ -39,13 +39,13 @@ class Enterprise < ApplicationRecord
                                    class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id', dependent: :destroy
   has_many :properties, through: :producer_properties
-  has_many :supplied_products, class_name: 'Spree::Product',
-                               foreign_key: 'supplier_id',
-                               dependent: :destroy
-  has_many :supplied_variants, through: :supplied_products, source: :variants
+  has_many :supplied_variants,
+           class_name: 'Spree::Variant', foreign_key: 'supplier_id', dependent: :destroy
+  has_many :supplied_products, through: :supplied_variants, source: :product
   has_many :distributed_orders, class_name: 'Spree::Order',
                                 foreign_key: 'distributor_id',
                                 dependent: :restrict_with_exception
+
   belongs_to :address, class_name: 'Spree::Address'
   belongs_to :business_address, optional: true, class_name: 'Spree::Address', dependent: :destroy
   has_many :enterprise_fees, dependent: :restrict_with_exception
@@ -167,7 +167,7 @@ class Enterprise < ApplicationRecord
   scope :is_distributor, -> { where.not(sells: 'none') }
   scope :is_hub, -> { where(sells: 'any') }
   scope :supplying_variant_in, lambda { |variants|
-    joins(supplied_products: :variants).
+    joins(:supplied_variants).
       where(spree_variants: { id: variants }).
       select('DISTINCT enterprises.*')
   }
@@ -205,14 +205,14 @@ class Enterprise < ApplicationRecord
       select('DISTINCT enterprises.*')
   }
 
-  scope :distributing_products, lambda { |product_ids|
+  scope :distributing_variants, lambda { |variants_ids|
     exchanges = joins("
         INNER JOIN exchanges
-          ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = 'f')
+          ON (exchanges.receiver_id = enterprises.id AND exchanges.incoming = false)
       ").
       joins('INNER JOIN exchange_variants ON (exchange_variants.exchange_id = exchanges.id)').
       joins('INNER JOIN spree_variants ON (spree_variants.id = exchange_variants.variant_id)').
-      where(spree_variants: { product_id: product_ids }).select('DISTINCT enterprises.id')
+      where(spree_variants: { id: variants_ids }).select('DISTINCT enterprises.id')
 
     where(id: exchanges)
   }
@@ -598,7 +598,7 @@ class Enterprise < ApplicationRecord
   # Touch distributors without them touching their distributors.
   # We avoid an infinite loop and don't need to touch the whole distributor tree.
   def touch_distributors
-    Enterprise.distributing_products(supplied_products.select(:id)).
+    Enterprise.distributing_variants(supplied_variants.select(:id)).
       where.not(enterprises: { id: }).
       update_all(updated_at: Time.zone.now)
   end

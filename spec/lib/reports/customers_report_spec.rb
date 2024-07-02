@@ -209,7 +209,7 @@ module Reporting
 
           describe "fetching orders" do
             let(:supplier) { create(:supplier_enterprise) }
-            let(:product) { create(:simple_product, supplier:) }
+            let(:product) { create(:simple_product, supplier_id: supplier.id) }
             let(:order) { create(:order, completed_at: 1.day.ago) }
 
             it "only shows orders managed by the current user" do

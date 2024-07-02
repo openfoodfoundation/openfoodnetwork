@@ -20,12 +20,7 @@ module Catalog
       attr_reader :excluded_items_ids, :enterprise_ids
 
       def enterprise_variants_relation
-        relation = Spree::Variant
-          .joins(:product)
-          .where(
-            spree_products: { supplier_id: enterprise_ids },
-            spree_variants: { deleted_at: nil }
-          )
+        relation = Spree::Variant.where(supplier_id: enterprise_ids)
 
         return relation if excluded_items_ids.blank?
 

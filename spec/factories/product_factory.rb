@@ -4,6 +4,10 @@ FactoryBot.define do
   factory :base_product, class: Spree::Product do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
 
+    supplier_id do
+      Enterprise.is_primary_producer.first&.id || FactoryBot.create(:supplier_enterprise).id
+    end
+
     transient do
       primary_taxon { nil }
     end
@@ -13,8 +17,6 @@ FactoryBot.define do
     price { 19.99 }
     sku { 'ABC' }
     deleted_at { nil }
-
-    supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
 
     unit_value { 1 }
     unit_description { '' }

@@ -4,3 +4,7 @@
 
   .filter-shopfront.property-selectors{ "ng-show": 'supplied_properties != null' }
     %filter-selector{ 'selector-set' => "propertySelectors", objects: "supplied_properties", "active-selectors" => "activeProperties"}
+
+  .filter-shopfront.property-selectors{ng: {show: 'supplied_producer_properties != null'}}
+    %filter-selector{ 'selector-set' => "producerPropertySelectors", objects: "supplied_producer_properties", "active-selectors" => "activeProducerProperties"}
+

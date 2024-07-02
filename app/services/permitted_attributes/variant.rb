@@ -7,7 +7,8 @@ module PermittedAttributes
         :id, :sku, :on_hand, :on_demand, :shipping_category_id,
         :price, :unit_value, :unit_description,
         :display_name, :display_as, :tax_category_id,
-        :weight, :height, :width, :depth, :taxon_ids, :primary_taxon_id
+        :weight, :height, :width, :depth, :taxon_ids, :primary_taxon_id,
+        :supplier_id
       ]
     end
   end

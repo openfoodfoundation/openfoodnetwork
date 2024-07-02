@@ -9,6 +9,7 @@ module Api
                  :price, :on_demand, :on_hand, :in_stock, :stock_location_id, :stock_location_name
 
       has_one :primary_taxon, key: :category_id, embed: :id
+      has_one :supplier, key: :producer_id, embed: :id
 
       def name
         if object.full_name.present?
@@ -31,7 +32,7 @@ module Api
       end
 
       def producer_name
-        object.product.supplier.name
+        object.supplier.name
       end
 
       def image

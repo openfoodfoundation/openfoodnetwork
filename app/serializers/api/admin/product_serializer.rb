@@ -7,8 +7,6 @@ module Api
                  :inherits_properties, :on_hand, :price, :import_date, :image_url,
                  :thumb_url, :variants
 
-      has_one :supplier, key: :producer_id, embed: :id
-
       def variants
         ActiveModel::ArraySerializer.new(
           object.variants,

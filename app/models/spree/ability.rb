@@ -189,7 +189,9 @@ module Spree
            :seo, :group_buy_options,
            :bulk_update, :clone, :delete,
            :destroy], Spree::Product do |product|
-        OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include? product.supplier
+        OpenFoodNetwork::Permissions.new(user).managed_product_enterprises.include?(
+          product.variants.first.supplier
+        )
       end
 
       can [:admin, :index, :bulk_update, :destroy, :destroy_variant, :clone], :products_v3
@@ -198,11 +200,11 @@ module Spree
       can [:admin, :index, :read, :edit,
            :update, :search, :delete, :destroy], Spree::Variant do |variant|
         OpenFoodNetwork::Permissions.new(user).
-          managed_product_enterprises.include? variant.product.supplier
+          managed_product_enterprises.include? variant.supplier
       end
 
       can [:admin, :index, :read, :update, :bulk_update, :bulk_reset], VariantOverride do |vo|
-        next false unless vo.hub.present? && vo.variant&.product&.supplier.present?
+        next false unless vo.hub.present? && vo.variant&.supplier.present?
 
         hub_auth = OpenFoodNetwork::Permissions.new(user).
           variant_override_hubs.
@@ -210,14 +212,14 @@ module Spree
 
         producer_auth = OpenFoodNetwork::Permissions.new(user).
           variant_override_producers.
-          include? vo.variant.product.supplier
+          include? vo.variant.supplier
 
         hub_auth && producer_auth
       end
 
       can [:admin, :create, :update], InventoryItem do |ii|
         next false unless ii.enterprise.present? &&
-                          ii.variant&.product&.supplier.present?
+                          ii.variant&.supplier.present?
 
         hub_auth = OpenFoodNetwork::Permissions.new(user).
           variant_override_hubs.
@@ -225,7 +227,7 @@ module Spree
 
         producer_auth = OpenFoodNetwork::Permissions.new(user).
           variant_override_producers.
-          include? ii.variant.product.supplier
+          include? ii.variant.supplier
 
         hub_auth && producer_auth
       end

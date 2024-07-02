@@ -189,10 +189,7 @@ module Admin
           .visible_enterprises
 
         if enterprises.present?
-          enterprises.includes(
-            supplied_products:
-              [:supplier, :variants, :image]
-          )
+          enterprises.includes(supplied_products: [:variants, :image])
         end
       when :index
         if spree_current_user.admin?
