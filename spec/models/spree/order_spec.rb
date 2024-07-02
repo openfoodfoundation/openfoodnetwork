@@ -229,10 +229,12 @@ RSpec.describe Spree::Order do
     end
 
     it "should sell inventory units" do
-      order.shipments.each do |shipment|
-        expect(shipment).to receive(:update!)
-        expect(shipment).to receive(:finalize!)
-      end
+      shipment = Spree::Shipment.new
+      order.shipments = [shipment]
+
+      expect(shipment).to receive(:update!).with(order)
+      expect(shipment).to receive(:finalize!)
+
       order.finalize!
     end
 
