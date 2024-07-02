@@ -305,7 +305,7 @@ module ProductImport
         unscaled_units = entry.unscaled_units.to_f || 0
         entry.unit_value = unscaled_units * unit_scale unless unit_scale.nil?
 
-        if inventory_entry_matches_existing_variant?(entry, existing_variant)
+        if entry.match_inventory_variant?(existing_variant)
           variant_override = create_inventory_item(entry, existing_variant)
           return validate_inventory_item(entry, variant_override)
         end
@@ -313,23 +313,6 @@ module ProductImport
 
       mark_as_invalid(entry, attribute: 'product',
                              error: I18n.t('admin.product_import.model.not_found'))
-    end
-
-    def entry_matches_existing_variant?(entry, existing_variant)
-      # matching on the unscaled unit so we know if we are trying to update an existing variant
-      display_name_are_the_same?(entry, existing_variant) &&
-        existing_variant.unit_value == entry.unscaled_units.to_f
-    end
-
-    def inventory_entry_matches_existing_variant?(entry, existing_variant)
-      display_name_are_the_same?(entry, existing_variant) &&
-        existing_variant.unit_value == entry.unit_value.to_f
-    end
-
-    def display_name_are_the_same?(entry, existing_variant)
-      return true if entry.display_name.blank? && existing_variant.display_name.blank?
-
-      existing_variant.display_name == entry.display_name
     end
 
     def category_validation(entry)
@@ -377,7 +360,7 @@ module ProductImport
       products.each { |product| product_field_errors(entry, product) }
 
       products.flat_map(&:variants).each do |existing_variant|
-        next unless entry_matches_existing_variant?(entry, existing_variant) &&
+        next unless entry.match_variant?(existing_variant) &&
                     existing_variant.deleted_at.nil?
 
         variant_field_errors(entry, existing_variant)
