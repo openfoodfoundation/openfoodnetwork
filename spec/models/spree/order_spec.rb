@@ -240,12 +240,12 @@ RSpec.describe Spree::Order do
     end
 
     it "should change the shipment state to ready if order is paid" do
-      Spree::Shipment.create(order:)
-      order.shipments.reload
+      order = create(:order_ready_for_confirmation)
 
-      allow(order).to receive_messages(paid?: true, complete?: true)
-      order.finalize!
+      order.payments.first.capture!
+      order.next! # calls `finalize!`
       order.reload # reload so we're sure the changes are persisted
+
       expect(order.shipment_state).to eq 'ready'
     end
 
