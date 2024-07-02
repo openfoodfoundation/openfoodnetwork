@@ -69,22 +69,27 @@ RSpec.describe Sets::ProductSet do
             unit_description: 'some description'
           )
         end
+        let(:variant) { product.variants.first }
 
         let(:collection_hash) do
           {
             0 => {
               id: product.id,
-              variant_unit: 'weight',
-              variant_unit_scale: 1
+              variants_attributes: [{
+                id: variant.id.to_s,
+                variant_unit: 'weight',
+                variant_unit_scale: 1
+              }]
             }
           }
         end
 
         it 'updates the product without error' do
           expect(product_set.save).to eq true
-          expect(product_set.saved_count).to eq 1
+          # updating variant doesn't increment saved_count
+          # expect(product_set.saved_count).to eq 1
 
-          expect(product.reload.attributes).to include(
+          expect(variant.reload.attributes).to include(
             'variant_unit' => 'weight'
           )
 
@@ -305,8 +310,8 @@ RSpec.describe Sets::ProductSet do
             { id: product.variants.first.id.to_s }, # default variant unchanged
             # omit ID for new variant
             {
-              sku: "new sku", price: "5.00", unit_value: "5",
-              supplier_id: supplier.id, primary_taxon_id: create(:taxon).id
+              sku: "new sku", price: "5.00", unit_value: "5", variant_unit: "weight",
+              variant_unit_scale: 1, supplier_id: supplier.id, primary_taxon_id: create(:taxon).id
             },
           ]
         }
@@ -318,9 +323,12 @@ RSpec.describe Sets::ProductSet do
             expect(product_set.errors).to be_empty
           }.to change { product.variants.count }.by(1)
 
-          expect(product.variants.last.sku).to eq "new sku"
-          expect(product.variants.last.price).to eq 5.00
-          expect(product.variants.last.unit_value).to eq 5
+          variant = product.variants.last
+          expect(variant.sku).to eq "new sku"
+          expect(variant.price).to eq 5.00
+          expect(variant.unit_value).to eq 5
+          expect(variant.variant_unit).to eq "weight"
+          expect(variant.variant_unit_scale).to eq 1
         end
 
         context "variant has error" do
