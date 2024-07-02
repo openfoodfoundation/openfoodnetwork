@@ -1,5 +1,7 @@
 import { Controller } from "stimulus";
 
+const BUTTON_TYPES = ['submit', 'button'];
+
 // Toggle state of a control based on a condition.
 //
 // 1. When an action occurs on an element,
@@ -57,10 +59,8 @@ export default class extends Controller {
       target.disabled = disable;
     });
 
-    // Focus first when enabled
-    if (!disable) {
-      this.controlTargets[0].focus();
-    }
+    // Focus first when enabled and it's not a button
+    if (!disable) this.#focusFieldControl();
   }
 
   #toggleDisplay(show) {
@@ -69,9 +69,7 @@ export default class extends Controller {
     });
 
     // Focus first when displayed
-    if (show) {
-      this.controlTargets[0].focus();
-    }
+    if (show) this.#focusFieldControl();
   }
 
   // Return input's value, but only if it would be submitted by a form
@@ -80,5 +78,11 @@ export default class extends Controller {
     if (input.type != "checkbox" || input.checked) {
       return input.value;
     }
+  }
+
+  #focusFieldControl() {
+    const control = this.controlTargets[0];
+    const isButton = BUTTON_TYPES.includes(control.type);
+    if(!isButton) control.focus();
   }
 }

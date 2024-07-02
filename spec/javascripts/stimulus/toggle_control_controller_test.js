@@ -71,11 +71,12 @@ describe("ToggleControlController", () => {
         </div>`;
       });
 
-      it("Enables when input is filled", () => {
+      it("Enables when input is filled and focuses the control", () => {
         input.value = "a"
         input.dispatchEvent(new Event("input"));
 
         expect(control.disabled).toBe(false);
+        expect(document.activeElement).toBe(control);
       });
 
       it("Disables when input is emptied", () => {
@@ -88,6 +89,37 @@ describe("ToggleControlController", () => {
         expect(control.disabled).toBe(true);
       });
     });
+    describe("with button as control target", () => {
+      beforeEach(() => {
+        document.body.innerHTML = `<div data-controller="toggle-control">
+          <input id="input" value="" data-action="input->toggle-control#enableIfPresent" />
+          <button id="control" data-toggle-control-target="control">
+        </div>`;
+      });
+
+      it("Enables the button control when input is filled, focus remains on input", () => {
+        // Simulating click on input to focus it
+        input.focus();
+        input.value = "test"
+        input.dispatchEvent(new Event("input"));
+
+        expect(control.disabled).toBe(false);
+        expect(document.activeElement).toBe(input);
+      });
+
+      it("Disables the button control when input is emptied, focus remains on input", () => {
+        // Simulating click on input to focus it
+        input.focus();
+        input.value = "test"
+        input.dispatchEvent(new Event("input"));
+
+        input.value = ""
+        input.dispatchEvent(new Event("input"));
+
+        expect(control.disabled).toBe(true);
+        expect(document.activeElement).toBe(input);
+      });
+    })
   });
 
   describe("#displayIfMatch", () => {
