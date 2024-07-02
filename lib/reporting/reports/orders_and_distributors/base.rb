@@ -32,26 +32,26 @@ module Reporting
         # rubocop:enable Metrics/AbcSize
 
         def search
-          permissions.visible_orders.select("DISTINCT spree_orders.*").
-            complete.not_state(:canceled).
-            ransack(ransack_params)
+          report_line_items.orders
         end
 
         def query_result
-          orders = search.result
-          # Mask non editable order details
-          editable_orders_ids = permissions.editable_orders.select(&:id).map(&:id)
-          orders
-            .filter { |order| order.in?(editable_orders_ids) }
-            .each { |order| Orders::MaskDataService.new(order).call }
-          # Get Line Items
-          orders.map(&:line_items).flatten
+          report_line_items.list(line_item_includes)
         end
 
         private
 
+        def line_item_includes
+          [{ variant: { product: :supplier },
+             order: [:bill_address, :payments, { distributor: :address }] }]
+        end
+
         def permissions
           @permissions ||= ::Permissions::Order.new(user, ransack_params)
+        end
+
+        def report_line_items
+          @report_line_items ||= Reporting::LineItems.new(permissions, params)
         end
       end
     end
