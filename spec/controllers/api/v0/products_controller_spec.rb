@@ -35,8 +35,8 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
 
     it "gets a single product" do
       product.create_image!(attachment:)
-      product.variants.create!(unit_value: "1", unit_description: "thing", price: 1,
-                               primary_taxon: taxon, supplier:)
+      product.variants.create!(unit_value: "1", variant_unit: "weight", variant_unit_scale: 1,
+                               unit_description: "thing", price: 1, primary_taxon: taxon, supplier:)
       product.variants.first.images.create!(attachment:)
       product.set_property("spree", "rocks")
 
@@ -121,7 +121,7 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
       expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       errors = json_response["errors"]
       expect(errors.keys).to match_array([
-                                           "name", "variant_unit", "price",
+                                           "name", "price",
                                            "primary_taxon_id", "supplier_id"
                                          ])
     end
