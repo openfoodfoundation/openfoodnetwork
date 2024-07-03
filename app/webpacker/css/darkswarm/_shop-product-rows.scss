@@ -144,7 +144,7 @@
           }
 
           .product-description {
-            white-space: nowrap;
+            white-space: normal;
             overflow: hidden;
             text-overflow: ellipsis;
             margin-bottom: 0.75rem;
@@ -156,8 +156,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden; 
             // line-clamp is not supported in Safari
-            line-height: 1rem;
-            height: 1.75rem;
+            line-height: 1.75rem;
 
             > div {
               margin-bottom: 1.5rem; // Equivalent to p (trix doesn't use p as separator by default, so emulate div as p to be backward compatible)
