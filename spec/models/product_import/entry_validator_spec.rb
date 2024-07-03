@@ -63,12 +63,12 @@ RSpec.describe ProductImport::EntryValidator do
     let(:potatoes) {
       create(
         :simple_product,
-        supplier: enterprise,
         on_hand: '100',
         name: 'Potatoes',
         unit_value: 1000,
         variant_unit_scale: 1000,
-        variant_unit: 'weight'
+        variant_unit: 'weight',
+        variants: [create(:variant, supplier: enterprise)]
       )
     }
 
@@ -119,24 +119,24 @@ RSpec.describe ProductImport::EntryValidator do
       let!(:product_g) {
         create(
           :simple_product,
-          supplier: enterprise,
           on_hand: '100',
           name: 'Tomato',
           unit_value: 500,
           variant_unit_scale: 1,
-          variant_unit: 'weight'
+          variant_unit: 'weight',
+          variants: [create(:variant, supplier: enterprise, unit_value: 500)]
         )
       }
 
       let!(:product_kg) {
         create(
           :simple_product,
-          supplier: enterprise,
           on_hand: '100',
           name: 'Potatoes',
           unit_value: 1000,
           variant_unit_scale: 1000,
-          variant_unit: 'weight'
+          variant_unit: 'weight',
+          variants: [create(:variant, supplier: enterprise, unit_value: 1000)]
         )
       }
 

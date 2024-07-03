@@ -8,7 +8,7 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
       let(:s_managed) { create(:enterprise) }
       let(:s_unmanaged) { create(:enterprise) }
       let(:product) do
-        create(:simple_product, supplier: s_unmanaged, name: 'Peas')
+        create(:simple_product, supplier_id: s_unmanaged.id, name: 'Peas')
       end
 
       before do
@@ -31,7 +31,7 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
       let!(:product) do
         create(
           :simple_product,
-          supplier: producer,
+          supplier_id: producer.id,
           variant_unit: 'items',
           variant_unit_scale: nil,
           variant_unit_name: 'bunches',
@@ -76,7 +76,7 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
       let!(:product) do
         create(
           :simple_product,
-          supplier: producer,
+          supplier_id: producer.id,
           variant_unit: 'items',
           variant_unit_scale: nil,
           variant_unit_name: 'bunches',
@@ -87,7 +87,7 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
       let!(:another_product) do
         create(
           :simple_product,
-          supplier: producer,
+          supplier_id: producer.id,
           variant_unit: 'weight',
           variant_unit_scale: 1000,
           variant_unit_name: nil
@@ -113,7 +113,8 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
                            "unit_value" => 4,
                            "unit_description" => "",
                            "display_name" => "name",
-                           "primary_taxon_id" => taxon.id
+                           "primary_taxon_id" => taxon.id,
+                           "supplier_id" => producer.id
                          }
                        ]
                      }
@@ -174,26 +175,10 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
 
   describe "updating a product" do
     let(:producer) { create(:enterprise) }
-    let!(:product) { create(:simple_product, supplier: producer) }
+    let!(:product) { create(:simple_product, supplier_id: producer.id) }
 
     before do
       controller_login_as_enterprise_user [producer]
-    end
-
-    describe "change product supplier" do
-      let(:distributor) { create(:distributor_enterprise) }
-      let!(:order_cycle) {
-        create(:simple_order_cycle, variants: [product.variants.first], coordinator: distributor,
-                                    distributors: [distributor])
-      }
-
-      it "should remove product from existing Order Cycles" do
-        new_producer = create(:enterprise)
-        spree_put :update, id: product, product: { supplier_id: new_producer.id }
-
-        expect(product.reload.supplier.id).to eq new_producer.id
-        expect(order_cycle.reload.distributed_variants).not_to include product.variants.first
-      end
     end
 
     describe "product stock setting with errors" do

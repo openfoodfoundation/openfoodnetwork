@@ -60,11 +60,12 @@ class ProducerMailer < ApplicationMailer
 
   def line_items_from(order_cycle, producer)
     @line_items ||= Spree::LineItem.
-      includes(variant: [:product]).
+      includes(variant: :product).
+      joins(variant: :product).
       from_order_cycle(order_cycle).
-      sorted_by_name_and_unit_value.
-      merge(Spree::Product.with_deleted.in_supplier(producer)).
-      merge(Spree::Order.by_state(["complete", "resumed"]))
+      merge(Spree::Variant.with_deleted.where(supplier: producer)).
+      merge(Spree::Order.by_state(["complete", "resumed"])).
+      sorted_by_name_and_unit_value
   end
 
   def total_from_line_items(line_items)
@@ -81,7 +82,7 @@ class ProducerMailer < ApplicationMailer
     line_items.map do |line_item|
       {
         sku: line_item.variant.sku,
-        supplier_name: line_item.product.supplier.name,
+        supplier_name: line_item.variant.supplier.name,
         product_and_full_name: line_item.product_and_full_name,
         quantity: line_item.quantity,
         first_name: line_item.order.billing_address.first_name,

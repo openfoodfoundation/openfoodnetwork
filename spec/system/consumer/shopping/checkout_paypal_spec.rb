@@ -10,7 +10,7 @@ RSpec.describe "Check out with Paypal" do
 
   let(:distributor) { create(:distributor_enterprise) }
   let(:supplier) { create(:supplier_enterprise) }
-  let(:product) { create(:simple_product, supplier:) }
+  let(:product) { create(:simple_product, supplier_id: supplier.id) }
   let(:variant) { product.variants.first }
   let(:order_cycle) {
     create(

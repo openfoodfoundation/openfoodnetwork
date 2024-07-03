@@ -53,8 +53,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       s1 = FactoryBot.create(:supplier_enterprise)
       s2 = FactoryBot.create(:supplier_enterprise)
       s3 = FactoryBot.create(:supplier_enterprise)
-      p1 = FactoryBot.create(:product, supplier: s2)
-      p2 = FactoryBot.create(:product, supplier: s3)
+      p1 = FactoryBot.create(:product, supplier_id: s2.id)
+      p2 = FactoryBot.create(:product, supplier_id: s3.id)
 
       visit spree.admin_products_path
 
@@ -269,7 +269,9 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
 
       # create a product with a different supplier
       let!(:producer1) { create(:supplier_enterprise, name: "Producer 1") }
-      let!(:product_by_supplier) { create(:simple_product, name: "Apples", supplier: producer1) }
+      let!(:product_by_supplier) {
+        create(:simple_product, name: "Apples", supplier_id: producer1.id)
+      }
 
       before { user.enterprise_roles.create(enterprise: producer1) }
 

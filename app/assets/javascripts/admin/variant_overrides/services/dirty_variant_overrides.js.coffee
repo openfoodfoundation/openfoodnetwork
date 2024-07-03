@@ -12,11 +12,11 @@ angular.module("admin.variantOverrides").factory "DirtyVariantOverrides", ($http
         @add(hub_id, variant_id, vo_id)
         @dirtyVariantOverrides[hub_id][variant_id][attr] = value
 
-    inherit: (hub_id, variant_id, vo_id) ->
-      @add(hub_id, variant_id, vo_id)
-      blankVo = angular.copy(VariantOverrides.inherit(hub_id, variant_id))
+    inherit: (hub_id, variant, vo_id) ->
+      @add(hub_id, variant.id, vo_id)
+      blankVo = angular.copy(VariantOverrides.inherit(hub_id, variant))
       delete blankVo[attr] for attr, value of blankVo when attr not in @requiredAttrs()
-      @dirtyVariantOverrides[hub_id][variant_id] = blankVo
+      @dirtyVariantOverrides[hub_id][variant.id] = blankVo
 
     count: ->
       count = 0

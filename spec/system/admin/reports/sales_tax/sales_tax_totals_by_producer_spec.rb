@@ -25,41 +25,35 @@ RSpec.describe "Sales Tax Totals By Producer" do
     ].join(" ")
   }
   let!(:state_zone){ create(:zone_with_state_member) }
-  let!(:country_zone){ create(:zone_with_member) }
-  let!(:tax_category){ create(:tax_category) }
-  let!(:state_tax_rate){ create(:tax_rate, zone: state_zone, tax_category:) }
-  let!(:country_tax_rate){ create(:tax_rate, zone: country_zone, tax_category:) }
-  let!(:ship_address){ create(:ship_address) }
+  let!(:country_zone) { create(:zone_with_member) }
+  let!(:tax_category) { create(:tax_category, name: 'tax_category') }
+  let!(:state_tax_rate) {
+    create(:tax_rate, name: 'State', amount: 0.015, zone: state_zone, tax_category:)
+  }
+  let!(:country_tax_rate) {
+    create(:tax_rate, name: 'Country', amount: 0.025, zone: country_zone, tax_category:)
+  }
+  let!(:ship_address) { create(:ship_address) }
   let(:another_state){ create(:state, name: 'Another state', country: ship_address.country) }
 
-  let!(:variant){ create(:variant) }
-  let!(:product){ variant.product }
-  let!(:supplier){ create(:supplier_enterprise) }
-  let!(:distributor){ create(:distributor_enterprise_with_tax) }
-  let!(:payment_method){ create(:payment_method, :flat_rate) }
-  let!(:shipping_method){ create(:shipping_method, :flat_rate) }
+  let!(:variant) { create(:variant, supplier:, tax_category:) }
+  let!(:product) { variant.product }
+  let!(:supplier) { create(:supplier_enterprise, name: 'Supplier', charges_sales_tax: true) }
+  let!(:distributor) { create(:distributor_enterprise_with_tax, name: 'Distributor') }
+  let!(:payment_method) { create(:payment_method, :flat_rate) }
+  let!(:shipping_method) { create(:shipping_method, :flat_rate) }
 
-  let!(:order){ create(:order_with_distributor, distributor:) }
-  let!(:order_cycle){
-    create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
+  let!(:order) { create(:order_with_distributor, distributor:) }
+  let!(:order_cycle) {
+    create(:simple_order_cycle, name: 'oc1', suppliers: [supplier], distributors: [distributor],
                                 variants: [variant])
   }
 
-  let(:admin){ create(:admin_user) }
+  let(:admin) { create(:admin_user) }
 
   before do
-    state_tax_rate.update!({ name: 'State', amount: 0.015 })
-    country_tax_rate.update!({ name: 'Country', amount: 0.025 })
-    tax_category.update!({ name: 'tax_category' })
-    order_cycle.update!(name: "oc1")
-
-    distributor.update!({ name: 'Distributor' })
     distributor.shipping_methods << shipping_method
     distributor.payment_methods << payment_method
-
-    supplier.update!(name: 'Supplier', charges_sales_tax: true)
-    product.update!(supplier_id: supplier.id)
-    variant.update!(tax_category_id: tax_category.id)
   end
 
   context 'added tax' do

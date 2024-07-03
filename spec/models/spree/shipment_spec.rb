@@ -65,8 +65,8 @@ RSpec.describe Spree::Shipment do
     end
 
     describe "with soft-deleted products or variants" do
-      let!(:product) { create(:product) }
-      let!(:order) { create(:order, distributor: product.supplier) }
+      let(:variant) { create(:variant) }
+      let(:order) { create(:order, distributor: variant.supplier) }
 
       context "when the variant is soft-deleted" do
         it "can still access the variant" do
@@ -79,7 +79,7 @@ RSpec.describe Spree::Shipment do
 
       context "when the product is soft-deleted" do
         it "can still access the variant" do
-          order.line_items.first.variant.delete
+          order.line_items.first.product.delete
 
           variants = shipment.reload.manifest.map(&:variant)
           expect(variants).to eq [order.line_items.first.variant]

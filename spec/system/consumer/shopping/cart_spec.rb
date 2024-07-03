@@ -24,11 +24,11 @@ RSpec.describe "full-page cart" do
       create(:enterprise_fee, amount: 11.00, tax_category: product_with_tax.tax_category)
     }
     let(:product_with_tax) {
-      create(:taxed_product, supplier:, zone:, price: 110.00, tax_rate_amount: 0.1,
+      create(:taxed_product, supplier_id: supplier.id, zone:, price: 110.00, tax_rate_amount: 0.1,
                              included_in_price: true)
     }
     let(:product_with_fee) {
-      create(:simple_product, supplier:, price: 0.86, on_hand: 100)
+      create(:simple_product, supplier_id: supplier.id, price: 0.86, on_hand: 100)
     }
     let(:order) { create(:order, order_cycle:, distributor:) }
 

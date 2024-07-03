@@ -16,19 +16,19 @@ RSpec.describe ProductsRenderer do
     let(:cakes_supplier) { create(:supplier_enterprise) }
     let!(:product_apples) {
       create(:product, name: "apples", primary_taxon_id: fruits.id,
-                       supplier_id: fruits_supplier.id)
+                       supplier_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_banana_bread) {
       create(:product, name: "banana bread", primary_taxon_id: cakes.id,
-                       supplier_id: cakes_supplier.id)
+                       supplier_id: cakes_supplier.id, inherits_properties: true)
     }
     let!(:product_cherries) {
       create(:product, name: "cherries", primary_taxon_id: fruits.id,
-                       supplier_id: fruits_supplier.id)
+                       supplier_id: fruits_supplier.id, inherits_properties: true)
     }
     let!(:product_doughnuts) {
       create(:product, name: "doughnuts", primary_taxon_id: cakes.id,
-                       supplier_id: cakes_supplier.id)
+                       supplier_id: cakes_supplier.id, inherits_properties: true)
     }
 
     before do
@@ -68,12 +68,17 @@ RSpec.describe ProductsRenderer do
 
     context "filtering" do
       it "filters products by name_or_meta_keywords_or_variants_display_as_or_" \
-         "variants_display_name_or_supplier_name_cont" do
-        products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, { q: {
-                                                   "#{[:name, :meta_keywords, :variants_display_as,
-                                                       :variants_display_name, :supplier_name]
-                                                   .join('_or_')}_cont": "apples",
-                                                 } })
+         "variants_display_name_or_variants_supplier_name_cont" do
+        params = [:name, :meta_keywords, :variants_display_as, :variants_display_name,
+                  :variants_supplier_name]
+        ransack_param = "#{params.join('_or_')}_cont"
+        products_renderer = ProductsRenderer.new(
+          distributor,
+          order_cycle,
+          customer,
+          { q: { "#{ransack_param}": "apples" } }
+        )
+
         products = products_renderer.send(:products)
         expect(products).to eq([product_apples])
       end
@@ -89,7 +94,7 @@ RSpec.describe ProductsRenderer do
                                                       value: '1', position: 1 })
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer,
                                                    { q: {
-                                                     with_properties: [property_organic.id]
+                                                     with_properties: [property_organic.id, 999]
                                                    } })
           products = products_renderer.send(:products)
           expect(products).to eq([product_apples])
@@ -98,12 +103,66 @@ RSpec.describe ProductsRenderer do
         it "filters products with a producer property" do
           fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                         value: '1', position: 1 })
-          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer,
-                                                   { q: {
-                                                     with_properties: [property_organic.id]
-                                                   } })
+
+          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
           products = products_renderer.send(:products)
           expect(products).to eq([product_apples, product_cherries])
+        end
+
+        # TODO this is a bit flaky due to banana bread having two supplier
+        it "filters products with a product property or a producer property" do
+          cakes_supplier.producer_properties.create!({ property_id: property_organic.id,
+                                                       value: '1', position: 1 })
+          product_apples.product_properties.create!({ property_id: property_conventional.id,
+                                                      value: '1', position: 1 })
+
+          search_param = { q:
+            {
+              "with_variants_supplier_properties" => [property_organic.id],
+              "with_properties" => [property_conventional.id]
+            } }
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
+          products = products_renderer.send(:products)
+          expect(products).to eq([product_apples, product_banana_bread, product_doughnuts])
+        end
+
+        it "filters product with property and taxon set" do
+          stone_fruit = create(:taxon, name: "Stone fruit")
+          product_peach =
+            create(:product, name: "peach", primary_taxon_id: stone_fruit.id,
+                             supplier_id: fruits_supplier.id, inherits_properties: true)
+
+          fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
+                                                        value: '1', position: 1 })
+          exchange.variants << product_peach.variants.first
+
+          search_param = { q:
+            {
+              "with_variants_supplier_properties" => [property_organic.id],
+              "variants_primary_taxon_id_in_any" => [stone_fruit.id],
+            } }
+
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
+          products = products_renderer.send(:products)
+          expect(products).to eq([product_peach])
+        end
+
+        it "filters out products with inherits_properties set to false" do
+          product_cherries.update!(inherits_properties: false)
+          product_banana_bread.update!(inherits_properties: false)
+
+          fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
+                                                        value: '1', position: 1 })
+
+          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
+          products = products_renderer.send(:products)
+          expect(products).to eq([product_apples])
         end
 
         it "filters products with property when sorting is enabled" do

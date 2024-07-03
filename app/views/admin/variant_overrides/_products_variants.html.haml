@@ -1,5 +1,5 @@
 %tr.variant{ id: "v_{{variant.id}}", "ng-repeat": 'variant in product.variants | inventoryVariants:hub_id:views' }
-  %td.producer{ "ng-show": 'columns.producer.visible' }
+  %td.producer{ "ng-show": 'columns.producer.visible', "ng-bind": '::producersByID[variant.producer_id].name' }
   %td.product{ "ng-show": 'columns.product.visible' }
     %span{ "ng-bind": '::variant.display_name || ""' }
     .variant-override-unit{ "ng-bind": '::variant.unit_to_display' }

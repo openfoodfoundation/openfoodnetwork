@@ -83,7 +83,7 @@ module Permissions
       Spree::Order.with_line_items_variants_and_products_outer.
         where(
           distributor_id: granted_distributor_ids,
-          spree_products: { supplier_id: enterprises_with_associated_orders }
+          spree_variants: { supplier_id: enterprises_with_associated_orders }
         ).
         where_clause.__send__(:predicates).
         reduce(:and)

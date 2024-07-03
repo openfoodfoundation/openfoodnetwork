@@ -24,6 +24,7 @@ RSpec.describe '
       fill_in 'unit_value_human', with: '1'
       fill_in 'variant_unit_description', with: 'foo'
       select taxon.name, from: "variant_primary_taxon_id"
+      select2_select product.variants.first.supplier.name, from: "variant_supplier_id"
       click_button 'Create'
 
       # Then the variant should have been created
@@ -65,6 +66,7 @@ RSpec.describe '
       fill_in 'variant_weight', with: '1.234'
       fill_in 'unit_value_human', with: 1
       select taxon.name, from: "variant_primary_taxon_id"
+      select2_select product.variants.first.supplier.name, from: "variant_supplier_id"
       click_button 'Create'
 
       # Then the variant should have been created
@@ -236,6 +238,27 @@ RSpec.describe '
     end
   end
 
+  describe "editing supplier" do
+    let(:product) { create(:simple_product) }
+    let(:variant) { product.variants.first }
+
+    before do
+      login_as_admin
+    end
+
+    it "updates the supplier" do
+      new_supplier = create(:supplier_enterprise)
+      visit spree.edit_admin_product_variant_path(product, variant)
+
+      select2_select new_supplier.name, from: "variant_supplier_id"
+
+      click_button 'Update'
+
+      expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
+      expect(variant.reload.supplier).to eq(new_supplier)
+    end
+  end
+
   describe "editing on hand and on demand values" do
     let(:product) { create(:simple_product) }
     let(:variant) { product.variants.first }
@@ -331,7 +354,7 @@ RSpec.describe '
 
       fill_in "unit_value_human", with: "1.23"
       click_button 'Update'
-      expect(page).not_to have_content %(Variant "#{product.name}" has been successfully updated!)
+      expect(page).to have_content %(Variant "#{product.name}" has been successfully updated!)
 
       # Then the displayed values should have been saved
       expect(variant.reload.unit_value).to eq(1.23)

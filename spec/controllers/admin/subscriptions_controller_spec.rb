@@ -262,9 +262,9 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
     let!(:user) { create(:user) }
     let!(:shop) { create(:distributor_enterprise, owner: user) }
     let!(:customer) { create(:customer, enterprise: shop) }
-    let!(:product1) { create(:product, supplier: shop) }
+    let!(:product1) { create(:product) }
     let!(:variant1) {
-      create(:variant, product: product1, unit_value: '100', price: 12.00)
+      create(:variant, product: product1, unit_value: '100', price: 12.00, supplier: shop)
     }
     let!(:enterprise_fee) { create(:enterprise_fee, amount: 1.75) }
     let!(:order_cycle) {

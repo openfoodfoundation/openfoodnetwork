@@ -18,7 +18,7 @@ module Reporting
             joins_order_bill_address.
             joins_variant.
             joins_variant_product.
-            joins_product_supplier.
+            joins_variant_supplier.
             joins_variant_shipping_category.
             selecting(select_fields).
             ordered_by(ordering_fields)

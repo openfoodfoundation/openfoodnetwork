@@ -37,9 +37,9 @@ RSpec.describe "Orders And Fulfillment" do
                                            order_cycle_id: order_cycle.id)
     }
     let(:supplier) { create(:supplier_enterprise, name: "Supplier Name") }
-    let(:product) { create(:simple_product, name: "Baked Beans", supplier: ) }
-    let(:variant1) { create(:variant, product:, unit_description: "Big") }
-    let(:variant2) { create(:variant, product:, unit_description: "Small") }
+    let(:product) { create(:simple_product, name: "Baked Beans", supplier_id: supplier.id ) }
+    let(:variant1) { create(:variant, product:, unit_description: "Big", supplier:) }
+    let(:variant2) { create(:variant, product:, unit_description: "Small", supplier: ) }
 
     before do
       # order1 has two line items / variants
@@ -427,8 +427,12 @@ RSpec.describe "Orders And Fulfillment" do
     describe "Order Cycle Distributor Totals by Supplier" do
       context "for an OC supplied by two suppliers" do
         let(:supplier2) { create(:supplier_enterprise, name: "Another Supplier Name") }
-        let(:product2) { create(:simple_product, name: "Salted Peanuts", supplier: supplier2 ) }
-        let(:variant3) { create(:variant, product: product2, unit_description: "Bag") }
+        let(:product2) {
+          create(:simple_product, name: "Salted Peanuts", supplier_id: supplier2.id )
+        }
+        let(:variant3) {
+          create(:variant, product: product2, unit_description: "Bag", supplier: supplier2)
+        }
         let(:order4) {
           create(:completed_order_with_totals, line_items_count: 0, distributor:,
                                                bill_address: bill_address1,

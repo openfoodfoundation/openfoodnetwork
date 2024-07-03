@@ -10,7 +10,6 @@ class Api::ProductSerializer < ActiveModel::Serializer
   has_many :variants, serializer: Api::VariantSerializer
 
   has_one :image, serializer: Api::ImageSerializer
-  has_one :supplier, serializer: Api::IdSerializer
 
   # return an unformatted descripton
   def description

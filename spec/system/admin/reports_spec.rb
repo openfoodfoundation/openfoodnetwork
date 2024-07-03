@@ -379,16 +379,19 @@ RSpec.describe '
     let(:supplier) { create(:supplier_enterprise, name: 'Supplier Name') }
     let(:taxon)    { create(:taxon, name: 'Taxon Name') }
     let(:product1) {
-      create(:simple_product, name: "Product Name", price: 100, supplier:,
-                              primary_taxon_id: taxon.id)
+      create(:simple_product, name: "Product Name", price: 100, primary_taxon_id: taxon.id,
+                              supplier_id: supplier.id)
     }
     let(:product2) {
       create(:simple_product, name: "Product 2", price: 99.0, variant_unit: 'weight',
-                              variant_unit_scale: 1, unit_value: '100', supplier:,
-                              primary_taxon_id: taxon.id, sku: "product_sku")
+                              variant_unit_scale: 1, unit_value: '100',
+                              primary_taxon_id: taxon.id, sku: "product_sku",
+                              supplier_id: supplier.id)
     }
     let(:variant1) { product1.variants.first }
-    let(:variant2) { create(:variant, product: product1, price: 80.0, primary_taxon: taxon) }
+    let(:variant2) {
+      create(:variant, product: product1, price: 80.0, primary_taxon: taxon, supplier:)
+    }
     let(:variant3) { product2.variants.first }
 
     before do
@@ -416,17 +419,17 @@ RSpec.describe '
                                       "Product Properties", "Taxons", "Variant Value", "Price",
                                       "Group Buy Unit Quantity", "Amount", "SKU",
                                       "On Demand?", "On Hand"]
-      expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
+      expect(page).to have_table_row [supplier.name, supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
                                       taxon.name, "1g", "100.0",
                                       "none", "", "sku1", "No", "10"]
-      expect(page).to have_table_row [product1.supplier.name, product1.supplier.address.city,
+      expect(page).to have_table_row [supplier.name, supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),
                                       taxon.name, "1g", "80.0",
                                       "none", "", "sku2", "No", "20"]
-      expect(page).to have_table_row [product2.supplier.name, product1.supplier.address.city,
+      expect(page).to have_table_row [supplier.name, supplier.address.city,
                                       "Product 2",
                                       product1.properties.map(&:presentation).join(", "),
                                       taxon.name, "100g", "99.0",

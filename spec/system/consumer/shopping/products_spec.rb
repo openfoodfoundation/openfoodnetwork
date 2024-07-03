@@ -25,11 +25,11 @@ RSpec.describe "As a consumer I want to view products" do
                                   orders_close_at: 2.days.from_now)
     }
     let(:product) {
-      create(:simple_product, supplier:, primary_taxon: taxon, properties: [property],
-                              name: "Beans")
+      create(:simple_product, supplier_id: supplier.id, primary_taxon: taxon,
+                              properties: [property], name: "Beans")
     }
     let(:product2) {
-      create(:product, supplier:, primary_taxon: taxon2, properties: [property2],
+      create(:product, supplier_id: supplier.id, primary_taxon: taxon2, properties: [property2],
                        name: "Chickpeas")
     }
     let(:variant) { product.variants.first }

@@ -523,21 +523,21 @@ RSpec.describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
       let!(:producer_c) { create(:supplier_enterprise, name: "Producer C") }
 
       let!(:fee_a) { create(:enterprise_fee, name: "Fee A", enterprise: producer_a, amount: 1) }
-      let!(:fee_b) { create(:enterprise_fee, name: "Fee B", enterprise: producer_b, amount: 1) }
-      let!(:fee_c) { create(:enterprise_fee, name: "Fee C", enterprise: producer_c, amount: 1) }
+      let!(:fee_b) { create(:enterprise_fee, name: "Fee B", enterprise: producer_b, amount: 2) }
+      let!(:fee_c) { create(:enterprise_fee, name: "Fee C", enterprise: producer_c, amount: 3) }
 
-      let!(:product_a) { create(:product, supplier: producer_a) }
-      let!(:product_b) { create(:product, supplier: producer_b) }
-      let!(:product_c) { create(:product, supplier: producer_c) }
+      let!(:product_a) { create(:product, supplier_id: producer_a.id) }
+      let!(:product_b) { create(:product, supplier_id: producer_b.id) }
+      let!(:product_c) { create(:product, supplier_id: producer_c.id) }
 
       let!(:variant_a) do
-        prepare_variant(product: product_a, producer: producer_a, incoming_exchange_fees: [fee_a])
+        prepare_variant(product: product_a, supplier: producer_a, incoming_exchange_fees: [fee_a])
       end
       let!(:variant_b) do
-        prepare_variant(product: product_b, producer: producer_b, incoming_exchange_fees: [fee_b])
+        prepare_variant(product: product_b, supplier: producer_b, incoming_exchange_fees: [fee_b])
       end
       let!(:variant_c) do
-        prepare_variant(product: product_c, producer: producer_c, incoming_exchange_fees: [fee_c])
+        prepare_variant(product: product_c, supplier: producer_c, incoming_exchange_fees: [fee_c])
       end
 
       let!(:order_a) { prepare_order(variant: variant_a) }
@@ -697,8 +697,7 @@ RSpec.describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
   end
 
   def default_order_options
-    { customer:, distributor:, order_cycle:,
-      shipping_method:, variant: }
+    { customer:, distributor:, order_cycle:, shipping_method:, variant: }
   end
 
   def prepare_incomplete_order(options = {})
@@ -713,8 +712,7 @@ RSpec.describe Reporting::Reports::EnterpriseFeeSummary::FeeSummary do
   end
 
   def default_variant_options
-    { product:, producer:, coordinator:,
-      distributor:, order_cycle: }
+    { product:, coordinator:, distributor:, order_cycle: }
   end
 
   def prepare_variant(options = {})

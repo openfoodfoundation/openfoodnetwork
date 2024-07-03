@@ -108,7 +108,7 @@ class ProductsReflex < ApplicationReflex
 
   def ransack_query
     query = {}
-    query.merge!(supplier_id_in: @producer_id) if @producer_id.present?
+    query.merge!(variants_supplier_id_in: @producer_id) if @producer_id.present?
     if @search_term.present?
       query.merge!(Spree::Variant::SEARCH_KEY => @search_term)
     end

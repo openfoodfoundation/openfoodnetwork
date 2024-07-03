@@ -12,7 +12,7 @@ RSpec.describe Api::V0::ShopsController, type: :controller do
     }
     let!(:producer) { create(:supplier_enterprise, name: 'Shopfront Test Producer') }
     let!(:category) { create(:taxon, name: 'Fruit') }
-    let!(:product) { create(:product, supplier: producer, primary_taxon: category ) }
+    let!(:product) { create(:product, supplier_id: producer.id, primary_taxon: category ) }
     let!(:relationship) { create(:enterprise_relationship, parent: hub, child: producer) }
     let!(:closed_hub1) { create(:distributor_enterprise) }
     let!(:closed_hub2) { create(:distributor_enterprise) }

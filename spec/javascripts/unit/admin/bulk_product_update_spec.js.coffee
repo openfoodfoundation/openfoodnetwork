@@ -192,7 +192,6 @@ describe "filtering products for submission to database", ->
       updated_at: null
       on_hand: 0
       on_demand: false
-      producer_id: 5
       group_buy: null
       group_buy_unit_size: null
       variants: [
@@ -204,6 +203,7 @@ describe "filtering products for submission to database", ->
         unit_description: "(bottle)"
         display_as: "bottle"
         display_name: "nothing"
+        producer_id: 5
       ]
       variant_unit: 'volume'
       variant_unit_scale: 1
@@ -213,7 +213,6 @@ describe "filtering products for submission to database", ->
     expect(filterSubmitProducts([testProduct])).toEqual [
       id: 1
       name: "TestProduct"
-      supplier_id: 5
       variant_unit: 'volume'
       variant_unit_scale: 1
       variant_unit_name: 'loaf'
@@ -226,6 +225,7 @@ describe "filtering products for submission to database", ->
         unit_description: "(bottle)"
         display_as: "bottle"
         display_name: "nothing"
+        supplier_id: 5
       ]
     ]
 

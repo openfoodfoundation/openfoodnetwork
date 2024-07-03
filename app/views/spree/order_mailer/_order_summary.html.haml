@@ -20,7 +20,7 @@
           = render 'spree/shared/line_item_name', line_item: item
           %br
           %small
-            %em= item.variant.product.supplier.name
+            %em= item.variant.supplier.name
         %td
           - if item.variant.sku.blank?
             \-

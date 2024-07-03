@@ -31,16 +31,17 @@ class ProductScopeQuery
     product_scope.find(@params[:product_id])
   end
 
-  def paged_products_for_producers
+  def products_for_producers
     producer_ids = OpenFoodNetwork::Permissions.new(@user).
       variant_override_producers.by_name.select('enterprises.id')
 
+    # Use `order("enterprises.name")` instead of `by_producer scope`, the scope adds a join
+    # on variants which messes our query
     Spree::Product.where(nil).
       merge(product_scope).
-      includes(variants: [:product, :default_price, :stock_items]).
-      where(supplier_id: producer_ids).
-      by_producer.by_name.
-      ransack(@params[:q]).result
+      includes(variants: [:product, :default_price, :stock_items, :supplier]).
+      where(variants: { supplier_id: producer_ids }).
+      ransack(@params[:q]).result(distinct: true)
   end
 
   def product_scope

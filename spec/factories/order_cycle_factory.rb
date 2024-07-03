@@ -30,7 +30,11 @@ FactoryBot.define do
 
       # Products with images
       proxy.exchanges.incoming.each do |exchange|
-        product = create(:product, supplier: exchange.sender)
+        product = create(:product).tap do |p|
+          variant = p.variants.first
+          variant.supplier = exchange.sender
+          variant.save!
+        end
         Spree::Image.create(
           viewable_id: product.id,
           viewable_type: 'Spree::Product',

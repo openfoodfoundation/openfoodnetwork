@@ -3,11 +3,11 @@
 class SuppliedProductBuilder < DfcBuilder
   def self.supplied_product(variant)
     id = urls.enterprise_supplied_product_url(
-      enterprise_id: variant.product.supplier_id,
+      enterprise_id: variant.supplier_id,
       id: variant.id,
     )
     product_uri = urls.enterprise_url(
-      variant.product.supplier_id,
+      variant.supplier_id,
       spree_product_id: variant.product_id
     )
 
@@ -29,14 +29,15 @@ class SuppliedProductBuilder < DfcBuilder
     if product
       Spree::Variant.new(
         product:,
+        supplier:,
         price: 0,
       ).tap do |variant|
         apply(supplied_product, variant)
       end
     else
       product = import_product(supplied_product)
-      product.supplier = supplier
       product.ensure_standard_variant
+      product.variants.first.supplier = supplier
       product.variants.first
     end.tap do |variant|
       link = supplied_product.semanticId

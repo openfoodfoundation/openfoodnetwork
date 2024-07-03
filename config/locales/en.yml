@@ -69,7 +69,6 @@ en:
         name: "Product Name"
         price: "Price"
         primary_taxon: "Product Category"
-        supplier: "Supplier"
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
@@ -77,6 +76,7 @@ en:
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
+        supplier: "Supplier"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -917,7 +917,6 @@ en:
         search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-      product_row:
         producer_field_name: "Producer"
       clone:
         success: Successfully cloned the product

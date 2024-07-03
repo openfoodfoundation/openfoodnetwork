@@ -108,6 +108,6 @@ class EnterpriseRelationship < ApplicationRecord
 
   def child_variant_overrides
     VariantOverride.unscoped.for_hubs(child)
-      .joins(variant: :product).where(spree_products: { supplier_id: parent })
+      .joins(:variant).where(spree_variants: { supplier_id: parent } )
   end
 end

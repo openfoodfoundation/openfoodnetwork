@@ -13,8 +13,8 @@ module Spree
 
     acts_as_paranoid
 
-    searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id
-    searchable_associations :product, :default_price, :primary_taxon
+    searchable_attributes :sku, :display_as, :display_name, :primary_taxon_id, :supplier_id
+    searchable_associations :product, :default_price, :primary_taxon, :supplier
     searchable_scopes :active, :deleted
 
     NAME_FIELDS = ["display_name", "display_as", "weight", "unit_value", "unit_description"].freeze
@@ -23,12 +23,15 @@ module Spree
                        meta_keywords
                        variants_display_as
                        variants_display_name
-                       supplier_name).join('_or_')}_cont".freeze
+                       variants_supplier_name).join('_or_')}_cont".freeze
 
-    belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product'
+    belongs_to :product, -> {
+                           with_deleted
+                         }, touch: true, class_name: 'Spree::Product', optional: false
     belongs_to :tax_category, class_name: 'Spree::TaxCategory'
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', optional: false
     belongs_to :primary_taxon, class_name: 'Spree::Taxon', touch: true, optional: false
+    belongs_to :supplier, class_name: 'Enterprise', optional: false, touch: true
 
     delegate :name, :name=, :description, :description=, :meta_keywords, to: :product
 
@@ -58,6 +61,7 @@ module Spree
     has_many :variant_overrides, dependent: :destroy
     has_many :inventory_items, dependent: :destroy
     has_many :semantic_links, dependent: :delete_all
+    has_many :supplier_properties, through: :supplier, source: :properties
 
     localize_number :price, :weight
 
@@ -94,7 +98,7 @@ module Spree
     after_save :save_default_price
 
     # default variant scope only lists non-deleted variants
-    scope :deleted, lambda { where.not(deleted_at: nil) }
+    scope :deleted, -> { where.not(deleted_at: nil) }
 
     scope :with_order_cycles_inner, -> { joins(exchanges: :order_cycle) }
 
@@ -139,11 +143,9 @@ module Spree
         .where("o_inventory_items.id IS NULL OR o_inventory_items.visible = (?)", true)
     }
 
-    scope :stockable_by, lambda { |enterprise|
-      return where("1=0") if enterprise.blank?
-
-      joins(:product).
-        where(spree_products: { id: Spree::Product.stockable_by(enterprise).select(:id) })
+    scope :with_properties, lambda { |property_ids|
+      left_outer_joins(:supplier_properties).
+        where(producer_properties: { property_id: property_ids })
     }
 
     # Define sope as class method to allow chaining with other scopes filtering id.
@@ -250,8 +252,16 @@ module Spree
     end
 
     def destruction
-      exchange_variants.reload.destroy_all
-      yield
+      transaction do
+        # Even tough Enterprise will touch associated variant distributors when touched,
+        # the variant will be removed from the exchange by the time it's triggered,
+        # so it won't be able to find the deleted variant's distributors.
+        # This why we do it here
+        touch_distributors
+
+        exchange_variants.reload.destroy_all
+        yield
+      end
     end
 
     def ensure_unit_value
@@ -267,6 +277,10 @@ module Spree
 
     def convert_variant_weight_to_decimal
       self.weight = weight.to_d
+    end
+
+    def touch_distributors
+      Enterprise.distributing_variants(id).each(&:touch)
     end
   end
 end

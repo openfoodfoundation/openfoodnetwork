@@ -9,6 +9,8 @@ class Api::VariantSerializer < ActiveModel::Serializer
              :tag_list, :thumb_url,
              :unit_price_price, :unit_price_unit
 
+  has_one :supplier, serializer: Api::IdSerializer
+
   delegate :price, to: :object
 
   def fees

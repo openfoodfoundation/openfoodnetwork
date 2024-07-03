@@ -9,7 +9,7 @@ module Api
       has_one :order, serializer: Api::Admin::IdSerializer
 
       def supplier
-        { id: object.product.supplier_id }
+        { id: object.supplier.id }
       end
 
       def units_product

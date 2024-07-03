@@ -136,7 +136,9 @@ end
 
 RSpec.shared_examples "associated attribute changes - line items" do |boolean, type|
   context "line item changes" do
-    let(:line_item){ order.line_items.first }
+    let(:line_item) { order.line_items.first }
+    let(:variant) { create(:variant) }
+
     context "on quantitity" do
       before { line_item.update!(quantity: line_item.quantity + 1) }
       it "returns #{boolean} if a #{type} attribute changes" do
@@ -146,7 +148,7 @@ RSpec.shared_examples "associated attribute changes - line items" do |boolean, t
     end
 
     context "on variant id" do
-      before { line_item.update!(variant_id: Spree::Variant.first.id) }
+      before { line_item.update!(variant_id: variant.id) }
       it "returns #{boolean} if a #{type} attribute changes" do
         order.reload
         expect(subject).to be boolean

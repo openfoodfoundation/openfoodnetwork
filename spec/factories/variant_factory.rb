@@ -12,7 +12,15 @@ FactoryBot.define do
     depth  { generate(:random_float) }
 
     primary_taxon { Spree::Taxon.first || FactoryBot.create(:taxon) }
-    product { |p| p.association(:product) }
+    supplier { Enterprise.is_primary_producer.first || FactoryBot.create(:supplier_enterprise) }
+
+    # createing a product here  will end up creating an extra variant, as creating product will
+    # create a "standard variant" by default. We could try to pass the variant instance we
+    # are creating but it fails because then the variant instance gets saved and it fails because
+    # the product isn't associated yet. It's a chicken and egg problem.
+    # It will be fixed once we finish the product refactor, and we don't need the product to
+    # create a "standard variant"
+    product { association :base_product }
 
     # ensure stock item will be created for this variant
     before(:create) { create(:stock_location) if Spree::StockLocation.count.zero? }
@@ -35,7 +43,7 @@ FactoryBot.define do
       trait :with_order_cycle do
         transient do
           order_cycle { create(:order_cycle) }
-          producer { product.supplier }
+          producer { supplier }
           coordinator { create(:distributor_enterprise) }
           distributor { create(:distributor_enterprise) }
           incoming_exchange_fees { [] }

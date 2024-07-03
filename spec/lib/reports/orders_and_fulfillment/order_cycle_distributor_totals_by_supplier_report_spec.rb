@@ -30,7 +30,7 @@ module Reporting
           distributor_name_field = report_table.first[0]
           expect(distributor_name_field).to eq distributor.name
 
-          supplier = order.line_items.first.variant.product.supplier
+          supplier = order.line_items.first.variant.supplier
           supplier_name_field = report_table.first[1]
           expect(supplier_name_field).to eq supplier.name
         end

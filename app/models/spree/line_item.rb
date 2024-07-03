@@ -16,7 +16,7 @@ module Spree
 
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant"
     has_one :product, through: :variant
-    has_one :supplier, through: :product
+    has_one :supplier, through: :variant
     belongs_to :tax_category, class_name: "Spree::TaxCategory", optional: true
 
     has_many :adjustments, as: :adjustable, dependent: :destroy
@@ -85,13 +85,11 @@ module Spree
         where(order_cycles: { id: order_cycle })
     }
 
-    # Here we are simply joining the line item to its variant and product
-    # We dont use joins here to avoid the default scopes,
-    #   and with that, include deleted variants and deleted products
+    # Here we are simply joining the line item to its variant
+    # We dont use joins here to avoid the default scopes, and with that, include deleted variants
     scope :supplied_by_any, lambda { |enterprises|
-      product_ids = Spree::Product.unscoped.where(supplier_id: enterprises).select(:id)
-      variant_ids = Spree::Variant.unscoped.where(product_id: product_ids).select(:id)
-      where(spree_line_items: { variant_id: variant_ids })
+      variant_ids = Spree::Variant.unscoped.where(supplier: enterprises).select(:id)
+      where(variant_id: variant_ids)
     }
 
     scope :with_tax, -> {
