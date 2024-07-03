@@ -78,8 +78,7 @@ class SuppliedProductBuilder < DfcBuilder
 
     variant.display_name = supplied_product.name
     variant.primary_taxon = taxon(supplied_product)
-    QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
-    variant.unit_value = variant.product.unit_value
+    QuantitativeValueBuilder.apply(supplied_product.quantity, variant)
   end
 
   def self.product_type(variant)
