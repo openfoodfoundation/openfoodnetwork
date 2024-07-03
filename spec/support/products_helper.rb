@@ -3,7 +3,7 @@
 module ProductsHelper
   def create_products(amount)
     amount.times do |i|
-      create(:simple_product, name: "product #{i}", supplier: producer)
+      create(:simple_product, name: "product #{i}", supplier_id: producer.id)
     end
   end
 
@@ -39,6 +39,13 @@ module ProductsHelper
   # visible name.
   def row_containing_name(value)
     "tr:has(input[aria-label=Name][value='#{value}'])"
+  end
+
+  # Selector for table row that has an input with a placeholder.
+  # Variant don't have display_name set, so we look for the input with placeholder matching the
+  # product's name to get the variant row
+  def row_containing_placeholder(value)
+    "tr:has(input[aria-label=Name][placeholder='#{value}'])"
   end
 
   # Wait for an element with the given CSS selector and class to be present

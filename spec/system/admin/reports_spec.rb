@@ -418,7 +418,7 @@ RSpec.describe '
       expect(page).to have_table_row ["Supplier", "Producer Suburb", "Product",
                                       "Product Properties", "Taxons", "Variant Value", "Price",
                                       "Group Buy Unit Quantity", "Amount", "SKU",
-                                      "On Demand?", "On hand"]
+                                      "On Demand?", "On Hand"]
       expect(page).to have_table_row [supplier.name, supplier.address.city,
                                       "Product Name",
                                       product1.properties.map(&:presentation).join(", "),

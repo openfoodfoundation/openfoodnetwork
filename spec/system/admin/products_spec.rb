@@ -255,12 +255,12 @@ RSpec.describe '
 
     describe "deleting" do
       let!(:product1) {
-        create(:simple_product, name: 'a product to keep', supplier_id: @supplier.id)
+        create(:simple_product, name: 'a product to keep', supplier_id: supplier.id)
       }
 
       context 'a simple product' do
         let!(:product2) {
-          create(:simple_product, name: 'a product to delete', supplier_id: @supplier.id
+          create(:simple_product, name: 'a product to delete', supplier_id: supplier.id)
         }
 
         before do
@@ -311,7 +311,7 @@ RSpec.describe '
 
     describe 'cloning' do
       let!(:product1) {
-        create(:simple_product, name: 'a weight product', supplier_id: @supplier.id,
+        create(:simple_product, name: 'a weight product', supplier_id: supplier.id,
                                 variant_unit: "weight")
       }
 
