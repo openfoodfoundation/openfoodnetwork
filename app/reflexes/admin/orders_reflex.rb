@@ -37,9 +37,12 @@ module Admin
 
       return if notify_if_abn_related_issue(visible_orders)
 
+      file_id = "#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}"
+
       cable_ready.append(
         selector: "#orders-index",
-        html: render(partial: "spree/admin/orders/bulk/invoice_modal")
+        html: render(partial: "spree/admin/orders/bulk/invoice_modal",
+                     locals: { invoice_url: "/admin/orders/invoices/#{file_id}" })
       ).broadcast
 
       # Preserve order of bulk_ids.
@@ -49,7 +52,7 @@ module Admin
 
       BulkInvoiceJob.perform_later(
         visible_order_ids,
-        "tmp/invoices/#{Time.zone.now.to_i}-#{SecureRandom.hex(2)}.pdf",
+        "tmp/invoices/#{file_id}.pdf",
         channel: SessionChannel.for_request(request),
         current_user_id: current_user.id
       )

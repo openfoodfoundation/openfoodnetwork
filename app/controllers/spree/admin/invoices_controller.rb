@@ -15,6 +15,8 @@ module Spree
         invoice_pdf = filepath(invoice_id)
 
         send_file(invoice_pdf, type: 'application/pdf', disposition: :inline)
+      rescue ActionController::MissingFile
+        render "errors/not_found", status: :not_found, formats: :html
       end
 
       def generate
