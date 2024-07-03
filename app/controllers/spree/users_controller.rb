@@ -47,14 +47,8 @@ module Spree
       @user = Spree::User.new(user_params)
 
       if @user.save
-        render cable_ready: cable_car.inner_html(
-          "#signup-feedback",
-          partial("layouts/alert",
-                  locals: {
-                    type: "success",
-                    message: t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-                  })
-        )
+        flash[:success] = t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
+        render cable_ready: cable_car.redirect_to(url: main_app.root_path)
       else
         render status: :unprocessable_entity, cable_ready: cable_car.morph(
           "#signup-tab",
