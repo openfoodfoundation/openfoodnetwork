@@ -287,6 +287,27 @@ RSpec.describe '
             it_behaves_like "can bulk print invoices from 2 orders"
           end
 
+          context "when cable_ready fails" do
+            # The backup polling is slower. Let's wait for it.
+            around do |example|
+              polling_interval = 5 # seconds
+              wait_time = Capybara.default_max_wait_time + polling_interval
+
+              using_wait_time(wait_time) do
+                example.run
+              end
+            end
+
+            # Don't send anything via web sockets.
+            before do
+              expect_any_instance_of(BulkInvoiceJob)
+                .to receive(:broadcast)
+                .and_return(nil) # do nothing
+            end
+
+            it_behaves_like "can bulk print invoices from 2 orders"
+          end
+
           context "one of the two orders is not invoiceable" do
             before do
               order4.cancel!
