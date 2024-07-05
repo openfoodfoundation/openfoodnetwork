@@ -25,7 +25,8 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
       let(:distributor1) { create(:distributor_enterprise) }
       let(:supplier) { create(:supplier_enterprise) }
       let(:user) { create(:admin_user) }
-      let(:product) { create(:product, supplier:) }
+      let(:product) { variant.product }
+      let(:variant) { create(:variant, supplier:) }
       let(:shipping_method) { create(:shipping_method) }
       let(:shipping_instructions) { 'pick up on thursday please!' }
       let(:order) {
