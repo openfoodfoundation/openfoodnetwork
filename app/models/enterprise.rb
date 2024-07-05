@@ -427,10 +427,9 @@ class Enterprise < ApplicationRecord
     test_permalink = UrlGenerator.to_url(test_permalink)
     test_permalink = "my-enterprise" if test_permalink.blank?
     existing = Enterprise.
-      select(:permalink).
       order(:permalink).
       where("permalink LIKE ?", "#{test_permalink}%").
-      map(&:permalink)
+      pluck(:permalink)
 
     if existing.include?(test_permalink)
       used_indices = existing.map do |p|
