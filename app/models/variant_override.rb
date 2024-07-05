@@ -52,11 +52,7 @@ class VariantOverride < ApplicationRecord
       return
     end
 
-    if quantity > 0
-      increment! :count_on_hand, quantity
-    elsif quantity < 0
-      decrement! :count_on_hand, -quantity
-    end
+    update!(count_on_hand: (count_on_hand || 0) + quantity)
   end
 
   def default_stock?

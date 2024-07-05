@@ -5,7 +5,6 @@ require 'open_food_network/scope_variant_to_hub'
 module Spree
   class LineItem < ApplicationRecord
     include VariantUnits::VariantAndLineItemNaming
-    include LineItemStockChanges
 
     searchable_attributes :price, :quantity, :order_id, :variant_id, :tax_category_id
     searchable_associations :order, :order_cycle, :variant, :product, :supplier, :tax_category
