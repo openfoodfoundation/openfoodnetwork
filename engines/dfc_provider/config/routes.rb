@@ -11,6 +11,9 @@ DfcProvider::Engine.routes.draw do
   resources :enterprise_groups, only: [:index, :show] do
     resources :affiliated_by, only: [:create, :destroy], module: 'enterprise_groups'
   end
-  resources :persons, only: [:show]
-  resources :anonymous_orders, only: [:index]
+  resources :persons, only: [:show] do
+    member do
+      get :affiliate_sales_data
+    end
+  end
 end

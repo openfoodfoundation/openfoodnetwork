@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module DfcProvider
-  class AnonymousOrdersController < DfcProvider::ApplicationController
-    def index
+  class AffiliateSalesDataController < DfcProvider::ApplicationController
+    def show
       orders = anonymous_orders.map do |order|
         OrderBuilder.build_anonymous(order)
       end
