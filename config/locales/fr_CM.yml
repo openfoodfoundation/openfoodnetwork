@@ -30,13 +30,13 @@ fr_CM:
         name: "Nom du Produit"
         price: "Prix"
         primary_taxon: "Catégorie Produit"
-        supplier: "Fournisseur"
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
       spree/variant:
         primary_taxon: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
+        supplier: "Fournisseur"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -627,13 +627,12 @@ fr_CM:
       sort:
         pagination:
           clear_search: Annuler la recherche
-      table:
+      product_variant_row:
         new_variant: Nouvelle variante
       variant_row:
         none_tax_category: Aucun
         category_field_name: "Catégorie"
         tax_category_field_name: "TVA applicable"
-      product_row:
         producer_field_name: "Producteur"
     product_import:
       title: Import liste produits
@@ -3311,7 +3310,7 @@ fr_CM:
   account: "Compte"
   logout: "Déconnexion"
   date_range: "Période"
-  status: "statut"
+  status: "Statut"
   new: "Nouveau"
   start: "Début"
   end: "Fin"

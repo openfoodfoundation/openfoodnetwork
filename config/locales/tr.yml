@@ -30,13 +30,13 @@ tr:
         name: "ÜRÜN ADI"
         price: "Fiyat"
         primary_taxon: "ÜRÜN KATEGORİSİ"
-        supplier: "TEDARİKÇİ"
         shipping_category_id: "TESLİMAT KATEGORİSİ"
         variant_unit: "Çeşit Birimi"
         variant_unit_name: "Çeşit Birim Adı"
       spree/variant:
         primary_taxon: "ÜRÜN KATEGORİSİ"
         shipping_category_id: "TESLİMAT KATEGORİSİ"
+        supplier: "TEDARİKÇİ"
       spree/credit_card:
         base: "Kredİ kartı"
         number: "Numara"
@@ -609,13 +609,12 @@ tr:
       sort:
         pagination:
           clear_search: Aramayı temizle
-      table:
+      product_variant_row:
         new_variant: Yeni Çeşit
       variant_row:
         none_tax_category: SATIŞ YAPMIYOR
         category_field_name: "Kategori"
         tax_category_field_name: "Vergi Kategorisi"
-      product_row:
         producer_field_name: "ÜRETİCİ"
     product_import:
       title: Ürün Aktarımı
@@ -3203,7 +3202,7 @@ tr:
   account: "Hesap"
   logout: "Çıkış Yap"
   date_range: "Tarih aralığı"
-  status: "durum"
+  status: "Durum"
   new: "YENİ"
   start: "Başlangıç"
   end: "Son"

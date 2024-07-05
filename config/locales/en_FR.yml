@@ -48,7 +48,6 @@ en_FR:
         name: "Product Name"
         price: "Price"
         primary_taxon: "Product Category"
-        supplier: "Supplier"
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
@@ -56,6 +55,7 @@ en_FR:
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
+        supplier: "Supplier"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -832,6 +832,7 @@ en_FR:
             other: "%{count} products could not be saved. Please review the errors and try again."
         reset: Discard changes
         save: Save changes
+      product_variant_row:
         new_variant: New variant
       bulk_update:
         success: Changes saved
@@ -846,8 +847,10 @@ en_FR:
         search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-      product_row:
         producer_field_name: "Producer"
+      clone:
+        success: Successfully cloned the product
+        error: Unable to clone the product
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -1600,6 +1603,9 @@ en_FR:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      display:
+        report_is_big: "This report is big and may slow down your device."
+        display_anyway: "Display anyway"
       download:
         button: "Download Report"
       show:
@@ -3702,7 +3708,7 @@ en_FR:
   account: "Account"
   logout: "Logout"
   date_range: "Date Range"
-  status: "status"
+  status: "Status"
   new: "New"
   start: "Start"
   end: "End"

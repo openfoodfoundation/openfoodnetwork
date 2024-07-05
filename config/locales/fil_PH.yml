@@ -28,13 +28,13 @@ fil_PH:
         name: "pangalan ng produkto"
         price: "Presyo"
         primary_taxon: "Kategorya ng Produkto"
-        supplier: "Supplier"
         shipping_category_id: "Kategorya ng Pagpapadala"
         variant_unit: "Yunit ng variant"
         variant_unit_name: "pangalan ng yunit ng variant"
       spree/variant:
         primary_taxon: "Kategorya ng Produkto"
         shipping_category_id: "Kategorya ng Pagpapadala"
+        supplier: "Supplier"
       spree/credit_card:
         base: "Credit Card"
         number: "Bilang"
@@ -532,13 +532,12 @@ fil_PH:
         categories:
           label: mga kategorya
         search: hanapin
-      table:
+      product_variant_row:
         new_variant: bagong uri
       variant_row:
         none_tax_category: wala
         category_field_name: "kategorya"
         tax_category_field_name: "kategorya ng tax"
-      product_row:
         producer_field_name: "Producer"
     product_import:
       title: paglipat ng produkto

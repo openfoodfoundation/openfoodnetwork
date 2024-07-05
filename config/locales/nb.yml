@@ -48,7 +48,6 @@ nb:
         name: "Produktnavn"
         price: "Pris"
         primary_taxon: "Produktkategori"
-        supplier: "Leverandør"
         shipping_category_id: "Leveringskategori"
         variant_unit: "Variant Enhet"
         variant_unit_name: "Enhetsnavn Variant"
@@ -56,6 +55,7 @@ nb:
       spree/variant:
         primary_taxon: "Produktkategori"
         shipping_category_id: "Leveringskategori"
+        supplier: "Leverandør"
       spree/credit_card:
         base: "Kredittkort"
         number: "Antall"
@@ -828,6 +828,7 @@ nb:
             other: "%{count} produkter kunne ikke lagres. Se gjennom feilene og prøv igjen."
         reset: Forkaste endringer
         save: Lagre endringer
+      product_variant_row:
         new_variant: Ny variant
       bulk_update:
         success: Endringer lagret
@@ -842,7 +843,6 @@ nb:
         search_for_tax_categories: "Søk etter avgiftskategorier"
         category_field_name: "Kategori"
         tax_category_field_name: "Avgiftskategori"
-      product_row:
         producer_field_name: "Produsent"
     product_import:
       title: Produktimport

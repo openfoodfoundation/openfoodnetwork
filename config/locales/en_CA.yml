@@ -48,7 +48,6 @@ en_CA:
         name: "Product Name"
         price: "Price"
         primary_taxon: "Product Category"
-        supplier: "Supplier"
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
@@ -56,6 +55,7 @@ en_CA:
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
+        supplier: "Supplier"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -828,6 +828,7 @@ en_CA:
             other: "%{count} products could not be saved. Please review the errors and try again."
         reset: Discard changes
         save: Save changes
+      product_variant_row:
         new_variant: New variant
       bulk_update:
         success: Changes saved
@@ -842,7 +843,6 @@ en_CA:
         search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-      product_row:
         producer_field_name: "Producer"
     product_import:
       title: Product Import
@@ -1288,8 +1288,8 @@ en_CA:
           disable: "Stop sharing"
           loading: "Loading"
           note: |
-              Your Open Food Network account is connected to Discover Regenerative.
-              Add or update information on your Discover Regenerative listing here.
+              Your Open Food Network account is connected to Discover Food Justice.
+              Changes made to your OFN profile will automatically update your Discover Food Justice listing.  For any other changes please contact OFN Support.
           link_label: "Manage listing"
           description_html: |
               <b><p>
@@ -1297,7 +1297,7 @@ en_CA:
               This simplifies how producers can connect in the Waterloo region around food justice and sovereignty.
               </p>
               <p>
-              <a href="https://about.openfoodnetwork.ca/project/open-flower-network/" target="_blank">Learn more about the Waterloo Food Commons Project
+              <a href="https://foodsystemroundtablewr.ca/" target="_blank">Learn more about the Waterloo Food Commons Project
               <i class="icon-external-link"></i></a>
               </p>
       actions:
@@ -3692,7 +3692,7 @@ en_CA:
   account: "Account"
   logout: "Logout"
   date_range: "Date Range"
-  status: "status"
+  status: "Status"
   new: "New"
   start: "Start"
   end: "End"

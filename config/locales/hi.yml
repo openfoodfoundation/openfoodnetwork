@@ -48,7 +48,6 @@ hi:
         name: "उत्पाद का नाम"
         price: "कीमत"
         primary_taxon: "उत्पाद की श्रेणी"
-        supplier: "आपूर्तिकर्ता"
         shipping_category_id: "शिपिंग श्रेणी"
         variant_unit: "वेरिएंट यूनिट"
         variant_unit_name: "वेरिएंट यूनिट का नाम"
@@ -56,6 +55,7 @@ hi:
       spree/variant:
         primary_taxon: "उत्पाद की श्रेणी"
         shipping_category_id: "शिपिंग श्रेणी"
+        supplier: "आपूर्तिकर्ता"
       spree/credit_card:
         base: "क्रेडिट कार्ड"
         number: "नंबर"
@@ -791,12 +791,12 @@ hi:
             other: "%{count} उत्पाद सेव नहीं किए जा सके। कृपया त्रुटियों को रिव्यू करें और फिर से प्रयास करें।"
         reset: परिवर्तनों को अस्वीकार करें
         save: परिवर्तन सेव करें
+      product_variant_row:
         new_variant: नया वैरिएंट
       variant_row:
         none_tax_category: कोई नहीं
         category_field_name: "श्रेणी"
         tax_category_field_name: "टैक्स श्रेणी"
-      product_row:
         producer_field_name: "उत्पादक"
     product_import:
       title: उत्पाद इम्पोर्ट करें

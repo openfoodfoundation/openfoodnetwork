@@ -28,13 +28,13 @@ pt_BR:
         name: "Nome do Produto"
         price: "Preço"
         primary_taxon: "Categoria de Produto"
-        supplier: "Fornecedor"
         shipping_category_id: "Tipos de Frete"
         variant_unit: "Unidade variante"
         variant_unit_name: "Nome da unidade variante"
       spree/variant:
         primary_taxon: "Categoria de Produto"
         shipping_category_id: "Tipos de Frete"
+        supplier: "Fornecedor"
       spree/credit_card:
         base: "Cartão de Crédito"
         number: "Número"
@@ -631,7 +631,6 @@ pt_BR:
         none_tax_category: Nenhum
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria de taxa"
-      product_row:
         producer_field_name: "Produtor"
     product_import:
       title: Importação de produtos
@@ -3206,7 +3205,7 @@ pt_BR:
   account: "Conta"
   logout: "Sair"
   date_range: "Período"
-  status: "status"
+  status: "Status"
   new: "Novo"
   start: "Início"
   end: "Fim"

@@ -48,7 +48,6 @@ ru:
         name: "Имя Товара"
         price: "Цена"
         primary_taxon: "Категория Продукта"
-        supplier: "Поставщик"
         shipping_category_id: "Категория Доставки"
         variant_unit: "Единица Варианта"
         variant_unit_name: "Название Единицы Варианта"
@@ -56,6 +55,7 @@ ru:
       spree/variant:
         primary_taxon: "Категория Товара"
         shipping_category_id: "Категория Доставки"
+        supplier: "Поставщик"
       spree/credit_card:
         base: "Кредитная Карта"
         number: "Номер"
@@ -821,6 +821,7 @@ ru:
             other: "%{count} товары не удалось сохранить. Пожалуйста, просмотрите ошибки и повторите попытку."
         reset: Отменить изменения
         save: Сохранить изменения
+      product_variant_row:
         new_variant: Новый вариант
       bulk_update:
         success: Изменения сохранены
@@ -834,7 +835,6 @@ ru:
         none_tax_category: Нет
         category_field_name: "Категория"
         tax_category_field_name: "Налоговая Категория"
-      product_row:
         producer_field_name: "Производитель"
     product_import:
       title: Импорт Товара

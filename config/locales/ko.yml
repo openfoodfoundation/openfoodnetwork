@@ -30,13 +30,13 @@ ko:
         name: "제품 이름"
         price: "가격"
         primary_taxon: "물품 목록"
-        supplier: "공급업체"
         shipping_category_id: "전송물품 목록"
         variant_unit: "구성 단위 변경"
         variant_unit_name: "변경된 구성 단위 이름"
       spree/variant:
         primary_taxon: "물품 목록"
         shipping_category_id: "전송물품 목록"
+        supplier: "공급업체"
       spree/credit_card:
         base: "신용카드"
         number: "숫자"
@@ -691,13 +691,12 @@ ko:
       sort:
         pagination:
           clear_search: 검색 지우기
-      table:
+      product_variant_row:
         new_variant: 새로운 변경사항
       variant_row:
         none_tax_category: None
         category_field_name: "목록"
         tax_category_field_name: "세금 목록"
-      product_row:
         producer_field_name: "제공자"
     product_import:
       title: 제품 가져오기

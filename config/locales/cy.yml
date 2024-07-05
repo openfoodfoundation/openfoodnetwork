@@ -48,7 +48,6 @@ cy:
         name: "Enw Cynnyrch"
         price: "Pris"
         primary_taxon: "Categori Cynnyrch"
-        supplier: "Cyflenwr"
         shipping_category_id: "Categori dosbarthu."
         variant_unit: "Uned Amrywiol"
         variant_unit_name: "Enw Uned Amrywiol"
@@ -56,6 +55,7 @@ cy:
       spree/variant:
         primary_taxon: "Categori Cynnyrch"
         shipping_category_id: "Categori Anfon"
+        supplier: "Cyflenwr"
       spree/credit_card:
         base: "Cerdyn credyd"
         number: "Rhif"
@@ -804,6 +804,7 @@ cy:
             other: "Cadwyd %{count} cynnyrch yn iawn, ond"
         reset: Hepgor y newidiadau
         save: Cadw’r newidiadau
+      product_variant_row:
         new_variant: Amrywiolyn newydd
       bulk_update:
         success: Cadwyd y newidiadau
@@ -817,7 +818,6 @@ cy:
         none_tax_category: Dim
         category_field_name: "Categori"
         tax_category_field_name: "Categori Treth"
-      product_row:
         producer_field_name: "Cynhyrchydd"
     product_import:
       title: Mewnforio Cynnyrch
@@ -3686,7 +3686,7 @@ cy:
   account: "Cyfrif"
   logout: "Allgofnodi"
   date_range: "Ystod Dyddiad"
-  status: "statws"
+  status: "Statws"
   new: "Newydd"
   start: "Dechrau"
   end: "Diwedd"

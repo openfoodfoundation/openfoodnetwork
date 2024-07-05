@@ -48,7 +48,6 @@ fr_CA:
         name: "Nom du Produit"
         price: "Prix"
         primary_taxon: "Catégorie Produit"
-        supplier: "Fournisseur"
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
@@ -56,6 +55,7 @@ fr_CA:
       spree/variant:
         primary_taxon: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
+        supplier: "Fournisseur"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -610,6 +610,7 @@ fr_CA:
     show_n_more: Montrer %{num} supplémentaires
     choose: "Choisir..."
     please_select: Veuillez choisir...
+    column_save_as_default: Sauvegarder par défaut
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"
@@ -698,6 +699,9 @@ fr_CA:
         balance_due: "Solde dû"
       destroy:
         has_associated_subscriptions: "La suppression a planté : cet acheteur a des abonnements actifs. Veuillez d'abord les annuler."
+    column_preferences:
+      bulk_update:
+        success: "Préférences colonnes sauvegardées"
     contents:
       edit:
         title: Contenu
@@ -829,6 +833,7 @@ fr_CA:
             other: "%{count} produits n'ont pas pu être sauvegardés. Veuillez examiner les erreurs et réessayer."
         reset: Annuler les changements
         save: Sauvegarder les changements
+      product_variant_row:
         new_variant: Nouvelle variante
       bulk_update:
         success: Changements sauvegardés
@@ -843,7 +848,6 @@ fr_CA:
         search_for_tax_categories: "Chercher les catégories de taxes"
         category_field_name: "Catégorie"
         tax_category_field_name: "Type de taxe"
-      product_row:
         producer_field_name: "Producteur"
     product_import:
       title: import produit
@@ -993,6 +997,7 @@ fr_CA:
       edit:
         order_sure_want_to: Etes-vous sûr de vouloir %{event} cette commande ?
         voucher_tax_included_in_price: "%{label} (taxe inclue dans le bon de réduction)"
+        tax_on_fees: "Tax on fees"
       invoice_email_sent: 'L''email de facturation a bien été envoyé'
       order_email_resent: 'L''email de commande a de nouveau été envoyé'
       bulk_management:
@@ -1290,6 +1295,7 @@ fr_CA:
           enable: "Autoriser le partage de données"
           disable: "Arrêter le partage"
           loading: "Chargement en cours"
+          need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
           note: |
               Votre compte Open Food Network est connecté à Discover Regenerative.
               Ajouter et mettre à jour les informations sur votre liste Discover Regenerative ici.

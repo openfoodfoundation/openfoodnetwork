@@ -45,7 +45,6 @@ pa:
         name: "ਉਤਪਾਦ ਦਾ ਨਾਂ"
         price: "ਕੀਮਤ"
         primary_taxon: "ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ"
-        supplier: "ਸਪਲਾਇਰ"
         shipping_category_id: "ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀ"
         variant_unit: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ"
         variant_unit_name: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ ਦਾ ਨਾਮ"
@@ -53,6 +52,7 @@ pa:
       spree/variant:
         primary_taxon: "ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ"
         shipping_category_id: "ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀ"
+        supplier: "ਸਪਲਾਇਰ"
       spree/credit_card:
         base: "ਕਰੇਡਿਟ ਕਾਰਡ"
         number: "ਨੰਬਰ"
@@ -773,6 +773,7 @@ pa:
       table:
         reset: ਤਬਦੀਲੀਆਂ ਤਿਆਗੋ
         save: ਤਬਦੀਲੀਆਂ ਨੂੰ ਸੇਵ ਕਰੋ
+      product_variant_row:
         new_variant: ਨਵਾਂ ਵੇਰੀਐਂਟ
       bulk_update:
         success: ਬਦਲਾਵ ਸੇਵ ਕੀਤੇ ਗਏ।'
@@ -780,7 +781,6 @@ pa:
         none_tax_category: ਕੋਈ ਨਹੀਂ
         category_field_name: "ਸ਼੍ਰੇਣੀ"
         tax_category_field_name: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
-      product_row:
         producer_field_name: "ਉਤਪਾਦਕ"
     product_import:
       title: ਉਤਪਾਦ ਦਾ ਇਮਪੋਰਟ

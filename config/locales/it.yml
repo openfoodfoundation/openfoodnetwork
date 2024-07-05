@@ -45,7 +45,6 @@ it:
         name: "Nome Prodotto"
         price: "Prezzo"
         primary_taxon: "Categoria Prodotto"
-        supplier: "Fornitore"
         shipping_category_id: "Categoria Spedizioni"
         variant_unit: "Unità Variante"
         variant_unit_name: "Nome Unità Variante"
@@ -53,6 +52,7 @@ it:
       spree/variant:
         primary_taxon: "Categoria Prodotto"
         shipping_category_id: "Categoria Spedizioni"
+        supplier: "Fornitore"
       spree/credit_card:
         base: "Carta di Credito"
         number: "Numero"
@@ -728,13 +728,12 @@ it:
       sort:
         pagination:
           clear_search: Pulisci ricerca
-      table:
+      product_variant_row:
         new_variant: Nuova variante
       variant_row:
         none_tax_category: Nessuno
         category_field_name: "Categoria"
         tax_category_field_name: "Categoria d'imposta"
-      product_row:
         producer_field_name: "Produttore"
     product_import:
       title: Importa prodotto
@@ -3486,7 +3485,7 @@ it:
   account: "Account"
   logout: "Logout"
   date_range: "Intervallo di date"
-  status: "stato"
+  status: "Stato"
   new: "Nuovo"
   start: "Inizio"
   end: "Fine"

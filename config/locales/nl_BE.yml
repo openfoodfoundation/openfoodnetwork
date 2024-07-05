@@ -30,13 +30,13 @@ nl_BE:
         name: "Naam produkt"
         price: "Prijs"
         primary_taxon: "Product categorie"
-        supplier: "Leverancier"
         shipping_category_id: "Verzendcategorie"
         variant_unit: "Eénheid"
         variant_unit_name: "Variant Unit Name"
       spree/variant:
         primary_taxon: "Product categorie"
         shipping_category_id: "Verzendcategorie"
+        supplier: "Leverancier"
       spree/credit_card:
         base: "Kredietkaart"
         number: "Nummer"
@@ -548,13 +548,12 @@ nl_BE:
       sort:
         pagination:
           clear_search: Verwijder zoektermen
-      table:
+      product_variant_row:
         new_variant: Nieuw variant
       variant_row:
         none_tax_category: Geen enkele
         category_field_name: "Categorie"
         tax_category_field_name: "Belastingcategorie"
-      product_row:
         producer_field_name: "Producent"
     product_import:
       title: Importeren van producten
@@ -2980,7 +2979,7 @@ nl_BE:
   account: "Account"
   logout: "Log uit"
   date_range: "Datumbereik"
-  status: "status"
+  status: "Status"
   new: "Nieuw"
   start: "Start"
   end: "Eind"

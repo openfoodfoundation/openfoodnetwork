@@ -30,13 +30,13 @@ es_US:
         name: "nombre del producto"
         price: "Precio"
         primary_taxon: "categoría del producto"
-        supplier: "Proveedora"
         shipping_category_id: "Categoría de envío"
         variant_unit: "Unidad Variante"
         variant_unit_name: "Nombre de la unidad de la variante"
       spree/variant:
         primary_taxon: "categoría del producto"
         shipping_category_id: "Categoría de envío"
+        supplier: "Proveedor"
       spree/credit_card:
         base: "Tarjeta de crédito"
         number: "Número"
@@ -668,13 +668,12 @@ es_US:
       sort:
         pagination:
           clear_search: Limpiar la búsqueda
-      table:
+      product_variant_row:
         new_variant: Nueva variante
       variant_row:
         none_tax_category: Ninguno
         category_field_name: "Categoría"
         tax_category_field_name: "Categoría del impuesto"
-      product_row:
         producer_field_name: "Productora"
     product_import:
       title: Importación de productos
@@ -3271,7 +3270,7 @@ es_US:
   account: "Cuenta"
   logout: "Cerrar sesión"
   date_range: "Rango de fechas"
-  status: "estado"
+  status: "Estado"
   new: "Nuevo"
   start: "Inicio"
   end: "Final"

@@ -45,7 +45,6 @@ ar:
         name: "اسم المنتج"
         price: "السعر"
         primary_taxon: "نوع المنتج "
-        supplier: "المورد"
         shipping_category_id: "نوع الشحن"
         variant_unit: "وحدة النوع"
         variant_unit_name: "اسم وحدة النوع"
@@ -53,6 +52,7 @@ ar:
       spree/variant:
         primary_taxon: "نوع المنتج "
         shipping_category_id: "نوع الشحن"
+        supplier: "المورد"
       spree/credit_card:
         base: "بطاقة ائتمان"
         number: "رقم "
@@ -707,13 +707,12 @@ ar:
       sort:
         pagination:
           clear_search: مسح البحث
-      table:
+      product_variant_row:
         new_variant: نوع جديد
       variant_row:
         none_tax_category: لا شيء
         category_field_name: "الفئة"
         tax_category_field_name: "الفئة الضريبية"
-      product_row:
         producer_field_name: "المنتج"
     product_import:
       title: استيراد المنتج

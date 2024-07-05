@@ -32,13 +32,13 @@ en_NZ:
         name: "Product Name"
         price: "Price"
         primary_taxon: "Product Category"
-        supplier: "Supplier"
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
+        supplier: "Supplier"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -694,13 +694,12 @@ en_NZ:
       sort:
         pagination:
           clear_search: Clear search
-      table:
+      product_variant_row:
         new_variant: New variant
       variant_row:
         none_tax_category: None
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-      product_row:
         producer_field_name: "Producer"
     product_import:
       title: Product Import
@@ -3342,7 +3341,7 @@ en_NZ:
   account: "Account"
   logout: "Logout"
   date_range: "Date Range"
-  status: "status"
+  status: "Status"
   new: "New"
   start: "Start"
   end: "End"

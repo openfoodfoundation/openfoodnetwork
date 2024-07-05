@@ -48,7 +48,6 @@ de_DE:
         name: "Produktname"
         price: "Preis"
         primary_taxon: "Produktkategorie"
-        supplier: "Lieferant"
         shipping_category_id: "Lieferkategorie"
         variant_unit: "Varianteneinheit"
         variant_unit_name: "Name der Varianteneinheit"
@@ -56,6 +55,7 @@ de_DE:
       spree/variant:
         primary_taxon: "Produktkategorie"
         shipping_category_id: "Lieferkategorie"
+        supplier: "Lieferant"
       spree/credit_card:
         base: "Kreditkarte"
         number: "Kreditkartennummer"
@@ -794,6 +794,7 @@ de_DE:
             other: "%{count} Produkte konnten nicht gespeichert werden. Bitte überprüfen Sie die Fehler und versuchen Sie es erneut."
         reset: Änderungen verwerfen
         save: Änderungen speichern
+      product_variant_row:
         new_variant: Neue Produktvariante
       bulk_update:
         success: Die Änderungen wurden gespeichert.
@@ -801,7 +802,6 @@ de_DE:
         none_tax_category: Nichts
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
-      product_row:
         producer_field_name: "Produzent"
     product_import:
       title: Produkte importieren

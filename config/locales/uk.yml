@@ -32,13 +32,13 @@ uk:
         name: "Назва продукту"
         price: "Ціна"
         primary_taxon: "Категорія товару"
-        supplier: "Постачальник"
         shipping_category_id: "Категорія доставки"
         variant_unit: "Варіант одиниці"
         variant_unit_name: "Назва варіанта одиниці"
       spree/variant:
         primary_taxon: "Категорія товару"
         shipping_category_id: "Категорія доставки"
+        supplier: "Постачальник"
       spree/credit_card:
         base: "Кредитна картка"
         number: "Номер"
@@ -696,13 +696,12 @@ uk:
       sort:
         pagination:
           clear_search: Очистити пошук
-      table:
+      product_variant_row:
         new_variant: Новий варіант
       variant_row:
         none_tax_category: Жодного
         category_field_name: "Категорія"
         tax_category_field_name: "Категорія податку"
-      product_row:
         producer_field_name: "Виробник"
     product_import:
       title: Імпорт продукту
@@ -3429,7 +3428,7 @@ uk:
   account: "Обліковий запис"
   logout: "Вийти"
   date_range: "Проміжок часу"
-  status: "статус"
+  status: "Статус"
   new: "Новий"
   start: "Старт"
   end: "Кінець"

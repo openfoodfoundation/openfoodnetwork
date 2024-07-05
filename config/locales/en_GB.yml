@@ -45,7 +45,6 @@ en_GB:
         name: "Product Name"
         price: "Price"
         primary_taxon: "Product Category"
-        supplier: "Supplier"
         shipping_category_id: "Shipping Category"
         variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
@@ -53,6 +52,7 @@ en_GB:
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
+        supplier: "Supplier"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -811,6 +811,7 @@ en_GB:
             other: "%{count}products were saved correctly, but "
         reset: Discard changes
         save: Save changes
+      product_variant_row:
         new_variant: New variant
       bulk_update:
         success: Changes saved
@@ -824,7 +825,6 @@ en_GB:
         none_tax_category: None
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
-      product_row:
         producer_field_name: "Producer"
     product_import:
       title: Product Import
@@ -3680,7 +3680,7 @@ en_GB:
   account: "Account"
   logout: "Logout"
   date_range: "Date Range"
-  status: "status"
+  status: "Status"
   new: "New"
   start: "Start"
   end: "End"

@@ -48,7 +48,6 @@ ml:
         name: "ഉത്പന്നത്തിന്റെ പേര്"
         price: "വില"
         primary_taxon: "ഉൽപ്പന്ന വിഭാഗം"
-        supplier: "വിതരണക്കാരൻ"
         shipping_category_id: "ഷിപ്പിംഗ് വിഭാഗം"
         variant_unit: "വേരിയന്റ് യൂണിറ്റ്"
         variant_unit_name: "വേരിയന്റ് യൂണിറ്റിന്റെ പേര്"
@@ -56,6 +55,7 @@ ml:
       spree/variant:
         primary_taxon: "ഉൽപ്പന്ന വിഭാഗം"
         shipping_category_id: "അയക്കൽ വിഭാഗം"
+        supplier: "വിതരണക്കാരൻ"
       spree/credit_card:
         base: "ക്രെഡിറ്റ് കാർഡ്"
         number: "നമ്പർ"
@@ -794,6 +794,7 @@ ml:
             other: "%{count} ഉൽപ്പന്നങ്ങൾ സേവ് ചെയ്യാൻ കഴിഞ്ഞില്ല. തകരാറുകൾ അവലോകനം ചെയ്‌ത് വീണ്ടും ശ്രമിക്കുക."
         reset: മാറ്റങ്ങൾ ഉപേക്ഷിക്കുക
         save: മാറ്റങ്ങൾ സേവ് ചെയ്യുക
+      product_variant_row:
         new_variant: പുതിയ വേരിയന്റ്
       bulk_update:
         success: മാറ്റങ്ങൾ സേവ് ചെയ്തു.
@@ -801,7 +802,6 @@ ml:
         none_tax_category: ഒന്നുമില്ല
         category_field_name: "വിഭാഗം"
         tax_category_field_name: "നികുതി വിഭാഗം"
-      product_row:
         producer_field_name: "പ്രൊഡ്യൂസർ"
     product_import:
       title: ഉൽപ്പന്ന ഇറക്കുമതി

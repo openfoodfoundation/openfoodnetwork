@@ -25,13 +25,13 @@ pl:
       spree/product:
         price: "Cena"
         primary_taxon: "Kategoria produktu"
-        supplier: "Dostawca"
         shipping_category_id: "Kategoria dostawy"
         variant_unit: "Jednostka wariantu"
         variant_unit_name: "Nazwa jednostki wariantu"
       spree/variant:
         primary_taxon: "Kategoria produktu"
         shipping_category_id: "Kategoria dostawy"
+        supplier: "Dostawca"
       spree/credit_card:
         base: "Karta kredytowa"
         number: "Numer zamówienia"
@@ -528,7 +528,6 @@ pl:
         none_tax_category: Nic
         category_field_name: "Kategoria"
         tax_category_field_name: "Kategoria podatku"
-      product_row:
         producer_field_name: "Producent"
     product_import:
       title: Import produktów
@@ -2969,7 +2968,7 @@ pl:
   account: "Konto"
   logout: "Wyloguj"
   date_range: "Zakres dat"
-  status: "status"
+  status: "Status"
   new: "Nowy"
   start: "Początek"
   end: "Koniec"

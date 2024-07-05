@@ -34,13 +34,13 @@ de_CH:
         name: "Produktname"
         price: "Preis"
         primary_taxon: "Produktkategorie"
-        supplier: "Lieferant"
         shipping_category_id: "Lieferkategorie"
         variant_unit: "Varianteneinheit"
         variant_unit_name: "Name der Varianteneinheit"
       spree/variant:
         primary_taxon: "Produktkategorie"
         shipping_category_id: "Lieferkategorie"
+        supplier: "Lieferant"
       spree/credit_card:
         base: "Kreditkarte"
         number: "Kreditkartennummer"
@@ -696,13 +696,12 @@ de_CH:
           clear_search: Suche zurücksetzen
       no_products:
         no_products_found: Keine Produkte gefunden.
-      table:
+      product_variant_row:
         new_variant: Neue Produktvariante
       variant_row:
         none_tax_category: Keine
         category_field_name: "Kategorie"
         tax_category_field_name: "Steuerkategorie"
-      product_row:
         producer_field_name: "Produzent"
     product_import:
       title: Produkte importieren

@@ -48,7 +48,6 @@ mr:
         name: "उत्पादनाचे नांव"
         price: "किंमत"
         primary_taxon: "उत्पादन श्रेणी"
-        supplier: "पुरवठादार"
         shipping_category_id: "शिपिंग श्रेणी"
         variant_unit: "व्हेरिएंट युनिट"
         variant_unit_name: "वेरिएंट युनिटचे नाव"
@@ -56,6 +55,7 @@ mr:
       spree/variant:
         primary_taxon: "उत्पादन श्रेणी"
         shipping_category_id: "शिपिंग श्रेणी"
+        supplier: "पुरवठादार"
       spree/credit_card:
         base: "क्रेडीट कार्ड"
         number: "क्रमांक"
@@ -789,7 +789,6 @@ mr:
       variant_row:
         none_tax_category: कोणतेही नाही
         category_field_name: "श्रेणी"
-      product_row:
         producer_field_name: "उत्पादक"
     product_import:
       title: उत्पादन आयात

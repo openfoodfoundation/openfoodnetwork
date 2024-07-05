@@ -22,8 +22,9 @@ sv:
         state: Region
       spree/product:
         price: "Pris"
-        supplier: "Leverantör"
         variant_unit: "Enhet för variant"
+      spree/variant:
+        supplier: "Leverantör"
       spree/credit_card:
         month: "Månad"
         year: "År"
@@ -330,7 +331,6 @@ sv:
         none_tax_category: Ingen
         category_field_name: "Kategori"
         tax_category_field_name: "Skattekategori"
-      product_row:
         producer_field_name: "Producent"
     product_import:
       file_not_found: Filen hittades inte eller kunde inte öppnas
@@ -2136,6 +2136,7 @@ sv:
   administration: "Administration"
   account: "Konto"
   logout: "Logga ut"
+  status: "Status"
   spree:
     all: "Alla"
     category: "Kategori"
