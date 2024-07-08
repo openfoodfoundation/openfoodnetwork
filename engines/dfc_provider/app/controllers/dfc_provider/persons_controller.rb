@@ -11,8 +11,11 @@ module DfcProvider
     end
 
     def affiliate_sales_data
-      sales_data = AffiliateSalesDataBuilder.build(user)
-      render json: DfcIo.export(sales_data)
+      render json: DfcIo.export(
+        AffiliateSalesDataBuilder.build_person(user),
+        *AffiliateSalesDataBuilder.build_orders,
+        *AffiliateSalesDataBuilder.build_sales_session,
+      )
     end
 
     private
