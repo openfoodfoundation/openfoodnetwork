@@ -42,72 +42,70 @@ describe "Option Value Namer", ->
       expect(namer.name()).toBe "value unit"
 
     describe "determining if a variant's value is scaled", ->
-      v = p = namer = null
+      v = namer = null
 
       beforeEach ->
-        p = {}
-        v = { product: p }
+        v = {}
         namer = new OptionValueNamer(v)
 
       it "returns true when the product has a scale", ->
-        p.variant_unit_scale = 1000
+        v.variant_unit_scale = 1000
         expect(namer.value_scaled()).toBe true
 
       it "returns false otherwise", ->
         expect(namer.value_scaled()).toBe false
 
     describe "generating option value's value and unit", ->
-      v = p = namer = null
+      v = namer = null
 
       beforeEach ->
-        p = {}
-        v = { product: p }
+        v = {}
         namer = new OptionValueNamer(v)
 
       it "generates simple values", ->
-        p.variant_unit = 'weight'
-        p.variant_unit_scale = 1.0
+        v.variant_unit = 'weight'
+        v.variant_unit_scale = 1.0
         v.unit_value = 100
         expect(namer.option_value_value_unit()).toEqual [100, 'g']
 
       it "generates values when unit value is non-integer", ->
-        p.variant_unit = 'weight'
-        p.variant_unit_scale = 1.0
+        v.variant_unit = 'weight'
+        v.variant_unit_scale = 1.0
         v.unit_value = 123.45
         expect(namer.option_value_value_unit()).toEqual [123.45, 'g']
 
       it "returns a value of 1 when unit value equals the scale", ->
-        p.variant_unit = 'weight'
-        p.variant_unit_scale = 1000.0
+        v.variant_unit = 'weight'
+        v.variant_unit_scale = 1000.0
         v.unit_value = 1000.0
         expect(namer.option_value_value_unit()).toEqual [1, 'kg']
 
       it "generates values for all weight scales", ->
         for units in [[1.0, 'g'], [1000.0, 'kg'], [1000000.0, 'T']]
           [scale, unit] = units
-          p.variant_unit = 'weight'
-          p.variant_unit_scale = scale
+          v.variant_unit = 'weight'
+          v.variant_unit_scale = scale
           v.unit_value = 100 * scale
           expect(namer.option_value_value_unit()).toEqual [100, unit]
 
       it "generates values for all volume scales", ->
         for units in [[0.001, 'mL'], [1.0, 'L'], [1000.0, 'kL']]
           [scale, unit] = units
-          p.variant_unit = 'volume'
-          p.variant_unit_scale = scale
+          v.variant_unit = 'volume'
+          v.variant_unit_scale = scale
           v.unit_value = 100 * scale
           expect(namer.option_value_value_unit()).toEqual [100, unit]
-      
+
       it "generates right values for volume with rounded values", ->
         unit = 'L'
-        p.variant_unit = 'volume'
-        p.variant_unit_scale = 1.0
+        v.variant_unit = 'volume'
+        v.variant_unit_scale = 1.0
         v.unit_value = 0.7
         expect(namer.option_value_value_unit()).toEqual [700, 'mL']
 
       it "chooses the correct scale when value is very small", ->
-        p.variant_unit = 'volume'
-        p.variant_unit_scale = 0.001
+        v.variant_unit = 'volume'
+        v.variant_unit_scale = 0.001
         v.unit_value = 0.0001
         expect(namer.option_value_value_unit()).toEqual [0.1, 'mL']
 
@@ -120,15 +118,15 @@ describe "Option Value Namer", ->
         #   subject.option_value_value_unit.should == [100, unit.pluralize]
 
       it "generates singular values for item units when value is 1", ->
-        p.variant_unit = 'items'
-        p.variant_unit_scale = null
-        p.variant_unit_name = 'packet'
+        v.variant_unit = 'items'
+        v.variant_unit_scale = null
+        v.variant_unit_name = 'packet'
         v.unit_value = 1
         expect(namer.option_value_value_unit()).toEqual [1, 'packet']
 
       it "returns [nil, nil] when unit value is not set", ->
-        p.variant_unit = 'items'
-        p.variant_unit_scale = null
-        p.variant_unit_name = 'foo'
+        v.variant_unit = 'items'
+        v.variant_unit_scale = null
+        v.variant_unit_name = 'foo'
         v.unit_value = null
         expect(namer.option_value_value_unit()).toEqual [null, null]
