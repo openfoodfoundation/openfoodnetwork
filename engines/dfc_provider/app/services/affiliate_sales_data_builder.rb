@@ -2,12 +2,20 @@
 
 class AffiliateSalesDataBuilder < DfcBuilder
   def self.build(user)
-    DataFoodConsortium::Connector::Person.new(urls.affiliate_sales_data_person_url(user.id))
+    DataFoodConsortium::Connector::Person.new(
+      urls.affiliate_sales_data_person_url(user.id),
+      logo: nil,
+      firstName: nil,
+      lastName: nil,
+      affiliatedOrganizations: user_enterprise(user.enterprises.first)
+    )
   end
 
-  def self.user_enterprise
-    # DataFoodConsortium::Connector::Enterprise.new(
-    # )
+  def self.user_enterprise(enterprise)
+    DataFoodConsortium::Connector::Enterprise.new(
+      urls.enterprise_url(enterprise.id),
+      name: enterprise.name
+    )
   end
 
   def self.sales_data
