@@ -30,15 +30,21 @@ class AffiliateSalesDataBuilder < DfcBuilder
     end
 
     def build_supplied_products
-      sales_data.map { |sale| build_supplied_product(sale) }
+      sales_data
+        .uniq(&:producer_id)
+        .map { |sale| build_supplied_product(sale) }
     end
 
     def build_catalogue_items
-      sales_data.map { |sale| build_catalogue_item(sale) }
+      sales_data
+        .uniq(&:producer_id)
+        .map { |sale| build_catalogue_item(sale) }
     end
 
     def build_offers
-      sales_data.map { |sale| build_offer(sale) }
+      sales_data
+        .uniq(&:producer_id)
+        .map { |sale| build_offer(sale) }
     end
 
     def build_order_lines
