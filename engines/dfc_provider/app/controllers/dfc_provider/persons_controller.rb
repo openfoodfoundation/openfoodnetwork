@@ -14,8 +14,7 @@ module DfcProvider
       render json: DfcIo.export(
         AffiliateSalesDataBuilder.build_person(user),
         *AffiliateSalesDataBuilder.build_order_lines,
-        *AffiliateSalesDataBuilder.build_orders,
-        *AffiliateSalesDataBuilder.build_sale_sessions,
+        *AffiliateSalesDataBuilder.build_orders
       )
     end
 
