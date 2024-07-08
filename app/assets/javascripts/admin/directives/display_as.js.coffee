@@ -4,31 +4,30 @@ angular.module("ofn.admin").directive "ofnDisplayAs", (OptionValueNamer) ->
     scope.$watchCollection ->
       return [
         scope.$eval(attrs.ofnDisplayAs).unit_value_with_description
-        scope.product.variant_unit_name
-        scope.product.variant_unit_with_scale
+        scope.variant.variant_unit_name
+        scope.variant.variant_unit_with_scale
       ]
     , ->
       [variant_unit, variant_unit_scale] = productUnitProperties()
       [unit_value, unit_description] = variantUnitProperties(variant_unit_scale)
-      variant_object = 
+      variant_object =
         unit_value: unit_value
         unit_description: unit_description
-        product:
-          variant_unit_scale: variant_unit_scale
-          variant_unit: variant_unit
-          variant_unit_name: scope.product.variant_unit_name
+        variant_unit_scale: variant_unit_scale
+        variant_unit: variant_unit
+        variant_unit_name: scope.variant.variant_unit_name
 
       scope.placeholder_text = new OptionValueNamer(variant_object).name()
 
     productUnitProperties = ->
       # get relevant product properties
-      if scope.product.variant_unit_with_scale?
-        match = scope.product.variant_unit_with_scale.match(/^([^_]+)_([\d\.]+)$/)
+      if scope.variant.variant_unit_with_scale?
+        match = scope.variant.variant_unit_with_scale.match(/^([^_]+)_([\d\.]+)$/)
         if match
           variant_unit = match[1]
           variant_unit_scale = parseFloat(match[2])
         else
-          variant_unit = scope.product.variant_unit_with_scale
+          variant_unit = scope.variant.variant_unit_with_scale
           variant_unit_scale = null
       else
         variant_unit = variant_unit_scale = null
