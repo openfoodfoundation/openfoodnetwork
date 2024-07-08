@@ -13,16 +13,16 @@ angular.module("admin.products").factory "OptionValueNamer", (VariantUnitManager
       name_fields.join ' '
 
     value_scaled: ->
-      @variant.product.variant_unit_scale?
+      @variant.variant_unit_scale?
 
     option_value_value_unit: ->
       if @variant.unit_value?
-        if @variant.product.variant_unit in ["weight", "volume"]
+        if @variant.variant_unit in ["weight", "volume"]
           [value, unit_name] = @option_value_value_unit_scaled()
 
         else
           value = @variant.unit_value
-          unit_name = @pluralize(@variant.product.variant_unit_name, value)
+          unit_name = @pluralize(@variant.variant_unit_name, value)
 
         value = parseInt(value, 10) if value == parseInt(value, 10)
 
@@ -58,14 +58,13 @@ angular.module("admin.products").factory "OptionValueNamer", (VariantUnitManager
       # to >= 1 when expressed in it.
       # If there is none available where this is true, use the smallest
       # available unit.
-      product = @variant.product
-      scales = VariantUnitManager.compatibleUnitScales(product.variant_unit_scale, product.variant_unit)
+      scales = VariantUnitManager.compatibleUnitScales(@variant.variant_unit_scale, @variant.variant_unit)
       variantUnitValue = @variant.unit_value
 
       # sets largestScale = last element in filtered scales array
       [_, ..., largestScale] = (scales.filter (s) -> variantUnitValue / s >= 1)
 
       if (largestScale)
-        [largestScale, VariantUnitManager.getUnitName(largestScale, product.variant_unit)]
+        [largestScale, VariantUnitManager.getUnitName(largestScale, @variant.variant_unit)]
       else
-        [scales[0], VariantUnitManager.getUnitName(scales[0], product.variant_unit)]
+        [scales[0], VariantUnitManager.getUnitName(scales[0], @variant.variant_unit)]
