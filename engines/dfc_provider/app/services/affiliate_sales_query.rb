@@ -42,6 +42,7 @@ class AffiliateSalesQuery
         spree_line_items.currency,
         producers.id AS producer_id,
         distributors.id AS distributor_id,
+        producers.city AS producer_city,
         distributors.zipcode AS distributor_postcode,
         producers.zipcode AS producer_postcode
       SQL

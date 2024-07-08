@@ -18,11 +18,15 @@ class AffiliateSalesDataBuilder < DfcBuilder
     end
 
     def build_addresses
-      sales_data.map { |sale| build_address(sale) }
+      sales_data
+        .uniq { |sale| sale.producer_city && sale.producer_postcode }
+        .map { |sale| build_address(sale) }
     end
 
     def build_producers
-      sales_data.map { |sale| build_producer(sale) }
+      sales_data
+        .uniq(&:producer_id)
+        .map { |sale| build_producer(sale) }
     end
 
     def build_supplied_products
@@ -64,13 +68,17 @@ class AffiliateSalesDataBuilder < DfcBuilder
         longitude: nil,
         region: nil,
         street: nil,
-        city: 'test'
+        city: sale.producer_city
       )
     end
 
     def build_producer(sale)
       DataFoodConsortium::Connector::Enterprise.new(
         urls.enterprise_url(sale.producer_id),
+        logo: nil,
+        name: nil,
+        description: nil,
+        vatNumber: nil,
         suppliedProducts: build_supplied_product(sale),
         localizations: build_address(sale)
       )
