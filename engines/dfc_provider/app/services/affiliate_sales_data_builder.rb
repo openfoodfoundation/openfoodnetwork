@@ -107,13 +107,16 @@ class AffiliateSalesDataBuilder < DfcBuilder
     def build_catalogue_item(sale)
       DataFoodConsortium::Connector::CatalogItem.new(
         urls.enterprise_catalog_item_url(sale.producer_id, sale.product_id),
+        stockLimitation: nil,
+        sku: nil,
         offers: build_offer(sale)
       )
     end
 
     def build_offer(sale)
       DataFoodConsortium::Connector::Offer.new(
-        urls.enterprise_offer_url(sale.producer_id, sale.product_id)
+        urls.enterprise_offer_url(sale.producer_id, sale.product_id),
+        stockLimitation: nil,
       )
     end
 
@@ -121,6 +124,7 @@ class AffiliateSalesDataBuilder < DfcBuilder
       DataFoodConsortium::Connector::OrderLine.new(
         urls.enterprise_order_order_line_url(sale.producer_id, sale.order_id, sale.line_item_id),
         description: nil,
+        offer: build_offer(sale),
         order: build_order(sale),
         quantity: build_quantity(sale),
         price: build_price(sale)
