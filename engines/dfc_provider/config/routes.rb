@@ -8,6 +8,7 @@ DfcProvider::Engine.routes.draw do
     resources :supplied_products, only: [:create, :show, :update]
     resources :social_medias, only: [:show]
     resources :sale_sessions, only: [:show]
+    resources :offers, only: [:show]
     resources :orders, only: [:show] do
       resources :order_lines, only: [:show]
     end

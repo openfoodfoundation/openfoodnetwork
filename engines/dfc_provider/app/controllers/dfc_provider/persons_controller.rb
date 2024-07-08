@@ -13,6 +13,11 @@ module DfcProvider
     def affiliate_sales_data
       render json: DfcIo.export(
         AffiliateSalesDataBuilder.build_person(user),
+        *AffiliateSalesDataBuilder.build_addresses,
+        *AffiliateSalesDataBuilder.build_producers,
+        *AffiliateSalesDataBuilder.build_supplied_products,
+        *AffiliateSalesDataBuilder.build_catalogue_items,
+        *AffiliateSalesDataBuilder.build_offers,
         *AffiliateSalesDataBuilder.build_order_lines,
         *AffiliateSalesDataBuilder.build_orders
       )
