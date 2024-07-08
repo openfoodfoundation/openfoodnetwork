@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class AffiliateSalesDataBuilder < DfcBuilder
   class << self
     def build_person(user)
@@ -14,6 +15,26 @@ class AffiliateSalesDataBuilder < DfcBuilder
 
     def user_enterprises(enterprises)
       enterprises.map { |enterprise| build_enterprise(enterprise.id) }
+    end
+
+    def build_addresses
+      sales_data.map { |sale| build_address(sale) }
+    end
+
+    def build_producers
+      sales_data.map { |sale| build_producer(sale) }
+    end
+
+    def build_supplied_products
+      sales_data.map { |sale| build_supplied_product(sale) }
+    end
+
+    def build_catalogue_items
+      sales_data.map { |sale| build_catalogue_item(sale) }
+    end
+
+    def build_offers
+      sales_data.map { |sale| build_offer(sale) }
     end
 
     def build_order_lines
@@ -32,6 +53,54 @@ class AffiliateSalesDataBuilder < DfcBuilder
 
     def build_enterprise(id)
       DataFoodConsortium::Connector::Enterprise.new(urls.enterprise_url(id))
+    end
+
+    def build_address(sale)
+      DataFoodConsortium::Connector::Address.new(
+        urls.address_url(sale.producer_id),
+        postalCode: sale.producer_postcode,
+        country: nil,
+        latitude: nil,
+        longitude: nil,
+        region: nil,
+        street: nil,
+        city: 'test'
+      )
+    end
+
+    def build_producer(sale)
+      DataFoodConsortium::Connector::Enterprise.new(
+        urls.enterprise_url(sale.producer_id),
+        suppliedProducts: build_supplied_product(sale),
+        localizations: build_address(sale)
+      )
+    end
+
+    def build_supplied_product(sale)
+      DataFoodConsortium::Connector::SuppliedProduct.new(
+        urls.enterprise_supplied_product_url(sale.producer_id, sale.product_id),
+        name: sale.product_name,
+        description: nil,
+        alcoholPercentage: nil,
+        lifetime: nil,
+        usageOrStorageConditions: nil,
+        totalTheoreticalStock: nil,
+        catalogItems: build_catalogue_item(sale),
+        quantity: build_quantity(sale)
+      )
+    end
+
+    def build_catalogue_item(sale)
+      DataFoodConsortium::Connector::CatalogItem.new(
+        urls.enterprise_catalog_item_url(sale.producer_id, sale.product_id),
+        offers: build_offer(sale)
+      )
+    end
+
+    def build_offer(sale)
+      DataFoodConsortium::Connector::Offer.new(
+        urls.enterprise_offer_url(sale.producer_id, sale.product_id)
+      )
     end
 
     def build_order_line(sale)
@@ -81,3 +150,4 @@ class AffiliateSalesDataBuilder < DfcBuilder
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

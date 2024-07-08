@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AffiliateSalesQuery
   class << self
     def call
@@ -27,6 +29,7 @@ class AffiliateSalesQuery
       <<~SQL.squish
         spree_orders.id AS order_id,
         spree_orders.created_at AS order_date,
+        spree_products.id AS product_id,
         spree_products.name AS product_name,
         spree_variants.display_name AS unit_name,
         spree_products.variant_unit AS unit_type,
@@ -47,6 +50,7 @@ class AffiliateSalesQuery
     def sales_data_group
       <<~SQL.squish
         spree_orders.id,
+        spree_products.id,
         spree_products.name,
         spree_variants.display_name,
         spree_variants.unit_value,
