@@ -24,9 +24,9 @@ class AffiliateSalesDataBuilder < DfcBuilder
       sales_data.map { |sale| build_order(sale) }
     end
 
-    def build_sale_sessions
-      sales_data.map { |sale| build_sale_session(sale) }
-    end
+    # def build_sale_sessions
+    #   sales_data.map { |sale| build_sale_session(sale) }
+    # end
 
     private
 
@@ -48,8 +48,8 @@ class AffiliateSalesDataBuilder < DfcBuilder
       DataFoodConsortium::Connector::Order.new(
         urls.enterprise_order_url(sale.producer_id, sale.order_id),
         number: nil,
-        date: sale.order_date.strftime("%Y-%m-%d"),
-        saleSession: build_sale_session(sale)
+        date: sale.order_date.strftime("%Y-%m-%d")
+        # saleSession: build_sale_session(sale)
       )
     end
 
