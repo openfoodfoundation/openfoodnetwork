@@ -4,6 +4,11 @@ require 'spec_helper'
 
 RSpec.describe Admin::ProductImportController, type: :controller do
   describe 'validate_file_path' do
+    before do
+      # Avoid error on redirect_to
+      allow(controller).to receive(:raise_invalid_file_path).and_return(false)
+    end
+
     context 'file extension' do
       it 'should authorize csv extension' do
         path = '/tmp/product_import123/import.csv'
@@ -11,7 +16,6 @@ RSpec.describe Admin::ProductImportController, type: :controller do
       end
 
       it 'should reject other extensions' do
-        allow(controller).to receive(:raise_invalid_file_path).and_return(false)
         path = '/tmp/product_import123/import.pdf'
         expect(controller.__send__(:validate_file_path, path)).to be_falsey
         path1 = '/tmp/product_import123/import.xslx'
@@ -30,7 +34,6 @@ RSpec.describe Admin::ProductImportController, type: :controller do
       end
 
       it 'should reject invalid paths' do
-        allow(controller).to receive(:raise_invalid_file_path).and_return(false)
         path = '/tmp/product_import123/../etc/import.csv'
         expect(controller.__send__(:validate_file_path, path)).to be_falsey
 
