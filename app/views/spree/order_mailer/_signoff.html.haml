@@ -10,7 +10,7 @@
   = @order.distributor.phone || ""
   %br
   %a{:href => "mailto:#{@order.distributor.contact.email}", :target => "_blank"}
-    = @order.distributor.contact.email
+    = @order.distributor.email_address.presence ||  @order.distributor.contact.email
   %br
   = @order.distributor.website || ""
   %br
