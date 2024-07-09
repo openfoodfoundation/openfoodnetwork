@@ -24,27 +24,19 @@ class AffiliateSalesDataBuilder < DfcBuilder
     end
 
     def build_producers
-      sales_data
-        .uniq(&:producer_id)
-        .map { |sale| build_producer(sale) }
+      sales_data_uniq_producers.map { |sale| build_producer(sale) }
     end
 
     def build_supplied_products
-      sales_data
-        .uniq(&:producer_id)
-        .map { |sale| build_supplied_product(sale) }
+      sales_data_uniq_producers.map { |sale| build_supplied_product(sale) }
     end
 
     def build_catalogue_items
-      sales_data
-        .uniq(&:producer_id)
-        .map { |sale| build_catalogue_item(sale) }
+      sales_data_uniq_producers.map { |sale| build_catalogue_item(sale) }
     end
 
     def build_offers
-      sales_data
-        .uniq(&:producer_id)
-        .map { |sale| build_offer(sale) }
+      sales_data_uniq_producers.map { |sale| build_offer(sale) }
     end
 
     def build_order_lines
@@ -54,10 +46,6 @@ class AffiliateSalesDataBuilder < DfcBuilder
     def build_orders
       sales_data.map { |sale| build_order(sale) }
     end
-
-    # def build_sale_sessions
-    #   sales_data.map { |sale| build_sale_session(sale) }
-    # end
 
     private
 
@@ -136,16 +124,6 @@ class AffiliateSalesDataBuilder < DfcBuilder
         urls.enterprise_order_url(sale.producer_id, sale.order_id),
         number: nil,
         date: sale.order_date.strftime("%Y-%m-%d")
-        # saleSession: build_sale_session(sale)
-      )
-    end
-
-    def build_sale_session(sale)
-      DataFoodConsortium::Connector::SaleSession.new(
-        urls.enterprise_sale_session_url(sale.producer_id, sale.line_item_id),
-        beginDate: nil,
-        endDate: nil,
-        quantity: nil
       )
     end
 
@@ -161,6 +139,10 @@ class AffiliateSalesDataBuilder < DfcBuilder
         value: sale.price.to_f,
         unit: sale.currency
       )
+    end
+
+    def sales_data_uniq_producers
+      @sales_data_uniq_producers ||= sales_data.uniq(&:producer_id)
     end
 
     def sales_data
