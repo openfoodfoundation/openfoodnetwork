@@ -128,9 +128,7 @@ module Admin
     end
 
     def mktmpdir
-      tmpdir = tmpdir_base + SecureRandom.hex(6)
-      Dir.mkdir(tmpdir)
-      tmpdir
+      Dir::Tmpname.create(TMPDIR_PREFIX, Rails.root.join('tmp') ) { |tmpname| Dir.mkdir(tmpname) }
     end
 
     def tmpdir_base
