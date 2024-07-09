@@ -4,6 +4,8 @@ require 'roo'
 
 module Admin
   class ProductImportController < Spree::Admin::BaseController
+    TMPDIR_PREFIX = "product_import-"
+
     before_action :validate_upload_presence, except: %i[index guide validate_data]
 
     def index
@@ -101,8 +103,7 @@ module Admin
 
     def save_uploaded_file(upload)
       extension = File.extname(upload.original_filename)
-      directory = Dir.mktmpdir 'product_import'
-      File.open(File.join(directory, "import#{extension}"), 'wb') do |f|
+      File.open(File.join(mktmpdir, "import#{extension}"), 'wb') do |f|
         data = UploadSanitizer.new(upload.read).call
         f.write(data)
         f.path
@@ -126,6 +127,16 @@ module Admin
       ProductImport::ProductImporter
     end
 
+    def mktmpdir
+      tmpdir = tmpdir_base + SecureRandom.hex(6)
+      Dir.mkdir(tmpdir)
+      tmpdir
+    end
+
+    def tmpdir_base
+      Rails.root.join('tmp', TMPDIR_PREFIX).to_s
+    end
+
     def file_path
       @file_path ||= validate_file_path(sanitize_file_path(params[:filepath]))
     end
@@ -134,8 +145,9 @@ module Admin
       FilePathSanitizer.new.sanitize(file_path, on_error: method(:raise_invalid_file_path))
     end
 
+    # Ensure file is under the safe tmp directory
     def validate_file_path(file_path)
-      return file_path if file_path.to_s.match?(TEMP_FILE_PATH_REGEX)
+      return file_path if file_path.to_s.match?(%r{^#{tmpdir_base}[A-Za-z0-9-]*/import\.csv$})
 
       raise_invalid_file_path
     end
@@ -145,6 +157,5 @@ module Admin
                   notice: I18n.t(:product_import_no_data_in_spreadsheet_notice)
       raise 'Invalid File Path'
     end
-    TEMP_FILE_PATH_REGEX = %r{^/tmp/product_import[A-Za-z0-9-]*/import\.csv$}
   end
 end
