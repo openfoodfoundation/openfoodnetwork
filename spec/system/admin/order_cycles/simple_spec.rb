@@ -138,6 +138,18 @@ describe '
     let!(:distributor_managed_fee) {
       create(:enterprise_fee, enterprise: distributor_managed, name: 'Managed distributor fee')
     }
+    let!(:supplier_permitted_fee1) {
+      create(:enterprise_fee, :per_item, enterprise: supplier_permitted, name: 'Supplier distributor fee1')
+    }
+    let!(:supplier_permitted_fee2) {
+      create(:enterprise_fee, :flat_rate, enterprise: supplier_permitted, name: 'Supplier distributor fee2')
+    }
+    let!(:supplier_permitted_fee3) {
+      create(:enterprise_fee, :per_item, enterprise: supplier_permitted, name: 'Supplier distributor fee3')
+    }
+    let!(:supplier_permitted_fee4) {
+      create(:enterprise_fee, :flat_rate, enterprise: supplier_permitted, name: 'Supplier distributor fee4')
+    }
     let!(:shipping_method) {
       create(:shipping_method,
              distributors: [distributor_managed, distributor_unmanaged, distributor_permitted])
@@ -257,6 +269,12 @@ describe '
         select 'Permitted supplier', from: 'new_supplier_id'
         click_button 'Add supplier'
         expect(page).to have_content "Permitted supplier"
+
+        within("tr.supplier-#{supplier_permitted.id}") { click_button 'Add fee' }
+        expect(page).to have_select("order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id", minimum: 1)
+        page.find("select#order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id").all('option[label]').first.select_option
+        sleep 1
+        expect(page).to have_select("order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id", options: ["", supplier_permitted_fee1.name, supplier_permitted_fee3.name])
 
         select_incoming_variant supplier_managed, 0, variant_managed
         select_incoming_variant supplier_permitted, 1, variant_permitted
