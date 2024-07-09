@@ -12,6 +12,9 @@ export const useOpenAndCloseAsAModal = (controller) => {
     }.bind(controller),
 
     close: function (_event, remove = false) {
+      // Only execute close if there is an open modal
+      if (!document.querySelector("body").classList.contains('modal-open')) return;
+
       this.modalTarget.classList.remove("in");
       this.backgroundTarget.classList.remove("in");
       document.querySelector("body").classList.remove("modal-open");

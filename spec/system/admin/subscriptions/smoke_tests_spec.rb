@@ -125,8 +125,9 @@ RSpec.describe 'Subscriptions' do
         select_datetime_from_datepicker Time.zone.at(1.month.from_now)
         find("body").send_keys(:escape)
 
-        click_button 'Save'
-
+        # Click save and comfirm in warning modal (because date time range value was changed)
+        click_button('Save')
+        click_button('Proceed anyway')
         visit edit_admin_subscription_path(subscription)
         click_button 'edit-products'
 
