@@ -167,6 +167,8 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
         if destination?
           $window.location = destination
         else
+          if ($window.adminOrderCycleUpdateCallback)
+            adminOrderCycleUpdateCallback(data.order_cycle);
           StatusMessage.display 'success', t('js.order_cycles.update_success')
       , (response) ->
         if response.data.errors?

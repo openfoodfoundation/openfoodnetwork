@@ -70,7 +70,12 @@ module Admin
         respond_to do |format|
           flash[:success] = t('.success') if params[:reloading] == '1'
           format.html { redirect_to_after_update_path }
-          format.json { render json: { success: true } }
+          format.json {
+            render json: { success: true, order_cycle: {
+              orders_open_at: @order_cycle.orders_open_at&.strftime('%Y-%m-%d %H:%M'),
+              orders_close_at: @order_cycle.orders_close_at&.strftime('%Y-%m-%d %H:%M')
+            } }
+          }
         end
       elsif request.format.html?
         render :checkout_options

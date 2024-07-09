@@ -15,19 +15,46 @@
   = t :edit_order_cycle
 
 - ng_controller = @order_cycle.simple? ? 'AdminSimpleEditOrderCycleCtrl' : 'AdminEditOrderCycleCtrl'
+- has_scheduled_order = @order_cycle.schedules.exists?
 = admin_inject_order_cycle_instance(@order_cycle)
-= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form'} do |f|
-
+= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form', data: { controller: 'modal modal-link order-cycle', "modal-link-target-value": "linked-schedule-warning-modal", 'order-cycle-has-schedule-value': has_scheduled_order, 'order-cycle-init-vals-value': { 'order_cycle[orders_open_at]': @order_cycle.orders_open_at&.strftime('%Y-%m-%d %H:%M'), 'order_cycle[orders_close_at]': @order_cycle.orders_close_at&.strftime('%Y-%m-%d %H:%M') } } } do |f|
   %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
-    %input.red{ type: "button", value: t('.save'), "ng-click": "submit($event, null)", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
-    - if @order_cycle.simple?
-      %input.red{ type: "button", value: t('.save_and_back_to_list'), "ng-click": "submit($event, '#{main_app.admin_order_cycles_path}')", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
-    - else
-      %input.red{ type: "button", value: t('.save_and_next'), "ng-click": "submit($event, '#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
-      %input{ type: "button", value: t('.next'), "ng-click": "cancel('#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled": "order_cycle_form.$dirty" }
-    %input{ type: "button", "ng-value": "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", "ng-click": "cancel('#{main_app.admin_order_cycles_path}')" }
+    %div#form-actions
+      %input.red{ type: "button", value: t('.save'), "ng-click": "submit($event, null)", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
+      - if @order_cycle.simple?
+        %input.red{ type: "button", value: t('.save_and_back_to_list'), "ng-click": "submit($event, '#{main_app.admin_order_cycles_path}')", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
+      - else
+        %input.red{ type: "button", value: t('.save_and_next'), "ng-click": "submit($event, '#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid" }
+        %input{ type: "button", value: t('.next'), "ng-click": "cancel('#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled": "order_cycle_form.$dirty" }
+      %input{ type: "button", "ng-value": "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", "ng-click": "cancel('#{main_app.admin_order_cycles_path}')" }
+    %div#modal-actions{style: "display: none;"}
+      %input.red{ type: "button", value: t('.save'), "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid", data: { 'action': 'click->modal-link#open click->order-cycle#updateModalConfirmButton', 'target': 'save'} }
+      - if @order_cycle.simple?
+        %input.red{ type: "button", value: t('.save_and_back_to_list'), "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid", data: { 'action': 'click->modal-link#open click->order-cycle#updateModalConfirmButton', 'target': 'saveAndBack'} }
+      - else
+        %input.red{ type: "button", value: t('.save_and_next'), "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid", data: { 'action': 'click->modal-link#open click->order-cycle#updateModalConfirmButton', 'target': 'saveAndNext'} }
+        %input{ type: "button", value: t('.next'), "ng-click": "cancel('#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled": "order_cycle_form.$dirty" }
+      %input{ type: "button", "ng-value": "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", "ng-click": "cancel('#{main_app.admin_order_cycles_path}')" }
 
   - if @order_cycle.simple?
     = render 'simple_form', f: f
   - else
     = render 'form', f: f
+
+  - if has_scheduled_order
+    = render ModalComponent.new(id: "linked-schedule-warning-modal", close_button: false) do
+      .content
+        .modal-body
+          %h6
+            = t('admin.order_cycles.edit.linked_schedule_warning_modal.title')
+          %div{ style: 'font-size: 1rem;' }
+            = t('admin.order_cycles.edit.linked_schedule_warning_modal.content')
+        %p.modal-actions.justify-end
+          %button.button.secondary#modal-confirm{ type: "button", 'data-action': 'click->modal#close', style: 'display: none;', data: { 'order-cycle-target': 'modalConfirm', request: 'save' }, "ng-click": "submit($event, null)" }
+            = t('admin.order_cycles.edit.linked_schedule_warning_modal.proceed')
+          %button.button.secondary#modal-confirm{ type: "button", 'data-action': 'click->modal#close', style: 'display: none;', data: { 'order-cycle-target': 'modalConfirm', request: 'saveAndNext' }, "ng-click": "submit($event, '#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')" }
+            = t('admin.order_cycles.edit.linked_schedule_warning_modal.proceed')
+          %button.button.secondary#modal-confirm{ type: "button", 'data-action': 'click->modal#close', style: 'display: none;', data: { 'order-cycle-target': 'modalConfirm', request: 'saveAndBack' }, "ng-click": "submit($event, '#{main_app.admin_order_cycles_path}')" }
+            = t('admin.order_cycles.edit.linked_schedule_warning_modal.proceed')
+          %button.button.primary{ type: "button", 'data-action': 'click->modal#close' }
+            = t('admin.order_cycles.edit.linked_schedule_warning_modal.cancel')

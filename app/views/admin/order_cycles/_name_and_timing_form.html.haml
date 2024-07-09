@@ -11,7 +11,7 @@
     = f.label :orders_open_at, t('.orders_open')
   .omega.six.columns.fullwidth_inputs
     - if viewing_as_coordinator_of?(@order_cycle)
-      = f.text_field :orders_open_at,  data: { controller: "flatpickr", "flatpickr-enable-time-value": true }, 'ng-model' => 'order_cycle.orders_open_at', 'ng-if' => 'loaded()', 'change-warning' => 'order_cycle', class: "datetimepicker"
+      = f.text_field :orders_open_at,  data: { controller: "flatpickr", "flatpickr-enable-time-value": true, action: 'order-cycle#toggleSaveBtns', 'order-cycle-target': 'input' }, 'ng-model' => 'order_cycle.orders_open_at', 'ng-if' => 'loaded()', 'change-warning' => 'order_cycle', class: "datetimepicker"
     - else
       {{ order_cycle.orders_open_at }}
 
@@ -24,7 +24,7 @@
     = f.label :orders_close, t('.orders_close')
   .six.columns.omega.fullwidth_inputs
     - if viewing_as_coordinator_of?(@order_cycle)
-      = f.text_field :orders_close_at, data: { controller: "flatpickr", "flatpickr-enable-time-value": true }, 'ng-model' => 'order_cycle.orders_close_at', 'ng-if' => 'loaded()', 'change-warning' => 'order_cycle', class: "datetimepicker"
+      = f.text_field :orders_close_at, data: { controller: "flatpickr", "flatpickr-enable-time-value": true, action: 'order-cycle#toggleSaveBtns', 'order-cycle-target': 'input' }, 'ng-model' => 'order_cycle.orders_close_at', 'ng-if' => 'loaded()', 'change-warning' => 'order_cycle', class: "datetimepicker"
     - else
       {{ order_cycle.orders_close_at }}
 

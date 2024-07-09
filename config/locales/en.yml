@@ -1506,6 +1506,11 @@ en:
         choose_products_from: "Choose Products From:"
         re_notify_producers: Re notify producers
         notify_producers_tip: This will send an email to each producer with the list of their orders.
+        linked_schedule_warning_modal:
+          title: 'Orders are linked to this order cycle.'
+          content: 'If you wish to create a new order cycle, it is recommended to duplicate the order cycle first and then change the dates.'
+          proceed: 'Proceed anyway'
+          cancel: 'Cancel'
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
