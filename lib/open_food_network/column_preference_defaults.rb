@@ -64,9 +64,8 @@ module OpenFoodNetwork
       {
         image: { name: I18n.t("admin.image"), visible: true },
         producer: { name: I18n.t("admin.producer"), visible: true },
-        sku: { name: I18n.t("admin.sku"), visible: false },
-        name: { name: I18n.t("admin.name"),                    visible: true },
-        unit: { name: I18n.t("#{node}.unit"),                  visible: true },
+        name: { name: I18n.t("admin.name"), visible: true },
+        unit: { name: I18n.t("#{node}.unit"), visible: true },
         price: { name: I18n.t("admin.price"), visible: true },
         on_hand: { name: I18n.t("admin.on_hand"), visible: true },
         on_demand: { name: I18n.t("admin.on_demand"), visible: true },
@@ -82,7 +81,6 @@ module OpenFoodNetwork
         {
           image: { name: t(:image), visible: true },
           name: { name: t(:name), visible: true },
-          sku: { name: t(:sku), visible: true },
           unit: { name: t(:unit), visible: true },
           unit_scale: { name: t(:unit_scale), visible: true },
           price: { name: t(:price), visible: true },
