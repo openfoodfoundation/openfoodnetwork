@@ -10,24 +10,32 @@ RSpec.describe '
   include AuthenticationHelper
   include WebHelper
 
+  let(:hub) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+
   it "listing and filtering order cycles" do
     # Given some order cycles (created in an arbitrary order)
     oc4 = create(:simple_order_cycle, name: 'oc4',
                                       orders_open_at: 2.days.from_now,
-                                      orders_close_at: 1.month.from_now)
-    oc2 = create(:simple_order_cycle, name: 'oc2', orders_close_at: 1.month.from_now)
+                                      orders_close_at: 1.month.from_now, distributors: [hub])
+    oc2 = create(:simple_order_cycle, name: 'oc2',
+                                      orders_close_at: 1.month.from_now, distributors: [hub])
     oc6 = create(:simple_order_cycle, name: 'oc6',
-                                      orders_open_at: 1.month.ago, orders_close_at: 3.weeks.ago)
+                                      orders_open_at: 1.month.ago, orders_close_at: 3.weeks.ago,
+                                      distributors: [hub])
     oc3 = create(:simple_order_cycle, name: 'oc3',
                                       orders_open_at: 1.day.from_now,
-                                      orders_close_at: 1.month.from_now)
+                                      orders_close_at: 1.month.from_now,
+                                      distributors: [hub])
     oc5 = create(:simple_order_cycle, name: 'oc5',
-                                      orders_open_at: 1.month.ago, orders_close_at: 2.weeks.ago)
-    oc1 = create(:order_cycle, name: 'oc1')
+                                      orders_open_at: 1.month.ago, orders_close_at: 2.weeks.ago,
+                                      distributors: [hub])
+    oc1 = create(:order_cycle, name: 'oc1', distributors: [hub])
     oc0 = create(:simple_order_cycle, name: 'oc0',
-                                      orders_open_at: nil, orders_close_at: nil)
+                                      orders_open_at: nil, orders_close_at: nil,
+                                      distributors: [hub])
     oc7 = create(:simple_order_cycle, name: 'oc7',
-                                      orders_open_at: 2.months.ago, orders_close_at: 5.weeks.ago)
+                                      orders_open_at: 2.months.ago, orders_close_at: 5.weeks.ago,
+                                      distributors: [hub])
     schedule1 = create(:schedule, name: 'Schedule1', order_cycles: [oc1, oc3])
     create(:proxy_order, subscription: create(:subscription, schedule: schedule1), order_cycle: oc1)
 
@@ -73,7 +81,9 @@ RSpec.describe '
 
     # I can load more order_cycles
     expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
-    trigger_click(:button, "Show 30 more days")
+    # binding.pry
+    # trigger_click(:button, "Show 30 more days")
+    click_button "Show 30 more days"
 
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
 

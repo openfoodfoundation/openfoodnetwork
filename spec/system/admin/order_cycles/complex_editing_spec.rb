@@ -32,7 +32,7 @@ RSpec.describe '
       .to eq(oc.orders_close_at.strftime("%Y-%m-%d %H:%M"))
     expect(page).to have_content "Coordinator #{oc.coordinator.name}"
 
-    trigger_click(:button, 'Next')
+    click_button "Next"
 
     # And I should see the suppliers
     expect(page).to have_selector 'td.supplier_name', text: oc.suppliers.first.name
@@ -76,7 +76,7 @@ RSpec.describe '
       selected: supplier.enterprise_fees.first.name
     )
 
-    trigger_click(:button, 'Next')
+    click_button "Next"
 
     # And I should see the distributors
     expect(page).to have_selector 'td.distributor_name', text: oc.distributors.first.name

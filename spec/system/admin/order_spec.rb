@@ -129,7 +129,7 @@ RSpec.describe '
 
       check 'order_use_billing'
 
-      trigger_click(:button, 'Update')
+      click_button "Update"
 
       expect(page).to have_content 'Customer Details updated'
 
@@ -156,7 +156,7 @@ RSpec.describe '
         expect(page).to have_field 'order_email', with: customer3.email
 
         expect do
-          trigger_click(:button, 'Update')
+          click_button "Update"
           expect(page).to have_content 'Customer Details updated'
         end.to change { order.reload.customer }.from(customer2).to(customer3)
       end
@@ -292,7 +292,7 @@ RSpec.describe '
     login_as_admin
     visit spree.edit_admin_order_path(order)
 
-    dismiss_warning
+    click_button 'Dismiss'
 
     expect(page).to have_select2 "order_distributor_id", with_options: [d.name]
     select2_select d.name, from: 'order_distributor_id'
@@ -778,7 +778,7 @@ RSpec.describe '
           visit spree.edit_admin_order_path(order)
 
           expect(page).not_to have_content different_shipping_method_for_distributor1.name
-          dismiss_warning
+          click_button 'Dismiss'
 
           find('.edit-method').click
 
@@ -1088,7 +1088,7 @@ RSpec.describe '
           end
 
           # updates the order and verifies the warning disappears
-          trigger_click(:button, 'Update And Recalculate Fees')
+          click_button "Update And Recalculate Fees"
           expect(page).not_to have_content "Out of Stock"
         end
       end
@@ -1099,7 +1099,7 @@ RSpec.describe '
       expect(page).to have_selector 'h1', text: 'Customer Details'
       click_link "Order Details"
 
-      dismiss_warning
+      click_button 'Dismiss'
 
       expect(page).to have_content 'Add Product'
       select2_select product.name, from: 'add_variant_id', search: true
@@ -1111,7 +1111,7 @@ RSpec.describe '
       expect(page).to have_select2 'order_distributor_id', with_options: [distributor1.name]
       expect(page).not_to have_select2 'order_distributor_id', with_options: [distributor2.name]
 
-      dismiss_warning
+      click_button 'Dismiss'
 
       expect(page).to have_select2 'order_order_cycle_id',
                                    with_options: ["#{order_cycle1.name} (open)"]
