@@ -71,8 +71,8 @@ module OrderCycles
       distributor.preferred_shopfront_product_sorting_method
     end
 
-    def supplier_property_join
-      @query = @query.joins("
+    def supplier_property_join(query)
+      query.joins("
         JOIN enterprises ON enterprises.id = first_variant.supplier_id
         LEFT OUTER JOIN producer_properties ON producer_properties.producer_id = enterprises.id
       ")
