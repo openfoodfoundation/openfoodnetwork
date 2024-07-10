@@ -278,7 +278,8 @@ describe '
         expect(page).to have_select(
           "order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id", minimum: 1
         )
-        select "Permitted supplier", from: "order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id"
+        select "Permitted supplier",
+               from: "order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id"
         expect(page).to have_select(
           "order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id",
           options: ["", supplier_permitted_fee1.name, supplier_permitted_fee3.name]
