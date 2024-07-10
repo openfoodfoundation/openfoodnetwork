@@ -3,6 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe OrderCycles::DistributedProductsService do
+  # NOTE: product_relation_incl_supplier is tested via ProductsRenderer specs:
+  # spec/services/products_renderer_spec.rb
+
   describe "#products_relation" do
     subject(:products_relation) {
       described_class.new(distributor, order_cycle, customer).products_relation

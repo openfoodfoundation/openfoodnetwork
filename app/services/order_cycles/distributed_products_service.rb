@@ -11,10 +11,14 @@ module OrderCycles
       @customer = customer
     end
 
-    def products_relation(supplier_properties: nil)
-      query = relation_by_sorting(supplier_properties)
+    def products_relation
+      relation_by_sorting.order(Arel.sql(order))
+    end
 
-      query = supplier_property_join(query) if supplier_properties.present?
+    def products_relation_incl_supplier_properties
+      query = relation_by_sorting(supplier_properties: true)
+
+      query = supplier_property_join(query)
 
       query.order(Arel.sql(order))
     end
@@ -30,10 +34,10 @@ module OrderCycles
 
     attr_reader :distributor, :order_cycle, :customer
 
-    def relation_by_sorting(supplier_properties)
+    def relation_by_sorting(supplier_properties: false)
       query = Spree::Product.where(id: stocked_products)
 
-      if sorting == "by_producer" || supplier_properties.present?
+      if sorting == "by_producer" || supplier_properties
         # Joins on the first product variant to allow us to filter product by supplier. This is so
         # enterprise can display product sorted by supplier in a custom order on their shopfront.
         #

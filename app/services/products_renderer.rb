@@ -35,7 +35,11 @@ class ProductsRenderer
     return unless order_cycle
 
     @products ||= begin
-      results = distributed_products.products_relation(supplier_properties: supplier_properties_arg)
+      results = if supplier_properties.present?
+                  distributed_products.products_relation_incl_supplier_properties
+                else
+                  distributed_products.products_relation
+                end
 
       results = filter(results)
       # Scope results with variant_overrides
@@ -52,8 +56,6 @@ class ProductsRenderer
   end
 
   def filter(query)
-    supplier_properties = supplier_properties_arg
-
     ransack_results = query.ransack(args[:q]).result.to_a
 
     return ransack_results if supplier_properties.blank?
@@ -83,12 +85,12 @@ class ProductsRenderer
     ransack_results
   end
 
-  def supplier_properties_arg
+  def supplier_properties
     args[:q]&.slice("with_variants_supplier_properties")
   end
 
   def supplier_property_ids
-    supplier_properties_arg["with_variants_supplier_properties"]
+    supplier_properties["with_variants_supplier_properties"]
   end
 
   def with_properties

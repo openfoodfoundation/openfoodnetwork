@@ -83,7 +83,6 @@ RSpec.describe ProductsRenderer do
           expect(products).to eq([product_apples, product_cherries])
         end
 
-        # TODO this is a bit flaky due to banana bread having two supplier
         it "filters products with a product property or a producer property" do
           cakes_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                        value: '1', position: 1 })
