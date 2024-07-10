@@ -35,6 +35,11 @@ RSpec.describe Admin::EnterpriseFeesController do
                                         per_order: true }
         expect(assigns(:collection)).to include fee1, fee3
       end
+      it 'returns all enterprise fees of enterprise' do
+        get :for_order_cycle, format: :json,
+                              params: { for_order_cycle: true, order_cycle_id: order_cycle.id }
+        expect(assigns(:collection)).to include fee1, fee2, fee3, fee4
+      end
     end
   end
 end
