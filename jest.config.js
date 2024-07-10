@@ -66,9 +66,7 @@ module.exports = {
   // maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+  moduleDirectories: ["node_modules", "app/webpacker"],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -157,9 +155,7 @@ module.exports = {
   // ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
-  "testRegex": [
-    "spec/javascripts/.*_test\\.js"
-  ],
+  testRegex: ["spec/javascripts/.*_test\\.js"],
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: undefined,
@@ -177,9 +173,7 @@ module.exports = {
   // transform: undefined,
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  "transformIgnorePatterns": [
-    "/node_modules/(?!(stimulus)/)"
-  ]
+  transformIgnorePatterns: ["/node_modules/(?!(stimulus)/)"],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
