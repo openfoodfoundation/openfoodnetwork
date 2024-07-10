@@ -52,11 +52,14 @@ class VariantOverride < ApplicationRecord
       return
     end
 
+    # rubocop:disable Rails/SkipsModelValidations
+    # Cf. conversation https://github.com/openfoodfoundation/openfoodnetwork/pull/12647
     if quantity > 0
       increment! :count_on_hand, quantity
     elsif quantity < 0
       decrement! :count_on_hand, -quantity
     end
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def default_stock?
