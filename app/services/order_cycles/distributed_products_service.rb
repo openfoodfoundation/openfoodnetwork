@@ -12,11 +12,11 @@ module OrderCycles
     end
 
     def products_relation(supplier_properties: nil)
-      @query = relation_by_sorting(supplier_properties)
+      query = relation_by_sorting(supplier_properties)
 
-      supplier_property_join if supplier_properties.present?
+      query = supplier_property_join(query) if supplier_properties.present?
 
-      @query.order(Arel.sql(order))
+      query.order(Arel.sql(order))
     end
 
     def variants_relation
@@ -67,8 +67,8 @@ module OrderCycles
       distributor.preferred_shopfront_product_sorting_method
     end
 
-    def supplier_property_join
-      @query = @query.joins("
+    def supplier_property_join(query)
+      query.joins("
         JOIN enterprises ON enterprises.id = first_variant.supplier_id
         LEFT OUTER JOIN producer_properties ON producer_properties.producer_id = enterprises.id
       ")
