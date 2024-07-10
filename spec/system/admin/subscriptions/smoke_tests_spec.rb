@@ -254,7 +254,7 @@ RSpec.describe 'Subscriptions', feature: :admin_style_v3 do
           page.find(delete_option_selector).click
         end
         within modal_selector do
-          page.find(delete_button_selector).click
+          click_button "Delete product"
         end
 
         visit edit_admin_subscription_path(subscription)
