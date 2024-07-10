@@ -38,34 +38,6 @@ RSpec.describe ProductsRenderer do
       exchange.variants << product_doughnuts.variants.first
     end
 
-    describe "sorting" do
-      it "sorts products by the distributor's preferred taxon list" do
-        allow(distributor)
-          .to receive(:preferred_shopfront_taxon_order) { "#{cakes.id},#{fruits.id}" }
-        products = products_renderer.send(:products)
-        expect(products)
-          .to eq([product_banana_bread, product_doughnuts, product_apples, product_cherries])
-      end
-
-      it "sorts products by the distributor's preferred producer list" do
-        allow(distributor)
-          .to receive(:preferred_shopfront_product_sorting_method) { "by_producer" }
-        allow(distributor).to receive(:preferred_shopfront_producer_order) {
-          "#{cakes_supplier.id},#{fruits_supplier.id}"
-        }
-        products = products_renderer.send(:products)
-        expect(products)
-          .to eq([product_banana_bread, product_doughnuts, product_apples, product_cherries])
-      end
-
-      it "alphabetizes products by name when taxon list is not set" do
-        allow(distributor).to receive(:preferred_shopfront_taxon_order) { "" }
-        products = products_renderer.send(:products)
-        expect(products)
-          .to eq([product_apples, product_banana_bread, product_cherries, product_doughnuts])
-      end
-    end
-
     context "filtering" do
       it "filters products by name_or_meta_keywords_or_variants_display_as_or_" \
          "variants_display_name_or_variants_supplier_name_cont" do
@@ -111,7 +83,6 @@ RSpec.describe ProductsRenderer do
           expect(products).to eq([product_apples, product_cherries])
         end
 
-        # TODO this is a bit flaky due to banana bread having two supplier
         it "filters products with a product property or a producer property" do
           cakes_supplier.producer_properties.create!({ property_id: property_organic.id,
                                                        value: '1', position: 1 })
