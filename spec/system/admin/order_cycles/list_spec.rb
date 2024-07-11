@@ -81,8 +81,6 @@ RSpec.describe '
 
     # I can load more order_cycles
     expect(page).not_to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
-    # binding.pry
-    # trigger_click(:button, "Show 30 more days")
     click_button "Show 30 more days"
 
     expect(page).to have_selector "#listing_order_cycles tr.order-cycle-#{oc7.id}"
