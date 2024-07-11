@@ -141,8 +141,8 @@ RSpec.describe "Managing users" do
         fill_in "Password", with: "user1Secret"
         fill_in "Confirm Password", with: "user1Secret"
 
-        expect(page).to have_select "Language", selected: "English"
-        select "Español", from: "Language"
+        expect(page).to have_select "Language", selected: "en_AU"
+        select "es", from: "Language"
 
         perform_enqueued_jobs do
           expect do
