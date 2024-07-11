@@ -800,7 +800,7 @@ fr:
         search_products: Chercher des produits
         search_for_producers: Rechercher des producteurs
         all_producers: Tous les producteurs
-        search_for_categories: Rechercher des catégories
+        search_for_categories: Rechercher
         all_categories: Toutes les catégories
         producers:
           label: Producteurs

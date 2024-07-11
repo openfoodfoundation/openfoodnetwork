@@ -849,6 +849,9 @@ fr_CA:
         category_field_name: "Catégorie"
         tax_category_field_name: "Type de taxe"
         producer_field_name: "Producteur"
+      clone:
+        success: Le produit a bien été dupliqué
+        error: Impossible de dupliquer le produit
     product_import:
       title: import produit
       file_not_found: Fichier non trouvé ou impossible à ouvrir
@@ -1289,27 +1292,24 @@ fr_CA:
           custom_tab_title: "Titre de l'onglet personnalisé"
           custom_tab_content: "Contenu de l'onglet personnalisé"
         connected_apps:
-          legend: "Connected apps  https://n8n.openfoodnetwork.org.uk/webhook-test/regen/connect-enterprise/can"
-          title: "Discover Regenerative"
-          tagline: "Autoriser Discover Regenerative à publier les informations de votre entreprise"
+          legend: "Applications connectées"
+          title: "Découvrir la justice alimentaire"
+          tagline: "Permettre à l'OFN Canada de publier les informations relatives à votre entreprise."
           enable: "Autoriser le partage de données"
           disable: "Arrêter le partage"
           loading: "Chargement en cours"
           need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
           note: |
-              Votre compte Open Food Network est connecté à Discover Regenerative.
-              Ajouter et mettre à jour les informations sur votre liste Discover Regenerative ici.
+              Votre compte Open Food Network est connecté à Discover Food Justice.
+              Les modifications apportées à votre profil OFN mettront automatiquement à jour votre liste Discover Food Justice. Pour toute autre modification, veuillez contacter le service d'assistance de l'OFN.
           link_label: "Gérer la liste"
           description_html: |
-              <p>
-              Les producteurs éligibles peuvent mettre en avant leurs références Regenerative,
-              pratiques agricoles et plus à travers le listing du profil.
-              Simplifier comment les acheteurs peuvent trouver les produits regeneratives et se connecter
-              avec des producteurs.
-              </p>
+              <p>Les producteurs éligibles peuvent présenter des appels à l'action en faveur du bénévolat local, de l'achat local ou du don local.
+              Cela simplifie la façon dont les producteurs peuvent se connecter dans la région de Waterloo autour de la justice et de la souveraineté alimentaires.
+
               <p>
               <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-              target="_blank"><b>En savoir plus sur Discover Regenerative </b>
+              target="_blank"><b>En savoir plus sur le projet Waterloo Food Commons </b>
               <i class="icon-external-link"></i></a>
               </p>
       actions:
@@ -1563,7 +1563,7 @@ fr_CA:
           users: "Utilisateurs"
           vouchers: Bon de réduction
           white_label: "Marque blanche"
-          connected_apps: "Connected apps  https://n8n.openfoodnetwork.org.uk/webhook-test/regen/connect-enterprise/can"
+          connected_apps: "Applications connectées"
         enterprise_group:
           primary_details: "Informations de base"
           users: "Utilisateurs"
@@ -1603,6 +1603,9 @@ fr_CA:
       pack_by_customer: Préparation des commandes par Acheteur
       pack_by_supplier: Préparation des commandes par Producteur
       pack_by_product: Préparation des commandes par Produit
+      display:
+        report_is_big: "Ce rapport est volumineux et risque de ralentir l'appareil sur lequel vous êtes en train de le consulter."
+        display_anyway: "Afficher quand même"
       download:
         button: "Télécharger le rapport"
       show:

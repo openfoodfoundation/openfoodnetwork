@@ -1276,6 +1276,7 @@ el:
           add_new: Προσθήκη νέου
           no_voucher_yet: 'Δεν υπάρχουν κουπόνια '
         white_label:
+          hide_ofn_navigation: "Απόκρυψη πλοήγησης OFN"
           upload_logo: "Λογότυπο καταστήματος"
           remove_logo: "Αφαίρεση λογότυπου."
           remove_logo_confirm: "Είστε σίγουροι ότι θέλετε να αφαιρέσετε το λογότυπο;"
@@ -1287,6 +1288,28 @@ el:
           custom_tab_content: "Περιεχόμενο για την προσαρμοσμένη καρτέλα"
         connected_apps:
           legend: "Μόνο οι διαχειριστές μπορούν να συνδέσουν εφαρμογές"
+          title: "Discover Regenerative"
+          tagline: "Να επιτρέψετε στο Discover Regenerative να δημοσιεύσει τις πληροφορίες της επιχείρησής σας."
+          enable: "Να επιτρέπεται η κοινοποίηση δεδομένων."
+          disable: "Διακοπή κοινοποίησης"
+          loading: "Φόρτωση"
+          need_to_be_manager: "Μόνο οι διαχειριστές μπορούν να συνδέουν εφαρμογές."
+          note: |
+              Ο λογαριασμός σας στο Open Food Network είναι συνδεδεμένος με το Discover Regenerative.
+              Προσθέστε ή ενημερώστε πληροφορίες για τη λίστα σας στο Discover Regenerative εδώ.
+          link_label: "Διαχείριση λίστας"
+          description_html: |
+              <p>
+              Οι επιλέξιμοι παραγωγοί μπορούν να παρουσιάσουν τις αναγεννητικές πιστοποιήσεις τους,
+              τις πρακτικές γεωργίας και άλλες πληροφορίες μέσω μιας καταχώρισης προφίλ.
+              Αυτό απλοποιεί τον τρόπο με τον οποίο οι αγοραστές μπορούν να βρουν αναγεννητικά προϊόντα και να συνδεθούν
+              με παραγωγούς που τους ενδιαφέρουν.
+              </p>
+              <p>
+              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+              target="_blank"><b>Μάθετε περισσότερα για το Discover Regenerative</b>
+              <i class="icon-external-link"></i></a>
+              </p>
       actions:
         edit_profile: Ρυθμήσεις
         properties: Ιδιότητες
@@ -1361,6 +1384,14 @@ el:
         create: "Δημιουργία"
         cancel: "Ακύρωση"
         back_to_list: "Πίσω στην Λίστα"
+      create:
+        success: 'Το κύκλος παραγγελιών σας δημιουργήθηκε.'
+      update:
+        success: 'Ο κύκλος παραγγελιών σας έχει ενημερωθεί.'
+      clone:
+        success: "Ο κύκλος παραγγελιών σας %{name} έχει αντιγραφεί."
+      notify_producers:
+        success: 'Τα email προς τους παραγωγούς έχουν μπει σε ουρά για αποστολή.'
       edit:
         save: "Αποθήκευση"
         save_and_next: "Αποθήκευση και Επόμενο"
@@ -1369,6 +1400,8 @@ el:
         back_to_list: "Πίσω στην Λίστα"
         save_and_back_to_list: "Αποθήκευση και Πίσω στην Λίστα"
         choose_products_from: "Επιλογή προϊόντων Από:"
+        re_notify_producers: Επαναλάβετε την ειδοποίηση προς τους παραγωγούς
+        notify_producers_tip: Αυτό θα στείλει ένα email σε κάθε παραγωγό με τη λίστα των παραγγελιών τους.
       incoming:
         incoming: "Εισερχόμενο"
         supplier: "Προμηθευτής"
@@ -1394,8 +1427,12 @@ el:
         cancel: "Ακύρωση"
         back_to_list: "Πίσω στην Λίστα"
       checkout_options:
+        back_end: "Μόνο για το back office"
         cancel: "Ακύρωση"
+        checkout_options: "Επιλογές ολοκλήρωσης αγοράς"
         distributor: "Διανομέας"
+        no_payment_methods: Κάθε διανομέας σε αυτόν τον κύκλο παραγγελιών απαιτεί τουλάχιστον έναν τρόπο πληρωμής.
+        no_shipping_methods: Κάθε διανομέας σε αυτόν τον κύκλο παραγγελιών απαιτεί τουλάχιστον έναν τρόπο αποστολής.
         payment_methods: "Τρόποι πληρωμής"
         save: "Αποθήκευση"
         save_and_back_to_list: "Αποθήκευση και Πίσω στην Λίστα"
@@ -1405,6 +1442,7 @@ el:
         edit: "1. Γενικές Ρυθμίσεις"
         incoming: "2. Εισερχόμενα Προϊόντα"
         outgoing: "3. Εξερχόμενα Προϊόντα"
+        checkout_options: "4. Επιλογές ολοκλήρωσης αγοράς"
       exchange_form:
         pickup_time_tip: Όταν οι παραγγελίες από αυτό το OC θα είναι έτοιμες για τον πελάτη
         pickup_instructions_placeholder: "Πληροφορίες παραλαβής"
@@ -1418,6 +1456,8 @@ el:
         add_supplier: 'Προσθήκη προμηθευτή'
         add_distributor: 'Προσθήκη διανομέα'
       advanced_settings:
+        automatic_notifications: Αυτόματες ειδοποιήσεις
+        automatic_notifications_tip: Αυτόματη ειδοποίηση των παραγωγών με τις παραγγελίες τους μέσω email όταν κλείνουν οι κύκλοι παραγγελιών.
         title: Ρυθμήσεις για Προχωρημένους
         choose_product_tip: Μπορείτε να περιορίσετε τα εισερχόμενα και τα εξερχόμενα προϊόντα μόνο στο απόθεμα %{inventory}.
         preferred_product_selection_from_coordinator_inventory_only_here: Μόνο το απόθεμα του συντονιστή
@@ -1475,6 +1515,11 @@ el:
         msg: Αυτός ο κύκλος παραγγελιών συνδέεται με τις ανοικτές παραγγελίες συνδρομής %{n}. Η αλλαγή αυτής της ημερομηνίας τώρα δεν θα επηρεάσει τυχόν παραγγελίες που έχουν ήδη πραγματοποιηθεί, αλλά θα πρέπει να αποφεύγονται εάν είναι δυνατόν. Είστε βέβαιοι ότι θέλετε να προχωρήσετε;
         cancel: Ακύρωση
         proceed: Προχώρησε
+      status:
+        undated: Ενημερώθηκε
+        upcoming: επερχόμενο
+        open: ανοιχτό
+        closed: κλειστό
     producer_properties:
       index:
         title: Ιδιότητες Παραγωτών
@@ -1483,6 +1528,10 @@ el:
         could_not_cancel_the_order: Δεν μπόρεσε να ακυρωθεί η παραγγελία
       resume:
         could_not_resume_the_order: Δεν μπόρεσε να συνεχιστεί η παραγγελία
+    select2:
+      minimal_search_length: Παρακαλώ εισάγετε %{count} ή περισσότερους χαρακτήρες
+      searching: Αναζήτηση...
+      no_matches: Δεν βρέθηκαν αποτελέσματα
     shared:
       user_guide_link:
         user_guide: Οδηγός Χρήσης
@@ -1490,6 +1539,8 @@ el:
         has_no_payment_methods: "%{enterprise} δεν διαθέτει τρόπους πληρωμείς"
         has_no_shipping_methods: "%{enterprise} δεν διαθέτει τρόπους αποστολής"
         has_no_enterprise_fees: "Το %{enterprise} δεν έχει επιχειρηματικά τέλη"
+      flashes:
+        dismiss: Απόρριψη
       side_menu:
         enterprise:
           primary_details: "Βασικές λεπτομέρειες"
@@ -1524,11 +1575,15 @@ el:
       email_confirmation: "Εκκρεμεί η επιβεβαίωση μέσω ηλεκτρονικού ταχυδρομείου. Στείλαμε ένα email επιβεβαίωσης στο %{email}."
       not_visible: "%{enterprise} δεν είναι ορατό και έτσι δεν μπορεί να βρεθεί στο χάρτη ή στις αναζητήσεις"
     reports:
+      deprecated: "Αυτή η αναφορά είναι αποσυρμένη και θα αφαιρεθεί σε μελλοντική έκδοση."
       hidden: ΚΡΥΦΟ
       unitsize: ΕΝΩΣΗ
       total: ΤΕΛΙΚΟ
       total_items: ΣΥΝΟΛΟ ΑΝΤΙΚΕΙΜΕΝΩΝ
+      total_by_customer: 'Σύνολο ανά πελάτη '
+      total_by_supplier: Σύνολο ανά προμηθευτή
       supplier_totals: Σύνολο προμηθευτή κύκλου παραγγελίας
+      percentage: "%{value} %"
       supplier_totals_by_distributor: Σύνολο προμηθευτή κύκλου παραγγελίας ανά διανομέα
       totals_by_supplier: Παραγγείλετε συνολικά διανομέας κύκλου ανά προμηθευτή
       customer_totals: Σύνολο κύκλου παραγγελιών για τον πελάτη
@@ -1537,15 +1592,27 @@ el:
       lettuce_share: Μαρούλι
       payment_methods: Αναφορά μεθόδων πληρωμής
       delivery: Αναφορά παράδοσης
+      sales_tax_totals_by_producer: 'Συνολικοί Φόροι Πωλήσεων ανά Παραγωγό '
+      sales_tax_totals_by_order: Συνολικοί φόροι πωλήσεων ανά παραγγελία
       tax_types: Φορολογικοί τύποι
       tax_rates: Φορολογικοί δείκτες
       pack_by_customer: Συσκευασία ανά πελάτη
       pack_by_supplier: Συσκευασία κατά προμηθευτή
+      pack_by_product: Συσκευασία ανά προϊόν
+      display:
+        report_is_big: "Αυτή η αναφορά είναι μεγάλη και μπορεί να επιβραδύνει τη συσκευή σας."
+        display_anyway: "Εμφάνιση παρά ταύτα"
+      download:
+        button: "Αποθήκευση αναφοράς"
       show:
         report_taking_longer: >
             Λυπούμαστε, αυτή η αναφορά χρειάστηκε πολύ χρόνο για να επεξεργαστεί.
             Μπορεί να περιέχει πολλά δεδομένα ή να είμαστε απασχολημένοι με άλλες
             αναφορές. Μπορείτε να δοκιμάσετε ξανά αργότερα.
+        report_taking_longer_html: >
+            Η αναφορά αυτή χρειάζεται περισσότερο χρόνο για επεξεργασία. Ίσως περιέχει
+            πολλά δεδομένα ή είμαστε απασχολημένοι με άλλες αναφορές. Μόλις ολοκληρωθεί,
+            θα σας ειδοποιήσουμε μέσω email.
         report_link_label: Αποθήκευση αναφοράς μόλις είναι διαθέσιμη
       orders_and_distributors:
         name: Παραγγελίες και Διανομείς
@@ -1575,11 +1642,17 @@ el:
       enterprise_fee_summary:
         name: "Περίληψη τελών για τις επιχειρήσεις"
         description: "Περίληψη των επιχειρησιακών τελών που συλλέχθηκαν"
+      enterprise_fees_with_tax_report_by_order: "Αναφορά τελών επιχείρησης με φόρο ανά παραγγελία"
+      enterprise_fees_with_tax_report_by_producer: "Αναφορά τελών επιχείρησης με φόρο ανά παραγωγό"
       errors:
+        no_report_type: "Παρακαλώ καθορίστε έναν τύπο αναφοράς."
         report_not_found: "Δεν βρέθηκε η αναφορά"
+        missing_ransack_params: "Οι παραμέτροι αναζήτησης Ransack πρέπει να παρέχονται στο αίτημα."
+      hidden_field: "< Κρυφό >"
       summary_row:
         total: "ΤΕΛΙΚΟ"
       table:
+        select_and_search: "Επιλέξτε φίλτρα και κάντε κλικ στο %{option} για να αποκτήσετε πρόσβαση στα δεδομένα σας."
         headings:
           customer_code: "Κωδικός"
           first_name: "Όνομα"
@@ -1588,14 +1661,33 @@ el:
           product: "Προϊόν"
           variant: "Διάφορα"
           quantity: "Ποσότητα"
+          is_temperature_controlled: "TempControlled?"
+          temp_controlled: "TempControlled?"
           price: "Τιμή"
       rendering_options:
         generate_report: "Δημιουργία αναφοράς "
+        spreadsheet: "Spreadsheet (Excel, OpenOffice..)"
+        display: Εμφάνιση
+        summary_row: Γραμμή συνόλων
+        header_row: Γραμμή τίτλων
+        raw_data: Ακατέργαστα δεδομένα
+        formatted_data: Μορφοποιημένα Δεδομένα
       packing:
         name: "Αναφορές συσκευασίας"
     oidc_settings:
       index:
+        title: "Ρυθμίσεις OIDC"
+        connect: "Σύνδεσε το λογαριασμό σου"
         disconnect: "Αποσύνδεση."
+        connected: "Ο λογαριασμός σας είναι συνδεδεμένος με %{uid}"
+        les_communs_link: "Ο Server Les Communs Open ID"
+        link_your_account: "Πρέπει πρώτα να συνδέσετε τον λογαριασμό σας με τον πάροχο εξουσιοδότησης που χρησιμοποιεί η DFC (Les Communs Open ID Connect)."
+        link_account_button: "Συνδέστε τον λογαριασμό Les Communs OIDC σας."
+        note_expiry: |
+            Τα τεκμήρια για την πρόσβαση στις συνδεδεμένες εφαρμογές έχουν λήξει. Παρακαλώ ανανεώστε τη
+            σύνδεσή σας για να διατηρήσετε όλες τις ενσωματωμένες λειτουργίες ενεργές.
+        refresh: "Ανανέωση της εξουσιοδότησης"
+        view_account: "Για να δείτε τον λογαριασμό σας, δείτε:"
     subscriptions:
       index:
         title: "Συνδρομές"
@@ -1709,8 +1801,12 @@ el:
         resource: Διαμόρφωση Stripe Connect
   api:
     unknown_error: "Κάτι πήγε στραβά. Έχουμε λάβει σχετική ειδοποίηση."
+    invalid_api_key: "Ορίστηκε μη έγκυρο κλειδί API (%{key}). "
     unauthorized: "Δεν έχετε έγκριση για να πραγματοποιήσετε αυτή τη πράξη."
+    unpermitted_parameters: "Παράμετροι που δεν επιτρέπονται σε αυτό το αίτημα: %{params}"
     missing_parameter: "Μια υποχρεωτική παράμετρος λείπει: %{param}"
+    invalid_resource: "Μη έγκυρος πόρος. Παρακαλώ διορθώστε τα σφάλματα και προσπαθήστε ξανά."
+    resource_not_found: "Ο πόρος που αναζητούσατε δεν βρέθηκε."
     enterprise_logo:
       destroy_attachment_does_not_exist: "Δεν υπάρχει λογότυπο"
     enterprise_promo_image:
@@ -1719,6 +1815,10 @@ el:
       destroy_attachment_does_not_exist: "Το αρχείο Όρων και Προϋποθέσεων δεν υπάρχει"
     orders:
       failed_to_update: "Αποτυχία στην ενημέρωση παραγγελίας"
+    query_param:
+      error:
+        title: 'Μη έγκυρη παράμετρος αιτήματος '
+        extra_fields: "Μη υποστηριζόμενα πεδία: %{fields}"
   checkout:
     failed: "Το checkout απέτυχε. Ενημερώστε μας για να μπορέσουμε να επεξεργαστούμε την παραγγελία σας."
     payment_cancelled_due_to_stock: "Η πληρωμή ακυρώθηκε: το ταμείο δεν μπορούσε να ολοκληρωθεί λόγω προβλημάτων αποθεμάτων."
@@ -1774,6 +1874,7 @@ el:
           label: Έτος
         stripe:
           use_saved_card: Αποθήκευση κάρτας
+          use_new_card: Εισάγετε τα αναγνωριστικά της κάρτας σας
           save_card: 'Αποθήκευση κάρτας για μελλοντική χρήση '
           create_new_card: ή εισάγετε νέα κάρτα παρακάτω
       explaination: Μπορείτε να ελέγξετε και να επιβεβαιώσετε τη κράτηση σας στο επόμενη βήμα που περιλαμβάνει και το τελικό κόστος.
@@ -1782,6 +1883,7 @@ el:
       voucher:
         voucher: "%{voucher_amount}Κουπόνι"
         apply_voucher: Χρήση κουπονιού
+        apply: Εφαρμογή
         placeholder: Εισαγωγή κωδικού κουπονιού
         remove_code: Αφαίρεση κωδικού
         confirm_delete: Είστε σίγουροι ότι θέλετε να αφαιρέσετε το κουπόνι;
@@ -1802,7 +1904,10 @@ el:
       terms_and_conditions:
         message_html: "Συμφωνώ στου πωλητή %{terms_and_conditions_link}"
         link_text: "Οροι και Προϋποθέσεις"
+      platform_terms_of_service:
+        message_html: "Συμφωνώ στη πλατφόρμα %{tos_link}."
       all_terms_and_conditions:
+        message_html: "Συμφωνώ στου πωλητή του %{terms_and_conditions_link} και στη πλατφόρμα %{tos_link}."
         terms_and_conditions: "Οροι και Προϋποθέσεις"
       submit: Ολοκλήρωση παραγγελίας.
       cancel: Επιστροφή στη μέθοδο πληρωμής.
@@ -1883,6 +1988,7 @@ el:
   invoice_column_price: "Τιμή"
   invoice_column_item: "Θέμα"
   invoice_column_qty: "Ποσότητα"
+  invoice_column_weight_volume: "Βάρος / Ένταση"
   invoice_column_unit_price_with_taxes: "Τιμή μονάδας (συμπ. φπα)"
   invoice_column_unit_price_without_taxes: "Τιμή μονάδας (χωρίς φπα)"
   invoice_column_price_with_taxes: "Σύνολο (συμπ. φπα)"
@@ -1890,6 +1996,7 @@ el:
   invoice_column_price_per_unit_without_taxes: "Τιμή ανά μονάδα. (Χωρίς το φόρο)"
   invoice_column_tax_rate: "Φορολογικός συντελεστής"
   invoice_tax_total: "Σύνολο GST:"
+  invoice_cancel_and_replace_invoice: "Ακύρωση και αντικατάσταση τιμολογίου"
   tax_invoice: "ΤΙΜΟΛΌΓΙΟ"
   tax_total: "Συνολικός φόρος (%{rate}):"
   invoice_shipping_category_delivery: "Παράδοση"
@@ -2112,6 +2219,9 @@ el:
   order_back_to_store: Επιστροφή στο κατάστημα
   order_back_to_cart: Επιστροφή στo καλάθι
   order_back_to_website: Πίσω στην ιστοσελίδα
+  checkout_details_title: Λεπτομέρειες ολοκλήρωσης παραγγελίας
+  checkout_payment_title: Πληρωμή παραγγελίας
+  checkout_summary_title: 'Επισκόπηση ολοκλήρωσης παραγγελίας '
   bom_tip: "Πατήστε εδώ για να αλλάξετε τις ποσότητες των προιόντων.Τα προιόντα μπορεί να αφαιρεθούν εξ ολοκλήρου από τις παραγγελίες αν απαιτείται."
   unsaved_changes_warning: "Υπάρχουν μη αποθηκευμένες αλλαγές και θα χαθούν αν συνεχίσετε."
   unsaved_changes_error: "Τα πεδία με κόκκινα περιγράμματα περιέχουν σφάλματα."
@@ -2591,6 +2701,8 @@ el:
   enterprise_limit: Όριο Επιχειρήσεων
   shipping_method_destroy_error: "Αυτός ο τρόπος αποστολής δεν μπορεί να διαγραφεί καθώς αναφέρεται με παραγγελία: %{number}."
   fees: "Τέλη"
+  fee_name: "Όνομα χρέωσης"
+  fee_owner: "Ιδιοκτήτης χρέωσης"
   item_cost: "Κόστος στοιχείου"
   bulk: "Ογκος"
   shop_variant_quantity_min: "λ"
@@ -2795,12 +2907,16 @@ el:
   report_payment_totals: 'Σύνολο πληρωμής'
   report_all: 'όλα'
   report_order_cycle: "Κύκλος Παραγγελειών"
+  report_hide_columns: Κελιά προς απόκρυψη
   report_columns: Στήλες
   report_enterprises: "Επιχειρήσεις"
   report_enterprise_fee: "Ονομασία Χρεώσεων"
   report_users: "Χρήστες"
   report_tax_rates: Φορολογικοί δείκτες
   report_tax_types: Φορολογικοί τύποι
+  report_filters: Φίλτρα αναφοράς
+  report_print: Εκτύπωση αναφοράς
+  report_render_options: Επιλογές rendering
   report_header_ofn_uid: OFN UID
   report_header_order_cycle: Κύκλος παραγγελίας
   report_header_user: Χρήστης
@@ -2847,13 +2963,19 @@ el:
   report_header_taxable_items_total: "Σύνολο φορολογητέων στοιχείων (%{currency_symbol})"
   report_header_sales_tax: "Φόρος πωλήσεων (%{currency_symbol})"
   report_header_delivery_charge: "Χρέωση παράδοσης (%{currency_symbol})"
+  report_header_tax: "Φόρος"
   report_header_tax_on_delivery: "Φόρος παράδοσης (%{currency_symbol})"
   report_header_tax_on_fees: "Φόρος Τέλη (%{currency_symbol})"
   report_header_tax_category: "Φορολογική Κατηγορία"
+  report_header_tax_rate_name: "Όνομα φορολογικού συντελεστή"
   report_header_tax_rate: "Φορολογικός συντελεστής"
   report_header_total_tax: "Συνολικός φόρος (%{currency_symbol})"
+  report_header_total_excl_tax: "Σύνολο χωρίς φόρο (%{currency_symbol})"
+  report_header_total_incl_tax: "Σύνολο συμπερ. φόρου (%{currency_symbol})"
+  report_header_total_orders: "Συνολικός αριθμός παραγγελιών"
   report_header_enterprise: Επιχείρηση
   report_header_enterprise_fee_name: Όνομα
+  report_header_enterprise_fee_type: Τύπος
   report_header_enterprise_fee_owner: Κάτοχος
   report_header_customer: Πελάτης
   report_header_customer_first_name: Όνομα
@@ -2861,6 +2983,7 @@ el:
   report_header_customer_code: Κωδικός πελάτη
   report_header_product: Προϊόν
   report_header_product_properties: Ιδιότητες Προϊόντος
+  report_header_product_tax_category: Κατηγορία Φόρου Προϊόντος
   report_header_quantity: Ποσότητα
   report_header_max_quantity: Μέγιστη Ποσότητα
   report_header_variant: Παραλαγή
@@ -2873,6 +2996,8 @@ el:
   report_header_supplier: Προμηθευτής
   report_header_producer: Παραγωγός
   report_header_producer_suburb: Παραγωγός Προάστιο
+  report_header_producer_tax_status: Κατάσταση φορολογίας παραγωγού
+  report_header_producer_charges_sales_tax?: GST/ΦΠΑ καταχωρήθηκε
   report_header_unit: Μονάδα
   report_header_group_buy_unit_quantity: Ομάδα Αγορά Μονάδα Ποσότητα
   report_header_cost: Κόστος
@@ -2888,10 +3013,12 @@ el:
   report_header_distributor_address: Διεύθυνση διανομέα
   report_header_distributor_city: Πόλη διανομέα
   report_header_distributor_postcode: Ταχυδρομικός κώδικας διανομέα
+  report_header_distributor_tax_status: Κατάσταση Φορολογίας Διανομέα
   report_header_delivery_address: Διεύθυνση παράδοσης
   report_header_delivery_postcode: Ταχυδρομικός κώδικας παράδοσης
   report_header_bulk_unit_size: Μαζικό μέγεθος μονάδας
   report_header_weight: Βάρος
+  report_header_final_weight_volume: Τελικό (Βάρος/ένταση)
   report_header_height: Ύψος
   report_header_width: Μήκος
   report_header_depth: Βάθος
@@ -2945,6 +3072,15 @@ el:
   report_header_transaction_fee: Τέλος συναλλαγής (χωρίς φόρο)
   report_header_total_untaxable_admin: Συνολικές μη φορολογικές προσαρμογές διαχειριστή (χωρίς φόρο)
   report_header_total_taxable_admin: Συνολικές φορολογικές προσαρμογές διαχειριστή (συμπεριλαμβανομένων των φόρων)
+  report_header_voucher_label: Ετικέτα κουπονιού
+  report_header_voucher_amount: "Ποσό κουπονιού (%{currency_symbol}) "
+  report_line_cost_of_produce: Κόστος παραγωγής
+  report_line_line_items: Γραμμή προϊόντων
+  report_header_last_completed_order_date: Ημερομηνία τελευταίας ολοκληρωμένης παραγγελίας
+  report_xero_configuration: Ρυθμίσεις Xero
+  initial_invoice_number: "Αρχικός αριθμός τιμολογίου "
+  invoice_date: "Ημερομηνία τιμολογίου"
+  due_date: "Ημερομηνία λήξης"
   equals: "Ίσοι"
   contains: "περιέχει"
   discount: "Εκπτωση"
@@ -2978,6 +3114,7 @@ el:
   action_required: "Απαιτείται δράση"
   tag_rules: "Κανόνες ετικετών"
   enterprise_fee_whole_order: Ολόκληρη παραγγελία
+  enterprise_fee_by_name: "%{name} κρατήσεις απο %{role} %{enterprise_name}"
   validation_msg_relationship_already_established: "^Αυτή η σχέση έχει ήδη καθιερωθεί."
   validation_msg_at_least_one_hub: "^Πρέπει να επιλεγεί τουλάχιστον ένας κόμβος"
   validation_msg_tax_category_cant_be_blank: "^Η κατηγορία φόρου δεν μπορεί να είναι κενή"
@@ -3021,10 +3158,12 @@ el:
   no_orders_found: "Δεν βρέθηκαν παραγγελίες"
   order_information: "Πληροφορίες Παραγγελίας"
   new_payment: "Νέα Πληρωμή"
+  create_or_update_invoice: "Δημιουργία ή ενημέρωση τιμολογίου"
   date_completed: "Ημερομηνία ολοκλήρωσης"
   amount: "Ποσό"
   invoice_number: "Αριθμός παραστατικού. "
   invoice_file: "Αρχείο"
+  invalid_url: "'%{url}' είναι μη έγκυρη διεύθυνση URL "
   state_names:
     ready: Ετοιμος
     pending: εκκρεμής
@@ -3049,11 +3188,17 @@ el:
     more_items: "+ %{count} Περισσότερα"
     default_card_updated: Η προεπιλεγμένη κάρτα ενημερώθηκε
     default_card_voids_auth: Η αλλαγή της προεπιλεγμένης κάρτας σας θα καταργήσει τις υπάρχουσες εξουσιοδοτήσεις των καταστημάτων για τη χρέωσή της. Μπορείτε να εξουσιοδοτήσετε ξανά τα καταστήματα μετά την ενημέρωση της προεπιλεγμένης κάρτας. Θέλετε να αλλάξετε την προεπιλεγμένη κάρτα;
+    cart:
+      add_to_cart_failed: >
+          Παρουσιάστηκε πρόβλημα κατά την προσθήκη αυτού του προϊόντος στο καλάθι.
+          Ίσως έχει γίνει μη διαθέσιμο ή το κατάστημα κλείνει.
     admin:
       unit_price_tooltip: "Η μοναδιαία τιμή αυξάνει τη διαφάνεια επιτρέποντας στους πελάτες σας να συγκρίνουν εύκολα τις τιμές μεταξύ διαφορετικών προϊόντων και μεγεθών συσκευασίας. Σημειώστε ότι η τελική τιμή μονάδας που εμφανίζεται στη βιτρίνα μπορεί να διαφέρει, καθώς περιλαμβάνει φόρους και τέλη."
       enterprise_limit_reached: "Έχετε συμπληρώσει το τυπικό όριο επιχειρήσεων ανά λογαριασμό. Γράψτε στο %{contact_email} αν χρειαστεί να το αυξήσετε."
+      deleting_item_will_cancel_order: "Αυτή η ενέργεια θα έχει ως αποτέλεσμα μία ή περισσότερες κενές παραγγελίες, οι οποίες θα ακυρωθούν. Θέλετε να προχωρήσετε;"
       modals:
         got_it: "Το έπιασα"
+        confirm: "Επιβεβαίωση"
         close: "Κλείσιμο"
         continue: "Συνέχεια"
         cancel: "Ακύρωση"
@@ -3145,6 +3290,10 @@ el:
               Η επιχείρησή σας είναι η ραχοκοκαλιά του τοπικού σας συστήματος τροφίμων.
               Μπορείτε να πουλάτε τα δικά σας προϊόντα καθώς και προϊόντα που συγκεντρώνονται
               από άλλες επιχειρήσεις μέσω του καταστήματός σας στο Open Food Network.
+          producer_hub_text2: >
+              Οι Κόμβοι Παραγωγών μπορούν να έχουν πολλές μορφές, είτε είναι ένα CSA,
+              ένα πρόγραμμα με κουτιά λαχανικών ή ένας συνεταιρισμός τροφίμων με κήπο
+              στην ταράτσα.
           producer_hub_text3: >
               Το Open Food Network στοχεύει να υποστηρίξει όσο το δυνατόν περισσότερα
               μοντέλα            , ώστε ανεξάρτητα από την κατάστασή σας, να σας παρέχουμε
@@ -3189,6 +3338,8 @@ el:
           select_all_variants: "Επιλέξτε Όλες οι παραλλαγές %{total_number_of_variants}"
           variants_loaded: "%{num_of_variants_loaded} από %{total_number_of_variants} Παραλλαγές φορτωμένες"
           loading_variants: "Φόρτωση παραλλαγών"
+          no_variants: "Δεν υπάρχει διαθέσιμη παραλλαγή για αυτό το προϊόν (κρυμμένο μέσω των ρυθμίσεων αποθεμάτων)."
+          some_variants_hidden: "(Ορισμένες παραλλαγές μπορεί να είναι κρυμμένες μέσω των ρυθμίσεων αποθεμάτων)"
       tag_rules:
         shipping_method_tagged_top: "Μέθοδοι αποστολής με ετικέτα"
         shipping_method_tagged_bottom: "είναι:"
@@ -3245,7 +3396,12 @@ el:
           processing: "επεξεργασία"
           void: "κενός"
           invalid: "Μη έγκυρο"
+        quantity_unavailable: "Μη επαρκές διαθέσιμο απόθεμα. Η γραμμή προϊόντος δεν αποθηκεύτηκε!"
         quantity_unchanged: "Ποσότητα αμετάβλητη από το προηγούμενο ποσό."
+        cancel_the_order_html: "Αυτό θα ακυρώσει την τρέχουσα παραγγελία.<br /> Είστε σίγουροι ότι θέλετε να προχωρήσετε;"
+        cancel_the_order_send_cancelation_email: "Αποστολή email ακύρωσης στον πελάτη"
+        restock_item: "Επαναφορά Αποθεμάτων: επιστροφή αντικειμένου στο απόθεμα"
+        restock_items: "Επαναφορά Αποθεμάτων: επιστροφή όλων των αντικειμένων στο απόθεμα"
       resend_user_email_confirmation:
         resend: "Ξαναστείλε"
         sending: "Επανάληψη αποστολής ..."
@@ -3368,6 +3524,11 @@ el:
       signup_or_login: "Ξεκινήστε με την εγγραφή (ή τη σύνδεση)"
       have_an_account: "Έχετε ήδη λογαριασμό?"
       action_login: "Συνδεθείτε τώρα."
+    stripe_elements:
+      unknown_error_from_stripe: |
+          Παρουσιάστηκε πρόβλημα κατά τη ρύθμιση της κάρτας σας στην πύλη πληρωμών μας.
+          Παρακαλώ ανανεώστε τη σελίδα και δοκιμάστε ξανά. Εάν αποτύχει και τη δεύτερη φορά,
+          παρακαλώ επικοινωνήστε μαζί μας για υποστήριξη.
   inflections:
     each:
       one: "καθε"
@@ -3530,7 +3691,15 @@ el:
   first: "Πρώτα"
   previous: "Προηγούμενος"
   last: "τελευταίος"
+  webhook_endpoints:
+    create:
+      success: Το Webhook endpoint δημιουργήθηκε επιτυχώς
+      error: To Webhook endpoint απέτυχε να δημιουργηθεί
+    destroy:
+      success: 'Το Webhook endpoint διαγράφηκε επιτυχώς '
+      error: Το Webhook endpoint απέτυχε να διαγραφεί
   spree:
+    order_updated: "Η παραγγελία ενημερώθηκε"
     add_country: "Προσθήκη χώρας"
     add_state: "Προσθήκη κατάστασης"
     adjustment: "Προσαρμογή"
@@ -3547,6 +3716,7 @@ el:
     editing_tax_category: "Επεξεργασία κατηγορίας φόρου"
     editing_tax_rate: "Επεξεργασία φορολογικού συντελεστή"
     editing_zone: "Ζώνη επεξεργασίας"
+    editing_state: "Επεξεργασία Κατάστασης"
     expiration: "Λήξη"
     invalid_payment_provider: "Μη έγκυρος πάροχος πληρωμών"
     items_cannot_be_shipped: "Δεν είναι δυνατή η αποστολή των αντικειμένων"
@@ -3570,9 +3740,13 @@ el:
     server_error: "Σφάλμα Διακομιστή"
     shipping_method_names:
       UPS Ground: "UPS Ground"
+      pick_up: "Παραλαβή από το αγρόκτημα"
+      delivery: "Υπογράφηκε, σφραγίστηκε, παραδόθηκε"
     start_date: "Ημερομηνία έναρξης"
     successfully_removed: "Καταργήθηκε επιτυχώς"
     taxonomy_edit: "Επεξεργασία ταξινόμησης"
+    taxonomy_tree_error: "Παρουσιάστηκε σφάλμα κατά την ενημέρωση του δέντρου ταξονομίας. "
+    taxonomy_tree_instruction: "Κάντε δεξί κλικ σε ένα αντικείμενο για να προσθέσετε, μετονομάσετε, αφαιρέσετε ή επεξεργαστείτε."
     tree: "Δέντρο"
     updating: "Ενημέρωση"
     your_order_is_empty_add_product: "Η παραγγελία σας είναι κενή, αναζητήστε και προσθέστε ένα προϊόν παραπάνω"
@@ -3581,6 +3755,7 @@ el:
     resend: "Ξαναστείλε"
     back_to_orders_list: "Επιστροφή στη λίστα παραγγελιών"
     back_to_payments_list: "Επιστροφή στη λίστα πληρωμών"
+    back_to_states_list: "Επιστροφή στη λίστα Πολιτειών"
     return_authorizations: "Επιστροφή εξουσιοδοτήσεων"
     cannot_create_returns: "Δεν είναι δυνατή η δημιουργία επιστροφών καθώς αυτή η παραγγελία δεν έχει αποσταλεί μονάδες."
     select_stock: "Επιλέξτε απόθεμα"
@@ -3625,6 +3800,7 @@ el:
     credit_card: "Κάρτα (πιστωτική/χρεωστική)"
     new_payment: "Νέα Πληρωμή"
     capture: "Πιάνω"
+    capture_and_complete_order: "Καταχώρηση και ολοκλήρωση παραγγελίας"
     void: "Κενός"
     login: "Σύνδεση"
     password: "Κωδικός"
@@ -3731,6 +3907,7 @@ el:
     email: ΗΛΕΚΤΡΟΝΙΚΗ ΔΙΕΥΘΥΝΣΗ
     account_updated: "Ο λογαριασμός ενημερώθηκε!"
     email_updated: "Ο λογαριασμός θα ενημερωθεί μόλις επιβεβαιωθεί το νέο μήνυμα ηλεκτρονικού ταχυδρομείου."
+    show_api_key_view_toggled: "Η προβολή του κλειδιού API έχει αλλάξει!"
     my_account: "Ο λογαριασμός μου"
     date: "Ημερομηνία"
     time: "χρόνος"
@@ -3813,6 +3990,8 @@ el:
         enterprise_relationships: "Άδειες"
         customers: "Πελάτες"
         groups: "Ομάδες"
+        oidc_settings: "Ρυθμίσεις OIDC"
+        overview: "Επισκόπηση"
         product_import: "Εισαγωγή"
         enterprise_roles: "Ρόλοι"
         payment_methods: "Τρόποι πληρωμής"
@@ -3868,11 +4047,14 @@ el:
       line_items:
         index:
           results_found: "Βρέθηκαν %{number} αποτελέσματα."
+          viewing: "Προβολή %{start} σε %{end}."
       orders:
         add_product:
           cannot_add_item_to_canceled_order: "Δεν είναι δυνατή η προσθήκη στοιχείου στην ακυρωμένη παραγγελία"
+          include_out_of_stock_variants: "Συμπερίληψη παραλλαγών χωρίς διαθέσιμο απόθεμα"
         shipment:
           mark_as_shipped_message_html: "Η παραγγελία πρόκειται να σημειωθεί ως \"Απεσταλμένη\". <br />Θέλετε σίγουρα να συνεχίσετε; "
+          mark_as_shipped_label_message: "Αποστολή email ειδοποίησης αποστολής/παραλαβής στον πελάτη."
         index:
           listing_orders: "Καταχώριση παραγγελιών"
           new_order: "Νέα παραγγελία"
@@ -4169,7 +4351,11 @@ el:
         form:
           name: Όνομα
           permalink: Permalink
+          meta_title: Τίτλος Meta
+          meta_description: Περιγραφή Meta
+          meta_keywords: Λέξεις-κλειδιά Meta
           description: Περιγραφή
+          dfc_id: DFC URI
       general_settings:
         edit:
           legal_settings: "Νομικές ρυθμίσεις"
@@ -4281,6 +4467,7 @@ el:
         track_information: "Πληροφορίες Εντοπισμού: %{tracking}"
         track_link: "Σύνδεσμος Εντοπισμού: %{url}"
         picked_up_instructions: "Η παραγγελία σας από το %{distributor}έχει παραληφθεί"
+        picked_up_subject: "Ειδοποίηση Παραλαβής"
     test_mailer:
       test_email:
         greeting: "Συγχαρητήρια!"
@@ -4332,6 +4519,8 @@ el:
       webhook_endpoints:
         title: Webhook Endpoints
         description: Συμβάντα στο σύστημα μπορεί να πυροδοτήσουν webhooks σε εξωτερικά συστήματα.
+        event_types:
+          order_cycle_opened: Ο Κύκλος παραγγελίας άνοιξε
         url:
           header: Endpoint URL
           create_placeholder: Εισάγετε το URL απο το απομακρυσμένο webhook endpoint.
@@ -4403,6 +4592,7 @@ el:
       shipment:
         cannot_ready: "Δεν είναι έτοιμη η αποστολή."
       invalid_taxonomy_id: "Μη έγκυρο αναγνωριστικό ταξινόμησης."
+      toggle_api_key_view: "Εμφάνιση προβολής κλειδιού API για τον χρήστη"
     activerecord:
       models:
         spree/payment:
