@@ -97,16 +97,12 @@ RSpec.describe "Product Import" do
       expect(potatoes.variants.first.price).to eq 6.50
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      wait_until { page.find("a.button.view").present? }
-
-      puts "TODO: migrate to v3"
-      Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
       click_link 'Go To Products Page'
-
       expect(page).to have_content 'Bulk Edit Products'
-      wait_until { page.find("#p_#{potatoes.id}").present? }
-      expect(page).to have_field "product_name", with: carrots.name
-      expect(page).to have_field "product_name", with: potatoes.name
+
+      # displays product list
+      expect(page).to have_field("_products_2_name", with: carrots.name.to_s)
+      expect(page).to have_field("_products_5_name", with: potatoes.name.to_s)
     end
 
     it "displays info about invalid entries but no save button if all items are invalid" do

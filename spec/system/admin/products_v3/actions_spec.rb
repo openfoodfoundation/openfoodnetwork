@@ -351,9 +351,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
               page.find(".vertical-ellipsis-menu").click
               page.find(delete_option_selector).click
             end
-            keep_button_selector = "input[type=button][value='Keep product']"
             within modal_selector do
-              page.find(keep_button_selector).click
+              click_button "Keep product"
             end
 
             expect(page).not_to have_selector(modal_selector)
@@ -364,9 +363,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
               page.find(".vertical-ellipsis-menu").click
               page.find(delete_option_selector).click
             end
-            keep_button_selector = "input[type=button][value='Keep variant']"
             within modal_selector do
-              page.find(keep_button_selector).click
+              click_button "Keep variant"
             end
 
             expect(page).not_to have_selector(modal_selector)
@@ -385,9 +383,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
               page.find(delete_option_selector).click
             end
 
-            delete_button_selector = "input[type=button][value='Delete variant']"
             within modal_selector do
-              page.find(delete_button_selector).click
+              click_button "Delete variant"
             end
 
             expect(page).not_to have_selector(modal_selector)
@@ -402,9 +399,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
               page.find(".vertical-ellipsis-menu").click
               page.find(delete_option_selector).click
             end
-            delete_button_selector = "input[type=button][value='Delete product']"
             within modal_selector do
-              page.find(delete_button_selector).click
+              click_button "Delete product"
             end
             expect(page).not_to have_selector(modal_selector)
             expect(page).not_to have_selector(product_selector)
@@ -424,9 +420,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
               page.find(delete_option_selector).click
             end
 
-            delete_button_selector = "input[type=button][value='Delete variant']"
             within modal_selector do
-              page.find(delete_button_selector).click
+              click_button "Delete variant"
             end
 
             within error_flash_message_selector do
@@ -439,9 +434,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
               page.find(".vertical-ellipsis-menu").click
               page.find(delete_option_selector).click
             end
-            delete_button_selector = "input[type=button][value='Delete product']"
             within modal_selector do
-              page.find(delete_button_selector).click
+              click_button "Delete product"
             end
             within error_flash_message_selector do
               expect(page).to have_content("Unable to delete the product")
@@ -464,9 +458,8 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
                 page.find(delete_option_selector).click
               end
 
-              delete_button_selector = "input[type=button][value='Delete variant']"
               within modal_selector do
-                page.find(delete_button_selector).click
+                click_button "Delete variant"
               end
             end
 

@@ -516,9 +516,7 @@ RSpec.describe '
           "table.exchanges tr.distributor-#{distributor_managed.id} td.tags"
         )
 
-        # When I save, any exchanges that I can't manage remain
-        # overlapping warning, we need to use 'node.trigger("click")'
-        page.find(:button, "Save").trigger("click")
+        click_button "Save"
         expect(page).to have_content "Your order cycle has been updated."
 
         oc.reload

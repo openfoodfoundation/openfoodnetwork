@@ -9,8 +9,10 @@ RSpec.describe '
   include AuthenticationHelper
   include WebHelper
 
+  let(:distributor_enterprise) { create(:distributor_enterprise, with_payment_and_shipping: true) }
+  let(:oc) { create(:order_cycle, distributors: [distributor_enterprise]) }
+
   it "Alerts for unsaved changes on general settings (/edit) page" do
-    oc = create(:order_cycle)
     login_as_admin
     visit edit_admin_order_cycle_path(oc)
 
@@ -34,9 +36,6 @@ RSpec.describe '
     dismiss_confirm "" do
       click_link 'Orders'
     end
-
-    # Click dismiss on distributor warning
-    click_button 'Dismiss'
 
     # Click cancel with unsaved changes
     dismiss_confirm "" do

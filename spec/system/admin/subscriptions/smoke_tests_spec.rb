@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-RSpec.describe 'Subscriptions' do
+RSpec.describe 'Subscriptions', feature: :admin_style_v3 do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper
@@ -242,15 +242,21 @@ RSpec.describe 'Subscriptions' do
         expect(page).to have_selector "#subscription-line-items .item", count: 4
 
         # Delete an existing product
-        puts "TODO: migrate to v3" # but first we need to make the actions menu more accessible.
-        Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
-        login_as_admin
-        visit spree.admin_products_path
-        within "#p_#{shop_product2.id}" do
-          accept_alert { page.find("[data-powertip=Remove]").click }
+        visit admin_products_url
+
+        product_selector = row_containing_name(shop_product2.name)
+        delete_option_selector = "a[data-controller='modal-link'].delete"
+        delete_button_selector = "input[type=button][value='Delete product']"
+        modal_selector = "div[data-modal-target=modal]"
+
+        within product_selector do
+          page.find(".vertical-ellipsis-menu").click
+          page.find(delete_option_selector).click
+        end
+        within modal_selector do
+          click_button "Delete product"
         end
 
-        Flipper.enable(:admin_style_v3) # re-enabling it for the rest of the spec
         visit edit_admin_subscription_path(subscription)
 
         # Remove deleted shop_variant from the subscription

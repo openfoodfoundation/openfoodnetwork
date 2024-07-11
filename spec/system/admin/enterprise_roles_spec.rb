@@ -182,7 +182,7 @@ create(:enterprise)
   def navigate_to_enterprise_users
     scroll_to(:bottom)
     within ".side_menu" do
-      trigger_click(:link, "Users")
+      click_link "Users"
     end
   end
 
