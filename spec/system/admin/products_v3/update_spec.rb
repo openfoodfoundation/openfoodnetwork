@@ -25,22 +25,20 @@ RSpec.describe 'As an enterprise user, I can update my products' do
     let!(:variant_a1) {
       product_a.variants.first.tap{ |v|
         v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
-                  on_demand: false
-      }
+                  on_demand: false, variant_unit: "weight", variant_unit_scale: 1
+      } # Grams
     }
     let!(:product_a) {
-      create(:simple_product, name: "Apples", sku: "APL-00",
-                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+      create(:simple_product, name: "Apples", sku: "APL-00" )
     }
     let(:variant_b1) {
       product_b.variants.first.tap{ |v|
         v.update! display_name: "Medium box", sku: "TMT-01", price: 5, on_hand: 5,
-                  on_demand: false
-      }
+                  on_demand: false, variant_unit: "weight", variant_unit_scale: 1
+      } # Grams
     }
     let(:product_b) {
-      create(:simple_product, name: "Tomatoes", sku: "TMT-01",
-                              variant_unit: "weight", variant_unit_scale: 1) # Grams
+      create(:simple_product, name: "Tomatoes", sku: "TMT-01")
     }
     before do
       visit admin_products_url
@@ -50,11 +48,16 @@ RSpec.describe 'As an enterprise user, I can update my products' do
       within row_containing_name("Apples") do
         fill_in "Name", with: "Pommes"
         fill_in "SKU", with: "POM-00"
+      end
+      within row_containing_name("Medium box") do
+        fill_in "Name", with: "Large box"
+        fill_in "SKU", with: "POM-01"
+
         tomselect_select "Volume (mL)", from: "Unit scale"
+        click_on "Unit" # activate popout
       end
 
       # Unit popout
-      click_on "Unit" # activate popout
       # have to use below method to trigger the +change+ event,
       #   +fill_in "Unit value", with: ""+ does not trigger +change+ event
       find_field('Unit value').send_keys(:control, 'a', :backspace) # empty the field
@@ -85,13 +88,13 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         variant_a1.reload
       }.to change { product_a.name }.to("Pommes")
         .and change{ product_a.sku }.to("POM-00")
-        .and change{ product_a.variant_unit }.to("volume")
-        .and change{ product_a.variant_unit_scale }.to(0.001)
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.unit_value }.to(0.5001) # volumes are stored in litres
         .and change{ variant_a1.price }.to(10.25)
         .and change{ variant_a1.on_hand }.to(6)
+        .and change{ variant_a1.variant_unit }.to("volume")
+        .and change{ variant_a1.variant_unit_scale }.to(0.001)
 
       within row_containing_name("Pommes") do
         expect(page).to have_field "Name", with: "Pommes"
@@ -130,11 +133,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
       it "saves unit values using the new scale" do
         within row_containing_name("Medium box") do
           expect(page).to have_button "Unit", text: "1g"
-        end
-        within row_containing_name("Apples") do
           tomselect_select "Weight (kg)", from: "Unit scale"
-        end
-        within row_containing_name("Medium box") do
           # New scale is visible immediately
           expect(page).to have_button "Unit", text: "1kg"
         end
@@ -142,10 +141,10 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         click_button "Save changes"
 
         expect(page).to have_content "Changes saved"
-        product_a.reload
-        expect(product_a.variant_unit).to eq "weight"
-        expect(product_a.variant_unit_scale).to eq 1000 # kg
-        expect(variant_a1.reload.unit_value).to eq 1000 # 1kg
+        variant_a1.reload
+        expect(variant_a1.variant_unit).to eq "weight"
+        expect(variant_a1.variant_unit_scale).to eq 1000 # kg
+        expect(variant_a1.unit_value).to eq 1000 # 1kg
 
         within row_containing_name("Medium box") do
           expect(page).to have_button "Unit", text: "1kg"
@@ -153,7 +152,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
       end
 
       it "saves a custom item unit name" do
-        within row_containing_name("Apples") do
+        within row_containing_name("Medium box") do
           tomselect_select "Items", from: "Unit scale"
           fill_in "Items", with: "box"
         end
@@ -163,8 +162,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
           expect(page).to have_content "Changes saved"
           product_a.reload
-        }.to change{ product_a.variant_unit }.to("items")
-          .and change{ product_a.variant_unit_name }.to("box")
+        }.to change{ variant_a1.variant_unit }.to("items")
+          .and change{ variant_a1.variant_unit_name }.to("box")
 
         within row_containing_name("Apples") do
           pending "#12005"

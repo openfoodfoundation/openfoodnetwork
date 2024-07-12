@@ -111,13 +111,10 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
     let!(:variant_a1) {
       product_a.variants.first.tap{ |v|
         v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
-                  on_demand: false
-      }
+                  on_demand: false, variant_unit: "weight", variant_unit_scale: 1
+      } # Grams
     }
-    let!(:product_a) {
-      create(:simple_product, name: "Apples", sku: "APL-00",
-                              variant_unit: "weight", variant_unit_scale: 1) # Grams
-    }
+    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
 
     context "when they are under 11" do
       before do
@@ -299,7 +296,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
         it "shows error message when cloning invalid record" do
           # Existing product is invalid:
-          product_a.update_columns(variant_unit: nil)
+          product_a.update_columns(name: nil)
 
           click_product_clone "Apples"
 
