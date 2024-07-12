@@ -638,12 +638,6 @@ Rails/ResponseParsedBody:
     - 'spec/controllers/spree/credit_cards_controller_spec.rb'
     - 'spec/controllers/user_registrations_controller_spec.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/RootPathnameMethods:
-  Exclude:
-    - 'spec/lib/reports/orders_and_fulfillment/order_cycle_customer_totals_report_spec.rb'
-
 # Offense count: 7
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
