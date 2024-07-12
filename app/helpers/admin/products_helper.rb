@@ -12,7 +12,7 @@ module Admin
 
     def prepare_new_variant(product)
       product.variants.build do |variant|
-        variant.unit_value = 1.0 * product.variant_unit_scale
+        variant.unit_value = 1.0 * (product.variant_unit_scale || 1)
         variant.unit_presentation = VariantUnits::OptionValueNamer.new(variant).name
       end
     end
