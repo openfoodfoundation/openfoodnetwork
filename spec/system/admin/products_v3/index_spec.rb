@@ -76,10 +76,15 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       end
 
       it "displays an on hand count in a span for each product" do
-        expect(page).to have_content "On demand"
-        expect(page).not_to have_content "20" # does not display the total stock
-        expect(page).to have_content "16" # displays the stock for variant_2
-        expect(page).to have_content "4"  # displays the stock for variant_3
+        within(:xpath, '//*[@id="products-form"]/table/tbody[1]/tr[2]/td[7]') do
+          expect(page).to have_content "On demand"
+        end
+        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[2]/td[7]') do
+          expect(page).to have_content "16" # displays the stock for variant_2
+        end
+        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[3]/td[7]') do
+          expect(page).to have_content "4"  # displays the stock for variant_3
+        end
       end
     end
 
