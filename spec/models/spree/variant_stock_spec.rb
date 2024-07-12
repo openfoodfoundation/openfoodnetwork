@@ -18,10 +18,10 @@ RSpec.describe Spree::Variant do
       expect { variant.move(-2) }.to change { variant.on_hand }.from(5).to(3)
     end
 
-    it "ignores stock when on demand" do
+    it "reduces stock even when on demand" do
       variant.on_demand = true
 
-      expect { variant.move(-2) }.not_to change { variant.on_hand }
+      expect { variant.move(-2) }.to change { variant.on_hand }.from(5).to(3)
     end
 
     it "rejects negative stock" do
@@ -55,20 +55,18 @@ RSpec.describe Spree::Variant do
           .and change { variant.on_hand }.by(0)
       end
 
-      it "ignores stock when on demand" do
-        override.update!(on_demand: true, count_on_hand: nil)
+      it "reduces stock when on demand" do
+        pending "VariantOverride allowing stock with on_demand"
+
+        override.update!(on_demand: true, count_on_hand: 7)
 
         expect {
           hub_variant.move(-3)
           override.reload
         }
-          .not_to change {
-            [
-              override.count_on_hand,
-              hub_variant.on_hand,
-              variant.on_hand,
-            ]
-          }
+          .to change { override.count_on_hand }.from(7).to(4)
+          .and change { hub_variant.on_hand }.from(7).to(4)
+          .and change { variant.on_hand }.by(0)
       end
 
       it "doesn't prevent negative stock" do
@@ -83,6 +81,20 @@ RSpec.describe Spree::Variant do
 
         # The update didn't run validations and now it's invalid:
         expect(override).not_to be_valid
+      end
+
+      it "doesn't fail on negative stock when on demand" do
+        pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/12586"
+
+        override.update!(on_demand: true, count_on_hand: nil)
+
+        expect {
+          hub_variant.move(-8)
+          override.reload
+        }
+          .to change { override.count_on_hand }.from(7).to(-1)
+          .and change { hub_variant.on_hand }.from(7).to(-1)
+          .and change { variant.on_hand }.by(0)
       end
     end
   end
