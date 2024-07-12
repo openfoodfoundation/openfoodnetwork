@@ -1,11 +1,8 @@
 # frozen_string_literal: false
 
 require 'spec_helper'
-require 'open_food_network/order_cycle_permissions'
 
 RSpec.describe Admin::EnterpriseFeesController do
-  before { @request.env['HTTP_REFERER'] = 'http://test.com/' }
-
   before do
     allow(controller).to receive_messages spree_current_user: super_admin
   end
