@@ -21,7 +21,7 @@
           value: unit_value_with_description(variant), 'aria-label': t('admin.products_page.columns.unit_value'), required: true
     .field
       = f.label :display_as, t('admin.products_page.columns.display_as')
-      = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(variant).name
+      = f.text_field :display_as, 'aria-label': t('admin.products_page.columns.display_as'), placeholder: VariantUnits::OptionValueNamer.new(variant).name
   = error_message_on variant, :unit_value
 %td.col-price.field.naked_inputs
   = f.text_field :price, 'aria-label': t('admin.products_page.columns.price'), value: number_to_currency(variant.price, unit: '')&.strip # TODO: add a spec to prove that this formatting is necessary. If so, it should be in a shared form helper for currency inputs

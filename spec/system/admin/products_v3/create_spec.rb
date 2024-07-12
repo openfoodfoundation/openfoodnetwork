@@ -45,6 +45,18 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       expect(page).to have_content "New variant"
     end
 
+    it "has the 1 unit value for the new variant display_as by default" do
+      new_variant_button.click
+
+      within new_variant_row do
+        unit_button = find('button[aria-label="Unit"]')
+        expect(unit_button.text.strip).to eq('1kg')
+
+        unit_button.click
+        find('input[aria-label="Display unit as"][placeholder="1kg"]')
+      end
+    end
+
     shared_examples "creating a new variant (bulk)" do |stock|
       it "handles the #{stock} behaviour" do
         # the product and the default variant is displayed
@@ -119,5 +131,13 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
   def visit_products_page_as_admin
     login_as_admin
     visit spree.admin_products_path
+  end
+
+  def new_variant_button
+    find("button.secondary.condensed.naked.icon-plus")
+  end
+
+  def new_variant_row
+    'tr[data-new-record="true"]'
   end
 end
