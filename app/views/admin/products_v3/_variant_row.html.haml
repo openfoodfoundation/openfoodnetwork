@@ -17,10 +17,8 @@
       -# Show a composite field for unit_value and unit_description
       = f.hidden_field :unit_value
       = f.hidden_field :unit_description
-      -# todo: create a method for value_with_description
       = f.text_field :unit_value_with_description,
-          value: [number_with_precision((variant.unit_value || 1) / (variant.product.variant_unit_scale || 1), precision: nil, strip_insignificant_zeros: true), variant.unit_description].compact_blank.join(" "),
-          'aria-label': t('admin.products_page.columns.unit_value'), required: true
+          value: unit_value_with_description(variant), 'aria-label': t('admin.products_page.columns.unit_value'), required: true
     .field
       = f.label :display_as, t('admin.products_page.columns.display_as')
       = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(variant).name
