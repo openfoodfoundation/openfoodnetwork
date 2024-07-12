@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import OptionValueNamer from "../../../app/webpacker/js/services/option_value_namer";
+import OptionValueNamer from "js/services/option_value_namer";
 
 describe("OptionValueNamer", () => {
   beforeAll(() => {
@@ -53,14 +53,12 @@ describe("OptionValueNamer", () => {
     });
 
     describe("determining if a variant's value is scaled", function() {
-      var p;
       beforeEach(function() {
-        p = {};
-        v = { product: p };
+        v = {};
         namer = new OptionValueNamer(v);
       });
       it("returns true when the product has a scale", function() {
-        p.variant_unit_scale = 1000;
+        v.variant_unit_scale = 1000;
         expect(namer.value_scaled()).toBe(true);
       });
       it("returns false otherwise", function() {
@@ -69,7 +67,7 @@ describe("OptionValueNamer", () => {
     });
 
     describe("generating option value's value and unit", function() {
-      var v, p, namer;
+      var v, namer;
 
       // Mock I18n. TODO: moved to a shared helper
       beforeAll(() => {
@@ -84,40 +82,39 @@ describe("OptionValueNamer", () => {
       })
 
       beforeEach(function() {
-        p = {};
-        v = { product: p };
+        v = {};
         namer = new OptionValueNamer(v);
       });
       it("generates simple values", function() {
-        p.variant_unit = 'weight';
-        p.variant_unit_scale = 1.0;
+        v.variant_unit = 'weight';
+        v.variant_unit_scale = 1.0;
         v.unit_value = 100;
         expect(namer.option_value_value_unit()).toEqual([100, 'g']);
       });
       it("generates values when unit value is non-integer", function() {
-        p.variant_unit = 'weight';
-        p.variant_unit_scale = 1.0;
+        v.variant_unit = 'weight';
+        v.variant_unit_scale = 1.0;
         v.unit_value = 123.45;
         expect(namer.option_value_value_unit()).toEqual([123.45, 'g']);
       });
       it("returns a value of 1 when unit value equals the scale", function() {
-        p.variant_unit = 'weight';
-        p.variant_unit_scale = 1000.0;
+        v.variant_unit = 'weight';
+        v.variant_unit_scale = 1000.0;
         v.unit_value = 1000.0;
         expect(namer.option_value_value_unit()).toEqual([1, 'kg']);
       });
       it("generates values for all weight scales", function() {
         [[1.0, 'g'], [1000.0, 'kg'], [1000000.0, 'T']].forEach(([scale, unit]) => {
-          p.variant_unit = 'weight';
-          p.variant_unit_scale = scale;
+          v.variant_unit = 'weight';
+          v.variant_unit_scale = scale;
           v.unit_value = 100 * scale;
           expect(namer.option_value_value_unit()).toEqual([100, unit]);
         });
       });
       it("generates values for all volume scales", function() {
         [[0.001, 'mL'], [1.0, 'L'], [1000.0, 'kL']].forEach(([scale, unit]) => {
-          p.variant_unit = 'volume';
-          p.variant_unit_scale = scale;
+          v.variant_unit = 'volume';
+          v.variant_unit_scale = scale;
           v.unit_value = 100 * scale;
           expect(namer.option_value_value_unit()).toEqual([100, unit]);
         });
@@ -125,14 +122,14 @@ describe("OptionValueNamer", () => {
       it("generates right values for volume with rounded values", function() {
         var unit;
         unit = 'L';
-        p.variant_unit = 'volume';
-        p.variant_unit_scale = 1.0;
+        v.variant_unit = 'volume';
+        v.variant_unit_scale = 1.0;
         v.unit_value = 0.7;
         expect(namer.option_value_value_unit()).toEqual([700, 'mL']);
       });
       it("chooses the correct scale when value is very small", function() {
-        p.variant_unit = 'volume';
-        p.variant_unit_scale = 0.001;
+        v.variant_unit = 'volume';
+        v.variant_unit_scale = 0.001;
         v.unit_value = 0.0001;
         expect(namer.option_value_value_unit()).toEqual([0.1, 'mL']);
       });
@@ -145,16 +142,16 @@ describe("OptionValueNamer", () => {
         //   subject.option_value_value_unit.should == [100, unit.pluralize]
       });
       it("generates singular values for item units when value is 1", function() {
-        p.variant_unit = 'items';
-        p.variant_unit_scale = null;
-        p.variant_unit_name = 'packet';
+        v.variant_unit = 'items';
+        v.variant_unit_scale = null;
+        v.variant_unit_name = 'packet';
         v.unit_value = 1;
         expect(namer.option_value_value_unit()).toEqual([1, 'packet']);
       });
       it("returns [null, null] when unit value is not set", function() {
-        p.variant_unit = 'items';
-        p.variant_unit_scale = null;
-        p.variant_unit_name = 'foo';
+        v.variant_unit = 'items';
+        v.variant_unit_scale = null;
+        v.variant_unit_name = 'foo';
         v.unit_value = null;
         expect(namer.option_value_value_unit()).toEqual([null, null]);
       });
