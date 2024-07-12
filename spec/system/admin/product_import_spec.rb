@@ -680,14 +680,20 @@ RSpec.describe "Product Import" do
       expect(page).to have_selector '.created-count', text: '2'
       expect(page).not_to have_selector '.updated-count'
 
-      puts "TODO: migrate to v3"
-      Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
+      default_variant_selector = "tr:has(input[aria-label=Name][value='Carrots'])"
+
       visit spree.admin_products_path
 
-      within "#p_#{Spree::Product.find_by(name: 'Carrots').id}" do
-        expect(page).to have_input "product_name", with: "Carrots"
-        expect(page).to have_select "variant_unit_with_scale", selected: "Weight (lb)"
-        expect(page).to have_content "5" # on_hand
+      carrots = Spree::Product.find_by(name: 'Carrots')
+
+      within "#product_#{carrots.id}" do
+        expect(page).to have_input("[products][2][variants_attributes][0][display_name]",
+                                   text: "Carrots")
+        expect(page).to have_input("[products][2][variants_attributes][][0][unit_to_display]",
+                                   text: "1 lb")
+        within(:xpath, '//*[@id="products-form"]/table/tbody[3]/tr[2]/td[7]') do
+          expect(page).to have_content("5")
+        end
       end
     end
 
@@ -721,15 +727,15 @@ RSpec.describe "Product Import" do
       expect(page).to have_content "Go To Products Page"
       expect(page).to have_content "Upload Another File"
 
-      puts "TODO: migrate to v3"
-      Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
       visit spree.admin_products_path
 
-      within "#p_#{Spree::Product.find_by(name: 'Cupcake').id}" do
-        expect(page).to have_input "product_name", with: "Cupcake"
-        expect(page).to have_select "variant_unit_with_scale", selected: "Items"
-        expect(page).to have_input "variant_unit_name", with: "Bunch"
-        expect(page).to have_content "5" # on_hand
+      expect(page).to have_input("[products][2][variants_attributes][0][display_name]",
+                                 text: "Cupcake")
+      expect(page).to have_select "_products_2_variant_unit_with_scale", selected: "Items"
+      expect(page).to have_input("[products][2][variant_unit_name]",
+                                 text: "Bunch")
+      within(:xpath, '//*[@id="products-form"]/table/tbody[3]/tr[2]/td[7]') do
+        expect(page).to have_content("5")
       end
     end
 
