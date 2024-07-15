@@ -1358,6 +1358,22 @@ en:
           custom_tab_content: "Content for custom tab"
         connected_apps:
           legend: "Connected apps"
+          affiliate_sales_data:
+            title: "INRAE / UFC QUE CHOISIR Research"
+            tagline: "Allow this research project to access your orders data anonymously"
+            enable: "Allow data sharing"
+            disable: "Stop sharing"
+            loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
+            description_html: |
+              <p>
+              INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project.
+              </p>
+              <p>
+              <a href="https://apropos.coopcircuits.fr/"
+              target="_blank"><b>Learn more about this research project</b>
+              <i class="icon-external-link"></i></a>
+              </p>
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Allow Discover Regenerative to publish your enterprise information."
