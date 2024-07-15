@@ -340,23 +340,21 @@ RSpec.describe '
     t1 = FactoryBot.create(:taxon)
     t2 = FactoryBot.create(:taxon)
     p = FactoryBot.create(:product, supplier_id: s1.id, variant_unit: 'volume',
-                                    variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
+                                    variant_unit_scale: 1, primary_taxon: t2)
 
     login_as_admin
     visit spree.admin_products_path
 
-    toggle_columns /^Category?/i, "Inherits Properties?", "SKU"
+    toggle_columns /^Category?/i, "Inherits Properties?"
 
     within "tr#p_#{p.id}" do
       expect(page).to have_field "product_name", with: p.name
       expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
       expect(page).to have_checked_field "inherits_properties"
-      expect(page).to have_field "product_sku", with: p.sku
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
       select "Weight (kg)", from: "variant_unit_with_scale"
       uncheck "inherits_properties"
-      fill_in "product_sku", with: "NEW SKU"
     end
 
     click_button 'Save Changes', match: :first
@@ -367,7 +365,6 @@ RSpec.describe '
     expect(p.variant_unit).to eq "weight"
     expect(p.variant_unit_scale).to eq 1000 # Kg
     expect(p.inherits_properties).to be false
-    expect(p.sku).to eq "NEW SKU"
   end
 
   it "updating a product with a variant unit of 'items'" do
@@ -404,8 +401,6 @@ RSpec.describe '
     visit spree.admin_products_path
     expect(page).to have_selector "a.view-variants", count: 1
     find("a.view-variants").click
-
-    toggle_columns "SKU"
 
     expect(page).to have_field "variant_sku", with: "VARIANTSKU"
     expect(page).to have_field "variant_price", with: "3.0"

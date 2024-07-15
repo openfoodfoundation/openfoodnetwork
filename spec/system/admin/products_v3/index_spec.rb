@@ -31,7 +31,6 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
       within ".products" do
         # displays table header
         expect(page).to have_selector "th", text: "Name"
-        expect(page).to have_selector "th", text: "SKU"
         expect(page).to have_selector "th", text: "Unit scale"
         expect(page).to have_selector "th", text: "Unit"
         expect(page).to have_selector "th", text: "Price"
