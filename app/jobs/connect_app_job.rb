@@ -19,7 +19,7 @@ class ConnectAppJob < ApplicationJob
 
     selector = "#connected-app-discover-regen.enterprise_#{enterprise.id}"
     html = ApplicationController.render(
-      partial: "admin/enterprises/form/connected_apps",
+      partial: "admin/enterprises/form/connected_apps/discover_regen",
       locals: { enterprise: },
     )
 
