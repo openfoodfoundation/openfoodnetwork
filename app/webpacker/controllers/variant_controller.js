@@ -11,7 +11,7 @@ export default class VariantController extends Controller {
     this.variantUnitScale = this.element.querySelector('[name$="[variant_unit_scale]"]');
     this.variantUnitName = this.element.querySelector('[name$="[variant_unit_name]"]');
     this.variantUnitWithScale = this.element.querySelector('[name$="[variant_unit_with_scale]"]');
-    
+
     // on variant_unit_with_scale changed; update variant_unit and variant_unit_scale
     this.variantUnitWithScale.addEventListener("change", this.#updateUnitAndScale.bind(this), {
       passive: true,
@@ -87,7 +87,7 @@ export default class VariantController extends Controller {
       variant_unit_name: this.variantUnitName.value,
     };
   }
-  
+
   // Extract variant_unit and variant_unit_scale from dropdown variant_unit_with_scale,
   // and update hidden product fields
   #updateUnitAndScale(event) {
