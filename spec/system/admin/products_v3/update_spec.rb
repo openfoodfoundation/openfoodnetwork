@@ -2,7 +2,7 @@
 
 require "system_helper"
 
-RSpec.describe 'As an enterprise user, I can update my products', feature: :admin_style_v3 do
+RSpec.describe 'As an enterprise user, I can update my products' do
   include AdminHelper
   include WebHelper
   include AuthenticationHelper
