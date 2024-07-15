@@ -4,9 +4,6 @@
   = f.hidden_field :id
   = f.text_field :display_name, 'aria-label': t('admin.products_page.columns.name'), placeholder: variant.product.name
   = error_message_on variant, :display_name
-%td.col-sku.field.naked_inputs
-  = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
-  = error_message_on variant, :sku
 %td.col-unit_scale
   -# empty
 %td.col-unit.field.popout{'data-controller': "popout", 'data-popout-update-display-value': "false"}
