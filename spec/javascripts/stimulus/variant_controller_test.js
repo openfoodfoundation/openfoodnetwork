@@ -5,28 +5,27 @@
 import { Application } from "stimulus";
 import variant_controller from "controllers/variant_controller";
 
-
 describe("VariantController", () => {
   beforeAll(() => {
     // Requires global var from page
     global.ofn_available_units_sorted = {
-      "weight": {
-       "1.0":{"name":"g","system":"metric"},
-       "1000.0":{"name":"kg","system":"metric"},
-       "1000000.0":{"name":"T","system":"metric"}
+      weight: {
+        "1.0": { name: "g", system: "metric" },
+        "1000.0": { name: "kg", system: "metric" },
+        "1000000.0": { name: "T", system: "metric" },
       },
-      "volume":{
-        "0.001":{"name":"mL","system":"metric"},
-        "1.0":{"name":"L","system":"metric"},
-        "4.54609":{"name":"gal","system":"imperial"},
-        "1000.0":{"name":"kL","system":"metric"}
-       }
+      volume: {
+        0.001: { name: "mL", system: "metric" },
+        "1.0": { name: "L", system: "metric" },
+        4.54609: { name: "gal", system: "imperial" },
+        "1000.0": { name: "kL", system: "metric" },
+      },
     };
 
     const mockedT = jest.fn();
-    mockedT.mockImplementation((string, opts) => (string + ', ' + JSON.stringify(opts)));
+    mockedT.mockImplementation((string, opts) => string + ", " + JSON.stringify(opts));
 
-    global.I18n =  { t: mockedT };
+    global.I18n = { t: mockedT };
 
     const application = Application.start();
     application.register("variant", variant_controller);
@@ -34,7 +33,7 @@ describe("VariantController", () => {
 
   afterAll(() => {
     delete global.I18n;
-  })
+  });
 
   describe("variant_unit_with_scale", () => {
     beforeEach(() => {
@@ -82,6 +81,6 @@ describe("VariantController", () => {
         expect(variant_unit.value).toBe("items");
         expect(variant_unit_scale.value).toBe("");
       });
-    })
+    });
   });
 });

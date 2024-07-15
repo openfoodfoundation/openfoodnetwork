@@ -5,6 +5,7 @@
 *.yaml
 *.json
 *.html
+**/*.rb
 
 # JS
 # Enabled: app/webpacker/controllers/*.js and app/webpacker/packs/*.js
@@ -27,6 +28,5 @@ postcss.config.js
 /coverage/
 /engines/
 /public/
-/spec/
 /tmp/
 /vendor/
