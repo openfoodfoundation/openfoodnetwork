@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_150852) do
     t.json "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type", default: "ConnectedApp", null: false
     t.index ["enterprise_id"], name: "index_connected_apps_on_enterprise_id"
   end
 
