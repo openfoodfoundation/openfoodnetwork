@@ -173,14 +173,14 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
       it 'clones the product' do
         spree_post :clone, product_id: product.id, format: :json
 
-        expect(json_response['name']).to eq("COPY OF #{product.name}")
+        expect(json_response['name']).to eq("#{product.name} [CLONE]")
       end
 
       it 'clones a product with image' do
         spree_post :clone, product_id: product_with_image.id, format: :json
 
         expect(response.status).to eq(201)
-        expect(json_response['name']).to eq("COPY OF #{product_with_image.name}")
+        expect(json_response['name']).to eq("#{product_with_image.name} [CLONE]")
       end
 
       # test cases related to bug #660: product duplication clones master variant
@@ -213,14 +213,14 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
       it 'clones the product' do
         spree_post :clone, product_id: product.id, format: :json
 
-        expect(json_response['name']).to eq("COPY OF #{product.name}")
+        expect(json_response['name']).to eq("#{product.name} [CLONE]")
       end
 
       it 'clones a product with image' do
         spree_post :clone, product_id: product_with_image.id, format: :json
 
         expect(response.status).to eq(201)
-        expect(json_response['name']).to eq("COPY OF #{product_with_image.name}")
+        expect(json_response['name']).to eq("#{product_with_image.name} [CLONE]")
       end
     end
   end

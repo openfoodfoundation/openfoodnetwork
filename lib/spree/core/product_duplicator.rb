@@ -19,7 +19,7 @@ module Spree
 
       def duplicate_product
         product.dup.tap do |new_product|
-          new_product.name = "COPY OF #{product.name}"
+          new_product.name = "#{product.name} [CLONE]"
           new_product.sku = ""
           new_product.created_at = nil
           new_product.deleted_at = nil

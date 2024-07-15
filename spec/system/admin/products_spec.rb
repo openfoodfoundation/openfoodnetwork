@@ -325,13 +325,13 @@ RSpec.describe '
         visit spree.admin_products_path
       end
 
-      it 'creates a copy of the product' do
+      it 'creates a clone of the product' do
         within "#p_#{product1.id}" do
           page.find("[data-powertip=Clone]").click
         end
         visit current_path
         within "#p_#{product1.id + 1}" do
-          expect(page).to have_input "product_name", with: 'COPY OF a weight product'
+          expect(page).to have_input "product_name", with: 'a weight product [CLONE]'
         end
       end
     end

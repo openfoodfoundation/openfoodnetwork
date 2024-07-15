@@ -15,7 +15,7 @@ RSpec.describe OrderCycles::CloneService do
       ex2 = create(:exchange, order_cycle: oc)
 
       occ = OrderCycles::CloneService.new(oc).create
-      expect(occ.name).to eq("COPY OF #{oc.name}")
+      expect(occ.name).to eq("#{oc.name} [CLONE]")
       expect(occ.orders_open_at).to be_nil
       expect(occ.orders_close_at).to be_nil
       expect(occ.coordinator).not_to be_nil

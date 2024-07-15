@@ -495,7 +495,7 @@ RSpec.describe '
 
     expect(page).to have_selector "a.clone-product", count: 1
     find("a.clone-product").click
-    expect(page).to have_field "product_name", with: "COPY OF #{p.name}"
+    expect(page).to have_field "product_name", with: "#{p.name} [CLONE]"
 
     within "#p_#{p.id}" do
       fill_in "product_name", with: "new product name"
@@ -679,13 +679,13 @@ RSpec.describe '
           find("a.clone-product").click
         end
         expect(page).to have_selector "a.clone-product", count: 4
-        expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
+        expect(page).to have_field "product_name", with: "#{p1.name} [CLONE]"
         expect(page).to have_select "producer_id", selected: p1.supplier.name.to_s
 
         visit spree.admin_products_path
 
         expect(page).to have_selector "a.clone-product", count: 4
-        expect(page).to have_field "product_name", with: "COPY OF #{p1.name}"
+        expect(page).to have_field "product_name", with: "#{p1.name} [CLONE]"
         expect(page).to have_select "producer_id", selected: p1.supplier.name.to_s
       end
     end

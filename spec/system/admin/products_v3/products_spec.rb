@@ -1031,7 +1031,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             input_content = page.find_all('input[type=text]').map(&:value).join
 
             # Products does not include the cloned product.
-            expect(input_content).not_to match /COPY OF Apples/
+            expect(input_content).not_to match /Apples [CLONE]/
           end
 
           within row_containing_name("Apples") do
@@ -1046,7 +1046,7 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
             input_content = page.find_all('input[type=text]').map(&:value).join
 
             # Products include the cloned product.
-            expect(input_content).to match /COPY OF Apples/
+            expect(input_content).to match /Apples [CLONE]/
           end
         end
       end
