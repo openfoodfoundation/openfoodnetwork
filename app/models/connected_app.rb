@@ -6,6 +6,8 @@
 class ConnectedApp < ApplicationRecord
   belongs_to :enterprise
 
+  scope :discover_regen, -> { where(type: "ConnectedApp") }
+
   def connecting?
     data.nil?
   end
