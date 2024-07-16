@@ -1,7 +1,7 @@
 #sort
   %div.pagination-description
     - if pagy.present?
-      = t(".pagination.total_html", total: pagy.count, from: pagy.from, to: pagy.to)
+      = t(".pagination.total_html", count: pagy.count, from: pagy.from, to: pagy.to)
 
     - if search_term.present? || producer_id.present? || category_id.present?
       %a{ href: url_for(page: 1), class: "button disruptive", 'data-turbo-frame': "_self" }
