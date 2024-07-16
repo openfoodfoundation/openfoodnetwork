@@ -8,6 +8,7 @@ class ConnectedApp < ApplicationRecord
   after_destroy :disconnect
 
   scope :discover_regen, -> { where(type: "ConnectedApp") }
+  scope :affiliate_sales_data, -> { where(type: "ConnectedApps::AffiliateSalesData") }
 
   def connecting?
     data.nil?
