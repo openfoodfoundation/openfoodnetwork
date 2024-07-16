@@ -6,11 +6,7 @@ module Admin
       authorize! :admin, enterprise
 
       app = ConnectedApp.create!(enterprise_id: enterprise.id)
-
-      ConnectAppJob.perform_later(
-        app, spree_current_user.spree_api_key,
-        channel: SessionChannel.for_request(request),
-      )
+      app.connect(api_key: spree_current_user.spree_api_key, channel: SessionChannel.for_request(request))
 
       render_panel
     end
@@ -20,12 +16,6 @@ module Admin
 
       app = enterprise.connected_apps.first
       app.destroy
-
-      WebhookDeliveryJob.perform_later(
-        app.data["destroy"],
-        "disconnect-app",
-        nil
-      )
 
       render_panel
     end
