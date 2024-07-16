@@ -6,6 +6,11 @@
 class ConnectedApp < ApplicationRecord
   belongs_to :enterprise
 
-  scope :connecting, -> { where(data: nil) }
-  scope :ready, -> { where.not(data: nil) }
+  def connecting?
+    data.nil?
+  end
+
+  def ready?
+    !connecting?
+  end
 end

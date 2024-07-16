@@ -1,1 +1,2 @@
-= render partial: "/admin/enterprises/form/connected_apps/discover_regen", locals: { enterprise: }
+= render partial: "/admin/enterprises/form/connected_apps/discover_regen",
+         locals: { enterprise:, connected_app: enterprise.connected_apps.first }
