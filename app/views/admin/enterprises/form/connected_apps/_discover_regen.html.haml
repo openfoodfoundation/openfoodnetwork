@@ -14,7 +14,7 @@
           &nbsp;
           = t ".loading"
       - else
-        = button_to t(".disable"), admin_enterprise_connected_app_path(0, enterprise_id: enterprise.id), method: :delete
+        = button_to t(".disable"), admin_enterprise_connected_app_path(connected_app.id, enterprise_id: enterprise.id), method: :delete
 
   .connected-app__connection
     - if connected_app&.ready?
