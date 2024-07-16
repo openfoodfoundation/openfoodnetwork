@@ -149,6 +149,7 @@ module ProductImport
       end
     end
 
+    # rubocop:disable Metrics/AbcSize
     def save_new_product(entry)
       @already_created ||= {}
       # If we've already added a new product with these attributes
@@ -162,7 +163,7 @@ module ProductImport
         return
       end
 
-      product = Spree::Product.new
+      product = Spree::Product.new(supplier_id: entry.enterprise_id)
       product.assign_attributes(
         entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
       )
@@ -177,6 +178,7 @@ module ProductImport
 
       @already_created.deep_merge! entry.enterprise_id => { entry.name => product.id }
     end
+    # rubocop:enable Metrics/AbcSize
 
     def save_variant(entry)
       variant = entry.product_object

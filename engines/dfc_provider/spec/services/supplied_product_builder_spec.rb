@@ -107,7 +107,7 @@ RSpec.describe SuppliedProductBuilder do
     }
 
     it "creates a new Spree::Product" do
-      product = builder.import_product(supplied_product)
+      product = builder.import_product(supplied_product, supplier)
 
       expect(product).to be_a(Spree::Product)
       expect(product.name).to eq("Tomato")
@@ -117,7 +117,7 @@ RSpec.describe SuppliedProductBuilder do
 
     describe "taxon" do
       it "assigns the taxon matching the DFC product type" do
-        product = builder.import_product(supplied_product)
+        product = builder.import_product(supplied_product, supplier)
 
         expect(product.variants.first.primary_taxon).to eq(taxon)
       end

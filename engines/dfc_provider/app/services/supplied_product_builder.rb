@@ -35,9 +35,7 @@ class SuppliedProductBuilder < DfcBuilder
         apply(supplied_product, variant)
       end
     else
-      product = import_product(supplied_product)
-      product.ensure_standard_variant
-      product.variants.first.supplier = supplier
+      product = import_product(supplied_product, supplier)
       product.variants.first
     end.tap do |variant|
       link = supplied_product.semanticId
@@ -62,15 +60,16 @@ class SuppliedProductBuilder < DfcBuilder
     end
   end
 
-  def self.import_product(supplied_product)
+  def self.import_product(supplied_product, supplier)
     Spree::Product.new(
       name: supplied_product.name,
       description: supplied_product.description,
-      price: 0 # will be in DFC Offer
+      price: 0, # will be in DFC Offer
+      supplier_id: supplier.id,
+      primary_taxon_id: taxon(supplied_product).id
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
       product.ensure_standard_variant
-      product.variants.first.primary_taxon = taxon(supplied_product)
     end
   end
 

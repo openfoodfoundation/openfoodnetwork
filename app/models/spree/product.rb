@@ -69,6 +69,7 @@ module Spree
     attr_accessor :price, :display_as, :unit_value, :unit_description, :tax_category_id,
                   :shipping_category_id, :primary_taxon_id, :supplier_id
 
+    after_validation :validate_variant_attrs, on: :create
     after_create :ensure_standard_variant
     after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
     around_destroy :destruction
@@ -288,6 +289,21 @@ module Spree
     end
 
     private
+
+    def validate_variant_attrs
+      # Avoid running validation when we can't set variant attrs
+      # eg clone product. Will raise error if clonning a product with no variant
+      return if variants.first&.valid?
+
+      unless Spree::Taxon.find_by(id: primary_taxon_id)
+        errors.add(:primary_taxon_id,
+                   I18n.t('activerecord.errors.models.spree/product.must_exist'))
+      end
+      return if Enterprise.find_by(id: supplier_id)
+
+      errors.add(:supplier_id,
+                 I18n.t('activerecord.errors.models.spree/product.must_exist'))
+    end
 
     def update_units
       return unless saved_change_to_variant_unit? || saved_change_to_variant_unit_name?

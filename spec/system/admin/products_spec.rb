@@ -170,14 +170,7 @@ RSpec.describe '
       expect(page).to have_content "Unit value is not a number"
     end
 
-    it "creating product with empty product category" do
-      pending("#12591")
-
-      login_as_admin
-      visit spree.admin_products_path
-
-      click_link 'New Product'
-
+    it "creating product with empty product category fails" do
       fill_in 'product_name', with: 'Hot Cakes'
       select 'New supplier', from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
