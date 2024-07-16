@@ -117,7 +117,7 @@ RSpec.describe Admin::StripeAccountsController, type: :controller do
       context "when Stripe is not enabled" do
         it "returns with a status of 'stripe_disabled'" do
           get(:status, params:)
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           expect(json_response["status"]).to eq "stripe_disabled"
         end
       end
@@ -128,7 +128,7 @@ RSpec.describe Admin::StripeAccountsController, type: :controller do
         context "when no stripe account is associated with the specified enterprise" do
           it "returns with a status of 'account_missing'" do
             get(:status, params:)
-            json_response = JSON.parse(response.body)
+            json_response = response.parsed_body
             expect(json_response["status"]).to eq "account_missing"
           end
         end
