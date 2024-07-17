@@ -1,6 +1,6 @@
 = form_with url: admin_products_path, id: "filters", method: :get, data: { "search-target": "form", 'turbo-frame': "_self", 'turbo-action': "advance" } do
   = hidden_field_tag :page, nil, class: "page"
-  = hidden_field_tag :per_page, nil, class: "per-page"
+  = hidden_field_tag :per_page, params[:per_page], class: "per-page"
   = hidden_field_tag '[q][s]', params.dig(:q, :s) || 'name asc', class: 'sort', 'data-default': 'name asc'
 
   .query
