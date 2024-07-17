@@ -86,12 +86,12 @@ RSpec.describe ProductScopeQuery do
     subject(:query) { ProductScopeQuery.new(current_api_user, { page: 1, per_page: 20 }) }
 
     let(:hub) { create(:distributor_enterprise) }
-    let(:producer) { create(:supplier_enterprise) }
-    let!(:product3) { create(:product, supplier_id: producer.id) }
-    let!(:product4) { create(:product, supplier_id: producer.id) }
+    let(:producer_z) { create(:supplier_enterprise, name: "z_name") }
+    let!(:product3) { create(:product, supplier_id: producer_z.id) }
+    let!(:product4) { create(:product, supplier_id: producer_z.id) }
     let!(:product5) { create(:product, supplier_id: supplier.id) }
     let!(:er) {
-      create(:enterprise_relationship, parent: producer, child: hub,
+      create(:enterprise_relationship, parent: producer_z, child: hub,
                                        permissions_list: [:create_variant_overrides])
     }
 
@@ -101,10 +101,23 @@ RSpec.describe ProductScopeQuery do
 
     it "finds products by producer" do
       # Add variants so we can check if we are not returning duplicate products
-      create(:variant, product: product3, supplier: producer)
-      create(:variant, product: product3, supplier: producer)
+      create(:variant, product: product3, supplier: producer_z)
+      create(:variant, product: product3, supplier: producer_z)
 
       expect(query.products_for_producers).to eq([product3, product4])
+    end
+
+    it "order products by producer alphabetically and product alphabetically" do
+      producer_b = create(:supplier_enterprise, name: "b_name")
+      product_b1 = create(:product, name: "g_name", supplier_id: producer_b.id)
+      product_b2 = create(:product, name: "z_name", supplier_id: producer_b.id)
+      product_b3 = create(:product, name: "a_name", supplier_id: producer_b.id)
+
+      create(:enterprise_relationship, parent: producer_b, child: hub,
+                                       permissions_list: [:create_variant_overrides])
+
+      result = query.products_for_producers
+      expect(result).to eq([product_b3, product_b1, product_b2, product3, product4])
     end
   end
 

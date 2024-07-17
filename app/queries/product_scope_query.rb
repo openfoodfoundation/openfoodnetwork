@@ -41,6 +41,7 @@ class ProductScopeQuery
       merge(product_scope).
       includes(variants: [:product, :default_price, :stock_items, :supplier]).
       where(variants: { supplier_id: producer_ids }).
+      order("enterprises.name, spree_products.name").
       ransack(@params[:q]).result(distinct: true)
   end
 
