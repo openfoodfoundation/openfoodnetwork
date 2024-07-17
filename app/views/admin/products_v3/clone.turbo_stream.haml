@@ -10,7 +10,7 @@
             tax_category_options: @tax_category_options,
             should_slide_in: true },
             formats: :html)
-    = turbo_stream.before dom_id(@product) do
+    = turbo_stream.after dom_id(@product) do
         = product_body
 
 = turbo_stream.append "flashes" do
