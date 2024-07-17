@@ -13,7 +13,10 @@ class FeatureToggleConstraint
   end
 
   def enabled?(request)
-    OpenFoodNetwork::FeatureToggle.enabled?(@feature, current_user(request))
+    user = current_user(request)
+    enabled = OpenFoodNetwork::FeatureToggle.enabled?(@feature, user)
+    Rails.logger.info "FeatureToggleConstraint #{@feature} enabled: #{enabled.to_s}; for user: #{user&.id.to_s}; path: #{request.path}"
+    enabled
   end
 
   def current_user(request)
