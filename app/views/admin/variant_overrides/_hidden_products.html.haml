@@ -12,7 +12,7 @@
         %th.add=t('admin.variant_overrides.index.add')
     %tbody{ "ng-repeat": 'product in filteredProducts | limitTo:productLimit' }
       %tr{ id: "v_{{variant.id}}", "ng-repeat": 'variant in product.variants | inventoryVariants:hub_id:views' }
-        %td.producer{ "ng-bind": '::producersByID[product.producer_id].name' }
+        %td.producer{ "ng-bind": '::producersByID[variant.producer_id].name' }
         %td.product{ "ng-bind": '::product.name' }
         %td.variant
           %span{ "ng-bind": '::variant.display_name || ""' }

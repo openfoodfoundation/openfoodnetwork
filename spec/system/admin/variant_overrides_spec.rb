@@ -547,6 +547,7 @@ RSpec.describe "
       visit admin_inventory_path
 
       expect(page).to have_text first_variant.name
+      expect(page).to have_text first_variant.supplier.name
       expect(page).to have_selector "tr.product", count: 10
       expect(page).to have_button "Show more"
       expect(page).to have_button "Show all (91  More)"
