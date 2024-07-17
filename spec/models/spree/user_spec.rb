@@ -268,4 +268,31 @@ RSpec.describe Spree::User do
       expect(user.disabled).to be_falsey
     end
   end
+
+  describe "#affiliate_enterprises" do
+    let(:user) { create(:user) }
+    let(:affiliate_enterprise) { create(:enterprise) }
+    let(:other_enterprise) { create(:enterprise) }
+    subject{ user.affiliate_enterprises }
+
+    before do
+      ConnectedApps::AffiliateSalesData.create(enterprise: affiliate_enterprise, data: true)
+    end
+
+    context "user does not have feature" do
+      it { is_expected.to be_empty }
+    end
+
+    context "user has feature affiliate_sales_data" do
+      before do
+        Flipper.enable_actor(:affiliate_sales_data, user)
+        user.reload
+      end
+
+      it "includes only affiliate enterprises" do
+        is_expected.to include affiliate_enterprise
+        is_expected.not_to include other_enterprise
+      end
+    end
+  end
 end
