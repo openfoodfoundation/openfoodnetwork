@@ -91,7 +91,7 @@ RSpec.describe WeightsAndMeasures do
         expect(subject.system).to eq("custom")
       end
 
-      pending "when unit is valid, but scale is 0" do
+      it "when unit is valid, but scale is 0" do
         allow(product).to receive(:variant_unit) { "weight" }
         allow(product).to receive(:variant_unit_scale) { 0.0 }
         expect(subject.system).to eq("custom")
