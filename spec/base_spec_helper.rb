@@ -2,9 +2,11 @@
 
 # This file defines configurations that are universal to all spec types (feature, system, etc)
 
+require 'simplecov' # if ENV["COVERAGE"]
+SimpleCov.start
+
 ENV["RAILS_ENV"] ||= 'test'
 
-require 'simplecov' if ENV["COVERAGE"]
 require 'rubygems'
 require 'pry' unless ENV['CI']
 require 'view_component/test_helpers'
@@ -26,6 +28,10 @@ end
 
 require 'knapsack_pro'
 KnapsackPro::Adapters::RSpecAdapter.bind
+
+KnapsackPro::Hooks::Queue.before_queue do
+  SimpleCov.command_name("rspec_ci_node_#{KnapsackPro::Config::Env.ci_node_index}")
+end
 
 # Allow connections to selenium whilst raising errors when connecting to external sites
 require 'webmock/rspec'
