@@ -25,7 +25,7 @@ class WeightsAndMeasures
     available_units_sorted.flat_map do |measurement, measurement_info|
       measurement_info.filter_map do |scale, unit_info|
         scale_clean =
-          ActiveSupport::NumberHelper.number_to_rounded(scale, precision: nil,
+          ActiveSupport::NumberHelper.number_to_rounded(scale, precision: nil, significant: false,
                                                                strip_insignificant_zeros: true)
         [
           "#{I18n.t(measurement)} (#{unit_info['name']})", # Label (eg "Weight (g)")
