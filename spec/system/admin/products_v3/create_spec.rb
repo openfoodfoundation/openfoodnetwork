@@ -39,10 +39,22 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
     before { visit_products_page_as_admin }
 
     it "hovering over the New variant button displays the text" do
-      page.find('button[aria-label="New variant"]', text: "New variant", visible: false)
+      new_variant_button
       find("button.secondary.condensed.naked.icon-plus").hover
-      page.find('button[aria-label="New variant"]', text: "New variant", visible: true)
+      new_variant_button(visible: true)
       expect(page).to have_content "New variant"
+    end
+
+    it "has the 1 unit value for the new variant display_as by default" do
+      new_variant_button.click
+
+      within new_variant_row do
+        unit_button = find('button[aria-label="Unit"]')
+        expect(unit_button.text.strip).to eq('1kg')
+
+        unit_button.click
+        expect(page).to have_field "Display unit as", placeholder: "1kg"
+      end
     end
 
     shared_examples "creating a new variant (bulk)" do |stock|
@@ -119,5 +131,13 @@ RSpec.describe 'As an enterprise user, I can manage my products', feature: :admi
   def visit_products_page_as_admin
     login_as_admin
     visit spree.admin_products_path
+  end
+
+  def new_variant_button(visible: false)
+    page.find('button[aria-label="New variant"]', text: "New variant", visible:)
+  end
+
+  def new_variant_row
+    'tr[data-new-record="true"]'
   end
 end

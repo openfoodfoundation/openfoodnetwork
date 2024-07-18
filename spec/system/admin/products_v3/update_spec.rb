@@ -517,7 +517,6 @@ RSpec.describe 'As an enterprise user, I can update my products', feature: :admi
             expect(page).to have_field "SKU", with: "n" * 256
             expect(page).to have_content "is too long"
             expect(page.find_button("Unit")).to have_text "" # have_button selector don't work here
-            expect(page).to have_content "can't be blank"
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
           end
 
