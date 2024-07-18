@@ -2,7 +2,7 @@
 
 require 'system_helper'
 
-RSpec.describe 'Subscriptions', feature: :admin_style_v3 do
+RSpec.describe 'Subscriptions' do
   include AdminHelper
   include AuthenticationHelper
   include WebHelper

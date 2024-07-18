@@ -187,6 +187,8 @@ RSpec.describe "Product Import" do
     end
 
     it "records a timestamp on import that can be viewed and filtered under Bulk Edit Products" do
+      pending "This feature was removed, see:
+        https://github.com/openfoodfoundation/openfoodnetwork/issues/10694#issuecomment-1578097339"
       csv_data = <<~CSV
         name, producer, category, on_hand, price, units, unit_type, shipping_category_id
         Carrots, User Enterprise, Vegetables, 5, 3.20, 500, g, #{shipping_category_id_str}
@@ -209,15 +211,18 @@ RSpec.describe "Product Import" do
       potatoes = Spree::Product.find_by(name: 'Potatoes')
       expect(potatoes.variants.first.import_date).to be_within(1.minute).of Time.zone.now
 
-      puts "TODO: migrate to v3"
-      Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
       click_link 'Go To Products Page'
 
-      wait_until { page.find("#p_#{carrots.id}").present? }
+      # displays product list
+      expect(page).to have_field("_products_2_name", with: carrots.name.to_s)
+      expect(page).to have_field("_products_5_name", with: potatoes.name.to_s)
 
-      expect(page).to have_field "product_name", with: carrots.name
-      expect(page).to have_field "product_name", with: potatoes.name
-      toggle_columns "Import"
+      click_button "Save changes"
+
+      ofn_drop_down("Columns").click
+      within ofn_drop_down("Columns") do
+        check "Import"
+      end
 
       within "tr#p_#{carrots.id} td.import_date" do
         expect(page).to have_content Time.zone.now.year
@@ -675,14 +680,20 @@ RSpec.describe "Product Import" do
       expect(page).to have_selector '.created-count', text: '2'
       expect(page).not_to have_selector '.updated-count'
 
-      puts "TODO: migrate to v3"
-      Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
+      default_variant_selector = "tr:has(input[aria-label=Name][value='Carrots'])"
+
       visit spree.admin_products_path
 
-      within "#p_#{Spree::Product.find_by(name: 'Carrots').id}" do
-        expect(page).to have_input "product_name", with: "Carrots"
-        expect(page).to have_select "variant_unit_with_scale", selected: "Weight (lb)"
-        expect(page).to have_content "5" # on_hand
+      carrots = Spree::Product.find_by(name: 'Carrots')
+
+      within "#product_#{carrots.id}" do
+        expect(page).to have_input("[products][2][variants_attributes][0][display_name]",
+                                   text: "Carrots")
+        expect(page).to have_input("[products][2][variants_attributes][][0][unit_to_display]",
+                                   text: "1 lb")
+        within(:xpath, '//*[@id="products-form"]/table/tbody[3]/tr[2]/td[7]') do
+          expect(page).to have_content("5")
+        end
       end
     end
 
@@ -716,15 +727,15 @@ RSpec.describe "Product Import" do
       expect(page).to have_content "Go To Products Page"
       expect(page).to have_content "Upload Another File"
 
-      puts "TODO: migrate to v3"
-      Flipper.disable(:admin_style_v3) # disabling BUU for legacy products page
       visit spree.admin_products_path
 
-      within "#p_#{Spree::Product.find_by(name: 'Cupcake').id}" do
-        expect(page).to have_input "product_name", with: "Cupcake"
-        expect(page).to have_select "variant_unit_with_scale", selected: "Items"
-        expect(page).to have_input "variant_unit_name", with: "Bunch"
-        expect(page).to have_content "5" # on_hand
+      expect(page).to have_input("[products][2][variants_attributes][0][display_name]",
+                                 text: "Cupcake")
+      expect(page).to have_select "_products_2_variant_unit_with_scale", selected: "Items"
+      expect(page).to have_input("[products][2][variant_unit_name]",
+                                 text: "Bunch")
+      within(:xpath, '//*[@id="products-form"]/table/tbody[3]/tr[2]/td[7]') do
+        expect(page).to have_content("5")
       end
     end
 

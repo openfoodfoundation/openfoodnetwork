@@ -50,6 +50,9 @@ module OpenFoodNetwork
     ACTIVE_BY_DEFAULT = {
       # Copy features here that were activated in a migration so that new
       # instances, development and test environments have the feature active.
+      "admin_style_v3" => <<~DESC,
+        Test the work-in-progress design updates.
+      DESC
     }.freeze
 
     def self.setup!
