@@ -58,6 +58,45 @@ RSpec.describe WeightsAndMeasures do
         expect(subject.system).to eq("custom")
       end
     end
+
+    # In the event of corrupt data, we don't want an exception
+    context "corrupt data" do
+      it "when unit is invalid, scale is valid" do
+        allow(product).to receive(:variant_unit) { "blah" }
+        allow(product).to receive(:variant_unit_scale) { 1.0 }
+        expect(subject.system).to eq("custom")
+      end
+
+      it "when unit is invalid, scale is nil" do
+        allow(product).to receive(:variant_unit) { "blah" }
+        allow(product).to receive(:variant_unit_scale) { nil }
+        expect(subject.system).to eq("custom")
+      end
+
+      it "when unit is nil, scale is valid" do
+        allow(product).to receive(:variant_unit) { nil }
+        allow(product).to receive(:variant_unit_scale) { 1.0 }
+        expect(subject.system).to eq("custom")
+      end
+
+      it "when unit is nil, scale is nil" do
+        allow(product).to receive(:variant_unit) { nil }
+        allow(product).to receive(:variant_unit_scale) { nil }
+        expect(subject.system).to eq("custom")
+      end
+
+      it "when unit is valid, but scale is nil" do
+        allow(product).to receive(:variant_unit) { "weight" }
+        allow(product).to receive(:variant_unit_scale) { nil }
+        expect(subject.system).to eq("custom")
+      end
+
+      pending "when unit is valid, but scale is 0" do
+        allow(product).to receive(:variant_unit) { "weight" }
+        allow(product).to receive(:variant_unit_scale) { 0.0 }
+        expect(subject.system).to eq("custom")
+      end
+    end
   end
 
   describe "#variant_unit_options" do
