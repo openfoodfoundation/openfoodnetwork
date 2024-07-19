@@ -126,7 +126,7 @@ fr_BE:
       message_html: "<b>Veuillez réessayer</b><p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton Précédent pour revenir à l'écran précédent ou revenir à <a href='/'>l'accueil</a> et réessayer.</p> <b>Contactez le support</b><p> Si le problème persiste ou est urgent, veuillez nous en informer. Retrouvez nos coordonnées sur la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>page locale mondiale d’Open Food Network</a> .</p><p> Cela nous aide vraiment si vous pouvez donner autant de détails que possible sur le sujet de la page manquante.</p>"
     internal_server_error:
       title: "Nous sommes désolés, mais quelque chose s'est mal passé (500)"
-      message_html: "<b>Veuillez réessayer</b><p> Il s&#39;agit peut-être d&#39;un problème temporaire. Veuillez cliquer sur le bouton Précédent pour revenir à l&#39;écran précédent ou revenir à <a href='/''>l&#39;accueil</a> et réessayer.</p> <b>Nous nous en occupons</b><p> Si vous avez déjà rencontré ce problème, nous le connaissons probablement déjà et travaillons sur un correctif. Nous enregistrons toutes les erreurs qui surviennent.</p> <b>Contactez le support</b><p> Si le problème persiste ou est urgent, veuillez nous en informer. Retrouvez nos coordonnées sur la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>page locale mondiale d’Open Food Network</a> .</p><p> Cela nous aide vraiment si vous pouvez donner autant de détails que possible sur ce que vous faisiez lorsque cette erreur s&#39;est produite.</p>"
+      message_html: "<b>Veuillez réessayer</b><p> Il s'agit peut-être d'un problème temporaire. Veuillez cliquer sur le bouton Précédent pour revenir à l'écran précédent ou revenir à <a href='/''>l'accueil</a> et réessayer.</p> <b>Nous nous en occupons</b><p> Si vous avez déjà rencontré ce problème, nous le connaissons probablement déjà et travaillons sur un correctif. Nous enregistrons toutes les erreurs qui surviennent.</p> <b>Contactez le support</b><p> Si le problème persiste ou est urgent, veuillez nous en informer. Retrouvez nos coordonnées sur la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>page locale mondiale d’Open Food Network</a> .</p><p> Cela nous aide vraiment si vous pouvez donner autant de détails que possible sur ce que vous faisiez lorsque cette erreur s'est produite.</p>"
     unprocessable_entity:
       title: "Le changement que vous souhaitiez a été rejeté (422)"
       message_html: "<p>Le changement que vous souhaitiez a été rejeté. Peut-être avez-vous essayé de modifier quelque chose auquel vous n'avez pas accès.<br><h3> <a href='/' >Retour au précédent</a></h3></p>"
@@ -280,6 +280,7 @@ fr_BE:
       heading: "Rapport prêt à télécharger"
       intro: |
           Le lien ci-dessous expirera après une semaine.
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Cher Client,"
@@ -432,7 +433,7 @@ fr_BE:
     create: "Créer"
     cancel: "Annuler"
     resume: "Reprendre"
-    save: "Sauvergarder"
+    save: "Sauvegarder"
     edit: "Modifier"
     update: "Mettre à jour"
     delete: "Supprimer"
@@ -455,6 +456,7 @@ fr_BE:
       columns:
         image: Image
         name: Nom
+        unit_scale: Unité
         unit: Unité
         unit_value: Valeur unitaire
         display_as: Unité d'affichage comme
@@ -532,7 +534,7 @@ fr_BE:
     form_invalid: "Le formulaire contient des champs manquants ou invalides"
     clear_filters: Annuler les filtres
     clear: Annuler
-    save: Sauvergarder
+    save: Sauvegarder
     cancel: Annuler
     back: Retour
     show_more: Afficher plus
@@ -622,6 +624,9 @@ fr_BE:
         credit_owed: "Crédit redevable"
       destroy:
         has_associated_subscriptions: "Échec de la suppression : ce client a des abonnements actifs. Annulez-les d'abord."
+    column_preferences:
+      bulk_update:
+        success: "Préférences de colonne enregistrées"
     contents:
       edit:
         title: Contenu
@@ -700,7 +705,14 @@ fr_BE:
       index:
         header:
           title: Gestion du catalogue produits
+      content:
+        loading: Chargement de vos produits
       filters:
+        search_products: Rechercher des produits
+        search_for_producers: Rechercher des producteurs
+        all_producers: Tous les producteurs
+        search_for_categories: Rechercher des catégories
+        all_categories: Toutes catégories
         producers:
           label: Producteur·trice·s
         categories:
@@ -708,11 +720,36 @@ fr_BE:
         search: Rechercher
       sort:
         pagination:
+          total_html: "<strong>%{total} produits</strong> trouvés pour vos critères de recherche. Affichage %{from} à %{to} ."
+          per_page:
+            show: Montrer
+            per_page: "%{num} par page"
           clear_search: Effacer recherche
+      no_products:
+        no_products_found: Aucun produit trouvé
+        import_products: Importer plusieurs produits
+        no_products_found_for_search: Aucun produit trouvé pour vos critères de recherche
+      table:
+        changed_summary:
+          one: "%{count} produit modifié."
+          other: "%{count} produits modifiés."
+        error_summary:
+          saved:
+            one: "Le produit %{count} a été enregistré correctement, mais "
+            other: "Les produits %{count} ont été enregistrés correctement, mais "
+          invalid:
+            one: "Le produit %{count} n&#39;a pas pu être enregistré. Veuillez examiner les erreurs et réessayer."
+            many: "Les produits %{count} n&#39;ont pas pu être enregistrés. Veuillez examiner les erreurs et réessayer."
+            other: "Les produits %{count} n'ont pas pu être enregistrés. Veuillez examiner les erreurs et réessayer."
+        reset: Annuler les modifications
+        save: Sauvegarder les modifications
       product_variant_row:
         new_variant: Nouvelle variante
+      bulk_update:
+        success: Modifications sauvegardées
       variant_row:
         none_tax_category: Aucun
+        search_for_tax_categories: "Rechercher des catégories de taxes"
         category_field_name: "Catégorie"
         tax_category_field_name: "TVA applicable"
         producer_field_name: "Producteur·trice"
@@ -763,7 +800,7 @@ fr_BE:
       import:
         review: Vérifier
         import: Importer
-        save: Sauvergarder
+        save: Sauvegarder
         results: Résultats
         save_imported: Sauvegarder les produits importés
         no_valid_entries: Aucune entrée valide trouvée
@@ -1223,7 +1260,7 @@ fr_BE:
       notify_producers:
         success: 'Les emails à destination des producteur·trice·s ont été mis en file d''attente.'
       edit:
-        save: "Sauvergarder"
+        save: "Sauvegarder"
         save_and_next: "Sauver et suivant"
         next: "Suivant"
         cancel: "Annuler"
@@ -1238,7 +1275,7 @@ fr_BE:
         products: "Produits"
         receival_details: "Detail de la livraison"
         fees: "Commission"
-        save: "Sauvergarder"
+        save: "Sauvegarder"
         save_and_next: "Sauver et suivant"
         next: "Suivant"
         cancel: "Annuler"
@@ -1252,7 +1289,7 @@ fr_BE:
         fees: "Commission"
         next: "Suivant"
         previous: "Précédent"
-        save: "Sauvergarder"
+        save: "Sauvegarder"
         save_and_next: "Sauver et suivant"
         cancel: "Annuler"
         back_to_list: "Retour à la liste."
@@ -1264,7 +1301,7 @@ fr_BE:
         no_payment_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de paiement.
         no_shipping_methods: Chaque boutique de ce cycle de vente a besoin d'au moins une méthode de livraison.
         payment_methods: "Méthodes de paiement"
-        save: "Sauvergarder"
+        save: "Sauvegarder"
         save_and_back_to_list: "Sauver et retour à la liste"
         select_all: "Tout sélectionner"
         shipping_methods: "Méthodes de livraison"
@@ -1363,6 +1400,8 @@ fr_BE:
         has_no_payment_methods: "%{enterprise} n'a pas défini de méthode de paiement"
         has_no_shipping_methods: "%{enterprise} n'a pas défini de méthode de livraison"
         has_no_enterprise_fees: "%{enterprise} n'a pas défini de marges et commissions"
+      flashes:
+        dismiss: Annuler
       side_menu:
         enterprise:
           primary_details: "Informations de base"
@@ -1588,7 +1627,7 @@ fr_BE:
       new:
         legend: Nouveau bon d'achat
         back: Retour
-        save: Sauvergarder
+        save: Sauvegarder
         voucher_code: Code du bon d'achat
         voucher_amount: Quantité
         voucher_type: Type de bon d'achat
@@ -1668,6 +1707,7 @@ fr_BE:
         card_year:
           label: Année
         stripe:
+          use_saved_card: Utiliser la carte enregistrée
           save_card: Enregistrer la carte pour une utilisation ultérieure
       explaination: Vous pouvez vérifier et confirmer votre commande à l'étape suivante qui comprend les coûts finaux.
       submit: Suivant - Récapitulatif de la commande
@@ -3610,6 +3650,7 @@ fr_BE:
     errors:
       messages:
         blank: "Champ obligatoire"
+        invalid_instagram_url: "Doit être uniquement le nom d'utilisateur, par exemple. le_prod"
     layouts:
       admin:
         login_nav:
@@ -3619,6 +3660,7 @@ fr_BE:
       images:
         edit:
           close: Retour
+          upload: Charger une photo
       mail_methods:
         send_testmail: "Envoyer un e-mail de test"
         testmail:
@@ -3729,6 +3771,8 @@ fr_BE:
           send_invoice_confirm_html: "Cela enverra par e-mail les factures des clients pour toutes les commandes finalisées sélectionnées.<br> Êtes-vous sur de vouloir continuer?"
           selected:
             zero: "Aucune commande sélectionnée"
+            one: "1 commande sélectionnée"
+            other: "%{count} commandes sélectionnées"
         sortable_header:
           payment_state: "Statut du Paiement"
           shipment_state: "Statut livraison"
@@ -3767,9 +3811,9 @@ fr_BE:
           active_products:
             zero: "Vous n'avez aucun produit actif."
             one: "U heeft één aktieve product"
-            few: "Vous avez %{count}des produits actifs"
-            many: "Vous avez %{count}des produits actifs"
-            other: "Vous avez %{count}des produits actifs"
+            few: "Vous avez %{count} produits actifs"
+            many: "Vous avez %{count} produits actifs"
+            other: "Vous avez %{count} produits actifs"
         order_cycles:
           order_cycles: "Cycles de vente"
           order_cycles_tip: "Les cycles de vente définissent quand et où vos produits peuvent être commandés par vos acheteur·euse·s."
@@ -3920,7 +3964,7 @@ fr_BE:
             message: "Notez que les niveaux de stock indiqués proviennent uniquement des listes de produits des fournisseurs. Si vous utilisez le \"catalogue magasin\" pour gérer vos stocks, ces valeurs seront ignorées dans ce rapport."
       users:
         index:
-          listing_users: "Utilisateur·trice d'annonces"
+          listing_users: "Liste des utilisateurs"
           new_user: "Nouvel utilisateur·trice"
           user: "Utilisateur·trice"
           enterprise_limit: "Nombre max d'entreprises"
@@ -4204,3 +4248,6 @@ fr_BE:
     pagination:
       next: Suivant
       previous: Précédent
+  invisible_captcha:
+    sentence_for_humans: "Veuillez laisser vide"
+    timestamp_error_message: "Veuillez réessayer après 5 secondes."
