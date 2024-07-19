@@ -269,6 +269,28 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       end
     end
 
+    context "product has no searchble term" do
+      it 'clears search input with no results and returns products list' do
+        create_products 2
+        visit admin_products_url
+        expect(page).to have_field "search_term", with: ""
+        expect(page).to have_content "Showing 1 to 2"
+
+        # returns no results, if the product does not exist
+        search_for "a product which does not exist"
+
+        expect(page).to have_field "search_term", with: "a product which does not exist"
+        expect(page).to have_content "No products found for your search criteria"
+        expect_products_count_to_be 0
+
+        # clears search input and renders product list
+        click_link "Clear search"
+        expect(page).to have_content "2 products found for your search criteria. Showing 1 to 2."
+        expect(page).to have_field "search_term", with: ""
+        expect_products_count_to_be 2
+      end
+    end
+
     context "product has producer" do
       before { create_products 1 }
 
