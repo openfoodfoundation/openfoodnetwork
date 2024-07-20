@@ -510,6 +510,40 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         subtotal: "Subtotal:"
         total: "Total:"
         includes_tax: "(includes tax):"
+    menu:
+      cart:
+        cart: "Cart"
+      cart_sidebar:
+        checkout: "Checkout"
+        edit_cart: "Edit cart"
+        items_in_cart_singular: "%{num} item in your cart"
+        items_in_cart_plural: "%{num} items in your cart"
+        close: "Close"
+        cart_empty: "Your cart is empty"
+        take_me_shopping: "Take me shopping!"
+      signed_in:
+        profile: "Profile"
+      mobile_menu:
+        cart: "Cart"
+    register_call:
+      selling_on_ofn: "Interested in getting on the Open Food Network?"
+      register: "Register here"
+    footer:
+      footer_secure: "Secure and trusted."
+      footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
+      footer_contact_headline: "Keep in touch"
+      footer_contact_email: "Email us"
+      footer_nav_headline: "Navigate"
+      footer_join_headline: "Join us"
+      footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
+      footer_join_cta: "Tell me more!"
+      footer_legal_call: "Read our"
+      footer_legal_visit: "Find us on"
+      footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
+      footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
+      footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
+      footer_data_privacy_policy: "privacy policy"
+      footer_data_cookies_policy: "cookies policy"
 
   provider_settings: "Provider settings"
 
@@ -2155,40 +2189,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       show_closed_shops: "Show closed shops"
       hide_closed_shops: "Hide closed shops"
       show_on_map: "Show all on the map"
-    menu:
-      cart:
-        cart: "Cart"
-      cart_sidebar:
-        checkout: "Checkout"
-        edit_cart: "Edit cart"
-        items_in_cart_singular: "%{num} item in your cart"
-        items_in_cart_plural: "%{num} items in your cart"
-        close: "Close"
-        cart_empty: "Your cart is empty"
-        take_me_shopping: "Take me shopping!"
-      signed_in:
-        profile: "Profile"
-      mobile_menu:
-        cart: "Cart"
-    register_call:
-      selling_on_ofn: "Interested in getting on the Open Food Network?"
-      register: "Register here"
-    footer:
-      footer_secure: "Secure and trusted."
-      footer_secure_text: "Open Food Network uses SSL encryption (2048 bit RSA) everywhere to keep your shopping and payment information private. Our servers do not store your credit card details and payments are processed by PCI-compliant services."
-      footer_contact_headline: "Keep in touch"
-      footer_contact_email: "Email us"
-      footer_nav_headline: "Navigate"
-      footer_join_headline: "Join us"
-      footer_join_body: "Create a listing, shop or group directory on the Open Food Network."
-      footer_join_cta: "Tell me more!"
-      footer_legal_call: "Read our"
-      footer_legal_visit: "Find us on"
-      footer_legal_text_html: "Open Food Network is a free and open source software platform. Our content is licensed with %{content_license} and our code with %{code_license}."
-      footer_data_text_with_privacy_policy_html: "We take good care of your data. See our %{privacy_policy} and %{cookies_policy}"
-      footer_data_text_without_privacy_policy_html: "We take good care of your data. See our %{cookies_policy}"
-      footer_data_privacy_policy: "privacy policy"
-      footer_data_cookies_policy: "cookies policy"
   shop:
     messages:
       customer_required:
