@@ -37,20 +37,24 @@
       = f.label :on_demand do
         = f.check_box :on_demand, 'data-action': 'change->toggle-control#disableIfPresent change->popout#closeIfChecked'
         = t(:on_demand)
-%td.col-producer.naked_inputs
+%td.col-producer.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :supplier_id,
       aria_label: t('.producer_field_name'),
       options: producer_options,
       selected_option: variant.supplier_id,
-      placeholder_value: t('admin.products_v3.filters.search_for_producers')))
+      include_blank: t('admin.products_v3.filters.select_producer'),
+      placeholder_value: t('admin.products_v3.filters.select_producer')))
+  = error_message_on variant, :supplier
 %td.col-category.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :primary_taxon_id,
       options: category_options,
       selected_option: variant.primary_taxon_id,
       aria_label: t('.category_field_name'),
-      placeholder_value: t('admin.products_v3.filters.search_for_categories')))
+      include_blank: t('admin.products_v3.filters.select_category'),
+      placeholder_value: t('admin.products_v3.filters.select_category')))
+  = error_message_on variant, :primary_taxon
 %td.col-tax_category.field.naked_inputs
   = render(SearchableDropdownComponent.new(form: f,
       name: :tax_category_id,

@@ -20,6 +20,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
   let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
 
   describe "updating" do
+    let!(:taxon) { create(:taxon) }
     let!(:variant_a1) {
       product_a.variants.first.tap{ |v|
         v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
@@ -349,6 +350,9 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
           click_on "On Hand" # activate popout
           fill_in "On Hand", with: "3"
+
+          select producer.name, from: 'Producer'
+          select taxon.name, from: 'Category'
         end
 
         expect {
@@ -541,6 +545,9 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
             click_on "Unit" # activate popout
             fill_in "Unit value", with: "200"
+
+            select producer.name, from: 'Producer'
+            select taxon.name, from: 'Category'
           end
 
           expect {

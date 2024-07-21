@@ -868,8 +868,10 @@ en:
       filters:
         search_products: Search for products
         search_for_producers: Search for producers
+        select_producer: Select producer
         all_producers: All producers
         search_for_categories: Search for categories
+        select_category: Select category
         all_categories: All categories
         producers:
           label: Producers

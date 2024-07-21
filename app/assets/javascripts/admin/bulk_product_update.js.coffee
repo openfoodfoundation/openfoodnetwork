@@ -126,8 +126,11 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
     DisplayProperties.setShowVariants 0, showVariants
 
   $scope.addVariant = (product) ->
+    # Set new variant category to same as last product variant category to keep compactibility with deleted variant callback to set new variant category
+    newVariantId = $scope.nextVariantId();
+    newVariantCategoryId = product.variants[product.variants.length - 1]?.category_id
     product.variants.push
-      id: $scope.nextVariantId()
+      id: newVariantId
       unit_value: null
       unit_description: null
       on_demand: false
@@ -136,8 +139,9 @@ angular.module("ofn.admin").controller "AdminProductEditCtrl", ($scope, $timeout
       on_hand: null
       price: null
       tax_category_id: null
-      category_id: null
+      category_id: newVariantCategoryId
     DisplayProperties.setShowVariants product.id, true
+    DirtyProducts.addVariantProperty(product.id, newVariantId, 'category_id', newVariantCategoryId)
 
 
   $scope.nextVariantId = ->
