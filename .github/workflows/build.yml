@@ -95,7 +95,6 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
-
   models:
     runs-on: ubuntu-22.04
     services:
@@ -154,6 +153,14 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/models/**/*_spec.rb}" 
         run: |
           bin/rake knapsack_pro:rspec
+
+      - name: Save SimpleCov file
+        uses: actions/upload-artifact@v3
+        with:
+          name: simple-cov-output-files
+          path: coverage/*.*
+          retention-days: 7
+          if-no-files-found: ignore
 
   system_admin:
     runs-on: ubuntu-22.04
@@ -233,6 +240,14 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
+      - name: Save SimpleCov file
+        uses: actions/upload-artifact@v3
+        with:
+          name: simple-cov-output-files
+          path: coverage/*.*
+          retention-days: 7
+          if-no-files-found: ignore
+
   system_consumer:
     runs-on: ubuntu-22.04
     services:
@@ -308,6 +323,14 @@ jobs:
         with:
           name: failed-tests-screenshots
           path: tmp/capybara/screenshots/*.png
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Save SimpleCov file
+        uses: actions/upload-artifact@v3
+        with:
+          name: simple-cov-output-files
+          path: coverage/*.*
           retention-days: 7
           if-no-files-found: ignore
 
@@ -390,6 +413,14 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
+      - name: Save SimpleCov file
+        uses: actions/upload-artifact@v3
+        with:
+          name: simple-cov-output-files
+          path: coverage/*.*
+          retention-days: 7
+          if-no-files-found: ignore
+
   test_the_rest:
     runs-on: ubuntu-22.04
     services:
@@ -458,6 +489,14 @@ jobs:
         run: |
           bin/rake knapsack_pro:rspec
 
+      - name: Save SimpleCov file
+        uses: actions/upload-artifact@v3
+        with:
+          name: simple-cov-output-files
+          path: coverage/*.*
+          retention-days: 7
+          if-no-files-found: ignore
+
   non_knapsack_jest_karma:
     runs-on: ubuntu-22.04
     services:
@@ -495,3 +534,11 @@ jobs:
 
       - name: Run jest tests
         run: yarn jest
+
+      - name: Save SimpleCov file
+        uses: actions/upload-artifact@v3
+        with:
+          name: simple-cov-output-files
+          path: coverage/*.*
+          retention-days: 7
+          if-no-files-found: ignore
