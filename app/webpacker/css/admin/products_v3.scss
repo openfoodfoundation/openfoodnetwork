@@ -435,19 +435,18 @@
     }
   }
 
-  @keyframes slideOutLeft {
+  @keyframes slideOutTop {
     from {
-      transform: translateX(0);
-      opacity: 1;
+      transform: scaleY(1);
     }
     to {
-      transform: translateX(-100%);
-      opacity: 0;
+      transform: scaleY(0);
     }
   }
 
   .slide-out {
-    animation: slideOutLeft 0.5s forwards;
+    transform-origin: top;
+    animation: slideOutTop 0.5s forwards;
   }
 
   @keyframes slideInRight {
