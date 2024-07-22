@@ -306,6 +306,23 @@ RSpec.describe CheckoutController, type: :controller do
             expect(response).to redirect_to checkout_step_path(:summary)
           end
         end
+
+        context "with existing invalid payments" do
+          let(:invalid_payments) { [
+              create(:payment, state: :failed),
+              create(:payment, state: :void),
+            ] }
+
+          before do
+            order.payments = invalid_payments
+          end
+
+          it "deletes invalid payments" do
+            expect{
+              put(:update, params:)
+            }.to change { order.payments.to_a }.from(invalid_payments)
+          end
+        end
       end
 
       context "with no payment source" do
