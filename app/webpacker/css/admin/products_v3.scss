@@ -449,18 +449,17 @@
     animation: slideOutTop 0.5s forwards;
   }
 
-  @keyframes slideInRight {
+  @keyframes slideInTop {
     from {
-      transform: translateX(100%);
-      opacity: 0;
+      transform: scaleY(0);
     }
     to {
-      transform: translateX(0);
-      opacity: 1;
+      transform: scaleY(1);
     }
   }
-  
+
   .slide-in {
-    animation: slideInRight 0.5s forwards;
+    transform-origin: top;
+    animation: slideInTop 0.5s forwards;
   }
 }
