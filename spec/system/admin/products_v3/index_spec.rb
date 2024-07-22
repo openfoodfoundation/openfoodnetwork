@@ -20,8 +20,8 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
   let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
 
   describe "listing" do
-    let!(:p1) { create(:product) }
-    let!(:p2) { create(:product) }
+    let!(:p1) { create(:product, name: "Product1") }
+    let!(:p2) { create(:product, name: "Product2") }
 
     before do
       visit admin_products_url
@@ -43,8 +43,8 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         expect(page).to have_selector "th", text: "Actions"
 
         # displays product list
-        expect(page).to have_field("_products_0_name", with: p1.name.to_s)
-        expect(page).to have_field("_products_1_name", with: p2.name.to_s)
+        expect(page).to have_field("_products_0_name", with: "Product1")
+        expect(page).to have_field("_products_1_name", with: "Product2")
       end
     end
 
@@ -66,24 +66,30 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
     context "with several variants" do
       let!(:variant1) { p1.variants.first }
-      let!(:variant2) { p2.variants.first }
-      let!(:variant3) { create(:variant, product: p2, on_demand: false, on_hand: 4) }
+      let!(:variant2a) { p2.variants.first }
+      let!(:variant2b) {
+        create(:variant, display_name: "Variant2b", product: p2, on_demand: false, on_hand: 4)
+      }
 
       before do
-        variant1.update!(on_hand: 0, on_demand: true)
-        variant2.update!(on_hand: 16, on_demand: false)
+        variant1.update!(display_name: "Variant1", on_hand: 0, on_demand: true)
+        variant2a.update!(display_name: "Variant2a", on_hand: 16, on_demand: false)
         visit spree.admin_products_path
       end
 
       it "displays an on hand count in a span for each product" do
-        within(:xpath, '//*[@id="products-form"]/table/tbody[1]/tr[2]/td[7]') do
+        within row_containing_name "Product1" do
+          expect(page).not_to have_content "20" # does not display the total stock
+        end
+        within row_containing_name "Variant1" do
           expect(page).to have_content "On demand"
         end
-        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[2]/td[7]') do
-          expect(page).to have_content "16" # displays the stock for variant_2
+
+        within row_containing_name "Variant2a" do
+          expect(page).to have_content "16"
         end
-        within(:xpath, '//*[@id="products-form"]/table/tbody[2]/tr[3]/td[7]') do
-          expect(page).to have_content "4"  # displays the stock for variant_3
+        within row_containing_name "Variant2b" do
+          expect(page).to have_content "4"
         end
       end
     end
