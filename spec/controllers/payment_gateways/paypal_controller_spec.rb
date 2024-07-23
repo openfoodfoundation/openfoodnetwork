@@ -109,11 +109,11 @@ module PaymentGateways
     describe '#expire_current_order' do
       it 'empties the order_id of the session' do
         expect(session).to receive(:[]=).with(:order_id, nil)
-        controller.send(:expire_current_order)
+        controller.__send__(:expire_current_order)
       end
 
       it 'resets the @current_order ivar' do
-        controller.send(:expire_current_order)
+        controller.__send__(:expire_current_order)
         expect(controller.instance_variable_get(:@current_order)).to be_nil
       end
     end

@@ -51,7 +51,7 @@ RSpec.describe ProductsRenderer do
           { q: { "#{ransack_param}": "apples" } }
         )
 
-        products = products_renderer.send(:products)
+        products = products_renderer.__send__(:products)
         expect(products).to eq([product_apples])
       end
 
@@ -68,7 +68,7 @@ RSpec.describe ProductsRenderer do
                                                    { q: {
                                                      with_properties: [property_organic.id, 999]
                                                    } })
-          products = products_renderer.send(:products)
+          products = products_renderer.__send__(:products)
           expect(products).to eq([product_apples])
         end
 
@@ -79,7 +79,7 @@ RSpec.describe ProductsRenderer do
           search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.send(:products)
+          products = products_renderer.__send__(:products)
           expect(products).to eq([product_apples, product_cherries])
         end
 
@@ -96,7 +96,7 @@ RSpec.describe ProductsRenderer do
             } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.send(:products)
+          products = products_renderer.__send__(:products)
           expect(products).to eq([product_apples, product_banana_bread, product_doughnuts])
         end
 
@@ -118,7 +118,7 @@ RSpec.describe ProductsRenderer do
 
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.send(:products)
+          products = products_renderer.__send__(:products)
           expect(products).to eq([product_peach])
         end
 
@@ -132,7 +132,7 @@ RSpec.describe ProductsRenderer do
           search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.send(:products)
+          products = products_renderer.__send__(:products)
           expect(products).to eq([product_apples])
         end
 
@@ -152,7 +152,7 @@ RSpec.describe ProductsRenderer do
                                                    { q: {
                                                      with_properties: [property_organic.id]
                                                    } })
-          products = products_renderer.send(:products)
+          products = products_renderer.__send__(:products)
           expect(products).to eq([product_cherries, product_banana_bread, product_doughnuts])
         end
       end
@@ -215,7 +215,7 @@ RSpec.describe ProductsRenderer do
                        inventory_items: [create(:inventory_item, enterprise: hub, visible: false)])
     }
     let(:products_renderer) { ProductsRenderer.new(hub, oc, customer) }
-    let(:variants) { products_renderer.send(:variants_for_shop_by_id) }
+    let(:variants) { products_renderer.__send__(:variants_for_shop_by_id) }
 
     it "scopes variants to distribution" do
       expect(variants[p.id]).to include v1

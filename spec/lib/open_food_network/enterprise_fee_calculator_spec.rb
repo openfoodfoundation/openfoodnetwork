@@ -235,11 +235,13 @@ module OpenFoodNetwork
 
       describe "fetching enterprise fees with pre-loaded exchange details" do
         it "scopes enterprise fees to those on exchanges for the current order cycle" do
-          expect(subject.send(:per_item_enterprise_fees_with_exchange_details)).to eq([ef_exchange])
+          expect(subject.__send__(:per_item_enterprise_fees_with_exchange_details)).to eq(
+            [ef_exchange]
+          )
         end
 
         it "includes the exchange variant id" do
-          expect(subject.send(:per_item_enterprise_fees_with_exchange_details)
+          expect(subject.__send__(:per_item_enterprise_fees_with_exchange_details)
             .first.variant_id.to_i).to eq(v.id)
         end
 
@@ -248,22 +250,24 @@ module OpenFoodNetwork
                             receiver: distributor_other, enterprise_fees: [ef_other_distributor],
                             variants: [v])
 
-          expect(subject.send(:per_item_enterprise_fees_with_exchange_details)).to eq([ef_exchange])
+          expect(subject.__send__(:per_item_enterprise_fees_with_exchange_details)).to eq(
+            [ef_exchange]
+          )
         end
       end
 
       describe "loading exchange fees" do
-        let(:exchange_fees) { subject.send(:per_item_enterprise_fees_with_exchange_details) }
+        let(:exchange_fees) { subject.__send__(:per_item_enterprise_fees_with_exchange_details) }
 
         it "loads exchange fees" do
-          subject.send(:load_exchange_fees, exchange_fees)
+          subject.__send__(:load_exchange_fees, exchange_fees)
           expect(indexed_enterprise_fees).to eq(v.id => [ef_exchange])
         end
       end
 
       describe "loading coordinator fees" do
         it "loads coordinator fees" do
-          subject.send(:load_coordinator_fees)
+          subject.__send__(:load_coordinator_fees)
           expect(indexed_enterprise_fees).to eq(v.id => [ef_coordinator])
         end
       end
@@ -307,7 +311,7 @@ module OpenFoodNetwork
           end
 
           it "makes fee applicators for a line item" do
-            expect(efc.send(:per_item_enterprise_fee_applicators_for, line_item.variant))
+            expect(efc.__send__(:per_item_enterprise_fee_applicators_for, line_item.variant))
               .to eq [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, line_item.variant,
                                                                    'supplier'),
                       OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, line_item.variant,
@@ -322,7 +326,8 @@ module OpenFoodNetwork
           let(:order) { double(:order, distributor: nil, order_cycle: nil) }
 
           it "does not make applicators for an order" do
-            expect(efc.send(:per_item_enterprise_fee_applicators_for, line_item.variant)).to eq []
+            expect(efc.__send__(:per_item_enterprise_fee_applicators_for,
+                                line_item.variant)).to eq []
           end
         end
       end
@@ -352,7 +357,7 @@ module OpenFoodNetwork
           end
 
           it "makes fee applicators for an order" do
-            expect(efc.send(:per_order_enterprise_fee_applicators_for, order))
+            expect(efc.__send__(:per_order_enterprise_fee_applicators_for, order))
               .to eq [OpenFoodNetwork::EnterpriseFeeApplicator.new(ef1, nil, 'supplier'),
                       OpenFoodNetwork::EnterpriseFeeApplicator.new(ef2, nil, 'distributor'),
                       OpenFoodNetwork::EnterpriseFeeApplicator.new(ef3, nil, 'coordinator')]
@@ -364,7 +369,7 @@ module OpenFoodNetwork
           let(:order) { double(:order, distributor: nil, order_cycle: nil) }
 
           it "does not make applicators for an order" do
-            expect(efc.send(:per_order_enterprise_fee_applicators_for, order)).to eq []
+            expect(efc.__send__(:per_order_enterprise_fee_applicators_for, order)).to eq []
           end
         end
       end

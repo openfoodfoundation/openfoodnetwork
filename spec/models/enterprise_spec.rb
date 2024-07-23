@@ -857,7 +857,7 @@ RSpec.describe Enterprise do
       allow(Enterprise).to receive(:find_available_permalink).and_return("available_permalink")
       expect(Enterprise).to receive(:find_available_permalink).with("Name To Turn Into A Permalink")
       expect do
-        enterprise.send(:initialize_permalink)
+        enterprise.__send__(:initialize_permalink)
       end.to change { enterprise.permalink }.to("available_permalink")
     end
 

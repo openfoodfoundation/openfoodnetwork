@@ -51,7 +51,7 @@ module OpenFoodNetwork
         before { allow(finder).to receive(:last_used_bill_address) { address } }
 
         it "returns a clone of the bill_address" do
-          expect(finder.send(:fallback_bill_address)).to eq "address_clone"
+          expect(finder.__send__(:fallback_bill_address)).to eq "address_clone"
         end
       end
 
@@ -59,7 +59,7 @@ module OpenFoodNetwork
         before { allow(finder).to receive(:last_used_bill_address) { nil } }
 
         it "returns a new empty address" do
-          expect(finder.send(:fallback_bill_address)).to eq Spree::Address.default
+          expect(finder.__send__(:fallback_bill_address)).to eq Spree::Address.default
         end
       end
     end
@@ -72,7 +72,7 @@ module OpenFoodNetwork
         before { allow(finder).to receive(:last_used_ship_address) { address } }
 
         it "returns a clone of the ship_address" do
-          expect(finder.send(:fallback_ship_address)).to eq "address_clone"
+          expect(finder.__send__(:fallback_ship_address)).to eq "address_clone"
         end
       end
 
@@ -80,7 +80,7 @@ module OpenFoodNetwork
         before { allow(finder).to receive(:last_used_ship_address) { nil } }
 
         it "returns a new empty address" do
-          expect(finder.send(:fallback_ship_address)).to eq Spree::Address.default
+          expect(finder.__send__(:fallback_ship_address)).to eq Spree::Address.default
         end
       end
     end
@@ -105,7 +105,7 @@ module OpenFoodNetwork
           end
 
           it "returns nil" do
-            expect(finder.send(:last_used_bill_address)).to eq nil
+            expect(finder.__send__(:last_used_bill_address)).to eq nil
           end
         end
       end
@@ -119,7 +119,7 @@ module OpenFoodNetwork
           before { order.update_attribute(:bill_address, address) }
 
           it "returns the bill_address" do
-            expect(finder.send(:last_used_bill_address)).to eq address
+            expect(finder.__send__(:last_used_bill_address)).to eq address
           end
         end
 
@@ -127,13 +127,13 @@ module OpenFoodNetwork
           before { order }
 
           it "return nil" do
-            expect(finder.send(:last_used_bill_address)).to eq nil
+            expect(finder.__send__(:last_used_bill_address)).to eq nil
           end
         end
 
         context "when no orders exist" do
           it "returns nil" do
-            expect(finder.send(:last_used_bill_address)).to eq nil
+            expect(finder.__send__(:last_used_bill_address)).to eq nil
           end
         end
       end
@@ -160,7 +160,7 @@ module OpenFoodNetwork
           end
 
           it "returns nil" do
-            expect(finder.send(:last_used_ship_address)).to eq nil
+            expect(finder.__send__(:last_used_ship_address)).to eq nil
           end
         end
       end
@@ -180,7 +180,7 @@ module OpenFoodNetwork
             before { order.shipping_method.update_attribute(:require_ship_address, true) }
 
             it "returns the ship_address" do
-              expect(finder.send(:last_used_ship_address)).to eq address
+              expect(finder.__send__(:last_used_ship_address)).to eq address
             end
           end
 
@@ -188,7 +188,7 @@ module OpenFoodNetwork
             before { order.shipping_method.update_attribute(:require_ship_address, false) }
 
             it "returns nil" do
-              expect(finder.send(:last_used_ship_address)).to eq nil
+              expect(finder.__send__(:last_used_ship_address)).to eq nil
             end
           end
         end
@@ -200,13 +200,13 @@ module OpenFoodNetwork
           }
 
           it "return nil" do
-            expect(finder.send(:last_used_ship_address)).to eq nil
+            expect(finder.__send__(:last_used_ship_address)).to eq nil
           end
         end
 
         context "when no orders exist" do
           it "returns nil" do
-            expect(finder.send(:last_used_ship_address)).to eq nil
+            expect(finder.__send__(:last_used_ship_address)).to eq nil
           end
         end
       end
@@ -224,14 +224,14 @@ module OpenFoodNetwork
           context "when the customer email matches the raw email" do
             before{ allow(customer).to receive(:email) { "email@email.com" } }
             it "returns true" do
-              expect(finder.send(:allow_search_by_email?)).to be true
+              expect(finder.__send__(:allow_search_by_email?)).to be true
             end
           end
 
           context "when the customer email does not match the raw email" do
             before{ allow(customer).to receive(:email) { "nah@email.com" } }
             it "returns false" do
-              expect(finder.send(:allow_search_by_email?)).to be false
+              expect(finder.__send__(:allow_search_by_email?)).to be false
             end
           end
         end
@@ -243,28 +243,28 @@ module OpenFoodNetwork
           context "when the user email matches the raw email" do
             before{ allow(user).to receive(:email) { "email@email.com" } }
             it "returns true" do
-              expect(finder.send(:allow_search_by_email?)).to be true
+              expect(finder.__send__(:allow_search_by_email?)).to be true
             end
           end
 
           context "when the user email does not match the raw email" do
             before{ allow(user).to receive(:email) { "nah@email.com" } }
             it "returns false" do
-              expect(finder.send(:allow_search_by_email?)).to be false
+              expect(finder.__send__(:allow_search_by_email?)).to be false
             end
           end
         end
 
         context "when neither a customer nor a user has been provided" do
           it "returns false" do
-            expect(finder.send(:allow_search_by_email?)).to be false
+            expect(finder.__send__(:allow_search_by_email?)).to be false
           end
         end
       end
 
       context "when an email address is not provided" do
         it "returns false" do
-          expect(finder.send(:allow_search_by_email?)).to be false
+          expect(finder.__send__(:allow_search_by_email?)).to be false
         end
       end
     end

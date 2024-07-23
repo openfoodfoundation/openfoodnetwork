@@ -872,39 +872,6 @@ Style/ReturnNilInPredicateMethodDefinition:
     - 'app/serializers/api/admin/customer_serializer.rb'
     - 'engines/order_management/app/services/order_management/subscriptions/validator.rb'
 
-# Offense count: 207
-Style/Send:
-  Exclude:
-    - 'spec/controllers/admin/subscriptions_controller_spec.rb'
-    - 'spec/controllers/payment_gateways/paypal_controller_spec.rb'
-    - 'spec/controllers/spree/admin/base_controller_spec.rb'
-    - 'spec/controllers/spree/orders_controller_spec.rb'
-    - 'spec/helpers/order_cycles_helper_spec.rb'
-    - 'spec/jobs/subscription_confirm_job_spec.rb'
-    - 'spec/jobs/subscription_placement_job_spec.rb'
-    - 'spec/lib/open_food_network/address_finder_spec.rb'
-    - 'spec/lib/open_food_network/enterprise_fee_applicator_spec.rb'
-    - 'spec/lib/open_food_network/enterprise_fee_calculator_spec.rb'
-    - 'spec/lib/open_food_network/order_cycle_form_applicator_spec.rb'
-    - 'spec/lib/open_food_network/permissions_spec.rb'
-    - 'spec/lib/open_food_network/tag_rule_applicator_spec.rb'
-    - 'spec/lib/reports/xero_invoices_report_spec.rb'
-    - 'spec/lib/stripe/webhook_handler_spec.rb'
-    - 'spec/models/calculator/weight_spec.rb'
-    - 'spec/models/enterprise_spec.rb'
-    - 'spec/models/exchange_spec.rb'
-    - 'spec/models/spree/order_inventory_spec.rb'
-    - 'spec/models/spree/payment_spec.rb'
-    - 'spec/models/spree/return_authorization_spec.rb'
-    - 'spec/models/tag_rule/filter_order_cycles_spec.rb'
-    - 'spec/models/tag_rule/filter_payment_methods_spec.rb'
-    - 'spec/models/tag_rule/filter_products_spec.rb'
-    - 'spec/models/tag_rule/filter_shipping_methods_spec.rb'
-    - 'spec/services/cart_service_spec.rb'
-    - 'spec/services/products_renderer_spec.rb'
-    - 'spec/services/variant_units/option_value_namer_spec.rb'
-    - 'spec/support/localized_number_helper.rb'
-
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/SlicingWithRange:

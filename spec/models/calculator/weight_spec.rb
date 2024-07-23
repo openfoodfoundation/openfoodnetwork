@@ -75,7 +75,7 @@ RSpec.describe Calculator::Weight do
     let(:calculator) { described_class.new(preferred_per_unit: 6, preferred_unit_from_list: "kg") }
     let(:line_item) do
       build_stubbed(:line_item, variant:, quantity: 2).tap do |object|
-        object.send(:calculate_final_weight_volume)
+        object.__send__(:calculate_final_weight_volume)
       end
     end
 
