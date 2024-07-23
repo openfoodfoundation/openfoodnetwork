@@ -12,22 +12,6 @@ Layout/EmptyLines:
   Exclude:
     - 'app/services/products_renderer.rb'
 
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Layout/MultilineMethodCallIndentation:
-  Exclude:
-    - 'app/services/products_renderer.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented
-Layout/MultilineOperationIndentation:
-  Exclude:
-    - 'app/services/products_renderer.rb'
-
 # Offense count: 16
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
@@ -101,7 +85,7 @@ Lint/UselessMethodDefinition:
   Exclude:
     - 'app/models/spree/gateway.rb'
 
-# Offense count: 23
+# Offense count: 24
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
@@ -114,6 +98,7 @@ Metrics/AbcSize:
     - 'app/helpers/spree/admin/navigation_helper.rb'
     - 'app/models/enterprise_group.rb'
     - 'app/models/enterprise_relationship.rb'
+    - 'app/models/product_import/entry_processor.rb'
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/address.rb'
     - 'app/models/spree/order/checkout.rb'
@@ -142,7 +127,7 @@ Metrics/BlockNesting:
   Exclude:
     - 'app/models/spree/payment/processing.rb'
 
-# Offense count: 47
+# Offense count: 46
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
@@ -178,7 +163,6 @@ Metrics/ClassLength:
     - 'app/models/spree/variant.rb'
     - 'app/models/spree/zone.rb'
     - 'app/reflexes/admin/orders_reflex.rb'
-    - 'app/reflexes/products_reflex.rb'
     - 'app/serializers/api/cached_enterprise_serializer.rb'
     - 'app/serializers/api/enterprise_shopfront_serializer.rb'
     - 'app/services/cart_service.rb'
@@ -408,7 +392,6 @@ RSpecRails/HaveHttpStatus:
     - 'spec/controllers/stripe/webhooks_controller_spec.rb'
     - 'spec/controllers/user_passwords_controller_spec.rb'
     - 'spec/controllers/user_registrations_controller_spec.rb'
-    - 'spec/requests/admin/images_spec.rb'
     - 'spec/requests/api/routes_spec.rb'
     - 'spec/requests/checkout/stripe_sca_spec.rb'
     - 'spec/requests/home_controller_spec.rb'
@@ -725,7 +708,7 @@ Style/ClassAndModuleChildren:
     - 'lib/open_food_network/locking.rb'
     - 'spec/models/spree/payment_method_spec.rb'
 
-# Offense count: 2
+# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: always, always_true, never

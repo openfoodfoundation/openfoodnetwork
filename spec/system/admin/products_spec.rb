@@ -187,6 +187,23 @@ RSpec.describe '
       expect(page).to have_content "Product Category must exist"
     end
 
+    it "creating product with empty product supplier fails" do
+      fill_in 'product_name', with: 'Hot Cakes'
+      select "Weight (kg)", from: 'product_variant_unit_with_scale'
+      fill_in "product_unit_value", with: '1'
+      fill_in 'product_price', with: '1.99'
+      select taxon.name, from: "product_primary_taxon_id"
+      fill_in 'product_on_hand', with: 0
+      check 'product_on_demand'
+      select 'Test Tax Category', from: 'product_tax_category_id'
+      fill_in_trix_editor 'product_description',
+                          with: 'In demand, and on_demand! The hottest cakes in town.'
+      click_button 'Create'
+
+      expect(current_path).to eq spree.admin_products_path
+      expect(page).to have_content "Supplier must exist"
+    end
+
     describe "localization settings" do
       shared_examples "with different price values" do |localized_number, price|
         context "when enable_localized_number is set to #{localized_number}" do

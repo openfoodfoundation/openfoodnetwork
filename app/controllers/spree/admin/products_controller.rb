@@ -46,7 +46,7 @@ module Spree
             # Re-fill the form with deleted params on product
             @on_hand = request.params[:product][:on_hand]
             @on_demand = request.params[:product][:on_demand]
-            render :new, status: :unprocessable_entity
+            render :new
           end
         end
       end
