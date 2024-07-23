@@ -304,7 +304,10 @@ RSpec.describe Sets::ProductSet do
           [
             { id: product.variants.first.id.to_s }, # default variant unchanged
             # omit ID for new variant
-            { sku: "new sku", price: "5.00", unit_value: "5", supplier_id: supplier.id },
+            {
+              sku: "new sku", price: "5.00", unit_value: "5",
+              supplier_id: supplier.id, primary_taxon_id: create(:taxon).id
+            },
           ]
         }
         let(:supplier) { create(:supplier_enterprise) }

@@ -797,14 +797,20 @@ describe "AdminProductEditCtrl", ->
       spyOn DisplayProperties, 'setShowVariants'
 
     it "adds first and subsequent variants", ->
-      product = {id: 123, variants: []}
+      product = {id: 123, variants: [
+        { 
+          id: 1, price: 10.0, unit_value: 1, tax_category_id: null, unit_description: '1kg',
+          on_demand: false, on_hand: null, display_as: null, display_name: null, category_id: 2
+        }
+      ]}
       $scope.addVariant(product)
       $scope.addVariant(product)
       expect(product).toEqual
         id: 123
         variants: [
-          {id: -1, price: null, unit_value: null, tax_category_id: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null, category_id: null}
-          {id: -2, price: null, unit_value: null, tax_category_id: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null, category_id: null}
+          {id: 1, price: 10.0, unit_value: 1, tax_category_id: null, unit_description: '1kg', on_demand: false, on_hand: null, display_as: null, display_name: null, category_id: 2}
+          {id: -1, price: null, unit_value: null, tax_category_id: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null, category_id: 2}
+          {id: -2, price: null, unit_value: null, tax_category_id: null, unit_description: null, on_demand: false, on_hand: null, display_as: null, display_name: null, category_id: 2}
         ]
 
     it "shows the variant(s)", ->
