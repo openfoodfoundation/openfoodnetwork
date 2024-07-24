@@ -14,7 +14,7 @@
       = hidden_field_tag "user[spree_role_ids][]", ""
     = f.field_container :locale do
       = f.label :locale, t(".locale")
-      = f.select :locale, OpenFoodNetwork::I18nConfig.locale_options, class: "fullwidth"
+      = f.select :locale, locale_options, class: "fullwidth"
     = f.field_container :enterprise_limit do
       = f.label :enterprise_limit, t(".enterprise_limit")
       = f.text_field :enterprise_limit, class: "fullwidth"
