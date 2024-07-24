@@ -641,7 +641,7 @@ hu:
       edit:
         title: "Stripe Connect"
         settings: "Beállítások"
-        stripe_connect_enabled: Engedélyezi az átadópontok számára a fizetés elfogadását a Stripe Connect használatával?
+        stripe_connect_enabled: Engedélyezi az átvételi pontok számára a fizetés elfogadását a Stripe Connect használatával?
         no_api_key_msg: Ehhez a vállalkozáshoz nem tartozik Stripe-fiók.
         configuration_explanation_html: A Stripe Connect integráció konfigurálására vonatkozó részletes utasításokért, kérjük, <a href='https://gitátvételi pont.com/openfoodfoundation/openfoodnetwork/wiki/Setting-up-Stripe-on-an-OFN-instance' target='_blank'>olvasd el ezt az útmutatót</a>.
         status: Státusz
@@ -1480,7 +1480,7 @@ hu:
         distributors: elosztók
         variants: változatai
       simple_form:
-        ready_for: Nyitás
+        ready_for: Átvétel
         ready_for_placeholder: Dátum idő
         customer_instructions: Vevői utasítások
         customer_instructions_placeholder: Átvételi vagy szállítólevelek
@@ -1912,8 +1912,8 @@ hu:
       add_voucher_error: Hiba történt a kupon hozzáadása során
   shops:
     hubs:
-      show_closed_shops: "Inaktív átadópontok megjelenítése"
-      hide_closed_shops: "Inaktív átadópontok elrejtése"
+      show_closed_shops: "Inaktív átvételi pontok megjelenítése"
+      hide_closed_shops: "Inaktív átvételi pontok elrejtése"
       show_on_map: "Az összes megjelenítése a térképen"
   shared:
     mailers:
@@ -1995,7 +1995,7 @@ hu:
   invoice_issued_on: "Kiállított számla:"
   order_number: "Rendelés sorszáma:"
   date_of_transaction: "A tranzakció dátuma:"
-  menu_1_title: "Átadópontok"
+  menu_1_title: "Átvételi pontok"
   menu_1_url: "/shops"
   menu_2_title: "Térkép"
   menu_2_url: "/map"
@@ -2059,7 +2059,7 @@ hu:
   authorization_failure: "Engedélyezési hiba"
   description: "Leírás"
   label_shop: "Átadópont"
-  label_shops: "Átadópontok"
+  label_shops: "Átvételi pontok"
   label_map: "Térkép"
   label_producer: "Termelő"
   label_producers: "Termelők"
@@ -2141,7 +2141,7 @@ hu:
   brandstory_intro: "Közösség által irányított élelmiszerrendszert építünk."
   brandstory_part1: "Az alapoktól kezdjük. \nA gazdálkodókkal, akiknek fontos, hogy közösen, egy fenntartható és mindenki számára átlátható, hazai élelemrendszert hozzunk létre. \nA bevásárlóközösségekkel, fogyasztói csoportokkal, más elosztókkal, akik összekapcsolják az embereket a termelőkkel és a termékekkel, és biztosítani szeretnék, hogy a termelők tisztességes díjazásban részesüljenek. \nAzokkal a fogyasztókkal, akik hisznek abban, hogy döntéseiknek hatása van."
   brandstory_part2: "Ahhoz, hogy ezt valósággá tegyük, szükségünk van egy eszközre, ami minden résztvevőt megerősít, aki élelmiszert termeszt, ad el, szervez, tervez, fogyaszt. \nEgy eszközre, amely láthatóvá teszi a gazdákat, a közösségeket, a termesztési módszereket, és képes kezelni a logisztikát. \nEz az Open Food Network platformja, amely országonként saját közösségi irányítás alatt áll, ugyanakkor globális erőforrásainkat összeadva fejlesztjük."
-  brandstory_part3: "Egy olyan piacteret hozunk így létre, amely átlátható, közvetlen kapcsolatokon alapul, láthatóvá teszi a rövid ellátási lánc szemeit.\nKifejezetten az élelmiszerek értékesítésére készült, így képes kezelni a trükkös méréseket vagy készletszinteket, amelyek csak az élelmiszerek esetében fordulnak elő.\nA termelők létrehozhatnak saját profilt, beszedhetik a fizetéseket, a platformon lévő más átadópontokon keresztül is értékesíthetnek, kiszállíthatnak, vagy akár futárszolgálattal is dolgozhatnak.\nA közösségek összefoghatják a helyi termelőket, hogy virtuális termelői piacokat vagy bevásárlóközösségeket hozzanak létre, és ezáltal rugalmas helyi élelmiszer-gazdaságot építsenek"
+  brandstory_part3: "Egy olyan piacteret hozunk így létre, amely átlátható, közvetlen kapcsolatokon alapul, láthatóvá teszi a rövid ellátási lánc szemeit.\nKifejezetten az élelmiszerek értékesítésére készült, így képes kezelni a trükkös méréseket vagy készletszinteket, amelyek csak az élelmiszerek esetében fordulnak elő.\nA termelők létrehozhatnak saját profilt, beszedhetik a fizetéseket, a platformon lévő más átvételi pontokon keresztül is értékesíthetnek, kiszállíthatnak, vagy akár futárszolgálattal is dolgozhatnak.\nA közösségek összefoghatják a helyi termelőket, hogy virtuális termelői piacokat vagy bevásárlóközösségeket hozzanak létre, és ezáltal rugalmas helyi élelmiszer-gazdaságot építsenek"
   brandstory_part4: "És ami legalább olyan fontos, mint maga a szoftver, azok az értékek, amelyek a szoftver alapját képezik.\nHa élelmiszert értékesítesz – akár mint gazdálkodó, akár mint termelői piac, vagy termelői szövetkezet vagy élelmiszer-központ -, akkor olyan szoftvert válassz, amely összhangban van az értékeiddel, az emberek és a bolygó érdekével, nem pedig a profit érdekében tevékenykedik. "
   brandstory_part5_strong: "Open Food Network – a Szabad Élelmiszerhálózat"
   brandstory_part6: "Csatlakozz te is!"
@@ -2173,7 +2173,7 @@ hu:
   checkout_default_ship_address: "Mentés alapértelmezett szállítási címként"
   checkout_method_free: Ingyenes
   checkout_address_same: A szállítási cím megegyezik a számlázási címmel?
-  checkout_ready_for: "Nyitás:"
+  checkout_ready_for: "Átvétel:"
   checkout_instructions: "Megjegyzés, vagy különleges igény?"
   checkout_payment: Fizetés
   checkout_send: Rendelés leadása most
@@ -2308,12 +2308,12 @@ hu:
   shopping_producers_of_hub: "%{hub} termelői:"
   enterprises_next_closing: "A következő rendelés lezárása"
   enterprises_currently_open: "A rendelések jelenleg nyitva vannak"
-  enterprises_ready_for: "Nyitás"
+  enterprises_ready_for: "Átvétel"
   enterprises_choose: "Válaszd ki, hogy mikor szeretnéd átvenni:"
-  maps_open: "Nyisd ki"
+  maps_open: "Nyitva"
   maps_closed: "Zárva"
   map_title: "Térkép"
-  hubs_buy: "Vásárolni valakinek:"
+  hubs_buy: "Kínálat:"
   hubs_shopping_here: "Vásárlás itt"
   hubs_orders_closed: "A rendelések lezárva"
   hubs_profile_only: "Csak profil"
@@ -2328,7 +2328,7 @@ hu:
   hubs_matches: "Úgy értetted:"
   hubs_intro: Nézz körül a környéken
   hubs_distance: Legközelebb
-  hubs_distance_filter: "Mutasson átadópontok %{location} közelében"
+  hubs_distance_filter: "Mutass átvételi pontokat %{location} közelében"
   shop_changeable_orders_alert_html:
     one: 'Megrendelése a következővel: <a href=''%{path}'' target=''_blank''>%{shop} / %{order}</a> nyitva áll ellenőrzésre. A módosításokat a következő időpontig hajthatja végre: %{oc_close}.'
     few: '<a href=''%{path}'' target=''_blank''>%{count} rendelése van a(z) %{shop}</a>-nál jelenleg ellenőrzésre nyitva. A módosításokat a következő időpontig végezhetsz: %{oc_close}.'
@@ -2360,14 +2360,14 @@ hu:
   products_changes_saved: "Változtatások elmentve."
   products_no_results_html: "Sajnáljuk, nem található találat a következőre: %{query}"
   products_clear_search: "Keresés törlése"
-  search_no_results_html: "Sajnáljuk, nem találtunk Átadópontot/Termelőt a következő kifejezésre: %{query} Próbálkozz másik kereséssel!"
+  search_no_results_html: "Sajnáljuk, nem találtunk Átvételi pontot/Termelőt a következő szűrésre: %{query} Próbálkozz másik kereséssel!"
   components_profiles_popover: "A Profiloknak nincs online kirakata az Open Food Network-ben, de lehet, hogy van saját fizikai vagy online átvételi pontjuk máshol."
   components_profiles_show: "Profilok megjelenítése"
   components_filters_nofilters: "Nincsenek szűrők"
   components_filters_clearfilters: "Törölje az összes szűrőt"
   groups_title: Csoportok
   groups_headline: Csoportok és régiók
-  groups_text: "Minden termelő egyedi. Minden gazdaság valami mást tud nyújtani. Csoportjaink olyan termelők, átadópontok és forgalmazók kollektívái, akikben van valami közös, mint például a helyszín, a termelői piac vagy a filozófia. Ez könnyebbé teszi számodra az eligazodást. Fedezd fel csoportjainkat, és hagyd, hogy a válogatást elvégezzék helyetted."
+  groups_text: "Minden termelő egyedi. Minden gazdaság valami mást tud nyújtani. Csoportjaink olyan termelők, átvételi pontok és forgalmazók kollektívái, akikben van valami közös, mint például a helyszín, a termelői piac vagy a filozófia. Ez könnyebbé teszi számodra az eligazodást. Fedezd fel csoportjainkat, és hagyd, hogy a válogatást elvégezzék helyetted."
   groups_search: "Keresés név vagy kulcsszó"
   groups_no_groups: "Nem található csoport"
   groups_about: "Rólunk"
@@ -2441,7 +2441,7 @@ hu:
   sell_listing_price: "A termelői regisztráció az OFN-en ingyenes, és az is marad. A platformon történő értékesítés volumenétől függően azonban közösségi hozzájárulást kérünk, a szoftver üzemeltetéshez és IT support biztosításához . \nRészletek hamarosan. "
   sell_embed: "Ezenkívül beágyazhatunk egy OFN profilt saját, személyre szabott webhelyedbe, vagy személyre szabott helyi élelmiszerközösségi webhelyet készíthetünk számodra."
   sell_ask_services: "Kérdezz bátran egyéb szolgáltatásainkról. "
-  shops_title: Átadópontok
+  shops_title: Átvételi pontok
   shops_headline: Bevásárlás újragondolva.
   shops_text: Rendelési ciklusokban dolgozunk. A növénytermesztés, az állattenyésztés, az élelem előállítása ciklikus folyamat. Így nálunk az áruátadás is ciklusokban történik, pont ahogy a növények is hétről hétre, és eltérő ütemben fejlődnek. Ha lezárt rendelési ciklust találsz valahol, nézd meg, ki van-e írva a rendelési ciklus nyitásának időpontja. Ha nem, látogass vissza később az adott termelőhöz, közösséghez.
   shops_signup_title: Regisztrálj Átvételi Pontként
@@ -2504,7 +2504,7 @@ hu:
   remember_me: Emlékezz rám
   are_you_sure: "Biztos vagy ebben?"
   orders_open: "Megrendelések nyitva"
-  closing: "Záró"
+  closing: "Zárás"
   going_back_to_home_page: "Visszavisz a kezdőlapra"
   creating: Létrehozás
   updating: Frissítés
@@ -3238,7 +3238,7 @@ hu:
           hub_profile: Átvételi Pont profil
           hub_profile_cost: "KÖLTSÉG: MINDIG INGYENES"
           hub_profile_text1: >
-              Az emberek megtalálhatnak és kapcsolatba léphetnek veled az Open Food
+              A fogyasztók megtalálhatnak és kapcsolatba léphetnek veled az Open Food
               Network oldalán. Vállalkozásod látható lesz a térképen és kereshető
               lesz a listákban.
           hub_profile_text2: >
@@ -4086,7 +4086,7 @@ hu:
           issued_on: "Kiadott"
           tax_invoice: "Rendelés sorszáma"
           code: "Kód"
-          to: "Vevő: "
+          to: "Vevő"
           shipping: "Szállítás"
           order_number: "Rendelési sorszám"
           invoice_number: "A számla sorszáma"
@@ -4374,8 +4374,8 @@ hu:
           or_enter_new_card: "Vagy add meg az új kártya adatait:"
           remember_this_card: Emlékezzen erre a kártyára?
     date_picker:
-      flatpickr_date_format: "Év-Hó-Nap"
-      flatpickr_datetime_format: "Év-Hó-Nap H:i"
+      flatpickr_date_format: "Y-m-d"
+      flatpickr_datetime_format: "Y-m-d H:i"
       today: "Ma"
       now: "Most"
       close: "Bezárás"

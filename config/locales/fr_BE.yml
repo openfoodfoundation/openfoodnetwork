@@ -657,7 +657,7 @@ fr_BE:
       form_primary_details:
         primary_details: "Informations de base"
       form_users:
-        users: "gestionnaire"
+        users: "Gestionnaires"
       form_about:
         about: "A propos"
       form_images:
@@ -1136,7 +1136,7 @@ fr_BE:
           add_new_rule: '+ Ajouter une nouvelle règle'
           add_new_tag: '+ Ajouter un nouveau tag'
         users:
-          legend: "gestionnaire"
+          legend: "Gestionnaires"
           email_confirmation_notice_html: "L'email de confirmation n'a pas encore été validé. Il a été envoyé à %{email}."
           resend: Renvoyer
           owner: 'Manager principal'
@@ -1419,12 +1419,12 @@ fr_BE:
           inventory_settings: "Catalogue comptoir"
           tag_rules: "Règles de tag"
           shop_preferences: "Préférences comptoir"
-          users: "gestionnaire"
+          users: "Gestionnaires"
           vouchers: Bons d'achat
           white_label: "Marque blanche"
         enterprise_group:
           primary_details: "Informations de base"
-          users: "gestionnaire"
+          users: "Gestionnaires"
           about: "A propos"
           images: "Images"
           contact: "Contact"
@@ -2719,7 +2719,7 @@ fr_BE:
   report_columns: Colonnes
   report_enterprises: "Entreprises"
   report_enterprise_fee: "Nom des commissions "
-  report_users: "gestionnaire"
+  report_users: "Gestionnaires"
   report_tax_rates: TVA par taux
   report_tax_types: TVA par type de produit/service
   report_filters: Filtres
@@ -2910,7 +2910,7 @@ fr_BE:
   no_change_to_save: "Pas de changement à sauvegarder"
   user_invited: "%{email}a été invité à gérer cette entreprise"
   add_manager: "Ajouter un utilisateur·trice existant"
-  users: "gestionnaire"
+  users: "Gestionnaires"
   about: "A propos"
   images: "Images"
   web: "Web"
