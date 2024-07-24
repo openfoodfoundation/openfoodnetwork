@@ -11,6 +11,7 @@ module Admin
     before_action :remove_protected_attrs, only: [:update]
     before_action :require_order_cycle_set_params, only: [:bulk_update]
     around_action :protect_invalid_destroy, only: :destroy
+    before_action :verify_datetime_change, only: :update
 
     def index
       respond_to do |format|
@@ -70,12 +71,7 @@ module Admin
         respond_to do |format|
           flash[:success] = t('.success') if params[:reloading] == '1'
           format.html { redirect_to_after_update_path }
-          format.json {
-            render json: { success: true, order_cycle: {
-              orders_open_at: @order_cycle.orders_open_at&.strftime('%Y-%m-%d %H:%M'),
-              orders_close_at: @order_cycle.orders_close_at&.strftime('%Y-%m-%d %H:%M')
-            } }
-          }
+          format.json { render json: { success: true } }
         end
       elsif request.format.html?
         render :checkout_options
@@ -240,7 +236,7 @@ module Admin
       else
         begin
           yield
-        rescue ActiveRecord::InvalidForeignKey
+        rescue ActiveRecord::InvalidForeignKey, ActiveRecord::DeleteRestrictionError
           redirect_to main_app.admin_order_cycles_url
           flash[:error] = I18n.t('admin.order_cycles.destroy_errors.orders_present')
         end
@@ -298,6 +294,24 @@ module Admin
       params.require(:order_cycle_set).permit(
         collection_attributes: [:id] + PermittedAttributes::OrderCycle.basic_attributes
       ).to_h.with_indifferent_access
+    end
+
+    # Check that order cycle datetime values changed if it has existing orders
+    def verify_datetime_change
+      return unless params[:order_cycle][:confirm]
+      return unless @order_cycle.orders.exists?
+      return if same_dates(@order_cycle.orders_open_at&.to_s,
+                           order_cycle_params[:orders_open_at]) &&
+                same_dates(@order_cycle.orders_close_at&.to_s, order_cycle_params[:orders_close_at])
+
+      render json: { trigger_action: params[:order_cycle][:trigger_action] }
+    end
+
+    def same_dates(string1, string2)
+      false unless string1 && string2
+
+      DateTime.parse(string1).strftime('%Y-%m-%d %H:%M') ==
+        DateTime.parse(string2).strftime('%Y-%m-%d %H:%M')
     end
   end
 end

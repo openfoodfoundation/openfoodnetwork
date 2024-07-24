@@ -22,6 +22,8 @@ angular.module('admin.orderCycles').controller "AdminSimpleEditOrderCycleCtrl", 
 
   $scope.submit = ($event, destination) ->
     $event.preventDefault()
+    $scope.order_cycle?.trigger_action = $($event.target).data('trigger-action');
+    $scope.order_cycle?.confirm = $($event.target).data('confirm');
     StatusMessage.display 'progress', t('js.saving')
     OrderCycle.mirrorIncomingToOutgoingProducts()
     OrderCycle.update(destination, $scope.order_cycle_form) if OrderCycle.confirmNoDistributors()
