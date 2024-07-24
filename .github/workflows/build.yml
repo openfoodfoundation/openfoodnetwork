@@ -476,3 +476,13 @@ jobs:
 
       - name: Run jest tests
         run: yarn jest
+
+merge:
+ runs-on: ubuntu-latest
+ needs: upload
+ steps:
+   - name: Merge Artifacts
+     uses: actions/upload-artifact/merge@v4
+     with:
+       name: all-my-files
+       pattern: my-artifact-*
