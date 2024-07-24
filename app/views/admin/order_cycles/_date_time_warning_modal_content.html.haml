@@ -1,0 +1,14 @@
+.modal-body.flex-column-gap-1
+  %h6
+    = t('admin.order_cycles.edit.linked_schedule_warning_modal.title')
+  %div{ style: 'font-size: 1rem;' }
+    = t('admin.order_cycles.edit.linked_schedule_warning_modal.content')
+%p.modal-actions.justify-end.gap-1
+  %button.button.secondary{ "ng-click": "submit($event, null)", type: "button", style: "display: none;", data: { action: 'click->modal#close', 'trigger-action': 'save' } }
+    = t('admin.order_cycles.edit.linked_schedule_warning_modal.proceed')
+  %button.button.secondary{ "ng-click": "submit($event, '#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", type: "button", style: "display: none;", data: {  action: 'click->modal#close', 'trigger-action': 'saveAndNext' } }
+    = t('admin.order_cycles.edit.linked_schedule_warning_modal.proceed')
+  %button.button.secondary{ "ng-click": "submit($event, '#{main_app.admin_order_cycles_path}')", type: "button", style: "display: none;", data: { action: 'click->modal#close', 'trigger-action': 'saveAndBack' } }
+    = t('admin.order_cycles.edit.linked_schedule_warning_modal.proceed')
+  %button.button.primary{ type: "button", 'data-action': 'click->modal#close' }
+    = t('admin.order_cycles.edit.linked_schedule_warning_modal.cancel')

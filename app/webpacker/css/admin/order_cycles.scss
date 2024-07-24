@@ -63,24 +63,6 @@ form.order_cycle {
   }
 }
 
-#linked-schedule-warning-modal {
-  .reveal-modal {
-    width: 28rem;
-    
-    .content {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      
-      .modal-body {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .modal-actions {
-        gap: 1rem;
-      }
-    }
-  }
+#linked-order-warning-modal .reveal-modal{
+  width: 28rem;
 }
