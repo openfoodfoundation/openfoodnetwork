@@ -10,4 +10,8 @@ module MailerHelper
       link_to ofn, "https://www.openfoodnetwork.org"
     end
   end
+
+  def order_reply_email(order)
+    order.distributor.email_address.presence || order.distributor.contact.email
+  end
 end
