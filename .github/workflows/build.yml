@@ -76,6 +76,14 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
+      - name: Save SimpleCov file
+        uses: actions/upload-artifact@v3
+        with:
+          name: simple-cov-output-files
+          path: coverage/*.*
+          retention-days: 7
+          if-no-files-found: ignore
+
   test-the-rest:
     runs-on: ubuntu-18.04
     services:

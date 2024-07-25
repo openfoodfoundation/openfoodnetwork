@@ -2,6 +2,10 @@
 
 # This file defines configurations that are universal to all spec types (feature, system, etc)
 
+require 'simplecov'
+SimpleCov.start 'rails'
+Rails.application.eager_load!
+
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'simplecov' if ENV["COVERAGE"]
