@@ -548,8 +548,9 @@ RSpec.describe '
           expect(page).to have_content "($500,150.00 / kg)" # unit price
           expect(page).to have_content "3 1g $416.79 $1,250.37 20.0% $1,500.45"
           # Enterprise fee
-          expect(page).to have_content "#{enterprise_fee.name} fee by $104.35 15.0% $120.00"
-          expect(page).to have_content "coordinator #{user1.enterprises.first.name}"
+          expect(page).to have_content(
+            "#{enterprise_fee.name} fee by coordinator $104.35 15.0% $120.00 #{distributor.name}"
+          )
           # Shipping
           expect(page).to have_content "Delivery (#{shipping_method_name}) $91.41 10.0% $100.55"
           # Tax totals
@@ -651,8 +652,9 @@ RSpec.describe '
           expect(page).to have_content "($500,150.00 / kg)" # unit price
           expect(page).to have_content "3 1g $500.15 $1,500.45 20.0% $1,800.54"
           # Enterprise fee
-          expect(page).to have_content "#{enterprise_fee.name} fee by $120.00 15.0% $138.00"
-          expect(page).to have_content "coordinator #{user1.enterprises.first.name}"
+          expect(page).to have_content(
+            "#{enterprise_fee.name} fee by coordinator $120.00 15.0% $138.00 #{distributor.name}"
+          )
           # Shipping
           expect(page).to have_content "Delivery (#{shipping_method_name}) $100.55 10.0% $110.61"
           # Tax totals
@@ -705,7 +707,11 @@ def convert_pdf_to_page
   temp_pdf = Tempfile.new('pdf')
   temp_pdf << page.source.force_encoding('UTF-8')
   reader = PDF::Reader.new(temp_pdf)
-  pdf_text = reader.pages.map(&:text)
+
+  # Call 'page.runs.map(&:text)' instead of 'page.text' because the latter doesn't return all text,
+  # see https://github.com/yob/pdf-reader/issues/518
+  pdf_text = reader.pages.map { |page| page.runs.map(&:text).join(' ') }
+
   temp_pdf.close
   page.driver.response.instance_variable_set('@body', pdf_text)
 end
