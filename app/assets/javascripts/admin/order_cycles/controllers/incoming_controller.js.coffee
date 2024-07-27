@@ -1,8 +1,9 @@
-angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($scope, $rootScope, $controller, $location, Enterprise, OrderCycle, ExchangeProduct, ocInstance) ->
+angular.module('admin.orderCycles').controller 'AdminOrderCycleIncomingCtrl', ($scope, $rootScope, $controller, $location, Enterprise, EnterpriseFee, OrderCycle, ExchangeProduct, ocInstance) ->
   $controller('AdminOrderCycleExchangesCtrl', {$scope: $scope, ocInstance: ocInstance, $location: $location})
 
   $scope.view = 'incoming'
 
+  $scope.enterprise_fees = EnterpriseFee.index(order_cycle_id: $scope.order_cycle_id, per_item: true)
   $scope.exchangeTotalVariants = (exchange) ->
     return unless $scope.enterprises? && $scope.enterprises[exchange.enterprise_id]?
 
