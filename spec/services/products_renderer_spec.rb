@@ -165,7 +165,7 @@ RSpec.describe ProductsRenderer do
           search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
           products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
 
-          products = products_renderer.send(:products)
+          products = products_renderer.__send__(:products)
           expect(products).to eq([product_apples, product_cherries])
         end
       end
