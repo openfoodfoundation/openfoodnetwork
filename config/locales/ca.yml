@@ -755,7 +755,7 @@ ca:
         search: Cerca
       sort:
         pagination:
-          total_html: "<strong>%{total} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
+          total_html: "<strong>%{count} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
           per_page:
             show: Mostra
             per_page: "%{num} per pàgina"

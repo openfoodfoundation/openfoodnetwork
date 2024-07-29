@@ -764,7 +764,7 @@ mr:
         search: शोधा
       sort:
         pagination:
-          total_html: "तुमच्या शोध निकषांसाठी <strong>%{total} उत्पादने</strong> आढळली. %{from} ते %{to} दाखवत आहे."
+          total_html: "तुमच्या शोध निकषांसाठी <strong>%{count} उत्पादने</strong> आढळली. %{from} ते %{to} दाखवत आहे."
           per_page:
             show: दाखवा
             per_page: "%{num} प्रति पृष्ठ"

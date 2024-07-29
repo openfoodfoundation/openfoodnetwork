@@ -798,7 +798,7 @@ hu:
         search: Keresés
       sort:
         pagination:
-          total_html: "<strong>%{total} terméket </strong> találtunk a keresési feltételek alapján. %{from}-től %{to}-ig mutat."
+          total_html: "<strong>%{count} terméket </strong> találtunk a keresési feltételek alapján. %{from}-től %{to}-ig mutat."
           per_page:
             show: Mutasd
             per_page: "%{num}per oldal"

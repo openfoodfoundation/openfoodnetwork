@@ -769,7 +769,7 @@ hi:
         search: सर्च
       sort:
         pagination:
-          total_html: "<strong>%{total} उत्पाद</strong> आपके सर्च क्राइटेरिया के लिए मिले। %{from} से %{to} दिखा रहा है।"
+          total_html: "<strong>%{count} उत्पाद</strong> आपके सर्च क्राइटेरिया के लिए मिले। %{from} से %{to} दिखा रहा है।"
           per_page:
             show: दिखाएं
             per_page: "%{num} प्रति पेज"
