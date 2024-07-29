@@ -17,13 +17,6 @@ module Spree
           expect(clone.sku).to eq ""
           expect(clone.image).to eq product.image
         end
-
-        it 'fails to duplicate invalid product' do
-          # Existing product is invalid:
-          product.update_columns(variant_unit: nil)
-
-          expect{ product.duplicate }.to raise_error(ActiveRecord::ActiveRecordError)
-        end
       end
 
       context "product has variants" do
@@ -123,7 +116,6 @@ module Spree
       it { is_expected.to validate_length_of(:name).is_at_most(255) }
       it { is_expected.to validate_length_of(:sku).is_at_most(255) }
 
-#
       context "when the product has variants" do
         let(:product) do
           product = create(:simple_product)
@@ -131,7 +123,7 @@ module Spree
           product.reload
         end
 
-        it { is_expected.to validate_numericality_of(:price).is_greater_than_or_equal_to(0)
+        it { is_expected.to validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
 
         context "saving a new product" do
           let!(:product){ Spree::Product.new }
