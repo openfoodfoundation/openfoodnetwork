@@ -226,6 +226,7 @@
 
     .pagination-description {
       flex-grow: 1; // Grow to fill space
+      margin-right: 1em; // TODO: cleanup and use flex gap
     }
 
     .with-dropdown {
