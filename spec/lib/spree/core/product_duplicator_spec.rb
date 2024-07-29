@@ -5,58 +5,28 @@ require 'spec_helper'
 RSpec.describe Spree::Core::ProductDuplicator do
   describe "unit" do
     let(:product) do
-      double 'Product',
-             name: "foo",
-             product_properties: [property],
-             variants: [variant],
-             image:,
-             variant_unit: 'item'
+      instance_double(
+        Spree::Product,
+        name: "foo",
+        product_properties: [property],
+        variants: [variant],
+        image:,
+        variant_unit: 'item'
+      )
     end
-
-    let(:new_product) do
-      double 'New Product',
-             save!: true
-    end
-
-    let(:property) do
-      double 'Property'
-    end
-
-    let(:new_property) do
-      double 'New Property'
-    end
-
+    let(:new_product) { instance_double(Spree::Product, save!: true) }
+    let(:property) { instance_double(Spree::ProductProperty) }
+    let(:new_property) { instance_double(Spree::ProductProperty) }
     let(:variant) do
-      double 'Variant 1',
-             sku: "67890",
-             price: 19.50,
-             currency: "AUD",
-             images: [image_variant]
+      instance_double(
+        Spree::Variant, sku: "67890", price: 19.50, currency: "AUD", images: [image_variant]
+      )
     end
-
-    let(:new_variant) do
-      double 'New Variant 1',
-             sku: "67890"
-    end
-
-    let(:image) do
-      double 'Image',
-             attachment: double('Attachment')
-    end
-
-    let(:new_image) do
-      double 'New Image'
-    end
-
-    let(:image_variant) do
-      double 'Image Variant',
-             attachment: double('Attachment')
-    end
-
-    let(:new_image_variant) do
-      double 'New Image Variant',
-             attachment: double('Attachment')
-    end
+    let(:new_variant) { instance_double(Spree::Variant, sku: "67890") }
+    let(:image) { instance_double(Spree::Image, attachment: double('Attachment')) }
+    let(:new_image) { instance_double(Spree::Image) }
+    let(:image_variant) { instance_double(Spree::Image, attachment: double('Attachment')) }
+    let(:new_image_variant) { instance_double(Spree::Image, attachment: double('Attachment')) }
 
     before do
       expect(product).to receive(:dup).and_return(new_product)
