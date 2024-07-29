@@ -754,7 +754,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
     end
 
     it "assigns data to instance variables" do
-      controller.send(:load_form_data)
+      controller.__send__(:load_form_data)
       expect(assigns(:customers)).to include customer1, customer2
       expect(assigns(:schedules)).to eq [schedule]
       expect(assigns(:order_cycles)).to eq [order_cycle]
@@ -769,7 +769,7 @@ RSpec.describe Admin::SubscriptionsController, type: :controller do
       }
 
       it "only loads Stripe and Cash payment methods" do
-        controller.send(:load_form_data)
+        controller.__send__(:load_form_data)
         expect(assigns(:payment_methods)).to include payment_method, stripe
         expect(assigns(:payment_methods)).not_to include paypal
       end

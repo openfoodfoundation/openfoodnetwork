@@ -116,21 +116,21 @@ RSpec.describe CartService do
       variant_data = { variant_id: variant.id, quantity: 2 }
 
       expect(cart_service).to receive(:line_item_for_variant).with(variant).and_return(nil)
-      expect(cart_service.send(:varies_from_cart, variant_data, variant )).to be true
+      expect(cart_service.__send__(:varies_from_cart, variant_data, variant )).to be true
     end
 
     it "returns true when item is not in cart and a max_quantity is specified" do
       variant_data = { variant_id: variant.id, quantity: 0, max_quantity: 2 }
 
       expect(cart_service).to receive(:line_item_for_variant).with(variant).and_return(nil)
-      expect(cart_service.send(:varies_from_cart, variant_data, variant)).to be true
+      expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be true
     end
 
     it "returns false when item is not in cart and no quantity or max_quantity are specified" do
       variant_data = { variant_id: variant.id, quantity: 0 }
 
       expect(cart_service).to receive(:line_item_for_variant).with(variant).and_return(nil)
-      expect(cart_service.send(:varies_from_cart, variant_data, variant)).to be false
+      expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be false
     end
 
     it "returns true when quantity varies" do
@@ -138,7 +138,7 @@ RSpec.describe CartService do
       line_item = double(:line_item, quantity: 1, max_quantity: nil)
       allow(cart_service).to receive(:line_item_for_variant) { line_item }
 
-      expect(cart_service.send(:varies_from_cart, variant_data, variant)).to be true
+      expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be true
     end
 
     it "returns true when max_quantity varies" do
@@ -146,7 +146,7 @@ RSpec.describe CartService do
       line_item = double(:line_item, quantity: 1, max_quantity: nil)
       allow(cart_service).to receive(:line_item_for_variant) { line_item }
 
-      expect(cart_service.send(:varies_from_cart, variant_data, variant)).to be true
+      expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be true
     end
 
     it "returns false when max_quantity varies only in nil vs 0" do
@@ -154,7 +154,7 @@ RSpec.describe CartService do
       line_item = double(:line_item, quantity: 1, max_quantity: nil)
       allow(cart_service).to receive(:line_item_for_variant) { line_item }
 
-      expect(cart_service.send(:varies_from_cart, variant_data, variant)).to be false
+      expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be false
     end
 
     it "returns false when both are specified and neither varies" do
@@ -162,7 +162,7 @@ RSpec.describe CartService do
       line_item = double(:line_item, quantity: 1, max_quantity: 2)
       allow(cart_service).to receive(:line_item_for_variant) { line_item }
 
-      expect(cart_service.send(:varies_from_cart, variant_data, variant)).to be false
+      expect(cart_service.__send__(:varies_from_cart, variant_data, variant)).to be false
     end
   end
 
@@ -183,7 +183,7 @@ RSpec.describe CartService do
       expect(order).to receive_message_chain(:contents, :update_or_create).
         with(variant, { quantity:, max_quantity: nil })
 
-      cart_service.send(:attempt_cart_add, variant, quantity)
+      cart_service.__send__(:attempt_cart_add, variant, quantity)
     end
 
     it "filters quantities through #final_quantities" do
@@ -196,7 +196,7 @@ RSpec.describe CartService do
       expect(order).to receive_message_chain(:contents, :update_or_create).
         with(variant, { quantity: 5, max_quantity: 5 })
 
-      cart_service.send(:attempt_cart_add, variant, quantity, quantity)
+      cart_service.__send__(:attempt_cart_add, variant, quantity, quantity)
     end
 
     it "removes variants which have become out of stock" do
@@ -209,7 +209,7 @@ RSpec.describe CartService do
       expect(cart_service).to receive(:cart_add).with(variant, 123, 123).and_call_original
       expect(order).to receive_message_chain(:contents, :remove).with(variant)
 
-      cart_service.send(:attempt_cart_add, variant, quantity, quantity)
+      cart_service.__send__(:attempt_cart_add, variant, quantity, quantity)
     end
   end
 
@@ -223,24 +223,24 @@ RSpec.describe CartService do
 
       context "getting quantity and max_quantity" do
         it "returns full amount when available" do
-          expect(cart_service.send(:final_quantities, v, 5, nil)).
+          expect(cart_service.__send__(:final_quantities, v, 5, nil)).
             to eq({ quantity: 5, max_quantity: nil })
         end
 
         it "returns a limited amount when not entirely available" do
-          expect(cart_service.send(:final_quantities, v, 15, nil)).
+          expect(cart_service.__send__(:final_quantities, v, 15, nil)).
             to eq({ quantity: 10, max_quantity: nil })
         end
       end
 
       context "when max_quantity is provided" do
         it "returns full amount when available" do
-          expect(cart_service.send(:final_quantities, v, 5, 6)).
+          expect(cart_service.__send__(:final_quantities, v, 5, 6)).
             to eq({ quantity: 5, max_quantity: 6 })
         end
 
         it "also returns the full amount when not entirely available" do
-          expect(cart_service.send(:final_quantities, v, 15, 16)).
+          expect(cart_service.__send__(:final_quantities, v, 15, 16)).
             to eq({ quantity: 10, max_quantity: 16 })
         end
       end
@@ -252,12 +252,12 @@ RSpec.describe CartService do
       end
 
       it "does not limit quantity" do
-        expect(cart_service.send(:final_quantities, v, 15, nil)).
+        expect(cart_service.__send__(:final_quantities, v, 15, nil)).
           to eq({ quantity: 15, max_quantity: nil })
       end
 
       it "does not limit max_quantity" do
-        expect(cart_service.send(:final_quantities, v, 15, 16)).
+        expect(cart_service.__send__(:final_quantities, v, 15, 16)).
           to eq({ quantity: 15, max_quantity: 16 })
       end
     end
@@ -268,13 +268,13 @@ RSpec.describe CartService do
       let(:variant) { double(:variant) }
 
       it "returns false and errors when order cycle is not provided" do
-        expect(cart_service.send(:check_order_cycle_provided)).to be false
+        expect(cart_service.__send__(:check_order_cycle_provided)).to be false
         expect(cart_service.errors.to_a).to eq(["Please choose an order cycle for this order."])
       end
 
       it "returns true when order cycle is provided" do
         cart_service.instance_variable_set :@order_cycle, double(:order_cycle)
-        expect(cart_service.send(:check_order_cycle_provided)).to be true
+        expect(cart_service.__send__(:check_order_cycle_provided)).to be true
       end
     end
 
@@ -293,14 +293,16 @@ RSpec.describe CartService do
         expect(order_cycle_distributed_variants).to receive(:available_variants)
           .and_return([variant])
 
-        expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be true
+        expect(cart_service.__send__(:check_variant_available_under_distribution,
+                                     variant)).to be true
         expect(cart_service.errors).to be_empty
       end
 
       it "delegates to OrderCycles::DistributedVariantsService, returns false - error otherwise" do
         expect(order_cycle_distributed_variants).to receive(:available_variants).and_return([])
 
-        expect(cart_service.send(:check_variant_available_under_distribution, variant)).to be false
+        expect(cart_service.__send__(:check_variant_available_under_distribution,
+                                     variant)).to be false
         expect(cart_service.errors.to_a)
           .to eq(["That product is not available from the chosen distributor or order cycle."])
       end

@@ -76,7 +76,7 @@ module OpenFoodNetwork
 
           it "does not match rules without customer tags" do
             rule = double(:rule, preferred_customer_tags: "")
-            expect(applicator.send(:customer_tags_match?, rule)).to be false
+            expect(applicator.__send__(:customer_tags_match?, rule)).to be false
           end
         end
 
@@ -89,16 +89,16 @@ module OpenFoodNetwork
 
           it "does not match rules without customer tags" do
             rule = double(:rule, preferred_customer_tags: "")
-            expect(applicator.send(:customer_tags_match?, rule)).to be false
+            expect(applicator.__send__(:customer_tags_match?, rule)).to be false
           end
         end
 
         context "when customer_tags are present" do
           let!(:customer_tags) { ["tag1"] }
 
-          let(:rules) { applicator.send(:rules) }
-          let(:customer_rules) { applicator.send(:customer_rules) }
-          let(:default_rules) { applicator.send(:default_rules) }
+          let(:rules) { applicator.__send__(:rules) }
+          let(:customer_rules) { applicator.__send__(:customer_rules) }
+          let(:default_rules) { applicator.__send__(:default_rules) }
 
           it "stores enterprise, rule_class and customer_tags as instance variables" do
             expect(applicator.enterprise).to eq enterprise
@@ -230,7 +230,7 @@ module OpenFoodNetwork
         before{ allow(customer_rule).to receive(:tags_match?).with(dummy) { true } }
 
         it "returns the value of customer_rule.reject_matched?" do
-          expect(applicator.send(:reject?, dummy)).to eq "customer_rule.reject_matched?"
+          expect(applicator.__send__(:reject?, dummy)).to eq "customer_rule.reject_matched?"
         end
       end
 
@@ -241,7 +241,7 @@ module OpenFoodNetwork
           before{ allow(default_rule).to receive(:tags_match?) { true } }
 
           it "returns the value of the default_rule.reject_matched?" do
-            expect(applicator.send(:reject?, dummy)).to eq "default_rule.reject_matched?"
+            expect(applicator.__send__(:reject?, dummy)).to eq "default_rule.reject_matched?"
           end
         end
 
@@ -249,7 +249,7 @@ module OpenFoodNetwork
           before{ allow(default_rule).to receive(:tags_match?) { false } }
 
           it "returns false" do
-            expect(applicator.send(:reject?, dummy)).to be false
+            expect(applicator.__send__(:reject?, dummy)).to be false
           end
         end
       end

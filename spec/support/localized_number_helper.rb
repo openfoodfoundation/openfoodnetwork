@@ -11,11 +11,11 @@ shared_examples "a model using the LocalizedNumber module" do |attributes|
     it "uses the LocalizedNumber.parse method when setting #{attribute}" do
       allow(Spree::LocalizedNumber).to receive(:parse).and_return(nil)
       expect(Spree::LocalizedNumber).to receive(:parse).with('1.599,99')
-      subject.send(setter, '1.599,99')
+      subject.__send__(setter, '1.599,99')
     end
 
     it "creates an error if the input to #{attribute} is invalid" do
-      subject.send(setter, '1.59,99')
+      subject.__send__(setter, '1.59,99')
       subject.valid?
       expect(subject.errors[attribute]).to include('has an invalid format. Please enter a number.')
     end
@@ -36,9 +36,9 @@ shared_examples "a Spree Calculator model using the LocalizedNumber module" do |
     end
 
     it "does not modify the attribute value when it is invalid" do
-      subject.send(setter, 'invalid')
+      subject.__send__(setter, 'invalid')
       subject.valid?
-      expect(subject.send(attribute)).to eq 'invalid'
+      expect(subject.__send__(attribute)).to eq 'invalid'
     end
   end
 end

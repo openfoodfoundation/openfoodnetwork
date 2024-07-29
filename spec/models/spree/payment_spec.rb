@@ -868,19 +868,19 @@ RSpec.describe Spree::Payment do
         let(:payment) { build_stubbed(:payment) }
 
         it "returns the parameter amount when given" do
-          expect(payment.send(:calculate_refund_amount, 123)).to be === 123.0
+          expect(payment.__send__(:calculate_refund_amount, 123)).to be === 123.0
         end
 
         it "refunds up to the value of the payment when the outstanding balance is larger" do
           allow(payment).to receive(:credit_allowed) { 123 }
           allow(payment).to receive(:order) { double(:order, outstanding_balance: 1000) }
-          expect(payment.send(:calculate_refund_amount)).to eq(123)
+          expect(payment.__send__(:calculate_refund_amount)).to eq(123)
         end
 
         it "refunds up to the outstanding balance of the order when the payment is larger" do
           allow(payment).to receive(:credit_allowed) { 1000 }
           allow(payment).to receive(:order) { double(:order, outstanding_balance: 123) }
-          expect(payment.send(:calculate_refund_amount)).to eq(123)
+          expect(payment.__send__(:calculate_refund_amount)).to eq(123)
         end
       end
 

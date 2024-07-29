@@ -16,8 +16,8 @@ module OpenFoodNetwork
         before { allow(user).to receive(:admin?) { true } }
 
         it "returns all enterprises" do
-          expect(permissions.send(:managed_and_related_enterprises_granting,
-                                  :some_permission)).to match_array [e1, e2]
+          expect(permissions.__send__(:managed_and_related_enterprises_granting,
+                                      :some_permission)).to match_array [e1, e2]
         end
       end
 
@@ -30,8 +30,8 @@ module OpenFoodNetwork
           expect(permissions).to receive(:related_enterprises_granting).with(:some_permission) {
                                    Enterprise.where(id: e3).select(:id)
                                  }
-          expect(permissions.send(:managed_and_related_enterprises_granting,
-                                  :some_permission)).to match_array [e1, e3]
+          expect(permissions.__send__(:managed_and_related_enterprises_granting,
+                                      :some_permission)).to match_array [e1, e3]
         end
       end
     end
@@ -41,8 +41,8 @@ module OpenFoodNetwork
         before { allow(user).to receive(:admin?) { true } }
 
         it "returns all enterprises" do
-          expect(permissions.send(:managed_and_related_enterprises_granting,
-                                  :some_permission)).to match_array [e1, e2]
+          expect(permissions.__send__(:managed_and_related_enterprises_granting,
+                                      :some_permission)).to match_array [e1, e2]
         end
       end
 
@@ -59,8 +59,8 @@ module OpenFoodNetwork
           expect(permissions).to receive(:related_enterprises_granted).with(:some_permission) {
                                    Enterprise.where(id: e4).select(:id)
                                  }
-          expect(permissions.send(:managed_and_related_enterprises_with,
-                                  :some_permission)).to match_array [e1, e3, e4]
+          expect(permissions.__send__(:managed_and_related_enterprises_with,
+                                      :some_permission)).to match_array [e1, e3, e4]
         end
       end
     end
@@ -296,12 +296,12 @@ module OpenFoodNetwork
 
       it "returns the enterprises" do
         allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e2) }
-        expect(permissions.send(:related_enterprises_granting, permission)).to eq([e1])
+        expect(permissions.__send__(:related_enterprises_granting, permission)).to eq([e1])
       end
 
       it "returns an empty array when there are none" do
         allow(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e1) }
-        expect(permissions.send(:related_enterprises_granting, permission)).to eq([])
+        expect(permissions.__send__(:related_enterprises_granting, permission)).to eq([])
       end
     end
 
@@ -316,13 +316,15 @@ module OpenFoodNetwork
 
       it "returns managed enterprises" do
         expect(permissions).to receive(:managed_enterprises) { Enterprise.where(id: e1) }
-        expect(permissions.send(:managed_and_related_enterprises_granting, permission)).to eq([e1])
+        expect(permissions.__send__(:managed_and_related_enterprises_granting,
+                                    permission)).to eq([e1])
       end
 
       it "returns permitted enterprises" do
         expect(permissions).to receive(:related_enterprises_granting).with(permission).
           and_return(Enterprise.where(id: e2).select(:id))
-        expect(permissions.send(:managed_and_related_enterprises_granting, permission)).to eq([e2])
+        expect(permissions.__send__(:managed_and_related_enterprises_granting,
+                                    permission)).to eq([e2])
       end
     end
 

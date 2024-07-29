@@ -389,7 +389,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
 
     context "when no order id is given in params" do
       it "returns the current_order" do
-        expect(controller.send(:order_to_update)).to eq current_order
+        expect(controller.__send__(:order_to_update)).to eq current_order
       end
     end
 
@@ -402,7 +402,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
         let!(:order) { create(:order) }
 
         it "returns nil" do
-          expect(controller.send(:order_to_update)).to eq nil
+          expect(controller.__send__(:order_to_update)).to eq nil
         end
       end
 
@@ -413,7 +413,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
           before { allow(controller).to receive(:can?).with(:update, order) { false } }
 
           it "returns nil" do
-            expect(controller.send(:order_to_update)).to eq nil
+            expect(controller.__send__(:order_to_update)).to eq nil
           end
         end
 
@@ -422,7 +422,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
 
           context "and the order is not editable" do
             it "returns nil" do
-              expect(controller.send(:order_to_update)).to eq nil
+              expect(controller.__send__(:order_to_update)).to eq nil
             end
           end
 
@@ -441,7 +441,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
             end
 
             it "returns the order" do
-              expect(controller.send(:order_to_update)).to eq order
+              expect(controller.__send__(:order_to_update)).to eq order
             end
           end
         end

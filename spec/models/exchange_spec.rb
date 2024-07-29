@@ -10,7 +10,7 @@ RSpec.describe Exchange do
   [:order_cycle, :sender, :receiver].each do |attr|
     it "should not be valid without #{attr}" do
       e = build(:exchange)
-      e.send("#{attr}=", nil)
+      e.__send__("#{attr}=", nil)
       expect(e).not_to be_valid
     end
   end

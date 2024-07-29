@@ -45,7 +45,7 @@ module VariantUnits
         allow(v).to receive(:product) { p }
         subject = OptionValueNamer.new v
 
-        expect(subject.send(:value_scaled?)).to be true
+        expect(subject.__send__(:value_scaled?)).to be true
       end
 
       it "returns false otherwise" do
@@ -54,7 +54,7 @@ module VariantUnits
         allow(v).to receive(:product) { p }
         subject = OptionValueNamer.new v
 
-        expect(subject.send(:value_scaled?)).to be false
+        expect(subject.__send__(:value_scaled?)).to be false
       end
     end
 
@@ -72,7 +72,7 @@ module VariantUnits
         allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 100 }
 
-        expect(subject.send(:option_value_value_unit)).to eq [100, 'g']
+        expect(subject.__send__(:option_value_value_unit)).to eq [100, 'g']
       end
 
       it "generates values when unit value is non-integer" do
@@ -81,7 +81,7 @@ module VariantUnits
         allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 123.45 }
 
-        expect(subject.send(:option_value_value_unit)).to eq [123.45, 'g']
+        expect(subject.__send__(:option_value_value_unit)).to eq [123.45, 'g']
       end
 
       it "returns a value of 1 when unit value equals the scale" do
@@ -90,7 +90,7 @@ module VariantUnits
         allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 1000.0 }
 
-        expect(subject.send(:option_value_value_unit)).to eq [1, 'kg']
+        expect(subject.__send__(:option_value_value_unit)).to eq [1, 'kg']
       end
 
       it "returns only values that are in the same measurement systems" do
@@ -100,7 +100,7 @@ module VariantUnits
         allow(v).to receive(:unit_value) { 500 }
         # 500g would convert to > 1 pound, but we don't want the namer to use
         # pounds since it's in a different measurement system.
-        expect(subject.send(:option_value_value_unit)).to eq [500, 'g']
+        expect(subject.__send__(:option_value_value_unit)).to eq [500, 'g']
       end
 
       it "generates values for all weight scales" do
@@ -110,7 +110,7 @@ module VariantUnits
           allow(v).to receive(:product) { p }
           allow(p).to receive(:persisted?) { true }
           allow(v).to receive(:unit_value) { 10.0 * scale }
-          expect(subject.send(:option_value_value_unit)).to eq [10, unit]
+          expect(subject.__send__(:option_value_value_unit)).to eq [10, unit]
         end
       end
 
@@ -120,7 +120,7 @@ module VariantUnits
           allow(v).to receive(:product) { p }
           allow(p).to receive(:persisted?) { true }
           allow(v).to receive(:unit_value) { 3 * scale }
-          expect(subject.send(:option_value_value_unit)).to eq [3, unit]
+          expect(subject.__send__(:option_value_value_unit)).to eq [3, unit]
         end
       end
 
@@ -129,7 +129,7 @@ module VariantUnits
         allow(v).to receive(:product) { p }
         allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 0.0001 }
-        expect(subject.send(:option_value_value_unit)).to eq [0.1, 'mL']
+        expect(subject.__send__(:option_value_value_unit)).to eq [0.1, 'mL']
       end
 
       it "generates values for item units" do
@@ -139,7 +139,7 @@ module VariantUnits
           allow(v).to receive(:product) { p }
           allow(p).to receive(:persisted?) { true }
           allow(v).to receive(:unit_value) { 100 }
-          expect(subject.send(:option_value_value_unit)).to eq [100, unit.pluralize]
+          expect(subject.__send__(:option_value_value_unit)).to eq [100, unit.pluralize]
         end
       end
 
@@ -149,7 +149,7 @@ module VariantUnits
         allow(v).to receive(:product) { p }
         allow(p).to receive(:persisted?) { true }
         allow(v).to receive(:unit_value) { 1 }
-        expect(subject.send(:option_value_value_unit)).to eq [1, 'packet']
+        expect(subject.__send__(:option_value_value_unit)).to eq [1, 'packet']
       end
 
       it "returns [nil, nil] when unit value is not set" do
@@ -157,7 +157,7 @@ module VariantUnits
                              variant_unit_name: 'foo')
         allow(v).to receive(:product) { p }
         allow(v).to receive(:unit_value) { nil }
-        expect(subject.send(:option_value_value_unit)).to eq [nil, nil]
+        expect(subject.__send__(:option_value_value_unit)).to eq [nil, nil]
       end
 
       it "truncates value to 2 decimals maximum" do
@@ -167,7 +167,7 @@ module VariantUnits
         allow(p).to receive(:persisted?) { true }
         # The unit_value is stored rounded to 2 decimals
         allow(v).to receive(:unit_value) { (12.5 * oz_scale).round(2) }
-        expect(subject.send(:option_value_value_unit)).to eq [BigDecimal(12.5, 6), 'oz']
+        expect(subject.__send__(:option_value_value_unit)).to eq [BigDecimal(12.5, 6), 'oz']
       end
     end
   end
