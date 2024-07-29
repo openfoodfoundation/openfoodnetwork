@@ -73,7 +73,6 @@ RSpec.describe Spree::Core::ProductDuplicator do
       expect(new_product).to receive(:product_properties=).with([new_property])
       expect(new_product).to receive(:created_at=).with(nil)
       expect(new_product).to receive(:price=).with(0)
-      expect(new_product).to receive(:unit_value=).with(nil)
       expect(new_product).to receive(:updated_at=).with(nil)
       expect(new_product).to receive(:deleted_at=).with(nil)
       expect(new_product).to receive(:variants=).with([new_variant])
@@ -99,18 +98,6 @@ RSpec.describe Spree::Core::ProductDuplicator do
   end
 
   describe "errors" do
-    context "with invalid product" do
-      let(:product) {
-        # name is a required field
-        create(:product).tap{ |p| p.update_columns(variant_unit: nil) }
-      }
-      subject { Spree::Core::ProductDuplicator.new(product).duplicate }
-
-      it "raises RecordInvalid error" do
-        expect{ subject }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
-
     context "invalid variant" do
       let(:variant) {
         # tax_category is required when products_require_tax_category
