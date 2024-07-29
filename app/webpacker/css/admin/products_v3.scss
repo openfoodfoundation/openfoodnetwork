@@ -257,31 +257,20 @@
       min-width: 15em;
 
       .search-input {
-        width: 100%;
         position: relative;
-        background-color: $lighter-grey;
-        border: 1px solid $lighter-grey;
-        border-radius: 4px;
-        height: $btn-relaxed-height;
-        line-height: $btn-relaxed-height;
-
-        &:has(input:focus),
-        &:has(input:active) {
-          border: 1px solid $dark-blue;
-        }
 
         > input {
-          // Totally hide the input from its container
-          background-color: transparent;
-          border: none;
-          width: calc(100% - 30px); // 30px is the width of the search icon + padding
+          padding-left: 33px;
+          width: 100%;
         }
 
         &:before {
+          position: absolute;
           font-family: FontAwesome;
           content: "\f002";
           color: $near-black;
           font-size: 16px;
+          margin-top: 0.7rem;
           margin-left: 10px;
         }
       }
