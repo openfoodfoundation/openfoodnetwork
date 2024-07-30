@@ -413,7 +413,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         end
 
         click_on "New variant"
-        second_new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
+        second_new_variant_row = find_field("Name", placeholder: "Apples",
+                                                    with: "").ancestor("tr")
         within second_new_variant_row do
           fill_in "Name", with: "Huge box"
         end
@@ -520,6 +521,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
             expect(page).to have_field "Name", with: "N" * 256
             expect(page).to have_field "SKU", with: "n" * 256
             expect(page).to have_content "is too long"
+            expect(page.find('.col-producer')).to have_content('must exist')
+            expect(page.find('.col-category')).to have_content('must exist')
             expect(page.find_button("Unit")).to have_text "" # have_button selector don't work here
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
           end
