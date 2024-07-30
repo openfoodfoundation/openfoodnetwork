@@ -12,6 +12,18 @@ namespace :ofn do
     enterprise.destroy
   end
 
+  namespace :enterprises do
+    desc "Activate connected app type for ALL enterprises"
+    task :activate_connected_app_type, [:type] => :environment do |_task, args|
+      Enterprise.find_each do |enterprise|
+        next if enterprise.connected_apps.public_send(args.type.underscore).exists?
+
+        "ConnectedApps::#{args.type.camelize}".constantize.new(enterprise:).connect({})
+        puts "Enterprise #{enterprise.id} connected."
+      end
+    end
+  end
+
   namespace :dev do
     desc 'export enterprises to CSV'
     task export_enterprises: :environment do

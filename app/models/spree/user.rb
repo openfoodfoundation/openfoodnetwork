@@ -156,6 +156,12 @@ module Spree
       self.disabled_at = value == '1' ? Time.zone.now : nil
     end
 
+    def affiliate_enterprises
+      return [] unless Flipper.enabled?(:affiliate_sales_data, self)
+
+      Enterprise.joins(:connected_apps).merge(ConnectedApps::AffiliateSalesData.ready)
+    end
+
     protected
 
     def password_required?

@@ -19,8 +19,8 @@ class ConnectAppJob < ApplicationJob
 
     selector = "#connected-app-discover-regen.enterprise_#{enterprise.id}"
     html = ApplicationController.render(
-      partial: "admin/enterprises/form/connected_apps",
-      locals: { enterprise: },
+      partial: "admin/enterprises/form/connected_apps/discover_regen",
+      locals: { enterprise:, connected_app: enterprise.connected_apps.discover_regen.first },
     )
 
     cable_ready[channel].morph(selector:, html:).broadcast

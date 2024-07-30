@@ -1,0 +1,15 @@
+%section.connected_app
+  .connected-app__head
+    %div
+      %h3= t ".title"
+      %p= t ".tagline"
+    %div
+      - if connected_app.nil?
+        = button_to t(".enable"), admin_enterprise_connected_apps_path(enterprise.id, type: "ConnectedApps::AffiliateSalesData"), method: :post, disabled: !managed_by_user?(enterprise)
+        -# This is only seen by super-admins:
+        %em= t(".need_to_be_manager") unless managed_by_user?(enterprise)
+      - else
+        = button_to t(".disable"), admin_enterprise_connected_app_path(connected_app.id, enterprise_id: enterprise.id), method: :delete
+  %hr
+  .connected-app__description
+    = t ".description_html"

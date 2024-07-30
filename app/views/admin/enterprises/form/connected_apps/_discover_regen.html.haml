@@ -1,0 +1,30 @@
+%section.connected_app{ id: "connected-app-discover-regen", class: "enterprise_#{enterprise.id}" }
+  .connected-app__head
+    %div
+      %h3= t ".title"
+      %p= t ".tagline"
+    %div
+      - if connected_app.nil?
+        = button_to t(".enable"), admin_enterprise_connected_apps_path(enterprise.id), method: :post, disabled: !managed_by_user?(enterprise)
+        -# This is only seen by super-admins:
+        %em= t(".need_to_be_manager") unless managed_by_user?(enterprise)
+      - elsif connected_app&.connecting?
+        %button{ disabled: true }
+          %i.spinner.fa.fa-spin.fa-circle-o-notch
+          &nbsp;
+          = t ".loading"
+      - else
+        = button_to t(".disable"), admin_enterprise_connected_app_path(connected_app.id, enterprise_id: enterprise.id), method: :delete
+
+  .connected-app__connection
+    - if connected_app&.ready?
+      .connected-app__note
+        - link = connected_app.data["link"]
+        %p= t ".note"
+        %div
+          %a{ href: link, target: "_blank", class: "button secondary" }
+            = t ".link_label"
+
+  %hr
+  .connected-app__description
+    = t ".description_html"

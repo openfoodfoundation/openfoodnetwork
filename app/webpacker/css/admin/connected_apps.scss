@@ -2,10 +2,18 @@
   max-width: 615px;
 }
 
+.connected_app {
+  margin-bottom: 2rem;
+
+  &:not(:first-of-type) {
+    border-top: 1px solid $color-border;
+  }
+}
+
 .connected-app__head {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1em;
+  margin: 1em 0;
 
   h3 {
     margin-bottom: 1em;

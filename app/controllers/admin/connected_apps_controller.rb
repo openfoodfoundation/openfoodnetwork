@@ -5,12 +5,12 @@ module Admin
     def create
       authorize! :admin, enterprise
 
-      app = ConnectedApp.create!(enterprise_id: enterprise.id)
+      attributes = {}
+      attributes[:type] = connected_app_params[:type] if connected_app_params[:type]
 
-      ConnectAppJob.perform_later(
-        app, spree_current_user.spree_api_key,
-        channel: SessionChannel.for_request(request),
-      )
+      app = ConnectedApp.create!(enterprise_id: enterprise.id, **attributes)
+      app.connect(api_key: spree_current_user.spree_api_key,
+                  channel: SessionChannel.for_request(request))
 
       render_panel
     end
@@ -18,14 +18,8 @@ module Admin
     def destroy
       authorize! :admin, enterprise
 
-      app = enterprise.connected_apps.first
+      app = enterprise.connected_apps.find(params.require(:id))
       app.destroy
-
-      WebhookDeliveryJob.perform_later(
-        app.data["destroy"],
-        "disconnect-app",
-        nil
-      )
 
       render_panel
     end
@@ -38,6 +32,10 @@ module Admin
 
     def render_panel
       redirect_to "#{edit_admin_enterprise_path(enterprise)}#/connected_apps_panel"
+    end
+
+    def connected_app_params
+      params.permit(:type)
     end
   end
 end
