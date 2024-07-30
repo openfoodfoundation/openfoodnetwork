@@ -10,6 +10,9 @@ class ConnectedApp < ApplicationRecord
   scope :discover_regen, -> { where(type: "ConnectedApp") }
   scope :affiliate_sales_data, -> { where(type: "ConnectedApps::AffiliateSalesData") }
 
+  scope :connecting, -> { where(data: nil) }
+  scope :ready, -> { where.not(data: nil) }
+
   def connecting?
     data.nil?
   end

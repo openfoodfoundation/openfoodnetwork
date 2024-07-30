@@ -272,11 +272,13 @@ RSpec.describe Spree::User do
   describe "#affiliate_enterprises" do
     let(:user) { create(:user) }
     let(:affiliate_enterprise) { create(:enterprise) }
+    let(:other_connected_enterprise) { create(:enterprise) }
     let(:other_enterprise) { create(:enterprise) }
     subject{ user.affiliate_enterprises }
 
     before do
       ConnectedApps::AffiliateSalesData.create(enterprise: affiliate_enterprise, data: true)
+      ConnectedApp.create(enterprise: other_connected_enterprise, data: true)
     end
 
     context "user does not have feature" do
@@ -291,6 +293,7 @@ RSpec.describe Spree::User do
 
       it "includes only affiliate enterprises" do
         is_expected.to include affiliate_enterprise
+        is_expected.not_to include other_connected_enterprise
         is_expected.not_to include other_enterprise
       end
     end

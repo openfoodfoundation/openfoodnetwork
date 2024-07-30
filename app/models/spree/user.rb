@@ -159,9 +159,7 @@ module Spree
     def affiliate_enterprises
       return [] unless Flipper.enabled?(:affiliate_sales_data, self)
 
-      Enterprise.joins(:connected_apps)
-        .where(connected_apps: { type: "ConnectedApps::AffiliateSalesData" })
-        .where.not(connected_apps: { data: nil })
+      Enterprise.joins(:connected_apps).merge(ConnectedApps::AffiliateSalesData.ready)
     end
 
     protected
