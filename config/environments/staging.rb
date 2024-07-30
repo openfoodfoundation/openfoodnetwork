@@ -40,6 +40,7 @@ Openfoodnetwork::Application.configure do
 
   # Configure logging:
   config.log_formatter = Logger::Formatter.new.tap { |f| f.datetime_format = "%Y-%m-%d %H:%M:%S" }
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production
   config.cache_store = :redis_cache_store, {
