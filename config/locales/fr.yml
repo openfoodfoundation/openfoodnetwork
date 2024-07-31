@@ -809,7 +809,7 @@ fr:
         search: Rechercher
       sort:
         pagination:
-          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Résultats %{from} à %{to}."
+          total_html: "<strong>%{count} produits</strong> trouvés selon vos critères de recherche. Résultats %{from} à %{to}."
           per_page:
             show: Montrer
             per_page: "%{num} par page"

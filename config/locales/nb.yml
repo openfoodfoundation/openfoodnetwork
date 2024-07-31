@@ -806,7 +806,7 @@ nb:
         search: Søk
       sort:
         pagination:
-          total_html: "<strong>%{total} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
+          total_html: "<strong>%{count} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
           per_page:
             show: Vis
             per_page: "%{num} per side"
