@@ -165,7 +165,7 @@ RSpec.describe VariantOverride do
 
   describe "with nil count on hand" do
     let(:variant_override) do
-      build_stubbed(
+      build(
         :variant_override,
         variant: build_stubbed(:variant),
         hub: build_stubbed(:distributor_enterprise),
@@ -175,15 +175,18 @@ RSpec.describe VariantOverride do
     end
 
     describe "stock_overridden?" do
-      it "returns false" do
-        expect(variant_override.stock_overridden?).to be false
+      it "returns true" do
+        expect(variant_override.stock_overridden?).to be true
       end
     end
 
     describe "move_stock!" do
       it "silently logs an error" do
-        expect(Bugsnag).to receive(:notify)
-        variant_override.move_stock!(5)
+        expect {
+          variant_override.move_stock!(5)
+        }.to change {
+          variant_override.count_on_hand
+        }.from(nil).to(5)
       end
     end
   end

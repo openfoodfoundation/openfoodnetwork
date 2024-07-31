@@ -38,9 +38,8 @@ class VariantOverride < ApplicationRecord
   end
 
   def stock_overridden?
-    # If count_on_hand is present, it means on_demand is false
-    #   See StockSettingsOverrideValidation for details
-    count_on_hand.present?
+    # Testing for not nil because for a boolean `false.present?` is false.
+    !on_demand.nil? || !count_on_hand.nil?
   end
 
   def use_producer_stock_settings?

@@ -10,7 +10,7 @@
 #
 # | on_demand | count_on_hand | stock_overridden? | use_producer_stock_settings? | valid? |
 # |-----------|---------------|-------------------|------------------------------|--------|
-# | 1         | nil           | false             | false                        | true   |
+# | 1         | nil           | true              | false                        | true   |
 # | 0         | x             | true              | false                        | true   |
 # | nil       | nil           | false             | true                         | true   |
 # | 1         | x             | true              | false                        | true   |

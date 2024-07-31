@@ -96,7 +96,7 @@ module VariantStock
   # Here we depend only on variant.total_on_hand and variant.on_demand.
   #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
   def fill_status(quantity)
-    on_hand = if total_on_hand >= quantity || on_demand
+    on_hand = if total_on_hand.to_i >= quantity || on_demand
                 quantity
               else
                 [0, total_on_hand].max

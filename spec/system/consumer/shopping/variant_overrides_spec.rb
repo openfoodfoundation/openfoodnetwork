@@ -222,15 +222,13 @@ RSpec.describe "shopping with variant overrides defined" do
       expect(product1_variant1_override.reload.count_on_hand).to be_nil
     end
 
-    it "does not subtract stock from variants where the override has on_demand: true" do
-      pending "update override stock"
-
+    it "subtracts stock from override but not variants where the override has on_demand: true" do
       click_add_to_cart product4_variant1, 2
       click_checkout
       expect do
         complete_checkout
       end.to change { product4_variant1.reload.on_hand }.by(0)
-      expect(product4_variant1_override.reload.count_on_hand).to be_nil
+      expect(product4_variant1_override.reload.count_on_hand).to eq(-2)
     end
 
     it "does not show out of stock flags on order confirmation page" do

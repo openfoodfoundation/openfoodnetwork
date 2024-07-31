@@ -181,11 +181,10 @@ module OpenFoodNetwork
             scoper.scope v2
           end
 
-          it "doesn't reduce variant's stock" do
-            pending "updating override stock"
-
+          it "reduces override stock, not variant's stock" do
             v2.move(-2)
             expect(Spree::Variant.find(v2.id).on_hand).to eq 5
+            expect(v2.on_hand).to eq(-2)
           end
         end
 

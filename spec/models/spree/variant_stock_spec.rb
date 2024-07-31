@@ -82,16 +82,14 @@ RSpec.describe Spree::Variant do
       end
 
       it "doesn't fail on negative stock when on demand" do
-        pending "https://github.com/openfoodfoundation/openfoodnetwork/issues/12586"
-
         override.update!(on_demand: true, count_on_hand: nil)
 
         expect {
           hub_variant.move(-8)
           override.reload
         }
-          .to change { override.count_on_hand }.from(7).to(-1)
-          .and change { hub_variant.on_hand }.from(7).to(-1)
+          .to change { override.count_on_hand }.from(nil).to(-8)
+          .and change { hub_variant.on_hand }.from(nil).to(-8)
           .and change { variant.on_hand }.by(0)
       end
     end
