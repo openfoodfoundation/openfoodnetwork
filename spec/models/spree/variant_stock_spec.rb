@@ -56,8 +56,6 @@ RSpec.describe Spree::Variant do
       end
 
       it "reduces stock when on demand" do
-        pending "VariantOverride allowing stock with on_demand"
-
         override.update!(on_demand: true, count_on_hand: 7)
 
         expect {
