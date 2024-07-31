@@ -6,12 +6,13 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
   include AuthenticationHelper
   include WebHelper
 
+  let!(:supplier) { create(:supplier_enterprise) }
+  let!(:taxon) { create(:taxon) }
+
   describe "creating a new product" do
     let!(:stock_location) { create(:stock_location, backorderable_default: false) }
-    let!(:supplier) { create(:supplier_enterprise) }
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:shipping_category) { create(:shipping_category) }
-    let!(:taxon) { create(:taxon) }
 
     before { visit_products_page_as_admin }
 
@@ -81,6 +82,10 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           find('input[id$="_display_as"]').fill_in with: "2 grams"
           find('button[aria-label="On Hand"]').click
           find('input[id$="_price"]').fill_in with: "11.1"
+
+          select supplier.name, from: 'Producer'
+          select taxon.name, from: 'Category'
+
           if stock == "on_hand"
             find('input[id$="_on_hand"]').fill_in with: "66"
           elsif stock == "on_demand"

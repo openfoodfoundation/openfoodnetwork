@@ -15,8 +15,8 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
     login_as user
   end
 
-  let(:producer_search_selector) { 'input[placeholder="Search for producers"]' }
-  let(:categories_search_selector) { 'input[placeholder="Search for categories"]' }
+  let(:producer_search_selector) { 'input[placeholder="Select producer"]' }
+  let(:categories_search_selector) { 'input[placeholder="Select category"]' }
   let(:tax_categories_search_selector) { 'input[placeholder="Search for tax categories"]' }
 
   describe "with no products" do
@@ -520,6 +520,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         expect(page).to have_select(
           '_products_0_variants_attributes_0_supplier_id',
           options: [
+            'Select producer',
             supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
           ], selected: supplier_managed1.name
         )
@@ -529,6 +530,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         expect(page).to have_select(
           '_products_1_variants_attributes_0_supplier_id',
           options: [
+            'Select producer',
             supplier_managed1.name, supplier_managed2.name, supplier_permitted.name
           ], selected: supplier_permitted.name
         )

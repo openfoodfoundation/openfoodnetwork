@@ -87,7 +87,6 @@ module Spree
     before_validation :ensure_unit_value
     before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
     before_validation :convert_variant_weight_to_decimal
-    before_validation :assign_related_taxon, if: ->(v) { v.primary_taxon.blank? }
 
     before_save :assign_units, if: ->(variant) {
       variant.new_record? || variant.changed_attributes.keys.intersection(NAME_FIELDS).any?
@@ -216,10 +215,6 @@ module Spree
     end
 
     private
-
-    def assign_related_taxon
-      self.primary_taxon ||= product.variants.last&.primary_taxon
-    end
 
     def check_currency
       return unless currency.nil?
