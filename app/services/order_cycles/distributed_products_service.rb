@@ -16,7 +16,7 @@ module OrderCycles
     end
 
     def products_relation_incl_supplier_properties
-      query = relation_by_sorting(supplier_properties: true)
+      query = relation_by_sorting
 
       query = supplier_property_join(query)
 
@@ -34,10 +34,10 @@ module OrderCycles
 
     attr_reader :distributor, :order_cycle, :customer
 
-    def relation_by_sorting(supplier_properties: false)
+    def relation_by_sorting
       query = Spree::Product.where(id: stocked_products)
 
-      if sorting == "by_producer" || supplier_properties
+      if sorting == "by_producer"
         # Joins on the first product variant to allow us to filter product by supplier. This is so
         # enterprise can display product sorted by supplier in a custom order on their shopfront.
         #
@@ -57,7 +57,8 @@ module OrderCycles
         # different category for a given product.
         query.
           joins("LEFT JOIN (
-                   SELECT DISTINCT ON(product_id) id, product_id, primary_taxon_id
+                   SELECT DISTINCT ON(product_id) id, product_id, primary_taxon_id,
+                   supplier_id
                    FROM spree_variants WHERE deleted_at IS NULL
                  ) first_variant ON spree_products.id = first_variant.product_id").
           select("spree_products.*, first_variant.primary_taxon_id").
@@ -71,6 +72,16 @@ module OrderCycles
       distributor.preferred_shopfront_product_sorting_method
     end
 
+    def sorting_by_producer?
+      sorting == "by_producer" &&
+        distributor.preferred_shopfront_producer_order.present?
+    end
+
+    def sorting_by_category?
+      sorting == "by_category" &&
+        distributor.preferred_shopfront_taxon_order.present?
+    end
+
     def supplier_property_join(query)
       query.joins("
         JOIN enterprises ON enterprises.id = first_variant.supplier_id
@@ -79,16 +90,14 @@ module OrderCycles
     end
 
     def order
-      if distributor.preferred_shopfront_product_sorting_method == "by_producer" &&
-         distributor.preferred_shopfront_producer_order.present?
+      if sorting_by_producer?
         order_by_producer = distributor
           .preferred_shopfront_producer_order
           .split(",").map { |id| "first_variant.supplier_id=#{id} DESC" }
           .join(", ")
 
         "#{order_by_producer}, spree_products.name ASC, spree_products.id ASC"
-      elsif distributor.preferred_shopfront_product_sorting_method == "by_category" &&
-            distributor.preferred_shopfront_taxon_order.present?
+      elsif sorting_by_category?
         order_by_category = distributor
           .preferred_shopfront_taxon_order
           .split(",").map { |id| "first_variant.primary_taxon_id=#{id} DESC" }

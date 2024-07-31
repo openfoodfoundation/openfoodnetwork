@@ -155,6 +155,19 @@ RSpec.describe ProductsRenderer do
           products = products_renderer.__send__(:products)
           expect(products).to eq([product_cherries, product_banana_bread, product_doughnuts])
         end
+
+        it "filters products with producer properties when sorting is enabled" do
+          allow(distributor).to receive(:preferred_shopfront_taxon_order) {
+            "#{fruits.id},#{cakes.id}"
+          }
+          fruits_supplier.producer_properties.create!({ property_id: property_organic.id,
+                                                        value: '1', position: 1 })
+          search_param = { q: { "with_variants_supplier_properties" => [property_organic.id] } }
+          products_renderer = ProductsRenderer.new(distributor, order_cycle, customer, search_param)
+
+          products = products_renderer.__send__(:products)
+          expect(products).to eq([product_apples, product_cherries])
+        end
       end
     end
   end
