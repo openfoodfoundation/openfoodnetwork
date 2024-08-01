@@ -39,6 +39,11 @@ module Admin
       )
     end
 
+    def connected_apps_enabled
+      connected_apps_enabled = Spree::Config.connected_apps_enabled&.split(',') || []
+      ConnectedApp::TYPES & connected_apps_enabled
+    end
+
     private
 
     def build_enterprise_side_menu_items(
