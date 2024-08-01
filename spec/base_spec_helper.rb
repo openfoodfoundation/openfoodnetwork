@@ -58,6 +58,8 @@ end
 # Disable timestamp check for test environment
 InvisibleCaptcha.timestamp_enabled = false
 
+InvisibleCaptcha.spinner_enabled = false
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = Rails.root.join('spec/fixtures').to_s
