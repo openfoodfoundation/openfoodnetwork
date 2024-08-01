@@ -81,41 +81,7 @@ module Api
     def distributed_properties
       return [] unless active
 
-      (distributed_product_properties + distributed_producer_properties).uniq do |property_object|
-        property_object.property.presentation
-      end
-    end
-
-    def distributed_product_properties
-      return [] unless active
-
-      properties = Spree::Property
-        .joins(products: { variants: { exchanges: :order_cycle } })
-        .merge(Exchange.outgoing)
-        .merge(Exchange.to_enterprise(enterprise))
-        .select('DISTINCT spree_properties.*')
-
-      return properties.merge(OrderCycle.active) if active
-
-      properties
-    end
-
-    def distributed_producer_properties
-      return [] unless active
-
-      properties = Spree::Property
-        .joins(
-          producer_properties: {
-            producer: { supplied_products: { variants: { exchanges: :order_cycle } } }
-          }
-        )
-        .merge(Exchange.outgoing)
-        .merge(Exchange.to_enterprise(enterprise))
-        .select('DISTINCT spree_properties.*')
-
-      return properties.merge(OrderCycle.active) if active
-
-      properties
+      enterprise.distributed_properties
     end
 
     def active

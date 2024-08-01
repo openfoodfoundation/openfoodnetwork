@@ -39,6 +39,32 @@ class Enterprise < ApplicationRecord
                                    class_name: 'EnterpriseGroup'
   has_many :producer_properties, foreign_key: 'producer_id', dependent: :destroy
   has_many :properties, through: :producer_properties
+  has_many :distributed_producer_properties,
+           -> {
+             where(
+               Exchange.outgoing
+                       .joins(:order_cycle)
+                       .merge(OrderCycle.active)
+                       .where("sender_id = enterprises.id")
+                       .arel
+                       .exists
+             )
+           }, class_name: "Spree::Property", through: :producer_properties, source: :property
+  has_many :distributed_product_properties,
+           -> {
+             where(
+               Exchange.outgoing
+                       .joins(:order_cycle)
+                       .merge(OrderCycle.active)
+                       .where("sender_id = enterprises.id")
+                       .arel
+                       .exists
+             ).where(
+               Spree::Product.where("supplier_id = enterprises_id")
+                 .arel
+                 .exists
+             )
+           }, class_name: "Spree::Property", through: :producer_properties, source: :property
   has_many :supplied_variants,
            class_name: 'Spree::Variant', foreign_key: 'supplier_id', dependent: :destroy
   has_many :supplied_products, through: :supplied_variants, source: :product
@@ -354,6 +380,12 @@ class Enterprise < ApplicationRecord
       Spree::Variant.visible_for(self)
     else
       Spree::Variant.not_hidden_for(self)
+    end
+  end
+
+  def distributed_properties
+    (distributed_product_properties + distributed_producer_properties).uniq do |property_object|
+      property_object.property.presentation
     end
   end
 

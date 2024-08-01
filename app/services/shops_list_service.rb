@@ -19,5 +19,6 @@ class ShopsListService
       .includes(address: [:state, :country])
       .includes(:properties)
       .includes(supplied_products: :properties)
+      .includes(:distributed_product_properties, :distributed_producer_properties)
   end
 end
