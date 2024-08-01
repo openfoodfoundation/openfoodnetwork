@@ -42,7 +42,6 @@ RSpec.describe "Connected Apps", feature: :connected_apps, vcr: true do
     expect(page).to have_content "CONNECTED APPS"
   end
 
-
   it "only shows enabled apps" do
     allow(Spree::Config).to receive(:connected_apps_enabled).and_return("discover_regen")
 
