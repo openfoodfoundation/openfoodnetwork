@@ -16,23 +16,23 @@
 
 - ng_controller = @order_cycle.simple? ? 'AdminSimpleEditOrderCycleCtrl' : 'AdminEditOrderCycleCtrl'
 = admin_inject_order_cycle_instance(@order_cycle)
-= form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form'} do |f|
+%div{ data: { controller: 'order-cycle-form' } }
+  = form_for [main_app, :admin, @order_cycle], :url => '', :html => {:class => 'ng order_cycle', 'ng-app' => 'admin.orderCycles', 'ng-controller' => ng_controller, name: 'order_cycle_form'} do |f|
 
-  %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
-    %input.red{ type: "button", value: t('.save'), "ng-click": "submit($event, null)", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid", data: { confirm: "true", 'trigger-action': 'save' } }
+    %save-bar{ dirty: "order_cycle_form.$dirty", persist: "true" }
+      %input.red{ type: "button", value: t('.save'), "ng-click": "submit($event, null)", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid", data: { confirm: "true", 'trigger-action': 'save' } }
+      - if @order_cycle.simple?
+        %input.red{ type: "button", value: t('.save_and_back_to_list'), "ng-click": "submit($event, '#{main_app.admin_order_cycles_path}')", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid", data: { confirm: "true", 'trigger-action': 'saveAndBack' } }
+      - else
+        %input.red{ type: "button", value: t('.save_and_next'), "ng-click": "submit($event, '#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid", data: { confirm: "true", 'trigger-action': 'saveAndNext' } }
+        %input{ type: "button", value: t('.next'), "ng-click": "cancel('#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled": "order_cycle_form.$dirty" }
+      %input{ type: "button", "ng-value": "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", "ng-click": "cancel('#{main_app.admin_order_cycles_path}')" }
+
     - if @order_cycle.simple?
-      %input.red{ type: "button", value: t('.save_and_back_to_list'), "ng-click": "submit($event, '#{main_app.admin_order_cycles_path}')", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid", data: { confirm: "true", 'trigger-action': 'saveAndBack' } }
+      = render 'simple_form', f: f
     - else
-      %input.red{ type: "button", value: t('.save_and_next'), "ng-click": "submit($event, '#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled": "!order_cycle_form.$dirty || order_cycle_form.$invalid", data: { confirm: "true", 'trigger-action': 'saveAndNext' } }
-      %input{ type: "button", value: t('.next'), "ng-click": "cancel('#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", "ng-disabled": "order_cycle_form.$dirty" }
-    %input{ type: "button", "ng-value": "order_cycle_form.$dirty ? '#{t('.cancel')}' : '#{t('.back_to_list')}'", "ng-click": "cancel('#{main_app.admin_order_cycles_path}')" }
+      = render 'form', f: f
 
-  - if @order_cycle.simple?
-    = render 'simple_form', f: f
-  - else
-    = render 'form', f: f
-
-  - if @order_cycle.orders.exists?
     %div.warning-modal{ data: { controller: 'modal modal-link', 'modal-link-target-value': "linked-order-warning-modal" } }
       %button.modal-target-trigger{ type: 'button', data: { 'action': 'modal-link#open' }, style: 'display: none;' } 
       = render ModalComponent.new(id: "linked-order-warning-modal", close_button: false) do

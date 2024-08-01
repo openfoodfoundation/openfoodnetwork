@@ -300,18 +300,18 @@ module Admin
     def verify_datetime_change
       return unless params[:order_cycle][:confirm]
       return unless @order_cycle.orders.exists?
-      return if same_dates(@order_cycle.orders_open_at&.to_s,
-                           order_cycle_params[:orders_open_at]) &&
-                same_dates(@order_cycle.orders_close_at&.to_s, order_cycle_params[:orders_close_at])
+      return if same_dates(@order_cycle.orders_open_at, order_cycle_params[:orders_open_at]) &&
+                same_dates(@order_cycle.orders_close_at, order_cycle_params[:orders_close_at])
 
-      render json: { trigger_action: params[:order_cycle][:trigger_action] }
+      render json: { trigger_action: params[:order_cycle][:trigger_action] },
+             status: :unprocessable_entity
     end
 
-    def same_dates(string1, string2)
-      false unless string1 && string2
+    def same_dates(date, string)
+      false unless date && string
 
-      DateTime.parse(string1).strftime('%Y-%m-%d %H:%M') ==
-        DateTime.parse(string2).strftime('%Y-%m-%d %H:%M')
+      DateTime.parse(string).strftime('%Y-%m-%d %H:%M') ==
+        date.to_datetime.strftime('%Y-%m-%d %H:%M')
     end
   end
 end
