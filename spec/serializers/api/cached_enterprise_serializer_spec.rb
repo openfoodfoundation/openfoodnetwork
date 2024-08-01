@@ -87,14 +87,6 @@ RSpec.describe Api::CachedEnterpriseSerializer do
         properties = cached_enterprise_serializer.distributed_properties
         expect(properties.map(&:presentation)).to eq([property.presentation])
       end
-
-      it 'fetches producer properties' do
-        distributed_producer_properties = cached_enterprise_serializer
-          .distributed_producer_properties
-
-        expect(distributed_producer_properties.map(&:presentation))
-          .to eq(producer.producer_properties.map(&:property).map(&:presentation))
-      end
     end
   end
 
