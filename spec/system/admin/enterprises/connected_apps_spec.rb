@@ -42,6 +42,16 @@ RSpec.describe "Connected Apps", feature: :connected_apps, vcr: true do
     expect(page).to have_content "CONNECTED APPS"
   end
 
+
+  it "only shows enabled apps" do
+    allow(Spree::Config).to receive(:connected_apps_enabled).and_return("discover_regen")
+
+    visit "#{edit_admin_enterprise_path(enterprise)}#/connected_apps_panel"
+
+    expect(page).to have_selector "h3", text: "Discover Regenerative"
+    expect(page).not_to have_selector "h3", text: "INRAE / UFC QUE CHOISIR Research"
+  end
+
   describe "Discover Regenerative" do
     before do
       allow(Spree::Config).to receive(:connected_apps_enabled).and_return("discover_regen")
