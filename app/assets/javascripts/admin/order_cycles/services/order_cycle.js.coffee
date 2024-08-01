@@ -167,15 +167,6 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
           trigger_action: this.order_cycle.trigger_action
         })
       oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
-        # Hide all confirmation buttons in warning modal
-        $('#linked-order-warning-modal .modal-actions button.secondary').css({ display: 'none' })
-        # Show the appropriate confirmation button, open warning modal, and return
-        if data.trigger_action
-          StatusMessage.display 'notice', "You have unsaved changes"
-          $("#linked-order-warning-modal button[data-trigger-action=#{data.trigger_action}]").css({ display: 'block' });
-          $('.warning-modal button.modal-target-trigger').trigger('click');
-          return;
-
         form.$setPristine() if form
         if destination?
           $window.location = destination
@@ -184,6 +175,8 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
       , (response) ->
         if response.data.errors?
           StatusMessage.display('failure', response.data.errors[0])
+        else if (response.data.trigger_action)
+          StatusMessage.display('notice', t('js.order_cycles.unsaved_changes'), response.data.trigger_action)
         else
           StatusMessage.display('failure', t('js.order_cycles.update_failure'))
 

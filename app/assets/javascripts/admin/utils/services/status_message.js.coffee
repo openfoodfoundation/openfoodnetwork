@@ -10,7 +10,9 @@ angular.module("admin.utils").factory "StatusMessage", ->
 
     statusMessage:
       text: ""
-      style: {}
+      style: {},
+      type: null,
+      actionName: null
 
     invalidMessage: ""
 
@@ -23,11 +25,15 @@ angular.module("admin.utils").factory "StatusMessage", ->
     active: ->
       @statusMessage.text != ''
 
-    display: (type, text) ->
+    display: (type, text, actionName = null) ->
       @statusMessage.text = text
+      @statusMessage.type = type
+      @statusMessage.actionName = actionName
       @statusMessage.style = @types[type].style
       null
 
     clear: ->
       @statusMessage.text = ''
       @statusMessage.style = {}
+      @statusMessage.type = null
+      @statusMessage.actionName = null

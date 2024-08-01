@@ -1,7 +1,7 @@
 #save-bar.animate-show{ "ng-show": 'dirty || persist || StatusMessage.active()' }
   .container
     .seven.columns.alpha
-      %h5#status-message{ "ng-show": "StatusMessage.invalidMessage == ''", "ng-style": 'StatusMessage.statusMessage.style' }
+      %h5#status-message{ "ng-show": "StatusMessage.invalidMessage == ''", "ng-style": 'StatusMessage.statusMessage.style', data: { 'order-cycle-form-target': 'element' }, "ng-attr-data-type": "{{StatusMessage.statusMessage.type}}", "ng-attr-data-action-name": "{{StatusMessage.statusMessage.actionName}}" }
         {{ StatusMessage.statusMessage.text || "&nbsp;" }}
       %h5#status-message{ style: 'color: #C85136', "ng-show": "StatusMessage.invalidMessage !== ''" }
         {{ StatusMessage.invalidMessage || "&nbsp;" }}

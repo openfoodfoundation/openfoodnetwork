@@ -1506,11 +1506,11 @@ en:
         choose_products_from: "Choose Products From:"
         re_notify_producers: Re notify producers
         notify_producers_tip: This will send an email to each producer with the list of their orders.
-        linked_schedule_warning_modal:
-          title: 'Orders are linked to this order cycle.'
-          content: 'If you wish to create a new order cycle, it is recommended to duplicate the order cycle first and then change the dates.'
-          proceed: 'Proceed anyway'
-          cancel: 'Cancel'
+      date_time_warning_modal_content:
+        title: 'Orders are linked to this order cycle.'
+        content: 'If you wish to create a new order cycle, it is recommended to duplicate the order cycle first and then change the dates.'
+        proceed: 'Proceed anyway'
+        cancel: 'Cancel'
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -3703,6 +3703,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         This will set stock level to zero on all products for this
         enterprise that are not present in the uploaded file.
     order_cycles:
+      unsaved_changes: "You have unsaved changes"
       create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
       update_failure: "Failed to update order cycle"
