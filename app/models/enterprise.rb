@@ -40,27 +40,27 @@ class Enterprise < ApplicationRecord
   has_many :producer_properties, foreign_key: 'producer_id', dependent: :destroy
   has_many :properties, through: :producer_properties
   has_many :distributed_producer_properties,
-           -> {
+           ->(enterprise) {
              where(
-               Exchange.outgoing
-                       .joins(:order_cycle)
-                       .merge(OrderCycle.active)
-                       .where("sender_id = enterprises.id")
-                       .arel
-                       .exists
+               ProducerProperty.joins(
+                 producer: { supplied_products: { variants: { exchanges: :order_cycle } } },
+               )
+                 .merge(Exchange.outgoing)
+                 .merge(Exchange.to_enterprise(enterprise))
+                 .merge(OrderCycle.active)
+                 .where("producer_properties.property_id = spree_properties.id")
+                 .arel
+                 .exists
              )
            }, class_name: "Spree::Property", through: :producer_properties, source: :property
   has_many :distributed_product_properties,
-           -> {
+           ->(enterprise) {
              where(
-               Exchange.outgoing
-                       .joins(:order_cycle)
-                       .merge(OrderCycle.active)
-                       .where("sender_id = enterprises.id")
-                       .arel
-                       .exists
-             ).where(
-               Spree::Product.where("supplier_id = enterprises_id")
+               Spree::ProductProperty.joins(product: { variants: { exchanges: :order_cycle } })
+                 .merge(Exchange.outgoing)
+                 .merge(Exchange.to_enterprise(enterprise))
+                 .merge(OrderCycle.active)
+                 .where("spree_product_properties.property_id = spree_properties.id")
                  .arel
                  .exists
              )
