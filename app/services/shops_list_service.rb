@@ -19,5 +19,7 @@ class ShopsListService
       .includes(address: [:state, :country])
       .includes(:properties)
       .includes(supplied_products: :properties)
+      .with_attached_promo_image
+      .with_attached_logo
   end
 end
