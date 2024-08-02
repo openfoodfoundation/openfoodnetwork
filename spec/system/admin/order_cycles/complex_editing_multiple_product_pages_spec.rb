@@ -13,7 +13,13 @@ RSpec.describe '
   describe "editing an order cycle with multiple pages of products" do
     let(:order_cycle) { create(:order_cycle) }
     let(:supplier_enterprise) { order_cycle.exchanges.incoming.first.sender }
-    let!(:new_product) { create(:product, supplier_id: supplier_enterprise.id) }
+    let!(:new_product) {
+      create(
+        :product,
+        supplier_id: supplier_enterprise.id,
+        name: "Z Last Product", # ordered by name
+      )
+    }
 
     before do
       stub_const("#{Api::V0::ExchangeProductsController}::DEFAULT_PER_PAGE", 1)
@@ -26,7 +32,7 @@ RSpec.describe '
       expect(page).to have_selector ".exchange-product-details"
 
       expect(page).to have_content "1 of 2 Variants Loaded"
-      expect(page).not_to have_content new_product.name
+      expect(page).not_to have_content "Z Last Product"
     end
 
     it "load all products" do
