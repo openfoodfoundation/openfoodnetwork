@@ -3,17 +3,17 @@
     %tr
       %th{:align => "left"}
         %h5= t(:invoice_column_item)
-      %th{:align => "right", :width => "15%"}
+      %th{:align => "right", :width => "6%" }
         %h5= t(:invoice_column_qty)
       %th{:align => "right", :width => "15%"}
         %h5= t(:invoice_column_weight_volume)
       %th{:align => "right", :width => "15%"}
         %h5= t(:invoice_column_price_per_unit_without_taxes)
-      %th{:align => "right", :width => "15%"}
+      %th{:align => "right", :width => "12%"}
         %h5= t(:invoice_column_price_without_taxes)
-      %th{:align => "right", :width => "15%"}
+      %th{:align => "right", :width => "9%" }
         %h5= t(:invoice_column_tax_rate)
-      %th{:align => "right", :width => "15%"}
+      %th{:align => "right", :width => "12%" }
         %h5= t(:invoice_column_price_with_taxes)
   %tbody
     - @order.sorted_line_items.each do |item|
