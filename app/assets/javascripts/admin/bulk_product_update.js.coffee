@@ -312,9 +312,6 @@ filterSubmitProducts = (productsToFilter) ->
             variantHasUpdatableProperty = result.hasUpdatableProperty
             filteredVariants.push filteredVariant  if variantHasUpdatableProperty
 
-        if product.hasOwnProperty("sku")
-          filteredProduct.sku = product.sku
-          hasUpdatableProperty = true
         if product.hasOwnProperty("name")
           filteredProduct.name = product.name
           hasUpdatableProperty = true

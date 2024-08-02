@@ -2,7 +2,6 @@
   %col.actions
   %col.image{ "ng-show": 'columns.image.visible' }
   %col.producer{ "ng-show": 'columns.producer.visible' }
-  %col.sku{ "ng-show": 'columns.sku.visible' }
   %col.name{ "ng-show": 'columns.name.visible' }
   %col.unit{ "ng-show": 'columns.unit.visible' }
   %col.display_as{ "ng-show": 'columns.unit.visible' }
@@ -24,7 +23,6 @@
         = t(:expand_all)
     %th.image{ 'ng-show' => 'columns.image.visible' }
     %th.producer{ 'ng-show' => 'columns.producer.visible' }=t('admin.producer')
-    %th.sku{ 'ng-show' => 'columns.sku.visible' }=t('admin.sku')
     %th.name{ 'ng-show' => 'columns.name.visible' }
       = render partial: 'spree/admin/shared/sortable_header', locals: {column_name: 'name'}
     %th.unit{ 'ng-show' => 'columns.unit.visible' }=t('.unit')

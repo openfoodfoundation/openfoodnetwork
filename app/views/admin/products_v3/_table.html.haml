@@ -18,7 +18,6 @@
       -# The `min-width` property works in Chrome but not Firefox so is considered progressive enhancement.
       %col.col-image{ width:"56px" }= # (image size + padding)
       %col.col-name{ style:"min-width: 6em" }= # (grow to fill)
-      %col.col-sku{ width:"8%", style:"min-width: 6em" }
       %col.col-unit_scale{ width:"8%" }
       %col.col-unit{ width:"8%" }
       %col.col-price{ width:"5%", style:"min-width: 5em" }
@@ -52,7 +51,6 @@
         %th.col-image.align-left= # image
         = render partial: 'spree/admin/shared/stimulus_sortable_header',
             locals: { column: :name, sorted: params.dig(:q, :s), default: 'name asc' }
-        %th.align-left.col-sku.with-input= t('admin.products_page.columns.sku')
         %th.align-left.col-unit_scale.with-input= t('admin.products_page.columns.unit_scale')
         %th.align-left.col-unit.with-input= t('admin.products_page.columns.unit')
         %th.align-left.col-price.with-input= t('admin.products_page.columns.price')

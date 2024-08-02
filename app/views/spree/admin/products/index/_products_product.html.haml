@@ -6,8 +6,6 @@
     %a{class: 'image-modal'}
       %img{'ng-src' => '{{ product.thumb_url }}'}
   %td.producer{ 'ng-show' => 'columns.producer.visible' }
-  %td.sku{ 'ng-show' => 'columns.sku.visible' }
-    %input{ 'ng-model' => "product.sku", :name => 'product_sku', 'ofn-track-product' => 'sku', :type => 'text' }
   %td.name{ 'ng-show' => 'columns.name.visible' }
     %input{ 'ng-model' => "product.name", :name => 'product_name', 'ofn-track-product' => 'name', :type => 'text' }
   %td.unit{ 'ng-show' => 'columns.unit.visible' }
