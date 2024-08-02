@@ -1,3 +1,7 @@
+trix-toolbar .trix-button-row {
+  flex-wrap: wrap;
+}
+
 trix-toolbar [data-trix-button-group="file-tools"] {
   display: none;
 }
@@ -11,7 +15,7 @@ trix-editor {
   color: #222;
 
   a {
-    color: #f27052; // Equivalent to text-angular a
+    color: #f27052;
   }
 
   @include trix-styles;

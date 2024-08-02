@@ -925,8 +925,6 @@ tr:
               Müşterilerinize merhaba diyebilir, dükkanınız ve alışveriş şartlarınız
               ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler mağazanızı
               ziyaret ettiğinde görünür olacak.
-          shopfront_message_link_tooltip: "Bağlantı ekle/düzenle"
-          shopfront_message_link_prompt: "Lütfen eklemek için bir URL girin"
           shopfront_closed_message: "KAPALI DÜKKAN MESAJI"
           shopfront_closed_message_placeholder: >
               Dükkanınızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize

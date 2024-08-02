@@ -1,1 +1,1 @@
-angular.module("admin.products", ["textAngular", "admin.utils", "OFNShared"])
+angular.module("admin.products", ["ngSanitize", "admin.utils", "OFNShared"])

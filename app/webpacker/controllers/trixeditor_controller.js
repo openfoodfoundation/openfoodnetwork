@@ -21,6 +21,15 @@ export default class extends Controller {
   };
 
   #trixInitialize = () => {
+    // Set I18n translations on Trix.
+    if(I18n.t("js.trix")) {
+      // Calling 'Trix.config.lang = I18n.t("js.trix")' doesn't work due to read-only error, so set
+      // translations one at a time.
+      for (const [key, translation] of Object.entries(I18n.t("js.trix"))) {
+        Trix.config.lang[key] = translation;
+      }
+    }
+
     // Add HR button to the Trix toolbar if it's not already there and the editor is present
     if (
       this.element.editor &&

@@ -839,8 +839,6 @@ fil_PH:
               kung paano mamili sa inyong shop. kung ang teksto ay ipinasok dito,
               ito ay makikita sa home tab kapag ang customer ay nasa loob na ng inyong
               shopfront.
-          shopfront_message_link_tooltip: "ilagay/ i-edit ang link"
-          shopfront_message_link_prompt: "ipasok ang URL na ilalagay"
           shopfront_closed_message: "pagsasarang mensahe ng Shopfront"
           shopfront_closed_message_placeholder: >
               isang mensahe na nagbibigay ng mas detalyadong paliwanag kung bakit

@@ -76,12 +76,12 @@ class EnterpriseGroup < ApplicationRecord
 
   # Remove any unsupported HTML.
   def long_description
-    HtmlSanitizer.sanitize(super)
+    HtmlSanitizer.sanitize_and_enforce_link_target_blank(super)
   end
 
   # Remove any unsupported HTML.
   def long_description=(html)
-    super(HtmlSanitizer.sanitize(html))
+    super(HtmlSanitizer.sanitize_and_enforce_link_target_blank(html))
   end
 
   private

@@ -861,8 +861,6 @@ nl_BE:
               Een optionele tekst om klanten te verwelkomen en om uittelegen hoe met
               jouw te shoppen. Als tekst hier is ingevuld gaat het zichtbaar zijn
               in de home tab waneer klanten eerst aankomen in je online vitrine.
-          shopfront_message_link_tooltip: "Link invoegen / bewerken"
-          shopfront_message_link_prompt: "Voer een URL in om in te voegen"
           shopfront_closed_message: "Bericht Gesloten Etalage"
           shopfront_closed_message_placeholder: >
               Een boodschap die een gedetailleerdere verklaring voorziet over waarom

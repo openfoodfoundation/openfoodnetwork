@@ -901,8 +901,6 @@ pt:
           customer_names_false: "Desactivado"
           customer_names_true: "Activo"
           shopfront_message: "Mensagem da Loja"
-          shopfront_message_link_tooltip: "Inserir / editar link"
-          shopfront_message_link_prompt: "Por favor insira um URL"
           shopfront_closed_message: "Mensagem de Loja Fechada"
           shopfront_closed_message_placeholder: >
               Uma mensagem que forneça uma explicação mais detalhada sobre o motivo

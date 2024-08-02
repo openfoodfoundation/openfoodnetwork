@@ -1196,8 +1196,6 @@ fr_CA:
               les particularités de votre boutique. Ce message s'affiche dans l'onglet
               Accueil de votre boutique. Si aucun message n'est affiché, l'onglet
               Accueil n'apparaitra pas.
-          shopfront_message_link_tooltip: "Insérer / modifier un lien"
-          shopfront_message_link_prompt: "Veuillez entrer l'URL à insérer"
           shopfront_closed_message: "Message d'accueil de la boutique fermée"
           shopfront_closed_message_placeholder: >
               Vous pouvez ici expliquer à vos acheteurs pourquoi votre boutique est

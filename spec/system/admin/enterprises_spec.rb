@@ -112,10 +112,8 @@ RSpec.describe '
       click_link "About"
     end
     fill_in 'enterprise_description', with: 'Connecting farmers and eaters'
-
-    description_input =
-      page.find("text-angular#enterprise_long_description div[id^='taTextElement']")
-    description_input.native.send_keys('This is an interesting long description')
+    fill_in_trix_editor 'enterprise_long_description',
+                        with: 'This is an interesting long description'
 
     # Check StimulusJs switching of sidebar elements
     accept_alert do
@@ -202,9 +200,8 @@ RSpec.describe '
     accept_alert do
       within(".side_menu") { find(:link, "Shop Preferences").trigger("click") }
     end
-    shop_message_input =
-      page.find("text-angular#enterprise_preferred_shopfront_message div[id^='taTextElement']")
-    shop_message_input.native.send_keys('This is my shopfront message.')
+    fill_in_trix_editor 'enterprise_preferred_shopfront_message',
+                        with: 'This is my shopfront message.'
     expect(page)
       .to have_checked_field "enterprise_preferred_shopfront_order_cycle_order_orders_close_at"
     # using "find" as fields outside of the screen and are not visible
@@ -258,11 +255,9 @@ RSpec.describe '
     page.execute_script('window.history.forward()')
     expect(page).to have_content 'This is my shopfront message.'
 
-    # Test that the right input alert text is displayed
-    accept_alert('Please enter a URL to insert') do
-      first('.ta-text').click
-      first('button[name="insertLink"]').click
-    end
+    # Test Trix editor translations are loaded
+    find(".trix-button--icon-link").click
+    expect(page).to have_selector("input[aria-label=URL][placeholder='Enter a URL…']")
   end
 
   describe "producer properties" do

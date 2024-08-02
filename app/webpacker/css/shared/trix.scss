@@ -16,7 +16,7 @@
   div,
   pre,
   h1 {
-    margin-bottom: 1.5rem; // Equivalent to text-angular p (trix doesn't use p as default one, since we could not include figures inside p)
+    margin-bottom: 1.5rem; // // Equivalent to p (trix doesn't use p as separator by default, so emulate div as p to be backward compatible)
   }
 
   h1 {
