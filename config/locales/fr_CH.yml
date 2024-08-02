@@ -1101,7 +1101,10 @@ fr_CH:
           customers: Client
           active: Active ?
         connected_apps:
-          loading: "Chargement en cours"
+          affiliate_sales_data:
+            loading: "Chargement en cours"
+          discover_regen:
+            loading: "Chargement en cours"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés

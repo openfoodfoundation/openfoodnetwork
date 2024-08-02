@@ -882,7 +882,10 @@ en_BE:
           rate: Rate
           customers: Customer
         connected_apps:
-          loading: "Loading"
+          affiliate_sales_data:
+            loading: "Loading"
+          discover_regen:
+            loading: "Loading"
       actions:
         edit_profile: Settings
         properties: Properties

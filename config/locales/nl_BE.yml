@@ -929,7 +929,10 @@ nl_BE:
           customers: Klant
           active: Actief?
         connected_apps:
-          loading: "Aan het opladen"
+          affiliate_sales_data:
+            loading: "Aan het opladen"
+          discover_regen:
+            loading: "Aan het opladen"
       actions:
         edit_profile: Instellingen
         properties: Eigenschappen

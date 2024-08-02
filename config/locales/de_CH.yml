@@ -1108,7 +1108,10 @@ de_CH:
           customers: Kunde
           active: Aktiv?
         connected_apps:
-          loading: "Wird geladen ..."
+          affiliate_sales_data:
+            loading: "Wird geladen ..."
+          discover_regen:
+            loading: "Wird geladen ..."
       actions:
         edit_profile: Einstellungen
         properties: Eigenschaften

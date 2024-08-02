@@ -1008,7 +1008,10 @@ pt_BR:
           customers: Consumidor
           active: Ativo?
         connected_apps:
-          loading: "Carregando"
+          affiliate_sales_data:
+            loading: "Carregando"
+          discover_regen:
+            loading: "Carregando"
       actions:
         edit_profile: Configurações
         properties: Propriedades

@@ -906,7 +906,10 @@ fil_PH:
           rate: antas
           customers: Customer
         connected_apps:
-          loading: "naglo-load"
+          affiliate_sales_data:
+            loading: "naglo-load"
+          discover_regen:
+            loading: "naglo-load"
       actions:
         edit_profile: Settings
         properties: mga katangian

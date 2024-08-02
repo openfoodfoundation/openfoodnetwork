@@ -1112,7 +1112,10 @@ uk:
           customers: Замовник
           active: Активний?
         connected_apps:
-          loading: "Завантаження"
+          affiliate_sales_data:
+            loading: "Завантаження"
+          discover_regen:
+            loading: "Завантаження"
       actions:
         edit_profile: Налаштування
         properties: Властивості

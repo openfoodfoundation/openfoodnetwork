@@ -769,7 +769,6 @@ hi:
         search: सर्च
       sort:
         pagination:
-          total_html: "<strong>%{count} उत्पाद</strong> आपके सर्च क्राइटेरिया के लिए मिले। %{from} से %{to} दिखा रहा है।"
           per_page:
             show: दिखाएं
             per_page: "%{num} प्रति पेज"
@@ -1232,7 +1231,10 @@ hi:
           custom_tab_title: "कस्टम टैब के लिए शीर्षक"
           custom_tab_content: "कस्टम टैब के लिए सामग्री"
         connected_apps:
-          loading: "लोड हो रहा"
+          affiliate_sales_data:
+            loading: "लोड हो रहा"
+          discover_regen:
+            loading: "लोड हो रहा"
       actions:
         edit_profile: सेटिंग्स
         properties: प्रॉपर्टीज़

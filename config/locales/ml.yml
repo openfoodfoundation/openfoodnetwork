@@ -772,7 +772,6 @@ ml:
         search: തിരയുക
       sort:
         pagination:
-          total_html: "നിങ്ങളുടെ തിരയൽ മാനദണ്ഡങ്ങൾക്കനുസരിച്ച് <strong>%{count} ഉൽപ്പന്നങ്ങൾ</strong> കണ്ടെത്തി. %{from} മുതൽ %{to} വരെ കാണിക്കുന്നു."
           per_page:
             show: കാണിക്കുക
             per_page: "ഓരോ പേജിലും %{num}"
@@ -1240,8 +1239,11 @@ ml:
           custom_tab_content: "ഇഷ്‌ടാനുസൃത ടാബിനുള്ള ഉള്ളടക്കം"
         connected_apps:
           legend: "ബന്ധിപ്പിച്ച ആപ്പുകൾ"
-          title: "റീജനറേറ്റീവ് കണ്ടെത്തുക"
-          loading: "ലോഡിംഗ്"
+          affiliate_sales_data:
+            loading: "ലോഡിംഗ്"
+          discover_regen:
+            title: "റീജനറേറ്റീവ് കണ്ടെത്തുക"
+            loading: "ലോഡിംഗ്"
       actions:
         edit_profile: ക്രമീകരണങ്ങൾ
         properties: പ്രോപ്പർട്ടികൾ

@@ -810,7 +810,6 @@ fr_CA:
         search: Chercher
       sort:
         pagination:
-          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
           per_page:
             show: Montrer
             per_page: "%{num} par page"
@@ -1293,25 +1292,31 @@ fr_CA:
           custom_tab_content: "Contenu de l'onglet personnalisé"
         connected_apps:
           legend: "Applications connectées"
-          title: "Découvrir la justice alimentaire"
-          tagline: "Permettre à l'OFN Canada de publier les informations relatives à votre entreprise."
-          enable: "Autoriser le partage de données"
-          disable: "Arrêter le partage"
-          loading: "Chargement en cours"
-          need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
-          note: |
-              Votre compte Open Food Network est connecté à Discover Food Justice.
-              Les modifications apportées à votre profil OFN mettront automatiquement à jour votre liste Discover Food Justice. Pour toute autre modification, veuillez contacter le service d'assistance de l'OFN.
-          link_label: "Gérer la liste"
-          description_html: |
-              <p>Les producteurs éligibles peuvent présenter des appels à l'action en faveur du bénévolat local, de l'achat local ou du don local.
-              Cela simplifie la façon dont les producteurs peuvent se connecter dans la région de Waterloo autour de la justice et de la souveraineté alimentaires.
+          affiliate_sales_data:
+            enable: "Autoriser le partage de données"
+            disable: "Arrêter le partage"
+            loading: "Chargement en cours"
+            need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+          discover_regen:
+            title: "Annuaire alimentaire de Waterloo"
+            tagline: "Permettre à l'OFN Canada de publier les informations relatives à votre entreprise."
+            enable: "Autoriser le partage de données"
+            disable: "Arrêter le partage"
+            loading: "Chargement en cours"
+            need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            note: |
+                Votre compte Open Food Network est connecté à Annuaire alimentaire de Waterloo.
+                Les modifications apportées à votre profil OFN mettront automatiquement à jour votre liste Annuaire alimentaire de Waterloo. Pour toute autre modification, veuillez contacter le service d'assistance de l'OFN.
+            link_label: "Gérer la liste"
+            description_html: |
+                <p>Les producteurs éligibles peuvent présenter des appels à l'action en faveur du manger local, donner local, et/ou cultiver local..
+                Cela simplifie la façon dont les producteurs peuvent se connecter dans la région de Waterloo autour de la justice et de la souveraineté alimentaires.
 
-              <p>
-              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-              target="_blank"><b>En savoir plus sur le projet Waterloo Food Commons </b>
-              <i class="icon-external-link"></i></a>
-              </p>
+                <p>
+                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+                target="_blank"><b>En savoir plus sur le projet Waterloo Food Commons </b>
+                <i class="icon-external-link"></i></a>
+                </p>
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés

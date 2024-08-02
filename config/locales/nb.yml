@@ -806,7 +806,6 @@ nb:
         search: Søk
       sort:
         pagination:
-          total_html: "<strong>%{count} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
           per_page:
             show: Vis
             per_page: "%{num} per side"
@@ -1282,28 +1281,34 @@ nb:
           custom_tab_content: "Innhold for egendefinert fane"
         connected_apps:
           legend: "Tilkoblede apper"
-          title: "Oppdag Regenerativ"
-          tagline: "Tillat Discover Regenerativ å publisere bedriftsinformasjonen din."
-          enable: "Tillat datadeling"
-          disable: "Stopp deling"
-          loading: "Laster"
-          need_to_be_manager: "Bare ledere kan koble til apper."
-          note: |
-              Open Food Network-kontoen din er koblet til Discover Regenerativ.
-              Legg til eller oppdater informasjon om Discover Regenerativ-oppføringen din her.
-          link_label: "Administrer oppføring"
-          description_html: |
-              <p>
-              Kvalifiserte produsenter kan vise frem sin regenerative legitimasjon,
-              oppdrettspraksis og mer gjennom en profiloppføring.
-              Forenkler hvordan kunder kan finne regenerative produkter og koble sammen
-              med produsenter av interesse.
-              </p>
-              <p>
-              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-              target="_blank"><b>Lær mer om Discover Regenerativ</b>
-              <i class="icon-external-link"></i></a>
-              </p>
+          affiliate_sales_data:
+            enable: "Tillat datadeling"
+            disable: "Stopp deling"
+            loading: "Laster"
+            need_to_be_manager: "Bare ledere kan koble til apper."
+          discover_regen:
+            title: "Oppdag Regenerativ"
+            tagline: "Tillat Discover Regenerativ å publisere bedriftsinformasjonen din."
+            enable: "Tillat datadeling"
+            disable: "Stopp deling"
+            loading: "Laster"
+            need_to_be_manager: "Bare ledere kan koble til apper."
+            note: |
+                Open Food Network-kontoen din er koblet til Discover Regenerativ.
+                Legg til eller oppdater informasjon om Discover Regenerativ-oppføringen din her.
+            link_label: "Administrer oppføring"
+            description_html: |
+                <p>
+                Kvalifiserte produsenter kan vise frem sin regenerative legitimasjon,
+                oppdrettspraksis og mer gjennom en profiloppføring.
+                Forenkler hvordan kunder kan finne regenerative produkter og koble sammen
+                med produsenter av interesse.
+                </p>
+                <p>
+                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+                target="_blank"><b>Lær mer om Discover Regenerativ</b>
+                <i class="icon-external-link"></i></a>
+                </p>
       actions:
         edit_profile: Innstillinger
         properties: Egenskaper

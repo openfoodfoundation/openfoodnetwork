@@ -798,7 +798,6 @@ hu:
         search: Keresés
       sort:
         pagination:
-          total_html: "<strong>%{count} terméket </strong> találtunk a keresési feltételek alapján. %{from}-től %{to}-ig mutat."
           per_page:
             show: Mutasd
             per_page: "%{num}per oldal"
@@ -1273,24 +1272,30 @@ hu:
           custom_tab_content: "Tartalom az egyéni laphoz"
         connected_apps:
           legend: "Csatlakoztatott alkalmazások"
-          title: "Discover Regenerative"
-          tagline: "Engedélyezd a Discover Regenerative számára a vállalati adatok közzétételét."
-          enable: "Adatmegosztás engedélyezése"
-          disable: "Megosztás leállítása"
-          loading: "Betöltés"
-          need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
-          note: |
-              Open Food Network fiókod a Discover Regenerative szolgáltatáshoz kapcsolódik.
-              Adj hozzá vagy frissíts információkat a Discover Regenerative adatlapjáról itt.
-          link_label: "Listázás kezelése"
-          description_html: |
-              <p>
-              Termelők bemutathatják bio gazdálkodási tanúsítványukat, egyéb gazdálkodási gyakorlatukat és tevékenységeiket a profiljukban. Ez egyszerűsíti a fogyasztók számára, hogy megtalálják a fenntartható gyakorlatokkal előállított termékeket, és kapcsolatba lépjenek a termelőkkel.</p>
-              <p>
-              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-              target="_blank"><b> Tudj meg többet a Regeneratív gyakorlatokról. </b>
-              <i class="icon-external-link"></i></a>
-              </p>
+          affiliate_sales_data:
+            enable: "Adatmegosztás engedélyezése"
+            disable: "Megosztás leállítása"
+            loading: "Betöltés"
+            need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
+          discover_regen:
+            title: "Discover Regenerative"
+            tagline: "Engedélyezd a Discover Regenerative számára a vállalati adatok közzétételét."
+            enable: "Adatmegosztás engedélyezése"
+            disable: "Megosztás leállítása"
+            loading: "Betöltés"
+            need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
+            note: |
+                Open Food Network fiókod a Discover Regenerative szolgáltatáshoz kapcsolódik.
+                Adj hozzá vagy frissíts információkat a Discover Regenerative adatlapjáról itt.
+            link_label: "Listázás kezelése"
+            description_html: |
+                <p>
+                Termelők bemutathatják bio gazdálkodási tanúsítványukat, egyéb gazdálkodási gyakorlatukat és tevékenységeiket a profiljukban. Ez egyszerűsíti a fogyasztók számára, hogy megtalálják a fenntartható gyakorlatokkal előállított termékeket, és kapcsolatba lépjenek a termelőkkel.</p>
+                <p>
+                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+                target="_blank"><b> Tudj meg többet a Regeneratív gyakorlatokról. </b>
+                <i class="icon-external-link"></i></a>
+                </p>
       actions:
         edit_profile: Beállítások
         properties: Tulajdonságok
@@ -2058,7 +2063,7 @@ hu:
   days: nap
   authorization_failure: "Engedélyezési hiba"
   description: "Leírás"
-  label_shop: "Átadópont"
+  label_shop: "Átvételi Pont"
   label_shops: "Átvételi pontok"
   label_map: "Térkép"
   label_producer: "Termelő"
@@ -2204,7 +2209,7 @@ hu:
   order_hub_info: Átvételi Pont Info
   order_back_to_store: Vissza a rendelési oldalra
   order_back_to_cart: Vissza a kosárba
-  order_back_to_website: Az Átvételi Pont saját weboldala
+  order_back_to_website: Az Átvételi Pont weboldala
   checkout_details_title: Fizetés részletei
   checkout_payment_title: Fizetési mód
   checkout_summary_title: Fizetési Összefoglaló
@@ -2229,7 +2234,7 @@ hu:
   email_signature: "%{sitename} csapata"
   email_confirm_customer_greeting: "Kedves %{name}!"
   email_confirm_customer_intro_html: "Köszönjük a vásárlást! <strong>%{distributor}</strong>"
-  email_confirm_customer_number_html: "Megrendelés visszaigazolás <strong>#%{number}</strong>"
+  email_confirm_customer_number_html: "- Megrendelés visszaigazolás <strong>#%{number}</strong>"
   email_confirm_customer_details_html: "Íme a megrendelésed részletei <strong>%{distributor}</strong>:"
   email_confirm_customer_signoff: "Üdvözlettel,"
   email_confirm_shop_greeting: "Kedves %{name}!"
@@ -2291,12 +2296,12 @@ hu:
   producer_mail_signoff: "Köszönet és jókívánságok"
   producer_mail_order_customer_text: "Itt található a rendelések összegzése ügyfelek szerint csoportosítva"
   shopping_oc_closed: A rendelések lezárva
-  shopping_oc_closed_description: "Kérjük, várd meg, amíg a következő ciklus megnyílik (vagy lépj kapcsolatba velünk közvetlenül, hogy tudjuk-e fogadni a a ciklus zárása utáni rendeléseket)"
+  shopping_oc_closed_description: "Kérjük, várd meg, amíg a következő ciklus megnyílik."
   shopping_oc_last_closed: "Az utolsó ciklus %{distance_of_time} előtt zárult"
   shopping_oc_next_open: "A következő ciklus %{distance_of_time} múlva kezdődik"
   shopping_oc_select: "Válassz..."
   shopping_tabs_home: "Nyitólap"
-  shopping_tabs_shop: "Átadópont"
+  shopping_tabs_shop: "Átvételi Pont"
   shopping_tabs_about: "Rólunk"
   shopping_tabs_producers: "Termelők"
   shopping_tabs_contact: "Kapcsolat"
@@ -2306,7 +2311,7 @@ hu:
   shopping_contact_social: "Kövesse"
   shopping_groups_part_of: "része:"
   shopping_producers_of_hub: "%{hub} termelői:"
-  enterprises_next_closing: "A következő rendelés lezárása"
+  enterprises_next_closing: "Rendelés zárása"
   enterprises_currently_open: "A rendelések jelenleg nyitva vannak"
   enterprises_ready_for: "Átvétel"
   enterprises_choose: "Válaszd ki, hogy mikor szeretnéd átvenni:"
@@ -2486,7 +2491,7 @@ hu:
   orders_bought_edit_button: "Megerősített tételek szerkesztése"
   orders_bought_already_confirmed: "* már megerősítve"
   orders_confirm_cancel: "Biztosan törlöd ezt a rendelést?"
-  order_processed_successfully: "Megrendelését sikeresen feldolgoztuk"
+  order_processed_successfully: "Megrendelésed sikeresen feldolgoztuk"
   thank_you_for_your_order: "Köszönjük a rendelésed!"
   products_cart_distributor_choice: "Megrendelését az alábbi szervezet szolgáltatja:"
   products_cart_distributor_change: "Ennek a rendelésnek a forgalmazója a következőre változik: %{name}, ha ezt a terméket a kosarába helyezi."
@@ -2695,7 +2700,7 @@ hu:
   contact: "Kapcsolat"
   follow: "Követés"
   shop_for_products_html: "Vásárolj <span class=turquoise>%{enterprise}</span> termékeket itt:"
-  change_shop: "Átadópont módosítása erre:"
+  change_shop: "Átvétel helyének módosítása erre:"
   shop_at: "Vásárolj most itt:"
   admin_fee: "Adminisztrációs díj"
   sales_fee: "Értékesítési díj"
@@ -3147,7 +3152,7 @@ hu:
   enterprise_register_success_notice: "Gratulálunk! A %{enterprise} regisztrációja befejeződött!"
   enterprise_bulk_update_success_notice: "A vállalkozások sikeresen frissítve"
   enterprise_bulk_update_error: 'Frissítés sikertelen'
-  enterprise_shop_show_error: "A keresett átadópont nem létezik, vagy inaktív az OFN-en. Kérjük, ellenőrizd a többi átadópontot."
+  enterprise_shop_show_error: "A keresett átvételi pont nem létezik, vagy inaktív az OFN-en. Kérjük, nézd meg a többi átvételi pontot."
   order_cycles_bulk_update_notice: 'A rendelési ciklusok frissítve.'
   order_cycles_no_permission_to_coordinate_error: "Egyik vállalkozásod sem rendelkezik engedéllyel egy rendelési ciklus koordinálására"
   order_cycles_no_permission_to_create_error: "Nincs engedélye az adott vállalkozás által koordinált rendelési ciklus létrehozására"
@@ -3180,16 +3185,16 @@ hu:
     unavailable: Nem érhető el
     profile: Profil
     hub: Átvételi Pont
-    shop: Átadópont
+    shop: Átvételi Pont
     choose: Választ
     resolve_errors: Kérjük, javítsd a következő hibákat
     more_items: "+ %{count} további"
     default_card_updated: Az alapértelmezett kártya frissítve
-    default_card_voids_auth: Az alapértelmezett kártya módosítása eltávolítja az átadópontok meglévő terhelési engedélyét. Az alapértelmezett kártya frissítése után újból engedélyezheted az átadópontokat. Meg akarod változtatni az alapértelmezett kártyát?
+    default_card_voids_auth: Az alapértelmezett kártya módosítása eltávolítja az átvételi pontok meglévő terhelési engedélyét. Az alapértelmezett kártya frissítése után újból engedélyezheted az átvételi pontoknak. Meg akarod változtatni az alapértelmezett kártyát?
     cart:
       add_to_cart_failed: >
           Hiba történt a termék kosárba helyezésekor. Lehet, hogy a termék elérhetetlenné
-          vált, vagy az átadópont/termelői értékesítési pont bezárt.
+          vált, vagy az átvételi pont/termelői értékesítési pont bezárt.
     admin:
       unit_price_tooltip: "Az egységár növeli az átláthatóságot azáltal, hogy lehetővé teszi a vásárlók számára, hogy könnyen összehasonlítsák az árakat. Vedd figyelembe, hogy ez nettó ár (a weboldalon megjelenített végső egységár eltérő lehet, mivel tartalmazza az adókat és illetékeket)."
       enterprise_limit_reached: "Elérted a vállalkozások számlaszámonkénti standard korlátját. Írj a %{contact_email} címre, ha növelni szeretnéd."
@@ -3246,8 +3251,8 @@ hu:
               Open Food Network mindig ingyenes lesz.
           hub_shop: Átvételi pont
           hub_shop_text1: >
-              A vállalkozásod a helyi élelmezési rendszer csomópontja. Más termelőktől
-              érkező árukat adhat át a vásárlóknak az átadóponton.
+              Szervezeted a helyi élelmezési rendszer csomópontja. Más termelőktől
+              érkező árukat is kínálhat a fogyasztóknak az átvételi ponton
           hub_shop_text2: >
               Az átvételi pontok sokféle formát ölthetnek, lehetnek élelmiszerszövetkezetek,
               egy fogyasztói csoport, egy zöldséges doboz program, vagy akár egy helyi
@@ -3285,7 +3290,7 @@ hu:
           producer_hub: Termelői Átvételi Pont
           producer_hub_text1: >
               Szervezeted a helyi élelmezési rendszer csomópontja. Más termelőktől
-              érkező árukat is kínálhat a fogyasztóknak az átadóponton.
+              érkező árukat is kínálhat a fogyasztóknak az átvételi ponton.
           producer_hub_text2: >
               A Termelői Átvételi Pontok többféle formában működhetnek. Lehet közösség
               által támogatott mezőgazdasági modell (CSA), vagy zöldségdoboz rendszer,
@@ -3307,7 +3312,7 @@ hu:
               stb. a termékeidet.
           producer_text2: >
               A termelők a saját termékek értékesítésén felül akár más termelőktől
-              érkező árukat is kínálhatnak a vásárlóknak amennyiben átadópontként
+              érkező árukat is kínálhatnak a fogyasztóknak amennyiben átvételi pontként
               is működnek.
           non_producer: Nem termelő
           non_producer_text1: >
@@ -4540,7 +4545,7 @@ hu:
         authorise: Engedélyezze
       open_orders:
         order: Rendelés
-        shop: Átadópont
+        shop: Átvételi Pont
         changes_allowed_until: Változások engedélyezettek ig
         items: Tételek
         total: Összesen
@@ -4550,7 +4555,7 @@ hu:
         until: Amíg
       past_orders:
         order: Rendelés
-        shop: Átadópont
+        shop: Átvételi Pont
         completed_at: 'Elkészült:'
         items: Tételek
         total: Összesen
@@ -4562,8 +4567,8 @@ hu:
         default?: Alapértelmezett?
         delete?: Töröl?
       cards:
-        authorised_shops: Engedélyezett átadópontok
-        authorised_shops_agreement: Ez azon átadópontok listája, amelyek megterhelhetik alapértelmezett hitelkártyáját az esetleges előfizetéseiért (azaz ismétlődő rendeléseiért). Kártyája adatait biztonságban tartjuk, és nem osztjuk meg az üzlet tulajdonosaival. Mindig értesítést kap, amikor felszámítják. Ha bejelöli az üzlet jelölőnégyzetét, beleegyezel abba, hogy felhatalmazod az üzletet, hogy utasításokat küldjön a kártyáját kibocsátó pénzintézetnek a fizetések fogadására az adott üzlettel létrehozott előfizetés feltételei szerint.
+        authorised_shops: Engedélyezett átvételi pontok
+        authorised_shops_agreement: Ez azon átvételi pontok listája, amelyek megterhelhetik alapértelmezett hitelkártyáját az esetleges előfizetéseiért (azaz ismétlődő rendeléseiért). Kártyája adatait biztonságban tartjuk, és nem osztjuk meg az üzlet tulajdonosaival. Mindig értesítést kap, amikor felszámítják. Ha bejelöli az üzlet jelölőnégyzetét, beleegyezel abba, hogy felhatalmazod az üzletet, hogy utasításokat küldjön a kártyáját kibocsátó pénzintézetnek a fizetések fogadására az adott üzlettel létrehozott előfizetés feltételei szerint.
         saved_cards_popover: Ez azon kártyák listája, amelyeket későbbi használatra ment el. A rendszer automatikusan kiválasztja az „alapértelmezett” kártyát a rendelés leadásakor, és ezt minden olyan üzlet megterhelheti, ahol ezt engedélyezted (lásd jobbra).
       authorised_shops:
         shop_name: "Átvételi pont neve"

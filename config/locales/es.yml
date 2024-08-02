@@ -1139,7 +1139,10 @@ es:
           remove_logo_confirm: "¿Está seguro de que desea eliminar este logo?"
           remove_logo_success: "Logo eliminado"
         connected_apps:
-          loading: "Cargando"
+          affiliate_sales_data:
+            loading: "Cargando"
+          discover_regen:
+            loading: "Cargando"
       actions:
         edit_profile: Configuración
         properties: Propiedades

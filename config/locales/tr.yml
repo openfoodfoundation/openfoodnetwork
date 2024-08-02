@@ -997,7 +997,10 @@ tr:
           customers: Müşteri
           active: AKTİF?
         connected_apps:
-          loading: "Yükleniyor"
+          affiliate_sales_data:
+            loading: "Yükleniyor"
+          discover_regen:
+            loading: "Yükleniyor"
       actions:
         edit_profile: Ayarlar
         properties: ÖZELLİKLER

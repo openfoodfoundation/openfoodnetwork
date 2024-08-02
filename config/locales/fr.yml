@@ -609,7 +609,7 @@ fr:
     show_n_more: Montrer + %{num}
     choose: "Choisir..."
     please_select: Veuillez choisir...
-    column_save_as_default: Sauvegarder par défaut
+    column_save_as_default: Sauvegarder
     columns: Colonnes
     actions: Actions
     viewing: "Vous regardez: %{current_view_name}"
@@ -799,8 +799,10 @@ fr:
       filters:
         search_products: Chercher des produits
         search_for_producers: Rechercher des producteurs
+        select_producer: Sélectionner producteur
         all_producers: Tous les producteurs
         search_for_categories: Rechercher
+        select_category: Sélectionner catégorie
         all_categories: Toutes les catégories
         producers:
           label: Producteurs
@@ -809,7 +811,10 @@ fr:
         search: Rechercher
       sort:
         pagination:
-          total_html: "<strong>%{count} produits</strong> trouvés selon vos critères de recherche. Résultats %{from} à %{to}."
+          total_html:
+            one: "<strong>%{count} produit</strong> trouvé pour vos critères de recherche. Affichage %{from} à %{to} ."
+            many: "<strong>%{count} produits</strong> trouvés pour vos critères de recherche. Affichage %{from} à %{to} ."
+            other: "<strong>%{count} produits</strong> trouvés pour vos critères de recherche. Affichage %{from} à %{to} ."
           per_page:
             show: Montrer
             per_page: "%{num} par page"
@@ -1291,28 +1296,45 @@ fr:
           custom_tab_content: "Contenu de l'onglet personnalisé"
         connected_apps:
           legend: "Applications connectées"
-          title: "Discover Regenerative"
-          tagline: "Autoriser Discover Regenerative à publier les informations de votre entreprise"
-          enable: "Autoriser le partage de données"
-          disable: "Arrêter le partage"
-          loading: "Chargement en cours"
-          need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
-          note: |
-              Votre compte Open Food Network est connecté à Discover Regenerative.
-              Ajouter et mettre à jour les informations sur votre liste Discover Regenerative ici.
-          link_label: "Gérer la liste"
-          description_html: |
-              <p>
-              Les producteurs éligibles peuvent mettre en avant leurs références Regenerative,
-              pratiques agricoles et plus à travers le listing du profil.
-              Simplifier comment les acheteurs peuvent trouver les produits regeneratives et se connecter
-              avec des producteurs.
-              </p>
-              <p>
-              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-              target="_blank"><b>En savoir plus sur Discover Regenerative</b>
-              <i class="icon-external-link"></i></a>
-              </p>
+          affiliate_sales_data:
+            title: "Programme de recherche INRAE / UFC QUE CHOISIR"
+            tagline: "Autoriser ce programme de recherche à accéder à vos données de commandes anonymisées"
+            enable: "Autoriser le partage de données"
+            disable: "Arrêter le partage"
+            loading: "Chargement en cours"
+            need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            description_html: |
+                <p>
+                L'INRAE et UFC QUE CHOISIR travaillent conjointement sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme.
+                </p>
+                <p>
+                <a href="https://apropos.coopcircuits.fr/"
+                target="_blank"><b>En savoir plus à propos de ce programme de recherche</b>
+                <i class="icon-external-link"></i></a>
+                </p>
+          discover_regen:
+            title: "Discover Regenerative"
+            tagline: "Autoriser Discover Regenerative à publier les informations de votre entreprise"
+            enable: "Autoriser le partage de données"
+            disable: "Arrêter le partage"
+            loading: "Chargement en cours"
+            need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            note: |
+                Votre compte Open Food Network est connecté à Discover Regenerative.
+                Ajouter et mettre à jour les informations sur votre liste Discover Regenerative ici.
+            link_label: "Gérer la liste"
+            description_html: |
+                <p>
+                Les producteurs éligibles peuvent mettre en avant leurs références Regenerative,
+                pratiques agricoles et plus à travers le listing du profil.
+                Simplifier comment les acheteurs peuvent trouver les produits regeneratives et se connecter
+                avec des producteurs.
+                </p>
+                <p>
+                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+                target="_blank"><b>En savoir plus sur Discover Regenerative</b>
+                <i class="icon-external-link"></i></a>
+                </p>
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés

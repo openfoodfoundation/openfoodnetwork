@@ -1146,7 +1146,10 @@ it:
           customers: Cliente
           active: Attivo?
         connected_apps:
-          loading: "Caricamento"
+          affiliate_sales_data:
+            loading: "Caricamento"
+          discover_regen:
+            loading: "Caricamento"
       actions:
         edit_profile: Impostazioni
         properties: Proprietà

@@ -969,7 +969,10 @@ pt:
           customers: Consumidor
           active: Activo?
         connected_apps:
-          loading: "A carregar"
+          affiliate_sales_data:
+            loading: "A carregar"
+          discover_regen:
+            loading: "A carregar"
       actions:
         edit_profile: Definições
         properties: Propriedades

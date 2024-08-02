@@ -811,7 +811,6 @@ el:
         search: Αναζήτηση
       sort:
         pagination:
-          total_html: "<strong>%{count}προϊόντα</strong> βρέθηκαν σύμφωνα με τα κριτήρια της αναζήτησής σας. Εμφανίζονται %{from} στα %{to}."
           per_page:
             show: Εμφάνιση
             per_page: "%{num}ανα σελίδα"
@@ -1216,6 +1215,7 @@ el:
           enabled: "Ενεργό"
           disabled: "Απενεργοποιημένο"
         social:
+          legend: "Κοινωνικός"
           twitter_placeholder: "π.χ. @the_prof"
           instagram_placeholder: "π.χ. the_prof"
           facebook_placeholder: "π.χ. www.facebook.com/PageNameHere"
@@ -1288,28 +1288,34 @@ el:
           custom_tab_content: "Περιεχόμενο για την προσαρμοσμένη καρτέλα"
         connected_apps:
           legend: "Μόνο οι διαχειριστές μπορούν να συνδέσουν εφαρμογές"
-          title: "Discover Regenerative"
-          tagline: "Να επιτρέψετε στο Discover Regenerative να δημοσιεύσει τις πληροφορίες της επιχείρησής σας."
-          enable: "Να επιτρέπεται η κοινοποίηση δεδομένων."
-          disable: "Διακοπή κοινοποίησης"
-          loading: "Φόρτωση"
-          need_to_be_manager: "Μόνο οι διαχειριστές μπορούν να συνδέουν εφαρμογές."
-          note: |
-              Ο λογαριασμός σας στο Open Food Network είναι συνδεδεμένος με το Discover Regenerative.
-              Προσθέστε ή ενημερώστε πληροφορίες για τη λίστα σας στο Discover Regenerative εδώ.
-          link_label: "Διαχείριση λίστας"
-          description_html: |
-              <p>
-              Οι επιλέξιμοι παραγωγοί μπορούν να παρουσιάσουν τις αναγεννητικές πιστοποιήσεις τους,
-              τις πρακτικές γεωργίας και άλλες πληροφορίες μέσω μιας καταχώρισης προφίλ.
-              Αυτό απλοποιεί τον τρόπο με τον οποίο οι αγοραστές μπορούν να βρουν αναγεννητικά προϊόντα και να συνδεθούν
-              με παραγωγούς που τους ενδιαφέρουν.
-              </p>
-              <p>
-              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-              target="_blank"><b>Μάθετε περισσότερα για το Discover Regenerative</b>
-              <i class="icon-external-link"></i></a>
-              </p>
+          affiliate_sales_data:
+            enable: "Να επιτρέπεται η κοινοποίηση δεδομένων."
+            disable: "Διακοπή κοινοποίησης"
+            loading: "Φόρτωση"
+            need_to_be_manager: "Μόνο οι διαχειριστές μπορούν να συνδέουν εφαρμογές."
+          discover_regen:
+            title: "Discover Regenerative"
+            tagline: "Να επιτρέψετε στο Discover Regenerative να δημοσιεύσει τις πληροφορίες της επιχείρησής σας."
+            enable: "Να επιτρέπεται η κοινοποίηση δεδομένων."
+            disable: "Διακοπή κοινοποίησης"
+            loading: "Φόρτωση"
+            need_to_be_manager: "Μόνο οι διαχειριστές μπορούν να συνδέουν εφαρμογές."
+            note: |
+                Ο λογαριασμός σας στο Open Food Network είναι συνδεδεμένος με το Discover Regenerative.
+                Προσθέστε ή ενημερώστε πληροφορίες για τη λίστα σας στο Discover Regenerative εδώ.
+            link_label: "Διαχείριση λίστας"
+            description_html: |
+                <p>
+                Οι επιλέξιμοι παραγωγοί μπορούν να παρουσιάσουν τις αναγεννητικές πιστοποιήσεις τους,
+                τις πρακτικές γεωργίας και άλλες πληροφορίες μέσω μιας καταχώρισης προφίλ.
+                Αυτό απλοποιεί τον τρόπο με τον οποίο οι αγοραστές μπορούν να βρουν αναγεννητικά προϊόντα και να συνδεθούν
+                με παραγωγούς που τους ενδιαφέρουν.
+                </p>
+                <p>
+                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+                target="_blank"><b>Μάθετε περισσότερα για το Discover Regenerative</b>
+                <i class="icon-external-link"></i></a>
+                </p>
       actions:
         edit_profile: Ρυθμήσεις
         properties: Ιδιότητες
@@ -1546,6 +1552,7 @@ el:
           primary_details: "Βασικές λεπτομέρειες"
           address: "Διεύθυνση"
           contact: "επικοινωνία"
+          social: "Κοινωνικός"
           about: "Σχετικά"
           business_details: "Λεπτομέρειες επιχείρησης "
           images: "Εικόνες"
@@ -1654,6 +1661,7 @@ el:
       table:
         select_and_search: "Επιλέξτε φίλτρα και κάντε κλικ στο %{option} για να αποκτήσετε πρόσβαση στα δεδομένα σας."
         headings:
+          hub: "Κεντρικό σημείο"
           customer_code: "Κωδικός"
           first_name: "Όνομα"
           last_name: "Επίθετο"
@@ -2009,15 +2017,15 @@ el:
   invoice_issued_on: "Το τιμολόγιο εκδόθηκε στις:"
   order_number: "Αριθμός παραγγελίας:"
   date_of_transaction: "Ημερομηνία συναλλαγής"
-  menu_1_title: "Καταστήματα"
+  menu_1_title: "Καταστηματα"
   menu_1_url: "/shops"
-  menu_2_title: "Χάρτης"
+  menu_2_title: "Χαρτης"
   menu_2_url: "/map"
-  menu_3_title: "Παραγωγοί"
+  menu_3_title: "Παραγωγοι"
   menu_3_url: "/producers"
   menu_4_title: "Ομάδες"
   menu_4_url: "/groups"
-  menu_5_title: "Σχετικά"
+  menu_5_title: "Σχετικα"
   menu_5_url: "https://about.openfoodnetwork.org.au/"
   menu_6_title: "Σύνδεση"
   menu_6_url: "https://openfoodnetwork.org/au/connect/"
@@ -2150,7 +2158,7 @@ el:
       cookies_policy_link_desc: "Αν θέλετε να μάθετε περισσότερα, ελέγξτε το"
       cookies_policy_link: "πολιτική cookies"
       cookies_accept_button: "Αποδοχή Cookies"
-  home_shop: Αγόρασε Τώρα
+  home_shop: Αγορασε Τωρα
   brandstory_headline: "Τροφή απευθείας από τον αγρό στο πιάτο μας"
   brandstory_intro: "Κάποιες φορές ο καλύτερος τρόπος για να διορθώσεις το σύστημα είναι να ξεκινήσεις ένα νέο..."
   brandstory_part1: "Ξεκινάμε από τη βάση. Με αγρότες και καλλιεργητές έτοιμους να πουν τις ιστορίες τους περήφανα και αληθινά. Με διανομείς έτοιμους να συνδέσουν τους ανθρώπους με προϊόντα δίκαια και ειλικρινά. Με αγοραστές που πιστεύουν ότι οι καλύτερες εβδομαδιαίες αποφάσεις αγορών μπορούν να αλλάξουν σοβαρά τον κόσμο."
@@ -2167,12 +2175,12 @@ el:
   system_step3: "3. Παραλαβή / Αποστολή"
   system_step3_text: "Περίμενε την παράδοση του φαγητού σου, ή επισκέψου τον παραγωγό ή το κατάστημα της περιοχής σου για μια πιο προσωπική επαφή. Η αγορά των τροφίμων είναι τόσο ποικιλόμορφη όσο η φύση ορίζει."
   cta_headline: "Αγορές που κάνουν τον κόσμο καλύτερο."
-  cta_label: "είμαι έτοιμος"
+  cta_label: "ειμαι ετοιμος"
   stats_headline: "Δημιουργούμε ένα νέο σύστημα διατροφής."
-  stats_producers: "Παραγωγοί τροφίμων"
-  stats_shops: "Καταστήματα τροφίμων"
-  stats_shoppers: "Αγοραστές τροφίμων"
-  stats_orders: "Παραγγελίες τροφίμων"
+  stats_producers: "Παραγωγοι τροφιμων"
+  stats_shops: "Καταστηματα τροφιμων"
+  stats_shoppers: "Καταναλωτες τροφιμων"
+  stats_orders: "Παραγγελιες τροφιμων"
   checkout_title: Ολοκλήρωση
   checkout_now: Ολοκλήρωση τώρα
   checkout_order_ready: Παραγγελία έτοιμη για
@@ -2830,7 +2838,7 @@ el:
   spree_admin_enterprises_none_create_a_new_enterprise: "ΔΗΜΙΟΥΡΓΗΣΤΕ ΝΕΑ ΕΠΙΧΕΙΡΗΣΗ"
   spree_admin_enterprises_none_text: "Δεν έχετε ακόμη επιχειρήσεις"
   spree_admin_enterprises_tabs_hubs: "HUBS"
-  spree_admin_enterprises_producers_manage_products: "ΔΙΑΧΕΙΡΙΣΗ ΠΡΟDΟΝΤΩΝ"
+  spree_admin_enterprises_producers_manage_products: "Διαχείριση προϊόντων"
   spree_admin_enterprises_create_new_product: "ΔΗΜΙΟΥΡΓΗΣΤΕ ΝΕΟ ΠΡΟDΟΝ"
   spree_admin_single_enterprise_alert_mail_confirmation: "Παρακαλώ επιβεβαιώστε τη διεύθυνση email για"
   spree_admin_single_enterprise_alert_mail_sent: "Έχουμε στείλει ένα email στο"
@@ -2857,14 +2865,14 @@ el:
   spree_user_enterprise_limit_error: "^%{email} δεν επιτρέπεται να κατέχει άλλες επιχειρήσεις (το όριο είναι %{enterprise_limit})."
   spree_variant_product_error: πρέπει να έχει τουλάχιστον μία παραλλαγή
   your_profil_live: "Το προφίλ σας ζωντανά"
-  see: "Βλέπω"
+  see: "ΕΜΦΑΝΙΣΗ"
   live: "ζω"
   manage: "Διαχείρηση"
   resend: "Ξαναστείλτε"
   add_and_manage_products: "Προσθήκη και διαχείριση προϊόντων"
-  add_and_manage_order_cycles: "Προσθήκη &amp; διαχείριση κύκλων παραγγελίας"
+  add_and_manage_order_cycles: "Προσθήκη & διαχείριση κύκλων παραγγελίας"
   manage_order_cycles: "Διαχείριση κύκλων παραγγελίας"
-  manage_products: "Διαχειριστείτε προϊόντα"
+  manage_products: "ΔΙΑΧΕΙΡΙΣΗ ΠΡΟΪΟΝΤΩΝ"
   edit_profile_details: "Επεξεργασία στοιχείων προφίλ"
   edit_profile_details_etc: "Αλλάξτε την περιγραφή του προφίλ σας, εικόνες κ.λπ."
   order_cycle: "Κύκλος Παραγγελειών"
@@ -2892,6 +2900,7 @@ el:
   hub_sidebar_red: "το κόκκινο"
   order_cycles_closed_for_hub: "Ο κόμβος που επιλέξατε είναι προσωρινά κλειστός για παραγγελίες. Παρακαλώ προσπαθήστε ξανά αργότερα."
   report_customers_distributor: "Διανομέας"
+  report_customers_hub: "Κεντρικό σημείο"
   report_customers_supplier: "Προμηθευτής"
   report_customers_cycle: "Κύκλος Παραγγελειών"
   report_customers_type: "Τύπος αναφοράς"

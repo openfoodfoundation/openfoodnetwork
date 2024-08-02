@@ -800,8 +800,10 @@ en_CA:
       filters:
         search_products: Search for products
         search_for_producers: Search for producers
+        select_producer: Select producer
         all_producers: All producers
         search_for_categories: Search for categories
+        select_category: Select category
         all_categories: All categories
         producers:
           label: Producers
@@ -810,7 +812,6 @@ en_CA:
         search: Search
       sort:
         pagination:
-          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
           per_page:
             show: Show
             per_page: "%{num} per page"
@@ -1290,25 +1291,33 @@ en_CA:
           custom_tab_content: "Content for custom tab"
         connected_apps:
           legend: "Connected apps"
-          title: "Discover Food Justice"
-          tagline: "Allow OFN Canada to publish your enterprise information."
-          enable: "Allow data sharing"
-          disable: "Stop sharing"
-          loading: "Loading"
-          need_to_be_manager: "Only managers can connect apps."
-          note: |
-              Your Open Food Network account is connected to Discover Food Justice.
-              Changes made to your OFN profile will automatically update your Discover Food Justice listing.  For any other changes please contact OFN Support.
-          link_label: "Manage listing"
-          description_html: |
-              <b><p>
-              Eligible producers can showcase call to actions to Volunteer Local, Buy Local, or Donate Local.
-              This simplifies how producers can connect in the Waterloo region around food justice and sovereignty.
-              </p>
-              <p>
-              <a href="https://foodsystemroundtablewr.ca/" target="_blank">Learn more about the Waterloo Food Commons Project
-              <i class="icon-external-link"></i></a>
-              </p>
+          affiliate_sales_data:
+            title: "INRAE / UFC QUE CHOISIR Research"
+            tagline: "Allow this research project to access your orders data anonymously"
+            enable: "Allow data sharing"
+            disable: "Stop sharing"
+            loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
+          discover_regen:
+            title: "Waterloo Food Directory"
+            tagline: "Allow OFN Canada to publish your enterprise information."
+            enable: "Allow data sharing"
+            disable: "Stop sharing"
+            loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
+            note: |
+                Your Open Food Network account is connected to the Waterloo Food Directory.
+                Changes made to your OFN profile will automatically update your Waterloo Food Directory listing.  For any other changes please contact OFN Support.
+            link_label: "Manage listing"
+            description_html: |
+                <b><p>
+                Eligible producers can showcase call to actions to Eat Local, Give Local, and/or Grow Local.
+                This simplifies how producers can connect in the Waterloo region around food justice and sovereignty.
+                </p>
+                <p>
+                <a href="https://foodsystemroundtablewr.ca/" target="_blank">Learn more about the Waterloo Food Commons Project
+                <i class="icon-external-link"></i></a>
+                </p>
       actions:
         edit_profile: Settings
         properties: Properties

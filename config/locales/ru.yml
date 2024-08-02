@@ -797,7 +797,6 @@ ru:
         search: Поиск
       sort:
         pagination:
-          total_html: "<strong>%{count} товаров</strong> найдено по вашим критериям поиска. Показаны %{from} до %{to} ."
           per_page:
             show: Показывать
             per_page: "%{num} на странице"
@@ -1275,15 +1274,20 @@ ru:
           custom_tab_content: "Контент для пользовательской вкладки"
         connected_apps:
           legend: "Подключенные приложения"
-          title: "Discover Regenerative"
-          tagline: "Разрешите Discover Regenerative публиковать информацию о вашем предприятии."
-          enable: "Разрешить обмен данными"
-          disable: "Прекратить обмен данными"
-          loading: "Загружается"
-          note: |
-              Ваша учетная запись Открытой Сети Продуктов подключена к Discover Regenerative.
-              Добавьте или обновите информацию о своем списке Discover Regenerative здесь.
-          link_label: "Управление списком"
+          affiliate_sales_data:
+            enable: "Разрешить обмен данными"
+            disable: "Прекратить обмен данными"
+            loading: "Загружается"
+          discover_regen:
+            title: "Discover Regenerative"
+            tagline: "Разрешите Discover Regenerative публиковать информацию о вашем предприятии."
+            enable: "Разрешить обмен данными"
+            disable: "Прекратить обмен данными"
+            loading: "Загружается"
+            note: |
+                Ваша учетная запись Открытой Сети Продуктов подключена к Discover Regenerative.
+                Добавьте или обновите информацию о своем списке Discover Regenerative здесь.
+            link_label: "Управление списком"
       actions:
         edit_profile: Настройки
         properties: Свойства

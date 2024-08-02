@@ -800,8 +800,10 @@ en_FR:
       filters:
         search_products: Search for products
         search_for_producers: Search for producers
+        select_producer: Select producer
         all_producers: All producers
         search_for_categories: Search for categories
+        select_category: Select category
         all_categories: All categories
         producers:
           label: Producers
@@ -810,7 +812,9 @@ en_FR:
         search: Search
       sort:
         pagination:
-          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
+          total_html:
+            one: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
+            other: "<strong>%{count} products</strong> found for your search criteria. Showing %{from} to %{to}."
           per_page:
             show: Show
             per_page: "%{num} per page"
@@ -1290,28 +1294,45 @@ en_FR:
           custom_tab_content: "Content for custom tab"
         connected_apps:
           legend: "Connected apps"
-          title: "Discover Regenerative"
-          tagline: "Allow Discover Regenerative to publish your enterprise information."
-          enable: "Allow data sharing"
-          disable: "Stop sharing"
-          loading: "Loading"
-          need_to_be_manager: "Only managers can connect apps."
-          note: |
-              Your Open Food Network account is connected to Discover Regenerative.
-              Add or update information on your Discover Regenerative listing here.
-          link_label: "Manage listing"
-          description_html: |
-              <p>
-              Eligible producers can showcase their regenerative credentials,
-              farming practices and more through a profile listing.
-              Simplifying how buyers can find regenerative produce and connect
-              with producers of interest.
-              </p>
-              <p>
-              <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-              target="_blank"><b>Learn more about Discover Regenerative</b>
-              <i class="icon-external-link"></i></a>
-              </p>
+          affiliate_sales_data:
+            title: "INRAE / UFC QUE CHOISIR Research"
+            tagline: "Allow this research project to access your orders data anonymously"
+            enable: "Allow data sharing"
+            disable: "Stop sharing"
+            loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
+            description_html: |
+                <p>
+                INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project.
+                </p>
+                <p>
+                <a href="https://apropos.coopcircuits.fr/"
+                target="_blank"><b>Learn more about this research project</b>
+                <i class="icon-external-link"></i></a>
+                </p>
+          discover_regen:
+            title: "Discover Regenerative"
+            tagline: "Allow Discover Regenerative to publish your enterprise information."
+            enable: "Allow data sharing"
+            disable: "Stop sharing"
+            loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
+            note: |
+                Your Open Food Network account is connected to Discover Regenerative.
+                Add or update information on your Discover Regenerative listing here.
+            link_label: "Manage listing"
+            description_html: |
+                <p>
+                Eligible producers can showcase their regenerative credentials,
+                farming practices and more through a profile listing.
+                Simplifying how buyers can find regenerative produce and connect
+                with producers of interest.
+                </p>
+                <p>
+                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
+                target="_blank"><b>Learn more about Discover Regenerative</b>
+                <i class="icon-external-link"></i></a>
+                </p>
       actions:
         edit_profile: Settings
         properties: Properties

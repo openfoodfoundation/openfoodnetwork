@@ -755,7 +755,6 @@ ca:
         search: Cerca
       sort:
         pagination:
-          total_html: "<strong>%{count} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
           per_page:
             show: Mostra
             per_page: "%{num} per pàgina"
@@ -1197,7 +1196,10 @@ ca:
           remove_logo_success: "Logo eliminat"
           white_label_logo_link_label: "Enllaç del logotip utilitzat a botiga"
         connected_apps:
-          loading: "S'està carregant"
+          affiliate_sales_data:
+            loading: "S'està carregant"
+          discover_regen:
+            loading: "S'està carregant"
       actions:
         edit_profile: Configuració
         properties: Propietats

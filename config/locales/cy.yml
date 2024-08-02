@@ -785,7 +785,6 @@ cy:
         search: Chwilio
       sort:
         pagination:
-          total_html: "<strong>%{count}Cafwyd hyd i </strong> cynnyrch ar gyfer eich meini prawf chwilio. Yn dangos %{from} i %{to}."
           per_page:
             show: Dangos
             per_page: "%{num} fesul tudalen"
@@ -1254,10 +1253,15 @@ cy:
           custom_tab_content: "Cynnwys y tab pwrpasol"
         connected_apps:
           legend: "Apiau cysylltiedig"
-          enable: "Caniatáu rhannu data"
-          disable: "Rhoi’r gorau i rannu"
-          loading: "Yn llwytho"
-          link_label: "Rheoli’r rhestru"
+          affiliate_sales_data:
+            enable: "Caniatáu rhannu data"
+            disable: "Rhoi’r gorau i rannu"
+            loading: "Yn llwytho"
+          discover_regen:
+            enable: "Caniatáu rhannu data"
+            disable: "Rhoi’r gorau i rannu"
+            loading: "Yn llwytho"
+            link_label: "Rheoli’r rhestru"
       actions:
         edit_profile: Gosodiadau
         properties: Manylion

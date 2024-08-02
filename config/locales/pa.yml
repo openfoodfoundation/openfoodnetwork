@@ -761,7 +761,6 @@ pa:
         search: ਖੋਜੋ
       sort:
         pagination:
-          total_html: "ਤੁਹਾਡੇ ਖੋਜ ਮਾਪਦੰਡ ਲਈ <strong>%{count} ਉਤਪਾਦ</strong> ਮਿਲੇ ਹਨ। %{from} ਤੋਂ %{to} ਦਿਖਾ ਰਹੇ ਹਨ।"
           per_page:
             show: ਵਿਖਾਓ
             per_page: "%{num} ਪ੍ਰਤੀ ਪੇਜ"
@@ -1216,7 +1215,10 @@ pa:
           custom_tab_title: "ਕਸਟਮ ਟੈਬ ਲਈ ਸਿਰਲੇਖ"
           custom_tab_content: "ਕਸਟਮ ਟੈਬ ਲਈ ਕੰਟੇਂਟ"
         connected_apps:
-          loading: "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+          affiliate_sales_data:
+            loading: "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+          discover_regen:
+            loading: "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
       actions:
         edit_profile: ਸੈਟਿੰਗਾਂ
         properties: ਪ੍ਰਾਪਰਟੀਜ਼

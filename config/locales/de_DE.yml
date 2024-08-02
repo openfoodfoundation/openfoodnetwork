@@ -772,7 +772,6 @@ de_DE:
         search: Suche
       sort:
         pagination:
-          total_html: "<strong>%{total} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
             per_page: "%{num} pro Seite"
@@ -1239,7 +1238,10 @@ de_DE:
           custom_tab_content: "Inhalt des Reiters"
         connected_apps:
           legend: "Verknüpfte Apps"
-          loading: "Wird geladen ..."
+          affiliate_sales_data:
+            loading: "Wird geladen ..."
+          discover_regen:
+            loading: "Wird geladen ..."
       actions:
         edit_profile: Einstellungen
         properties: Eigenschaften
