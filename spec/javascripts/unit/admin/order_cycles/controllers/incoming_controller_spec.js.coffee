@@ -17,6 +17,8 @@ describe 'AdminOrderCycleIncomingCtrl', ->
       preventDefault: jasmine.createSpy('preventDefault')
     OrderCycle =
       addSupplier: jasmine.createSpy('addSupplier')
+    EnterpriseFee =
+      index: jasmine.createSpy('index').and.returnValue('enterprise fees list')
     ocInstance = {}
 
     module('admin.orderCycles')

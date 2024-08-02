@@ -138,6 +138,38 @@ RSpec.describe '
     let!(:distributor_managed_fee) {
       create(:enterprise_fee, enterprise: distributor_managed, name: 'Managed distributor fee')
     }
+    let!(:supplier_permitted_fee1) {
+      create(:enterprise_fee, :per_item, enterprise: supplier_permitted,
+                                         name: 'Supplier distributor fee1')
+    }
+    let!(:supplier_permitted_fee2) {
+      create(:enterprise_fee, :flat_rate, enterprise: supplier_permitted,
+                                          name: 'Supplier distributor fee2')
+    }
+    let!(:supplier_permitted_fee3) {
+      create(:enterprise_fee, :per_item, enterprise: supplier_permitted,
+                                         name: 'Supplier distributor fee3')
+    }
+    let!(:supplier_permitted_fee4) {
+      create(:enterprise_fee, :flat_rate, enterprise: supplier_permitted,
+                                          name: 'Supplier distributor fee4')
+    }
+    let!(:distributor_permitted_fee1) {
+      create(:enterprise_fee, :per_item, enterprise: distributor_permitted,
+                                         name: 'Distributor distributor fee1')
+    }
+    let!(:distributor_permitted_fee2) {
+      create(:enterprise_fee, :flat_rate, enterprise: distributor_permitted,
+                                          name: 'Distributor distributor fee2')
+    }
+    let!(:distributor_permitted_fee3) {
+      create(:enterprise_fee, :per_item, enterprise: distributor_permitted,
+                                         name: 'Distributor distributor fee3')
+    }
+    let!(:distributor_permitted_fee4) {
+      create(:enterprise_fee, :flat_rate, enterprise: distributor_permitted,
+                                          name: 'Distributor distributor fee4')
+    }
     let!(:shipping_method) {
       create(:shipping_method,
              distributors: [distributor_managed, distributor_unmanaged, distributor_permitted])
@@ -256,6 +288,17 @@ RSpec.describe '
         click_button 'Add supplier'
         expect(page).to have_content "Permitted supplier"
 
+        within("tr.supplier-#{supplier_permitted.id}") { click_button 'Add fee' }
+        expect(page).to have_select(
+          "order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id", minimum: 1
+        )
+        select "Permitted supplier",
+               from: "order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_id"
+        expect(page).to have_select(
+          "order_cycle_incoming_exchange_1_enterprise_fees_0_enterprise_fee_id",
+          options: ["", supplier_permitted_fee1.name, supplier_permitted_fee3.name]
+        )
+
         select_incoming_variant supplier_managed, 0, variant_managed
         select_incoming_variant supplier_permitted, 1, variant_permitted
 
@@ -271,6 +314,18 @@ RSpec.describe '
         select 'Permitted distributor', from: 'new_distributor_id'
         click_button 'Add distributor'
         expect(page).to have_content "Permitted distributor"
+
+        within("tr.distributor-#{distributor_permitted.id}") { click_button 'Add fee' }
+        expect(page).to have_select(
+          "order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id", minimum: 1
+        )
+        select "Permitted distributor",
+               from: "order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_id"
+        expect(page).to have_select(
+          "order_cycle_outgoing_exchange_1_enterprise_fees_0_enterprise_fee_id",
+          options: ["", distributor_permitted_fee1.name, distributor_permitted_fee2.name,
+                    distributor_permitted_fee3.name, distributor_permitted_fee4.name]
+        )
 
         expect(page).to have_input 'order_cycle_outgoing_exchange_0_pickup_time'
         fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'

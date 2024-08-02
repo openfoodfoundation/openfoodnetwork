@@ -6,6 +6,8 @@ angular.module('admin.orderCycles').factory('EnterpriseFee', ($resource) ->
       params:
         order_cycle_id: '@order_cycle_id'
         coordinator_id: '@coordinator_id'
+        per_item: '@per_item'
+        per_order: '@per_order'
   })
 
   {
