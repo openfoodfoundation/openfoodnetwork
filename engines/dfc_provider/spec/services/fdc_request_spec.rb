@@ -8,7 +8,7 @@ RSpec.describe FdcRequest do
   let(:user) { build(:oidc_user) }
   let(:account) { user.oidc_account }
   let(:url) {
-    "https://food-data-collaboration-produc-fe870152f634.herokuapp.com/fdc/products?shop=test-hodmedod.myshopify.com"
+    "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
   }
 
   it "refreshes the access token and retrieves a catalog", vcr: true do
@@ -27,9 +27,8 @@ RSpec.describe FdcRequest do
     }
 
     json = JSON.parse(response)
-    expect(json["message"]).to eq "Products retrieved successfully"
 
-    graph = DfcIo.import(json["products"])
+    graph = DfcIo.import(json)
     products = graph.select { |s| s.semanticType == "dfc-b:SuppliedProduct" }
     expect(products).to be_present
   end
