@@ -761,6 +761,7 @@ pa:
         search: ਖੋਜੋ
       sort:
         pagination:
+          total_html: "ਤੁਹਾਡੇ ਖੋਜ ਮਾਪਦੰਡ ਲਈ <strong>%{total} ਉਤਪਾਦ</strong> ਮਿਲੇ ਹਨ। %{from} ਤੋਂ %{to} ਦਿਖਾ ਰਹੇ ਹਨ।"
           per_page:
             show: ਵਿਖਾਓ
             per_page: "%{num} ਪ੍ਰਤੀ ਪੇਜ"

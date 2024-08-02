@@ -785,6 +785,7 @@ cy:
         search: Chwilio
       sort:
         pagination:
+          total_html: "<strong>%{total}Cafwyd hyd i </strong> cynnyrch ar gyfer eich meini prawf chwilio. Yn dangos %{from} i %{to}."
           per_page:
             show: Dangos
             per_page: "%{num} fesul tudalen"
