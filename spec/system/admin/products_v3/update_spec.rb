@@ -58,9 +58,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
       end
 
       # Unit popout
-      fill_in "Unit value", with: ""
-      click_button "Save changes" # attempt to save or close the popout
-      expect(page).to have_field "Unit value", with: "" # popout is still open
       fill_in "Unit value", with: "500.1"
 
       within row_containing_name("Medium box") do

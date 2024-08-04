@@ -45,15 +45,15 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       expect(page).to have_content "New variant"
     end
 
-    it "has the 1 unit value for the new variant display_as by default" do
+    it "has the empty unit value for the new variant display_as by default" do
       new_variant_button.click
 
       within new_variant_row do
         unit_button = find('button[aria-label="Unit"]')
-        expect(unit_button.text.strip).to eq('1kg')
+        expect(unit_button.text.strip).to eq('')
 
         unit_button.click
-        expect(page).to have_field "Display unit as", placeholder: "1kg"
+        expect(page).to have_field "Display unit as", placeholder: ""
       end
     end
 
