@@ -16,8 +16,8 @@ RSpec.describe Admin::ProductsHelper do
     context 'when unit_value is nil' do
       before { variant.update_column(:unit_value, nil) }
 
-      it 'defaults to 1 and returns the scaled unit value with the description' do
-        expect(helper.unit_value_with_description(variant)).to eq('0.001 kg')
+      it 'returns the description' do
+        expect(helper.unit_value_with_description(variant)).to eq('kg')
       end
     end
 
@@ -40,8 +40,8 @@ RSpec.describe Admin::ProductsHelper do
     context 'when both unit_value and unit_description are nil' do
       before { variant.update_columns(unit_description: nil, unit_value: nil) }
 
-      it 'returns the default unit value without description' do
-        expect(helper.unit_value_with_description(variant)).to eq('0.001')
+      it 'returns empty string' do
+        expect(helper.unit_value_with_description(variant)).to eq('')
       end
     end
   end
