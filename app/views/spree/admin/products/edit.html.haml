@@ -1,7 +1,7 @@
 = admin_inject_available_units
 
 - content_for :page_actions do
-  %li= button_link_to t('admin.products.back_to_products_list'), "#{admin_products_path}#{(@url_filters.empty? ? "" : "#?#{@url_filters.to_query}")}", :icon => 'icon-arrow-left'
+  %li= button_link_to t('admin.products.back_to_products_list'), products_return_to_url, :icon => 'icon-arrow-left'
   %li#new_product_link
     = button_link_to t(:new_product), new_object_url, { :icon => 'icon-plus', :id => 'admin_new_product' }
 
@@ -16,4 +16,4 @@
     .form-buttons.filter-actions.actions
       = button t(:update), 'icon-refresh'
 
-      = button_link_to t(:cancel), "#{collection_url}#{(@url_filters.empty? ? "" : "#?#{@url_filters.to_query}")}", icon: 'icon-remove'
+      = button_link_to t(:cancel), products_return_to_url, icon: 'icon-remove'

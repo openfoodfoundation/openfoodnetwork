@@ -27,5 +27,9 @@ module Admin
 
       [precised_unit_value, variant.unit_description].compact_blank.join(" ")
     end
+
+    def products_return_to_url
+      session[:products_return_to_url] || admin_products_url
+    end
   end
 end

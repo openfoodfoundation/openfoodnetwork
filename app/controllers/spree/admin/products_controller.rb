@@ -10,6 +10,7 @@ module Spree
       include OpenFoodNetwork::SpreeApiKeyLoader
       include OrderCyclesHelper
       include EnterprisesHelper
+      helper ::Admin::ProductsHelper
 
       before_action :load_data
       before_action :load_producers, only: [:index, :new]
