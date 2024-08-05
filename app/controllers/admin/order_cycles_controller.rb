@@ -310,8 +310,7 @@ module Admin
     def same_dates(date, string)
       false unless date && string
 
-      DateTime.parse(string).strftime('%Y-%m-%d %H:%M') ==
-        date.to_datetime.strftime('%Y-%m-%d %H:%M')
+      DateTime.parse(string).to_fs(:short) == date.to_fs(:short)
     end
   end
 end
