@@ -5,6 +5,13 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'simplecov' if ENV["COVERAGE"]
+require 'simplecov-lcov'
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::LcovFormatter,
+])
+require 'undercover'
+
 require 'rubygems'
 require 'pry' unless ENV['CI']
 require 'view_component/test_helpers'
