@@ -811,10 +811,7 @@ fr:
         search: Rechercher
       sort:
         pagination:
-          total_html:
-            one: "<strong>%{count} produit</strong> trouvé pour vos critères de recherche. Affichage %{from} à %{to} ."
-            many: "<strong>%{count} produits</strong> trouvés pour vos critères de recherche. Affichage %{from} à %{to} ."
-            other: "<strong>%{count} produits</strong> trouvés pour vos critères de recherche. Affichage %{from} à %{to} ."
+          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Résultats %{from} à %{to}."
           per_page:
             show: Montrer
             per_page: "%{num} par page"

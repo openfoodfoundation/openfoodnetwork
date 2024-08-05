@@ -772,6 +772,7 @@ ml:
         search: തിരയുക
       sort:
         pagination:
+          total_html: "നിങ്ങളുടെ തിരയൽ മാനദണ്ഡങ്ങൾക്കനുസരിച്ച് <strong>%{total} ഉൽപ്പന്നങ്ങൾ</strong> കണ്ടെത്തി. %{from} മുതൽ %{to} വരെ കാണിക്കുന്നു."
           per_page:
             show: കാണിക്കുക
             per_page: "ഓരോ പേജിലും %{num}"

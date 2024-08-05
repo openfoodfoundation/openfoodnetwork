@@ -811,6 +811,7 @@ el:
         search: Αναζήτηση
       sort:
         pagination:
+          total_html: "<strong>%{total}προϊόντα</strong> βρέθηκαν σύμφωνα με τα κριτήρια της αναζήτησής σας. Εμφανίζονται %{from} στα %{to}."
           per_page:
             show: Εμφάνιση
             per_page: "%{num}ανα σελίδα"
