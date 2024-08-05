@@ -782,8 +782,10 @@ en_GB:
       filters:
         search_products: Search for products
         search_for_producers: Search for producers
+        select_producer: Select producer
         all_producers: All producers
         search_for_categories: Search for categories
+        select_category: Select category
         all_categories: All categories
         producers:
           label: Producer
@@ -792,6 +794,7 @@ en_GB:
         search: Search
       sort:
         pagination:
+          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
           per_page:
             show: Show
             per_page: "%{num} per page"
@@ -802,12 +805,15 @@ en_GB:
         no_products_found_for_search: No products found for your search criteria
       table:
         changed_summary:
-          one: "%{count}product modified."
-          other: "%{count}products modified."
+          one: "%{count} product modified."
+          other: "%{count} products modified."
         error_summary:
           saved:
-            one: "%{count}product was saved correctly, but "
-            other: "%{count}products were saved correctly, but "
+            one: "%{count} product was saved correctly, but "
+            other: "%{count} products were saved correctly, but "
+          invalid:
+            one: "%{count} product could not be saved. Please review the errors and try again."
+            other: "%{count} products could not be saved. Please review the errors and try again."
         reset: Discard changes
         save: Save changes
       product_variant_row:
@@ -3476,7 +3482,7 @@ en_GB:
       one_override: one override
       overrides: overrides
       remain_unsaved: remain unsaved.
-      no_changes_to_save: No changes to save.'
+      no_changes_to_save: No changes to save.
       no_authorisation: "I couldn't get authorisation to save those changes, so they remain unsaved."
       some_trouble: "I had some trouble saving: %{errors}"
       changing_on_hand_stock: Changing 'in stock' stock levels...

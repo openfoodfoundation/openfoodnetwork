@@ -791,6 +791,7 @@ en_IE:
         search: Search
       sort:
         pagination:
+          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
           per_page:
             show: Show
             per_page: "%{num} per page"

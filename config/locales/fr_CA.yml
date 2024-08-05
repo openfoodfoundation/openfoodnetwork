@@ -810,6 +810,7 @@ fr_CA:
         search: Chercher
       sort:
         pagination:
+          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
           per_page:
             show: Montrer
             per_page: "%{num} par page"

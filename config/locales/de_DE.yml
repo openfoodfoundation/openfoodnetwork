@@ -772,6 +772,7 @@ de_DE:
         search: Suche
       sort:
         pagination:
+          total_html: "<strong>%{total} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
             per_page: "%{num} pro Seite"
