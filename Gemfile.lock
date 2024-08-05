@@ -974,7 +974,6 @@ DEPENDENCIES
   sidekiq
   sidekiq-scheduler
   simplecov
-  simplecov-html
   simplecov-lcov
   spreadsheet_architect
   spring

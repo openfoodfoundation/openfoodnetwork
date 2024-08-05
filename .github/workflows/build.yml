@@ -86,6 +86,11 @@ jobs:
           git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
           bin/rake knapsack_pro:rspec
 
+      - name: Check code coverage changes
+
+        run: |
+          bundle exec undercover --compare origin/master
+
   models:
     runs-on: ubuntu-22.04
     services:
@@ -144,6 +149,11 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/models/**/*_spec.rb}" 
         run: |
           bin/rake knapsack_pro:rspec
+
+      - name: Check code coverage changes
+
+        run: |
+          bundle exec undercover --compare origin/master
 
   system_admin:
     runs-on: ubuntu-22.04
@@ -222,6 +232,11 @@ jobs:
           path: tmp/capybara/screenshots/*.png
           retention-days: 7
           if-no-files-found: ignore
+          
+      - name: Check code coverage changes
+
+        run: |
+          bundle exec undercover --compare origin/master
 
   system_consumer:
     runs-on: ubuntu-22.04
