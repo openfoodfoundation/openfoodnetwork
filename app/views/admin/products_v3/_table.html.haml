@@ -47,7 +47,7 @@
                 .form-buttons
                   %a.button.reset.medium{ href: admin_products_path(page: @page, per_page: @per_page, search_term: @search_term, producer_id: @producer_id, category_id: @category_id), 'data-turbo': "false" }
                     = t('.reset')
-                  = form.submit t('.save'), class: "medium"
+                  = form.submit t('.save'), { class: "medium", data: { action: "click->bulk-form#popoutEmptyVariantUnit" }}
       %tr
         %th.col-image.align-left= # image
         = render partial: 'spree/admin/shared/stimulus_sortable_header',

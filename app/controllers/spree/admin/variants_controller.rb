@@ -5,6 +5,8 @@ require 'open_food_network/scope_variants_for_search'
 module Spree
   module Admin
     class VariantsController < ::Admin::ResourceController
+      helper ::Admin::ProductsHelper
+
       belongs_to 'spree/product'
 
       before_action :load_data, only: [:new, :edit]
