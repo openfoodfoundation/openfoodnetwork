@@ -749,6 +749,8 @@ en:
         connected_apps_enabled:
           discover_regen: Discover Regenerative portal
           affiliate_sales_data: DFC anonymised orders API for research purposes
+      update:
+        resource: Connected app settings
 
     customers:
       index:

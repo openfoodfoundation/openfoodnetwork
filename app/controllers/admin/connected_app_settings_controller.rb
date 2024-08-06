@@ -7,6 +7,7 @@ module Admin
 
       respond_to do |format|
         format.html {
+          flash[:success] = t(:successfully_updated, resource: t('.resource'))
           redirect_to main_app.edit_admin_connected_app_settings_path
         }
       end
