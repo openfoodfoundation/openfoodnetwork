@@ -33,6 +33,10 @@ Shoulda::Matchers.configure do |config|
 end
 
 require 'knapsack_pro'
+KnapsackPro::Hooks::Queue.before_queue do
+  SimpleCov.command_name("rspec_ci_node_#{KnapsackPro::Config::Env.ci_node_index}")
+end
+
 KnapsackPro::Adapters::RSpecAdapter.bind
 
 # Allow connections to selenium whilst raising errors when connecting to external sites
