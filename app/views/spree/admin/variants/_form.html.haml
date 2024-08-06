@@ -11,23 +11,21 @@
       = f.text_field :display_name, class: "fullwidth", placeholder: t('.display_name_placeholder')
 
     .field{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
-      -#TODO translation
-      = f.label :unit_scale, raw(t(:unit_scale) + content_tag(:span, ' *', :class => 'required'))
+      = f.label :unit_scale, raw(t('.unit_scale') + content_tag(:span, ' *', :class => 'required'))
       = f.hidden_field :variant_unit
       = f.hidden_field :variant_unit_scale
       = f.select :variant_unit_with_scale,
           options_for_select(WeightsAndMeasures.variant_unit_options, @variant.variant_unit_with_scale),
           { include_blank: true },
-          { class: "fullwidth no-input", 'aria-label': t('admin.products_page.columns.unit_scale'), data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }', action: "change->toggle-control#displayIfMatch" } }
+          { class: "fullwidth no-input", 'aria-label': t('.unit_scale'), data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }', action: "change->toggle-control#displayIfMatch" } }
       = error_message_on @variant, :variant_unit, 'data-toggle-control-target': 'control'
       .field
         = f.text_field :variant_unit_name, 'aria-label': t('items'), 'data-toggle-control-target': 'control', style: (@variant.variant_unit == "items" ? "" : "display: none")
         = error_message_on @variant, :variant_unit_name, 'data-toggle-control-target': 'control'
     
     .field.popout{'data-controller': "popout", 'data-popout-update-display-value': "false"}
-      -#TODO translation
-      = f.label :unit, raw(t(:unit) + content_tag(:span, ' *', :class => 'required'))
-      = f.button :unit_to_display, class: "popout__button", 'aria-label': t('admin.products_page.columns.unit'), 'data-popout-target': "button" do
+      = f.label :unit, raw(t('.unit') + content_tag(:span, ' *', :class => 'required'))
+      = f.button :unit_to_display, class: "popout__button", 'aria-label': t('.unit'), 'data-popout-target': "button" do
         = @variant.unit_to_display # Show the generated summary of unit values
       %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
         .field
@@ -35,9 +33,9 @@
           = f.hidden_field :unit_value
           = f.hidden_field :unit_description
           = f.text_field :unit_value_with_description,
-              value: unit_value_with_description(@variant), 'aria-label': t('admin.products_page.columns.unit_value'), required: true
+              value: unit_value_with_description(@variant), 'aria-label': t('.unit_value'), required: true
         .field
-          = f.label :display_as, t('admin.products_page.columns.display_as')
+          = f.label :display_as, t('.display_as')
           = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(@variant).name
       = error_message_on @variant, :unit_value
 
@@ -46,7 +44,7 @@
         = f.label :sku, t('.sku')
         = f.text_field :sku, class: 'fullwidth'
       .field
-        = f.label :price, raw(t(:price) + content_tag(:span, ' *', :class => 'required'))
+        = f.label :price, raw(t('.price') + content_tag(:span, ' *', :class => 'required'))
         = f.text_field :price, class: 'fullwidth', value: number_to_currency(@variant.price, unit: '')&.strip
       .field
         = hidden_field_tag 'variant_variant_unit', @variant.variant_unit
@@ -96,7 +94,7 @@
       = f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, {}, { class: 'select2 fullwidth' })
 
     .field
-      = f.label :primary_taxon, t('spree.admin.products.primary_taxon_form.product_category')
+      = f.label :primary_taxon, t('.variant_category')
       = f.collection_select(:primary_taxon_id, Spree::Taxon.order(:name), :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
 
     .field
