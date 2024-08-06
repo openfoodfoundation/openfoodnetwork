@@ -11,6 +11,9 @@
     = t('.info_html')
 
     .field
+      -# Blank value in case nothing is selected
+      = hidden_field_tag("preferences[connected_apps_enabled][]", "")
+
       - ConnectedApp::TYPES.each do |type|
         %label
           = check_box_tag("preferences[connected_apps_enabled][]", type,

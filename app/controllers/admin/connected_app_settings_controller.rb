@@ -15,7 +15,7 @@ module Admin
     private
 
     def connected_apps_enabled
-      params.require(:preferences).require(:connected_apps_enabled).join(",")
+      params.require(:preferences).require(:connected_apps_enabled).compact_blank.join(",")
     end
   end
 end
