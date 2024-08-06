@@ -6,6 +6,8 @@ import UnitPrices from "js/services/unit_prices";
 //
 // TODO refactor so we can extract what's common with Bulk product page
 export default class EditVariantController extends Controller {
+  static targets = ["onHand"];
+
   connect() {
     this.unitPrices = new UnitPrices();
     // idea: create a helper that includes a nice getter/setter for Rails model attr values, just pass it the attribute name.
@@ -65,6 +67,17 @@ export default class EditVariantController extends Controller {
 
   disconnect() {
     // Make sure to clean up anything that happened outside
+  }
+
+  toggleOnHand(event) {
+    if (event.target.checked === true) {
+      this.onHandTarget.dataStock = this.onHandTarget.value;
+      this.onHandTarget.value = I18n.t("admin.products.variants.infinity");
+      this.onHandTarget.disabled = "disabled";
+    } else {
+      this.onHandTarget.removeAttribute("disabled");
+      this.onHandTarget.value = this.onHandTarget.dataStock;
+    }
   }
 
   // private
@@ -156,14 +169,4 @@ export default class EditVariantController extends Controller {
     this.weight = this.element.querySelector('[id="variant_weight"]');
     this.weight.parentElement.style.display = display;
   }
-
-  //#showWeight() {
-  //  this.weight = this.element.querySelector('[id="variant_weight"]');
-  //  this.weight.parentElement.style.display= "block"
-  //}
-
-  //#hideWeight() {
-  //  this.weight = this.element.querySelector('[id="variant_weight"]');
-  //  this.weight.parentElement.style.display= "none"
-  //}
 }
