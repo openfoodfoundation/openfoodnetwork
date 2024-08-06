@@ -68,6 +68,8 @@ class CheckoutController < BaseController
 
   def clear_invalid_payments
     @order.payments.with_state(:invalid).delete_all
+    # todo: delete all invalid payments, and somehow remove them from the association without reloading any valid payments?
+    #  how about loop through them, delete and reload one by one.
   end
 
   def confirm_order
