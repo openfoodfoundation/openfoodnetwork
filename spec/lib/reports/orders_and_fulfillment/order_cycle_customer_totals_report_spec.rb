@@ -35,7 +35,7 @@ RSpec.describe Reporting::Reports::OrdersAndFulfillment::OrderCycleCustomerTotal
       end
     end
     let(:comparison_report) do
-      File.read(Rails.root.join(report_file_name))
+      Rails.root.join(report_file_name).read
     end
     let(:report_file_name) do
       "spec/fixtures/reports/orders_and_fulfillment/order_cycle_customer_totals_report.csv"
