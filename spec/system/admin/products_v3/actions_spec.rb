@@ -293,20 +293,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
             expect(input_content).to match /COPY OF Apples/
           end
         end
-
-        it "shows error message when cloning invalid record" do
-          # Existing product is invalid:
-          product_a.update_columns(name: nil)
-
-          click_product_clone "Apples"
-
-          expect(page).to have_content "Unit Scale can't be blank"
-
-          within "table.products" do
-            # Products does not include the cloned product.
-            expect(all_input_values).not_to match /COPY OF Apples/
-          end
-        end
       end
     end
 

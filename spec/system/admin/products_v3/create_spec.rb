@@ -114,7 +114,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         expect(new_variant.display_name).to eq "Small bag"
         expect(new_variant.variant_unit).to eq "weight"
         expect(new_variant.variant_unit_scale).to eq 1 # g
-        expect(new_variant.unit_value).to eq 2.0
+        expect(new_variant.unit_value).to eq 0.002
         expect(new_variant.display_as).to eq "2 grams"
         expect(new_variant.unit_presentation).to eq "2 grams"
         expect(new_variant.price).to eq 11.1

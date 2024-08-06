@@ -18,17 +18,15 @@ module Admin
     end
 
     def unit_value_with_description(variant)
-      precised_unit_value = nil
+      return "" if variant.unit_value.nil?
 
-      if variant.unit_value
-        scaled_unit_value = variant.unit_value / (variant.product.variant_unit_scale || 1)
-        precised_unit_value = number_with_precision(
-          scaled_unit_value,
-          precision: nil,
-          strip_insignificant_zeros: true,
-          significant: false,
-        )
-      end
+      scaled_unit_value = variant.unit_value / (variant.product.variant_unit_scale || 1)
+      precised_unit_value = number_with_precision(
+        scaled_unit_value,
+        precision: nil,
+        strip_insignificant_zeros: true,
+        significant: false,
+      )
 
       [precised_unit_value, variant.unit_description].compact_blank.join(" ")
     end

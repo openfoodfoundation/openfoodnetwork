@@ -161,7 +161,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           click_button "Save changes"
 
           expect(page).to have_content "Changes saved"
-          product_a.reload
+          variant_a1.reload
         }.to change{ variant_a1.variant_unit }.to("items")
           .and change{ variant_a1.variant_unit_name }.to("box")
 
@@ -343,8 +343,9 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           fill_in "Name", with: "Large box"
           fill_in "SKU", with: "APL-02"
 
+          tomselect_select("Weight (kg)", from: "Unit scale")
           click_on "Unit" # activate popout
-          fill_in "Unit value", with: "1000"
+          fill_in "Unit value", with: "1"
 
           fill_in "Price", with: 10.25
 
@@ -366,7 +367,9 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         expect(new_variant.display_name).to eq "Large box"
         expect(new_variant.sku).to eq "APL-02"
         expect(new_variant.price).to eq 10.25
-        expect(new_variant.unit_value).to eq 1000
+        expect(new_variant.variant_unit).to eq "weight"
+        expect(new_variant.unit_value).to eq 1 * 1000
+        expect(new_variant.variant_unit_scale).to eq 1000
         expect(new_variant.on_hand).to eq 3
         expect(new_variant.tax_category_id).to be_nil
 
@@ -485,11 +488,12 @@ RSpec.describe 'As an enterprise user, I can update my products' do
       end
 
       context "with invalid data" do
+        let(:new_variant_row) { find_field("Name", placeholder: "Apples", with: "").ancestor("tr") }
+
         before do
           click_on "New variant"
 
           # find empty row for Apples
-          new_variant_row = find_field("Name", placeholder: "Apples", with: "").ancestor("tr")
           expect(new_variant_row).to be_present
 
           within new_variant_row do
@@ -506,6 +510,30 @@ RSpec.describe 'As an enterprise user, I can update my products' do
             fill_in "Name", with: "M" * 256
             fill_in "SKU", with: "m" * 256
             fill_in "Price", with: "10.25"
+          end
+
+          # Client side validation
+          click_button "Save changes"
+          within new_variant_row do
+            expect_browser_validation('select[aria-label="Unit scale"]',
+                                      "Please select an item in the list.")
+          end
+
+          # Fix error
+          within new_variant_row do
+            tomselect_select("Weight (kg)", from: "Unit scale")
+          end
+
+          # Client side validation
+          click_button "Save changes"
+          within new_variant_row do
+            expect_browser_validation('input[aria-label="Unit value"]',
+                                      "Please fill in this field.")
+          end
+
+          # Fix error
+          within new_variant_row do
+            fill_in "Unit value", with: "200"
           end
 
           expect {
@@ -537,6 +565,13 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         end
 
         it "saves changes after fixing errors" do
+          # Fill value to satisfy client side validation
+          within new_variant_row do
+            tomselect_select("Weight (kg)", from: "Unit scale")
+            click_on "Unit" # activate popout
+            fill_in "Unit value", with: "200"
+          end
+
           expect {
             click_button "Save changes"
 
@@ -546,9 +581,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           within row_containing_name("N" * 256) do
             fill_in "Name", with: "Nice box"
             fill_in "SKU", with: "APL-02"
-
-            click_on "Unit" # activate popout
-            fill_in "Unit value", with: "200"
 
             select producer.name, from: 'Producer'
             select taxon.name, from: 'Category'
@@ -565,10 +597,18 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           expect(new_variant.display_name).to eq "Nice box"
           expect(new_variant.sku).to eq "APL-02"
           expect(new_variant.price).to eq 10.25
-          expect(new_variant.unit_value).to eq 200
+          expect(new_variant.variant_unit_scale).to eq 1000
+          expect(new_variant.unit_value).to eq 200 * 1000
         end
 
         it "removes unsaved record" do
+          # Fill value to satisfy client side validation
+          within new_variant_row do
+            tomselect_select("Weight (kg)", from: "Unit scale")
+            click_on "Unit" # activate popout
+            fill_in "Unit value", with: "200"
+          end
+
           click_button "Save changes"
 
           expect(page).to have_text("1 product could not be saved.")
@@ -705,5 +745,10 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
       include_examples "updating image"
     end
+  end
+
+  def expect_browser_validation(selector, message)
+    browser_message = page.find(selector)["validationMessage"]
+    expect(browser_message).to eq message
   end
 end
