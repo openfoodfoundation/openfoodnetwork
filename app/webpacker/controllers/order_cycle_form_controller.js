@@ -3,7 +3,6 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ['statusMessage']
   connect() {
-    console.log(this.statusMessageTarget)
     this.observer = new MutationObserver(this.updateCallback);
     this.observer.observe(
       this.statusMessageTarget,
