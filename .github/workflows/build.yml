@@ -89,7 +89,7 @@ jobs:
       - name: Check code coverage changes
 
         run: |
-          bundle exec undercover --compare origin/master
+          bin/rake undercover:run_diff_master
 
   models:
     runs-on: ubuntu-22.04
@@ -153,7 +153,7 @@ jobs:
       - name: Check code coverage changes
 
         run: |
-          bundle exec undercover --compare origin/master
+          bin/rake undercover:run_diff_master
 
   system_admin:
     runs-on: ubuntu-22.04
@@ -236,7 +236,7 @@ jobs:
       - name: Check code coverage changes
 
         run: |
-          bundle exec undercover --compare origin/master
+          bin/rake undercover:run_diff_master
 
   system_consumer:
     runs-on: ubuntu-22.04
@@ -315,6 +315,11 @@ jobs:
           path: tmp/capybara/screenshots/*.png
           retention-days: 7
           if-no-files-found: ignore
+
+      - name: Check code coverage changes
+
+        run: |
+          bin/rake undercover:run_diff_master
 
   engines:
     runs-on: ubuntu-22.04
@@ -395,6 +400,11 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
+      - name: Check code coverage changes
+
+        run: |
+          bin/rake undercover:run_diff_master
+
   test_the_rest:
     runs-on: ubuntu-22.04
     services:
@@ -463,6 +473,11 @@ jobs:
         run: |
           bin/rake knapsack_pro:rspec
 
+      - name: Check code coverage changes
+
+        run: |
+          bin/rake undercover:run_diff_master
+
   non_knapsack_jest_karma:
     runs-on: ubuntu-22.04
     services:
@@ -500,3 +515,8 @@ jobs:
 
       - name: Run jest tests
         run: yarn jest
+                  
+      - name: Check code coverage changes
+
+        run: |
+          bin/rake undercover:run_diff_master
