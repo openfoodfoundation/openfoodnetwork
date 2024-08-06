@@ -12,7 +12,7 @@
             = f.label :supplier, t(".supplier")
             %span.required *
             = f.select :supplier_id, options_from_collection_for_select(@producers, :id, :name, @product.supplier_id), { include_blank: t("spree.admin.products.new.supplier_select_placeholder") }, { "data-controller": "tom-select", class: "primary" }
-            = f.error_message_on :supplier
+            = f.error_message_on :supplier_id
         .eight.columns.omega
           = f.field_container :name do
             = f.label :name, t(".product_name")

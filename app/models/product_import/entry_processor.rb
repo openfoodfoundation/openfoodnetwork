@@ -162,7 +162,7 @@ module ProductImport
         return
       end
 
-      product = Spree::Product.new
+      product = Spree::Product.new(supplier_id: entry.enterprise_id)
       product.assign_attributes(
         entry.assignable_attributes.except('id', 'on_hand', 'on_demand', 'display_name')
       )

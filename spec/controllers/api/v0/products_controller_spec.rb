@@ -120,7 +120,10 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
       expect(response.status).to eq(422)
       expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       errors = json_response["errors"]
-      expect(errors.keys).to match_array(["name", "variant_unit", "price"])
+      expect(errors.keys).to match_array([
+                                           "name", "variant_unit", "price",
+                                           "primary_taxon_id", "supplier_id"
+                                         ])
     end
 
     it "can update a product" do

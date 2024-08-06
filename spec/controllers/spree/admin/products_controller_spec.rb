@@ -171,6 +171,17 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
         expect(response.status).to eq 200
       end
     end
+
+    describe "when variant attributes are missing" do
+      it 'renders form with errors' do
+        spree_post :create, product: product_attrs.merge!(
+          { supplier_id: nil, primary_taxon_id: nil }
+        ),
+                            button: 'create'
+        expect(response.status).to eq 200
+        expect(response).to render_template('spree/admin/products/new')
+      end
+    end
   end
 
   describe "updating a product" do
