@@ -7,7 +7,7 @@ module Api
     attributes :orders_close_at, :active
 
     def orders_close_at
-      options[:data].earliest_closing_times[object.id]
+      options[:data].earliest_closing_times[object.id]&.to_time
     end
 
     def active

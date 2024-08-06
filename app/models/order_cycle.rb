@@ -154,9 +154,8 @@ class OrderCycle < ApplicationRecord
         joins(:order_cycle).
         merge(OrderCycle.active).
         group('exchanges.receiver_id').
-        select("exchanges.receiver_id AS receiver_id,
-                MIN(order_cycles.orders_close_at) AS earliest_close_at").
-        map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
+        pluck(Arel.sql("exchanges.receiver_id AS receiver_id"),
+              Arel.sql("MIN(order_cycles.orders_close_at) AS earliest_close_at"))
     ]
   end
 
