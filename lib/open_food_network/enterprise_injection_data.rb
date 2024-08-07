@@ -2,13 +2,23 @@
 
 module OpenFoodNetwork
   class EnterpriseInjectionData
+    # By default, data is fetched for *every* enterprise in the DB, but we specify some ids of
+    # enterprises that we are interested in, there is a lot less data to fetch
+    def initialize(enterprise_ids = nil)
+      @enterprise_ids = enterprise_ids
+    end
+
     def active_distributor_ids
       @active_distributor_ids ||=
-        Enterprise.distributors_with_active_order_cycles.ready_for_checkout.pluck(:id)
+        begin
+          enterprises = Enterprise.distributors_with_active_order_cycles.ready_for_checkout
+          enterprises = enterprises.where(id: @enterprise_ids) if @enterprise_ids.present?
+          enterprises.pluck(:id)
+        end
     end
 
     def earliest_closing_times
-      @earliest_closing_times ||= OrderCycle.earliest_closing_times
+      @earliest_closing_times ||= OrderCycle.earliest_closing_times(@enterprise_ids)
     end
 
     def shipping_method_services
@@ -16,7 +26,7 @@ module OpenFoodNetwork
                                                                       Spree::ShippingMethod) do
         # This result relies on a simple join with DistributorShippingMethod.
         # Updated DistributorShippingMethod records touch their associated Spree::ShippingMethod.
-        Spree::ShippingMethod.services
+        Spree::ShippingMethod.services(@enterprise_ids)
       end
     end
 
@@ -26,16 +36,16 @@ module OpenFoodNetwork
         # class Classification which maps the relationship. Classification records touch
         # their associated Spree::Taxon when updated. A Spree::Product's primary_taxon
         # is also touched when changed.
-        Spree::Taxon.supplied_taxons
+        Spree::Taxon.supplied_taxons(@enterprise_ids)
       end
     end
 
     def all_distributed_taxons
-      @all_distributed_taxons ||= Spree::Taxon.distributed_taxons(:all)
+      @all_distributed_taxons ||= Spree::Taxon.distributed_taxons(:all, @enterprise_ids)
     end
 
     def current_distributed_taxons
-      @current_distributed_taxons ||= Spree::Taxon.distributed_taxons(:current)
+      @current_distributed_taxons ||= Spree::Taxon.distributed_taxons(:current, @enterprise_ids)
     end
   end
 end
