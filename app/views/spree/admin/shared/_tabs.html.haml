@@ -3,7 +3,7 @@
 = tab :order_cycles, url: main_app.admin_order_cycles_path, icon: 'icon-refresh'
 = tab :orders, :subscriptions, :customer_details, :adjustments, :payments, :return_authorizations, url: admin_orders_path, icon: 'icon-shopping-cart'
 = tab :reports, url: main_app.admin_reports_path, icon: 'icon-file'
-= tab :general_settings, :terms_of_service_files, :mail_methods, :tax_categories, :tax_rates, :tax_settings, :zones, :countries, :states, :payment_methods, :taxonomies, :shipping_methods, :shipping_categories, :enterprise_fees, :contents, :invoice_settings, :matomo_settings, :stripe_connect_settings, :connected_app_settings, label: 'configuration', icon: 'icon-wrench', url: edit_admin_general_settings_path
+= tab :general_settings, :terms_of_service_files, :mail_methods, :tax_categories, :tax_rates, :tax_settings, :zones, :countries, :states, :payment_methods, :taxons, :shipping_methods, :shipping_categories, :enterprise_fees, :contents, :invoice_settings, :matomo_settings, :stripe_connect_settings, :connected_app_settings, label: 'configuration', icon: 'icon-wrench', url: edit_admin_general_settings_path
 = tab :enterprises, :enterprise_relationships, :vouchers, :oidc_settings, url: main_app.admin_enterprises_path
 = tab :customers, url: main_app.admin_customers_path
 = tab :enterprise_groups, url: main_app.admin_enterprise_groups_path, label: 'groups'

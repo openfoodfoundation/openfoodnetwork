@@ -1,16 +1,16 @@
 = render partial: 'spree/admin/shared/configuration_menu'
 
 - content_for :page_title do
-  = t("spree.taxonomy_edit")
+  = t(".title")
 
 - content_for :page_actions do
   %li
-    = button_link_to t("spree.back_to_taxonomies_list"), spree.admin_taxonomies_path, icon: 'icon-arrow-left'
+    = button_link_to t("spree.admin.taxons.back_to_list"), admin_taxons_path, icon: 'icon-arrow-left'
 
-- # Because otherwise the form would attempt to use to_param of @taxon
-- form_url = admin_taxonomy_taxon_path(@taxonomy.id, @taxon.id)
-= form_for [:admin, @taxonomy, @taxon], method: :put, url: form_url, html: { multipart: true } do |f|
+= form_with model: @taxon, url: admin_taxon_path(@taxon.id),
+      data: { turbo: true }, id: "edit-taxon-#{@taxon.id}",
+      method: :put, html: { multipart: true } do |f|
   = render partial: 'form', locals: { f: f }
   .form-buttons
     = button t('spree.actions.update'), 'icon-refresh'
-    = button_link_to t('spree.actions.cancel'), edit_admin_taxonomy_url(@taxonomy), icon: "icon-remove"
+    = button_link_to t('spree.actions.cancel'), admin_taxons_url, icon: "icon-remove"

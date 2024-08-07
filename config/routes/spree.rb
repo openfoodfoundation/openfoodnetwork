@@ -142,15 +142,7 @@ Spree::Core::Engine.routes.draw do
     end
     resources :states
 
-    resources :taxonomies do
-      collection do
-        post :update_positions
-      end
-      member do
-        get :get_children
-      end
-      resources :taxons
-    end
+    resources :taxons, except: :show
 
     resources :tax_rates
     resource  :tax_settings

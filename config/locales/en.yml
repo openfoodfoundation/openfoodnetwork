@@ -3959,10 +3959,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
-    taxonomy_edit: "Taxonomy edit"
-    taxonomy_tree_error: "There was an error updating the taxonomy tree."
-    taxonomy_tree_instruction: "Right-click on an item to add, rename, remove or edit."
-    tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
@@ -4086,10 +4082,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     new_state: "New State"
 
     payment_methods: "Payment Methods"
-
-    taxonomies: "Taxonomies"
-    new_taxonomy: "New Taxonomy"
-    back_to_taxonomies_list: "Back to Taxonomies List"
+    taxons: "Product Categories"
 
     shipping_methods: "Shipping Methods"
     shipping_method: "Shipping Method"
@@ -4582,6 +4575,18 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           total: "Total"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Back to Product Categeory List"
+        index:
+          title: "Product Categories"
+          new_taxon: 'New product category'
+        new:
+          title: "New Product Category"
+        edit:
+          title: "Edit Product Category"
+        destroy:
+          delete_taxon:
+            success: "Successfully deleted the product category" 
+            error: "Unable to delete the product category"
         form:
           name: Name
           permalink: Permalink

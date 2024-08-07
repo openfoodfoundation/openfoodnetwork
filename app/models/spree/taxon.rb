@@ -2,12 +2,6 @@
 
 module Spree
   class Taxon < ApplicationRecord
-    self.belongs_to_required_by_default = false
-
-    acts_as_nested_set dependent: :destroy
-
-    belongs_to :taxonomy, class_name: 'Spree::Taxonomy', touch: true
-
     has_many :variants, class_name: "Spree::Variant", foreign_key: "primary_taxon_id",
                         inverse_of: :primary_taxon, dependent: :restrict_with_error
 
@@ -32,23 +26,12 @@ module Spree
     end
 
     def set_permalink
-      if parent.present?
-        self.permalink = [parent.permalink, permalink_end].join('/')
-      elsif permalink.blank?
-        self.permalink = UrlGenerator.to_url(name)
-      end
+      self.permalink = UrlGenerator.to_url(name)
     end
 
     # For #2759
     def to_param
       permalink
-    end
-
-    def pretty_name
-      ancestor_chain = ancestors.inject("") do |name, ancestor|
-        name + "#{ancestor.name} -> "
-      end
-      ancestor_chain + name.to_s
     end
 
     # Find all the taxons of supplied products for each enterprise, indexed by enterprise.

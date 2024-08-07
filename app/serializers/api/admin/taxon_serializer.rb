@@ -3,7 +3,7 @@
 module Api
   module Admin
     class TaxonSerializer < ActiveModel::Serializer
-      attributes :id, :name, :pretty_name
+      attributes :id, :name
     end
   end
 end

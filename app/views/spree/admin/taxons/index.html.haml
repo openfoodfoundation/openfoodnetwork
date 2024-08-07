@@ -1,0 +1,27 @@
+= render partial: 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t(".title")
+
+- content_for :page_actions do
+  %li
+    = button_link_to t(".new_taxon"), spree.new_admin_taxon_url, icon: 'icon-plus', id: 'admin_new_taxon_link'
+
+%table#listing_taxons.index
+  %colgroup
+    %col{style: "width: 85%"}/
+    %col{style: "width: 15%"}/
+  %thead
+    %tr
+      %th= t("spree.name")
+      %th.actions
+  %tbody
+    - @taxons.each do |taxon|
+      %tr{class: cycle('odd', 'even'), id: spree_dom_id(taxon)}
+        %td
+          = taxon.name
+        %td.actions
+          = link_to_edit taxon.id, no_text: true
+          = link_to '', admin_taxon_path(taxon.id), method: :delete,
+              class: "icon_link with-tip icon-trash no-text",
+              data: { turbo: true, turbo_method: :delete, turbo_confirm: t(:are_you_sure) }

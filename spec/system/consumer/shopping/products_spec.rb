@@ -130,7 +130,7 @@ RSpec.describe "As a consumer I want to view products" do
         add_variant_to_order_cycle(exchange1, variant2)
       end
 
-      context "product taxonomies" do
+      context "product taxons" do
         before do
           distributor.preferred_shopfront_product_sorting_method = "by_category"
           distributor.preferred_shopfront_taxon_order = taxon.id.to_s
