@@ -60,18 +60,17 @@
           %input{ "type" => "text", "id" => "variant_unit_price", "name" => "variant[unit_price]", "class" => 'fullwidth', "disabled" => true}
           %div{style: "color: black"}
             = t("spree.admin.products.new.unit_price_legend")
-      %div{ 'set-on-demand' => '' }
+      %div
         .field.checkbox
           %label
-            = f.check_box :on_demand
+            = f.check_box :on_demand, data: { "action": "click->edit-variant#toggleOnHand" }
             = t(:on_demand)
-          - #TODO tooltip is broken
-          %div{'ofn-with-tip' => t('admin.products.variants.to_order_tip')}
-            %a= t('admin.whats_this')
+
+          = render partial: "admin/shared/tooltip", locals: { tooltip_text: t('admin.products.variants.to_order_tip'), link_text: t('admin.whats_this'), placement: "right" }
         .field
           = f.label :on_hand, t(:on_hand)
           .fullwidth
-            = f.text_field :on_hand
+            = f.text_field :on_hand, data: { "edit-variant-target": "onHand" }
 
   .right.six.columns.omega.label-block
     .field
@@ -98,7 +97,7 @@
       = f.collection_select(:primary_taxon_id, Spree::Taxon.order(:name), :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
 
     .field
-      = f.label :supplier, t(:spree_admin_supplier)
+      = f.label :supplier, raw(t(:spree_admin_supplier) + content_tag(:span, ' *', :class => 'required'))
       = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
 
   .clear
