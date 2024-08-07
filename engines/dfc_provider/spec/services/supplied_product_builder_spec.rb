@@ -176,12 +176,12 @@ RSpec.describe SuppliedProductBuilder do
           spree_product_id: variant.product.id
         )
       end
-      let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK }
+      let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.DRINK.SOFT_DRINK.FRUIT_JUICE }
       let!(:new_taxon) {
         create(
           :taxon,
-          name: "Soft Drink",
-          dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#soft-drink"
+          name: "Fruit Juice",
+          dfc_id: "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#fruit-juice"
         )
       }
 
