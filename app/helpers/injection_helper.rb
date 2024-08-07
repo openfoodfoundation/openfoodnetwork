@@ -10,8 +10,6 @@ module InjectionHelper
   def inject_enterprises(enterprises = nil)
     enterprises ||= default_enterprise_query
 
-    # make sure the query is performed now so it is only performed once
-    enterprises = enterprises.to_a
     inject_json_array(
       "enterprises",
       enterprises,
@@ -56,8 +54,7 @@ module InjectionHelper
       relatives_including_self.
       activated.
       includes(:properties, address: [:state, :country], supplied_products: :properties).
-      all.
-      to_a
+      all
 
     inject_json_array "enterprises",
                       enterprises_and_relatives,
@@ -66,7 +63,7 @@ module InjectionHelper
   end
 
   def inject_group_enterprises(group)
-    enterprises = group.enterprises.activated.visible.all.to_a
+    enterprises = group.enterprises.activated.visible.all
     inject_json_array(
       "enterprises",
       enterprises,
@@ -97,11 +94,11 @@ module InjectionHelper
   end
 
   def inject_taxons
-    inject_json_array "taxons", Spree::Taxon.all.to_a, Api::TaxonSerializer
+    inject_json_array "taxons", Spree::Taxon.all, Api::TaxonSerializer
   end
 
   def inject_properties
-    inject_json_array "properties", Spree::Property.all.to_a, Api::PropertySerializer
+    inject_json_array "properties", Spree::Property.all, Api::PropertySerializer
   end
 
   def inject_currency_config
