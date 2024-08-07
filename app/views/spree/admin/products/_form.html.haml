@@ -1,5 +1,5 @@
 %div.admin-product-form-fields
-  .left.twelve.columns.alpha
+  .left.sixteen.columns.alpha
     = f.field_container :name do
       = f.label :name, raw(t(:name) + content_tag(:span, ' *', :class => 'required'))
       = f.text_field :name, :class => 'fullwidth title'
@@ -9,25 +9,6 @@
       = f.label :description, t(:description)
       = f.hidden_field :description, id: "product_description", value: @product.description
       %trix-editor{ input: "product_description", "data-controller": "trixeditor" }
-
-  .right.four.columns.omega
-    .variant_units_form{ 'ng-app' => 'admin.products', 'ng-controller' => 'editUnitsCtrl' }
-
-      = f.field_container :units do
-        = f.label :variant_unit_with_scale, t(:spree_admin_variant_unit_scale)
-        %select.select2.fullwidth{ id: 'product_variant_unit_with_scale', 'ng-model' => 'variant_unit_with_scale', 'ng-change' => 'setFields()', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options' }
-          %option{'value' => ''}
-
-      = f.text_field :variant_unit, {'id' => 'variant_unit', 'ng-value' => 'product.variant_unit', 'hidden' => true}
-      = f.text_field :variant_unit_scale, {'id' => 'variant_unit_scale', 'ng-value' => 'product.variant_unit_scale', 'hidden' => true}
-
-      .variant_unit_name{'ng-show' => 'product.variant_unit == "items"'}
-        = f.field_container :variant_unit_name do
-          = f.label :variant_unit_name, t(:spree_admin_variant_unit_name)
-          = f.text_field :variant_unit_name, {placeholder: t('admin.products.unit_name_placeholder')}
-          = f.error_message_on :variant_unit_name
-
-    .clear
 
   .clear
 
