@@ -35,13 +35,7 @@ module Admin
     private
 
     def fetch_catalog(url)
-      if url =~ /food-data-collaboration/
-        fdc_json = FdcRequest.new(spree_current_user).call(url)
-        fdc_message = JSON.parse(fdc_json)
-        fdc_message["products"]
-      else
-        DfcRequest.new(spree_current_user).call(url)
-      end
+      DfcRequest.new(spree_current_user).call(url)
     end
 
     # Most of this code is the same as in the DfcProvider::SuppliedProductsController.
