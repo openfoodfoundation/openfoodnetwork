@@ -25,18 +25,19 @@ module Spree
 
     # Find all the taxons of supplied products for each enterprise, indexed by enterprise.
     # Format: {enterprise_id => [taxon_id, ...]}
-    def self.supplied_taxons
-      taxons = {}
-
-      Spree::Taxon.
+    #
+    # Optionally, specify some enterprise_ids to scope the results
+    def self.supplied_taxons(enterprise_ids = nil)
+      taxons = Spree::Taxon.
         joins(variants: :supplier).
-        select('spree_taxons.*, enterprises.id AS enterprise_id').
-        each do |t|
-          taxons[t.enterprise_id.to_i] ||= Set.new
-          taxons[t.enterprise_id.to_i] << t.id
-        end
+        select('spree_taxons.*, enterprises.id AS enterprise_id')
 
-      taxons
+      taxons = taxons.where(enterprises: { id: enterprise_ids }) if enterprise_ids.present?
+
+      taxons.each_with_object({}) do |t, collection|
+        collection[t.enterprise_id.to_i] ||= Set.new
+        collection[t.enterprise_id.to_i] << t.id
+      end
     end
 
     # Find all the taxons of distributed products for each enterprise, indexed by enterprise.
@@ -44,7 +45,9 @@ module Spree
     # or :current taxons (distributed in an open order cycle).
     #
     # Format: {enterprise_id => [taxon_id, ...]}
-    def self.distributed_taxons(which_taxons = :all)
+    #
+    # Optionally, specify some enterprise_ids to scope the results
+    def self.distributed_taxons(which_taxons = :all, enterprise_ids = nil)
       ents_and_vars = ExchangeVariant.joins(exchange: :order_cycle).merge(Exchange.outgoing)
         .select("DISTINCT variant_id, receiver_id AS enterprise_id")
 
@@ -56,6 +59,10 @@ module Spree
         .joins("
           INNER JOIN (#{ents_and_vars.to_sql}) AS ents_and_vars
           ON spree_variants.id = ents_and_vars.variant_id")
+
+      if enterprise_ids.present?
+        taxons = taxons.where(ents_and_vars: { enterprise_id: enterprise_ids })
+      end
 
       taxons.each_with_object({}) do |t, ts|
         ts[t.enterprise_id.to_i] ||= Set.new
