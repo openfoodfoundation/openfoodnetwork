@@ -94,11 +94,11 @@ module InjectionHelper
   end
 
   def inject_taxons
-    inject_json_array "taxons", Spree::Taxon.all, Api::TaxonSerializer
+    inject_json_array "taxons", Spree::Taxon.all.to_a, Api::TaxonSerializer
   end
 
   def inject_properties
-    inject_json_array "properties", Spree::Property.all, Api::PropertySerializer
+    inject_json_array "properties", Spree::Property.all.to_a, Api::PropertySerializer
   end
 
   def inject_currency_config
