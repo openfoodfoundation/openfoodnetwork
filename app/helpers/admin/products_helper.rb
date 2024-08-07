@@ -22,7 +22,8 @@ module Admin
       precised_unit_value = number_with_precision(
         scaled_unit_value,
         precision: nil,
-        strip_insignificant_zeros: true
+        strip_insignificant_zeros: true,
+        significant: false,
       )
 
       [precised_unit_value, variant.unit_description].compact_blank.join(" ")
