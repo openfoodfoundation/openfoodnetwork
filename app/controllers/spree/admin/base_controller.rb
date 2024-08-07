@@ -82,6 +82,9 @@ module Spree
       private
 
       def html_request?
+        return false if request.format.symbol == :turbo_stream ||
+                        request.format.to_s.include?("turbo")
+
         request.format.html?
       end
 
