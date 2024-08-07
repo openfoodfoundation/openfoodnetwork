@@ -7,9 +7,18 @@ DfcProvider::Engine.routes.draw do
     resources :offers, only: [:show, :update]
     resources :supplied_products, only: [:create, :show, :update]
     resources :social_medias, only: [:show]
+    resources :sale_sessions, only: [:show]
+    resources :offers, only: [:show]
+    resources :orders, only: [:show] do
+      resources :order_lines, only: [:show]
+    end
   end
   resources :enterprise_groups, only: [:index, :show] do
     resources :affiliated_by, only: [:create, :destroy], module: 'enterprise_groups'
   end
-  resources :persons, only: [:show]
+  resources :persons, only: [:show] do
+    member do
+      get :affiliate_sales_data
+    end
+  end
 end
