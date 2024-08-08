@@ -6,7 +6,7 @@ module Admin
     include ReportsActions
     helper ReportsHelper
 
-    before_action :authorize_report, only: [:show]
+    before_action :authorize_report, only: [:show, :create]
 
     # Define model class for Can? permissions
     def model_class
@@ -20,14 +20,17 @@ module Admin
     end
 
     def show
-      @report = report_class.new(spree_current_user, params, render: render_data?)
+      @report = report_class.new(spree_current_user, params, render: false)
       @rendering_options = rendering_options # also stores user preferences
 
-      if render_data?
-        render_in_background
-      else
-        show_report
-      end
+      show_report
+    end
+
+    def create
+      @report = report_class.new(spree_current_user, params, render: true)
+      @rendering_options = rendering_options # also stores user preferences
+
+      render_in_background
     end
 
     private
@@ -52,10 +55,6 @@ module Admin
     def load_selected_variant
       variant = Spree::Variant.find(params[:variant_id_in][0])
       @variant_serialized = Api::Admin::VariantSerializer.new(variant)
-    end
-
-    def render_data?
-      request.post?
     end
 
     def render_in_background

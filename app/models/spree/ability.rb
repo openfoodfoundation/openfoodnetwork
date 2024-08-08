@@ -244,7 +244,7 @@ module Spree
 
       # Reports page
       can [:admin, :index, :show], ::Admin::ReportsController
-      can [:admin, :show, :customers, :orders_and_distributors, :group_buys, :payments,
+      can [:admin, :show, :create, :customers, :orders_and_distributors, :group_buys, :payments,
            :orders_and_fulfillment, :products_and_inventory, :order_cycle_management,
            :packing, :enterprise_fee_summary, :bulk_coop], :report
     end
@@ -324,7 +324,7 @@ module Spree
       end
 
       # Reports page
-      can [:admin, :index, :show], ::Admin::ReportsController
+      can [:admin, :index, :show, :create], ::Admin::ReportsController
       can [:admin, :customers, :group_buys, :sales_tax, :payments,
            :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
            :order_cycle_management, :xero_invoices, :enterprise_fee_summary, :bulk_coop], :report
