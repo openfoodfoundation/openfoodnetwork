@@ -1,0 +1,25 @@
+= render :partial => 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t('.title')
+
+= form_tag main_app.admin_connected_app_settings_path, :method => :put do
+
+  %fieldset
+    %legend= t('.enabled_legend')
+
+    = t('.info_html')
+
+    .field
+      -# Blank value in case nothing is selected
+      = hidden_field_tag("preferences[connected_apps_enabled][]", "")
+
+      - ConnectedApp::TYPES.each do |type|
+        %label
+          = check_box_tag("preferences[connected_apps_enabled][]", type,
+                          Spree::Config.connected_apps_enabled&.split(',')&.include?(type))
+          = t('.connected_apps_enabled.' + type)
+        %br
+
+  .form-buttons
+    = button t(:update), 'icon-refresh'

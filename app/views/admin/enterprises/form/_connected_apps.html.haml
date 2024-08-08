@@ -1,4 +1,3 @@
-= render partial: "/admin/enterprises/form/connected_apps/discover_regen",
-         locals: { enterprise:, connected_app: enterprise.connected_apps.discover_regen.first }
-= render partial: "/admin/enterprises/form/connected_apps/affiliate_sales_data",
-         locals: { enterprise:, connected_app: enterprise.connected_apps.affiliate_sales_data.first }
+- connected_apps_enabled.each do |type|
+  = render partial: "/admin/enterprises/form/connected_apps/#{type}",
+           locals: { enterprise:, connected_app: enterprise.connected_apps.public_send(type).first }

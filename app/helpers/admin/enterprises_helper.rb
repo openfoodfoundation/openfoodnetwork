@@ -26,7 +26,8 @@ module Admin
       show_enterprise_fees = can?(:manage_enterprise_fees,
                                   enterprise) && (is_shop || enterprise.is_primary_producer)
       show_connected_apps = can?(:manage_connected_apps, enterprise) &&
-                            feature?(:connected_apps, spree_current_user, enterprise)
+                            feature?(:connected_apps, spree_current_user, enterprise) &&
+                            Spree::Config.connected_apps_enabled.present?
 
       build_enterprise_side_menu_items(
         is_shop:,
@@ -36,6 +37,11 @@ module Admin
         show_enterprise_fees:,
         show_connected_apps:,
       )
+    end
+
+    def connected_apps_enabled
+      connected_apps_enabled = Spree::Config.connected_apps_enabled&.split(',') || []
+      ConnectedApp::TYPES & connected_apps_enabled
     end
 
     private

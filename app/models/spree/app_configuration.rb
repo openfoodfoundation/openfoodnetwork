@@ -139,5 +139,8 @@ module Spree
 
     # Available units
     preference :available_units, :string, default: "g,kg,T,mL,L,kL"
+
+    # Connected Apps
+    preference :connected_apps_enabled, :string, default: nil
   end
 end

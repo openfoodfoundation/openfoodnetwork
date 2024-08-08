@@ -28,6 +28,8 @@ RSpec.describe Admin::EnterprisesHelper, type: :helper do
     end
 
     it "lists enabled features when allowed", feature: :connected_apps do
+      allow(Spree::Config).to receive(:connected_apps_enabled).and_return "discover_regen"
+
       user.enterprises << enterprise
       expect(visible_items.pluck(:name)).to include "connected_apps"
     end
