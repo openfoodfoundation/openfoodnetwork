@@ -51,20 +51,20 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         fill_in "SKU", with: "POM-00"
         tomselect_select "Volume (mL)", from: "Unit scale"
       end
-      within row_containing_name("Medium box") do
-        fill_in "Name", with: "Large box"
-        fill_in "SKU", with: "POM-01"
-
-        click_on "Unit" # activate popout
-      end
 
       # Unit popout
-      fill_in "Unit value", with: ""
-      click_button "Save changes" # attempt to save or close the popout
-      expect(page).to have_field "Unit value", with: "" # popout is still open
+      click_on "Unit" # activate popout
+      # have to use below method to trigger the +change+ event,
+      #   +fill_in "Unit value", with: ""+ does not trigger +change+ event
+      find_field('Unit value').send_keys(:control, 'a', :backspace) # empty the field
+      click_button "Save changes" # attempt to save and should fail with below error
+      expect(page).to have_content "must be greater than 0"
+      click_on "Unit" # activate popout
       fill_in "Unit value", with: "500.1"
 
       within row_containing_name("Medium box") do
+        fill_in "Name", with: "Large box"
+        fill_in "SKU", with: "POM-01"
         fill_in "Price", with: "10.25"
 
         click_on "On Hand" # activate popout
@@ -524,6 +524,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
             expect(page.find('.col-producer')).to have_content('must exist')
             expect(page.find('.col-category')).to have_content('must exist')
             expect(page.find_button("Unit")).to have_text "" # have_button selector don't work here
+            expect(page).to have_content "can't be blank"
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
           end
 
