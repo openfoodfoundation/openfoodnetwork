@@ -9,7 +9,10 @@ RSpec.describe "Connected Apps", feature: :connected_apps, vcr: true do
     login_as enterprise.owner
   end
 
-  it "is only visible when enabled" do
+  it "is only visible when feature is enabled" do
+    allow(Spree::Config).to receive(:connected_apps_enabled).
+      and_return("discover_regen,affiliate_sales_data")
+
     # Assuming that this feature will be the default one day, I'm treating this
     # as special case and disable the feature. I don't want to wrap all other
     # test cases in a context block for the feature toggle which will need
@@ -28,7 +31,30 @@ RSpec.describe "Connected Apps", feature: :connected_apps, vcr: true do
     expect(page).to have_content "CONNECTED APPS"
   end
 
+  it "is only visible when setting is enabled" do
+    allow(Spree::Config).to receive(:connected_apps_enabled).and_return(nil)
+    visit edit_admin_enterprise_path(enterprise)
+    expect(page).not_to have_content "CONNECTED APPS"
+
+    allow(Spree::Config).to receive(:connected_apps_enabled).
+      and_return("discover_regen,affiliate_sales_data")
+    visit edit_admin_enterprise_path(enterprise)
+    expect(page).to have_content "CONNECTED APPS"
+  end
+
+  it "only shows enabled apps" do
+    allow(Spree::Config).to receive(:connected_apps_enabled).and_return("discover_regen")
+
+    visit "#{edit_admin_enterprise_path(enterprise)}#/connected_apps_panel"
+
+    expect(page).to have_selector "h3", text: "Discover Regenerative"
+    expect(page).not_to have_selector "h3", text: "INRAE / UFC QUE CHOISIR Research"
+  end
+
   describe "Discover Regenerative" do
+    before do
+      allow(Spree::Config).to receive(:connected_apps_enabled).and_return("discover_regen")
+    end
     let(:section_heading) { self.class.description }
 
     it "can be enabled and disabled" do
@@ -76,6 +102,9 @@ RSpec.describe "Connected Apps", feature: :connected_apps, vcr: true do
   end
 
   describe "Affiliate Sales Data" do
+    before do
+      allow(Spree::Config).to receive(:connected_apps_enabled).and_return("affiliate_sales_data")
+    end
     let(:section_heading) { "INRAE / UFC QUE CHOISIR Research" }
 
     it "can be enabled and disabled" do

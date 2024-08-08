@@ -4,6 +4,8 @@
 #
 # Here we store keys and links to access the app.
 class ConnectedApp < ApplicationRecord
+  TYPES = ['discover_regen', 'affiliate_sales_data'].freeze
+
   belongs_to :enterprise
   after_destroy :disconnect
 

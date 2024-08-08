@@ -18,7 +18,7 @@
       = f.hidden_field :unit_value
       = f.hidden_field :unit_description
       = f.text_field :unit_value_with_description,
-          value: unit_value_with_description(variant), 'aria-label': t('admin.products_page.columns.unit_value'), required: true
+          value: unit_value_with_description(variant), 'aria-label': t('admin.products_page.columns.unit_value')
     .field
       = f.label :display_as, t('admin.products_page.columns.display_as')
       = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(variant).name

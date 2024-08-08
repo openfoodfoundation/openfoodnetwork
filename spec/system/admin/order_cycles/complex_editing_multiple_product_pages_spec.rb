@@ -46,10 +46,9 @@ RSpec.describe '
 
       expect_all_products_loaded
 
-      expect(page).to have_checked_field(
-        "order_cycle_incoming_exchange_0_variants_#{new_product.variants.first.id}",
-        disabled: false
-      )
+      within("div.exchange-product", text: "Z Last Product") do
+        expect(page).to have_checked_field "1g", disabled: false
+      end
     end
 
     def expect_all_products_loaded
