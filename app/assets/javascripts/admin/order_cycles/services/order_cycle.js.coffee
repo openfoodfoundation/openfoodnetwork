@@ -161,7 +161,11 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
           StatusMessage.display('failure', t('js.order_cycles.create_failure'))
 
     update: (destination, form) ->
-      oc = new OrderCycleResource({order_cycle: this.dataForSubmit()})
+      oc = new OrderCycleResource({
+          order_cycle: this.dataForSubmit(),
+          confirm: this.order_cycle.confirm,
+          trigger_action: this.order_cycle.trigger_action
+        })
       oc.$update {order_cycle_id: this.order_cycle.id, reloading: (if destination? then 1 else 0)}, (data) =>
         form.$setPristine() if form
         if destination?
@@ -171,6 +175,8 @@ angular.module('admin.orderCycles').factory 'OrderCycle', ($resource, $window, $
       , (response) ->
         if response.data.errors?
           StatusMessage.display('failure', response.data.errors[0])
+        else if (response.data.trigger_action)
+          StatusMessage.display('notice', t('js.order_cycles.unsaved_changes'), response.data.trigger_action)
         else
           StatusMessage.display('failure', t('js.order_cycles.update_failure'))
 
