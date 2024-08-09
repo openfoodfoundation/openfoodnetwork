@@ -941,8 +941,6 @@ pt_BR:
               Uma mensagem opcional para dar as boas-vindas aos clientes e explicar
               como comprar com você. Se o texto for inserido aqui, ele será exibido
               em uma guia inicial quando os clientes chegarem à sua loja virtual.
-          shopfront_message_link_tooltip: "Inserir / editar link"
-          shopfront_message_link_prompt: "Digite um URL para inserir"
           shopfront_closed_message: "Mensagem de loja virtual fechada"
           shopfront_closed_message_placeholder: >
               Uma mensagem que forneça uma explicação detalhada sobre o porque de

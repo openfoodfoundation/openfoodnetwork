@@ -298,6 +298,24 @@ RSpec.describe Enterprise do
       end
     end
 
+    describe "preferred_shopfront_message" do
+      it "sanitises HTML" do
+        enterprise = build(:enterprise, preferred_shopfront_message:
+                           'Hello <script>alert</script> dearest <b>monster</b>.')
+        expect(enterprise.preferred_shopfront_message)
+          .to eq "Hello alert dearest <b>monster</b>."
+      end
+    end
+
+    describe "preferred_shopfront_closed_message" do
+      it "sanitises HTML" do
+        enterprise = build(:enterprise, preferred_shopfront_closed_message:
+                           'Hello <script>alert</script> dearest <b>monster</b>.')
+        expect(enterprise.preferred_shopfront_closed_message)
+          .to eq "Hello alert dearest <b>monster</b>."
+      end
+    end
+
     describe "preferred_shopfront_taxon_order" do
       it "empty strings are valid" do
         enterprise = build(:enterprise, preferred_shopfront_taxon_order: "")

@@ -1023,8 +1023,6 @@ ko:
           shopfront_message_placeholder: >
               고객을 환영하고 함께 쇼핑하는 방법을 설명하는 선택적 메시지입니다. 여기에 텍스트를 입력하면 고객이 처음 상점에 도착했을
               때 홈 탭에 표시됩니다.
-          shopfront_message_link_tooltip: "링크 삽입 / 수정"
-          shopfront_message_link_prompt: "삽입할 URL을 입력하십시오."
           shopfront_closed_message: "매장 폐쇄 메시지"
           shopfront_closed_message_placeholder: >
               가게가 문을 닫은 이유 및/또는 고객이 가게가 언제 다시 문을 열 것으로 예상할 수 있는지에 대하여 보다 자세한 설명을 제공하는

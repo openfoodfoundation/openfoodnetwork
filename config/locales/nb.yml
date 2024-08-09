@@ -1197,8 +1197,6 @@ nb:
               En valgfri melding for å ønske kunder velkommen og forklare hvordan
               de handler hos deg. Hvis tekst legges inn her, vil den vises i en hjemmefane
               når kundene først ankommer butikken din.
-          shopfront_message_link_tooltip: "Sett inn / rediger lenke"
-          shopfront_message_link_prompt: "Vennligst skriv inn en URL for å sette inn"
           shopfront_closed_message: "Melding Butikk Stengt"
           shopfront_closed_message_placeholder: >
               En melding som gir en mer detaljert forklaring om hvorfor din butikk

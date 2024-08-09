@@ -1041,8 +1041,6 @@ es_CR:
               en el sitio. Si el texto se agrega en este campo, va a ser mostrado
               en la pestaña de inicio cuando los clientes ingresen por primera vez
               a la tienda.
-          shopfront_message_link_tooltip: "Insertar / editar enlace"
-          shopfront_message_link_prompt: "Por favor introduzca una URL para insertar"
           shopfront_closed_message: "Mensaje de tienda cerrada"
           shopfront_closed_message_placeholder: >
               Un mensaje que proporciona una explicación más detallada sobre por qué

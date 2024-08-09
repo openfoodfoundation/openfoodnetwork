@@ -1167,8 +1167,6 @@ en_IE:
               An optional message to welcome customers and explain how to shop with
               you. If text is entered here it will be displayed in a home tab when
               customers first arrive at your shopfront.
-          shopfront_message_link_tooltip: "Insert / edit link"
-          shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
           shopfront_closed_message_placeholder: >
               A message which provides a more detailed explanation about why your

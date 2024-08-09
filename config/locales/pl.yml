@@ -820,8 +820,6 @@ pl:
               Opcjonalna wiadomość witająca klientów i wyjaśniająca, jak robić u Ciebie
               zakupy. Jeśli tu wprowadzisz tekst, zostanie on wyświetlony na karcie
               głównej, gdy klienci po raz pierwszy pojawią się w Twoim sklepie.
-          shopfront_message_link_tooltip: "Wstaw / edytuj link"
-          shopfront_message_link_prompt: "Wprowadź adres URL do wstawienia"
           shopfront_closed_message: "Komunikat o zamknięciu witryny sklepowej"
           shopfront_closed_message_placeholder: >
               Wiadomość, która zawiera bardziej szczegółowe wyjaśnienie, dlaczego

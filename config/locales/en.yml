@@ -1279,8 +1279,6 @@ en:
           shopfront_message: "Shopfront Message"
           shopfront_message_placeholder: >
             An optional message to welcome customers and explain how to shop with you. If text is entered here it will be displayed in a home tab when customers first arrive at your shopfront.
-          shopfront_message_link_tooltip: "Insert / edit link"
-          shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
           shopfront_closed_message_placeholder: >
             A message which provides a more detailed explanation about why your shop is
@@ -3725,6 +3723,33 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         There was a problem setting up your card in our payments gateway.
         Please refresh the page and try again, if it fails a second time,
         please contact us for support.
+    trix:
+      attachFiles: "Attach Files"
+      bold: "Bold"
+      bullets: "Bullets"
+      byte: "Byte"
+      bytes: "Bytes"
+      captionPlaceholder: "Add a caption…"
+      code: "Code"
+      heading1: "Heading"
+      indent: "Increase Level"
+      italic: "Italic"
+      link: "Link"
+      numbers: "Numbers"
+      outdent: "Decrease Level"
+      quote: "Quote"
+      redo: "Redo"
+      remove: "Remove"
+      strike: "Strikethrough"
+      undo: "Undo"
+      unlink: "Unlink"
+      url: "URL"
+      urlPlaceholder: "Enter a URL…"
+      GB: "GB"
+      KB: "KB"
+      MB: "MB"
+      PB: "PB"
+      TB: "TB"
 
   # Singular and plural forms of commonly used words.
   # We use these entries to pluralize unit names in every language.

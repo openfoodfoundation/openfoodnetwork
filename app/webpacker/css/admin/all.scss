@@ -6,7 +6,6 @@
 @import "~jquery-ui/themes/base/resizable";
 @import "vendor/assets/stylesheets/jquery-ui-theme";
 @import "~jquery-ui/themes/base/dialog";
-@import "../shared/textAngular";
 @import "../shared/ng-tags-input.min";
 @import "vendor/assets/stylesheets/select2.css.scss";
 @import "~flatpickr/dist/flatpickr";
@@ -72,7 +71,6 @@
 @import "components/todo";
 @import "components/tooltip";
 @import "components/wizard_progress";
-@import "components/text-angular";
 
 @import "pages/enterprise_form";
 @import "pages/subscription_form";

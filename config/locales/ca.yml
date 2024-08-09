@@ -1116,8 +1116,6 @@ ca:
               com comprar amb vosaltres. Si s'introdueix text aquí, es mostrarà a
               la pestanya d'inici quan els clients arribin per primera vegada a la
               vostra botiga.
-          shopfront_message_link_tooltip: "Inserir / editar enllaç"
-          shopfront_message_link_prompt: "Introduïu un URL per inserir"
           shopfront_closed_message: "Missatge de tancament de la botiga"
           shopfront_closed_message_placeholder: >
               Un missatge que proporciona una explicació més detallada sobre per què

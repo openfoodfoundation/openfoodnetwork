@@ -1072,8 +1072,6 @@ it:
               Un messaggio opzionale per dare il benvenuto ai clienti e spiegare come
               acquistare. Il testo inserito qui verrà mostrato nel tab principale
               della vetrina.
-          shopfront_message_link_tooltip: "Inserisci / modifica link"
-          shopfront_message_link_prompt: "Per favore inserisci un URL"
           shopfront_closed_message: "Messaggio Chiusura Vetrina"
           shopfront_closed_message_placeholder: >
               Un messaggio che fornisce una spiegazione più dettagliata sul perché

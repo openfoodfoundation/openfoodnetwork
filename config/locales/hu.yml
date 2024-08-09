@@ -1197,8 +1197,6 @@ hu:
               Opcionális üzenet, amely üdvözli az ügyfeleket, és elmagyarázza, hogyan
               vásárolhatnak Nálad. Ha itt szöveget írsz be, az megjelenik a kezdőlapon,
               amikor az ügyfelek először érkeznek az oldaladra.
-          shopfront_message_link_tooltip: "Hivatkozás beszúrása / szerkesztése"
-          shopfront_message_link_prompt: "Kérünk, adj meg egy URL-t"
           shopfront_closed_message: "Kirakat zárt üzenet"
           shopfront_closed_message_placeholder: >
               Üzenet a fogyasztóknak az oldaladon, ha épp nincs aktív rendelési ciklus

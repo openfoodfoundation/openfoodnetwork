@@ -1,17 +1,13 @@
 .row
-  .three.columns.alpha
+  .eleven.columns.alpha
     = f.label "enterprise_preferred_shopfront_message", t('.shopfront_message')
-  .eight.columns.omega
-    %text-angular{'ng-model' => 'Enterprise.preferred_shopfront_message', 'id' => 'enterprise_preferred_shopfront_message', 'name' => 'enterprise[preferred_shopfront_message]', 'class' => 'text-angular textangular-strip', 'ta-paste' => "stripFormatting($html)", "textangular-links-target-blank" => true,
-      'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
-      'placeholder' => t('.shopfront_message_placeholder')}
+    = f.hidden_field :preferred_shopfront_message, id: "enterprise_preferred_shopfront_message", value: @enterprise.preferred_shopfront_message
+    %trix-editor{ input: "enterprise_preferred_shopfront_message", "data-controller": "trixeditor", placeholder: t('.shopfront_message_placeholder') }
 .row
-  .three.columns.alpha
+  .eleven.columns.alpha
     = f.label "enterprise_preferred_shopfront_closed_message", t('.shopfront_closed_message')
-  .eight.columns.omega
-    %text-angular{'ng-model' => 'Enterprise.preferred_shopfront_closed_message', 'id' => 'enterprise_preferred_shopfront_closed_message', 'name' => 'enterprise[preferred_shopfront_closed_message]', 'class' => 'text-angular textangular-strip', 'ta-paste' => "stripFormatting($html)", "textangular-links-target-blank" => true,
-      'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
-      'placeholder' => t('.shopfront_closed_message_placeholder')}
+    = f.hidden_field :preferred_shopfront_closed_message, id: "enterprise_preferred_shopfront_closed_message", value: @enterprise.preferred_shopfront_closed_message
+    %trix-editor{ input: "enterprise_preferred_shopfront_closed_message", "data-controller": "trixeditor", placeholder: t('.shopfront_closed_message_placeholder') }
 
 .row
   .text-normal

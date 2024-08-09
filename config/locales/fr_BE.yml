@@ -1085,8 +1085,6 @@ fr_BE:
               expliquer comment faire leurs achats avec vous. Si le texte est saisi
               ici, il sera affiché dans un onglet d'accueil lorsque les clients arriveront
               pour la première fois à votre vitrine.
-          shopfront_message_link_tooltip: "Insérer / éditer le lien"
-          shopfront_message_link_prompt: "Entrer l'URL pour insérer"
           shopfront_closed_message: "Message d'accueil comptoir fermé"
           shopfront_closed_message_placeholder: >
               Vous pouvez ici expliquer à vos acheteurs pourquoi votre comptoir est

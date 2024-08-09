@@ -1033,8 +1033,6 @@ de_CH:
               wie sie bei Ihnen einkaufen können. Wenn hier Text eingegeben wird,
               wird dieser auf einer Startseite in Ihrem Laden angezeigt, wenn Kunden
               ihn zum ersten Mal besuchen.
-          shopfront_message_link_tooltip: "Link einfügen/bearbeiten"
-          shopfront_message_link_prompt: "Bitte geben Sie die einzufügende URL ein:"
           shopfront_closed_message: "'Laden geschlossen'-Nachricht im Laden"
           shopfront_closed_message_placeholder: >
               Eine Nachricht, die eine detailliertere Erklärung liefert, warum Ihr
