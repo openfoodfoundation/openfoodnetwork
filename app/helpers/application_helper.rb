@@ -61,15 +61,6 @@ module ApplicationHelper
     classes << shopfront_layout
   end
 
-  def pdf_stylesheet_pack_tag(source)
-    if running_in_development?
-      options = { media: "all", host: "#{Webpacker.dev_server.host}:#{Webpacker.dev_server.port}" }
-      stylesheet_pack_tag(source, **options)
-    else
-      wicked_pdf_stylesheet_pack_tag(source)
-    end
-  end
-
   def cache_with_locale(key = nil, options = {}, &block)
     cache(cache_key_with_locale(key, I18n.locale), options) do
       yield(block)
