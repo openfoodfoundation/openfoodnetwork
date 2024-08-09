@@ -90,25 +90,17 @@ module Spree
     #
     # Optionally, specify some distributor_ids as a parameter to scope the results
     def self.services(distributor_ids = nil)
-      methods = Spree::ShippingMethod.
-        joins(:distributor_shipping_methods).
-        group('distributor_id')
+      methods = Spree::ShippingMethod.joins(:distributor_shipping_methods).group('distributor_id')
 
       if distributor_ids.present?
         methods = methods.where(distributor_shipping_methods: { distributor_id: distributor_ids })
       end
 
-      methods = methods.pluck(
-        Arel.sql("distributor_id"),
-        Arel.sql("BOOL_OR(spree_shipping_methods.require_ship_address = 'f') AS pickup"),
-        Arel.sql("BOOL_OR(spree_shipping_methods.require_ship_address = 't') AS delivery")
-      )
-
-      Hash[
-        methods.map do |(distributor_id, pickup, delivery)|
-          [distributor_id.to_i, { pickup:, delivery: }]
-        end
-      ]
+      methods.
+        pluck(Arel.sql("distributor_id"),
+              Arel.sql("BOOL_OR(spree_shipping_methods.require_ship_address = 'f') AS pickup"),
+              Arel.sql("BOOL_OR(spree_shipping_methods.require_ship_address = 't') AS delivery")).
+        to_h { |(distributor_id, pickup, delivery)| [distributor_id.to_i, { pickup:, delivery: }] }
     end
 
     def self.backend
