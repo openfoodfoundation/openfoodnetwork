@@ -7,8 +7,6 @@ module Spree
 
     has_many :products, through: :variants, dependent: nil
 
-    before_create :set_permalink
-
     validates :name, presence: true
 
     # Indicate which filters should be used for this taxon
@@ -23,15 +21,6 @@ module Spree
       else
         root? ? name : "#{root.name} - #{name}"
       end
-    end
-
-    def set_permalink
-      self.permalink = UrlGenerator.to_url(name)
-    end
-
-    # For #2759
-    def to_param
-      permalink
     end
 
     # Find all the taxons of supplied products for each enterprise, indexed by enterprise.
@@ -72,14 +61,6 @@ module Spree
         ts[t.enterprise_id.to_i] ||= Set.new
         ts[t.enterprise_id.to_i] << t.id
       end
-    end
-
-    private
-
-    def permalink_end
-      return UrlGenerator.to_url(name) if permalink.blank?
-
-      permalink.split('/').last
     end
   end
 end

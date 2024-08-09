@@ -6,13 +6,6 @@
       %br/
       = error_message_on :taxon, :name
       = text_field :taxon, :name, class: 'fullwidth'
-    = f.field_container :permalink_part do
-      = f.label :permalink_part, t(".permalink")
-      %span.required *
-      %br/
-      - if @taxon.permalink
-        = @taxon.permalink.split("/")[0...-1].join("/") + "/" 
-      = text_field_tag :permalink_part, @permalink_part
     = f.field_container :meta_title do
       = f.label :meta_title, t(".meta_title")
       %br/
