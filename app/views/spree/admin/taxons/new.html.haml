@@ -1,0 +1,14 @@
+= render partial: 'spree/admin/shared/configuration_menu'
+
+- content_for :page_title do
+  = t(".title")
+
+- content_for :page_actions do
+  %li
+    = button_link_to t("spree.admin.taxons.back_to_list"), spree.admin_taxons_path, icon: 'icon-arrow-left'
+
+= form_with model: @taxon, url: admin_taxons_path, data: { turbo: true }, html: { multipart: true } do |f|
+  = render partial: 'form', locals: { f: f }
+  .form-buttons
+    = button t('actions.create'), 'icon-ok'
+    = button_link_to t('actions.cancel'), admin_taxons_url, icon: "icon-remove"

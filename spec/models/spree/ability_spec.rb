@@ -153,13 +153,6 @@ RSpec.describe Spree::Ability do
       end
     end
 
-    context 'for Taxonomy' do
-      let(:resource) { Spree::Taxonomy.new }
-      context 'requested by any user' do
-        it_should_behave_like 'read only'
-      end
-    end
-
     context 'for User' do
       context 'requested by same user' do
         let(:resource) { user }

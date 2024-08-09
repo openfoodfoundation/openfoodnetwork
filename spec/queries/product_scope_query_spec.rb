@@ -13,7 +13,9 @@ RSpec.describe ProductScopeQuery do
   before { current_api_user.enterprise_roles.create(enterprise: supplier2) }
 
   describe '#bulk_products' do
-    let!(:product3) { create(:product, supplier_id: supplier2.id) }
+    let!(:product3) {
+      create(:product, supplier_id: supplier2.id, primary_taxon_id: create(:taxon).id)
+    }
 
     it "returns a list of products" do
       expect(ProductScopeQuery.new(current_api_user, {}).bulk_products)
