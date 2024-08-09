@@ -264,6 +264,37 @@ RSpec.describe Spree::Shipment do
     end
   end
 
+  describe "#finalize!" do
+    subject(:shipment) { order.shipments.first }
+    let(:variant) { order.variants.first }
+    let(:order) { create(:order_ready_for_confirmation) }
+
+    it "reduces stock" do
+      variant.on_hand = 5
+
+      expect { shipment.finalize! }
+        .to change { variant.on_hand }.from(5).to(4)
+    end
+
+    it "reduces stock of a variant override" do
+      variant.on_hand = 5
+      variant_override = VariantOverride.create!(
+        variant:,
+        hub: order.distributor,
+        count_on_hand: 7,
+        on_demand: false,
+      )
+
+      expect {
+        shipment.finalize!
+        variant.reload
+        variant_override.reload
+      }
+        .to change { variant_override.count_on_hand }.from(7).to(6)
+        .and change { variant.on_hand }.by(0)
+    end
+  end
+
   context "when order is completed" do
     before do
       allow(order).to receive_messages completed?: true
