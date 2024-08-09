@@ -88,13 +88,9 @@ module ReportsActions
         display_header_row: false
       }
     end
-    update_rendering_options
-    @rendering_options
   end
 
   def update_rendering_options
-    return unless request.post?
-
     @rendering_options.update(
       options: {
         fields_to_show: params[:fields_to_show],
