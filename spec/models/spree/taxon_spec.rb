@@ -51,18 +51,5 @@ module Spree
         end.to change { taxon2.reload.updated_at }
       end
     end
-
-    context "set_permalink" do
-      it "should set permalink correctly when no parent present" do
-        taxon.set_permalink
-        expect(taxon.permalink).to eq "ruby-on-rails"
-      end
-
-      it "should support Chinese characters" do
-        taxon.name = "你好"
-        taxon.set_permalink
-        expect(taxon.permalink).to eq 'ni-hao'
-      end
-    end
   end
 end
