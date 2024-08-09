@@ -28,7 +28,6 @@ module Admin
 
     def create
       @report = report_class.new(spree_current_user, params, render: true)
-      @rendering_options = rendering_options
       update_rendering_options
 
       render_in_background

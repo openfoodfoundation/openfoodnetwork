@@ -91,7 +91,7 @@ module ReportsActions
   end
 
   def update_rendering_options
-    @rendering_options.update(
+    rendering_options.update(
       options: {
         fields_to_show: params[:fields_to_show],
         display_summary_row: params[:display_summary_row].present?,
