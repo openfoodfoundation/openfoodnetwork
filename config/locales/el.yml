@@ -44,7 +44,7 @@ el:
       spree/product:
         name: "Όνομα Προϊόντος"
         price: "Τιμή"
-        primary_taxon: "Κατηγορία προϊόντος"
+        primary_taxon_id: "Κατηγορία προϊόντος"
         shipping_category_id: "Κατηγορία μεταφορικών"
         variant_unit: "Μονάδα μέτρησης μεταβλητής"
         variant_unit_name: "Όνομα μεταβλητής"

@@ -47,7 +47,7 @@ mr:
       spree/product:
         name: "उत्पादनाचे नांव"
         price: "किंमत"
-        primary_taxon: "उत्पादन श्रेणी"
+        primary_taxon_id: "उत्पादन श्रेणी"
         shipping_category_id: "शिपिंग श्रेणी"
         variant_unit: "व्हेरिएंट युनिट"
         variant_unit_name: "वेरिएंट युनिटचे नाव"

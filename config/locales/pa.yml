@@ -44,7 +44,7 @@ pa:
       spree/product:
         name: "ਉਤਪਾਦ ਦਾ ਨਾਂ"
         price: "ਕੀਮਤ"
-        primary_taxon: "ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ"
+        primary_taxon_id: "ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ"
         shipping_category_id: "ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀ"
         variant_unit: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ"
         variant_unit_name: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ ਦਾ ਨਾਮ"

@@ -31,7 +31,7 @@ uk:
       spree/product:
         name: "Назва продукту"
         price: "Ціна"
-        primary_taxon: "Категорія товару"
+        primary_taxon_id: "Категорія товару"
         shipping_category_id: "Категорія доставки"
         variant_unit: "Варіант одиниці"
         variant_unit_name: "Назва варіанта одиниці"

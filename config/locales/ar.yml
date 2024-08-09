@@ -44,7 +44,7 @@ ar:
       spree/product:
         name: "اسم المنتج"
         price: "السعر"
-        primary_taxon: "نوع المنتج "
+        primary_taxon_id: "نوع المنتج "
         shipping_category_id: "نوع الشحن"
         variant_unit: "وحدة النوع"
         variant_unit_name: "اسم وحدة النوع"

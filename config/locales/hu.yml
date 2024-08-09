@@ -47,7 +47,7 @@ hu:
       spree/product:
         name: "Termék Név"
         price: "Ár"
-        primary_taxon: "Termékkategória"
+        primary_taxon_id: "Termékkategória"
         shipping_category_id: "Szállítási mód"
         variant_unit: "Változat egysége"
         variant_unit_name: "Változat egység neve"
@@ -67,11 +67,22 @@ hu:
       variant_override:
         count_on_hand: "Készleten"
       spree/payment_method/calculator:
+        preferred_flat_percent: "Átalány százalék számítása:"
+        preferred_amount: "Mennyiség:"
+        preferred_first_item: "Első tétel:"
         preferred_additional_item: "További tételek kalkulált költsége:"
+        preferred_max_items: "Maximális tételek:"
+        preferred_minimal_amount: "Minimális összeg:"
+        preferred_normal_amount: "Normál összeg:"
+        preferred_discount_amount: "Kedvezmény összege:"
+        preferred_unit_from_list: "Számítás mértékegysége a listából:"
+        preferred_per_unit: "Számítás egységenként:"
       enterprise:
         white_label_logo_link: "A főoldalon használt logo linkje"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Az adókategória örökléséhez tételenkénti kalkulátor szükséges."
         spree/image:
           attributes:
             attachment:
@@ -88,6 +99,8 @@ hu:
           attributes:
             base:
               card_expired: "lejárt"
+        spree/product:
+          must_exist: 'léteznie kell'
         order_cycle:
           attributes:
             orders_close_at:
@@ -147,7 +160,7 @@ hu:
       card_declined: "A kártyát elutasították."
       missing: "Az ügyfélnél nincs kártya, amelynek terhelése folyamatban van."
       processing_error: "Hiba történt a kártya feldolgozása közben."
-      rate_limit: "Hiba történt az API-t túl gyorsan elérő kérések miatt. Kérjük, tudassa velünk, ha folyamatosan ezt a hibát tapasztalja."
+      rate_limit: "Hiba történt az API-t túl gyorsan elérő kérések miatt. Kérjük, tudasd velünk, ha folyamatosan ezt a hibát tapasztalod."
       authentication_required: "A kártyát elutasították, mivel a tranzakció hitelesítést igényel."
       approve_with_id: "A fizetés nem engedélyezhető."
       call_issuer: "A kártyát ismeretlen okból elutasították."
@@ -244,7 +257,7 @@ hu:
         signed_up_but_unconfirmed: "Megerősítő linket tartalmazó üzenetet küldtünk az email címedre. Kérjük, nyisd meg a linket a fiók aktiválásához."
         unknown_error: "Hiba történt a fiók létrehozásakor. Ellenőrizd email címed, és próbáld újra."
     failure:
-      disabled: "A fiókot inaktiváltuk. Kérünk fordulj munkatársunkhoz, hogy feloldjuk."
+      disabled: "A fiókot inaktiváltuk. Kérjük fordulj munkatársunkhoz, hogy feloldjuk."
       invalid: |
           Rossz email cím vagy jelszó.
           Legutóbb is vendégként használtad a felületet? Talán létre kell hoznod egy fiókot vagy vissza kell állítanod a jelszavad:
@@ -379,7 +392,7 @@ hu:
   home: "OFN"
   title: "Open Food Network"
   welcome_to: "Üdvözli az"
-  site_meta_description: "Az alapoktól kezdjük. A gazdálkodókkal, akiknek fontos, hogy közösen, egy fenntartható és mindenki számára átlátható, hazai élelemrendszert hozzunk létre. A bevásárlóközösségekkel, fogyasztói csoportokkal, elosztó pontokkal, akik összekapcsolják az embereket a termelőkkel és a termékekkel, és biztosítani szeretnék, hogy a termelők tisztességes díjazásban részesüljenek. Azokkal a fogyasztókkal, akik hisznek abban, hogy döntéseiknek hatása van."
+  site_meta_description: "Az alapoktól kezdjük. A gazdálkodókkal, akiknek fontos, hogy közösen, egy fenntartható és mindenki számára átlátható, hazai élelemrendszert hozzunk létre. A bevásárlóközösségekkel, fogyasztói csoportokkal, átvételi pontokkal, akik összekapcsolják az embereket a termelőkkel és a termékekkel, és biztosítani szeretnék, hogy a termelők tisztességes díjazásban részesüljenek. Azokkal a fogyasztókkal, akik hisznek abban, hogy döntéseiknek hatása van."
   search_by_name: Keresés név vagy település szerint...
   producers_join: A magyar termelők most már csatlakozhatnak az Open Food hálózatához.
   charges_sales_tax: Áfaköteles?
@@ -514,6 +527,7 @@ hu:
       columns:
         image: Kép
         name: Név
+        unit_scale: Mértékegység skála
         unit: Mértékegység
         unit_value: Egység értéke
         display_as: Egység megjelenítése mint
@@ -788,8 +802,10 @@ hu:
       filters:
         search_products: Keresés a termékek között
         search_for_producers: Keresés termelőre
+        select_producer: Válassz termelőt
         all_producers: Minden termelő
         search_for_categories: Keresés termékkategóriára
+        select_category: Válassz kategóriát
         all_categories: Minden kategória
         producers:
           label: Termelők
@@ -987,6 +1003,7 @@ hu:
       edit:
         order_sure_want_to: Biztosan %{event} akarja ezt a megrendelést?
         voucher_tax_included_in_price: "%{label}(a kupon tartalmazza az adót)"
+        tax_on_fees: "Díjak adója"
       invoice_email_sent: 'Számla e-mail elküldve'
       order_email_resent: 'A megrendelési e-mail újra el lett küldve'
       bulk_management:
@@ -1263,21 +1280,35 @@ hu:
           add_new: Új hozzáadása
           no_voucher_yet: Még nincsenek kuponok.
         white_label:
+          legend: "White Label"
           hide_ofn_navigation: "OFN navigáció elrejtése"
           upload_logo: "A Profil által használt Logo"
           remove_logo: "Logo eltávolítása"
           remove_logo_confirm: "Biztos vagy benne, hogy eltávolítod ezt a logo-t?"
           remove_logo_success: "Logo eltávolítva"
           white_label_logo_link_label: "A főoldalon használt logo linkje"
+          hide_groups_tab: "Csoportok lap elrejtése a kirakatban"
+          create_custom_tab: "Hozz létre egyéni lapot a kirakatban"
           custom_tab_title: "Az egyéni lap címe"
           custom_tab_content: "Tartalom az egyéni laphoz"
         connected_apps:
           legend: "Csatlakoztatott alkalmazások"
           affiliate_sales_data:
+            title: "INRAE / UFC QUE CHOISIR Kutatás"
+            tagline: "Engedélyezd ennek a kutatási projektnek, hogy névtelenül hozzáférjen rendelési adataidhoz"
             enable: "Adatmegosztás engedélyezése"
             disable: "Megosztás leállítása"
             loading: "Betöltés"
             need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
+            description_html: |
+                <p>
+                INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project.
+                </p>
+                <p>
+                <a href="https://apropos.coopcircuits.fr/"
+                target="_blank"><b>Learn more about this research project</b>
+                <i class="icon-external-link"></i></a>
+                </p>
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Engedélyezd a Discover Regenerative számára a vállalati adatok közzétételét."
@@ -1324,7 +1355,7 @@ hu:
         producer_shop_description_text2: A Termelői Értékesítési Pont kizárólag a saját termékeid értékesítésére szolgál. Ha más termékeit  is szeretnéd kínálni, válaszd az „Termelői Átvételi Pont” lehetőséget.
         producer_hub: Termelői Átvételi Pont
         producer_hub_text: Saját és mások termékeinek értékesítése
-        producer_hub_description_text: 'Az Open Food Network gerincét az átvételi pontok adják. Amennyiben termelő vagy, átvételi pontként értékesítheted saját termékeidet, de más termelőktől, vállalkozásoktól átvett termékeket is. '
+        producer_hub_description_text: 'Az Open Food Network gerincét az átvételi pontok adják. Amennyiben termelő vagy, értékesítheted saját termékeidet, de átvételi pontként más termelőktől, vállalkozásoktól átvett termékeket is. '
         profile: Csak profil
         get_listing: Kerülj fel a térképre, csatlakozz listákhoz, csoportokhoz
         profile_description_text: Az Open Food Network-ön keresztül megtalálnak a fogyasztók és kapcsolatba is léphetnek veled. Vállalkozásod látható lesz a térképen, és kereshető lesz a listákban.
@@ -1547,6 +1578,7 @@ hu:
           shop_preferences: "Átvételi ponti beállítások"
           users: "Felhasználók"
           vouchers: Kuponok
+          white_label: "White Label"
           connected_apps: "Csatlakoztatott alkalmazások"
         enterprise_group:
           primary_details: "Főbb adatok"
@@ -1580,6 +1612,8 @@ hu:
       lettuce_share: Részesedés
       payment_methods: Fizetési módokról szóló jelentés
       delivery: Kézbesítési jelentés
+      sales_tax_totals_by_producer: Forgalmi adó teljes összege termelőként
+      sales_tax_totals_by_order: Forgalmi adó végösszege megrendelés alapján
       tax_types: Adótípusok
       tax_rates: Adókulcsok
       pack_by_customer: Összekészítés Ügyfelenként
@@ -1630,6 +1664,8 @@ hu:
       enterprise_fee_summary:
         name: "Vállalkozási díjak összefoglalója"
         description: "Összefoglaló a beszedett vállalkozási díjakról"
+      enterprise_fees_with_tax_report_by_order: "Vállalkozási díjak adójelentéssel megrendelés alapján"
+      enterprise_fees_with_tax_report_by_producer: "Vállalkozási díjak termelői adóbevallással"
       errors:
         no_report_type: "Adja meg a jelentés típusát"
         report_not_found: "A jelentés nem található"
@@ -1779,6 +1815,7 @@ hu:
         voucher_code: Kupon kód
         voucher_amount: Összeg
         voucher_type: Kupon típus
+        flat_rate: Átalány
         percentage_rate: Százalék (%)
     controllers:
       enterprises:
@@ -1987,6 +2024,7 @@ hu:
   invoice_column_unit_price_without_taxes: "Egységár (adó nélkül)"
   invoice_column_price_with_taxes: "Teljes ár (áfával)"
   invoice_column_price_without_taxes: "Teljes ár (adó nélkül)"
+  invoice_column_price_per_unit_without_taxes: "Egységár (adó nélkül)"
   invoice_column_tax_rate: "Adókulcs"
   invoice_tax_total: "ÁFA összesen:"
   invoice_cancel_and_replace_invoice: "érvényteleníti és cseréli a számlát"
@@ -1996,6 +2034,7 @@ hu:
   invoice_shipping_category_pickup: "Átvétel"
   total_excl_tax: "Összesen (adó nélkül):"
   total_incl_tax: "Összesen (adóval együtt):"
+  total_all_tax: "Összes adó:"
   abn: "Adószám:"
   acn: "Közösségi Adószám (EU):"
   invoice_issued_on: "Kiállított számla:"
@@ -2114,13 +2153,13 @@ hu:
       desc_part_3: "A sütiket elsősorban azért használjuk, hogy megjegyezzük, ki vagy, ha „bejelentkezik” a szolgáltatásba, vagy hogy emlékezzünk a kosárba tett termékekre, még akkor is, ha nincs bejelentkezve. „Cookie-k elfogadása”, feltételezzük, hogy Ön hozzájárul ahhoz, hogy a weboldal működéséhez nélkülözhetetlen cookie-kat tároljunk. Íme az általunk használt sütik listája!"
       essential_cookies: "Lényeges cookie-k"
       essential_cookies_desc: "Az alábbi cookie-k feltétlenül szükségesek weboldalunk működéséhez."
-      essential_cookies_note: "A legtöbb cookie csak egyedi azonosítót tartalmaz, más adatot azonban nem, így például az Ön e-mail címe és jelszava soha nem szerepel bennük, és soha nem kerül nyilvánosságra."
+      essential_cookies_note: "A legtöbb cookie csak egyedi azonosítót tartalmaz, más adatot azonban nem, így például az e-mail címed és jelszavad soha nem szerepel bennük, és soha nem kerül nyilvánosságra."
       cookie_domain: "Által meghatározott:"
-      cookie_session_desc: "Arra szolgál, hogy a webhely emlékezzen a felhasználókra az oldallátogatások között, például emlékezzen a kosárban lévő tételekre."
+      cookie_session_desc: "Arra szolgál, hogy a webhely emlékezzen a felhasználókra az oldalváltások között, például emlékezzen a kosárban lévő tételekre."
       cookie_consent_desc: "A cookie-k tárolására vonatkozó felhasználói hozzájárulás állapotának fenntartására szolgál"
-      cookie_remember_me_desc: "Akkor használatos, ha a felhasználó arra kérte a webhelyet, hogy emlékezzen rá. Ez a süti 12 nap elteltével automatikusan törlődik. Ha felhasználóként szeretné törölni a cookie-t, csak ki kell jelentkeznie. Ha nem szeretné, hogy a cookie telepítve legyen a számítógépére, ne jelölje be az „emlékezz rám” jelölőnégyzetet bejelentkezéskor."
+      cookie_remember_me_desc: "Akkor használatos, ha a felhasználóként arra kérted a webhelyet, hogy emlékezzen rád. Ez a süti 12 nap elteltével automatikusan törlődik. Ha felhasználóként szeretnéd törölni a cookie-t, csak ki kell jelentkezned. Ha nem szeretnéd, hogy a cookie telepítve legyen a számítógépedre, ne jelöld be az „emlékezz rám” jelölőnégyzetet bejelentkezéskor."
       cookie_openstreemap_desc: "A cookie-t barátságos, nyílt forráskódú térképszolgáltatónk (OpenStreetMap) használja annak biztosítására, hogy egy adott időszakon belül ne kapjon túl sok kérést, és megakadályozza a szolgáltatásaikkal való visszaélést."
-      cookie_stripe_desc: "fizetésfeldolgozó, a Stripe által a csalások felderítése céljából gyűjtött adatok https://stripe.com/cookies-policy/legal. Nem minden üzlet használja a Stripe-ot fizetési módként, de a csalások megelőzése érdekében bevált gyakorlat, ha ezt minden oldalon alkalmazzák. A Stripe valószínűleg képet alkot arról, hogy melyik oldalunk működik általában az API-jával, majd megjelöl minden szokatlant. Tehát a Stripe cookie beállításának tágabb funkciója van, mint egy egyszerűen fizetési lehetőság biztosítása a felhasználó számára. Az eltávolítása hatással lehet magának a szolgáltatásnak a biztonságára. A Stripe-ról többet megtudhat, és elolvashatja adatvédelmi szabályzatát a https://stripe.com/privacy oldalon."
+      cookie_stripe_desc: "A Stripe fizetési szolgáltató által a csalások felderítése céljából gyűjtött adatok https://stripe.com/cookies-policy/legal. Nem minden átvételi pont vagy termelő használja a Stripe-ot fizetési módszerként, de a csalás megelőzése érdekében jó gyakorlat, hogy minden oldalon alkalmazzuk. A Stripe valószínűleg képet alkot arról, hogy mely oldalaink lépnek általában kapcsolatba az API-jukkal, majd minden szokatlant megjelöl. A Stripe cookie beállításának tehát szélesebb funkciója van, mint egyszerűen a fizetési mód biztosítása a felhasználó számára. Eltávolítása befolyásolhatja magának a szolgáltatásnak a biztonságát. A Stripe-ról többet megtudhatsz, és elolvashatod adatvédelmi irányelveit a https://stripe.com/privacy oldalon."
       statistics_cookies: "Statisztikai cookie-k"
       statistics_cookies_desc: "Az alábbiak nem feltétlenül szükségesek, de segítik a legjobb felhasználói élmény biztosítását azáltal, hogy lehetővé teszik számunkra, hogy elemezzük a felhasználói viselkedést, azonosítsuk, mely funkciókat használja a legtöbbet, vagy nem használja, megértsük a felhasználói élményekkel kapcsolatos problémákat stb."
       statistics_cookies_matomo_desc_html: "platformhasználati adatok gyűjtéséhez és elemzéséhez a <a href='https://matomo.org/' target='_blank'>Matomo</a> (ex Piwik) egy nyílt forráskódú elemző eszközt használunk, amely megfelel a GDPR-nak és védi a magánéletét."
@@ -2134,7 +2173,7 @@ hu:
       disabling_cookies_chrome_link: "https://support.google.com/chrome/answer/95647"
       disabling_cookies_ie_link: "https://support.microsoft.com/en-us/help/17442/windows-internet-explorer-delete-manage-cookies"
       disabling_cookies_safari_link: "https://www.apple.com/legal/privacy/en-ww/cookies/"
-      disabling_cookies_note: "De ügyeljen arra, hogy ha törli vagy módosítja az Open Food Network által használt alapvető sütiket, a webhely nem fog működni, nem tud semmit sem a kosárba tenni, sem például a fizetéshez."
+      disabling_cookies_note: "Ügyelj arra, hogy ha törlöd vagy módosítod az Open Food Network által használt alapvető sütiket, a webhely nem fog működni, nem tudsz semmit sem a kosárba tenni, és fizetni sem fogsz tudni."
     cookies_banner:
       cookies_usage: "Ez az oldal cookie-kat használ annak érdekében, hogy navigációját zökkenőmentessé és biztonságossá tegye, valamint hogy segítsen megérteni számunkra, hogyan használja az oldalt, hogy javíthassuk az oldal funkcióit."
       cookies_definition: "A sütik nagyon kisméretű szöveges fájlok, amelyek bizonyos webhelyek meglátogatásakor a számítógépén tárolódnak."
@@ -2694,6 +2733,7 @@ hu:
   shipping_method_destroy_error: "Ez a szállítási mód nem törölhető, mivel a következő rendelés hivatkozik rá: %{number}."
   fees: "Díjak"
   fee_name: "Díj neve"
+  fee_owner: "Díjtulajdonos"
   item_cost: "Cikk költsége"
   bulk: "Tömeges"
   shop_variant_quantity_min: "min"
@@ -2736,6 +2776,7 @@ hu:
   admin_enterprise_relationships_permits: "engedélyezi"
   admin_enterprise_relationships_seach_placeholder: "Keresés"
   admin_enterprise_relationships_button_create: "Létrehozás"
+  admin_enterprise_relationships_to: "kapcsolat vele"
   admin_enterprise_groups: "Vállalkozási csoportok"
   admin_enterprise_groups_name: "Név"
   admin_enterprise_groups_owner: "Tulajdonos"
@@ -3638,6 +3679,8 @@ hu:
           supplier: "Beérkező"
           distributor: "Kimenő"
           coordinator: "Koordinátor"
+        tax_category_name:
+          shipping_instance_rate: "Kézbesítői díj"
         formats:
           csv:
             header:
@@ -3743,6 +3786,7 @@ hu:
     shipping_method_names:
       UPS Ground: "UPS föld"
       pick_up: "Átvétel a gazdaságban"
+      delivery: "Aláírva, lepecsételve, kézbesítve"
     start_date: "Kezdő dátum"
     successfully_removed: "Sikeresen eltávolítva"
     taxonomy_edit: "Termékkategória szerkesztése"
@@ -3756,6 +3800,7 @@ hu:
     resend: "Újraküldés"
     back_to_orders_list: "Vissza a rendelési listához"
     back_to_payments_list: "Vissza a fizetési listához"
+    back_to_states_list: "Vissza a státusz listához"
     return_authorizations: "Visszaküldési engedélyek"
     cannot_create_returns: "Nem tudsz visszárut létrehozni, mivel a rendelésnek nincsenek kiszállított egységei."
     select_stock: "Válasszon részvényt"
@@ -4092,6 +4137,7 @@ hu:
           issued_on: "Kiadott"
           tax_invoice: "Rendelés sorszáma"
           code: "Kód"
+          from: "Küldő"
           to: "Vevő"
           shipping: "Szállítás"
           order_number: "Rendelési sorszám"

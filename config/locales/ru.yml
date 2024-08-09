@@ -47,7 +47,7 @@ ru:
       spree/product:
         name: "Имя Товара"
         price: "Цена"
-        primary_taxon: "Категория Продукта"
+        primary_taxon_id: "Категория Товара"
         shipping_category_id: "Категория Доставки"
         variant_unit: "Единица Варианта"
         variant_unit_name: "Название Единицы Варианта"

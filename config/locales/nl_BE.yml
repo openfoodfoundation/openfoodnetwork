@@ -29,7 +29,7 @@ nl_BE:
       spree/product:
         name: "Naam produkt"
         price: "Prijs"
-        primary_taxon: "Product categorie"
+        primary_taxon_id: "Product categorie"
         shipping_category_id: "Verzendcategorie"
         variant_unit: "Eénheid"
         variant_unit_name: "Variant Unit Name"

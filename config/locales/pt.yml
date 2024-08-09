@@ -29,7 +29,7 @@ pt:
       spree/product:
         name: "Nome do Produto"
         price: "Preço"
-        primary_taxon: "Categoria de Produto"
+        primary_taxon_id: "Categoria de Produto"
         shipping_category_id: "Categoria de Envio"
         variant_unit: "Unidade da Variante"
         variant_unit_name: "Nome da Unidade da Variante"

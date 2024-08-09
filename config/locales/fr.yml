@@ -47,7 +47,7 @@ fr:
       spree/product:
         name: "Nom du Produit"
         price: "Prix"
-        primary_taxon: "Catégorie Produit"
+        primary_taxon_id: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
@@ -99,6 +99,8 @@ fr:
           attributes:
             base:
               card_expired: "a expiré"
+        spree/product:
+          must_exist: 'doit exister'
         order_cycle:
           attributes:
             orders_close_at:
@@ -325,7 +327,7 @@ fr:
       email_registered: "va, dès que vous aurez choisi un type d'entreprise, être créé sur"
       email_userguide_html: "Le Guide Utilisateur est là pour vous accompagner dans la prise en main de la plateforme. Vous y trouverez les informations détaillées de paramétrage de votre entreprise, de vos produits si vous êtes producteur, et éventuellement de votre boutique. Pour accéder au guide en français, cliquez ici : %{link}"
       userguide: "Guide utilisateur"
-      email_admin_html: "Pour gérer votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite les 3 premiers mois après la première vente pour vous permettre de tester notre solution. Vous pouvez faire des \"vraies commandes\" pour tester à condition de les annuler juste après pour ne pas démarrer les 3 mois. Consultez la rubrique \"Nos offres & tarifs\" du site internet pour en connaître les détails."
+      email_admin_html: "Pour gérer votre entreprise, rendez-vous sur l’%{link}. Si vous choisissez CoopCircuits pour organiser vos ventes, l’utilisation est gratuite pendant les 3 premiers mois à compter de la première vente pour vous permettre de tester notre solution. Vous pouvez aussi faire de \"vraies commandes\" pour tester à condition de les annuler juste après pour ne pas démarrer la période des 3 mois. Passée la période d'essai des 3 mois après la 1ère vente, CoopCircuits vous facturera pour votre utilisation du service un montant correspondant à 3.5% du chiffre d'affaires réalisé en ligne, avec un plancher annuel de 60€ et un plafond annuel de 10 000€. Consultez la rubrique \"Nos offres & tarifs\" du site internet pour tous les détails sur le tarif et le service fourni."
       admin_panel: "interface d'administration"
       email_community_html: "Nous avons aussi un forum de discussion en ligne pour échanger avec la communauté sur des questions liées à la plateforme ou aux défis de la gestion d'un circuit court. Nous vous invitons à y participer ! %{link}\nSi vous avez besoin d'aide,  nous proposons des démonstrations hebdomadaires en visio, où nous vous présentons la coopérative CoopCircuits, et vous donnons tous les trucs et astuces sur l'outil et ses fonctionnalités. Inscrivez-vous via le lien présent sur la page Aide&FAQ de notre site.\nSi vous préférez un rdv individuel - par téléphone ou visio - n'hésitez-pas à nous proposer un créneau pour vous rappeler \U0001F917"
       join_community: "Accéder au forum"

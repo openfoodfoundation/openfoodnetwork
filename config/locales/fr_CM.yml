@@ -29,7 +29,7 @@ fr_CM:
       spree/product:
         name: "Nom du Produit"
         price: "Prix"
-        primary_taxon: "Catégorie Produit"
+        primary_taxon_id: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
         variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"

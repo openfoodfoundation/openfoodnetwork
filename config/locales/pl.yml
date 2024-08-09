@@ -24,7 +24,7 @@ pl:
         source: Źródło
       spree/product:
         price: "Cena"
-        primary_taxon: "Kategoria produktu"
+        primary_taxon_id: "Kategoria produktu"
         shipping_category_id: "Kategoria dostawy"
         variant_unit: "Jednostka wariantu"
         variant_unit_name: "Nazwa jednostki wariantu"

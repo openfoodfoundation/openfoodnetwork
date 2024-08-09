@@ -27,7 +27,7 @@ fil_PH:
       spree/product:
         name: "pangalan ng produkto"
         price: "Presyo"
-        primary_taxon: "Kategorya ng Produkto"
+        primary_taxon_id: "Kategorya ng Produkto"
         shipping_category_id: "Kategorya ng Pagpapadala"
         variant_unit: "Yunit ng variant"
         variant_unit_name: "pangalan ng yunit ng variant"

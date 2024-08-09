@@ -47,7 +47,7 @@ ml:
       spree/product:
         name: "ഉത്പന്നത്തിന്റെ പേര്"
         price: "വില"
-        primary_taxon: "ഉൽപ്പന്ന വിഭാഗം"
+        primary_taxon_id: "ഉൽപ്പന്ന വിഭാഗം"
         shipping_category_id: "ഷിപ്പിംഗ് വിഭാഗം"
         variant_unit: "വേരിയന്റ് യൂണിറ്റ്"
         variant_unit_name: "വേരിയന്റ് യൂണിറ്റിന്റെ പേര്"

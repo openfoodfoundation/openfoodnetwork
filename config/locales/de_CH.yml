@@ -33,7 +33,7 @@ de_CH:
       spree/product:
         name: "Produktname"
         price: "Preis"
-        primary_taxon: "Produktkategorie"
+        primary_taxon_id: "Produktkategorie"
         shipping_category_id: "Lieferkategorie"
         variant_unit: "Varianteneinheit"
         variant_unit_name: "Name der Varianteneinheit"

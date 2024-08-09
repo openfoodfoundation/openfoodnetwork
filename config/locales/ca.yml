@@ -44,7 +44,7 @@ ca:
       spree/product:
         name: "Nom del producte"
         price: "Preu"
-        primary_taxon: "Categoria del producte"
+        primary_taxon_id: "Categoria del producte"
         shipping_category_id: "Categoria d'enviament"
         variant_unit: "Unitat de la variant"
         variant_unit_name: "Nom de la unitat de la variant"

@@ -29,7 +29,7 @@ ko:
       spree/product:
         name: "제품 이름"
         price: "가격"
-        primary_taxon: "물품 목록"
+        primary_taxon_id: "물품 목록"
         shipping_category_id: "전송물품 목록"
         variant_unit: "구성 단위 변경"
         variant_unit_name: "변경된 구성 단위 이름"

@@ -47,7 +47,7 @@ hi:
       spree/product:
         name: "उत्पाद का नाम"
         price: "कीमत"
-        primary_taxon: "उत्पाद की श्रेणी"
+        primary_taxon_id: "उत्पाद की श्रेणी"
         shipping_category_id: "शिपिंग श्रेणी"
         variant_unit: "वेरिएंट यूनिट"
         variant_unit_name: "वेरिएंट यूनिट का नाम"

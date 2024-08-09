@@ -47,7 +47,7 @@ cy:
       spree/product:
         name: "Enw Cynnyrch"
         price: "Pris"
-        primary_taxon: "Categori Cynnyrch"
+        primary_taxon_id: "Categori Cynnyrch"
         shipping_category_id: "Categori dosbarthu."
         variant_unit: "Uned Amrywiol"
         variant_unit_name: "Enw Uned Amrywiol"

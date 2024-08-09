@@ -29,7 +29,7 @@ tr:
       spree/product:
         name: "ÜRÜN ADI"
         price: "Fiyat"
-        primary_taxon: "ÜRÜN KATEGORİSİ"
+        primary_taxon_id: "ÜRÜN KATEGORİSİ"
         shipping_category_id: "TESLİMAT KATEGORİSİ"
         variant_unit: "Çeşit Birimi"
         variant_unit_name: "Çeşit Birim Adı"

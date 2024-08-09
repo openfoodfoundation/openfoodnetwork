@@ -47,7 +47,7 @@ nb:
       spree/product:
         name: "Produktnavn"
         price: "Pris"
-        primary_taxon: "Produktkategori"
+        primary_taxon_id: "Produktkategori"
         shipping_category_id: "Leveringskategori"
         variant_unit: "Variant Enhet"
         variant_unit_name: "Enhetsnavn Variant"
@@ -99,6 +99,8 @@ nb:
           attributes:
             base:
               card_expired: "har utgått"
+        spree/product:
+          must_exist: 'må eksistere'
         order_cycle:
           attributes:
             orders_close_at:
@@ -610,6 +612,7 @@ nb:
     show_n_more: Vis %{num} flere
     choose: "Velg..."
     please_select: Vennligst velg...
+    column_save_as_default: Lagre som standard
     columns: Kolonner
     actions: Handlinger
     viewing: "Viser: %{current_view_name}"
@@ -698,6 +701,9 @@ nb:
         balance_due: "Til Forfall"
       destroy:
         has_associated_subscriptions: "Sletting mislyktes: Denne kunden har aktive abonnementer. Avbryt dem først."
+    column_preferences:
+      bulk_update:
+        success: "Kolonnepreferansene er lagret"
     contents:
       edit:
         title: Innhold
@@ -796,8 +802,10 @@ nb:
       filters:
         search_products: Søk etter produkter
         search_for_producers: Søk etter produsenter
+        select_producer: Velg produsent
         all_producers: Alle produsenter
         search_for_categories: Søk etter kategorier
+        select_category: Velg kategori
         all_categories: Alle kategorier
         producers:
           label: Produsenter
@@ -844,6 +852,9 @@ nb:
         category_field_name: "Kategori"
         tax_category_field_name: "Avgiftskategori"
         producer_field_name: "Produsent"
+      clone:
+        success: Kloning av produktet var vellykket
+        error: Kan ikke klone produktet
     product_import:
       title: Produktimport
       file_not_found: Filen ble ikke funnet eller kunne ikke åpnes
@@ -992,6 +1003,7 @@ nb:
       edit:
         order_sure_want_to: Er du sikker på at du vil %{event} denne bestillingen?
         voucher_tax_included_in_price: "%{label} (avgift inkludert i kupongen)"
+        tax_on_fees: "Skatt på avgifter"
       invoice_email_sent: 'Faktura-e-post er sendt'
       order_email_resent: 'Bestillings-e-post har blitt angitt'
       bulk_management:
@@ -1283,10 +1295,21 @@ nb:
         connected_apps:
           legend: "Tilkoblede apper"
           affiliate_sales_data:
+            title: "INRAE / UFC QUE CHOISIR Research"
+            tagline: "La dette forskningsprosjektet få tilgang til ordredataene dine anonymt"
             enable: "Tillat datadeling"
             disable: "Stopp deling"
             loading: "Laster"
             need_to_be_manager: "Bare ledere kan koble til apper."
+            description_html: |
+                <p>
+                INRAE og UFC QUE CHOISIR går sammen for å studere matvarepriser i korte matsystemer og sammenligne dem med prisene i supermarkedet, for et gitt sett med produkter. Dataene som brukes av INRAE er blandet med data som kommer fra andre korte matkjedeplattformer i Frankrike. Ingen individuelle produktpriser vil bli offentliggjort gjennom dette prosjektet.
+                </p>
+                <p>
+                <a href="https://apropos.coopcircuits.fr/"
+                target="_blank"></b>Lær mer om dette forskningsprosjektet</b>
+                <i class="icon-external-link"></i></a>
+                </p>
           discover_regen:
             title: "Oppdag Regenerativ"
             tagline: "Tillat Discover Regenerativ å publisere bedriftsinformasjonen din."
@@ -1601,6 +1624,9 @@ nb:
       pack_by_customer: Pakk etter Kunde
       pack_by_supplier: Pakk etter Leverandør
       pack_by_product: Pakke etter Produkt
+      display:
+        report_is_big: "Denne rapporten er stor og kan gjøre enheten din tregere."
+        display_anyway: "Vis uansett"
       download:
         button: "Last ned rapport"
       show:
