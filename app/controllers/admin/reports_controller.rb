@@ -70,10 +70,12 @@ module Admin
           block: "start"
         ).broadcast
 
+      blob = ReportBlob.create_for_upload_later!(report_filename)
+
       ReportJob.perform_later(
         report_class:, user: spree_current_user, params:,
         format: report_format,
-        filename: report_filename,
+        blob:,
         channel: ScopedChannel.for_id(params[:uuid]),
       )
 
