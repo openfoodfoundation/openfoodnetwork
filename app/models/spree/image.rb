@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "mini_magick"
+
 module Spree
   class Image < Asset
     has_one_attached :attachment, service: image_service do |attachment|

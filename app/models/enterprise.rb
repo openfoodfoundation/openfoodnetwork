@@ -1,5 +1,7 @@
 # frozen_string_literal: false
 
+require "mini_magick"
+
 class Enterprise < ApplicationRecord
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
