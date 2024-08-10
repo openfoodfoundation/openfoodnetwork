@@ -216,7 +216,7 @@ jobs:
 
       - name: Archive failed tests screenshots
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: failed-tests-screenshots
           path: tmp/capybara/screenshots/*.png
@@ -294,7 +294,7 @@ jobs:
 
       - name: Archive failed tests screenshots
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: failed-tests-screenshots
           path: tmp/capybara/screenshots/*.png
@@ -373,7 +373,7 @@ jobs:
 
       - name: Archive failed tests screenshots
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: failed-tests-screenshots
           path: tmp/capybara/screenshots/*.png
