@@ -41,6 +41,7 @@ RSpec.describe '
       end
 
       it "shows all hubs that have been ordered from with balance or credit" do
+        raise 'TESTING ARTIFACT UPLOAD'
         # Single test to avoid re-rendering page
         visit "/account"
 

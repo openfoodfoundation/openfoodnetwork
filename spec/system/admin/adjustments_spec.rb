@@ -41,6 +41,7 @@ RSpec.describe '
   shared_examples "when the enable_localized_number preference" \
     do |adjustment_label, adjustment_amount, tax_category, tax, tax_total|
     it "creates the adjustment and calculates taxes" do
+      raise 'TESTING ARTIFACT UPLOAD'
       # When I go to the adjustments page for the order
       page.find('td.actions a.icon-edit').click
       click_link 'Adjustments'
