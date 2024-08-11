@@ -1,4 +1,4 @@
-= f.field_container :shipping_categories do 
+= f.field_container :shipping_category_id do 
   = f.label :shipping_category_id, t(:shipping_category)
   = f.collection_select(:shipping_category_id, Spree::ShippingCategory.all, :id, :name, {:include_blank => false}, {:class => 'select2 fullwidth'})
   = f.error_message_on :shipping_category_id

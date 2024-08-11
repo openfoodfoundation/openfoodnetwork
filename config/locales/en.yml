@@ -120,8 +120,6 @@ en:
           attributes:
             base:
               card_expired: "has expired"
-        spree/product:
-          must_exist: 'must exist'
         order_cycle:
           attributes:
             orders_close_at:

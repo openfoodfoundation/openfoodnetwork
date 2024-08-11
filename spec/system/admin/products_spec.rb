@@ -184,7 +184,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      expect(page).to have_content "Product Category must exist"
+      expect(page).to have_content "Product Category can't be blank"
     end
 
     it "creating product with empty product supplier fails" do
@@ -201,7 +201,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      expect(page).to have_content "Supplier must exist"
+      expect(page).to have_content "Supplier can't be blank"
     end
 
     describe "localization settings" do

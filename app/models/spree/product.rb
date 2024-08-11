@@ -295,14 +295,8 @@ module Spree
       # eg clone product. Will raise error if clonning a product with no variant
       return if variants.first&.valid?
 
-      unless Spree::Taxon.find_by(id: primary_taxon_id)
-        errors.add(:primary_taxon_id,
-                   I18n.t('activerecord.errors.models.spree/product.must_exist'))
-      end
-      return if Enterprise.find_by(id: supplier_id)
-
-      errors.add(:supplier_id,
-                 I18n.t('activerecord.errors.models.spree/product.must_exist'))
+      errors.add(:primary_taxon_id, :blank) unless Spree::Taxon.find_by(id: primary_taxon_id)
+      errors.add(:supplier_id, :blank) unless Enterprise.find_by(id: supplier_id)
     end
 
     def update_units
