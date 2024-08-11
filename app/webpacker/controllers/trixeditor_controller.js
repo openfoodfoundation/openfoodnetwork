@@ -2,9 +2,9 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   connect() {
-    window.addEventListener("trix-change", this.#trixChange);
+    this.element.addEventListener("trix-change", this.#trixChange);
     this.#trixInitialize();
-    window.addEventListener("trix-initialize", this.#trixInitialize);
+    this.element.addEventListener("trix-initialize", this.#trixInitialize);
   }
 
   #trixChange = (event) => {
