@@ -60,7 +60,7 @@ RSpec.describe Spree::Admin::TaxonsController do
         expect(response).to have_http_status :found
       end
 
-      it "retruns error with invalid attributes" do
+      it "returns error with invalid attributes" do
         spree_post :update, id: new_taxon.id,
                             taxon: { **valid_attributes, name: '' }
 
