@@ -18,7 +18,7 @@ RSpec.describe OpenFoodNetwork::EnterpriseInjectionData do
   let!(:closed_oc) { create :closed_order_cycle, coordinator: enterprise4 }
 
   context "when scoped to specific enterprises" do
-    let(:subject) {
+    subject {
       described_class.new([enterprise1.id, enterprise2.id])
     }
 
