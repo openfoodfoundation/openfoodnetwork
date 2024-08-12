@@ -51,7 +51,7 @@ module OpenFoodNetwork
       # Copy features here that were activated in a migration so that new
       # instances, development and test environments have the feature active.
       "admin_style_v3" => <<~DESC,
-        Test the work-in-progress design updates. Activated for admins, new users, and 75% of all users.
+        Test the work-in-progress design updates.
       DESC
     }.freeze
 
