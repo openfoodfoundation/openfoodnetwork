@@ -92,6 +92,7 @@ RSpec.describe '
         it "shows such orders in a section labelled 'Open Orders'" do
           visit '/account'
           expect(page).to have_content 'Open Orders'
+          raise 'Testing artifact upload from different nodes at the same time'
 
           expect(page).to have_link 'Edit', href: order_path(d1o1)
           expect(page).to have_link 'Edit', href: order_path(d1o2)
