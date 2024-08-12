@@ -100,7 +100,6 @@ RSpec.describe '
     it 'shows error when order cycle is not selected' do
       select2_select distributor.name, from: 'order_distributor_id'
       click_button 'Next'
-      raise 'Testing artifact upload from different nodes at the same time'
 
       expect(page).to have_content "Order cycle can't be blank"
     end
