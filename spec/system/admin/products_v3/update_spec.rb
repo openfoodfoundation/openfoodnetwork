@@ -682,12 +682,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         end
       end
 
-      it "fails intentionally to generate screenshot" do
-        within ".reveal-modal" do
-          expect(page).to have_content "This text does not exist"
-        end
-      end
-
       it 'shows a modal telling not a valid image when uploading a non valid image file' do
         within ".reveal-modal" do
           attach_file 'image[attachment]',
