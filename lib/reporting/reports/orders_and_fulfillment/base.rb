@@ -72,8 +72,7 @@ module Reporting
           return " " if not_all_have_unit?(line_items)
 
           total_units = line_items.sum do |li|
-            product = li.variant.product
-            li.quantity * li.unit_value / scale_factor(product)
+            li.quantity * li.unit_value / scale_factor(li.variant)
           end
 
           total_units.round(3)
@@ -92,8 +91,8 @@ module Reporting
           line_items.map { |li| li.unit_value.nil? }.any?
         end
 
-        def scale_factor(product)
-          product.variant_unit == 'weight' ? 1000 : 1
+        def scale_factor(variant)
+          variant.variant_unit == 'weight' ? 1000 : 1
         end
 
         def report_variant_overrides
