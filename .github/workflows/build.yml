@@ -218,7 +218,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: failed-tests-screenshots
+          name: failed-admin-tests-screenshots
           path: tmp/capybara/screenshots/*.png
           retention-days: 7
           if-no-files-found: ignore
@@ -296,7 +296,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: failed-tests-screenshots
+          name: failed-consumer-tests-screenshots
           path: tmp/capybara/screenshots/*.png
           retention-days: 7
           if-no-files-found: ignore
