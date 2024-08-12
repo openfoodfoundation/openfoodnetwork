@@ -10,71 +10,157 @@ RSpec.describe '
   include AuthenticationHelper
   include WebHelper
 
-  context 'when cycle has attached order(s)' do
-    let(:order) { create(:order_without_full_payment) }
+  let(:order_cycle_attrs) {
+    { orders_open_at: "2024-03-01 08:00", orders_close_at: "2024-03-20 20:00", }
+  }
+  describe 'simple order cycle' do
+    let(:coordinator) { create(:distributor_enterprise, sells: 'own') }
+    let(:order_cycle) {
+      create(:simple_order_cycle, coordinator:, **order_cycle_attrs, suppliers: [coordinator],
+                                  distributors: [coordinator])
+    }
 
-    it "show warning modal when datetime field values change" do
-      # When I go to the admin order cycle edit page
-      login_as_admin
-      visit edit_admin_order_cycle_path(order.order_cycle)
+    context 'with attached order(s)' do
+      let!(:order) { create(:order, order_cycle: ) }
 
-      # change non-date range field
-      fill_in 'order_cycle_name', with: "Order cycle name updated"
-      expect(page).to have_content('You have unsaved changes')
-      click_button('Save')
-      expect(page).not_to have_content "Orders are linked to this order cycle"
-      expect(page).to have_content('Your order cycle has been updated.')
+      it "shows warning modal when datetime field values change" do
+        login_as_admin
+        visit edit_admin_order_cycle_path(order_cycle)
 
-      # change date range field value
-      time = DateTime.current
-      find('#order_cycle_orders_close_at').click
-      select_datetime_from_datepicker Time.zone.at(time)
+        # change non-date range field
+        fill_in 'order_cycle_name', with: "Order cycle name updated"
+        # Set Ready for value to enable save button
+        fill_in 'order_cycle_outgoing_exchange_0_pickup_time', with: 'pickup time'
 
-      expect(page.find('#order_cycle_orders_close_at').value).to eq time.strftime('%Y-%m-%d %H:%M')
-      expect(page).to have_content('You have unsaved changes')
+        expect(page).to have_content('You have unsaved changes')
+        click_button 'Save'
 
-      # click save to open warning modal
-      click_button('Save')
-      expect(page).to have_content('You have unsaved changes')
-      expect(page).to have_content "Orders are linked to this order cycle."
+        expect(page).not_to have_content "Orders are linked to this order cycle"
+        expect(page).to have_field 'order_cycle_name', with: "Order cycle name updated"
+        expect(page).to have_content('Your order cycle has been updated.')
 
-      # confirm to close modal and update order cycle changed fields
-      click_button('Proceed anyway')
-      expect(page).not_to have_content "Orders are linked to this cycle"
-      expect(page).to have_content('Your order cycle has been updated.')
-      expect(page.find('#order_cycle_orders_close_at').value).to eq time.strftime('%Y-%m-%d %H:%M')
+        # change date range field value
+        find('#order_cycle_orders_close_at').click
+        within(".flatpickr-calendar.open") do
+          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
+          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+          find("button", text: "Close").click
+        end
+        expect(page).to have_content('You have unsaved changes')
+
+        # click save to open warning modal
+        click_button('Save')
+        expect(page).to have_content('You have unsaved changes')
+        expect(page).to have_content "Orders are linked to this order cycle."
+
+        # confirm to close modal and update order cycle changed fields
+        click_button('Proceed anyway')
+        expect(page).not_to have_content "Orders are linked to this cycle"
+        expect(page).to have_field 'order_cycle_orders_close_at', with: '2024-03-30 00:00'
+        expect(page).to have_content('Your order cycle has been updated.')
+      end
+    end
+
+    context 'with no attached order' do
+      it "does not show warning modal" do
+        login_as_admin
+        visit edit_admin_order_cycle_path(order_cycle)
+
+        # change non-date range field value
+        fill_in 'order_cycle_name', with: "OC1 name updated"
+        expect(page).to have_content('You have unsaved changes')
+
+        # click save
+        click_button('Save')
+        expect(page).to have_field 'order_cycle_name', with: 'OC1 name updated'
+        expect(page).to have_content('Your order cycle has been updated.')
+
+        # Now change date range field value
+        find('#order_cycle_orders_close_at').click
+        within(".flatpickr-calendar.open") do
+          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
+          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+          find("button", text: "Close").click
+        end
+        expect(page).to have_content('You have unsaved changes')
+
+        click_button('Save')
+        expect(page).to have_field 'order_cycle_orders_close_at', with: '2024-03-30 00:00'
+        expect(page).to have_content('Your order cycle has been updated.')
+      end
     end
   end
 
-  context 'when cycle does not have attached schedule' do
-    let(:order_cycle) {
-      create(:simple_order_cycle, name: 'My Order cycle',
-                                  orders_open_at: nil, orders_close_at: nil)
-    }
+  describe 'non simple order cycle' do
+    let(:coordinator) { create(:supplier_enterprise, sells: 'any') }
+    let(:order_cycle) { create(:simple_order_cycle, coordinator:, **order_cycle_attrs) }
 
-    it "does not render warning modal" do
-      # When I go to the admin order cycle edit page
-      login_as_admin
-      visit edit_admin_order_cycle_path(order_cycle)
+    context 'with attached orders' do
+      let!(:order) { create(:order, order_cycle: ) }
 
-      # change non-date range field value
-      fill_in 'order_cycle_name', with: "OC1 name updated"
-      expect(page).to have_content('You have unsaved changes')
+      it "shows warning modal when datetime field values change" do
+        login_as_admin
+        visit edit_admin_order_cycle_path(order_cycle)
 
-      # click save
-      click_button('Save')
-      expect(page.find('#order_cycle_name').value).to eq 'OC1 name updated'
-      expect(page).to have_content('Your order cycle has been updated.')
+        # change non-date range field
+        fill_in 'order_cycle_name', with: "Order cycle name updated"
+        expect(page).to have_content('You have unsaved changes')
+        click_button 'Save'
+        expect(page).not_to have_content "Orders are linked to this order cycle"
+        expect(page).to have_content('Your order cycle has been updated.')
+        expect(page).to have_field 'order_cycle_name', with: "Order cycle name updated"
 
-      # Now change date range field value
-      time = DateTime.current
-      find('#order_cycle_orders_close_at').click
-      select_datetime_from_datepicker Time.zone.at(time)
-      expect(page).to have_content('You have unsaved changes')
+        # change date range field value
+        find('#order_cycle_orders_close_at').click
+        within(".flatpickr-calendar.open") do
+          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
+          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+          find("button", text: "Close").click
+        end
 
-      click_button('Save')
-      expect(page.find('#order_cycle_orders_close_at').value).to eq time.strftime('%Y-%m-%d %H:%M')
-      expect(page).to have_content('Your order cycle has been updated.')
+        expect(page).to have_content('You have unsaved changes')
+
+        # click save to open warning modal
+        click_button('Save')
+        expect(page).to have_content('You have unsaved changes')
+        expect(page).to have_content "Orders are linked to this order cycle."
+
+        # confirm to close modal and update order cycle changed fields
+        click_button('Proceed anyway')
+        expect(page).not_to have_content "Orders are linked to this cycle"
+        expect(page).to have_field 'order_cycle_orders_close_at', with: '2024-03-30 00:00'
+        expect(page).to have_content('Your order cycle has been updated.')
+      end
+    end
+
+    context 'with no attached orders' do
+      it "does not show warning modal" do
+        login_as_admin
+        visit edit_admin_order_cycle_path(order_cycle)
+
+        # change non-date range field value
+        fill_in 'order_cycle_name', with: "OC1 name updated"
+        expect(page).to have_content('You have unsaved changes')
+
+        # click save
+        click_button('Save')
+        expect(page.find('#order_cycle_name').value).to eq 'OC1 name updated'
+        expect(page).to have_content('Your order cycle has been updated.')
+
+        # Now change date range field value
+        find('#order_cycle_orders_close_at').click
+        within(".flatpickr-calendar.open") do
+          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
+          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+          find("button", text: "Close").click
+        end
+        expect(page).to have_content('You have unsaved changes')
+
+        click_button('Save')
+        expect(page).not_to have_content "Orders are linked to this cycle"
+        expect(page).to have_field 'order_cycle_orders_close_at', with: '2024-03-30 00:00'
+        expect(page).to have_content('Your order cycle has been updated.')
+      end
     end
   end
 end
