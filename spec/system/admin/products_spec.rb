@@ -299,6 +299,43 @@ RSpec.describe '
     describe "editing page" do
       let!(:product) { create(:simple_product, name: 'a product', supplier_id: supplier2.id) }
 
+      describe "'Back to products list' and 'Cancel' buttons" do
+        context "navigates to edit from the bulk product update page with searched results" do
+          it "should navigate back to the same searched results page" do
+            # Navigating to a searched URL
+            visit admin_products_url({
+                                       page: 1,
+                                       per_page: 25,
+                                       search_term: 'product',
+                                       producer_id: supplier2.id
+                                     })
+
+            products_page_url = current_url
+            within row_containing_name('a product') do
+              page.find(".vertical-ellipsis-menu").click
+              click_link('Edit', href: spree.edit_admin_product_path(product))
+            end
+
+            expect(page).to have_link('Back to products list',
+                                      href: products_page_url)
+            expect(page).to have_link('Cancel',
+                                      href: products_page_url)
+          end
+        end
+
+        context "directly navigates to the edit page" do
+          it "should navigate back to all the products page" do
+            # Navigating to a searched URL
+            visit spree.edit_admin_product_path(product)
+
+            expect(page).to have_link('Back to products list',
+                                      href: admin_products_url)
+            expect(page).to have_link('Cancel',
+                                      href: admin_products_url)
+          end
+        end
+      end
+
       it "editing a product" do
         visit spree.edit_admin_product_path product
 
@@ -307,61 +344,6 @@ RSpec.describe '
         expect(flash_message).to eq('Product "a product" has been successfully updated!')
         product.reload
         expect(product.description).to eq("<div>A description...</div>")
-      end
-
-      it "editing a product comming from the bulk product update page with filter" do
-        visit spree.edit_admin_product_path(product, filter)
-
-        click_button 'Update'
-        expect(flash_message).to eq('Product "a product" has been successfully updated!')
-
-        # Check the url still includes the filters
-        uri = URI.parse(current_url)
-        expect("#{uri.path}?#{uri.query}").to eq spree.edit_admin_product_path(product, filter)
-
-        # Link back to the bulk product update page should include the filters
-        expected_admin_product_url =
-          Regexp.new(Regexp.escape("#{spree.admin_products_path}#?#{filter.to_query}"))
-        expect(page).to have_link('Back to products list',
-                                  href: expected_admin_product_url)
-        expect(page).to have_link('Cancel', href: expected_admin_product_url)
-
-        expected_product_url = Regexp.new(Regexp.escape(spree.edit_admin_product_path(
-                                                          product.id, filter
-                                                        )))
-        expect(page).to have_link('Product Details',
-                                  href: expected_product_url)
-
-        expected_product_image_url = Regexp.new(Regexp.escape(spree.admin_product_images_path(
-                                                                product.id, filter
-                                                              )))
-        expect(page).to have_link('Images',
-                                  href: expected_product_image_url)
-
-        expected_product_variant_url = Regexp.new(Regexp.escape(spree.admin_product_variants_path(
-                                                                  product.id, filter
-                                                                )))
-        expect(page).to have_link('Variants',
-                                  href: expected_product_variant_url)
-
-        expected_product_properties_url =
-          Regexp.new(Regexp.escape(spree.admin_product_product_properties_path(
-                                     product.id, filter
-                                   )))
-        expect(page).to have_link('Product Properties',
-                                  href: expected_product_properties_url)
-
-        expected_product_group_buy_option_url =
-          Regexp.new(Regexp.escape(spree.group_buy_options_admin_product_path(
-                                     product.id, filter
-                                   )))
-        expect(page).to have_link('Group Buy Options',
-                                  href: expected_product_group_buy_option_url)
-
-        expected_product_seo_url = Regexp.new(Regexp.escape(spree.seo_admin_product_path(
-                                                              product.id, filter
-                                                            )))
-        expect(page).to have_link('Search', href: expected_product_seo_url)
       end
 
       it "editing product group buy options" do
