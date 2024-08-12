@@ -19,7 +19,7 @@ angular.module("ofn.admin").factory "BulkProducts", (ProductResource, dataFetche
       for server_product in serverProducts
         product = @findProductInList(server_product.id, @products)
         product.variants = server_product.variants
-        @loadVariantUnitValues product
+        @loadVariantUnitValues product.variants
 
     find: (id) ->
       @findProductInList id, @products
@@ -38,34 +38,32 @@ angular.module("ofn.admin").factory "BulkProducts", (ProductResource, dataFetche
       @products.splice(index + 1, 0, newProduct)
 
     unpackProduct: (product) ->
-      #$scope.matchProducer product
       @loadVariantUnit product
 
     loadVariantUnit: (product) ->
-      product.variant_unit_with_scale =
-        if product.variant_unit && product.variant_unit_scale && product.variant_unit != 'items'
-          "#{product.variant_unit}_#{product.variant_unit_scale}"
-        else if product.variant_unit
-          product.variant_unit
+      @loadVariantUnitValues product.variants if product.variants
+
+    loadVariantUnitValues: (variants) ->
+      for variant in variants
+        @loadVariantUnitValue variant
+
+    loadVariantUnitValue: (variant) ->
+      variant.variant_unit_with_scale =
+        if variant.variant_unit && variant.variant_unit_scale && variant.variant_unit != 'items'
+          "#{variant.variant_unit}_#{variant.variant_unit_scale}"
+        else if variant.variant_unit
+          variant.variant_unit
         else
           null
 
-      @loadVariantUnitValues product if product.variants
-      @loadVariantUnitValue product, product.master if product.master
-
-    loadVariantUnitValues: (product) ->
-      for variant in product.variants
-        @loadVariantUnitValue product, variant
-
-    loadVariantUnitValue: (product, variant) ->
-      unit_value = @variantUnitValue product, variant
+      unit_value = @variantUnitValue variant
       unit_value = if unit_value? then unit_value else ''
       variant.unit_value_with_description = "#{unit_value} #{variant.unit_description || ''}".trim()
 
-    variantUnitValue: (product, variant) ->
+    variantUnitValue: (variant) ->
       if variant.unit_value?
-        if product.variant_unit_scale
-          variant_unit_value = @divideAsInteger variant.unit_value, product.variant_unit_scale
+        if variant.variant_unit_scale
+          variant_unit_value = @divideAsInteger variant.unit_value, variant.variant_unit_scale
           parseFloat(window.bigDecimal.round(variant_unit_value, 2))
         else
           variant.unit_value
