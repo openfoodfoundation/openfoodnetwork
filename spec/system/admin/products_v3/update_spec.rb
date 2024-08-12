@@ -527,8 +527,10 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           # Client side validation
           click_button "Save changes"
           within new_variant_row do
+            # In CI we get "Please fill out this field." and locally we get
+            # "Please fill in this field."
             expect_browser_validation('input[aria-label="Unit value"]',
-                                      "Please fill in this field.")
+                                      /Please fill (in|out) this field./)
           end
 
           # Fix error
@@ -749,6 +751,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
   def expect_browser_validation(selector, message)
     browser_message = page.find(selector)["validationMessage"]
-    expect(browser_message).to eq message
+    expect(browser_message).to match message
   end
 end
