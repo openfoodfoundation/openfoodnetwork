@@ -2,5 +2,11 @@
   = f.label :primary_taxon_id, t('.product_category')
   %span.required *
   %br
-  = f.select :primary_taxon_id, options_from_collection_for_select(Spree::Taxon.order(:name), :id, :name, @product.primary_taxon_id), { include_blank: true }, { "data-controller": "tom-select", class: "primary" }
+  = render(SearchableDropdownComponent.new(form: f,
+      name: :primary_taxon_id,
+      aria_label: t('.product_category'),
+      options: Spree::Taxon.select(:name, :id).order(:name).pluck(:name, :id),
+      selected_option: @product.primary_taxon_id,
+      include_blank: true,
+      placeholder_value: t('.search_for_categories')))
   = f.error_message_on :primary_taxon_id

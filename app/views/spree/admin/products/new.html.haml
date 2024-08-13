@@ -11,7 +11,13 @@
           = f.field_container :supplier_id do
             = f.label :supplier_id, t(".supplier")
             %span.required *
-            = f.select :supplier_id, options_from_collection_for_select(@producers, :id, :name, @product.supplier_id), { include_blank: true }, { "data-controller": "tom-select", class: "primary" }
+            = render(SearchableDropdownComponent.new(form: f,
+                name: :supplier_id,
+                aria_label: t('.supplier'),
+                options: @producers.select(:name, :id).order(:name).pluck(:name, :id),
+                selected_option: @product.supplier_id,
+                include_blank: true,
+                placeholder_value: t('.search_for_suppliers')))
             = f.error_message_on :supplier_id
         .eight.columns.omega
           = f.field_container :name do
@@ -25,16 +31,19 @@
           = f.field_container :variant_unit do
             = f.label :variant_unit, t(".units")
             %span.required *
-            = f.select 'variant_unit', [],
-              { include_blank: true },
-              { id: 'product_variant_unit_with_scale',
-              name: 'product_variant_unit_with_scale',
-              'ng-model' => 'product.variant_unit_with_scale', 
-              'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options', 
-              "data-controller": "tom-select", 
-              "data-tom-select-options-value": '{"allowEmptyOption":false}', 
-              class: "primary",
-              }
+            = render(SearchableDropdownComponent.new(form: f,
+                name: :variant_unit,
+                aria_label: t('.units'),
+                options: [],
+                selected_option: @product.variant_unit,
+                include_blank: true,
+                placeholder_value: t('.search_for_units'),
+                other_attrs: { id: 'product_variant_unit_with_scale',
+                name: 'product_variant_unit_with_scale',
+                'ng-model' => 'product.variant_unit_with_scale', 
+                'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options', 
+                "data-controller": "tom-select",
+                "data-tom-select-options-value": '{"allowEmptyOption":false}'}))
             %input{ type: 'hidden', 'ng-value': 'product.variant_unit', "ng-init": "product.variant_unit='#{@product.variant_unit}'", name: 'product[variant_unit]' }
             %input{ type: 'hidden', 'ng-value': 'product.variant_unit_scale', "ng-init": "product.variant_unit_scale='#{@product.variant_unit_scale}'", name: 'product[variant_unit_scale]' }
             = f.error_message_on :variant_unit
