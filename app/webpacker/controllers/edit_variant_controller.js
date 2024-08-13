@@ -60,13 +60,22 @@ export default class EditVariantController extends Controller {
     // on variantUnit change we need to check if weight needs to be toggled
     this.variantUnit.addEventListener("change", this.#toggleWeight.bind(this), { passive: true });
 
+    // make sure the unit is correct when page is reload after an error
+    this.#updateUnitDisplay();
     // update unit price on page load
     this.#processUnitPrice();
-    this.#toggleWeight();
+
+    if (this.variantUnit.value === "weight") {
+      return this.#hideWeight();
+    }
   }
 
   disconnect() {
     // Make sure to clean up anything that happened outside
+    // TODO remove all added event
+    this.variantUnit.removeEventListener("change", this.#toggleWeight.bind(this), {
+      passive: true,
+    });
   }
 
   toggleOnHand(event) {
@@ -160,13 +169,21 @@ export default class EditVariantController extends Controller {
     this.element.querySelector('[id="variant_unit_price"]').value = unit_price;
   }
 
+  #hideWeight() {
+    this.weight = this.element.querySelector('[id="variant_weight"]');
+    this.weight.parentElement.style.display = "none";
+  }
+
   #toggleWeight() {
-    let display = "block";
     if (this.variantUnit.value === "weight") {
-      display = "none";
+      return this.#hideWeight();
     }
 
+    // Show weight
     this.weight = this.element.querySelector('[id="variant_weight"]');
-    this.weight.parentElement.style.display = display;
+    this.weight.parentElement.style.display = "block";
+    // Clearing weight value to remove calculated weight for a variant with unit set to "weight"
+    // See Spree::Variant hook update_weight_from_unit_value
+    this.weight.value = "";
   }
 }
