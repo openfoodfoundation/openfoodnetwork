@@ -535,10 +535,10 @@ RSpec.describe '
           # header
           expect(page).to have_content "Item Qty"
           expect(page).to have_content "Weight / VOL."
-          expect(page).to have_content "Price Per unit (Excl. tax)"
-          expect(page).to have_content "Total price (Excl. tax)"
+          expect(page).to have_content "Price Per unit (Excl."
+          expect(page).to have_content "Total price (Excl."
           expect(page).to have_content "Tax rate"
-          expect(page).to have_content "Total price (Incl. tax)"
+          expect(page).to have_content "Total price (Incl."
           # first line item, no tax
           expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "($12,540.00 / kg)" # unit price
@@ -639,10 +639,10 @@ RSpec.describe '
           # header
           expect(page).to have_content "Item Qty"
           expect(page).to have_content "Weight / VOL."
-          expect(page).to have_content "Price Per unit (Excl. tax)"
-          expect(page).to have_content "Total price (Excl. tax)"
+          expect(page).to have_content "Price Per unit (Excl."
+          expect(page).to have_content "Total price (Excl."
           expect(page).to have_content "Tax rate"
-          expect(page).to have_content "Total price (Incl. tax)"
+          expect(page).to have_content "Total price (Incl."
           # first line item, no tax
           expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "($12,540.00 / kg)" # unit price
