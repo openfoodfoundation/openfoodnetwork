@@ -213,35 +213,67 @@ describe "LineItemsCtrl", ->
           expect(scope.fulfilled()).toEqual ''
 
         it "returns '' if selectedUnitsVariant has no property 'group_buy_unit_size' or group_buy_unit_size is 0", ->
-          scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 0 }
+          scope.selectedUnitsProduct = { group_buy_unit_size: 0 }
+          scope.selectedUnitsVariant = { variant_unit: "weight" }
           expect(scope.fulfilled()).toEqual ''
-          scope.selectedUnitsProduct = { variant_unit: "weight" }
+          scope.selectedUnitsProduct = { }
+          scope.selectedUnitsVariant = { variant_unit: "weight" }
           expect(scope.fulfilled()).toEqual ''
 
         it "calls Math.round() if variant_unit is 'weight', 'volume', or items", ->
           spyOn(Math,"round")
-          scope.selectedUnitsProduct = { variant_unit: "weight", group_buy_unit_size: 10 }
+          scope.selectedUnitsProduct = { group_buy_unit_size: 10 }
+          scope.selectedUnitsVariant = { variant_unit: "weight" }
+
           scope.fulfilled()
           expect(Math.round).toHaveBeenCalled()
-          scope.selectedUnitsProduct = { variant_unit: "volume", group_buy_unit_size: 10 }
+
+          scope.selectedUnitsProduct = { group_buy_unit_size: 10 }
+          scope.selectedUnitsVariant = { variant_unit: "volume" }
+
           scope.fulfilled()
           expect(Math.round).toHaveBeenCalled()
-          scope.selectedUnitsProduct = { variant_unit: "items", group_buy_unit_size: 10 }
+
+          scope.selectedUnitsProduct = { group_buy_unit_size: 10 }
+          scope.selectedUnitsVariant = { variant_unit: "items" }
+
           scope.fulfilled()
           expect(Math.round).toHaveBeenCalled()
 
 
-        describe "returns the quantity of fulfilled group buy units", -> 
+        describe "returns the quantity of fulfilled group buy units", ->
           runs = [
-            { selectedUnitsProduct: { variant_unit: "weight", group_buy_unit_size: 1000, variant_unit_scale: 1 }, arg: 1500, expected: 1.5  },
-            { selectedUnitsProduct: { variant_unit: "weight", group_buy_unit_size: 60000, variant_unit_scale: 1000 }, arg: 9, expected: 0.15  },
-            { selectedUnitsProduct: { variant_unit: "weight", group_buy_unit_size: 60000, variant_unit_scale: 1 }, arg: 9000, expected: 0.15 }
-            { selectedUnitsProduct: { variant_unit: "weight", group_buy_unit_size: 5, variant_unit_scale: 28.35 }, arg: 12, expected: 2.4},
-            { selectedUnitsProduct: { variant_unit: "volume", group_buy_unit_size: 5000, variant_unit_scale: 1  }, arg: 5, expected: 0.001}
-          ];
-          runs.forEach ({selectedUnitsProduct, arg, expected}) ->
-            it "returns the quantity of fulfilled group buy units, group_buy_unit_size: " + selectedUnitsProduct.group_buy_unit_size + ", arg: " + arg + ", scale: " + selectedUnitsProduct.variant_unit_scale ,  ->
+            {
+              selectedUnitsProduct: { group_buy_unit_size: 1000 },
+              selectedUnitsVariant: { variant_unit: "weight", variant_unit_scale: 1 },
+              arg: 1500,
+              expected: 1.5
+            }, {
+              selectedUnitsProduct: { group_buy_unit_size: 60000 } ,
+              selectedUnitsVariant: { variant_unit: "weight", variant_unit_scale: 1000 } ,
+              arg: 9,
+              expected: 0.15
+            }, {
+              selectedUnitsProduct: { group_buy_unit_size: 60000 },
+              selectedUnitsVariant: { variant_unit: "weight", variant_unit_scale: 1 },
+              arg: 9000,
+              expected: 0.15
+            }, {
+              selectedUnitsProduct: { group_buy_unit_size: 5 },
+              selectedUnitsVariant: { variant_unit: "weight", variant_unit_scale: 28.35 },
+              arg: 12,
+              expected: 2.4
+            }, {
+              selectedUnitsProduct: { group_buy_unit_size: 5000 },
+              selectedUnitsVariant: { variant_unit: "volume", variant_unit_scale: 1  },
+              arg: 5,
+              expected: 0.001
+            }
+          ]
+          runs.forEach ({selectedUnitsProduct, selectedUnitsVariant, arg, expected}) ->
+            it "returns the quantity of fulfilled group buy units, group_buy_unit_size: " + selectedUnitsProduct.group_buy_unit_size + ", arg: " + arg + ", scale: " + selectedUnitsVariant.variant_unit_scale ,  ->
               scope.selectedUnitsProduct = selectedUnitsProduct
+              scope.selectedUnitsVariant = selectedUnitsVariant
               expect(scope.fulfilled(arg)).toEqual expected
 
       describe "allFinalWeightVolumesPresent()", ->
@@ -278,44 +310,44 @@ describe "LineItemsCtrl", ->
       describe "sumUnitValues()", ->
         it "returns the sum of the final_weight_volumes line_items if volume", ->
           scope.filteredLineItems = [
-            { final_weight_volume: 2, units_product: { variant_unit: "volume" } }
-            { final_weight_volume: 7, units_product: { variant_unit: "volume" } }
-            { final_weight_volume: 21, units_product: { variant_unit: "volume" } }
+            { final_weight_volume: 2, units_variant: { variant_unit: "volume" } }
+            { final_weight_volume: 7, units_variant: { variant_unit: "volume" } }
+            { final_weight_volume: 21, units_variant: { variant_unit: "volume" } }
           ]
           expect(scope.sumUnitValues()).toEqual 30
 
         it "returns the sum of the quantity line_items if items", ->
           scope.filteredLineItems = [
-            { quantity: 2, units_product: { variant_unit: "items" } }
-            { quantity: 7, units_product: { variant_unit: "items" } }
-            { quantity: 21, units_product: { variant_unit: "items" } }
+            { quantity: 2, units_variant: { variant_unit: "items" } }
+            { quantity: 7, units_variant: { variant_unit: "items" } }
+            { quantity: 21, units_variant: { variant_unit: "items" } }
           ]
           expect(scope.sumUnitValues()).toEqual 30
 
         it "returns the sum of the final_weight_volumes for line_items with both metric and imperial units", ->
           scope.filteredLineItems = [
-            { final_weight_volume: 907.2, units_product: { variant_unit: "weight", variant_unit_scale: 453.6 }, units_variant: { unit_value: 453.6 } }
-            { final_weight_volume: 2000, units_product: { variant_unit: "weight", variant_unit_scale: 1000 }, units_variant: { unit_value: 1000 } }
-            { final_weight_volume: 56.7, units_product: { variant_unit: "weight", variant_unit_scale: 28.35 }, units_variant: { unit_value: 28.35 } }
-            { final_weight_volume: 2, units_product: { variant_unit: "volume", variant_unit_scale: 1.0 }, units_variant: { unit_value: 1.0 } }
+            { final_weight_volume: 907.2, units_variant: { variant_unit: "weight", variant_unit_scale: 453.6, unit_value: 453.6 } }
+            { final_weight_volume: 2000, units_variant: { variant_unit: "weight", variant_unit_scale: 1000, unit_value: 1000 } }
+            { final_weight_volume: 56.7, units_variant: { variant_unit: "weight", variant_unit_scale: 28.35, unit_value: 28.35 } }
+            { final_weight_volume: 2, units_variant: { variant_unit: "volume", variant_unit_scale: 1.0, unit_value: 1.0 } }
           ]
           expect(scope.sumUnitValues()).toEqual 8
 
       describe "sumMaxUnitValues()", ->
         it "returns the sum of the product of unit_value and maxOf(max_quantity, pristine quantity) for specified line_items", ->
           scope.filteredLineItems = [
-            { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5, units_product: { variant_unit: "volume", variant_unit_scale: 1 } }
-            { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1, units_product: { variant_unit: "volume", variant_unit_scale: 1 } }
-            { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10, units_product: { variant_unit: "volume", variant_unit_scale: 1 } }
+            { id: 1, units_variant: { variant_unit: "volume", variant_unit_scale: 1, unit_value: 1 }, max_quantity: 5 }
+            { id: 2, units_variant: { variant_unit: "volume", variant_unit_scale: 1, unit_value: 2 }, max_quantity: 1 }
+            { id: 3, units_variant: { variant_unit: "volume", variant_unit_scale: 1, unit_value: 3 }, max_quantity: 10 }
           ]
 
           expect(scope.sumMaxUnitValues()).toEqual 37
 
         it "returns the sum of the product of max_quantity for specified line_items if variant_unit is `items`", ->
           scope.filteredLineItems = [
-            { id: 1, units_variant: { unit_value: 1 }, max_quantity: 5, units_product: { variant_unit: "items" } }
-            { id: 2, units_variant: { unit_value: 2 }, max_quantity: 1, units_product: { variant_unit: "items" } }
-            { id: 3, units_variant: { unit_value: 3 }, max_quantity: 10, units_product: { variant_unit: "items" } }
+            { id: 1, units_variant: { variant_unit: "items", unit_value: 1 }, max_quantity: 5 }
+            { id: 2, units_variant: { variant_unit: "items", unit_value: 2 }, max_quantity: 1 }
+            { id: 3, units_variant: { variant_unit: "items", unit_value: 3 }, max_quantity: 10 }
           ]
 
           expect(scope.sumMaxUnitValues()).toEqual 16
@@ -331,45 +363,45 @@ describe "LineItemsCtrl", ->
           expect(scope.formattedValueWithUnitName(1,{})).toEqual ''
 
         it "returns the value, and does not call Math.round if variant_unit is 'items'", ->
-          unitsProduct = { variant_unit: "items" }
-          expect(scope.formattedValueWithUnitName(1, unitsProduct, unitsVariant)).toEqual "1 items"
+          unitsVariant.variant_unit=  "items"
+          expect(scope.formattedValueWithUnitName(1, unitsVariant)).toEqual "1 items"
 
         it "calls Math.round() if variant_unit is 'weight' or 'volume'", ->
-          unitsProduct = { variant_unit: "weight", variant_unit_scale: 1 }
-          scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)
+          unitsVariant = { unit_value: "1", variant_unit: "weight", variant_unit_scale: 1 }
+          scope.formattedValueWithUnitName(1, unitsVariant)
           expect(Math.round).toHaveBeenCalled()
-          scope.selectedUnitsVariant = { variant_unit: "volume" }
-          scope.formattedValueWithUnitName(1,unitsProduct,unitsVariant)
+
+          scope.selectedUnitsVariant = {unit_value: "1", variant_unit: "volume" }
+          scope.formattedValueWithUnitName(1, unitsVariant)
           expect(Math.round).toHaveBeenCalled()
 
         it "calls Math.round with the value multiplied by 1000", ->
-          unitsProduct = { variant_unit: "weight", variant_unit_scale: 5 }
-          scope.formattedValueWithUnitName(10, unitsProduct,unitsVariant)
+          unitsVariant = { unit_value: 1, variant_unit: "weight", variant_unit_scale: 5 }
+          scope.formattedValueWithUnitName(10, unitsVariant)
           expect(Math.round).toHaveBeenCalledWith 10 * 1000
 
         it "returns the result of Math.round divided by 1000, followed by the result of getUnitName", ->
-          unitsProduct = { variant_unit: "weight", variant_unit_scale: 1000 }
+          unitsVariant = { unit_value: 1, variant_unit: "weight", variant_unit_scale: 1000 }
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
-          expect(scope.formattedValueWithUnitName(2,unitsProduct,unitsVariant)).toEqual "2 kg"
+          expect(scope.formattedValueWithUnitName(2, unitsVariant)).toEqual "2 kg"
 
         it "handle correclty the imperial units", ->
-          unitsProduct = { variant_unit: "weight", variant_unit_scale: 1000 }
-          unitsVariant = { unit_value: "453.6" }
+          unitsVariant = { variant_unit: "weight", variant_unit_scale: 1000, unit_value: "453.6" }
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "lb"
-          expect(scope.formattedValueWithUnitName(2, unitsProduct, unitsVariant)).toEqual "2 lb"
+          expect(scope.formattedValueWithUnitName(2, unitsVariant)).toEqual "2 lb"
 
       describe "get group by size formatted value with unit name", ->
         beforeEach ->
           spyOn(VariantUnitManager, "getUnitName").and.returnValue "kg"
-        
-        unitsProduct = { variant_unit: "weight", variant_unit_scale: 1000 }
-         
+
+        unitsVariant = { variant_unit: "weight", variant_unit_scale: 1000 }
+
         it "returns the formatted value with unit name", ->
-          expect(scope.getGroupBySizeFormattedValueWithUnitName(1000, unitsProduct)).toEqual "1 kg"
+          expect(scope.getGroupBySizeFormattedValueWithUnitName(1000, unitsVariant)).toEqual "1 kg"
 
         it "handle the case when the value is actually null or empty", ->
-          expect(scope.getGroupBySizeFormattedValueWithUnitName(null, unitsProduct)).toEqual ""
-          expect(scope.getGroupBySizeFormattedValueWithUnitName("", unitsProduct)).toEqual ""
+          expect(scope.getGroupBySizeFormattedValueWithUnitName(null, unitsVariant)).toEqual ""
+          expect(scope.getGroupBySizeFormattedValueWithUnitName("", unitsVariant)).toEqual ""
 
 
       describe "updating the price upon updating the weight of a line item", ->
