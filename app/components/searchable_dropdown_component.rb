@@ -11,7 +11,8 @@ class SearchableDropdownComponent < ViewComponent::Base
     selected_option:,
     placeholder_value:,
     include_blank: false,
-    aria_label: ''
+    aria_label: '',
+    other_attrs: {}
   )
     @f = form
     @name = name
@@ -20,11 +21,13 @@ class SearchableDropdownComponent < ViewComponent::Base
     @placeholder_value = placeholder_value
     @include_blank = include_blank
     @aria_label = aria_label
+    @other_attrs = other_attrs
   end
 
   private
 
-  attr_reader :f, :name, :options, :selected_option, :placeholder_value, :include_blank, :aria_label
+  attr_reader :f, :name, :options, :selected_option, :placeholder_value, :include_blank,
+              :aria_label, :other_attrs
 
   def classes
     "fullwidth #{remove_search_plugin? ? 'no-input' : ''}"
