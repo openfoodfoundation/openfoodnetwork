@@ -878,31 +878,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_10_150912) do
     t.datetime "deleted_at", precision: nil
   end
 
-  create_table "spree_taxonomies", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255, null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.integer "position", default: 0
-  end
-
   create_table "spree_taxons", id: :serial, force: :cascade do |t|
-    t.integer "parent_id"
     t.integer "position", default: 0
     t.string "name", limit: 255, null: false
     t.string "permalink", limit: 255
-    t.integer "taxonomy_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.integer "lft"
-    t.integer "rgt"
     t.text "description"
     t.string "meta_title", limit: 255
     t.string "meta_description", limit: 255
     t.string "meta_keywords", limit: 255
     t.string "dfc_id"
-    t.index ["parent_id"], name: "index_taxons_on_parent_id"
     t.index ["permalink"], name: "index_taxons_on_permalink"
-    t.index ["taxonomy_id"], name: "index_taxons_on_taxonomy_id"
   end
 
   create_table "spree_tokenized_permissions", id: :serial, force: :cascade do |t|
@@ -1220,8 +1207,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_10_150912) do
   add_foreign_key "spree_stock_movements", "spree_stock_items", column: "stock_item_id"
   add_foreign_key "spree_tax_rates", "spree_tax_categories", column: "tax_category_id", name: "spree_tax_rates_tax_category_id_fk"
   add_foreign_key "spree_tax_rates", "spree_zones", column: "zone_id", name: "spree_tax_rates_zone_id_fk"
-  add_foreign_key "spree_taxons", "spree_taxonomies", column: "taxonomy_id", name: "spree_taxons_taxonomy_id_fk"
-  add_foreign_key "spree_taxons", "spree_taxons", column: "parent_id", name: "spree_taxons_parent_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "bill_address_id", name: "spree_users_bill_address_id_fk"
   add_foreign_key "spree_users", "spree_addresses", column: "ship_address_id", name: "spree_users_ship_address_id_fk"
   add_foreign_key "spree_variants", "enterprises", column: "supplier_id"

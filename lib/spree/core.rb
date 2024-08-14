@@ -2,7 +2,6 @@
 
 require 'active_merchant'
 require 'acts_as_list'
-require 'awesome_nested_set'
 require 'cancan'
 require 'pagy'
 require 'mail'
@@ -35,7 +34,3 @@ require 'spree/core/permalinks'
 require 'spree/core/token_resource'
 require 'spree/core/product_duplicator'
 require 'spree/core/gateway_error'
-
-ActiveRecord::Base.class_eval do
-  include CollectiveIdea::Acts::NestedSet
-end
