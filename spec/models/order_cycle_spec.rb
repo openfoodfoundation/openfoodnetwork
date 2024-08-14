@@ -434,6 +434,11 @@ RSpec.describe OrderCycle do
         expect(OrderCycle.earliest_closing_times([e1.id])).not_to have_key e2.id
         expect(OrderCycle.earliest_closing_times([e2.id])).not_to have_key e1.id
       end
+
+      it "returns the correct values" do
+        expect(OrderCycle.earliest_closing_times([e1.id])[e1.id].round).to eq time1.round
+        expect(OrderCycle.earliest_closing_times([e2.id])[e2.id].round).to eq time2.round
+      end
     end
 
     context "when not scoped by distributors" do
