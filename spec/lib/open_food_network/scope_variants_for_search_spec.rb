@@ -65,6 +65,11 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
       let(:params) { { q: "product", distributor_id: d2.id } }
 
       it "returns all products distributed through that distributor" do
+        expect{ result }.to query_database [
+          "Enterprise Load", "Enterprise Load", "Enterprise Load", # loads same enterprise three times
+          "VariantOverride Load",
+          "SQL"
+        ]
         expect(result).to include v4
         expect(result).not_to include v1, v2, v3
       end
