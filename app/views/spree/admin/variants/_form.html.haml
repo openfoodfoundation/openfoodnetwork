@@ -1,4 +1,4 @@
-%div{'data-controller': "edit-variant"}
+%div{'data-controller': "edit-variant", id: "edit_variant"}
   .label-block.left.six.columns.alpha
     %script= render partial: "admin/shared/global_var_ofn", formats: :js,
       locals: { name: :available_units_sorted, value: WeightsAndMeasures.available_units_sorted }

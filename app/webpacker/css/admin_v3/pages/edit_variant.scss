@@ -1,0 +1,55 @@
+@import "unit_popout";
+
+#edit_variant {
+
+  .popout {
+    @include unit_popout;
+
+    &__button {
+      // override popout button styles
+      &.popout__button {
+        // Reapplying button style from buttons.css
+        background-color: $color-btn-bg;
+        border: 1px solid $color-btn-bg;
+        color: $color-btn-text;
+        font-weight: bold;
+
+        &:before {
+          font-family: FontAwesome;
+          text-decoration: inherit;
+          display: inline-block;
+          speak: none;
+          content: "\f078";
+
+          position: absolute;
+          top: 0; // Required for empty buttons
+          right: $border-radius;
+          font-size: 0.67em;
+        }
+
+        // Reapplying button style from buttons.css
+        &:active,
+        &:focus {
+          outline: none;
+          border: 1px solid $color-btn-hover-border;
+        }
+
+        &:active:focus {
+          box-shadow: none;
+        }
+
+        &:hover {
+          background-color: $color-btn-hover-bg;
+          border: 1px solid $color-btn-hover-bg;
+          color: $color-btn-hover-text;
+        }
+      }
+    }
+
+    &__container {
+      width: max-content;
+      top: auto;
+      left: auto;
+    }
+  }
+}
