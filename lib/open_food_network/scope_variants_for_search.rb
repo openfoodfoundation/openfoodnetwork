@@ -42,7 +42,7 @@ module OpenFoodNetwork
     end
 
     def distributor
-      Enterprise.find params[:distributor_id]
+      @distributor ||= Enterprise.find params[:distributor_id]
     end
 
     def scope_to_schedule
