@@ -28,15 +28,15 @@ module Spree
     #
     # Optionally, specify some enterprise_ids to scope the results
     def self.supplied_taxons(enterprise_ids = nil)
-      taxons = Spree::Taxon.
-        joins(variants: :supplier).
-        select('spree_taxons.*, enterprises.id AS enterprise_id')
+      taxons = Spree::Taxon.joins(variants: :supplier)
 
       taxons = taxons.where(enterprises: { id: enterprise_ids }) if enterprise_ids.present?
 
-      taxons.each_with_object({}) do |t, collection|
-        collection[t.enterprise_id.to_i] ||= Set.new
-        collection[t.enterprise_id.to_i] << t.id
+      taxons
+        .pluck('spree_taxons.id, enterprises.id AS enterprise_id')
+        .each_with_object({}) do |(taxon_id, enterprise_id), collection|
+        collection[enterprise_id.to_i] ||= Set.new
+        collection[enterprise_id.to_i] << taxon_id
       end
     end
 
