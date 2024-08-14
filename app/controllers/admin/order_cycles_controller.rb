@@ -11,6 +11,7 @@ module Admin
     before_action :remove_protected_attrs, only: [:update]
     before_action :require_order_cycle_set_params, only: [:bulk_update]
     around_action :protect_invalid_destroy, only: :destroy
+    before_action :verify_datetime_change, only: :update
 
     def index
       respond_to do |format|
@@ -235,7 +236,7 @@ module Admin
       else
         begin
           yield
-        rescue ActiveRecord::InvalidForeignKey
+        rescue ActiveRecord::InvalidForeignKey, ActiveRecord::DeleteRestrictionError
           redirect_to main_app.admin_order_cycles_url
           flash[:error] = I18n.t('admin.order_cycles.destroy_errors.orders_present')
         end
@@ -293,6 +294,23 @@ module Admin
       params.require(:order_cycle_set).permit(
         collection_attributes: [:id] + PermittedAttributes::OrderCycle.basic_attributes
       ).to_h.with_indifferent_access
+    end
+
+    # Check that order cycle datetime values changed if it has existing orders
+    def verify_datetime_change
+      return unless params[:order_cycle][:confirm]
+      return unless @order_cycle.orders.exists?
+      return if same_dates(@order_cycle.orders_open_at, order_cycle_params[:orders_open_at]) &&
+                same_dates(@order_cycle.orders_close_at, order_cycle_params[:orders_close_at])
+
+      render json: { trigger_action: params[:order_cycle][:trigger_action] },
+             status: :unprocessable_entity
+    end
+
+    def same_dates(date, string)
+      false unless date && string
+
+      DateTime.parse(string).to_fs(:short) == date.to_fs(:short)
     end
   end
 end
