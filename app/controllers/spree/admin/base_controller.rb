@@ -24,7 +24,7 @@ module Spree
       # Warn the user when they have an active order cycle with hubs that are not ready
       # for checkout (ie. does not have valid shipping and payment methods).
       def warn_invalid_order_cycles
-        return if session[:displayed_order_cycle_warning]
+        return if flash[:notice].present? || session[:displayed_order_cycle_warning]
 
         warning = OrderCycles::WarningService.new(spree_current_user).call
         return if warning.blank?
