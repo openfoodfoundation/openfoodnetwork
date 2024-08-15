@@ -2,6 +2,8 @@
 
 module Admin
   class OrderCyclesController < Admin::ResourceController
+    class DateTimeChangeError < StandardError; end
+
     include ::OrderCyclesHelper
     include PaperTrailLogging
 
@@ -11,7 +13,6 @@ module Admin
     before_action :remove_protected_attrs, only: [:update]
     before_action :require_order_cycle_set_params, only: [:bulk_update]
     around_action :protect_invalid_destroy, only: :destroy
-    before_action :verify_datetime_change, only: :update
 
     def index
       respond_to do |format|
@@ -63,9 +64,7 @@ module Admin
     end
 
     def update
-      @order_cycle_form = OrderCycles::FormService.new(@order_cycle, order_cycle_params,
-                                                       spree_current_user)
-
+      @order_cycle_form = set_order_cycle_form
       if @order_cycle_form.save
         update_nil_subscription_line_items_price_estimate(@order_cycle)
         respond_to do |format|
@@ -78,6 +77,9 @@ module Admin
       elsif request.format.json?
         render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
+    rescue DateTimeChangeError
+      render json: { trigger_action: params[:trigger_action] },
+             status: :unprocessable_entity
     end
 
     def bulk_update
@@ -91,6 +93,9 @@ module Admin
         order_cycle = order_cycle_set.collection.find{ |oc| oc.errors.present? }
         render json: { errors: order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
+    rescue DateTimeChangeError
+      render json: { trigger_action: params[:trigger_action] },
+             status: :unprocessable_entity
     end
 
     def bulk_update_nil_subscription_line_items_price_estimate
@@ -271,7 +276,10 @@ module Admin
     end
 
     def order_cycle_set
-      @order_cycle_set ||= Sets::OrderCycleSet.new(@order_cycles, order_cycle_bulk_params)
+      @order_cycle_set ||= Sets::OrderCycleSet.new(
+        @order_cycles, { **order_cycle_bulk_params,
+          confirm_datetime_change: params[:confirm], error_class: DateTimeChangeError }
+      )
     end
 
     def require_order_cycle_set_params
@@ -296,21 +304,13 @@ module Admin
       ).to_h.with_indifferent_access
     end
 
-    # Check that order cycle datetime values changed if it has existing orders
-    def verify_datetime_change
-      return unless params[:order_cycle][:confirm]
-      return unless @order_cycle.orders.exists?
-      return if same_dates(@order_cycle.orders_open_at, order_cycle_params[:orders_open_at]) &&
-                same_dates(@order_cycle.orders_close_at, order_cycle_params[:orders_close_at])
-
-      render json: { trigger_action: params[:order_cycle][:trigger_action] },
-             status: :unprocessable_entity
-    end
-
-    def same_dates(date, string)
-      false unless date && string
-
-      DateTime.parse(string).to_fs(:short) == date.to_fs(:short)
+    def set_order_cycle_form
+      OrderCycles::FormService.new(
+        @order_cycle, order_cycle_params.merge(
+                        { confirm_datetime_change: params[:order_cycle][:confirm],
+                          error_class: DateTimeChangeError }
+                      ), spree_current_user
+      )
     end
   end
 end
