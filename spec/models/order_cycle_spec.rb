@@ -803,4 +803,31 @@ RSpec.describe OrderCycle do
       expect(order_cycle).not_to be_simple
     end
   end
+
+  describe "same_datetime_value" do
+    it 'returns true when old and new values are nil' do
+      order_cycle = create(:order_cycle, orders_open_at: nil, orders_close_at: nil)
+      expect(order_cycle.same_datetime_value(:orders_open_at, nil)).to be_truthy
+    end
+
+    it 'returns false if one value is nil and other not nil' do
+      order_cycle = create(:order_cycle, orders_open_at: "2024-09-30 06:09", orders_close_at: nil)
+      expect(order_cycle.same_datetime_value(:orders_open_at, nil)).to be_falsey
+      expect(order_cycle.same_datetime_value(:orders_close_at, "2024-09-30 06:09")).to be_falsey
+    end
+
+    it 'returns true if either values are same' do
+      order_cycle = create(:order_cycle, orders_open_at: Time.zone.parse("2024-09-30 06:09"),
+                                         orders_close_at: Time.zone.parse("2024-11-30 06:09"))
+      expect(order_cycle.same_datetime_value(:orders_open_at, "2024-09-30 06:09")).to be_truthy
+      expect(order_cycle.same_datetime_value(:orders_close_at, "2024-11-30 06:09")).to be_truthy
+    end
+
+    it 'returns false if either values are not same' do
+      order_cycle = create(:order_cycle, orders_open_at: Time.zone.parse("2024-09-30 06:09"),
+                                         orders_close_at: Time.zone.parse("2024-11-30 06:09"))
+      expect(order_cycle.same_datetime_value(:orders_open_at, "2024-10-30 06:09")).to be_falsey
+      expect(order_cycle.same_datetime_value(:orders_close_at, "2024-12-30 06:09")).to be_falsey
+    end
+  end
 end
