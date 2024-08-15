@@ -11,6 +11,8 @@ module Admin
     def index
       fetch_products
       render "index", locals: { producers:, categories:, tax_category_options:, flash: }
+
+      session[:products_return_to_url] = request.url
     end
 
     def bulk_update
