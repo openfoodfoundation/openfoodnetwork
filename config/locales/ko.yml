@@ -1191,6 +1191,8 @@ ko:
         choose_products_from: "제품 위치 선택:"
         re_notify_producers: 생산자에게 재통보
         notify_producers_tip: 이렇게 하면 각 생산자에게 주문 목록과 함께 이메일이 전송됩니다.
+      date_time_warning_modal_content:
+        cancel: '취소'
       incoming:
         incoming: "새로 들어옴"
         supplier: "공급업체"
@@ -3157,6 +3159,7 @@ ko:
       confirmation: |
           업로드된 파일에 없는 이 기업의 모든 제품에 대한 재고 수준이 0으로 설정됩니다.
     order_cycles:
+      unsaved_changes: "저장되지 않은 변경이 있습니다."
       create_failure: "주문 주기를 생성하지 못했습니다."
       update_success: '주문 주기가 업데이트 되었습니다.'
       update_failure: "주문 주기를 업데이트하지 못했습니다."
@@ -3364,8 +3367,6 @@ ko:
       UPS Ground: "UPS 배경"
     start_date: "시작 날짜"
     successfully_removed: "성공적으로 제거됨"
-    taxonomy_edit: "분류법 편집"
-    tree: "트리"
     updating: "업데이트 중"
     your_order_is_empty_add_product: "주문이 비어 있습니다. 위의 제품을 검색하여 추가하십시오."
     add_product: "상품 추가"
@@ -3478,9 +3479,7 @@ ko:
     abbreviation: "축약"
     new_state: "신규 주"
     payment_methods: "결제 방법"
-    taxonomies: "분류법"
-    new_taxonomy: "신규 분류법"
-    back_to_taxonomies_list: "분류법 리스트로 돌아가기"
+    taxons: "제품 카테고리"
     shipping_methods: "전송 방법"
     shipping_method: "배송 방법"
     shipment: "수송"
@@ -3926,9 +3925,10 @@ ko:
           total: "총합"
           billing_address_name: "이름"
       taxons:
+        index:
+          title: "제품 카테고리"
         form:
           name: 이름
-          permalink: 하이퍼링크
           description: 설명
       general_settings:
         edit:

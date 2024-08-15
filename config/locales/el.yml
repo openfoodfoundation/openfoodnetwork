@@ -454,7 +454,7 @@ el:
   admin_and_handling: Διαχείριση
   profile: Προφίλ
   supplier_only: Μόνο Προμηθευτής
-  has_shopfront: Διαθέτει σελίδα καταστήματος
+  has_shopfront: Ενεργό κατάστημα
   weight: Βάρος
   volume: Όγκος
   items: Αντικείμενα
@@ -570,7 +570,7 @@ el:
     email: Email
     ends_at: Ολοκληρώνεται σε
     ends_on: Ολοκληρώνεται στις
-    name: Όνονα
+    name: Όνομα
     first_name: Όνομα
     last_name: Επίθετο
     on_hand: Στο χέρι
@@ -725,7 +725,7 @@ el:
         title: "Χρεώσεις επιχείρησης"
         enterprise: "Επιχείρηση"
         fee_type: "Κατηγορίες αμοιβών"
-        name: "Όνονα"
+        name: "Όνομα"
         tax_category: "Φορολογική Κατηγορία"
         calculator: "Υπολογισμός"
         calculator_values: "Υπολογισμός Αξίας"
@@ -875,7 +875,7 @@ el:
       index:
         notice: "Ειδοποίηση"
         beta_notice: "Αυτή η λειτουργία είναι ακόμα σε δοκιμαστική έκδοση beta: ενδέχεται να αντιμετωπίσετε ορισμένα σφάλματα κατά τη χρήση της. Μη διστάσετε να επικοινωνήσετε με την υποστήριξη."
-        select_file: Επιλέξτε φύλλο εργασίας προς ανέβασμα
+        select_file: Επιλέξτε αρχείο CSV
         spreadsheet: Φύλλο Εργασίας
         choose_import_type: Επιλογή τύπου εισαγωγής
         import_into: Τύπος εισαγωγής
@@ -886,7 +886,7 @@ el:
         csv_templates: Πρότυπο CSV
         product_list_template: Λήψη προτύπου λίστας προϊόντων
         inventory_template: Λήψη προτύπου κατάλογου προϊόντων
-        category_values: Διαθέσιμες παραλλαγές Κατηγορίας
+        category_values: Διαθέσιμες κατηγορίες
         product_categories: Κατηγορίες προϊόντος
         tax_categories: Κατηγορίες Φορολόγησης
         shipping_categories: Κατηγορίες Μεταφορικών
@@ -913,8 +913,8 @@ el:
         not_found: δεν ήταν δυνατή η εύρεση της επιχείρησης στη βάση δεδομένων
         no_name: Δεν υπάρχει όνομα
         blank_enterprise: ορισμένα προϊόντα δεν έχουν συσχετιστεί με κάποια επιχείρηση
-        reset_absent?: Επαναφέρετε τα προϊόντα που λείπουν
-        reset_absent_tip: Ορίστε μηδενικό απόθεμα για όλα τα εξερχόμενα προϊόντα που δεν υπάρχουν στο αρχείο
+        reset_absent?: Σχετικά με τα υπόλοιπα προϊόντα
+        reset_absent_tip: Ορίστε μηδενικό απόθεμα για όλα τα προϊόντα που δεν υπάρχουν στο αρχείο
         overwrite_all: Αντικατάσταση Όλων
         overwrite_empty: Αντικατάσταση αν είναι κενό
         default_stock: Ορισμός επιπέδου αποθέματος
@@ -1075,7 +1075,7 @@ el:
           select_state: "Επέλεξε πόλη"
         contact:
           legend: "επικοινωνία"
-          name: Όνονα
+          name: Όνομα
           name_placeholder: π.χ Gustav Plum
           email_address: Δημόσια Διεύθυνση Ηλεκτρονικού Ταχυδρομείου
           email_address_placeholder: π.χ. inquiries@fresh-food.com
@@ -1089,9 +1089,9 @@ el:
           website_placeholder: π.χ. www.truffles.com
         enterprise_fees:
           legend: "Χρεώσεις επιχείρησης"
-          name: Όνονα
+          name: Όνομα
           fee_type: Κατηγορίες αμοιβών
-          manage_fees: Διαχείρηση Αμοιβών Επιχειρήσεων
+          manage_fees: Διαχείριση αμοιβών επιχειρήσεων
           no_fees_yet: Δεν έχετε τέλη επιχείρησης ακόμα.
           create_button: Δημιούργησε έναν τώρα
         enterprise_permissions:
@@ -1121,7 +1121,7 @@ el:
           preferred_product_selection_from_inventory_only_no: Νέα προϊόντα πρέπει να προστεθούν στο απόθεμά μου πριν μπορέσουν να τοποθετηθούν στη βιτρίνα μου
         payment_methods:
           legend: "Τρόποι πληρωμής"
-          name: Όνονα
+          name: Όνομα
           applies: Ισχύει?
           manage: Διαχείριση Τρόπων Πληρωμής
           no_method_yet: Δεν έχετε επιλέξει κανέναν τρόπο πληρωμής.
@@ -1129,7 +1129,7 @@ el:
           create_one_button: Δημιούργησε έναν τώρα
         primary_details:
           legend: "Βασικές λεπτομέρειες"
-          name: Όνονα
+          name: Όνομα
           name_placeholder: π.χ. Βιοδυναμικές τρούφες του καθηγητή Plum
           groups: Ομάδες
           groups_tip: Επέλεξε κάποια ομάδα ή περιοχή. Αυτό θα βοηθήσει τους καταναλωτές να βρίσκουν την επιχείρησή σου.
@@ -1158,7 +1158,7 @@ el:
           ofn_uid_tip: Το μοναδικό αναγνωριστικό που χρησιμοποιείται για την ταυτοποίηση της επιχείρησης στο Open Food Network.
         shipping_methods:
           legend: "Τρόποι αποστολής"
-          name: "Όνονα"
+          name: "Όνομα"
           applies: "Ενεργό;"
           manage: "Διαχείριση Τρόπων Αποστολής"
           create_button: "Δημιουργία Νέου Τρόπου Αποστολής"
@@ -1357,7 +1357,7 @@ el:
         loading_enterprises: ΦΌΡΤΩΣΕ ΤΙΣ ΕΠΙΧΕΙΡΉΣΕΙΣ
         no_enterprises_found: Δεν βρέθηκε επιχείρηση.
         search_placeholder: Αναζήτηση Με Όνομα
-        manage: Διαχείρηση
+        manage: Διαχείριση
         manage_link: Ρυθμήσεις
         producer?: "Παραγωγός?"
         package: "Πακέτο"
@@ -1409,6 +1409,8 @@ el:
         choose_products_from: "Επιλογή προϊόντων Από:"
         re_notify_producers: Επαναλάβετε την ειδοποίηση προς τους παραγωγούς
         notify_producers_tip: Αυτό θα στείλει ένα email σε κάθε παραγωγό με τη λίστα των παραγγελιών τους.
+      date_time_warning_modal_content:
+        cancel: 'Ακύρωση'
       incoming:
         incoming: "Εισερχόμενο"
         supplier: "Προμηθευτής"
@@ -1476,7 +1478,7 @@ el:
         add: Προσθήκη κομίστρου συντονιστή
       filters:
         search_by_order_cycle_name: "Αναζήτηση με όνομα Κύκλου Παραγγελίας ..."
-        involving: "Συμμετοχή"
+        involving: "Αφορά"
         any_enterprise: "Οποιαδήποτε Επιχείρηση"
         any_schedule: "Οποιοδήποτε Πρόγραμμα"
       form:
@@ -1497,7 +1499,7 @@ el:
         new_schedule: Νέο Πρόγραμμα
         new_schedule_tooltip: Η συχνότητα με την οποία πραγματοποιείται μια συνδρομή
       name_and_timing_form:
-        name: Όνονα
+        name: Όνομα
         orders_open: Οι παραγγελίες ανοιγούν στις
         coordinator: Συντονιστής
         orders_close: Οι παραγγελίες είναι κλείστες
@@ -2024,7 +2026,7 @@ el:
   menu_2_url: "/map"
   menu_3_title: "Παραγωγοι"
   menu_3_url: "/producers"
-  menu_4_title: "Ομάδες"
+  menu_4_title: "Ομαδες"
   menu_4_url: "/groups"
   menu_5_title: "Σχετικα"
   menu_5_url: "https://about.openfoodnetwork.org.au/"
@@ -2048,7 +2050,7 @@ el:
   footer_links_md: "Σύνδεσμοι"
   footer_about_url: "Σχετικά με τη διεύθυνση URL"
   user_guide_link: "Σύνδεσμος οδηγού χρήστη"
-  name: Όνονα
+  name: Όνομα
   first_name: Όνομα
   last_name: Επίθετο
   email: Email
@@ -2333,7 +2335,7 @@ el:
   enterprises_currently_open: "Οι παραγγελίες είναι προς το παρόν ανοιχτές"
   enterprises_ready_for: "Έτοιμος για"
   enterprises_choose: "Επιλέξτε πότε θέλετε την παραγγελία σας:"
-  maps_open: "Ανοιξε"
+  maps_open: "Άνοιγμα"
   maps_closed: "Κλειστό"
   map_title: "Χάρτης"
   hubs_buy: "Ψώνια για:"
@@ -2773,9 +2775,9 @@ el:
   admin_enterprise_groups_contact_country_id: "Χώρα"
   admin_enterprise_groups_web_twitter: "π.χ. @the_prof"
   admin_enterprise_groups_web_website_placeholder: "π.χ. www.fresh-food-supplier.gr"
-  admin_order_cycles: "Κύκλοι παραγγελίας διαχειριστή"
-  open: "Ανοιξε"
-  close: "Κλείσιμο"
+  admin_order_cycles: "Κύκλοι παραγγελιών διαχειριστή"
+  open: "Έναρξη"
+  close: "Λήξη"
   create: "Δημιουργία"
   search: "Αναζήτηση"
   supplier: "Προμηθευτής"
@@ -2805,7 +2807,7 @@ el:
   flexible_rate: "Ευέλικτο ποσοστό"
   price_sack: "Price Sack"
   new_order_cycles: "Κύκλοι νέας παραγγελίας"
-  new_order_cycle: "Κύκλος νέας παραγγελίας"
+  new_order_cycle: "Νέος κύκλος παραγγελίας"
   new_order_cycle_tooltip: "Ανοίξτε το κατάστημα για μια ορισμένη χρονική περίοδο"
   select_a_coordinator_for_your_order_cycle: "Επιλέξτε έναν συντονιστή για τον κύκλο παραγγελιών σας"
   notify_producers: 'Ειδοποιήστε τους παραγωγούς'
@@ -2832,7 +2834,7 @@ el:
   no_products: Χωρίς Προϊόντα
   spree_admin_overview_enterprises_header: "Οι Επιχειρήσεις μου"
   spree_admin_overview_enterprises_footer: "ΔΙΑΧΕΙΡΙΣΤΕ ΤΙΣ ΕΠΙΧΕΙΡΗΣΕΙΣ ΜΟΥ"
-  spree_admin_enterprises_hubs_name: "Όνονα"
+  spree_admin_enterprises_hubs_name: "Όνομα"
   spree_admin_enterprises_create_new: "ΔΗΜΙΟΥΡΓΗΣΤΕ ΝΕΟ"
   spree_admin_enterprises_shipping_methods: "Τρόποι αποστολής"
   spree_admin_enterprises_fees: "Αμοιβή επιχείρησης"
@@ -2865,17 +2867,17 @@ el:
   spree_distributors_error: "Πρέπει να επιλεγεί τουλάχιστον ένας κόμβος"
   spree_user_enterprise_limit_error: "^%{email} δεν επιτρέπεται να κατέχει άλλες επιχειρήσεις (το όριο είναι %{enterprise_limit})."
   spree_variant_product_error: πρέπει να έχει τουλάχιστον μία παραλλαγή
-  your_profil_live: "Το προφίλ σας ζωντανά"
+  your_profil_live: "Προφίλ καταστήματος"
   see: "ΕΜΦΑΝΙΣΗ"
-  live: "ζω"
-  manage: "Διαχείρηση"
+  live: " "
+  manage: "Διαχείριση"
   resend: "Ξαναστείλτε"
   add_and_manage_products: "Προσθήκη και διαχείριση προϊόντων"
   add_and_manage_order_cycles: "Προσθήκη & διαχείριση κύκλων παραγγελίας"
   manage_order_cycles: "Διαχείριση κύκλων παραγγελίας"
-  manage_products: "ΔΙΑΧΕΙΡΙΣΗ ΠΡΟΪΟΝΤΩΝ"
+  manage_products: "Διαχείριση προϊόντων"
   edit_profile_details: "Επεξεργασία στοιχείων προφίλ"
-  edit_profile_details_etc: "Αλλάξτε την περιγραφή του προφίλ σας, εικόνες κ.λπ."
+  edit_profile_details_etc: "Αλλάξτε την περιγραφή του καταστήματός σας, εικόνες κ.λ.π."
   order_cycle: "Κύκλος Παραγγελειών"
   enterprise_relationships: "Δικαιώματα επιχείρησης"
   first_name_begins_with: "Το όνομα αρχίζει με"
@@ -2895,7 +2897,7 @@ el:
   admin_share_state: "Πόλη"
   hub_sidebar_hubs: "Σημείο Συλλογής "
   hub_sidebar_none_available: "Κανένα διαθέσιμο"
-  hub_sidebar_manage: "Διαχείρηση"
+  hub_sidebar_manage: "Διαχείριση"
   hub_sidebar_at_least: "Πρέπει να επιλεγεί τουλάχιστον ένας κόμβος"
   hub_sidebar_blue: "μπλε"
   hub_sidebar_red: "το κόκκινο"
@@ -3512,6 +3514,7 @@ el:
           Αυτό θα θέσει το επίπεδο αποθέματος σε μηδέν για όλα τα προϊόντα αυτής της
           επιχείρησης που δεν υπάρχουν στο ανεβασμένο αρχείο.
     order_cycles:
+      unsaved_changes: "Έχετε μη αποθηκευμένες αλλαγές"
       create_failure: "Η δημιουργία κύκλου παραγγελίας απέτυχε"
       update_success: 'Ο κύκλος παραγγελιών σας ενημερώθηκε.'
       update_failure: "Η ενημέρωση του κύκλου παραγγελίας απέτυχε"
@@ -3687,7 +3690,7 @@ el:
   import_date: "Ημερομηνία εισαγωγής"
   delivery: "Διανομή"
   temperature_controlled: "Ελεγχόμενη θερμοκρασία"
-  new_product: "Καινουργιο ΠΡΟΪΟΝ"
+  new_product: "Καινούργιο προϊόν"
   administration: "Διαχείριση"
   logged_in_as: "Συνδεδεμένος ως"
   account: "Λογαριασμός"
@@ -3754,10 +3757,6 @@ el:
       delivery: "Υπογράφηκε, σφραγίστηκε, παραδόθηκε"
     start_date: "Ημερομηνία έναρξης"
     successfully_removed: "Καταργήθηκε επιτυχώς"
-    taxonomy_edit: "Επεξεργασία ταξινόμησης"
-    taxonomy_tree_error: "Παρουσιάστηκε σφάλμα κατά την ενημέρωση του δέντρου ταξονομίας. "
-    taxonomy_tree_instruction: "Κάντε δεξί κλικ σε ένα αντικείμενο για να προσθέσετε, μετονομάσετε, αφαιρέσετε ή επεξεργαστείτε."
-    tree: "Δέντρο"
     updating: "Ενημέρωση"
     your_order_is_empty_add_product: "Η παραγγελία σας είναι κενή, αναζητήστε και προσθέστε ένα προϊόν παραπάνω"
     add_product: "Προσθήκη Προϊόντος"
@@ -3873,9 +3872,7 @@ el:
     abbreviation: "Συντομογραφία"
     new_state: "Νέα Πολιτεία"
     payment_methods: "τρόποι πληρωμής"
-    taxonomies: "Ταξινομίες"
-    new_taxonomy: "Νέα Ταξινομία"
-    back_to_taxonomies_list: "Επιστροφή στη λίστα ταξινομιών"
+    taxons: "Κατηγορίες προϊόντος"
     shipping_methods: "Τρόποι αποστολής"
     shipping_method: "Τρόπος Αποστολής"
     shipment: "Αποστολή"
@@ -4244,8 +4241,8 @@ el:
         image_upload_error: "Παρακαλώ ανεβάστε την εικόνα σε τύπο αρχείου JPG, PNG, GIF, SVG ή WEBP."
         image_not_processable: "Η συνημμένη εικόνα δεν υποστηρίζεται."
         new:
-          title: "Καινουργιο ΠΡΟΪΟΝ"
-          new_product: "Καινουργιο ΠΡΟΪΟΝ"
+          title: "Καινούργιο προϊόν"
+          new_product: "Καινούργιο προϊόν"
           supplier: "Προμηθευτής"
           supplier_select_placeholder: "Διαλέξτε ένα προμηθευτή"
           product_name: "Ονομασία προϊόντος"
@@ -4358,9 +4355,10 @@ el:
           total: "Σύνολο"
           billing_address_name: "Όνομα"
       taxons:
+        index:
+          title: "Κατηγορίες προϊόντος"
         form:
           name: Όνομα
-          permalink: Permalink
           meta_title: Τίτλος Meta
           meta_description: Περιγραφή Meta
           meta_keywords: Λέξεις-κλειδιά Meta

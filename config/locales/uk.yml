@@ -1208,6 +1208,8 @@ uk:
         choose_products_from: "Виберіть продукти з:"
         re_notify_producers: Повторно повідомте виробників
         notify_producers_tip: Це надішле електронний лист кожному виробнику зі списком їхніх замовлень.
+      date_time_warning_modal_content:
+        cancel: 'Скасувати'
       incoming:
         incoming: "Вхідні"
         supplier: "Постачальник"
@@ -3204,6 +3206,7 @@ uk:
       confirmation: |
           Це призведе до нульового рівня запасів для всіх продуктів для цього підприємства, яких немає в завантаженому файлі.
     order_cycles:
+      unsaved_changes: "У вас є незбережені зміни"
       create_failure: "Не вдалося створити цикл замовлення"
       update_success: 'Ваш цикл замовлення оновлено.'
       update_failure: "Не вдалося оновити цикл замовлення"
@@ -3481,8 +3484,6 @@ uk:
       UPS Ground: "UPS наземна"
     start_date: "Дата початку"
     successfully_removed: "Успішно видалено"
-    taxonomy_edit: "Редагування таксономії"
-    tree: "Дерево"
     updating: "Оновлення"
     your_order_is_empty_add_product: "Ваше замовлення порожнє, знайдіть і додайте продукт вище"
     add_product: "Додати продукт"
@@ -3595,9 +3596,7 @@ uk:
     abbreviation: "Абревіатура"
     new_state: "Новий регіон"
     payment_methods: "методи оплати"
-    taxonomies: "Таксономії"
-    new_taxonomy: "Нова таксономія"
-    back_to_taxonomies_list: "Назад до списку таксономій"
+    taxons: "Категорії продуктів"
     shipping_methods: "Способи доставки"
     shipping_method: "Спосіб доставки"
     shipment: "Відвантаження"
@@ -4051,9 +4050,10 @@ uk:
           total: "Всього"
           billing_address_name: "Ім'я"
       taxons:
+        index:
+          title: "Категорії продуктів"
         form:
           name: Ім'я
-          permalink: Постійне посилання
           description: Опис
       general_settings:
         edit:

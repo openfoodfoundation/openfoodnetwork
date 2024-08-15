@@ -1091,6 +1091,8 @@ tr:
         back_to_list: "Listeye geri dön"
         save_and_back_to_list: "KAYDET VE LİSTEYE DÖN"
         choose_products_from: "Ürünlerİ Buradan SeÇ:"
+      date_time_warning_modal_content:
+        cancel: 'İptal et'
       incoming:
         incoming: "Gelen"
         supplier: "TEDARİKÇİ"
@@ -3025,6 +3027,7 @@ tr:
           Yüklenen dosyada bulunmayan tüm işletmeler için
           tüm ürünlerin stok seviyelerini sıfır olarak ayar.
     order_cycles:
+      unsaved_changes: "kaydedilmemiş değişiklikleriniz var"
       create_failure: "Sipariş dönemi oluşturulamadı"
       update_success: 'Sipariş döneminiz güncellendi.'
       update_failure: "Sipariş dönemi güncellenemedi"
@@ -3253,8 +3256,6 @@ tr:
     server_error: "Server hatası"
     start_date: "Başlangıç tarihi"
     successfully_removed: "Başarıyla Kaldırıldı"
-    taxonomy_edit: "Kategori düzenleme"
-    tree: "Ağaç"
     updating: "Güncelleniyor"
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"
     add_product: "ürün ekle"
@@ -3367,9 +3368,7 @@ tr:
     abbreviation: "Kısaltma"
     new_state: "Yeni Şehir"
     payment_methods: "ÖDEME YÖNTEMLERİ"
-    taxonomies: "KATEGORİ"
-    new_taxonomy: "YENİ KATEGORİ"
-    back_to_taxonomies_list: "Kategori Listesine Geri Dön"
+    taxons: "Ürün Kategorileri"
     shipping_methods: "TESLİMAT YÖNTEMLERİ"
     shipping_method: "TESLİMAT YÖNTEMİ"
     shipment: "Teslimat"
@@ -3813,9 +3812,10 @@ tr:
           total: "Toplam"
           billing_address_name: "Ad"
       taxons:
+        index:
+          title: "Ürün Kategorileri"
         form:
           name: Ad
-          permalink: Permalink
           description: Açıklama
       general_settings:
         edit:

@@ -1355,6 +1355,8 @@ cy:
         choose_products_from: "Dewis Cynnyrch gan:"
         re_notify_producers: Ail-hysbysu cynhyrchwyr.
         notify_producers_tip: Trwy hyn anfonir ebost at bob cynhyrchydd gyda rhestr o'r archebion.
+      date_time_warning_modal_content:
+        cancel: 'Canslo'
       incoming:
         incoming: "Yn dod i mewn"
         supplier: "Cyflenwr"
@@ -3462,6 +3464,7 @@ cy:
           This will set stock level to zero on all products for this
           enterprise that are not present in the uploaded file.
     order_cycles:
+      unsaved_changes: "Mae gennych chi newidiadau heb eu cadw"
       create_failure: "Wedi methu creu cylch archebu"
       update_success: 'Diweddarwyd eich cylch archebu'
       update_failure: "Wedi methu diweddaru'r cylch archebu"
@@ -3751,8 +3754,6 @@ cy:
       delivery: "Llofnodwyd, cadarnhawyd a chyflenwyd"
     start_date: "Dyddiad cychwyn"
     successfully_removed: "Llwyddwyd i ddileu"
-    taxonomy_edit: "Golygu tacsonomi"
-    tree: "Coeden"
     updating: "Yn diweddaru"
     your_order_is_empty_add_product: "Mae eich archeb yn wag, chwiliwch am ac ychwanegwch gynnyrch uchod"
     add_product: "Ychwanegu Cynnyrch"
@@ -3867,9 +3868,7 @@ cy:
     abbreviation: "Talfyriad"
     new_state: "Sir Newydd"
     payment_methods: "Dulliau Talu"
-    taxonomies: "Tacsonomeg"
-    new_taxonomy: "Tacsonomeg Newydd"
-    back_to_taxonomies_list: "Yn ôl i'r Rhestr Tacsonomeg"
+    taxons: "Categorïau Cynnyrch"
     shipping_methods: "Dulliau Anfon"
     shipping_method: "Dull Anfon"
     shipment: "Llwyth"
@@ -4350,9 +4349,10 @@ cy:
           total: "Cyfanswm"
           billing_address_name: "Enw"
       taxons:
+        index:
+          title: "Categorïau Cynnyrch"
         form:
           name: Enw
-          permalink: Permalink
           meta_title: Meta Title
           meta_description: Meta Description
           meta_keywords: Meta Keywords

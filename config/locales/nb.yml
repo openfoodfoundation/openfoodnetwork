@@ -1425,6 +1425,8 @@ nb:
         choose_products_from: "Velg Produkter Fra:"
         re_notify_producers: Varsle produsentene på nytt
         notify_producers_tip: Dette vil sende en epost til hver produsent med listen over deres bestillinger.
+      date_time_warning_modal_content:
+        cancel: 'Avbryt'
       incoming:
         incoming: "Innkommende"
         supplier: "Leverandør"
@@ -3547,6 +3549,7 @@ nb:
       confirmation: |
           Dette vil sette varebeholdning til null på alle produkter for denne virksomheten som ikke er til stede i den nedlastede filen.
     order_cycles:
+      unsaved_changes: "Du har ulagrede endringer"
       create_failure: "Kunne ikke opprette bestillingsrunde"
       update_success: 'Din bestillingsrunde har blitt oppdatert.'
       update_failure: "Kunne ikke oppdatere bestillingsrunde"
@@ -3787,10 +3790,6 @@ nb:
       delivery: "Signert, forseglet, levert"
     start_date: "Startdato"
     successfully_removed: "Fjernet OK"
-    taxonomy_edit: "Rediger kategori"
-    taxonomy_tree_error: "Det oppsto en feil under oppdatering av kategoritreet."
-    taxonomy_tree_instruction: "Høyreklikk på et element for å legge til, gi nytt navn, fjerne eller redigere."
-    tree: "Tre"
     updating: "Oppdaterer"
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
     add_product: "Legg til produkt"
@@ -3906,9 +3905,7 @@ nb:
     abbreviation: "Forkortelse"
     new_state: "Ny Region"
     payment_methods: "Betalingsmetoder"
-    taxonomies: "Taksonomier"
-    new_taxonomy: "Ny Taksonomi"
-    back_to_taxonomies_list: "Tilbake til Taksonomiliste"
+    taxons: "Produktkategorier"
     shipping_methods: "Leveringsmetoder"
     shipping_method: "Leveringsmetode"
     shipment: "Leveranse"
@@ -4392,9 +4389,10 @@ nb:
           total: "Total"
           billing_address_name: "Navn"
       taxons:
+        index:
+          title: "Produktkategorier"
         form:
           name: Navn
-          permalink: Permalink
           meta_title: Metatittel
           meta_description: Metabeskrivelse
           meta_keywords: Meta nøkkelord

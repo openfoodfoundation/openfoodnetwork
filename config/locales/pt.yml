@@ -1063,6 +1063,8 @@ pt:
         back_to_list: "Voltar à Lista"
         save_and_back_to_list: "Guardar e Voltar à Lista"
         choose_products_from: "Escolha produtos de:"
+      date_time_warning_modal_content:
+        cancel: 'Cancelar'
       incoming:
         incoming: "Entrada"
         supplier: "Fornecedor"
@@ -2861,6 +2863,7 @@ pt:
       confirmation: |
           Isto colocará a zero o stock de todos os produtos desta organização que não estejam presentes no ficheiro carregado.
     order_cycles:
+      unsaved_changes: "Tem alterações por guardar"
       create_failure: "Falhou a criação do ciclo de encomendas"
       update_success: 'O seu ciclo de encomendas foi actualizado.'
       update_failure: "Falhou a atualização do ciclo de encomendas"
@@ -3118,9 +3121,7 @@ pt:
     abbreviation: "Abreviatura"
     new_state: "Nova Região"
     payment_methods: "Métodos de pagamento"
-    taxonomies: "Taxonomias"
-    new_taxonomy: "Nova Taxonomia"
-    back_to_taxonomies_list: "Voltar à Lista de Taxonomias"
+    taxons: "Categorias de Produtos"
     shipping_methods: "Métodos de Envio"
     shipping_method: "Método de Envio"
     shipment: "Envio"
@@ -3480,6 +3481,8 @@ pt:
           total: "Total"
           billing_address_name: "Nome"
       taxons:
+        index:
+          title: "Categorias de Produtos"
         form:
           name: Nome
           description: Descrição

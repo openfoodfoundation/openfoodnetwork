@@ -1000,6 +1000,8 @@ fil_PH:
         back_to_list: "bumalik sa listahan"
         save_and_back_to_list: "i-save at bumalik sa listahan"
         choose_products_from: "pumili ng mga produkto mula sa:"
+      date_time_warning_modal_content:
+        cancel: 'kanselahin'
       incoming:
         incoming: "paparating"
         supplier: "Supplier"
@@ -2827,6 +2829,7 @@ fil_PH:
           ise-set nito ang lebel ng stock sa zero para sa lahat ng mga produkto para dito
           enterprise na hindi makikita sa inupload na file.
     order_cycles:
+      unsaved_changes: "May mga pagbabago na hindi na-save"
       create_failure: "hindi nagtagumpay sa paggawa ng order cycle"
       update_success: 'ang iyong order cycle ay na-update na'
       update_failure: "hindi nagtagumpay sa pag-update ng order cycle"
@@ -3111,9 +3114,7 @@ fil_PH:
     abbreviation: "Pinaikli"
     new_state: "Bagong Status"
     payment_methods: "Mga Paraan ng Pagbabayad"
-    taxonomies: "taxonomies"
-    new_taxonomy: "bagong taxonomy"
-    back_to_taxonomies_list: "bumalik sa listahan ng mga taxonomy"
+    taxons: "kategorya ng produkto"
     shipping_methods: "mga paraan ng pagpapadala"
     shipping_method: "paraan ng pagpapadala"
     shipment: "kargamento"
@@ -3502,6 +3503,8 @@ fil_PH:
           total: "kabuuan"
           billing_address_name: "Pangalan"
       taxons:
+        index:
+          title: "kategorya ng produkto"
         form:
           name: Pangalan
           description: paglalarawan

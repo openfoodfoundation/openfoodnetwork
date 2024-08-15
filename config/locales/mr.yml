@@ -1311,6 +1311,8 @@ mr:
         choose_products_from: "यामधून उत्पादने निवडा:"
         re_notify_producers: उत्पादकांना पुन्हा सूचित करा
         notify_producers_tip: हे प्रत्येक उत्पादकाला त्यांच्या ऑर्डरच्या सूचीचे ईमेल पाठवेल.
+      date_time_warning_modal_content:
+        cancel: 'रद्द करा'
       incoming:
         incoming: "येणारे"
         supplier: "पुरवठादार"
@@ -3358,6 +3360,7 @@ mr:
           हे अपलोड केलेल्या फाइलमध्ये उपस्थित नसलेल्या एंटरप्राइझसाठी
           सर्व उत्पादनांचा साठा शून्यावर सेट करेल.
     order_cycles:
+      unsaved_changes: "तुमच्याकडे सेव्ह न केलेले बदल आहेत"
       create_failure: "ऑर्डर सायकल तयार करण्यात अयशस्वी"
       update_success: 'तुमची ऑर्डर सायकल अपडेट केली गेली आहे.'
       update_failure: "ऑर्डर सायकल अपडेट करण्यात अयशस्वी"
@@ -3598,8 +3601,6 @@ mr:
       delivery: "स्वाक्षरी, सीलबंद, वितरित"
     start_date: "प्रारंभ तारीख"
     successfully_removed: "यशस्वीरित्या काढले"
-    taxonomy_edit: "वर्गीकरण संपादन"
-    tree: "वृक्ष"
     updating: "अपडेट करत आहे"
     your_order_is_empty_add_product: "तुमची ऑर्डर रिकामी आहे, कृपया उत्पादन शोधा आणि वर समाविष्ट करा"
     add_product: "उत्पादन जोडा"
@@ -3714,9 +3715,6 @@ mr:
     abbreviation: "संक्षेप"
     new_state: "नवीन राज्य"
     payment_methods: "पेमेंट पद्धती"
-    taxonomies: "वर्गीकरण"
-    new_taxonomy: "नवीन वर्गीकरण"
-    back_to_taxonomies_list: "वर्गीकरण सूचीकडे परत जा"
     shipping_methods: "शिपिंग पद्धती"
     shipping_method: "शिपिंग पद्धत "
     shipment: "शिपमेंट"

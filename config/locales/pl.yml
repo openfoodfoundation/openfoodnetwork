@@ -967,6 +967,8 @@ pl:
         back_to_list: "Powrót do listy"
         save_and_back_to_list: "Zapisz i wróć do listy"
         choose_products_from: "Wybierz produkty z:"
+      date_time_warning_modal_content:
+        cancel: 'Anuluj'
       incoming:
         incoming: "Przychodzący"
         supplier: "Dostawca"
@@ -2748,6 +2750,7 @@ pl:
       confirmation: |
           Spowoduje to ustawienie poziomu zapasów na zero dla wszystkich produktów tego podmiotu, których nie ma w przesłanym pliku.
     order_cycles:
+      unsaved_changes: "Masz niezapisane zmiany"
       create_failure: "Nie udało się utworzyć cyklu zamówień"
       update_success: 'Twój cykl zamówień został zaktualizowany.'
       update_failure: "Nie udało się zaktualizować cyklu zamówień"
@@ -3088,9 +3091,7 @@ pl:
     abbreviation: "Skrót"
     new_state: "Nowe województwo"
     payment_methods: "Metody płatności"
-    taxonomies: "Taksonomie"
-    new_taxonomy: "Nowa taksonomia"
-    back_to_taxonomies_list: "Powrót do listy taksonomii"
+    taxons: "Kategorie produktów"
     shipping_methods: "Metody dostaw"
     shipping_method: "Metoda dostawy"
     payment: "Płatność"
@@ -3481,6 +3482,8 @@ pl:
           total: "Razem"
           billing_address_name: "Nazwa"
       taxons:
+        index:
+          title: "Kategorie produktów"
         form:
           name: Nazwa
           description: Opis

@@ -1298,6 +1298,15 @@ fr_CA:
             disable: "Arrêter le partage"
             loading: "Chargement en cours"
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            description_html: |
+                <p>
+                L'INRAE et UFC QUE CHOISIR travaillent conjointement sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme.
+                </p>
+                <p>
+                <a href="https://apropos.coopcircuits.fr/"
+                target="_blank"><b>En savoir plus à propos de ce programme de recherche</b>
+                <i class="icon-external-link"></i></a>
+                </p>
           discover_regen:
             title: "Annuaire alimentaire de Waterloo"
             tagline: "Permettre à l'OFN Canada de publier les informations relatives à votre entreprise."
@@ -1410,6 +1419,8 @@ fr_CA:
         choose_products_from: "Choisir produits depuis :"
         re_notify_producers: Notifier les producteurs
         notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec le contenu du cycle de vente.
+      date_time_warning_modal_content:
+        cancel: 'Annuler'
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les hubs)"
         supplier: "Fournisseur"
@@ -3548,6 +3559,7 @@ fr_CA:
           Cette action remettra tous les niveaux de stock à zero pour cette
           entreprises pour les produits non présents dans ce fichier.
     order_cycles:
+      unsaved_changes: "Des modifications n'ont pas été sauvegardées"
       create_failure: "La création du cycle de vente a échoué"
       update_success: 'Votre cycle de vente a été mis à jour.'
       update_failure: "La mise à jour du cycle de vente à échoué"
@@ -3814,10 +3826,6 @@ fr_CA:
       delivery: "Signé, scellé, livré"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
-    taxonomy_edit: "Modifier la taxonomie"
-    taxonomy_tree_error: "Erreur lors de la mise à jour de l'arbre de taxonomie."
-    taxonomy_tree_instruction: "Faites un clic droit sur un article pour ajouter, renommer, supprimer ou modifier."
-    tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
@@ -3933,9 +3941,7 @@ fr_CA:
     abbreviation: "Code"
     new_state: "Nouveau Région:"
     payment_methods: "Méthodes de paiement"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "Nouvelle taxonomie"
-    back_to_taxonomies_list: "Retour à la liste des taxonomies"
+    taxons: "Catégorie Produit"
     shipping_methods: "Méthodes de livraison"
     shipping_method: "Option d'expédition"
     shipment: "Livraison"
@@ -4419,9 +4425,10 @@ fr_CA:
           total: "Total"
           billing_address_name: "Nom"
       taxons:
+        index:
+          title: "Catégorie Produit"
         form:
           name: Nom
-          permalink: Nom pour URL (sans espace)
           meta_title: Méta titre
           meta_description: Méta description
           meta_keywords: Méta mots clés

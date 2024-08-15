@@ -1238,6 +1238,8 @@ ar:
         choose_products_from: "اختر المنتجات من:"
         re_notify_producers: إعادة إخطار المنتجين
         notify_producers_tip: سيؤدي هذا إلى إرسال بريد إلكتروني إلى كل منتج مع قائمة طلباتهم.
+      date_time_warning_modal_content:
+        cancel: 'إلغاء'
       incoming:
         incoming: "الوارد"
         supplier: "المورد"
@@ -3300,6 +3302,7 @@ ar:
           سيؤدي ذلك إلى ضبط مستوى المخزون لصفر على جميع المنتجات
           المؤسسة غير موجودة في الملف الذي تم تحميله.
     order_cycles:
+      unsaved_changes: "لم تحفظ التغييرات"
       create_failure: "فشل في تكوين دورة الطلب"
       update_success: 'تم تحديث دورة الطلب.'
       update_failure: "فشل في تحديث دورة الطلب"
@@ -3636,8 +3639,6 @@ ar:
       delivery: "موقعة ومختومة وتم التسليم"
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
-    taxonomy_edit: "التصنيف"
-    tree: "شجرة"
     updating: "تحديث"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
     add_product: "أضف منتج"
@@ -3751,9 +3752,7 @@ ar:
     abbreviation: "الاختصار"
     new_state: "محافظة جديدة"
     payment_methods: "طرق الدفع"
-    taxonomies: "التصنيفات"
-    new_taxonomy: "تصنيف جديد"
-    back_to_taxonomies_list: "العودة إلى قائمة التصنيفات"
+    taxons: "فئات المنتجات"
     shipping_methods: "طرق الشحن"
     shipping_method: "طريقة الشحن"
     shipment: "الشحنة"
@@ -4218,9 +4217,10 @@ ar:
           total: "المجموع"
           billing_address_name: "الاسم"
       taxons:
+        index:
+          title: "فئات المنتجات"
         form:
           name: الاسم
-          permalink: الرابط الثابت
           description: وصف
       general_settings:
         edit:

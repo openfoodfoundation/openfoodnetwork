@@ -99,6 +99,8 @@ en_CA:
           attributes:
             base:
               card_expired: "has expired"
+        spree/product:
+          must_exist: 'must exist'
         order_cycle:
           attributes:
             orders_close_at:
@@ -675,6 +677,16 @@ en_CA:
         info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See 1matomo.org1 for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
         config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
+    connected_app_settings:
+      edit:
+        title: "Connected app settings"
+        info_html: "Enabled apps will appear under Enterprise Settings > Connected Apps."
+        enabled_legend: "Enabled connected apps"
+        connected_apps_enabled:
+          discover_regen: Discover Regenerative portal
+          affiliate_sales_data: DFC anonymised orders API for research purposes
+      update:
+        resource: Connected app settings
     customers:
       index:
         new_customer: "New Customer"
@@ -1299,6 +1311,15 @@ en_CA:
             disable: "Stop sharing"
             loading: "Loading"
             need_to_be_manager: "Only managers can connect apps."
+            description_html: |
+                <p>
+                INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publically disclosed through this project.
+                </p>
+                <p>
+                <a href="https://apropos.coopcircuits.fr/"
+                target="_blank"><b>Learn more about this research project </b>
+                <i class="icon-external-link"></i></a>
+                </p>
           discover_regen:
             title: "Waterloo Food Directory"
             tagline: "Allow OFN Canada to publish your enterprise information."
@@ -1411,6 +1432,8 @@ en_CA:
         choose_products_from: "Choose Products From:"
         re_notify_producers: Re notify producers
         notify_producers_tip: This will send an email to each producer with the list of their orders.
+      date_time_warning_modal_content:
+        cancel: 'Cancel'
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -1931,7 +1954,7 @@ en_CA:
       all_terms_and_conditions:
         message_html: "I agree to the seller's %{terms_and_conditions_link} and the platform %{tos_link}"
         terms_and_conditions: "Terms and Conditions"
-      submit: Complete order
+      submit: Click to place order
       cancel: Back to Payment method
     errors:
       saving_failed: "Saving failed, please update the highlighted fields."
@@ -3533,6 +3556,7 @@ en_CA:
           This will set stock level to zero on all products for this
           enterprise that are not present in the uploaded file.
     order_cycles:
+      unsaved_changes: "You have unsaved changes"
       create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
       update_failure: "Failed to update order cycle"
@@ -3775,10 +3799,6 @@ en_CA:
       delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
-    taxonomy_edit: "Taxonomy edit"
-    taxonomy_tree_error: "There was an error updating the taxonomy tree."
-    taxonomy_tree_instruction: "Right-click on an item to add, rename, remove or edit."
-    tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
@@ -3894,9 +3914,7 @@ en_CA:
     abbreviation: "Abbreviation"
     new_state: "New Province"
     payment_methods: "Payment Methods"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "New Taxonomy"
-    back_to_taxonomies_list: "Back to Taxonomies List"
+    taxons: "Product Categories"
     shipping_methods: "Delivery/Pick-up Methods"
     shipping_method: "Shipping Method"
     shipment: "Shipment"
@@ -4121,7 +4139,7 @@ en_CA:
           email: "Customer E-Mail"
         invoice:
           issued_on: "Issued on"
-          tax_invoice: "Order Number"
+          tax_invoice: "INVOICE"
           code: "Code"
           from: "From"
           to: "Bill to"
@@ -4380,9 +4398,10 @@ en_CA:
           total: "Total"
           billing_address_name: "Name"
       taxons:
+        index:
+          title: "Product Categories"
         form:
           name: Name
-          permalink: Permalink
           meta_title: Meta Title
           meta_description: Meta Description
           meta_keywords: Meta Keywords

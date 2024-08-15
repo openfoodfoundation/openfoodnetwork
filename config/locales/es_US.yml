@@ -1164,6 +1164,8 @@ es_US:
         choose_products_from: "Escoger Productos desde:"
         re_notify_producers: Re notificar a productores
         notify_producers_tip: Esto enviará un correo electrónico a cada productor con la lista de sus pedidos.
+      date_time_warning_modal_content:
+        cancel: 'Cancelar'
       incoming:
         incoming: "Entrante"
         supplier: "Proveedora"
@@ -3076,6 +3078,7 @@ es_US:
           Esto establecerá el nivel de stock a cero en todos los productos para este
           organización no está presente en el archivo subido.
     order_cycles:
+      unsaved_changes: "Tienes cambios sin guardar"
       create_failure: "Error al crear el ciclo de pedido"
       update_success: 'Se ha actualizado su ciclo de pedido.'
       update_failure: "Error al actualizar el ciclo de pedido"
@@ -3315,7 +3318,6 @@ es_US:
     resend_authorization_email: "Reenviar email de autorización"
     refund: "Reembolso"
     server_error: "Error del Servidor"
-    tree: "Árbol"
     updating: "Actualizando"
     your_order_is_empty_add_product: "Su pedido está vacío, busque y añada un producto arriba"
     add_product: "Añadir Producto"
@@ -3428,9 +3430,7 @@ es_US:
     abbreviation: "Abreviatura"
     new_state: "Nuevo estado"
     payment_methods: "Métodos de Pago"
-    taxonomies: "Taxonomias"
-    new_taxonomy: "Nueva taxonomía"
-    back_to_taxonomies_list: "Volver a la Lista de Taxonomías"
+    taxons: "Categorías de Producto"
     shipping_methods: "Métodos de envío"
     shipping_method: "Método de envío"
     shipment: "Envío"
@@ -3872,9 +3872,10 @@ es_US:
           total: "Total"
           billing_address_name: "Nombre"
       taxons:
+        index:
+          title: "Categorías de Producto"
         form:
           name: Nombre
-          permalink: Enlace permanente
           description: Descripción
       general_settings:
         edit:

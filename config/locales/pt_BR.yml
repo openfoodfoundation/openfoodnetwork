@@ -1102,6 +1102,8 @@ pt_BR:
         back_to_list: "Voltar Para a Lista"
         save_and_back_to_list: "Salvar e Voltar para a Lista"
         choose_products_from: "Escolha produtos de:"
+      date_time_warning_modal_content:
+        cancel: 'Cancelar'
       incoming:
         incoming: "Entrada"
         supplier: "Fornecedor"
@@ -3009,6 +3011,7 @@ pt_BR:
           Isso ajustará o nível de estoque para zero em todos os produtos para esta
           iniciativa que não está presente no arquivo carregado.
     order_cycles:
+      unsaved_changes: "Você possui alterações não salvas"
       create_failure: "Falha ao criar o ciclo do pedidos"
       update_success: 'O seu ciclo de pedidos foi atualizado.'
       update_failure: "Falha ao atualizar o ciclo do pedidos"
@@ -3255,8 +3258,6 @@ pt_BR:
     server_error: "Erro de servidor"
     start_date: "Data de início"
     successfully_removed: "Removido com Sucesso"
-    taxonomy_edit: "Editar Taxonomia"
-    tree: "Árvore"
     updating: "Atualizando"
     your_order_is_empty_add_product: "Seu pedido está vazio, pesquise e adicione um produto acima"
     add_product: "Adicionar produto"
@@ -3369,9 +3370,6 @@ pt_BR:
     abbreviation: "Abreviação"
     new_state: "Estado novo"
     payment_methods: "Métodos de pagamento"
-    taxonomies: "Taxonomias"
-    new_taxonomy: "Nova taxonomia"
-    back_to_taxonomies_list: "Voltar à lista de taxonomias"
     shipping_methods: "Métodos de envio"
     shipping_method: "Método de envio"
     shipment: "Envio"
@@ -3812,7 +3810,6 @@ pt_BR:
       taxons:
         form:
           name: Nome
-          permalink: Permalink
           description: Descrição
       general_settings:
         edit:

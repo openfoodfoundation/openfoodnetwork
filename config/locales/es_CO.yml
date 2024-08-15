@@ -1032,6 +1032,8 @@ es_CO:
         back_to_list: "Regresar a la lista"
         save_and_back_to_list: "Guardar y volver a lista"
         choose_products_from: "Escoger productos desde:"
+      date_time_warning_modal_content:
+        cancel: 'Cancelar'
       incoming:
         incoming: "Entrante"
         supplier: "Proveedor"
@@ -2886,6 +2888,7 @@ es_CO:
           Esto establecerá el nivel de stock a cero en todos los productos para esta
           organización que no están presentes en el archivo subido.
     order_cycles:
+      unsaved_changes: "Tiene cambios sin guardar"
       create_failure: "Error al crear el ciclo de pedido"
       update_success: 'Se ha actualizado su ciclo de pedido.'
       update_failure: "Error al actualizar el ciclo de pedido"
@@ -3206,9 +3209,7 @@ es_CO:
     abbreviation: "Abreviatura"
     new_state: "Nueva provincia"
     payment_methods: "Métodos de pago"
-    taxonomies: "Taxonomías"
-    new_taxonomy: "Nueva taxonomía"
-    back_to_taxonomies_list: "Volver a la lista de taxonomías"
+    taxons: "Categorías de producto"
     shipping_methods: "Métodos de envío"
     shipping_method: "Método de envío"
     shipment: "Envío"
@@ -3616,6 +3617,8 @@ es_CO:
           total: "Total"
           billing_address_name: "Nombre"
       taxons:
+        index:
+          title: "Categorías de producto"
         form:
           name: Nombre
           description: Descripción

@@ -1425,6 +1425,8 @@ en_FR:
         choose_products_from: "Choose Products From:"
         re_notify_producers: Re notify producers
         notify_producers_tip: This will send an email to each producer with the list of their orders.
+      date_time_warning_modal_content:
+        cancel: 'Cancel'
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -3548,6 +3550,7 @@ en_FR:
           This will set stock level to zero on all products for this
           enterprise that are not present in the uploaded file.
     order_cycles:
+      unsaved_changes: "You have unsaved changes"
       create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
       update_failure: "Failed to update order cycle"
@@ -3790,10 +3793,6 @@ en_FR:
       delivery: "Signed, sealed, delivered"
     start_date: "Start date"
     successfully_removed: "Successfully Removed"
-    taxonomy_edit: "Taxonomy edit"
-    taxonomy_tree_error: "There was an error updating the taxonomy tree."
-    taxonomy_tree_instruction: "Right-click on an item to add, rename, remove or edit."
-    tree: "Tree"
     updating: "Updating"
     your_order_is_empty_add_product: "Your order is empty, please search for and add a product above"
     add_product: "Add Product"
@@ -3909,9 +3908,7 @@ en_FR:
     abbreviation: "Abbreviation"
     new_state: "New State"
     payment_methods: "Payment Methods"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "New Taxonomy"
-    back_to_taxonomies_list: "Back to Taxonomies List"
+    taxons: "Product Categories"
     shipping_methods: "Shipping Methods"
     shipping_method: "Shipping Method"
     shipment: "Shipment"
@@ -4395,9 +4392,10 @@ en_FR:
           total: "Total"
           billing_address_name: "Name"
       taxons:
+        index:
+          title: "Product Categories"
         form:
           name: Name
-          permalink: Permalink
           meta_title: Meta Title
           meta_description: Meta Description
           meta_keywords: Meta Keywords

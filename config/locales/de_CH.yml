@@ -1204,6 +1204,8 @@ de_CH:
         choose_products_from: "Wählen Sie Produkte von:"
         re_notify_producers: Produzenten erneut benachrichtigen
         notify_producers_tip: Benachrichtigen Sie die Produzenten per E-Mail über in diesem Bestellzyklus erhaltene Bestellungen.
+      date_time_warning_modal_content:
+        cancel: 'Stornieren'
       incoming:
         incoming: "Eingehend"
         supplier: "Lieferant"
@@ -3210,6 +3212,7 @@ de_CH:
           Dadurch wird der Lagerbestand für alle Produkte dieses Unternehmens,
           die in der hochgeladenen Datei nicht vorhanden sind, auf Null gesetzt.
     order_cycles:
+      unsaved_changes: "Sie haben nicht gespeicherte Änderungen."
       create_failure: "Fehler beim Erstellen des Bestellzyklus."
       update_success: 'Ihr Bestellzyklus wurde aktualisiert.'
       update_failure: "Fehler beim Aktualisieren des Bestellzyklus."
@@ -3440,8 +3443,6 @@ de_CH:
       UPS Ground: "UPS Ground"
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
-    taxonomy_edit: "Kategorien bearbeiten"
-    tree: "Struktur"
     updating: "Aktualisierung"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."
     add_product: "Produkt hinzufügen"
@@ -3554,9 +3555,7 @@ de_CH:
     abbreviation: "Abkürzung"
     new_state: "Neuer Kanton"
     payment_methods: "Zahlungsarten"
-    taxonomies: "Kategorien"
-    new_taxonomy: "Neue Kategorie"
-    back_to_taxonomies_list: "Zurück zur Kategorieliste"
+    taxons: "Produktkategorien"
     shipping_methods: "Lieferoptionen"
     shipping_method: "Lieferoption"
     shipment: "Lieferung"
@@ -4002,9 +4001,10 @@ de_CH:
           total: "Gesamt"
           billing_address_name: "Name"
       taxons:
+        index:
+          title: "Produktkategorien"
         form:
           name: Name
-          permalink: Permalink
           description: Beschreibung
       general_settings:
         edit:

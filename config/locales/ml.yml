@@ -1337,6 +1337,8 @@ ml:
         choose_products_from: "ഇതിൽ നിന്ന് ഉൽപ്പന്നങ്ങൾ തിരഞ്ഞെടുക്കുക:"
         re_notify_producers: പ്രൊഡ്യൂസേഴ്സിനെ വീണ്ടും അറിയിക്കുക
         notify_producers_tip: ഇത് ഓരോ പ്രൊഡ്യൂസേഴ്സിനും അവരുടെ ഓർഡറുകളുടെ ലിസ്റ്റുമായി ഒരു ഇമെയിൽ അയയ്ക്കും.
+      date_time_warning_modal_content:
+        cancel: 'റദ്ദാക്കുക'
       incoming:
         incoming: "ഇൻകമിംഗ്"
         supplier: "വിതരണക്കാരൻ"
@@ -3458,6 +3460,7 @@ ml:
           ഇതിനായുള്ള എല്ലാ ഉൽപ്പന്നങ്ങളുടെയും സ്റ്റോക്ക് ലെവൽ പൂജ്യമായി സജ്ജമാക്കും
           അപ്‌ലോഡ് ചെയ്ത ഫയലിൽ ഇല്ലാത്ത എന്റർപ്രൈസ്.
     order_cycles:
+      unsaved_changes: "നിങ്ങൾക്ക് സേവ് ചെയ്യാത്ത മാറ്റങ്ങളുണ്ട്"
       create_failure: "ഓർഡർ സൈക്കിൾ സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു"
       update_success: 'നിങ്ങളുടെ ഓർഡർ സൈക്കിൾ അപ്ഡേറ്റ് ചെയ്തു.'
       update_failure: "ഓർഡർ സൈക്കിൾ അപ്ഡേറ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
@@ -3699,8 +3702,6 @@ ml:
       delivery: "ഒപ്പിട്ടു, സീൽ ചെയ്തു, എത്തിച്ചു"
     start_date: "ആരംഭിക്കുന്ന തീയതി"
     successfully_removed: "വിജയകരമായി നീക്കം ചെയ്തു"
-    taxonomy_edit: "ടാക്സോണമി എഡിറ്റ്"
-    tree: "ട്രീ"
     updating: "അപ്ഡേറ്റ് ചെയ്യുന്നു"
     your_order_is_empty_add_product: "നിങ്ങളുടെ ഓർഡർ ശൂന്യമാണ്, മുകളിൽ ഒരു ഉൽപ്പന്നം തിരയുകയും ചേർക്കുകയും ചെയ്യുക"
     add_product: "ഉൽപ്പന്നം ചേർക്കുക"
@@ -3815,9 +3816,7 @@ ml:
     abbreviation: "ചുരുക്കെഴുത്ത്"
     new_state: "പുതിയ സംസ്ഥാനം"
     payment_methods: "പേയ്മെന്റ് രീതികൾ"
-    taxonomies: "ടാക്സോണമികൾ"
-    new_taxonomy: "പുതിയ ടാക്സോണമി"
-    back_to_taxonomies_list: "ടാക്‌സോണമി ലിസ്റ്റിലേക്ക് മടങ്ങുക"
+    taxons: "ഉൽപ്പന്ന വിഭാഗങ്ങൾ"
     shipping_methods: "ഷിപ്പിംഗ് രീതികൾ"
     shipping_method: "ഷിപ്പിംഗ് രീതി"
     shipment: "കയറ്റുമതി"
@@ -4293,9 +4292,10 @@ ml:
           total: "ആകെ"
           billing_address_name: "പേര്"
       taxons:
+        index:
+          title: "ഉൽപ്പന്ന വിഭാഗങ്ങൾ"
         form:
           name: പേര്
-          permalink: പെർമലിങ്ക്
           description: വിവരണം
       general_settings:
         edit:

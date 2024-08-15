@@ -638,6 +638,8 @@ sv:
         next: "Näst"
         cancel: "Avbryt"
         choose_products_from: "Välj produkter från:"
+      date_time_warning_modal_content:
+        cancel: 'Avbryt'
       incoming:
         incoming: "Inkommande"
         supplier: "Leverantör"
@@ -2085,6 +2087,7 @@ sv:
       confirmation: |
           Detta kommer att ställa lagersaldot till noll på alla produkter för detta företag, som inte är närvarande i den uppladdade filen.
     order_cycles:
+      unsaved_changes: "Du har osparade ändringar"
       update_success: 'Din beställningsomgång har uppdaterats.'
       no_distributors: Det finns inga distributörer i denna beställningsomgång. Den kommer inte att vara synlig för kunderna tills du lägger till en distributör. Vill du fortsätta och spara denna beställningsomgång? '
     enterprises:

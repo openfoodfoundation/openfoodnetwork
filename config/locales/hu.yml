@@ -1420,6 +1420,8 @@ hu:
         choose_products_from: "Válasszon termékeket a következők közül:"
         re_notify_producers: Értesítse újra a termelőket
         notify_producers_tip: Ez minden termelőnak e-mailt küld a rendeléseik listájával.
+      date_time_warning_modal_content:
+        cancel: 'Törlés'
       incoming:
         incoming: "Beérkező"
         supplier: "Beszállító"
@@ -3547,6 +3549,7 @@ hu:
           Ez nullára állítja a készletszintet a vállalkozás összes olyan termékénél,
           amely nem szerepel a feltöltött fájlban.
     order_cycles:
+      unsaved_changes: "Nem mentett módosításaid vannak"
       create_failure: "Nem sikerült létrehozni a rendelési ciklust"
       update_success: 'Megrendelési ciklusod frissült.'
       update_failure: "Nem sikerült frissíteni a rendelési ciklust"
@@ -3789,10 +3792,6 @@ hu:
       delivery: "Aláírva, lepecsételve, kézbesítve"
     start_date: "Kezdő dátum"
     successfully_removed: "Sikeresen eltávolítva"
-    taxonomy_edit: "Termékkategória szerkesztése"
-    taxonomy_tree_error: "Hiba lépett fel a Kategória-fa frissítésében."
-    taxonomy_tree_instruction: "Kattints a jobb gombbal egy elemre a hozzáadáshoz, átnevezéshez, eltávolításhoz vagy szerkesztéshez."
-    tree: "Fa"
     updating: "Frissítés"
     your_order_is_empty_add_product: "Rendelésed üres, kérünk adj hozzá legalább egy terméket"
     add_product: "Termék hozzáadása"
@@ -3908,9 +3907,7 @@ hu:
     abbreviation: "Rövidítés"
     new_state: "Új állam"
     payment_methods: "Fizetési módok"
-    taxonomies: "Taxonómiák"
-    new_taxonomy: "Új termék kategória"
-    back_to_taxonomies_list: "Vissza a taxonómiák listájához"
+    taxons: "Termékkategóriák"
     shipping_methods: "Szállítási módok"
     shipping_method: "Szállítási Mód"
     shipment: "Szállítás"
@@ -4394,9 +4391,10 @@ hu:
           total: "Összesen"
           billing_address_name: "Név"
       taxons:
+        index:
+          title: "Termékkategóriák"
         form:
           name: Név
-          permalink: Permalink
           meta_title: Meta Cím (SEO cím)
           meta_description: Meta Leírás
           meta_keywords: Meta Kulcsszavak

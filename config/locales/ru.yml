@@ -1381,6 +1381,8 @@ ru:
         choose_products_from: "Выбрать Товары Из:"
         re_notify_producers: Повторно уведомить производителей
         notify_producers_tip: Каждому производителю будет отправлено электронное письмо со списком их заказов.
+      date_time_warning_modal_content:
+        cancel: 'Выход'
       incoming:
         incoming: "Входящие"
         supplier: "Поставщик"
@@ -3513,6 +3515,7 @@ ru:
           Это установит нулевой уровень запасов для всех продуктов этого
           предприятия, которых нет в загруженном файле.
     order_cycles:
+      unsaved_changes: "Есть не сохраненные изменения"
       create_failure: "Не удалось создать цикл заказа"
       update_success: 'Ваш цикл заказа был обновлен.'
       update_failure: "Не удалось обновить цикл заказа"
@@ -3802,10 +3805,6 @@ ru:
       delivery: "Подписано, запечатано, доставлено"
     start_date: "Дата начала"
     successfully_removed: "Успешно удалено"
-    taxonomy_edit: "Изменить таксономию"
-    taxonomy_tree_error: "Произошла ошибка при обновлении дерева таксономии."
-    taxonomy_tree_instruction: "Щелкните правой кнопкой мыши элемент, чтобы добавить, переименовать, удалить или отредактировать."
-    tree: "Дерево"
     updating: "Обновление"
     your_order_is_empty_add_product: "Ваша корзина пуста, пожалуйста, найдите и добавьте товар выше"
     add_product: "Добавить Товар"
@@ -3920,9 +3919,7 @@ ru:
     abbreviation: "Сокращение"
     new_state: "Новый Регион"
     payment_methods: "Способы Оплаты"
-    taxonomies: "Таксономии"
-    new_taxonomy: "Новая Таксономия"
-    back_to_taxonomies_list: "Назад к Списку Таксономий"
+    taxons: "Категории Товаров"
     shipping_methods: "Способы Доставки"
     shipping_method: "Способ Доставки"
     shipment: "Доставка"
@@ -4406,9 +4403,10 @@ ru:
           total: "Всего"
           billing_address_name: "Название"
       taxons:
+        index:
+          title: "Категории Товаров"
         form:
           name: Название
-          permalink: Постоянная ссылка
           description: Описание
       general_settings:
         edit:

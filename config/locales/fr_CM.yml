@@ -1121,6 +1121,8 @@ fr_CM:
         choose_products_from: "Choisir produits depuis :"
         re_notify_producers: Notifier les producteurs
         notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec le contenu du cycle de vente.
+      date_time_warning_modal_content:
+        cancel: 'Annuler'
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les boutiques du cycle de vente)"
         supplier: "Fournisseur"
@@ -3108,6 +3110,7 @@ fr_CM:
           Cette action remettra tous les niveaux de stock à zero pour cette
           entreprise pour les produits non présents dans ce fichier.
     order_cycles:
+      unsaved_changes: "Des modifications n'ont pas été sauvegardées"
       create_failure: "La création du cycle de vente a échoué"
       update_success: 'Votre cycle de vente a été mis à jour.'
       update_failure: "La mise à jour du cycle de vente à échoué"
@@ -3363,8 +3366,6 @@ fr_CM:
       UPS Ground: "UPS Ground"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
-    taxonomy_edit: "Modifier la taxonomie"
-    tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
@@ -3477,9 +3478,7 @@ fr_CM:
     abbreviation: "Code"
     new_state: "Nouveau département"
     payment_methods: "Méthodes de paiement"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "Nouvelle taxonomie"
-    back_to_taxonomies_list: "Retour à la liste des taxonomies"
+    taxons: "Catégorie Produit"
     shipping_methods: "Méthodes de livraison"
     shipping_method: "Option d'expédition"
     shipment: "Livraison"
@@ -3924,9 +3923,10 @@ fr_CM:
           total: "Total"
           billing_address_name: "Produit/Variante"
       taxons:
+        index:
+          title: "Catégorie Produit"
         form:
           name: Produit/Variante
-          permalink: Permalien
           description: Description
       general_settings:
         edit:

@@ -1023,6 +1023,8 @@ nl_BE:
         back_to_list: "Terug naar lijst"
         save_and_back_to_list: "Opslaan en terug naar lijst"
         choose_products_from: "Kies Producten Uit:"
+      date_time_warning_modal_content:
+        cancel: 'Annuleren'
       incoming:
         incoming: "Binnenkomend"
         supplier: "Leverancier"
@@ -2885,6 +2887,7 @@ nl_BE:
           Deze handeling zet het stockpeil op nul
           bedrijf voor de produkten niet aanwezig in deze file
     order_cycles:
+      unsaved_changes: "U heeft niet opgeslagen wijzigingen"
       create_failure: "Het maken van de bestelcyclus is mislukt"
       update_success: 'Uw bestelcyclus is bijgewerkt'
       update_failure: "De bijwerking van de bestelcyclus is mislukt"
@@ -3104,9 +3107,7 @@ nl_BE:
     abbreviation: "Afkortingen "
     new_state: "Nieuw Provincie"
     payment_methods: "Betalingsmethode"
-    taxonomies: "Taxonomies "
-    new_taxonomy: "Nieuwe taxonomie "
-    back_to_taxonomies_list: "Terug naar de lijst Taxonomies"
+    taxons: "Productcategorieën"
     shipping_methods: "Methode Verzending"
     shipping_method: "Het verschepen Methode"
     shipment: "Verzending"
@@ -3515,9 +3516,10 @@ nl_BE:
           total: "Totaal"
           billing_address_name: "Naam"
       taxons:
+        index:
+          title: "Productcategorieën"
         form:
           name: Naam
-          permalink: Permalink
           description: Beschrijving
       general_settings:
         edit:

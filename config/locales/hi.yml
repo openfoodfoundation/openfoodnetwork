@@ -1328,6 +1328,8 @@ hi:
         choose_products_from: "इनमें से उत्पाद चुनें:"
         re_notify_producers: उत्पादकों को फिर से नोटिफाई करें
         notify_producers_tip: यह प्रत्येक उत्पादक को उनके ऑर्डर्स की सूची के साथ एक ईमेल भेजेगा।
+      date_time_warning_modal_content:
+        cancel: 'रद्द करें'
       incoming:
         incoming: "इनकमिंग"
         supplier: "आपूर्तिकर्ता"
@@ -3434,6 +3436,7 @@ hi:
           यह इस एंटरप्राइज़ के लिए उन सभी उत्पादों पर स्टॉक स्तर शून्य पर सेट कर देगा
           जो अपलोड की गई फ़ाइल में मौजूद नहीं हैं।
     order_cycles:
+      unsaved_changes: "आपके पास बिना सेव किए गए परिवर्तन हैं"
       create_failure: "ऑर्डर साइकल बनाने में विफल हुआ"
       update_success: 'आपका ऑर्डर साइकल अपडेट कर दिया गया है।'
       update_failure: "ऑर्डर साइकल अपडेट करने में विफल हुआ"
@@ -3675,8 +3678,6 @@ hi:
       delivery: "हस्ताक्षरित, सीलबंद, डिलीवर किया गया"
     start_date: "शुरू होने की तिथि"
     successfully_removed: "सफलतापूर्वक हटाया गया"
-    taxonomy_edit: "टैक्सोनॉमी एडिट करें"
-    tree: "ट्री"
     updating: "अपडेट किया जा रहा है"
     your_order_is_empty_add_product: "आपका ऑर्डर खाली है, कृपया ऊपर दिए गए उत्पाद को सर्च करें और जोड़ें"
     add_product: "उत्पाद जोड़ें"
@@ -3791,9 +3792,7 @@ hi:
     abbreviation: "संक्षेपण"
     new_state: "नया राज्य"
     payment_methods: "भुगतान की विधियाँ"
-    taxonomies: "टैक्सोनॉमीज़"
-    new_taxonomy: "न्यू टैक्सोनॉमी"
-    back_to_taxonomies_list: "टैक्सोनॉमीज़ सूची पर वापस जाएं"
+    taxons: "उत्पाद श्रेणियां"
     shipping_methods: "शिपिंग की विधियाँ"
     shipping_method: "शिपिंग की विधि"
     shipment: "शिपमेंट"
@@ -4266,9 +4265,10 @@ hi:
           total: "कुल"
           billing_address_name: "नाम"
       taxons:
+        index:
+          title: "उत्पाद श्रेणियां"
         form:
           name: नाम
-          permalink: पर्मलिंक
           description: विवरण
       general_settings:
         edit:

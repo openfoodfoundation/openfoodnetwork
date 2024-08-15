@@ -1312,6 +1312,8 @@ pa:
         choose_products_from: "ਇਥੋਂ ਉਤਪਾਦ ਚੁਣੋ:"
         re_notify_producers: ਉਤਪਾਦਕਾਂ ਨੂੰ ਦੁਬਾਰਾ ਸੂਚਿਤ ਕਰੋ
         notify_producers_tip: ਇਹ ਹਰੇਕ ਉਤਪਾਦਕ ਨੂੰ ਉਹਨਾਂ ਦੇ ਆਰਡਰ ਦੀ ਸੂਚੀ ਦੇ ਨਾਲ ਇੱਕ ਈਮੇਲ ਭੇਜੇਗਾ।
+      date_time_warning_modal_content:
+        cancel: 'ਰੱਦ ਕਰੋ'
       incoming:
         incoming: "ਅੰਦਰ ਆਉਣ ਵਾਲੇ"
         supplier: "ਸਪਲਾਇਰ"
@@ -3403,6 +3405,7 @@ pa:
       confirmation: |
           ਇਹ ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਲਈ ਉਹਨਾਂ ਸਾਰੇ ਉਤਪਾਦਾਂ ਦੇ ਸਟਾਕ ਪੱਧਰ ਨੂੰ ਜ਼ੀਰੋ ਤੇ ਸੇਟ ਕਰ ਦੇਵੇਗਾ ਜੋ ਅੱਪਲੋਡ ਕੀਤੀ ਫਾਈਲ ਵਿੱਚ ਮੌਜੂਦ ਨਹੀਂ ਹਨ।
     order_cycles:
+      unsaved_changes: "ਤੁਹਾਡੇ ਕੋਲ ਸੇਵ ਨਾ ਕੀਤੀਆਂ ਤਬਦੀਲੀਆਂ ਹਨ"
       create_failure: "ਆਰਡਰ ਸਾਈਕਲ ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ"
       update_success: 'ਤੁਹਾਡਾ ਆਰਡਰ ਸਾਈਕਲ ਅੱਪਡੇਟ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ।'''
       update_failure: "ਆਰਡਰ ਸਾਈਕਲ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
@@ -3569,8 +3572,6 @@ pa:
       delivery: "ਦਸਤਖਤ ਕੀਤੇ, ਸੀਲ ਕੀਤੇ, ਡਿਲੀਵਰ ਕੀਤੇ ਗਏ"
     start_date: "ਸ਼ੁਰੂ ਕਰਨ ਦੀ ਮਿਤੀ"
     successfully_removed: "ਸਫਲਤਾਪੂਰਵਕ ਹਟਾਇਆ ਗਿਆ"
-    taxonomy_edit: "ਟੈਕਸੋਨੌਮੀ ਸੰਪਾਦਨ"
-    tree: "ਟ੍ਰੀ"
     updating: "ਅੱਪਡੇਟ ਹੋ ਰਿਹਾ ਹੈ"
     your_order_is_empty_add_product: "ਤੁਹਾਡਾ ਆਰਡਰ ਖਾਲੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਉਪਰ ਇੱਕ ਉਤਪਾਦ ਦੀ ਖੋਜ ਕਰੋ ਅਤੇ ਜੋੜੋ"
     add_product: "ਉਤਪਾਦ ਜੋੜੋ"
@@ -3685,9 +3686,7 @@ pa:
     abbreviation: "ਸੰਖਿਪਤ ਰੂਪ"
     new_state: "ਨਵਾਂ ਰਾਜ"
     payment_methods: "ਭੁਗਤਾਨ ਦੇ ਢੰਗ"
-    taxonomies: "ਟੈਕਸੋਨੌਮੀਜ਼"
-    new_taxonomy: "ਨਵਾਂ ਟੈਕਸੋਨੌਮੀ"
-    back_to_taxonomies_list: "\"ਟੈਕਸਨੋਮੀਜ਼ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+    taxons: "ਉਤਪਾਦ ਸ਼੍ਰੇਣੀਆਂ"
     shipping_methods: "ਸ਼ਿਪਿੰਗ ਦੇ ਢੰਗ"
     shipping_method: "ਸ਼ਿਪਿੰਗ ਦਾ ਤਰੀਕਾ"
     shipment: "ਸ਼ਿਪਮੈਂਟ"
@@ -4160,9 +4159,10 @@ pa:
           total: "ਕੁੱਲ"
           billing_address_name: "ਨਾਮ"
       taxons:
+        index:
+          title: "ਉਤਪਾਦ ਸ਼੍ਰੇਣੀਆਂ"
         form:
           name: ਨਾਂ
-          permalink: ਪਰਮਾਲਿੰਕ
           description: ਵਰਣਨ
       general_settings:
         edit:

@@ -1292,6 +1292,8 @@ ca:
         save_and_back_to_list: "Desa i torna a la llista"
         choose_products_from: "Trieu Productes des de:"
         notify_producers_tip: Això enviarà un correu electrònic a cada productor amb la llista dels seus productes demanats a les comandes.
+      date_time_warning_modal_content:
+        cancel: 'Cancel·lar'
       incoming:
         incoming: "Entrant"
         supplier: "Proveïdora"
@@ -3281,6 +3283,7 @@ ca:
           Això establirà el nivell d'estoc a zero en tots els productes per aquesta
           organització que no estan presents al fitxer carregat.
     order_cycles:
+      unsaved_changes: "Teniu canvis sense desar"
       create_failure: "No s'ha pogut crear el cicle de comanda"
       update_success: 'S''ha actualitzat el cicle de comanda.'
       update_failure: "No s'ha pogut actualitzar el cicle de comanda"
@@ -3513,8 +3516,6 @@ ca:
       delivery: "Signat, segellat, lliurat"
     start_date: "Data d'inici"
     successfully_removed: "S'ha suprimit correctament"
-    taxonomy_edit: "Edició de taxonomia"
-    tree: "Arbre"
     updating: "Actualitzant"
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"
     add_product: "Afegeix un producte"
@@ -3629,9 +3630,7 @@ ca:
     abbreviation: "Abreviatura"
     new_state: "Nou estat"
     payment_methods: "Mètodes de Pagament"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "Nova taxonomia"
-    back_to_taxonomies_list: "Torna a la llista de taxonomies"
+    taxons: "Tipus de productes"
     shipping_methods: "Mètodes d'enviament"
     shipping_method: "Mètode d'enviament"
     shipment: "Enviament"
@@ -4096,9 +4095,10 @@ ca:
           total: "Total"
           billing_address_name: "Nom"
       taxons:
+        index:
+          title: "Tipus de productes"
         form:
           name: Nom
-          permalink: Enllaç permanent
           description: Descripció
       general_settings:
         edit:

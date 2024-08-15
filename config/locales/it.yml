@@ -1242,6 +1242,8 @@ it:
         choose_products_from: "Scegli i prodotti da:"
         re_notify_producers: Ri-notifica i produttori
         notify_producers_tip: Sarà inviata una mail a ciascun produttore con la lista dei suoi ordini.
+      date_time_warning_modal_content:
+        cancel: 'Annulla'
       incoming:
         incoming: "In arrivo"
         supplier: "Fornitore"
@@ -3283,6 +3285,7 @@ it:
           Questo imposterà il livello delle scorte a zero su tutti i prodotti per questa
           impresa che non sono presenti nel file caricato.
     order_cycles:
+      unsaved_changes: "Hai modifiche non salvate"
       create_failure: "Impossibile creare il ciclo dell'ordine"
       update_success: 'Il tuo ciclo di richieste è stato aggiornato'
       update_failure: "Impossibile aggiornare il ciclo dell'ordine"
@@ -3540,8 +3543,6 @@ it:
       delivery: "Firmato, sigillato, consegnato"
     start_date: "Data inizio"
     successfully_removed: "Rimosso con successo"
-    taxonomy_edit: "Modifica tassonomia"
-    tree: "Schema"
     updating: "In aggiornamento"
     your_order_is_empty_add_product: "Il tuo ordine è vuoto, cerca e aggiungi un prodotto qui sopra"
     add_product: "Aggiungi prodotto"
@@ -3655,9 +3656,7 @@ it:
     abbreviation: "Abbreviazione"
     new_state: "Nuovo Stato"
     payment_methods: "Metodi di pagamento"
-    taxonomies: "Tassonomie"
-    new_taxonomy: "Nuova tassonomia"
-    back_to_taxonomies_list: "Torna all'elenco delle tassonomie"
+    taxons: "Categorie Prodotti"
     shipping_methods: "Metodi di spedizione"
     shipping_method: "Metodo di spedizione"
     shipment: "Spedizione"
@@ -4119,9 +4118,10 @@ it:
           total: "Totale"
           billing_address_name: "Nome"
       taxons:
+        index:
+          title: "Categorie Prodotti"
         form:
           name: Nome
-          permalink: Permalink
           description: Descrizione
       general_settings:
         edit:
