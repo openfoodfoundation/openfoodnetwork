@@ -1,7 +1,11 @@
 angular.module("admin.orderCycles").controller "OrderCyclesCtrl", ($scope, $q, Columns, StatusMessage, RequestMonitor, OrderCycles, Enterprises, Schedules, Dereferencer) ->
   $scope.RequestMonitor = RequestMonitor
   $scope.columns = Columns.columns
-  $scope.saveAll = -> OrderCycles.saveChanges($scope.order_cycles_form)
+  $scope.saveAll = ($event) ->
+    trigger_action = $($event.target).data('trigger-action')
+    confirm = $($event.target).data('confirm')
+    OrderCycles.saveChanges($scope.order_cycles_form, { trigger_action, confirm })
+
   $scope.ordersCloseAtLimit = -31 # days
 
   $scope.resetSelectFilters = ->

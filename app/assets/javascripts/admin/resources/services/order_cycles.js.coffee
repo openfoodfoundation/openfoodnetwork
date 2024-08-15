@@ -29,13 +29,13 @@ angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCy
         deferred.reject(response)
       deferred.promise
 
-    saveChanges: (form) ->
+    saveChanges: (form, params = {}) ->
       changed = {}
       for id, orderCycle of @byID when not @saved(orderCycle)
         changed[Object.keys(changed).length] = @changesFor(orderCycle)
       if Object.keys(changed).length > 0
         StatusMessage.display('progress', "Saving...")
-        OrderCycleResource.bulkUpdate { order_cycle_set: { collection_attributes: changed } }, (data) =>
+        OrderCycleResource.bulkUpdate { order_cycle_set: { collection_attributes: changed }, confirm: params['confirm'], trigger_action: params['trigger_action'] }, (data) =>
           for orderCycle in data
             delete orderCycle.coordinator
             delete orderCycle.producers
@@ -47,8 +47,10 @@ angular.module("admin.resources").factory 'OrderCycles', ($q, $injector, OrderCy
         , (response) =>
           if response.data.errors?
             StatusMessage.display('failure', response.data.errors[0])
+          else if (response.data.trigger_action)
+            StatusMessage.display('notice', t('js.order_cycles.unsaved_changes'), response.data.trigger_action)
           else
-            StatusMessage.display('failure', "Oh no! I was unable to save your changes.")
+            StatusMessage.display('failure', t('js.order_cycles.bulk_save_error'))
 
     saved: (order_cycle) ->
       @diff(order_cycle).length == 0
