@@ -2,4 +2,4 @@
   = button t(:go), "report__submit-btn", "submit", disabled: true
 = turbo_stream.update "report-table" do
   = render "admin/reports/loading"
-= turbo_stream.action(:scroll_into_view, "report-table")
+= turbo_stream.scroll_into_view("#report-table", behavior: "smooth")

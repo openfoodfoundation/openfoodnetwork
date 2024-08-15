@@ -104,6 +104,7 @@ gem 'sidekiq-scheduler'
 gem "cable_ready"
 gem "stimulus_reflex"
 
+gem "turbo_power"
 gem "turbo-rails"
 
 gem 'combine_pdf'
