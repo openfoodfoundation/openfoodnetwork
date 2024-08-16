@@ -5,6 +5,10 @@ require 'spec_helper'
 module Admin
   RSpec.describe OrderCyclesController, type: :controller do
     let!(:distributor_owner) { create(:user) }
+    let(:datetime_confirmation_attrs) {
+      { confirm_datetime_change: nil,
+        error_class: Admin::OrderCyclesController::DateTimeChangeError }
+    }
 
     before do
       allow(controller).to receive_messages spree_current_user: distributor_owner
@@ -276,7 +280,8 @@ module Admin
         it "can update preference product_selection_from_coordinator_inventory_only" do
           expect(OrderCycles::FormService).to receive(:new).
             with(order_cycle,
-                 { "preferred_product_selection_from_coordinator_inventory_only" => true },
+                 { "preferred_product_selection_from_coordinator_inventory_only" => true,
+                   **datetime_confirmation_attrs },
                  anything) { form_mock }
           allow(form_mock).to receive(:save) { true }
 
@@ -289,7 +294,7 @@ module Admin
         it "can update preference automatic_notifications" do
           expect(OrderCycles::FormService).to receive(:new).
             with(order_cycle,
-                 { "automatic_notifications" => true },
+                 { "automatic_notifications" => true, **datetime_confirmation_attrs },
                  anything) { form_mock }
           allow(form_mock).to receive(:save) { true }
 
@@ -323,13 +328,18 @@ module Admin
           format: :json, id: order_cycle.id, order_cycle: allowed.merge(restricted)
         }
       }
-      let(:form_mock) { instance_double(OrderCycles::FormService, save: true) }
+      let(:form_mock) {
+        instance_double(OrderCycles::FormService, save: true)
+      }
 
       before { allow(controller).to receive(:spree_current_user) { user } }
 
       context "as a manager of the coordinator" do
         let(:user) { coordinator.owner }
-        let(:expected) { [order_cycle, allowed.merge(restricted), user] }
+        let(:error_class) { Admin::OrderCyclesController::DateTimeChangeError }
+        let(:expected) {
+          [order_cycle, allowed.merge(restricted).merge(datetime_confirmation_attrs), user]
+        }
 
         it "allows me to update exchange information for exchanges, name and dates" do
           expect(OrderCycles::FormService).to receive(:new).with(*expected) { form_mock }
@@ -339,7 +349,7 @@ module Admin
 
       context "as a producer supplying to an order cycle" do
         let(:user) { producer.owner }
-        let(:expected) { [order_cycle, allowed, user] }
+        let(:expected) { [order_cycle, allowed.merge(datetime_confirmation_attrs), user] }
 
         it "allows me to update exchange information for exchanges, but not name or dates" do
           expect(OrderCycles::FormService).to receive(:new).with(*expected) { form_mock }
