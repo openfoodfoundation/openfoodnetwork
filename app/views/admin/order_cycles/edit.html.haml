@@ -37,4 +37,4 @@
       %button.modal-target-trigger{ type: 'button', data: { 'action': 'modal-link#open' }, style: 'display: none;' } 
       = render ModalComponent.new(id: "linked-order-warning-modal", close_button: false) do
         .content.flex-column.gap-2
-          = render 'date_time_warning_modal_content'
+          = render 'date_time_warning_modal_content', action: 'simple_update'

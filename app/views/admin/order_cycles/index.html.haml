@@ -23,12 +23,20 @@
     .thirteen.columns.alpha &nbsp;
     %columns-dropdown{ action: "#{controller_name}_#{action_name}" }
 
-  %form{ name: 'order_cycles_form' }
-    %save-bar{ dirty: "order_cycles_form.$dirty", persist: "false" }
-      %input.red{ type: "button", value: t(:save_changes), "ng-click": "saveAll()", "ng-disabled": "!order_cycles_form.$dirty" }
-    %table.index#listing_order_cycles{ "ng-show": 'orderCycles.length > 0' }
-      = render 'admin/order_cycles/header' #, simple_index: simple_index
-      %tbody
-        = render 'admin/order_cycles/row' #, simple_index: simple_index
-    = render 'admin/order_cycles/loading_flash'
-    = render 'admin/order_cycles/show_more'
+    %div{ data: { controller: 'order-cycle-form' } }
+      %form{ name: 'order_cycles_form' }
+        %save-bar{ dirty: "order_cycles_form.$dirty", persist: "false" }
+          %input.red{ type: "button", value: t(:save_changes), "ng-click": "saveAll($event)", "ng-disabled": "!order_cycles_form.$dirty",
+                      data: { confirm: "true", 'trigger-action': 'bulk_save' } }
+        %table.index#listing_order_cycles{ "ng-show": 'orderCycles.length > 0' }
+          = render 'admin/order_cycles/header' #, simple_index: simple_index
+          %tbody
+            = render 'admin/order_cycles/row' #, simple_index: simple_index
+        = render 'admin/order_cycles/loading_flash'
+        = render 'admin/order_cycles/show_more'
+
+        %div.warning-modal{ data: { controller: 'modal modal-link', 'modal-link-target-value': "linked-order-warning-modal" } }
+          %button.modal-target-trigger{ type: 'button', data: { 'action': 'modal-link#open' }, style: 'display: none;' } 
+          = render ModalComponent.new(id: "linked-order-warning-modal", close_button: false) do
+            .content.flex-column.gap-2
+              = render 'date_time_warning_modal_content', action: 'bulk_update'

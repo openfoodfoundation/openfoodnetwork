@@ -3704,6 +3704,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         enterprise that are not present in the uploaded file.
     order_cycles:
       unsaved_changes: "You have unsaved changes"
+      bulk_save_error: "Oh no! I was unable to save your changes."
       create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
       update_failure: "Failed to update order cycle"
