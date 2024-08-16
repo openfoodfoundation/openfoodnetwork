@@ -2881,6 +2881,8 @@ pt:
       signup_or_login: "Comece por fazer login ou registar-se"
       have_an_account: "Já possui uma conta?"
       action_login: "Entrar agora."
+    trix:
+      urlPlaceholder: "Por favor insira um URL"
   inflections:
     packet:
       one: "pacote"

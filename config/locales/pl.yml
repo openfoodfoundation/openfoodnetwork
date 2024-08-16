@@ -2771,6 +2771,8 @@ pl:
     stripe_elements:
       unknown_error_from_stripe: |
           Wystąpił problem z konfiguracją Twojej karty w naszej bramce płatności. Odśwież stronę i spróbuj ponownie, jeśli to się nie powiedzie po raz drugi, skontaktuj się z nami, aby uzyskać pomoc.
+    trix:
+      urlPlaceholder: "Wprowadź adres URL do wstawienia"
   inflections:
     each:
       one: "każdy"

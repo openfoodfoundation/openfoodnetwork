@@ -3308,6 +3308,8 @@ it:
           C'è stato un problema nell'impostare la tua carta nel nostro portale di pagamento.
           Per favore aggiorna la pagina e prova ancora, se dovesse ripresentarsi l'errore,
           contattaci per avere supporto.
+    trix:
+      urlPlaceholder: "Per favore inserisci un URL"
   inflections:
     each:
       one: "ogni"

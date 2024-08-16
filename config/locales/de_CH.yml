@@ -3234,6 +3234,8 @@ de_CH:
       unknown_error_from_stripe: |
           Beim Einrichten Ihrer Kreditkarte in unserem Zahlungsgateway ist ein Problem aufgetreten.
           Bitte laden Sie die Seite neu und versuchen Sie es erneut. Wenn dies ein zweites Mal fehlschlägt, kontaktieren Sie uns bitte, um Unterstützung zu erhalten.
+    trix:
+      urlPlaceholder: "Bitte geben Sie die einzufügende URL ein:"
   inflections:
     each:
       one: "jeder"

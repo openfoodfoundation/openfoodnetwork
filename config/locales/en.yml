@@ -3744,7 +3744,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       undo: "Undo"
       unlink: "Unlink"
       url: "URL"
-      urlPlaceholder: "Enter a URL…"
+      urlPlaceholder: "Please enter a URL to insert"
       GB: "GB"
       KB: "KB"
       MB: "MB"

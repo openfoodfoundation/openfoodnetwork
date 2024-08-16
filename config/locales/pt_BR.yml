@@ -3034,6 +3034,8 @@ pt_BR:
           Houve um problema ao configurar seu cartão no nosso serviço de pagamento.
           Favor recarregar a página e tentar novamente. Se não funcionar,
           por favor entre em contato com o nosso suporte.
+    trix:
+      urlPlaceholder: "Digite um URL para inserir"
   inflections:
     each:
       one: "cada"
