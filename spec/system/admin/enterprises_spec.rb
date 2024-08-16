@@ -257,7 +257,9 @@ RSpec.describe '
 
     # Test Trix editor translations are loaded
     find(".trix-button--icon-link").click
-    expect(page).to have_selector("input[aria-label=URL][placeholder='Please enter a URL to insert']")
+    expect(page).to have_selector(
+      "input[aria-label=URL][placeholder='Please enter a URL to insert']"
+    )
   end
 
   describe "producer properties" do
