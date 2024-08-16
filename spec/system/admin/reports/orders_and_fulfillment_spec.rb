@@ -256,12 +256,12 @@ RSpec.describe "Orders And Fulfillment" do
         describe "Totals" do
           before do
             click_link "Order Cycle Supplier Totals"
-            run_report
           end
 
           context "with the header row option not selected" do
             before do
               find("#display_header_row").set(false) # hides the header row
+              run_report
             end
 
             it "displays the report" do

@@ -28,7 +28,7 @@
             }
           });
         } else {
-          setTimeout(tryDownload, 1000);
+          setTimeout(tryDownload, 2000);
         }
       });
     }
@@ -39,6 +39,9 @@
       https://openfoodnetwork.org.au/admin/sidekiq/metrics/ReportJob?period=8h
       https://openfoodnetwork.org.uk/admin/sidekiq/metrics/ReportJob?period=8h
       https://coopcircuits.fr/admin/sidekiq/metrics/ReportJob?period=8h
+
+      But let's leave the timed response to websockets for now and just poll
+      as a backup mechanism.
     */
-    setTimeout(tryDownload, 250);
+    setTimeout(tryDownload, 3000);
   })();

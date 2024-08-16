@@ -93,8 +93,7 @@ RSpec.describe "enterprise fee summaries" do
 
         it "generates file with data for all enterprises" do
           select "CSV"
-          click_on "Go"
-          perform_enqueued_jobs(only: ReportJob)
+          run_report
           click_on "Download Report"
           expect(downloaded_filename).to include ".csv"
           expect(downloaded_content).to have_content(distributor.name)
@@ -118,8 +117,7 @@ RSpec.describe "enterprise fee summaries" do
 
         it "generates file with data for the enterprise" do
           select "CSV"
-          click_on "Go"
-          perform_enqueued_jobs(only: ReportJob)
+          run_report
           click_on "Download Report"
 
           expect(downloaded_filename).to include ".csv"
@@ -154,8 +152,7 @@ RSpec.describe "enterprise fee summaries" do
 
         find("#report_format").click
         select "CSV"
-        click_on "Go"
-        perform_enqueued_jobs(only: ReportJob)
+        run_report
         click_on "Download Report"
 
         expect(downloaded_filename).to include ".csv"
