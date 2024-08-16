@@ -63,12 +63,12 @@ export default class extends Controller {
 
         // Set toolbar translations (Chrome)
         this.#setTranslation(
-          `[data-trix-action="${this.#translationKeyToAttributeMappings(key)}"]`,
+          `[data-trix-action="${this.#attributeOrActionForTranslationKey(key)}"]`,
           "title",
           translation
         );
         this.#setTranslation(
-          `[data-trix-attribute="${this.#translationKeyToAttributeMappings(key)}"]`,
+          `[data-trix-attribute="${this.#attributeOrActionForTranslationKey(key)}"]`,
           "title",
           translation
         );
@@ -86,7 +86,7 @@ export default class extends Controller {
     }
   }
 
-  #translationKeyToAttributeMappings(key) {
+  #attributeOrActionForTranslationKey(key) {
     let mapping = {
       "bullets": "bullet",
       "link": "href",
