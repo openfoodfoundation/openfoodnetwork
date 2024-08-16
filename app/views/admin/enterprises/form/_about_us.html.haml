@@ -6,5 +6,5 @@
 .row
   .alpha.eleven.columns
     = f.label :long_description, t('.desc_long')
-    = f.hidden_field :long_description, id: "enterprise_long_description", value: @enterprise.long_description
+    = f.hidden_field :long_description, id: "enterprise_long_description"
     %trix-editor{ input: "enterprise_long_description", "data-controller": "trixeditor" }

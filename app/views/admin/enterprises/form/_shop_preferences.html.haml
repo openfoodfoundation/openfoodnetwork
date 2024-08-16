@@ -1,12 +1,12 @@
 .row
   .eleven.columns.alpha
     = f.label "enterprise_preferred_shopfront_message", t('.shopfront_message')
-    = f.hidden_field :preferred_shopfront_message, id: "enterprise_preferred_shopfront_message", value: @enterprise.preferred_shopfront_message
+    = f.hidden_field :preferred_shopfront_message, id: "enterprise_preferred_shopfront_message"
     %trix-editor{ input: "enterprise_preferred_shopfront_message", "data-controller": "trixeditor", placeholder: t('.shopfront_message_placeholder') }
 .row
   .eleven.columns.alpha
     = f.label "enterprise_preferred_shopfront_closed_message", t('.shopfront_closed_message')
-    = f.hidden_field :preferred_shopfront_closed_message, id: "enterprise_preferred_shopfront_closed_message", value: @enterprise.preferred_shopfront_closed_message
+    = f.hidden_field :preferred_shopfront_closed_message, id: "enterprise_preferred_shopfront_closed_message"
     %trix-editor{ input: "enterprise_preferred_shopfront_closed_message", "data-controller": "trixeditor", placeholder: t('.shopfront_closed_message_placeholder') }
 
 .row
@@ -73,7 +73,7 @@
     = f.radio_button :preferred_product_low_stock_display, true, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'true'
     = f.label :preferred_product_low_stock_display, t('.enabled'), value: :true
   .five.columns.omega
-    = f.radio_button :preferred_product_low_stock_display, false, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'false' 
+    = f.radio_button :preferred_product_low_stock_display, false, 'ng-model' => 'Enterprise.preferred_product_low_stock_display', 'ng-value' => 'false'
     = f.label :preferred_product_low_stock_display, t('.disabled'), value: :false
 
 .row

@@ -1,5 +1,5 @@
 %fieldset.alpha.no-border-bottom#about_panel{ data: { "tabs-and-panels-target": "panel" } }
   %legend= t('.about')
   = f.field_container :long_description do
-    = f.hidden_field :long_description, id: "enterprise_group_long_description", value: @enterprise_group.long_description
+    = f.hidden_field :long_description, id: "enterprise_group_long_description"
     %trix-editor{ input: "enterprise_group_long_description", "data-controller": "trixeditor" }
