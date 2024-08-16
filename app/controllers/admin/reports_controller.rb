@@ -58,12 +58,12 @@ module Admin
     end
 
     def render_in_background
-      blob = ReportBlob.create_for_upload_later!(report_filename)
+      @blob = ReportBlob.create_for_upload_later!(report_filename)
 
       ReportJob.perform_later(
         report_class:, user: spree_current_user, params:,
         format: report_format,
-        blob:,
+        blob: @blob,
         channel: ScopedChannel.for_id(params[:uuid]),
       )
     end

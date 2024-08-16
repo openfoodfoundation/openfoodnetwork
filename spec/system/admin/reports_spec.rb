@@ -115,8 +115,6 @@ RSpec.describe '
     end
 
     it "allows the report to finish before the loading screen is rendered" do
-      pending "Race condition between loading message and report rendering"
-
       login_as_admin
       visit admin_report_path(report_type: :customers)
 
