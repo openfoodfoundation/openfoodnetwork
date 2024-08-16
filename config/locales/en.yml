@@ -3724,14 +3724,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         Please refresh the page and try again, if it fails a second time,
         please contact us for support.
     trix:
-      attachFiles: "Attach Files"
       bold: "Bold"
       bullets: "Bullets"
-      byte: "Byte"
-      bytes: "Bytes"
-      captionPlaceholder: "Add a caption…"
       code: "Code"
       heading1: "Heading"
+      hr: "Horizontal rule"
       indent: "Increase Level"
       italic: "Italic"
       link: "Link"
@@ -3739,17 +3736,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       outdent: "Decrease Level"
       quote: "Quote"
       redo: "Redo"
-      remove: "Remove"
       strike: "Strikethrough"
       undo: "Undo"
       unlink: "Unlink"
       url: "URL"
       urlPlaceholder: "Please enter a URL to insert"
-      GB: "GB"
-      KB: "KB"
-      MB: "MB"
-      PB: "PB"
-      TB: "TB"
 
   # Singular and plural forms of commonly used words.
   # We use these entries to pluralize unit names in every language.
