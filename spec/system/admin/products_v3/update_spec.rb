@@ -49,35 +49,34 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         fill_in "Name", with: "Pommes"
         fill_in "SKU", with: "POM-00"
       end
+
       within row_containing_name("Medium box") do
         fill_in "Name", with: "Large box"
         fill_in "SKU", with: "POM-01"
 
         tomselect_select "Volume (mL)", from: "Unit scale"
+
+        # Unit popout
         click_on "Unit" # activate popout
-      end
+        # have to use below method to trigger the +change+ event,
+        #   +fill_in "Unit value", with: ""+ does not trigger +change+ event
+        find_field('Unit value').send_keys(:control, 'a', :backspace) # empty the field
+        # In CI we get "Please fill out this field." and locally we get
+        # "Please fill in this field."
+        expect_browser_validation('input[aria-label="Unit value"]',
+                                  /Please fill (in|out) this field./)
 
-      # Unit popout
-      # have to use below method to trigger the +change+ event,
-      #   +fill_in "Unit value", with: ""+ does not trigger +change+ event
-      find_field('Unit value').send_keys(:control, 'a', :backspace) # empty the field
-      click_button "Save changes" # attempt to save and should fail with below error
-      expect(page).to have_content "must be greater than 0"
-      click_on "Unit" # activate popout
-      fill_in "Unit value", with: "500.1"
-
-      within row_containing_name("Medium box") do
-        fill_in "Name", with: "Large box"
-        fill_in "SKU", with: "POM-01"
+        fill_in "Unit value", with: "500.1"
         fill_in "Price", with: "10.25"
 
+        # Stock popout
         click_on "On Hand" # activate popout
+        fill_in "On Hand", with: "-1"
       end
 
-      # Stock popout
-      fill_in "On Hand", with: "-1"
       click_button "Save changes" # attempt to save or close the popout
       expect(page).to have_field "On Hand", with: "-1" # popout is still open
+
       fill_in "On Hand", with: "6"
 
       expect {
@@ -553,8 +552,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
             expect(page).to have_content "is too long"
             expect(page.find('.col-producer')).to have_content('must exist')
             expect(page.find('.col-category')).to have_content('must exist')
-            expect(page.find_button("Unit")).to have_text "" # have_button selector don't work here
-            expect(page).to have_content "can't be blank"
             expect(page).to have_field "Price", with: "10.25" # other updated value is retained
           end
 

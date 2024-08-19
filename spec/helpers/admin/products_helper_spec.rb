@@ -4,8 +4,9 @@ require "spec_helper"
 
 RSpec.describe Admin::ProductsHelper do
   describe '#unit_value_with_description' do
-    let(:product) { create(:product, variant_unit_scale: 1000.0) }
-    let(:variant) { create(:variant, product:, unit_value: 2000.0, unit_description: 'kg') }
+    let(:variant) {
+      create(:variant, variant_unit_scale: 1000.0, unit_value: 2000.0, unit_description: 'kg')
+    }
 
     context 'when unit_value and unit_description are present' do
       it 'returns the scaled unit value with the description' do
@@ -30,7 +31,7 @@ RSpec.describe Admin::ProductsHelper do
     end
 
     context 'when variant_unit_scale is nil' do
-      before { product.update_column(:variant_unit_scale, nil) }
+      before { variant.update_column(:variant_unit_scale, nil) }
 
       it 'uses default scale of 1 and returns the unscaled unit value with the description' do
         expect(helper.unit_value_with_description(variant)).to eq('2000 kg')

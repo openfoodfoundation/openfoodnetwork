@@ -18,9 +18,9 @@ module Admin
     end
 
     def unit_value_with_description(variant)
-      return "" if variant.unit_value.nil?
+      return variant.unit_description.to_s if variant.unit_value.nil?
 
-      scaled_unit_value = variant.unit_value / (variant.product.variant_unit_scale || 1)
+      scaled_unit_value = variant.unit_value / (variant.variant_unit_scale || 1)
       precised_unit_value = number_with_precision(
         scaled_unit_value,
         precision: nil,
