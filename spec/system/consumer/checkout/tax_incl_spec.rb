@@ -92,7 +92,6 @@ RSpec.describe "As a consumer, I want to see adjustment breakdown" do
 
       it "will be charged tax on the order" do
         visit checkout_step_path(:details)
-        raise 'Testing upload artifact'
 
         choose "Delivery"
 
