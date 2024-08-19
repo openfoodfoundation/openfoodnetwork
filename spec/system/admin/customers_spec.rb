@@ -35,6 +35,7 @@ RSpec.describe 'Customers' do
 
       it "passes the smoke test" do
         # Prompts for a hub for a list of my managed enterprises
+        raise 'Testing upload artifact'
         expect(page).to have_select2(
           "shop_id",
           with_options: [managed_distributor1.name, managed_distributor2.name],

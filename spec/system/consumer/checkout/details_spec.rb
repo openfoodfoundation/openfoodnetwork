@@ -258,6 +258,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
             end
 
             it "does not display the shipping address form" do
+              raise 'Testing upload artifact'
               expect(page).not_to have_field "order_ship_address_attributes_address1"
             end
 

@@ -100,6 +100,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         producer_to_select = random_producer(variant_a1)
         category_to_select = random_category(variant_a1)
         tax_category_to_select = random_tax_category
+        raise 'Testing upload artifact'
 
         within row_containing_name(variant_a1.display_name) do
           validate_tomselect_without_search!(
