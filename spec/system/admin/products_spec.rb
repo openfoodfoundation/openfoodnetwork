@@ -53,7 +53,6 @@ RSpec.describe '
     end
 
     it "display all attributes when submitting with error: Unit Value must be grater than 0" do
-      pending "rebase so we can add needed validation"
       select 'New supplier', from: 'product_supplier_id'
       fill_in 'product_name', with: "new product name"
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
@@ -154,7 +153,6 @@ RSpec.describe '
     end
 
     it "creating product with empty unit value" do
-      pending "rebase"
       fill_in 'product_name', with: 'Hot Cakes'
       select 'New supplier', from: 'product_supplier_id'
       select "Weight (kg)", from: 'product_variant_unit_with_scale'
@@ -169,7 +167,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      expect(page).to have_content "Unit value is not a number"
+      expect(page).to have_content "Unit value can't be blank"
     end
 
     it "creating product with empty product category fails" do
