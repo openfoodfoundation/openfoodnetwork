@@ -21,7 +21,7 @@ module Api
         authorize! :create, Spree::Product
         @product = Spree::Product.new(product_params)
 
-        if @product.save
+        if @product.save(context: :create_and_create_standard_variant)
           render json: @product, serializer: Api::Admin::ProductSerializer, status: :created
         else
           invalid_resource!(@product)

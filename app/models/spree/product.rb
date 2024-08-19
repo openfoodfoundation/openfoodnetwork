@@ -48,7 +48,27 @@ module Spree
     validate :validate_image
     validates :price, numericality: { greater_than_or_equal_to: 0, if: ->{ new_record? } }
 
-    accepts_nested_attributes_for :variants, allow_destroy: true
+    # These validators are used to make sure the standard variant created via
+    # `ensure_standard_variant` will be valid. The are only used when creating a new product
+    with_options on: :create_and_create_standard_variant do
+      validates :supplier_id, presence: true
+      validates :primary_taxon_id, presence: true
+      validates :variant_unit, presence: true
+      validates :unit_value, presence: true, if: ->(product) {
+        %w(weight volume).include?(product.variant_unit)
+      }
+      validates :unit_value, numericality: { greater_than: 0 }, allow_blank: true
+      validates :unit_description, presence: true, if: ->(product) {
+        product.variant_unit.present? && product.unit_value.nil?
+      }
+      validates :variant_unit_scale, presence: true, if: ->(product) {
+        %w(weight volume).include?(product.variant_unit)
+      }
+      validates :variant_unit_name, presence: true, if: ->(product) {
+        product.variant_unit == 'items'
+      }
+    end
+
     accepts_nested_attributes_for :image
     accepts_nested_attributes_for :product_properties,
                                   allow_destroy: true,
@@ -60,9 +80,8 @@ module Spree
                   :variant_unit_name, :variant_unit_scale, :tax_category_id, :shipping_category_id,
                   :primary_taxon_id, :supplier_id
 
-    after_validation :validate_variant_attrs, on: :create
     after_create :ensure_standard_variant
-    after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
+    # after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
     around_destroy :destruction
     after_touch :touch_supplier
 
@@ -235,6 +254,7 @@ module Spree
       end
     end
 
+    # rubocop:disable Metrics/AbcSize
     def ensure_standard_variant
       return unless variants.empty?
 
@@ -253,6 +273,7 @@ module Spree
       variant.supplier_id = supplier_id
       variants << variant
     end
+    # rubocop:enable Metrics/AbcSize
 
     # Remove any unsupported HTML.
     def description
@@ -266,15 +287,6 @@ module Spree
 
     private
 
-    def validate_variant_attrs
-      # Avoid running validation when we can't set variant attrs
-      # eg clone product. Will raise error if clonning a product with no variant
-      return if variants.first&.valid?
-
-      errors.add(:primary_taxon_id, :blank) unless Spree::Taxon.find_by(id: primary_taxon_id)
-      errors.add(:supplier_id, :blank) unless Enterprise.find_by(id: supplier_id)
-    end
-
     def touch_supplier
       return if variants.empty?
 
@@ -286,7 +298,6 @@ module Spree
       # importing product. In this scenario the variant has not been updated with the supplier yet
       # hence the check.
       first_variant.supplier.touch if first_variant.supplier.present?
-
     end
 
     def validate_image

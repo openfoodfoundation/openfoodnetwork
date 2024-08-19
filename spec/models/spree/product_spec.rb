@@ -133,6 +133,9 @@ module Spree
 
           before do
             create(:stock_location)
+          end
+
+          it "copies properties to the first standard variant" do
             product.primary_taxon_id = taxon.id
             product.name = "Product1"
             product.variant_unit = "weight"
@@ -142,10 +145,8 @@ module Spree
             product.price = 4.27
             product.shipping_category_id = shipping_category.id
             product.supplier_id = supplier.id
-            product.save!
-          end
+            product.save(context: :create_and_create_standard_variant)
 
-          it "copies properties to the first standard variant" do
             expect(product.variants.reload.length).to eq 1
             standard_variant = product.variants.reload.first
 
@@ -158,6 +159,100 @@ module Spree
             expect(standard_variant.shipping_category).to eq shipping_category
             expect(standard_variant.primary_taxon).to eq taxon
             expect(standard_variant.supplier).to eq supplier
+          end
+
+          context "with variant attributes" do
+            it {
+              is_expected.to validate_presence_of(:variant_unit)
+                .on(:create_and_create_standard_variant)
+            }
+            it {
+              is_expected.to validate_presence_of(:supplier_id)
+                .on(:create_and_create_standard_variant)
+            }
+            it {
+              is_expected.to validate_presence_of(:primary_taxon_id)
+                .on(:create_and_create_standard_variant)
+            }
+
+            describe "unit_value" do
+              subject { build(:simple_product, variant_unit: "items") }
+
+              it {
+                is_expected.to validate_numericality_of(:unit_value).is_greater_than(0)
+                  .on(:create_and_create_standard_variant)
+              }
+              it {
+                is_expected.not_to validate_presence_of(:unit_value)
+                  .on(:create_and_create_standard_variant)
+              }
+
+              ["weight", "volume"].each do |variant_unit|
+                context "when variant_unit is #{variant_unit}" do
+                  subject { build(:simple_product, variant_unit:) }
+
+                  it {
+                    is_expected.to validate_presence_of(:unit_value)
+                      .on(:create_and_create_standard_variant)
+                  }
+                end
+              end
+
+              describe "unit_description" do
+                it {
+                  is_expected.not_to validate_presence_of(:unit_description)
+                    .on(:create_and_create_standard_variant)
+                }
+
+                context "when variant_unit is et and unit_value is nil" do
+                  subject {
+                    build(:simple_product, variant_unit: "items", unit_value: nil,
+                                           unit_description: "box")
+                  }
+
+                  it {
+                    is_expected.to validate_presence_of(:unit_description)
+                      .on(:create_and_create_standard_variant)
+                  }
+                end
+              end
+
+              describe "variant_unit_scale" do
+                it {
+                  is_expected.not_to validate_presence_of(:variant_unit_scale)
+                    .on(:create_and_create_standard_variant)
+                }
+
+                ["weight", "volume"].each do |variant_unit|
+                  context "when variant_unit is #{variant_unit}" do
+                    subject { build(:simple_product, variant_unit:) }
+
+                    it {
+                      is_expected.to validate_presence_of(:variant_unit_scale)
+                        .on(:create_and_create_standard_variant)
+                    }
+                  end
+                end
+              end
+
+              describe "variant_unit_name" do
+                subject { build(:simple_product, variant_unit: "volume") }
+
+                it {
+                  is_expected.not_to validate_presence_of(:variant_unit_name)
+                    .on(:create_and_create_standard_variant)
+                }
+
+                context "when variant_unit is items" do
+                  subject { build(:simple_product, variant_unit: "items") }
+
+                  it {
+                    is_expected.to validate_presence_of(:variant_unit_name)
+                      .on(:create_and_create_standard_variant)
+                  }
+                end
+              end
+            end
           end
         end
       end
