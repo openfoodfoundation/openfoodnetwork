@@ -22,7 +22,12 @@ module Spree
     include LogDestroyPerformer
 
     self.belongs_to_required_by_default = false
-    self.ignored_columns += [:supplier_id, :variant_unit_scale, :variant_unit_name]
+    # These columns have been moved to variant. Currently this is only for documentation purposes,
+    # because they are declared as attr_accessor below, declaring them as ignored columns has no
+    # effect
+    self.ignored_columns += [
+      :supplier_id, :primary_taxon_id, :variant_unit, :variant_unit_scale, :variant_unit_name
+    ]
 
     acts_as_paranoid
 
