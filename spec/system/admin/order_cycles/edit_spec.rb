@@ -144,8 +144,8 @@ RSpec.describe '
 
         # click save
         click_button('Save')
-        expect(page.find('#order_cycle_name').value).to eq 'OC1 name updated'
         expect(page).to have_content('Your order cycle has been updated.')
+        expect(page.find('#order_cycle_name').value).to eq 'OC1 name updated'
 
         # Now change date range field value
         find('#order_cycle_orders_close_at').click
@@ -157,9 +157,9 @@ RSpec.describe '
         expect(page).to have_content('You have unsaved changes')
 
         click_button('Save')
+        expect(page).to have_content('Your order cycle has been updated.')
         expect(page).not_to have_content "Orders are linked to this cycle"
         expect(page).to have_field 'order_cycle_orders_close_at', with: '2024-03-30 00:00'
-        expect(page).to have_content('Your order cycle has been updated.')
       end
     end
   end
