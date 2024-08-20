@@ -31,19 +31,16 @@
           = f.field_container :variant_unit do
             = f.label :variant_unit, t(".units")
             %span.required *
-            = render(SearchableDropdownComponent.new(form: f,
-                name: :variant_unit,
-                aria_label: t('.units'),
-                options: [],
-                selected_option: @product.variant_unit,
-                include_blank: true,
-                placeholder_value: t('.search_for_units'),
-                other_attrs: { id: 'product_variant_unit_with_scale',
-                name: 'product_variant_unit_with_scale',
-                'ng-model' => 'product.variant_unit_with_scale', 
-                'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options', 
-                "data-controller": "tom-select",
-                "data-tom-select-options-value": '{"allowEmptyOption":false}'}))
+            = f.select 'variant_unit', [],
+              { include_blank: true },
+              { id: 'product_variant_unit_with_scale',
+              name: 'product_variant_unit_with_scale',
+              'ng-model' => 'product.variant_unit_with_scale', 
+              'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options', 
+              "data-controller": "tom-select", 
+              "data-tom-select-options-value": '{"allowEmptyOption":false}', 
+              class: "primary",
+              }
             %input{ type: 'hidden', 'ng-value': 'product.variant_unit', "ng-init": "product.variant_unit='#{@product.variant_unit}'", name: 'product[variant_unit]' }
             %input{ type: 'hidden', 'ng-value': 'product.variant_unit_scale', "ng-init": "product.variant_unit_scale='#{@product.variant_unit_scale}'", name: 'product[variant_unit_scale]' }
             = f.error_message_on :variant_unit
