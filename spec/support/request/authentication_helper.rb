@@ -3,7 +3,7 @@
 module AuthenticationHelper
   include Warden::Test::Helpers
 
-  def login_as_admin
+  def login_as_admin_typo
     login_as create(:admin_user)
   end
 
