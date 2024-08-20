@@ -10,7 +10,7 @@ module Reporting
 
         def columns
           {
-            supplier: :variant_product_supplier_name,
+            supplier: :variant_supplier_name,
             product: :variant_product_name,
             bulk_unit_size: :variant_product_group_buy_unit_size_f,
             variant: :full_name,
@@ -44,8 +44,8 @@ module Reporting
 
         private
 
-        def variant_product_supplier_name(line_items)
-          line_items.first.variant.product.supplier.name
+        def variant_supplier_name(line_items)
+          line_items.first.variant.supplier.name
         end
       end
     end
