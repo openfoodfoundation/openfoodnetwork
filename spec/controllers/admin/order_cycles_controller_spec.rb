@@ -336,7 +336,6 @@ module Admin
 
       context "as a manager of the coordinator" do
         let(:user) { coordinator.owner }
-        let(:error_class) { Admin::OrderCyclesController::DateTimeChangeError }
         let(:expected) {
           [order_cycle, allowed.merge(restricted).merge(datetime_confirmation_attrs), user]
         }
