@@ -218,7 +218,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: failed-admin-tests-screenshots
+          name: failed-admin_${{ matrix.ci_node_index }}-tests-screenshots
           path: tmp/capybara/screenshots/*.png
           retention-days: 7
           if-no-files-found: ignore
@@ -296,7 +296,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: failed-consumer-tests-screenshots
+          name: failed-consumer_${{ matrix.ci_node_index }}-tests-screenshots
           path: tmp/capybara/screenshots/*.png
           retention-days: 7
           if-no-files-found: ignore
