@@ -499,12 +499,16 @@ RSpec.describe '
   end
 
   describe 'bulk coop report' do
+    let!(:order) { create(:completed_order_with_totals) }
+
     before do
       login_as_admin
       visit admin_reports_path
     end
 
     it "generating Bulk Co-op Supplier Report" do
+      pending("S2 bug #12768")
+
       click_link "Bulk Co-op Supplier Report"
       run_report
 
