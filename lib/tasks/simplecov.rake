@@ -6,7 +6,7 @@ namespace :simplecov do
        [:path_to_results, :coverage_dir] do |_t, args|
     require "simplecov"
 
-    path_to_results = args[:path_to_results].presence || "tmp/simple-cov"
+    path_to_results = args[:path_to_results].presence || "tmp/simplecov"
     coverage_dir = args[:coverage_dir].presence || "coverage"
 
     SimpleCov.collate Dir[File.join(path_to_results, "**", ".resultset.json")], "rails" do

@@ -14,4 +14,6 @@ SimpleCov.start 'rails' do
   add_filter '/log'
   add_filter '/db'
   add_filter '/lib/tasks/sample_data/'
+
+  formatter SimpleCov::Formatter::SimpleFormatter
 end
