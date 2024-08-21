@@ -2,5 +2,5 @@
   = "#{line_item.product.name}"
   - unless line_item.product.name.include? line_item.name_to_display
     %span= "- #{line_item.name_to_display}"
-- if line_item.options_text
-  = "(#{line_item.options_text})"
+- if line_item.unit_to_display
+  = "(#{line_item.unit_to_display})"

@@ -60,7 +60,7 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
                                  bill_address.city,
                                  line_item.product.sku,
                                  line_item.product.name,
-                                 line_item.options_text,
+                                 line_item.unit_to_display,
                                  line_item.quantity,
                                  line_item.max_quantity,
                                  line_item.price * line_item.quantity,
