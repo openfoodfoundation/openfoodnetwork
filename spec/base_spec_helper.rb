@@ -4,8 +4,9 @@
 
 ENV["RAILS_ENV"] ||= 'test'
 
+# for full configuration, see .simplecov
 require 'simplecov' if ENV["COVERAGE"]
-require 'rubygems'
+
 require 'pry' unless ENV['CI']
 require 'view_component/test_helpers'
 
@@ -26,6 +27,12 @@ end
 
 require 'knapsack_pro'
 KnapsackPro::Adapters::RSpecAdapter.bind
+
+if ENV["COVERAGE"] && defined?(SimpleCov)
+  KnapsackPro::Hooks::Queue.before_queue do
+    SimpleCov.command_name("rspec_ci_node_#{KnapsackPro::Config::Env.ci_node_index}")
+  end
+end
 
 # Allow connections to selenium whilst raising errors when connecting to external sites
 require 'webmock/rspec'
