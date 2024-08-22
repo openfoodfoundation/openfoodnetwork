@@ -139,14 +139,15 @@ RSpec.describe '
       # Unlocking the breakpoint will continue execution of the controller.
       breakpoint.unlock
 
-      # We have to wait to be sure that the "loading" spinner won't appear
-      # within the next half second. The default wait time would wait for
-      # 10 seconds which slows down the spec.
-      using_wait_time 0.5 do
-        page.has_selector? ".loading"
-      end
+      # Now the controller response will show the loading spinner again and
+      # the fallback mechanism will render the report later.
+      expect(page).to have_selector ".loading"
+
+      # Wait for the fallback mechanism:
+      sleep 3
 
       expect(page).not_to have_selector ".loading"
+      expect(page).to have_content "First Name Last Name Billing Address Email"
     end
   end
 

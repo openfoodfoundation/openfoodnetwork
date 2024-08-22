@@ -310,14 +310,15 @@ RSpec.describe Admin::ReportsController, type: :controller do
     end
 
     it "triggers the delivery report" do
-      spree_post :show, {
+      spree_post :create, {
+        format: :turbo,
         q: { completed_at_lt: 1.day.ago },
         shipping_method_in: ["123"], # We just need to search for shipping methods
         report_type: :order_cycle_management,
         report_subtype: "delivery",
       }
 
-      expect(response).to have_http_status(:no_content)
+      expect(response).to have_http_status(:ok)
     end
   end
 

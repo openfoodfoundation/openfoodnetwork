@@ -135,6 +135,7 @@ Openfoodnetwork::Application.routes.draw do
     end
 
     get '/reports', to: 'reports#index', as: :reports
-    match '/reports/:report_type(/:report_subtype)', to: 'reports#show', via: [:get, :post], as: :report
+    match '/reports/:report_type(/:report_subtype)', to: 'reports#show', via: :get, as: :report
+    match '/reports/:report_type(/:report_subtype)', to: 'reports#create', via: :post
   end
 end

@@ -6,13 +6,14 @@ RSpec.describe ReportJob do
   include CableReady::Broadcaster
 
   let(:report_args) {
-    { report_class:, user:, params:, format:, filename: }
+    { report_class:, user:, params:, format:, blob: }
   }
   let(:report_class) { Reporting::Reports::UsersAndEnterprises::Base }
   let(:user) { enterprise.owner }
   let(:enterprise) { create(:enterprise) }
   let(:params) { {} }
   let(:format) { :csv }
+  let(:blob) { ReportBlob.create_for_upload_later!(filename) }
   let(:filename) { "report.csv" }
 
   it "generates a report" do
@@ -25,11 +26,12 @@ RSpec.describe ReportJob do
   it "enqueues a job for async processing" do
     expect {
       ReportJob.perform_later(**report_args)
-    }.not_to change { ActiveStorage::Blob.count }
+    }.not_to change { blob.checksum }
 
     expect {
       perform_enqueued_jobs(only: ReportJob)
-    }.to change { ActiveStorage::Blob.count }
+      blob.reload
+    }.to change { blob.checksum }
 
     expect_csv_report
   end
@@ -44,7 +46,8 @@ RSpec.describe ReportJob do
 
     expect {
       perform_enqueued_jobs(only: ReportJob)
-    }.to change { ActiveStorage::Blob.count }
+      blob.reload
+    }.to change { blob.checksum }
   end
 
   it "triggers an email when the report is done" do
