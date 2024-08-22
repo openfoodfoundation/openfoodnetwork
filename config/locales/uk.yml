@@ -70,7 +70,6 @@ uk:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "має бути порожнім, оскільки використовуються налаштування запасів виробника"
-            on_demand_but_count_on_hand_set: "має бути порожнім, якщо на вимогу"
             limited_stock_but_no_count_on_hand: "необхідно вказати, оскільки запаси обмежені"
       messages:
         blank: "не може бути порожнім"
@@ -2579,7 +2578,6 @@ uk:
   spree_admin_single_enterprise_hint: "Підказка: щоб люди могли вас знайти, увімкніть свою видимість під"
   spree_admin_eg_pickup_from_school: "напр. «Забір із першої школи»"
   spree_admin_eg_collect_your_order: "напр. \"Будь ласка, заберіть своє замовлення за адресою: 123 Imaginary St, Northcote \";"
-  spree_classification_primary_taxon_error: "Таксон %{taxon} є основним таксоном %{product} і не може бути видалений"
   spree_order_availability_error: "Дистриб’ютор або цикл замовлення не можуть надати продукти у вашому кошику"
   spree_order_populator_error: "Цей дистриб’ютор або цикл замовлення не може забезпечити всі продукти у вашому кошику. Виберіть інший."
   spree_order_cycle_error: "Будь ласка, виберіть цикл замовлення для цього замовлення."
@@ -3207,6 +3205,7 @@ uk:
           Це призведе до нульового рівня запасів для всіх продуктів для цього підприємства, яких немає в завантаженому файлі.
     order_cycles:
       unsaved_changes: "У вас є незбережені зміни"
+      bulk_save_error: "О ні! Мені не вдалося зберегти ваші зміни."
       create_failure: "Не вдалося створити цикл замовлення"
       update_success: 'Ваш цикл замовлення оновлено.'
       update_failure: "Не вдалося оновити цикл замовлення"
@@ -3467,7 +3466,6 @@ uk:
     more: "Більше"
     new_adjustment: "Нове коригування"
     new_tax_category: "Нова податкова категорія"
-    new_taxon: "Новий таксон"
     new_user: "Новий користувач"
     no_pending_payments: "Немає незавершених платежів"
     remove: "Видалити"
@@ -4273,7 +4271,6 @@ uk:
       key_cleared: "Ключ видалено"
       shipment:
         cannot_ready: "Неможливо підготувати відправлення."
-      invalid_taxonomy_id: "Недійсний ID таксономії."
     activerecord:
       models:
         spree/payment:

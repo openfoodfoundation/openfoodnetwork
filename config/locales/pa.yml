@@ -99,7 +99,6 @@ pa:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "ਖਾਲੀ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ ਕਿਉਂਕਿ ਉਤਪਾਦਕ ਸਟਾਕ ਸੈਟਿੰਗਾਂ ਦੀ ਵਰਤੋਂ ਕੀਤੀ ਹੈ"
-            on_demand_but_count_on_hand_set: "ਜੇ ਡਿਮਾਂਡ ਤੇ ਹੋਵੇ ਤਾਂ ਖਾਲੀ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ"
             limited_stock_but_no_count_on_hand: "ਸੀਮਤ ਸਟਾਕ ਨੂੰ ਮਜਬੂਰ ਕਰਨ ਕਰਕੇ ਨਿਰਧਾਰਤ ਕੀਤਾ ਜਾਣਾ ਚਾਹੀਦਾ ਹੈ"
       messages:
         confirmation: "%{attribute} ਨਾਲ ਮੇਲ ਨਹੀਂ ਖਾਂਦਾ"
@@ -761,7 +760,6 @@ pa:
         search: ਖੋਜੋ
       sort:
         pagination:
-          total_html: "ਤੁਹਾਡੇ ਖੋਜ ਮਾਪਦੰਡ ਲਈ <strong>%{total} ਉਤਪਾਦ</strong> ਮਿਲੇ ਹਨ। %{from} ਤੋਂ %{to} ਦਿਖਾ ਰਹੇ ਹਨ।"
           per_page:
             show: ਵਿਖਾਓ
             per_page: "%{num} ਪ੍ਰਤੀ ਪੇਜ"
@@ -2743,7 +2741,6 @@ pa:
   spree_admin_single_enterprise_hint: "ਸੰਕੇਤ: ਲੋਕਾਂ ਨੂੰ ਤੁਹਾਨੂੰ ਲੱਭਣ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ, ਇਸ ਦੇ ਹੇਠਾਂ ਆਪਣੀ ਦਿੱਖ ਨੂੰ ਚਾਲੂ ਕਰੋ"
   spree_admin_eg_pickup_from_school: "ਜਿਵੇਂ ਕਿ 'ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ ਤੋਂ ਪਿਕ-ਅੱਪ'"
   spree_admin_eg_collect_your_order: "ਜਿਵੇਂ ਕਿ 'ਕਿਰਪਾ ਕਰਕੇ 123 ਇਮੇਜਿਨਰੀ ਸੇਂਟ, ਨੌਰਥਕੋਟ, 3070' ਤੋਂ ਆਪਣਾ ਆਰਡਰ ਲਵੋ"
-  spree_classification_primary_taxon_error: "ਟੈਕਸਨ %{taxon}, %{product} ਦਾ ਪ੍ਰਾਇਮਰੀ ਟੈਕਸਨ ਹੈ ਅਤੇ ਇਸ ਨੂੰ ਮਿਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ"
   spree_order_availability_error: "ਵਿਤਰਕ ਜਾਂ ਆਰਡਰ ਸਾਈਕਲ ਤੁਹਾਡੇ ਕਾਰਟ ਵਿੱਚ ਉਤਪਾਦਾਂ ਦੀ ਸਪਲਾਈ ਨਹੀਂ ਕਰ ਸਕਦਾ"
   spree_order_populator_error: "ਉਹ ਵਿਤਰਕ ਜਾਂ ਆਰਡਰ ਸਾਈਕਲ ਤੁਹਾਡੇ ਕਾਰਟ ਵਿੱਚ ਦਿੱਤੇ ਸਾਰੇ ਉਤਪਾਦਾਂ ਦੀ ਸਪਲਾਈ ਨਹੀਂ ਕਰ ਸਕਦਾ। ਕਿਰਪਾ ਕਰਕੇ ਕੋਈ ਹੋਰ ਚੁਣੋ।"
   spree_order_cycle_error: "ਕਿਰਪਾ ਕਰਕੇ ਇਸ ਆਰਡਰ ਲਈ ਇੱਕ ਆਰਡਰ ਸਾਈਕਲ ਚੁਣੋ।"
@@ -3406,6 +3403,7 @@ pa:
           ਇਹ ਇਸ ਐਂਟਰਪ੍ਰਾਈਜ਼ ਲਈ ਉਹਨਾਂ ਸਾਰੇ ਉਤਪਾਦਾਂ ਦੇ ਸਟਾਕ ਪੱਧਰ ਨੂੰ ਜ਼ੀਰੋ ਤੇ ਸੇਟ ਕਰ ਦੇਵੇਗਾ ਜੋ ਅੱਪਲੋਡ ਕੀਤੀ ਫਾਈਲ ਵਿੱਚ ਮੌਜੂਦ ਨਹੀਂ ਹਨ।
     order_cycles:
       unsaved_changes: "ਤੁਹਾਡੇ ਕੋਲ ਸੇਵ ਨਾ ਕੀਤੀਆਂ ਤਬਦੀਲੀਆਂ ਹਨ"
+      bulk_save_error: "ਓ ਨਹੀਂ! ਮੈਂ ਤੁਹਾਡੇ ਬਦਲਾਵਾਂ ਨੂੰ ਸੇਵ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ ਰਿਹਾ।"
       create_failure: "ਆਰਡਰ ਸਾਈਕਲ ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ"
       update_success: 'ਤੁਹਾਡਾ ਆਰਡਰ ਸਾਈਕਲ ਅੱਪਡੇਟ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ।'''
       update_failure: "ਆਰਡਰ ਸਾਈਕਲ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ"
@@ -3553,7 +3551,6 @@ pa:
     more: "ਹੋਰ"
     new_adjustment: "ਨਵਾਂ ਸਮਾਯੋਜਨ"
     new_tax_category: "ਨਵੀਂ ਟੈਕਸ ਸ਼੍ਰੇਣੀ"
-    new_taxon: "ਨਵਾਂ ਟੈਕਸੋਨ"
     new_user: "ਨਵਾਂ ਉਪਭੋਗਤਾ"
     no_pending_payments: "ਕੋਈ ਬਕਾਇਆ ਭੁਗਤਾਨ ਨਹੀਂ ਹੈ"
     remove: "Remove"
@@ -4400,7 +4397,6 @@ pa:
       key_cleared: "ਕੁੰਜੀ ਹਟਾਈ ਗਈ"
       shipment:
         cannot_ready: "ਸ਼ਿਪਮੈਂਟ ਤਿਆਰ ਨਹੀਂ ਹੋ ਸਕਦੀ।"
-      invalid_taxonomy_id: "ਅਵੈਧ ਟੈਕਸੋਨੌਮੀ ਆਈਡੀ।"
       toggle_api_key_view: "ਉਪਭੋਗਤਾ ਲਈ API ਕੁੰਜੀ ਦ੍ਰਿਸ਼ ਵਿਖਾਓ"
     unit: ਯੂਨਿਟ
     per_unit: ਪ੍ਰਤੀ ਯੂਨਿਟ

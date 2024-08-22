@@ -102,7 +102,6 @@ cy:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "rhaid bod yn wag oherwydd defnydd o osodiadau stoc cynhyrchwyr"
-            on_demand_but_count_on_hand_set: "rhaid iddo fod yn wag os ar alw"
             limited_stock_but_no_count_on_hand: "rhaid nodi hyn oherwydd gorfodi stoc gyfyngedig"
       messages:
         confirmation: "Nid yw’n cyfateb %{attribute}"
@@ -785,7 +784,6 @@ cy:
         search: Chwilio
       sort:
         pagination:
-          total_html: "<strong>%{total}Cafwyd hyd i </strong> cynnyrch ar gyfer eich meini prawf chwilio. Yn dangos %{from} i %{to}."
           per_page:
             show: Dangos
             per_page: "%{num} fesul tudalen"
@@ -2801,7 +2799,6 @@ cy:
   spree_admin_single_enterprise_hint: "Awgrym: Er mwyn caniatáu i bobl ddod o hyd i chi, gofalwch fod pobl yn gallu eich gweld"
   spree_admin_eg_pickup_from_school: "e.e. 'Casglu o'r Ysgol Gynradd'"
   spree_admin_eg_collect_your_order: "e.e. 'Dylid casglu eich archeb o 123 Ffordd y Don, Pwllheli'"
-  spree_classification_primary_taxon_error: "Tacson %{taxon} yw prif dacson %{product} ac ni ellir ei ddileu"
   spree_order_availability_error: "Ni all dosbarthwr neu gylch archebu gyflenwi'r cynnyrch yn eich basged"
   spree_order_populator_error: "Ni all y dosbarthwr neu'r cylch archebu dan sylw gyflenwi'r holl gynnyrch yn eich basged. Dewiswch un arall."
   spree_order_cycle_error: "Dewiswch gylch archebu ar gyfer archeb hwn."
@@ -3465,6 +3462,7 @@ cy:
           enterprise that are not present in the uploaded file.
     order_cycles:
       unsaved_changes: "Mae gennych chi newidiadau heb eu cadw"
+      bulk_save_error: "O na! Nid oeddyn bosib cadw eich newidiadau."
       create_failure: "Wedi methu creu cylch archebu"
       update_success: 'Diweddarwyd eich cylch archebu'
       update_failure: "Wedi methu diweddaru'r cylch archebu"
@@ -3735,7 +3733,6 @@ cy:
     more: "Mwy"
     new_adjustment: "Addasiad newydd"
     new_tax_category: "Categori treth newydd"
-    new_taxon: "Tacson newydd"
     new_user: "Defnyddiwr newydd"
     no_pending_payments: "Dim taliadau yn yr arfaeth"
     remove: "Dileu"
@@ -4357,6 +4354,7 @@ cy:
           meta_description: Meta Description
           meta_keywords: Meta Keywords
           description: Disgrifiad
+          dfc_id: DFC URI
       general_settings:
         edit:
           legal_settings: "Gosodiadau Cyfreithiol"
@@ -4593,7 +4591,6 @@ cy:
       key_cleared: "Cliriwyd yr Allwedd"
       shipment:
         cannot_ready: "Methu â pharatoi'r llwyth."
-      invalid_taxonomy_id: "Tacsonomeg id. annilys"
       toggle_api_key_view: "Dangos gwedd yr allwedd API ar gyfer y defnyddiwr."
     activerecord:
       models:

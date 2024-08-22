@@ -102,7 +102,6 @@ hi:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "उत्पादक स्टॉक सेटिंग्स का उपयोग करने के कारण खाली होना ही चाहिए"
-            on_demand_but_count_on_hand_set: "यदि मांग हो तो खाली होना ही चाहिए"
             limited_stock_but_no_count_on_hand: "सीमित स्टॉक को मजबूर करने के कारण निर्दिष्ट किया जाना ही चाहिए"
       messages:
         confirmation: "%{attribute} से मेल नहीं खाता"
@@ -769,7 +768,6 @@ hi:
         search: सर्च
       sort:
         pagination:
-          total_html: "<strong>%{total} उत्पाद</strong> आपके सर्च क्राइटेरिया के लिए मिले। %{from} से %{to} दिखा रहा है।"
           per_page:
             show: दिखाएं
             per_page: "%{num} प्रति पेज"
@@ -2773,7 +2771,6 @@ hi:
   spree_admin_single_enterprise_hint: "संकेत: लोगों को आपको ढूंढने की अनुमति देने के लिए, नीचे से अपनी दृश्यता चालू करें"
   spree_admin_eg_pickup_from_school: "उदाहरण 'प्राइमरी स्कूल से पिक-अप'"
   spree_admin_eg_collect_your_order: "उदाहरण 'कृपया 123 इमेजिनरी सेंट, नॉर्थकोट, 3070 से अपना ऑर्डर एकत्र करें'"
-  spree_classification_primary_taxon_error: "टैक्सोन %{taxon} %{product} का प्राथमिक टैक्सोन है और इसे हटाया नहीं जा सकता"
   spree_order_availability_error: "आपके कार्ट में वितरक या ऑर्डर साइकिल उत्पादों की आपूर्ति नहीं कर सकता है"
   spree_order_populator_error: "वह वितरक या ऑर्डर साइकिल आपके कार्ट में सभी उत्पादों की आपूर्ति नहीं कर सकता है। कृपया कोई दूसरा चुनें।"
   spree_order_cycle_error: "कृपया इस ऑर्डर के लिए ऑर्डर साइकल चुनें।"
@@ -3437,6 +3434,7 @@ hi:
           जो अपलोड की गई फ़ाइल में मौजूद नहीं हैं।
     order_cycles:
       unsaved_changes: "आपके पास बिना सेव किए गए परिवर्तन हैं"
+      bulk_save_error: "अरे नहीं! मैं आपके परिवर्तनों को सेव करने में असमर्थ था।"
       create_failure: "ऑर्डर साइकल बनाने में विफल हुआ"
       update_success: 'आपका ऑर्डर साइकल अपडेट कर दिया गया है।'
       update_failure: "ऑर्डर साइकल अपडेट करने में विफल हुआ"
@@ -3659,7 +3657,6 @@ hi:
     more: "और ज्यादा"
     new_adjustment: "नया एडजस्टमेंट"
     new_tax_category: "नई टैक्स श्रेणी"
-    new_taxon: "नया टैक्सोन"
     new_user: "नया यूज़र"
     no_pending_payments: "कोई पेंडिंग भुगतान नहीं"
     remove: "मिटाएँ"
@@ -4506,7 +4503,6 @@ hi:
       key_cleared: "कुंजी साफ़ हो गई"
       shipment:
         cannot_ready: "शिपमेंट तैयार नहीं कर सकते।"
-      invalid_taxonomy_id: "अमान्य टैक्सोनॉमी id।"
       toggle_api_key_view: "यूज़र्स के लिए API कुंजी दृश्य दिखाएं"
     activerecord:
       models:

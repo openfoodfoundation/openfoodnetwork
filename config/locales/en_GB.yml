@@ -1,5 +1,8 @@
 en_GB:
   language_name: "English"
+  time:
+    formats:
+      long: "%B %d, %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Product
@@ -96,6 +99,8 @@ en_GB:
           attributes:
             base:
               card_expired: "has expired"
+        spree/product:
+          must_exist: 'must exist'
         order_cycle:
           attributes:
             orders_close_at:
@@ -103,7 +108,6 @@ en_GB:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
-            on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
       messages:
         confirmation: "doesn't match %{attribute}"
@@ -194,6 +198,9 @@ en_GB:
       transaction_not_allowed: "The card has been declined for an unknown reason."
       try_again_later: "The card has been declined for an unknown reason."
       withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      disconnect_failure: "Failed to disconnect Stripe."
+    success_code:
+      disconnected: "Stripe account disconnected."
   activemodel:
     errors:
       messages:
@@ -219,10 +226,16 @@ en_GB:
               not_available_to_shop: "is not available to %{shop}"
   card_details: "Card details"
   card_type: "Card type"
+  card_type_is: "Card type is"
+  unrecognized_card_type: "Unrecognised card type"
+  use_new_cc: "Use a new credit card"
+  what_is_this: "What is this?"
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   additional_information: "Additional Information"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -598,6 +611,7 @@ en_GB:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
+    column_save_as_default: Save as default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -646,6 +660,7 @@ en_GB:
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
+        instance_publishable_key: Instance Publishable Key
         account_id: Account ID
         business_name: Business Name
         charges_enabled: Charges Enabled
@@ -661,6 +676,16 @@ en_GB:
         info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
         config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
+    connected_app_settings:
+      edit:
+        title: "Connected app settings"
+        info_html: "Enabled apps will appear under Enterprise Settings > Connected Apps."
+        enabled_legend: "Enabled connected apps"
+        connected_apps_enabled:
+          discover_regen: Discover Regenerative portal
+          affiliate_sales_data: DFC anonymised orders API for research purposes
+      update:
+        resource: Connected app settings
     customers:
       index:
         new_customer: "New Customer"
@@ -685,6 +710,9 @@ en_GB:
         balance_due: "Balance Due"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+    column_preferences:
+      bulk_update:
+        success: "Column preferences saved"
     contents:
       edit:
         title: Content
@@ -700,6 +728,7 @@ en_GB:
         map: Map
     dfc_product_imports:
       index:
+        title: "Importing a DFC product catalogue"
         imported_products: "Imported products:"
     enterprise_fees:
       index:
@@ -794,7 +823,9 @@ en_GB:
         search: Search
       sort:
         pagination:
-          total_html: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}."
+          products_total_html:
+            one: "<strong>%{total} product</strong> found for your search criteria. Showing %{from} to %{to}."
+            other: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}. "
           per_page:
             show: Show
             per_page: "%{num} per page"
@@ -828,9 +859,13 @@ en_GB:
         error: Unable to delete the variant
       variant_row:
         none_tax_category: None
+        search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
+      clone:
+        success: Successfully cloned the product
+        error: Unable to clone the product
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -873,7 +908,9 @@ en_GB:
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
       dfc_import_form:
+        title: "Import from DFC catalogue"
         enterprise: "Enterprise"
+        catalog_url: "DFC catalogue URL"
         import: "Import"
       import:
         review: Review
@@ -977,6 +1014,7 @@ en_GB:
       edit:
         order_sure_want_to: Are you sure you want to %{event} this order?
         voucher_tax_included_in_price: "%{label}(tax included in voucher)"
+        tax_on_fees: "Tax on fees"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -1183,6 +1221,7 @@ en_GB:
           open_date: "Open Date"
           close_date: "Close Date"
           display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_product: "By product"
           shopfront_sort_by_category: "By category"
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
@@ -1267,15 +1306,18 @@ en_GB:
         connected_apps:
           legend: "Connected apps"
           affiliate_sales_data:
+            tagline: "Allow this research project to access your orders data anonymously"
             enable: "Allow data sharing"
             disable: "Stop sharing"
             loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Allow Discover Regenerative to publish your enterprise information."
             enable: "Allow data sharing"
             disable: "Stop sharing"
             loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
             note: |
                 Your Open Food Network account is connected to Discover Regenerative.
                 Add or update information on your Discover Regenerative listing here.
@@ -1385,6 +1427,9 @@ en_GB:
         re_notify_producers: Re notify producers
         notify_producers_tip: This will send an email to each producer with the list of their orders.
       date_time_warning_modal_content:
+        title: 'Orders are linked to this order cycle.'
+        content: 'If you wish to create a new order cycle, it is recommended to duplicate the order cycle first and then change the dates.'
+        proceed: 'Proceed anyway'
         cancel: 'Cancel'
       incoming:
         incoming: "Incoming"
@@ -1585,6 +1630,9 @@ en_GB:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      display:
+        report_is_big: "This report is big and may slow down your device."
+        display_anyway: "Display anyway"
       download:
         button: "Download Report"
       show:
@@ -2495,6 +2543,7 @@ en_GB:
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
+  thank_you_for_your_order: "Thank you for your order"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
   products_cart_distributor_is: "Your distributor for this order is %{name}."
@@ -2841,7 +2890,6 @@ en_GB:
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
   spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Newcastle, NE1 1AA'"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
   spree_order_cycle_error: "Please choose an order cycle for this order."
@@ -3512,6 +3560,7 @@ en_GB:
           enterprise that are not present in the uploaded file.
     order_cycles:
       unsaved_changes: "You have unsaved changes"
+      bulk_save_error: "Oh no! I was unable to save your changes."
       create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
       update_failure: "Failed to update order cycle"
@@ -3726,6 +3775,7 @@ en_GB:
     editing_tax_category: "Editing tax category"
     editing_tax_rate: "Editing tax rate"
     editing_zone: "Editing zone"
+    editing_state: "Editing State"
     expiration: "Expiration"
     invalid_payment_provider: "Invalid payment provider"
     items_cannot_be_shipped: "Items cannot be shipped"
@@ -3734,7 +3784,6 @@ en_GB:
     more: "More"
     new_adjustment: "New adjustment"
     new_tax_category: "New Tax Category"
-    new_taxon: "New taxon"
     new_user: "New user"
     no_pending_payments: "No pending payments"
     remove: "Remove"
@@ -3760,6 +3809,7 @@ en_GB:
     resend: "Resend"
     back_to_orders_list: "Back To Orders List"
     back_to_payments_list: "Back To Payments List"
+    back_to_states_list: "Back To States List"
     return_authorizations: "Return Authorisations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
@@ -4351,8 +4401,17 @@ en_GB:
           total: "Total"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Back to Product Category List"
         index:
           title: "Product Categories"
+          new_taxon: 'New product category'
+        new:
+          title: "New Product Category"
+        edit:
+          title: "Edit Product Category"
+        destroy:
+          delete_taxon:
+            success: "Successfully deleted the product category"
         form:
           name: Name
           meta_title: Meta Title
@@ -4596,7 +4655,6 @@ en_GB:
       key_cleared: "Key cleared"
       shipment:
         cannot_ready: "Cannot ready shipment."
-      invalid_taxonomy_id: "Invalid taxonomy id."
       toggle_api_key_view: "Show API key view for user"
     activerecord:
       models:

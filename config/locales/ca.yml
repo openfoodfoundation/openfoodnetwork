@@ -86,7 +86,6 @@ ca:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració d'estoc de la productora"
-            on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
       messages:
         blank: "no es pot deixar en blanc"
@@ -755,7 +754,6 @@ ca:
         search: Cerca
       sort:
         pagination:
-          total_html: "<strong>%{total} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
           per_page:
             show: Mostra
             per_page: "%{num} per pàgina"
@@ -2658,7 +2656,6 @@ ca:
   spree_admin_single_enterprise_hint: "Suggeriment: per permetre que la gent us trobi, activeu la vostra visibilitat"
   spree_admin_eg_pickup_from_school: "p. ex: 'Recollida al local del grup de consum'"
   spree_admin_eg_collect_your_order: "p. ex: \"Recolliu la vostra comanda al c/Ample, n. 123'"
-  spree_classification_primary_taxon_error: "El taxó %{taxon} és el principal taxó d'%{product} i no es pot eliminar"
   spree_order_availability_error: "La distribuïdora o el cicle de comanda no pot subministrar els productes de la vostra cistella"
   spree_order_populator_error: "Aquesta distribuïdora o cicle de comanda no pot subministrar tots els productes de la vostra cistella. Si us plau trieu-ne d'altres."
   spree_order_cycle_error: "Seleccioneu un cicle per a aquesta comanda."
@@ -3284,6 +3281,7 @@ ca:
           organització que no estan presents al fitxer carregat.
     order_cycles:
       unsaved_changes: "Teniu canvis sense desar"
+      bulk_save_error: "Ah no! No he pogut desar els canvis."
       create_failure: "No s'ha pogut crear el cicle de comanda"
       update_success: 'S''ha actualitzat el cicle de comanda.'
       update_failure: "No s'ha pogut actualitzar el cicle de comanda"
@@ -3497,7 +3495,6 @@ ca:
     more: "Més"
     new_adjustment: "Nou ajustament"
     new_tax_category: "Nova categoria fiscal"
-    new_taxon: "Nou tàxon"
     new_user: "Nou usuari"
     no_pending_payments: "No hi ha pagaments pendents"
     remove: "Eliminar"
@@ -4326,7 +4323,6 @@ ca:
       key_cleared: "La clau esborrada"
       shipment:
         cannot_ready: "No es pot fer l'enviament."
-      invalid_taxonomy_id: "Identificador de taxonomia no vàlid."
     activerecord:
       models:
         spree/payment:

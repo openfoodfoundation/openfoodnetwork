@@ -68,7 +68,6 @@ ko:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "생산자 제고 관리를 위해 빈 칸으로 남겨야 합니다."
-            on_demand_but_count_on_hand_set: "요구 사항이 있을 경우 빈 칸으로 남겨야 합니다."
             limited_stock_but_no_count_on_hand: "한정된 재고 사항에 따라 명시되어야 합니다."
       messages:
         blank: "빈칸이 될 수 없습니다."
@@ -2556,7 +2555,6 @@ ko:
   spree_admin_single_enterprise_hint: "힌트 : 다른 사용자가 사용자를 찾을 수 있도록 하려면 다음에서 사용자 가시성을 켜십시오."
   spree_admin_eg_pickup_from_school: "예. '초등학교에서 픽업'"
   spree_admin_eg_collect_your_order: "예. '123 Imaginary St, Northcote, 3070번지에서 주문을 받으십시오.'"
-  spree_classification_primary_taxon_error: "분류군%{taxon}은 %{product}의 기본 분류군이며 삭제할 수 없습니다."
   spree_order_availability_error: "대리점 또는 주문 주기가 카트의 제품을 제공할 수 없습니다."
   spree_order_populator_error: "해당 유통업체나 주문 주기가 카트에 있는 모든 제품을 공급할 수는 없습니다. 다른 항목을 선택하십시오."
   spree_order_cycle_error: "이 주문에 대한 주문 주기를 선택하십시오."
@@ -3160,6 +3158,7 @@ ko:
           업로드된 파일에 없는 이 기업의 모든 제품에 대한 재고 수준이 0으로 설정됩니다.
     order_cycles:
       unsaved_changes: "저장되지 않은 변경이 있습니다."
+      bulk_save_error: "이런! 변경 내용을 저장할 수 없습니다."
       create_failure: "주문 주기를 생성하지 못했습니다."
       update_success: '주문 주기가 업데이트 되었습니다.'
       update_failure: "주문 주기를 업데이트하지 못했습니다."
@@ -3350,7 +3349,6 @@ ko:
     more: "추가 정보"
     new_adjustment: "새 조정"
     new_tax_category: "신규 세금 카테고리"
-    new_taxon: "새 분류군"
     new_user: "신규 사용자"
     no_pending_payments: "미지금급"
     remove: "제거"
@@ -4148,7 +4146,6 @@ ko:
       key_cleared: "키 지워짐"
       shipment:
         cannot_ready: "발송을 준비할 수 없습니다."
-      invalid_taxonomy_id: "분류법 ID가 잘못되었습니다."
     activerecord:
       models:
         spree/payment:

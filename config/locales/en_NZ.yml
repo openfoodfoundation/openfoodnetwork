@@ -70,7 +70,6 @@ en_NZ:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
-            on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
       messages:
         blank: "can't be blank"
@@ -2566,7 +2565,6 @@ en_NZ:
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
   spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
   spree_order_cycle_error: "Please choose an order cycle for this order."
@@ -3172,6 +3170,7 @@ en_NZ:
           enterprise that are not present in the uploaded file.
     order_cycles:
       unsaved_changes: "You have unsaved changes"
+      bulk_save_error: "Oh no! I was unable to save your changes."
       create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
       update_failure: "Failed to update order cycle"
@@ -4127,7 +4126,6 @@ en_NZ:
       key_cleared: "Key cleared"
       shipment:
         cannot_ready: "Cannot ready shipment."
-      invalid_taxonomy_id: "Invalid taxonomy id."
     activerecord:
       models:
         spree/payment:

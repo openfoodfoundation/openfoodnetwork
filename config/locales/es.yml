@@ -84,7 +84,6 @@ es:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque estás usando la configuración de estoc de la productora"
-            on_demand_but_count_on_hand_set: "debe estar en blanco si está bajo demanda"
             limited_stock_but_no_count_on_hand: "se debe especificar porque se ha definido estoc limitado"
       messages:
         blank: "no puede estar vacío"
@@ -2623,7 +2622,6 @@ es:
   spree_admin_single_enterprise_hint: "Sugerencia: Para permitir que la gente te encuentre, activa tu visibilidad"
   spree_admin_eg_pickup_from_school: "p.ej. 'Recogida en la Cooperativa'"
   spree_admin_eg_collect_your_order: "p.ej. 'Por favor recoge tu pedido en la Calle del Hormiguero nº3'"
-  spree_classification_primary_taxon_error: "La clasificación %{taxon} es la clasificación primaria de %{product} y no puede ser eliminada"
   spree_order_availability_error: "El Distribuidor o el Ciclo de Pedido no pueden suministrar los productos en su carrito"
   spree_order_populator_error: "Este Distribuidor o Ciclo de Pedido no puede suministrar todos los productos en tu carrito. Por favor, elige otro."
   spree_order_cycle_error: "Elija un ciclo de pedido para este pedido."
@@ -3257,6 +3255,7 @@ es:
           organización no está presente en el archivo subido.
     order_cycles:
       unsaved_changes: "Tienes cambios sin guardar"
+      bulk_save_error: "¡Vaya! No se ha podido guardar los cambios."
       create_failure: "Error al crear el ciclo de pedido"
       update_success: 'Se ha actualizado su ciclo de pedido.'
       update_failure: "Error al actualizar el ciclo de pedido"
@@ -3494,7 +3493,6 @@ es:
     more: "Más"
     new_adjustment: "Nuevo ajuste"
     new_tax_category: "Nueva categoría de impuestos"
-    new_taxon: "Nuevo taxón"
     new_user: "Nuevo usuario"
     no_pending_payments: "No tiene pagos pendientes"
     remove: "Eliminar"
@@ -4309,7 +4307,6 @@ es:
       key_cleared: "valor borrado"
       shipment:
         cannot_ready: "No se puede completar envío"
-      invalid_taxonomy_id: "El identificador de taxonomía es inválido."
     activerecord:
       models:
         spree/payment:

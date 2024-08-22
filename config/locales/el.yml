@@ -103,7 +103,6 @@ el:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "πρέπει να είναι κενό επειδή χρησιμοποιούνται ρυθμίσεις αποθεμάτων παραγωγού"
-            on_demand_but_count_on_hand_set: "πρέπει να παραμείνει κενό αν είναι κατόπιν ζήτησης"
             limited_stock_but_no_count_on_hand: "πρέπει να καθοριστεί επειδή δημιουργεί περιορισμένο απόθεμα"
       messages:
         confirmation: "δεν ταιριάζει "
@@ -811,7 +810,6 @@ el:
         search: Αναζήτηση
       sort:
         pagination:
-          total_html: "<strong>%{total}προϊόντα</strong> βρέθηκαν σύμφωνα με τα κριτήρια της αναζήτησής σας. Εμφανίζονται %{from} στα %{to}."
           per_page:
             show: Εμφάνιση
             per_page: "%{num}ανα σελίδα"
@@ -2859,7 +2857,6 @@ el:
   spree_admin_single_enterprise_hint: "Υπόδειξη: Για να επιτρέψεις στους άλλους να σε βρουν, ενεργοποίησε την ορατότητά σου κάτω"
   spree_admin_eg_pickup_from_school: "π.χ. \"Παραλαβή από το Δημοτικό Σχολείο\""
   spree_admin_eg_collect_your_order: "π.χ. &quot;Παρακαλώ συλλέξτε την παραγγελία σας από 123 Imaginary St, Northcote, 3070&quot;"
-  spree_classification_primary_taxon_error: "Το Taxon %{taxon} είναι το κύριο ταξινομικό του %{product} και δεν μπορεί να διαγραφεί"
   spree_order_availability_error: "Ο κύκλος διανομής ή παραγγελίας δεν μπορεί να παρέχει τα προϊόντα στο καλάθι σας"
   spree_order_populator_error: "Αυτός ο κύκλος διανομέων ή παραγγελιών δεν μπορεί να παρέχει όλα τα προϊόντα στο καλάθι σας. Επιλέξτε άλλο."
   spree_order_cycle_error: "Επιλέξτε έναν κύκλο παραγγελιών για αυτήν την παραγγελία."
@@ -3515,6 +3512,7 @@ el:
           επιχείρησης που δεν υπάρχουν στο ανεβασμένο αρχείο.
     order_cycles:
       unsaved_changes: "Έχετε μη αποθηκευμένες αλλαγές"
+      bulk_save_error: "Ωχ όχι! Δεν μπόρεσα να αποθηκεύσω τις αλλαγές σας."
       create_failure: "Η δημιουργία κύκλου παραγγελίας απέτυχε"
       update_success: 'Ο κύκλος παραγγελιών σας ενημερώθηκε.'
       update_failure: "Η ενημέρωση του κύκλου παραγγελίας απέτυχε"
@@ -3738,7 +3736,6 @@ el:
     more: "Περισσότερα"
     new_adjustment: "Νέα προσαρμογή"
     new_tax_category: "Νέα Φορολογική Κατηγορία"
-    new_taxon: "Νέο ταξί"
     new_user: "Νέος χρήστης"
     no_pending_payments: "Δεν υπάρχουν πληρωμές σε εκκρεμότητα"
     remove: "Αφαίρεση"
@@ -4599,7 +4596,6 @@ el:
       key_cleared: "Το κλειδί διαγράφηκε"
       shipment:
         cannot_ready: "Δεν είναι έτοιμη η αποστολή."
-      invalid_taxonomy_id: "Μη έγκυρο αναγνωριστικό ταξινόμησης."
       toggle_api_key_view: "Εμφάνιση προβολής κλειδιού API για τον χρήστη"
     activerecord:
       models:

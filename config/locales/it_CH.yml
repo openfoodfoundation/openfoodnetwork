@@ -68,7 +68,6 @@ it_CH:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "deve restare vuoto perché si stanno utilizzando le impostazioni di magazzino del produttore"
-            on_demand_but_count_on_hand_set: "deve restare vuoto se su richiesta"
             limited_stock_but_no_count_on_hand: "deve essere specificato a causa di una disponibilità limitata"
       messages:
         blank: "non può essere lasciato vuoto"
@@ -2526,7 +2525,6 @@ it_CH:
   spree_admin_single_enterprise_hint: "Suggerimento: Per permettere alle persone di trovarti, abilita la tua visibilità sotto"
   spree_admin_eg_pickup_from_school: "es. \"Ritiro presso la Cooperativa\""
   spree_admin_eg_collect_your_order: "es. \"Prego ritira il tuo ordine in via Roma 45\""
-  spree_classification_primary_taxon_error: "La classificazione %{taxon} è la classificazione primaria di %{product} e non può essere cancellata"
   spree_order_availability_error: "Il distributore o il ciclo di richiesta non possono rifornire i prodotti nel tuo carrello"
   spree_order_populator_error: "Il distributore o il ciclo di richieste non hanno disponibilità di alcuni prodotti nel tuo carrello. Per favore scegline un altro."
   spree_order_cycle_error: "Per favore seleziona un ciclo di richieste per questa gentile richiesta."
@@ -3146,6 +3144,7 @@ it_CH:
           impresa che non sono presenti nel file caricato.
     order_cycles:
       unsaved_changes: "Hai modifiche non salvate"
+      bulk_save_error: "Oh no! non siamo riusciti a salvare le tue modifiche"
       create_failure: "Impossibile creare il ciclo dell'ordine"
       update_success: 'Il tuo ciclo di richieste è stato aggiornato'
       update_failure: "Impossibile aggiornare il ciclo dell'ordine"
@@ -3384,7 +3383,6 @@ it_CH:
     more: "Di più"
     new_adjustment: "Nuovo aggiustamento"
     new_tax_category: "Nuova Categoria imposta"
-    new_taxon: "Nuova tassonomia"
     new_user: "Nuovo utente"
     no_pending_payments: "Nessun pagamento in sospeso"
     remove: "Rimuovi"
@@ -4181,7 +4179,6 @@ it_CH:
       key_cleared: "Chiave cancellata"
       shipment:
         cannot_ready: "Impossibile spedizione immediata."
-      invalid_taxonomy_id: "ID tassonomia non valido."
     activerecord:
       models:
         spree/payment:

@@ -102,7 +102,6 @@ de_DE:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "muss leer sein, da die Einstellungen des Produzentenbestands verwendet werden"
-            on_demand_but_count_on_hand_set: "muss leer sein, wenn unbegrenzt verfügbar oder die Produktion auf Bestellung erfolgt"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände verfügbar sind"
       messages:
         confirmation: "stimmt nicht mit %{attribute} überein"
@@ -772,7 +771,6 @@ de_DE:
         search: Suche
       sort:
         pagination:
-          total_html: "<strong>%{total} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
             per_page: "%{num} pro Seite"
@@ -2781,7 +2779,6 @@ de_DE:
   spree_admin_single_enterprise_hint: "Tipp: Damit andere Nutzer Sie finden können, aktivieren Sie Ihre Sichtbarkeit unter:"
   spree_admin_eg_pickup_from_school: "z. B. \"Abholung von der Grundschule\""
   spree_admin_eg_collect_your_order: "z. B. 'Bitte holen Sie Ihre Bestellung in der Gartenstraße 123 in 30701 Nordwestheim ab.'"
-  spree_classification_primary_taxon_error: "Kategorie %{taxon} ist die primäre Kategorie von %{product} und kann nicht gelöscht werden."
   spree_order_availability_error: "Verteilstelle oder Bestellzyklus kann die Produkte in Ihrem Warenkorb nicht liefern"
   spree_order_populator_error: "Diese Verteilstelle oder dieser Bestellzyklus kann nicht alle Produkte aus Ihrem Warenkorb liefern. Bitte ändern Sie Ihre Auswahl."
   spree_order_cycle_error: "Bitte wählen Sie einen Bestellzyklus für diese Bestellung aus."
@@ -3453,6 +3450,7 @@ de_DE:
           die in der hochgeladenen Datei nicht vorhanden sind, auf Null gesetzt.
     order_cycles:
       unsaved_changes: "Sie haben nicht gespeicherte Änderungen."
+      bulk_save_error: "Ihre Änderungen konnten leider nicht gespeichert werden."
       create_failure: "Fehler beim Erstellen des Bestellzyklus."
       update_success: 'Ihr Bestellzyklus wurde aktualisiert.'
       update_failure: "Fehler beim Aktualisieren des Bestellzyklus."
@@ -3674,7 +3672,6 @@ de_DE:
     more: "Mehr"
     new_adjustment: "Neue Anpassung"
     new_tax_category: "Neue Steuerkategorie"
-    new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"
     no_pending_payments: "Keine ausstehenden Zahlungen."
     remove: "Löschen"
@@ -4520,7 +4517,6 @@ de_DE:
       key_cleared: "Schlüssel gelöscht"
       shipment:
         cannot_ready: "Versand nicht möglich."
-      invalid_taxonomy_id: "Ungültige Kategorie-ID"
       toggle_api_key_view: "API-Schlüssel dem Benutzer anzeigen"
     activerecord:
       models:

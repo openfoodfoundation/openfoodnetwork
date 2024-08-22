@@ -68,7 +68,6 @@ tr:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "Boş bırakılmalı çünkü üretici stok ayarları kullanılıyor"
-            on_demand_but_count_on_hand_set: "talep üzerine is boş bırakılmalıdır"
             limited_stock_but_no_count_on_hand: "Sınırlı stok durumundan dolayı belirtilmeli"
       messages:
         blank: "boş olamaz"
@@ -2417,7 +2416,6 @@ tr:
   spree_admin_single_enterprise_hint: "İpucu: İnsanların sizi bulmasına izin vermek için 'Görünür' olmayı ayarlamayı unutmayın:"
   spree_admin_eg_pickup_from_school: "Örn. 'Teslimat noktası: Moda İlkokulu Bahçesi'"
   spree_admin_eg_collect_your_order: "Örn. Lütfen siparişinizi Moda Cad. No:17 Temiz Dükkan'dan teslim alınız."
-  spree_classification_primary_taxon_error: "%{taxon} cinsi, %{product}ürününün birincil cinsidir ve silinemez"
   spree_order_availability_error: "Dağıtımcı veya sipariş dönemi sepetinizdeki ürünleri tedarik edemiyor"
   spree_order_populator_error: "Bu dağıtımcı veya sipariş dönemi, sepetinizdeki tüm ürünleri tedarik edemiyor. Lütfen başka birini seçin."
   spree_order_cycle_error: "Bu sipariş için bir sipariş dönemi seçin."
@@ -3028,6 +3026,7 @@ tr:
           tüm ürünlerin stok seviyelerini sıfır olarak ayar.
     order_cycles:
       unsaved_changes: "kaydedilmemiş değişiklikleriniz var"
+      bulk_save_error: "Pardon! Yaptığınız değişiklikleri kaydedemedim."
       create_failure: "Sipariş dönemi oluşturulamadı"
       update_success: 'Sipariş döneminiz güncellendi.'
       update_failure: "Sipariş dönemi güncellenemedi"
@@ -3241,7 +3240,6 @@ tr:
     more: "Daha Fazla"
     new_adjustment: "Yeni düzenleme"
     new_tax_category: "Yeni Vergi Kategorisi"
-    new_taxon: "Yeni kategori"
     new_user: "Yeni kullanıcı"
     no_pending_payments: "Bekleyen ödeme yok"
     remove: "Kaldır"
@@ -4035,7 +4033,6 @@ tr:
       key_cleared: "Anahtar temizlendi"
       shipment:
         cannot_ready: "Gönderim hazırlanamıyor."
-      invalid_taxonomy_id: "Geçersiz kategori kimliği."
     activerecord:
       models:
         spree/payment:

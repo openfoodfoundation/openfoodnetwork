@@ -1597,7 +1597,6 @@ sv:
   spree_admin_single_enterprise_hint: "Tips: För att folk skall hitta dig lättare, slå på din reklam under"
   spree_admin_eg_pickup_from_school: "t.ex. \"Upphämtning från grundskolan\""
   spree_admin_eg_collect_your_order: "t.ex. \"Var snäll och samla din beställning från Exempelgatan,  100 00 Stad '"
-  spree_classification_primary_taxon_error: "Gruppen %{taxon} är den primära gruppen för %{product} och kan inte raderas"
   spree_order_availability_error: "Distributören eller beställningsomgången kan inte leverera produkterna i din kundvagn"
   spree_order_populator_error: "Denna distributör eller beställningsomgång kan inte leverera alla produkter i din kundvagn. Vänligen välj en annan."
   spree_order_populator_availability_error: "Den produkten är inte tillgänglig från den valda distributören eller denna beställningsomgång."
@@ -2088,6 +2087,7 @@ sv:
           Detta kommer att ställa lagersaldot till noll på alla produkter för detta företag, som inte är närvarande i den uppladdade filen.
     order_cycles:
       unsaved_changes: "Du har osparade ändringar"
+      bulk_save_error: "Å nej! Jag kunde inte spara dina ändringar."
       update_success: 'Din beställningsomgång har uppdaterats.'
       no_distributors: Det finns inga distributörer i denna beställningsomgång. Den kommer inte att vara synlig för kunderna tills du lägger till en distributör. Vill du fortsätta och spara denna beställningsomgång? '
     enterprises:

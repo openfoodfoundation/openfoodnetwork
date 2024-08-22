@@ -65,7 +65,6 @@ nl_BE:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "moet leeg zijn omdat u de instellingen voor de voorraad van de producent gebruikt"
-            on_demand_but_count_on_hand_set: "moet leeg zijn op aanvraag"
             limited_stock_but_no_count_on_hand: "moet worden opgegeven omdat een beperkte voorraad wordt geforceerd"
       messages:
         blank: "kan niet leeg zijn"
@@ -2296,7 +2295,6 @@ nl_BE:
   spree_admin_single_enterprise_hint: "Hint: Om het voor mensen mogelijk te maken je te vinden, zet je zichtbaarheid aan"
   spree_admin_eg_pickup_from_school: "bv. 'Ophaling op een basisschool'"
   spree_admin_eg_collect_your_order: "bv. 'Verzamel alsjeblieft je bestelling op de stationsstraat 123, 9000 Gent'"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} is de eerste taxon van %{product} en kan niet verwijderd worden."
   spree_order_availability_error: "De verdeler of de bestelcyclus kan de producten in je winkelwagentje niet toevoegen"
   spree_order_populator_error: "De verdeler of de bestelcyclus kan al de producten in je winkelwagentje niet toevoegen. Gelieve een andere te kiezen."
   spree_order_populator_availability_error: "Dit produkt is niet toegelaten op de gekozen verdeler of bestelcyclus."
@@ -2888,6 +2886,7 @@ nl_BE:
           bedrijf voor de produkten niet aanwezig in deze file
     order_cycles:
       unsaved_changes: "U heeft niet opgeslagen wijzigingen"
+      bulk_save_error: "Ah nee! Ik kon onmogelijk uw wijzigingen opslaan."
       create_failure: "Het maken van de bestelcyclus is mislukt"
       update_success: 'Uw bestelcyclus is bijgewerkt'
       update_failure: "De bijwerking van de bestelcyclus is mislukt"
@@ -3700,7 +3699,6 @@ nl_BE:
       key_cleared: "Sleutel gewist"
       shipment:
         cannot_ready: "Kan levering niet klaarmaken"
-      invalid_taxonomy_id: "Onjuiste taxonomie id."
   components:
     search_input:
       placeholder: Zoeken

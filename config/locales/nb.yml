@@ -108,7 +108,6 @@ nb:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "må være tomt fordi du bruker produsentens lagerinnstillinger"
-            on_demand_but_count_on_hand_set: "må være tom hvis på forespørsel"
             limited_stock_but_no_count_on_hand: "må spesifiseres fordi det tvinger begrenset lager"
       messages:
         confirmation: "samsvarer ikke med %{attribute}"
@@ -814,7 +813,6 @@ nb:
         search: Søk
       sort:
         pagination:
-          total_html: "<strong>%{total} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
           per_page:
             show: Vis
             per_page: "%{num} per side"
@@ -2886,7 +2884,6 @@ nb:
   spree_admin_single_enterprise_hint: "Hint: For å hjelpe folk til å finne deg, skru på din synlighet under"
   spree_admin_eg_pickup_from_school: "f.eks. 'Henting ved Sammfunnshuset'"
   spree_admin_eg_collect_your_order: "f.eks. 'Vennligst hente din bestilling fra 123 Matveien, Nesodden, 3070'"
-  spree_classification_primary_taxon_error: "Gruppe %{taxon} er hovedgruppe til %{product} og kan ikke slettes"
   spree_order_availability_error: "Distributør eller bestillingsrunde kan ikke levere produktene i handlekurven din"
   spree_order_populator_error: "Den distributøren eller bestillingsrunden kan ikke levere alle produktene i handlekurven din. Vennligst velg en annen."
   spree_order_cycle_error: "Vennligst velg en bestillingsrunde for denne bestillingen."
@@ -3550,6 +3547,7 @@ nb:
           Dette vil sette varebeholdning til null på alle produkter for denne virksomheten som ikke er til stede i den nedlastede filen.
     order_cycles:
       unsaved_changes: "Du har ulagrede endringer"
+      bulk_save_error: "Å nei! Jeg kunne ikke lagre endringene dine."
       create_failure: "Kunne ikke opprette bestillingsrunde"
       update_success: 'Din bestillingsrunde har blitt oppdatert.'
       update_failure: "Kunne ikke oppdatere bestillingsrunde"
@@ -3771,7 +3769,6 @@ nb:
     more: "Mer"
     new_adjustment: "Ny justering"
     new_tax_category: "Ny avgiftskategori"
-    new_taxon: "Ny kategori"
     new_user: "Ny bruker"
     no_pending_payments: "Ingen ventende betalinger"
     remove: "Fjern"
@@ -4634,7 +4631,6 @@ nb:
       key_cleared: "Nøkkelen ble fjernet"
       shipment:
         cannot_ready: "Kan ikke gjøre klar forsendelse."
-      invalid_taxonomy_id: "Ugyldig kategori-id."
       toggle_api_key_view: "Vis API-nøkkelvisning for bruker"
     activerecord:
       models:

@@ -68,7 +68,6 @@ pt:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "deve ser vazio dado estar a usar as configurações do produtor"
-            on_demand_but_count_on_hand_set: "deve ser vazio dado estar sob encomenda"
             limited_stock_but_no_count_on_hand: "deve ser definido dado não estar sob encomenda"
       messages:
         blank: "não pode ser vazio"
@@ -2301,7 +2300,6 @@ pt:
   spree_admin_single_enterprise_hint: "Dica: Para permitir que as pessoas te encontrem, ative sua visibilidade em"
   spree_admin_eg_pickup_from_school: "ex: \"Levantar na Escola Primária\""
   spree_admin_eg_collect_your_order: "ex: \"Por favor levante a sua encomenda na Rua Imaginária, nº 123, 3070\""
-  spree_classification_primary_taxon_error: "A Taxon %{taxon}é a taxon primária de %{product} e não pode ser apagada."
   spree_order_availability_error: "O distribuidor ou ciclo de encomendas não pode fornecer os produtos do seu carrinho"
   spree_order_populator_error: "Esse distribuidor ou ciclo de encomendas não pode fornecer todos os produtos do seu carrinho. Por favor escolha outro."
   spree_order_populator_availability_error: "Esse produto não está disponível no distribuidor ou ciclo de encomendas selecionado."
@@ -2864,6 +2862,7 @@ pt:
           Isto colocará a zero o stock de todos os produtos desta organização que não estejam presentes no ficheiro carregado.
     order_cycles:
       unsaved_changes: "Tem alterações por guardar"
+      bulk_save_error: "Oh não! Não conseguimos guardar as suas alterações."
       create_failure: "Falhou a criação do ciclo de encomendas"
       update_success: 'O seu ciclo de encomendas foi actualizado.'
       update_failure: "Falhou a atualização do ciclo de encomendas"

@@ -108,7 +108,6 @@ hu:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "üresnek kell lennie, mert a termelői készlet beállításait használja"
-            on_demand_but_count_on_hand_set: "igény esetén üresnek kell lennie"
             limited_stock_but_no_count_on_hand: "meg kell adni, mert korlátozott a készlet"
       messages:
         confirmation: "nem egyezik %{attribute}"
@@ -814,7 +813,6 @@ hu:
         search: Keresés
       sort:
         pagination:
-          total_html: "<strong>%{total} terméket </strong> találtunk a keresési feltételek alapján. %{from}-től %{to}-ig mutat."
           per_page:
             show: Mutasd
             per_page: "%{num}per oldal"
@@ -2881,7 +2879,6 @@ hu:
   spree_admin_single_enterprise_hint: "Tipp: Ha szeretnéd, hogy mások megtaláljanak, kapcsold be a nyilvános beállítást:"
   spree_admin_eg_pickup_from_school: "például. \"Átvétel az Általános iskolából\""
   spree_admin_eg_collect_your_order: "például. \"Kérjük, vegye át rendelését a 123 Imaginary St, Northcote, 3070 címről\""
-  spree_classification_primary_taxon_error: "A %{taxon} taxon a %{product} elsődleges taxonja, és nem törölhető"
   spree_order_availability_error: "A forgalmazó vagy a rendelési ciklus nem tudja szállítani a kosárban lévő termékeket"
   spree_order_populator_error: "Ez a forgalmazó vagy a rendelési ciklus nem tudja a kosárban lévő összes terméket szállítani. Kérjük, válasszon másikat."
   spree_order_cycle_error: "Kérjük, válassz rendelési ciklust ehhez a rendeléshez."
@@ -3550,6 +3547,7 @@ hu:
           amely nem szerepel a feltöltött fájlban.
     order_cycles:
       unsaved_changes: "Nem mentett módosításaid vannak"
+      bulk_save_error: "Hopsz! Nem tudtuk menteni a módosításokat."
       create_failure: "Nem sikerült létrehozni a rendelési ciklust"
       update_success: 'Megrendelési ciklusod frissült.'
       update_failure: "Nem sikerült frissíteni a rendelési ciklust"
@@ -3773,7 +3771,6 @@ hu:
     more: "Több"
     new_adjustment: "Új beállítás"
     new_tax_category: "Új adókategória"
-    new_taxon: "Új taxon"
     new_user: "Új felhasználó"
     no_pending_payments: "Nincsenek függőben lévő kifizetések"
     remove: "Eltávolítás"
@@ -4636,7 +4633,6 @@ hu:
       key_cleared: "Kulcs törölve"
       shipment:
         cannot_ready: "Nem áll készen a szállításra."
-      invalid_taxonomy_id: "Érvénytelen termékkategória azonosító."
       toggle_api_key_view: "API-kulcs nézet megjelenítése a felhasználó számára"
     activerecord:
       models:

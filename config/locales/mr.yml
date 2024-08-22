@@ -102,7 +102,6 @@ mr:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "उत्पादक स्टॉक सेटिंग्ज वापरल्याने रिक्त असणे आवश्यक आहे"
-            on_demand_but_count_on_hand_set: "मागणी केली असल्यास रिक्त असणे आवश्यक आहे"
             limited_stock_but_no_count_on_hand: "मर्यादित स्टॉकची सक्ती केल्यामुळे निर्दिष्ट करणे आवश्यक आहे"
       messages:
         confirmation: "%{attribute} जुळत नाही"
@@ -764,7 +763,6 @@ mr:
         search: शोधा
       sort:
         pagination:
-          total_html: "तुमच्या शोध निकषांसाठी <strong>%{total} उत्पादने</strong> आढळली. %{from} ते %{to} दाखवत आहे."
           per_page:
             show: दाखवा
             per_page: "%{num} प्रति पृष्ठ"
@@ -2697,7 +2695,6 @@ mr:
   spree_admin_single_enterprise_hint: "सूचना: लोकांना तुम्हाला शोधण्याची अनुमती देण्यासाठी, या अंतर्गत तुमची दृश्यमानता चालू करा"
   spree_admin_eg_pickup_from_school: "उदा. 'प्राथमिक शाळेतून पिक-अप'"
   spree_admin_eg_collect_your_order: "उदा. 'कृपया 123 सरदार वल्लभभाई पटेल रोड, सुरत, 301070 वरून तुमची ऑर्डर प्राप्त करा'"
-  spree_classification_primary_taxon_error: "टॅक्सन %{taxon} हा %{product} चा प्राथमिक टॅक्सन आहे आणि तो हटवला जाऊ शकत नाही"
   spree_order_availability_error: "वितरक किंवा ऑर्डर सायकल तुमच्या कार्ट मधील उत्पादने पुरवू शकत नाही"
   spree_order_populator_error: "तो वितरक किंवा ऑर्डर सायकल तुमच्या कार्टमधील सर्व उत्पादने पुरवू शकत नाही. कृपया दुसरा वितरक किंवा दुसरी ऑर्डर सायकल निवडा."
   spree_order_cycle_error: "कृपया या ऑर्डरसाठी ऑर्डर सायकल निवडा."
@@ -3361,6 +3358,7 @@ mr:
           सर्व उत्पादनांचा साठा शून्यावर सेट करेल.
     order_cycles:
       unsaved_changes: "तुमच्याकडे सेव्ह न केलेले बदल आहेत"
+      bulk_save_error: "क्षमस्व ! तुमचे बदल मी सेव्ह करू शकलो नाही."
       create_failure: "ऑर्डर सायकल तयार करण्यात अयशस्वी"
       update_success: 'तुमची ऑर्डर सायकल अपडेट केली गेली आहे.'
       update_failure: "ऑर्डर सायकल अपडेट करण्यात अयशस्वी"
@@ -3583,7 +3581,6 @@ mr:
     more: "अधिक"
     new_adjustment: "नवीन समायोजन"
     new_tax_category: "नवीन कर श्रेणी"
-    new_taxon: "नवीन टॅक्सन"
     new_user: "नवीन वापरकर्ता"
     no_pending_payments: "कोणतीही प्रलंबित देयके नाहीत"
     none: "कोणतेही नाही"
@@ -4419,7 +4416,6 @@ mr:
       key_cleared: "Key क्लिअर केली"
       shipment:
         cannot_ready: "शिपमेंट तयार करू शकत नाही."
-      invalid_taxonomy_id: "अवैध वर्गीकरण आयडी."
       toggle_api_key_view: "वापरकर्त्यासाठी API key दृश्य दर्शवा"
     activerecord:
       models:

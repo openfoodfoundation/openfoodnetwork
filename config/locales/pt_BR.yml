@@ -66,7 +66,6 @@ pt_BR:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "deve estar em branco porque está usando configurações de estoque do produtor"
-            on_demand_but_count_on_hand_set: "deve ficar em branco se sob demanda"
             limited_stock_but_no_count_on_hand: "deve ser especificado porque está forçando o estoque limitado"
       messages:
         blank: "Não pode ser vazio"
@@ -2405,7 +2404,6 @@ pt_BR:
   spree_admin_single_enterprise_hint: "Dica: Para permitir que as pessoas te encontrem, ative sua visibilidade em"
   spree_admin_eg_pickup_from_school: "ex: 'Buscar na Escola'"
   spree_admin_eg_collect_your_order: "ex: 'Por favor, colete seu pedido na Rua dos Sonhos, 123, casa 5, Bairro Liberdade"
-  spree_classification_primary_taxon_error: "O táxon %{taxon} é o táxon principal de %{product} e não pode ser excluído"
   spree_order_availability_error: "O distribuidor ou o ciclo de pedidos não pode fornecer os produtos no seu carrinho"
   spree_order_populator_error: "Distribuidor ou ciclo de pedidos não pode fornecer os produtos no seu carrinho. Por favor, escolha outro."
   spree_order_cycle_error: "Favor escolher um ciclo de pedidos para este pedido"
@@ -3012,6 +3010,7 @@ pt_BR:
           iniciativa que não está presente no arquivo carregado.
     order_cycles:
       unsaved_changes: "Você possui alterações não salvas"
+      bulk_save_error: "Ah não! Não consegui salvar suas alterações."
       create_failure: "Falha ao criar o ciclo do pedidos"
       update_success: 'O seu ciclo de pedidos foi atualizado.'
       update_failure: "Falha ao atualizar o ciclo do pedidos"
@@ -3244,7 +3243,6 @@ pt_BR:
     more: "Mais"
     new_adjustment: "Novo ajuste"
     new_tax_category: "Nova Categoria de Taxa"
-    new_taxon: "Nova taxonomia"
     new_user: "Novo usuário"
     no_pending_payments: "Nenhum pagamento pendente"
     remove: "Remover"
@@ -4026,7 +4024,6 @@ pt_BR:
       key_cleared: "Chave apagada"
       shipment:
         cannot_ready: "Não é possível completar a entrega."
-      invalid_taxonomy_id: "Id invalido de taxonomia"
     activerecord:
       models:
         spree/payment:

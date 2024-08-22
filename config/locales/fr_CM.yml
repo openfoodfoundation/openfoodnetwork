@@ -68,7 +68,6 @@ fr_CM:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
-            on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
       messages:
         blank: "Champ obligatoire"
@@ -2471,7 +2470,6 @@ fr_CM:
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
   spree_admin_eg_pickup_from_school: "ex : \"Retrait des produits à l'Ecole Marimati / Au Café du coin / chez Babette / ...\""
   spree_admin_eg_collect_your_order: "ex : \"Veuillez récupérer votre commande au 34 rue Victor Hugo, 75018 Paris\""
-  spree_classification_primary_taxon_error: "La catégorie %{taxon}est utilisée par %{product} et ne peut être supprimée"
   spree_order_availability_error: "Le distributeur ne peut fournir les produits de votre panier pour ce cycle de vente."
   spree_order_populator_error: "Le distributeur ne peut fournir tous les produits de votre panier pour ce cycle de vente. Merci de choisir un autre distributeur ou un autre cycle de vente."
   spree_order_cycle_error: "Veuillez sélectionner une option pour cette commande."
@@ -3111,6 +3109,7 @@ fr_CM:
           entreprise pour les produits non présents dans ce fichier.
     order_cycles:
       unsaved_changes: "Des modifications n'ont pas été sauvegardées"
+      bulk_save_error: "Oups ! Nous n'avons pas réussi à sauvegarder vos modification :-("
       create_failure: "La création du cycle de vente a échoué"
       update_success: 'Votre cycle de vente a été mis à jour.'
       update_failure: "La mise à jour du cycle de vente à échoué"
@@ -3349,7 +3348,6 @@ fr_CM:
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
     new_tax_category: "Nouvelle catégorie de taxe"
-    new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"
     no_pending_payments: "Aucun paiement en attente."
     remove: "Supprimer"
@@ -4147,7 +4145,6 @@ fr_CM:
       key_cleared: "Clé supprimée"
       shipment:
         cannot_ready: "La livraison ne peut pas être préparée."
-      invalid_taxonomy_id: "L'identifiant de la catégorie n'est pas valide."
     activerecord:
       models:
         spree/payment:

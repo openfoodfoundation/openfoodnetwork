@@ -61,7 +61,6 @@ fil_PH:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "ay dapat blanko sapagkat ginagamit ang stock settings ng producer"
-            on_demand_but_count_on_hand_set: "ay dapat blanko kung on demand"
             limited_stock_but_no_count_on_hand: "ay dapat matukoy sapagkat ipipilit ang limitadong stock"
       messages:
         blank: "hindi maaaring iwanang blanko"
@@ -2246,7 +2245,6 @@ fil_PH:
   spree_admin_single_enterprise_hint: "payo: para mahanap ka ng ibang tao, i-turn on ang visibility sa ilalim ng"
   spree_admin_eg_pickup_from_school: "hal. 'Pick-up mula sa Primary School'"
   spree_admin_eg_collect_your_order: "hal. 'Kolektahin ang inyong order sa 123 Kapayapaan St., Tobias Fornier, Antique 5716'"
-  spree_classification_primary_taxon_error: "ang Tax sa%{taxon}ay ang pangunahing tax ng %{product}at hindi maaaring tanggalin"
   spree_order_availability_error: "ang distributor o order cycle ay hindi kayang ibigay ang mga produkto sa inyong cart"
   spree_order_populator_error: "ang distributor o order cycle na ito ay hindi kayang ibigay lahat ng mga produkto sa inyong cart. pumili ng iba."
   spree_order_populator_availability_error: "ang produktong ito ay hindi ngayon available mula sa napiling distributor o order cycle."
@@ -2830,6 +2828,7 @@ fil_PH:
           enterprise na hindi makikita sa inupload na file.
     order_cycles:
       unsaved_changes: "May mga pagbabago na hindi na-save"
+      bulk_save_error: "paumanhin! hindi ko na-save ang mga pagbabagong ginawa mo."
       create_failure: "hindi nagtagumpay sa paggawa ng order cycle"
       update_success: 'ang iyong order cycle ay na-update na'
       update_failure: "hindi nagtagumpay sa pag-update ng order cycle"
@@ -3671,7 +3670,6 @@ fil_PH:
       key_cleared: "binura ang key"
       shipment:
         cannot_ready: "hindi maihanda ang kargamento"
-      invalid_taxonomy_id: "hindi valid na taxonomy id."
     unit: yunit
   components:
     search_input:

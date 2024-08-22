@@ -84,7 +84,6 @@ ar:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "يجب أن تكون فارغة بسبب استخدام إعدادات المخزون للمنتج"
-            on_demand_but_count_on_hand_set: "يجب أن تكون فارغة إذا كانت عند الطلب"
             limited_stock_but_no_count_on_hand: "يجب ان تكون تحديد بسبب فرض مدودية المخزون"
       messages:
         blank: "لا يمكن أن تكون فارغة"
@@ -2653,7 +2652,6 @@ ar:
   spree_admin_single_enterprise_hint: "لمحة: للسماح للأشخاص بالعثور عليك ، قم بتشغيل الرؤية الخاصة بك أسفل"
   spree_admin_eg_pickup_from_school: "على سبيل المثال. &quot;البيك اب من المدرسة الابتدائية&quot;"
   spree_admin_eg_collect_your_order: "على سبيل المثال. &quot;يرجى جمع طلبك من 123 Imaginary St، Northcote ، 3070&quot;"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} هو التصنيف الأساسي %{product} ولا يمكن حذفه"
   spree_order_availability_error: "لا يمكن لموزع أو دورة طلب توفير المنتجات في سلة التسوق"
   spree_order_populator_error: "لا يمكن لهذا الموزع أو دورة الطلب توفير جميع المنتجات في سلة التسوق. الرجاء اختيار آخر."
   spree_order_cycle_error: "الرجاء اختيار دورة الطلب لهذا الطلب."
@@ -3303,6 +3301,7 @@ ar:
           المؤسسة غير موجودة في الملف الذي تم تحميله.
     order_cycles:
       unsaved_changes: "لم تحفظ التغييرات"
+      bulk_save_error: "عذرا لا! لم أستطع حفظ تغييراتك."
       create_failure: "فشل في تكوين دورة الطلب"
       update_success: 'تم تحديث دورة الطلب.'
       update_failure: "فشل في تحديث دورة الطلب"
@@ -3620,7 +3619,6 @@ ar:
     more: "أكثر"
     new_adjustment: "تعديل جديد"
     new_tax_category: "فئة ضريبية جديدة"
-    new_taxon: "اصنوفة جديدة"
     new_user: "مستخدم جديد"
     no_pending_payments: "لا توجد دفعات معلقة"
     remove: "إزالة"
@@ -4458,7 +4456,6 @@ ar:
       key_cleared: "تم مسح المفتاح"
       shipment:
         cannot_ready: "لا يمكن تجهيز الشحنة"
-      invalid_taxonomy_id: "معرف التصنيف غير صالح."
       toggle_api_key_view: "إظهار عرض مفتاح API للمستخدم"
     activerecord:
       models:

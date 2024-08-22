@@ -63,7 +63,6 @@ pl:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "musi być puste, ponieważ używane są ustawienia zapasów producenta"
-            on_demand_but_count_on_hand_set: "musi być puste, jeśli na żądanie"
             limited_stock_but_no_count_on_hand: "należy określić, z powodu ograniczonych zapasów"
       messages:
         blank: "nie może być puste"
@@ -2175,7 +2174,6 @@ pl:
   spree_admin_single_enterprise_hint: "Wskazówka: aby inni mogli Cię znaleźć, włącz widoczność poniżej"
   spree_admin_eg_pickup_from_school: "np: 'Odbiór w Domu Kultury Krąg'"
   spree_admin_eg_collect_your_order: "np. „Proszę odebrać zamówienie pod adresem Słowackiego 19, Poznań”"
-  spree_classification_primary_taxon_error: "Takson %{taxon} jest głównym taksonem %{product} i nie można go usunąć"
   spree_order_availability_error: "Dystrybutor lub cykl zamówień nie mogą dostarczyć produktów w Twoim koszyku"
   spree_order_populator_error: "Ten dystrybutor lub cykl zamówień nie może dostarczyć wszystkich produktów w Twoim koszyku. Proszę wybierz inny."
   spree_order_populator_availability_error: "Ten produkt nie jest dostępny u wybranego dystrybutora lub cyklu zamówień."
@@ -3659,7 +3657,6 @@ pl:
       key_cleared: "Klucz wyczyszczony"
       shipment:
         cannot_ready: "Nie można przygotować wysyłki."
-      invalid_taxonomy_id: "Nieprawidłowy identyfikator taksonomii."
     activerecord:
       models:
         spree/payment:

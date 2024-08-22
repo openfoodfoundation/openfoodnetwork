@@ -106,7 +106,6 @@ ru:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "должно быть пустым, потому что используются настройки склада производителя"
-            on_demand_but_count_on_hand_set: "должен быть пустым, если по требованию'"
             limited_stock_but_no_count_on_hand: "необходимо указать, поскольку принудительный ограниченный запас"
       messages:
         confirmation: "не соответствует %{attribute}"
@@ -797,7 +796,6 @@ ru:
         search: Поиск
       sort:
         pagination:
-          total_html: "<strong>%{total} товаров</strong> найдено по вашим критериям поиска. Показаны %{from} до %{to} ."
           per_page:
             show: Показывать
             per_page: "%{num} на странице"
@@ -2844,7 +2842,6 @@ ru:
   spree_admin_single_enterprise_hint: "Подсказка: чтобы люди могли вас найти, включите видимость в"
   spree_admin_eg_pickup_from_school: "напр. 'Самовывоз у школы'"
   spree_admin_eg_collect_your_order: "напр. 'Пожалуйста, заберите свой заказ по адресу: ул. Школьная д.1, Воронеж'"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Дистрибьютор или цикл заказа не могут поставить продукты в Вашей корзине"
   spree_order_populator_error: "Этот дистрибьютор или цикл заказа не может поставить все продукты в Вашей корзине. Пожалуйста, выберите другой."
   spree_order_cycle_error: "Выберите цикл для этого заказа."
@@ -3516,6 +3513,7 @@ ru:
           предприятия, которых нет в загруженном файле.
     order_cycles:
       unsaved_changes: "Есть не сохраненные изменения"
+      bulk_save_error: "Ой! Не удалось сохранить  Ваши изменения"
       create_failure: "Не удалось создать цикл заказа"
       update_success: 'Ваш цикл заказа был обновлен.'
       update_failure: "Не удалось обновить цикл заказа"
@@ -3786,7 +3784,6 @@ ru:
     more: "Ещё"
     new_adjustment: "Новая корректировка"
     new_tax_category: "Новая Налоговая Категория"
-    new_taxon: "Новая таксономия"
     new_user: "Новый пользователь"
     no_pending_payments: "Нет ожидающих платежей"
     remove: "Удалить"
@@ -4645,7 +4642,6 @@ ru:
       key_cleared: "Ключ очищен"
       shipment:
         cannot_ready: "Не может готовая отгрузка."
-      invalid_taxonomy_id: "Неверный ID таксономии."
       toggle_api_key_view: "Показать ключ API для пользователя"
     activerecord:
       models:
