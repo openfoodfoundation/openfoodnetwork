@@ -313,6 +313,13 @@ class OrderCycle < ApplicationRecord
     coordinator.sells == 'own'
   end
 
+  def same_datetime_value(attribute, string)
+    return true if self[attribute].blank? && string.blank?
+    return false if self[attribute].blank? || string.blank?
+
+    DateTime.parse(string).to_fs(:short) == self[attribute]&.to_fs(:short)
+  end
+
   private
 
   def opening?
