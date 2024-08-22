@@ -148,16 +148,20 @@ class OrderCycle < ApplicationRecord
 
   # Find the earliest closing times for each distributor in an active order cycle, and return
   # them in the format {distributor_id => closing_time, ...}
-  def self.earliest_closing_times
-    Hash[
-      Exchange.
-        outgoing.
-        joins(:order_cycle).
-        merge(OrderCycle.active).
-        group('exchanges.receiver_id').
-        pluck(Arel.sql("exchanges.receiver_id AS receiver_id"),
-              Arel.sql("MIN(order_cycles.orders_close_at) AS earliest_close_at"))
-    ]
+  #
+  # Optionally, specify some distributor_ids as a parameter to scope the results
+  def self.earliest_closing_times(distributor_ids = nil)
+    cycles = Exchange.
+      outgoing.
+      joins(:order_cycle).
+      merge(OrderCycle.active).
+      group('exchanges.receiver_id')
+
+    cycles = cycles.where(receiver_id: distributor_ids) if distributor_ids.present?
+
+    cycles.pluck("exchanges.receiver_id AS receiver_id",
+                 "MIN(order_cycles.orders_close_at) AS earliest_close_at")
+      .to_h
   end
 
   def attachable_distributor_payment_methods
