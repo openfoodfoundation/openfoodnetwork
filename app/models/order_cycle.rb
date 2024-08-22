@@ -315,7 +315,7 @@ class OrderCycle < ApplicationRecord
 
   def same_datetime_value(attribute, string)
     return true if self[attribute].blank? && string.blank?
-    return false if [[attribute].present?, string.present?].include?(false)
+    return false if self[attribute].blank? || string.blank?
 
     DateTime.parse(string).to_fs(:short) == self[attribute]&.to_fs(:short)
   end
