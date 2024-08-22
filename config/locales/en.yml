@@ -3044,7 +3044,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
   spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
   spree_order_cycle_error: "Please choose an order cycle for this order."
@@ -3947,7 +3946,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     more: "More"
     new_adjustment: "New adjustment"
     new_tax_category: "New Tax Category"
-    new_taxon: "New taxon"
     new_user: "New user"
     no_pending_payments: "No pending payments"
     remove: "Remove"
@@ -4593,7 +4591,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
         destroy:
           delete_taxon:
             success: "Successfully deleted the product category" 
-            error: "Unable to delete the product category"
+            error: "Unable to delete the product category due to assigned products."
         form:
           name: Name
           meta_title: Meta Title
@@ -4837,7 +4835,6 @@ See the %{link} to find out more about %{sitename}'s features and to start using
       key_cleared: "Key cleared"
       shipment:
         cannot_ready: "Cannot ready shipment."
-      invalid_taxonomy_id: "Invalid taxonomy id."
       toggle_api_key_view: "Show API key view for user"
     activerecord:
       models:
