@@ -5,6 +5,7 @@ require "system_helper"
 RSpec.describe "Orders And Distributors" do
   include AuthenticationHelper
   include WebHelper
+  include ReportsHelper
 
   describe "Orders And Distributors" do
     let!(:distributor) { create(:distributor_enterprise, name: "By Bike") }
@@ -19,6 +20,13 @@ RSpec.describe "Orders And Distributors" do
     }
 
     context "as an enterprise user" do
+      let(:header) {
+        ["Order date", "Order Id", "Customer Name", "Customer Email", "Customer Phone",
+         "Customer City", "SKU", "Item name", "Variant", "Quantity", "Max Quantity",
+         "Cost", "Shipping Cost", "Payment Method", "Distributor", "Distributor address",
+         "Distributor city", "Distributor postcode", "Shipping Method",
+         "Shipping instructions"]
+      }
       let(:line_item1) {
         [completed_at, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
          "ABC", Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
@@ -56,28 +64,7 @@ RSpec.describe "Orders And Distributors" do
         rows = find("table.report__table").all("thead tr")
         table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
 
-        expect(table_headers).to eq([
-                                      ['Order date',
-                                       'Order Id',
-                                       'Customer Name',
-                                       'Customer Email',
-                                       'Customer Phone',
-                                       'Customer City',
-                                       'SKU',
-                                       'Item name',
-                                       'Variant',
-                                       'Quantity',
-                                       'Max Quantity',
-                                       'Cost',
-                                       'Shipping Cost',
-                                       'Payment Method',
-                                       'Distributor',
-                                       'Distributor address',
-                                       'Distributor city',
-                                       'Distributor postcode',
-                                       'Shipping Method',
-                                       'Shipping instructions']
-                                    ])
+        expect(table_headers).to eq([header])
 
         expect(all('table.report__table tbody tr').count).to eq(
           Spree::LineItem.where(
@@ -98,6 +85,30 @@ RSpec.describe "Orders And Distributors" do
         expect(table).to have_content(line_item3)
         expect(table).to have_content(line_item4)
         expect(table).to have_content(line_item5)
+      end
+
+      describe "downloading the report" do
+        shared_examples "reports generated as" do |output_type, extension|
+          context output_type.to_s do
+            it "downloads the #{output_type} file" do
+              select output_type, from: "report_format"
+
+              expect { generate_report }.to change { downloaded_filenames.length }.from(0).to(1)
+
+              expect(downloaded_filename).to match(/.*\.#{extension}/)
+
+              downloaded_file_txt = load_file_txt(extension, downloaded_filename)
+
+              expect(downloaded_file_txt).to have_text header.join(" ")
+              expect(downloaded_file_txt).to have_text(
+                "By Bike 10 Lovely Street Herndon 20170 UPS Ground", count: 5
+              )
+            end
+          end
+        end
+
+        it_behaves_like "reports generated as", "CSV", "csv"
+        it_behaves_like "reports generated as", "Spreadsheet", "xlsx"
       end
     end
 

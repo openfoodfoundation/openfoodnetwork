@@ -12,4 +12,20 @@ module ReportsHelper
     expect(page).not_to have_selector ".loading"
     expect(page).to have_button "Go", disabled: false
   end
+
+  def generate_report
+    run_report
+    click_on "Download Report"
+    wait_for_download
+  end
+
+  def load_file_txt(extension, downloaded_filename)
+    case extension
+    when "csv"
+      CSV.read(downloaded_filename).join(" ")
+    when "xlsx"
+      xlsx = Roo::Excelx.new(downloaded_filename)
+      xlsx.map(&:to_a).join(" ")
+    end
+  end
 end
