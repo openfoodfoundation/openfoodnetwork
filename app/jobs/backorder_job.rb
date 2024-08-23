@@ -7,7 +7,6 @@ class BackorderJob < ApplicationJob
   FDC_SALE_SESSION_URL = "#{FDC_BASE_URL}/SalesSession/#".freeze
 
   # The FDC implementation needs special ids for new objects:
-  FDC_NEW_ORDER_URL = "#{FDC_ORDERS_URL}/#".freeze
   FDC_ORDER_LINES_URL = "#{FDC_ORDERS_URL}/#/OrderLines".freeze
 
   queue_as :default
@@ -32,7 +31,7 @@ class BackorderJob < ApplicationJob
   end
 
   def self.place_backorder(order, linked_variants)
-    backorder = build_order(order)
+    backorder = FdcBackorderer.new.find_or_build_order(order)
     catalog = load_catalog(order.distributor.owner)
 
     linked_variants.each_with_index do |variant, index|
@@ -61,11 +60,6 @@ class BackorderJob < ApplicationJob
     linked_variants.each do |variant|
       variant.on_hand = 0
     end
-  end
-
-  # This needs to find an existing order when the API is available.
-  def self.build_order(ofn_order)
-    OrderBuilder.new_order(ofn_order, FDC_NEW_ORDER_URL)
   end
 
   def self.build_order_line(offer, quantity)
