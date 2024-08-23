@@ -89,7 +89,7 @@ jobs:
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v3
         with:
-          name: __simplecov-chunk-controllers-${{ matrix.ci_node_index }}
+          name: simplecov-chunk-controllers-${{ matrix.ci_node_index }}
           path: coverage/*.*
           retention-days: 2 # doesn't need to be long, because it's the combined results that matter
           if-no-files-found: ignore
@@ -156,7 +156,7 @@ jobs:
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v3
         with:
-          name: __simplecov-chunk-models-${{ matrix.ci_node_index }}
+          name: simplecov-chunk-models-${{ matrix.ci_node_index }}
           path: coverage/*.*
           retention-days: 2 # doesn't need to be long, because it's the combined results that matter
           if-no-files-found: ignore
@@ -233,7 +233,7 @@ jobs:
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v3
         with:
-          name: __simplecov-chunk-system-admin-${{ matrix.ci_node_index }}
+          name: simplecov-chunk-system-admin-${{ matrix.ci_node_index }}
           path: coverage/*.*
           retention-days: 2 # doesn't need to be long, because it's the combined results that matter
           if-no-files-found: ignore
@@ -319,7 +319,7 @@ jobs:
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v3
         with:
-          name: __simplecov-chunk-system-consumer-${{ matrix.ci_node_index }}
+          name: simplecov-chunk-system-consumer-${{ matrix.ci_node_index }}
           path: coverage/*.*
           retention-days: 2 # doesn't need to be long, because it's the combined results that matter
           if-no-files-found: ignore
@@ -406,7 +406,7 @@ jobs:
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v3
         with:
-          name: __simplecov-chunk-engines-${{ matrix.ci_node_index }}
+          name: simplecov-chunk-engines-${{ matrix.ci_node_index }}
           path: coverage/*.*
           retention-days: 2 # doesn't need to be long, because it's the combined results that matter
           if-no-files-found: ignore
@@ -482,7 +482,7 @@ jobs:
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v3
         with:
-          name: __simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
+          name: simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
           path: coverage/*.*
           retention-days: 2 # doesn't need to be long, because it's the combined results that matter
           if-no-files-found: ignore
@@ -545,7 +545,7 @@ jobs:
       - name: Download individual results from individual runners
         uses: actions/download-artifact@v3
         with:
-          pattern: __simplecov-chunk-*
+          pattern: simplecov-chunk-*
           path: tmp/simplecov
           merge-multiple: true
 
@@ -555,7 +555,7 @@ jobs:
       - name: Upload collated results
         uses: actions/upload-artifact@v3
         with:
-          name: simplecov-combined-results
+          name: combined-simplecov-report
           path: coverage/*.*
           retention-days: 7
           if-no-files-found: ignore
