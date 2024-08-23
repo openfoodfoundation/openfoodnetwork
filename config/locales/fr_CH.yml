@@ -3239,8 +3239,6 @@ fr_CH:
           Il a eu un problème lors de la prise en compte de votre carte.
           Merci de rafraîchir la page. Si cela ne fonctionne pas une seconde fois,
           merci de nous contacter.
-    trix:
-      urlPlaceholder: "Veuillez entrer l'URL à insérer"
   inflections:
     each:
       one: "chacun"

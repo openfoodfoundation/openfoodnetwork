@@ -3572,8 +3572,6 @@ hu:
           Hiba történt a kártya beállításakor.
           Kérjük, frissítsd az oldalt, és próbáld újra. Ha másodszorra sem sikerül
           kérjük, fordulj hozzánk támogatásért.
-    trix:
-      urlPlaceholder: "Kérünk, adj meg egy URL-t"
   inflections:
     each:
       one: "mindegyik"

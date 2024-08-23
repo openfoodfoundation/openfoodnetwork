@@ -3304,8 +3304,6 @@ ca:
     stripe_elements:
       unknown_error_from_stripe: |
           Hi ha hagut un problema al configurar la vostra targeta a la nostra passarel·la de pagaments. Actualitzeu la pàgina i torneu-ho a provar; si falla una segona vegada, poseu-vos en contacte amb nosaltres per obtenir assistència.
-    trix:
-      urlPlaceholder: "Introduïu un URL per inserir"
   inflections:
     each:
       one: "cadascun"

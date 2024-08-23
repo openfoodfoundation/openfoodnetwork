@@ -3336,8 +3336,6 @@ fr_BE:
       signup_or_login: "Commencez par vous inscrire (ou connexion)"
       have_an_account: "Déjà inscrit?"
       action_login: "Se connecter."
-    trix:
-      urlPlaceholder: "Entrer l'URL pour insérer"
   inflections:
     item:
       one: "article"

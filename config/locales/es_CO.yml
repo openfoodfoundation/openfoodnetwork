@@ -2910,8 +2910,6 @@ es_CO:
       unknown_error_from_stripe: |
           Hubo un problema al configurar su tarjeta en nuestra pasarela de pagos.
           Por favor actualice la página y vuelva a intentarlo; si falla por segunda vez, por favor contáctanos para recibir asistencia.
-    trix:
-      urlPlaceholder: "Por favor introduzca una URL para insertar"
   inflections:
     each:
       one: "each"

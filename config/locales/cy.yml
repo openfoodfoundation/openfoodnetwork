@@ -3487,8 +3487,6 @@ cy:
           Roedd problem wrth sefydlu eich cerdyn yn y porth talu.
           Gofynnir ichi ddiweddaru'r dudalen a rhoi cynnig arall, os bydd yn methu'r ail dro,
           cysylltwch â ni am gymorth.
-    trix:
-      urlPlaceholder: "Noder URL i'w fewnosod"
   inflections:
     each:
       one: "yr un"

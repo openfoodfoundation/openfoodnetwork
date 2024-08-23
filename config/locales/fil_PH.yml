@@ -2847,8 +2847,6 @@ fil_PH:
       signup_or_login: "magsimula sa pamamagitan ng pag-sign-up (o pag-log-in)"
       have_an_account: "Mayroon ka na bang account?"
       action_login: "Maglog-in na ngayon."
-    trix:
-      urlPlaceholder: "ipasok ang URL na ilalagay"
   inflections:
     each:
       one: "bawat"

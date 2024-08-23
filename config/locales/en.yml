@@ -584,7 +584,7 @@ en:
         price: Price
         producer: Producer
         category: Category
-        sku: SKU 
+        sku: SKU
         on_hand: "On Hand"
         on_demand: "On Demand"
         tax_category: "Tax Category"
@@ -596,7 +596,7 @@ en:
         price: Price
         producer: Producer
         category: Category
-        sku: SKU 
+        sku: SKU
         on_hand: "On Hand"
         on_demand: "On Demand"
         tax_category: "Tax Category"
@@ -1356,7 +1356,7 @@ en:
           use_limit: Use/Limit
           customers: Customer
           net_value: Net Value
-          active: Active? 
+          active: Active?
           add_new: Add New
           no_voucher_yet: No Vouchers yet
         white_label:
@@ -2135,7 +2135,7 @@ en:
   invoice_column_price_per_unit_without_taxes: "Price Per unit (Excl. tax)"
   invoice_column_tax_rate: "Tax rate"
   invoice_tax_total: "GST Total:"
-  invoice_cancel_and_replace_invoice: "cancels and replaces invoice" 
+  invoice_cancel_and_replace_invoice: "cancels and replaces invoice"
   tax_invoice: "TAX INVOICE"
   tax_total: "Total tax (%{rate}):"
   invoice_shipping_category_delivery: "Delivery"
@@ -4605,7 +4605,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
           meta_description: Meta Description
           meta_keywords: Meta Keywords
           description: Description
-          dfc_id: DFC URI 
+          dfc_id: DFC URI
       general_settings:
         edit:
           legal_settings: "Legal Settings"

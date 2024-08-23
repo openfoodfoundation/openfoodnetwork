@@ -3049,8 +3049,6 @@ tr:
       unknown_error_from_stripe: |
           Ödeme sağlayıcımızda kart ayarlarınız ile ilgili bir sorun oluştu.
           Lütfen sayfayı yenileyip tekrar deneyin, eğer sorun devam ediyorsa lütfen destek için bize ulaşın.
-    trix:
-      urlPlaceholder: "Lütfen eklemek için bir URL girin"
   inflections:
     each:
       one: "her biri"
