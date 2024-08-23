@@ -14,9 +14,12 @@ class DfcRequest
   end
 
   def call(url, data = nil)
-    response = request(url, data)
+    begin
+      response = request(url, data)
+    rescue Faraday::UnauthorizedError, Faraday::ForbiddenError
+      raise unless token_stale?
 
-    if response.status >= 400 && token_stale?
+      # If access was denied and our token is stale then refresh and retry:
       refresh_access_token!
       response = request(url, data)
     end
@@ -47,7 +50,10 @@ class DfcRequest
         'Content-Type' => 'application/json',
         'Authorization' => "Bearer #{@user.oidc_account.token}",
       }
-    )
+    ) do |f|
+      # Configure Faraday to raise errors on status 4xx and 5xx responses.
+      f.response :raise_error
+    end
   end
 
   def only_public_connections(&)

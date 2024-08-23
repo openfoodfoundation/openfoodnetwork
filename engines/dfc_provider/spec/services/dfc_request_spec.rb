@@ -40,11 +40,13 @@ RSpec.describe DfcRequest do
 
     expect {
       api.call("http://example.net/api")
-    }.to change {
-      account.token
-    }.and change {
-      account.refresh_token
     }
+      .to raise_error(Faraday::UnauthorizedError)
+      .and change {
+             account.token
+           }.and change {
+                   account.refresh_token
+                 }
   end
 
   it "doesn't try to refresh the token when it's still fresh" do
@@ -53,7 +55,8 @@ RSpec.describe DfcRequest do
 
     user.oidc_account.updated_at = 1.minute.ago
 
-    expect(api.call("http://example.net/api")).to eq ""
+    expect { api.call("http://example.net/api") }
+      .to raise_error(Faraday::UnauthorizedError)
 
     # Trying to reach the OIDC server via network request to refresh the token
     # would raise errors because we didn't setup Webmock or VCR.
