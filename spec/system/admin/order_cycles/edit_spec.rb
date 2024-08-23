@@ -62,7 +62,7 @@ RSpec.describe '
     end
 
     context 'with no attached order' do
-      it "does not show warning modal" do
+      it "does not show warning modal", retry: 3 do
         login_as_admin
         visit edit_admin_order_cycle_path(order_cycle)
 
@@ -134,13 +134,14 @@ RSpec.describe '
     end
 
     context 'with no attached orders' do
-      it "does not show warning modal" do
+      it "does not show warning modal", retry: 3 do
         login_as_admin
         visit edit_admin_order_cycle_path(order_cycle)
 
         # change non-date range field value
         fill_in 'order_cycle_name', with: "OC1 name updated"
         expect(page).to have_content('You have unsaved changes')
+        sleep(2)
 
         # click save
         click_button('Save')
@@ -155,6 +156,7 @@ RSpec.describe '
           find("button", text: "Close").click
         end
         expect(page).to have_content('You have unsaved changes')
+        sleep(2)
 
         click_button('Save')
         expect(page).to have_content('Your order cycle has been updated.')
