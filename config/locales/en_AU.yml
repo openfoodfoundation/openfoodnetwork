@@ -2957,24 +2957,6 @@ en_AU:
           There was a problem setting up your card in our payments gateway.
           Please refresh the page and try again, if it fails a second time,
           please contact us for support.
-    trix:
-      bold: "Bold"
-      bullets: "Bullets"
-      code: "Code"
-      heading1: "Heading"
-      hr: "Horizontal rule"
-      indent: "Increase Level"
-      italic: "Italic"
-      link: "Link"
-      numbers: "Numbers"
-      outdent: "Decrease Level"
-      quote: "Quote"
-      redo: "Redo"
-      strike: "Strikethrough"
-      undo: "Undo"
-      unlink: "Unlink"
-      url: "URL"
-      urlPlaceholder: "Please enter a URL to insert"
   inflections:
     each:
       one: "each"
