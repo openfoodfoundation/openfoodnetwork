@@ -154,7 +154,7 @@ RSpec.describe '
       # editing to an invalid combination
       select 'Flat Rate (per order)', from: "#{prefix}_calculator_type"
       expect{ click_button 'Update' }.not_to change { fee.reload.calculator_type }
-      expect(page).to have_content "Inheriting the tax categeory requires a per-item calculator."
+      expect(page).to have_content "Inheriting the tax category requires a per-item calculator."
     end
   end
 
@@ -299,7 +299,7 @@ RSpec.describe '
       end
 
       context "an error message is displayed" do
-        message = 'Inheriting the tax categeory requires a per-item calculator.'
+        message = 'Inheriting the tax category requires a per-item calculator.'
         it_behaves_like "setting it up", 'Inherit From Product',
                         'Flat Rate (per order)', message, 0
       end

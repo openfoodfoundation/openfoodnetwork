@@ -103,7 +103,7 @@ en:
     errors:
       models:
         enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Inheriting the tax categeory requires a per-item calculator."
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
         spree/image:
           attributes:
             attachment:
