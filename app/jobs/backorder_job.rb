@@ -4,6 +4,7 @@ class BackorderJob < ApplicationJob
   FDC_BASE_URL =  "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod"
   FDC_CATALOG_URL = "#{FDC_BASE_URL}/SuppliedProducts".freeze
   FDC_ORDERS_URL = "#{FDC_BASE_URL}/Orders".freeze
+  FDC_SALE_SESSION_URL = "#{FDC_BASE_URL}/SalesSession/#".freeze
 
   # The FDC implementation needs special ids for new objects:
   FDC_NEW_ORDER_URL = "#{FDC_ORDERS_URL}/#".freeze
@@ -47,7 +48,8 @@ class BackorderJob < ApplicationJob
     lines = backorder.lines
     offers = lines.map(&:offer)
     products = offers.map(&:offeredItem)
-    json = DfcIo.export(backorder, *lines, *offers, *products, build_sale_session)
+    session = build_sale_session(order)
+    json = DfcIo.export(backorder, *lines, *offers, *products, session)
 
     api = DfcRequest.new(order.distributor.owner)
 
@@ -70,12 +72,10 @@ class BackorderJob < ApplicationJob
     OrderLineBuilder.build(offer, quantity)
   end
 
-  def self.build_sale_session
-    DataFoodConsortium::Connector::SaleSession.new(
-      "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SalesSession/#",
-      beginDate: "Tue Aug 20 2024 08:02:23 GMT+0000 (Coordinated Universal Time)",
-      endDate: "Tue Aug 27 2024 08:02:23 GMT+0000 (Coordinated Universal Time)",
-    )
+  def self.build_sale_session(order)
+    SaleSessionBuilder.build(order.order_cycle).tap do |session|
+      session.semanticId = FDC_SALE_SESSION_URL
+    end
   end
 
   def self.best_offer(catalog, variant)
