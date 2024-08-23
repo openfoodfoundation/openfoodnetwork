@@ -309,7 +309,7 @@ RSpec.describe '
     describe "editing page" do
       let!(:product) { create(:simple_product, name: 'a product', supplier_id: supplier2.id) }
 
-      describe "'Back to products list' and 'Cancel' buttons" do
+      describe "'Back To Products List' and 'Cancel' buttons" do
         context "navigates to edit from the bulk product update page with searched results" do
           it "should navigate back to the same searched results page" do
             # Navigating to a searched URL
@@ -326,7 +326,7 @@ RSpec.describe '
               click_link('Edit', href: spree.edit_admin_product_path(product))
             end
 
-            expect(page).to have_link('Back to products list',
+            expect(page).to have_link('Back To Products List',
                                       href: products_page_url)
             expect(page).to have_link('Cancel',
                                       href: products_page_url)
@@ -338,7 +338,7 @@ RSpec.describe '
             # Navigating to a searched URL
             visit spree.edit_admin_product_path(product)
 
-            expect(page).to have_link('Back to products list',
+            expect(page).to have_link('Back To Products List',
                                       href: admin_products_url)
             expect(page).to have_link('Cancel',
                                       href: admin_products_url)
