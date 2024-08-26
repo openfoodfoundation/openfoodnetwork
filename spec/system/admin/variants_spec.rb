@@ -33,6 +33,14 @@ RSpec.describe '
 
       # Then the variant should have been created
       expect(page).to have_content "Variant \"#{product.name}\" has been successfully created!"
+
+      new_variant = Spree::Variant.last
+      expect(new_variant.unit_value).to eq(1)
+      expect(new_variant.variant_unit).to eq("volume")
+      expect(new_variant.variant_unit_scale).to eq(1) # Liter
+      expect(new_variant.price).to eq(2.5)
+      expect(new_variant.primary_taxon).to eq(taxon)
+      expect(new_variant.supplier).to eq(product.variants.first.supplier)
     end
 
     it "creating a new variant from product variant page with filter" do
