@@ -7,6 +7,11 @@ export default class extends Controller {
     this.element.addEventListener("trix-initialize", this.#trixInitialize);
   }
 
+  disconnect() {
+    this.element.removeEventListener("trix-change", this.#trixChange);
+    this.element.removeEventListener("trix-initialize", this.#trixInitialize);
+  }
+
   #trixChange = (event) => {
     // trigger a change event on the form that contains the Trix editor
     event.target.form.dispatchEvent(new Event("change", { bubbles: true }));
