@@ -86,7 +86,6 @@ module Spree
                   :primary_taxon_id, :supplier_id
 
     after_create :ensure_standard_variant
-    # after_update :touch_supplier, if: :saved_change_to_primary_taxon_id?
     around_destroy :destruction
     after_touch :touch_supplier
 
