@@ -575,7 +575,7 @@ RSpec.describe ProductImport::ProductImporter do
     end
   end
 
-  describe "updating non-updatable fields on existing products" do
+  describe "updating non-updatable fields on existing variants" do
     let(:csv_data) {
       CSV.generate do |csv|
         csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",

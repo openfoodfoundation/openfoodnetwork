@@ -6,8 +6,6 @@
 
 module ProductImport
   class EntryValidator
-    SKIP_VALIDATE_ON_UPDATE = [:description].freeze
-
     # rubocop:disable Metrics/ParameterLists
     def initialize(current_user, import_time, spreadsheet_data, editable_enterprises,
                    inventory_permissions, reset_counts, import_settings, all_entries)
@@ -21,12 +19,6 @@ module ProductImport
       @all_entries = all_entries
     end
     # rubocop:enable Metrics/ParameterLists
-
-    def self.non_updatable_product_fields
-      {
-        description: :description,
-      }
-    end
 
     def self.non_updatable_variant_fields
       {
@@ -357,8 +349,6 @@ module ProductImport
         return
       end
 
-      products.each { |product| product_field_errors(entry, product) }
-
       products.flat_map(&:variants).each do |existing_variant|
         next unless entry.match_variant?(existing_variant) &&
                     existing_variant.deleted_at.nil?
@@ -410,25 +400,10 @@ module ProductImport
       end
     end
 
-    def product_field_errors(entry, existing_product)
-      EntryValidator.non_updatable_product_fields.each do |display_name, attribute|
-        next if attributes_match?(attribute, existing_product, entry) ||
-                attributes_blank?(attribute, existing_product, entry)
-        next if ignore_when_updating_product?(attribute)
-
-        mark_as_invalid(entry, attribute: display_name,
-                               error: I18n.t('admin.product_import.model.not_updatable'))
-      end
-    end
-
     def attributes_match?(attribute, existing_product, entry)
       existing_product_value = existing_product.public_send(attribute)
       entry_value = entry.public_send(attribute)
       existing_product_value == convert_to_trusted_type(entry_value, existing_product_value)
-    end
-
-    def ignore_when_updating_product?(attribute)
-      SKIP_VALIDATE_ON_UPDATE.include? attribute
     end
 
     def convert_to_trusted_type(untrusted_attribute, trusted_attribute)
