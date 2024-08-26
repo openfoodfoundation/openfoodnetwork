@@ -11,7 +11,9 @@
       = f.text_field :display_name, class: "fullwidth", placeholder: t('.display_name_placeholder')
 
     .field{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
-      = f.label :unit_scale, raw(t('.unit_scale') + content_tag(:span, ' *', :class => 'required'))
+      = f.label :unit_scale do 
+        = t('.unit_scale')
+        = content_tag(:span, ' *', class: 'required')
       = f.hidden_field :variant_unit
       = f.hidden_field :variant_unit_scale
       = f.select :variant_unit_with_scale,
@@ -24,7 +26,9 @@
         = error_message_on @variant, :variant_unit_name, 'data-toggle-control-target': 'control'
     
     .field.popout{'data-controller': "popout", 'data-popout-update-display-value': "false"}
-      = f.label :unit, raw(t('.unit') + content_tag(:span, ' *', :class => 'required'))
+      = f.label :unit do
+        = t('.unit')
+        = content_tag(:span, ' *', class: 'required')
       = f.button :unit_to_display, class: "popout__button", 'aria-label': t('.unit'), 'data-popout-target': "button" do
         = @variant.unit_to_display # Show the generated summary of unit values
       %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
@@ -44,7 +48,9 @@
         = f.label :sku, t('.sku')
         = f.text_field :sku, class: 'fullwidth'
       .field
-        = f.label :price, raw(t('.price') + content_tag(:span, ' *', :class => 'required'))
+        = f.label :price do
+          = t('.price')
+          = content_tag(:span, ' *', class: 'required')
         = f.text_field :price, class: 'fullwidth', value: number_to_currency(@variant.price, unit: '')&.strip
       .field
         = hidden_field_tag 'variant_variant_unit', @variant.variant_unit
@@ -97,7 +103,10 @@
       = f.collection_select(:primary_taxon_id, Spree::Taxon.order(:name), :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
 
     .field
-      = f.label :supplier, raw(t(:spree_admin_supplier) + content_tag(:span, ' *', :class => 'required'))
+      = f.label :supplier do
+        = t(:spree_admin_supplier)
+        = content_tag(:span, ' *', class: 'required')
+
       = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
 
   .clear
