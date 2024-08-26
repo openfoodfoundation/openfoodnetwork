@@ -50,7 +50,7 @@ RSpec.describe Spree::Variant do
 
       it { is_expected.to validate_presence_of :variant_unit }
 
-      context "when the product's unit is items" do
+      context "when the unit is items" do
         subject(:variant) { build(:variant, variant_unit: "items", variant_unit_name: "box") }
 
         it "is valid with only unit value set" do
