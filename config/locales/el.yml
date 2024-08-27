@@ -1957,7 +1957,7 @@ el:
       mobile_menu:
         cart: "Καλάθι"
     register_call:
-      selling_on_ofn: "Ενδιαφέρεσαι να μπεις στο Open Food Network?"
+      selling_on_ofn: "Ενδιαφέρεσαι να πουλήσεις τα προϊόντα σου μέσω του Open Food Network;"
       register: "Εγγραφή εδώ"
     footer:
       footer_secure: "Ασφαλές και Αξιόπιστο"
@@ -2583,10 +2583,10 @@ el:
         registration_checklist: "Τι χρειάζομαι?"
         registration_time: "5-10 λεπτά"
         registration_enterprise_address: "Διέυθυνση επιχείρησης"
-        registration_contact_details: "Κύρια στοιχεία επικοινωνίας"
-        registration_logo: "Η εικόνα του λογότυπου σας"
-        registration_promo_image: "Εικόνα τοπίου για το προφίλ σας"
-        registration_about_us: "Κείμενο &quot;Σχετικά με εμάς&quot;"
+        registration_contact_details: "Τα στοιχεία επικοινωνίας σας"
+        registration_logo: "Το λογότυπο σας"
+        registration_promo_image: "Εικόνα για το προφίλ σας"
+        registration_about_us: "Ένα κέιμενο σχετικά με την επιχείρηση σας"
         registration_outcome_headline: "Τι πέρνω?"
         registration_outcome1_html: "Το προφίλ σου βοηθά τους ανθρώπους να σε <strong>βρουν</strong> και να <strong>επικοινωνήσουν</strong> μαζί σου στο Open Food Network."
         registration_outcome2: "Χρησιμοποιήστε αυτόν τον χώρο για να πείτε την ιστορία της επιχείρησής σας, για να διευκολύνετε τις συνδέσεις με την κοινωνική και διαδικτυακή σας παρουσία."

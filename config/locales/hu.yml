@@ -346,7 +346,7 @@ hu:
       link_label: "%{name}"
   shipment_mailer:
     shipped_email:
-      dear_customer: "Kedves Ügyfelünk,"
+      dear_customer: "Kedves Felhasználónk,"
       instructions: "Megrendelésed kiszállították"
       shipment_summary: "Szállítási összefoglaló"
       subject: "Szállítási értesítés"
@@ -587,7 +587,7 @@ hu:
     schedule: Menetrend
     shipping: Szállítás
     shipping_method: Szállítási Mód
-    shop: Átadási pont
+    shop: Átvételi pont
     sku: SKU
     status_state: Ország
     tags: Címkék
@@ -883,7 +883,7 @@ hu:
         spreadsheet: Táblázat
         choose_import_type: Válaszd ki az importálás típusát
         import_into: Importálás típusa
-        product_list: Termék
+        product_list: Terméklista
         inventories: Készletek
         import: Importálás
         upload: Feltöltés
@@ -994,7 +994,7 @@ hu:
         no_matching_new_products: Egyetlen új termék sem felel meg a keresési feltételeknek
         inventory_powertip: Ez a termékkészleted. Termékek hozzáadásához a válaszd az "Új Termék" lehetőséget a legördülő menüből..
         hidden_powertip: Ezeket a termékeket elrejtetted a készletedből, és nem lesz elérhető az oldalon. A "Hozzáadás" gombra kattintva hozzáadhatsz egy terméket a készletedhez.
-        new_powertip: Ezeket a termékeket hozzáadhatja a készletéhez. Kattintson a 'Hozzáadás' gombra, ha hozzá szeretne adni egy terméket a készletéhez, vagy a 'Elrejtés' gombra, ha el szeretné rejteni a terméket. Később bármikor meggondolhatja magát!
+        new_powertip: Ezeket a termékeket hozzáadhatod a készletedhez. Kattints a 'Hozzáadás' gombra, ha hozzá szeretnél adni egy terméket a készletéhez, vagy a 'Elrejtés' gombra, ha el szeretnéd rejteni a terméket. Később bármikor meggondolhatod magad!
       controls:
         back_to_my_inventory: Vissza a leltárhoz
     orders:
@@ -1547,7 +1547,7 @@ hu:
       resume:
         could_not_resume_the_order: Nem sikerült folytatni a rendelést
     select2:
-      minimal_search_length: Kérlek írj be 1%{count} vagy több karaktert
+      minimal_search_length: Kérlek írj be %{count} vagy több karaktert
       searching: Keresés...
       no_matches: Nincs találat
     shared:
@@ -1664,7 +1664,7 @@ hu:
       enterprise_fee_summary:
         name: "Vállalkozási díjak összefoglalója"
         description: "Összefoglaló a beszedett vállalkozási díjakról"
-      enterprise_fees_with_tax_report_by_order: "Vállalkozási díjak adójelentéssel megrendelés alapján"
+      enterprise_fees_with_tax_report_by_order: "Vállalkozási díjak adójelentéssei megrendelés alapján"
       enterprise_fees_with_tax_report_by_producer: "Vállalkozási díjak termelői adóbevallással"
       errors:
         no_report_type: "Adja meg a jelentés típusát"
@@ -2002,9 +2002,9 @@ hu:
       customer_required:
         login: "Belépés"
         contact: "kapcsolatba lépni"
-        require_customer_login: "Csak jóváhagyott vásárlók férhetnek hozzá ehhez az üzlethez."
-        require_login_link_html: "Ha már jóváhagyott ügyfél, %{login} a folytatáshoz."
-        require_login_2_html: "Itt szeretne vásárolni? Kérjük, %{contact} %{enterprise} és érdeklődjön a csatlakozásról."
+        require_customer_login: "Csak regisztrált és jóváhagyott vásárlók férhetnek hozzá az átadópont kínálatához."
+        require_login_link_html: "Ha már regisztrált felhasználó vagy,  a folytatáshoz be kell lépned: %{login}"
+        require_login_2_html: "Ezen az átadóponton szeretnél vásárolni?  %{enterprise}-el  itt tudsz %{contact}, és érdeklődni a csatlakozásról."
         require_customer_html: "Ha itt szeretne vásárolni, kérjük, %{contact} %{enterprise} érdeklődjön a csatlakozásról."
       select_oc:
         select_oc_html: "Kérjük, <span class='highlighted'>válaszd ki, hogy mikorra szeretnéd megrendelni</span>, hogy megtudd, milyen termékek állnak rendelkezésre."
@@ -2477,7 +2477,7 @@ hu:
   sell_headline: "Legyél Te is a hálózat tagja!"
   sell_motivation: "Mutasd be termékeidet, tedd elérhetővé a fogyasztók számára."
   sell_producers: "Termelők"
-  sell_hubs: "Átvételi Pont"
+  sell_hubs: "Átvételi Pontok"
   sell_groups: "Csoportok"
   sell_producers_detail: "Őstermelő, kistermelő, családi gazdálkodó, vagy épp kisválllalkozás vagy? Hozz létre termelői profilt az OFN-en percek alatt. Bármikor frissítheted profilod egy online áruházra, és közvetlenül ajánlhatod termékeidet a fogyasztóknak."
   sell_hubs_detail: "Bevásárlóközösséget indítanál? Vagy csak összefognál a termelőtársakkal és közösen szólítanátok meg a fogyasztókat? Hozz létre új profilt, vagy bármikor frissítheted a profilodat egy többtermelős átvételi pontra."
@@ -2538,7 +2538,7 @@ hu:
   products_cart_distributor_is: "Megrendelésed szolgáltatója: %{name}."
   products_distributor_error: "Kérjük, fejezd be a rendelésed a %{link} címen, mielőtt másik szolgáltatónál vásárolnál."
   products_oc: "Rendelési ciklus a megrendeléshez:"
-  products_oc_change: "Ha ezt a terméket a kosárba helyezi, a rendelési ciklusa a következőre módosul: %{name}."
+  products_oc_change: "Ha ezt a terméket a kosárba helyezed, a rendelési ciklus a következőre módosul: %{name}."
   products_oc_is: "Rendelési ciklusod ehhez a rendeléshez: %{name}."
   products_oc_error: "Kérjük, fejezd be rendelésed a %{link} webhelyről, mielőtt másik rendelési ciklusban vásárolnál."
   products_oc_current: "aktuális rendelési ciklusod"
@@ -2607,7 +2607,7 @@ hu:
         registration_enterprise_address: "Vállalkozási cím"
         registration_contact_details: "Elsődleges elérhetőségek"
         registration_logo: "A logó képe"
-        registration_promo_image: "Fejléc a profilodhoz"
+        registration_promo_image: "Fejléckép a profilodhoz"
         registration_about_us: "Bemutatkozó szöveg"
         registration_outcome_headline: "Mit kapsz?"
         registration_outcome1_html: "Profilod segít az embereknek <strong>megtalálni</strong> és <strong>kapcsolatba lépni</strong> Veled az Open Food Network hálózaton."
@@ -3117,7 +3117,7 @@ hu:
   report_header_total_taxable_admin: Összes adóköteles rendszergazdai korrekció (adóval együtt)
   report_header_voucher_label: Kupon címke
   report_header_voucher_amount: "Kuponösszeg (%{currency_symbol})"
-  report_line_cost_of_produce: Termékek költsége, termelési költségek?
+  report_line_cost_of_produce: Termékek költsége, termelési költségek
   report_line_line_items: tételsor
   report_header_last_completed_order_date: Utolsó teljesített rendelés dátuma
   report_xero_configuration: Xero konfiguráció
@@ -3268,7 +3268,7 @@ hu:
               elrejtése) a megadott címkével rendelkező ügyfelek számára.
         terms_and_conditions_info:
           title: "Általános Szerződési Feltételek feltöltése"
-          message_1: "Az Általános Szerződési Feltételek az Ön, az eladó és a vásárló közötti szerződés. Ha feltölt egy fájlt ide, a vásárlóknak el kell fogadniuk az Általános Szerződési Feltételeket a fizetés befejezéséhez. A vásárló számára ez egy jelölőnégyzetként jelenik meg a pénztárnál, amelyet be kell jelölnie a fizetés folytatásához. Javasoljuk, hogy a nemzeti jogszabályokkal összhangban töltse fel az Általános Szerződési Feltételeket."
+          message_1: "Az Általános Szerződési Feltételek az Ön, az eladó és a vásárló közötti szerződés. Ha feltöltesz egy fájlt ide, a vásárlóknak el kell fogadniuk az Általános Szerződési Feltételeket a fizetés befejezéséhez. A vásárló számára ez egy jelölőnégyzetként jelenik meg a pénztárnál, amelyet be kell jelölnie a fizetés folytatásához. Javasoljuk, hogy a nemzeti jogszabályokkal összhangban tölts fel Általános Szerződési Feltételeket."
           message_2: "A vásárlóknak csak egyszer kell elfogadniuk az Általános Szerződési Feltételeket. Ha azonban megváltoztatja az Általános Szerződési Feltételeket, a vásárlóknak ismét el kell fogadniuk azokat, mielőtt fizetésre kerülne a rendelésük."
         terms_and_conditions_warning:
           title: "Általános Szerződési Feltételek feltöltése"
@@ -3398,7 +3398,7 @@ hu:
         index:
           per_page: "%{results} találat oldalanként"
           view_file: "Fájl megtekintése"
-          compiling_invoices: "Számlák összeállítása"
+          compiling_invoices: "Vevői lapok összeállítása"
           bulk_invoice_created: "Tömeges számla létrehozva"
           bulk_invoice_failed: "Nem sikerült létrehozni a tömeges számlát"
           please_wait: "A modul bezárása előtt várja meg, amíg a PDF elkészül."
@@ -3769,7 +3769,7 @@ hu:
     gateway_config_unavailable: "Az átjáró konfigurációja nem érhető el"
     gateway_error: "Fizetés meghiúsult"
     more: "Több"
-    new_adjustment: "Új beállítás"
+    new_adjustment: "Új kiigazítás"
     new_tax_category: "Új adókategória"
     new_user: "Új felhasználó"
     no_pending_payments: "Nincsenek függőben lévő kifizetések"
@@ -4610,7 +4610,7 @@ hu:
         delete?: Töröl?
       cards:
         authorised_shops: Engedélyezett átvételi pontok
-        authorised_shops_agreement: Ez azon átvételi pontok listája, amelyek megterhelhetik alapértelmezett hitelkártyáját az esetleges előfizetéseiért (azaz ismétlődő rendeléseiért). Kártyája adatait biztonságban tartjuk, és nem osztjuk meg az üzlet tulajdonosaival. Mindig értesítést kap, amikor felszámítják. Ha bejelöli az üzlet jelölőnégyzetét, beleegyezel abba, hogy felhatalmazod az üzletet, hogy utasításokat küldjön a kártyáját kibocsátó pénzintézetnek a fizetések fogadására az adott üzlettel létrehozott előfizetés feltételei szerint.
+        authorised_shops_agreement: Ez azon átvételi pontok listája, amelyek megterhelhetik alapértelmezett hitelkártyád az esetleges előfizetési díjakkal (azaz ismétlődő rendeléseid összegével). Kártyád adatait biztonságban tartjuk, és nem osztjuk meg az adott termelő vagy átvételi pont kezelőivel. Mindig értesítést kapsz, amikor díj felszámítás történik. Ha bejelölöd az átvételi pont jelölőnégyzetét, beleegyezel abba, hogy felhatalmazod az átvételi pontot, hogy utasításokat küldjön a kártyád kibocsátó pénzintézetének a fizetések fogadására az adott átvételi ponttal létrehozott előfizetés feltételei szerint.
         saved_cards_popover: Ez azon kártyák listája, amelyeket későbbi használatra ment el. A rendszer automatikusan kiválasztja az „alapértelmezett” kártyát a rendelés leadásakor, és ezt minden olyan üzlet megterhelheti, ahol ezt engedélyezted (lásd jobbra).
       authorised_shops:
         shop_name: "Átvételi pont neve"

@@ -4474,6 +4474,7 @@ fr:
         destroy:
           delete_taxon:
             success: "Catégorie de produit supprimée"
+            error: "Impossible de supprimer la catégorie de produit car des produits sont liés à cette catégorie."
         form:
           name: Nom
           meta_title: Méta titre
