@@ -745,6 +745,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
   # on the browser's locale.
   def expect_browser_validation(selector)
     browser_message = page.find(selector)["validationMessage"]
-    expect(browser_message.present?).to be(true)
+    expect(browser_message).to be_present
   end
 end
