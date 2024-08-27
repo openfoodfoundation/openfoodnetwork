@@ -824,8 +824,8 @@ en_GB:
       sort:
         pagination:
           products_total_html:
-            one: "<strong>%{total} product</strong> found for your search criteria. Showing %{from} to %{to}."
-            other: "<strong>%{total} products</strong> found for your search criteria. Showing %{from} to %{to}. "
+            one: "<strong>%{count} product</strong> found for your search criteria. Showing %{from} to %{to}."
+            other: "<strong>%{count} products</strong> found for your search criteria. Showing %{from} to %{to}. "
           per_page:
             show: Show
             per_page: "%{num} per page"
