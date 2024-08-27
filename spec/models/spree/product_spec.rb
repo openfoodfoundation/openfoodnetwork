@@ -17,6 +17,13 @@ module Spree
           expect(clone.sku).to eq ""
           expect(clone.image).to eq product.image
         end
+
+        it 'fails to duplicate invalid product' do
+          # cloned product will be invalid
+          product.update_columns(name: "l" * 254)
+
+          expect{ product.duplicate }.to raise_error(ActiveRecord::ActiveRecordError)
+        end
       end
 
       context "product has variants" do

@@ -68,6 +68,21 @@ RSpec.describe Spree::Core::ProductDuplicator do
   end
 
   describe "errors" do
+    context "with invalid product" do
+      # Name has a max length of 255 char, when cloning a product the cloned product has a name
+      # starting with "COPY OF <product.name>". So we set a name with 254 char to make sure the
+      # cloned product will be invalid
+      let(:product) {
+        create(:product).tap{ |v| v.update_columns(name: "l" * 254) }
+      }
+
+      subject { Spree::Core::ProductDuplicator.new(product).duplicate }
+
+      it "raises RecordInvalid error" do
+        expect{ subject }.to raise_error(ActiveRecord::ActiveRecordError)
+      end
+    end
+
     context "invalid variant" do
       let(:variant) {
         # tax_category is required when products_require_tax_category
