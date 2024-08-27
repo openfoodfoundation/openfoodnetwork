@@ -61,10 +61,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         # have to use below method to trigger the +change+ event,
         #   +fill_in "Unit value", with: ""+ does not trigger +change+ event
         find_field('Unit value').send_keys(:control, 'a', :backspace) # empty the field
-        # In CI we get "Please fill out this field." and locally we get
-        # "Please fill in this field."
-        expect_browser_validation('input[aria-label="Unit value"]',
-                                  /Please fill (in|out) this field./)
+        expect_browser_validation('input[aria-label="Unit value"]')
 
         fill_in "Unit value", with: "500.1"
         fill_in "Price", with: "10.25"
@@ -514,8 +511,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           # Client side validation
           click_button "Save changes"
           within new_variant_row do
-            expect_browser_validation('select[aria-label="Unit scale"]',
-                                      "Please select an item in the list.")
+            expect_browser_validation('select[aria-label="Unit scale"]')
           end
 
           # Fix error
@@ -528,8 +524,7 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           within new_variant_row do
             # In CI we get "Please fill out this field." and locally we get
             # "Please fill in this field."
-            expect_browser_validation('input[aria-label="Unit value"]',
-                                      /Please fill (in|out) this field./)
+            expect_browser_validation('input[aria-label="Unit value"]')
           end
 
           # Fix error
@@ -746,8 +741,10 @@ RSpec.describe 'As an enterprise user, I can update my products' do
     end
   end
 
-  def expect_browser_validation(selector, message)
+  # Check a validation message is set, we don't check the message itself because the value is based
+  # on the browser's locale.
+  def expect_browser_validation(selector)
     browser_message = page.find(selector)["validationMessage"]
-    expect(browser_message).to match message
+    expect(browser_message.present?).to be(true)
   end
 end
