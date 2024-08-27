@@ -20,3 +20,6 @@
     = render partial: 'delete_modal', locals: { object_type: }
   #modal-component
   #edit_image_modal
+
+  = render ModalComponent.new(id: "product-preview-modal", "data-action": "product-preview:open@window->modal#open") do
+    #product-preview
