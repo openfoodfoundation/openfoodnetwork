@@ -294,6 +294,21 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           end
         end
       end
+
+      it "shows error message when cloning invalid record" do
+        # The cloned product will be invalid
+        product_a.update_columns(name: "L" * 254)
+
+        # The page has not been reloaded so the product's name is still "Apples"
+        click_product_clone "Apples"
+
+        expect(page).to have_content "Unable to clone the product"
+
+        within "table.products" do
+          # Products does not include the cloned product.
+          expect(all_input_values).not_to match /COPY OF #{('L' * 254)}/
+        end
+      end
     end
 
     describe "delete" do
