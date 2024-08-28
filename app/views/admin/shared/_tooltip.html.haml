@@ -1,5 +1,8 @@
-%div{"data-controller": "tooltip"}
-  %a{"data-tooltip-target": "element", href: link, class: link_class}
+- tooltip_placement = defined?(placement) ? placement : "top"
+- tooltip_link = defined?(link) ? link : ""
+- tooltip_link_class = defined?(link_class) ? link_class : ""
+%div{"data-controller": "tooltip", "data-tooltip-placement-value": tooltip_placement }
+  %a{"data-tooltip-target": "element", href: tooltip_link, class: tooltip_link_class}
     = link_text 
   .tooltip-container
     .tooltip{"data-tooltip-target": "tooltip"}
