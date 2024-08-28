@@ -556,6 +556,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: combined-simplecov-report
-          path: coverage/*.*
+          path: coverage/**/*.*
           retention-days: 7
           if-no-files-found: ignore
