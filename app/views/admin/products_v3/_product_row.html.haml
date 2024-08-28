@@ -40,4 +40,4 @@
         "data-modal-link-target-value": "product-delete-modal", "class": "delete",
         "data-modal-link-modal-dataset-value": {'data-delete-path': admin_product_destroy_path(product)}.to_json }
       = t('admin.products_page.actions.delete')
-    = link_to "Preview", admin_product_preview_path(product), {"data-turbo-stream": "",  "data-controller": "product-preview", "data-action": "click->product-preview#open" } # TODO move product-preview controller to table element ?
+    = link_to "Preview", admin_product_preview_path(product), {"data-turbo-stream": "" } 
