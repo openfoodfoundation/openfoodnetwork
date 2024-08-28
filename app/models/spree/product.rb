@@ -266,7 +266,8 @@ module Spree
       scale_clean = ActiveSupport::NumberHelper.number_to_rounded(variant_unit_scale,
                                                                   precision: nil,
                                                                   significant: false,
-                                                                  strip_insignificant_zeros: true)
+                                                                  strip_insignificant_zeros: true,
+                                                                  locale: :en)
       [variant_unit, scale_clean].compact_blank.join("_")
     end
 
