@@ -3,7 +3,7 @@
 require_relative "../swagger_helper"
 
 RSpec.describe "AffiliateSalesData", swagger_doc: "dfc.yaml", rswag_autodoc: true do
-  let(:user) { create(:oidc_user, id: 10_000) }
+  let(:user) { create(:oidc_user) }
 
   before { login_as user }
 
@@ -14,7 +14,8 @@ RSpec.describe "AffiliateSalesData", swagger_doc: "dfc.yaml", rswag_autodoc: tru
       response "200", "successful" do
         run_test! do
           expect(json_response).to include(
-            "@id" => "http://test.host/api/dfc/persons/10000",
+            "@id" => "http://test.host/api/dfc/affiliate_sales_data",
+            "@type" => "dfc-b:Person",
           )
         end
       end

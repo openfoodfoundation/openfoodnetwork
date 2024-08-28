@@ -83,9 +83,17 @@ paths:
                 test_example:
                   value:
                     "@context": https://www.datafoodconsortium.org
-                    "@id": http://test.host/api/dfc/persons/10000
+                    "@id": http://test.host/api/dfc/affiliate_sales_data
                     "@type": dfc-b:Person
                     dfc-b:logo: ''
+                    dfc-b:firstName: ''
+                    dfc-b:familyName: ''
+                    dfc-b:affiliates:
+                      "@type": dfc-b:Enterprise
+                      dfc-b:logo: ''
+                      dfc-b:name: ''
+                      dfc-b:hasDescription: ''
+                      dfc-b:VATnumber: ''
   "/api/dfc/enterprises/{enterprise_id}/catalog_items":
     parameters:
     - name: enterprise_id
