@@ -7,12 +7,11 @@ namespace :simplecov do
     require "simplecov"
 
     path_to_results = args[:path_to_results].presence || "tmp/simplecov"
-    coverage_dir = args[:coverage_dir].presence || "coverage"
+    output_path = args[:coverage_dir].presence || "coverage"
 
     SimpleCov.collate Dir[File.join(path_to_results, "**", ".resultset.json")], "rails" do
-      formatter SimpleCov::Formatter::HTMLFormatter
-
-      coverage_dir coverage_dir
+      formatter(SimpleCov::Formatter::HTMLFormatter)
+      coverage_dir(output_path)
     end
   end
 end
