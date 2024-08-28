@@ -69,6 +69,23 @@ paths:
                     dfc-b:region: Victoria
         '404':
           description: not found
+  "/api/dfc/affiliate_sales_data":
+    get:
+      summary: Show sales data of person's affiliate enterprises
+      tags:
+      - AffiliateSalesData
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@id": http://test.host/api/dfc/persons/10000
+                    "@type": dfc-b:Person
+                    dfc-b:logo: ''
   "/api/dfc/enterprises/{enterprise_id}/catalog_items":
     parameters:
     - name: enterprise_id
