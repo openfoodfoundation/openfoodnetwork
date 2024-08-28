@@ -1,5 +1,38 @@
 = turbo_stream.replace "product-preview" do
   #product-preview
-    This is where the product preview will be, id:
-    = @id
+    .row
+      .columns.small-12.medium-6.large-6.product-header
+        %h3
+          = @product.name
+        %span
+          %em 
+            = t("products_from")
+          %span
+            = @product.variants.first.supplier.name
 
+        %br-
+
+        .filter-shopfront.property-selectors.inline-block
+          %ul
+            - @product.properties_including_inherited.each do |property|
+              %li
+                %span
+                  - if property[:value].present?
+                    = render partial: "admin/shared/tooltip", locals: { tooltip_text: property[:value], link_text: property[:name], placement: "bottom" }
+                  - else
+                    %a
+                      = property[:name] 
+
+
+        - if @product.description
+          .product-description
+            - # TODO description not wrapped properly
+            %p.text-small{ 'data-controller': "add-blank-to-link" }
+              - # description is sanitized in Spree::Product#description method
+              = @product.description.html_safe
+
+      .columns.small-12.medium-6.large-6.product-img
+        - if @product.image
+          %img{ src: @product.image.url(:large) }
+        -else
+          %img.placeholder{ src: Spree::Image.default_image_url(:large) }

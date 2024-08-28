@@ -3,11 +3,11 @@
 module Admin
   class ProductPreviewController < Spree::Admin::BaseController
     def show
-      @id = params[:id]
-      # TODO load product data based on param
+      @product = Spree::Product.find(params[:id])
+
       respond_with do |format|
         format.turbo_stream {
-          render "admin/products_v3/product_preview", status: :ok, locals: { id: @id }
+          render "admin/products_v3/product_preview", status: :ok
         }
       end
     end
