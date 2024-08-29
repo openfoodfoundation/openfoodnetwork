@@ -508,8 +508,6 @@ RSpec.describe '
     end
 
     it "generating Bulk Co-op Supplier Report" do
-      pending("S2 bug #12768")
-
       click_link "Bulk Co-op Supplier Report"
       run_report
 
