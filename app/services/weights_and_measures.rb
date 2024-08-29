@@ -26,9 +26,15 @@ class WeightsAndMeasures
   def self.variant_unit_options
     available_units_sorted.flat_map do |measurement, measurement_info|
       measurement_info.filter_map do |scale, unit_info|
+        # Our code is based upon English based number formatting
+        # Some language locales like +hu+ uses a comma(,) for decimal separator
+        # While in English, decimal separator is represented by a period.
+        # e.g. en: 0.001, hu: 0,001
+        # Hence the results become "weight_0,001" for hu while or code recognizes "weight_0.001"
         scale_clean =
           ActiveSupport::NumberHelper.number_to_rounded(scale, precision: nil, significant: false,
-                                                               strip_insignificant_zeros: true)
+                                                               strip_insignificant_zeros: true,
+                                                               locale: :en)
         [
           "#{I18n.t(measurement)} (#{unit_info['name']})", # Label (eg "Weight (g)")
           "#{measurement}_#{scale_clean}", # Scale ID (eg "weight_1")
