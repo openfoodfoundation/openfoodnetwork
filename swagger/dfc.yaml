@@ -88,12 +88,6 @@ paths:
                     dfc-b:logo: ''
                     dfc-b:firstName: ''
                     dfc-b:familyName: ''
-                    dfc-b:affiliates:
-                      "@type": dfc-b:Enterprise
-                      dfc-b:logo: ''
-                      dfc-b:name: ''
-                      dfc-b:hasDescription: ''
-                      dfc-b:VATnumber: ''
   "/api/dfc/enterprises/{enterprise_id}/catalog_items":
     parameters:
     - name: enterprise_id
