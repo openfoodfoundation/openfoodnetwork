@@ -8,10 +8,16 @@
       %legend{align: "center"}= t(".new_product")
       .sixteen.columns.alpha
         .eight.columns.alpha
-          = f.field_container :supplier do
-            = f.label :supplier, t(".supplier")
+          = f.field_container :supplier_id do
+            = f.label :supplier_id, t(".supplier")
             %span.required *
-            = f.select :supplier_id, options_from_collection_for_select(@producers, :id, :name, @product.supplier_id), { include_blank: t("spree.admin.products.new.supplier_select_placeholder") }, { "data-controller": "tom-select", class: "primary" }
+            = render(SearchableDropdownComponent.new(form: f,
+                name: :supplier_id,
+                aria_label: t('.supplier'),
+                options: @producers.select(:name, :id).order(:name).pluck(:name, :id),
+                selected_option: @product.supplier_id,
+                include_blank: true,
+                placeholder_value: t('.search_for_suppliers')))
             = f.error_message_on :supplier_id
         .eight.columns.omega
           = f.field_container :name do
@@ -25,8 +31,16 @@
           = f.field_container :variant_unit do
             = f.label :variant_unit, t(".units")
             %span.required *
-            %select{id: 'product_variant_unit_with_scale', 'ng-model' => 'product.variant_unit_with_scale', 'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options', "data-controller": "tom-select","data-tom-select-options-value": '{"allowEmptyOption":false}', class: "primary"}
-              %option{'value' => '', 'ng-hide' => "hasUnit(product)"}
+            = f.select 'variant_unit', [],
+              { include_blank: true },
+              { id: 'product_variant_unit_with_scale',
+              name: 'product_variant_unit_with_scale',
+              'ng-model' => 'product.variant_unit_with_scale', 
+              'ng-options' => 'unit[1] as unit[0] for unit in variant_unit_options', 
+              "data-controller": "tom-select", 
+              "data-tom-select-options-value": '{"allowEmptyOption":false}', 
+              class: "primary",
+              }
             %input{ type: 'hidden', 'ng-value': 'product.variant_unit', "ng-init": "product.variant_unit='#{@product.variant_unit}'", name: 'product[variant_unit]' }
             %input{ type: 'hidden', 'ng-value': 'product.variant_unit_scale', "ng-init": "product.variant_unit_scale='#{@product.variant_unit_scale}'", name: 'product[variant_unit_scale]' }
             = f.error_message_on :variant_unit
@@ -34,16 +48,17 @@
           = f.field_container :unit_value do
             = f.label :unit_value, t(".value"), 'ng-disabled' => "!hasUnit(product)"
             %span.required *
-            %input.fullwidth{ id: 'product_unit_value', 'ng-model' => 'product.master.unit_value_with_description', :type => 'text', placeholder: "eg. 2", 'ng-disabled' => "!hasUnit(product)" }
+            = f.text_field :unit_value, placeholder: "eg. 2", 'ng-model' => 'product.master.unit_value_with_description', class: 'fullwidth', 'ng-disabled' => "!hasUnit(product)"
             %input{ type: 'hidden', 'ng-value': 'product.master.unit_value', "ng-init": "product.master.unit_value='#{@product.unit_value}'", name: 'product[unit_value]' }
             %input{ type: 'hidden', 'ng-value': 'product.master.unit_description', "ng-init": "product.master.unit_description='#{@product.unit_description}'", name: 'product[unit_description]' }
             = f.error_message_on :unit_value
         = render 'display_as', f: f
         .six.columns.omega{ 'ng-show' => "product.variant_unit_with_scale == 'items'" }
-          = f.field_container :unit_name do
-            = f.label :product_variant_unit_name, t(".unit_name")
+          = f.field_container :variant_unit_name do
+            = f.label :variant_unit_name, t(".unit_name")
             %span.required *
-            %input.fullwidth{ id: 'product_variant_unit_name','ng-model' => 'product.variant_unit_name', :name => 'product[variant_unit_name]', :placeholder => t('admin.products.unit_name_placeholder'), :type => 'text' }
+            = f.text_field :variant_unit_name, :placeholder => t('admin.products.unit_name_placeholder'), 'ng-model' => 'product.variant_unit_name', class: 'fullwidth', 'ng-init': "product.variant_unit_name='#{@product.variant_unit_name}'"
+            = f.error_message_on :variant_unit_name
       .sixteen.columns.alpha
         .eight.columns.alpha
           = render 'spree/admin/products/primary_taxon_form', f: f
