@@ -81,8 +81,6 @@ fr_CA:
         white_label_logo_link: "Lien vers le logo utilisé pour la boutique"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Déterminer la catégorie de taxe requiert l'utilisation du calculateur par article"
         spree/image:
           attributes:
             attachment:
@@ -771,7 +769,6 @@ fr_CA:
       variants:
         infinity: "Infini"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
-      back_to_products_list: "Retour à la liste produits"
       editing_product: "Modifier le produit"
       tabs:
         product_details: " Détails"
@@ -1377,10 +1374,8 @@ fr_CA:
         contact_name: Nom du contact principal
       edit:
         editing: 'Configuration:'
-        back_link: Revenir à la liste des entreprises
       new:
         title: Nouvelle entreprise
-        back_link: Revenir à la liste des entreprises
       welcome:
         welcome_title: Bienvenue sur Open Food Network !
         welcome_text: 'Vous avez créé avec succès '
@@ -3920,7 +3915,6 @@ fr_CA:
     tax_rate_amount_explanation: "Les taux de taxe sont présentés en nombres décimaux pour faciliter les calculs (ex : si le taux est 5% saisissez 0.05)"
     included_in_price: "Inclus dans le prix"
     show_rate_in_label: "Montrer le taux dans le nom"
-    back_to_tax_rates_list: "Retour à la liste des taux de taxe"
     tax_settings: "Paramètres taxe"
     zones: "Zones"
     new_zone: "Nouvelle zone"
@@ -3933,7 +3927,6 @@ fr_CA:
     iso_name: "Noms ISO"
     states_required: "États/Départements requis"
     editing_country: "Pays en cours de mise à jour"
-    back_to_countries_list: "Retour à la liste des pays"
     states: "États/Départements requis"
     abbreviation: "Code"
     new_state: "Nouveau Région:"
@@ -4098,7 +4091,6 @@ fr_CA:
           continue: "Suivant"
         new:
           new_return_authorization: "Nouvelle autorisation de retour"
-          back_to_return_authorizations_list: "Revenir à la liste des autorisations"
           continue: "Suivant"
         edit:
           receive: " reçoit"
@@ -4345,6 +4337,7 @@ fr_CA:
           product_name: Nom du Produit
         primary_taxon_form:
           product_category: Catégorie Produit
+          search_for_categories: "Rechercher des catégories"
         group_buy_form:
           group_buy: "Achat groupé ?"
           bulk_unit_size: Quantité totale du lot

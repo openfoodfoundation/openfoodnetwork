@@ -81,8 +81,6 @@ de_DE:
         white_label_logo_link: "Verlinkungsziel des Logos im Online-Shop"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Um die Steuerkategorie des Produkts zu übernehmen, muss in der Spalte \"Berechnung\" eine Auswahl mit Zusatz \"pro Artikel\" verwendet werden."
         spree/user:
           attributes:
             email:
@@ -746,7 +744,6 @@ de_DE:
       variants:
         infinity: "Unbegrenzt"
         to_order_tip: "Artikel, die auf Anfrage hergestellt werden, haben keinen festgelegten Lagerbestand."
-      back_to_products_list: "Zurück zur Produktliste"
       editing_product: "Produkt bearbeiten"
       tabs:
         product_details: "Produktdetails"
@@ -1293,10 +1290,8 @@ de_DE:
         contact_name: Kontaktname
       edit:
         editing: 'Einstellungen:'
-        back_link: Zurück zur Unternehmensliste
       new:
         title: Neues Unternehmen
-        back_link: Zurück zur Unternehmensliste
       welcome:
         welcome_title: Willkommen im Open Food Network!
         welcome_text: 'Erfolgreich erstellt:'
@@ -3786,7 +3781,6 @@ de_DE:
     tax_rate_amount_explanation: "Eingabe als Dezimalbetrag (d. h. bei Steuersatz 5 %, geben Sie 0.05 ein)."
     included_in_price: "Im Preis enthalten"
     show_rate_in_label: "Steuersatz im Namen anzeigen"
-    back_to_tax_rates_list: "Zurück zur Liste der Steuersätze"
     tax_settings: "Steuereinstellungen"
     zones: "Zonen"
     new_zone: "Neue Zone"
@@ -3799,7 +3793,6 @@ de_DE:
     iso_name: "ISO-Name"
     states_required: "Staaten/Bundesländer/Regionen erforderlich"
     editing_country: "Land bearbeiten"
-    back_to_countries_list: "Zurück zur Länderliste"
     states: "Bundesländer"
     abbreviation: "Abkürzung"
     new_state: "Neues Bundesland"
@@ -3962,7 +3955,6 @@ de_DE:
           continue: "Weiter"
         new:
           new_return_authorization: "Neue Retour"
-          back_to_return_authorizations_list: "Zurück zur Retourenliste"
           continue: "Weiter"
         edit:
           receive: "erhalten"

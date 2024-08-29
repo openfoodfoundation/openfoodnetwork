@@ -344,7 +344,7 @@ pt_BR:
   password_confirmation: Confirmação de senha
   reset_password_token: Redefinir chave de senha
   expired: expirou, por favor solicite um novo
-  back_to_payments_list: "voltar para lista de pagamento"
+  back_to_payments_list: "Voltar pra Lista de Pagamentos"
   maestro_or_solo_cards: "Cartões Maestro / Solo"
   backordered: "Pedidos em atraso"
   on_hand: "Disponível"
@@ -607,7 +607,6 @@ pt_BR:
       variants:
         infinity: "Infinidade"
         to_order_tip: "Os itens feitos por encomenda não têm um nível de estoque definido, como pão fresco, por exemplo."
-      back_to_products_list: "Voltar à lista de produtos"
       editing_product: "Editando Produto"
       tabs:
         product_details: "Detalhes do Produto"
@@ -1063,10 +1062,8 @@ pt_BR:
         contact_name: Nome para contato
       edit:
         editing: 'Configurações:'
-        back_link: Voltar à lista de iniciativas
       new:
         title: Nova iniciativa
-        back_link: Voltar à lista de iniciativas
       welcome:
         welcome_title: Bem-vindo à Ajunta!
         welcome_text: Você criou com sucesso uma
@@ -2685,7 +2682,7 @@ pt_BR:
   order_cycles_no_permission_to_coordinate_error: "Nenhuma das suas iniciativas tem permissão para coordenar um ciclo de pedidos"
   order_cycles_no_permission_to_create_error: "Você não tem permissão para criar um ciclo de pedidos coordenado por esta iniciativa"
   order_cycle_closed: "O ciclo de pedidos selecionado acabou de fechar, por favor tente novamente depois!"
-  back_to_orders_list: "Voltar à lista de pedidos"
+  back_to_orders_list: "Voltar Para Lista de Pedidos"
   no_orders_found: "Nenhum pedido encontrado"
   order_information: "Informações sobre pedidos"
   new_payment: "Novo Pagamento"
@@ -3350,7 +3347,6 @@ pt_BR:
     tax_rate_amount_explanation: "As alíquotas são um valor decimal para ajudar nos cálculos (por exemplo, se a alíquota for de 5%, digite 0,05)"
     included_in_price: "Incluído no preço"
     show_rate_in_label: "Mostrar taxa no rótulo"
-    back_to_tax_rates_list: "Voltar à lista de alíquotas."
     tax_settings: "Configurações de Taxas"
     zones: "Zonas"
     new_zone: "Nova Zona"
@@ -3363,7 +3359,6 @@ pt_BR:
     iso_name: "Nome ISO"
     states_required: "Estados Necessários"
     editing_country: "Editando País"
-    back_to_countries_list: "Voltar à lista de países"
     states: "Estados"
     abbreviation: "Abreviação"
     new_state: "Estado novo"
@@ -3521,7 +3516,6 @@ pt_BR:
           continue: "Continuar"
         new:
           new_return_authorization: "Nova Autorização de Retorno"
-          back_to_return_authorizations_list: "Voltar Para Lista de Autorização de Retorno"
           continue: "Continuar"
         edit:
           receive: "receber"

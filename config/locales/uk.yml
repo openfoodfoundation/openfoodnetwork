@@ -674,7 +674,6 @@ uk:
       variants:
         infinity: "Нескінченність"
         to_order_tip: "Товари, виготовлені на замовлення, не мають встановленого рівня запасів, наприклад, хліб, свіжий на замовлення."
-      back_to_products_list: "Повернутися до списку продуктів"
       editing_product: "Редагування продукту"
       tabs:
         product_details: "Деталі продукту"
@@ -1167,10 +1166,8 @@ uk:
         contact_name: Контактна Особа
       edit:
         editing: 'Налаштування:'
-        back_link: Повернутися до списку підприємств
       new:
         title: Нове підприємство
-        back_link: Повернутися до списку підприємств
       welcome:
         welcome_title: Ласкаво просимо до Open Food Network!
         welcome_text: 'Ви успішно створили '
@@ -2871,7 +2868,7 @@ uk:
   order_cycles_no_permission_to_coordinate_error: "Жодне з ваших підприємств не має дозволу на координацію циклу замовлення"
   order_cycles_no_permission_to_create_error: "У вас немає дозволу на створення циклу замовлення, який координує це підприємство"
   order_cycle_closed: "Вибраний вами цикл замовлення щойно закрито. Будь ласка спробуйте ще раз!"
-  back_to_orders_list: "Повернутися до списку замовлень"
+  back_to_orders_list: "Назад до списку замовлень"
   no_orders_found: "Замовлень не знайдено"
   order_information: "Інформація про замовлення"
   new_payment: "Нова оплата"
@@ -3576,7 +3573,6 @@ uk:
     tax_rate_amount_explanation: "Ставки податку – це десяткова сума, яка допомагає під час розрахунків (тобто, якщо ставка податку становить 5%, введіть 0,05)"
     included_in_price: "Входить у вартість"
     show_rate_in_label: "Показати ставку в етикетці"
-    back_to_tax_rates_list: "Повернутися до списку податкових ставок"
     tax_settings: "Налаштування податку"
     zones: "Зони"
     new_zone: "Нова зона"
@@ -3589,7 +3585,6 @@ uk:
     iso_name: "Назва ISO"
     states_required: "Регіони обовязкові"
     editing_country: "Країна редагування"
-    back_to_countries_list: "Назад до списку країн"
     states: "Області"
     abbreviation: "Абревіатура"
     new_state: "Новий регіон"
@@ -3748,7 +3743,6 @@ uk:
           continue: "Продовжити"
         new:
           new_return_authorization: "Авторизація на нове повернення"
-          back_to_return_authorizations_list: "Назад до списку Авторизації повернень"
           continue: "Продовжити"
         edit:
           receive: "отримати"

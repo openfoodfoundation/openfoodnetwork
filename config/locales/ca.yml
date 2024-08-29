@@ -716,7 +716,6 @@ ca:
       variants:
         infinity: "Infinit"
         to_order_tip: "Els articles preparats per encàrrec no tenen un nivell fixat d'existències, com ara pa fet sota comanda."
-      back_to_products_list: "Torna a la llista de productes"
       editing_product: "Editant el producte"
       tabs:
         product_details: "Detalls del producte"
@@ -1251,10 +1250,8 @@ ca:
         contact_name: Nom de contacte
       edit:
         editing: 'Configuració:'
-        back_link: Tornar a la llista d'organitzacions
       new:
         title: Nova organització
-        back_link: 'Tornar a la llista d''organitzacions '
       welcome:
         welcome_title: Benvingut a Katuma - Open Food Network!
         welcome_text: Heu creat correctament un
@@ -2946,7 +2943,7 @@ ca:
   order_cycles_no_permission_to_coordinate_error: "Cap de les vostres organitzacions té permís per coordinar un cicle de comanda"
   order_cycles_no_permission_to_create_error: "No teniu permís per crear un cicle de comandes coordinat per aquesta organització"
   order_cycle_closed: "El cicle de comandes que has triat acaba de tancar. Sisplau prova en un altre moment."
-  back_to_orders_list: "Torna a la llista de comandes"
+  back_to_orders_list: "Tornar a la llista de comandes"
   no_orders_found: "No s'han trobat comandes"
   order_information: "Informació de la comanda"
   new_payment: "Nou pagament"
@@ -3609,7 +3606,6 @@ ca:
     tax_rate_amount_explanation: "Les taxes impositives són un import decimal per ajudar en els càlculs (és a dir, si el tipus impositiu és del 5%, introduïu 0,05)"
     included_in_price: "Inclòs al preu"
     show_rate_in_label: "Mostra l'impost a l'etiqueta"
-    back_to_tax_rates_list: "Tornar a la llista d'impostos"
     tax_settings: "Configuració fiscal"
     zones: "Zones"
     new_zone: "Nova zona"
@@ -3622,7 +3618,6 @@ ca:
     iso_name: "Nom ISO"
     states_required: "Estats obligatoris"
     editing_country: "Editar el país"
-    back_to_countries_list: "Torna a la llista de països"
     states: "Estats"
     abbreviation: "Abreviatura"
     new_state: "Nou estat"
@@ -3781,7 +3776,6 @@ ca:
           continue: "Continua"
         new:
           new_return_authorization: "Nova autorització de devolució"
-          back_to_return_authorizations_list: "Tornar a la llista d'autorització"
           continue: "Continua"
         edit:
           receive: "rebre"
@@ -4017,6 +4011,7 @@ ca:
           product_name: Nom del producte
         primary_taxon_form:
           product_category: Categoria del producte
+          search_for_categories: "Cercar categories"
         group_buy_form:
           group_buy: "Compra en grup?"
           bulk_unit_size: Mida de la unitat a granel

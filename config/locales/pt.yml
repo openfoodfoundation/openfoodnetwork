@@ -316,7 +316,6 @@ pt:
   password_confirmation: Confirmação de Palavra-passe
   reset_password_token: Redefinir palavra-passe
   expired: expirou, por favor peça uma nova
-  back_to_payments_list: "Voltar à lista de pagamentos"
   maestro_or_solo_cards: "Cartões Maestro/Solo"
   backordered: "Encomendado"
   on_hand: "Disponível"
@@ -565,7 +564,6 @@ pt:
       variants:
         infinity: "Infinito"
         to_order_tip: "Os itens feitos por encomenda não têm um nível de stock definido, como pão fresco, por exemplo."
-      back_to_products_list: "Voltar à lista de produtos"
       editing_product: "Editando um Produto"
       tabs:
         product_details: "Detalhes do Produto"
@@ -1024,10 +1022,8 @@ pt:
         contact_name: Nome do contacto
       edit:
         editing: 'Configurações'
-        back_link: Voltar à lista de organizações
       new:
         title: Nova Organização
-        back_link: Voltar à lista de organizações
       welcome:
         welcome_title: Bem-vindo à Open Food Network!
         welcome_text: Você criou com sucesso uma
@@ -2575,7 +2571,7 @@ pt:
   order_cycles_bulk_update_notice: 'Os ciclos de encomendas foram actualizados.'
   order_cycles_no_permission_to_coordinate_error: "Nenhuma das suas organizações tem permissão para coordenar um ciclo de encomendas."
   order_cycles_no_permission_to_create_error: "Não tem permissão para criar um ciclo de encomendas coordenado por essa organização."
-  back_to_orders_list: "Voltar à lista de encomendas"
+  back_to_orders_list: "Voltar à Lista de Encomendas"
   no_orders_found: "Nenhuma encomenda encontrada"
   order_information: "Informação da Encomenda"
   new_payment: "Novo Pagamento"
@@ -3102,7 +3098,6 @@ pt:
     tax_rate_amount_explanation: "Taxas de Imposto são uma quantidade decimal que suportam o cálculo (por exemplo, se a taxa de imposto for 5%, insira 0.05)"
     included_in_price: "Incluído no Preço"
     show_rate_in_label: "Mostrar taxa na etiqueta"
-    back_to_tax_rates_list: "Voltar à lista de Taxas de Imposto"
     tax_settings: "Configurações de Impostos"
     zones: "Zonas"
     new_zone: "Nova Zona"
@@ -3115,7 +3110,6 @@ pt:
     iso_name: "Nome ISO"
     states_required: "Regiões obrigatórias"
     editing_country: "Editar País"
-    back_to_countries_list: "Voltar à Lista de Países"
     states: "Regiões"
     abbreviation: "Abreviatura"
     new_state: "Nova Região"

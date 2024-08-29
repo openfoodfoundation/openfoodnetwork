@@ -381,7 +381,7 @@ es_US:
   password_confirmation: Confirmación de contraseña
   reset_password_token: token de restablecimiento de contraseña
   expired: ha expirado, por favor solicite una nueva
-  back_to_payments_list: "Volver a la lista de pagos"
+  back_to_payments_list: "Regresar a la lista de pagos"
   maestro_or_solo_cards: "Tarjetas Maestro/Solo"
   backordered: "Reabastecido"
   on_hand: "Disponibles"
@@ -646,7 +646,6 @@ es_US:
       variants:
         infinity: "infinito"
         to_order_tip: "Los artículos hechos según demanda no tienen un nivel de stock, como por ejemplo panes hechos según demanda."
-      back_to_products_list: "Volver a la lista de productos"
       editing_product: "Editando producto"
       tabs:
         product_details: "Detalles del Producto"
@@ -1123,10 +1122,8 @@ es_US:
         contact_name: Nombre de Contacto
       edit:
         editing: 'Configuración:'
-        back_link: Volver a la lista de organizaciones
       new:
         title: Nueva Organización
-        back_link: Volver a la lista de organizaciones
       welcome:
         welcome_title: Bienvenida a Open Food Network!
         welcome_text: Has creado correctamente un
@@ -3411,7 +3408,6 @@ es_US:
     tax_rate_amount_explanation: "Las tasas de impuestos son una cantidad decimal para ayudar en los cálculos (es decir, si la tasa de impuestos es del 5%, introduzca 0.05)"
     included_in_price: "Incluido en el precio"
     show_rate_in_label: "Mostrar impuesto en la etiqueta"
-    back_to_tax_rates_list: "Volver a la lista de impuestos"
     tax_settings: "Configuración de Impuestos"
     zones: "Zonas"
     new_zone: "Nueva zona"
@@ -3424,7 +3420,6 @@ es_US:
     iso_name: "Nombre ISO"
     states_required: "Estados requeridos"
     editing_country: "Editar país"
-    back_to_countries_list: "Volver a la lista de países"
     states: "Estados"
     abbreviation: "Abreviatura"
     new_state: "Nuevo estado"
@@ -3583,7 +3578,6 @@ es_US:
           continue: "Continuar"
         new:
           new_return_authorization: "Nueva autorización de devolución"
-          back_to_return_authorizations_list: "Back To Return Authorization List"
           continue: "Continuar"
         edit:
           receive: "recibir"

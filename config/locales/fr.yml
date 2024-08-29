@@ -81,8 +81,6 @@ fr:
         white_label_logo_link: "Lien vers le logo utilisé pour la boutique"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Déterminer la catégorie de taxe requiert l'utilisation du calculateur par article. "
         spree/image:
           attributes:
             attachment:
@@ -99,8 +97,6 @@ fr:
           attributes:
             base:
               card_expired: "a expiré"
-        spree/product:
-          must_exist: 'doit exister'
         order_cycle:
           attributes:
             orders_close_at:
@@ -782,7 +778,6 @@ fr:
       variants:
         infinity: "Infini"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
-      back_to_products_list: "Retour à la liste produits"
       editing_product: "Modifier le produit"
       tabs:
         product_details: "Détails"
@@ -1398,10 +1393,8 @@ fr:
         contact_name: Nom du contact principal
       edit:
         editing: 'Configuration:'
-        back_link: Revenir à la liste des entreprises
       new:
         title: Nouvelle entreprise
-        back_link: Revenir à la liste des entreprises
       welcome:
         welcome_title: Bienvenue sur CoopCircuits !
         welcome_text: 'Vous avez créé avec succès '
@@ -3961,7 +3954,6 @@ fr:
     tax_rate_amount_explanation: "Les taux de taxe sont présentés en nombres décimaux pour faciliter les calculs (ex : si le taux est 5,5% saisissez 0.055)"
     included_in_price: "Inclus dans le prix"
     show_rate_in_label: "Montrer le taux dans le nom"
-    back_to_tax_rates_list: "Retour à la liste des taux de taxe"
     tax_settings: "Paramètres TVA"
     zones: "Zones"
     new_zone: "Nouvelle zone"
@@ -3974,7 +3966,6 @@ fr:
     iso_name: "Noms ISO"
     states_required: "États/Départements requis"
     editing_country: "Pays en cours de mise à jour"
-    back_to_countries_list: "Retour à la liste des pays"
     states: "Départements"
     abbreviation: "Code"
     new_state: "Nouveau département"
@@ -4139,7 +4130,6 @@ fr:
           continue: "Suivant"
         new:
           new_return_authorization: "Nouvelle autorisation de retour"
-          back_to_return_authorizations_list: "Revenir à la liste des autorisations"
           continue: "Suivant"
         edit:
           receive: "reçoit"
@@ -4386,6 +4376,7 @@ fr:
           product_name: Nom du Produit
         primary_taxon_form:
           product_category: Catégorie Produit
+          search_for_categories: "Rechercher"
         group_buy_form:
           group_buy: "Achat groupé de lots fixes ?"
           bulk_unit_size: Quantité totale du lot
@@ -4463,7 +4454,6 @@ fr:
           total: "Total"
           billing_address_name: "Nom"
       taxons:
-        back_to_list: "Retour à la liste des catégories de produits"
         index:
           title: "Catégorie Produit"
           new_taxon: 'Nouvelle catégorie de produit'

@@ -278,7 +278,6 @@ en_ZA:
   password_confirmation: Password Confirmation
   reset_password_token: Reset password
   expired: has expired, please request a new one
-  back_to_payments_list: "Back to Payments List"
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "Backordered"
   on_hand: "In Stock"
@@ -513,7 +512,6 @@ en_ZA:
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
-      back_to_products_list: "Back to products list"
       editing_product: "Editing Product"
       tabs:
         product_details: "Product Details"
@@ -961,10 +959,8 @@ en_ZA:
         contact_name: Contact Name
       edit:
         editing: 'Settings:'
-        back_link: Back to enterprises list
       new:
         title: New Enterprise
-        back_link: Back to enterprises list
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
@@ -2525,7 +2521,7 @@ en_ZA:
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
-  back_to_orders_list: "Back to order list"
+  back_to_orders_list: "Back To Orders List"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
@@ -3023,7 +3019,6 @@ en_ZA:
     tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
     included_in_price: "Included in Price"
     show_rate_in_label: "Show rate in label"
-    back_to_tax_rates_list: "Back to Tax Rates List"
     tax_settings: "Tax Settings"
     zones: "Zones"
     new_zone: "New Zone"
@@ -3036,7 +3031,6 @@ en_ZA:
     iso_name: "ISO Name"
     states_required: "Provinces Required"
     editing_country: "Editing Country"
-    back_to_countries_list: "Back to Countries List"
     states: "Provinces"
     abbreviation: "Abbreviation"
     new_state: "New Province"

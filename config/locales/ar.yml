@@ -685,7 +685,6 @@ ar:
       variants:
         infinity: "ما لا نهاية"
         to_order_tip: "لا تحتوي المواد التي تريد طلبها  على مستوى مخزون محدد ، مثل أرغفة الخبز المصنوعة طازجة حسب الطلب."
-      back_to_products_list: "العودة إلى قائمة المنتجات"
       editing_product: "تحرير المنتج"
       tabs:
         product_details: "تفاصيل المنتج"
@@ -1197,10 +1196,8 @@ ar:
         contact_name: اسم جهة الاتصال
       edit:
         editing: 'الإعدادات:'
-        back_link: العودة إلى قائمة المؤسسات
       new:
         title: شركة جديدة
-        back_link: العودة إلى قائمة المؤسسات
       welcome:
         welcome_title: مرحبا بكم في شبكة الغذاء المفتوح الاردن - فلاحة جو !
         welcome_text: لقد نجحت في إنشاء
@@ -2964,7 +2961,7 @@ ar:
   order_cycles_no_permission_to_coordinate_error: "لا تملك أي من مؤسساتك إذنًا لتنسيق دورة الطلب"
   order_cycles_no_permission_to_create_error: "ليس لديك إذن لإنشاء دورة طلب تنسقها تلك المؤسسة"
   order_cycle_closed: "تم إغلاق دورة الطلب التي حددتها للتو. حاول مرة اخرى!"
-  back_to_orders_list: "العودة إلى قائمة الطلب"
+  back_to_orders_list: "العودة إلى قائمة الطلبات"
   no_orders_found: "لم يتم العثور على أية طلبات"
   order_information: "معلومات الطلب"
   new_payment: "دفعة جديد"
@@ -3732,7 +3729,6 @@ ar:
     tax_rate_amount_explanation: "معدلات الضرائب هي مبلغ عشري للمساعدة في العمليات الحسابية ، (أي إذا كان معدل الضريبة 5٪ ، فأدخل 0.05)"
     included_in_price: "المدرجة في السعر"
     show_rate_in_label: "عرض السعر في التسمية"
-    back_to_tax_rates_list: "العودة إلى قائمة أسعار الضرائب"
     tax_settings: "الإعدادات الضريبية"
     zones: "مناطق"
     new_zone: "منطقة جديدة"
@@ -3745,7 +3741,6 @@ ar:
     iso_name: "اسم شهادة ISO"
     states_required: "المنطقة مطلوبة"
     editing_country: "تحرير الدولة"
-    back_to_countries_list: "العودة إلى قائمة الدول"
     states: "محافظات"
     abbreviation: "الاختصار"
     new_state: "محافظة جديدة"
@@ -3907,7 +3902,6 @@ ar:
           continue: "تابع"
         new:
           new_return_authorization: "عودة الترخيص جديد"
-          back_to_return_authorizations_list: "العودة إلى قائمة عودة الترخيص"
           continue: "تابع"
         edit:
           receive: "استلام"

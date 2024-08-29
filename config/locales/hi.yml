@@ -81,8 +81,6 @@ hi:
         white_label_logo_link: "शॉपफ्रन्ट में इस्तेमाल किए गए लोगो के लिए लिंक"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "टैक्स की श्रेणी को इन्हेरिट करने के लिए प्रति-आइटम कॅल्क्युलेटर की आवश्यकता है।"
         spree/user:
           attributes:
             email:
@@ -743,7 +741,6 @@ hi:
       variants:
         infinity: "इन्फिनिटी"
         to_order_tip: "ऑर्डर करने के लिए बनाई गई वस्तुओं का एक निर्धारित स्टॉक स्तर नहीं होता है, जैसे कि ऑर्डर करने के लिए ताजा बनाई गई ब्रेड की रोटियां।"
-      back_to_products_list: "उत्पादों की सूची पर वापस जाएं"
       editing_product: "उत्पाद की एडिटिंग हो रही है"
       tabs:
         product_details: "उत्पाद का विवरण"
@@ -1286,10 +1283,8 @@ hi:
         contact_name: संपर्क का नाम
       edit:
         editing: 'सेटिंग्स:'
-        back_link: एंटरप्राइज़ सूची पर वापस जाएं
       new:
         title: न्यू एंटरप्राइज़
-        back_link: एंटरप्राइज़ सूची पर वापस जाएं
       welcome:
         welcome_title: Open Food Network में आपका स्वागत है!
         welcome_text: आपने सफलतापूर्वक एक बनाया है
@@ -3771,7 +3766,6 @@ hi:
     tax_rate_amount_explanation: "कैलकुलेशन में सहायता के लिए टैक्स दरें एक दशमलव राशि हैं, (यानी यदि टैक्स की दर 5% है तो 0.05 एंटर करें)"
     included_in_price: "कीमत में शामिल"
     show_rate_in_label: "लेबल में रेट दिखाएं"
-    back_to_tax_rates_list: "टैक्स दरों की सूची पर वापस जाएं"
     tax_settings: "टैक्स सेटिंग्स"
     zones: "ज़ोन"
     new_zone: "न्यू ज़ोन"
@@ -3784,7 +3778,6 @@ hi:
     iso_name: "ISO का नाम"
     states_required: "आवश्यक राज्य"
     editing_country: "एडिटिंग देश"
-    back_to_countries_list: "देशों की सूची पर वापस जाएं"
     states: "राज्य"
     abbreviation: "संक्षेपण"
     new_state: "नया राज्य"
@@ -3947,7 +3940,6 @@ hi:
           continue: "जारी रखें"
         new:
           new_return_authorization: "नया रिटर्न प्राधिकरण"
-          back_to_return_authorizations_list: "रिटर्न प्राधिकरण सूची पर वापस जाएं"
           continue: "जारी रखें"
         edit:
           receive: "प्राप्त करें"

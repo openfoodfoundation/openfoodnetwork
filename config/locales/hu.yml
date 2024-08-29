@@ -81,8 +81,6 @@ hu:
         white_label_logo_link: "A főoldalon használt logo linkje"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Az adókategória örökléséhez tételenkénti kalkulátor szükséges."
         spree/image:
           attributes:
             attachment:
@@ -99,8 +97,6 @@ hu:
           attributes:
             base:
               card_expired: "lejárt"
-        spree/product:
-          must_exist: 'léteznie kell'
         order_cycle:
           attributes:
             orders_close_at:
@@ -773,7 +769,6 @@ hu:
       variants:
         infinity: "Végtelen"
         to_order_tip: "A megrendelésre készült termékeknek nincs meghatározott készletszintjük, például a rendelésre frissen készült kenyérnek."
-      back_to_products_list: "Vissza a termékek listájához"
       editing_product: "Termék szerkesztése"
       tabs:
         product_details: "Termék leírás"
@@ -1378,10 +1373,8 @@ hu:
         contact_name: Kapcsolattartó neve
       edit:
         editing: 'Beállítások:'
-        back_link: Vissza a vállalkozások listájához
       new:
         title: Új Vállalkozás
-        back_link: Vissza a vállalkozások listájához
       welcome:
         welcome_title: Üdvözölünk az Open Food Network-ben!
         welcome_text: Sikeresen létrehoztad a
@@ -2261,11 +2254,11 @@ hu:
   products_at: "itt: %{distributor}"
   products_elsewhere: "Máshol talált termékek"
   email_confirmed: "Köszönjük, hogy megerősítette e-mail címét."
-  email_confirmation_activate_account: "Mielőtt aktiválhatnánk új fiókját, meg kell erősíteni az e-mail címét."
+  email_confirmation_activate_account: "Mielőtt aktiválhatnánk az új fiókodat, meg kell erősíteni az e-mail címed."
   email_confirmation_greeting: "Kedves %{contact}!"
   email_confirmation_profile_created: "A %{name} profilod sikeresen létrejött! Profilod aktiválásához meg kell erősíteni ezt az e-mail címet."
-  email_confirmation_click_link: "Kérjük, kattintson az alábbi linkre az e-mail-cím megerősítéséhez és a profil beállításának folytatásához."
-  email_confirmation_link_label: "Erősítse meg ezt az e-mail címet »"
+  email_confirmation_click_link: "Kérjük, kattints az alábbi linkre az e-mail-cím megerősítéséhez és a profil beállításának folytatásához."
+  email_confirmation_link_label: "E-mail cím megerősítése »"
   email_confirmation_help_html: "Az e-mail-cím megerősítése után hozzáférhetsz a vállalkozás adminisztrációs fiókjához. Tekintsd meg a %{link} webhelyet, hogy többet megtudj %{sitename} szolgáltatásairól, és elkezdhesd használni profilod vagy online áruházad."
   email_confirmation_notice_unexpected: "Azért kaptad ezt az üzenetet, mert regisztráltál a(z) %{sitename} webhelyen, vagy egy olyan személy, akit valószínűleg ismersz, meghívott. Ha nem érted, miért kaptad ezt az e-mailt, kérjük, írj a %{contact} címre."
   email_social: "Lépj kapcsolatba velünk:"
@@ -2317,14 +2310,14 @@ hu:
   email_shipping_collection_time: "Átvétel időpontja:"
   email_shipping_collection_instructions: "Átvételi információk:"
   email_special_instructions: "Megjegyzés:"
-  email_signup_greeting: Helló!
-  email_signup_welcome: "Üdvözlünk a %{sitename} oldalon!"
-  email_signup_confirmed_email: "Köszönjük, hogy megerősítette e-mailjét."
-  email_signup_shop_html: "Most már bejelentkezhet a %{link} címen."
+  email_signup_greeting: Üdv!
+  email_signup_welcome: "Köszöntünk az %{sitename} oldalon!"
+  email_signup_confirmed_email: "Köszönjük, hogy megerősítetted az e-mail címed."
+  email_signup_shop_html: "Most már bejelentkezhetsz a %{link} címen."
   email_signup_text: "Köszönjük, hogy csatlakoztál a hálózathoz! "
   email_signup_help_html: "Szívesen fogadunk minden kérdést és visszajelzést; ehhez bátran használd a <em>Visszajelzés küldése</em> gombot a weboldalon, vagy írhatsz nekünk egy e-mailt a következő címre: %{email}"
   invite_email:
-    greeting: "Helló!"
+    greeting: "Üdv!"
     invited_to_manage: "Meghívást kaptál, hogy kezeld a(z) %{enterprise} %{instance} szolgáltatást."
     confirm_your_email: "Egy megerősítő linket tartalmazó e-mailt kellett volna kapnia, vagy hamarosan kapni fog. Addig nem férhetsz hozzá %{enterprise} profiljához, amíg meg nem erősíted az e-mail címedet."
     set_a_password: "Ezután a rendszer kéri, hogy állítson be egy jelszót, mielőtt felügyelheti a vállalkozásot."
@@ -2592,7 +2585,7 @@ hu:
   signup_email: "Email címed"
   choose_password: "Adj meg egy jelszót"
   confirm_password: "Jelszó megerősítése"
-  action_signup: "Regisztrálj most"
+  action_signup: "Regisztrálok"
   forgot_password: "Elfelejtett jelszó"
   password_reset_sent: "Elküldtük a jelszó visszaállítására vonatkozó utasításokat tartalmazó e-mailt!"
   reset_password: "Jelszó visszaállítása"
@@ -3468,7 +3461,7 @@ hu:
       customers:
         index:
           add_customer: "Ügyfél hozzáadása"
-          add_a_new_customer_for: "Új vásárló hozzáadása a %{shop_name}számára"
+          add_a_new_customer_for: "Új vásárló hozzáadása a  %{shop_name}számára"
           customer_placeholder: "ügyfél@example.org"
           valid_email_error: "Kérjük valós e-mail címet adj meg"
       subscriptions:
@@ -3566,7 +3559,7 @@ hu:
       users:
         order: "Rendelés"
     registration:
-      welcome_to_ofn: "Üdvözlünk az Open Food Hálózatában!"
+      welcome_to_ofn: "Köszöntünk az Open Food Hálózatában!"
       signup_or_login: "Kezd a regisztrációval (vagy bejelentkezéssel)"
       have_an_account: "Már van fiókod?"
       action_login: "Jelentkezz be most."
@@ -3886,7 +3879,6 @@ hu:
     tax_rate_amount_explanation: "Az adókulcsok tizedesjegyek, amelyek segítik a számításokat (azaz ha az adókulcs 5%, akkor írj be 0,05-öt)"
     included_in_price: "Az ár tartalmazza"
     show_rate_in_label: "Mutassa az arányát a címkén"
-    back_to_tax_rates_list: "Vissza az adókulcs-listához"
     tax_settings: "Adóbeállítások"
     zones: "Zónák"
     new_zone: "Új zóna"
@@ -3899,7 +3891,6 @@ hu:
     iso_name: "ISO név"
     states_required: "Állam kötelező"
     editing_country: "Ország szerkesztése"
-    back_to_countries_list: "Vissza az országok listájához"
     states: "Államok"
     abbreviation: "Rövidítés"
     new_state: "Új állam"
@@ -4064,7 +4055,6 @@ hu:
           continue: "Tovább"
         new:
           new_return_authorization: "Új visszaküldési engedély"
-          back_to_return_authorizations_list: "Vissza a visszaküldési engedélyek listájához"
           continue: "Tovább"
         edit:
           receive: "kap"
@@ -4311,6 +4301,7 @@ hu:
           product_name: Termék név
         primary_taxon_form:
           product_category: Termékkategória
+          search_for_categories: "Keresés termékkategóriára"
         group_buy_form:
           group_buy: "Csoportos vásárlás?"
           bulk_unit_size: Tömeges mértékegység

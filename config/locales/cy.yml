@@ -81,8 +81,6 @@ cy:
         white_label_logo_link: "Defnyddiwyd dolen i’r logo yn ffrynt y siop"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Mae etifeddu’r categori treth yn golygu bod angen cyfrifiannell fesul eitem."
         spree/user:
           attributes:
             email:
@@ -469,7 +467,7 @@ cy:
   password_confirmation: Cadarnhau Cyfrinair
   reset_password_token: Ailosod y cyfrinair
   expired: wedi dod i ben, gofynnwch am un newydd
-  back_to_payments_list: "Yn ôl i'r Rhestr Taliadau"
+  back_to_payments_list: "Yn ôl at y Rhestr Taliadau"
   maestro_or_solo_cards: "Cardiau Maestro / Solo"
   backordered: "Ol-archebwyd"
   on_hand: "Ar gael"
@@ -746,7 +744,6 @@ cy:
       variants:
         infinity: "Anfeidredd"
         to_order_tip: "Nid oes gan eitemau a gynhyrchir ar gyfer archeb lefel stoc benodol, megis torthau o fara a gynhyrchir yn ffres ar gyfer archeb."
-      back_to_products_list: "Yn ôl i'r rhestr cynnyrch"
       editing_product: "Golygu cynnyrch"
       tabs:
         product_details: "Manylion Cynnyrch"
@@ -1313,10 +1310,8 @@ cy:
         contact_name: Enw Cyswllt
       edit:
         editing: 'Gosodiadau:'
-        back_link: Yn ôl i'r rhestr mentrau
       new:
         title: Menter Newydd
-        back_link: Yn ôl i'r rhestr mentrau
       welcome:
         welcome_title: Croeso i'r Open Food Network!
         welcome_text: 'Rydych chi wedi  llwyddo i greu '
@@ -3118,7 +3113,7 @@ cy:
   order_cycles_no_permission_to_coordinate_error: "Nid oes gan unrhyw un o'ch mentrau ganiatâd i gydlynu cylch archebu"
   order_cycles_no_permission_to_create_error: "Nid oes gennych ganiatâd i greu cylch archebu a gydlynwyd gan y fenter honno"
   order_cycle_closed: "Mae'r cylch archebu a ddewiswyd newydd gau.  Rhowch gynnig arall!"
-  back_to_orders_list: "Yn ôl i'r rhestr archebu"
+  back_to_orders_list: "Yn ôl i'r Rhestr Archebion"
   no_orders_found: "Ni ddaethpwyd o hyd i archebion"
   order_information: "Gwybodaeth Archebu"
   new_payment: "Taliad Newydd"
@@ -3847,7 +3842,6 @@ cy:
     tax_rate_amount_explanation: "Mae cyfraddau treth yn swm degol i helpu gyda chyfrifiadau, (h.y. os yw'r gyfradd dreth yn 5% yna nodwch 0.05)"
     included_in_price: "Wedi'i gynnwys yn y Pris"
     show_rate_in_label: "Dangos cyfradd yn y label"
-    back_to_tax_rates_list: "Yn ôl i'r Rhestr Cyfraddau Treth"
     tax_settings: "Gosodiadau Treth"
     zones: "Parthau"
     new_zone: "Parth Newydd"
@@ -3860,7 +3854,6 @@ cy:
     iso_name: "Enw ISO"
     states_required: "Angen y Siroedd"
     editing_country: "Yn golygu'r wlad "
-    back_to_countries_list: "Yn ôl i'r Rhestr Gwledydd"
     states: "Siroedd"
     abbreviation: "Talfyriad"
     new_state: "Sir Newydd"
@@ -4025,7 +4018,6 @@ cy:
           continue: "Parhau"
         new:
           new_return_authorization: "Awdurdodi Dychwelyd nwyddau newydd"
-          back_to_return_authorizations_list: "Yn ôl i'r rhestr awdurdodi dychwelyd nwyddau"
           continue: "Parhau"
         edit:
           receive: "derbyn"
@@ -4269,6 +4261,7 @@ cy:
           product_name: Enw Cynnyrch
         primary_taxon_form:
           product_category: Categori Cynnyrch
+          search_for_categories: "Chwilio am gategorïau"
         group_buy_form:
           group_buy: "Prynu fel Grŵp?"
           bulk_unit_size: Maint uned swmp

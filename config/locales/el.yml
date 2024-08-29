@@ -78,8 +78,6 @@ el:
         white_label_logo_link: "Σύνδεσμος για το λογότυπο που χρησιμοποιείται στο κατάστημα"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Η απόδοση της κατηγορίας φόρου απαιτεί έναν υπολογιστή ανά αντικείμενο."
         spree/image:
           attributes:
             attachment:
@@ -485,7 +483,7 @@ el:
   password_confirmation: Επιβεβαίωση κωδικού πρόσβασης
   reset_password_token: Επαναφορά ένδειξης κωδικού
   expired: έχει λήξει, παρακαλώ ζητήστε νέο
-  back_to_payments_list: "Πίσω στην Λίστα Πληρωμών"
+  back_to_payments_list: "Επιστροφή στη λίστα πληρωμών"
   maestro_or_solo_cards: "Κάρτα Maestro/Sola"
   backordered: "Σε εκκρεμότητα"
   on_hand: "Στο χέρι"
@@ -772,7 +770,6 @@ el:
       variants:
         infinity: "Άπειρο"
         to_order_tip: "Προιόντα κατά παραγγελία δεν έχουν καθορισμένο αριθμό σε απόθεμα,για παράδειγμα το ψωμί παραδίδεται κατά παραγγελία και φρέσκο."
-      back_to_products_list: "Πίσω στην λίστα προϊόντων"
       editing_product: "Επεξεργασία Προϊόντος"
       tabs:
         product_details: "Λεπτομέριες Προϊόντος"
@@ -1367,10 +1364,8 @@ el:
         contact_name: Όνομα Επικοινωνίας
       edit:
         editing: 'Ρυθμίσεις:'
-        back_link: Πίσω στην λίστα επιχειρήσεων
       new:
         title: Νέα Επιχείρηση
-        back_link: Πίσω στην λίστα επιχειρήσεων
       welcome:
         welcome_title: Καλώς ήρθατε στο Open Food Network
         welcome_text: επιτυχής δημιουργία
@@ -3851,7 +3846,6 @@ el:
     tax_rate_amount_explanation: "Οι φορολογικοί συντελεστές είναι ένα δεκαδικό ποσό για βοήθεια στους υπολογισμούς, (δηλ. Εάν ο συντελεστής φόρου είναι 5%, τότε πληκτρολογήστε 0,05)"
     included_in_price: "Περιλαμβάνεται στην Τιμή"
     show_rate_in_label: "Εμφάνιση τιμής στην ετικέτα"
-    back_to_tax_rates_list: "Επιστροφή στη λίστα φορολογικών συντελεστών"
     tax_settings: "Ρυθμίσεις φόρου"
     zones: "Ζώνες"
     new_zone: "Νέα Ζώνη"
@@ -3864,7 +3858,6 @@ el:
     iso_name: "Όνομα ISO"
     states_required: "Απαιτούνται κράτη"
     editing_country: "Χώρα επεξεργασίας"
-    back_to_countries_list: "Επιστροφή στη λίστα χωρών"
     states: "Κρατών"
     abbreviation: "Συντομογραφία"
     new_state: "Νέα Πολιτεία"
@@ -4029,7 +4022,6 @@ el:
           continue: "Συνέχεια"
         new:
           new_return_authorization: "Νέα εξουσιοδότηση επιστροφής"
-          back_to_return_authorizations_list: "Πίσω στην επιστροφή λίστας εξουσιοδότησης"
           continue: "Συνέχεια"
         edit:
           receive: "λαμβάνω"
@@ -4276,6 +4268,7 @@ el:
           product_name: Ονομασία προϊόντος
         primary_taxon_form:
           product_category: Κατηγορία προϊόντων
+          search_for_categories: "Αναζήτηση κατηγοριών"
         group_buy_form:
           group_buy: "Ομαδική αγορά;"
           bulk_unit_size: Μέγεθος μονάδας χύδην

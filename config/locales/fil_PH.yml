@@ -278,7 +278,6 @@ fil_PH:
   password_confirmation: Kumpirmasyon ng password
   reset_password_token: i-reset ang password token
   expired: ay expired na, magrequest ng bago
-  back_to_payments_list: "bumalik sa listahan ng mga bayad"
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "na-backorder"
   on_hand: "on hand"
@@ -513,7 +512,6 @@ fil_PH:
       variants:
         infinity: "walang katapusan"
         to_order_tip: "ang mga item na made to order ay hindi maaaring i-set ng lebel ng stock, tulad ng mga tinapay na ginagawa lamang kapag may order."
-      back_to_products_list: "bumalik sa listahan ng mga produkto"
       editing_product: "ine-edit ang mga produkto"
       tabs:
         product_details: "mga detalye ng produkto"
@@ -961,10 +959,8 @@ fil_PH:
         contact_name: Contact name
       edit:
         editing: 'Settings:'
-        back_link: bumalik sa listahan ng mga enterprise
       new:
         title: bagong enterprise
-        back_link: bumalik sa listahan ng mga enterprise
       welcome:
         welcome_title: Welcome sa Open Food Network!
         welcome_text: matagumpay mong nagawa ang
@@ -2520,7 +2516,7 @@ fil_PH:
   order_cycles_bulk_update_notice: 'ang mga order cycle ay na-update na'
   order_cycles_no_permission_to_coordinate_error: "wala sa inyong mga enterprise ay may pahintulot na magsa-ayos ng order cycle"
   order_cycles_no_permission_to_create_error: "wala kang pahintulot na gumawa ng order cycle na isinaayos ng enterprise na iyon."
-  back_to_orders_list: "bumalik sa listahan ng order"
+  back_to_orders_list: "bumalik sa listahan ng mga order"
   no_orders_found: "walang mahanap na mga order"
   order_information: "impormasyon tungkol sa order"
   new_payment: "Bagong Pagbabayad"
@@ -3095,7 +3091,6 @@ fil_PH:
     tax_rate_amount_explanation: "ang mga rate ng tax ay mga halagang may decimal na makakatulong sa pagkukuwenta, (hal. kung ang rate ng tax ay 5% ang ilalagay ay 0.05)"
     included_in_price: "nakasama sa presyo"
     show_rate_in_label: "ipakita ang rate sa tatak"
-    back_to_tax_rates_list: "bumalik sa listahan ng rate ng tax"
     tax_settings: "Settings ng tax"
     zones: "mga sona"
     new_zone: "bagong sona"
@@ -3108,7 +3103,6 @@ fil_PH:
     iso_name: "pangalan ng ISO"
     states_required: "Kailangang nakasaad ang mga Lalawigan"
     editing_country: "pag-edit ng bansa"
-    back_to_countries_list: "bumalik sa listahan ng mga bansa"
     states: "Mga Lalawigan"
     abbreviation: "Pinaikli"
     new_state: "Bagong Status"
@@ -3244,7 +3238,6 @@ fil_PH:
           continue: "Magpatuloy"
         new:
           new_return_authorization: "bagong awtorisasyon sa pagbabalik"
-          back_to_return_authorizations_list: "bumalik sa listahan ng awtorisasyon sa pagbabalik"
           continue: "Magpatuloy"
         edit:
           receive: "tumanggap"

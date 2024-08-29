@@ -81,8 +81,6 @@ mr:
         white_label_logo_link: "शॉपफ्रंटमध्ये वापरलेल्या लोगोची लिंक"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "कर श्रेणीचा वारसा मिळवण्यासाठी प्रति-आयटम कॅल्क्युलेटर आवश्यक आहे."
         spree/user:
           attributes:
             email:
@@ -469,7 +467,6 @@ mr:
   password_confirmation: पासवर्ड पुष्टीकरण
   reset_password_token: पासवर्ड टोकन रीसेट करा
   expired: कालबाह्य झाले आहे, कृपया नवीन विनंती करा
-  back_to_payments_list: "पेमेंट्स लिस्टकडे परत"
   maestro_or_solo_cards: "मेस्ट्रो/सोलो कार्ड"
   backordered: "बॅकऑर्डर केलेले"
   on_hand: "आता उपलब्ध"
@@ -740,7 +737,6 @@ mr:
       variants:
         infinity: "अनंत"
         to_order_tip: "ऑर्डरप्रमाणे बनवलेल्या वस्तूंची स्टॉक लेव्हल नसते, जसे की ऑर्डरप्रमाणे बनवलेले ताजे ब्रेडस्. "
-      back_to_products_list: "उत्पादनांच्या सूचीकडे परत"
       editing_product: "उत्पादन संपादित करत आहे"
       tabs:
         product_details: "उत्पादन तपशील"
@@ -1275,10 +1271,8 @@ mr:
         contact_name: संपर्क नाव
       edit:
         editing: 'सेटिंग्ज:'
-        back_link: उपक्रमांच्या सूचीकडे परत
       new:
         title: नवे एंटरप्राइज
-        back_link: एंटरप्राइझ लिस्टकडे परता
       welcome:
         welcome_title: ओपन फूड नेटवर्कमध्ये आपले स्वागत आहे!
         welcome_text: आपण यशस्वीरित्या तयार केले आहे
@@ -3012,7 +3006,6 @@ mr:
   order_cycles_no_permission_to_coordinate_error: "तुमच्या कोणत्याही एंटरप्राइझला ऑर्डर सायकल को-ऑर्डिनेट करण्याची परवानगी नाही"
   order_cycles_no_permission_to_create_error: "तुम्हाला त्या एंटरप्राइझद्वारे  को-ऑर्डिनेट केलेल्या ऑर्डर सायकल तयार करण्याची परवानगी नाही"
   order_cycle_closed: "तुम्ही निवडलेले ऑर्डर सायकल नुकतेच बंद झाले आहे. कृपया पुन्हा प्रयत्न करा!"
-  back_to_orders_list: "ऑर्डर सूचीकडे परत"
   no_orders_found: "कोणत्याही ऑर्डर आढळल्या नाहीत"
   order_information: "ऑर्डर माहिती"
   new_payment: "नवीन पेमेंट"
@@ -3694,7 +3687,6 @@ mr:
     tax_rate_amount_explanation: "कर दर ही गणना करण्यात मदत करण्यासाठीची दशांश रक्कम आहे, (म्हणजे कर दर 5% असल्यास 0.05 प्रविष्ट करा)"
     included_in_price: "किंमतीमध्ये समाविष्ट आहे"
     show_rate_in_label: "लेबलमध्ये दर दर्शवा"
-    back_to_tax_rates_list: "कर दर सूचीकडे परत"
     tax_settings: "कर सेटिंग्ज"
     zones: "क्षेत्रे"
     new_zone: "नवीन क्षेत्र"
@@ -3707,7 +3699,6 @@ mr:
     iso_name: "आयएसओ नाव"
     states_required: "राज्ये आवश्यक"
     editing_country: "संपादन देश"
-    back_to_countries_list: "देशांच्या यादीकडे परत"
     states: "राज्ये"
     abbreviation: "संक्षेप"
     new_state: "नवीन राज्य"
@@ -3863,7 +3854,6 @@ mr:
           continue: "सुरू ठेवा "
         new:
           new_return_authorization: "रिटर्न अधिकृतता"
-          back_to_return_authorizations_list: "रिटर्न अधिकृतता सूचीकडे परता"
           continue: "सुरू ठेवा "
         edit:
           receive: "प्राप्त"

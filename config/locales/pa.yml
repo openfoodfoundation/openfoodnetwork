@@ -78,8 +78,6 @@ pa:
         white_label_logo_link: "ਸ਼ੌਪਫਰੰਟ ਵਿੱਚ ਵਰਤੇ ਗਏ ਲੋਗੋ ਦਾ ਲਿੰਕ"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "ਟੈਕਸ ਸ਼੍ਰੇਣੀ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਪ੍ਰਤੀ-ਆਈਟਮ ਕੈਲਕੁਲੇਟਰ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।"
         spree/user:
           attributes:
             email:
@@ -462,7 +460,7 @@ pa:
   password_confirmation: ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ
   reset_password_token: ਪਾਸਵਰਡ ਟੋਕਨ ਨੂੰ ਰੀਸੈਟ ਕਰੋ
   expired: ਮਿਆਦ ਪੁੱਗ ਗਈ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਨਵੇਂ ਲਈ ਬੇਨਤੀ ਕਰੋ
-  back_to_payments_list: "ਭੁਗਤਾਨ ਸੂਚੀ ਤੇ ਵਾਪਸ"
+  back_to_payments_list: "ਭੁਗਤਾਨ ਸੂਚੀ ਤੇ ਵਾਪਸ ਜਾਓ"
   maestro_or_solo_cards: "ਮਾਏਸਟ੍ਰੋ/ਸੋਲੋ ਕਾਰਡ"
   backordered: "ਬੈਕਆਰਡਰ ਕੀਤਾ ਗਿਆ"
   on_hand: "ਹੱਥ ਵਿਚ"
@@ -735,7 +733,6 @@ pa:
       variants:
         infinity: "ਇਨਫਿਨਿਟੀ"
         to_order_tip: "ਆਰਡਰ ਉਤੇ ਬਣੀਆਂ ਆਈਟਮਾਂ ਵਿੱਚ ਸਟਾਕ ਦੇ ਪੱਧਰ ਨਿਰਧਾਰਤ ਨਹੀਂ ਹੁੰਦੇ, ਜਿਵੇਂ ਕਿ ਆਰਡਰ ਤੇ ਬਣਾਈ ਗਈ ਤਾਜ਼ਾ ਬ੍ਰੈਡ।"
-      back_to_products_list: "ਉਤਪਾਦਾਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਿਸ"
       editing_product: "ਉਤਪਾਦ ਦਾ ਸੰਪਾਦਨ"
       tabs:
         product_details: "ਉਤਪਾਦ ਵੇਰਵੇ"
@@ -1270,10 +1267,8 @@ pa:
         contact_name: ਸੰਪਰਕ ਨਾਮ
       edit:
         editing: 'ਸੈਟਿੰਗਾਂ:'''
-        back_link: ਐਂਟਰਪ੍ਰਾਈਜ਼ ਸੂਚੀ ਤੇ ਵਾਪਸ ਜਾਓ
       new:
         title: ਐਂਟਰਪ੍ਰਾਈਜ਼ਜ਼
-        back_link: ਐਂਟਰਪ੍ਰਾਈਜ਼ ਸੂਚੀ ਤੇ ਵਾਪਸ ਜਾਓ
       welcome:
         welcome_title: ਓਪਨ ਫੂਡ ਨੈਟਵਰਕ ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ!
         welcome_text: ਤੁਸੀਂ ਸਫਲਤਾਪੂਰਵਕ ਇਹ ਬਣਾ ਲਿਆ ਹੈ
@@ -3665,7 +3660,6 @@ pa:
     tax_rate_amount_explanation: "ਟੈਕਸ ਦੀਆਂ ਦਰਾਂ ਗਣਨਾ ਵਿੱਚ ਸਹਾਇਤਾ ਲਈ ਇੱਕ ਦਸ਼ਮਲਵ ਰਕਮ ਹਨ, (ਜਿਵੇਂ ਕਿ ਜੇਕਰ ਟੈਕਸ ਦਰ 5% ਹੈ ਤਾਂ 0.05 ਦਰਜ ਕਰੋ)"
     included_in_price: "ਕੀਮਤ ਵਿੱਚ ਸ਼ਾਮਲ"
     show_rate_in_label: "ਲੇਬਲ ਵਿੱਚ ਦਰ ਦਿਖਾਓ"
-    back_to_tax_rates_list: "ਟੈਕਸ ਦਰਾਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਸ"
     tax_settings: "ਟੈਕਸ ਸੈਟਿੰਗਾਂ"
     zones: "ਜ਼ੋਨਾਂ"
     new_zone: "ਨਵਾਂ ਜ਼ੋਨ"
@@ -3678,7 +3672,6 @@ pa:
     iso_name: "ISO ਨਾਂ"
     states_required: "ਰਾਜਾਂ ਦੀ ਲੋੜ ਹੈ"
     editing_country: "ਦੇਸ਼ ਦਾ ਸੰਪਾਦਨ"
-    back_to_countries_list: "ਦੇਸ਼ਾਂ ਦੀ ਸੂਚੀ ਤੇ ਵਾਪਸ"
     states: "ਰਾਜ"
     abbreviation: "ਸੰਖਿਪਤ ਰੂਪ"
     new_state: "ਨਵਾਂ ਰਾਜ"
@@ -3841,7 +3834,6 @@ pa:
           continue: "ਜਾਰੀ ਰੱਖੋ"
         new:
           new_return_authorization: "ਨਵਾਂ ਵਾਪਸੀ ਅਧਿਕਾਰ"
-          back_to_return_authorizations_list: "ਵਾਪਸੀ ਅਧਿਕਾਰ ਸੂਚੀ ਤੇ ਵਾਪਸ"
           continue: "ਜਾਰੀ ਰੱਖੋ"
         edit:
           receive: "ਪ੍ਰਾਪਤ ਕਰੋ"

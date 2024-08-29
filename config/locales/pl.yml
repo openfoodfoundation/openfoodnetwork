@@ -285,7 +285,6 @@ pl:
   password_confirmation: Potwierdzenie hasła
   reset_password_token: Token resetowania hasła
   expired: wygasł, poproś o nowy
-  back_to_payments_list: "Powrót do listy płatności"
   maestro_or_solo_cards: "Karty Maestro / Solo"
   backordered: "Zamówienie zaległe"
   on_hand: "Dostępne"
@@ -510,7 +509,6 @@ pl:
       variants:
         infinity: "Nieskończoność"
         to_order_tip: "Przedmioty wykonane na zamówienie nie mają ustalonego poziomu zapasów, np. Świeże bochenki chleba na zamówienie."
-      back_to_products_list: "Powrót do listy produktów"
       editing_product: "Edycja produktu"
       tabs:
         product_details: "Szczegóły produktu"
@@ -932,10 +930,8 @@ pl:
         contact_name: Nazwa Kontaktu
       edit:
         editing: 'Ustawienia:'
-        back_link: Powrót do listy podmiotów
       new:
         title: Nowy podmiot
-        back_link: Powrót do listy podmiotów
       welcome:
         welcome_title: Witamy w Open Food Network!
         welcome_text: Pomyślnie utworzyłeś
@@ -2444,7 +2440,6 @@ pl:
   order_cycles_no_permission_to_coordinate_error: "Żaden z Twoich podmiotów nie ma uprawnień do koordynowania cyklu zamówień"
   order_cycles_no_permission_to_create_error: "Nie masz uprawnień do tworzenia cyklu zamówień koordynowanego przez ten podmiot"
   order_cycle_closed: "Wybrany cykl zamówień właśnie się zakończył. Proszę spróbuj ponownie!"
-  back_to_orders_list: "Powrót do listy zamówień"
   no_orders_found: "Nie znaleziono zamówień"
   order_information: "Szczegóły zamówienia"
   date_completed: "Data zakończenia"
@@ -3071,7 +3066,6 @@ pl:
     tax_rate_amount_explanation: "Stawki podatku są kwotami dziesiętnymi, aby ułatwić obliczenia (tj. Jeśli stawka podatku wynosi 5%, wprowadź 0,05)"
     included_in_price: "Wliczony w cenę"
     show_rate_in_label: "Pokaż kurs na etykiecie"
-    back_to_tax_rates_list: "Powrót do listy stawek podatkowych"
     tax_settings: "Ustawienia podatkowe"
     zones: "Strefy"
     new_zone: "Nowa strefa"
@@ -3084,7 +3078,6 @@ pl:
     iso_name: "Nazwa ISO"
     states_required: "Województwo wymagane"
     editing_country: "Edycja kraju"
-    back_to_countries_list: "Powrót do listy krajów"
     states: "Województwa"
     abbreviation: "Skrót"
     new_state: "Nowe województwo"
@@ -3216,7 +3209,6 @@ pl:
           continue: "Kontyntynuj"
         new:
           new_return_authorization: "Nowa autoryzacja zwrotu"
-          back_to_return_authorizations_list: "Powrót do listy autoryzacji zwrotu"
           continue: "Kontyntynuj"
         edit:
           receive: "otrzymać"

@@ -81,8 +81,6 @@ ru:
         white_label_logo_link: "Ссылка на логотип, используемый на витрине магазина"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Для наследования налоговой категории требуется поэлементный калькулятор."
         spree/image:
           attributes:
             attachment:
@@ -475,7 +473,7 @@ ru:
   password_confirmation: Подтверждение Пароля
   reset_password_token: Сброс пароля токена
   expired: истёк, пожалуйста запросите новый
-  back_to_payments_list: "Назад к Списку Платежей"
+  back_to_payments_list: "Вернуться К Списку Платежей"
   maestro_or_solo_cards: "Дебитовые карты"
   backordered: "Предзаказано"
   on_hand: "В наличии"
@@ -758,7 +756,6 @@ ru:
       variants:
         infinity: "Безграничный"
         to_order_tip: "Товары, изготовленные на заказ, не имеют определенного уровня запасов, например, буханки хлеба, приготовленные на заказ."
-      back_to_products_list: "Назад к списку товаров"
       editing_product: "Изменение Товара"
       tabs:
         product_details: "Информация о Товаре"
@@ -1339,10 +1336,8 @@ ru:
         contact_name: Имя Контакта
       edit:
         editing: 'Настройки:'
-        back_link: Назад к списку Предприятий
       new:
         title: Новое Предприятие
-        back_link: Назад к списку Предприятий
       welcome:
         welcome_title: Добро пожаловать в Открытую Сеть Продуктов!
         welcome_text: Вы успешно создали
@@ -3161,7 +3156,7 @@ ru:
   order_cycles_no_permission_to_coordinate_error: "Ни одно из ваших Предприятий не имеет разрешения координировать цикл заказа"
   order_cycles_no_permission_to_create_error: "У вас нет разрешения на создание цикла заказов, координируемого этим Предприятием"
   order_cycle_closed: "Выбранный вами цикл заказов закрылся. Пожалуйста, попробуйте еще раз!"
-  back_to_orders_list: "Назад к списку заказов"
+  back_to_orders_list: "Назад К Списку Заказов"
   no_orders_found: "Заказов Не Найдено"
   order_information: "Информация по Заказу"
   new_payment: "Новый Платёж"
@@ -3898,7 +3893,6 @@ ru:
     tax_rate_amount_explanation: "Налоговые ставки представляют собой десятичную сумму для помощи в расчетах (т.е. если налоговая ставка составляет 5%, введите 0,05)"
     included_in_price: "Включено в Стоимость"
     show_rate_in_label: "Показывать ставку в метке"
-    back_to_tax_rates_list: "Назад к Списку Налоговых Ставок"
     tax_settings: "Настройки Налогов"
     zones: "Торговая зона"
     new_zone: "Новая Торговая зона"
@@ -3911,7 +3905,6 @@ ru:
     iso_name: "ISO Имя"
     states_required: "Области Обязательны"
     editing_country: "Редактирование Страны"
-    back_to_countries_list: "Назад к Списку Стран"
     states: "Регионы"
     abbreviation: "Сокращение"
     new_state: "Новый Регион"
@@ -4076,7 +4069,6 @@ ru:
           continue: "Продолжить"
         new:
           new_return_authorization: "Новое разрешение на возврат"
-          back_to_return_authorizations_list: "Назад К Списку Разрешений На Возврат"
           continue: "Продолжить"
         edit:
           receive: "получить"
@@ -4323,6 +4315,7 @@ ru:
           product_name: Имя Товара
         primary_taxon_form:
           product_category: Категория Товара
+          search_for_categories: "Поиск категорий"
         group_buy_form:
           group_buy: "Групповая покупка?"
           bulk_unit_size: Размер оптовой еденицы

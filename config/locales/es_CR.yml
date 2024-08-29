@@ -406,7 +406,6 @@ es_CR:
   password_confirmation: Confirmación de contraseña
   reset_password_token: Token de restablecimiento de contraseña
   expired: ha expirado, por favor solicite una nueva
-  back_to_payments_list: "Volver a la lista de pagos"
   maestro_or_solo_cards: "Solo tarjetas MasterCard"
   backordered: "Pedido pendiente"
   on_hand: "Disponibles"
@@ -676,7 +675,6 @@ es_CR:
       variants:
         infinity: "infinito"
         to_order_tip: "Los artículos hechos según el pedido no tienen un nivel fijado de inventario, como por ejemplo panes hechos según demanda."
-      back_to_products_list: "Volver a la lista de productos"
       editing_product: "Editando producto"
       tabs:
         product_details: "Detalles del producto"
@@ -1170,10 +1168,8 @@ es_CR:
         contact_name: Nombre de contacto
       edit:
         editing: 'Configuración:'
-        back_link: Volver a la lista de organizaciones
       new:
         title: Nueva Organización
-        back_link: Volver a la lista de organizaciones
       welcome:
         welcome_title: ¡Bienvenido a Open Food Network (LaFeriaCR)!
         welcome_text: Ha creado correctamente un
@@ -3540,7 +3536,6 @@ es_CR:
     tax_rate_amount_explanation: "Las tarifas de impuestos son una cantidad decimal para ayudar en los cálculos (es decir, si la tasa de impuestos es del 5%, introduzca 0.05)"
     included_in_price: "Incluido en el precio"
     show_rate_in_label: "Mostrar tarifa en la etiqueta"
-    back_to_tax_rates_list: "Volver a la lista de tarifas de impuestos"
     tax_settings: "Configuración de Impuestos"
     zones: "Zonas"
     new_zone: "Nueva zona"
@@ -3553,7 +3548,6 @@ es_CR:
     iso_name: "Nombre de ISO"
     states_required: "Provincias requeridas"
     editing_country: "Editar país"
-    back_to_countries_list: "Volver a la lista de países"
     states: "Provincias"
     abbreviation: "Abreviatura"
     new_state: "Nueva provincia"
@@ -3690,7 +3684,6 @@ es_CR:
           continue: "Continuar"
         new:
           new_return_authorization: "Nueva autorización de devolución"
-          back_to_return_authorizations_list: "Volver a lista de autorización de devolución"
           continue: "Continuar"
         edit:
           receive: "recibir"

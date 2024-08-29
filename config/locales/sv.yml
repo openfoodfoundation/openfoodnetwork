@@ -613,11 +613,8 @@ sv:
         owner_tip: Den primära användaren är ansvarig för detta företag.
         i_am_producer: Jag är en Tillverkare
         contact_name: Kontaktperson
-      edit:
-        back_link: Åter till företagslistan
       new:
         title: Nya företag
-        back_link: Åter till företagslistan
       welcome:
         welcome_title: Välkommen till OFN!
         welcome_text: Du har korrekt slutfört en

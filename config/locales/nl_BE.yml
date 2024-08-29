@@ -284,7 +284,6 @@ nl_BE:
   password_confirmation: Wachtwoord Bevestiging
   reset_password_token: Reset wachtwoord token
   expired: is verlopen, gelieve een nieuwe aan te vragen
-  back_to_payments_list: "Terug naar Betalingslijst"
   maestro_or_solo_cards: "Maestro/Solo kaart"
   backordered: "Niet in stock"
   on_hand: "Bij de Hand"
@@ -526,7 +525,6 @@ nl_BE:
       variants:
         infinity: "Oneindigheid"
         to_order_tip: "Op bestelling gemaakte artikelen hebben geen vast voorraadniveau, zoals broden die vers op bestelling worden gemaakt."
-      back_to_products_list: "Terug naar productenlijst"
       editing_product: "Product bijwerken"
       tabs:
         product_details: "Product details"
@@ -984,10 +982,8 @@ nl_BE:
         contact_name: Naam contactpersoon
       edit:
         editing: 'Instellingen:'
-        back_link: Terug naar bedrijvenlijst
       new:
         title: Nieuwe onderneming
-        back_link: Terug naar bedrijvenlijst
       welcome:
         welcome_title: Welkom bij het Open Food Network!
         welcome_text: U heeft met succes een
@@ -2575,7 +2571,7 @@ nl_BE:
   order_cycles_no_permission_to_coordinate_error: "Geen van uw bedrijven heeft de vereiste rechten om een verkoopcyclus te coördineren"
   order_cycles_no_permission_to_create_error: "U bezit de vereiste rechten niet om een bestelcyclus te maken die gecoördineerd wordt door dat bedrijf"
   order_cycle_closed: "De hub die u hebt geselecteerd is tijdelijk gesloten. Probeer gerust later terug."
-  back_to_orders_list: "Terug naar de bestellijst"
+  back_to_orders_list: "Terug naar de bestellingslijst"
   no_orders_found: "Geen bestelling gevonden"
   order_information: "Info bestelling"
   new_payment: "Nieuwe betaling"
@@ -3088,7 +3084,6 @@ nl_BE:
     tax_rate_amount_explanation: "BTW percentages zijn decimaal om de berekening gemakkelijker te maken, (bv. als de percentage 5% is dan 0.05 invoeren)"
     included_in_price: "In de prijs inbegrepen "
     show_rate_in_label: "Toon de percentahe op de label "
-    back_to_tax_rates_list: "Terug naar de lijst BTW percentages"
     tax_settings: "Belastings Instellingen"
     zones: "Zones "
     new_zone: "Nieuwe zone"
@@ -3101,7 +3096,6 @@ nl_BE:
     iso_name: "ISO Naam"
     states_required: "Staten Vereist"
     editing_country: "Editing Land"
-    back_to_countries_list: "Terug naar landenlijst"
     states: "Provincies"
     abbreviation: "Afkortingen "
     new_state: "Nieuw Provincie"
@@ -3240,7 +3234,6 @@ nl_BE:
           continue: "Ga verder"
         new:
           new_return_authorization: "Nieuwe terugkeer goedkeuring"
-          back_to_return_authorizations_list: "Terug naar goedkeuringslijst"
           continue: "Ga verder"
         edit:
           receive: "Ontvangst"

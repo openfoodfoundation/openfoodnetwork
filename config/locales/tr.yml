@@ -587,7 +587,6 @@ tr:
       variants:
         infinity: "Sonsuz"
         to_order_tip: "Sipariş üzerine yapılan ürünlerin, belirlenmiş stok seviyeleri yoktur."
-      back_to_products_list: "Ürün listesine geri dön"
       editing_product: "Ürün Düzenleme"
       tabs:
         product_details: "Ürün Detayları"
@@ -1052,10 +1051,8 @@ tr:
         contact_name: İLETİŞİM Kurulacak KİŞİ
       edit:
         editing: 'Ayarlar:'
-        back_link: İşletmeler LİSTESİNE gerİ dön
       new:
         title: Yeni İşletme
-        back_link: İşletmeler LİSTESİNE gerİ dön
       welcome:
         welcome_title: Açık Gıda Ağı'na Hoşgeldiniz!
         welcome_text: 'BAŞARILI ŞEKİLDE OLUŞTURULDU:'
@@ -2699,7 +2696,7 @@ tr:
   order_cycles_no_permission_to_coordinate_error: "Hiçbir işletmenizin sipariş dönemini koordine etme izni yok"
   order_cycles_no_permission_to_create_error: "Bu işletme tarafından koordine edilen bir sipariş dönemi oluşturma izniniz yok"
   order_cycle_closed: "Seçmiş olduğunuz sipariş dönemi az önce kapandı. Lütfen daha sonra tekrar deneyin :("
-  back_to_orders_list: "Sipariş listesine geri dön"
+  back_to_orders_list: "SİPARİŞLER LİSTESİNE GERİ DÖN"
   no_orders_found: "SİPARİŞ BULUNAMADI"
   order_information: "Sipariş Bilgisi"
   new_payment: "Yeni Ödeme"
@@ -3348,7 +3345,6 @@ tr:
     tax_rate_amount_explanation: "Vergi oranları ondalık bir tutar olmalı (yani vergi oranı % 5 ise 0.05 girin)"
     included_in_price: "Fiyata Dahil"
     show_rate_in_label: "Oranı etikette göster"
-    back_to_tax_rates_list: "Vergi Oranları Listesine Geri Dön"
     tax_settings: "Vergi Ayarları"
     zones: "bölgeler"
     new_zone: "Yeni Bölge"
@@ -3361,7 +3357,6 @@ tr:
     iso_name: "ISO Adı"
     states_required: "Şehİr Gerekli"
     editing_country: "Ülkeyi Düzenle"
-    back_to_countries_list: "Ülke Listesine Geri Dön"
     states: "Şehİrler"
     abbreviation: "Kısaltma"
     new_state: "Yeni Şehir"
@@ -3520,7 +3515,6 @@ tr:
           continue: "Devam et"
         new:
           new_return_authorization: "Yeni İade Yetkisi"
-          back_to_return_authorizations_list: "İade Yetkisi Listesine Geri Dön"
           continue: "Devam et"
         edit:
           receive: "Al"
