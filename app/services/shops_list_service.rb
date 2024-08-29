@@ -2,7 +2,10 @@
 
 class ShopsListService
   def open_shops
-    shops_list.ready_for_checkout.all
+    shops_list.
+      ready_for_checkout.
+      distributors_with_active_order_cycles.
+      all
   end
 
   def closed_shops
