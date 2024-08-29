@@ -1,20 +1,13 @@
-if Rails.env.test?
-  Rails.application.reloader.to_prepare do
-    WickedPdf.config = {
-      #:wkhtmltopdf => '/usr/local/bin/wkhtmltopdf',
-      #:layout => "pdf.html",
-      :page_size => 'A3',
-      :exe_path => `bundle exec which wkhtmltopdf`.chomp
-    }
-  end
-else
-  Rails.application.reloader.to_prepare do
-    WickedPdf.config = {
-      #:wkhtmltopdf => '/usr/local/bin/wkhtmltopdf',
-      #:layout => "pdf.html",
-      :page_size => 'A4', # default
-      :exe_path => `bundle exec which wkhtmltopdf`.chomp
-    }
+WickedPdf.configure do |c|
+  c.exe_path = `bundle exec which wkhtmltopdf`.chomp
+
+  if Rails.env.test?
+    # Conversion from PDF to text struggles with multi-line text.
+    # We avoid that by printing on bigger pages.
+    # https://github.com/openfoodfoundation/openfoodnetwork/pull/9674
+    c.page_size = "A3"
+  else
+    c.page_size = "A4"
   end
 end
 
