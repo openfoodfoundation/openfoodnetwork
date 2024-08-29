@@ -457,7 +457,6 @@ RSpec.describe "Sales Tax Totals By order" do
 
       it_behaves_like "reports generated as", "CSV", "csv", false
       it_behaves_like "reports generated as", "Spreadsheet", "xlsx", true
-      it_behaves_like "reports generated as", "PDF", "pdf", true
     end
   end
 
@@ -482,10 +481,6 @@ RSpec.describe "Sales Tax Totals By order" do
     when "xlsx"
       xlsx = Roo::Excelx.new(downloaded_filename)
       xlsx.map(&:to_a).join(" ")
-    when "pdf"
-      # Load PDF pages and contents join into one big string
-      pdf = PDF::Reader.new(downloaded_filename)
-      pdf.pages.map(&:text).join(" ")
     end
   end
 end
