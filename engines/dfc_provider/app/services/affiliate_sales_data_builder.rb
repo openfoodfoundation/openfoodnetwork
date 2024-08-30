@@ -5,7 +5,7 @@ class AffiliateSalesDataBuilder < DfcBuilder
     def person(user)
       DataFoodConsortium::Connector::Person.new(
         urls.affiliate_sales_data_url,
-        affiliatedOrganizations: enterprises(user.enterprises)
+        affiliatedOrganizations: enterprises(user.affiliate_enterprises)
       )
     end
 

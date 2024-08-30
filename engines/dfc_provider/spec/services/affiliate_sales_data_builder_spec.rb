@@ -33,6 +33,7 @@ RSpec.describe AffiliateSalesDataBuilder do
           owner: user,
           address: create(:address, zipcode: "6666"),
         )
+        ConnectedApps::AffiliateSalesData.new(enterprise: distributor).connect({})
         line_item = build(
           :line_item,
           variant:,
@@ -55,7 +56,7 @@ RSpec.describe AffiliateSalesDataBuilder do
         )
       end
 
-      it "returns required sales data" do
+      it "returns required sales data", feature: :affiliate_sales_data do
         supplier = person.affiliatedOrganizations[0]
         product = supplier.suppliedProducts[0]
         line = product.semanticPropertyValue("dfc-b:concernedBy")
