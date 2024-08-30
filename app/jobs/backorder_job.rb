@@ -31,7 +31,8 @@ class BackorderJob < ApplicationJob
   end
 
   def self.place_backorder(order, linked_variants)
-    backorder = FdcBackorderer.new.find_or_build_order(order)
+    orderer = FdcBackorderer.new
+    backorder = orderer.find_or_build_order(order)
     catalog = load_catalog(order.distributor.owner)
 
     linked_variants.each_with_index do |variant, index|
@@ -44,16 +45,7 @@ class BackorderJob < ApplicationJob
       backorder.lines << line
     end
 
-    lines = backorder.lines
-    offers = lines.map(&:offer)
-    products = offers.map(&:offeredItem)
-    session = build_sale_session(order)
-    json = DfcIo.export(backorder, *lines, *offers, *products, session)
-
-    api = DfcRequest.new(order.distributor.owner)
-
-    # Create order via POST:
-    api.call(FDC_ORDERS_URL, json)
+    backorderer.send_order(order, backorder)
 
     # Once we have transformations and know the quantities in bulk products
     # we will need to increase on_hand by the ordered quantity.
