@@ -2,11 +2,16 @@
 
 class AffiliateSalesQuery
   class << self
-    def data(enterprises)
+    def data(enterprises, start_date: nil, end_date: nil)
+      end_date = end_date&.end_of_day # Include the whole end date.
+
       Spree::LineItem
         .joins(tables)
         .where(
-          spree_orders: { state: "complete", distributor_id: enterprises },
+          spree_orders: {
+            state: "complete", distributor_id: enterprises,
+            completed_at: [start_date..end_date],
+          },
         )
         .group(key_fields)
         .pluck(fields)

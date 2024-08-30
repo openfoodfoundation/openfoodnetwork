@@ -70,6 +70,15 @@ paths:
         '404':
           description: not found
   "/api/dfc/affiliate_sales_data":
+    parameters:
+    - name: startDate
+      in: query
+      schema:
+        type: string
+    - name: endDate
+      in: query
+      schema:
+        type: string
     get:
       summary: Show sales data of person's affiliate enterprises
       tags:
@@ -88,6 +97,71 @@ paths:
                     dfc-b:logo: ''
                     dfc-b:firstName: ''
                     dfc-b:familyName: ''
+                    dfc-b:affiliates:
+                      "@type": dfc-b:Enterprise
+                      dfc-b:hasAddress:
+                        "@type": dfc-b:Address
+                        dfc-b:hasStreet: ''
+                        dfc-b:hasPostalCode: '20170'
+                        dfc-b:hasCity: ''
+                        dfc-b:hasCountry: ''
+                        dfc-b:latitude: 0.0
+                        dfc-b:longitude: 0.0
+                        dfc-b:region: ''
+                      dfc-b:logo: ''
+                      dfc-b:name: ''
+                      dfc-b:hasDescription: ''
+                      dfc-b:VATnumber: ''
+                      dfc-b:supplies:
+                        "@type": dfc-b:SuppliedProduct
+                        dfc-b:name: 'Product #3 - 7198'
+                        dfc-b:description: ''
+                        dfc-b:hasQuantity:
+                          "@type": dfc-b:QuantitativeValue
+                          dfc-b:hasUnit: dfc-m:Gram
+                          dfc-b:value: 1.0
+                        dfc-b:alcoholPercentage: 0.0
+                        dfc-b:lifetime: ''
+                        dfc-b:usageOrStorageCondition: ''
+                        dfc-b:totalTheoreticalStock: 0.0
+                        dfc-b:concernedBy:
+                          "@type": dfc-b:OrderLine
+                          dfc-b:description: ''
+                          dfc-b:quantity:
+                            "@type": dfc-b:QuantitativeValue
+                            dfc-b:hasUnit: dfc-m:Piece
+                            dfc-b:value: 1.0
+                          dfc-b:hasPrice:
+                            "@type": dfc-b:QuantitativeValue
+                            dfc-b:value: 10.0
+                          dfc-b:partOf:
+                            "@type": dfc-b:Order
+                            dfc-b:orderNumber: ''
+                            dfc-b:date: ''
+                            dfc-b:belongsTo:
+                              "@type": dfc-b:SaleSession
+                              dfc-b:beginDate: ''
+                              dfc-b:endDate: ''
+                              dfc-b:quantity: 0.0
+                              dfc-b:objectOf:
+                                "@type": dfc-b:Coordination
+                                dfc-b:coordinatedBy:
+                                  "@type": dfc-b:Enterprise
+                                  dfc-b:hasAddress:
+                                    "@type": dfc-b:Address
+                                    dfc-b:hasStreet: ''
+                                    dfc-b:hasPostalCode: '20170'
+                                    dfc-b:hasCity: ''
+                                    dfc-b:hasCountry: ''
+                                    dfc-b:latitude: 0.0
+                                    dfc-b:longitude: 0.0
+                                    dfc-b:region: ''
+                                  dfc-b:logo: ''
+                                  dfc-b:name: ''
+                                  dfc-b:hasDescription: ''
+                                  dfc-b:VATnumber: ''
+        '400':
+          description: bad request
   "/api/dfc/enterprises/{enterprise_id}/catalog_items":
     parameters:
     - name: enterprise_id
