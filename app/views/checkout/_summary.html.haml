@@ -1,10 +1,10 @@
-= form_with url: checkout_update_path(checkout_step), model: @order, method: :put, data: { remote: "true" } do |f|
+= form_with url: checkout_update_path(checkout_step), model: @order, method: :put, data: { remote: "true", 'guest-checkout-target': 'summary' } do |f|
   .summary-main
     = render partial: "checkout/already_ordered" if show_bought_items? && checkout_step?(:summary)
     .checkout-substep
       .checkout-title
         = t("checkout.step3.delivery_details.title")
-        %a.summary-edit{href: main_app.checkout_step_path(:details)}
+        %a.summary-edit{ href: main_app.checkout_step_path(:details), data: { action: "guest-checkout#removeUnloadEvent" } }
           = t("checkout.step3.delivery_details.edit")
 
       .summary-subtitle
@@ -51,7 +51,7 @@
     .checkout-substep
       .checkout-title
         = t("checkout.step3.payment_method.title")
-        %a.summary-edit{href: main_app.checkout_step_path(:payment)}
+        %a.summary-edit{ href: main_app.checkout_step_path(:payment), data: { action: "guest-checkout#removeUnloadEvent" } }
           = t("checkout.step3.payment_method.edit")
       .two-columns
         - payment_method = last_payment_method(@order)
@@ -74,7 +74,7 @@
     %div.checkout-substep
       %div.checkout-title
         = t("checkout.step3.order.title")
-        %a.summary-edit{href: main_app.cart_path}
+        %a.summary-edit{ href: main_app.cart_path, data: { action: "guest-checkout#removeUnloadEvent" } }
           = t("checkout.step3.order.edit")
 
       = render 'spree/orders/summary', order: @order, display_footer: false
@@ -108,4 +108,4 @@
     .checkout-submit
       - if any_terms_required?(@order.distributor)
         = render partial: "terms_and_conditions", locals: { f: f }
-      = f.submit t("checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false
+      = f.submit t("checkout.step3.submit"), name: "confirm_order", class: "button primary", disabled: @terms_and_conditions_accepted == false || @platform_tos_accepted == false, data: { action: "click -> guest-checkout#removeUnloadEvent" }

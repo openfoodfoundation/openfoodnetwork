@@ -109,6 +109,41 @@ RSpec.describe "As a consumer, I want to checkout my order" do
         end
       end
 
+      describe "navigating away from checkout summary page" do
+        it "navigates to new page when popup is confirmed" do
+          visit checkout_step_path(:summary)
+          expect(page).to have_content "Order summary"
+          within '.nav-main-menu' do
+            accept_alert do
+              click_link(href: '/groups')
+            end
+          end
+          expect(page).not_to have_content "Order summary"
+          expect(page).to have_content "Groups / regions"
+        end
+
+        it "doesn't navigate to new page when popup is canceled" do
+          visit checkout_step_path(:summary)
+          expect(page).to have_content "Order summary"
+          within '.nav-main-menu' do
+            dismiss_confirm do
+              click_link(href: '/groups')
+            end
+          end
+          expect(page).to have_content "Order summary"
+          expect(page).not_to have_content "Groups / regions"
+        end
+
+        it "opens correct order step when edit link is clicked" do
+          visit checkout_step_path(:summary)
+          expect(page).to have_content "Order summary"
+          click_link(href: '/checkout/details')
+
+          expect(page).to have_content "Contact information"
+          expect(page).not_to have_content "Groups / regions"
+        end
+      end
+
       describe "navigation available" do
         it "redirect to Payment method step by clicking on 'Payment method' link" do
           visit checkout_step_path(:summary)
