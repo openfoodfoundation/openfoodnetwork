@@ -171,10 +171,14 @@ describe "LineItemsCtrl", ->
 
       it "asks for confirmation only if orders will be canceled", ->
         spyOn(window, "ofnCancelOrderAlert")
+
         line_item3.checked = true
         scope.deleteLineItems(scope.line_items)
+
         line_item1.checked = true
         scope.deleteLineItems(scope.line_items)
+        expect(ofnCancelOrderAlert).toHaveBeenCalled()
+
 
     describe "check boxes for line items", ->
       line_item1 = line_item2 = null
