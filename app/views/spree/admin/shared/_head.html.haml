@@ -7,6 +7,8 @@
 %title
   - if content_for? :html_title
     = yield :html_title
+  - elsif content_for? :page_title
+    = strip_tags(yield(:page_title))
   - else
     = t("spree.admin.tab.#{controller.controller_name}", :default => controller.controller_name.titleize)
   = " - OFN #{t(:administration)}"
