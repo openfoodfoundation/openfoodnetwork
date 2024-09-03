@@ -21,6 +21,10 @@ export default class extends Controller {
     }
   }
 
+  disconnect() {
+    this.removeUnloadEvent();
+  }
+
   login() {
     window.dispatchEvent(new Event("login:modal:open"));
   }
@@ -40,19 +44,13 @@ export default class extends Controller {
   }
 
   handlePageUnload(event) {
-    event.preventDefault()
-
-    event.returnValue = 'I18n.t("admin.unsaved_confirm_leave")';
-    return 
+    event.preventDefault();
+    event.returnValue = I18n.t("admin.unsaved_confirm_leave");
   }
 
   removeUnloadEvent() {
     if (this.hasSummaryTarget) {
       window.removeEventListener('beforeunload', this.handlePageUnload);
     }
-  }
-
-  disconnect() {
-    this.removeUnloadEvent();
   }
 }
