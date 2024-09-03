@@ -1,0 +1,41 @@
+#product-preview {
+  // tabs
+  dl.tabs {
+    box-shadow: $box-shadow;
+    display: flex;
+    flex-wrap: wrap;
+
+    dd {
+      width: auto;
+      padding: 0;
+
+      a {
+        display: inline-block;
+        padding: 16px 20px;
+        color: $color-9 !important;
+        text-align: center;
+        position: relative;
+        font-size: 16px;
+        font-weight: 600;
+
+        &:hover {
+          color: $red !important;
+
+          &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: $red;
+          }
+        }
+
+        &.active {
+          @extend a, :hover;
+        }
+      }
+    }
+  }
+}
