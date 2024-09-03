@@ -21,5 +21,5 @@
   #modal-component
   #edit_image_modal
 
-  = render ModalComponent.new(id: "product-preview-modal", "data-action": "product-preview:open@window->modal#open") do
+  = render ModalComponent.new(id: "product-preview-modal", modal_class: "big", "data-action": "product-preview:open@window->modal#open") do
     #product-preview

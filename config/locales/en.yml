@@ -606,6 +606,10 @@ en:
         remove: Remove
       image:
         edit: Edit
+      product_preview:
+        product_preview: Product preview
+        shop_tab: Shop
+        product_details_tab: Product details
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     # Common properties / models
