@@ -73,7 +73,7 @@ RSpec.describe "Orders And Distributors" do
         )
 
         # displays only orders from the hub it is managing
-        expect(page).to have_content(distributor.name), count: 5
+        expect(page).to have_content(distributor.name, count: 6)
 
         # only sees line items from orders it manages
         expect(page).not_to have_content(distributor2.name)
@@ -132,7 +132,33 @@ RSpec.describe "Orders And Distributors" do
           create(:order_ready_to_ship, distributor_id: distributor.id, completed_at: completed_at2)
         }
 
-        context "applying filters" do
+        context "applying time/date filters" do
+          it "is precise to time of day, not just date" do
+            # When I generate a customer report
+            # with a timeframe that includes one order but not the other
+            find("input.datepicker").click
+            select_dates_from_daterangepicker datetime_start1, datetime_end
+            find(".shortcut-buttons-flatpickr-button").click # closes flatpickr
+
+            run_report
+            # Then I should see the rows for the first order but not the second
+            # One row per line item - order3 only
+            expect(page).to have_text(distributor.name, count: 6)
+            expect(page).to have_text(order3.email, count: 5)
+
+            # setting a time interval to include both orders
+            find("input.datepicker").click
+            select_dates_from_daterangepicker datetime_start2, Time.zone.now
+
+            run_report
+            # Then I should see the rows for both orders
+            expect(page).to have_text(distributor.name, count: 11)
+            expect(page).to have_text(order3.email, count: 5)
+            expect(page).to have_text(order4.email, count: 5)
+          end
+        end
+
+        context "applying distributor filters" do
           it "displays line items from the correct distributors" do
             # for one distributor
             select2_select distributor.name, from: "q_distributor_id_in"
