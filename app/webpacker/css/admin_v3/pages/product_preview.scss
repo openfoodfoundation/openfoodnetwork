@@ -38,4 +38,63 @@
       }
     }
   }
+
+  // The frontend css is base on foundation-sites https://github.com/foundation/foundation-sites
+  // Below we copied the sections that are relevant to the product preview modal 
+
+  // from foundation-sites/scss/foundations/components/_types.scss
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #222222;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    margin-top: 0.2rem;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.4;
+  }
+
+  h3 {
+    font-size: 1.6875rem;
+  }
+
+  em,
+  i {
+    font-style: italic;
+    line-height: inherit;
+  }
+
+  ul,
+  ol,
+  dl {
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    list-style-position: outside;
+    margin-bottom: 1.25rem;
+  }
+
+  // from fondation-sites/scss/foundations/components/_grid.scss
+  .column + .column:last-child,
+  .column + .columns:last-child,
+  .columns + .column:last-child,
+  .columns + .columns:last-child {
+    float: right;
+  }
+
 }
+
