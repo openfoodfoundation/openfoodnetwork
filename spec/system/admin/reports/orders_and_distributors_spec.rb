@@ -8,6 +8,7 @@ RSpec.describe "Orders And Distributors" do
   include ReportsHelper
 
   describe "Orders And Distributors" do
+    let!(:report_url) { admin_report_path(report_type: :orders_and_distributors) }
     let!(:distributor) { create(:distributor_enterprise, name: "By Bike") }
     let!(:distributor2) { create(:distributor_enterprise, name: "By Moto") }
     let!(:completed_at) { Time.zone.now.to_fs(:db) }
@@ -55,22 +56,15 @@ RSpec.describe "Orders And Distributors" do
 
       before do
         login_as(distributor.owner)
-        visit admin_reports_path
-        click_link "Orders And Distributors"
+        visit report_url
         run_report
       end
 
       it "generates the report" do
-        rows = find("table.report__table").all("thead tr")
-        table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-
         expect(table_headers).to eq([header])
 
-        expect(all('table.report__table tbody tr').count).to eq(
-          Spree::LineItem.where(
-            order_id: order.id # Total rows should equal nr. of line items, per order
-          ).count
-        )
+        # Total rows should equal nr. of line items, per order
+        expect(all('table.report__table tbody tr').count).to eq(5)
 
         # displays only orders from the hub it is managing
         expect(page).to have_content(distributor.name, count: 6)
@@ -115,8 +109,8 @@ RSpec.describe "Orders And Distributors" do
     context "as admin" do
       before do
         login_as_admin
-        visit admin_reports_path
-        click_link "Orders And Distributors"
+        visit report_url
+        run_report
       end
 
       context "with two orders on the same day at different times" do

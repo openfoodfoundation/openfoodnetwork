@@ -28,4 +28,9 @@ module ReportsHelper
       xlsx.map(&:to_a).join(" ")
     end
   end
+
+  def table_headers
+    rows = find("table.report__table").all("thead tr")
+    rows.map { |r| r.all("th").map { |c| c.text.strip } }
+  end
 end

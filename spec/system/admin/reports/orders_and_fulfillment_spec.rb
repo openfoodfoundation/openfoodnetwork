@@ -439,20 +439,17 @@ RSpec.describe "Orders And Fulfillment" do
             end
 
             it "displays the report" do
-              rows = find("table.report__table").all("thead tr")
-              table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-
               # displays the producer column
-              expect(table).to eq([
-                                    ["Producer",
-                                     "Product",
-                                     "Variant",
-                                     "Hub",
-                                     "Quantity",
-                                     "Curr. Cost per Unit",
-                                     "Total Cost",
-                                     "Shipping Method"]
-                                  ])
+              expect(table_headers).to eq([
+                                            ["Producer",
+                                             "Product",
+                                             "Variant",
+                                             "Hub",
+                                             "Quantity",
+                                             "Curr. Cost per Unit",
+                                             "Total Cost",
+                                             "Shipping Method"]
+                                          ])
 
               # displays the producer name in the respective column
               # does not display the header row
@@ -461,6 +458,53 @@ RSpec.describe "Orders And Fulfillment" do
                 expect(page).not_to have_css("td.header-row")
               end
             end
+
+            xit "aggregates results per variant" do
+              pending '#9678'
+              expect(all('table.report__table tbody tr').count).to eq(4)
+              # 1 row per variant = 2 rows
+              # 2 TOTAL rows
+              # 4 rows total
+
+              expect(table_headers[0]).to eq(
+                ["Supplier Name", "Baked Beans", "1g Small, S",
+                 "Distributor Name", "7", "10.0", "70.0", "UPS Ground"]
+              )
+              expect(table_headers[1]).to eq(
+                ["", "", "", "TOTAL", "7", "", "70.0", ""]
+              )
+              expect(table_headers[2]).to eq(
+                ["Supplier Name", "Baked Beans", "1g Big, S",
+                 "Distributor Name",
+                 "3", "10.0", "30.0", "UPS Ground"]
+              )
+              expect(table_headers[3]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+            end
+          end
+
+          context "with the header row option selected" do
+            before do
+              find("#display_header_row").set(true) # displays the header row
+              run_report
+            end
+
+            it "displays the report" do
+              # hides the producer column
+              expect(table_headers).to eq([
+                                            ["Product",
+                                             "Variant",
+                                             "Quantity",
+                                             "Curr. Cost per Unit",
+                                             "Total Cost",
+                                             "Shipping Method"]
+                                          ])
+
+              # displays the producer name in own row
+              within "td.header-row" do
+                expect(page).to have_content("Supplier Name")
+              end
+            end
+>>>>>>> 50da07bb61 (Addresses reviews. The biggest change is moving the table CSS)
           end
         end
       end
@@ -495,21 +539,18 @@ RSpec.describe "Orders And Fulfillment" do
           end
 
           it "displays the report" do
-            rows = find("table.report__table").all("thead tr")
-            table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-
             # displays the producer column
-            expect(table).to eq([
-                                  ["Hub",
-                                   "Producer",
-                                   "Product",
-                                   "Variant",
-                                   "Quantity",
-                                   "Curr. Cost per Unit",
-                                   "Total Cost",
-                                   "Total Shipping Cost",
-                                   "Shipping Method"]
-                                ])
+            expect(table_headers).to eq([
+                                          ["Hub",
+                                           "Producer",
+                                           "Product",
+                                           "Variant",
+                                           "Quantity",
+                                           "Curr. Cost per Unit",
+                                           "Total Cost",
+                                           "Total Shipping Cost",
+                                           "Shipping Method"]
+                                        ])
 
             # displays the Distributor name in the respective column
             # does not display the header row
@@ -526,16 +567,19 @@ RSpec.describe "Orders And Fulfillment" do
             # 1 TOTAL rows
             # 4 rows total
 
-            rows = find("table.report__table").all("tbody tr")
-            table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
-
-            expect(table[0]).to eq(["Distributor Name", "Another Supplier Name", "Salted Peanuts",
-                                    "1g Bag, S", "2", "10.0", "20.0", "", "UPS Ground"])
-            expect(table[1]).to eq(["Distributor Name", "Supplier Name", "Baked Beans",
-                                    "1g Small, S", "3", "10.0", "30.0", "", "UPS Ground"])
-            expect(table[2]).to eq(["Distributor Name", "Supplier Name", "Baked Beans",
-                                    "1g Big, S", "3", "10.0", "30.0", "", "UPS Ground"])
-            expect(table[3]).to eq(["", "", "", "", "", "TOTAL", "80.0", "0.0", ""])
+            expect(table_headers[0]).to eq(
+              ["Distributor Name", "Another Supplier Name", "Salted Peanuts",
+               "1g Bag, S", "2", "10.0", "20.0", "", "UPS Ground"]
+            )
+            expect(table_headers[1]).to eq(
+              ["Distributor Name", "Supplier Name", "Baked Beans",
+               "1g Small, S", "3", "10.0", "30.0", "", "UPS Ground"]
+            )
+            expect(table_headers[2]).to eq(
+              ["Distributor Name", "Supplier Name", "Baked Beans",
+               "1g Big, S", "3", "10.0", "30.0", "", "UPS Ground"]
+            )
+            expect(table_headers[3]).to eq(["", "", "", "", "", "TOTAL", "80.0", "0.0", ""])
           end
         end
 
@@ -547,20 +591,17 @@ RSpec.describe "Orders And Fulfillment" do
           it "displays the report" do
             run_report
 
-            rows = find("table.report__table").all("thead tr")
-            table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-
             # hides the Hub column
-            expect(table).to eq([
-                                  ["Producer",
-                                   "Product",
-                                   "Variant",
-                                   "Quantity",
-                                   "Curr. Cost per Unit",
-                                   "Total Cost",
-                                   "Total Shipping Cost",
-                                   "Shipping Method"]
-                                ])
+            expect(table_headers).to eq([
+                                          ["Producer",
+                                           "Product",
+                                           "Variant",
+                                           "Quantity",
+                                           "Curr. Cost per Unit",
+                                           "Total Cost",
+                                           "Total Shipping Cost",
+                                           "Shipping Method"]
+                                        ])
 
             # displays the Distributor name in own row
             within "td.header-row" do
