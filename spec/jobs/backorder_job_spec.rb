@@ -31,6 +31,8 @@ RSpec.describe BackorderJob do
         semantic_id: product_link
       )
       BackorderJob.check_stock(order)
+
+      expect(variant.on_hand).to eq 0
     end
   end
 

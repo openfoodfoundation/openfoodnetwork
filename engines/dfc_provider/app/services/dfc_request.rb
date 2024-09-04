@@ -13,15 +13,15 @@ class DfcRequest
     @user = user
   end
 
-  def call(url, data = nil)
+  def call(url, data = nil, method: nil)
     begin
-      response = request(url, data)
+      response = request(url, data, method:)
     rescue Faraday::UnauthorizedError, Faraday::ForbiddenError
       raise unless token_stale?
 
       # If access was denied and our token is stale then refresh and retry:
       refresh_access_token!
-      response = request(url, data)
+      response = request(url, data, method:)
     end
 
     response.body
@@ -29,9 +29,11 @@ class DfcRequest
 
   private
 
-  def request(url, data = nil)
+  def request(url, data = nil, method: nil)
     only_public_connections do
-      if data
+      if method == :put
+        connection.put(url, data)
+      elsif data
         connection.post(url, data)
       else
         connection.get(url)

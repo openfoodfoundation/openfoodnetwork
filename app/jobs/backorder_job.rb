@@ -4,10 +4,6 @@ class BackorderJob < ApplicationJob
   FDC_BASE_URL =  "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod"
   FDC_CATALOG_URL = "#{FDC_BASE_URL}/SuppliedProducts".freeze
   FDC_ORDERS_URL = "#{FDC_BASE_URL}/Orders".freeze
-  FDC_SALE_SESSION_URL = "#{FDC_BASE_URL}/SalesSession/#".freeze
-
-  # The FDC implementation needs special ids for new objects:
-  FDC_ORDER_LINES_URL = "#{FDC_ORDERS_URL}/#/OrderLines".freeze
 
   queue_as :default
 
@@ -35,32 +31,20 @@ class BackorderJob < ApplicationJob
     backorder = orderer.find_or_build_order(order)
     catalog = load_catalog(order.distributor.owner)
 
-    linked_variants.each_with_index do |variant, index|
+    linked_variants.each do |variant|
       needed_quantity = -1 * variant.on_hand
       offer = best_offer(catalog, variant)
 
-      # Order lines are enumerated in the FDC API:
-      line = build_order_line(offer, needed_quantity)
-      line.semanticId = "#{FDC_ORDER_LINES_URL}/#{index}"
-      backorder.lines << line
+      line = orderer.find_or_build_order_line(backorder, offer)
+      line.quantity = line.quantity.to_i + needed_quantity
     end
 
-    backorderer.send_order(order, backorder)
+    orderer.send_order(order, backorder)
 
     # Once we have transformations and know the quantities in bulk products
     # we will need to increase on_hand by the ordered quantity.
     linked_variants.each do |variant|
       variant.on_hand = 0
-    end
-  end
-
-  def self.build_order_line(offer, quantity)
-    OrderLineBuilder.build(offer, quantity)
-  end
-
-  def self.build_sale_session(order)
-    SaleSessionBuilder.build(order.order_cycle).tap do |session|
-      session.semanticId = FDC_SALE_SESSION_URL
     end
   end
 

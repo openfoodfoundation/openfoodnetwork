@@ -35,4 +35,33 @@ RSpec.describe FdcBackorderer do
       expect(backorder.lines.count).to eq 1
     end
   end
+
+  describe "#find_or_build_order_line" do
+    it "add quantity to an existing line item", vcr: true do
+      catalog = BackorderJob.load_catalog(order.distributor.owner)
+      backorder = subject.find_or_build_order(order)
+      existing_line = backorder.lines[0]
+
+      # The FDC API returns different ids for the same offer.
+      # In order to test that we can still match it, we are retrieving
+      # the catalog offer here which is different to the offer on the
+      # existing order line.
+      ordered_product = existing_line.offer.offeredItem
+      catalog_product = catalog.find do |i|
+        i.semanticId == ordered_product.semanticId
+      end
+      catalog_offer = BackorderJob.offer_of(catalog_product)
+
+      # The API response is missing this connection:
+      catalog_offer.offeredItem = catalog_product
+
+      # Just confirm that we got good test data from the API:
+      expect(backorder.semanticId).to match %r{^https.*/[0-9]+$}
+      expect(backorder.lines.count).to eq 1
+
+      found_line = subject.find_or_build_order_line(backorder, catalog_offer)
+
+      expect(found_line).to eq existing_line
+    end
+  end
 end

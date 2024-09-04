@@ -5,6 +5,7 @@ class FdcBackorderer
   FDC_BASE_URL = "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod"
   FDC_ORDERS_URL = "#{FDC_BASE_URL}/Orders".freeze
   FDC_NEW_ORDER_URL = "#{FDC_ORDERS_URL}/#".freeze
+  FDC_SALE_SESSION_URL = "#{FDC_BASE_URL}/SalesSession/#".freeze
 
   def find_or_build_order(ofn_order)
     remote_order = find_open_order(ofn_order.distributor.owner)
@@ -44,6 +45,33 @@ class FdcBackorderer
     end
   end
 
+  def find_or_build_order_line(order, offer)
+    find_order_line(order, offer) || build_order_line(order, offer)
+  end
+
+  def build_order_line(order, offer)
+    # Order lines are enumerated in the FDC API and we must assign a unique
+    # semantic id. We need to look at current ids to avoid collisions.
+    # existing_ids = order.lines.map do |line|
+    #   line.semanticId.match(/[0-9]+$/).to_s.to_i
+    # end
+    # next_id = existing_ids.max.to_i + 1
+
+    # Suggested by FDC team:
+    next_id = order.lines.count + 1
+
+    OrderLineBuilder.build(offer, 0).tap do |line|
+      line.semanticId = "#{order.semanticId}/OrderLines/#{next_id}"
+      order.lines << line
+    end
+  end
+
+  def find_order_line(order, offer)
+    order.lines.find do |line|
+      line.offer.offeredItem.semanticId == offer.offeredItem.semanticId
+    end
+  end
+
   def import(user, url)
     api = DfcRequest.new(user)
     json = api.call(url)
@@ -54,17 +82,24 @@ class FdcBackorderer
     lines = backorder.lines
     offers = lines.map(&:offer)
     products = offers.map(&:offeredItem)
-    session = build_sale_session(ofn_order)
-    json = DfcIo.export(backorder, *lines, *offers, *products, session)
 
     api = DfcRequest.new(ofn_order.distributor.owner)
 
     if backorder.semanticId == FDC_NEW_ORDER_URL
       # Create order via POST:
+      session = build_sale_session(ofn_order)
+      json = DfcIo.export(backorder, *lines, *offers, *products, session)
       api.call(FDC_ORDERS_URL, json)
     else
       # Update existing:
-      api.call(backorder.semanticId, json)
+      json = DfcIo.export(backorder, *lines, *offers, *products)
+      api.call(backorder.semanticId, json, method: :put)
+    end
+  end
+
+  def build_sale_session(order)
+    SaleSessionBuilder.build(order.order_cycle).tap do |session|
+      session.semanticId = FDC_SALE_SESSION_URL
     end
   end
 end
