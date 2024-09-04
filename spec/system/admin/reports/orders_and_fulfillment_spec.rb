@@ -481,31 +481,6 @@ RSpec.describe "Orders And Fulfillment" do
               expect(table_headers[3]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
             end
           end
-
-          context "with the header row option selected" do
-            before do
-              find("#display_header_row").set(true) # displays the header row
-              run_report
-            end
-
-            it "displays the report" do
-              # hides the producer column
-              expect(table_headers).to eq([
-                                            ["Product",
-                                             "Variant",
-                                             "Quantity",
-                                             "Curr. Cost per Unit",
-                                             "Total Cost",
-                                             "Shipping Method"]
-                                          ])
-
-              # displays the producer name in own row
-              within "td.header-row" do
-                expect(page).to have_content("Supplier Name")
-              end
-            end
->>>>>>> 50da07bb61 (Addresses reviews. The biggest change is moving the table CSS)
-          end
         end
       end
     end

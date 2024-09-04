@@ -67,7 +67,9 @@ RSpec.describe "Orders And Distributors" do
         expect(all('table.report__table tbody tr').count).to eq(5)
 
         # displays only orders from the hub it is managing
-        expect(page).to have_content(distributor.name, count: 6)
+        within ".report__table" do
+          expect(page).to have_content(distributor.name, count: 5)
+        end
 
         # only sees line items from orders it manages
         expect(page).not_to have_content(distributor2.name)
@@ -137,7 +139,9 @@ RSpec.describe "Orders And Distributors" do
             run_report
             # Then I should see the rows for the first order but not the second
             # One row per line item - order3 only
-            expect(page).to have_text(distributor.name, count: 6)
+            within ".report__table" do
+              expect(page).to have_content(distributor.name, count: 5)
+            end
             expect(page).to have_text(order3.email, count: 5)
 
             # setting a time interval to include both orders
@@ -145,8 +149,10 @@ RSpec.describe "Orders And Distributors" do
             select_dates_from_daterangepicker datetime_start2, Time.zone.now
 
             run_report
-            # Then I should see the rows for both orders
-            expect(page).to have_text(distributor.name, count: 11)
+            # Then I should see the both orders
+            within ".report__table" do
+              expect(page).to have_content(distributor.name, count: 10)
+            end
             expect(page).to have_text(order3.email, count: 5)
             expect(page).to have_text(order4.email, count: 5)
           end
@@ -157,14 +163,19 @@ RSpec.describe "Orders And Distributors" do
             # for one distributor
             select2_select distributor.name, from: "q_distributor_id_in"
             run_report
-            expect(page).to have_content(distributor.name), count: 15
 
+            within ".report__table" do
+              expect(page).to have_content(distributor.name, count: 15)
+            end
             clear_select2("#s2id_q_distributor_id_in")
 
             # for another distributor
             select2_select distributor2.name, from: "q_distributor_id_in"
             run_report
-            expect(page).to have_content(distributor2.name), count: 5
+
+            within ".report__table" do
+              expect(page).to have_content(distributor2.name, count: 5)
+            end
           end
         end
       end
