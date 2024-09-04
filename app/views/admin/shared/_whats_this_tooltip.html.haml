@@ -1,1 +1,1 @@
-= render partial: 'admin/shared/tooltip', locals: {link_class: "" ,link: nil, link_text: t('admin.whats_this'),  tooltip_text: tooltip_text}
+= render AdminTooltipComponent.new(text: tooltip_text, link_text: t('admin.whats_this'), link: nil)
