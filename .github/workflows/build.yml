@@ -87,7 +87,7 @@ jobs:
           bin/rake knapsack_pro:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: simplecov-chunk-controllers-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -155,7 +155,7 @@ jobs:
           bin/rake knapsack_pro:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: simplecov-chunk-models-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -233,7 +233,7 @@ jobs:
           bin/rake knapsack_pro:queue:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: simplecov-chunk-system-admin-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -320,7 +320,7 @@ jobs:
           bin/rake knapsack_pro:queue:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: simplecov-chunk-system-consumer-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -408,7 +408,7 @@ jobs:
           bin/rake knapsack_pro:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: simplecov-chunk-engines-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -485,7 +485,7 @@ jobs:
           bin/rake knapsack_pro:rspec
 
       - name: Save SimpleCov file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: simplecov-chunk-the-rest-${{ matrix.ci_node_index }}
           path: coverage/*.*
@@ -549,7 +549,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Download individual results from individual runners
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           pattern: simplecov-chunk-*
           path: tmp/simplecov
@@ -559,7 +559,7 @@ jobs:
         run: bundle exec rake 'simplecov:collate_results[tmp/simplecov]'
 
       - name: Upload collated results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: combined-simplecov-report
           path: coverage/**/*.*
