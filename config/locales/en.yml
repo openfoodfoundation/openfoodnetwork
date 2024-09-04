@@ -604,6 +604,7 @@ en:
         clone: Clone
         delete: Delete
         remove: Remove
+        preview: Preview 
       image:
         edit: Edit
       product_preview:
