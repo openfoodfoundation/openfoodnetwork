@@ -1,3 +1,6 @@
+@import "../../darkswarm/branding";
+@import "../../darkswarm/mixins";
+
 #product-preview {
   // tabs
   dl.tabs {
@@ -40,7 +43,7 @@
   }
 
   // The frontend css is base on foundation-sites https://github.com/foundation/foundation-sites
-  // Below we copied the sections that are relevant to the product preview modal 
+  // Below we copied the sections that are relevant to the product preview modal
 
   // from foundation-sites/scss/foundations/components/_types.scss
   h1,
@@ -88,7 +91,7 @@
     margin-bottom: 1.25rem;
   }
 
-  // from fondation-sites/scss/foundations/components/_grid.scss
+  // from foundation-sites/scss/foundations/components/_grid.scss
   .column + .column:last-child,
   .column + .columns:last-child,
   .columns + .column:last-child,
@@ -96,5 +99,24 @@
     float: right;
   }
 
-}
+  // from foundation-sites/scss/foundations/components/_global.scss
+  img {
+    display: inline-block;
+    vertical-align: middle;
+  }
 
+  // Import frontend partials
+  @import "../../darkswarm/shop_partials/typography";
+  @import "../../darkswarm/overrides";
+
+  // product preview override
+  .row {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  @import "../../darkswarm/shop_partials/animations";
+  @import "../../darkswarm/shop_partials/shop-filters";
+  @import "../../darkswarm/shop-modals";
+  @import "../../darkswarm/shop_partials/images";
+}
