@@ -549,7 +549,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Download individual results from individual runners
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           pattern: simplecov-chunk-*
           path: tmp/simplecov
