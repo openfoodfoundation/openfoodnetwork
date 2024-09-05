@@ -341,13 +341,100 @@ RSpec.describe "Orders And Fulfillment" do
         end
 
         describe "Totals by Distributor" do
-          before do
-            click_link "Order Cycle Supplier Totals by Distributor"
+          context "as the distributor" do
+            let(:current_user) { distributor.owner }
+
+            before do
+              login_as(current_user)
+              visit admin_reports_path
+              click_link "Order Cycle Supplier Totals by Distributor"
+            end
+
+            context "with the header row option not selected" do
+              before do
+                find("#display_header_row").set(false) # hides the header row
+                run_report
+              end
+
+              it "displays the report" do
+                rows = find("table.report__table").all("thead tr")
+                table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+                # displays the producer column
+                expect(table).to eq([
+                                      ["Producer",
+                                       "Product",
+                                       "Variant",
+                                       "Hub",
+                                       "Quantity",
+                                       "Curr. Cost per Unit",
+                                       "Total Cost",
+                                       "Shipping Method"]
+                                    ])
+
+                # displays the producer name in the respective column
+                # does not display the header row
+                within "td" do
+                  expect(page).to have_content("Supplier Name")
+                  expect(page).not_to have_css("td.header-row")
+                end
+              end
+
+              xit "aggregates results per variant" do
+                pending '#9678'
+                expect(all('table.report__table tbody tr').count).to eq(4)
+                # 1 row per variant = 2 rows
+                # 2 TOTAL rows
+                # 4 rows total
+
+                rows = find("table.report__table").all("tbody tr")
+                table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
+
+                expect(table[0]).to eq(["Supplier Name", "Baked Beans", "1g Small, S",
+                                        "Distributor Name", "7", "10.0", "70.0", "UPS Ground"])
+                expect(table[1]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
+                expect(table[2]).to eq(["Supplier Name", "Baked Beans", "1g Big, S",
+                                        "Distributor Name", "3", "10.0", "30.0", "UPS Ground"])
+                expect(table[3]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+              end
+            end
+
+            context "with the header row option selected" do
+              before do
+                find("#display_header_row").set(true) # displays the header row
+                run_report
+              end
+
+              it "displays the report" do
+                rows = find("table.report__table").all("thead tr")
+                table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
+
+                # hides the producer column
+                expect(table).to eq([
+                                      ["Product",
+                                       "Variant",
+                                       "Quantity",
+                                       "Curr. Cost per Unit",
+                                       "Total Cost",
+                                       "Shipping Method"]
+                                    ])
+
+                # displays the producer name in own row
+                within "td.header-row" do
+                  expect(page).to have_content("Supplier Name")
+                end
+              end
+            end
           end
 
-          context "with the header row option not selected" do
+          context "as the supplier" do
+            let(:current_user) { supplier.owner }
+
             before do
-              find("#display_header_row").set(false) # hides the header row
+              pending("S2 bug fix - #12835")
+              login_as(current_user)
+              visit admin_reports_path
+              click_link "Order Cycle Supplier Totals by Distributor"
               run_report
             end
 
@@ -372,51 +459,6 @@ RSpec.describe "Orders And Fulfillment" do
               within "td" do
                 expect(page).to have_content("Supplier Name")
                 expect(page).not_to have_css("td.header-row")
-              end
-            end
-
-            xit "aggregates results per variant" do
-              pending '#9678'
-              expect(all('table.report__table tbody tr').count).to eq(4)
-              # 1 row per variant = 2 rows
-              # 2 TOTAL rows
-              # 4 rows total
-
-              rows = find("table.report__table").all("tbody tr")
-              table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
-
-              expect(table[0]).to eq(["Supplier Name", "Baked Beans", "1g Small, S",
-                                      "Distributor Name", "7", "10.0", "70.0", "UPS Ground"])
-              expect(table[1]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
-              expect(table[2]).to eq(["Supplier Name", "Baked Beans", "1g Big, S",
-                                      "Distributor Name", "3", "10.0", "30.0", "UPS Ground"])
-              expect(table[3]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
-            end
-          end
-
-          context "with the header row option selected" do
-            before do
-              find("#display_header_row").set(true) # displays the header row
-              run_report
-            end
-
-            it "displays the report" do
-              rows = find("table.report__table").all("thead tr")
-              table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-
-              # hides the producer column
-              expect(table).to eq([
-                                    ["Product",
-                                     "Variant",
-                                     "Quantity",
-                                     "Curr. Cost per Unit",
-                                     "Total Cost",
-                                     "Shipping Method"]
-                                  ])
-
-              # displays the producer name in own row
-              within "td.header-row" do
-                expect(page).to have_content("Supplier Name")
               end
             end
           end
