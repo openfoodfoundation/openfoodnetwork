@@ -97,6 +97,11 @@ class FdcBackorderer
     end
   end
 
+  def complete_order(ofn_order, backorder)
+    backorder.orderStatus = "dfc-v:Complete"
+    send_order(ofn_order, backorder)
+  end
+
   def build_sale_session(order)
     SaleSessionBuilder.build(order.order_cycle).tap do |session|
       session.semanticId = FDC_SALE_SESSION_URL

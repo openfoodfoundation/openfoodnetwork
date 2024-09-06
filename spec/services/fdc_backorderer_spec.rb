@@ -34,6 +34,18 @@ RSpec.describe FdcBackorderer do
       expect(backorder.semanticId).to match %r{^https.*/[0-9]+$}
       expect(backorder.lines.count).to eq 1
     end
+
+    it "completes an order", vcr: true do
+      backorder = subject.find_or_build_order(order)
+
+      expect(backorder.semanticId).to match %r{^https.*/[0-9]+$}
+      expect(backorder.lines.count).to eq 1
+
+      subject.complete_order(order, backorder)
+
+      remaining_open_order = subject.find_or_build_order(order)
+      expect(remaining_open_order.semanticId).not_to eq backorder.semanticId
+    end
   end
 
   describe "#find_or_build_order_line" do
