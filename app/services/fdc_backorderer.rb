@@ -107,7 +107,10 @@ class FdcBackorderer
     end
   end
 
-  def complete_order(backorder)
+  def complete_order(semantic_id)
+    backorder = import(semantic_id).find do |o|
+      o.semanticType == "dfc-b:Order"
+    end
     backorder.orderStatus = "dfc-v:Complete"
     send_order(backorder)
   end

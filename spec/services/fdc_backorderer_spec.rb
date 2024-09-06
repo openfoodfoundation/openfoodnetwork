@@ -17,6 +17,42 @@ RSpec.describe FdcBackorderer do
     order.distributor.owner.oidc_account = account
   end
 
+  it "creates, finds and updates orders", vcr: true do
+    # This test case contains a full order life cycle.
+    # It assumes that there's no open order yet to start with.
+    # After closing the order at the end, the test can be repeated live again.
+
+    # Build a new order when no open one is found:
+    order.order_cycle = build(:order_cycle)
+    backorder = subject.find_or_build_order(order)
+    expect(backorder.semanticId).to match %r{^https.*/\#$}
+    expect(backorder.lines).to eq []
+
+    # Add items and place the new order:
+    catalog = BackorderJob.load_catalog(order.distributor.owner)
+    product = catalog.find { |i| i.semanticType == "dfc-b:SuppliedProduct" }
+    offer = BackorderJob.offer_of(product)
+    line = subject.find_or_build_order_line(backorder, offer)
+    line.quantity = 3
+    order_json = subject.send_order(backorder)
+    placed_order = DfcIo.import(order_json).find { |i| i.semanticType == "dfc-b:Order" }
+
+    # Give the Shopify app time to process and place the order.
+    # That process seems to be async.
+    sleep 10 if VCR.current_cassette.recording?
+
+    # Now we can find the open order:
+    found_backorder = subject.find_or_build_order(order)
+    expect(found_backorder.semanticId).to eq placed_order.semanticId
+    expect(found_backorder.lines.count).to eq 1
+    expect(found_backorder.lines[0].quantity.to_i).to eq 3
+
+    # And close the order again:
+    subject.complete_order(placed_order.semanticId)
+    remaining_open_order = subject.find_or_build_order(order)
+    expect(remaining_open_order.semanticId).not_to eq placed_order.semanticId
+  end
+
   describe "#find_or_build_order" do
     it "builds an order object" do
       account.updated_at = Time.zone.now
@@ -27,25 +63,6 @@ RSpec.describe FdcBackorderer do
 
       expect(backorder.semanticId).to match %r{^https.*/\#$}
       expect(backorder.lines).to eq []
-    end
-
-    it "finds an order object", vcr: true do
-      backorder = subject.find_or_build_order(order)
-
-      expect(backorder.semanticId).to match %r{^https.*/[0-9]+$}
-      expect(backorder.lines.count).to eq 1
-    end
-
-    it "completes an order", vcr: true do
-      backorder = subject.find_or_build_order(order)
-
-      expect(backorder.semanticId).to match %r{^https.*/[0-9]+$}
-      expect(backorder.lines.count).to eq 1
-
-      subject.complete_order(backorder)
-
-      remaining_open_order = subject.find_or_build_order(order)
-      expect(remaining_open_order.semanticId).not_to eq backorder.semanticId
     end
   end
 
