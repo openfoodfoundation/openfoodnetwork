@@ -4,7 +4,6 @@
 class FdcBackorderer
   FDC_BASE_URL = "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod"
   FDC_ORDERS_URL = "#{FDC_BASE_URL}/Orders".freeze
-  FDC_NEW_ORDER_URL = "#{FDC_ORDERS_URL}/#".freeze
   FDC_SALE_SESSION_URL = "#{FDC_BASE_URL}/SalesSession/#".freeze
 
   attr_reader :user
@@ -18,7 +17,7 @@ class FdcBackorderer
   end
 
   def build_new_order(ofn_order)
-    OrderBuilder.new_order(ofn_order, FDC_NEW_ORDER_URL).tap do |order|
+    OrderBuilder.new_order(ofn_order, FDC_ORDERS_URL).tap do |order|
       order.saleSession = build_sale_session(ofn_order)
     end
   end
@@ -98,13 +97,13 @@ class FdcBackorderer
 
     api = DfcRequest.new(user)
 
-    if backorder.semanticId == FDC_NEW_ORDER_URL
-      # Create order via POST:
-      api.call(FDC_ORDERS_URL, json)
-    else
-      # Update existing:
-      api.call(backorder.semanticId, json, method: :put)
-    end
+    method = if backorder.semanticId == FDC_ORDERS_URL
+               :post # -> create
+             else
+               :put  # -> update
+             end
+
+    api.call(backorder.semanticId, json, method:)
   end
 
   def complete_order(semantic_id)

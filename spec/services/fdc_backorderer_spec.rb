@@ -25,7 +25,7 @@ RSpec.describe FdcBackorderer do
     # Build a new order when no open one is found:
     order.order_cycle = build(:order_cycle)
     backorder = subject.find_or_build_order(order)
-    expect(backorder.semanticId).to match %r{^https.*/\#$}
+    expect(backorder.semanticId).to eq FdcBackorderer::FDC_ORDERS_URL
     expect(backorder.lines).to eq []
 
     # Add items and place the new order:
@@ -61,7 +61,7 @@ RSpec.describe FdcBackorderer do
 
       backorder = subject.find_or_build_order(order)
 
-      expect(backorder.semanticId).to match %r{^https.*/\#$}
+      expect(backorder.semanticId).to eq FdcBackorderer::FDC_ORDERS_URL
       expect(backorder.lines).to eq []
     end
   end
