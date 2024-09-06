@@ -27,7 +27,7 @@ class BackorderJob < ApplicationJob
   end
 
   def self.place_backorder(order, linked_variants)
-    orderer = FdcBackorderer.new
+    orderer = FdcBackorderer.new(order.distributor.owner)
     backorder = orderer.find_or_build_order(order)
     catalog = load_catalog(order.distributor.owner)
 
@@ -39,7 +39,7 @@ class BackorderJob < ApplicationJob
       line.quantity = line.quantity.to_i + needed_quantity
     end
 
-    orderer.send_order(order, backorder)
+    orderer.send_order(backorder)
 
     # Once we have transformations and know the quantities in bulk products
     # we will need to increase on_hand by the ordered quantity.

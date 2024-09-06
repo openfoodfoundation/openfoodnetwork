@@ -7,9 +7,14 @@ class FdcBackorderer
   FDC_NEW_ORDER_URL = "#{FDC_ORDERS_URL}/#".freeze
   FDC_SALE_SESSION_URL = "#{FDC_BASE_URL}/SalesSession/#".freeze
 
+  attr_reader :user
+
+  def initialize(user)
+    @user = user
+  end
+
   def find_or_build_order(ofn_order)
-    remote_order = find_open_order(ofn_order.distributor.owner)
-    remote_order || build_new_order(ofn_order)
+    find_open_order || build_new_order(ofn_order)
   end
 
   def build_new_order(ofn_order)
@@ -18,8 +23,8 @@ class FdcBackorderer
     end
   end
 
-  def find_open_order(user)
-    graph = import(user, FDC_ORDERS_URL)
+  def find_open_order
+    graph = import(FDC_ORDERS_URL)
     open_orders = graph&.select do |o|
       o.semanticType == "dfc-b:Order" && o.orderStatus[:path] == "Held"
     end
@@ -78,20 +83,20 @@ class FdcBackorderer
     end
   end
 
-  def import(user, url)
+  def import(url)
     api = DfcRequest.new(user)
     json = api.call(url)
     DfcIo.import(json)
   end
 
-  def send_order(ofn_order, backorder)
+  def send_order(backorder)
     lines = backorder.lines
     offers = lines.map(&:offer)
     products = offers.map(&:offeredItem)
     sessions = [backorder.saleSession].compact
     json = DfcIo.export(backorder, *lines, *offers, *products, *sessions)
 
-    api = DfcRequest.new(ofn_order.distributor.owner)
+    api = DfcRequest.new(user)
 
     if backorder.semanticId == FDC_NEW_ORDER_URL
       # Create order via POST:
@@ -102,9 +107,9 @@ class FdcBackorderer
     end
   end
 
-  def complete_order(ofn_order, backorder)
+  def complete_order(backorder)
     backorder.orderStatus = "dfc-v:Complete"
-    send_order(ofn_order, backorder)
+    send_order(backorder)
   end
 
   def build_sale_session(order)

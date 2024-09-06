@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe FdcBackorderer do
+  let(:subject) { FdcBackorderer.new(order.distributor.owner) }
   let(:order) { create(:completed_order_with_totals) }
   let(:account) {
     OidcAccount.new(
@@ -41,7 +42,7 @@ RSpec.describe FdcBackorderer do
       expect(backorder.semanticId).to match %r{^https.*/[0-9]+$}
       expect(backorder.lines.count).to eq 1
 
-      subject.complete_order(order, backorder)
+      subject.complete_order(backorder)
 
       remaining_open_order = subject.find_or_build_order(order)
       expect(remaining_open_order.semanticId).not_to eq backorder.semanticId
