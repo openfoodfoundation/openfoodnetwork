@@ -103,7 +103,8 @@ class FdcBackorderer
                :put  # -> update
              end
 
-    api.call(backorder.semanticId, json, method:)
+    result = api.call(backorder.semanticId, json, method:)
+    DfcIo.import(result).find { |i| i.semanticType == "dfc-b:Order" }
   end
 
   def complete_order(semantic_id)

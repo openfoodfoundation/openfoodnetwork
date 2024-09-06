@@ -34,8 +34,7 @@ RSpec.describe FdcBackorderer do
     offer = BackorderJob.offer_of(product)
     line = subject.find_or_build_order_line(backorder, offer)
     line.quantity = 3
-    order_json = subject.send_order(backorder)
-    placed_order = DfcIo.import(order_json).find { |i| i.semanticType == "dfc-b:Order" }
+    placed_order = subject.send_order(backorder)
 
     # Give the Shopify app time to process and place the order.
     # That process seems to be async.
