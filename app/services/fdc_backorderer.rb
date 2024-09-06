@@ -9,7 +9,13 @@ class FdcBackorderer
 
   def find_or_build_order(ofn_order)
     remote_order = find_open_order(ofn_order.distributor.owner)
-    remote_order || OrderBuilder.new_order(ofn_order, FDC_NEW_ORDER_URL)
+    remote_order || build_new_order(ofn_order)
+  end
+
+  def build_new_order(ofn_order)
+    OrderBuilder.new_order(ofn_order, FDC_NEW_ORDER_URL).tap do |order|
+      order.saleSession = build_sale_session(ofn_order)
+    end
   end
 
   def find_open_order(user)
@@ -82,17 +88,16 @@ class FdcBackorderer
     lines = backorder.lines
     offers = lines.map(&:offer)
     products = offers.map(&:offeredItem)
+    sessions = [backorder.saleSession].compact
+    json = DfcIo.export(backorder, *lines, *offers, *products, *sessions)
 
     api = DfcRequest.new(ofn_order.distributor.owner)
 
     if backorder.semanticId == FDC_NEW_ORDER_URL
       # Create order via POST:
-      session = build_sale_session(ofn_order)
-      json = DfcIo.export(backorder, *lines, *offers, *products, session)
       api.call(FDC_ORDERS_URL, json)
     else
       # Update existing:
-      json = DfcIo.export(backorder, *lines, *offers, *products)
       api.call(backorder.semanticId, json, method: :put)
     end
   end
