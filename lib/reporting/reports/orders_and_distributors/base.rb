@@ -15,7 +15,7 @@ module Reporting
             customer_city: proc { |line_item| line_item.order.bill_address.city },
             sku: proc { |line_item| line_item.product.sku },
             item_name: proc { |line_item| line_item.product.name },
-            variant: proc { |line_item| line_item.options_text },
+            variant: proc { |line_item| line_item.unit_to_display },
             quantity: proc { |line_item| line_item.quantity },
             max_quantity: proc { |line_item| line_item.max_quantity },
             cost: proc { |line_item| line_item.price * line_item.quantity },
