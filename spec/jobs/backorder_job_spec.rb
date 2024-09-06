@@ -30,9 +30,15 @@ RSpec.describe BackorderJob do
       variant.semantic_links << SemanticLink.new(
         semantic_id: product_link
       )
-      BackorderJob.check_stock(order)
+
+      expect {
+        BackorderJob.check_stock(order)
+      }.to enqueue_job CompleteBackorderJob
 
       expect(variant.on_hand).to eq 0
+
+      # Clean up after ourselves:
+      perform_enqueued_jobs(only: CompleteBackorderJob)
     end
   end
 

@@ -5,6 +5,11 @@ class BackorderJob < ApplicationJob
   FDC_CATALOG_URL = "#{FDC_BASE_URL}/SuppliedProducts".freeze
   FDC_ORDERS_URL = "#{FDC_BASE_URL}/Orders".freeze
 
+  # In the current FDC project, the shop wants to review and adjust orders
+  # before finalising. They also run a market stall and need to adjust stock
+  # levels after the market. This should be done within four hours.
+  SALE_SESSION_DELAY = 4.hours
+
   queue_as :default
 
   def self.check_stock(order)
@@ -27,7 +32,8 @@ class BackorderJob < ApplicationJob
   end
 
   def self.place_backorder(order, linked_variants)
-    orderer = FdcBackorderer.new(order.distributor.owner)
+    user = order.distributor.owner
+    orderer = FdcBackorderer.new(user)
     backorder = orderer.find_or_build_order(order)
     catalog = load_catalog(order.distributor.owner)
 
@@ -39,7 +45,13 @@ class BackorderJob < ApplicationJob
       line.quantity = line.quantity.to_i + needed_quantity
     end
 
-    orderer.send_order(backorder)
+    placed_order = orderer.send_order(backorder)
+
+    if orderer.new?(backorder)
+      wait_until = order.order_cycle.orders_close_at + SALE_SESSION_DELAY
+      CompleteBackorderJob.set(wait_until:)
+        .perform_later(user, placed_order.semanticId)
+    end
 
     # Once we have transformations and know the quantities in bulk products
     # we will need to increase on_hand by the ordered quantity.

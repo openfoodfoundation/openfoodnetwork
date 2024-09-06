@@ -97,7 +97,7 @@ class FdcBackorderer
 
     api = DfcRequest.new(user)
 
-    method = if backorder.semanticId == FDC_ORDERS_URL
+    method = if new?(backorder)
                :post # -> create
              else
                :put  # -> update
@@ -113,6 +113,10 @@ class FdcBackorderer
     end
     backorder.orderStatus = "dfc-v:Complete"
     send_order(backorder)
+  end
+
+  def new?(order)
+    order.semanticId == FDC_ORDERS_URL
   end
 
   def build_sale_session(order)
