@@ -81,6 +81,8 @@ en_FR:
         white_label_logo_link: "Link for the logo used in shopfront"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
         spree/image:
           attributes:
             attachment:
@@ -779,6 +781,7 @@ en_FR:
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
+      back_to_products_list: "Back To Products List"
       editing_product: "Editing Product"
       tabs:
         product_details: "Product Details"
@@ -1391,8 +1394,10 @@ en_FR:
         contact_name: Contact Name
       edit:
         editing: 'Settings:'
+        back_link: Back To Enterprises List
       new:
         title: New Enterprise
+        back_link: Back To Enterprises List
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
@@ -3896,6 +3901,7 @@ en_FR:
     tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
     included_in_price: "Included in Price"
     show_rate_in_label: "Show rate in label"
+    back_to_tax_rates_list: "Back To Tax Rates List"
     tax_settings: "Tax Settings"
     zones: "Zones"
     new_zone: "New Zone"
@@ -3908,6 +3914,7 @@ en_FR:
     iso_name: "ISO Name"
     states_required: "States Required"
     editing_country: "Editing Country"
+    back_to_countries_list: "Back To Countries List"
     states: "States"
     abbreviation: "Abbreviation"
     new_state: "New State"
@@ -4072,6 +4079,7 @@ en_FR:
           continue: "Continue"
         new:
           new_return_authorization: "New Return Authorization"
+          back_to_return_authorizations_list: "Back To Return Authorizations List"
           continue: "Continue"
         edit:
           receive: "receive"
@@ -4284,6 +4292,8 @@ en_FR:
           new_product: "New Product"
           supplier: "Supplier"
           supplier_select_placeholder: "Select a supplier"
+          search_for_suppliers: "Search for suppliers"
+          search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
@@ -4396,6 +4406,7 @@ en_FR:
           total: "Total"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Back To Product Categories List"
         index:
           title: "Product Categories"
           new_taxon: 'New product category'

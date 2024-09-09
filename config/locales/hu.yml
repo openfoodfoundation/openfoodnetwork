@@ -1412,6 +1412,8 @@ hu:
         re_notify_producers: Értesítse újra a termelőket
         notify_producers_tip: Ez minden termelőnak e-mailt küld a rendeléseik listájával.
       date_time_warning_modal_content:
+        title: 'Ebben a rendelési ciklusban már vannak rendelések.'
+        content: 'Ha új rendelési ciklust szeretnél létrehozni, ajánlott először megduplázni a rendelési ciklust, majd módosítani a dátumokat.'
         cancel: 'Törlés'
       incoming:
         incoming: "Beérkező"
@@ -2030,7 +2032,7 @@ hu:
   total_all_tax: "Összes adó:"
   abn: "Adószám:"
   acn: "Közösségi Adószám (EU):"
-  invoice_issued_on: "Kiállított számla:"
+  invoice_issued_on: "Kiállítás dátuma:"
   order_number: "Rendelés sorszáma:"
   date_of_transaction: "A tranzakció dátuma:"
   menu_1_title: "Átvételi pontok"
@@ -2390,7 +2392,7 @@ hu:
   products_updating_cart: "Kosár frissítése..."
   products_cart_empty: "Kosár üres"
   products_edit_cart: "Kosár szerkesztése"
-  products_from: Elosztó
+  products_from: elosztó
   products_change: "Nincs mentendő módosítás."
   products_update_error: "A mentés a következő hibá(k) miatt nem sikerült:"
   products_update_error_msg: "A mentés nem sikerült."
@@ -4456,7 +4458,7 @@ hu:
         details: "Itt vannak a megrendelt termékek részletei:"
         unpaid_order: "Megrendelésed nem lett kifizetve, így visszatérítés nem történt"
         paid_order: "Megrendelésed fizetésre került, így %{distributor} visszatérítette a teljes összeget"
-        credit_order: "Megrendelésed kifizették, számládon  jóváhagyták."
+        credit_order: "Megrendelésed kifizetésre került, számládon  jóváhagyták a tranzakciót."
         subject: "Megrendelés törlése"
       cancel_email_for_shop:
         greeting: "Kedves %{name}!"
@@ -4556,7 +4558,7 @@ hu:
           header: Esemény típusa
         url:
           header: Végpont URL
-          create_placeholder: Adja meg a távoli webhook végpont URL-címét
+          create_placeholder: Add meg a távoli webhook végpont URL-címét
       developer_settings:
         title: Fejlesztői beállítások
       form:
@@ -4568,14 +4570,14 @@ hu:
           cards: Bankkártyák
           transactions: Tranzakciók
           settings: Fiók beállítások
-        unconfirmed_email: "E-mail megerősítésre vár: %{unconfirmed_email}. Az Ön e-mail címe frissítésre kerül, amint az új e-mailt megerősítjük."
+        unconfirmed_email: "E-mail megerősítésre vár: %{unconfirmed_email}. E-mail címed frissítésre kerül, amint az új e-mailt megerősítjük."
       orders:
         open_orders: Rendelések megnyitása
         past_orders: Korábbi megrendelések
       transactions:
         transaction_history: Tranzakciós előzmények
         authorisation_required: Engedély szükséges
-        authorise: Engedélyezze
+        authorise: Engedélyezd
       open_orders:
         order: Rendelés
         shop: Átvételi Pont
@@ -4683,5 +4685,5 @@ hu:
       next: Következő
       previous: Előző
   invisible_captcha:
-    sentence_for_humans: "Kérjük hagyja üresen"
+    sentence_for_humans: "Kérjük hagyd üresen"
     timestamp_error_message: "Kérjük, próbáld meg 5 másodperc múlva."
