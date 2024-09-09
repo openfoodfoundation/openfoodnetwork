@@ -106,9 +106,8 @@
 
 
               - if @product.description
-                .product-description
-                  - # TODO description not wrapped properly
-                  %p.text-small{ 'data-controller': "add-blank-to-link" }
+                .product-description{ 'data-controller': "add-blank-to-link" }
+                  %p.text-small
                     - # description is sanitized in Spree::Product#description method
                     = @product.description.html_safe
 

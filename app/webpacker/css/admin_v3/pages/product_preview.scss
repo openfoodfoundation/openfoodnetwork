@@ -121,6 +121,15 @@
   }
 
   // from foundation-sites/scss/foundations/components/_grid.scss
+  @media only screen and (min-width: 64.0625em) {
+    .column, .columns {
+      position: relative;
+      padding-left: 0.9375rem;
+      padding-right: 0.9375rem;
+      float: left;
+    }
+  }
+
   .column + .column:last-child,
   .column + .columns:last-child,
   .columns + .column:last-child,
@@ -141,6 +150,12 @@
   @media only screen and (min-width: 64.0625em) {
     .large-3 {
       width: 25%;
+    }
+  }
+
+  @media only screen and (min-width: 64.0625em) {
+    .large-6 {
+      width: 50%;
     }
   }
 
@@ -187,9 +202,14 @@
   .tooltip {
     @include joyride-content;
     width: $joyride-width;
+    text-transform: none;
   }
 
   .arrow {
     background-color: $dynamic-blue;
+  }
+
+  .columns {
+    margin-left: 0;
   }
 }
