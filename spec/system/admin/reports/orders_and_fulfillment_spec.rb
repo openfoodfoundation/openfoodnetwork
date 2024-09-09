@@ -357,20 +357,17 @@ RSpec.describe "Orders And Fulfillment" do
               end
 
               it "displays the report" do
-                rows = find("table.report__table").all("thead tr")
-                table = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-
                 # displays the producer column
-                expect(table).to eq([
-                                      ["Producer",
-                                       "Product",
-                                       "Variant",
-                                       "Hub",
-                                       "Quantity",
-                                       "Curr. Cost per Unit",
-                                       "Total Cost",
-                                       "Shipping Method"]
-                                    ])
+                expect(table_headers).to eq([
+                                              ["Producer",
+                                               "Product",
+                                               "Variant",
+                                               "Hub",
+                                               "Quantity",
+                                               "Curr. Cost per Unit",
+                                               "Total Cost",
+                                               "Shipping Method"]
+                                            ])
 
                 # displays the producer name in the respective column
                 # does not display the header row
@@ -380,8 +377,7 @@ RSpec.describe "Orders And Fulfillment" do
                 end
               end
 
-              xit "aggregates results per variant" do
-                pending '#9678'
+              it "aggregates results per variant" do
                 expect(all('table.report__table tbody tr').count).to eq(4)
                 # 1 row per variant = 2 rows
                 # 2 TOTAL rows
@@ -390,12 +386,12 @@ RSpec.describe "Orders And Fulfillment" do
                 rows = find("table.report__table").all("tbody tr")
                 table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
 
-                expect(table[0]).to eq(["Supplier Name", "Baked Beans", "1g Small, S",
-                                        "Distributor Name", "7", "10.0", "70.0", "UPS Ground"])
-                expect(table[1]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
-                expect(table[2]).to eq(["Supplier Name", "Baked Beans", "1g Big, S",
+                expect(table[0]).to eq(["Supplier Name", "Baked Beans", "1g Big",
                                         "Distributor Name", "3", "10.0", "30.0", "UPS Ground"])
-                expect(table[3]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+                expect(table[1]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+                expect(table[2]).to eq(["Supplier Name", "Baked Beans", "1g Small",
+                                        "Distributor Name", "7", "10.0", "70.0", "UPS Ground"])
+                expect(table[3]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
               end
             end
 
@@ -459,22 +455,21 @@ RSpec.describe "Orders And Fulfillment" do
               end
             end
 
-            xit "aggregates results per variant" do
-              pending '#9678'
+            it "aggregates results per variant" do
               expect(all('table.report__table tbody tr').count).to eq(4)
               # 1 row per variant = 2 rows
               # 2 TOTAL rows
               # 4 rows total
 
               expect(table_headers[0]).to eq(
-                ["Supplier Name", "Baked Beans", "1g Small, S",
+                ["Supplier Name", "Baked Beans", "1g Small",
                  "Distributor Name", "7", "10.0", "70.0", "UPS Ground"]
               )
               expect(table_headers[1]).to eq(
                 ["", "", "", "TOTAL", "7", "", "70.0", ""]
               )
               expect(table_headers[2]).to eq(
-                ["Supplier Name", "Baked Beans", "1g Big, S",
+                ["Supplier Name", "Baked Beans", "1g Big",
                  "Distributor Name",
                  "3", "10.0", "30.0", "UPS Ground"]
               )
