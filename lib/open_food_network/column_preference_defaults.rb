@@ -77,7 +77,9 @@ module OpenFoodNetwork
       }
     end
 
-    def products_v3_index_columns
+    def products_v3_index_columns(user)
+      producer_visibility = display_producer_column?(user)
+
       I18n.with_options scope: 'admin.products_page.columns' do
         {
           image: { name: t(:image), visible: true },
@@ -87,7 +89,7 @@ module OpenFoodNetwork
           unit_scale: { name: t(:unit_scale), visible: true },
           price: { name: t(:price), visible: true },
           on_hand: { name: t(:on_hand), visible: true },
-          producer: { name: t(:producer), visible: true },
+          producer: { name: t(:producer), visible: producer_visibility },
           category: { name: t(:category), visible: true },
           tax_category: { name: t(:tax_category), visible: true },
           inherits_properties: { name: t(:inherits_properties), visible: true },
@@ -133,6 +135,13 @@ module OpenFoodNetwork
         payment_method: { name: I18n.t("admin.payment_method"), visible: false },
         shipping_method: { name: I18n.t("admin.shipping_method"), visible: false }
       }
+    end
+
+    def display_producer_column?(user)
+      producers = OpenFoodNetwork::Permissions.new(user)
+        .managed_product_enterprises.is_primary_producer
+
+      producers.many?
     end
   end
 end

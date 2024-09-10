@@ -37,5 +37,9 @@ module Admin
 
       "#{admin_products_path}#{url_filters.empty? ? '' : "#?#{url_filters.to_query}"}"
     end
+
+    def hide_producer_column?(producer_options)
+      spree_current_user.column_preferences.products.empty? && producer_options.one?
+    end
   end
 end
