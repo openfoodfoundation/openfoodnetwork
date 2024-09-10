@@ -47,11 +47,7 @@ class BackorderJob < ApplicationJob
 
     placed_order = orderer.send_order(backorder)
 
-    if orderer.new?(backorder)
-      wait_until = order.order_cycle.orders_close_at + SALE_SESSION_DELAY
-      CompleteBackorderJob.set(wait_until:)
-        .perform_later(user, placed_order.semanticId)
-    end
+    schedule_order_completion(user, order, placed_order) if orderer.new?(backorder)
 
     # Once we have transformations and know the quantities in bulk products
     # we will need to increase on_hand by the ordered quantity.
@@ -68,6 +64,12 @@ class BackorderJob < ApplicationJob
     api = DfcRequest.new(user)
     catalog_json = api.call(FDC_CATALOG_URL)
     DfcIo.import(catalog_json)
+  end
+
+  def self.schedule_order_completion(user, order, placed_order)
+    wait_until = order.order_cycle.orders_close_at + SALE_SESSION_DELAY
+    CompleteBackorderJob.set(wait_until:)
+      .perform_later(user, placed_order.semanticId)
   end
 
   def perform(*args)
