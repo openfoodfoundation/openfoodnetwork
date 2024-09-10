@@ -202,6 +202,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           page.find(".vertical-ellipsis-menu").click
           expect(page).to have_link "Edit", href: spree.edit_admin_product_path(product_a)
         end
+        close_action_menu
 
         within row_containing_name("Medium box") do
           page.find(".vertical-ellipsis-menu").click
@@ -232,6 +233,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
             page.find(".vertical-ellipsis-menu").click
             expect(page).to have_link "Clone", href: admin_clone_product_path(product_a)
           end
+          close_action_menu
 
           within row_containing_name("Medium box") do
             page.find(".vertical-ellipsis-menu").click
@@ -351,11 +353,12 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
               page.find(".vertical-ellipsis-menu").click
               page.find(delete_option_selector).click
             end
+
             within modal_selector do
               click_button "Keep product"
             end
 
-            expect(page).not_to have_selector(modal_selector)
+            expect(page).not_to have_content "Delete Product"
             expect(page).to have_selector(product_selector)
 
             # Keep Variant
@@ -367,7 +370,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
               click_button "Keep variant"
             end
 
-            expect(page).not_to have_selector(modal_selector)
+            expect(page).not_to have_content("Delete Variant")
             expect(page).to have_selector(variant_selector)
           end
         end
@@ -387,7 +390,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
               click_button "Delete variant"
             end
 
-            expect(page).not_to have_selector(modal_selector)
+            expect(page).not_to have_content("Delete variant")
             expect(page).not_to have_selector(variant_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the variant")
@@ -402,7 +405,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
             within modal_selector do
               click_button "Delete product"
             end
-            expect(page).not_to have_selector(modal_selector)
+            expect(page).not_to have_content("Delete product")
             expect(page).not_to have_selector(product_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the product")
@@ -556,5 +559,9 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       expect(page).to have_content "Changes saved"
       expect(page).to have_selector row_containing_name("Pommes")
     end
+  end
+
+  def close_action_menu
+    page.find("div#content").click
   end
 end
