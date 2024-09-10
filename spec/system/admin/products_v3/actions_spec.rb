@@ -475,6 +475,39 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         end
       end
     end
+
+    describe "Preview" do
+      let(:product) { create(:product, name: "Apples") }
+      let!(:variant) { create(:variant, product:) }
+
+      it "show product preview modal" do
+        login_as_admin
+        visit admin_products_url
+
+        within row_containing_name("Apples") do
+          open_action_menu
+          click_link "Preview"
+        end
+
+        expect(page).to have_content("Product preview")
+
+        within "#product-preview-modal" do
+          # Shop tab
+          expect(page).to have_selector("h3 a span", text: "Apples")
+          add_buttons = page.all(".add-variant")
+          expect(add_buttons.length).to eql(2)
+
+          # Product Details tab
+          find("a", text: "Product details").click # click_link doesn't work
+          expect(page).to have_selector("h3", text: "Apples")
+
+          # Closing the modal
+          click_button "Close"
+        end
+
+        expect(page).not_to have_content("Product preview")
+      end
+    end
   end
 
   context "as an enterprise manager" do
@@ -559,6 +592,10 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       expect(page).to have_content "Changes saved"
       expect(page).to have_selector row_containing_name("Pommes")
     end
+  end
+
+  def open_action_menu
+    page.find(".vertical-ellipsis-menu").click
   end
 
   def close_action_menu
