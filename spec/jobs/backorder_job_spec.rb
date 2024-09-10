@@ -35,7 +35,8 @@ RSpec.describe BackorderJob do
         BackorderJob.check_stock(order)
       }.to enqueue_job CompleteBackorderJob
 
-      expect(variant.on_hand).to eq 0
+      # We ordered a case of 12 cans: -3 + 12 = 9
+      expect(variant.on_hand).to eq 9
 
       # Clean up after ourselves:
       perform_enqueued_jobs(only: CompleteBackorderJob)

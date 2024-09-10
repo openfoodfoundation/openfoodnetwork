@@ -11,14 +11,14 @@ RSpec.describe FdcOfferBroker do
   }
 
   describe ".best_offer" do
-    it "finds a linked offer", vcr: true do
-      offer = subject.best_offer(product.semanticId)
+    it "finds a linked wholesale offer", vcr: true do
+      solution = subject.best_offer(product.semanticId)
 
-      # This is the URL structure on the FDC API:
-      expect(offer.semanticId).to eq "#{product.semanticId}/Offer"
-
-      # Well, if you ask the orders endpoint, you actually get different ids
-      # for the same offers...
+      # These values depend on the test data but are a good sanity check:
+      expect(product.name).to eq "Baked British Beans - Retail can, 400g (can)"
+      expect(solution.product.name).to eq "Baked British Beans - Case, 12 x 400g (can)"
+      expect(solution.factor).to eq 12
+      expect(solution.offer.offeredItem).to eq solution.product
     end
   end
 end

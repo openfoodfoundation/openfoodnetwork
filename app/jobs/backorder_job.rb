@@ -36,23 +36,34 @@ class BackorderJob < ApplicationJob
     orderer = FdcBackorderer.new(user)
     backorder = orderer.find_or_build_order(order)
     broker = load_broker(order.distributor.owner)
+    ordered_quantities = {}
 
     linked_variants.each do |variant|
       needed_quantity = -1 * variant.on_hand
-      offer = broker.best_offer(variant.semantic_links[0].semantic_id)
+      solution = broker.best_offer(variant.semantic_links[0].semantic_id)
 
-      line = orderer.find_or_build_order_line(backorder, offer)
-      line.quantity = line.quantity.to_i + needed_quantity
+      # The number of wholesale packs we need to order to fulfill the
+      # needed quantity.
+      # For example, we order 2 packs of 12 cans if we need 15 cans.
+      wholesale_quantity = (needed_quantity.to_f / solution.factor).ceil
+
+      # The number of individual retail items we get with the wholesale order.
+      # For example, if we order 2 packs of 12 cans, we will get 24 cans
+      # and we'll account for that in our stock levels.
+      retail_quantity = wholesale_quantity * solution.factor
+
+      line = orderer.find_or_build_order_line(backorder, solution.offer)
+      line.quantity = line.quantity.to_i + wholesale_quantity
+
+      ordered_quantities[variant] = retail_quantity
     end
 
     placed_order = orderer.send_order(backorder)
 
     schedule_order_completion(user, order, placed_order) if orderer.new?(backorder)
 
-    # Once we have transformations and know the quantities in bulk products
-    # we will need to increase on_hand by the ordered quantity.
     linked_variants.each do |variant|
-      variant.on_hand = 0
+      variant.on_hand += ordered_quantities[variant]
     end
   end
 
