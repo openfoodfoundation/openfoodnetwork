@@ -31,7 +31,7 @@ RSpec.describe FdcBackorderer do
     # Add items and place the new order:
     catalog = BackorderJob.load_catalog(order.distributor.owner)
     product = catalog.find { |i| i.semanticType == "dfc-b:SuppliedProduct" }
-    offer = BackorderJob.offer_of(product)
+    offer = FdcOfferBroker.new(nil).offer_of(product)
     line = subject.find_or_build_order_line(backorder, offer)
     line.quantity = 3
     placed_order = subject.send_order(backorder)
@@ -79,7 +79,7 @@ RSpec.describe FdcBackorderer do
       catalog_product = catalog.find do |i|
         i.semanticId == ordered_product.semanticId
       end
-      catalog_offer = BackorderJob.offer_of(catalog_product)
+      catalog_offer = FdcOfferBroker.new(nil).offer_of(catalog_product)
 
       # The API response is missing this connection:
       catalog_offer.offeredItem = catalog_product

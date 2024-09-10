@@ -41,19 +41,4 @@ RSpec.describe BackorderJob do
       perform_enqueued_jobs(only: CompleteBackorderJob)
     end
   end
-
-  describe ".best_offer" do
-    it "finds a linked offer", vcr: true do
-      variant = order.line_items[0].variant
-
-      variant.semantic_links << SemanticLink.new(
-        semantic_id: product_link
-      )
-
-      catalog = BackorderJob.load_catalog(user)
-      offer = BackorderJob.best_offer(catalog, variant)
-
-      expect(offer.semanticId).to eq "#{product_link}/Offer"
-    end
-  end
 end

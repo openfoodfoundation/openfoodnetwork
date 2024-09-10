@@ -35,11 +35,11 @@ class BackorderJob < ApplicationJob
     user = order.distributor.owner
     orderer = FdcBackorderer.new(user)
     backorder = orderer.find_or_build_order(order)
-    catalog = load_catalog(order.distributor.owner)
+    broker = load_broker(order.distributor.owner)
 
     linked_variants.each do |variant|
       needed_quantity = -1 * variant.on_hand
-      offer = best_offer(catalog, variant)
+      offer = broker.best_offer(variant.semantic_links[0].semantic_id)
 
       line = orderer.find_or_build_order_line(backorder, offer)
       line.quantity = line.quantity.to_i + needed_quantity
@@ -60,20 +60,8 @@ class BackorderJob < ApplicationJob
     end
   end
 
-  def self.best_offer(catalog, variant)
-    link = variant.semantic_links[0]
-
-    return unless link
-
-    product = catalog.find { |item| item.semanticId == link.semantic_id }
-    offer_of(product)
-  end
-
-  def self.offer_of(product)
-    product&.catalogItems&.first&.offers&.first&.tap do |offer|
-      # Unfortunately, the imported catalog doesn't provide the reverse link:
-      offer.offeredItem = product
-    end
+  def self.load_broker(user)
+    FdcOfferBroker.new(load_catalog(user))
   end
 
   def self.load_catalog(user)

@@ -43,5 +43,16 @@ FactoryBot.define do
         OidcAccount.new(provider: "openid_connect", uid: email)
       }
     end
+
+    # This is a live test user authenticated via Les Communes.
+    factory :testdfc_user do
+      oidc_account {
+        OidcAccount.new(
+          uid: "testdfc@protonmail.com",
+          refresh_token: ENV.fetch("OPENID_REFRESH_TOKEN"),
+          updated_at: 1.day.ago,
+        )
+      }
+    end
   end
 end
