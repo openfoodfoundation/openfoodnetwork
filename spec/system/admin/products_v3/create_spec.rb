@@ -7,6 +7,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
   include WebHelper
 
   let!(:supplier) { create(:supplier_enterprise) }
+  let!(:supplier2) { create(:supplier_enterprise) }
   let!(:taxon) { create(:taxon) }
 
   describe "creating a new product" do

@@ -10,8 +10,11 @@ module Admin
       end
     end
 
-    def prepare_new_variant(product)
-      product.variants.build
+    def prepare_new_variant(product, producer_options)
+      # e.g producer_options = [['producer name', id]]
+      product.variants.build do |new_variant|
+        new_variant.supplier_id = producer_options.first.second if producer_options.one?
+      end
     end
 
     def unit_value_with_description(variant)

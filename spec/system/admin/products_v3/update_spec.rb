@@ -9,7 +9,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
   include FileHelper
 
   let(:producer) { create(:supplier_enterprise) }
-  let(:user) { create(:user, enterprises: [producer]) }
+  let(:producer2) { create(:supplier_enterprise) }
+  let(:user) { create(:user, enterprises: [producer, producer2]) }
 
   before do
     login_as user

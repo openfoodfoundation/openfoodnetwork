@@ -36,7 +36,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         expect(page).to have_selector "th", text: "Unit"
         expect(page).to have_selector "th", text: "Price"
         expect(page).to have_selector "th", text: "On Hand"
-        expect(page).to have_selector "th", text: "Producer"
         expect(page).to have_selector "th", text: "Category"
         expect(page).to have_selector "th", text: "Tax Category"
         expect(page).to have_selector "th", text: "Inherits Properties?"

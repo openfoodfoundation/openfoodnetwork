@@ -37,7 +37,7 @@ class ColumnPreference < ApplicationRecord
   end
 
   def self.valid_columns_for(action_name)
-    __send__("#{action_name}_columns").keys.map(&:to_s)
+    get_default_preferences(action_name, Spree::User.new).keys.map(&:to_s)
   end
 
   def self.known_actions
