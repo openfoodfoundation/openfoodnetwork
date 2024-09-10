@@ -8825,10 +8825,10 @@ tty-browserify@0.0.0:
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
 
-turbo_power@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/turbo_power/-/turbo_power-0.6.2.tgz#d2320ffd18d7dba641bfbddaba388ffef5d90cb6"
-  integrity sha512-GCrwi6+rSLVORqb1LwP9pf/jP1Zo5lJgzGbLVu8g79T6LvB/9GGg7VWdLlWB0RvvDE1/+3hm32MPtEL5g89fsg==
+turbo_power@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/turbo_power/-/turbo_power-0.7.0.tgz#537cc82f3617feb1c70b94ee6c8b7d42cdce81db"
+  integrity sha512-KU5YbHnyYXluETUKmq02tH4/Vy/yJ4my1Nn7USRPWyEFV6LiXICPlhr2ETJ90pf11khs7WMNKEEqNTcGLngs6w==
 
 type-check@~0.3.2:
   version "0.3.2"
