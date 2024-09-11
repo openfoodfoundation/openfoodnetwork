@@ -8,6 +8,16 @@ module Admin
     before_action :init_filters_params
     before_action :init_pagination_params
 
+    VIEW_FIELD_NAME_MAPPER = {
+      name: I18n.t("admin.products_page.columns.name"),
+      sku: I18n.t('admin.products_page.columns.sku'),
+      variant_unit: I18n.t('admin.products_page.columns.unit_scale'),
+      unit_presentation: I18n.t('admin.products_page.columns.unit'),
+      supplier_id: I18n.t('admin.products_page.columns.producer'),
+      primary_taxon_id: I18n.t('admin.products_page.columns.category'),
+      tax_category_id: I18n.t('admin.products_page.columns.tax_category')
+    }.freeze
+
     def index
       fetch_products
       render "index", locals: { producers:, categories:, tax_category_options:, flash: }
@@ -84,8 +94,8 @@ module Admin
         @producer_options = producers
         @category_options = categories
         @tax_category_options = tax_category_options
-      rescue ActiveRecord::ActiveRecordError => _e
-        flash.now[:error] = t('.error')
+      rescue ActiveRecord::ActiveRecordError => e
+        flash.now[:error] = clone_error_message(e)
         status = :unprocessable_entity
         @product_index = "-1" # Create a unique enough index
       end
@@ -208,6 +218,18 @@ module Admin
     def products_bulk_params
       params.permit(products: ::PermittedAttributes::Product.attributes)
         .to_h.with_indifferent_access
+    end
+
+    def clone_error_message(error)
+      case error
+      when ActiveRecord::RecordInvalid
+        invalid_field_names = error.record.errors.attribute_names
+          .map{ |field_name| VIEW_FIELD_NAME_MAPPER[field_name] }.join(', ')
+
+        t('.invalid_fields_error', invalid_field_names:)
+      else
+        t('.error')
+      end
     end
   end
 end
