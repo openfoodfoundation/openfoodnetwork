@@ -46,8 +46,18 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         expect_other_columns_visible
 
         # Producer is hidden by if only one producer is present
-        expect(page).not_to have_checked_field "Producer"
+        expect(page).to have_unchecked_field "Producer"
         expect(page).not_to have_selector "th", text: "Producer"
+
+        # Show Producer column
+        ofn_drop_down("Columns").click
+        within ofn_drop_down("Columns") do
+          check "Producer"
+        end
+
+        # Preference saved
+        save_preferences
+        expect(page).to have_selector "th", text: "Producer"
 
         # Name is hidden
         ofn_drop_down("Columns").click
@@ -58,9 +68,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         expect_other_columns_visible
 
         # Preference saved
-        click_on "Save as default"
-        expect(page).to have_content "Column preferences saved"
-        refresh
+        save_preferences
 
         # Preference remembered
         ofn_drop_down("Columns").click
@@ -74,6 +82,13 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       def expect_other_columns_visible
         expect(page).to have_selector "th", text: "Price"
         expect(page).to have_selector "th", text: "On Hand"
+      end
+
+      def save_preferences
+        # Preference saved
+        click_on "Save as default"
+        expect(page).to have_content "Column preferences saved"
+        refresh
       end
     end
 
