@@ -55,6 +55,12 @@ class FdcBackorderer
     end
   end
 
+  def find_order(semantic_id)
+    import(semantic_id).find do |o|
+      o.semanticType == "dfc-b:Order"
+    end
+  end
+
   def find_or_build_order_line(order, offer)
     find_order_line(order, offer) || build_order_line(order, offer)
   end
@@ -107,10 +113,7 @@ class FdcBackorderer
     DfcIo.import(result).find { |i| i.semanticType == "dfc-b:Order" }
   end
 
-  def complete_order(semantic_id)
-    backorder = import(semantic_id).find do |o|
-      o.semanticType == "dfc-b:Order"
-    end
+  def complete_order(backorder)
     backorder.orderStatus = "dfc-v:Complete"
     send_order(backorder)
   end

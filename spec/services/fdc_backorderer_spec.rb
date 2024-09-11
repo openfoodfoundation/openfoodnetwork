@@ -47,7 +47,7 @@ RSpec.describe FdcBackorderer do
     expect(found_backorder.lines[0].quantity.to_i).to eq 3
 
     # And close the order again:
-    subject.complete_order(placed_order.semanticId)
+    subject.complete_order(placed_order)
     remaining_open_order = subject.find_or_build_order(order)
     expect(remaining_open_order.semanticId).not_to eq placed_order.semanticId
   end
