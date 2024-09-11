@@ -44,7 +44,7 @@ module Admin
     # if user hasn't saved any preferences on products page and there's only one producer;
     # we need to hide producer column
     def hide_producer_column?(producer_options)
-      spree_current_user.column_preferences.products.empty? && producer_options.one?
+      spree_current_user.column_preferences.bulk_edit_product.empty? && producer_options.one?
     end
   end
 end

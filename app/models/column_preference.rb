@@ -15,7 +15,7 @@ class ColumnPreference < ApplicationRecord
   validates :column_name, presence: true, inclusion: { in: proc { |p|
                                                              valid_columns_for(p.action_name)
                                                            } }
-  scope :products, -> { where(action_name: 'products_v3_index') }
+  scope :bulk_edit_product, -> { where(action_name: 'products_v3_index') }
 
   def self.for(user, action_name)
     stored_preferences = where(user_id: user.id, action_name:)
