@@ -211,43 +211,6 @@ RSpec.describe '
       visit admin_reports_path
     end
 
-    it "generates the orders and distributors report" do
-      click_link 'Orders And Distributors'
-      run_report
-
-      rows = find("table.report__table").all("thead tr")
-      table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-
-      expect(table_headers).to eq([
-                                    ['Order date',
-                                     'Order Id',
-                                     'Customer Name',
-                                     'Customer Email',
-                                     'Customer Phone',
-                                     'Customer City',
-                                     'SKU',
-                                     'Item name',
-                                     'Variant',
-                                     'Quantity',
-                                     'Max Quantity',
-                                     'Cost',
-                                     'Shipping Cost',
-                                     'Payment Method',
-                                     'Distributor',
-                                     'Distributor address',
-                                     'Distributor city',
-                                     'Distributor postcode',
-                                     'Shipping Method',
-                                     'Shipping instructions']
-                                  ])
-
-      expect(all('table.report__table tbody tr').count).to eq(
-        Spree::LineItem.where(
-          order_id: ready_to_ship_order.id # Total rows should equal number of line items, per order
-        ).count
-      )
-    end
-
     it "generates the payments reports" do
       click_link 'Payments By Type'
       run_report

@@ -88,6 +88,16 @@ module WebHelper
     find(:css, ".select2-result-label", text: options[:select_text] || value).click
   end
 
+  def clear_select2(selector)
+    page.find(selector).scroll_to(page.find(selector))
+      .find(:css, '.select2-choice, .select2-search-field').click
+    page.find(selector).scroll_to(page.find(selector))
+      .find(:css, '.select2-choice, .select2-search-field').send_keys :backspace
+    page.find(selector).scroll_to(page.find(selector))
+      .find(:css, '.select2-choice, .select2-search-field').send_keys :backspace
+    find("body").send_keys(:escape)
+  end
+
   def request_monitor_finished(controller = nil)
     page.evaluate_script("#{angular_scope(controller)}.scope().RequestMonitor.loading == false")
   end
