@@ -7,6 +7,8 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
   include WebHelper
 
   let!(:supplier) { create(:supplier_enterprise) }
+  # Creating another producer such that producer column is visible
+  # otherwise on one producer, it's hidden by default
   let!(:supplier2) { create(:supplier_enterprise) }
   let!(:taxon) { create(:taxon) }
 
