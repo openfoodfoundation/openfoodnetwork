@@ -39,32 +39,35 @@ class BackorderJob < ApplicationJob
     ordered_quantities = {}
 
     linked_variants.each do |variant|
-      needed_quantity = -1 * variant.on_hand
-      solution = broker.best_offer(variant.semantic_links[0].semantic_id)
-
-      # The number of wholesale packs we need to order to fulfill the
-      # needed quantity.
-      # For example, we order 2 packs of 12 cans if we need 15 cans.
-      wholesale_quantity = (needed_quantity.to_f / solution.factor).ceil
-
-      # The number of individual retail items we get with the wholesale order.
-      # For example, if we order 2 packs of 12 cans, we will get 24 cans
-      # and we'll account for that in our stock levels.
-      retail_quantity = wholesale_quantity * solution.factor
-
-      line = orderer.find_or_build_order_line(backorder, solution.offer)
-      line.quantity = line.quantity.to_i + wholesale_quantity
-
+      retail_quantity = add_item_to_backorder(variant, broker, backorder, orderer)
       ordered_quantities[variant] = retail_quantity
     end
 
-    placed_order = orderer.send_order(backorder)
-
-    schedule_order_completion(user, order, placed_order) if orderer.new?(backorder)
+    place_order(user, order, orderer, backorder)
 
     linked_variants.each do |variant|
       variant.on_hand += ordered_quantities[variant]
     end
+  end
+
+  def self.add_item_to_backorder(variant, broker, backorder, orderer)
+    needed_quantity = -1 * variant.on_hand
+    solution = broker.best_offer(variant.semantic_links[0].semantic_id)
+
+    # The number of wholesale packs we need to order to fulfill the
+    # needed quantity.
+    # For example, we order 2 packs of 12 cans if we need 15 cans.
+    wholesale_quantity = (needed_quantity.to_f / solution.factor).ceil
+
+    # The number of individual retail items we get with the wholesale order.
+    # For example, if we order 2 packs of 12 cans, we will get 24 cans
+    # and we'll account for that in our stock levels.
+    retail_quantity = wholesale_quantity * solution.factor
+
+    line = orderer.find_or_build_order_line(backorder, solution.offer)
+    line.quantity = line.quantity.to_i + wholesale_quantity
+
+    retail_quantity
   end
 
   def self.load_broker(user)
@@ -77,7 +80,11 @@ class BackorderJob < ApplicationJob
     DfcIo.import(catalog_json)
   end
 
-  def self.schedule_order_completion(user, order, placed_order)
+  def self.place_order(user, order, orderer, backorder)
+    placed_order = orderer.send_order(backorder)
+
+    return unless orderer.new?(backorder)
+
     wait_until = order.order_cycle.orders_close_at + SALE_SESSION_DELAY
     CompleteBackorderJob.set(wait_until:)
       .perform_later(user, placed_order.semanticId)
