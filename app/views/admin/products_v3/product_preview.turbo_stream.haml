@@ -1,43 +1,99 @@
-= turbo_stream.replace "product-preview" do
-  #product-preview{ "data-controller": "tabs product-preview" } 
-    %h1
-      = t("admin.products_page.product_preview.product_preview")
-    %dl.tabs
-      %dd
-        %a{ data: { "tabs-target": "tab", "action": "tabs#select" } }
-          = t("admin.products_page.product_preview.shop_tab")
-      %dd
-        %a{ data: { "tabs-target": "tab", "action": "tabs#select" } }
-          = t("admin.products_page.product_preview.product_details_tab")
-    .tabs-content
-      .content.active
-        %div{ data: { "tabs-target": "content" } }
-          .product-thumb
-            %a
-              - if @product.group_buy
-                %span.product-thumb__bulk-label
-                  = t(".bulk")
-              = image_tag @product.image&.url(:small) || Spree::Image.default_image_url(:small)
+= turbo_stream.update "product-preview-modal-container" do
+  = render ModalComponent.new(id: "product-preview-modal", instant: true, modal_class: "big") do
+    #product-preview{ "data-controller": "tabs" }
+      %h1
+        = t("admin.products_page.product_preview.product_preview")
+      %dl.tabs
+        %dd
+          %a{ data: { "tabs-target": "tab", "action": "tabs#select" } }
+            = t("admin.products_page.product_preview.shop_tab")
+        %dd
+          %a{ data: { "tabs-target": "tab", "action": "tabs#select" } }
+            = t("admin.products_page.product_preview.product_details_tab")
+      .tabs-content
+        .content.active
+          %div{ data: { "tabs-target": "content" } }
+            .product-thumb
+              %a
+                - if @product.group_buy
+                  %span.product-thumb__bulk-label
+                    = t(".bulk")
+                = image_tag @product.image&.url(:small) || Spree::Image.default_image_url(:small)
 
-          .summary
-            .summary-header
-              %h3
-                %a
-                  %span
-                    = @product.name
-              - if @product.description
-                .product-description{ "data-controller": "add-blank-to-link" }
-                  - # description is sanitized in Spree::Product#description method
-                  = @product.description.html_safe
-
-              - if @product.variants.first.supplier.visible
-                %div
-                  .product-producer
-                    = t :products_from
+            .summary
+              .summary-header
+                %h3
+                  %a
                     %span
-                      %a 
-                        = @product.variants.first.supplier.name
-              .product-properties.filter-shopfront.property-selectors
+                      = @product.name
+                - if @product.description
+                  .product-description{ "data-controller": "add-blank-to-link" }
+                    - # description is sanitized in Spree::Product#description method
+                    = @product.description.html_safe
+
+                - if @product.variants.first.supplier.visible
+                  %div
+                    .product-producer
+                      = t :products_from
+                      %span
+                        %a 
+                          = @product.variants.first.supplier.name
+                .product-properties.filter-shopfront.property-selectors
+                  .filter-shopfront.property-selectors.inline-block
+                    %ul
+                      - @product.properties_including_inherited.each do |property|
+                        %li
+                          - if property[:value].present?
+                            = render AdminTooltipComponent.new(text: property[:value], link_text: property[:name], placement: "bottom")
+                          - else
+                            %a
+                              %span
+                                = property[:name] 
+            .shop-variants
+              - @product.variants.sort { |v1, v2| v1.name_to_display <=> v2.name_to_display }.sort { |v1, v2| v1.unit_value <=> v2.unit_value }.each do |variant|
+                .variants.row
+                  .small-3.columns.variant-name
+                    - if variant.display_name.present?
+                      .inline
+                        = variant.display_name
+                    .variant-unit
+                      = variant.unit_to_display
+                  .small-4.medium-3.columns.variant-price
+                    = number_to_currency(variant.price)
+                    .unit-price.variant-unit-price
+                      = render AdminTooltipComponent.new(text: t("js.shopfront.unit_price_tooltip"), link_text: "", placement: "top", link_class: "question-mark-icon")
+                      - # TODO use an helper
+                      - unit_price = UnitPrice.new(variant)
+                      - price_per_unit = variant.price / (unit_price.denominator || 1)
+                      = "#{number_to_currency(price_per_unit)}&nbsp;/&nbsp;#{unit_price.unit}".html_safe
+
+
+                  .medium-3.columns.total-price
+                    %span
+                      = number_to_currency(0.00) 
+                  .small-5.medium-3.large-3.columns.variant-quantity-column.text-right
+                    .variant-quantity-inputs
+                      %button.add-variant
+                        = t("js.shopfront.variant.add_to_cart")
+
+                    - # TODO can't check the shop preferrence here, display by default ?
+                    - if !variant.on_demand && variant.on_hand <= 3
+                      .variant-remaining-stock
+                        = t("js.shopfront.variant.remaining_in_stock", quantity: variant.on_hand)
+
+          %div{ data: { "tabs-target": "content" } }
+            .row
+              .columns.small-12.medium-6.large-6.product-header
+                %h3
+                  = @product.name
+                %span
+                  %em 
+                    = t("products_from")
+                  %span
+                    = @product.variants.first.supplier.name
+
+                %br
+
                 .filter-shopfront.property-selectors.inline-block
                   %ul
                     - @product.properties_including_inherited.each do |property|
@@ -48,71 +104,16 @@
                           %a
                             %span
                               = property[:name] 
-          .shop-variants
-            - @product.variants.sort { |v1, v2| v1.name_to_display <=> v2.name_to_display }.sort { |v1, v2| v1.unit_value <=> v2.unit_value }.each do |variant|
-              .variants.row
-                .small-3.columns.variant-name
-                  - if variant.display_name.present?
-                    .inline
-                      = variant.display_name
-                  .variant-unit
-                    = variant.unit_to_display
-                .small-4.medium-3.columns.variant-price
-                  = number_to_currency(variant.price)
-                  .unit-price.variant-unit-price
-                    = render AdminTooltipComponent.new(text: t("js.shopfront.unit_price_tooltip"), link_text: "", placement: "top", link_class: "question-mark-icon")
-                    - # TODO use an helper
-                    - unit_price = UnitPrice.new(variant)
-                    - price_per_unit = variant.price / (unit_price.denominator || 1)
-                    = "#{number_to_currency(price_per_unit)}&nbsp;/&nbsp;#{unit_price.unit}".html_safe
 
 
-                .medium-3.columns.total-price
-                  %span
-                    = number_to_currency(0.00) 
-                .small-5.medium-3.large-3.columns.variant-quantity-column.text-right
-                  .variant-quantity-inputs
-                    %button.add-variant
-                      = t("js.shopfront.variant.add_to_cart")
+                - if @product.description
+                  .product-description{ 'data-controller': "add-blank-to-link" }
+                    %p.text-small
+                      - # description is sanitized in Spree::Product#description method
+                      = @product.description.html_safe
 
-                  - # TODO can't check the shop preferrence here, display by default ?
-                  - if !variant.on_demand && variant.on_hand <= 3
-                    .variant-remaining-stock
-                      = t("js.shopfront.variant.remaining_in_stock", quantity: variant.on_hand)
-
-        %div{ data: { "tabs-target": "content" } }
-          .row
-            .columns.small-12.medium-6.large-6.product-header
-              %h3
-                = @product.name
-              %span
-                %em 
-                  = t("products_from")
-                %span
-                  = @product.variants.first.supplier.name
-
-              %br
-
-              .filter-shopfront.property-selectors.inline-block
-                %ul
-                  - @product.properties_including_inherited.each do |property|
-                    %li
-                      - if property[:value].present?
-                        = render AdminTooltipComponent.new(text: property[:value], link_text: property[:name], placement: "bottom")
-                      - else
-                        %a
-                          %span
-                            = property[:name] 
-
-
-              - if @product.description
-                .product-description{ 'data-controller': "add-blank-to-link" }
-                  %p.text-small
-                    - # description is sanitized in Spree::Product#description method
-                    = @product.description.html_safe
-
-            .columns.small-12.medium-6.large-6.product-img
-              - if @product.image
-                %img{ src: @product.image.url(:large) }
-              -else
-                %img.placeholder{ src: Spree::Image.default_image_url(:large) }
+              .columns.small-12.medium-6.large-6.product-img
+                - if @product.image
+                  %img{ src: @product.image.url(:large) }
+                -else
+                  %img.placeholder{ src: Spree::Image.default_image_url(:large) }

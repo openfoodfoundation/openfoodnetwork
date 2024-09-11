@@ -20,6 +20,4 @@
 
       = button_link_to t(:cancel), products_return_to_url(@url_filters), icon: 'icon-remove'
 
-    = render ModalComponent.new(id: "product-preview-modal", modal_class: "big", "data-action": "product-preview:open@window->modal#open") do
-      #product-preview
-      
+    #product-preview-modal-container
