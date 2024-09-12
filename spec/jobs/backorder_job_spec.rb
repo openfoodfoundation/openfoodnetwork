@@ -24,7 +24,11 @@ RSpec.describe BackorderJob do
     end
 
     it "places an order", vcr: true do
-      order.order_cycle = build(:order_cycle)
+      order.order_cycle = create(
+        :simple_order_cycle,
+        distributors: [order.distributor],
+        variants: [variant],
+      )
       variant.on_demand = true
       variant.on_hand = -3
       variant.semantic_links << SemanticLink.new(

@@ -87,7 +87,9 @@ class BackorderJob < ApplicationJob
 
     wait_until = order.order_cycle.orders_close_at + SALE_SESSION_DELAY
     CompleteBackorderJob.set(wait_until:)
-      .perform_later(user, placed_order.semanticId)
+      .perform_later(
+        user, order.distributor, order.order_cycle, placed_order.semanticId
+      )
   end
 
   def perform(*args)

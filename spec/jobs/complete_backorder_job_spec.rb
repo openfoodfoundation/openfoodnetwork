@@ -5,26 +5,60 @@ require 'spec_helper'
 RSpec.describe CompleteBackorderJob do
   let(:user) { build(:testdfc_user) }
   let(:catalog) { BackorderJob.load_catalog(user) }
-  let(:product) {
+  let(:retail_product) {
     catalog.find { |item| item.semanticType == "dfc-b:SuppliedProduct" }
+  }
+  let(:wholesale_product) {
+    flow = catalog.find { |item| item.semanticType == "dfc-b:AsPlannedProductionFlow" }
+    catalog.find { |item| item.semanticId == flow.product }
   }
   let(:orderer) { FdcBackorderer.new(user) }
   let(:order) {
-    ofn_order = build(:order, distributor_id: 1)
-    ofn_order.order_cycle = build(:order_cycle)
     backorder = orderer.find_or_build_order(ofn_order)
-    offer = FdcOfferBroker.new(nil).offer_of(product)
+    broker = FdcOfferBroker.new(catalog)
+    offer = broker.best_offer(retail_product.semanticId).offer
     line = orderer.find_or_build_order_line(backorder, offer)
     line.quantity = 3
 
     orderer.send_order(backorder)
   }
+  let(:ofn_order) { create(:completed_order_with_totals) }
+  let(:distributor) { ofn_order.distributor }
+  let(:order_cycle) { ofn_order.order_cycle }
+  let(:variant) { ofn_order.variants[0] }
 
   describe "#perform" do
+    before do
+      variant.semantic_links << SemanticLink.new(
+        semantic_id: retail_product.semanticId
+      )
+
+      # We are assuming 12 cans in a slab.
+      # We got more stock than we need.
+      variant.on_hand = 13
+
+      ofn_order.order_cycle = create(
+        :simple_order_cycle,
+        distributors: [distributor],
+        variants: [variant],
+      )
+    end
+
     it "completes an order", vcr: true do
-      subject.perform(user, order.semanticId)
-      updated_order = orderer.find_order(order.semanticId)
-      expect(updated_order.orderStatus[:path]).to eq "Complete"
+      current_order = order
+
+      expect {
+        subject.perform(user, distributor, order_cycle, order.semanticId)
+        current_order = orderer.find_order(order.semanticId)
+      }.to change {
+        current_order.orderStatus[:path]
+      }.from("Held").to("Complete")
+        .and change {
+          current_order.lines[0].quantity.to_i
+        }.from(3).to(2)
+        .and change {
+          variant.on_hand
+        }.from(13).to(1)
     end
   end
 end
