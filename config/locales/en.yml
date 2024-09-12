@@ -937,7 +937,7 @@ en:
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
-        invalid_fields_error: "Product being cloned has invalid %{invalid_field_names}"
+        invalid_fields_error: "Product being cloned has invalid %{field_names}"
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened

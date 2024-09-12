@@ -223,10 +223,10 @@ module Admin
     def clone_error_message(error)
       case error
       when ActiveRecord::RecordInvalid
-        invalid_field_names = error.record.errors.attribute_names
+        field_names = error.record.errors.attribute_names
           .map{ |field_name| VIEW_FIELD_NAME_MAPPER[field_name] }.join(', ')
 
-        t('.invalid_fields_error', invalid_field_names:)
+        field_names.present? ? t('.invalid_fields_error', field_names:) : t('.error')
       else
         t('.error')
       end
