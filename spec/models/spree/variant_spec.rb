@@ -488,6 +488,19 @@ RSpec.describe Spree::Variant do
     end
   end
 
+  describe ".linked_to" do
+    let!(:variant_unlinked) { create(:variant) }
+    let!(:variant_linked) { create(:variant, semantic_links: [link]) }
+    let!(:variant_linked_unrelated) { create(:variant, semantic_links: [unrelated_link]) }
+    let(:link) { SemanticLink.new(semantic_id: "#my_precious") }
+    let(:unrelated_link) { SemanticLink.new(semantic_id: "#other") }
+
+    it "finds a variant by link" do
+      expect(Spree::Variant.linked_to("#my_precious"))
+        .to eq variant_linked
+    end
+  end
+
   describe "generating the product and variant name" do
     let(:product) { variant.product }
 
