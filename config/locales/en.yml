@@ -70,7 +70,7 @@ en:
         price: "Price"
         primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
-        variant_unit: "Variant Unit"
+        variant_unit: "Unit Scale"
         variant_unit_name: "Variant Unit Name"
         unit_value: "Unit value"
       spree/variant:

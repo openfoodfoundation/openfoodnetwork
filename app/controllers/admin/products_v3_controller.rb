@@ -8,16 +8,6 @@ module Admin
     before_action :init_filters_params
     before_action :init_pagination_params
 
-    VIEW_FIELD_NAME_MAPPER = {
-      name: I18n.t("admin.products_page.columns.name"),
-      sku: I18n.t('admin.products_page.columns.sku'),
-      variant_unit: I18n.t('admin.products_page.columns.unit_scale'),
-      unit_presentation: I18n.t('admin.products_page.columns.unit'),
-      supplier_id: I18n.t('admin.products_page.columns.producer'),
-      primary_taxon_id: I18n.t('admin.products_page.columns.category'),
-      tax_category_id: I18n.t('admin.products_page.columns.tax_category')
-    }.freeze
-
     def index
       fetch_products
       render "index", locals: { producers:, categories:, tax_category_options:, flash: }
@@ -223,10 +213,7 @@ module Admin
     def clone_error_message(error)
       case error
       when ActiveRecord::RecordInvalid
-        field_names = error.record.errors.attribute_names
-          .map{ |field_name| VIEW_FIELD_NAME_MAPPER[field_name] }.join(', ')
-
-        field_names.present? ? t('.invalid_fields_error', field_names:) : t('.error')
+        error.record.errors.full_messages.to_sentence
       else
         t('.error')
       end
