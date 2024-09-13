@@ -2,46 +2,6 @@
 @import "../../darkswarm/mixins";
 
 #product-preview {
-  // tabs
-  dl.tabs {
-    box-shadow: $box-shadow;
-    display: flex;
-    flex-wrap: wrap;
-
-    dd {
-      width: auto;
-      padding: 0;
-
-      a {
-        display: inline-block;
-        padding: 16px 20px;
-        color: $color-9 !important;
-        text-align: center;
-        position: relative;
-        font-size: 16px;
-        font-weight: 600;
-
-        &:hover {
-          color: $red !important;
-
-          &:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 20px;
-            right: 20px;
-            height: 3px;
-            background: $red;
-          }
-        }
-
-        &.active {
-          @extend a, :hover;
-        }
-      }
-    }
-  }
-
   // The frontend css is base on foundation-sites https://github.com/foundation/foundation-sites
   // Below we copied the sections that are relevant to the product preview modal
 
@@ -122,7 +82,8 @@
 
   // from foundation-sites/scss/foundations/components/_grid.scss
   @media only screen and (min-width: 64.0625em) {
-    .column, .columns {
+    .column,
+    .columns {
       position: relative;
       padding-left: 0.9375rem;
       padding-right: 0.9375rem;
