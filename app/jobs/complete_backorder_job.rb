@@ -34,16 +34,23 @@ class CompleteBackorderJob < ApplicationJob
     broker = FdcOfferBroker.new(BackorderJob.load_catalog(user))
 
     order.lines.each do |line|
+      line.quantity = line.quantity.to_i
       wholesale_product_id = line.offer.offeredItem.semanticId
       transformation = broker.wholesale_to_retail(wholesale_product_id)
       linked_variant = variants.linked_to(transformation.retail_product_id)
 
       # Note that a division of integers dismisses the remainder, like `floor`:
       wholesale_items_contained_in_stock = linked_variant.on_hand / transformation.factor
-      line.quantity = line.quantity.to_i - wholesale_items_contained_in_stock
 
-      retail_stock_changes = wholesale_items_contained_in_stock * transformation.factor
+      # But maybe we didn't actually order that much:
+      deductable_quantity = [line.quantity, wholesale_items_contained_in_stock].min
+      line.quantity -= deductable_quantity
+
+      retail_stock_changes = deductable_quantity * transformation.factor
       linked_variant.on_hand -= retail_stock_changes
     end
+
+    # Clean up empty lines:
+    order.lines.reject! { |line| line.quantity.zero? }
   end
 end

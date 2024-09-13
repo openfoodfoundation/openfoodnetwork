@@ -56,9 +56,7 @@ class FdcBackorderer
   end
 
   def find_order(semantic_id)
-    import(semantic_id).find do |o|
-      o.semanticType == "dfc-b:Order"
-    end
+    find_subject(import(semantic_id), "dfc-b:Order")
   end
 
   def find_or_build_order_line(order, offer)
@@ -88,6 +86,14 @@ class FdcBackorderer
     end
   end
 
+  def find_subject(object_or_graph, type)
+    if object_or_graph.is_a?(Array)
+      object_or_graph.find { |i| i.semanticType == type }
+    else
+      object_or_graph
+    end
+  end
+
   def import(url)
     api = DfcRequest.new(user)
     json = api.call(url)
@@ -110,7 +116,7 @@ class FdcBackorderer
              end
 
     result = api.call(backorder.semanticId, json, method:)
-    DfcIo.import(result).find { |i| i.semanticType == "dfc-b:Order" }
+    find_subject(DfcIo.import(result), "dfc-b:Order")
   end
 
   def complete_order(backorder)

@@ -32,11 +32,6 @@ RSpec.describe CompleteBackorderJob do
       variant.semantic_links << SemanticLink.new(
         semantic_id: retail_product.semanticId
       )
-
-      # We are assuming 12 cans in a slab.
-      # We got more stock than we need.
-      variant.on_hand = 13
-
       ofn_order.order_cycle = create(
         :simple_order_cycle,
         distributors: [distributor],
@@ -45,6 +40,10 @@ RSpec.describe CompleteBackorderJob do
     end
 
     it "completes an order", vcr: true do
+      # We are assuming 12 cans in a slab.
+      # We got more stock than we need.
+      variant.on_hand = 13
+
       current_order = order
 
       expect {
@@ -59,6 +58,29 @@ RSpec.describe CompleteBackorderJob do
         .and change {
           variant.on_hand
         }.from(13).to(1)
+    end
+
+    it "removes line items", vcr: true do
+      # We are assuming 12 cans in a slab.
+      # We backordered 3 slabs, which is 36 cans.
+      # And now we would have more than 4 slabs (4*12 + 1 = 49)
+      # We got more stock than we need.
+      variant.on_hand = 49
+
+      current_order = order
+
+      expect {
+        subject.perform(user, distributor, order_cycle, order.semanticId)
+        current_order = orderer.find_order(order.semanticId)
+      }.to change {
+        current_order.orderStatus[:path]
+      }.from("Held").to("Complete")
+        .and change {
+          current_order.lines.count
+        }.from(1).to(0)
+        .and change {
+          variant.on_hand
+        }.from(49).to(13) # minus 3 backordered slabs (3 * 12 = 36)
     end
   end
 end
