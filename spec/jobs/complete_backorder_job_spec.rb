@@ -4,7 +4,11 @@ require 'spec_helper'
 
 RSpec.describe CompleteBackorderJob do
   let(:user) { build(:testdfc_user) }
-  let(:catalog) { BackorderJob.load_catalog(user) }
+  let(:catalog) { BackorderJob.load_catalog(user, urls) }
+  let(:urls) { FdcUrlBuilder.new(product_link) }
+  let(:product_link) {
+    "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
+  }
   let(:retail_product) {
     catalog.find { |item| item.semanticType == "dfc-b:SuppliedProduct" }
   }
@@ -12,7 +16,7 @@ RSpec.describe CompleteBackorderJob do
     flow = catalog.find { |item| item.semanticType == "dfc-b:AsPlannedProductionFlow" }
     catalog.find { |item| item.semanticId == flow.product }
   }
-  let(:orderer) { FdcBackorderer.new(user) }
+  let(:orderer) { FdcBackorderer.new(user, urls) }
   let(:order) {
     backorder = orderer.find_or_build_order(ofn_order)
     broker = FdcOfferBroker.new(catalog)

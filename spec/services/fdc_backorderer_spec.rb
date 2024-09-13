@@ -3,7 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe FdcBackorderer do
-  let(:subject) { FdcBackorderer.new(order.distributor.owner) }
+  let(:subject) { FdcBackorderer.new(order.distributor.owner, urls) }
+  let(:urls) { FdcUrlBuilder.new(product_link) }
+  let(:product_link) {
+    "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
+  }
   let(:order) { create(:completed_order_with_totals) }
   let(:account) {
     OidcAccount.new(
@@ -25,11 +29,11 @@ RSpec.describe FdcBackorderer do
     # Build a new order when no open one is found:
     order.order_cycle = build(:order_cycle)
     backorder = subject.find_or_build_order(order)
-    expect(backorder.semanticId).to eq FdcBackorderer::FDC_ORDERS_URL
+    expect(backorder.semanticId).to eq urls.orders_url
     expect(backorder.lines).to eq []
 
     # Add items and place the new order:
-    catalog = BackorderJob.load_catalog(order.distributor.owner)
+    catalog = BackorderJob.load_catalog(order.distributor.owner, urls)
     product = catalog.find { |i| i.semanticType == "dfc-b:SuppliedProduct" }
     offer = FdcOfferBroker.new(nil).offer_of(product)
     line = subject.find_or_build_order_line(backorder, offer)
@@ -55,19 +59,19 @@ RSpec.describe FdcBackorderer do
   describe "#find_or_build_order" do
     it "builds an order object" do
       account.updated_at = Time.zone.now
-      stub_request(:get, FdcBackorderer::FDC_ORDERS_URL)
+      stub_request(:get, urls.orders_url)
         .to_return(status: 200, body: "{}")
 
       backorder = subject.find_or_build_order(order)
 
-      expect(backorder.semanticId).to eq FdcBackorderer::FDC_ORDERS_URL
+      expect(backorder.semanticId).to eq urls.orders_url
       expect(backorder.lines).to eq []
     end
   end
 
   describe "#find_or_build_order_line" do
     it "add quantity to an existing line item", vcr: true do
-      catalog = BackorderJob.load_catalog(order.distributor.owner)
+      catalog = BackorderJob.load_catalog(order.distributor.owner, urls)
       backorder = subject.find_or_build_order(order)
       existing_line = backorder.lines[0]
 

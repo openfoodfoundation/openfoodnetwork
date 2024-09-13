@@ -57,7 +57,8 @@ RSpec.describe BackorderJob do
       )
       completion_time = Date.tomorrow.noon + 4.hours
 
-      orderer = FdcBackorderer.new(user)
+      urls = FdcUrlBuilder.new(product_link)
+      orderer = FdcBackorderer.new(user, urls)
       backorder = orderer.build_new_order(order)
       backorder.client = "https://openfoodnetwork.org.uk/api/dfc/enterprises/203468"
 

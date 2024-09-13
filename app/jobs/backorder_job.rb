@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class BackorderJob < ApplicationJob
-  FDC_BASE_URL =  "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod"
-  FDC_CATALOG_URL = "#{FDC_BASE_URL}/SuppliedProducts".freeze
-  FDC_ORDERS_URL = "#{FDC_BASE_URL}/Orders".freeze
-
   # In the current FDC project, one shop wants to review and adjust orders
   # before finalising. They also run a market stall and need to adjust stock
   # levels after the market. This should be done within four hours.
@@ -36,9 +32,14 @@ class BackorderJob < ApplicationJob
 
   def self.place_backorder(order, linked_variants)
     user = order.distributor.owner
-    orderer = FdcBackorderer.new(user)
+
+    # We are assuming that all variants are linked to the same wholesale
+    # shop and its catalog:
+    urls = FdcUrlBuilder.new(linked_variants[0].semantic_links[0].semantic_id)
+    orderer = FdcBackorderer.new(user, urls)
+
     backorder = orderer.find_or_build_order(order)
-    broker = load_broker(order.distributor.owner)
+    broker = load_broker(order.distributor.owner, urls)
     ordered_quantities = {}
 
     linked_variants.each do |variant|
@@ -73,13 +74,13 @@ class BackorderJob < ApplicationJob
     retail_quantity
   end
 
-  def self.load_broker(user)
-    FdcOfferBroker.new(load_catalog(user))
+  def self.load_broker(user, urls)
+    FdcOfferBroker.new(load_catalog(user, urls))
   end
 
-  def self.load_catalog(user)
+  def self.load_catalog(user, urls)
     api = DfcRequest.new(user)
-    catalog_json = api.call(FDC_CATALOG_URL)
+    catalog_json = api.call(urls.catalog_url)
     DfcIo.import(catalog_json)
   end
 

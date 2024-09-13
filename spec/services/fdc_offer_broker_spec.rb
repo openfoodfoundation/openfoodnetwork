@@ -4,7 +4,11 @@ require 'spec_helper'
 
 RSpec.describe FdcOfferBroker do
   subject { FdcOfferBroker.new(catalog) }
-  let(:catalog) { BackorderJob.load_catalog(user) }
+  let(:catalog) { BackorderJob.load_catalog(user, urls) }
+  let(:urls) { FdcUrlBuilder.new(product_link) }
+  let(:product_link) {
+    "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
+  }
   let(:user) { build(:testdfc_user) }
   let(:product) {
     catalog.find { |item| item.semanticType == "dfc-b:SuppliedProduct" }

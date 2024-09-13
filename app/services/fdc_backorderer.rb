@@ -2,14 +2,11 @@
 
 # Place and update orders based on missing stock.
 class FdcBackorderer
-  FDC_BASE_URL = "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod"
-  FDC_ORDERS_URL = "#{FDC_BASE_URL}/Orders".freeze
-  FDC_SALE_SESSION_URL = "#{FDC_BASE_URL}/SalesSession/#".freeze
+  attr_reader :user, :urls
 
-  attr_reader :user
-
-  def initialize(user)
+  def initialize(user, urls)
     @user = user
+    @urls = urls
   end
 
   def find_or_build_order(ofn_order)
@@ -17,13 +14,13 @@ class FdcBackorderer
   end
 
   def build_new_order(ofn_order)
-    OrderBuilder.new_order(ofn_order, FDC_ORDERS_URL).tap do |order|
+    OrderBuilder.new_order(ofn_order, urls.orders_url).tap do |order|
       order.saleSession = build_sale_session(ofn_order)
     end
   end
 
   def find_open_order
-    graph = import(FDC_ORDERS_URL)
+    graph = import(urls.orders_url)
     open_orders = graph&.select do |o|
       o.semanticType == "dfc-b:Order" && o.orderStatus[:path] == "Held"
     end
@@ -125,12 +122,12 @@ class FdcBackorderer
   end
 
   def new?(order)
-    order.semanticId == FDC_ORDERS_URL
+    order.semanticId == urls.orders_url
   end
 
   def build_sale_session(order)
     SaleSessionBuilder.build(order.order_cycle).tap do |session|
-      session.semanticId = FDC_SALE_SESSION_URL
+      session.semanticId = urls.sale_session_url
     end
   end
 end

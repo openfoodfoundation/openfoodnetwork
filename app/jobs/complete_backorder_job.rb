@@ -16,13 +16,13 @@ class CompleteBackorderJob < ApplicationJob
   #             Having the id makes sure that we don't accidentally finalise
   #             someone else's order.
   def perform(user, distributor, order_cycle, order_id)
-    service = FdcBackorderer.new(user)
-    order = service.find_order(order_id)
+    order = FdcBackorderer.new(user, nil).find_order(order_id)
+    urls = FdcUrlBuilder.new(order.lines[0].offer.offeredItem.semanticId)
 
     variants = order_cycle.variants_distributed_by(distributor)
-    adjust_quantities(user, order, variants)
+    adjust_quantities(user, order, urls, variants)
 
-    service.complete_order(order)
+    FdcBackorderer.new(user, urls).complete_order(order)
   end
 
   # Check if we have enough stock to reduce the backorder.
@@ -30,8 +30,8 @@ class CompleteBackorderJob < ApplicationJob
   # Our local stock can increase when users cancel their orders.
   # But stock levels could also have been adjusted manually. So we review all
   # quantities before finalising the order.
-  def adjust_quantities(user, order, variants)
-    broker = FdcOfferBroker.new(BackorderJob.load_catalog(user))
+  def adjust_quantities(user, order, urls, variants)
+    broker = FdcOfferBroker.new(BackorderJob.load_catalog(user, urls))
 
     order.lines.each do |line|
       line.quantity = line.quantity.to_i
