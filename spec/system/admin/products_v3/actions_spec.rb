@@ -493,13 +493,14 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
         within "#product-preview-modal" do
           # Shop tab
-          expect(page).to have_selector("h3 a span", text: "Apples")
+          expect(page).to have_selector("h3", text: "Apples")
           add_buttons = page.all(".add-variant")
           expect(add_buttons.length).to eql(2)
 
           # Product Details tab
           find("a", text: "Product details").click # click_link doesn't work
           expect(page).to have_selector("h3", text: "Apples")
+          expect(page).to have_selector(".product-img")
 
           # Closing the modal
           click_button "Close"
