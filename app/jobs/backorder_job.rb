@@ -5,10 +5,13 @@ class BackorderJob < ApplicationJob
   FDC_CATALOG_URL = "#{FDC_BASE_URL}/SuppliedProducts".freeze
   FDC_ORDERS_URL = "#{FDC_BASE_URL}/Orders".freeze
 
-  # In the current FDC project, the shop wants to review and adjust orders
+  # In the current FDC project, one shop wants to review and adjust orders
   # before finalising. They also run a market stall and need to adjust stock
   # levels after the market. This should be done within four hours.
-  SALE_SESSION_DELAY = 4.hours
+  SALE_SESSION_DELAYS = {
+    # https://openfoodnetwork.org.uk/handleyfarm/shop
+    "https://openfoodnetwork.org.uk/api/dfc/enterprises/203468" => 4.hours,
+  }.freeze
 
   queue_as :default
 
@@ -85,7 +88,8 @@ class BackorderJob < ApplicationJob
 
     return unless orderer.new?(backorder)
 
-    wait_until = order.order_cycle.orders_close_at + SALE_SESSION_DELAY
+    delay = SALE_SESSION_DELAYS.fetch(backorder.client, 1.minute)
+    wait_until = order.order_cycle.orders_close_at + delay
     CompleteBackorderJob.set(wait_until:)
       .perform_later(
         user, order.distributor, order.order_cycle, placed_order.semanticId

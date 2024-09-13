@@ -29,6 +29,7 @@ RSpec.describe BackorderJob do
         distributors: [order.distributor],
         variants: [variant],
       )
+      completion_time = order.order_cycle.orders_close_at + 1.minute
       variant.on_demand = true
       variant.on_hand = -3
       variant.semantic_links << SemanticLink.new(
@@ -37,13 +38,33 @@ RSpec.describe BackorderJob do
 
       expect {
         BackorderJob.check_stock(order)
-      }.to enqueue_job CompleteBackorderJob
+      }.to enqueue_job(CompleteBackorderJob).at(completion_time)
 
       # We ordered a case of 12 cans: -3 + 12 = 9
       expect(variant.on_hand).to eq 9
 
       # Clean up after ourselves:
       perform_enqueued_jobs(only: CompleteBackorderJob)
+    end
+  end
+
+  describe ".place_order" do
+    it "schedules backorder completion for specific enterprises" do
+      order.order_cycle = build(
+        :simple_order_cycle,
+        id: 1,
+        orders_close_at: Date.tomorrow.noon,
+      )
+      completion_time = Date.tomorrow.noon + 4.hours
+
+      orderer = FdcBackorderer.new(user)
+      backorder = orderer.build_new_order(order)
+      backorder.client = "https://openfoodnetwork.org.uk/api/dfc/enterprises/203468"
+
+      expect(orderer).to receive(:send_order).and_return(backorder)
+      expect {
+        BackorderJob.place_order(user, order, orderer, backorder)
+      }.to enqueue_job(CompleteBackorderJob).at(completion_time)
     end
   end
 end
