@@ -230,8 +230,7 @@ label .select2-container {
       justify-content: center;
 
       .select2-search-choice-close {
-        background-image: none !important;
-        font-size: 85% !important;
+        font-size: 85%;
         @extend .icon-remove;
         @extend [class^="icon-"], :before;
         margin-left: 2px;
