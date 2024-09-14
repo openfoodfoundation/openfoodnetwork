@@ -2023,7 +2023,7 @@ hu:
   invoice_column_tax_rate: "Adókulcs"
   invoice_tax_total: "ÁFA összesen:"
   invoice_cancel_and_replace_invoice: "érvényteleníti és cseréli a számlát"
-  tax_invoice: "Rendelés sorszáma"
+  tax_invoice: "VEVŐI LAP"
   tax_total: "Teljes adó (%{rate}):"
   invoice_shipping_category_delivery: "Szállítás"
   invoice_shipping_category_pickup: "Átvétel"
@@ -4121,7 +4121,7 @@ hu:
           email: "Ügyfél e-mail"
         invoice:
           issued_on: "Kiadott"
-          tax_invoice: "Rendelés sorszáma"
+          tax_invoice: "VEVŐI LAP"
           code: "Kód"
           from: "Küldő"
           to: "Vevő"
