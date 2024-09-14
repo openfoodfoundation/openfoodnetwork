@@ -228,16 +228,14 @@ label .select2-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-left: 7px;
 
       .select2-search-choice-close {
-        position: relative;
-        order: -1;
-        width: auto;
-        left: 0;
-        top: 0;
-        margin: 0;
-        padding: 0;
+        background-image: none !important;
+        font-size: 85% !important;
+        @extend .icon-remove;
+        @extend [class^="icon-"], :before;
+        margin-left: 2px;
+        color: $color-1;
       }
     }
   }
