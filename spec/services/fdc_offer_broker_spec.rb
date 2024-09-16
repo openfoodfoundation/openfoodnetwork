@@ -24,5 +24,15 @@ RSpec.describe FdcOfferBroker do
       expect(solution.factor).to eq 12
       expect(solution.offer.offeredItem).to eq solution.product
     end
+
+    it "falls back to the original product offer", vcr: true do
+      solution = subject.best_offer(product.semanticId)
+      fallback_solution = subject.best_offer(solution.product.semanticId)
+
+      # These values depend on the test data but are a good sanity check:
+      expect(fallback_solution.product.name).to eq "Baked British Beans - Case, 12 x 400g (can)"
+      expect(fallback_solution.factor).to eq 1
+      expect(fallback_solution.offer.offeredItem).to eq fallback_solution.product
+    end
   end
 end

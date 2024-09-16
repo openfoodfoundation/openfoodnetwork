@@ -11,16 +11,31 @@ class FdcOfferBroker
   end
 
   def best_offer(product_id)
-    consumption_flow = catalog_item("#{product_id}/AsPlannedConsumptionFlow")
+    Solution.new(
+      wholesale_product(product_id),
+      contained_quantity(product_id),
+      offer_of(wholesale_product(product_id))
+    )
+  end
+
+  def wholesale_product(product_id)
     production_flow = catalog_item("#{product_id}/AsPlannedProductionFlow")
 
-    contained_quantity = consumption_flow.quantity.value.to_i
-    wholesale_product_id = production_flow.product
-    wholesale_product = catalog_item(wholesale_product_id)
+    if production_flow
+      wholesale_product_id = production_flow.product
+      catalog_item(wholesale_product_id)
+    else
+      # We didn't find a wholesale variant, falling back to the given product.
+      catalog_item(product_id)
+    end
+  end
 
-    offer = offer_of(wholesale_product)
+  def contained_quantity(product_id)
+    consumption_flow = catalog_item("#{product_id}/AsPlannedConsumptionFlow")
 
-    Solution.new(wholesale_product, contained_quantity, offer)
+    # If we don't find a transformation, we return the original product,
+    # which contains exactly one of itself (identity).
+    consumption_flow&.quantity&.value&.to_i || 1
   end
 
   def wholesale_to_retail(wholesale_product_id)
