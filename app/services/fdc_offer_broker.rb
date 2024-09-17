@@ -40,6 +40,9 @@ class FdcOfferBroker
 
   def wholesale_to_retail(wholesale_product_id)
     production_flow = flow_producing(wholesale_product_id)
+
+    return RetailSolution.new(wholesale_product_id, 1) if production_flow.nil?
+
     consumption_flow = catalog_item(
       production_flow.semanticId.sub("AsPlannedProductionFlow", "AsPlannedConsumptionFlow")
     )
