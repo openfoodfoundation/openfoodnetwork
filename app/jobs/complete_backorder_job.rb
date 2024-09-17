@@ -31,7 +31,7 @@ class CompleteBackorderJob < ApplicationJob
   # But stock levels could also have been adjusted manually. So we review all
   # quantities before finalising the order.
   def adjust_quantities(user, order, urls, variants)
-    broker = FdcOfferBroker.new(BackorderJob.load_catalog(user, urls))
+    broker = FdcOfferBroker.new(user, urls)
 
     order.lines.each do |line|
       line.quantity = line.quantity.to_i

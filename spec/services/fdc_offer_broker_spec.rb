@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe FdcOfferBroker do
-  subject { FdcOfferBroker.new(catalog) }
+  subject { FdcOfferBroker.new(user, urls) }
   let(:catalog) {
-    VCR.use_cassette(:fdc_catalog) { BackorderJob.load_catalog(user, urls) }
+    VCR.use_cassette(:fdc_catalog) { subject.catalog }
   }
   let(:urls) { FdcUrlBuilder.new(product_link) }
   let(:product_link) {

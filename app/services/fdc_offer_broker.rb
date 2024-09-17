@@ -6,8 +6,19 @@ class FdcOfferBroker
   Solution = Struct.new(:product, :factor, :offer)
   RetailSolution = Struct.new(:retail_product_id, :factor)
 
-  def initialize(catalog)
-    @catalog = catalog
+  def self.load_catalog(user, urls)
+    api = DfcRequest.new(user)
+    catalog_json = api.call(urls.catalog_url)
+    DfcIo.import(catalog_json)
+  end
+
+  def initialize(user, urls)
+    @user = user
+    @urls = urls
+  end
+
+  def catalog
+    @catalog ||= self.class.load_catalog(@user, @urls)
   end
 
   def best_offer(product_id)
@@ -61,7 +72,7 @@ class FdcOfferBroker
   end
 
   def catalog_item(id)
-    @catalog_by_id ||= @catalog.index_by(&:semanticId)
+    @catalog_by_id ||= catalog.index_by(&:semanticId)
     @catalog_by_id[id]
   end
 
@@ -71,7 +82,7 @@ class FdcOfferBroker
   end
 
   def production_flows
-    @production_flows ||= @catalog.select do |i|
+    @production_flows ||= catalog.select do |i|
       i.semanticType == "dfc-b:AsPlannedProductionFlow"
     end
   end

@@ -75,13 +75,7 @@ class BackorderJob < ApplicationJob
   end
 
   def self.load_broker(user, urls)
-    FdcOfferBroker.new(load_catalog(user, urls))
-  end
-
-  def self.load_catalog(user, urls)
-    api = DfcRequest.new(user)
-    catalog_json = api.call(urls.catalog_url)
-    DfcIo.import(catalog_json)
+    FdcOfferBroker.new(user, urls)
   end
 
   def self.place_order(user, order, orderer, backorder)

@@ -4,7 +4,9 @@ require 'spec_helper'
 
 RSpec.describe CompleteBackorderJob do
   let(:user) { build(:testdfc_user) }
-  let(:catalog) { BackorderJob.load_catalog(user, urls) }
+  let(:catalog) {
+    VCR.use_cassette(:fdc_catalog) { FdcOfferBroker.load_catalog(user, urls) }
+  }
   let(:urls) { FdcUrlBuilder.new(product_link) }
   let(:product_link) {
     "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
@@ -19,7 +21,7 @@ RSpec.describe CompleteBackorderJob do
   let(:orderer) { FdcBackorderer.new(user, urls) }
   let(:order) {
     backorder = orderer.find_or_build_order(ofn_order)
-    broker = FdcOfferBroker.new(catalog)
+    broker = FdcOfferBroker.new(user, urls)
     offer = broker.best_offer(retail_product.semanticId).offer
     line = orderer.find_or_build_order_line(backorder, offer)
     line.quantity = 3
