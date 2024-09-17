@@ -481,7 +481,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       let!(:variant) { create(:variant, product:) }
 
       it "show product preview modal" do
-        login_as_admin
         visit admin_products_url
 
         within row_containing_name("Apples") do
