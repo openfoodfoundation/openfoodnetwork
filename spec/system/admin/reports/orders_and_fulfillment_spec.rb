@@ -435,7 +435,6 @@ RSpec.describe "Orders And Fulfillment" do
                                       :order_cycle_supplier_totals_by_distributor)
 
               uncheck "Header Row"
-              pending("S2 bug fix - #12835")
               run_report
             end
 
