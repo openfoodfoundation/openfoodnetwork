@@ -86,7 +86,7 @@ RSpec.describe SuppliedProductBuilder do
 
   describe ".import_product" do
     let(:supplied_product) do
-      DataFoodConsortium::Connector::SuppliedProduct.new(
+      DfcProvider::SuppliedProduct.new(
         "https://example.net/tomato",
         name: "Tomato",
         description: "Awesome tomato",
@@ -95,6 +95,7 @@ RSpec.describe SuppliedProductBuilder do
           value: 2,
         ),
         productType: product_type,
+        image: "https://cd.net/tomato.png?v=5",
       )
     end
     let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
@@ -106,6 +107,13 @@ RSpec.describe SuppliedProductBuilder do
       )
     }
 
+    before do
+      stub_request(:get, "https://cd.net/tomato.png?v=5").to_return(
+        status: 200,
+        body: black_logo_path.read,
+      )
+    end
+
     it "creates a new Spree::Product" do
       product = builder.import_product(supplied_product, supplier)
 
@@ -113,6 +121,9 @@ RSpec.describe SuppliedProductBuilder do
       expect(product.name).to eq("Tomato")
       expect(product.description).to eq("Awesome tomato")
       expect(product.variant_unit).to eq("weight")
+      expect(product.image).to be_present
+      expect(product.image.attachment).to be_attached
+      expect(product.image.url(:product)).to match /^http.*tomato\.png/
     end
 
     describe "taxon" do
