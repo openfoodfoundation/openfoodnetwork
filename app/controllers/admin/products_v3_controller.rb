@@ -40,6 +40,8 @@ module Admin
         { id: params[:id] }
       ).find_product
 
+      authorize! :delete, @record
+
       @record.destroyed_by = spree_current_user
       status = :ok
 
@@ -74,6 +76,8 @@ module Admin
 
     def clone
       @product = Spree::Product.find(params[:id])
+      authorize! :clone, @product
+
       status = :ok
 
       begin
