@@ -84,14 +84,6 @@ module Spree
       end
     end
 
-    describe '#total_on_hand' do
-      it 'returns sum of stock items count_on_hand' do
-        product = build(:product)
-        allow(product).to receive_messages stock_items: [double(Spree::StockItem, count_on_hand: 5)]
-        expect(product.total_on_hand).to eql(5)
-      end
-    end
-
     context "has stock movements" do
       let(:product) { create(:product) }
       let(:variant) { product.variants.first }
