@@ -1,0 +1,8 @@
+%div{"data-controller": "tooltip", "data-tooltip-placement-value": @placement }
+  %a{"data-tooltip-target": "element", href: @link, class: @link_class}
+    = @link_text 
+  .tooltip-container
+    .tooltip{"data-tooltip-target": "tooltip"}
+      = sanitize @text
+      .arrow{"data-tooltip-target": "arrow"}
+

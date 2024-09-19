@@ -45,7 +45,7 @@
     %div.row-loading-icons
       - if local_assigns[:success]
         %i.success.icon-ok-sign{"data-controller": "ephemeral"}
-    = render partial: 'admin/shared/tooltip', locals: {link_class: "icon_link with-tip icon-edit no-text" ,link: edit_admin_order_path(order), link_text: "",  tooltip_text: t('spree.admin.orders.index.edit')}
+    = render AdminTooltipComponent.new(text: t('spree.admin.orders.index.edit'), link_text: "", link: edit_admin_order_path(order), link_class: "icon_link with-tip icon-edit no-text")
     - if order.ready_to_ship?
       %form
         = render ShipOrderComponent.new(order: order)

@@ -347,13 +347,28 @@ RSpec.describe '
       end
 
       it "editing a product" do
+        login_as_admin
         visit spree.edit_admin_product_path product
 
         fill_in_trix_editor 'product_description', with: 'A description...'
+
         click_button 'Update'
+
         expect(flash_message).to eq('Product "a product" has been successfully updated!')
         product.reload
         expect(product.description).to eq("<div>A description...</div>")
+
+        # Product preview
+        click_link 'Preview'
+
+        within "#product-preview-modal" do
+          expect(page).to have_content("Product preview")
+          expect(page).to have_selector("h3 a span", text: "a product")
+
+          click_button "Close"
+        end
+
+        expect(page).not_to have_content("Product preview")
       end
 
       it "editing product group buy options" do

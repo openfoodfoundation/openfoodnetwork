@@ -11,9 +11,13 @@
 = render :partial => 'spree/shared/error_messages', :locals => { :target => @product }
 
 = form_for [:admin, @product], :url => admin_product_path(@product, @url_filters), :method => :put, :html => { :multipart => true } do |f|
-  %fieldset.no-border-top{'ng-app' => 'admin.products'}
+  %fieldset.no-border-top{'ng-app': 'admin.products', 'data-turbo': true, 'data-controller': "product-preview"}
     = render :partial => 'form', :locals => { :f => f }
     .form-buttons.filter-actions.actions
+      = link_to t("admin.products_page.actions.preview"), Rails.application.routes.url_helpers.admin_product_preview_path(@product), {"data-turbo-stream": "" , class: "button secondary"} 
+
       = button t(:update), 'icon-refresh'
 
       = button_link_to t(:cancel), products_return_to_url(@url_filters), icon: 'icon-remove'
+
+    #product-preview-modal-container

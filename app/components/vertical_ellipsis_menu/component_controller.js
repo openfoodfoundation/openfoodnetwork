@@ -8,6 +8,10 @@ export default class extends Controller {
     window.addEventListener("click", this.#hideIfClickedOutside);
   }
 
+  disconnect() {
+    window.removeEventListener("click", this.#hideIfClickedOutside);
+  }
+
   toggle() {
     this.contentTarget.classList.toggle("show");
   }

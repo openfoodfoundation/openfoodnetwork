@@ -29,7 +29,6 @@ module Spree
         can :update, Order do |order, token|
           order.user == user || (order.token && token == order.token)
         end
-        can [:index, :read], Product
         can [:index, :read], ProductProperty
         can [:index, :read], Property
         can :create, Spree::User

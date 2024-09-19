@@ -1,28 +1,15 @@
-
-@mixin headingFont {
-  font-family: "Oswald", sans-serif;
-}
+@import "shop_partials/typography";
 
 @mixin bodyFont {
   font-family: "Roboto", Arial, sans-serif;
 }
 
 $headingFont: "Oswald";
-$body-font: "Roboto", Arial, sans-serif;
 
 body {
   @include bodyFont;
 
   font-weight: 400;
-}
-
-a {
-  color: $clr-brick;
-
-  &:hover, &:focus, &:active {
-    text-decoration: none;
-    color: $clr-brick-bright;
-  }
 }
 
 .text-vbig {
@@ -37,16 +24,6 @@ a {
 
 small, .small {
   font-size: 0.75rem;
-}
-
-.text-small {
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-  font-family: $body-font;
-
-  &, & * {
-    font-size: 0.875rem;
-  }
 }
 
 .text-normal {
@@ -90,12 +67,6 @@ small, .small {
 
 .hr-light {
   border-color: rgba(#ddd, 0.25);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  @include headingFont;
-
-  padding: 0px;
 }
 
 .inline-header {

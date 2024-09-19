@@ -1,0 +1,176 @@
+@import "../../darkswarm/branding";
+@import "../../darkswarm/mixins";
+
+#product-preview {
+  // The frontend css is base on foundation-sites https://github.com/foundation/foundation-sites
+  // Below we copied the sections that are relevant to the product preview modal
+
+  // from foundation-sites/scss/foundations/components/_types.scss
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #222222;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    margin-top: 0.2rem;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.4;
+  }
+
+  h3 {
+    font-size: 1.6875rem;
+  }
+
+  em,
+  i {
+    font-style: italic;
+    line-height: inherit;
+  }
+
+  ul,
+  ol,
+  dl {
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    list-style-position: outside;
+    margin-bottom: 1.25rem;
+  }
+
+  .text-right {
+    text-align: right !important;
+  }
+
+  // from foundation-sites/scss/foundations/components/_buttons.scss
+  button,
+  .button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0;
+    cursor: pointer;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-weight: normal;
+    line-height: normal;
+    margin: 0 0 1.25rem;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 1rem 2rem 1.0625rem 2rem;
+    font-size: 1rem;
+    background-color: #008cba;
+    border-color: #007095;
+    color: #ffffff;
+    transition: background-color 300ms ease-out;
+  }
+
+  // from foundation-sites/scss/foundations/components/_grid.scss
+  @media only screen and (min-width: 64.0625em) {
+    .column,
+    .columns {
+      position: relative;
+      padding-left: 0.9375rem;
+      padding-right: 0.9375rem;
+      float: left;
+    }
+  }
+
+  .column + .column:last-child,
+  .column + .columns:last-child,
+  .columns + .column:last-child,
+  .columns + .columns:last-child {
+    float: right;
+  }
+
+  .small-3 {
+    width: 25%;
+  }
+
+  @media only screen and (min-width: 40.0625em) {
+    .medium-3 {
+      width: 20%; // original value 25%
+    }
+  }
+
+  @media only screen and (min-width: 64.0625em) {
+    .large-3 {
+      width: 25%;
+    }
+  }
+
+  @media only screen and (min-width: 64.0625em) {
+    .large-6 {
+      width: 50%;
+    }
+  }
+
+  // from foundation-sites/scss/foundations/components/_global.scss
+  img {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  // Import frontend partials
+
+  // Product details
+  @import "../../darkswarm/shop_partials/typography";
+  @import "../../darkswarm/overrides";
+
+  .row {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  @import "../../darkswarm/shop_partials/animations";
+  @import "../../darkswarm/shop_partials/shop-filters";
+  @import "../../darkswarm/shop-modals";
+  @import "../../darkswarm/shop_partials/images";
+
+  // Shop
+  @import "../../darkswarm/shop_partials/shop-product-thumb";
+  @import "../../darkswarm/shop_partials/shop-product-rows";
+  @import "../../darkswarm/shop_partials/shop-inputs";
+  @import "../../shared/question-mark-icon";
+
+  button.add-variant {
+    opacity: 0.5;
+  }
+
+  .variant-remaining-stock {
+    opacity: 0.5;
+  }
+
+  .question-mark-icon {
+    display: block;
+  }
+
+  .tooltip {
+    @include joyride-content;
+    width: $joyride-width;
+    text-transform: none;
+  }
+
+  .arrow {
+    background-color: $dynamic-blue;
+  }
+
+  .columns {
+    margin-left: 0;
+  }
+}

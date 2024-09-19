@@ -50,8 +50,19 @@
   margin-left: 2px;
 }
 
+@mixin joyride-content {
+  background-color: $dynamic-blue;
+  padding: $padding-small;
+  border-radius: $radius-small;
+  color: $white;
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+$joyride-width: 16rem;
+
 .joyride-tip-guide.question-mark-tooltip {
-  width: 16rem;
+  width: $joyride-width;
   max-width: 65%;
   // JS needs to be tweaked to adjust for left alignment - this is dynamic can't rewrite in CSS
   margin-left: -7.4rem;
@@ -70,12 +81,7 @@
   }
 
   .joyride-content-wrapper {
-    background-color: $dynamic-blue;
-    padding: $padding-small;
-    border-radius: $radius-small;
-    color: $white;
-    width: 100%;
-    font-size: 0.8rem;
+    @include joyride-content;
   }
 
   .joyride-nub.bottom {
