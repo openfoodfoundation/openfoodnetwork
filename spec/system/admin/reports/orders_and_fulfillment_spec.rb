@@ -423,14 +423,18 @@ RSpec.describe "Orders And Fulfillment" do
             end
           end
 
-          context "as the supplier" do
+          context "as the supplier granting P-OC to distributor" do
             let(:current_user) { supplier.owner }
 
             before do
-              pending("S2 bug fix - #12835")
+              create(:enterprise_relationship, parent: supplier, child: distributor,
+                                               permissions_list: [:add_to_order_cycle])
+
               login_as(current_user)
-              visit admin_reports_path
-              click_link "Order Cycle Supplier Totals by Distributor"
+              visit admin_report_path(:orders_and_fulfillment,
+                                      :order_cycle_supplier_totals_by_distributor)
+
+              uncheck "Header Row"
               run_report
             end
 
@@ -456,24 +460,20 @@ RSpec.describe "Orders And Fulfillment" do
             end
 
             it "aggregates results per variant" do
-              expect(all('table.report__table tbody tr').count).to eq(4)
+              rows = find("table.report__table").all("tbody tr")
+              table = rows.map { |r| r.all("td").map { |c| c.text.strip } }
+
+              expect(table.count).to eq(4)
               # 1 row per variant = 2 rows
-              # 2 TOTAL rows
+              # 2 TOTAL rows for distributors
               # 4 rows total
 
-              expect(table_headers[0]).to eq(
-                ["Supplier Name", "Baked Beans", "1g Small",
-                 "Distributor Name", "7", "10.0", "70.0", "UPS Ground"]
-              )
-              expect(table_headers[1]).to eq(
-                ["", "", "", "TOTAL", "7", "", "70.0", ""]
-              )
-              expect(table_headers[2]).to eq(
-                ["Supplier Name", "Baked Beans", "1g Big",
-                 "Distributor Name",
-                 "3", "10.0", "30.0", "UPS Ground"]
-              )
-              expect(table_headers[3]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+              expect(table[0]).to eq(["Supplier Name", "Baked Beans", "1g Big",
+                                      "Distributor Name", "3", "10.0", "30.0", "UPS Ground"])
+              expect(table[1]).to eq(["", "", "", "TOTAL", "3", "", "30.0", ""])
+              expect(table[2]).to eq(["Supplier Name", "Baked Beans", "1g Small",
+                                      "Distributor Name", "7", "10.0", "70.0", "UPS Ground"])
+              expect(table[3]).to eq(["", "", "", "TOTAL", "7", "", "70.0", ""])
             end
           end
         end

@@ -415,7 +415,7 @@ RSpec.describe Spree::Ability do
 
       it "should be able to read some reports" do
         is_expected.to have_ability(
-          [:admin, :index, :show], for: Admin::ReportsController
+          [:admin, :index, :show, :create], for: Admin::ReportsController
         )
         is_expected.to have_ability(
           [:customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory,
@@ -651,7 +651,7 @@ RSpec.describe Spree::Ability do
 
       it "should be able to read some reports" do
         is_expected.to have_ability(
-          [:admin, :index, :show], for: Admin::ReportsController
+          [:admin, :index, :show, :create], for: Admin::ReportsController
         )
         is_expected.to have_ability(
           [:customers, :sales_tax, :group_buys, :bulk_coop, :payments,

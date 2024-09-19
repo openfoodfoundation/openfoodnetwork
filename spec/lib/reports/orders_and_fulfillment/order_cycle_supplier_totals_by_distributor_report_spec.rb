@@ -7,12 +7,12 @@ module Reporting
     module OrdersAndFulfillment
       RSpec.describe OrderCycleSupplierTotalsByDistributor do
         let!(:distributor) { create(:distributor_enterprise) }
-        let!(:order) do
-          create(:completed_order_with_totals, line_items_count: 3, distributor:)
-        end
-        let(:supplier) { order.line_items.first.variant.supplier }
+        let(:order_cycle) { create(:simple_order_cycle, distributors: [distributor]) }
 
         describe "as the distributor" do
+          let!(:order) do
+            create(:completed_order_with_totals, line_items_count: 3, distributor:)
+          end
           let(:current_user) { distributor.owner }
           let(:params) { { display_summary_row: true } }
           let(:report) do
@@ -42,18 +42,32 @@ module Reporting
           end
         end
 
-        describe "as the supplier of the order cycle" do
+        describe "as the supplier permitting products in the order cycle" do
+          let!(:order) {
+            create(:completed_order_with_totals, line_items_count: 0, distributor:,
+                                                 order_cycle_id: order_cycle.id)
+          }
+          let(:supplier){ order.line_items.first.variant.supplier }
+
           before do
-            pending("S2 bug fix - #12835")
+            3.times do
+              owner = create(:user)
+              s = create(:supplier_enterprise, owner:)
+              variant = create(:variant, supplier: s)
+              create(:line_item_with_shipment, variant:, quantity: 1, order:)
+            end
+
+            create(:enterprise_relationship, parent: supplier, child: distributor,
+                                             permissions_list: [:add_to_order_cycle])
           end
 
-          let!(:current_user) { supplier.owner }
-          let!(:params) { { display_summary_row: true } }
-          let!(:report) do
+          let(:current_user) { supplier.owner }
+          let(:params) { { display_summary_row: true } }
+          let(:report) do
             OrderCycleSupplierTotalsByDistributor.new(current_user, params)
           end
 
-          let!(:report_table) do
+          let(:report_table) do
             report.table_rows
           end
 
