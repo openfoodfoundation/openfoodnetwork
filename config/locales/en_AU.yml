@@ -348,6 +348,8 @@ en_AU:
         remove: Remove
       image:
         edit: Edit
+      product_preview:
+        shop_tab: Shop
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer

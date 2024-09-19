@@ -358,6 +358,8 @@ es_CO:
         remove: Eliminar
       image:
         edit: Editar
+      product_preview:
+        shop_tab: Tienda
     begins_at: Empieza en
     begins_on: Comienza en
     customer: Cliente

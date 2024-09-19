@@ -483,6 +483,8 @@ es:
         remove: Eliminar
       image:
         edit: Editar
+      product_preview:
+        shop_tab: Tienda
     adjustments:
       skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
     begins_at: Empieza en

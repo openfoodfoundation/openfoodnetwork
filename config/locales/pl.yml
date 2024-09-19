@@ -339,6 +339,8 @@ pl:
         remove: Usuń
       image:
         edit: Edytuj
+      product_preview:
+        shop_tab: Sklep
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient

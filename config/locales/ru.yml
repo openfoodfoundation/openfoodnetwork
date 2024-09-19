@@ -546,6 +546,8 @@ ru:
         remove: Удалить
       image:
         edit: Изменить
+      product_preview:
+        shop_tab: Магазин
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С

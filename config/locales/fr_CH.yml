@@ -470,6 +470,8 @@ fr_CH:
         remove: Supprimer
       image:
         edit: Modifier
+      product_preview:
+        shop_tab: Faire mes courses
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence

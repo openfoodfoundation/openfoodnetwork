@@ -474,6 +474,8 @@ de_CH:
         remove: Löschen
       image:
         edit: Bearbeiten
+      product_preview:
+        shop_tab: Laden
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt

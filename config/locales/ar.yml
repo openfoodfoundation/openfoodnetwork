@@ -482,6 +482,8 @@ ar:
         remove: إزالة
       image:
         edit: تعديل
+      product_preview:
+        shop_tab: المتجر
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند

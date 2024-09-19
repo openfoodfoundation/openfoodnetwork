@@ -534,6 +534,8 @@ mr:
         clone: क्लोन
       image:
         edit: सुधारित करा
+      product_preview:
+        shop_tab: शॉप
     adjustments:
       skipped_changing_canceled_order: "तुम्ही रद्द केलेली ऑर्डर बदलू शकत नाही."
     begins_at: वाजता सुरू होते

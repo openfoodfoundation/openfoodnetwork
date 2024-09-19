@@ -554,6 +554,8 @@ en_GB:
         remove: Remove
       image:
         edit: Edit
+      product_preview:
+        shop_tab: Shop
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -2203,7 +2205,7 @@ en_GB:
   system_step3_text: "Set up payment methods and add your collection and delivery options."
   cta_headline: "The sustainable food network of our future."
   cta_label: "Start shopping"
-  stats_headline: "Join over 15k shoppers and producers in creating a new food system"
+  stats_headline: "Join over 18k shoppers and producers in creating a new food system"
   stats_producers: "food producers"
   stats_shops: "food shops"
   stats_shoppers: "food shoppers"

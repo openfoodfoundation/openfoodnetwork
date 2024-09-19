@@ -409,6 +409,8 @@ pt_BR:
         remove: Remover
       image:
         edit: Editar
+      product_preview:
+        shop_tab: Comprar
     adjustments:
       skipped_changing_canceled_order: "Não é possível modificar um pedido cancelado"
     begins_at: Começa em

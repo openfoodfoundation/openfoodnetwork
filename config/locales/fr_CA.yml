@@ -81,6 +81,8 @@ fr_CA:
         white_label_logo_link: "Lien vers le logo utilisé pour la boutique"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Déterminer la catégorie de taxe requiert l'utilisation du calculateur par article"
         spree/image:
           attributes:
             attachment:
@@ -554,6 +556,8 @@ fr_CA:
         remove: Supprimer
       image:
         edit: Modifier
+      product_preview:
+        shop_tab: Boutique
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence à
@@ -672,6 +676,16 @@ fr_CA:
         info_html: "Matomo est un outil de suivi de traffic et de comportement des utilisateurs. Matomo est open source et validée par la CNIL française car non intrusif dans les données personnelles des utilisateurs. Pour plus d'infos : 1matomo.org1."
         config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
         config_instructions_tag_manager_html: "Ajouter l'URL du Tag Manager rend actif Matomo Tag Manager. Cet outil vous permet de suivre des évènements en particulier. Pour trouver l'URL rendez-vous sur l' \"Install Code section\" du Tag Manager. Attention à bien copier le bon contener et le bon environnement, car ils font varier l'URL."
+    connected_app_settings:
+      edit:
+        title: "Paramètres de l'application connectée"
+        info_html: "Les applications autorisées apparaitront dans Entreprises > Configuration > Applications connectées"
+        enabled_legend: "Applications connectées autorisées"
+        connected_apps_enabled:
+          discover_regen: Portail Discover Regenerative
+          affiliate_sales_data: API de commandes anonymisées DFC à fins de recherche
+      update:
+        resource: Paramètres de l'application connectée
     customers:
       index:
         new_customer: "Nouveau client"
@@ -769,6 +783,7 @@ fr_CA:
       variants:
         infinity: "Infini"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
+      back_to_products_list: "Revenir à la liste des produits"
       editing_product: "Modifier le produit"
       tabs:
         product_details: " Détails"
@@ -796,8 +811,10 @@ fr_CA:
       filters:
         search_products: Chercher des produits
         search_for_producers: Rechercher des producteurs
+        select_producer: Sélectionner producteur
         all_producers: Tous les producteurs
         search_for_categories: Rechercher des catégories
+        select_category: Sélectionner catégorie
         all_categories: Toutes les catégories
         producers:
           label: Producteurs
@@ -1289,6 +1306,8 @@ fr_CA:
         connected_apps:
           legend: "Applications connectées"
           affiliate_sales_data:
+            title: "Programme de recherche INRAE / UFC QUE CHOISIR"
+            tagline: "Autoriser ce programme de recherche à accéder à vos données de commandes anonymisées"
             enable: "Autoriser le partage de données"
             disable: "Arrêter le partage"
             loading: "Chargement en cours"
@@ -1311,8 +1330,8 @@ fr_CA:
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
             note: |
                 Votre compte Open Food Network est connecté à Annuaire alimentaire de Waterloo.
-                Les modifications apportées à votre profil OFN mettront automatiquement à jour votre liste Annuaire alimentaire de Waterloo. Pour toute autre modification, veuillez contacter le service d'assistance de l'OFN.
-            link_label: "Gérer la liste"
+                Les modifications apportées à votre profil OFN mettront à jour votre liste Waterloo Food Directory lorsque vous cliquerez sur le bouton 'Mise à jour de la liste'. Pour toute autre modification, veuillez contacter le service d'assistance de l'OFN et support@openfoodnetwork.ca.
+            link_label: "Mise à jour de la liste"
             description_html: |
                 <p>Les producteurs éligibles peuvent présenter des appels à l'action en faveur du manger local, donner local, et/ou cultiver local..
                 Cela simplifie la façon dont les producteurs peuvent se connecter dans la région de Waterloo autour de la justice et de la souveraineté alimentaires.
@@ -1374,8 +1393,10 @@ fr_CA:
         contact_name: Nom du contact principal
       edit:
         editing: 'Configuration:'
+        back_link: Retour à la liste des entreprises
       new:
         title: Nouvelle entreprise
+        back_link: Retour à la liste des entreprises
       welcome:
         welcome_title: Bienvenue sur Open Food Network !
         welcome_text: 'Vous avez créé avec succès '
@@ -1413,6 +1434,9 @@ fr_CA:
         re_notify_producers: Notifier les producteurs
         notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec le contenu du cycle de vente.
       date_time_warning_modal_content:
+        title: 'Les commandes sont liées à ce cycle de vente.'
+        content: 'Si vous souhaitez créer un nouveau cycle de vente, il est recommandé de dupliquer un cycle de vente existant puis de changer les dates.'
+        proceed: 'Procéder quand même'
         cancel: 'Annuler'
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les hubs)"
@@ -3915,6 +3939,7 @@ fr_CA:
     tax_rate_amount_explanation: "Les taux de taxe sont présentés en nombres décimaux pour faciliter les calculs (ex : si le taux est 5% saisissez 0.05)"
     included_in_price: "Inclus dans le prix"
     show_rate_in_label: "Montrer le taux dans le nom"
+    back_to_tax_rates_list: "Revenir à la liste des taux de taxe"
     tax_settings: "Paramètres taxe"
     zones: "Zones"
     new_zone: "Nouvelle zone"
@@ -3927,6 +3952,7 @@ fr_CA:
     iso_name: "Noms ISO"
     states_required: "États/Départements requis"
     editing_country: "Pays en cours de mise à jour"
+    back_to_countries_list: "Revenir à la liste des pays"
     states: "États/Départements requis"
     abbreviation: "Code"
     new_state: "Nouveau Région:"
@@ -4091,6 +4117,7 @@ fr_CA:
           continue: "Suivant"
         new:
           new_return_authorization: "Nouvelle autorisation de retour"
+          back_to_return_authorizations_list: "Revenir à la liste des autorisations"
           continue: "Suivant"
         edit:
           receive: " reçoit"
@@ -4303,6 +4330,8 @@ fr_CA:
           new_product: "Nouveau Produit"
           supplier: "Fournisseur"
           supplier_select_placeholder: "Sélectionner un producteur"
+          search_for_suppliers: "Chercher des fournisseurs"
+          search_for_units: "Chercher des unités"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
           value: "Nb unités"
@@ -4415,8 +4444,18 @@ fr_CA:
           total: "Total"
           billing_address_name: "Nom"
       taxons:
+        back_to_list: "Revenir à la liste des catégories de produits"
         index:
           title: "Catégorie Produit"
+          new_taxon: 'Nouvelle catégorie de produit'
+        new:
+          title: "Nouvelle catégorie de produit"
+        edit:
+          title: "Editer la catégorie de produit"
+        destroy:
+          delete_taxon:
+            success: "Catégorie de produit supprimée"
+            error: "Impossible de supprimer la catégorie de produit car des produits sont liés à cette catégorie."
         form:
           name: Nom
           meta_title: Méta titre

@@ -503,6 +503,8 @@ it:
         remove: Rimuovi
       image:
         edit: Modifica
+      product_preview:
+        shop_tab: Negozio
     adjustments:
       skipped_changing_canceled_order: "Non puoi modificare una richiesta annullata"
     begins_at: Inizia a

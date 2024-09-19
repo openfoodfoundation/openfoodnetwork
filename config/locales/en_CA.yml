@@ -81,6 +81,8 @@ en_CA:
         white_label_logo_link: "Link for the logo used in shopfront"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
         spree/image:
           attributes:
             attachment:
@@ -554,6 +556,8 @@ en_CA:
         remove: Remove
       image:
         edit: Edit
+      product_preview:
+        shop_tab: Shop
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -779,6 +783,7 @@ en_CA:
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
+      back_to_products_list: "Back To Products List"
       editing_product: "Editing Product"
       tabs:
         product_details: "Product Details"
@@ -1322,8 +1327,8 @@ en_CA:
             need_to_be_manager: "Only managers can connect apps."
             note: |
                 Your Open Food Network account is connected to the Waterloo Food Directory.
-                Changes made to your OFN profile will automatically update your Waterloo Food Directory listing.  For any other changes please contact OFN Support.
-            link_label: "Manage listing"
+                Changes made to your OFN profile will update your Waterloo Food Directory listing when you click the 'Update listing' button.  For any other changes please contact OFN Support at support@openfoodnetwork.ca.
+            link_label: "Update listing"
             description_html: |
                 <b><p>
                 Eligible producers can showcase call to actions to Eat Local, Give Local, and/or Grow Local.
@@ -1385,8 +1390,10 @@ en_CA:
         contact_name: Contact Name
       edit:
         editing: 'Settings:'
+        back_link: Back To Enterprises List
       new:
         title: New Enterprise
+        back_link: Back To Enterprises List
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
@@ -1424,6 +1431,9 @@ en_CA:
         re_notify_producers: Re notify producers
         notify_producers_tip: This will send an email to each producer with the list of their orders.
       date_time_warning_modal_content:
+        title: 'Orders are linked to this order cycle.'
+        content: 'If you wish to create a new order cycle, it is recommended to duplicate the order cycle first and then change the dates.'
+        proceed: 'Proceed anyway'
         cancel: 'Cancel'
       incoming:
         incoming: "Incoming"
@@ -3886,6 +3896,7 @@ en_CA:
     tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calcuations, (i.e. if the tax rate is 5% then enter 0.05)"
     included_in_price: "Included in Price"
     show_rate_in_label: "Show rate in label"
+    back_to_tax_rates_list: "Back To Tax Rates List"
     tax_settings: "Tax Settings"
     zones: "Zones"
     new_zone: "New Zone"
@@ -3898,6 +3909,7 @@ en_CA:
     iso_name: "ISO Name"
     states_required: "Provinces Required"
     editing_country: "Editing Country"
+    back_to_countries_list: "Back To Countries List"
     states: "Provinces"
     abbreviation: "Abbreviation"
     new_state: "New Province"
@@ -4062,6 +4074,7 @@ en_CA:
           continue: "Continue"
         new:
           new_return_authorization: "New Return Authorization"
+          back_to_return_authorizations_list: "Back To Return Authorizations List"
           continue: "Continue"
         edit:
           receive: "receive"
@@ -4274,6 +4287,8 @@ en_CA:
           new_product: "New Product"
           supplier: "Supplier"
           supplier_select_placeholder: "Select a supplier"
+          search_for_suppliers: "Search for suppliers"
+          search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
@@ -4386,8 +4401,18 @@ en_CA:
           total: "Total"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Back To Product Categories List"
         index:
           title: "Product Categories"
+          new_taxon: 'New product category'
+        new:
+          title: "New Product Category"
+        edit:
+          title: "Edit Product Category"
+        destroy:
+          delete_taxon:
+            success: "Successfully deleted the product category"
+            error: "Unable to delete the product category due to assigned products."
         form:
           name: Name
           meta_title: Meta Title

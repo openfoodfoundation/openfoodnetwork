@@ -343,6 +343,8 @@ nl_BE:
         remove: Verwijderen
       image:
         edit: bewerking
+      product_preview:
+        shop_tab: winkel
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant

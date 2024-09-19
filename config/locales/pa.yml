@@ -531,6 +531,8 @@ pa:
         remove: Remove
       image:
         edit: ਸੰਪਾਦਿਤ ਕਰੋ
+      product_preview:
+        shop_tab: ਸ਼ਾਪ
     adjustments:
       skipped_changing_canceled_order: "ਤੁਸੀਂ ਰੱਦ ਕੀਤੇ ਆਰਡਰ ਨੂੰ ਬਦਲ ਨਹੀਂ ਸਕਦੇ ਹੋ।"
     begins_at: ਇਸਤੇ ਸ਼ੁਰੂ ਹੋਵੇਗਾ

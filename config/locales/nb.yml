@@ -554,6 +554,8 @@ nb:
         remove: Fjern
       image:
         edit: Rediger
+      product_preview:
+        shop_tab: Butikk
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på

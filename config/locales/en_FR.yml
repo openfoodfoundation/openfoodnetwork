@@ -556,6 +556,8 @@ en_FR:
         remove: Remove
       image:
         edit: Edit
+      product_preview:
+        shop_tab: Shop
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At

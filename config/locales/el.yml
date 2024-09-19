@@ -556,6 +556,8 @@ el:
         remove: Αφαίρεση
       image:
         edit: Επεξεργασία
+      product_preview:
+        shop_tab: Κατάστημα
     adjustments:
       skipped_changing_canceled_order: "Δεν μπορείτε να κάνετε αλλαγή ακυρωμένης παραγγελίας."
     begins_at: Ξεκινάει από

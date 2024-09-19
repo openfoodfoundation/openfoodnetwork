@@ -180,6 +180,8 @@ sv:
         remove: Ta bort
       image:
         edit: Redigera
+      product_preview:
+        shop_tab: 'Butik '
     customer: Kund
     date: Datum
     email: epost

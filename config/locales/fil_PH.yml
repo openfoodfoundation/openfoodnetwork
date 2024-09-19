@@ -334,6 +334,8 @@ fil_PH:
         remove: Tanggalin
       image:
         edit: i-edit
+      product_preview:
+        shop_tab: Shop
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
     customer: Customer

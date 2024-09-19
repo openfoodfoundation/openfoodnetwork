@@ -538,6 +538,8 @@ hi:
         remove: मिटाएँ
       image:
         edit: एडिट करें
+      product_preview:
+        shop_tab: शॉप
     adjustments:
       skipped_changing_canceled_order: "आप रद्द किए गए ऑर्डर को बदल नहीं सकते।"
     begins_at: को शुरू होता है

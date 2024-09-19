@@ -554,6 +554,8 @@ hu:
         remove: Eltávolítás
       image:
         edit: Szerkesztés
+      product_preview:
+        shop_tab: Átvételi pont
     adjustments:
       skipped_changing_canceled_order: "A törölt rendelést nem módosíthatod."
     begins_at: 'Kezdete:'

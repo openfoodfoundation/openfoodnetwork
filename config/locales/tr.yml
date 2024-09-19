@@ -389,6 +389,8 @@ tr:
         remove: Kaldır
       image:
         edit: Düzenle
+      product_preview:
+        shop_tab: DÜKKAN
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
