@@ -34,42 +34,74 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
   describe "column selector" do
     let!(:product) { create(:simple_product) }
 
-    before do
-      visit admin_products_url
+    context "with one producer only" do
+      before do
+        visit admin_products_url
+      end
+
+      it "hides column and remembers saved preference" do
+        # Name shows by default
+        expect(page).to have_checked_field "Name"
+        expect(page).to have_selector "th", text: "Name"
+        expect_other_columns_visible
+
+        # Producer is hidden by if only one producer is present
+        expect(page).to have_unchecked_field "Producer"
+        expect(page).not_to have_selector "th", text: "Producer"
+
+        # Show Producer column
+        ofn_drop_down("Columns").click
+        within ofn_drop_down("Columns") do
+          check "Producer"
+        end
+
+        # Preference saved
+        save_preferences
+        expect(page).to have_selector "th", text: "Producer"
+
+        # Name is hidden
+        ofn_drop_down("Columns").click
+        within ofn_drop_down("Columns") do
+          uncheck "Name"
+        end
+        expect(page).not_to have_selector "th", text: "Name"
+        expect_other_columns_visible
+
+        # Preference saved
+        save_preferences
+
+        # Preference remembered
+        ofn_drop_down("Columns").click
+        within ofn_drop_down("Columns") do
+          expect(page).to have_unchecked_field "Name"
+        end
+        expect(page).not_to have_selector "th", text: "Name"
+        expect_other_columns_visible
+      end
+
+      def expect_other_columns_visible
+        expect(page).to have_selector "th", text: "Price"
+        expect(page).to have_selector "th", text: "On Hand"
+      end
+
+      def save_preferences
+        # Preference saved
+        click_on "Save as default"
+        expect(page).to have_content "Column preferences saved"
+        refresh
+      end
     end
 
-    it "hides column and remembers saved preference" do
-      # Name shows by default
-      expect(page).to have_checked_field "Name"
-      expect(page).to have_selector "th", text: "Name"
-      expect_other_columns_visible
+    context "with multiple producers" do
+      let!(:producer2) { create(:supplier_enterprise, owner: user) }
 
-      # Name is hidden
-      ofn_drop_down("Columns").click
-      within ofn_drop_down("Columns") do
-        uncheck "Name"
+      before { visit admin_products_url }
+
+      it "has selected producer column by default" do
+        # Producer shows by default
+        expect(page).to have_checked_field "Producer"
+        expect(page).to have_selector "th", text: "Producer"
       end
-      expect(page).not_to have_selector "th", text: "Name"
-      expect_other_columns_visible
-
-      # Preference saved
-      click_on "Save as default"
-      expect(page).to have_content "Column preferences saved"
-      refresh
-
-      # Preference remembered
-      ofn_drop_down("Columns").click
-      within ofn_drop_down("Columns") do
-        expect(page).to have_unchecked_field "Name"
-      end
-      expect(page).not_to have_selector "th", text: "Name"
-      expect_other_columns_visible
-    end
-
-    def expect_other_columns_visible
-      expect(page).to have_selector "th", text: "Producer"
-      expect(page).to have_selector "th", text: "Price"
-      expect(page).to have_selector "th", text: "On Hand"
     end
   end
 

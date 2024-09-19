@@ -13,7 +13,7 @@
   = hidden_field_tag :producer_id, @producer_id
   = hidden_field_tag :category_id, @category_id
 
-  %table.products{ 'data-column-preferences-target': "table" }
+  %table.products{ 'data-column-preferences-target': "table", class: (hide_producer_column?(producer_options) ? 'hide-producer' : '') }
     %colgroup
       -# The `min-width` property works in Chrome but not Firefox so is considered progressive enhancement.
       %col.col-image{ width:"44px" }= # (image size + padding)
