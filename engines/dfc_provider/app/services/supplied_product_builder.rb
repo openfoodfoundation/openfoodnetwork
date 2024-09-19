@@ -43,6 +43,7 @@ class SuppliedProductBuilder < DfcBuilder
     end.tap do |variant|
       link = supplied_product.semanticId
       variant.semantic_links.new(semantic_id: link) if link.present?
+      CatalogItemBuilder.apply_stock(supplied_product&.catalogItems&.first, variant)
     end
   end
 

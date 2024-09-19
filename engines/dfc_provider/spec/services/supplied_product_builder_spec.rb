@@ -147,11 +147,23 @@ RSpec.describe SuppliedProductBuilder do
           value: 2,
         ),
         productType: product_type,
+        catalogItems: [catalog_item],
       )
     end
     let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
+    let(:catalog_item) {
+      DataFoodConsortium::Connector::CatalogItem.new(
+        nil,
+        # On-demand is expressed as negative stock.
+        # And some APIs send strings instead of numbers...
+        stockLimitation: "-1",
+      )
+    }
 
     it "creates a new Spree::Product and variant" do
+      # We need this to save stock:
+      DefaultStockLocation.find_or_create
+
       create(:taxon)
 
       expect(imported_variant).to be_a(Spree::Variant)
@@ -169,6 +181,11 @@ RSpec.describe SuppliedProductBuilder do
       expect(imported_product.name).to eq("Tomato")
       expect(imported_product.description).to eq("Awesome tomato")
       expect(imported_product.variant_unit).to eq("weight")
+
+      # Stock can only be checked when persisted:
+      imported_product.save!
+      expect(imported_variant.on_demand).to eq true
+      expect(imported_variant.on_hand).to eq 0
     end
 
     context "with spree_product_id supplied" do
