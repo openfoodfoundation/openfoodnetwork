@@ -104,7 +104,7 @@ module Api
       properties = Spree::Property
         .joins(
           producer_properties: {
-            producer: { supplied_products: { variants: { exchanges: :order_cycle } } }
+            producer: { supplied_variants: { exchanges: :order_cycle } }
           }
         )
         .merge(Exchange.outgoing)
