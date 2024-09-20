@@ -95,9 +95,7 @@ module Api
         .merge(Exchange.to_enterprise(enterprise))
         .select('DISTINCT spree_properties.*')
 
-      return properties.merge(OrderCycle.active) if active
-
-      properties
+      properties.merge(OrderCycle.active)
     end
 
     def distributed_producer_properties
@@ -113,9 +111,7 @@ module Api
         .merge(Exchange.to_enterprise(enterprise))
         .select('DISTINCT spree_properties.*')
 
-      return properties.merge(OrderCycle.active) if active
-
-      properties
+      properties.merge(OrderCycle.active)
     end
 
     def active
