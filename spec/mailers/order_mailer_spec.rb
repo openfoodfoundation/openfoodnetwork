@@ -46,7 +46,7 @@ RSpec.describe Spree::OrderMailer do
     end
 
     it "display the OFN header by default" do
-      expect(email.body).to include(ContentConfig.url_for(:footer_logo))
+      expect(email.body).to include(ContentConfig.url_for(:logo))
     end
 
     context 'when hide OFN navigation is enabled for the distributor of the order' do
@@ -55,7 +55,7 @@ RSpec.describe Spree::OrderMailer do
       end
 
       it 'does not display the OFN navigation' do
-        expect(email.body).not_to include(ContentConfig.url_for(:footer_logo))
+        expect(email.body).not_to include(ContentConfig.url_for(:logo))
       end
     end
   end

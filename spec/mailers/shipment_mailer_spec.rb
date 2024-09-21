@@ -35,24 +35,23 @@ RSpec.describe Spree::ShipmentMailer do
     }.not_to raise_error
   end
 
-  it "includes the distributor's name in the subject" do
+  it "includes the order number and distributor's name in the subject" do
     shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: true)
-    expect(shipment_email.subject).to include("#{distributor.name} Shipment Notification")
+    expect(shipment_email.subject).to include("Shipment notification of order #{shipment.order.number} at #{distributor.name}")
   end
 
   it "includes the distributor's name in the body" do
     shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: true)
-    expect(shipment_email.body).to include("Your order from #{distributor.name} has been shipped")
+    expect(shipment_email.body).to include("Your order from <strong>#{distributor.name}</strong> has been shipped")
   end
 
   it "picked_up email includes different text in body" do
-    text = "Your order from #{distributor.name} has been picked-up"
     picked_up_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: false)
-    expect(picked_up_email.body).to include(text)
+    expect(picked_up_email.body).to include("Your order from <strong>#{distributor.name}</strong> has been picked-up")
   end
 
   it "picked_up email has different subject" do
     shipment_email = Spree::ShipmentMailer.shipped_email(shipment, delivery: false)
-    expect(shipment_email.subject).to include("#{distributor.name} Pick up Notification")
+    expect(shipment_email.subject).to include("Pick up notification of order #{shipment.order.number} at #{distributor.name}")
   end
 end

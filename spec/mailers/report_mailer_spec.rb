@@ -13,8 +13,8 @@ RSpec.describe ReportMailer do
     let(:blob) { ReportBlob.create_locally!("customers.csv", "report content") }
 
     it "notifies about a report" do
-      expect(email.subject).to eq "Report ready"
-      expect(email.body).to have_content "Report ready for download"
+      expect(email.subject).to eq "Report ready for download"
+      expect(email.body).to have_content "Your report is ready for download."
     end
 
     it "notifies the user" do

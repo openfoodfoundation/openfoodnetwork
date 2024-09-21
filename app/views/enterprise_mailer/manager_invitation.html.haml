@@ -1,13 +1,23 @@
-%h3
-  = t('invite_email.greeting')
-%p.lead
-  = t('invite_email.invited_to_manage', enterprise: @enterprise.name, instance: @instance)
+- if @enterprise.logo.variable?
+  - @enterprise_for_logo = @enterprise
+
+- greeting_key = "mailers_shared.general_greeting"
+- intro_key = ".invited_to_manage_html"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key),
+                   intro: t(intro_key, enterprise: @enterprise.name, instance: @instance),
+                   enterprise_for_logo: @enterprise_for_logo }
 
 %p
-  = t('invite_email.confirm_your_email', enterprise: @enterprise.name)
+  = t('.confirm_your_email_html', enterprise: @enterprise.name)
 %p
-  = t('invite_email.mistakenly_sent', owner_email: @enterprise.owner.email)
+  = t('.set_a_password')
+%p.callout
+  = t('.mistakenly_sent', enterprise: @enterprise.name)
+  %a{:href => "mailto:#{@enterprise.owner.email}", :target => "_blank"}
+    = @enterprise.owner.email
 
-= render 'shared/mailers/signoff'
+= render 'shared/mailers/signoff_instance'
 
 = render 'shared/mailers/social_and_contact'

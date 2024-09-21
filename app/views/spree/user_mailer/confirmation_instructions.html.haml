@@ -1,18 +1,20 @@
-%h3
-  = t :email_signup_greeting
-%p.lead
-  = t :email_signup_welcome, sitename: @instance
-%p= t :email_confirmation_activate_account
+- greeting_key = "mailers_shared.general_greeting"
+- intro_key = ".welcome"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key),
+                   intro: t(intro_key, sitename: @instance) }
+
+%p
+  = t('.activate_account')
 
 %p.callout
-  = t :email_confirmation_click_link
+  = t('.click_link')
   %br
   %strong
-    = link_to t(:email_confirmation_link_label), spree.spree_user_confirmation_url(:confirmation_token => @user.confirmation_token)
+    = link_to t('.link_label'), spree.spree_user_confirmation_url(:confirmation_token => @user.confirmation_token)
 
-= render 'shared/mailers/signoff'
-
-= render 'shared/mailers/powered_by'
+= render 'shared/mailers/signoff_instance'
 
 %p.notice
-  = t :email_confirmation_notice_unexpected, sitename: @instance, contact: @contact
+  = t('.notice_unexpected', sitename: @instance, contact: @contact)

@@ -9,7 +9,7 @@ class ProducerMailer < ApplicationMailer
 
     load_data
 
-    I18n.with_locale(owner_locale) do
+    I18n.with_locale valid_locale(@producer.owner) do
       return unless orders?(order_cycle, producer)
 
       mail(
@@ -22,10 +22,6 @@ class ProducerMailer < ApplicationMailer
   end
 
   private
-
-  def owner_locale
-    valid_locale(@producer.owner)
-  end
 
   def load_data
     @coordinator = @order_cycle.coordinator
@@ -41,8 +37,10 @@ class ProducerMailer < ApplicationMailer
   end
 
   def subject
-    order_cycle_subject = I18n.t('producer_mailer.order_cycle.subject', producer: @producer.name)
-    "[#{Spree::Config.site_name}] #{order_cycle_subject}"
+    order_cycle_subject = I18n.t('producer_mailer.order_cycle_report.subject',
+                                  coordinator: @coordinator.name,
+                                  producer: @producer.name)
+    "#{order_cycle_subject}"
   end
 
   def orders?(order_cycle, producer)

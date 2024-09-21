@@ -1,24 +1,26 @@
-%table.social.white-bg.fullwidth
-  %table.column
-    %tr
-      %td
-        %h3
-          = t(".customer_greeting", name: @order.bill_address.firstname)
-        %h4
-          = t(".instructions_html", distributor: @order.distributor.name )
-        - if @order.distributor.logo.variable?
-          = image_tag @order.distributor.logo_url(:medium)
+- if @order.distributor.logo.variable?
+  - @enterprise_for_logo = @order.distributor
+
+- greeting_key = "mailers_shared.customer_greeting"
+- intro_key = ".instructions_html"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key, name: @order.bill_address.firstname),
+                   intro: t(intro_key, distributor: @order.distributor.name),
+                   enterprise_for_logo: @enterprise_for_logo }
 
 %p.callout
-  = t(".dont_cancel", email: @order.distributor.contact.email)
+  = t(".dont_cancel")
+  %br
+  %a{:href => "mailto:#{@order.distributor.contact.email}", :target => "_blank"}
+    = @order.distributor.contact.email
 
-%p &nbsp;
-%h4
+%h3
   = t(".order_summary_canceled_html", number: @order.number)
 %p
   = t(".details")
 
-= render 'order_summary'
+= render 'shared/mailers/order_summary'
 
 %p
   - if @order.paid?
@@ -26,5 +28,4 @@
   - else
     = t(".unpaid_order")
 
-= render 'signoff'
-= render 'shared/mailers/powered_by'
+= render 'shared/mailers/signoff_distributor'

@@ -1,33 +1,31 @@
-%table.social.white-bg{:width => "100%"}
-  %tr
-    %td
-      %table.column{:align => "left"}
-        %tr
-          %td
-            %h3
-              = t :email_confirm_shop_greeting, name: @order.distributor.contact_name
-            %h4
-              = t :email_confirm_shop_order_html, distributor: @order.distributor.name
-      %table.column{:align => "left"}
-        %tr
-          %td{:align => "right"}
-            - if @order.distributor.logo.variable?
-              = image_tag @order.distributor.logo_url(:medium), class: "float-right"
-      %span.clear
+- if @order.distributor.logo.variable?
+  - @enterprise_for_logo = @order.distributor
 
-%p &nbsp;
+- greeting_key = "mailers_shared.enterprise_greeting"
+- intro_key = ".intro_html"
+
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key, name: @order.distributor.contact_name),
+                   intro: t(intro_key, distributor: @order.distributor.name),
+                   enterprise_for_logo: @enterprise_for_logo }
+
+%h3
+  = t('mailers_shared.order_confirmation_html', number: @order.number)
 %h4
-  = t :email_confirm_shop_number_html, number: @order.number
-%h5
-  %strong= "#{@order.bill_address.firstname} #{@order.bill_address.lastname}"
-  = " <#{@order.email}>" if @order.email
+  = t('.customer_info')
+%p
+  = "#{@order.bill_address.firstname} #{@order.bill_address.lastname}"
+  %br
+  = "#{@order.email}" if @order.email
+  %br
   = @order.bill_address.phone if @order.bill_address.phone
 
-= render 'order_summary'
-= render 'spree/shared/payment'
-= render 'shipping'
-= render 'special_instructions'
+= render 'shared/mailers/order_summary'
 
-%p &nbsp;
-= render 'shared/mailers/signoff'
+.detail
+  = render 'spree/shared/payment'
+  = render 'shipping'
+  = render 'special_instructions'
+
+= render 'shared/mailers/signoff_instance'
 = render 'shared/mailers/social_and_contact'

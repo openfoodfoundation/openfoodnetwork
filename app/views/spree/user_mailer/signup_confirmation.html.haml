@@ -1,23 +1,20 @@
-%h3
-  = t :email_signup_greeting
-%p.lead
-  = t :email_signup_welcome, sitename: Spree::Config[:site_name]
+- greeting_key = "mailers_shared.general_greeting"
+- intro_key = ".welcome"
 
-/ Heading Panel
-%p &nbsp;
+= render partial: 'shared/mailers/greeting_and_intro',
+         locals: { greeting: t(greeting_key),
+                   intro: t(intro_key, sitename: Spree::Config[:site_name]) }
+
 %p
-  = t :email_signup_confirmed_email
-%p
+  = t('.confirmed_email')
+%p.callout
   -# Remove http:// and trailing slashes from root url if they exist
-  = t :email_signup_shop_html, link: link_to(main_app.root_url.sub(/http:\/\//,"").sub(/\/$/,""), main_app.root_url, target: '_blank')
-%p &nbsp;
-%hr/
-%p &nbsp;
-%p.lead
-  = t :email_signup_text
+  = t('.shop_html', link: link_to(main_app.root_url.sub(/http:\/\//,"").sub(/\/$/,""), main_app.root_url, target: '_blank'))
 %p
-  = t :email_signup_help_html, email: mail_to(ContentConfig.footer_email)
+  = t('.signup_text')
+%p
+  = t('.help_html', email: mail_to(ContentConfig.footer_email))
 
-= render 'shared/mailers/signoff'
+= render 'shared/mailers/signoff_instance'
 
 = render 'shared/mailers/social_and_contact'
