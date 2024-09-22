@@ -22,6 +22,7 @@ module Reporting
           xero_invoices: xero_report_types,
           packing: packing_report_types,
           revenues_by_hub: [],
+          suppliers: suppliers_report_types,
         }
       end
 
@@ -104,6 +105,12 @@ module Reporting
           bulk_coop_item(:allocation),
           bulk_coop_item(:packing_sheets),
           bulk_coop_item(:customer_payments)
+        ]
+      end
+
+      def suppliers_report_types
+        [
+          [i18n_translate(:pay_your_suppliers), :pay_your_suppliers]
         ]
       end
 
