@@ -1768,6 +1768,7 @@ en:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      pay_your_suppliers: Pay your suppliers
       display:
         report_is_big: "This report is big and may slow down your device."
         display_anyway: "Display anyway"
@@ -1814,6 +1815,8 @@ en:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      suppliers:
+        name: Suppliers
       enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
       enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
