@@ -72,7 +72,7 @@
             = f.check_box :on_demand, data: { "action": "click->edit-variant#toggleOnHand" }
             = t(:on_demand)
 
-          = render partial: "admin/shared/tooltip", locals: { tooltip_text: t('admin.products.variants.to_order_tip'), link_text: t('admin.whats_this'), placement: "right" }
+          = render AdminTooltipComponent.new(text: t('admin.products.variants.to_order_tip'), link_text: t('admin.whats_this'), placement: "right")
         .field
           = f.label :on_hand, t(:on_hand)
           .fullwidth
