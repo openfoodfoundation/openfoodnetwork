@@ -303,7 +303,8 @@ RSpec.describe '
 
         context "Line item with variant having variant_unit as 'items'" do
           before do
-            line_item1.variant.update!(variant_unit: "items", display_as: "1 bucket")
+            line_item1.variant.update!(variant_unit: "items", display_as: "1 bucket",
+                                       variant_unit_name: "bucket")
             login_as_admin
             visit spree.print_admin_order_path(order1, params: url_params)
             convert_pdf_to_page
