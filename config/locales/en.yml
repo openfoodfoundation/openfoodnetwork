@@ -753,6 +753,7 @@ en:
         connected_apps_enabled:
           discover_regen: Discover Regenerative portal
           affiliate_sales_data: DFC anonymised orders API for research purposes
+          vine: Voucher Engine (VINE) 
       update:
         resource: Connected app settings
 
@@ -1418,6 +1419,22 @@ en:
               target="_blank"><b>Learn more about Discover Regenerative</b>
               <i class="icon-external-link"></i></a>
               </p>
+          vine:
+            title: "Voucher Engine (VINE)"
+            tagline: "Enable the use of VINE api to handle vouchers"
+            enable: "Connect"
+            disable: "Disconnect"
+            need_to_be_manager: "Only managers can connect apps."
+            vine_api_key: "VINE API Key"
+            description_html: |
+              <p>
+              To enable VINE for your enterprise, enter your API key.
+              </p>
+              <p>
+              <a href="#" target="_blank"><b>VINE</b>
+              <i class="icon-external-link"></i></a>
+              </p>
+
       actions:
         edit_profile: Settings
         properties: Properties
