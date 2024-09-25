@@ -10,6 +10,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
   include StripeStubs
   include PaypalHelper
   include AuthenticationHelper
+  include UIComponentHelper
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -48,7 +49,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
     before do
       login_as(user)
-      visit checkout_path
     end
 
     context "summary step" do
@@ -308,6 +308,47 @@ RSpec.describe "As a consumer, I want to checkout my order" do
             expect(order.reload.state).to eq "complete"
           end
         end
+      end
+    end
+
+    context "when updating cart after summary step" do
+      let(:order) {
+        create(:order_ready_for_payment, distributor:)
+      }
+      let!(:payment_with_fee) {
+        create(
+          :payment_method,
+          distributors: [distributor],
+          name: "Payment with Fee", description: "Payment with fee",
+          calculator: Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 0.1)
+        )
+      }
+
+      it "calculated the correct order total" do
+        pending
+        visit checkout_step_path(:payment)
+        expect(page).to have_checked_field "Payment with Fee"
+
+        click_button "Next - Order summary"
+        expect(page).to have_title "Checkout Summary - Open Food Network"
+
+        # Back to the shop
+        click_link "Shopping @ #{distributor.name}"
+        expect(page).to have_content(distributor.name)
+
+        # Add item to cart
+        within_variant(order.line_items.first.variant) do
+          click_button increase_quantity_symbol
+        end
+        wait_for_cart
+
+        # Checkout
+        toggle_cart
+        click_link "Checkout"
+
+        # Check summary page total
+        expect(page).to have_title "Checkout Summary - Open Food Network"
+        expect(page).to have_selector("#order_total", text: 20.02)
       end
     end
 
