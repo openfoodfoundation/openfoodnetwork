@@ -20,9 +20,25 @@ RSpec.describe BackorderJob do
 
   describe ".check_stock" do
     it "ignores products without semantic link" do
-      BackorderJob.check_stock(order) # and not web requests were made
+      expect {
+        BackorderJob.check_stock(order)
+      }.not_to enqueue_job(BackorderJob)
     end
 
+    it "enqueues backorder", vcr: true do
+      variant.on_demand = true
+      variant.on_hand = -3
+      variant.semantic_links << SemanticLink.new(
+        semantic_id: product_link
+      )
+
+      expect {
+        BackorderJob.check_stock(order)
+      }.to enqueue_job(BackorderJob).with(order, [variant])
+    end
+  end
+
+  describe "#place_backorder" do
     it "places an order", vcr: true do
       order.order_cycle = create(
         :simple_order_cycle,
@@ -37,7 +53,7 @@ RSpec.describe BackorderJob do
       )
 
       expect {
-        BackorderJob.check_stock(order)
+        subject.place_backorder(order, [variant])
       }.to enqueue_job(CompleteBackorderJob).at(completion_time)
 
       # We ordered a case of 12 cans: -3 + 12 = 9
@@ -48,7 +64,7 @@ RSpec.describe BackorderJob do
     end
   end
 
-  describe ".place_order" do
+  describe "#place_order" do
     it "schedules backorder completion for specific enterprises" do
       order.order_cycle = build(
         :simple_order_cycle,
@@ -64,7 +80,7 @@ RSpec.describe BackorderJob do
 
       expect(orderer).to receive(:send_order).and_return(backorder)
       expect {
-        BackorderJob.place_order(user, order, orderer, backorder)
+        subject.place_order(user, order, orderer, backorder)
       }.to enqueue_job(CompleteBackorderJob).at(completion_time)
     end
   end

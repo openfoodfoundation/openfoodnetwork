@@ -22,15 +22,16 @@ class BackorderJob < ApplicationJob
       variant.semantic_links.present?
     end
 
-    return if linked_variants.empty?
-
-    # At this point we want to move to the background with perform_later.
-    # But while this is in development I'll perform the backordering
-    # immediately. It should ease debugging for now.
-    place_backorder(order, linked_variants)
+    perform_later(order, linked_variants) if linked_variants.present?
   end
 
-  def self.place_backorder(order, linked_variants)
+  def perform(order, linked_variants)
+    OrderLocker.lock_order_and_variants(order) do
+      place_backorder(order, linked_variants)
+    end
+  end
+
+  def place_backorder(order, linked_variants)
     user = order.distributor.owner
 
     # We are assuming that all variants are linked to the same wholesale
@@ -54,7 +55,7 @@ class BackorderJob < ApplicationJob
     end
   end
 
-  def self.add_item_to_backorder(variant, broker, backorder, orderer)
+  def add_item_to_backorder(variant, broker, backorder, orderer)
     needed_quantity = -1 * variant.on_hand
     solution = broker.best_offer(variant.semantic_links[0].semantic_id)
 
@@ -74,11 +75,11 @@ class BackorderJob < ApplicationJob
     retail_quantity
   end
 
-  def self.load_broker(user, urls)
+  def load_broker(user, urls)
     FdcOfferBroker.new(user, urls)
   end
 
-  def self.place_order(user, order, orderer, backorder)
+  def place_order(user, order, orderer, backorder)
     placed_order = orderer.send_order(backorder)
 
     return unless orderer.new?(backorder)
@@ -89,9 +90,5 @@ class BackorderJob < ApplicationJob
       .perform_later(
         user, order.distributor, order.order_cycle, placed_order.semanticId
       )
-  end
-
-  def perform(*args)
-    # The ordering logic will live here later.
   end
 end
