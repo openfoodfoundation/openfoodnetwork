@@ -42,6 +42,8 @@ class BackorderJob < ApplicationJob
       payload.add_metadata(:order, order)
       payload.add_metadata(:linked_variants, linked_variants)
     end
+
+    BackorderMailer.backorder_failed(order, linked_variants).deliver_later
   end
 
   def place_backorder(order, linked_variants)

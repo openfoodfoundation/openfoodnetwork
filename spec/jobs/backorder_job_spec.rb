@@ -54,6 +54,12 @@ RSpec.describe BackorderJob do
         subject.perform(nil, [])
       }.not_to raise_error
     end
+
+    it "notifies owner of errors" do
+      expect {
+        subject.perform(order, [])
+      }.to enqueue_mail(BackorderMailer, :backorder_failed)
+    end
   end
 
   describe "#place_backorder" do

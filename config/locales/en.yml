@@ -360,6 +360,22 @@ en:
     report_failed: |
       This report failed. It may be too big to process.
       We will look into it but please let us know if the problem persists.
+  backorder_mailer:
+    backorder_failed:
+      subject: "An automatic backorder failed"
+      headline: "Backordering failed"
+      description: |
+        We tried to place or update a backorder for out-of-stock items but
+        something went wrong. You may have negative stock and need to resolve
+        the issue to order more stock in.
+      hints: |
+        You may need to go to the OIDC settings and reconnect your account.
+        Also check that your supplier's catalog hasn't changed and is still
+        supplying all products you need. And please get in touch with us if
+        you have any questions.
+      order: "Affected order: %{number}"
+      stock: "Stock"
+      product: "Product"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
