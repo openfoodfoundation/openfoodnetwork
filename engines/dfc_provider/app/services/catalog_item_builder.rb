@@ -6,10 +6,6 @@ class CatalogItemBuilder < DfcBuilder
 
     return if limit.blank?
 
-    # Negative stock means "on demand".
-    # And we are only interested in that for now.
-    return unless limit.to_i.negative?
-
     if variant.stock_items.empty?
       variant.stock_items << Spree::StockItem.new(
         stock_location: DefaultStockLocation.find_or_create,
@@ -17,6 +13,10 @@ class CatalogItemBuilder < DfcBuilder
       )
     end
 
-    variant.stock_items[0].backorderable = true
+    if limit.to_i.negative?
+      variant.stock_items[0].backorderable = true
+    else
+      variant.stock_items[0].count_on_hand = limit
+    end
   end
 end

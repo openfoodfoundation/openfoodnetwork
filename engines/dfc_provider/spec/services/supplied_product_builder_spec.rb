@@ -157,6 +157,13 @@ RSpec.describe SuppliedProductBuilder do
         # On-demand is expressed as negative stock.
         # And some APIs send strings instead of numbers...
         stockLimitation: "-1",
+        offers: [offer],
+      )
+    }
+    let(:offer) {
+      DataFoodConsortium::Connector::Offer.new(
+        nil,
+        price: DataFoodConsortium::Connector::Price.new(value: "15.50"),
       )
     }
 
@@ -184,6 +191,7 @@ RSpec.describe SuppliedProductBuilder do
 
       # Stock can only be checked when persisted:
       imported_product.save!
+      expect(imported_variant.price).to eq 15.50
       expect(imported_variant.on_demand).to eq true
       expect(imported_variant.on_hand).to eq 0
     end
