@@ -23,11 +23,24 @@ class BackorderJob < ApplicationJob
     end
 
     perform_later(order, linked_variants) if linked_variants.present?
+  rescue StandardError => e
+    # Errors here shouldn't affect the checkout. So let's report them
+    # separately:
+    Bugsnag.notify(e) do |payload|
+      payload.add_metadata(:order, order)
+    end
   end
 
   def perform(order, linked_variants)
     OrderLocker.lock_order_and_variants(order) do
       place_backorder(order, linked_variants)
+    end
+  rescue StandardError => e
+    # If the backordering fails, we need to tell the shop owner because they
+    # need to organgise more stock.
+    Bugsnag.notify(e) do |payload|
+      payload.add_metadata(:order, order)
+      payload.add_metadata(:linked_variants, linked_variants)
     end
   end
 

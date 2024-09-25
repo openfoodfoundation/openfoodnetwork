@@ -36,6 +36,24 @@ RSpec.describe BackorderJob do
         BackorderJob.check_stock(order)
       }.to enqueue_job(BackorderJob).with(order, [variant])
     end
+
+    it "reports errors" do
+      expect(Bugsnag).to receive(:notify).and_call_original
+
+      expect {
+        BackorderJob.check_stock(nil)
+      }.not_to raise_error
+    end
+  end
+
+  describe "#peform" do
+    it "reports errors" do
+      expect(Bugsnag).to receive(:notify).and_call_original
+
+      expect {
+        subject.perform(nil, [])
+      }.not_to raise_error
+    end
   end
 
   describe "#place_backorder" do
