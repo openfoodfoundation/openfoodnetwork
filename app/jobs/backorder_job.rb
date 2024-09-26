@@ -10,6 +10,7 @@ class BackorderJob < ApplicationJob
   }.freeze
 
   queue_as :default
+  sidekiq_options retry: 0
 
   def self.check_stock(order)
     variants_needing_stock = order.variants.select do |variant|
@@ -35,15 +36,12 @@ class BackorderJob < ApplicationJob
     OrderLocker.lock_order_and_variants(order) do
       place_backorder(order, linked_variants)
     end
-  rescue StandardError => e
+  rescue StandardError
     # If the backordering fails, we need to tell the shop owner because they
     # need to organgise more stock.
-    Bugsnag.notify(e) do |payload|
-      payload.add_metadata(:order, order)
-      payload.add_metadata(:linked_variants, linked_variants)
-    end
-
     BackorderMailer.backorder_failed(order, linked_variants).deliver_later
+
+    raise
   end
 
   def place_backorder(order, linked_variants)

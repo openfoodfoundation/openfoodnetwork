@@ -3,6 +3,8 @@
 # After an order cycle closed, we need to finalise open draft orders placed
 # to replenish stock.
 class CompleteBackorderJob < ApplicationJob
+  sidekiq_options retry: 0
+
   # Required parameters:
   #
   # * user: to authenticate DFC requests
@@ -23,15 +25,10 @@ class CompleteBackorderJob < ApplicationJob
     adjust_quantities(user, order, urls, variants)
 
     FdcBackorderer.new(user, urls).complete_order(order)
-  rescue StandardError => e
-    Bugsnag.notify(e) do |payload|
-      payload.add_metadata(:user, user)
-      payload.add_metadata(:distributor, distributor)
-      payload.add_metadata(:order_cycle, order_cycle)
-      payload.add_metadata(:order_id, order_id)
-    end
-
+  rescue StandardError
     BackorderMailer.backorder_incomplete(user, distributor, order_cycle, order_id).deliver_later
+
+    raise
   end
 
   # Check if we have enough stock to reduce the backorder.

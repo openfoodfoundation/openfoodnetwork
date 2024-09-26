@@ -47,18 +47,11 @@ RSpec.describe BackorderJob do
   end
 
   describe "#peform" do
-    it "reports errors" do
-      expect(Bugsnag).to receive(:notify).and_call_original
-
-      expect {
-        subject.perform(nil, [])
-      }.not_to raise_error
-    end
-
     it "notifies owner of errors" do
       expect {
         subject.perform(order, [])
       }.to enqueue_mail(BackorderMailer, :backorder_failed)
+        .and raise_error(NoMethodError)
     end
   end
 

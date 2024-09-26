@@ -90,18 +90,10 @@ RSpec.describe CompleteBackorderJob do
     end
 
     it "reports errors" do
-      expect(Bugsnag).to receive(:notify).and_call_original
-
-      expect {
-        subject.perform(user, distributor, order_cycle, "https://nil")
-      }.not_to raise_error
-
-      # Combined example for performance
-      expect(Bugsnag).to receive(:notify).and_call_original
-
       expect {
         subject.perform(user, distributor, order_cycle, "https://nil")
       }.to enqueue_mail(BackorderMailer, :backorder_incomplete)
+        .and raise_error VCR::Errors::UnhandledHTTPRequestError
     end
   end
 end
