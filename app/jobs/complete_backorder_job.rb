@@ -23,6 +23,15 @@ class CompleteBackorderJob < ApplicationJob
     adjust_quantities(user, order, urls, variants)
 
     FdcBackorderer.new(user, urls).complete_order(order)
+  rescue StandardError => e
+    Bugsnag.notify(e) do |payload|
+      payload.add_metadata(:user, user)
+      payload.add_metadata(:distributor, distributor)
+      payload.add_metadata(:order_cycle, order_cycle)
+      payload.add_metadata(:order_id, order_id)
+    end
+
+    BackorderMailer.backorder_incomplete(user, distributor, order_cycle, order_id).deliver_later
   end
 
   # Check if we have enough stock to reduce the backorder.

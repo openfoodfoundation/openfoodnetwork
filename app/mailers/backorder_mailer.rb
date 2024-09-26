@@ -11,4 +11,14 @@ class BackorderMailer < ApplicationMailer
       mail(to: order.distributor.owner.email)
     end
   end
+
+  def backorder_incomplete(user, distributor, order_cycle, order_id)
+    @distributor = distributor
+    @order_cycle = order_cycle
+    @order_id = order_id
+
+    I18n.with_locale valid_locale(user) do
+      mail(to: user.email)
+    end
+  end
 end

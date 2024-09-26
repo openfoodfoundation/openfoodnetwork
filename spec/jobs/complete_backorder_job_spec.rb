@@ -88,5 +88,20 @@ RSpec.describe CompleteBackorderJob do
           variant.on_hand
         }.from(49).to(13) # minus 3 backordered slabs (3 * 12 = 36)
     end
+
+    it "reports errors" do
+      expect(Bugsnag).to receive(:notify).and_call_original
+
+      expect {
+        subject.perform(user, distributor, order_cycle, "https://nil")
+      }.not_to raise_error
+
+      # Combined example for performance
+      expect(Bugsnag).to receive(:notify).and_call_original
+
+      expect {
+        subject.perform(user, distributor, order_cycle, "https://nil")
+      }.to enqueue_mail(BackorderMailer, :backorder_incomplete)
+    end
   end
 end

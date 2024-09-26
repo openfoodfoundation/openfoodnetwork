@@ -376,6 +376,20 @@ en:
       order: "Affected order: %{number}"
       stock: "Stock"
       product: "Product"
+    backorder_incomplete:
+      subject: "An automatic backorder failed to complete"
+      headline: "Your backorder is still a draft"
+      description: |
+        We tried to complete a backorder for out-of-stock items but
+        something went wrong. The backorder quantities may be too high if
+        you had cancellations. And your backorder won't be fulfilled while
+        it's in draft state.
+      hints: |
+        You may need to go to the OIDC settings and reconnect your account.
+        Also check that your supplier's catalog hasn't changed and is still
+        supplying all products you need. And please get in touch with us if
+        you have any questions.
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
