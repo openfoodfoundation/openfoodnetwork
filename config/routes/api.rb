@@ -79,18 +79,7 @@ Openfoodnetwork::Application.routes.draw do
 
       resources :states, :only => [:index, :show]
 
-      resources :taxons, :only => [:index]
-
-      resources :taxonomies do
-        member do
-          get :jstree
-        end
-        resources :taxons do
-          member do
-            get :jstree
-          end
-        end
-      end
+      resources :taxons, except: %i[show edit]
 
       get '/reports/:report_type(/:report_subtype)', to: 'reports#show',
           constraints: lambda { |_| OpenFoodNetwork::FeatureToggle.enabled?(:api_reports) }

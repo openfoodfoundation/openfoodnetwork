@@ -1,23 +1,4 @@
-.product-img {
-  text-align: center;
-
-  img {
-    padding: 0.3rem;
-
-    // placeholder for when no product images
-    &.placeholder {
-      opacity: 0.35;
-
-      @include breakpoint(desktop) {
-        display: none;
-      }
-    }
-
-    @media only screen and (max-width: 1024px) {
-      margin: 0 0 0.5rem;
-    }
-  }
-}
+@import "shop_partials/images";
 
 .hero-img {
   outline: 1px solid $disabled-bright;

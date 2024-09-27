@@ -7,6 +7,8 @@ module OrderCycles
   class FormService
     def initialize(order_cycle, order_cycle_params, user)
       @order_cycle = order_cycle
+      @confirm_datetime_change = order_cycle_params.delete :confirm_datetime_change
+      @error_class = order_cycle_params.delete :error_class
       @order_cycle_params = order_cycle_params
       @specified_params = order_cycle_params.keys
       @user = user
@@ -21,6 +23,9 @@ module OrderCycles
     end
 
     def save
+      # Check that order cycle datetime values changed if it has existing orders
+      verify_datetime_change!
+
       schedule_ids = build_schedule_ids
       order_cycle.assign_attributes(order_cycle_params)
       return false unless order_cycle.valid?
@@ -228,6 +233,17 @@ module OrderCycles
       @user_distributor_shipping_method_ids ||=
         DistributorShippingMethod.where(distributor_id: user_distributors_ids)
           .pluck(:id)
+    end
+
+    def verify_datetime_change!
+      return unless @confirm_datetime_change
+      return unless @order_cycle.orders.exists?
+      return if @order_cycle.same_datetime_value(:orders_open_at,
+                                                 @order_cycle_params[:orders_open_at]) &&
+                @order_cycle.same_datetime_value(:orders_close_at,
+                                                 @order_cycle_params[:orders_close_at])
+
+      raise @error_class
     end
   end
 end

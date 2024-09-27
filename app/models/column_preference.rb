@@ -15,10 +15,11 @@ class ColumnPreference < ApplicationRecord
   validates :column_name, presence: true, inclusion: { in: proc { |p|
                                                              valid_columns_for(p.action_name)
                                                            } }
+  scope :bulk_edit_product, -> { where(action_name: 'products_v3_index') }
 
   def self.for(user, action_name)
     stored_preferences = where(user_id: user.id, action_name:)
-    default_preferences = __send__("#{action_name}_columns")
+    default_preferences = get_default_preferences(action_name, user)
     filter(default_preferences, user, action_name)
     default_preferences.each_with_object([]) do |(column_name, default_attributes), preferences|
       stored_preference = stored_preferences.find_by(column_name:)
@@ -36,7 +37,7 @@ class ColumnPreference < ApplicationRecord
   end
 
   def self.valid_columns_for(action_name)
-    __send__("#{action_name}_columns").keys.map(&:to_s)
+    get_default_preferences(action_name, Spree::User.new).keys.map(&:to_s)
   end
 
   def self.known_actions
@@ -51,5 +52,14 @@ class ColumnPreference < ApplicationRecord
     return if user.admin? || user.enterprises.where(enable_subscriptions: true).any?
 
     default_preferences.delete(:schedules)
+  end
+
+  def self.get_default_preferences(action_name, user)
+    case action_name
+    when 'products_v3_index'
+      products_v3_index_columns(user)
+    else
+      __send__("#{action_name}_columns")
+    end
   end
 end

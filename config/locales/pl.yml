@@ -63,7 +63,6 @@ pl:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "musi być puste, ponieważ używane są ustawienia zapasów producenta"
-            on_demand_but_count_on_hand_set: "musi być puste, jeśli na żądanie"
             limited_stock_but_no_count_on_hand: "należy określić, z powodu ograniczonych zapasów"
       messages:
         blank: "nie może być puste"
@@ -286,7 +285,6 @@ pl:
   password_confirmation: Potwierdzenie hasła
   reset_password_token: Token resetowania hasła
   expired: wygasł, poproś o nowy
-  back_to_payments_list: "Powrót do listy płatności"
   maestro_or_solo_cards: "Karty Maestro / Solo"
   backordered: "Zamówienie zaległe"
   on_hand: "Dostępne"
@@ -341,6 +339,8 @@ pl:
         remove: Usuń
       image:
         edit: Edytuj
+      product_preview:
+        shop_tab: Sklep
     begins_at: Początek o
     begins_on: Początek się w dniu
     customer: Klient
@@ -511,7 +511,6 @@ pl:
       variants:
         infinity: "Nieskończoność"
         to_order_tip: "Przedmioty wykonane na zamówienie nie mają ustalonego poziomu zapasów, np. Świeże bochenki chleba na zamówienie."
-      back_to_products_list: "Powrót do listy produktów"
       editing_product: "Edycja produktu"
       tabs:
         product_details: "Szczegóły produktu"
@@ -933,10 +932,8 @@ pl:
         contact_name: Nazwa Kontaktu
       edit:
         editing: 'Ustawienia:'
-        back_link: Powrót do listy podmiotów
       new:
         title: Nowy podmiot
-        back_link: Powrót do listy podmiotów
       welcome:
         welcome_title: Witamy w Open Food Network!
         welcome_text: Pomyślnie utworzyłeś
@@ -967,6 +964,8 @@ pl:
         back_to_list: "Powrót do listy"
         save_and_back_to_list: "Zapisz i wróć do listy"
         choose_products_from: "Wybierz produkty z:"
+      date_time_warning_modal_content:
+        cancel: 'Anuluj'
       incoming:
         incoming: "Przychodzący"
         supplier: "Dostawca"
@@ -2173,7 +2172,6 @@ pl:
   spree_admin_single_enterprise_hint: "Wskazówka: aby inni mogli Cię znaleźć, włącz widoczność poniżej"
   spree_admin_eg_pickup_from_school: "np: 'Odbiór w Domu Kultury Krąg'"
   spree_admin_eg_collect_your_order: "np. „Proszę odebrać zamówienie pod adresem Słowackiego 19, Poznań”"
-  spree_classification_primary_taxon_error: "Takson %{taxon} jest głównym taksonem %{product} i nie można go usunąć"
   spree_order_availability_error: "Dystrybutor lub cykl zamówień nie mogą dostarczyć produktów w Twoim koszyku"
   spree_order_populator_error: "Ten dystrybutor lub cykl zamówień nie może dostarczyć wszystkich produktów w Twoim koszyku. Proszę wybierz inny."
   spree_order_populator_availability_error: "Ten produkt nie jest dostępny u wybranego dystrybutora lub cyklu zamówień."
@@ -2444,7 +2442,6 @@ pl:
   order_cycles_no_permission_to_coordinate_error: "Żaden z Twoich podmiotów nie ma uprawnień do koordynowania cyklu zamówień"
   order_cycles_no_permission_to_create_error: "Nie masz uprawnień do tworzenia cyklu zamówień koordynowanego przez ten podmiot"
   order_cycle_closed: "Wybrany cykl zamówień właśnie się zakończył. Proszę spróbuj ponownie!"
-  back_to_orders_list: "Powrót do listy zamówień"
   no_orders_found: "Nie znaleziono zamówień"
   order_information: "Szczegóły zamówienia"
   date_completed: "Data zakończenia"
@@ -2748,6 +2745,7 @@ pl:
       confirmation: |
           Spowoduje to ustawienie poziomu zapasów na zero dla wszystkich produktów tego podmiotu, których nie ma w przesłanym pliku.
     order_cycles:
+      unsaved_changes: "Masz niezapisane zmiany"
       create_failure: "Nie udało się utworzyć cyklu zamówień"
       update_success: 'Twój cykl zamówień został zaktualizowany.'
       update_failure: "Nie udało się zaktualizować cyklu zamówień"
@@ -3070,7 +3068,6 @@ pl:
     tax_rate_amount_explanation: "Stawki podatku są kwotami dziesiętnymi, aby ułatwić obliczenia (tj. Jeśli stawka podatku wynosi 5%, wprowadź 0,05)"
     included_in_price: "Wliczony w cenę"
     show_rate_in_label: "Pokaż kurs na etykiecie"
-    back_to_tax_rates_list: "Powrót do listy stawek podatkowych"
     tax_settings: "Ustawienia podatkowe"
     zones: "Strefy"
     new_zone: "Nowa strefa"
@@ -3083,14 +3080,11 @@ pl:
     iso_name: "Nazwa ISO"
     states_required: "Województwo wymagane"
     editing_country: "Edycja kraju"
-    back_to_countries_list: "Powrót do listy krajów"
     states: "Województwa"
     abbreviation: "Skrót"
     new_state: "Nowe województwo"
     payment_methods: "Metody płatności"
-    taxonomies: "Taksonomie"
-    new_taxonomy: "Nowa taksonomia"
-    back_to_taxonomies_list: "Powrót do listy taksonomii"
+    taxons: "Kategorie produktów"
     shipping_methods: "Metody dostaw"
     shipping_method: "Metoda dostawy"
     payment: "Płatność"
@@ -3217,7 +3211,6 @@ pl:
           continue: "Kontyntynuj"
         new:
           new_return_authorization: "Nowa autoryzacja zwrotu"
-          back_to_return_authorizations_list: "Powrót do listy autoryzacji zwrotu"
           continue: "Kontyntynuj"
         edit:
           receive: "otrzymać"
@@ -3481,6 +3474,8 @@ pl:
           total: "Razem"
           billing_address_name: "Nazwa"
       taxons:
+        index:
+          title: "Kategorie produktów"
         form:
           name: Nazwa
           description: Opis
@@ -3656,7 +3651,6 @@ pl:
       key_cleared: "Klucz wyczyszczony"
       shipment:
         cannot_ready: "Nie można przygotować wysyłki."
-      invalid_taxonomy_id: "Nieprawidłowy identyfikator taksonomii."
     activerecord:
       models:
         spree/payment:

@@ -38,7 +38,6 @@
 
 @import "plugins/flatpickr-customization"; // admin_v3
 @import "plugins/powertip"; // admin_v3
-@import "../admin/plugins/jstree";
 
 @import "sections/orders"; // admin_v3
 @import "../admin/sections/products";
@@ -131,3 +130,5 @@
 @import "app/webpacker/css/admin/trix.scss";
 
 @import "terms_of_service_banner"; // admin_v3
+
+@import "pages/product_preview"; // admin_v3

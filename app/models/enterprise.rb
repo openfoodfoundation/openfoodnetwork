@@ -1,7 +1,5 @@
 # frozen_string_literal: false
 
-require "mini_magick"
-
 class Enterprise < ApplicationRecord
   SELLS = %w(unspecified none own any).freeze
   ENTERPRISE_SEARCH_RADIUS = 100
@@ -249,12 +247,6 @@ class Enterprise < ApplicationRecord
     count(distinct: true)
   end
 
-  # Remove any unsupported HTML.
-  def long_description
-    HtmlSanitizer.sanitize_and_enforce_link_target_blank(super)
-  end
-
-  # Remove any unsupported HTML.
   def long_description=(html)
     super(HtmlSanitizer.sanitize_and_enforce_link_target_blank(html))
   end
@@ -488,7 +480,7 @@ class Enterprise < ApplicationRecord
     return unless image.variable?
 
     image_variant_url_for(image.variant(name))
-  rescue ActiveStorage::Error, MiniMagick::Error, ActionView::Template::Error => e
+  rescue StandardError => e
     Bugsnag.notify "Enterprise ##{id} #{image.try(:name)} error: #{e.message}"
     Rails.logger.error(e.message)
 

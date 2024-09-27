@@ -68,7 +68,6 @@ fr_CM:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
-            on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
       messages:
         blank: "Champ obligatoire"
@@ -408,6 +407,8 @@ fr_CM:
         remove: Supprimer
       image:
         edit: Modifier
+      product_preview:
+        shop_tab: Faire mes courses
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -606,7 +607,6 @@ fr_CM:
       variants:
         infinity: "Infini"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
-      back_to_products_list: "Retour à la liste produits"
       editing_product: "Modifier le produit"
       tabs:
         product_details: "Détails"
@@ -1081,10 +1081,8 @@ fr_CM:
         contact_name: Nom du contact principal
       edit:
         editing: 'Configuration:'
-        back_link: Revenir à la liste des entreprises
       new:
         title: Nouvelle entreprise
-        back_link: Revenir à la liste des entreprises
       welcome:
         welcome_title: Bienvenue sur CoopCircuits !
         welcome_text: 'Vous avez créé avec succès '
@@ -1121,6 +1119,8 @@ fr_CM:
         choose_products_from: "Choisir produits depuis :"
         re_notify_producers: Notifier les producteurs
         notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec le contenu du cycle de vente.
+      date_time_warning_modal_content:
+        cancel: 'Annuler'
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les boutiques du cycle de vente)"
         supplier: "Fournisseur"
@@ -2469,7 +2469,6 @@ fr_CM:
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
   spree_admin_eg_pickup_from_school: "ex : \"Retrait des produits à l'Ecole Marimati / Au Café du coin / chez Babette / ...\""
   spree_admin_eg_collect_your_order: "ex : \"Veuillez récupérer votre commande au 34 rue Victor Hugo, 75018 Paris\""
-  spree_classification_primary_taxon_error: "La catégorie %{taxon}est utilisée par %{product} et ne peut être supprimée"
   spree_order_availability_error: "Le distributeur ne peut fournir les produits de votre panier pour ce cycle de vente."
   spree_order_populator_error: "Le distributeur ne peut fournir tous les produits de votre panier pour ce cycle de vente. Merci de choisir un autre distributeur ou un autre cycle de vente."
   spree_order_cycle_error: "Veuillez sélectionner une option pour cette commande."
@@ -3108,6 +3107,8 @@ fr_CM:
           Cette action remettra tous les niveaux de stock à zero pour cette
           entreprise pour les produits non présents dans ce fichier.
     order_cycles:
+      unsaved_changes: "Des modifications n'ont pas été sauvegardées"
+      bulk_save_error: "Oups ! Nous n'avons pas réussi à sauvegarder vos modification :-("
       create_failure: "La création du cycle de vente a échoué"
       update_success: 'Votre cycle de vente a été mis à jour.'
       update_failure: "La mise à jour du cycle de vente à échoué"
@@ -3346,7 +3347,6 @@ fr_CM:
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
     new_tax_category: "Nouvelle catégorie de taxe"
-    new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"
     no_pending_payments: "Aucun paiement en attente."
     remove: "Supprimer"
@@ -3363,8 +3363,6 @@ fr_CM:
       UPS Ground: "UPS Ground"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
-    taxonomy_edit: "Modifier la taxonomie"
-    tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
@@ -3459,7 +3457,6 @@ fr_CM:
     tax_rate_amount_explanation: "Les taux de taxe sont présentés en nombres décimaux pour faciliter les calculs (ex : si le taux est 5,5% saisissez 0.055)"
     included_in_price: "Inclus dans le prix"
     show_rate_in_label: "Montrer le taux dans le nom"
-    back_to_tax_rates_list: "Retour à la liste des taux de taxe"
     tax_settings: "Paramètres TVA"
     zones: "Zones"
     new_zone: "Nouvelle zone"
@@ -3472,14 +3469,11 @@ fr_CM:
     iso_name: "Noms ISO"
     states_required: "États/Départements requis"
     editing_country: "Pays en cours de mise à jour"
-    back_to_countries_list: "Retour à la liste des pays"
     states: "Départements"
     abbreviation: "Code"
     new_state: "Nouveau département"
     payment_methods: "Méthodes de paiement"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "Nouvelle taxonomie"
-    back_to_taxonomies_list: "Retour à la liste des taxonomies"
+    taxons: "Catégorie Produit"
     shipping_methods: "Méthodes de livraison"
     shipping_method: "Option d'expédition"
     shipment: "Livraison"
@@ -3633,7 +3627,6 @@ fr_CM:
           continue: "Suivant"
         new:
           new_return_authorization: "Nouvelle autorisation de retour"
-          back_to_return_authorizations_list: "Revenir à la liste des autorisations"
           continue: "Suivant"
         edit:
           receive: "reçoit"
@@ -3924,9 +3917,10 @@ fr_CM:
           total: "Total"
           billing_address_name: "Produit/Variante"
       taxons:
+        index:
+          title: "Catégorie Produit"
         form:
           name: Produit/Variante
-          permalink: Permalien
           description: Description
       general_settings:
         edit:
@@ -4147,7 +4141,6 @@ fr_CM:
       key_cleared: "Clé supprimée"
       shipment:
         cannot_ready: "La livraison ne peut pas être préparée."
-      invalid_taxonomy_id: "L'identifiant de la catégorie n'est pas valide."
     activerecord:
       models:
         spree/payment:

@@ -81,8 +81,6 @@ ml:
         white_label_logo_link: "കടയുടെ മുൻവശത്ത് ഉപയോഗിക്കുന്ന ലോഗോയ്ക്കുള്ള ലിങ്ക്"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "നികുതി വിഭാഗം അവകാശമായി ലഭിക്കുന്നതിന് ഓരോ ഇനത്തിനും കാൽക്കുലേറ്റർ ആവശ്യമാണ്."
         spree/user:
           attributes:
             email:
@@ -102,7 +100,6 @@ ml:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "പ്രൊഡ്യൂസർ സ്റ്റോക്ക് ക്രമീകരണങ്ങൾ ഉപയോഗിക്കുന്നതിനാൽ ശൂന്യമായിരിക്കണം"
-            on_demand_but_count_on_hand_set: "ആവശ്യകത കൂടിയിരുന്നാൽ ശൂന്യമായിരിക്കണം"
             limited_stock_but_no_count_on_hand: "സ്റ്റോക്ക് പരിമിതമായതിനാൽ വ്യക്തമാക്കണം"
       messages:
         confirmation: "%{attribute} എന്നതുമായി പൊരുത്തപ്പെടുന്നില്ല"
@@ -541,6 +538,8 @@ ml:
         remove: നീക്കം ചെയ്യുക
       image:
         edit: എഡിറ്റ് ചെയ്യുക
+      product_preview:
+        shop_tab: ഷോപ്പ്
     adjustments:
       skipped_changing_canceled_order: "നിങ്ങൾക്ക് റദ്ദാക്കിയ ഓർഡർ മാറ്റാൻ കഴിയില്ല."
     begins_at: ആരംഭിക്കുന്നത്
@@ -747,7 +746,6 @@ ml:
       variants:
         infinity: "അനന്തത"
         to_order_tip: "ഓർഡർ ചെയ്യാൻ തയ്യാറാക്കിയ ഇനങ്ങൾക്ക് സെറ്റ് സ്റ്റോക്ക് ലെവൽ ഇല്ല, ഉദാഹരണത്തിന്, ഓർഡർ അനുസരിച്ച് തയ്യാറാക്കുന്ന ബ്രഡ് പാക്കറ്റുകൾ."
-      back_to_products_list: "ഉൽപ്പന്നങ്ങളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
       editing_product: "ഉൽപ്പന്നം തിരുത്തുന്നു"
       tabs:
         product_details: "ഉൽപ്പന്നത്തിന്റെ വിവരം"
@@ -772,7 +770,6 @@ ml:
         search: തിരയുക
       sort:
         pagination:
-          total_html: "നിങ്ങളുടെ തിരയൽ മാനദണ്ഡങ്ങൾക്കനുസരിച്ച് <strong>%{total} ഉൽപ്പന്നങ്ങൾ</strong> കണ്ടെത്തി. %{from} മുതൽ %{to} വരെ കാണിക്കുന്നു."
           per_page:
             show: കാണിക്കുക
             per_page: "ഓരോ പേജിലും %{num}"
@@ -1297,10 +1294,8 @@ ml:
         contact_name: ബന്ധപ്പെടാനുള്ള പേര്
       edit:
         editing: 'ക്രമീകരണങ്ങൾ:'
-        back_link: എന്റർപ്രൈസസ് ലിസ്റ്റിലേക്ക് മടങ്ങുക
       new:
         title: പുതിയ എന്റർപ്രൈസ്
-        back_link: എന്റർപ്രൈസസ് ലിസ്റ്റിലേക്ക് മടങ്ങുക
       welcome:
         welcome_title: ഓപ്പൺ ഫുഡ് നെറ്റ്‌വർക്കിലേക്ക് സ്വാഗതം!
         welcome_text: നിങ്ങൾ വിജയകരമായി സൃഷ്ടിച്ചു
@@ -1337,6 +1332,8 @@ ml:
         choose_products_from: "ഇതിൽ നിന്ന് ഉൽപ്പന്നങ്ങൾ തിരഞ്ഞെടുക്കുക:"
         re_notify_producers: പ്രൊഡ്യൂസേഴ്സിനെ വീണ്ടും അറിയിക്കുക
         notify_producers_tip: ഇത് ഓരോ പ്രൊഡ്യൂസേഴ്സിനും അവരുടെ ഓർഡറുകളുടെ ലിസ്റ്റുമായി ഒരു ഇമെയിൽ അയയ്ക്കും.
+      date_time_warning_modal_content:
+        cancel: 'റദ്ദാക്കുക'
       incoming:
         incoming: "ഇൻകമിംഗ്"
         supplier: "വിതരണക്കാരൻ"
@@ -2787,7 +2784,6 @@ ml:
   spree_admin_single_enterprise_hint: "സൂചന: നിങ്ങളെ കണ്ടെത്താൻ ആളുകളെ അനുവദിക്കുന്നതിന്, ചുവടെ നിങ്ങളുടെ ദൃശ്യപരത ഓണാക്കുക"
   spree_admin_eg_pickup_from_school: "ഉദാ. 'പ്രൈമറി സ്കൂളിൽ നിന്ന് പിക്കപ്പ് ചെയ്യുക'"
   spree_admin_eg_collect_your_order: "ഉദാ. 'ദയവായി 123 ഇമാജിനറി സ്ട്രീറ്റ്, നോർത്ത്കോട്ട്, 3070-ൽ നിന്ന് നിങ്ങളുടെ ഓർഡർ ശേഖരിക്കുക'"
-  spree_classification_primary_taxon_error: "ടാക്സോൺ %{taxon} എന്നത് %{product} -ന്റെ പ്രാഥമിക ടാക്സോണാണ്, അത് ഇല്ലാതാക്കാൻ കഴിയില്ല"
   spree_order_availability_error: "ഡിസ്ട്രിബ്യൂട്ടർക്കോ അല്ലെങ്കിൽ ഓർഡർ സൈക്കിളിനോ നിങ്ങളുടെ കാർട്ടിലെ ഉൽപ്പന്നങ്ങൾ വിതരണം ചെയ്യാൻ കഴിയില്ല"
   spree_order_populator_error: "നിങ്ങളുടെ കാർട്ടിലെ എല്ലാ ഉൽപ്പന്നങ്ങളും വിതരണം ചെയ്യാൻ ആ വിതരണക്കാരനോ ഓർഡർ സൈക്കിളിനോ കഴിയില്ല. ദയവായി മറ്റൊന്ന് തിരഞ്ഞെടുക്കുക."
   spree_order_cycle_error: "ഈ ഓർഡറിനായി ഒരു ഓർഡർ സൈക്കിൾ തിരഞ്ഞെടുക്കുക."
@@ -3458,6 +3454,8 @@ ml:
           ഇതിനായുള്ള എല്ലാ ഉൽപ്പന്നങ്ങളുടെയും സ്റ്റോക്ക് ലെവൽ പൂജ്യമായി സജ്ജമാക്കും
           അപ്‌ലോഡ് ചെയ്ത ഫയലിൽ ഇല്ലാത്ത എന്റർപ്രൈസ്.
     order_cycles:
+      unsaved_changes: "നിങ്ങൾക്ക് സേവ് ചെയ്യാത്ത മാറ്റങ്ങളുണ്ട്"
+      bulk_save_error: "അയ്യോ! നിങ്ങളുടെ മാറ്റങ്ങൾ സേവ് ചെയ്യാൻ എനിക്ക് കഴിഞ്ഞില്ല."
       create_failure: "ഓർഡർ സൈക്കിൾ സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു"
       update_success: 'നിങ്ങളുടെ ഓർഡർ സൈക്കിൾ അപ്ഡേറ്റ് ചെയ്തു.'
       update_failure: "ഓർഡർ സൈക്കിൾ അപ്ഡേറ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു"
@@ -3680,7 +3678,6 @@ ml:
     more: "കൂടുതൽ"
     new_adjustment: "പുതിയ മാറ്റംവരുത്തൽ"
     new_tax_category: "പുതിയ നികുതി വിഭാഗം"
-    new_taxon: "പുതിയ ടാക്സൺ"
     new_user: "പുതിയ ഉപയോക്താവ്"
     no_pending_payments: "തീർപ്പാക്കാത്ത പേയ്‌മെന്റുകളൊന്നുമില്ല"
     remove: "നീക്കം ചെയ്യുക"
@@ -3699,8 +3696,6 @@ ml:
       delivery: "ഒപ്പിട്ടു, സീൽ ചെയ്തു, എത്തിച്ചു"
     start_date: "ആരംഭിക്കുന്ന തീയതി"
     successfully_removed: "വിജയകരമായി നീക്കം ചെയ്തു"
-    taxonomy_edit: "ടാക്സോണമി എഡിറ്റ്"
-    tree: "ട്രീ"
     updating: "അപ്ഡേറ്റ് ചെയ്യുന്നു"
     your_order_is_empty_add_product: "നിങ്ങളുടെ ഓർഡർ ശൂന്യമാണ്, മുകളിൽ ഒരു ഉൽപ്പന്നം തിരയുകയും ചേർക്കുകയും ചെയ്യുക"
     add_product: "ഉൽപ്പന്നം ചേർക്കുക"
@@ -3797,7 +3792,6 @@ ml:
     tax_rate_amount_explanation: "കണക്കുകൂട്ടലുകളെ സഹായിക്കുന്നതിനുള്ള ഒരു ദശാംശ തുകയാണ് നികുതി നിരക്കുകൾ, (അതായത് നികുതി നിരക്ക് 5% ആണെങ്കിൽ 0.05 നൽകുക)"
     included_in_price: "വിലയിൽ ഉൾപ്പെടുത്തിയിട്ടുണ്ട്"
     show_rate_in_label: "ലേബലിൽ നിരക്ക് കാണിക്കുക"
-    back_to_tax_rates_list: "നികുതി നിരക്കുകളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
     tax_settings: "നികുതി ക്രമീകരണങ്ങൾ"
     zones: "സോണുകൾ"
     new_zone: "പുതിയ സോൺ"
@@ -3810,14 +3804,11 @@ ml:
     iso_name: "ഐഎസ്ഓ നാമം"
     states_required: "ആവശ്യമുള്ള സംസ്ഥാനങ്ങൾ"
     editing_country: "രാജ്യം എഡിറ്റ് ചെയ്യുന്നു"
-    back_to_countries_list: "രാജ്യങ്ങളുടെ പട്ടികയിലേക്ക് മടങ്ങുക"
     states: "സംസ്ഥാനങ്ങൾ"
     abbreviation: "ചുരുക്കെഴുത്ത്"
     new_state: "പുതിയ സംസ്ഥാനം"
     payment_methods: "പേയ്മെന്റ് രീതികൾ"
-    taxonomies: "ടാക്സോണമികൾ"
-    new_taxonomy: "പുതിയ ടാക്സോണമി"
-    back_to_taxonomies_list: "ടാക്‌സോണമി ലിസ്റ്റിലേക്ക് മടങ്ങുക"
+    taxons: "ഉൽപ്പന്ന വിഭാഗങ്ങൾ"
     shipping_methods: "ഷിപ്പിംഗ് രീതികൾ"
     shipping_method: "ഷിപ്പിംഗ് രീതി"
     shipment: "കയറ്റുമതി"
@@ -3975,7 +3966,6 @@ ml:
           continue: "തുടരുക"
         new:
           new_return_authorization: "പുതിയ റിട്ടേൺ അനുമതി"
-          back_to_return_authorizations_list: "റിട്ടേൺ അനുമതി ലിസ്റ്റിലേക്ക് മടങ്ങുക"
           continue: "തുടരുക"
         edit:
           receive: "സ്വീകരിക്കുക"
@@ -4293,9 +4283,10 @@ ml:
           total: "ആകെ"
           billing_address_name: "പേര്"
       taxons:
+        index:
+          title: "ഉൽപ്പന്ന വിഭാഗങ്ങൾ"
         form:
           name: പേര്
-          permalink: പെർമലിങ്ക്
           description: വിവരണം
       general_settings:
         edit:
@@ -4533,7 +4524,6 @@ ml:
       key_cleared: "കീ മായ്ച്ചു"
       shipment:
         cannot_ready: "കയറ്റുമതി തയ്യാറാക്കാൻ കഴിയില്ല."
-      invalid_taxonomy_id: "ടാക്സോണമി ഐഡി അസാധുവാണ്."
       toggle_api_key_view: "ഉപയോക്താവിനായി എപിഐ കീ കാണിക്കുക"
     activerecord:
       models:

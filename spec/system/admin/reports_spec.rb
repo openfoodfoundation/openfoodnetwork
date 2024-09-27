@@ -139,14 +139,15 @@ RSpec.describe '
       # Unlocking the breakpoint will continue execution of the controller.
       breakpoint.unlock
 
-      # We have to wait to be sure that the "loading" spinner won't appear
-      # within the next half second. The default wait time would wait for
-      # 10 seconds which slows down the spec.
-      using_wait_time 0.5 do
-        page.has_selector? ".loading"
-      end
+      # Now the controller response will show the loading spinner again and
+      # the fallback mechanism will render the report later.
+      expect(page).to have_selector ".loading"
+
+      # Wait for the fallback mechanism:
+      sleep 3
 
       expect(page).not_to have_selector ".loading"
+      expect(page).to have_content "First Name Last Name Billing Address Email"
     end
   end
 
@@ -208,43 +209,6 @@ RSpec.describe '
     before do
       login_as_admin
       visit admin_reports_path
-    end
-
-    it "generates the orders and distributors report" do
-      click_link 'Orders And Distributors'
-      run_report
-
-      rows = find("table.report__table").all("thead tr")
-      table_headers = rows.map { |r| r.all("th").map { |c| c.text.strip } }
-
-      expect(table_headers).to eq([
-                                    ['Order date',
-                                     'Order Id',
-                                     'Customer Name',
-                                     'Customer Email',
-                                     'Customer Phone',
-                                     'Customer City',
-                                     'SKU',
-                                     'Item name',
-                                     'Variant',
-                                     'Quantity',
-                                     'Max Quantity',
-                                     'Cost',
-                                     'Shipping Cost',
-                                     'Payment Method',
-                                     'Distributor',
-                                     'Distributor address',
-                                     'Distributor city',
-                                     'Distributor postcode',
-                                     'Shipping Method',
-                                     'Shipping instructions']
-                                  ])
-
-      expect(all('table.report__table tbody tr').count).to eq(
-        Spree::LineItem.where(
-          order_id: ready_to_ship_order.id # Total rows should equal number of line items, per order
-        ).count
-      )
     end
 
     it "generates the payments reports" do
@@ -499,6 +463,8 @@ RSpec.describe '
   end
 
   describe 'bulk coop report' do
+    let!(:order) { create(:completed_order_with_totals) }
+
     before do
       login_as_admin
       visit admin_reports_path

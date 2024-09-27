@@ -24,6 +24,7 @@ class OrderCycle < ApplicationRecord
                                          where incoming: false
                                        }, class_name: "Exchange", dependent: :destroy
 
+  has_many :orders, class_name: 'Spree::Order', dependent: :restrict_with_exception
   has_many :suppliers, -> { distinct }, source: :sender, through: :cached_incoming_exchanges
   has_many :distributors, -> { distinct }, source: :receiver, through: :cached_outgoing_exchanges
   has_many :order_cycle_schedules, dependent: :destroy
@@ -147,17 +148,20 @@ class OrderCycle < ApplicationRecord
 
   # Find the earliest closing times for each distributor in an active order cycle, and return
   # them in the format {distributor_id => closing_time, ...}
-  def self.earliest_closing_times
-    Hash[
-      Exchange.
-        outgoing.
-        joins(:order_cycle).
-        merge(OrderCycle.active).
-        group('exchanges.receiver_id').
-        select("exchanges.receiver_id AS receiver_id,
-                MIN(order_cycles.orders_close_at) AS earliest_close_at").
-        map { |ex| [ex.receiver_id, ex.earliest_close_at.to_time] }
-    ]
+  #
+  # Optionally, specify some distributor_ids as a parameter to scope the results
+  def self.earliest_closing_times(distributor_ids = nil)
+    cycles = Exchange.
+      outgoing.
+      joins(:order_cycle).
+      merge(OrderCycle.active).
+      group('exchanges.receiver_id')
+
+    cycles = cycles.where(receiver_id: distributor_ids) if distributor_ids.present?
+
+    cycles.pluck("exchanges.receiver_id AS receiver_id",
+                 "MIN(order_cycles.orders_close_at) AS earliest_close_at")
+      .to_h
   end
 
   def attachable_distributor_payment_methods
@@ -311,6 +315,13 @@ class OrderCycle < ApplicationRecord
 
   def simple?
     coordinator.sells == 'own'
+  end
+
+  def same_datetime_value(attribute, string)
+    return true if self[attribute].blank? && string.blank?
+    return false if self[attribute].blank? || string.blank?
+
+    DateTime.parse(string).to_fs(:short) == self[attribute]&.to_fs(:short)
   end
 
   private

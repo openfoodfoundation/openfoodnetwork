@@ -11,6 +11,8 @@ module Admin
     def index
       fetch_products
       render "index", locals: { producers:, categories:, tax_category_options:, flash: }
+
+      session[:products_return_to_url] = request.url
     end
 
     def bulk_update
@@ -37,6 +39,8 @@ module Admin
         spree_current_user,
         { id: params[:id] }
       ).find_product
+
+      authorize! :delete, @record
 
       @record.destroyed_by = spree_current_user
       status = :ok
@@ -72,6 +76,8 @@ module Admin
 
     def clone
       @product = Spree::Product.find(params[:id])
+      authorize! :clone, @product
+
       status = :ok
 
       begin

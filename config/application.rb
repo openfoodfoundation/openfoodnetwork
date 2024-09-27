@@ -216,6 +216,7 @@ module Openfoodnetwork
     config.assets.precompile += ['web/all.js']
     config.assets.precompile += ['darkswarm/all.js']
     config.assets.precompile += ['shared/*']
+    config.assets.precompile += ['mail.scss']
     config.assets.precompile += ['*.jpg', '*.jpeg', '*.png', '*.gif' '*.svg']
 
     # Highlight code that triggered database queries in logs.

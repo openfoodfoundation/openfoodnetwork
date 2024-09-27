@@ -32,7 +32,9 @@ module OrderManagement
           .merge(Enterprise.is_primary_producer)
           .pluck(:parent_id)
 
-        other_permitted_producer_ids | [distributor.id]
+        # Append to the potentially gigantic array instead of using union, which creates a new array
+        # The db IN statement won't care if there's a duplicate.
+        other_permitted_producer_ids << distributor.id
       end
 
       def self.outgoing_exchange_variant_ids(distributor)

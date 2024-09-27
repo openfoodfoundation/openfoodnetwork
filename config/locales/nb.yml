@@ -81,8 +81,6 @@ nb:
         white_label_logo_link: "Link til logoen som brukes i butikk"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Å arve skattekategorien krever en varekalkulator."
         spree/image:
           attributes:
             attachment:
@@ -99,8 +97,6 @@ nb:
           attributes:
             base:
               card_expired: "har utgått"
-        spree/product:
-          must_exist: 'må eksistere'
         order_cycle:
           attributes:
             orders_close_at:
@@ -108,7 +104,6 @@ nb:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "må være tomt fordi du bruker produsentens lagerinnstillinger"
-            on_demand_but_count_on_hand_set: "må være tom hvis på forespørsel"
             limited_stock_but_no_count_on_hand: "må spesifiseres fordi det tvinger begrenset lager"
       messages:
         confirmation: "samsvarer ikke med %{attribute}"
@@ -559,6 +554,8 @@ nb:
         remove: Fjern
       image:
         edit: Rediger
+      product_preview:
+        shop_tab: Butikk
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på
@@ -774,7 +771,6 @@ nb:
       variants:
         infinity: "Uendelig"
         to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
-      back_to_products_list: "Tilbake til produktlisten"
       editing_product: "Redigerer produkt"
       tabs:
         product_details: "Produktdetaljer"
@@ -814,7 +810,6 @@ nb:
         search: Søk
       sort:
         pagination:
-          total_html: "<strong>%{total} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
           per_page:
             show: Vis
             per_page: "%{num} per side"
@@ -1385,10 +1380,8 @@ nb:
         contact_name: Kontaktnavn
       edit:
         editing: 'innstillinger:'
-        back_link: Tilbake til bedriftsliste
       new:
         title: Ny Bedrift
-        back_link: Tilbake til bedriftsliste
       welcome:
         welcome_title: Velkommen til Open Food Network!
         welcome_text: Du har opprettet en
@@ -1425,6 +1418,8 @@ nb:
         choose_products_from: "Velg Produkter Fra:"
         re_notify_producers: Varsle produsentene på nytt
         notify_producers_tip: Dette vil sende en epost til hver produsent med listen over deres bestillinger.
+      date_time_warning_modal_content:
+        cancel: 'Avbryt'
       incoming:
         incoming: "Innkommende"
         supplier: "Leverandør"
@@ -2884,7 +2879,6 @@ nb:
   spree_admin_single_enterprise_hint: "Hint: For å hjelpe folk til å finne deg, skru på din synlighet under"
   spree_admin_eg_pickup_from_school: "f.eks. 'Henting ved Sammfunnshuset'"
   spree_admin_eg_collect_your_order: "f.eks. 'Vennligst hente din bestilling fra 123 Matveien, Nesodden, 3070'"
-  spree_classification_primary_taxon_error: "Gruppe %{taxon} er hovedgruppe til %{product} og kan ikke slettes"
   spree_order_availability_error: "Distributør eller bestillingsrunde kan ikke levere produktene i handlekurven din"
   spree_order_populator_error: "Den distributøren eller bestillingsrunden kan ikke levere alle produktene i handlekurven din. Vennligst velg en annen."
   spree_order_cycle_error: "Vennligst velg en bestillingsrunde for denne bestillingen."
@@ -3204,7 +3198,7 @@ nb:
   order_cycles_no_permission_to_coordinate_error: "Ingen av bedriftene dine har tillatelse til å koordinere en bestillingsrunde"
   order_cycles_no_permission_to_create_error: "Du har ikke rettigheter til å opprette en bestillingsrunde som er koordinert av den bedriften"
   order_cycle_closed: "Bestillingsrunden du har valgt har akkurat stengt. Vennligst prøv igjen!"
-  back_to_orders_list: "Tilbake til bestillingslisten"
+  back_to_orders_list: "Tilbake til Bestillingsliste"
   no_orders_found: "Ingen bestillinger funnet"
   order_information: "Bestillingsinformasjon"
   new_payment: "Ny betaling"
@@ -3547,6 +3541,8 @@ nb:
       confirmation: |
           Dette vil sette varebeholdning til null på alle produkter for denne virksomheten som ikke er til stede i den nedlastede filen.
     order_cycles:
+      unsaved_changes: "Du har ulagrede endringer"
+      bulk_save_error: "Å nei! Jeg kunne ikke lagre endringene dine."
       create_failure: "Kunne ikke opprette bestillingsrunde"
       update_success: 'Din bestillingsrunde har blitt oppdatert.'
       update_failure: "Kunne ikke oppdatere bestillingsrunde"
@@ -3768,7 +3764,6 @@ nb:
     more: "Mer"
     new_adjustment: "Ny justering"
     new_tax_category: "Ny avgiftskategori"
-    new_taxon: "Ny kategori"
     new_user: "Ny bruker"
     no_pending_payments: "Ingen ventende betalinger"
     remove: "Fjern"
@@ -3787,10 +3782,6 @@ nb:
       delivery: "Signert, forseglet, levert"
     start_date: "Startdato"
     successfully_removed: "Fjernet OK"
-    taxonomy_edit: "Rediger kategori"
-    taxonomy_tree_error: "Det oppsto en feil under oppdatering av kategoritreet."
-    taxonomy_tree_instruction: "Høyreklikk på et element for å legge til, gi nytt navn, fjerne eller redigere."
-    tree: "Tre"
     updating: "Oppdaterer"
     your_order_is_empty_add_product: "Bestillingen din er tom, vennligst søk etter og legg til et produkt over"
     add_product: "Legg til produkt"
@@ -3888,7 +3879,6 @@ nb:
     tax_rate_amount_explanation: "Avgiftssatser er et desimalbeløp til hjelp i beregninger, (dvs. dersom avgiftssatsen er 5%, angi 0,05)"
     included_in_price: "Inkludert i Pris"
     show_rate_in_label: "Vis sats på merkelapp"
-    back_to_tax_rates_list: "Tilbake til siden for Avgiftssats"
     tax_settings: "Avgiftsinnstillinger"
     zones: "Soner"
     new_zone: "Ny Sone"
@@ -3901,14 +3891,11 @@ nb:
     iso_name: "ISO-navn"
     states_required: "Regioner Påkrevd"
     editing_country: "Redigerer Land"
-    back_to_countries_list: "Tilbake til Landlisten"
     states: "Regioner"
     abbreviation: "Forkortelse"
     new_state: "Ny Region"
     payment_methods: "Betalingsmetoder"
-    taxonomies: "Taksonomier"
-    new_taxonomy: "Ny Taksonomi"
-    back_to_taxonomies_list: "Tilbake til Taksonomiliste"
+    taxons: "Produktkategorier"
     shipping_methods: "Leveringsmetoder"
     shipping_method: "Leveringsmetode"
     shipment: "Leveranse"
@@ -4068,7 +4055,6 @@ nb:
           continue: "Fortsett"
         new:
           new_return_authorization: "Ny Returautorisasjon"
-          back_to_return_authorizations_list: "Tilbake til liste over Returautorisasjoner"
           continue: "Fortsett"
         edit:
           receive: "motta"
@@ -4315,6 +4301,7 @@ nb:
           product_name: Produktnavn
         primary_taxon_form:
           product_category: Produktkategori
+          search_for_categories: "Søk etter kategorier"
         group_buy_form:
           group_buy: "Gruppekjøp?"
           bulk_unit_size: Bulk enhetsstørrelse
@@ -4392,9 +4379,10 @@ nb:
           total: "Total"
           billing_address_name: "Navn"
       taxons:
+        index:
+          title: "Produktkategorier"
         form:
           name: Navn
-          permalink: Permalink
           meta_title: Metatittel
           meta_description: Metabeskrivelse
           meta_keywords: Meta nøkkelord
@@ -4636,7 +4624,6 @@ nb:
       key_cleared: "Nøkkelen ble fjernet"
       shipment:
         cannot_ready: "Kan ikke gjøre klar forsendelse."
-      invalid_taxonomy_id: "Ugyldig kategori-id."
       toggle_api_key_view: "Vis API-nøkkelvisning for bruker"
     activerecord:
       models:

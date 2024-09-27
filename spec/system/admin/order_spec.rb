@@ -778,7 +778,6 @@ RSpec.describe '
           visit spree.edit_admin_order_path(order)
 
           expect(page).not_to have_content different_shipping_method_for_distributor1.name
-          click_button 'Dismiss'
 
           find('.edit-method').click
 
@@ -1099,8 +1098,6 @@ RSpec.describe '
       expect(page).to have_selector 'h1', text: 'Customer Details'
       click_link "Order Details"
 
-      click_button 'Dismiss'
-
       expect(page).to have_content 'Add Product'
       select2_select product.name, from: 'add_variant_id', search: true
 
@@ -1110,8 +1107,6 @@ RSpec.describe '
 
       expect(page).to have_select2 'order_distributor_id', with_options: [distributor1.name]
       expect(page).not_to have_select2 'order_distributor_id', with_options: [distributor2.name]
-
-      click_button 'Dismiss'
 
       expect(page).to have_select2 'order_order_cycle_id',
                                    with_options: ["#{order_cycle1.name} (open)"]

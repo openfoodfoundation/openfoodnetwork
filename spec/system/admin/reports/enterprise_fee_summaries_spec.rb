@@ -5,6 +5,7 @@ require "system_helper"
 RSpec.describe "enterprise fee summaries" do
   include AuthenticationHelper
   include WebHelper
+  include ReportsHelper
 
   let!(:distributor) { create(:distributor_enterprise) }
   let!(:other_distributor) { create(:distributor_enterprise) }
@@ -78,61 +79,48 @@ RSpec.describe "enterprise fee summaries" do
     end
   end
 
-  describe "csv downloads" do
+  describe "permissions" do
     describe "smoke test for generation of report based on permissions" do
+      let!(:order) do
+        create(:completed_order_with_fees, order_cycle:,
+                                           distributor:)
+      end
+      let!(:other_order) do
+        create(:completed_order_with_fees, order_cycle: other_order_cycle,
+                                           distributor: other_distributor)
+      end
       context "when logged in as admin" do
-        let!(:order) do
-          create(:completed_order_with_fees, order_cycle:,
-                                             distributor:)
-        end
-        let(:current_user) { create(:admin_user) }
+        let!(:current_user) { create(:admin_user) }
 
         before do
           visit main_app.admin_report_path(report_type: 'enterprise_fee_summary')
         end
 
         it "generates file with data for all enterprises" do
-          select "CSV"
-          click_on "Go"
-          perform_enqueued_jobs(only: ReportJob)
-          click_on "Download Report"
-          expect(downloaded_filename).to include ".csv"
-          expect(downloaded_content).to have_content(distributor.name)
+          run_report
+          expect(page).to have_content(distributor.name)
+          expect(page).to have_content(other_distributor.name)
         end
       end
 
       context "when logged in as enterprise user" do
-        let!(:order) do
-          create(:completed_order_with_fees, order_cycle:,
-                                             distributor:)
-        end
-        let!(:other_order) do
-          create(:completed_order_with_fees, order_cycle: other_order_cycle,
-                                             distributor: other_distributor)
-        end
-        let(:current_user) { distributor.owner }
+        let!(:current_user) { distributor.owner }
 
         before do
           visit main_app.admin_report_path(report_type: 'enterprise_fee_summary')
         end
 
         it "generates file with data for the enterprise" do
-          select "CSV"
-          click_on "Go"
-          perform_enqueued_jobs(only: ReportJob)
-          click_on "Download Report"
-
-          expect(downloaded_filename).to include ".csv"
-          expect(downloaded_content).to have_content(distributor.name)
-          expect(downloaded_content).not_to have_content(other_distributor.name)
+          run_report
+          expect(page).to have_content(distributor.name)
+          expect(page).not_to have_content(other_distributor.name)
         end
       end
     end
 
-    describe "smoke test for filtering report based on filters" do
+    describe "downloading the report" do
       let!(:second_distributor) { create(:distributor_enterprise) }
       let!(:second_order_cycle) { create(:simple_order_cycle, coordinator: second_distributor) }
-
       let!(:order) do
         create(:completed_order_with_fees, order_cycle:,
                                            distributor:)
@@ -146,22 +134,29 @@ RSpec.describe "enterprise fee summaries" do
 
       before do
         visit main_app.admin_report_path(report_type: 'enterprise_fee_summary')
-      end
-
-      it "generates file with data for selected order cycle" do
         find("#s2id_q_order_cycle_ids").click
         select order_cycle.name
-
-        find("#report_format").click
-        select "CSV"
-        click_on "Go"
-        perform_enqueued_jobs(only: ReportJob)
-        click_on "Download Report"
-
-        expect(downloaded_filename).to include ".csv"
-        expect(downloaded_content).to have_content(distributor.name)
-        expect(downloaded_content).not_to have_content(second_distributor.name)
       end
+
+      shared_examples "reports generated as" do |output_type, extension|
+        context output_type.to_s do
+          it "downloads the #{output_type} file" do
+            select output_type, from: "report_format"
+
+            expect { generate_report }.to change { downloaded_filenames.length }.from(0).to(1)
+
+            expect(downloaded_filename).to match(/.*\.#{extension}/)
+
+            downloaded_file_txt = load_file_txt(extension, downloaded_filename)
+
+            expect(downloaded_file_txt).to have_content(distributor.name)
+            expect(downloaded_file_txt).not_to have_content(second_distributor.name)
+          end
+        end
+      end
+
+      it_behaves_like "reports generated as", "CSV", "csv"
+      it_behaves_like "reports generated as", "Spreadsheet", "xlsx"
     end
   end
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "mini_magick"
-
 module Spree
   class Image < Asset
     has_one_attached :attachment, service: image_service do |attachment|
@@ -35,7 +33,7 @@ module Spree
       return self.class.default_image_url(size) unless attachment.attached?
 
       image_variant_url_for(variant(size))
-    rescue ActiveStorage::Error, MiniMagick::Error, ActionView::Template::Error => e
+    rescue StandardError => e
       Bugsnag.notify "Product ##{viewable_id} Image ##{id} error: #{e.message}"
       Rails.logger.error(e.message)
 

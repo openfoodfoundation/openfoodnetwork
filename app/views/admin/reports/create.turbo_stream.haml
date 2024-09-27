@@ -1,0 +1,6 @@
+= turbo_stream.update "report-go" do
+  = button t(:go), "report__submit-btn", "submit", disabled: true
+= turbo_stream.update "report-table" do
+  = render "admin/reports/loading"
+  = render "admin/reports/fallback_display", file_url: @blob.expiring_service_url
+= turbo_stream.scroll_into_view("#report-table", behavior: "smooth")

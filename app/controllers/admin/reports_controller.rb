@@ -6,7 +6,7 @@ module Admin
     include ReportsActions
     helper ReportsHelper
 
-    before_action :authorize_report, only: [:show]
+    before_action :authorize_report, only: [:show, :create]
 
     # Define model class for Can? permissions
     def model_class
@@ -20,14 +20,17 @@ module Admin
     end
 
     def show
-      @report = report_class.new(spree_current_user, params, render: render_data?)
-      @rendering_options = rendering_options # also stores user preferences
+      @report = report_class.new(spree_current_user, params, render: false)
+      @rendering_options = rendering_options
 
-      if render_data?
-        render_in_background
-      else
-        show_report
-      end
+      show_report
+    end
+
+    def create
+      @report = report_class.new(spree_current_user, params, render: true)
+      update_rendering_options
+
+      render_in_background
     end
 
     private
@@ -54,31 +57,15 @@ module Admin
       @variant_serialized = Api::Admin::VariantSerializer.new(variant)
     end
 
-    def render_data?
-      request.post?
-    end
-
     def render_in_background
-      cable_ready[ScopedChannel.for_id(params[:uuid])]
-        .inner_html(
-          selector: "#report-go",
-          html: helpers.button(t(:go), "report__submit-btn", "submit", disabled: true)
-        ).inner_html(
-          selector: "#report-table",
-          html: render_to_string(partial: "admin/reports/loading")
-        ).scroll_into_view(
-          selector: "#report-table",
-          block: "start"
-        ).broadcast
+      @blob = ReportBlob.create_for_upload_later!(report_filename)
 
       ReportJob.perform_later(
         report_class:, user: spree_current_user, params:,
         format: report_format,
-        filename: report_filename,
+        blob: @blob,
         channel: ScopedChannel.for_id(params[:uuid]),
       )
-
-      head :no_content
     end
   end
 end

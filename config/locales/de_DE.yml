@@ -81,8 +81,6 @@ de_DE:
         white_label_logo_link: "Verlinkungsziel des Logos im Online-Shop"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Um die Steuerkategorie des Produkts zu übernehmen, muss in der Spalte \"Berechnung\" eine Auswahl mit Zusatz \"pro Artikel\" verwendet werden."
         spree/user:
           attributes:
             email:
@@ -102,7 +100,6 @@ de_DE:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "muss leer sein, da die Einstellungen des Produzentenbestands verwendet werden"
-            on_demand_but_count_on_hand_set: "muss leer sein, wenn unbegrenzt verfügbar oder die Produktion auf Bestellung erfolgt"
             limited_stock_but_no_count_on_hand: "muss angegeben werden, da nur begrenzte Lagerbestände verfügbar sind"
       messages:
         confirmation: "stimmt nicht mit %{attribute} überein"
@@ -541,6 +538,8 @@ de_DE:
         remove: Löschen
       image:
         edit: Bearbeiten
+      product_preview:
+        shop_tab: Produkte
     adjustments:
       skipped_changing_canceled_order: "Eine stornierte Bestellung kann nicht geändert werden."
     begins_at: Beginnt
@@ -747,7 +746,6 @@ de_DE:
       variants:
         infinity: "Unbegrenzt"
         to_order_tip: "Artikel, die auf Anfrage hergestellt werden, haben keinen festgelegten Lagerbestand."
-      back_to_products_list: "Zurück zur Produktliste"
       editing_product: "Produkt bearbeiten"
       tabs:
         product_details: "Produktdetails"
@@ -772,7 +770,6 @@ de_DE:
         search: Suche
       sort:
         pagination:
-          total_html: "<strong>%{total} Produkte</strong> für Ihre Suchkriterien gefunden. Zeige %{from} bis %{to}."
           per_page:
             show: Zeige
             per_page: "%{num} pro Seite"
@@ -1295,10 +1292,8 @@ de_DE:
         contact_name: Kontaktname
       edit:
         editing: 'Einstellungen:'
-        back_link: Zurück zur Unternehmensliste
       new:
         title: Neues Unternehmen
-        back_link: Zurück zur Unternehmensliste
       welcome:
         welcome_title: Willkommen im Open Food Network!
         welcome_text: 'Erfolgreich erstellt:'
@@ -1335,6 +1330,8 @@ de_DE:
         choose_products_from: "Wählen Sie Produkte von:"
         re_notify_producers: Produzenten erneut benachrichtigen
         notify_producers_tip: Benachrichtigen Sie die Produzenten per E-Mail über in diesem Bestellzyklus erhaltene Bestellungen.
+      date_time_warning_modal_content:
+        cancel: 'Abbrechen'
       incoming:
         incoming: "Eingehend"
         supplier: "Lieferant"
@@ -2779,7 +2776,6 @@ de_DE:
   spree_admin_single_enterprise_hint: "Tipp: Damit andere Nutzer Sie finden können, aktivieren Sie Ihre Sichtbarkeit unter:"
   spree_admin_eg_pickup_from_school: "z. B. \"Abholung von der Grundschule\""
   spree_admin_eg_collect_your_order: "z. B. 'Bitte holen Sie Ihre Bestellung in der Gartenstraße 123 in 30701 Nordwestheim ab.'"
-  spree_classification_primary_taxon_error: "Kategorie %{taxon} ist die primäre Kategorie von %{product} und kann nicht gelöscht werden."
   spree_order_availability_error: "Verteilstelle oder Bestellzyklus kann die Produkte in Ihrem Warenkorb nicht liefern"
   spree_order_populator_error: "Diese Verteilstelle oder dieser Bestellzyklus kann nicht alle Produkte aus Ihrem Warenkorb liefern. Bitte ändern Sie Ihre Auswahl."
   spree_order_cycle_error: "Bitte wählen Sie einen Bestellzyklus für diese Bestellung aus."
@@ -3450,6 +3446,8 @@ de_DE:
           Dadurch wird der Lagerbestand für alle Produkte dieses Unternehmens,
           die in der hochgeladenen Datei nicht vorhanden sind, auf Null gesetzt.
     order_cycles:
+      unsaved_changes: "Sie haben nicht gespeicherte Änderungen."
+      bulk_save_error: "Ihre Änderungen konnten leider nicht gespeichert werden."
       create_failure: "Fehler beim Erstellen des Bestellzyklus."
       update_success: 'Ihr Bestellzyklus wurde aktualisiert.'
       update_failure: "Fehler beim Aktualisieren des Bestellzyklus."
@@ -3671,7 +3669,6 @@ de_DE:
     more: "Mehr"
     new_adjustment: "Neue Anpassung"
     new_tax_category: "Neue Steuerkategorie"
-    new_taxon: "Neue Kategorie"
     new_user: "Neuer Benutzer"
     no_pending_payments: "Keine ausstehenden Zahlungen."
     remove: "Löschen"
@@ -3690,8 +3687,6 @@ de_DE:
       delivery: "Lieferung"
     start_date: "Anfangsdatum"
     successfully_removed: "Erfolgreich gelöscht"
-    taxonomy_edit: "Kategorien bearbeiten"
-    tree: "Struktur"
     updating: "Aktualisierung"
     your_order_is_empty_add_product: "Ihre Bestellung ist leer. Suchen Sie oben ein Produkt und fügen Sie es hinzu."
     add_product: "Produkt hinzufügen"
@@ -3788,7 +3783,6 @@ de_DE:
     tax_rate_amount_explanation: "Eingabe als Dezimalbetrag (d. h. bei Steuersatz 5 %, geben Sie 0.05 ein)."
     included_in_price: "Im Preis enthalten"
     show_rate_in_label: "Steuersatz im Namen anzeigen"
-    back_to_tax_rates_list: "Zurück zur Liste der Steuersätze"
     tax_settings: "Steuereinstellungen"
     zones: "Zonen"
     new_zone: "Neue Zone"
@@ -3801,14 +3795,11 @@ de_DE:
     iso_name: "ISO-Name"
     states_required: "Staaten/Bundesländer/Regionen erforderlich"
     editing_country: "Land bearbeiten"
-    back_to_countries_list: "Zurück zur Länderliste"
     states: "Bundesländer"
     abbreviation: "Abkürzung"
     new_state: "Neues Bundesland"
     payment_methods: "Zahlungsarten"
-    taxonomies: "Kategorien"
-    new_taxonomy: "Neue Kategorie"
-    back_to_taxonomies_list: "Zurück zur Kategorieliste"
+    taxons: "Produktkategorien"
     shipping_methods: "Lieferoptionen"
     shipping_method: "Lieferoption"
     shipment: "Lieferung"
@@ -3966,7 +3957,6 @@ de_DE:
           continue: "Weiter"
         new:
           new_return_authorization: "Neue Retour"
-          back_to_return_authorizations_list: "Zurück zur Retourenliste"
           continue: "Weiter"
         edit:
           receive: "erhalten"
@@ -4281,9 +4271,10 @@ de_DE:
           total: "Gesamt"
           billing_address_name: "Name"
       taxons:
+        index:
+          title: "Produktkategorien"
         form:
           name: Name
-          permalink: Permalink
           description: Beschreibung
       general_settings:
         edit:
@@ -4520,7 +4511,6 @@ de_DE:
       key_cleared: "Schlüssel gelöscht"
       shipment:
         cannot_ready: "Versand nicht möglich."
-      invalid_taxonomy_id: "Ungültige Kategorie-ID"
       toggle_api_key_view: "API-Schlüssel dem Benutzer anzeigen"
     activerecord:
       models:

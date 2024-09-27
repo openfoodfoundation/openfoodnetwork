@@ -200,6 +200,56 @@ RSpec.describe '
       end
     end
   end
+  describe 'updating order cycles' do
+    let!(:order_cycle) { create(:simple_order_cycle) }
+    before(:each) do
+      login_as_admin
+      visit admin_order_cycles_path
+    end
+
+    context 'with attached order cycles' do
+      let!(:order) { create(:order, order_cycle: ) }
+      it('renders warning modal with datetime value changed') do
+        within("tr.order-cycle-#{order_cycle.id}") do
+          find('input.datetimepicker', match: :first).click
+        end
+        within(".flatpickr-calendar.open") do
+          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
+          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+          find("button", text: "Close").click
+        end
+        expect(page).to have_content('You have unsaved changes')
+
+        # click save to open warning modal
+        click_button('Save')
+        expect(page).to have_content('You have unsaved changes')
+        expect(page).to have_content "Orders are linked to this order cycle."
+
+        # confirm to close modal and update order cycle changed fields
+        click_button('Proceed anyway')
+        expect(page).not_to have_content "Orders are linked to this cycle"
+        expect(page).to have_content('Order cycles have been updated.')
+      end
+    end
+
+    context 'with no attached order cycles' do
+      it('renders warnig modal with datetime value changed') do
+        within("tr.order-cycle-#{order_cycle.id}") do
+          find('input.datetimepicker', match: :first).click
+        end
+        within(".flatpickr-calendar.open") do
+          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
+          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+          find("button", text: "Close").click
+        end
+        expect(page).to have_content('You have unsaved changes')
+
+        click_button('Save')
+        expect(page).not_to have_content "Orders are linked to this order cycle."
+        expect(page).to have_content('Order cycles have been updated.')
+      end
+    end
+  end
 
   private
 

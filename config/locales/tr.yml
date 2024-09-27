@@ -68,7 +68,6 @@ tr:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "Boş bırakılmalı çünkü üretici stok ayarları kullanılıyor"
-            on_demand_but_count_on_hand_set: "talep üzerine is boş bırakılmalıdır"
             limited_stock_but_no_count_on_hand: "Sınırlı stok durumundan dolayı belirtilmeli"
       messages:
         blank: "boş olamaz"
@@ -390,6 +389,8 @@ tr:
         remove: Kaldır
       image:
         edit: Düzenle
+      product_preview:
+        shop_tab: DÜKKAN
     adjustments:
       skipped_changing_canceled_order: "İptal edilmiş bir siparişi değiştiremezsiniz."
     begins_at: Başlangıç
@@ -588,7 +589,6 @@ tr:
       variants:
         infinity: "Sonsuz"
         to_order_tip: "Sipariş üzerine yapılan ürünlerin, belirlenmiş stok seviyeleri yoktur."
-      back_to_products_list: "Ürün listesine geri dön"
       editing_product: "Ürün Düzenleme"
       tabs:
         product_details: "Ürün Detayları"
@@ -1053,10 +1053,8 @@ tr:
         contact_name: İLETİŞİM Kurulacak KİŞİ
       edit:
         editing: 'Ayarlar:'
-        back_link: İşletmeler LİSTESİNE gerİ dön
       new:
         title: Yeni İşletme
-        back_link: İşletmeler LİSTESİNE gerİ dön
       welcome:
         welcome_title: Açık Gıda Ağı'na Hoşgeldiniz!
         welcome_text: 'BAŞARILI ŞEKİLDE OLUŞTURULDU:'
@@ -1091,6 +1089,8 @@ tr:
         back_to_list: "Listeye geri dön"
         save_and_back_to_list: "KAYDET VE LİSTEYE DÖN"
         choose_products_from: "Ürünlerİ Buradan SeÇ:"
+      date_time_warning_modal_content:
+        cancel: 'İptal et'
       incoming:
         incoming: "Gelen"
         supplier: "TEDARİKÇİ"
@@ -2415,7 +2415,6 @@ tr:
   spree_admin_single_enterprise_hint: "İpucu: İnsanların sizi bulmasına izin vermek için 'Görünür' olmayı ayarlamayı unutmayın:"
   spree_admin_eg_pickup_from_school: "Örn. 'Teslimat noktası: Moda İlkokulu Bahçesi'"
   spree_admin_eg_collect_your_order: "Örn. Lütfen siparişinizi Moda Cad. No:17 Temiz Dükkan'dan teslim alınız."
-  spree_classification_primary_taxon_error: "%{taxon} cinsi, %{product}ürününün birincil cinsidir ve silinemez"
   spree_order_availability_error: "Dağıtımcı veya sipariş dönemi sepetinizdeki ürünleri tedarik edemiyor"
   spree_order_populator_error: "Bu dağıtımcı veya sipariş dönemi, sepetinizdeki tüm ürünleri tedarik edemiyor. Lütfen başka birini seçin."
   spree_order_cycle_error: "Bu sipariş için bir sipariş dönemi seçin."
@@ -2699,7 +2698,7 @@ tr:
   order_cycles_no_permission_to_coordinate_error: "Hiçbir işletmenizin sipariş dönemini koordine etme izni yok"
   order_cycles_no_permission_to_create_error: "Bu işletme tarafından koordine edilen bir sipariş dönemi oluşturma izniniz yok"
   order_cycle_closed: "Seçmiş olduğunuz sipariş dönemi az önce kapandı. Lütfen daha sonra tekrar deneyin :("
-  back_to_orders_list: "Sipariş listesine geri dön"
+  back_to_orders_list: "SİPARİŞLER LİSTESİNE GERİ DÖN"
   no_orders_found: "SİPARİŞ BULUNAMADI"
   order_information: "Sipariş Bilgisi"
   new_payment: "Yeni Ödeme"
@@ -3025,6 +3024,8 @@ tr:
           Yüklenen dosyada bulunmayan tüm işletmeler için
           tüm ürünlerin stok seviyelerini sıfır olarak ayar.
     order_cycles:
+      unsaved_changes: "kaydedilmemiş değişiklikleriniz var"
+      bulk_save_error: "Pardon! Yaptığınız değişiklikleri kaydedemedim."
       create_failure: "Sipariş dönemi oluşturulamadı"
       update_success: 'Sipariş döneminiz güncellendi.'
       update_failure: "Sipariş dönemi güncellenemedi"
@@ -3238,7 +3239,6 @@ tr:
     more: "Daha Fazla"
     new_adjustment: "Yeni düzenleme"
     new_tax_category: "Yeni Vergi Kategorisi"
-    new_taxon: "Yeni kategori"
     new_user: "Yeni kullanıcı"
     no_pending_payments: "Bekleyen ödeme yok"
     remove: "Kaldır"
@@ -3253,8 +3253,6 @@ tr:
     server_error: "Server hatası"
     start_date: "Başlangıç tarihi"
     successfully_removed: "Başarıyla Kaldırıldı"
-    taxonomy_edit: "Kategori düzenleme"
-    tree: "Ağaç"
     updating: "Güncelleniyor"
     your_order_is_empty_add_product: "Sepetiniz boş, lütfen bir ürün arayın ve ekleyin"
     add_product: "ürün ekle"
@@ -3349,7 +3347,6 @@ tr:
     tax_rate_amount_explanation: "Vergi oranları ondalık bir tutar olmalı (yani vergi oranı % 5 ise 0.05 girin)"
     included_in_price: "Fiyata Dahil"
     show_rate_in_label: "Oranı etikette göster"
-    back_to_tax_rates_list: "Vergi Oranları Listesine Geri Dön"
     tax_settings: "Vergi Ayarları"
     zones: "bölgeler"
     new_zone: "Yeni Bölge"
@@ -3362,14 +3359,11 @@ tr:
     iso_name: "ISO Adı"
     states_required: "Şehİr Gerekli"
     editing_country: "Ülkeyi Düzenle"
-    back_to_countries_list: "Ülke Listesine Geri Dön"
     states: "Şehİrler"
     abbreviation: "Kısaltma"
     new_state: "Yeni Şehir"
     payment_methods: "ÖDEME YÖNTEMLERİ"
-    taxonomies: "KATEGORİ"
-    new_taxonomy: "YENİ KATEGORİ"
-    back_to_taxonomies_list: "Kategori Listesine Geri Dön"
+    taxons: "Ürün Kategorileri"
     shipping_methods: "TESLİMAT YÖNTEMLERİ"
     shipping_method: "TESLİMAT YÖNTEMİ"
     shipment: "Teslimat"
@@ -3523,7 +3517,6 @@ tr:
           continue: "Devam et"
         new:
           new_return_authorization: "Yeni İade Yetkisi"
-          back_to_return_authorizations_list: "İade Yetkisi Listesine Geri Dön"
           continue: "Devam et"
         edit:
           receive: "Al"
@@ -3813,9 +3806,10 @@ tr:
           total: "Toplam"
           billing_address_name: "Ad"
       taxons:
+        index:
+          title: "Ürün Kategorileri"
         form:
           name: Ad
-          permalink: Permalink
           description: Açıklama
       general_settings:
         edit:
@@ -4035,7 +4029,6 @@ tr:
       key_cleared: "Anahtar temizlendi"
       shipment:
         cannot_ready: "Gönderim hazırlanamıyor."
-      invalid_taxonomy_id: "Geçersiz kategori kimliği."
     activerecord:
       models:
         spree/payment:

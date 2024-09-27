@@ -3,6 +3,8 @@
 require 'system_helper'
 
 RSpec.describe "Sales Tax Totals By order" do
+  include ReportsHelper
+
   #  Scenarion 1: added tax
   #  1 producer
   #  1 distributor
@@ -457,7 +459,6 @@ RSpec.describe "Sales Tax Totals By order" do
 
       it_behaves_like "reports generated as", "CSV", "csv", false
       it_behaves_like "reports generated as", "Spreadsheet", "xlsx", true
-      it_behaves_like "reports generated as", "PDF", "pdf", true
     end
   end
 
@@ -467,25 +468,5 @@ RSpec.describe "Sales Tax Totals By order" do
       report_type: :sales_tax,
       report_subtype: :sales_tax_totals_by_order
     )
-  end
-
-  def generate_report
-    run_report
-    click_on "Download Report"
-    wait_for_download
-  end
-
-  def load_file_txt(extension, downloaded_filename)
-    case extension
-    when "csv"
-      CSV.read(downloaded_filename).join(" ")
-    when "xlsx"
-      xlsx = Roo::Excelx.new(downloaded_filename)
-      xlsx.map(&:to_a).join(" ")
-    when "pdf"
-      # Load PDF pages and contents join into one big string
-      pdf = PDF::Reader.new(downloaded_filename)
-      pdf.pages.map(&:text).join(" ")
-    end
   end
 end

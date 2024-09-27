@@ -61,7 +61,6 @@ fil_PH:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "ay dapat blanko sapagkat ginagamit ang stock settings ng producer"
-            on_demand_but_count_on_hand_set: "ay dapat blanko kung on demand"
             limited_stock_but_no_count_on_hand: "ay dapat matukoy sapagkat ipipilit ang limitadong stock"
       messages:
         blank: "hindi maaaring iwanang blanko"
@@ -279,7 +278,6 @@ fil_PH:
   password_confirmation: Kumpirmasyon ng password
   reset_password_token: i-reset ang password token
   expired: ay expired na, magrequest ng bago
-  back_to_payments_list: "bumalik sa listahan ng mga bayad"
   maestro_or_solo_cards: "Maestro/Solo cards"
   backordered: "na-backorder"
   on_hand: "on hand"
@@ -336,6 +334,8 @@ fil_PH:
         remove: Tanggalin
       image:
         edit: i-edit
+      product_preview:
+        shop_tab: Shop
     begins_at: nagsimula sa
     begins_on: nagsisimula sa
     customer: Customer
@@ -514,7 +514,6 @@ fil_PH:
       variants:
         infinity: "walang katapusan"
         to_order_tip: "ang mga item na made to order ay hindi maaaring i-set ng lebel ng stock, tulad ng mga tinapay na ginagawa lamang kapag may order."
-      back_to_products_list: "bumalik sa listahan ng mga produkto"
       editing_product: "ine-edit ang mga produkto"
       tabs:
         product_details: "mga detalye ng produkto"
@@ -962,10 +961,8 @@ fil_PH:
         contact_name: Contact name
       edit:
         editing: 'Settings:'
-        back_link: bumalik sa listahan ng mga enterprise
       new:
         title: bagong enterprise
-        back_link: bumalik sa listahan ng mga enterprise
       welcome:
         welcome_title: Welcome sa Open Food Network!
         welcome_text: matagumpay mong nagawa ang
@@ -1000,6 +997,8 @@ fil_PH:
         back_to_list: "bumalik sa listahan"
         save_and_back_to_list: "i-save at bumalik sa listahan"
         choose_products_from: "pumili ng mga produkto mula sa:"
+      date_time_warning_modal_content:
+        cancel: 'kanselahin'
       incoming:
         incoming: "paparating"
         supplier: "Supplier"
@@ -2244,7 +2243,6 @@ fil_PH:
   spree_admin_single_enterprise_hint: "payo: para mahanap ka ng ibang tao, i-turn on ang visibility sa ilalim ng"
   spree_admin_eg_pickup_from_school: "hal. 'Pick-up mula sa Primary School'"
   spree_admin_eg_collect_your_order: "hal. 'Kolektahin ang inyong order sa 123 Kapayapaan St., Tobias Fornier, Antique 5716'"
-  spree_classification_primary_taxon_error: "ang Tax sa%{taxon}ay ang pangunahing tax ng %{product}at hindi maaaring tanggalin"
   spree_order_availability_error: "ang distributor o order cycle ay hindi kayang ibigay ang mga produkto sa inyong cart"
   spree_order_populator_error: "ang distributor o order cycle na ito ay hindi kayang ibigay lahat ng mga produkto sa inyong cart. pumili ng iba."
   spree_order_populator_availability_error: "ang produktong ito ay hindi ngayon available mula sa napiling distributor o order cycle."
@@ -2520,7 +2518,7 @@ fil_PH:
   order_cycles_bulk_update_notice: 'ang mga order cycle ay na-update na'
   order_cycles_no_permission_to_coordinate_error: "wala sa inyong mga enterprise ay may pahintulot na magsa-ayos ng order cycle"
   order_cycles_no_permission_to_create_error: "wala kang pahintulot na gumawa ng order cycle na isinaayos ng enterprise na iyon."
-  back_to_orders_list: "bumalik sa listahan ng order"
+  back_to_orders_list: "bumalik sa listahan ng mga order"
   no_orders_found: "walang mahanap na mga order"
   order_information: "impormasyon tungkol sa order"
   new_payment: "Bagong Pagbabayad"
@@ -2827,6 +2825,8 @@ fil_PH:
           ise-set nito ang lebel ng stock sa zero para sa lahat ng mga produkto para dito
           enterprise na hindi makikita sa inupload na file.
     order_cycles:
+      unsaved_changes: "May mga pagbabago na hindi na-save"
+      bulk_save_error: "paumanhin! hindi ko na-save ang mga pagbabagong ginawa mo."
       create_failure: "hindi nagtagumpay sa paggawa ng order cycle"
       update_success: 'ang iyong order cycle ay na-update na'
       update_failure: "hindi nagtagumpay sa pag-update ng order cycle"
@@ -3093,7 +3093,6 @@ fil_PH:
     tax_rate_amount_explanation: "ang mga rate ng tax ay mga halagang may decimal na makakatulong sa pagkukuwenta, (hal. kung ang rate ng tax ay 5% ang ilalagay ay 0.05)"
     included_in_price: "nakasama sa presyo"
     show_rate_in_label: "ipakita ang rate sa tatak"
-    back_to_tax_rates_list: "bumalik sa listahan ng rate ng tax"
     tax_settings: "Settings ng tax"
     zones: "mga sona"
     new_zone: "bagong sona"
@@ -3106,14 +3105,11 @@ fil_PH:
     iso_name: "pangalan ng ISO"
     states_required: "Kailangang nakasaad ang mga Lalawigan"
     editing_country: "pag-edit ng bansa"
-    back_to_countries_list: "bumalik sa listahan ng mga bansa"
     states: "Mga Lalawigan"
     abbreviation: "Pinaikli"
     new_state: "Bagong Status"
     payment_methods: "Mga Paraan ng Pagbabayad"
-    taxonomies: "taxonomies"
-    new_taxonomy: "bagong taxonomy"
-    back_to_taxonomies_list: "bumalik sa listahan ng mga taxonomy"
+    taxons: "kategorya ng produkto"
     shipping_methods: "mga paraan ng pagpapadala"
     shipping_method: "paraan ng pagpapadala"
     shipment: "kargamento"
@@ -3244,7 +3240,6 @@ fil_PH:
           continue: "Magpatuloy"
         new:
           new_return_authorization: "bagong awtorisasyon sa pagbabalik"
-          back_to_return_authorizations_list: "bumalik sa listahan ng awtorisasyon sa pagbabalik"
           continue: "Magpatuloy"
         edit:
           receive: "tumanggap"
@@ -3502,6 +3497,8 @@ fil_PH:
           total: "kabuuan"
           billing_address_name: "Pangalan"
       taxons:
+        index:
+          title: "kategorya ng produkto"
         form:
           name: Pangalan
           description: paglalarawan
@@ -3668,7 +3665,6 @@ fil_PH:
       key_cleared: "binura ang key"
       shipment:
         cannot_ready: "hindi maihanda ang kargamento"
-      invalid_taxonomy_id: "hindi valid na taxonomy id."
     unit: yunit
   components:
     search_input:

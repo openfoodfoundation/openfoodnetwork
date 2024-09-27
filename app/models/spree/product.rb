@@ -263,10 +263,12 @@ module Spree
 
     # Format as per WeightsAndMeasures (todo: re-orgnaise maybe after product/variant refactor)
     def variant_unit_with_scale
+      # Our code is based upon English based number formatting with a period `.`
       scale_clean = ActiveSupport::NumberHelper.number_to_rounded(variant_unit_scale,
                                                                   precision: nil,
                                                                   significant: false,
-                                                                  strip_insignificant_zeros: true)
+                                                                  strip_insignificant_zeros: true,
+                                                                  locale: :en)
       [variant_unit, scale_clean].compact_blank.join("_")
     end
 
@@ -295,14 +297,8 @@ module Spree
       # eg clone product. Will raise error if clonning a product with no variant
       return if variants.first&.valid?
 
-      unless Spree::Taxon.find_by(id: primary_taxon_id)
-        errors.add(:primary_taxon_id,
-                   I18n.t('activerecord.errors.models.spree/product.must_exist'))
-      end
-      return if Enterprise.find_by(id: supplier_id)
-
-      errors.add(:supplier_id,
-                 I18n.t('activerecord.errors.models.spree/product.must_exist'))
+      errors.add(:primary_taxon_id, :blank) unless Spree::Taxon.find_by(id: primary_taxon_id)
+      errors.add(:supplier_id, :blank) unless Enterprise.find_by(id: supplier_id)
     end
 
     def update_units

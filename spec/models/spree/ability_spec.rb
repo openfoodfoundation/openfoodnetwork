@@ -97,22 +97,15 @@ RSpec.describe Spree::Ability do
       end
     end
 
-    context 'for Product' do
-      let(:resource) { Spree::Product.new }
-      context 'requested by any user' do
-        it_should_behave_like 'read only'
-      end
-    end
-
     context 'for ProductProperty' do
-      let(:resource) { Spree::Product.new }
+      let(:resource) { Spree::ProductProperty.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for Property' do
-      let(:resource) { Spree::Product.new }
+      let(:resource) { Spree::Property.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
@@ -148,13 +141,6 @@ RSpec.describe Spree::Ability do
 
     context 'for Taxons' do
       let(:resource) { Spree::Taxon.new }
-      context 'requested by any user' do
-        it_should_behave_like 'read only'
-      end
-    end
-
-    context 'for Taxonomy' do
-      let(:resource) { Spree::Taxonomy.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
@@ -366,6 +352,20 @@ RSpec.describe Spree::Ability do
         is_expected.to have_ability(:create, for: Spree::Product)
       end
 
+      it "should be able to read/write their enterprises' products" do
+        is_expected.to have_ability(
+          [:admin, :read, :index, :update, :seo, :group_buy_options, :bulk_update, :clone, :delete,
+           :destroy], for: p1
+        )
+      end
+
+      it "should not be able to read/write other enterprises' products" do
+        is_expected.not_to have_ability(
+          [:admin, :read, :index, :update, :seo, :group_buy_options, :bulk_update, :clone, :delete,
+           :destroy], for: p2
+        )
+      end
+
       it "should be able to read/write their enterprises' product variants" do
         is_expected.to have_ability([:create], for: Spree::Variant)
         is_expected.to have_ability(
@@ -422,7 +422,7 @@ RSpec.describe Spree::Ability do
 
       it "should be able to read some reports" do
         is_expected.to have_ability(
-          [:admin, :index, :show], for: Admin::ReportsController
+          [:admin, :index, :show, :create], for: Admin::ReportsController
         )
         is_expected.to have_ability(
           [:customers, :bulk_coop, :orders_and_fulfillment, :products_and_inventory,
@@ -658,7 +658,7 @@ RSpec.describe Spree::Ability do
 
       it "should be able to read some reports" do
         is_expected.to have_ability(
-          [:admin, :index, :show], for: Admin::ReportsController
+          [:admin, :index, :show, :create], for: Admin::ReportsController
         )
         is_expected.to have_ability(
           [:customers, :sales_tax, :group_buys, :bulk_coop, :payments,

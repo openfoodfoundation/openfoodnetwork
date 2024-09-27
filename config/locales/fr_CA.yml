@@ -106,7 +106,6 @@ fr_CA:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
-            on_demand_but_count_on_hand_set: "doit être vide si \"à volonté\""
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
       messages:
         confirmation: "ne correspond pas %{attribute}"
@@ -557,6 +556,8 @@ fr_CA:
         remove: Supprimer
       image:
         edit: Modifier
+      product_preview:
+        shop_tab: Boutique
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence à
@@ -675,6 +676,16 @@ fr_CA:
         info_html: "Matomo est un outil de suivi de traffic et de comportement des utilisateurs. Matomo est open source et validée par la CNIL française car non intrusif dans les données personnelles des utilisateurs. Pour plus d'infos : 1matomo.org1."
         config_instructions_html: "Pour utiliser Matomo, vous devez configurer l'intégration avec Open Food France. L'URL de l'instance sur Matomo correspond à l'url du site internet visé par le suivi de la navigation utilisateur. Si le champ est vide, Matomo n'effectuera aucune analyse sur ce site. L'ID de l'instance sur Matomo n'est pas obligatoire, mais nécessaire si vous souhaitez analyser plusieurs sites web sur une seule instance Matomo. Cet ID peut être trouvé sur l'espace administrateur Matomo."
         config_instructions_tag_manager_html: "Ajouter l'URL du Tag Manager rend actif Matomo Tag Manager. Cet outil vous permet de suivre des évènements en particulier. Pour trouver l'URL rendez-vous sur l' \"Install Code section\" du Tag Manager. Attention à bien copier le bon contener et le bon environnement, car ils font varier l'URL."
+    connected_app_settings:
+      edit:
+        title: "Paramètres de l'application connectée"
+        info_html: "Les applications autorisées apparaitront dans Entreprises > Configuration > Applications connectées"
+        enabled_legend: "Applications connectées autorisées"
+        connected_apps_enabled:
+          discover_regen: Portail Discover Regenerative
+          affiliate_sales_data: API de commandes anonymisées DFC à fins de recherche
+      update:
+        resource: Paramètres de l'application connectée
     customers:
       index:
         new_customer: "Nouveau client"
@@ -772,7 +783,7 @@ fr_CA:
       variants:
         infinity: "Infini"
         to_order_tip: "Les articles fabriqués sur commande n'ont pas un niveau de stock défini, comme des pains faits à la main."
-      back_to_products_list: "Retour à la liste produits"
+      back_to_products_list: "Revenir à la liste des produits"
       editing_product: "Modifier le produit"
       tabs:
         product_details: " Détails"
@@ -800,8 +811,10 @@ fr_CA:
       filters:
         search_products: Chercher des produits
         search_for_producers: Rechercher des producteurs
+        select_producer: Sélectionner producteur
         all_producers: Tous les producteurs
         search_for_categories: Rechercher des catégories
+        select_category: Sélectionner catégorie
         all_categories: Toutes les catégories
         producers:
           label: Producteurs
@@ -810,7 +823,6 @@ fr_CA:
         search: Chercher
       sort:
         pagination:
-          total_html: "<strong>%{total} produits</strong> trouvés selon vos critères de recherche. Montrer %{from} à %{to}."
           per_page:
             show: Montrer
             per_page: "%{num} par page"
@@ -1294,10 +1306,21 @@ fr_CA:
         connected_apps:
           legend: "Applications connectées"
           affiliate_sales_data:
+            title: "Programme de recherche INRAE / UFC QUE CHOISIR"
+            tagline: "Autoriser ce programme de recherche à accéder à vos données de commandes anonymisées"
             enable: "Autoriser le partage de données"
             disable: "Arrêter le partage"
             loading: "Chargement en cours"
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            description_html: |
+                <p>
+                L'INRAE et UFC QUE CHOISIR travaillent conjointement sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme.
+                </p>
+                <p>
+                <a href="https://apropos.coopcircuits.fr/"
+                target="_blank"><b>En savoir plus à propos de ce programme de recherche</b>
+                <i class="icon-external-link"></i></a>
+                </p>
           discover_regen:
             title: "Annuaire alimentaire de Waterloo"
             tagline: "Permettre à l'OFN Canada de publier les informations relatives à votre entreprise."
@@ -1307,8 +1330,8 @@ fr_CA:
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
             note: |
                 Votre compte Open Food Network est connecté à Annuaire alimentaire de Waterloo.
-                Les modifications apportées à votre profil OFN mettront automatiquement à jour votre liste Annuaire alimentaire de Waterloo. Pour toute autre modification, veuillez contacter le service d'assistance de l'OFN.
-            link_label: "Gérer la liste"
+                Les modifications apportées à votre profil OFN mettront à jour votre liste Waterloo Food Directory lorsque vous cliquerez sur le bouton 'Mise à jour de la liste'. Pour toute autre modification, veuillez contacter le service d'assistance de l'OFN et support@openfoodnetwork.ca.
+            link_label: "Mise à jour de la liste"
             description_html: |
                 <p>Les producteurs éligibles peuvent présenter des appels à l'action en faveur du manger local, donner local, et/ou cultiver local..
                 Cela simplifie la façon dont les producteurs peuvent se connecter dans la région de Waterloo autour de la justice et de la souveraineté alimentaires.
@@ -1370,10 +1393,10 @@ fr_CA:
         contact_name: Nom du contact principal
       edit:
         editing: 'Configuration:'
-        back_link: Revenir à la liste des entreprises
+        back_link: Retour à la liste des entreprises
       new:
         title: Nouvelle entreprise
-        back_link: Revenir à la liste des entreprises
+        back_link: Retour à la liste des entreprises
       welcome:
         welcome_title: Bienvenue sur Open Food Network !
         welcome_text: 'Vous avez créé avec succès '
@@ -1410,6 +1433,11 @@ fr_CA:
         choose_products_from: "Choisir produits depuis :"
         re_notify_producers: Notifier les producteurs
         notify_producers_tip: Cette action va envoyer un mail à tous les producteurs avec le contenu du cycle de vente.
+      date_time_warning_modal_content:
+        title: 'Les commandes sont liées à ce cycle de vente.'
+        content: 'Si vous souhaitez créer un nouveau cycle de vente, il est recommandé de dupliquer un cycle de vente existant puis de changer les dates.'
+        proceed: 'Procéder quand même'
+        cancel: 'Annuler'
       incoming:
         incoming: "Produits entrants (pouvant être mis en vente par les hubs)"
         supplier: "Fournisseur"
@@ -2872,7 +2900,6 @@ fr_CA:
   spree_admin_single_enterprise_hint: "Astuce: Pour permettre aux gens de vous trouver, activez votre visibilité "
   spree_admin_eg_pickup_from_school: "ex : \"Retrait des produits à l'Ecole Marimati / Au Café du coin / chez Babette / ...\""
   spree_admin_eg_collect_your_order: "ex : \"Veuillez récupérer votre commande au 123 Parliament Street, Toronto, Ontario 3070 \""
-  spree_classification_primary_taxon_error: "L'intitulé %{taxon} est l'intitulé de base pour %{product}  et ne peut être supprimé"
   spree_order_availability_error: "Le distributeur ne peut fournir les produits de votre panier pour ce cycle de vente."
   spree_order_populator_error: "Le distributeur ne peut fournir tous les produits de votre panier pour ce cycle de vente. Merci de choisir un autre distributeur ou un autre cycle de vente."
   spree_order_cycle_error: "Veuillez sélectionner une option pour cette commande."
@@ -3548,6 +3575,8 @@ fr_CA:
           Cette action remettra tous les niveaux de stock à zero pour cette
           entreprises pour les produits non présents dans ce fichier.
     order_cycles:
+      unsaved_changes: "Des modifications n'ont pas été sauvegardées"
+      bulk_save_error: "Oups ! Nous n'avons pas réussi à sauvegarder vos modification :-("
       create_failure: "La création du cycle de vente a échoué"
       update_success: 'Votre cycle de vente a été mis à jour.'
       update_failure: "La mise à jour du cycle de vente à échoué"
@@ -3795,7 +3824,6 @@ fr_CA:
     more: "Plus"
     new_adjustment: "Nouvel ajustement"
     new_tax_category: "Nouvelle catégorie de taxe"
-    new_taxon: "Nouvelle taxonomie"
     new_user: "Nouvel utilisateur"
     no_pending_payments: "Aucun paiement en attente."
     remove: "Supprimer"
@@ -3814,10 +3842,6 @@ fr_CA:
       delivery: "Signé, scellé, livré"
     start_date: "Date de début"
     successfully_removed: "Supprimé avec succès"
-    taxonomy_edit: "Modifier la taxonomie"
-    taxonomy_tree_error: "Erreur lors de la mise à jour de l'arbre de taxonomie."
-    taxonomy_tree_instruction: "Faites un clic droit sur un article pour ajouter, renommer, supprimer ou modifier."
-    tree: "Arbre"
     updating: "Mettre à jour"
     your_order_is_empty_add_product: "Votre commande est vide, veuillez ajouter des produits"
     add_product: "Ajouter un produit"
@@ -3915,7 +3939,7 @@ fr_CA:
     tax_rate_amount_explanation: "Les taux de taxe sont présentés en nombres décimaux pour faciliter les calculs (ex : si le taux est 5% saisissez 0.05)"
     included_in_price: "Inclus dans le prix"
     show_rate_in_label: "Montrer le taux dans le nom"
-    back_to_tax_rates_list: "Retour à la liste des taux de taxe"
+    back_to_tax_rates_list: "Revenir à la liste des taux de taxe"
     tax_settings: "Paramètres taxe"
     zones: "Zones"
     new_zone: "Nouvelle zone"
@@ -3928,14 +3952,12 @@ fr_CA:
     iso_name: "Noms ISO"
     states_required: "États/Départements requis"
     editing_country: "Pays en cours de mise à jour"
-    back_to_countries_list: "Retour à la liste des pays"
+    back_to_countries_list: "Revenir à la liste des pays"
     states: "États/Départements requis"
     abbreviation: "Code"
     new_state: "Nouveau Région:"
     payment_methods: "Méthodes de paiement"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "Nouvelle taxonomie"
-    back_to_taxonomies_list: "Retour à la liste des taxonomies"
+    taxons: "Catégorie Produit"
     shipping_methods: "Méthodes de livraison"
     shipping_method: "Option d'expédition"
     shipment: "Livraison"
@@ -4308,6 +4330,8 @@ fr_CA:
           new_product: "Nouveau Produit"
           supplier: "Fournisseur"
           supplier_select_placeholder: "Sélectionner un producteur"
+          search_for_suppliers: "Chercher des fournisseurs"
+          search_for_units: "Chercher des unités"
           product_name: "Nom du Produit"
           units: "Unité de mesure"
           value: "Nb unités"
@@ -4342,6 +4366,7 @@ fr_CA:
           product_name: Nom du Produit
         primary_taxon_form:
           product_category: Catégorie Produit
+          search_for_categories: "Rechercher des catégories"
         group_buy_form:
           group_buy: "Achat groupé ?"
           bulk_unit_size: Quantité totale du lot
@@ -4419,9 +4444,20 @@ fr_CA:
           total: "Total"
           billing_address_name: "Nom"
       taxons:
+        back_to_list: "Revenir à la liste des catégories de produits"
+        index:
+          title: "Catégorie Produit"
+          new_taxon: 'Nouvelle catégorie de produit'
+        new:
+          title: "Nouvelle catégorie de produit"
+        edit:
+          title: "Editer la catégorie de produit"
+        destroy:
+          delete_taxon:
+            success: "Catégorie de produit supprimée"
+            error: "Impossible de supprimer la catégorie de produit car des produits sont liés à cette catégorie."
         form:
           name: Nom
-          permalink: Nom pour URL (sans espace)
           meta_title: Méta titre
           meta_description: Méta description
           meta_keywords: Méta mots clés
@@ -4664,7 +4700,6 @@ fr_CA:
       key_cleared: "Clé supprimée"
       shipment:
         cannot_ready: "La livraison ne peut pas être préparée."
-      invalid_taxonomy_id: "L'identifiant de la catégorie n'est pas valide."
       toggle_api_key_view: "Montrer la clé API pour cet utilisateur"
     activerecord:
       models:

@@ -29,7 +29,6 @@ module Spree
         can :update, Order do |order, token|
           order.user == user || (order.token && token == order.token)
         end
-        can [:index, :read], Product
         can [:index, :read], ProductProperty
         can [:index, :read], Property
         can :create, Spree::User
@@ -39,7 +38,6 @@ module Spree
         can [:index, :read], StockLocation
         can [:index, :read], StockMovement
         can [:index, :read], Taxon
-        can [:index, :read], Taxonomy
         can [:index, :read], Variant
         can [:index, :read], Zone
       end
@@ -244,8 +242,8 @@ module Spree
       can [:admin, :index], ::Admin::DfcProductImportsController
 
       # Reports page
-      can [:admin, :index, :show], ::Admin::ReportsController
-      can [:admin, :show, :customers, :orders_and_distributors, :group_buys, :payments,
+      can [:admin, :index, :show, :create], ::Admin::ReportsController
+      can [:admin, :show, :create, :customers, :orders_and_distributors, :group_buys, :payments,
            :orders_and_fulfillment, :products_and_inventory, :order_cycle_management,
            :packing, :enterprise_fee_summary, :bulk_coop], :report
     end
@@ -325,7 +323,7 @@ module Spree
       end
 
       # Reports page
-      can [:admin, :index, :show], ::Admin::ReportsController
+      can [:admin, :index, :show, :create], ::Admin::ReportsController
       can [:admin, :customers, :group_buys, :sales_tax, :payments,
            :orders_and_distributors, :orders_and_fulfillment, :products_and_inventory,
            :order_cycle_management, :xero_invoices, :enterprise_fee_summary, :bulk_coop], :report

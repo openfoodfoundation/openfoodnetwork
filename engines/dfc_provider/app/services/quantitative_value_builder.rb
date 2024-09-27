@@ -11,13 +11,13 @@
 class QuantitativeValueBuilder < DfcBuilder
   def self.quantity(variant)
     DataFoodConsortium::Connector::QuantitativeValue.new(
-      unit: unit(variant),
+      unit: unit(variant.product.variant_unit),
       value: variant.unit_value,
     )
   end
 
-  def self.unit(variant)
-    case variant.product.variant_unit
+  def self.unit(unit_name)
+    case unit_name
     when "volume"
       DfcLoader.connector.MEASURES.LITRE
     when "weight"

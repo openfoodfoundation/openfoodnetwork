@@ -68,7 +68,6 @@ pt:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "deve ser vazio dado estar a usar as configurações do produtor"
-            on_demand_but_count_on_hand_set: "deve ser vazio dado estar sob encomenda"
             limited_stock_but_no_count_on_hand: "deve ser definido dado não estar sob encomenda"
       messages:
         blank: "não pode ser vazio"
@@ -317,7 +316,6 @@ pt:
   password_confirmation: Confirmação de Palavra-passe
   reset_password_token: Redefinir palavra-passe
   expired: expirou, por favor peça uma nova
-  back_to_payments_list: "Voltar à lista de pagamentos"
   maestro_or_solo_cards: "Cartões Maestro/Solo"
   backordered: "Encomendado"
   on_hand: "Disponível"
@@ -382,6 +380,8 @@ pt:
         remove: Remover
       image:
         edit: Editar
+      product_preview:
+        shop_tab: Loja
     begins_at: Começa às
     begins_on: Começa em
     customer: Consumidor/a
@@ -566,7 +566,6 @@ pt:
       variants:
         infinity: "Infinito"
         to_order_tip: "Os itens feitos por encomenda não têm um nível de stock definido, como pão fresco, por exemplo."
-      back_to_products_list: "Voltar à lista de produtos"
       editing_product: "Editando um Produto"
       tabs:
         product_details: "Detalhes do Produto"
@@ -1025,10 +1024,8 @@ pt:
         contact_name: Nome do contacto
       edit:
         editing: 'Configurações'
-        back_link: Voltar à lista de organizações
       new:
         title: Nova Organização
-        back_link: Voltar à lista de organizações
       welcome:
         welcome_title: Bem-vindo à Open Food Network!
         welcome_text: Você criou com sucesso uma
@@ -1063,6 +1060,8 @@ pt:
         back_to_list: "Voltar à Lista"
         save_and_back_to_list: "Guardar e Voltar à Lista"
         choose_products_from: "Escolha produtos de:"
+      date_time_warning_modal_content:
+        cancel: 'Cancelar'
       incoming:
         incoming: "Entrada"
         supplier: "Fornecedor"
@@ -2299,7 +2298,6 @@ pt:
   spree_admin_single_enterprise_hint: "Dica: Para permitir que as pessoas te encontrem, ative sua visibilidade em"
   spree_admin_eg_pickup_from_school: "ex: \"Levantar na Escola Primária\""
   spree_admin_eg_collect_your_order: "ex: \"Por favor levante a sua encomenda na Rua Imaginária, nº 123, 3070\""
-  spree_classification_primary_taxon_error: "A Taxon %{taxon}é a taxon primária de %{product} e não pode ser apagada."
   spree_order_availability_error: "O distribuidor ou ciclo de encomendas não pode fornecer os produtos do seu carrinho"
   spree_order_populator_error: "Esse distribuidor ou ciclo de encomendas não pode fornecer todos os produtos do seu carrinho. Por favor escolha outro."
   spree_order_populator_availability_error: "Esse produto não está disponível no distribuidor ou ciclo de encomendas selecionado."
@@ -2575,7 +2573,7 @@ pt:
   order_cycles_bulk_update_notice: 'Os ciclos de encomendas foram actualizados.'
   order_cycles_no_permission_to_coordinate_error: "Nenhuma das suas organizações tem permissão para coordenar um ciclo de encomendas."
   order_cycles_no_permission_to_create_error: "Não tem permissão para criar um ciclo de encomendas coordenado por essa organização."
-  back_to_orders_list: "Voltar à lista de encomendas"
+  back_to_orders_list: "Voltar à Lista de Encomendas"
   no_orders_found: "Nenhuma encomenda encontrada"
   order_information: "Informação da Encomenda"
   new_payment: "Novo Pagamento"
@@ -2861,6 +2859,8 @@ pt:
       confirmation: |
           Isto colocará a zero o stock de todos os produtos desta organização que não estejam presentes no ficheiro carregado.
     order_cycles:
+      unsaved_changes: "Tem alterações por guardar"
+      bulk_save_error: "Oh não! Não conseguimos guardar as suas alterações."
       create_failure: "Falhou a criação do ciclo de encomendas"
       update_success: 'O seu ciclo de encomendas foi actualizado.'
       update_failure: "Falhou a atualização do ciclo de encomendas"
@@ -3100,7 +3100,6 @@ pt:
     tax_rate_amount_explanation: "Taxas de Imposto são uma quantidade decimal que suportam o cálculo (por exemplo, se a taxa de imposto for 5%, insira 0.05)"
     included_in_price: "Incluído no Preço"
     show_rate_in_label: "Mostrar taxa na etiqueta"
-    back_to_tax_rates_list: "Voltar à lista de Taxas de Imposto"
     tax_settings: "Configurações de Impostos"
     zones: "Zonas"
     new_zone: "Nova Zona"
@@ -3113,14 +3112,11 @@ pt:
     iso_name: "Nome ISO"
     states_required: "Regiões obrigatórias"
     editing_country: "Editar País"
-    back_to_countries_list: "Voltar à Lista de Países"
     states: "Regiões"
     abbreviation: "Abreviatura"
     new_state: "Nova Região"
     payment_methods: "Métodos de pagamento"
-    taxonomies: "Taxonomias"
-    new_taxonomy: "Nova Taxonomia"
-    back_to_taxonomies_list: "Voltar à Lista de Taxonomias"
+    taxons: "Categorias de Produtos"
     shipping_methods: "Métodos de Envio"
     shipping_method: "Método de Envio"
     shipment: "Envio"
@@ -3480,6 +3476,8 @@ pt:
           total: "Total"
           billing_address_name: "Nome"
       taxons:
+        index:
+          title: "Categorias de Produtos"
         form:
           name: Nome
           description: Descrição

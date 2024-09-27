@@ -16,39 +16,60 @@ RSpec.describe InjectionHelper, type: :helper do
   }
   let!(:d2o1) { create(:completed_order_with_totals, distributor: distributor2, user_id: user.id) }
 
+  let(:sm) { create(:shipping_method) }
+  let(:pm) { create(:payment_method) }
+  let(:distributor) {
+    create(:distributor_enterprise, shipping_methods: [sm], payment_methods: [pm])
+  }
+  let(:order) { create(:order, distributor:) }
+
+  before do
+    allow_any_instance_of(EnterprisesHelper).to receive(:current_distributor).and_return distributor
+    allow_any_instance_of(EnterprisesHelper).to receive(:current_order).and_return order
+  end
+
   it "will inject via AMS" do
     expect(helper.inject_json_array("test", [enterprise],
                                     Api::IdSerializer)).to match /#{enterprise.id}/
   end
 
-  it "injects enterprises" do
-    expect(helper.inject_enterprises).to match enterprise.name
-    expect(helper.inject_enterprises).to match enterprise.facebook
+  describe "#inject_enterprises" do
+    it "injects enterprises" do
+      expect(helper.inject_enterprises).to match enterprise.name
+      expect(helper.inject_enterprises).to match enterprise.facebook
+    end
+
+    it "only injects activated enterprises" do
+      inactive_enterprise = create(:enterprise, sells: 'unspecified')
+      expect(helper.inject_enterprises).not_to match inactive_enterprise.name
+    end
   end
 
-  it "only injects activated enterprises" do
-    inactive_enterprise = create(:enterprise, sells: 'unspecified')
-    expect(helper.inject_enterprises).not_to match inactive_enterprise.name
+  describe "#inject_enterprise_and_relatives" do
+    let(:child) { create :distributor_enterprise }
+    let!(:relationship) { create :enterprise_relationship, parent: distributor, child: }
+
+    it "injects the current distributor and its relatives" do
+      expect(helper.inject_enterprise_and_relatives).to match distributor.name
+      expect(helper.inject_enterprise_and_relatives).to match child.name
+    end
   end
 
-  it "injects shipping_methods" do
-    sm = create(:shipping_method)
-    current_distributor = create(:distributor_enterprise, shipping_methods: [sm])
-    order = create(:order, distributor: current_distributor)
-    allow(helper).to receive(:current_order) { order }
-    allow(helper).to receive(:spree_current_user) { nil }
+  describe "#inject_group_enterprises" do
+    let(:group) { create :enterprise_group, enterprises: [enterprise] }
+
+    it "injects an enterprise group's enterprises" do
+      expect(helper.inject_group_enterprises(group)).to match enterprise.name
+    end
   end
 
-  it "injects payment methods" do
-    pm = create(:payment_method)
-    current_distributor = create(:distributor_enterprise, payment_methods: [pm])
-    order = create(:order, distributor: current_distributor)
-    allow(helper).to receive(:current_order) { order }
-    allow(helper).to receive(:spree_current_user) { nil }
+  describe "#inject_current_hub" do
+    it "injects the current distributor" do
+      expect(helper.inject_current_hub).to match distributor.name
+    end
   end
 
   it "injects current order" do
-    allow(helper).to receive(:current_order).and_return order = create(:order)
     expect(helper.inject_current_order).to match order.id.to_s
   end
 

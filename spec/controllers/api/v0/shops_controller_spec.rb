@@ -32,10 +32,19 @@ RSpec.describe Api::V0::ShopsController, type: :controller do
     end
 
     describe "#closed_shops" do
+      let!(:hub_open_order_cycle) {
+        create(:simple_order_cycle, orders_open_at: 10.days.ago,
+                                    orders_close_at: 17.days.from_now,
+                                    suppliers: [create(:supplier_enterprise)],
+                                    distributors: [hub], variants: [product.variants.first])
+      }
+
       it "returns data for all closed shops" do
         get :closed_shops, params: {}
 
-        expect(json_response).not_to match hub.name
+        # `hub` has an open order cycle (hub_open_order_cycle), so it should be excluded from
+        # results
+        expect(json_response.inspect).not_to match hub.name
 
         response_ids = json_response.pluck(:id)
         expect(response_ids).to contain_exactly(closed_hub1.id, closed_hub2.id)

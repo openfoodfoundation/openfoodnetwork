@@ -1,5 +1,8 @@
 import "@hotwired/turbo";
 
+import TurboPower from "turbo_power";
+TurboPower.initialize(Turbo.StreamActions);
+
 document.addEventListener("turbo:frame-missing", (event) => {
   // don't replace frame contents
   event.preventDefault();

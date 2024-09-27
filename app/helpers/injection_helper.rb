@@ -8,11 +8,13 @@ module InjectionHelper
   include OrderCyclesHelper
 
   def inject_enterprises(enterprises = nil)
+    enterprises ||= default_enterprise_query
+
     inject_json_array(
       "enterprises",
-      enterprises || default_enterprise_query,
+      enterprises,
       Api::EnterpriseSerializer,
-      enterprise_injection_data,
+      enterprise_injection_data(enterprises.map(&:id)),
     )
   end
 
@@ -57,15 +59,16 @@ module InjectionHelper
     inject_json_array "enterprises",
                       enterprises_and_relatives,
                       Api::EnterpriseSerializer,
-                      enterprise_injection_data
+                      enterprise_injection_data(enterprises_and_relatives.map(&:id))
   end
 
   def inject_group_enterprises(group)
+    enterprises = group.enterprises.activated.visible.all
     inject_json_array(
       "enterprises",
-      group.enterprises.activated.visible.all,
+      enterprises,
       Api::EnterpriseSerializer,
-      enterprise_injection_data,
+      enterprise_injection_data(enterprises.map(&:id)),
     )
   end
 
@@ -73,7 +76,7 @@ module InjectionHelper
     inject_json "currentHub",
                 current_distributor,
                 Api::EnterpriseSerializer,
-                enterprise_injection_data
+                enterprise_injection_data(current_distributor ? [current_distributor.id] : nil)
   end
 
   def inject_current_order
@@ -153,7 +156,9 @@ module InjectionHelper
     Enterprise.activated.includes(address: [:state, :country]).all
   end
 
-  def enterprise_injection_data
-    @enterprise_injection_data ||= { data: OpenFoodNetwork::EnterpriseInjectionData.new }
+  def enterprise_injection_data(enterprise_ids)
+    {
+      data: OpenFoodNetwork::EnterpriseInjectionData.new(enterprise_ids)
+    }
   end
 end

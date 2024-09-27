@@ -1,0 +1,19 @@
+.flex-column-gap-1
+  %h6
+    = t('.title')
+  %div{ style: 'font-size: 1rem;' }
+    = t('.content')
+%p.modal-actions.justify-end.gap-1
+  - if action == 'simple_update'
+    %button.button.secondary{ "ng-click": "submit($event, null)", type: "button", style: "display: none;", data: { action: 'click->modal#close', 'trigger-action': 'save' } }
+      = t('.proceed')
+    %button.button.secondary{ "ng-click": "submit($event, '#{main_app.admin_order_cycle_incoming_path(@order_cycle)}')", type: "button", style: "display: none;", data: {  action: 'click->modal#close', 'trigger-action': 'saveAndNext' } }
+      = t('.proceed')
+    %button.button.secondary{ "ng-click": "submit($event, '#{main_app.admin_order_cycles_path}')", type: "button", style: "display: none;", data: { action: 'click->modal#close', 'trigger-action': 'saveAndBack' } }
+      = t('.proceed')
+    = link_to t('.cancel'), admin_order_cycles_path, id: 'cancel', class: 'button primary', data: { 'order-cycle-form-target': 'cancel' }
+  - if action == 'bulk_update'
+    %button.button.secondary{ "ng-click": "saveAll($event)", type: "button", style: "display: none;", data: { action: 'click->modal#close', trigger_action: 'bulk_save' } }
+      = t('.proceed')
+    %button.button.primary{ type: "button", 'data-action': 'click->modal#close' }
+      = t('.cancel')

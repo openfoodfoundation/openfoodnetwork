@@ -53,7 +53,7 @@ RSpec.describe "DFC Product Import" do
 
     select enterprise.name, from: "Enterprise"
 
-    url = "https://food-data-collaboration-produc-fe870152f634.herokuapp.com/fdc/products?shop=test-hodmedod.myshopify.com"
+    url = "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
     fill_in "catalog_url", with: url
 
     expect {

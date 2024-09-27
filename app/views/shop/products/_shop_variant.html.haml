@@ -1,8 +1,9 @@
+- # NOTE: make sure that any changes in this template are reflected in app/views/admin/products_v3/product_preview.turbo_stream.haml
 = cache_with_locale do
-  .small-4.medium-4.large-5.columns.variant-name
+  .small-3.columns.variant-name
     .inline{"ng-if" => "::variant.display_name"} {{ ::variant.display_name }}
     .variant-unit {{ ::variant.unit_to_display }}
-  .small-3.medium-3.large-2.columns.variant-price
+  .small-4.medium-3.columns.variant-price
     %price-breakdown{"price-breakdown" => "_", variant: "variant",
       "price-breakdown-append-to-body" => "true",
       "price-breakdown-placement" => "bottom",
@@ -16,7 +17,7 @@
       key: "'js.shopfront.unit_price_tooltip'"}
       {{ variant.unit_price_price | localizeCurrency }}&nbsp;/&nbsp;{{ variant.unit_price_unit }}
 
-  .medium-2.large-2.columns.total-price
+  .medium-3.columns.total-price
     %span{"ng-class" => "{filled: variant.line_item.total_price}"}
       {{ variant.line_item.total_price | localizeCurrency }}
   = render partial: "shop/products/shop_variant_no_group_buy"

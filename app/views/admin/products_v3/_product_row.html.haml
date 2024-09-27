@@ -25,7 +25,7 @@
   -# empty
 %td.col-on_hand.align-right
   -# empty
-%td.col-on_hand.align-right
+%td.col-producer.align-right
   -# empty
 %td.col-category.align-left
   -# empty
@@ -40,3 +40,4 @@
         "data-modal-link-target-value": "product-delete-modal", "class": "delete",
         "data-modal-link-modal-dataset-value": {'data-delete-path': admin_product_destroy_path(product)}.to_json }
       = t('admin.products_page.actions.delete')
+    = link_to t('admin.products_page.actions.preview'), admin_product_preview_path(product), {"data-turbo-stream": "" } 

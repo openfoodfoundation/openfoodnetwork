@@ -84,7 +84,6 @@ ar:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "يجب أن تكون فارغة بسبب استخدام إعدادات المخزون للمنتج"
-            on_demand_but_count_on_hand_set: "يجب أن تكون فارغة إذا كانت عند الطلب"
             limited_stock_but_no_count_on_hand: "يجب ان تكون تحديد بسبب فرض مدودية المخزون"
       messages:
         blank: "لا يمكن أن تكون فارغة"
@@ -483,6 +482,8 @@ ar:
         remove: إزالة
       image:
         edit: تعديل
+      product_preview:
+        shop_tab: المتجر
     adjustments:
       skipped_changing_canceled_order: "لا يمكنك تغيير الطلب الذي تم إلغاؤه."
     begins_at: يبدأ عند
@@ -686,7 +687,6 @@ ar:
       variants:
         infinity: "ما لا نهاية"
         to_order_tip: "لا تحتوي المواد التي تريد طلبها  على مستوى مخزون محدد ، مثل أرغفة الخبز المصنوعة طازجة حسب الطلب."
-      back_to_products_list: "العودة إلى قائمة المنتجات"
       editing_product: "تحرير المنتج"
       tabs:
         product_details: "تفاصيل المنتج"
@@ -1198,10 +1198,8 @@ ar:
         contact_name: اسم جهة الاتصال
       edit:
         editing: 'الإعدادات:'
-        back_link: العودة إلى قائمة المؤسسات
       new:
         title: شركة جديدة
-        back_link: العودة إلى قائمة المؤسسات
       welcome:
         welcome_title: مرحبا بكم في شبكة الغذاء المفتوح الاردن - فلاحة جو !
         welcome_text: لقد نجحت في إنشاء
@@ -1238,6 +1236,8 @@ ar:
         choose_products_from: "اختر المنتجات من:"
         re_notify_producers: إعادة إخطار المنتجين
         notify_producers_tip: سيؤدي هذا إلى إرسال بريد إلكتروني إلى كل منتج مع قائمة طلباتهم.
+      date_time_warning_modal_content:
+        cancel: 'إلغاء'
       incoming:
         incoming: "الوارد"
         supplier: "المورد"
@@ -2651,7 +2651,6 @@ ar:
   spree_admin_single_enterprise_hint: "لمحة: للسماح للأشخاص بالعثور عليك ، قم بتشغيل الرؤية الخاصة بك أسفل"
   spree_admin_eg_pickup_from_school: "على سبيل المثال. &quot;البيك اب من المدرسة الابتدائية&quot;"
   spree_admin_eg_collect_your_order: "على سبيل المثال. &quot;يرجى جمع طلبك من 123 Imaginary St، Northcote ، 3070&quot;"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} هو التصنيف الأساسي %{product} ولا يمكن حذفه"
   spree_order_availability_error: "لا يمكن لموزع أو دورة طلب توفير المنتجات في سلة التسوق"
   spree_order_populator_error: "لا يمكن لهذا الموزع أو دورة الطلب توفير جميع المنتجات في سلة التسوق. الرجاء اختيار آخر."
   spree_order_cycle_error: "الرجاء اختيار دورة الطلب لهذا الطلب."
@@ -2964,7 +2963,7 @@ ar:
   order_cycles_no_permission_to_coordinate_error: "لا تملك أي من مؤسساتك إذنًا لتنسيق دورة الطلب"
   order_cycles_no_permission_to_create_error: "ليس لديك إذن لإنشاء دورة طلب تنسقها تلك المؤسسة"
   order_cycle_closed: "تم إغلاق دورة الطلب التي حددتها للتو. حاول مرة اخرى!"
-  back_to_orders_list: "العودة إلى قائمة الطلب"
+  back_to_orders_list: "العودة إلى قائمة الطلبات"
   no_orders_found: "لم يتم العثور على أية طلبات"
   order_information: "معلومات الطلب"
   new_payment: "دفعة جديد"
@@ -3300,6 +3299,8 @@ ar:
           سيؤدي ذلك إلى ضبط مستوى المخزون لصفر على جميع المنتجات
           المؤسسة غير موجودة في الملف الذي تم تحميله.
     order_cycles:
+      unsaved_changes: "لم تحفظ التغييرات"
+      bulk_save_error: "عذرا لا! لم أستطع حفظ تغييراتك."
       create_failure: "فشل في تكوين دورة الطلب"
       update_success: 'تم تحديث دورة الطلب.'
       update_failure: "فشل في تحديث دورة الطلب"
@@ -3617,7 +3618,6 @@ ar:
     more: "أكثر"
     new_adjustment: "تعديل جديد"
     new_tax_category: "فئة ضريبية جديدة"
-    new_taxon: "اصنوفة جديدة"
     new_user: "مستخدم جديد"
     no_pending_payments: "لا توجد دفعات معلقة"
     remove: "إزالة"
@@ -3636,8 +3636,6 @@ ar:
       delivery: "موقعة ومختومة وتم التسليم"
     start_date: "تاريخ البدء"
     successfully_removed: "تمت الإزالة بنجاح"
-    taxonomy_edit: "التصنيف"
-    tree: "شجرة"
     updating: "تحديث"
     your_order_is_empty_add_product: "طلبك فارغ ، يرجى البحث عن المنتج أعلاه وإضافته"
     add_product: "أضف منتج"
@@ -3733,7 +3731,6 @@ ar:
     tax_rate_amount_explanation: "معدلات الضرائب هي مبلغ عشري للمساعدة في العمليات الحسابية ، (أي إذا كان معدل الضريبة 5٪ ، فأدخل 0.05)"
     included_in_price: "المدرجة في السعر"
     show_rate_in_label: "عرض السعر في التسمية"
-    back_to_tax_rates_list: "العودة إلى قائمة أسعار الضرائب"
     tax_settings: "الإعدادات الضريبية"
     zones: "مناطق"
     new_zone: "منطقة جديدة"
@@ -3746,14 +3743,11 @@ ar:
     iso_name: "اسم شهادة ISO"
     states_required: "المنطقة مطلوبة"
     editing_country: "تحرير الدولة"
-    back_to_countries_list: "العودة إلى قائمة الدول"
     states: "محافظات"
     abbreviation: "الاختصار"
     new_state: "محافظة جديدة"
     payment_methods: "طرق الدفع"
-    taxonomies: "التصنيفات"
-    new_taxonomy: "تصنيف جديد"
-    back_to_taxonomies_list: "العودة إلى قائمة التصنيفات"
+    taxons: "فئات المنتجات"
     shipping_methods: "طرق الشحن"
     shipping_method: "طريقة الشحن"
     shipment: "الشحنة"
@@ -3910,7 +3904,6 @@ ar:
           continue: "تابع"
         new:
           new_return_authorization: "عودة الترخيص جديد"
-          back_to_return_authorizations_list: "العودة إلى قائمة عودة الترخيص"
           continue: "تابع"
         edit:
           receive: "استلام"
@@ -4218,9 +4211,10 @@ ar:
           total: "المجموع"
           billing_address_name: "الاسم"
       taxons:
+        index:
+          title: "فئات المنتجات"
         form:
           name: الاسم
-          permalink: الرابط الثابت
           description: وصف
       general_settings:
         edit:
@@ -4458,7 +4452,6 @@ ar:
       key_cleared: "تم مسح المفتاح"
       shipment:
         cannot_ready: "لا يمكن تجهيز الشحنة"
-      invalid_taxonomy_id: "معرف التصنيف غير صالح."
       toggle_api_key_view: "إظهار عرض مفتاح API للمستخدم"
     activerecord:
       models:

@@ -44,6 +44,10 @@ module OpenFoodNetwork
         Enterprise data can be shared with another app.
         The first example is the Australian Discover Regenerative Portal.
       DESC
+      "affiliate_sales_data" => <<~DESC,
+        Activated for a user.
+        The user (INRAE researcher) has access to anonymised sales.
+      DESC
     }.freeze
 
     # Features you would like to be enabled to start with.

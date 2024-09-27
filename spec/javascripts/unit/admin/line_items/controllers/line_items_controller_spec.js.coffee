@@ -121,18 +121,24 @@ describe "LineItemsCtrl", ->
         scope.line_items = [ line_item1, line_item2 ]
 
       it "show popup about order cancellation only on last item deletion", ->
+        spyOn(window, "confirm").and.callFake(-> return true)
         spyOn(window, "ofnCancelOrderAlert")
+
         scope.deleteLineItem(line_item2)
+        expect(confirm).toHaveBeenCalled()
         expect(ofnCancelOrderAlert).not.toHaveBeenCalled()
+
         scope.deleteLineItem(line_item1)
         expect(ofnCancelOrderAlert).toHaveBeenCalled()
 
       it "deletes the line item", ->
         spyOn(window, "confirm").and.callFake(-> return true)
         spyOn(LineItems, "delete")
+
         scope.deleteLineItem(line_item2)
+        expect(confirm).toHaveBeenCalled()
         expect(LineItems.delete).toHaveBeenCalledWith(line_item2, jasmine.anything())
-    
+
     describe "deleting 'checked' line items", ->
       line_item1 = line_item2 = line_item3 = line_item4 = null
       order1 = order2 = order3 = null
@@ -165,10 +171,14 @@ describe "LineItemsCtrl", ->
 
       it "asks for confirmation only if orders will be canceled", ->
         spyOn(window, "ofnCancelOrderAlert")
+
         line_item3.checked = true
         scope.deleteLineItems(scope.line_items)
+
         line_item1.checked = true
         scope.deleteLineItems(scope.line_items)
+        expect(ofnCancelOrderAlert).toHaveBeenCalled()
+
 
     describe "check boxes for line items", ->
       line_item1 = line_item2 = null

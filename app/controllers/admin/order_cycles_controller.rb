@@ -2,6 +2,8 @@
 
 module Admin
   class OrderCyclesController < Admin::ResourceController
+    class DateTimeChangeError < StandardError; end
+
     include ::OrderCyclesHelper
     include PaperTrailLogging
 
@@ -62,9 +64,7 @@ module Admin
     end
 
     def update
-      @order_cycle_form = OrderCycles::FormService.new(@order_cycle, order_cycle_params,
-                                                       spree_current_user)
-
+      @order_cycle_form = set_order_cycle_form
       if @order_cycle_form.save
         update_nil_subscription_line_items_price_estimate(@order_cycle)
         respond_to do |format|
@@ -77,6 +77,9 @@ module Admin
       elsif request.format.json?
         render json: { errors: @order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
+    rescue DateTimeChangeError
+      render json: { trigger_action: params[:trigger_action] },
+             status: :unprocessable_entity
     end
 
     def bulk_update
@@ -90,6 +93,9 @@ module Admin
         order_cycle = order_cycle_set.collection.find{ |oc| oc.errors.present? }
         render json: { errors: order_cycle.errors.full_messages }, status: :unprocessable_entity
       end
+    rescue DateTimeChangeError
+      render json: { trigger_action: params[:trigger_action] },
+             status: :unprocessable_entity
     end
 
     def bulk_update_nil_subscription_line_items_price_estimate
@@ -235,7 +241,7 @@ module Admin
       else
         begin
           yield
-        rescue ActiveRecord::InvalidForeignKey
+        rescue ActiveRecord::InvalidForeignKey, ActiveRecord::DeleteRestrictionError
           redirect_to main_app.admin_order_cycles_url
           flash[:error] = I18n.t('admin.order_cycles.destroy_errors.orders_present')
         end
@@ -270,7 +276,10 @@ module Admin
     end
 
     def order_cycle_set
-      @order_cycle_set ||= Sets::OrderCycleSet.new(@order_cycles, order_cycle_bulk_params)
+      @order_cycle_set ||= Sets::OrderCycleSet.new(
+        @order_cycles, { **order_cycle_bulk_params,
+          confirm_datetime_change: params[:confirm], error_class: DateTimeChangeError }
+      )
     end
 
     def require_order_cycle_set_params
@@ -293,6 +302,15 @@ module Admin
       params.require(:order_cycle_set).permit(
         collection_attributes: [:id] + PermittedAttributes::OrderCycle.basic_attributes
       ).to_h.with_indifferent_access
+    end
+
+    def set_order_cycle_form
+      OrderCycles::FormService.new(
+        @order_cycle, order_cycle_params.merge(
+                        { confirm_datetime_change: params[:order_cycle][:confirm],
+                          error_class: DateTimeChangeError }
+                      ), spree_current_user
+      )
     end
   end
 end

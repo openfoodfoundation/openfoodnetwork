@@ -1,34 +1,7 @@
 .darkswarm {
   products {
     product {
-      .product-thumb {
-        // Desktop: the product summary is nine columns wide. Use two
-        // for the image. 100% / 9 * 2 = 22.222% <= 192px
-        width: calc(22.222%);
-        float: left;
-
-        // Mobile: the summary has full twelve columns and the image
-        // should take four of them. 100% / 12 * 4 = 33.333% <= 227px
-        @include breakpoint(phablet) {
-          width: calc(33.333%);
-        }
-
-        // Make this an anchor for the bulk label.
-        position: relative;
-
-        .product-thumb__bulk-label {
-          background-color: $grey-700;
-          color: white;
-          position: absolute;
-          right: 0;
-          top: .8em;
-          padding: .25em .5em;
-        }
-
-        &:hover {
-          filter: brightness(96%);
-        }
-      }
+      @import "shop_partials/shop-product-thumb";
     }
   }
 }

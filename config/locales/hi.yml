@@ -81,8 +81,6 @@ hi:
         white_label_logo_link: "शॉपफ्रन्ट में इस्तेमाल किए गए लोगो के लिए लिंक"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "टैक्स की श्रेणी को इन्हेरिट करने के लिए प्रति-आइटम कॅल्क्युलेटर की आवश्यकता है।"
         spree/user:
           attributes:
             email:
@@ -102,7 +100,6 @@ hi:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "उत्पादक स्टॉक सेटिंग्स का उपयोग करने के कारण खाली होना ही चाहिए"
-            on_demand_but_count_on_hand_set: "यदि मांग हो तो खाली होना ही चाहिए"
             limited_stock_but_no_count_on_hand: "सीमित स्टॉक को मजबूर करने के कारण निर्दिष्ट किया जाना ही चाहिए"
       messages:
         confirmation: "%{attribute} से मेल नहीं खाता"
@@ -541,6 +538,8 @@ hi:
         remove: मिटाएँ
       image:
         edit: एडिट करें
+      product_preview:
+        shop_tab: शॉप
     adjustments:
       skipped_changing_canceled_order: "आप रद्द किए गए ऑर्डर को बदल नहीं सकते।"
     begins_at: को शुरू होता है
@@ -744,7 +743,6 @@ hi:
       variants:
         infinity: "इन्फिनिटी"
         to_order_tip: "ऑर्डर करने के लिए बनाई गई वस्तुओं का एक निर्धारित स्टॉक स्तर नहीं होता है, जैसे कि ऑर्डर करने के लिए ताजा बनाई गई ब्रेड की रोटियां।"
-      back_to_products_list: "उत्पादों की सूची पर वापस जाएं"
       editing_product: "उत्पाद की एडिटिंग हो रही है"
       tabs:
         product_details: "उत्पाद का विवरण"
@@ -769,7 +767,6 @@ hi:
         search: सर्च
       sort:
         pagination:
-          total_html: "<strong>%{total} उत्पाद</strong> आपके सर्च क्राइटेरिया के लिए मिले। %{from} से %{to} दिखा रहा है।"
           per_page:
             show: दिखाएं
             per_page: "%{num} प्रति पेज"
@@ -1288,10 +1285,8 @@ hi:
         contact_name: संपर्क का नाम
       edit:
         editing: 'सेटिंग्स:'
-        back_link: एंटरप्राइज़ सूची पर वापस जाएं
       new:
         title: न्यू एंटरप्राइज़
-        back_link: एंटरप्राइज़ सूची पर वापस जाएं
       welcome:
         welcome_title: Open Food Network में आपका स्वागत है!
         welcome_text: आपने सफलतापूर्वक एक बनाया है
@@ -1328,6 +1323,8 @@ hi:
         choose_products_from: "इनमें से उत्पाद चुनें:"
         re_notify_producers: उत्पादकों को फिर से नोटिफाई करें
         notify_producers_tip: यह प्रत्येक उत्पादक को उनके ऑर्डर्स की सूची के साथ एक ईमेल भेजेगा।
+      date_time_warning_modal_content:
+        cancel: 'रद्द करें'
       incoming:
         incoming: "इनकमिंग"
         supplier: "आपूर्तिकर्ता"
@@ -2771,7 +2768,6 @@ hi:
   spree_admin_single_enterprise_hint: "संकेत: लोगों को आपको ढूंढने की अनुमति देने के लिए, नीचे से अपनी दृश्यता चालू करें"
   spree_admin_eg_pickup_from_school: "उदाहरण 'प्राइमरी स्कूल से पिक-अप'"
   spree_admin_eg_collect_your_order: "उदाहरण 'कृपया 123 इमेजिनरी सेंट, नॉर्थकोट, 3070 से अपना ऑर्डर एकत्र करें'"
-  spree_classification_primary_taxon_error: "टैक्सोन %{taxon} %{product} का प्राथमिक टैक्सोन है और इसे हटाया नहीं जा सकता"
   spree_order_availability_error: "आपके कार्ट में वितरक या ऑर्डर साइकिल उत्पादों की आपूर्ति नहीं कर सकता है"
   spree_order_populator_error: "वह वितरक या ऑर्डर साइकिल आपके कार्ट में सभी उत्पादों की आपूर्ति नहीं कर सकता है। कृपया कोई दूसरा चुनें।"
   spree_order_cycle_error: "कृपया इस ऑर्डर के लिए ऑर्डर साइकल चुनें।"
@@ -3434,6 +3430,8 @@ hi:
           यह इस एंटरप्राइज़ के लिए उन सभी उत्पादों पर स्टॉक स्तर शून्य पर सेट कर देगा
           जो अपलोड की गई फ़ाइल में मौजूद नहीं हैं।
     order_cycles:
+      unsaved_changes: "आपके पास बिना सेव किए गए परिवर्तन हैं"
+      bulk_save_error: "अरे नहीं! मैं आपके परिवर्तनों को सेव करने में असमर्थ था।"
       create_failure: "ऑर्डर साइकल बनाने में विफल हुआ"
       update_success: 'आपका ऑर्डर साइकल अपडेट कर दिया गया है।'
       update_failure: "ऑर्डर साइकल अपडेट करने में विफल हुआ"
@@ -3656,7 +3654,6 @@ hi:
     more: "और ज्यादा"
     new_adjustment: "नया एडजस्टमेंट"
     new_tax_category: "नई टैक्स श्रेणी"
-    new_taxon: "नया टैक्सोन"
     new_user: "नया यूज़र"
     no_pending_payments: "कोई पेंडिंग भुगतान नहीं"
     remove: "मिटाएँ"
@@ -3675,8 +3672,6 @@ hi:
       delivery: "हस्ताक्षरित, सीलबंद, डिलीवर किया गया"
     start_date: "शुरू होने की तिथि"
     successfully_removed: "सफलतापूर्वक हटाया गया"
-    taxonomy_edit: "टैक्सोनॉमी एडिट करें"
-    tree: "ट्री"
     updating: "अपडेट किया जा रहा है"
     your_order_is_empty_add_product: "आपका ऑर्डर खाली है, कृपया ऊपर दिए गए उत्पाद को सर्च करें और जोड़ें"
     add_product: "उत्पाद जोड़ें"
@@ -3773,7 +3768,6 @@ hi:
     tax_rate_amount_explanation: "कैलकुलेशन में सहायता के लिए टैक्स दरें एक दशमलव राशि हैं, (यानी यदि टैक्स की दर 5% है तो 0.05 एंटर करें)"
     included_in_price: "कीमत में शामिल"
     show_rate_in_label: "लेबल में रेट दिखाएं"
-    back_to_tax_rates_list: "टैक्स दरों की सूची पर वापस जाएं"
     tax_settings: "टैक्स सेटिंग्स"
     zones: "ज़ोन"
     new_zone: "न्यू ज़ोन"
@@ -3786,14 +3780,11 @@ hi:
     iso_name: "ISO का नाम"
     states_required: "आवश्यक राज्य"
     editing_country: "एडिटिंग देश"
-    back_to_countries_list: "देशों की सूची पर वापस जाएं"
     states: "राज्य"
     abbreviation: "संक्षेपण"
     new_state: "नया राज्य"
     payment_methods: "भुगतान की विधियाँ"
-    taxonomies: "टैक्सोनॉमीज़"
-    new_taxonomy: "न्यू टैक्सोनॉमी"
-    back_to_taxonomies_list: "टैक्सोनॉमीज़ सूची पर वापस जाएं"
+    taxons: "उत्पाद श्रेणियां"
     shipping_methods: "शिपिंग की विधियाँ"
     shipping_method: "शिपिंग की विधि"
     shipment: "शिपमेंट"
@@ -3951,7 +3942,6 @@ hi:
           continue: "जारी रखें"
         new:
           new_return_authorization: "नया रिटर्न प्राधिकरण"
-          back_to_return_authorizations_list: "रिटर्न प्राधिकरण सूची पर वापस जाएं"
           continue: "जारी रखें"
         edit:
           receive: "प्राप्त करें"
@@ -4266,9 +4256,10 @@ hi:
           total: "कुल"
           billing_address_name: "नाम"
       taxons:
+        index:
+          title: "उत्पाद श्रेणियां"
         form:
           name: नाम
-          permalink: पर्मलिंक
           description: विवरण
       general_settings:
         edit:
@@ -4506,7 +4497,6 @@ hi:
       key_cleared: "कुंजी साफ़ हो गई"
       shipment:
         cannot_ready: "शिपमेंट तैयार नहीं कर सकते।"
-      invalid_taxonomy_id: "अमान्य टैक्सोनॉमी id।"
       toggle_api_key_view: "यूज़र्स के लिए API कुंजी दृश्य दिखाएं"
     activerecord:
       models:

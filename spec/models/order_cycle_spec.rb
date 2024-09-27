@@ -423,6 +423,30 @@ RSpec.describe OrderCycle do
     it "returns the earliest closing time" do
       expect(OrderCycle.earliest_closing_times[e2.id].round).to eq(time2.round)
     end
+
+    context "when scoped by distributors" do
+      it "returns times for the given distributors" do
+        expect(OrderCycle.earliest_closing_times([e1.id])).to have_key e1.id
+        expect(OrderCycle.earliest_closing_times([e2.id])).to have_key e2.id
+      end
+
+      it "doesn't return times for other distributors" do
+        expect(OrderCycle.earliest_closing_times([e1.id])).not_to have_key e2.id
+        expect(OrderCycle.earliest_closing_times([e2.id])).not_to have_key e1.id
+      end
+
+      it "returns the correct values" do
+        expect(OrderCycle.earliest_closing_times([e1.id])[e1.id].round).to eq time1.round
+        expect(OrderCycle.earliest_closing_times([e2.id])[e2.id].round).to eq time2.round
+      end
+    end
+
+    context "when not scoped by distributors" do
+      it "returns times for all distributors" do
+        expect(OrderCycle.earliest_closing_times).to have_key e1.id
+        expect(OrderCycle.earliest_closing_times).to have_key e2.id
+      end
+    end
   end
 
   describe "finding all line items sold by to a user by a given shop" do
@@ -801,6 +825,33 @@ RSpec.describe OrderCycle do
       order_cycle = build(:simple_order_cycle, coordinator: build(:enterprise, sells: "any"))
 
       expect(order_cycle).not_to be_simple
+    end
+  end
+
+  describe "same_datetime_value" do
+    it 'returns true when old and new values are nil' do
+      order_cycle = create(:order_cycle, orders_open_at: nil, orders_close_at: nil)
+      expect(order_cycle.same_datetime_value(:orders_open_at, nil)).to be_truthy
+    end
+
+    it 'returns false if one value is nil and other not nil' do
+      order_cycle = create(:order_cycle, orders_open_at: "2024-09-30 06:09", orders_close_at: nil)
+      expect(order_cycle.same_datetime_value(:orders_open_at, nil)).to be_falsey
+      expect(order_cycle.same_datetime_value(:orders_close_at, "2024-09-30 06:09")).to be_falsey
+    end
+
+    it 'returns true if either values are same' do
+      order_cycle = create(:order_cycle, orders_open_at: Time.zone.parse("2024-09-30 06:09"),
+                                         orders_close_at: Time.zone.parse("2024-11-30 06:09"))
+      expect(order_cycle.same_datetime_value(:orders_open_at, "2024-09-30 06:09")).to be_truthy
+      expect(order_cycle.same_datetime_value(:orders_close_at, "2024-11-30 06:09")).to be_truthy
+    end
+
+    it 'returns false if either values are not same' do
+      order_cycle = create(:order_cycle, orders_open_at: Time.zone.parse("2024-09-30 06:09"),
+                                         orders_close_at: Time.zone.parse("2024-11-30 06:09"))
+      expect(order_cycle.same_datetime_value(:orders_open_at, "2024-10-30 06:09")).to be_falsey
+      expect(order_cycle.same_datetime_value(:orders_close_at, "2024-12-30 06:09")).to be_falsey
     end
   end
 end

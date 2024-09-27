@@ -1,9 +1,58 @@
 // Navigation
 //---------------------------------------------------
+
+@mixin menu-display {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@mixin menu-link {
+  a {
+    display: inline-block;
+    padding: 16px 20px;
+    color: $color-9 !important;
+    text-align: center;
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+
+    &:hover {
+      color: $red !important;
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 20px;
+        right: 20px;
+        height: 3px;
+        background: $red;
+      }
+    }
+
+    &.active {
+      @extend :hover;
+    }
+  }
+}
+
 .inline-menu {
   margin: 0;
   -webkit-margin-before: 0;
   -webkit-padding-start: 0;
+}
+
+// tabs
+/// use the same styling as #admin-menu via menu-display and menu-link mixins
+dl.admin-tabs {
+  box-shadow: $box-shadow;
+  @include menu-display;
+
+  dd {
+    width: auto;
+    padding: 0;
+    @include menu-link;
+  }
 }
 
 nav.menu {
@@ -95,33 +144,10 @@ nav.menu {
   }
 
   ul {
-    display: flex;
-    flex-wrap: wrap;
+    @include menu-display;
 
     li {
-      a {
-        display: inline-block;
-        padding: 16px 20px;
-        color: $color-9 !important;
-        text-align: center;
-        position: relative;
-        font-size: 14px;
-        font-weight: 600;
-
-        &:hover {
-          color: $red !important;
-
-          &:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 20px;
-            right: 20px;
-            height: 3px;
-            background: $red;
-          }
-        }
-      }
+      @include menu-link;
 
       &.selected a {
         @extend a, :hover;

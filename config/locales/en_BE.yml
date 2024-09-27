@@ -57,7 +57,6 @@ en_BE:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
-            on_demand_but_count_on_hand_set: "must be blank if on demand"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
       messages:
         blank: "can't be blank"
@@ -269,7 +268,6 @@ en_BE:
   password_confirmation: Password Confirmation
   reset_password_token: Reset password token
   expired: has expired, please request a new one
-  back_to_payments_list: "Back to Payments List"
   on_hand: "On Hand"
   on hand: "On Hand"
   ship: "Ship"
@@ -324,6 +322,8 @@ en_BE:
         remove: Remove
       image:
         edit: Edit
+      product_preview:
+        shop_tab: Shop
     begins_at: Begins At
     begins_on: Begins On
     customer: Customer
@@ -502,7 +502,6 @@ en_BE:
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
-      back_to_products_list: "Back to products list"
       tabs:
         group_buy_options: "Group Buy Options"
         images: "Images"
@@ -938,10 +937,8 @@ en_BE:
         contact_name: Contact Name
       edit:
         editing: 'Settings:'
-        back_link: Back to enterprises list
       new:
         title: New Enterprise
-        back_link: Back to enterprises list
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
@@ -972,6 +969,8 @@ en_BE:
         next: "Next"
         cancel: "Cancel"
         choose_products_from: "Choose Products From:"
+      date_time_warning_modal_content:
+        cancel: 'Cancel'
       incoming:
         incoming: "Incoming"
         supplier: "Supplier"
@@ -2192,7 +2191,6 @@ en_BE:
   spree_admin_single_enterprise_hint: "Hint: To allow people to find you, turn on your visibility under"
   spree_admin_eg_pickup_from_school: "eg. 'Pick-up from Primary School'"
   spree_admin_eg_collect_your_order: "eg. 'Please collect your order from 123 Imaginary St, Northcote, 3070'"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Distributor or order cycle cannot supply the products in your cart"
   spree_order_populator_error: "That distributor or order cycle can't supply all the products in your cart. Please choose another."
   spree_order_populator_availability_error: "That product is not available from the chosen distributor or order cycle."
@@ -2466,7 +2464,7 @@ en_BE:
   order_cycles_bulk_update_notice: 'Order cycles have been updated.'
   order_cycles_no_permission_to_coordinate_error: "None of your enterprises have permission to coordinate an order cycle"
   order_cycles_no_permission_to_create_error: "You don't have permission to create an order cycle coordinated by that enterprise"
-  back_to_orders_list: "Back to order list"
+  back_to_orders_list: "Back To Orders List"
   no_orders_found: "No Orders Found"
   order_information: "Order Information"
   new_payment: "New Payment"
@@ -2759,6 +2757,8 @@ en_BE:
           This will set stock level to zero on all products for this
           enterprise that are not present in the uploaded file.
     order_cycles:
+      unsaved_changes: "You have unsaved changes"
+      bulk_save_error: "Oh no! I was unable to save your changes."
       create_failure: "Failed to create order cycle"
       update_success: 'Your order cycle has been updated.'
       update_failure: "Failed to update order cycle"
@@ -2948,7 +2948,6 @@ en_BE:
     tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
     included_in_price: "Included in Price"
     show_rate_in_label: "Show rate in label"
-    back_to_tax_rates_list: "Back to Tax Rates List"
     tax_settings: "Tax Settings"
     zones: "Zones"
     new_zone: "New Zone"
@@ -2961,14 +2960,11 @@ en_BE:
     iso_name: "ISO Name"
     states_required: "States Required"
     editing_country: "Editing Country"
-    back_to_countries_list: "Back to Countries List"
     states: "States"
     abbreviation: "Abbreviation"
     new_state: "New State"
     payment_methods: "Payment Methods"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "New Taxonomy"
-    back_to_taxonomies_list: "Back to Taxonomies List"
+    taxons: "Product Categories"
     shipping_methods: "Shipping Methods"
     shipping_method: "Shipping Method"
     shipment: "Shipment"
@@ -3308,6 +3304,8 @@ en_BE:
           total: "Total"
           billing_address_name: "Name"
       taxons:
+        index:
+          title: "Product Categories"
         form:
           name: Name
           description: Description

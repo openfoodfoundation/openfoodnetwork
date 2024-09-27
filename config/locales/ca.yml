@@ -86,7 +86,6 @@ ca:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "ha d'estar en blanc perquè s'utilitza la configuració d'estoc de la productora"
-            on_demand_but_count_on_hand_set: "ha d'estar en blanc si és sota demanda"
             limited_stock_but_no_count_on_hand: "cal especificar-se perquè força existències limitades"
       messages:
         blank: "no es pot deixar en blanc"
@@ -511,6 +510,8 @@ ca:
         remove: Eliminar
       image:
         edit: Editar
+      product_preview:
+        shop_tab: Botiga
     adjustments:
       skipped_changing_canceled_order: "No podeu canviar una comanda cancel·lada."
     begins_at: Comença a
@@ -717,7 +718,6 @@ ca:
       variants:
         infinity: "Infinit"
         to_order_tip: "Els articles preparats per encàrrec no tenen un nivell fixat d'existències, com ara pa fet sota comanda."
-      back_to_products_list: "Torna a la llista de productes"
       editing_product: "Editant el producte"
       tabs:
         product_details: "Detalls del producte"
@@ -755,7 +755,6 @@ ca:
         search: Cerca
       sort:
         pagination:
-          total_html: "<strong>%{total} productes</strong> trobats pels vostres criteris de cerca. Mostrant de %{from} a %{to} ."
           per_page:
             show: Mostra
             per_page: "%{num} per pàgina"
@@ -1253,10 +1252,8 @@ ca:
         contact_name: Nom de contacte
       edit:
         editing: 'Configuració:'
-        back_link: Tornar a la llista d'organitzacions
       new:
         title: Nova organització
-        back_link: 'Tornar a la llista d''organitzacions '
       welcome:
         welcome_title: Benvingut a Katuma - Open Food Network!
         welcome_text: Heu creat correctament un
@@ -1292,6 +1289,8 @@ ca:
         save_and_back_to_list: "Desa i torna a la llista"
         choose_products_from: "Trieu Productes des de:"
         notify_producers_tip: Això enviarà un correu electrònic a cada productor amb la llista dels seus productes demanats a les comandes.
+      date_time_warning_modal_content:
+        cancel: 'Cancel·lar'
       incoming:
         incoming: "Entrant"
         supplier: "Proveïdora"
@@ -2656,7 +2655,6 @@ ca:
   spree_admin_single_enterprise_hint: "Suggeriment: per permetre que la gent us trobi, activeu la vostra visibilitat"
   spree_admin_eg_pickup_from_school: "p. ex: 'Recollida al local del grup de consum'"
   spree_admin_eg_collect_your_order: "p. ex: \"Recolliu la vostra comanda al c/Ample, n. 123'"
-  spree_classification_primary_taxon_error: "El taxó %{taxon} és el principal taxó d'%{product} i no es pot eliminar"
   spree_order_availability_error: "La distribuïdora o el cicle de comanda no pot subministrar els productes de la vostra cistella"
   spree_order_populator_error: "Aquesta distribuïdora o cicle de comanda no pot subministrar tots els productes de la vostra cistella. Si us plau trieu-ne d'altres."
   spree_order_cycle_error: "Seleccioneu un cicle per a aquesta comanda."
@@ -2947,7 +2945,7 @@ ca:
   order_cycles_no_permission_to_coordinate_error: "Cap de les vostres organitzacions té permís per coordinar un cicle de comanda"
   order_cycles_no_permission_to_create_error: "No teniu permís per crear un cicle de comandes coordinat per aquesta organització"
   order_cycle_closed: "El cicle de comandes que has triat acaba de tancar. Sisplau prova en un altre moment."
-  back_to_orders_list: "Torna a la llista de comandes"
+  back_to_orders_list: "Tornar a la llista de comandes"
   no_orders_found: "No s'han trobat comandes"
   order_information: "Informació de la comanda"
   new_payment: "Nou pagament"
@@ -3281,6 +3279,8 @@ ca:
           Això establirà el nivell d'estoc a zero en tots els productes per aquesta
           organització que no estan presents al fitxer carregat.
     order_cycles:
+      unsaved_changes: "Teniu canvis sense desar"
+      bulk_save_error: "Ah no! No he pogut desar els canvis."
       create_failure: "No s'ha pogut crear el cicle de comanda"
       update_success: 'S''ha actualitzat el cicle de comanda.'
       update_failure: "No s'ha pogut actualitzar el cicle de comanda"
@@ -3494,7 +3494,6 @@ ca:
     more: "Més"
     new_adjustment: "Nou ajustament"
     new_tax_category: "Nova categoria fiscal"
-    new_taxon: "Nou tàxon"
     new_user: "Nou usuari"
     no_pending_payments: "No hi ha pagaments pendents"
     remove: "Eliminar"
@@ -3513,8 +3512,6 @@ ca:
       delivery: "Signat, segellat, lliurat"
     start_date: "Data d'inici"
     successfully_removed: "S'ha suprimit correctament"
-    taxonomy_edit: "Edició de taxonomia"
-    tree: "Arbre"
     updating: "Actualitzant"
     your_order_is_empty_add_product: "La comanda està buida, si us plau cerca i afegeix un producte a dalt"
     add_product: "Afegeix un producte"
@@ -3611,7 +3608,6 @@ ca:
     tax_rate_amount_explanation: "Les taxes impositives són un import decimal per ajudar en els càlculs (és a dir, si el tipus impositiu és del 5%, introduïu 0,05)"
     included_in_price: "Inclòs al preu"
     show_rate_in_label: "Mostra l'impost a l'etiqueta"
-    back_to_tax_rates_list: "Tornar a la llista d'impostos"
     tax_settings: "Configuració fiscal"
     zones: "Zones"
     new_zone: "Nova zona"
@@ -3624,14 +3620,11 @@ ca:
     iso_name: "Nom ISO"
     states_required: "Estats obligatoris"
     editing_country: "Editar el país"
-    back_to_countries_list: "Torna a la llista de països"
     states: "Estats"
     abbreviation: "Abreviatura"
     new_state: "Nou estat"
     payment_methods: "Mètodes de Pagament"
-    taxonomies: "Taxonomies"
-    new_taxonomy: "Nova taxonomia"
-    back_to_taxonomies_list: "Torna a la llista de taxonomies"
+    taxons: "Tipus de productes"
     shipping_methods: "Mètodes d'enviament"
     shipping_method: "Mètode d'enviament"
     shipment: "Enviament"
@@ -3785,7 +3778,6 @@ ca:
           continue: "Continua"
         new:
           new_return_authorization: "Nova autorització de devolució"
-          back_to_return_authorizations_list: "Tornar a la llista d'autorització"
           continue: "Continua"
         edit:
           receive: "rebre"
@@ -4021,6 +4013,7 @@ ca:
           product_name: Nom del producte
         primary_taxon_form:
           product_category: Categoria del producte
+          search_for_categories: "Cercar categories"
         group_buy_form:
           group_buy: "Compra en grup?"
           bulk_unit_size: Mida de la unitat a granel
@@ -4096,9 +4089,10 @@ ca:
           total: "Total"
           billing_address_name: "Nom"
       taxons:
+        index:
+          title: "Tipus de productes"
         form:
           name: Nom
-          permalink: Enllaç permanent
           description: Descripció
       general_settings:
         edit:
@@ -4326,7 +4320,6 @@ ca:
       key_cleared: "La clau esborrada"
       shipment:
         cannot_ready: "No es pot fer l'enviament."
-      invalid_taxonomy_id: "Identificador de taxonomia no vàlid."
     activerecord:
       models:
         spree/payment:

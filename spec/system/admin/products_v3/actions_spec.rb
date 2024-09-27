@@ -34,42 +34,74 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
   describe "column selector" do
     let!(:product) { create(:simple_product) }
 
-    before do
-      visit admin_products_url
+    context "with one producer only" do
+      before do
+        visit admin_products_url
+      end
+
+      it "hides column and remembers saved preference" do
+        # Name shows by default
+        expect(page).to have_checked_field "Name"
+        expect(page).to have_selector "th", text: "Name"
+        expect_other_columns_visible
+
+        # Producer is hidden by if only one producer is present
+        expect(page).to have_unchecked_field "Producer"
+        expect(page).not_to have_selector "th", text: "Producer"
+
+        # Show Producer column
+        ofn_drop_down("Columns").click
+        within ofn_drop_down("Columns") do
+          check "Producer"
+        end
+
+        # Preference saved
+        save_preferences
+        expect(page).to have_selector "th", text: "Producer"
+
+        # Name is hidden
+        ofn_drop_down("Columns").click
+        within ofn_drop_down("Columns") do
+          uncheck "Name"
+        end
+        expect(page).not_to have_selector "th", text: "Name"
+        expect_other_columns_visible
+
+        # Preference saved
+        save_preferences
+
+        # Preference remembered
+        ofn_drop_down("Columns").click
+        within ofn_drop_down("Columns") do
+          expect(page).to have_unchecked_field "Name"
+        end
+        expect(page).not_to have_selector "th", text: "Name"
+        expect_other_columns_visible
+      end
+
+      def expect_other_columns_visible
+        expect(page).to have_selector "th", text: "Price"
+        expect(page).to have_selector "th", text: "On Hand"
+      end
+
+      def save_preferences
+        # Preference saved
+        click_on "Save as default"
+        expect(page).to have_content "Column preferences saved"
+        refresh
+      end
     end
 
-    it "hides column and remembers saved preference" do
-      # Name shows by default
-      expect(page).to have_checked_field "Name"
-      expect(page).to have_selector "th", text: "Name"
-      expect_other_columns_visible
+    context "with multiple producers" do
+      let!(:producer2) { create(:supplier_enterprise, owner: user) }
 
-      # Name is hidden
-      ofn_drop_down("Columns").click
-      within ofn_drop_down("Columns") do
-        uncheck "Name"
+      before { visit admin_products_url }
+
+      it "has selected producer column by default" do
+        # Producer shows by default
+        expect(page).to have_checked_field "Producer"
+        expect(page).to have_selector "th", text: "Producer"
       end
-      expect(page).not_to have_selector "th", text: "Name"
-      expect_other_columns_visible
-
-      # Preference saved
-      click_on "Save as default"
-      expect(page).to have_content "Column preferences saved"
-      refresh
-
-      # Preference remembered
-      ofn_drop_down("Columns").click
-      within ofn_drop_down("Columns") do
-        expect(page).to have_unchecked_field "Name"
-      end
-      expect(page).not_to have_selector "th", text: "Name"
-      expect_other_columns_visible
-    end
-
-    def expect_other_columns_visible
-      expect(page).to have_selector "th", text: "Producer"
-      expect(page).to have_selector "th", text: "Price"
-      expect(page).to have_selector "th", text: "On Hand"
     end
   end
 
@@ -202,6 +234,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           page.find(".vertical-ellipsis-menu").click
           expect(page).to have_link "Edit", href: spree.edit_admin_product_path(product_a)
         end
+        close_action_menu
 
         within row_containing_name("Medium box") do
           page.find(".vertical-ellipsis-menu").click
@@ -232,6 +265,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
             page.find(".vertical-ellipsis-menu").click
             expect(page).to have_link "Clone", href: admin_clone_product_path(product_a)
           end
+          close_action_menu
 
           within row_containing_name("Medium box") do
             page.find(".vertical-ellipsis-menu").click
@@ -351,11 +385,12 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
               page.find(".vertical-ellipsis-menu").click
               page.find(delete_option_selector).click
             end
+
             within modal_selector do
               click_button "Keep product"
             end
 
-            expect(page).not_to have_selector(modal_selector)
+            expect(page).not_to have_content "Delete Product"
             expect(page).to have_selector(product_selector)
 
             # Keep Variant
@@ -367,7 +402,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
               click_button "Keep variant"
             end
 
-            expect(page).not_to have_selector(modal_selector)
+            expect(page).not_to have_content("Delete Variant")
             expect(page).to have_selector(variant_selector)
           end
         end
@@ -387,7 +422,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
               click_button "Delete variant"
             end
 
-            expect(page).not_to have_selector(modal_selector)
+            expect(page).not_to have_content("Delete variant")
             expect(page).not_to have_selector(variant_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the variant")
@@ -402,7 +437,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
             within modal_selector do
               click_button "Delete product"
             end
-            expect(page).not_to have_selector(modal_selector)
+            expect(page).not_to have_content("Delete product")
             expect(page).not_to have_selector(product_selector)
             within success_flash_message_selector do
               expect(page).to have_content("Successfully deleted the product")
@@ -470,6 +505,39 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
             end
           end
         end
+      end
+    end
+
+    describe "Preview" do
+      let(:product) { create(:product, name: "Apples") }
+      let!(:variant) { create(:variant, product:) }
+
+      it "show product preview modal" do
+        visit admin_products_url
+
+        within row_containing_name("Apples") do
+          open_action_menu
+          click_link "Preview"
+        end
+
+        expect(page).to have_content("Product preview")
+
+        within "#product-preview-modal" do
+          # Shop tab
+          expect(page).to have_selector("h3", text: "Apples")
+          add_buttons = page.all(".add-variant")
+          expect(add_buttons.length).to eql(2)
+
+          # Product Details tab
+          find("a", text: "Product details").click # click_link doesn't work
+          expect(page).to have_selector("h3", text: "Apples")
+          expect(page).to have_selector(".product-img")
+
+          # Closing the modal
+          click_button "Close"
+        end
+
+        expect(page).not_to have_content("Product preview")
       end
     end
   end
@@ -556,5 +624,13 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       expect(page).to have_content "Changes saved"
       expect(page).to have_selector row_containing_name("Pommes")
     end
+  end
+
+  def open_action_menu
+    page.find(".vertical-ellipsis-menu").click
+  end
+
+  def close_action_menu
+    page.find("div#content").click
   end
 end

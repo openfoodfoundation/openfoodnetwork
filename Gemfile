@@ -16,7 +16,6 @@ gem "image_processing"
 
 gem 'activemerchant', '>= 1.78.0'
 gem 'angular-rails-templates', '>= 0.3.0'
-gem 'awesome_nested_set'
 gem 'ransack', '~> 4.1.0'
 gem 'responders'
 gem 'webpacker', '~> 5'
@@ -105,6 +104,7 @@ gem 'sidekiq-scheduler'
 gem "cable_ready"
 gem "stimulus_reflex"
 
+gem "turbo_power"
 gem "turbo-rails"
 
 gem 'combine_pdf'

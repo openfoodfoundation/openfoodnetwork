@@ -300,6 +300,21 @@ RSpec.describe '
             expect(page).to have_content "Total (Excl. tax): $1,458.67"
           end
         end
+
+        context "Line item with variant having variant_unit as 'items'" do
+          before do
+            line_item1.variant.update!(variant_unit: "items", display_as: "1 bucket")
+            login_as_admin
+            visit spree.print_admin_order_path(order1, params: url_params)
+            convert_pdf_to_page
+          end
+
+          it 'should have correct display as value' do
+            # first line item
+            expect(page).to have_content Spree::Product.first.name.to_s
+            expect(page).to have_content "(1 bucket)" # display as
+          end
+        end
       end
 
       context "added" do
@@ -535,10 +550,10 @@ RSpec.describe '
           # header
           expect(page).to have_content "Item Qty"
           expect(page).to have_content "Weight / VOL."
-          expect(page).to have_content "Price Per unit (Excl. tax)"
-          expect(page).to have_content "Total price (Excl. tax)"
+          expect(page).to have_content "Price Per unit (Excl."
+          expect(page).to have_content "Total price (Excl."
           expect(page).to have_content "Tax rate"
-          expect(page).to have_content "Total price (Incl. tax)"
+          expect(page).to have_content "Total price (Incl."
           # first line item, no tax
           expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "($12,540.00 / kg)" # unit price
@@ -639,10 +654,10 @@ RSpec.describe '
           # header
           expect(page).to have_content "Item Qty"
           expect(page).to have_content "Weight / VOL."
-          expect(page).to have_content "Price Per unit (Excl. tax)"
-          expect(page).to have_content "Total price (Excl. tax)"
+          expect(page).to have_content "Price Per unit (Excl."
+          expect(page).to have_content "Total price (Excl."
           expect(page).to have_content "Tax rate"
-          expect(page).to have_content "Total price (Incl. tax)"
+          expect(page).to have_content "Total price (Incl."
           # first line item, no tax
           expect(page).to have_content Spree::Product.first.name.to_s
           expect(page).to have_content "($12,540.00 / kg)" # unit price

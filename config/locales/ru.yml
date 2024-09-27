@@ -81,8 +81,6 @@ ru:
         white_label_logo_link: "Ссылка на логотип, используемый на витрине магазина"
     errors:
       models:
-        enterprise_fee:
-          inherit_tax_requires_per_item_calculator: "Для наследования налоговой категории требуется поэлементный калькулятор."
         spree/image:
           attributes:
             attachment:
@@ -106,7 +104,6 @@ ru:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "должно быть пустым, потому что используются настройки склада производителя"
-            on_demand_but_count_on_hand_set: "должен быть пустым, если по требованию'"
             limited_stock_but_no_count_on_hand: "необходимо указать, поскольку принудительный ограниченный запас"
       messages:
         confirmation: "не соответствует %{attribute}"
@@ -476,7 +473,7 @@ ru:
   password_confirmation: Подтверждение Пароля
   reset_password_token: Сброс пароля токена
   expired: истёк, пожалуйста запросите новый
-  back_to_payments_list: "Назад к Списку Платежей"
+  back_to_payments_list: "Вернуться К Списку Платежей"
   maestro_or_solo_cards: "Дебитовые карты"
   backordered: "Предзаказано"
   on_hand: "В наличии"
@@ -549,6 +546,8 @@ ru:
         remove: Удалить
       image:
         edit: Изменить
+      product_preview:
+        shop_tab: Магазин
     adjustments:
       skipped_changing_canceled_order: "Вы не можете изменить отмененный заказ."
     begins_at: Начинается С
@@ -759,7 +758,6 @@ ru:
       variants:
         infinity: "Безграничный"
         to_order_tip: "Товары, изготовленные на заказ, не имеют определенного уровня запасов, например, буханки хлеба, приготовленные на заказ."
-      back_to_products_list: "Назад к списку товаров"
       editing_product: "Изменение Товара"
       tabs:
         product_details: "Информация о Товаре"
@@ -797,7 +795,6 @@ ru:
         search: Поиск
       sort:
         pagination:
-          total_html: "<strong>%{total} товаров</strong> найдено по вашим критериям поиска. Показаны %{from} до %{to} ."
           per_page:
             show: Показывать
             per_page: "%{num} на странице"
@@ -1341,10 +1338,8 @@ ru:
         contact_name: Имя Контакта
       edit:
         editing: 'Настройки:'
-        back_link: Назад к списку Предприятий
       new:
         title: Новое Предприятие
-        back_link: Назад к списку Предприятий
       welcome:
         welcome_title: Добро пожаловать в Открытую Сеть Продуктов!
         welcome_text: Вы успешно создали
@@ -1381,6 +1376,8 @@ ru:
         choose_products_from: "Выбрать Товары Из:"
         re_notify_producers: Повторно уведомить производителей
         notify_producers_tip: Каждому производителю будет отправлено электронное письмо со списком их заказов.
+      date_time_warning_modal_content:
+        cancel: 'Выход'
       incoming:
         incoming: "Входящие"
         supplier: "Поставщик"
@@ -2842,7 +2839,6 @@ ru:
   spree_admin_single_enterprise_hint: "Подсказка: чтобы люди могли вас найти, включите видимость в"
   spree_admin_eg_pickup_from_school: "напр. 'Самовывоз у школы'"
   spree_admin_eg_collect_your_order: "напр. 'Пожалуйста, заберите свой заказ по адресу: ул. Школьная д.1, Воронеж'"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} is the primary taxon of %{product} and cannot be deleted"
   spree_order_availability_error: "Дистрибьютор или цикл заказа не могут поставить продукты в Вашей корзине"
   spree_order_populator_error: "Этот дистрибьютор или цикл заказа не может поставить все продукты в Вашей корзине. Пожалуйста, выберите другой."
   spree_order_cycle_error: "Выберите цикл для этого заказа."
@@ -3162,7 +3158,7 @@ ru:
   order_cycles_no_permission_to_coordinate_error: "Ни одно из ваших Предприятий не имеет разрешения координировать цикл заказа"
   order_cycles_no_permission_to_create_error: "У вас нет разрешения на создание цикла заказов, координируемого этим Предприятием"
   order_cycle_closed: "Выбранный вами цикл заказов закрылся. Пожалуйста, попробуйте еще раз!"
-  back_to_orders_list: "Назад к списку заказов"
+  back_to_orders_list: "Назад К Списку Заказов"
   no_orders_found: "Заказов Не Найдено"
   order_information: "Информация по Заказу"
   new_payment: "Новый Платёж"
@@ -3513,6 +3509,8 @@ ru:
           Это установит нулевой уровень запасов для всех продуктов этого
           предприятия, которых нет в загруженном файле.
     order_cycles:
+      unsaved_changes: "Есть не сохраненные изменения"
+      bulk_save_error: "Ой! Не удалось сохранить  Ваши изменения"
       create_failure: "Не удалось создать цикл заказа"
       update_success: 'Ваш цикл заказа был обновлен.'
       update_failure: "Не удалось обновить цикл заказа"
@@ -3783,7 +3781,6 @@ ru:
     more: "Ещё"
     new_adjustment: "Новая корректировка"
     new_tax_category: "Новая Налоговая Категория"
-    new_taxon: "Новая таксономия"
     new_user: "Новый пользователь"
     no_pending_payments: "Нет ожидающих платежей"
     remove: "Удалить"
@@ -3802,10 +3799,6 @@ ru:
       delivery: "Подписано, запечатано, доставлено"
     start_date: "Дата начала"
     successfully_removed: "Успешно удалено"
-    taxonomy_edit: "Изменить таксономию"
-    taxonomy_tree_error: "Произошла ошибка при обновлении дерева таксономии."
-    taxonomy_tree_instruction: "Щелкните правой кнопкой мыши элемент, чтобы добавить, переименовать, удалить или отредактировать."
-    tree: "Дерево"
     updating: "Обновление"
     your_order_is_empty_add_product: "Ваша корзина пуста, пожалуйста, найдите и добавьте товар выше"
     add_product: "Добавить Товар"
@@ -3902,7 +3895,6 @@ ru:
     tax_rate_amount_explanation: "Налоговые ставки представляют собой десятичную сумму для помощи в расчетах (т.е. если налоговая ставка составляет 5%, введите 0,05)"
     included_in_price: "Включено в Стоимость"
     show_rate_in_label: "Показывать ставку в метке"
-    back_to_tax_rates_list: "Назад к Списку Налоговых Ставок"
     tax_settings: "Настройки Налогов"
     zones: "Торговая зона"
     new_zone: "Новая Торговая зона"
@@ -3915,14 +3907,11 @@ ru:
     iso_name: "ISO Имя"
     states_required: "Области Обязательны"
     editing_country: "Редактирование Страны"
-    back_to_countries_list: "Назад к Списку Стран"
     states: "Регионы"
     abbreviation: "Сокращение"
     new_state: "Новый Регион"
     payment_methods: "Способы Оплаты"
-    taxonomies: "Таксономии"
-    new_taxonomy: "Новая Таксономия"
-    back_to_taxonomies_list: "Назад к Списку Таксономий"
+    taxons: "Категории Товаров"
     shipping_methods: "Способы Доставки"
     shipping_method: "Способ Доставки"
     shipment: "Доставка"
@@ -4082,7 +4071,6 @@ ru:
           continue: "Продолжить"
         new:
           new_return_authorization: "Новое разрешение на возврат"
-          back_to_return_authorizations_list: "Назад К Списку Разрешений На Возврат"
           continue: "Продолжить"
         edit:
           receive: "получить"
@@ -4329,6 +4317,7 @@ ru:
           product_name: Имя Товара
         primary_taxon_form:
           product_category: Категория Товара
+          search_for_categories: "Поиск категорий"
         group_buy_form:
           group_buy: "Групповая покупка?"
           bulk_unit_size: Размер оптовой еденицы
@@ -4406,9 +4395,10 @@ ru:
           total: "Всего"
           billing_address_name: "Название"
       taxons:
+        index:
+          title: "Категории Товаров"
         form:
           name: Название
-          permalink: Постоянная ссылка
           description: Описание
       general_settings:
         edit:
@@ -4647,7 +4637,6 @@ ru:
       key_cleared: "Ключ очищен"
       shipment:
         cannot_ready: "Не может готовая отгрузка."
-      invalid_taxonomy_id: "Неверный ID таксономии."
       toggle_api_key_view: "Показать ключ API для пользователя"
     activerecord:
       models:

@@ -68,7 +68,6 @@ es_CO:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque está usando la configuración de inventario del productor"
-            on_demand_but_count_on_hand_set: "debe estar en blanco si es bajo demanda"
             limited_stock_but_no_count_on_hand: "debe estar especificado porque se ha definido un inventario limitado"
       messages:
         blank: "no puede estar vacío"
@@ -300,7 +299,6 @@ es_CO:
   password_confirmation: Confirmación de contraseña
   reset_password_token: Token de restablecimiento de contraseña
   expired: ha expirado, por favor solicite una nueva
-  back_to_payments_list: "Volver a la lista de pagos"
   maestro_or_solo_cards: "Solo tarjetas MasterCard"
   backordered: "Pedido pendiente"
   on_hand: "Disponibles"
@@ -360,6 +358,8 @@ es_CO:
         remove: Eliminar
       image:
         edit: Editar
+      product_preview:
+        shop_tab: Tienda
     begins_at: Empieza en
     begins_on: Comienza en
     customer: Cliente
@@ -541,7 +541,6 @@ es_CO:
       variants:
         infinity: "infinito"
         to_order_tip: "Los artículos hechos según el pedido no tienen un nivel fijado de inventario, como por ejemplo panes hechos según demanda."
-      back_to_products_list: "Volver a la lista de productos"
       editing_product: "Editando producto"
       tabs:
         product_details: "Detalles del producto"
@@ -994,10 +993,8 @@ es_CO:
         contact_name: Nombre de contacto
       edit:
         editing: 'Configuración:'
-        back_link: Volver a la lista de organizaciones
       new:
         title: Nueva Organización
-        back_link: Volver a la lista de organizaciones
       welcome:
         welcome_title: ¡Bienvenido a Open Food Network!
         welcome_text: Ha creado correctamente un
@@ -1032,6 +1029,8 @@ es_CO:
         back_to_list: "Regresar a la lista"
         save_and_back_to_list: "Guardar y volver a lista"
         choose_products_from: "Escoger productos desde:"
+      date_time_warning_modal_content:
+        cancel: 'Cancelar'
       incoming:
         incoming: "Entrante"
         supplier: "Proveedor"
@@ -2300,7 +2299,6 @@ es_CO:
   spree_admin_single_enterprise_hint: "Sugerencia: Para permitir que la gente te encuentre, activa tu visibilidad"
   spree_admin_eg_pickup_from_school: "p.ej. 'Recogida en la Cooperativa'"
   spree_admin_eg_collect_your_order: "p.ej. 'Por favor recoge tu pedido en la Calle del Hormiguero nº3'"
-  spree_classification_primary_taxon_error: "La clasificación %{taxon} es la clasificación primaria de %{product} y no puede ser eliminada"
   spree_order_availability_error: "El Distribuidor o el Ciclo de Pedido no pueden suministrar los productos en su carrito"
   spree_order_populator_error: "Este Distribuidor o Ciclo de Pedido no puede suministrar todos los productos en tu carrito. Por favor, elige otro."
   spree_order_populator_availability_error: "Este producto no está disponible por el distribuidor o Ciclo de Pedido elegido."
@@ -2886,6 +2884,8 @@ es_CO:
           Esto establecerá el nivel de stock a cero en todos los productos para esta
           organización que no están presentes en el archivo subido.
     order_cycles:
+      unsaved_changes: "Tiene cambios sin guardar"
+      bulk_save_error: "¡Vaya! No se ha podido guardar los cambios."
       create_failure: "Error al crear el ciclo de pedido"
       update_success: 'Se ha actualizado su ciclo de pedido.'
       update_failure: "Error al actualizar el ciclo de pedido"
@@ -3188,7 +3188,6 @@ es_CO:
     tax_rate_amount_explanation: "Las tarifas de impuestos son una cantidad decimal para ayudar en los cálculos (es decir, si la tasa de impuestos es del 5%, introduzca 0.05)"
     included_in_price: "Incluido en el precio"
     show_rate_in_label: "Mostrar tarifa en la etiqueta"
-    back_to_tax_rates_list: "Volver a la lista de tarifas de impuestos"
     tax_settings: "Configuración de Impuestos"
     zones: "Zonas"
     new_zone: "Nueva zona"
@@ -3201,14 +3200,11 @@ es_CO:
     iso_name: "Nombre de ISO"
     states_required: "Provincias requeridas"
     editing_country: "Editar país"
-    back_to_countries_list: "Volver a la lista de países"
     states: "Provincias"
     abbreviation: "Abreviatura"
     new_state: "Nueva provincia"
     payment_methods: "Métodos de pago"
-    taxonomies: "Taxonomías"
-    new_taxonomy: "Nueva taxonomía"
-    back_to_taxonomies_list: "Volver a la lista de taxonomías"
+    taxons: "Categorías de producto"
     shipping_methods: "Métodos de envío"
     shipping_method: "Método de envío"
     shipment: "Envío"
@@ -3342,7 +3338,6 @@ es_CO:
           continue: "Continuar"
         new:
           new_return_authorization: "Nueva autorización de devolución"
-          back_to_return_authorizations_list: "Volver a lista de autorización de devolución"
           continue: "Continuar"
         edit:
           receive: "recibir"
@@ -3616,6 +3611,8 @@ es_CO:
           total: "Total"
           billing_address_name: "Nombre"
       taxons:
+        index:
+          title: "Categorías de producto"
         form:
           name: Nombre
           description: Descripción
@@ -3796,7 +3793,6 @@ es_CO:
       key_cleared: "Llave borrada"
       shipment:
         cannot_ready: "No se puede completar envío"
-      invalid_taxonomy_id: "El identificador de taxonomía es inválido."
     activerecord:
       models:
         spree/payment:

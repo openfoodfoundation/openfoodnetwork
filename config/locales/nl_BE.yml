@@ -65,7 +65,6 @@ nl_BE:
         variant_override:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "moet leeg zijn omdat u de instellingen voor de voorraad van de producent gebruikt"
-            on_demand_but_count_on_hand_set: "moet leeg zijn op aanvraag"
             limited_stock_but_no_count_on_hand: "moet worden opgegeven omdat een beperkte voorraad wordt geforceerd"
       messages:
         blank: "kan niet leeg zijn"
@@ -285,7 +284,6 @@ nl_BE:
   password_confirmation: Wachtwoord Bevestiging
   reset_password_token: Reset wachtwoord token
   expired: is verlopen, gelieve een nieuwe aan te vragen
-  back_to_payments_list: "Terug naar Betalingslijst"
   maestro_or_solo_cards: "Maestro/Solo kaart"
   backordered: "Niet in stock"
   on_hand: "Bij de Hand"
@@ -345,6 +343,8 @@ nl_BE:
         remove: Verwijderen
       image:
         edit: bewerking
+      product_preview:
+        shop_tab: winkel
     begins_at: Begint Bij
     begins_on: Begint Op
     customer: Klant
@@ -527,7 +527,6 @@ nl_BE:
       variants:
         infinity: "Oneindigheid"
         to_order_tip: "Op bestelling gemaakte artikelen hebben geen vast voorraadniveau, zoals broden die vers op bestelling worden gemaakt."
-      back_to_products_list: "Terug naar productenlijst"
       editing_product: "Product bijwerken"
       tabs:
         product_details: "Product details"
@@ -985,10 +984,8 @@ nl_BE:
         contact_name: Naam contactpersoon
       edit:
         editing: 'Instellingen:'
-        back_link: Terug naar bedrijvenlijst
       new:
         title: Nieuwe onderneming
-        back_link: Terug naar bedrijvenlijst
       welcome:
         welcome_title: Welkom bij het Open Food Network!
         welcome_text: U heeft met succes een
@@ -1023,6 +1020,8 @@ nl_BE:
         back_to_list: "Terug naar lijst"
         save_and_back_to_list: "Opslaan en terug naar lijst"
         choose_products_from: "Kies Producten Uit:"
+      date_time_warning_modal_content:
+        cancel: 'Annuleren'
       incoming:
         incoming: "Binnenkomend"
         supplier: "Leverancier"
@@ -2294,7 +2293,6 @@ nl_BE:
   spree_admin_single_enterprise_hint: "Hint: Om het voor mensen mogelijk te maken je te vinden, zet je zichtbaarheid aan"
   spree_admin_eg_pickup_from_school: "bv. 'Ophaling op een basisschool'"
   spree_admin_eg_collect_your_order: "bv. 'Verzamel alsjeblieft je bestelling op de stationsstraat 123, 9000 Gent'"
-  spree_classification_primary_taxon_error: "Taxon %{taxon} is de eerste taxon van %{product} en kan niet verwijderd worden."
   spree_order_availability_error: "De verdeler of de bestelcyclus kan de producten in je winkelwagentje niet toevoegen"
   spree_order_populator_error: "De verdeler of de bestelcyclus kan al de producten in je winkelwagentje niet toevoegen. Gelieve een andere te kiezen."
   spree_order_populator_availability_error: "Dit produkt is niet toegelaten op de gekozen verdeler of bestelcyclus."
@@ -2575,7 +2573,7 @@ nl_BE:
   order_cycles_no_permission_to_coordinate_error: "Geen van uw bedrijven heeft de vereiste rechten om een verkoopcyclus te coördineren"
   order_cycles_no_permission_to_create_error: "U bezit de vereiste rechten niet om een bestelcyclus te maken die gecoördineerd wordt door dat bedrijf"
   order_cycle_closed: "De hub die u hebt geselecteerd is tijdelijk gesloten. Probeer gerust later terug."
-  back_to_orders_list: "Terug naar de bestellijst"
+  back_to_orders_list: "Terug naar de bestellingslijst"
   no_orders_found: "Geen bestelling gevonden"
   order_information: "Info bestelling"
   new_payment: "Nieuwe betaling"
@@ -2885,6 +2883,8 @@ nl_BE:
           Deze handeling zet het stockpeil op nul
           bedrijf voor de produkten niet aanwezig in deze file
     order_cycles:
+      unsaved_changes: "U heeft niet opgeslagen wijzigingen"
+      bulk_save_error: "Ah nee! Ik kon onmogelijk uw wijzigingen opslaan."
       create_failure: "Het maken van de bestelcyclus is mislukt"
       update_success: 'Uw bestelcyclus is bijgewerkt'
       update_failure: "De bijwerking van de bestelcyclus is mislukt"
@@ -3086,7 +3086,6 @@ nl_BE:
     tax_rate_amount_explanation: "BTW percentages zijn decimaal om de berekening gemakkelijker te maken, (bv. als de percentage 5% is dan 0.05 invoeren)"
     included_in_price: "In de prijs inbegrepen "
     show_rate_in_label: "Toon de percentahe op de label "
-    back_to_tax_rates_list: "Terug naar de lijst BTW percentages"
     tax_settings: "Belastings Instellingen"
     zones: "Zones "
     new_zone: "Nieuwe zone"
@@ -3099,14 +3098,11 @@ nl_BE:
     iso_name: "ISO Naam"
     states_required: "Staten Vereist"
     editing_country: "Editing Land"
-    back_to_countries_list: "Terug naar landenlijst"
     states: "Provincies"
     abbreviation: "Afkortingen "
     new_state: "Nieuw Provincie"
     payment_methods: "Betalingsmethode"
-    taxonomies: "Taxonomies "
-    new_taxonomy: "Nieuwe taxonomie "
-    back_to_taxonomies_list: "Terug naar de lijst Taxonomies"
+    taxons: "Productcategorieën"
     shipping_methods: "Methode Verzending"
     shipping_method: "Het verschepen Methode"
     shipment: "Verzending"
@@ -3240,7 +3236,6 @@ nl_BE:
           continue: "Ga verder"
         new:
           new_return_authorization: "Nieuwe terugkeer goedkeuring"
-          back_to_return_authorizations_list: "Terug naar goedkeuringslijst"
           continue: "Ga verder"
         edit:
           receive: "Ontvangst"
@@ -3515,9 +3510,10 @@ nl_BE:
           total: "Totaal"
           billing_address_name: "Naam"
       taxons:
+        index:
+          title: "Productcategorieën"
         form:
           name: Naam
-          permalink: Permalink
           description: Beschrijving
       general_settings:
         edit:
@@ -3698,7 +3694,6 @@ nl_BE:
       key_cleared: "Sleutel gewist"
       shipment:
         cannot_ready: "Kan levering niet klaarmaken"
-      invalid_taxonomy_id: "Onjuiste taxonomie id."
   components:
     search_input:
       placeholder: Zoeken

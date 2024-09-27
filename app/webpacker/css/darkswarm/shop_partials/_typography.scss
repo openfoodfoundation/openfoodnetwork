@@ -1,0 +1,31 @@
+@mixin headingFont {
+  font-family: "Oswald", sans-serif;
+}
+
+// TODO should probably move that to a variables.scss
+$body-font: "Roboto", Arial, sans-serif;
+
+h1, h2, h3, h4, h5, h6 {
+  @include headingFont;
+
+  padding: 0px;
+}
+
+a {
+  color: $clr-brick;
+
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: $clr-brick-bright;
+  }
+}
+
+.text-small {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-family: $body-font;
+
+  &, & * {
+    font-size: 0.875rem;
+  }
+}

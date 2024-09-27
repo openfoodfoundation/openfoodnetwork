@@ -1,0 +1,47 @@
+.download.hidden
+  = link_to t("admin.reports.download.button"), file_url, target: "_blank", class: "button icon icon-file"
+
+:javascript
+  (function () {
+    const tryDownload = function() {
+      const link = document.querySelector(".download a");
+
+      // If the report was already rendered via web sockets:
+      if (link == null) return;
+
+      fetch(link.href).then((response) => {
+        if (response.ok) {
+          response.blob().then((blob) => blob.text()).then((text) => {
+            const loading = document.querySelector(".loading");
+
+            if (loading == null) return;
+
+            loading.remove();
+            document.querySelector("#report-go button").disabled = false;
+
+            if (link.href.endsWith(".html")) {
+              // This replaces the hidden download button with the report:
+              link.parentElement.outerHTML = text;
+            } else {
+              // Or just show the download button when it's ready:
+              document.querySelector(".download").classList.remove("hidden")
+            }
+          });
+        } else {
+          setTimeout(tryDownload, 2000);
+        }
+      });
+    }
+
+    /*
+      A lot of reports are rendered within 250ms. Others take at least
+      2.5 seconds. There's a big gap in between. Observed on:
+      https://openfoodnetwork.org.au/admin/sidekiq/metrics/ReportJob?period=8h
+      https://openfoodnetwork.org.uk/admin/sidekiq/metrics/ReportJob?period=8h
+      https://coopcircuits.fr/admin/sidekiq/metrics/ReportJob?period=8h
+
+      But let's leave the timed response to websockets for now and just poll
+      as a backup mechanism.
+    */
+    setTimeout(tryDownload, 3000);
+  })();

@@ -1,3 +1,4 @@
+- # NOTE: make sure that any changes in this template are reflected in app/views/admin/products_v3/product_preview.turbo_stream.haml
 %ul
   %active-selector{ "ng-repeat": "selector in allSelectors", "ng-show": "ifDefined(selector.fits, true)" }
     %span{"ng-bind" => "::selector.object.name"}
