@@ -9,6 +9,7 @@ angular.module("admin.utils")
           $window.onbeforeunload = @onBeforeUnloadHandler
 
         $rootScope.$on "$locationChangeStart", @locationChangeStartHandler
+        $window.onBeforeUnloadHandler = @onBeforeUnloadHandler
 
       # Action for regular browser navigation.
       onBeforeUnloadHandler: ($event) =>

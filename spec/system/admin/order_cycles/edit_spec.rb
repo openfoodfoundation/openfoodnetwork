@@ -59,6 +59,31 @@ RSpec.describe '
         expect(page).to have_field 'order_cycle_orders_close_at', with: '2024-03-30 00:00'
         expect(page).to have_content('Your order cycle has been updated.')
       end
+
+      it "it redirects user to oc list when modal cancel is clicked" do
+        login_as_admin
+        visit edit_admin_order_cycle_path(order_cycle)
+
+        # change date range field value
+        find('#order_cycle_orders_close_at').click
+        within(".flatpickr-calendar.open") do
+          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
+          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+          find("button", text: "Close").click
+        end
+
+        # click save to open warning modal
+        click_button('Save')
+        expect(page).to have_content('You have unsaved changes')
+        expect(page).to have_content "Orders are linked to this order cycle."
+
+        # Now cancel modal
+        within('.modal-actions') do
+          click_link('Cancel')
+        end
+        expect(page).not_to have_content('You have unsaved changes')
+        expect(page).to have_current_path admin_order_cycles_path
+      end
     end
 
     context 'with no attached order' do

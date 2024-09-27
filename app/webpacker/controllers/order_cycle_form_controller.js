@@ -1,13 +1,17 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ['statusMessage']
+  static targets = ['statusMessage', 'cancel']
   connect() {
     this.observer = new MutationObserver(this.updateCallback);
     this.observer.observe(
       this.statusMessageTarget,
       { attributes: true, attributeOldValue: true, attributeFilter: ['data-type'] }
     );
+
+    if (this.hasCancelTarget) {
+      this.cancelTarget.addEventListener('click', this.removeUnloadEvent)
+    }
   }
 
   // Callback to trigger warning modal
@@ -38,7 +42,14 @@ export default class extends Controller {
     }
   }
 
+  removeUnloadEvent() {
+    window.removeEventListener('beforeunload', window.onBeforeUnloadHandler)
+  }
+
   disconnect() {
     this.observer.disconnect();
+    if (this.hasCancelTarget) {
+      this.cancelTarget.removeEventListener('click', this.removeUnloadEvent)
+    }
   }
 }
