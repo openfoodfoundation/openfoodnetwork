@@ -88,8 +88,8 @@ module Admin
         @producer_options = producers
         @category_options = categories
         @tax_category_options = tax_category_options
-      rescue ActiveRecord::ActiveRecordError => _e
-        flash.now[:error] = t('.error')
+      rescue ActiveRecord::ActiveRecordError => e
+        flash.now[:error] = clone_error_message(e)
         status = :unprocessable_entity
         @product_index = "-1" # Create a unique enough index
       end
@@ -212,6 +212,15 @@ module Admin
     def products_bulk_params
       params.permit(products: ::PermittedAttributes::Product.attributes)
         .to_h.with_indifferent_access
+    end
+
+    def clone_error_message(error)
+      case error
+      when ActiveRecord::RecordInvalid
+        error.record.errors.full_messages.to_sentence
+      else
+        t('.error')
+      end
     end
   end
 end

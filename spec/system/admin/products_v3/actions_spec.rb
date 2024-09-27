@@ -303,7 +303,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
 
           click_product_clone "Apples"
 
-          expect(page).to have_content "Unable to clone the product"
+          expect(page).to have_content "Unit Scale can't be blank"
 
           within "table.products" do
             # Products does not include the cloned product.
