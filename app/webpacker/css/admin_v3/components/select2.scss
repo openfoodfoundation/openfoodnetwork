@@ -233,6 +233,7 @@ label .select2-container {
         font-size: 85%;
         @extend .icon-remove;
         @extend [class^="icon-"], :before;
+        width: 0;
         margin-left: 2px;
         color: $color-1;
       }
