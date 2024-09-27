@@ -1,6 +1,9 @@
 - content_for :main_ng_app_name do
   = "admin.lineItems"
 
+- content_for :html_title do
+  = t("admin.orders.bulk_management.page_title")
+
 - content_for :page_title do
   %h1.page-title
     = t("admin.orders.bulk_management.page_title")

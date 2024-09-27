@@ -1,5 +1,8 @@
 = render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Payments' }
 
+- content_for :html_title do
+  = Spree.t('refund', scope: :paypal)
+
 - content_for :page_title do
   %i.icon-arrow-right
   = link_to Spree.t(:payments), admin_order_payments_path(@order)
