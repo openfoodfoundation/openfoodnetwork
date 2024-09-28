@@ -2334,7 +2334,7 @@ hu:
   producer_mail_order_customer_text: "Itt található a rendelések összegzése ügyfelek szerint csoportosítva"
   shopping_oc_closed: A rendelések lezárva
   shopping_oc_closed_description: "Kérjük, várd meg, amíg a következő ciklus megnyílik."
-  shopping_oc_last_closed: "Az utolsó ciklus %{distance_of_time} előtt zárult"
+  shopping_oc_last_closed: "Az utolsó ciklus ennyi ideje zárult:  %{distance_of_time}"
   shopping_oc_next_open: "A következő ciklus %{distance_of_time} múlva kezdődik"
   shopping_oc_select: "Válassz..."
   shopping_tabs_home: "Nyitólap"

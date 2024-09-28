@@ -553,8 +553,13 @@ fr:
         clone: Dupliquer
         delete: Supprimer
         remove: Supprimer
+        preview: Prévisualisation
       image:
         edit: Modifier
+      product_preview:
+        product_preview: Prévisualisation du produit
+        shop_tab: Boutique
+        product_details_tab: Détail produits
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
