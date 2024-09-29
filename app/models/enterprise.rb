@@ -247,9 +247,17 @@ class Enterprise < ApplicationRecord
     count(distinct: true)
   end
 
-  # Remove any unsupported HTML.
   def long_description=(html)
-    super(HtmlSanitizer.sanitize(html))
+    super(HtmlSanitizer.sanitize_and_enforce_link_target_blank(html))
+  end
+
+  def preferred_shopfront_message=(html)
+    self.prefers_shopfront_message = HtmlSanitizer.sanitize_and_enforce_link_target_blank(html)
+  end
+
+  def preferred_shopfront_closed_message=(html)
+    self.prefers_shopfront_closed_message =
+      HtmlSanitizer.sanitize_and_enforce_link_target_blank(html)
   end
 
   def contact

@@ -21,6 +21,5 @@ Haml::BOOLEAN_ATTRIBUTES.push(
     ofn-disable-enter
     question-mark-with-tooltip-animation
     scroll-after-load
-    textangular-links-target-blank
   ]
 )

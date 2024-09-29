@@ -1,6 +1,5 @@
 %fieldset.alpha.no-border-bottom#about_panel{ data: { "tabs-and-panels-target": "panel" } }
   %legend= t('.about')
   = f.field_container :long_description do
-    %text-angular{'id' => 'enterprise_group_long_description', 'name' => 'enterprise_group[long_description]', 'class' => 'text-angular', "textangular-links-target-blank" => true,
-      'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]"}
-      != @enterprise_group[:long_description]
+    = f.hidden_field :long_description, id: "enterprise_group_long_description"
+    %trix-editor{ input: "enterprise_group_long_description", "data-controller": "trixeditor" }

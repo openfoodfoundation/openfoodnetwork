@@ -18,4 +18,16 @@ class HtmlSanitizer
       html, tags: ALLOWED_TAGS, attributes: (ALLOWED_ATTRIBUTES + ALLOWED_TRIX_DATA_ATTRIBUTES)
     )
   end
+
+  def self.sanitize_and_enforce_link_target_blank(html)
+    sanitize(enforce_link_target_blank(html))
+  end
+
+  def self.enforce_link_target_blank(html)
+    return if html.nil?
+
+    Nokogiri::HTML::DocumentFragment.parse(html).tap do |document|
+      document.css("a").each { |link| link["target"] = "_blank" }
+    end.to_s
+  end
 end

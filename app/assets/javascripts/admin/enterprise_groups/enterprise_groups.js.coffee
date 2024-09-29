@@ -1,1 +1,1 @@
-angular.module("admin.enterprise_groups", ["admin.side_menu", "admin.users", "textAngular"])
+angular.module("admin.enterprise_groups", ["admin.side_menu", "admin.users", "ngSanitize"])

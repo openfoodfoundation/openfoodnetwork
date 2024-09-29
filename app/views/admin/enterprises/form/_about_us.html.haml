@@ -4,14 +4,7 @@
   .omega.eight.columns
     = f.text_field :description, maxlength: 255, placeholder: t('.desc_short_placeholder')
 .row
-  .alpha.three.columns
+  .alpha.eleven.columns
     = f.label :long_description, t('.desc_long')
-  .omega.eight.columns
-    -# textAngular toolbar options, add to the ta-toolbar array below and separate into groups with extra ],[ if needed:
-    -# 	['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
-    -# 	['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
-    -# 	['justifyLeft','justifyCenter','justifyRight','indent','outdent'],
-    -# 	['html', 'insertImage', 'insertLink', 'insertVideo']
-    %text-angular{'ng-model' => 'Enterprise.long_description', 'id' => 'enterprise_long_description', 'name' => 'enterprise[long_description]', 'class' => 'text-angular', "textangular-links-target-blank" => true,
-      'ta-toolbar' => "[['h1','h2','h3','h4','p'],['bold','italics','underline','clear'],['insertLink']]",
-      'placeholder' => t('.desc_long_placeholder')}
+    = f.hidden_field :long_description, id: "enterprise_long_description"
+    %trix-editor{ input: "enterprise_long_description", "data-controller": "trixeditor" }

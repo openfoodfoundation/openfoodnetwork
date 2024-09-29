@@ -98,4 +98,21 @@ RSpec.describe HtmlSanitizer do
       expect(subject.sanitize(html)).to eq('<figure data-trix-attachment="{...}">...</figure>')
     end
   end
+
+  context "when HTML has links" do
+    describe "#sanitize" do
+      it "doesn't add target blank to links" do
+        html = '<a href="https://example.com">Link</a>'
+        expect(subject.sanitize(html)).to eq('<a href="https://example.com">Link</a>')
+      end
+    end
+
+    describe "#sanitize_and_enforece_link_target_blank" do
+      it "adds target blank to links so they open in new windows" do
+        html = '<a href="https://example.com">Link</a>'
+        expect(subject.sanitize_and_enforce_link_target_blank(html))
+          .to eq('<a href="https://example.com" target="_blank">Link</a>')
+      end
+    end
+  end
 end

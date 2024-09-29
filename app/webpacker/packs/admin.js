@@ -11,6 +11,11 @@ window.bigDecimal = bigDecimal;
 
 import Trix from "trix";
 
+document.addEventListener("trix-before-initialize", (event) => {
+  // Set Trix translations
+  Object.assign(Trix.config.lang, I18n.t("js.trix"));
+});
+
 document.addEventListener("trix-file-accept", (event) => {
   event.preventDefault();
 });
