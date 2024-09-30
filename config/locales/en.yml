@@ -3174,7 +3174,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_print: Print Report
   report_render_options: Rendering Options
   report_header_ofn_uid: OFN UID
-  report_header_order_cycle: Order Cycle (OC)
+  report_header_order_cycle: Order Cycle
   report_header_order_cycle_start_date: OC Start Date
   report_header_order_cycle_end_date: OC End Date
   report_header_user: User
