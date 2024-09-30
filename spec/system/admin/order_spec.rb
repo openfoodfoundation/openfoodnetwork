@@ -179,20 +179,22 @@ RSpec.describe '
   context "When adding a product on an order with transaction fee" do
     let(:order_with_fees) { create(:completed_order_with_fees, user:, distributor:, order_cycle: ) }
 
-    it 'recalculates transaction fee' do
-      pending
+    it "recalculates transaction fee and order total" do
       login_as_admin
       visit spree.edit_admin_order_path(order_with_fees)
 
-      adjustment_for_transaction_fee = order_with_fees.all_adjustments.payment_fee.eligible.first
-      transaction_fee = adjustment_for_transaction_fee.amount
+      # Fee is $5 per item and we have two line items
+      expect(page).to have_css("#order_adjustments", text: 10.00)
+      expect(page).to have_css(".order-total", text: 36.00)
 
-      expect(page.find("#order_adjustments").text).to have_content(transaction_fee)
+      expect {
+        select2_select product.name, from: 'add_variant_id', search: true
+        find('button.add_variant').click
+      }.to change { order_with_fees.payments.first.adjustment.amount }.from(10.00).to(15.00)
+        .and change { order_with_fees.reload.total }.from(36.00).to(63.99)
 
-      select2_select product.name, from: 'add_variant_id', search: true
-      find('button.add_variant').click
-      expect(page).to have_css("#order_adjustments",
-                               text: adjustment_for_transaction_fee.reload.amount)
+      expect(page).to have_css("#order_adjustments", text: 15.00)
+      expect(page).to have_css(".order-total", text: 63.99)
     end
   end
 
