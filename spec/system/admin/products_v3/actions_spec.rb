@@ -302,7 +302,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         # The page has not been reloaded so the product's name is still "Apples"
         click_product_clone "Apples"
 
-        expect(page).to have_content "Unable to clone the product"
+        expect(page).to have_content "Product Name is too long (maximum is 255 characters)"
 
         within "table.products" do
           # Products does not include the cloned product.
