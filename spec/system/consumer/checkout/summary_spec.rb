@@ -320,12 +320,11 @@ RSpec.describe "As a consumer, I want to checkout my order" do
           :payment_method,
           distributors: [distributor],
           name: "Payment with Fee", description: "Payment with fee",
-          calculator: Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 0.1)
+          calculator: Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
         )
       }
 
       it "calculated the correct order total" do
-        pending
         visit checkout_step_path(:payment)
         expect(page).to have_checked_field "Payment with Fee"
 
@@ -348,7 +347,8 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
         # Check summary page total
         expect(page).to have_title "Checkout Summary - Open Food Network"
-        expect(page).to have_selector("#order_total", text: 20.02)
+        expect(page).to have_selector("#order_total", text: 22.00)
+        expect(order.reload.payments.first.amount).to eql(22.00)
       end
     end
 
