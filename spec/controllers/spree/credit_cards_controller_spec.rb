@@ -26,23 +26,20 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
           {
             format: :json,
             exp_month: 9,
-            exp_year: 2024,
+            exp_year: 1.year.from_now.year,
             last4: 4242,
             token: token['id'],
             cc_type: "visa"
           }
         end
 
-        before do
-          # there should be no cards stored locally
-          expect(Spree::CreditCard.count).to eq(0)
-        end
-
         it "saves the card locally" do
-          spree_post :new_from_token, params
+          expect {
+            spree_post :new_from_token, params
+          }.to change {
+            Spree::CreditCard.count
+          }.from(0).to(1)
 
-          # checks whether a card was created
-          expect(Spree::CreditCard.count).to eq(1)
           card = Spree::CreditCard.last
 
           # retrieves the created card from Stripe
