@@ -14,12 +14,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: docker/build
-    - run: docker-compose up --detach
+    - run: docker compose up --detach
     - run: until curl -f -s http://localhost:3000; do echo "waiting for api server"; sleep 1; done
-    - run: docker-compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="update spree_users set spree_api_key='testing' where login='ofn@example.com'"
+    - run: docker compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="update spree_users set spree_api_key='testing' where login='ofn@example.com'"
     # equivalent to Flipper.enable(:api_v1)
-    - run: docker-compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="insert into flipper_features (key, created_at, updated_at) values ('api_v1', localtimestamp, localtimestamp)"
-    - run: docker-compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="insert into flipper_gates (feature_key, key, value, created_at, updated_at) values ('api_v1', 'boolean', 'true', localtimestamp, localtimestamp)"
+    - run: docker compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="insert into flipper_features (key, created_at, updated_at) values ('api_v1', localtimestamp, localtimestamp)"
+    - run: docker compose exec -T db psql postgresql://ofn:f00d@localhost:5432/open_food_network_dev --command="insert into flipper_gates (feature_key, key, value, created_at, updated_at) values ('api_v1', 'boolean', 'true', localtimestamp, localtimestamp)"
 
     # Run Mayhem for API
     - name: Run Mayhem for API
