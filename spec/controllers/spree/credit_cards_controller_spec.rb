@@ -26,7 +26,7 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
           {
             format: :json,
             exp_month: 9,
-            exp_year: 2024,
+            exp_year: 1.year.from_now.year,
             last4: 4242,
             token: token['id'],
             cc_type: "visa"
