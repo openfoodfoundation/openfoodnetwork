@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "private_address_check"
+require "private_address_check/tcpsocket_ext"
+
 class SuppliedProductBuilder < DfcBuilder
   def self.supplied_product(variant)
     id = urls.enterprise_supplied_product_url(
@@ -39,7 +42,11 @@ class SuppliedProductBuilder < DfcBuilder
       product.variants.first
     end.tap do |variant|
       link = supplied_product.semanticId
+      catalog_item = supplied_product&.catalogItems&.first
+      offer = catalog_item&.offers&.first
       variant.semantic_links.new(semantic_id: link) if link.present?
+      CatalogItemBuilder.apply_stock(catalog_item, variant)
+      OfferBuilder.apply(offer, variant)
     end
   end
 
@@ -66,7 +73,8 @@ class SuppliedProductBuilder < DfcBuilder
       description: supplied_product.description,
       price: 0, # will be in DFC Offer
       supplier_id: supplier.id,
-      primary_taxon_id: taxon(supplied_product).id
+      primary_taxon_id: taxon(supplied_product).id,
+      image: image(supplied_product),
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
       product.ensure_standard_variant
@@ -94,6 +102,21 @@ class SuppliedProductBuilder < DfcBuilder
     # Every product needs a primary taxon to be valid. So if we don't have
     # one or can't find it we just take a random one.
     Spree::Taxon.find_by(dfc_id:) || Spree::Taxon.first
+  end
+
+  def self.image(supplied_product)
+    url = URI.parse(supplied_product.image)
+    filename = File.basename(supplied_product.image)
+
+    Spree::Image.new.tap do |image|
+      PrivateAddressCheck.only_public_connections do
+        image.attachment.attach(io: url.open, filename:)
+      end
+    end
+  rescue StandardError
+    # Any URL parsing or network error shouldn't impact the product import
+    # at all. Maybe we'll add UX for error handling later.
+    nil
   end
 
   private_class_method :product_type, :taxon

@@ -1,0 +1,16 @@
+%h1= t ".headline"
+
+%p= t ".description"
+
+%p= t ".hints"
+%p= t ".order", number: @order.number
+
+%table
+  %tr
+    %th= t ".stock"
+    %th= t ".product"
+
+  - @linked_variants.each do |variant|
+    %tr
+      %td= variant.on_hand
+      %td= variant.product_and_full_name

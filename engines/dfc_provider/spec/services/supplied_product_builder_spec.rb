@@ -86,7 +86,7 @@ RSpec.describe SuppliedProductBuilder do
 
   describe ".import_product" do
     let(:supplied_product) do
-      DataFoodConsortium::Connector::SuppliedProduct.new(
+      DfcProvider::SuppliedProduct.new(
         "https://example.net/tomato",
         name: "Tomato",
         description: "Awesome tomato",
@@ -95,6 +95,7 @@ RSpec.describe SuppliedProductBuilder do
           value: 2,
         ),
         productType: product_type,
+        image: "https://cd.net/tomato.png?v=5",
       )
     end
     let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
@@ -106,6 +107,13 @@ RSpec.describe SuppliedProductBuilder do
       )
     }
 
+    before do
+      stub_request(:get, "https://cd.net/tomato.png?v=5").to_return(
+        status: 200,
+        body: black_logo_path.read,
+      )
+    end
+
     it "creates a new Spree::Product" do
       product = builder.import_product(supplied_product, supplier)
 
@@ -113,6 +121,9 @@ RSpec.describe SuppliedProductBuilder do
       expect(product.name).to eq("Tomato")
       expect(product.description).to eq("Awesome tomato")
       expect(product.variant_unit).to eq("weight")
+      expect(product.image).to be_present
+      expect(product.image.attachment).to be_attached
+      expect(product.image.url(:product)).to match /^http.*tomato\.png/
     end
 
     describe "taxon" do
@@ -136,11 +147,30 @@ RSpec.describe SuppliedProductBuilder do
           value: 2,
         ),
         productType: product_type,
+        catalogItems: [catalog_item],
       )
     end
     let(:product_type) { DfcLoader.connector.PRODUCT_TYPES.VEGETABLE.NON_LOCAL_VEGETABLE }
+    let(:catalog_item) {
+      DataFoodConsortium::Connector::CatalogItem.new(
+        nil,
+        # On-demand is expressed as negative stock.
+        # And some APIs send strings instead of numbers...
+        stockLimitation: "-1",
+        offers: [offer],
+      )
+    }
+    let(:offer) {
+      DataFoodConsortium::Connector::Offer.new(
+        nil,
+        price: DataFoodConsortium::Connector::Price.new(value: "15.50"),
+      )
+    }
 
     it "creates a new Spree::Product and variant" do
+      # We need this to save stock:
+      DefaultStockLocation.find_or_create
+
       create(:taxon)
 
       expect(imported_variant).to be_a(Spree::Variant)
@@ -158,6 +188,12 @@ RSpec.describe SuppliedProductBuilder do
       expect(imported_product.name).to eq("Tomato")
       expect(imported_product.description).to eq("Awesome tomato")
       expect(imported_product.variant_unit).to eq("weight")
+
+      # Stock can only be checked when persisted:
+      imported_product.save!
+      expect(imported_variant.price).to eq 15.50
+      expect(imported_variant.on_demand).to eq true
+      expect(imported_variant.on_hand).to eq 0
     end
 
     context "with spree_product_id supplied" do

@@ -1,0 +1,9 @@
+%h1= t ".headline"
+
+%p= t ".description"
+
+%p= t ".hints"
+
+%p= t ".affected", enterprise: @distributor.name, order_cycle: @order_cycle.name
+
+%pre= @order_id

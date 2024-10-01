@@ -63,5 +63,10 @@ RSpec.describe "DFC Product Import" do
     }
 
     expect(page).to have_content "Importing a DFC product catalog"
+
+    product = Spree::Product.last
+
+    expect(product.variants[0].semantic_links).to be_present
+    expect(product.image).to be_present
   end
 end

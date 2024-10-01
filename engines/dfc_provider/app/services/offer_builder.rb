@@ -15,7 +15,21 @@ class OfferBuilder < DfcBuilder
   end
 
   def self.apply(offer, variant)
-    variant.on_hand = offer.stockLimitation
-    variant.price = offer.price
+    return if offer.nil?
+
+    CatalogItemBuilder.apply_stock(offer, variant)
+
+    return if offer.price.nil?
+
+    variant.price = price(offer)
+  end
+
+  def self.price(offer)
+    # We assume same currency here:
+    if offer.price.respond_to?(:value)
+      offer.price.value
+    else
+      offer.price
+    end
   end
 end

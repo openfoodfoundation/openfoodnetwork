@@ -170,6 +170,11 @@ module Spree
                                           select("spree_variants.id") })
     end
 
+    def self.linked_to(semantic_id)
+      includes(:semantic_links).references(:semantic_links)
+        .where(semantic_links: { semantic_id: }).first
+    end
+
     def tax_category
       super || TaxCategory.find_by(is_default: true)
     end
@@ -235,6 +240,8 @@ module Spree
     end
 
     def create_stock_items
+      return unless stock_items.empty?
+
       StockLocation.find_each do |stock_location|
         stock_location.propagate_variant(self)
       end
