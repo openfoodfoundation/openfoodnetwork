@@ -33,16 +33,13 @@ RSpec.describe Spree::CreditCardsController, type: :controller do
           }
         end
 
-        before do
-          # there should be no cards stored locally
-          expect(Spree::CreditCard.count).to eq(0)
-        end
-
         it "saves the card locally" do
-          spree_post :new_from_token, params
+          expect {
+            spree_post :new_from_token, params
+          }.to change {
+            Spree::CreditCard.count
+          }.from(0).to(1)
 
-          # checks whether a card was created
-          expect(Spree::CreditCard.count).to eq(1)
           card = Spree::CreditCard.last
 
           # retrieves the created card from Stripe
