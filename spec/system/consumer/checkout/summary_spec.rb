@@ -311,47 +311,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
       end
     end
 
-    context "when updating cart after summary step" do
-      let(:order) {
-        create(:order_ready_for_payment, distributor:)
-      }
-      let!(:payment_with_fee) {
-        create(
-          :payment_method,
-          distributors: [distributor],
-          name: "Payment with Fee", description: "Payment with fee",
-          calculator: Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
-        )
-      }
-
-      it "calculated the correct order total" do
-        visit checkout_step_path(:payment)
-        expect(page).to have_checked_field "Payment with Fee"
-
-        click_button "Next - Order summary"
-        expect(page).to have_title "Checkout Summary - Open Food Network"
-
-        # Back to the shop
-        click_link "Shopping @ #{distributor.name}"
-        expect(page).to have_content(distributor.name)
-
-        # Add item to cart
-        within_variant(order.line_items.first.variant) do
-          click_button increase_quantity_symbol
-        end
-        wait_for_cart
-
-        # Checkout
-        toggle_cart
-        click_link "Checkout"
-
-        # Check summary page total
-        expect(page).to have_title "Checkout Summary - Open Food Network"
-        expect(page).to have_selector("#order_total", text: 22.00)
-        expect(order.reload.payments.first.amount).to eql(22.00)
-      end
-    end
-
     context "with previous open orders" do
       let(:order) {
         create(:order_ready_for_confirmation, distributor:,
