@@ -45,4 +45,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<HIDDEN-OPENID-TOKEN>') { |interaction|
     interaction.request.body.match(/"accessToken":"([^"]+)"/)&.public_send(:[], 1)
   }
+  config.filter_sensitive_data('<HIDDEN-VINE-TOKEN>') { |interaction|
+    interaction.request.headers["X-Authorization"]&.public_send(:[], 0)
+  }
 end
