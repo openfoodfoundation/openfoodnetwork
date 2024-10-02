@@ -34,7 +34,7 @@ RSpec.describe BackorderJob do
 
       expect {
         BackorderJob.check_stock(order)
-      }.to enqueue_job(BackorderJob).with(order, [variant])
+      }.to enqueue_job(BackorderJob).with(order)
     end
 
     it "reports errors" do
@@ -48,8 +48,9 @@ RSpec.describe BackorderJob do
 
   describe "#peform" do
     it "notifies owner of errors" do
+      incorrect_order = create(:order)
       expect {
-        subject.perform(order, [])
+        subject.perform(incorrect_order)
       }.to enqueue_mail(BackorderMailer, :backorder_failed)
         .and raise_error(NoMethodError)
     end
@@ -70,7 +71,7 @@ RSpec.describe BackorderJob do
       )
 
       expect {
-        subject.place_backorder(order, [variant])
+        subject.place_backorder(order)
       }.to enqueue_job(CompleteBackorderJob).at(completion_time)
 
       # We ordered a case of 12 cans: -3 + 12 = 9

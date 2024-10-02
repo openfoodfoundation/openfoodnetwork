@@ -13,17 +13,9 @@ class BackorderJob < ApplicationJob
   sidekiq_options retry: 0
 
   def self.check_stock(order)
-    variants_needing_stock = order.variants.select do |variant|
-      # TODO: scope variants to hub.
-      # We are only supporting producer stock at the moment.
-      variant.on_hand&.negative?
-    end
+    links = SemanticLink.where(variant_id: order.line_items.select(:variant_id))
 
-    linked_variants = variants_needing_stock.select do |variant|
-      variant.semantic_links.present?
-    end
-
-    perform_later(order, linked_variants) if linked_variants.present?
+    perform_later(order) if links.exists?
   rescue StandardError => e
     # Errors here shouldn't affect the checkout. So let's report them
     # separately:
@@ -32,20 +24,25 @@ class BackorderJob < ApplicationJob
     end
   end
 
-  def perform(order, linked_variants)
+  def perform(order)
     OrderLocker.lock_order_and_variants(order) do
-      place_backorder(order, linked_variants)
+      place_backorder(order)
     end
   rescue StandardError
     # If the backordering fails, we need to tell the shop owner because they
     # need to organgise more stock.
-    BackorderMailer.backorder_failed(order, linked_variants).deliver_later
+    BackorderMailer.backorder_failed(order).deliver_later
 
     raise
   end
 
-  def place_backorder(order, linked_variants)
+  def place_backorder(order)
     user = order.distributor.owner
+    linked_variants = order.variants.select do |variant|
+      # TODO: scope variants to hub.
+      # We are only supporting producer stock at the moment.
+      variant.on_hand&.negative? && variant.semantic_links.present?
+    end
 
     # We are assuming that all variants are linked to the same wholesale
     # shop and its catalog:
