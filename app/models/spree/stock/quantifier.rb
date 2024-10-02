@@ -7,7 +7,7 @@ module Spree
 
       def initialize(variant)
         @variant = variant
-        @stock_items = fetch_stock_items
+        @stock_items = @variant.stock_items
       end
 
       def total_on_hand
@@ -24,16 +24,6 @@ module Spree
 
       def can_supply?(required)
         total_on_hand >= required || backorderable?
-      end
-
-      private
-
-      def fetch_stock_items
-        # Don't re-fetch associated stock items from the DB if we've already eager-loaded them
-        return @variant.stock_items if @variant.stock_items.loaded?
-
-        Spree::StockItem.joins(:stock_location).
-          where(:variant_id => @variant, Spree::StockLocation.table_name => { active: true })
       end
     end
   end

@@ -3,7 +3,7 @@
 module Spree
   class StockLocation < ApplicationRecord
     self.belongs_to_required_by_default = false
-    self.ignored_columns += [:backorderable_default]
+    self.ignored_columns += [:backorderable_default, :active]
 
     has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
     has_many :stock_movements, through: :stock_items
@@ -12,8 +12,6 @@ module Spree
     belongs_to :country, class_name: 'Spree::Country'
 
     validates :name, presence: true
-
-    scope :active, -> { where(active: true) }
 
     after_create :create_stock_items
 
