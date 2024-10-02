@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_28_203544) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_02_014059) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -338,6 +338,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_28_203544) do
     t.boolean "automatic_notifications", default: false
     t.boolean "mails_sent", default: false
     t.datetime "opened_at", precision: nil
+    t.index ["orders_close_at"], name: "index_order_cycles_on_orders_close_at"
+    t.index ["orders_open_at"], name: "index_order_cycles_on_orders_open_at"
   end
 
   create_table "order_cycles_distributor_payment_methods", id: false, force: :cascade do |t|
