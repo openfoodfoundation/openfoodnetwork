@@ -1437,7 +1437,10 @@ en:
               <a href="#" target="_blank"><b>VINE</b>
               <i class="icon-external-link"></i></a>
               </p>
-
+            api_key_empty: "Please enter an API key"
+            api_key_error: "Check you entered your API key correctly, contact your instance manager if the error persists"
+            connection_error: "API connection error, please try again"
+            setup_error: "VINE API is not configured, please contact your instance manager"
       actions:
         edit_profile: Settings
         properties: Properties

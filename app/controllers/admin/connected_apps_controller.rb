@@ -5,12 +5,7 @@ module Admin
     def create
       authorize! :admin, enterprise
 
-      attributes = {}
-      attributes[:type] = connected_app_params[:type] if connected_app_params[:type]
-
-      app = ConnectedApp.create!(enterprise_id: enterprise.id, **attributes)
-      app.connect(api_key: spree_current_user.spree_api_key,
-                  channel: SessionChannel.for_request(request))
+      connect
 
       render_panel
     end
@@ -26,6 +21,45 @@ module Admin
 
     private
 
+    def create_connected_app
+      attributes = {}
+      attributes[:type] = connected_app_params[:type] if connected_app_params[:type]
+
+      @app = ConnectedApp.create!(enterprise_id: enterprise.id, **attributes)
+    end
+
+    def connect
+      return connect_vine if connected_app_params[:type] == "ConnectedApps::Vine"
+
+      create_connected_app
+      @app.connect(api_key: spree_current_user.spree_api_key,
+                   channel: SessionChannel.for_request(request))
+    end
+
+    def connect_vine
+      if connected_app_params[:vine_api_key].empty?
+        return flash[:error] = I18n.t("admin.enterprises.form.connected_apps.vine.api_key_empty")
+      end
+
+      create_connected_app
+
+      jwt_service = VineJwtService.new(secret: ENV.fetch("VINE_API_SECRET"))
+      vine_api = VineApiService.new(api_key: connected_app_params[:vine_api_key],
+                                    jwt_generator: jwt_service)
+
+      if !@app.connect(api_key: connected_app_params[:vine_api_key], vine_api:)
+        error_message = "#{@app.errors.full_messages.to_sentence}. \
+          #{I18n.t('admin.enterprises.form.connected_apps.vine.api_key_error')}".squish
+        handle_error(error_message)
+      end
+    rescue Faraday::Error => e
+      log_and_notify_exception(e)
+      handle_error(I18n.t("admin.enterprises.form.connected_apps.vine.connection_error"))
+    rescue KeyError => e
+      log_and_notify_exception(e)
+      handle_error(I18n.t("admin.enterprises.form.connected_apps.vine.setup_error"))
+    end
+
     def enterprise
       @enterprise ||= Enterprise.find(params.require(:enterprise_id))
     end
@@ -34,8 +68,18 @@ module Admin
       redirect_to "#{edit_admin_enterprise_path(enterprise)}#/connected_apps_panel"
     end
 
+    def handle_error(message)
+      flash[:error] = message
+      @app.destroy
+    end
+
+    def log_and_notify_exception(exception)
+      Rails.logger.error exception.inspect
+      Bugsnag.notify(exception)
+    end
+
     def connected_app_params
-      params.permit(:type)
+      params.permit(:type, :vine_api_key)
     end
   end
 end
