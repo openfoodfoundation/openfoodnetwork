@@ -10,7 +10,7 @@ RSpec.describe Sets::ProductSet do
     subject{ product_set.save }
 
     context 'when the product does not exist yet' do
-      let!(:stock_location) { create(:stock_location, backorderable_default: false) }
+      let!(:stock_location) { create(:stock_location) }
       let(:collection_hash) do
         {
           0 => {

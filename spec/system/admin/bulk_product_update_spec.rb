@@ -188,7 +188,7 @@ RSpec.describe '
   end
 
   it "creating a new product" do
-    create(:stock_location, backorderable_default: false)
+    create(:stock_location)
 
     supplier = create(:supplier_enterprise)
     distributor = create(:distributor_enterprise)

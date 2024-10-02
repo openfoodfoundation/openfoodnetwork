@@ -95,7 +95,7 @@ RSpec.describe VariantStock do
         build_stubbed(
           :variant,
           stock_locations: [
-            build_stubbed(:stock_location, backorderable_default: false)
+            build_stubbed(:stock_location)
           ]
         )
       end
