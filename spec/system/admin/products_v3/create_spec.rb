@@ -13,7 +13,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
   let!(:taxon) { create(:taxon) }
 
   describe "creating a new product" do
-    let!(:stock_location) { create(:stock_location, backorderable_default: false) }
+    let!(:stock_location) { create(:stock_location) }
     let!(:distributor) { create(:distributor_enterprise) }
     let!(:shipping_category) { create(:shipping_category) }
 

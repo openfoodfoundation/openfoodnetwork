@@ -3,6 +3,7 @@
 module Spree
   class StockLocation < ApplicationRecord
     self.belongs_to_required_by_default = false
+    self.ignored_columns += [:backorderable_default]
 
     has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
     has_many :stock_movements, through: :stock_items
@@ -18,7 +19,7 @@ module Spree
 
     # Wrapper for creating a new stock item respecting the backorderable config
     def propagate_variant(variant)
-      stock_items.create!(variant:, backorderable: backorderable_default)
+      stock_items.create!(variant:)
     end
 
     def stock_item(variant)

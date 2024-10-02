@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   RSpec.describe StockLocation do
-    subject { create(:stock_location_with_items, backorderable_default: true) }
+    subject { create(:stock_location_with_items) }
     let(:stock_item) { subject.stock_items.order(:id).first }
     let(:variant) { stock_item.variant }
 
@@ -47,7 +47,7 @@ module Spree
     end
 
     it 'finds determines if you a variant is backorderable' do
-      expect(subject.backorderable?(variant)).to be_truthy
+      expect(subject.backorderable?(variant)).to eq false
     end
 
     it 'restocks a variant with a positive stock movement' do
