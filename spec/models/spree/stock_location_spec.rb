@@ -20,7 +20,7 @@ module Spree
           subject { StockLocation.new(name: "testing") }
 
           specify do
-            expect(subject).to receive(:propagate_variant).at_least(:once)
+            expect(subject.stock_items).to receive(:create!).at_least(:once)
             subject.save!
           end
         end

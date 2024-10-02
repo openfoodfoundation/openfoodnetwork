@@ -18,10 +18,6 @@ module Spree
     after_create :create_stock_items
 
     # Wrapper for creating a new stock item respecting the backorderable config
-    def propagate_variant(variant)
-      stock_items.create!(variant:)
-    end
-
     def stock_item(variant)
       stock_items.where(variant_id: variant).order(:id).first
     end
@@ -57,7 +53,7 @@ module Spree
     private
 
     def create_stock_items
-      Variant.find_each { |variant| propagate_variant(variant) }
+      Variant.find_each { |variant| stock_items.create!(variant:) }
     end
   end
 end
