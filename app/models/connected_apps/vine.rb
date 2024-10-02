@@ -4,12 +4,18 @@
 #
 module ConnectedApps
   class Vine < ConnectedApp
-    def connect(api_key: )
-      # TODO
+    VINE_API_URL = "https://vine-staging.openfoodnetwork.org.au/api/v1/my-team"
+
+    def connect(api_key:, vine_api:, **_opts)
+      response = vine_api.my_team
+
+      return update data: { api_key: } if response.success?
+
+      errors.add(:base, I18n.t("activerecord.errors.models.connected_apps.vine.api_request_error"))
+
+      false
     end
 
-    def disconnect
-      # TODO
-    end
+    def disconnect; end
   end
 end
