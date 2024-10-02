@@ -3,6 +3,7 @@
 module Spree
   class StockLocation < ApplicationRecord
     self.belongs_to_required_by_default = false
+    self.ignored_columns += [:backorderable_default]
 
     has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
     has_many :stock_movements, through: :stock_items
