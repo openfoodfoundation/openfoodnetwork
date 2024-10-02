@@ -125,13 +125,6 @@ RSpec.describe Spree::Ability do
       end
     end
 
-    context 'for StockLocation' do
-      let(:resource) { Spree::StockLocation.new }
-      context 'requested by any user' do
-        it_should_behave_like 'read only'
-      end
-    end
-
     context 'for StockMovement' do
       let(:resource) { Spree::StockMovement.new }
       context 'requested by any user' do

@@ -35,7 +35,6 @@ module Spree
         can [:read, :update, :destroy], Spree::User, id: user.id
         can [:index, :read], State
         can [:index, :read], StockItem
-        can [:index, :read], StockLocation
         can [:index, :read], StockMovement
         can [:index, :read], Taxon
         can [:index, :read], Variant
