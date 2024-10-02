@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://vine-staging.openfoodnetwork.org.au/api/v1/my-team
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      X-Authorization:
+      - "<HIDDEN-VINE-TOKEN>"
+      User-Agent:
+      - Faraday v2.9.0
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Cache-Control:
+      - no-cache, private
+      Date:
+      - Wed, 02 Oct 2024 00:27:30 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: '{"meta":{"responseCode":200,"limit":50,"offset":0,"message":"","cached":true,"cached_at":"2024-10-02
+        00:27:30","availableRelations":["teamUsers.user","country"]},"data":{"id":1,"name":"OK200
+        Team","country_id":14,"created_at":"2024-09-12T06:39:07.000000Z","updated_at":"2024-09-12T06:39:07.000000Z","deleted_at":null}}'
+  recorded_at: Wed, 02 Oct 2024 00:27:30 GMT
+recorded_with: VCR 6.2.0
