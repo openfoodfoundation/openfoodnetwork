@@ -25,7 +25,7 @@ RSpec.describe BackorderJob do
       }.not_to enqueue_job(BackorderJob)
     end
 
-    it "enqueues backorder", vcr: true do
+    it "enqueues backorder" do
       variant.on_demand = true
       variant.on_hand = -3
       variant.semantic_links << SemanticLink.new(
