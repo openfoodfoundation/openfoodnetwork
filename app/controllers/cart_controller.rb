@@ -11,6 +11,8 @@ class CartController < BaseController
       order.cap_quantity_at_stock!
       order.recreate_all_fees!
 
+      StockSyncJob.sync_linked_catalogs(order)
+
       render json: { error: false, stock_levels: stock_levels(order) }, status: :ok
     else
       render json: { error: cart_service.errors.full_messages.join(",") },
