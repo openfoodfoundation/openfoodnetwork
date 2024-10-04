@@ -38,7 +38,7 @@ class BackorderJob < ApplicationJob
 
   def place_backorder(order)
     user = order.distributor.owner
-    items = backorder_items(order)
+    items = backorderable_items(order)
 
     # We are assuming that all variants are linked to the same wholesale
     # shop and its catalog:
@@ -65,7 +65,7 @@ class BackorderJob < ApplicationJob
 
   # We look at linked variants which are either stock controlled or
   # are on demand with negative stock.
-  def backorder_items(order)
+  def backorderable_items(order)
     order.line_items.select do |item|
       # TODO: scope variants to hub.
       # We are only supporting producer stock at the moment.
