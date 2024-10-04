@@ -31,7 +31,6 @@ pt:
         price: "Preço"
         primary_taxon_id: "Categoria de Produto"
         shipping_category_id: "Categoria de Envio"
-        variant_unit: "Unidade da Variante"
         variant_unit_name: "Nome da Unidade da Variante"
       spree/variant:
         primary_taxon: "Categoria de Produto"
@@ -165,6 +164,9 @@ pt:
     integer_array_validator:
       not_array_error: "deve ser uma lista"
       invalid_element_error: "deve conter apenas números válidos"
+  backorder_mailer:
+    backorder_failed:
+      product: "Produto"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Por favor confirme o endereço de email de %{enterprise}"
@@ -900,8 +902,6 @@ pt:
           customer_names_false: "Desactivado"
           customer_names_true: "Activo"
           shopfront_message: "Mensagem da Loja"
-          shopfront_message_link_tooltip: "Inserir / editar link"
-          shopfront_message_link_prompt: "Por favor insira um URL"
           shopfront_closed_message: "Mensagem de Loja Fechada"
           shopfront_closed_message_placeholder: >
               Uma mensagem que forneça uma explicação mais detalhada sobre o motivo
@@ -2883,6 +2883,9 @@ pt:
       signup_or_login: "Comece por fazer login ou registar-se"
       have_an_account: "Já possui uma conta?"
       action_login: "Entrar agora."
+    trix:
+      code: "Código"
+      urlPlaceholder: "Por favor insira um URL"
   inflections:
     packet:
       one: "pacote"

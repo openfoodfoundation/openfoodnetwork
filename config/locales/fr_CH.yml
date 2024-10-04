@@ -31,7 +31,6 @@ fr_CH:
         price: "Prix"
         primary_taxon_id: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
-        variant_unit: "Unité"
         variant_unit_name: "Unité de la variante"
       spree/variant:
         primary_taxon: "Catégorie Produit"
@@ -248,6 +247,9 @@ fr_CH:
     integer_array_validator:
       not_array_error: "doit être une séquence"
       invalid_element_error: "doit contenir uniquement des nombres entiers"
+  backorder_mailer:
+    backorder_failed:
+      product: "Produit"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -1027,8 +1029,6 @@ fr_CH:
               les particularités de votre boutique. Ce message s'affiche dans l'onglet
               Accueil de votre boutique. Si aucun message n'est affiché, l'onglet
               Accueil n'apparaitra pas.
-          shopfront_message_link_tooltip: "Insérer / modifier un lien"
-          shopfront_message_link_prompt: "Veuillez entrer l'URL à insérer"
           shopfront_closed_message: "Message d'accueil boutique fermée"
           shopfront_closed_message_placeholder: >
               Vous pouvez ici expliquer à vos acheteurs pourquoi votre boutique est
@@ -3242,6 +3242,9 @@ fr_CH:
           Il a eu un problème lors de la prise en compte de votre carte.
           Merci de rafraîchir la page. Si cela ne fonctionne pas une seconde fois,
           merci de nous contacter.
+    trix:
+      code: "Code"
+      urlPlaceholder: "Veuillez entrer l'URL à insérer"
   inflections:
     each:
       one: "chacun"

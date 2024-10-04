@@ -26,7 +26,6 @@ pl:
         price: "Cena"
         primary_taxon_id: "Kategoria produktu"
         shipping_category_id: "Kategoria dostawy"
-        variant_unit: "Jednostka wariantu"
         variant_unit_name: "Nazwa jednostki wariantu"
       spree/variant:
         primary_taxon: "Kategoria produktu"
@@ -135,6 +134,9 @@ pl:
     integer_array_validator:
       not_array_error: "musi być tablicą"
       invalid_element_error: "musi zawierać tylko prawidłowe liczby całkowite"
+  backorder_mailer:
+    backorder_failed:
+      product: "Produkt"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Potwierdź adres e-mail dla %{enterprise}"
@@ -819,8 +821,6 @@ pl:
               Opcjonalna wiadomość witająca klientów i wyjaśniająca, jak robić u Ciebie
               zakupy. Jeśli tu wprowadzisz tekst, zostanie on wyświetlony na karcie
               głównej, gdy klienci po raz pierwszy pojawią się w Twoim sklepie.
-          shopfront_message_link_tooltip: "Wstaw / edytuj link"
-          shopfront_message_link_prompt: "Wprowadź adres URL do wstawienia"
           shopfront_closed_message: "Komunikat o zamknięciu witryny sklepowej"
           shopfront_closed_message_placeholder: >
               Wiadomość, która zawiera bardziej szczegółowe wyjaśnienie, dlaczego
@@ -2771,6 +2771,8 @@ pl:
     stripe_elements:
       unknown_error_from_stripe: |
           Wystąpił problem z konfiguracją Twojej karty w naszej bramce płatności. Odśwież stronę i spróbuj ponownie, jeśli to się nie powiedzie po raz drugi, skontaktuj się z nami, aby uzyskać pomoc.
+    trix:
+      code: "Kod"
   inflections:
     each:
       one: "każdy"

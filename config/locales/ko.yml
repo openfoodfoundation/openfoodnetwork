@@ -31,7 +31,6 @@ ko:
         price: "가격"
         primary_taxon_id: "물품 목록"
         shipping_category_id: "전송물품 목록"
-        variant_unit: "구성 단위 변경"
         variant_unit_name: "변경된 구성 단위 이름"
       spree/variant:
         primary_taxon: "물품 목록"
@@ -249,6 +248,9 @@ ko:
     integer_array_validator:
       not_array_error: "배열 형태여야 합니다."
       invalid_element_error: "허용되는 숫자 형태만을 포함해야 합니다."
+  backorder_mailer:
+    backorder_failed:
+      product: "상품"
   enterprise_mailer:
     confirmation_instructions:
       subject: "%{enterprise}의 이메일 주소를 확인해 주세요."
@@ -1023,8 +1025,6 @@ ko:
           shopfront_message_placeholder: >
               고객을 환영하고 함께 쇼핑하는 방법을 설명하는 선택적 메시지입니다. 여기에 텍스트를 입력하면 고객이 처음 상점에 도착했을
               때 홈 탭에 표시됩니다.
-          shopfront_message_link_tooltip: "링크 삽입 / 수정"
-          shopfront_message_link_prompt: "삽입할 URL을 입력하십시오."
           shopfront_closed_message: "매장 폐쇄 메시지"
           shopfront_closed_message_placeholder: >
               가게가 문을 닫은 이유 및/또는 고객이 가게가 언제 다시 문을 열 것으로 예상할 수 있는지에 대하여 보다 자세한 설명을 제공하는
@@ -3185,6 +3185,9 @@ ko:
           결제 게이트웨이에서 카드를 설정하는 동안 문제가 발생했습니다.
           페이지를 새로 고친 후 다시 시도하십시오. 만약 다시 실패하신면,
           저희에게 지원을 요청해주세요.
+    trix:
+      code: "코드"
+      urlPlaceholder: "삽입할 URL을 입력하십시오."
   inflections:
     each:
       other: "각"

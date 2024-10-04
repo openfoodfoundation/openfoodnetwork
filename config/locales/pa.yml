@@ -46,7 +46,6 @@ pa:
         price: "ਕੀਮਤ"
         primary_taxon_id: "ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ"
         shipping_category_id: "ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀ"
-        variant_unit: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ"
         variant_unit_name: "ਵੇਰੀਐਂਟ ਯੂਨਿਟ ਦਾ ਨਾਮ"
         unit_value: "ਯੂਨਿਟ ਵੈਲਯੂ"
       spree/variant:
@@ -294,6 +293,9 @@ pa:
   report_job:
     report_failed: |
         ਇਹ ਰਿਪੋਰਟ ਅਸਫਲ ਰਹੀ। ਇਹ ਸੰਸਾਧਨ ਕਰਨ ਲਈ ਬਹੁਤ ਵੱਡਾ ਹੋ ਸਕਦੀ ਹੈ। ਅਸੀਂ ਇਸ ਦੀ ਜਾਂਚ ਕਰਾਂਗੇ, ਪਰ ਜੇਕਰ ਸਮੱਸਿਆ ਬਣੀ ਰਹਿੰਦੀ ਹੈ ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ ਸਾਨੂੰ ਦੱਸੋ।
+  backorder_mailer:
+    backorder_failed:
+      product: "ਉਤਪਾਦ"
   enterprise_mailer:
     confirmation_instructions:
       subject: "ਕਿਰਪਾ ਕਰਕੇ %{enterprise} ਲਈ ਈਮੇਲ ਪਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
@@ -1118,8 +1120,6 @@ pa:
               ਗਾਹਕਾਂ ਦਾ ਸੁਆਗਤ ਕਰਨ ਅਤੇ ਤੁਹਾਡੇ ਨਾਲ ਖਰੀਦਦਾਰੀ ਕਰਨ ਦਾ ਢੰਗ ਦੱਸਣ ਲਈ ਇੱਕ ਵਿਕਲਪਿਕ
               ਸੰਦੇਸ਼। ਜੇਕਰ ਟੈਕਸਟ ਇੱਥੇ ਦਰਜ ਕੀਤਾ ਗਿਆ ਹੈ ਤਾਂ ਉਹ ਹੋਮ ਟੈਬ ਵਿੱਚ ਪ੍ਰਦਰਸ਼ਿਤ
               ਹੋਵੇਗਾ ਜਦੋਂ ਗਾਹਕ ਪਹਿਲੀ ਵਾਰ ਤੁਹਾਡੇ ਸ਼ਾਪ ਦੇ ਸਾਹਮਣੇ ਆਉਂਦੇ ਹਨ।
-          shopfront_message_link_tooltip: "ਲਿੰਕ ਪਾਓ / ਸੰਪਾਦਿਤ ਕਰੋ"
-          shopfront_message_link_prompt: "ਸਮਿਲਿਤ ਕਰਨ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ URL ਦਾਖਲ ਕਰੋ"
           shopfront_closed_message: "ਸ਼ਾਪਫ੍ਰੰਟ ਦੇ ਬੰਦ ਹੋਣ ਦਾ ਸੰਦੇਸ਼"
           shopfront_closed_message_placeholder: >
               ਇੱਕ ਸੰਦੇਸ਼ ਜੋ ਇਸ ਬਾਰੇ ਵਧੇਰੇ ਵਿਸਤ੍ਰਿਤ ਵਿਆਖਿਆ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ ਕਿ ਤੁਹਾਡੀ
@@ -3426,6 +3426,9 @@ pa:
     stripe_elements:
       unknown_error_from_stripe: |
           ਸਾਡੇ ਭੁਗਤਾਨ ਗੇਟਵੇ ਵਿੱਚ ਤੁਹਾਡੇ ਕਾਰਡ ਨੂੰ ਸੇਟ ਕਰਨ ਵਿੱਚ ਇੱਕ ਸਮੱਸਿਆ ਆਈ ਸੀ। ਕਿਰਪਾ ਕਰਕੇ ਪੇਜ ਨੂੰ ਤਾਜ਼ਾ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ, ਜੇਕਰ ਇਹ ਦੂਜੀ ਵਾਰ ਅਸਫਲ ਹੁੰਦਾ ਹੈ, ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ ਮਦਦ ਲਈ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।
+    trix:
+      code: "ਕੋਡ"
+      urlPlaceholder: "ਸਮਿਲਿਤ ਕਰਨ ਲਈ ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ URL ਦਾਖਲ ਕਰੋ"
   producers:
     signup:
       start_free_profile: "ਇੱਕ ਮੁਫ਼ਤ ਪ੍ਰੋਫਾਈਲ ਨਾਲ ਸ਼ੁਰੂ ਕਰੋ, ਅਤੇ ਜਦੋਂ ਤੁਸੀਂ ਤਿਆਰ ਹੋਵੋ ਤਾਂ ਵਿਸਤਾਰ ਕਰੋ!"

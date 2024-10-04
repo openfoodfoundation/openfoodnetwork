@@ -29,7 +29,6 @@ en_PH:
         price: "Price"
         primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
-        variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
       spree/variant:
         primary_taxon: "Product Category"
@@ -129,6 +128,9 @@ en_PH:
     integer_array_validator:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
+  backorder_mailer:
+    backorder_failed:
+      product: "Product"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -837,8 +839,6 @@ en_PH:
               An optional message to welcome customers and explain how to shop with
               you. If text is entered here it will be displayed in a home tab when
               customers first arrive at your shopfront.
-          shopfront_message_link_tooltip: "Insert / edit link"
-          shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
           shopfront_closed_message_placeholder: >
               A message which provides a more detailed explanation about why your
@@ -2838,6 +2838,9 @@ en_PH:
       signup_or_login: "Start By Signing Up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
+    trix:
+      code: "Code"
+      urlPlaceholder: "Please enter a URL to insert"
   inflections:
     each:
       one: "each"

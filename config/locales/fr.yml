@@ -315,6 +315,13 @@ fr:
   report_job:
     report_failed: |
         L'édition de ce rapport a échoué. Il est probablement trop volumineux. Nous allons examiner cela, mais faites-nous signe si le problème persiste.
+  backorder_mailer:
+    backorder_failed:
+      order: "Commande concernée : %{number}"
+      stock: "Stock"
+      product: "Produit"
+    backorder_incomplete:
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -1214,8 +1221,6 @@ fr:
               les particularités de votre boutique. Ce message s'affiche dans l'onglet
               Accueil de votre boutique. Si aucun message n'est affiché, l'onglet
               Accueil n’apparaîtra pas.
-          shopfront_message_link_tooltip: "Insérer / modifier un lien"
-          shopfront_message_link_prompt: "Veuillez entrer l'URL à insérer"
           shopfront_closed_message: "Message d'accueil ventes terminées"
           shopfront_closed_message_placeholder: >
               Vous pouvez expliquer ici à vos acheteurs pourquoi vos ventes sont fermées
@@ -3629,6 +3634,24 @@ fr:
           Il a eu un problème lors de la prise en compte de votre carte.
           Merci de rafraîchir la page. Si cela ne fonctionne pas une seconde fois,
           merci de nous contacter.
+    trix:
+      bold: "Gras"
+      bullets: "Puces"
+      code: "Code"
+      heading1: "En-tête"
+      hr: "Règle horizontale"
+      indent: "Augmenter d'un niveau"
+      italic: "Italique"
+      link: "Lien"
+      numbers: "Nombres"
+      outdent: "Diminuer d'un niveau"
+      quote: "Citation"
+      redo: "Rééditer"
+      strike: "Barré"
+      undo: "Annuler"
+      unlink: "Supprimer le lien"
+      url: "URL"
+      urlPlaceholder: "Veuillez entrer l'URL à insérer"
   inflections:
     each:
       one: "chacun"

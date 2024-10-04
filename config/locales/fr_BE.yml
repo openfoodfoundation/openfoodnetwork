@@ -46,7 +46,6 @@ fr_BE:
         price: "Prix"
         primary_taxon_id: "Catégorie de Produit"
         shipping_category_id: "Catégorie de livraison"
-        variant_unit: "Unité de variante"
         variant_unit_name: "Nom de la variante"
         unit_value: "Valeur unitaire"
       spree/variant:
@@ -253,6 +252,9 @@ fr_BE:
     report_failed: |
         Ce rapport a échoué. C'est peut-être trop lourd à traiter.
         Nous allons examiner la question, mais n'hésitez pas à nous faire savoir si le problème persiste.
+  backorder_mailer:
+    backorder_failed:
+      product: "Produit"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -1087,8 +1089,6 @@ fr_BE:
               expliquer comment faire leurs achats avec vous. Si le texte est saisi
               ici, il sera affiché dans un onglet d'accueil lorsque les clients arriveront
               pour la première fois à votre vitrine.
-          shopfront_message_link_tooltip: "Insérer / éditer le lien"
-          shopfront_message_link_prompt: "Entrer l'URL pour insérer"
           shopfront_closed_message: "Message d'accueil comptoir fermé"
           shopfront_closed_message_placeholder: >
               Vous pouvez ici expliquer à vos acheteurs pourquoi votre comptoir est
@@ -3347,6 +3347,9 @@ fr_BE:
       signup_or_login: "Commencez par vous inscrire (ou connexion)"
       have_an_account: "Déjà inscrit?"
       action_login: "Se connecter."
+    trix:
+      code: "Code"
+      urlPlaceholder: "Entrer l'URL pour insérer"
   inflections:
     item:
       one: "article"

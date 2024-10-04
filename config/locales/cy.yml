@@ -49,7 +49,6 @@ cy:
         price: "Pris"
         primary_taxon_id: "Categori Cynnyrch"
         shipping_category_id: "Categori dosbarthu."
-        variant_unit: "Uned Amrywiol"
         variant_unit_name: "Enw Uned Amrywiol"
         unit_value: "Gwerth yr uned"
       spree/variant:
@@ -301,6 +300,9 @@ cy:
     report_failed: |
         Methodd yr adroddiad hwn. Hwyrach ei fod yn rhy fawr i’w brosesu.
         Byddwn yn ymchwilio i hyn, ond cofiwch gysylltu os bydd y broblem yn parhau.
+  backorder_mailer:
+    backorder_failed:
+      product: "Cynnyrch"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Cadarnhewch y cyfeiriad e-bost ar gyfer %{enterprise}"
@@ -1155,8 +1157,6 @@ cy:
               Neges ddewisol i groesawu cwsmeriaid ac eluro sut i siopa gyda chi.
               Os nodir testun fan hyn, caiff ei arddangos mewn tab hafan pan fydd
               cwsmeriaid yn cyrraedd ffrynt eich siop
-          shopfront_message_link_tooltip: "Mewnosod / golygu dolen"
-          shopfront_message_link_prompt: "Noder URL i'w fewnosod"
           shopfront_closed_message: "Neges - Ffrynt Siop Ar Gau "
           shopfront_closed_message_placeholder: >
               Neges sy'n rhoi eglurhad mwy manwl ynghylch pam mae'ch siop ar gau a/neu
@@ -3487,6 +3487,9 @@ cy:
           Roedd problem wrth sefydlu eich cerdyn yn y porth talu.
           Gofynnir ichi ddiweddaru'r dudalen a rhoi cynnig arall, os bydd yn methu'r ail dro,
           cysylltwch â ni am gymorth.
+    trix:
+      code: "Cod"
+      urlPlaceholder: "Noder URL i'w fewnosod"
   inflections:
     each:
       one: "yr un"

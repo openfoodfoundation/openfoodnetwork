@@ -29,7 +29,6 @@ en_DE:
         price: "Price"
         primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
-        variant_unit: "Variant Unit"
         variant_unit_name: "Variant Unit Name"
       spree/variant:
         primary_taxon: "Product Category"
@@ -123,6 +122,9 @@ en_DE:
     integer_array_validator:
       not_array_error: "must be an array"
       invalid_element_error: "must contain only valid integers"
+  backorder_mailer:
+    backorder_failed:
+      product: "Product"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -822,8 +824,6 @@ en_DE:
           customer_names_false: "Disabled"
           customer_names_true: "Enabled"
           shopfront_message: "Shopfront Message"
-          shopfront_message_link_tooltip: "Insert / edit link"
-          shopfront_message_link_prompt: "Please enter a URL to insert"
           shopfront_closed_message: "Shopfront Closed Message"
           shopfront_closed_message_placeholder: >
               A message which provides a more detailed explanation about why your
@@ -2789,6 +2789,9 @@ en_DE:
       signup_or_login: "Start By Signing Up (or logging in)"
       have_an_account: "Already have an account?"
       action_login: "Log in now."
+    trix:
+      code: "Code"
+      urlPlaceholder: "Please enter a URL to insert"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"

@@ -29,7 +29,6 @@ fil_PH:
         price: "Presyo"
         primary_taxon_id: "Kategorya ng Produkto"
         shipping_category_id: "Kategorya ng Pagpapadala"
-        variant_unit: "Yunit ng variant"
         variant_unit_name: "pangalan ng yunit ng variant"
       spree/variant:
         primary_taxon: "Kategorya ng Produkto"
@@ -129,6 +128,9 @@ fil_PH:
     integer_array_validator:
       not_array_error: "ay dapat na pagpipilian"
       invalid_element_error: "ay dapat naglalaman lamang ng valid na integers"
+  backorder_mailer:
+    backorder_failed:
+      product: "Produkto"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Kumpirmahin ang email address para sa %{enterprise}"
@@ -838,8 +840,6 @@ fil_PH:
               kung paano mamili sa inyong shop. kung ang teksto ay ipinasok dito,
               ito ay makikita sa home tab kapag ang customer ay nasa loob na ng inyong
               shopfront.
-          shopfront_message_link_tooltip: "ilagay/ i-edit ang link"
-          shopfront_message_link_prompt: "ipasok ang URL na ilalagay"
           shopfront_closed_message: "pagsasarang mensahe ng Shopfront"
           shopfront_closed_message_placeholder: >
               isang mensahe na nagbibigay ng mas detalyadong paliwanag kung bakit
@@ -2849,6 +2849,9 @@ fil_PH:
       signup_or_login: "magsimula sa pamamagitan ng pag-sign-up (o pag-log-in)"
       have_an_account: "Mayroon ka na bang account?"
       action_login: "Maglog-in na ngayon."
+    trix:
+      code: "Code"
+      urlPlaceholder: "ipasok ang URL na ilalagay"
   inflections:
     each:
       one: "bawat"

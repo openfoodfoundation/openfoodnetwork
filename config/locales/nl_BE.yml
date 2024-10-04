@@ -31,7 +31,6 @@ nl_BE:
         price: "Prijs"
         primary_taxon_id: "Product categorie"
         shipping_category_id: "Verzendcategorie"
-        variant_unit: "Eénheid"
         variant_unit_name: "Variant Unit Name"
       spree/variant:
         primary_taxon: "Product categorie"
@@ -133,6 +132,9 @@ nl_BE:
     integer_array_validator:
       not_array_error: "moet een array zijn"
       invalid_element_error: "mogen alleen geldige gehele getallen bevatten"
+  backorder_mailer:
+    backorder_failed:
+      product: "Product"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Bevestig a.u.b. het e-mailadres voor %{enterprise}"
@@ -860,8 +862,6 @@ nl_BE:
               Een optionele tekst om klanten te verwelkomen en om uittelegen hoe met
               jouw te shoppen. Als tekst hier is ingevuld gaat het zichtbaar zijn
               in de home tab waneer klanten eerst aankomen in je online vitrine.
-          shopfront_message_link_tooltip: "Link invoegen / bewerken"
-          shopfront_message_link_prompt: "Voer een URL in om in te voegen"
           shopfront_closed_message: "Bericht Gesloten Etalage"
           shopfront_closed_message_placeholder: >
               Een boodschap die een gedetailleerdere verklaring voorziet over waarom
@@ -2907,6 +2907,9 @@ nl_BE:
       signup_or_login: "Start door te registreren (of in te loggen)"
       have_an_account: "Heb je al een account?"
       action_login: "Log nu in."
+    trix:
+      code: "Code"
+      urlPlaceholder: "Voer een URL in om in te voegen"
   producers:
     signup:
       start_free_profile: "Eerst uw bedrijfsprofiel maken en wijzig de formule als U klaar bent !"

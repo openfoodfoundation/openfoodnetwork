@@ -31,7 +31,6 @@ tr:
         price: "Fiyat"
         primary_taxon_id: "ÜRÜN KATEGORİSİ"
         shipping_category_id: "TESLİMAT KATEGORİSİ"
-        variant_unit: "Çeşit Birimi"
         variant_unit_name: "Çeşit Birim Adı"
       spree/variant:
         primary_taxon: "ÜRÜN KATEGORİSİ"
@@ -168,6 +167,9 @@ tr:
     integer_array_validator:
       not_array_error: "Sıralı olmalı"
       invalid_element_error: "Yalnızca geçerli tam sayılar içermelidir"
+  backorder_mailer:
+    backorder_failed:
+      product: "Ürün"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Lütfen %{enterprise} için e-posta adresini doğrulayın"
@@ -925,8 +927,6 @@ tr:
               Müşterilerinize merhaba diyebilir, dükkanınız ve alışveriş şartlarınız
               ile ilgili bilgi verebilirsiniz. Yazdıklarınız, müşteriler mağazanızı
               ziyaret ettiğinde görünür olacak.
-          shopfront_message_link_tooltip: "Bağlantı ekle/düzenle"
-          shopfront_message_link_prompt: "Lütfen eklemek için bir URL girin"
           shopfront_closed_message: "KAPALI DÜKKAN MESAJI"
           shopfront_closed_message_placeholder: >
               Dükkanınızın neden satışa kapalı olduğunu ve ne zaman açılacağını müşterilerinize
@@ -3052,6 +3052,9 @@ tr:
       unknown_error_from_stripe: |
           Ödeme sağlayıcımızda kart ayarlarınız ile ilgili bir sorun oluştu.
           Lütfen sayfayı yenileyip tekrar deneyin, eğer sorun devam ediyorsa lütfen destek için bize ulaşın.
+    trix:
+      code: "Kod"
+      urlPlaceholder: "Lütfen eklemek için bir URL girin"
   inflections:
     each:
       one: "her biri"

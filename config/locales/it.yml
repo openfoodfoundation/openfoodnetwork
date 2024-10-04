@@ -46,7 +46,6 @@ it:
         price: "Prezzo"
         primary_taxon_id: "Categoria Prodotto"
         shipping_category_id: "Categoria Spedizioni"
-        variant_unit: "Unità Variante"
         variant_unit_name: "Nome Unità Variante"
         unit_value: "Valore unità"
       spree/variant:
@@ -277,6 +276,9 @@ it:
     integer_array_validator:
       not_array_error: "deve essere un array"
       invalid_element_error: "deve contenere solo numeri interi"
+  backorder_mailer:
+    backorder_failed:
+      product: "Prodotto"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Per favore conferma l'indirizzo email di %{enterprise}"
@@ -1072,8 +1074,6 @@ it:
               Un messaggio opzionale per dare il benvenuto ai clienti e spiegare come
               acquistare. Il testo inserito qui verrà mostrato nel tab principale
               della vetrina.
-          shopfront_message_link_tooltip: "Inserisci / modifica link"
-          shopfront_message_link_prompt: "Per favore inserisci un URL"
           shopfront_closed_message: "Messaggio Chiusura Vetrina"
           shopfront_closed_message_placeholder: >
               Un messaggio che fornisce una spiegazione più dettagliata sul perché
@@ -3311,6 +3311,9 @@ it:
           C'è stato un problema nell'impostare la tua carta nel nostro portale di pagamento.
           Per favore aggiorna la pagina e prova ancora, se dovesse ripresentarsi l'errore,
           contattaci per avere supporto.
+    trix:
+      code: "Codice"
+      urlPlaceholder: "Per favore inserisci un URL"
   inflections:
     each:
       one: "ogni"

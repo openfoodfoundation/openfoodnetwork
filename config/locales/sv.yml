@@ -22,7 +22,6 @@ sv:
         state: Region
       spree/product:
         price: "Pris"
-        variant_unit: "Enhet för variant"
       spree/variant:
         supplier: "Leverantör"
       spree/credit_card:
@@ -48,6 +47,9 @@ sv:
           Var du gäst senast? Du behöver kanske skapa ett konto eller återställa ditt lösenord.
   sku: "SKU"
   tax_rate: "Skattesats"
+  backorder_mailer:
+    backorder_failed:
+      product: "Produkt"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vänligen bekräfta e-postadressen för %{enterprise}"
@@ -2103,6 +2105,8 @@ sv:
       signup_or_login: "Börja genom att underteckna (eller logga in)"
       have_an_account: "Har du redan ett konto?"
       action_login: "Logga in nu."
+    trix:
+      code: "Kod"
   producers:
     signup:
       start_free_profile: "Börja med en gratis profil och uppgradera när du är redo!"

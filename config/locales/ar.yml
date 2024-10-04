@@ -46,7 +46,6 @@ ar:
         price: "السعر"
         primary_taxon_id: "نوع المنتج "
         shipping_category_id: "نوع الشحن"
-        variant_unit: "وحدة النوع"
         variant_unit_name: "اسم وحدة النوع"
         unit_value: "قيمةالوحدة"
       spree/variant:
@@ -256,6 +255,9 @@ ar:
     integer_array_validator:
       not_array_error: "يجب أن يكون مصفوفة"
       invalid_element_error: "يجب أن يحتوي فقط على أعداد صحيحة فاعلة"
+  backorder_mailer:
+    backorder_failed:
+      product: "المنتج"
   enterprise_mailer:
     confirmation_instructions:
       subject: "يرجى تأكيد عنوان البريد الإلكتروني ل %{enterprise}"
@@ -1051,8 +1053,6 @@ ar:
               رسالة اختيارية للترحيب بالعملاء وشرح كيفية التسوق معك. إذا تم إدخال
               النص هنا ، فسيتم عرضه في علامة تبويب الصفحة الرئيسية عندما يصل العملاء
               إلى واجهة المتجر الخاصة بك.
-          shopfront_message_link_tooltip: "إدراج / تحرير الرابط"
-          shopfront_message_link_prompt: "الرجاء إدخال عنوان URL لإدراجه"
           shopfront_closed_message: "واجهة المتجر رسالة مغلقة"
           shopfront_closed_message_placeholder: >
               الرسالة تقدم شرحًا أكثر تفصيلًا حول سبب إغلاق متجرك و / أو متى يمكن
@@ -3328,6 +3328,9 @@ ar:
           كانت هناك مشكلة في إعداد بطاقتك في بوابة المدفوعات الخاصة بنا.
           يرجى تحديث الصفحة والمحاولة مرة أخرى ، إذا فشلت مرة أخرى ،
           يرجى الاتصال بنا للحصول على الدعم.
+    trix:
+      code: "الشفرة"
+      urlPlaceholder: "الرجاء إدخال عنوان URL لإدراجه"
   inflections:
     each:
       zero: "كل"

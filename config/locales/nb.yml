@@ -49,7 +49,6 @@ nb:
         price: "Pris"
         primary_taxon_id: "Produktkategori"
         shipping_category_id: "Leveringskategori"
-        variant_unit: "Variant Enhet"
         variant_unit_name: "Enhetsnavn Variant"
         unit_value: "Enhetsverdi"
       spree/variant:
@@ -314,6 +313,9 @@ nb:
     report_failed: |
         Denne rapporten mislyktes. Det kan være for stort å behandle.
         Vi vil se nærmere på det, men gi oss beskjed hvis problemet vedvarer.
+  backorder_mailer:
+    backorder_failed:
+      product: "Produkt"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vennligst bekreft epostadressen til %{enterprise}"
@@ -1192,8 +1194,6 @@ nb:
               En valgfri melding for å ønske kunder velkommen og forklare hvordan
               de handler hos deg. Hvis tekst legges inn her, vil den vises i en hjemmefane
               når kundene først ankommer butikken din.
-          shopfront_message_link_tooltip: "Sett inn / rediger lenke"
-          shopfront_message_link_prompt: "Vennligst skriv inn en URL for å sette inn"
           shopfront_closed_message: "Melding Butikk Stengt"
           shopfront_closed_message_placeholder: >
               En melding som gir en mer detaljert forklaring om hvorfor din butikk
@@ -3568,6 +3568,9 @@ nb:
     stripe_elements:
       unknown_error_from_stripe: |
           Det oppsto et problem med å konfigurere kortet ditt i betalingsportalen vår. Oppdater siden og prøv igjen. Hvis den mislykkes en gang til, kan du kontakte oss for support.
+    trix:
+      code: "Kode"
+      urlPlaceholder: "Vennligst skriv inn en URL for å sette inn"
   inflections:
     each:
       one: "Hver"

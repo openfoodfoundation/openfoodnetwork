@@ -31,7 +31,6 @@ es_CO:
         price: "Precio"
         primary_taxon_id: "Categoría del producto"
         shipping_category_id: "Categoría de envío"
-        variant_unit: "Unidad Variante"
         variant_unit_name: "Nombre de la unidad de la variante"
       spree/variant:
         primary_taxon: "Categoría del producto"
@@ -148,6 +147,9 @@ es_CO:
     integer_array_validator:
       not_array_error: "debe ser una lista"
       invalid_element_error: "debe contener solo enteros válidos"
+  backorder_mailer:
+    backorder_failed:
+      product: "Producto"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Por favor, confirma la dirección de correo electrónico de %{enterprise}"
@@ -870,8 +872,6 @@ es_CO:
               en el sitio. Si el texto se agrega en este campo, va a ser mostrado
               en la pestaña de inicio cuando los clientes ingresen por primera vez
               a la tienda.
-          shopfront_message_link_tooltip: "Insertar / editar enlace"
-          shopfront_message_link_prompt: "Por favor introduzca una URL para insertar"
           shopfront_closed_message: "Mensaje de tienda cerrada"
           shopfront_closed_message_placeholder: >
               Un mensaje que proporciona una explicación más detallada sobre por qué
@@ -2912,6 +2912,9 @@ es_CO:
       unknown_error_from_stripe: |
           Hubo un problema al configurar su tarjeta en nuestra pasarela de pagos.
           Por favor actualice la página y vuelva a intentarlo; si falla por segunda vez, por favor contáctanos para recibir asistencia.
+    trix:
+      code: "Código"
+      urlPlaceholder: "Por favor introduzca una URL para insertar"
   inflections:
     each:
       one: "each"
