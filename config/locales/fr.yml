@@ -317,10 +317,33 @@ fr:
         L'édition de ce rapport a échoué. Il est probablement trop volumineux. Nous allons examiner cela, mais faites-nous signe si le problème persiste.
   backorder_mailer:
     backorder_failed:
+      subject: "Une commande fournisseur automatique a échoué"
+      headline: "La commande fournisseur a échoué"
+      description: |
+          Nous avons essayé de passer ou mettre à jour une commande fournisseur pour des articles en rupture de stock mais
+          cela n'a pas fonctionné. Il se peut que vous ayez un stock négatif et que vous deviez résoudre
+          le problème pour commander un stock plus important.
+      hints: |
+          Il se peut que vous deviez aller dans les paramètres du cycle de vente et reconnecter votre compte.
+          Vérifiez également que le catalogue de votre fournisseur n'a pas changé et qu'il fournit
+          toujours les produits dont vous avez besoin. N'hésitez pas à nous contacter si
+          vous avez des questions.
       order: "Commande concernée : %{number}"
       stock: "Stock"
       product: "Produit"
     backorder_incomplete:
+      subject: "Une commande fournisseur automatique n'a pas pu aboutir"
+      headline: "Votre commande fournisseur n'est pas terminée"
+      description: |
+          Nous avons essayé de passer ou mettre à jour une commande fournisseur pour des articles en rupture de stock mais
+          cela n'a pas fonctionné. Les quantités en attente peuvent être trop élevées si
+          vous avez eu des annulations. De plus, votre commande fournisseur ne sera pas exécutée
+          tant qu'elle est à l'état de projet.
+      hints: |
+          Il se peut que vous deviez aller dans les paramètres du cycle de vente et reconnecter votre compte.
+          Vérifiez également que le catalogue de votre fournisseur n'a pas changé et qu'il fournit
+          toujours les produits dont vous avez besoin. N'hésitez pas à nous contacter si
+          vous avez des questions.
       affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
