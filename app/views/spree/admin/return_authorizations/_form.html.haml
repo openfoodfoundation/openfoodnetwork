@@ -44,5 +44,5 @@
 
   = f.field_container :stock_location do
     = f.label :stock_location, t('.stock_location')
-    = f.select :stock_location_id, Spree::StockLocation.active.all.collect{ |l| [l.name, l.id] }, { style: 'height:100px;', class: 'fullwidth' }
+    = f.select :stock_location_id, Spree::StockLocation.all.collect{ |l| [l.name, l.id] }, { style: 'height:100px;', class: 'fullwidth' }
     = f.error_message_on :reason

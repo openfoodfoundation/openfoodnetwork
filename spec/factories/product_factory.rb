@@ -26,7 +26,7 @@ FactoryBot.define do
     variant_unit_name { '' }
 
     # ensure stock item will be created for this products master
-    before(:create) { create(:stock_location) if Spree::StockLocation.count.zero? }
+    before(:create) { DefaultStockLocation.find_or_create }
 
     factory :product do
       transient do

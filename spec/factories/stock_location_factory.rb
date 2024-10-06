@@ -9,7 +9,6 @@ FactoryBot.define do
     city { 'Washington' }
     zipcode { '20500' }
     phone { '(202) 456-1111' }
-    active { true }
 
     country  { |stock_location| Spree::Country.first || stock_location.association(:country) }
     state do |stock_location|

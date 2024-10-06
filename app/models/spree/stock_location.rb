@@ -3,7 +3,7 @@
 module Spree
   class StockLocation < ApplicationRecord
     self.belongs_to_required_by_default = false
-    self.ignored_columns += [:backorderable_default]
+    self.ignored_columns += [:backorderable_default, :active]
 
     has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
     has_many :stock_movements, through: :stock_items
@@ -13,15 +13,9 @@ module Spree
 
     validates :name, presence: true
 
-    scope :active, -> { where(active: true) }
-
     after_create :create_stock_items
 
     # Wrapper for creating a new stock item respecting the backorderable config
-    def propagate_variant(variant)
-      stock_items.create!(variant:)
-    end
-
     def stock_item(variant)
       stock_items.where(variant_id: variant).order(:id).first
     end
@@ -57,7 +51,7 @@ module Spree
     private
 
     def create_stock_items
-      Variant.find_each { |variant| propagate_variant(variant) }
+      Variant.find_each { |variant| stock_items.create!(variant:) }
     end
   end
 end

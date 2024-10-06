@@ -23,7 +23,7 @@ FactoryBot.define do
     product { association :base_product }
 
     # ensure stock item will be created for this variant
-    before(:create) { create(:stock_location) if Spree::StockLocation.count.zero? }
+    before(:create) { DefaultStockLocation.find_or_create }
 
     factory :variant do
       transient do

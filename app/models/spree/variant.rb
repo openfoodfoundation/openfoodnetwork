@@ -243,7 +243,7 @@ module Spree
       return unless stock_items.empty?
 
       StockLocation.find_each do |stock_location|
-        stock_location.propagate_variant(self)
+        stock_items.create!(stock_location:)
       end
     end
 
