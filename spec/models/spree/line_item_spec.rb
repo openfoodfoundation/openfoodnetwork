@@ -699,11 +699,11 @@ module Spree
 
       describe "getting unit for display" do
         let(:o) { create(:order) }
-        let(:p1) { create(:product, name: 'Clear Honey', variant_unit_scale: 1) }
-        let(:v1) { create(:variant, product: p1, unit_value: 500) }
+        let(:p1) { create(:product, name: 'Clear Honey') }
+        let(:v1) { create(:variant, product: p1, variant_unit_scale: 1, unit_value: 500) }
         let(:li1) { create(:line_item, order: o, product: p1, variant: v1) }
-        let(:p2) { create(:product, name: 'Clear United States Honey', variant_unit_scale: 453.6) }
-        let(:v2) { create(:variant, product: p2, unit_value: 453.6) }
+        let(:p2) { create(:product, name: 'Clear United States Honey') }
+        let(:v2) { create(:variant, product: p2, variant_unit_scale: 453.6, unit_value: 453.6) }
         let(:li2) { create(:line_item, order: o, product: p2, variant: v2) }
 
         before do
@@ -723,8 +723,11 @@ module Spree
       end
 
       context "when the line_item has a final_weight_volume set" do
-        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-        let!(:v) { create(:variant, product: p0, unit_value: 10, unit_description: 'bar') }
+        let!(:p0) { create(:simple_product) }
+        let!(:v) {
+          create(:variant, product: p0, variant_unit: 'weight', variant_unit_scale: 1,
+                           unit_value: 10, unit_description: 'bar')
+        }
 
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:li) { create(:line_item, product: p, final_weight_volume: 5) }
@@ -742,8 +745,11 @@ module Spree
       end
 
       context "when the variant already has a value set" do
-        let!(:p0) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-        let!(:v) { create(:variant, product: p0, unit_value: 10, unit_description: 'bar') }
+        let!(:p0) { create(:simple_product) }
+        let!(:v) {
+          create(:variant, product: p0, variant_unit: 'weight', variant_unit_scale: 1,
+                           unit_value: 10, unit_description: 'bar')
+        }
 
         let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
         let!(:li) { create(:line_item, product: p, final_weight_volume: 5) }

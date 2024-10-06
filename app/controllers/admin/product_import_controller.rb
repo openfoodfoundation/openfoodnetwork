@@ -21,8 +21,7 @@ module Admin
       @importer = ProductImport::ProductImporter.new(File.new(@filepath), spree_current_user,
                                                      params[:settings])
       @original_filename = params[:file].try(:original_filename)
-      @non_updatable_fields = ProductImport::EntryValidator.non_updatable_fields
-
+      @non_updatable_fields = ProductImport::EntryValidator.non_updatable_variant_fields
       return if contains_errors? @importer
 
       @ams_data = ams_data

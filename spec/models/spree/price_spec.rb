@@ -34,5 +34,25 @@ module Spree
         expect(variant.reload.price).to eq 10.25
       end
     end
+
+    describe "#price=" do
+      subject { Spree::Price.new }
+
+      context "with a number" do
+        it "returns the same number" do
+          subject.price = 12.5
+
+          expect(subject.price).to eq(12.5)
+        end
+      end
+
+      context "with empty string" do
+        it "sets the price to nil" do
+          subject.price = ""
+
+          expect(subject.price).to be_nil
+        end
+      end
+    end
   end
 end

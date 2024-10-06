@@ -30,7 +30,10 @@ RSpec.describe '
       login_as_admin
       visit spree.admin_product_variants_path product
       click_link 'New Variant'
-      fill_in 'Weight (g)', with: '1'
+
+      tomselect_select "Weight (g)", from: "Unit scale"
+      click_on "Unit" # activate popout
+      fill_in "Unit value", with: "1"
       fill_in 'Price', with: '1'
 
       expect(find_field("Unit Price", disabled: true).value).to eq '$1,000.00 / kg'
@@ -66,7 +69,10 @@ RSpec.describe '
       visit spree.admin_dashboard_path(locale: 'es')
       visit spree.admin_product_variants_path product
       click_link 'Nueva Variante'
-      fill_in 'Peso (g)', with: '1'
+
+      tomselect_select "Peso (g)", from: "Unit scale"
+      click_on "Unit" # activate popout
+      fill_in "Unit value", with: "1"
       fill_in 'Precio', with: '1,5'
 
       expect(find_field("Precio por unidad", disabled: true).value).to eq '1.500,00 $ / kg'

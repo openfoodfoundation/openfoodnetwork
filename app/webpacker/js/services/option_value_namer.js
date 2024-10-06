@@ -1,4 +1,4 @@
-import VariantUnitManager from "../../js/services/variant_unit_manager";
+import VariantUnitManager from "js/services/variant_unit_manager";
 
 // Javascript clone of VariantUnits::OptionValueNamer, for bulk product editing.
 export default class OptionValueNamer {
@@ -9,7 +9,7 @@ export default class OptionValueNamer {
 
   name() {
     const [value, unit] = this.option_value_value_unit();
-    const separator = this.value_scaled() ? '' : ' ';
+    const separator = this.value_scaled() ? "" : " ";
     const name_fields = [];
     if (value && unit) {
       name_fields.push(`${value}${separator}${unit}`);
@@ -20,21 +20,21 @@ export default class OptionValueNamer {
     if (this.variant.unit_description) {
       name_fields.push(this.variant.unit_description);
     }
-    return name_fields.join(' ');
+    return name_fields.join(" ");
   }
 
   value_scaled() {
-    return !!this.variant.product.variant_unit_scale;
+    return !!this.variant.variant_unit_scale;
   }
 
   option_value_value_unit() {
     let value, unit_name;
     if (this.variant.unit_value) {
-      if (this.variant.product.variant_unit === "weight" || this.variant.product.variant_unit === "volume") {
+      if (this.variant.variant_unit === "weight" || this.variant.variant_unit === "volume") {
         [value, unit_name] = this.option_value_value_unit_scaled();
       } else {
         value = this.variant.unit_value;
-        unit_name = this.pluralize(this.variant.product.variant_unit_name, value);
+        unit_name = this.pluralize(this.variant.variant_unit_name, value);
       }
       if (value == parseInt(value, 10)) {
         value = parseInt(value, 10);
@@ -55,7 +55,7 @@ export default class OptionValueNamer {
     }
     return I18n.t(["inflections", unit_key], {
       count: count,
-      defaultValue: unit_name
+      defaultValue: unit_name,
     });
   }
 
@@ -83,17 +83,21 @@ export default class OptionValueNamer {
     // to >= 1 when expressed in it.
     // If there is none available where this is true, use the smallest
     // available unit.
-    const product = this.variant.product;
-    const scales = this.variantUnitManager.compatibleUnitScales(product.variant_unit_scale, product.variant_unit);
+    const scales = this.variantUnitManager.compatibleUnitScales(
+      this.variant.variant_unit_scale,
+      this.variant.variant_unit,
+    );
     const variantUnitValue = this.variant.unit_value;
 
     // sets largestScale = last element in filtered scales array
-    const largestScale = scales.filter(s => variantUnitValue / s >= 1).slice(-1)[0];
+    const largestScale = scales.filter((s) => variantUnitValue / s >= 1).slice(-1)[0];
     if (largestScale) {
-      return [largestScale, this.variantUnitManager.getUnitName(largestScale, product.variant_unit)];
+      return [
+        largestScale,
+        this.variantUnitManager.getUnitName(largestScale, this.variant.variant_unit),
+      ];
     } else {
-      return [scales[0], this.variantUnitManager.getUnitName(scales[0], product.variant_unit)];
+      return [scales[0], this.variantUnitManager.getUnitName(scales[0], this.variant.variant_unit)];
     }
   }
 }
-

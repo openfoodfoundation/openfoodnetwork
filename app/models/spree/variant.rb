@@ -71,21 +71,25 @@ module Spree
     validates :tax_category, presence: true,
                              if: proc { Spree::Config.products_require_tax_category }
 
+    validates :variant_unit, presence: true
     validates :unit_value, presence: true, if: ->(variant) {
-      %w(weight volume).include?(variant.product&.variant_unit)
+      %w(weight volume).include?(variant.variant_unit)
     }
-
     validates :unit_value, numericality: { greater_than: 0 }, allow_blank: true
-    validates :price, numericality: { greater_than_or_equal_to: 0 }
-
     validates :unit_description, presence: true, if: ->(variant) {
-      variant.product&.variant_unit.present? && variant.unit_value.nil?
+      variant.variant_unit.present? && variant.unit_value.nil?
+    }
+    validates :variant_unit_scale, presence: true, if: ->(variant) {
+      %w(weight volume).include?(variant.variant_unit)
+    }
+    validates :variant_unit_name, presence: true, if: ->(variant) {
+      variant.variant_unit == 'items'
     }
 
     before_validation :set_cost_currency
     before_validation :ensure_shipping_category
     before_validation :ensure_unit_value
-    before_validation :update_weight_from_unit_value, if: ->(v) { v.product.present? }
+    before_validation :update_weight_from_unit_value
     before_validation :convert_variant_weight_to_decimal
 
     before_save :assign_units, if: ->(variant) {
@@ -95,6 +99,9 @@ module Spree
     after_create :create_stock_items
     around_destroy :destruction
     after_save :save_default_price
+    after_save :update_units, if: -> {
+      saved_change_to_variant_unit? || saved_change_to_variant_unit_name?
+    }
 
     # default variant scope only lists non-deleted variants
     scope :deleted, -> { where.not(deleted_at: nil) }
@@ -219,6 +226,25 @@ module Spree
       Spree::Stock::Quantifier.new(self).total_on_hand
     end
 
+    # Format as per WeightsAndMeasures
+    def variant_unit_with_scale
+      # Our code is based upon English based number formatting with a period `.`
+      scale_clean = ActiveSupport::NumberHelper.number_to_rounded(variant_unit_scale,
+                                                                  precision: nil,
+                                                                  significant: false,
+                                                                  strip_insignificant_zeros: true,
+                                                                  locale: :en)
+      [variant_unit, scale_clean].compact_blank.join("_")
+    end
+
+    def variant_unit_with_scale=(variant_unit_with_scale)
+      values = variant_unit_with_scale.split("_")
+      assign_attributes(
+        variant_unit: values[0],
+        variant_unit_scale: values[1] || nil
+      )
+    end
+
     private
 
     def check_currency
@@ -248,7 +274,7 @@ module Spree
     end
 
     def update_weight_from_unit_value
-      return unless product.variant_unit == 'weight' && unit_value.present?
+      return unless variant_unit == 'weight' && unit_value.present?
 
       self.weight = weight_from_unit_value
     end
@@ -268,7 +294,7 @@ module Spree
 
     def ensure_unit_value
       Bugsnag.notify("Trying to set unit_value to NaN") if unit_value&.nan?
-      return unless (product&.variant_unit == "items" && unit_value.nil?) || unit_value&.nan?
+      return unless (variant_unit == "items" && unit_value.nil?) || unit_value&.nan?
 
       self.unit_value = 1.0
     end

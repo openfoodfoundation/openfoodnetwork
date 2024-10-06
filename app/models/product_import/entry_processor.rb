@@ -224,6 +224,9 @@ module ProductImport
       # Ensure attributes are correctly copied to a new product's variant
       variant = product.variants.first
       variant.display_name = entry.display_name if entry.display_name
+      variant.variant_unit = entry.variant_unit if entry.variant_unit
+      variant.variant_unit_name = entry.variant_unit_name if entry.variant_unit_name
+      variant.variant_unit_scale = entry.variant_unit_scale if entry.variant_unit_scale
       variant.import_date = @import_time
       variant.supplier_id = entry.producer_id
       variant.save

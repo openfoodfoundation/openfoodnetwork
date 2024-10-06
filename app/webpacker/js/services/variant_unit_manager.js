@@ -7,22 +7,30 @@ export default class VariantUnitManager {
 
   getUnitName(scale, unitType) {
     if (this.units[unitType][scale]) {
-      return this.units[unitType][scale]['name'];
+      return this.units[unitType][scale]["name"];
     } else {
-      return '';
+      return "";
     }
-  };
+  }
 
- // Filter by measurement system
+  // Filter by measurement system
   compatibleUnitScales(scale, unitType) {
-    const scaleSystem = this.units[unitType][scale]['system'];
+    const scaleSystem = this.units[unitType][scale]["system"];
 
     return Object.entries(this.units[unitType])
       .filter(([scale, scaleInfo]) => {
-        return scaleInfo['system'] == scaleSystem;
+        return scaleInfo["system"] == scaleSystem;
       })
       .map(([scale, _]) => parseFloat(scale))
       .sort();
+  }
+
+  systemOfMeasurement(scale, unitType) {
+    if (this.units[unitType][scale]) {
+      return this.units[unitType][scale]["system"];
+    } else {
+      return "custom";
+    }
   }
 
   // private
@@ -30,10 +38,10 @@ export default class VariantUnitManager {
   #loadUnits(units) {
     // Transform unit scale to a JS Number for compatibility. This would be way simpler in Ruby or Coffeescript!!
     const unitsTransformed = Object.entries(units).map(([measurement, measurementInfo]) => {
-      const measurementInfoTransformed = Object.fromEntries(Object.entries(measurementInfo).map(([scale, unitInfo]) =>
-        [ parseFloat(scale), unitInfo ]
-      ));
-      return [ measurement, measurementInfoTransformed ];
+      const measurementInfoTransformed = Object.fromEntries(
+        Object.entries(measurementInfo).map(([scale, unitInfo]) => [parseFloat(scale), unitInfo]),
+      );
+      return [measurement, measurementInfoTransformed];
     });
     return Object.fromEntries(unitsTransformed);
   }

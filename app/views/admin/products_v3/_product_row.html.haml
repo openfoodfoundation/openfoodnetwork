@@ -7,18 +7,8 @@
 %td.col-sku.field.naked_inputs
   = f.text_field :sku, 'aria-label': t('admin.products_page.columns.sku')
   = error_message_on product, :sku
-%td.col-unit_scale.field.naked_inputs{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
-  = f.hidden_field :variant_unit
-  = f.hidden_field :variant_unit_scale
-  = f.select :variant_unit_with_scale,
-      options_for_select(WeightsAndMeasures.variant_unit_options, product.variant_unit_with_scale),
-      {},
-      class: "fullwidth no-input",
-      'aria-label': t('admin.products_page.columns.unit_scale'),
-      data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }', action: "change->toggle-control#displayIfMatch"}
-  .field
-    = f.text_field :variant_unit_name, 'aria-label': t('items'), 'data-toggle-control-target': 'control', style: (product.variant_unit == "items" ? "" : "display: none")
-    = error_message_on product, :variant_unit_name, 'data-toggle-control-target': 'control'
+%td.col-unit_scale.align-right
+  -# empty
 %td.col-unit.align-right
   -# empty
 %td.col-price.align-right

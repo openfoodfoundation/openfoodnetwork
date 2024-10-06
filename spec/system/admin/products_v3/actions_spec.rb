@@ -111,13 +111,10 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
     let!(:variant_a1) {
       product_a.variants.first.tap{ |v|
         v.update! display_name: "Medium box", sku: "APL-01", price: 5.25, on_hand: 5,
-                  on_demand: false
-      }
+                  on_demand: false, variant_unit: "weight", variant_unit_scale: 1
+      } # Grams
     }
-    let!(:product_a) {
-      create(:simple_product, name: "Apples", sku: "APL-00",
-                              variant_unit: "weight", variant_unit_scale: 1) # Grams
-    }
+    let!(:product_a) { create(:simple_product, name: "Apples", sku: "APL-00") }
 
     context "when they are under 11" do
       before do
@@ -296,19 +293,20 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
             expect(input_content).to match /COPY OF Apples/
           end
         end
+      end
 
-        it "shows error message when cloning invalid record" do
-          # Existing product is invalid:
-          product_a.update_columns(variant_unit: nil)
+      it "shows error message when cloning invalid record" do
+        # The cloned product will be invalid
+        product_a.update_columns(name: "L" * 254)
 
-          click_product_clone "Apples"
+        # The page has not been reloaded so the product's name is still "Apples"
+        click_product_clone "Apples"
 
-          expect(page).to have_content "Unit Scale can't be blank"
+        expect(page).to have_content "Product Name is too long (maximum is 255 characters)"
 
-          within "table.products" do
-            # Products does not include the cloned product.
-            expect(all_input_values).not_to match /COPY OF Apples/
-          end
+        within "table.products" do
+          # Products does not include the cloned product.
+          expect(all_input_values).not_to match /COPY OF #{('L' * 254)}/
         end
       end
     end

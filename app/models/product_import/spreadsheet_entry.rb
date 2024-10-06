@@ -84,6 +84,14 @@ module ProductImport
       invalid_attrs.except(* NON_PRODUCT_ATTRIBUTES, *NON_DISPLAY_ATTRIBUTES)
     end
 
+    def match_variant?(variant)
+      match_display_name?(variant) && variant.unit_value.to_d == unscaled_units.to_d
+    end
+
+    def match_inventory_variant?(variant)
+      match_display_name?(variant) && variant.unit_value.to_d == unit_value.to_d
+    end
+
     private
 
     def remove_empty_skus(attrs)
@@ -98,6 +106,12 @@ module ProductImport
           public_send("#{attr}=", value)
         end
       end
+    end
+
+    def match_display_name?(variant)
+      return true if display_name.blank? && variant.display_name.blank?
+
+      variant.display_name == display_name
     end
   end
 end

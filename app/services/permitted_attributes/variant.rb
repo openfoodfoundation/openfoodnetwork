@@ -4,11 +4,10 @@ module PermittedAttributes
   class Variant
     def self.attributes
       [
-        :id, :sku, :on_hand, :on_demand, :shipping_category_id,
-        :price, :unit_value, :unit_description,
-        :display_name, :display_as, :tax_category_id,
-        :weight, :height, :width, :depth, :taxon_ids, :primary_taxon_id,
-        :supplier_id
+        :id, :sku, :on_hand, :on_demand, :shipping_category_id, :price, :unit_value,
+        :unit_description, :variant_unit, :variant_unit_name, :variant_unit_scale, :display_name,
+        :display_as, :tax_category_id, :weight, :height, :width, :depth, :taxon_ids,
+        :primary_taxon_id, :supplier_id
       ]
     end
   end

@@ -16,10 +16,10 @@ class WeightsAndMeasures
   def system
     return "custom" unless scales = scales_for_variant_unit(ignore_available_units: true)
 
-    product_scale = @variant.product.variant_unit_scale&.to_f
-    return "custom" unless product_scale.present? && product_scale.positive?
+    variant_scale = @variant.variant_unit_scale&.to_f
+    return "custom" unless variant_scale.present? && variant_scale.positive?
 
-    scales[product_scale]['system']
+    scales[variant_scale]['system']
   end
 
   # @returns enumerable with label and value for select
@@ -92,9 +92,9 @@ class WeightsAndMeasures
   }.freeze
 
   def scales_for_variant_unit(ignore_available_units: false)
-    return @units[@variant.product.variant_unit] if ignore_available_units
+    return @units[@variant.variant_unit] if ignore_available_units
 
-    @units[@variant.product.variant_unit]&.reject { |_scale, unit_info|
+    @units[@variant.variant_unit]&.reject { |_scale, unit_info|
       self.class.available_units.exclude?(unit_info['name'])
     }
   end
