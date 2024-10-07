@@ -4,8 +4,6 @@
 #
 module ConnectedApps
   class Vine < ConnectedApp
-    VINE_API_URL = "https://vine-staging.openfoodnetwork.org.au/api/v1/my-team"
-
     def connect(api_key:, vine_api:, **_opts)
       response = vine_api.my_team
 

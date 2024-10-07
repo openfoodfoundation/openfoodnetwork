@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Admin::ConnectedAppsController do
+RSpec.describe "Admin ConnectedApp" do
   let(:user) { create(:admin_user) }
   let(:enterprise) { create(:enterprise, owner: user) }
   let(:edit_enterprise_url) { "#{edit_admin_enterprise_url(enterprise)}#/connected_apps_panel" }

@@ -52,7 +52,7 @@ RSpec.describe VineApiService do
     end
 
     context "when a request succeed", :vcr do
-      it "returns the response do" do
+      it "returns the response" do
         response = vine_api.my_team
 
         expect(response.success?).to be(true)

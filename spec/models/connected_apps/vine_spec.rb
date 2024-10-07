@@ -15,7 +15,7 @@ RSpec.describe ConnectedApps::Vine do
       connected_app.connect(api_key: vine_api_key, vine_api: )
     end
 
-    context "when request succeed", :vcr do
+    context "when request succeed" do
       it "store the vine api key" do
         allow(vine_api).to receive(:my_team).and_return(mock_api_response(true))
 
