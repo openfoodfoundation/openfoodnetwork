@@ -37,27 +37,26 @@ module Admin
     end
 
     def connect_vine
-      if connected_app_params[:vine_api_key].empty?
-        return flash[:error] = I18n.t("admin.enterprises.form.connected_apps.vine.api_key_empty")
+      if vine_params_empty?
+        return flash[:error] =
+                 I18n.t("admin.enterprises.form.connected_apps.vine.api_parameters_empty")
       end
 
       create_connected_app
 
-      jwt_service = VineJwtService.new(secret: ENV.fetch("VINE_API_SECRET"))
+      jwt_service = VineJwtService.new(secret: connected_app_params[:vine_secret])
       vine_api = VineApiService.new(api_key: connected_app_params[:vine_api_key],
                                     jwt_generator: jwt_service)
 
-      if !@app.connect(api_key: connected_app_params[:vine_api_key], vine_api:)
+      if !@app.connect(api_key: connected_app_params[:vine_api_key],
+                       secret: connected_app_params[:vine_secret], vine_api:)
         error_message = "#{@app.errors.full_messages.to_sentence}. \
-          #{I18n.t('admin.enterprises.form.connected_apps.vine.api_key_error')}".squish
+          #{I18n.t('admin.enterprises.form.connected_apps.vine.api_parameters_error')}".squish
         handle_error(error_message)
       end
     rescue Faraday::Error => e
       log_and_notify_exception(e)
       handle_error(I18n.t("admin.enterprises.form.connected_apps.vine.connection_error"))
-    rescue KeyError => e
-      log_and_notify_exception(e)
-      handle_error(I18n.t("admin.enterprises.form.connected_apps.vine.setup_error"))
     end
 
     def enterprise
@@ -78,8 +77,12 @@ module Admin
       Bugsnag.notify(exception)
     end
 
+    def vine_params_empty?
+      connected_app_params[:vine_api_key].empty? || connected_app_params[:vine_secret].empty?
+    end
+
     def connected_app_params
-      params.permit(:type, :vine_api_key)
+      params.permit(:type, :vine_api_key, :vine_secret)
     end
   end
 end

@@ -12,6 +12,9 @@
             = f.label :vine_api_key, t(".vine_api_key")
             %span.required *
             = f.text_field :vine_api_key, { disabled: !managed_by_user?(enterprise) }
+            = f.label :vine_secret, t(".vine_secret")
+            %span.required *
+            = f.text_field :vine_secret, { disabled: !managed_by_user?(enterprise) }
           %div 
             - disabled = managed_by_user?(enterprise) ? {} : { disabled: true, "data-disable-with": false } 
             = f.submit t(".enable"), disabled

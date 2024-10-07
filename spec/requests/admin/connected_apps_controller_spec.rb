@@ -8,9 +8,6 @@ RSpec.describe "Admin ConnectedApp" do
   let(:edit_enterprise_url) { "#{edit_admin_enterprise_url(enterprise)}#/connected_apps_panel" }
 
   before do
-    allow(ENV).to receive(:fetch).and_call_original
-    allow(ENV).to receive(:fetch).with("VINE_API_SECRET").and_return("my_secret")
-
     sign_in user
   end
 
@@ -28,11 +25,15 @@ RSpec.describe "Admin ConnectedApp" do
 
         params = {
           type: ConnectedApps::Vine,
-          vine_api_key: "12345678"
+          vine_api_key: "12345678",
+          vine_secret: "my_secret"
         }
         post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
 
-        expect(ConnectedApps::Vine.find_by(enterprise_id: enterprise.id)).not_to be_nil
+        vine_app = ConnectedApps::Vine.find_by(enterprise_id: enterprise.id)
+        expect(vine_app).not_to be_nil
+        expect(vine_app.data["api_key"]).to eq("12345678")
+        expect(vine_app.data["secret"]).to eq("my_secret")
       end
 
       it "redirects to enterprise edit page" do
@@ -40,7 +41,8 @@ RSpec.describe "Admin ConnectedApp" do
 
         params = {
           type: ConnectedApps::Vine,
-          vine_api_key: "12345678"
+          vine_api_key: "12345678",
+          vine_secret: "my_secret"
         }
         post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
 
@@ -51,17 +53,33 @@ RSpec.describe "Admin ConnectedApp" do
         it "redirects to enterprise edit page, with an error" do
           params = {
             type: ConnectedApps::Vine,
-            vine_api_key: ""
+            vine_api_key: "",
+            vine_secret: "my_secret"
           }
           post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
 
           expect(response).to redirect_to(edit_enterprise_url)
-          expect(flash[:error]).to eq("Please enter an API key")
+          expect(flash[:error]).to eq("Please enter an API key and a secret")
           expect(ConnectedApps::Vine.find_by(enterprise_id: enterprise.id)).to be_nil
         end
       end
 
-      context "when api key is not valid" do
+      context "when api secret is empty" do
+        it "redirects to enterprise edit page, with an error" do
+          params = {
+            type: ConnectedApps::Vine,
+            vine_api_key: "12345678",
+            vine_secret: ""
+          }
+          post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
+
+          expect(response).to redirect_to(edit_enterprise_url)
+          expect(flash[:error]).to eq("Please enter an API key and a secret")
+          expect(ConnectedApps::Vine.find_by(enterprise_id: enterprise.id)).to be_nil
+        end
+      end
+
+      context "when api key or secret is not valid" do
         before do
           allow(vine_api).to receive(:my_team).and_return(mock_api_response(false))
         end
@@ -69,7 +87,8 @@ RSpec.describe "Admin ConnectedApp" do
         it "doesn't create a new connected app" do
           params = {
             type: ConnectedApps::Vine,
-            vine_api_key: "12345678"
+            vine_api_key: "12345678",
+            vine_secret: "my_secret"
           }
           post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
 
@@ -79,14 +98,15 @@ RSpec.describe "Admin ConnectedApp" do
         it "redirects to enterprise edit page, with an error" do
           params = {
             type: ConnectedApps::Vine,
-            vine_api_key: "12345678"
+            vine_api_key: "12345678",
+            vine_secret: "my_secret"
           }
           post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
 
           expect(response).to redirect_to(edit_enterprise_url)
           expect(flash[:error]).to eq(
             "An error occured when connecting to Vine API. Check you entered your API key \
-            correctly, contact your instance manager if the error persists".squish
+            and secret correctly, contact your instance manager if the error persists".squish
           )
         end
       end
@@ -99,7 +119,8 @@ RSpec.describe "Admin ConnectedApp" do
         it "redirects to enterprise edit page, with an error" do
           params = {
             type: ConnectedApps::Vine,
-            vine_api_key: "12345678"
+            vine_api_key: "12345678",
+            vine_secret: "my_secret"
           }
           post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
 
@@ -112,37 +133,8 @@ RSpec.describe "Admin ConnectedApp" do
 
           params = {
             type: ConnectedApps::Vine,
-            vine_api_key: "12345678"
-          }
-          post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
-        end
-      end
-
-      context "when VINE API is not set up properly" do
-        before do
-          allow(ENV).to receive(:fetch).and_call_original
-          allow(ENV).to receive(:fetch).with("VINE_API_SECRET").and_raise(KeyError)
-        end
-
-        it "redirects to enterprise edit page, with an error" do
-          params = {
-            type: ConnectedApps::Vine,
-            vine_api_key: "12345678"
-          }
-          post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
-
-          expect(response).to redirect_to(edit_enterprise_url)
-          expect(flash[:error]).to eq(
-            "VINE API is not configured, please contact your instance manager"
-          )
-        end
-
-        it "notifies Bugsnag" do
-          expect(Bugsnag).to receive(:notify)
-
-          params = {
-            type: ConnectedApps::Vine,
-            vine_api_key: "12345678"
+            vine_api_key: "12345678",
+            vine_secret: "my_secret"
           }
           post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
         end
@@ -158,7 +150,10 @@ RSpec.describe "Admin ConnectedApp" do
       end
 
       it "redirect to enterprise edit page" do
-        app = ConnectedApps::Vine.create!(enterprise:, data: { api_key: "12345" })
+        app = ConnectedApps::Vine.create!(enterprise:,
+                                          data: {
+                                            api_key: "12345", secret: "my_secret"
+                                          })
         delete("/admin/enterprises/#{enterprise.id}/connected_apps/#{app.id}")
 
         expect(response).to redirect_to(edit_enterprise_url)
