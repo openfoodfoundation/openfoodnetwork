@@ -756,7 +756,7 @@ en:
         connected_apps_enabled:
           discover_regen: Discover Regenerative portal
           affiliate_sales_data: DFC anonymised orders API for research purposes
-          vine: Voucher Engine (VINE) 
+          vine: Voucher Integration Engine (VINE) 
       update:
         resource: Connected app settings
 
@@ -1423,8 +1423,8 @@ en:
               <i class="icon-external-link"></i></a>
               </p>
           vine:
-            title: "Voucher Engine (VINE)"
-            tagline: "Enable the use of VINE api to handle vouchers"
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Allow redemption of VINE vouchers in your shopfront."
             enable: "Connect"
             disable: "Disconnect"
             need_to_be_manager: "Only managers can connect apps."
