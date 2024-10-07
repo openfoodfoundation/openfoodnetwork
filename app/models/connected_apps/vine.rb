@@ -4,6 +4,8 @@
 #
 module ConnectedApps
   class Vine < ConnectedApp
+    encrypts :data
+
     def connect(api_key:, secret:, vine_api:, **_opts)
       response = vine_api.my_team
 
