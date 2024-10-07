@@ -27,7 +27,6 @@ module Reporting
           suppliers: suppliers_report_types,
         }
       end
-
     end
   end
 end

@@ -3,7 +3,6 @@
 module Reporting
   module Reports
     module ReportTypes
-
       protected
 
       def orders_and_fulfillment_report_types

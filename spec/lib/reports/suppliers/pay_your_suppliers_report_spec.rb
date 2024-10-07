@@ -31,7 +31,9 @@ RSpec.describe "Pay Your Suppliers Report" do
       expect(table_row.order_number).to eq(order.number)
       expect(table_row.order_date).to eq(order.completed_at.strftime("%d/%m/%Y"))
       expect(table_row.order_cycle).to eq(order_cycle.name)
-      expect(table_row.order_cycle_start_date).to eq(order_cycle.orders_open_at.strftime("%d/%m/%Y"))
+      expect(table_row.order_cycle_start_date).to eq(
+        order_cycle.orders_open_at.strftime("%d/%m/%Y")
+      )
       expect(table_row.order_cycle_end_date).to eq(order_cycle.orders_close_at.strftime("%d/%m/%Y"))
       expect(table_row.product).to eq(product.name)
       expect(table_row.variant_unit_name).to eq(variant.full_name)
