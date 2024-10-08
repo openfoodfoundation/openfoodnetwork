@@ -19,7 +19,7 @@ module Reporting
             proc do |line_items|
               supplier = supplier(line_items)
 
-              supplier.abn.presence || supplier.acn
+              [supplier.abn, supplier.acn].compact_blank.join("/")
             end
           end
 
