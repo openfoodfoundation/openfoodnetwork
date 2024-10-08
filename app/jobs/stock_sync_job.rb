@@ -27,26 +27,37 @@ class StockSyncJob < ApplicationJob
   end
 
   def perform(user, semantic_id)
+    products = load_products(user, semantic_id)
+    products_by_id = products.index_by(&:semanticId)
+    product_ids = products_by_id.keys
+    variants = linked_variants(user.enterprises, product_ids)
+
+    # Avoid race condition between checkout and stock sync.
+    Spree::Variant.transaction do
+      variants.order(:id).lock.each do |variant|
+        next if variant.on_demand
+
+        product = products_by_id[variant.semantic_links[0].semantic_id]
+        catalog_item = product&.catalogItems&.first
+        CatalogItemBuilder.apply_stock(catalog_item, variant)
+        variant.stock_items[0].save!
+      end
+    end
+  end
+
+  def load_products(user, semantic_id)
     urls = FdcUrlBuilder.new(semantic_id)
     json_catalog = DfcRequest.new(user).call(urls.catalog_url)
     graph = DfcIo.import(json_catalog)
 
-    products = graph.select do |subject|
+    graph.select do |subject|
       subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
     end
-    products_by_id = products.index_by(&:semanticId)
-    product_ids = products_by_id.keys
-    variants = Spree::Variant.where(supplier: user.enterprises)
+  end
+
+  def linked_variants(enterprises, product_ids)
+    Spree::Variant.where(supplier: enterprises)
       .includes(:semantic_links).references(:semantic_links)
       .where(semantic_links: { semantic_id: product_ids })
-
-    variants.each do |variant|
-      next if variant.on_demand
-
-      product = products_by_id[variant.semantic_links[0].semantic_id]
-      catalog_item = product&.catalogItems&.first
-      CatalogItemBuilder.apply_stock(catalog_item, variant)
-      variant.stock_items[0].save!
-    end
   end
 end
