@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-## 1. Preparation on Thursday
+## 1. Drafting on Friday
 
 - [ ] Merge pull requests in the [Ready To Go] column
 - [ ] Include translations: `script/release/update_locales`
@@ -26,8 +26,9 @@ assignees: ''
 - [ ] Move this issue to Test Ready.
 - [ ] Notify `@testers` in [#testing].
 - [ ] Test build: [Deploy to Staging] with release tag.
+- [ ] Notify a deployer to deploy it
 
-## 3. Finish on Tuesday
+## 3. Deployment at beginning of week
 
 - [ ] Publish and notify [#global-community] (this is automatically posted with a plugin)
 - [ ] Deploy the new release to all managed instances.
@@ -40,7 +41,7 @@ assignees: ''
   </details>
 - [ ] Notify [#instance-managers]:
   > @instance_managers The new release has been deployed.
-- [ ] [Create issue] for next release and confirm with next release manager in [#core-devs].
+- [ ] [Create issue] for next release and confirm with next release drafter in [#delivery-circle].
 
 The full process is described at https://github.com/openfoodfoundation/openfoodnetwork/wiki/Releasing.
 
@@ -53,5 +54,5 @@ The full process is described at https://github.com/openfoodfoundation/openfoodn
 [Deploy to Staging]: https://github.com/openfoodfoundation/openfoodnetwork/actions/workflows/stage.yml
 [#global-community]: https://app.slack.com/client/T02G54U79/C59ADD8F2
 [Create issue]: https://github.com/openfoodfoundation/openfoodnetwork/issues/new?assignees=&labels=&projects=&template=release.md&title=Release
-[#core-devs]: https://openfoodnetwork.slack.com/archives/GK2T38QPJ
+[#delivery-circle]: https://openfoodnetwork.slack.com/archives/C01T75H6G0Z
 [Transifex Client]: https://developers.transifex.com/docs/cli
