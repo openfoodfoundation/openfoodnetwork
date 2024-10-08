@@ -14,8 +14,32 @@ class VineApiService
   def my_team
     my_team_url = "#{@vine_api_url}/my-team"
 
+    response = connection.get(my_team_url)
+
+    log_error("VineApiService#my_team", response)
+
+    response
+  end
+
+  def voucher_validation(voucher_short_code)
+    voucher_validation_url = "#{@vine_api_url}/voucher-validation"
+
+    response = connection.post(
+      voucher_validation_url,
+      { type: "voucher_code", value: voucher_short_code },
+      'Content-Type': "application/json"
+    )
+
+    log_error("VineApiService#voucher_validation", response)
+
+    response
+  end
+
+  private
+
+  def connection
     jwt = jwt_generator.generate_token
-    connection = Faraday.new(
+    Faraday.new(
       request: { timeout: 30 },
       headers: {
         'X-Authorization': "JWT #{jwt}",
@@ -26,14 +50,12 @@ class VineApiService
       f.response :json
       f.request :authorization, 'Bearer', api_key
     end
+  end
 
-    response = connection.get(my_team_url)
+  def log_error(prefix, response)
+    return if response.success?
 
-    if !response.success?
-      Rails.logger.error "VineApiService#my_team -- response_status: #{response.status}"
-      Rails.logger.error "VineApiService#my_team -- response: #{response.body}"
-    end
-
-    response
+    Rails.logger.error "#{prefix} -- response_status: #{response.status}"
+    Rails.logger.error "#{prefix} -- response: #{response.body}"
   end
 end
