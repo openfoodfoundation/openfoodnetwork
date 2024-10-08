@@ -10,7 +10,6 @@ class CheckoutController < BaseController
   include CheckoutCallbacks
   include CheckoutSteps
   include OrderCompletion
-  include CablecarResponses
   include WhiteLabel
 
   helper 'terms_and_conditions'
@@ -49,7 +48,7 @@ class CheckoutController < BaseController
   rescue Spree::Core::GatewayError => e
     flash[:error] = I18n.t(:spree_gateway_error_flash_for_checkout, error: e.message)
     @order.update_column(:state, "payment")
-    render cable_ready: cable_car.redirect_to(url: checkout_step_path(:payment))
+    redirect_to checkout_step_path(:payment)
   end
 
   private
@@ -57,9 +56,12 @@ class CheckoutController < BaseController
   def render_error
     flash.now[:error] ||= I18n.t('checkout.errors.saving_failed')
 
-    render status: :unprocessable_entity, cable_ready: cable_car.
-      replace("#checkout", partial("checkout/checkout")).
-      replace("#flashes", partial("shared/flashes", locals: { flashes: flash }))
+    respond_to do |format|
+      format.html { head :unprocessable_entity }
+      format.turbo_stream do
+        render :render_error, status: :unprocessable_entity
+      end
+    end
   end
 
   def check_payments_adjustments
@@ -87,7 +89,7 @@ class CheckoutController < BaseController
     return unless selected_payment_method&.external_gateway?
     return unless (redirect_url = selected_payment_method.external_payment_url(order: @order))
 
-    render cable_ready: cable_car.redirect_to(url: redirect_url)
+    redirect_to redirect_url
     true
   end
 
