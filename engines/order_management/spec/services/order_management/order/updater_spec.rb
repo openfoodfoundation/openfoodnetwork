@@ -121,7 +121,7 @@ module OrderManagement
             updater.update
           end
 
-          context "whith pending payments" do
+          context "with pending payments" do
             let(:order) { create(:completed_order_with_totals) }
 
             it "updates pending payments" do
@@ -182,6 +182,19 @@ module OrderManagement
                 order.payments.reload
 
                 expect { updater.update }.to change { payment.reload.amount }.from(10).to(20)
+              end
+
+              it "updates pending payments fees" do
+                calculator = build(:calculator_flat_percent_per_item, preferred_flat_percent: 10)
+                payment_method = create(:payment_method, name: "Percentage cash", calculator:)
+                payment = create(:payment, payment_method:, order:, amount: order.total)
+
+                # update order so the order total will change
+                update_order_quantity(order)
+                order.payments.reload
+
+                expect { updater.update }.to change { payment.reload.amount }.from(10).to(22)
+                  .and change { payment.reload.adjustment.amount }.from(1).to(2)
               end
             end
 
