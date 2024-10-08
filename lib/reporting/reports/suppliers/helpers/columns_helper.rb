@@ -8,11 +8,11 @@ module Reporting
           include LineItemsAccessHelper
 
           def producer
-            proc { |line_items| supplier(line_items).name }
+            proc { |line_item| supplier(line_item).name }
           end
 
           def producer_address
-            proc { |line_items| supplier(line_items).address&.full_address }
+            proc { |line_item| supplier(line_item).address&.full_address }
           end
 
           def producer_abn_acn
@@ -24,92 +24,92 @@ module Reporting
           end
 
           def email
-            proc { |line_items| supplier(line_items).email_address }
+            proc { |line_item| supplier(line_item).email_address }
           end
 
           def hub
-            proc { |line_items| distributor(line_items).name }
+            proc { |line_item| distributor(line_item).name }
           end
 
           def hub_address
-            proc { |line_items| distributor(line_items).address&.full_address }
+            proc { |line_item| distributor(line_item).address&.full_address }
           end
 
           def hub_contact_email
-            proc { |line_items| distributor(line_items).email_address }
+            proc { |line_item| distributor(line_item).email_address }
           end
 
           def order_number
-            proc { |line_items| order(line_items).number }
+            proc { |line_item| order(line_item).number }
           end
 
           def order_date
-            proc { |line_items| order(line_items).completed_at.to_date }
+            proc { |line_item| order(line_item).completed_at.to_date }
           end
 
           def order_cycle
-            proc { |line_items| item_order_cycle(line_items).name }
+            proc { |line_item| item_order_cycle(line_item).name }
           end
 
           def order_cycle_start_date
-            proc { |line_items| item_order_cycle(line_items).orders_open_at.to_date }
+            proc { |line_item| item_order_cycle(line_item).orders_open_at.to_date }
           end
 
           def order_cycle_end_date
-            proc { |line_items| item_order_cycle(line_items).orders_close_at.to_date }
+            proc { |line_item| item_order_cycle(line_item).orders_close_at.to_date }
           end
 
           def product
-            proc { |line_items| variant(line_items).product.name }
+            proc { |line_item| variant(line_item).product.name }
           end
 
           def variant_unit_name
-            proc { |line_items| variant(line_items).full_name }
+            proc { |line_item| variant(line_item).full_name }
           end
 
           def quantity
-            proc { |line_items| line_items.to_a.sum(&:quantity) }
+            proc { |line_item| line_item.quantity }
           end
 
           def total_excl_vat_and_fees
-            proc do |line_items|
-              included_tax = adjustments_by_type(line_items, :tax, included: true)
-              line_items.sum(&:amount) - included_tax
+            proc do |line_item|
+              included_tax = adjustments_by_type(line_item, :tax, included: true)
+              line_item.amount - included_tax
             end
           end
 
           def total_excl_vat
-            proc do |line_items|
-              total_fees = adjustments_by_type(line_items, :fees)
-              total_excl_vat_and_fees.call(line_items) + total_fees
+            proc do |line_item|
+              total_fees = adjustments_by_type(line_item, :fees)
+              total_excl_vat_and_fees.call(line_item) + total_fees
             end
           end
 
           def total_fees_excl_vat
-            proc do |line_items|
-              included_tax = tax_on_fees(line_items, included: true)
-              adjustments_by_type(line_items, :fees) - included_tax
+            proc do |line_item|
+              included_tax = tax_on_fees(line_item, included: true)
+              adjustments_by_type(line_item, :fees) - included_tax
             end
           end
 
           def total_vat_on_fees
-            proc { |line_items| tax_on_fees(line_items) }
+            proc { |line_item| tax_on_fees(line_item) }
           end
 
           def total_tax
-            proc do |line_items|
-              excluded_tax = adjustments_by_type(line_items, :tax)
-              included_tax = adjustments_by_type(line_items, :tax, included: true)
+            proc do |line_item|
+              excluded_tax = adjustments_by_type(line_item, :tax)
+              included_tax = adjustments_by_type(line_item, :tax, included: true)
 
               excluded_tax + included_tax
             end
           end
 
           def total
-            proc do |line_items|
-              total_price = total_excl_vat_and_fees.call(line_items)
-              total_fees = total_fees_excl_vat.call(line_items)
-              tax = total_tax.call(line_items)
+            proc do |line_item|
+              total_price = total_excl_vat_and_fees.call(line_item)
+              total_fees = total_fees_excl_vat.call(line_item)
+              tax = total_tax.call(line_item)
 
               total_price + total_fees + tax
             end
