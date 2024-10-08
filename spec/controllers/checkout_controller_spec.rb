@@ -451,6 +451,20 @@ RSpec.describe CheckoutController, type: :controller do
           expect(response).to redirect_to order_path(order, order_token: order.token)
           expect(order.reload.state).to eq "complete"
         end
+
+        it "syncs stock before locking the order" do
+          actions = []
+          expect(StockSyncJob).to receive(:sync_linked_catalogs_now) do
+            actions << "sync stock"
+          end
+          expect(CurrentOrderLocker).to receive(:around) do
+            actions << "lock order"
+          end
+
+          put(:update, params:)
+
+          expect(actions).to eq ["sync stock", "lock order"]
+        end
       end
 
       context "when accepting T&Cs is required" do

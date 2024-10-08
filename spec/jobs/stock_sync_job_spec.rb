@@ -37,6 +37,30 @@ RSpec.describe StockSyncJob do
     end
   end
 
+  describe ".sync_linked_catalogs_now" do
+    subject { StockSyncJob.sync_linked_catalogs_now(order) }
+    it "ignores products without semantic link" do
+      expect(StockSyncJob).not_to receive(:perform_now)
+      expect { subject }.not_to enqueue_job(StockSyncJob)
+    end
+
+    it "performs stock check now" do
+      beans.semantic_links << SemanticLink.new(
+        semantic_id: beans_retail_link
+      )
+
+      expect(StockSyncJob).to receive(:perform_now).with(user, catalog_link)
+      expect { subject }.not_to raise_error
+    end
+
+    it "reports errors" do
+      expect(order).to receive(:variants).and_raise("test error")
+      expect(Bugsnag).to receive(:notify).and_call_original
+
+      expect { subject }.not_to raise_error
+    end
+  end
+
   describe "#perform" do
     subject { StockSyncJob.perform_now(user, catalog_link) }
 

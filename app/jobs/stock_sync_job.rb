@@ -9,15 +9,8 @@ class StockSyncJob < ApplicationJob
   # enqueue a new job. That should save some time loading the order with
   # all the stock data to make this decision.
   def self.sync_linked_catalogs(order)
-    stock_controlled_variants = order.variants.reject(&:on_demand)
-    links = SemanticLink.where(variant_id: stock_controlled_variants.map(&:id))
-    semantic_ids = links.pluck(:semantic_id)
-    catalog_ids = semantic_ids.map do |product_id|
-      FdcUrlBuilder.new(product_id).catalog_url
-    end
-
     user = order.distributor.owner
-    catalog_ids.uniq.each do |catalog_id|
+    catalog_ids(order).each do |catalog_id|
       perform_later(user, catalog_id)
     end
   rescue StandardError => e
@@ -26,6 +19,28 @@ class StockSyncJob < ApplicationJob
     Bugsnag.notify(e) do |payload|
       payload.add_metadata(:order, order)
     end
+  end
+
+  def self.sync_linked_catalogs_now(order)
+    user = order.distributor.owner
+    catalog_ids(order).each do |catalog_id|
+      perform_now(user, catalog_id)
+    end
+  rescue StandardError => e
+    # Errors here shouldn't affect the shopping. So let's report them
+    # separately:
+    Bugsnag.notify(e) do |payload|
+      payload.add_metadata(:order, order)
+    end
+  end
+
+  def self.catalog_ids(order)
+    stock_controlled_variants = order.variants.reject(&:on_demand)
+    links = SemanticLink.where(variant_id: stock_controlled_variants.map(&:id))
+    semantic_ids = links.pluck(:semantic_id)
+    semantic_ids.map do |product_id|
+      FdcUrlBuilder.new(product_id).catalog_url
+    end.uniq
   end
 
   def perform(user, catalog_id)
