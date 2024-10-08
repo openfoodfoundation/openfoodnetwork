@@ -18,8 +18,8 @@ module Reporting
           def producer_abn_acn
             proc do |line_items|
               supplier = supplier(line_items)
-
-              [supplier.abn, supplier.acn].compact_blank.join("/")
+              # return nil if both abn and acn are nil so that it can be converted to "none"
+              [supplier.abn, supplier.acn].compact_blank.join("/").presence
             end
           end
 
