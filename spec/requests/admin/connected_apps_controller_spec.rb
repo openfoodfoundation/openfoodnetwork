@@ -113,8 +113,9 @@ RSpec.describe "Admin ConnectedApp" do
 
       context "when VINE API is not set up properly" do
         before do
-          # VineApiService will raise a KeyError if VINE_API_URL is not set
-          allow(VineApiService).to receive(:new).and_raise(KeyError)
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with("VINE_API_URL").and_raise(KeyError)
+          allow(VineApiService).to receive(:new).and_call_original
         end
 
         it "redirects to enterprise edit page, with an error" do
