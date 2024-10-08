@@ -63,12 +63,6 @@ module CheckoutCallbacks
     end
   end
 
-  def valid_order_line_items?
-    @order.insufficient_stock_lines.empty? &&
-      OrderCycles::DistributedVariantsService.new(@order.order_cycle, @order.distributor).
-        distributes_order_variants?(@order)
-  end
-
   def ensure_order_not_completed
     redirect_to main_app.cart_path if @order.completed?
   end
