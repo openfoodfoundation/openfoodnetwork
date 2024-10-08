@@ -128,6 +128,9 @@ en:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+        connected_apps:
+          vine:
+            api_request_error: "An error occured when connecting to Vine API"
       messages:
         confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
@@ -783,6 +786,7 @@ en:
         connected_apps_enabled:
           discover_regen: Discover Regenerative portal
           affiliate_sales_data: DFC anonymised orders API for research purposes
+          vine: Voucher Integration Engine (VINE) 
       update:
         resource: Connected app settings
 
@@ -1446,6 +1450,26 @@ en:
               target="_blank"><b>Learn more about Discover Regenerative</b>
               <i class="icon-external-link"></i></a>
               </p>
+          vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Allow redemption of VINE vouchers in your shopfront."
+            enable: "Connect"
+            disable: "Disconnect"
+            need_to_be_manager: "Only managers can connect apps."
+            vine_api_key: "VINE API Key"
+            vine_secret: "VINE secret"
+            description_html: |
+              <p>
+              To enable VINE for your enterprise, enter your API key and secret.
+              </p>
+              <p>
+              <a href="#" target="_blank"><b>VINE</b>
+              <i class="icon-external-link"></i></a>
+              </p>
+            api_parameters_empty: "Please enter an API key and a secret"
+            api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
+            connection_error: "API connection error, please try again"
+            setup_error: "VINE API is not configured, please contact your instance manager"
       actions:
         edit_profile: Settings
         properties: Properties
