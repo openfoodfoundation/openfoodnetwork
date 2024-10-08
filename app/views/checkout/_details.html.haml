@@ -1,4 +1,4 @@
-= form_with url: checkout_update_path(checkout_step), model: @order, method: :put, data: { remote: "true" } do |f|
+= form_with url: checkout_update_path(checkout_step), model: @order, method: :put, data: { turbo: true } do |f|
   .medium-6
     = f.fields :bill_address, model: @order.bill_address do |bill_address|
       %div.checkout-substep

@@ -3,7 +3,6 @@
 class UserConfirmationsController < DeviseController
   # Needed for access to current_ability, so we can authorize! actions
   include Spree::Core::ControllerHelpers::Auth
-  include CablecarResponses
 
   # GET /resource/confirmation?confirmation_token=abcdef
   def show
@@ -22,22 +21,12 @@ class UserConfirmationsController < DeviseController
     set_return_url if params.key? :return_url
     self.resource = resource_class.send_confirmation_instructions(resource_params)
 
-    if is_navigational_format?
-      if successfully_sent?(resource)
-        set_flash_message(:success, :confirmation_sent)
-      else
-        set_flash_message(:error, :confirmation_not_sent)
-      end
+    if successfully_sent?(resource)
+      set_flash_message(:success, :confirmation_sent)
     else
-      render cable_ready: cable_car.inner_html(
-        "##{params[:tab] || 'forgot'}-feedback",
-        partial("layouts/alert",
-                locals: { type: "success", message: t("devise.confirmations.send_instructions") })
-      )
-      return
+      set_flash_message(:error, :confirmation_not_sent)
     end
-
-    respond_with_navigational(resource){ redirect_to login_path }
+    redirect_to login_path
   end
 
   protected

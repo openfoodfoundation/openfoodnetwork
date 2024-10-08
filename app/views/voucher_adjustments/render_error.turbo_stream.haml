@@ -1,0 +1,4 @@
+= render turbo_stream 'flashes' do
+  = render partial: "shared/flashes", locals: { flashes: flash }
+= render turbo_stream 'voucher-section' do
+  render partial: 'checkout/voucher_section, locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }

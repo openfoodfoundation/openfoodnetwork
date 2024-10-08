@@ -1,15 +1,15 @@
-# frozen_string_literal: true
+# # frozen_string_literal: true
 
-module CablecarResponses
-  extend ActiveSupport::Concern
+# module CablecarResponses
+#   extend ActiveSupport::Concern
 
-  included do
-    include CableReady::Broadcaster
-  end
+#   included do
+#     include CableReady::Broadcaster
+#   end
 
-  private
+#   private
 
-  def partial(path, options = {})
-    { html: render_to_string(partial: path, **options) }
-  end
-end
+#   def partial(path, options = {})
+#     { html: render_to_string(partial: path, **options) }
+#   end
+# end

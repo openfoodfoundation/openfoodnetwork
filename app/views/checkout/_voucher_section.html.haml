@@ -2,7 +2,7 @@
   .checkout-title
     = t("checkout.step2.voucher.apply_voucher")
   .checkout-input{"data-controller": "toggle-control"}
-    = form_with url: voucher_adjustments_path, model: @order, method: :post, data: { remote: true } do |form|
+    = form_with url: voucher_adjustments_path, model: @order, method: :post, data: { turbo: true } do |form|
       - if voucher_adjustment.present?
         .two-columns-inputs.voucher
           %span.button.voucher-added
@@ -22,4 +22,4 @@
             = form.error_message_on :voucher_code
 
           %div.checkout-input
-            = form.submit t("checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher-button", "data-disable-with": false, data: { "toggle-control-target": "control" }
+            = form.submit t("checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher-button", data: { "toggle-control-target": "control" }

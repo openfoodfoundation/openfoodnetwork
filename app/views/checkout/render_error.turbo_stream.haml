@@ -1,0 +1,4 @@
+= turbo_stream.replace "flashes" do
+	= render(partial: 'shared/flashes', locals: { flashes: flash })
+= turbo_stream.replace "checkout" do
+	= render(partial: 'checkout/checkout')

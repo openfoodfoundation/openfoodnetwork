@@ -124,10 +124,10 @@ module Spree
       def update_search_results
         session[:admin_orders_search] = search_params
 
-        render cable_ready: cable_car.inner_html(
-          "#orders-index",
-          partial("spree/admin/orders/table", locals: { pagy: @pagy, orders: @orders })
-        )
+        respond_to do |format|
+          format.html { redirect_to admin_orders_path }
+          format.turbo_stream { render :update_search_results }
+        end
       end
 
       def searching?
