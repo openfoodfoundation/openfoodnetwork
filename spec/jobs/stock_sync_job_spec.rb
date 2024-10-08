@@ -10,6 +10,9 @@ RSpec.describe StockSyncJob do
   let(:beans_retail_link) {
     "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
   }
+  let(:catalog_link) {
+    "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
+  }
 
   describe ".sync_linked_catalogs" do
     subject { StockSyncJob.sync_linked_catalogs(order) }
@@ -23,7 +26,7 @@ RSpec.describe StockSyncJob do
       )
 
       expect { subject }.to enqueue_job(StockSyncJob)
-        .with(user, beans_retail_link)
+        .with(user, catalog_link)
     end
 
     it "reports errors" do
@@ -34,8 +37,8 @@ RSpec.describe StockSyncJob do
     end
   end
 
-  describe "#peform" do
-    subject { StockSyncJob.perform_now(user, beans_retail_link) }
+  describe "#perform" do
+    subject { StockSyncJob.perform_now(user, catalog_link) }
 
     before do
       distributor.save!

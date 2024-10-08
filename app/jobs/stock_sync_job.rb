@@ -12,12 +12,14 @@ class StockSyncJob < ApplicationJob
     stock_controlled_variants = order.variants.reject(&:on_demand)
     links = SemanticLink.where(variant_id: stock_controlled_variants.map(&:id))
     semantic_ids = links.pluck(:semantic_id)
-
-    return if semantic_ids.empty?
+    catalog_ids = semantic_ids.map do |product_id|
+      FdcUrlBuilder.new(product_id).catalog_url
+    end
 
     user = order.distributor.owner
-    reference_id = semantic_ids.first # Assuming one catalog for now.
-    perform_later(user, reference_id)
+    catalog_ids.uniq.each do |catalog_id|
+      perform_later(user, catalog_id)
+    end
   rescue StandardError => e
     # Errors here shouldn't affect the shopping. So let's report them
     # separately:
@@ -26,8 +28,8 @@ class StockSyncJob < ApplicationJob
     end
   end
 
-  def perform(user, semantic_id)
-    products = load_products(user, semantic_id)
+  def perform(user, catalog_id)
+    products = load_products(user, catalog_id)
     products_by_id = products.index_by(&:semanticId)
     product_ids = products_by_id.keys
     variants = linked_variants(user.enterprises, product_ids)
@@ -45,9 +47,8 @@ class StockSyncJob < ApplicationJob
     end
   end
 
-  def load_products(user, semantic_id)
-    urls = FdcUrlBuilder.new(semantic_id)
-    json_catalog = DfcRequest.new(user).call(urls.catalog_url)
+  def load_products(user, catalog_id)
+    json_catalog = DfcRequest.new(user).call(catalog_id)
     graph = DfcIo.import(json_catalog)
 
     graph.select do |subject|
