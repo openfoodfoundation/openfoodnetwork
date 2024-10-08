@@ -44,7 +44,7 @@ module Reporting
           end
 
           def order_date
-            proc { |line_items| order(line_items).completed_at.strftime("%d/%m/%Y") }
+            proc { |line_items| order(line_items).completed_at.to_date }
           end
 
           def order_cycle
@@ -52,11 +52,11 @@ module Reporting
           end
 
           def order_cycle_start_date
-            proc { |line_items| item_order_cycle(line_items).orders_open_at.strftime("%d/%m/%Y") }
+            proc { |line_items| item_order_cycle(line_items).orders_open_at.to_date }
           end
 
           def order_cycle_end_date
-            proc { |line_items| item_order_cycle(line_items).orders_close_at.strftime("%d/%m/%Y") }
+            proc { |line_items| item_order_cycle(line_items).orders_close_at.to_date }
           end
 
           def product
