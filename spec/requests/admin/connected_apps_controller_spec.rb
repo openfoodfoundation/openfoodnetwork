@@ -111,6 +111,38 @@ RSpec.describe "Admin ConnectedApp" do
         end
       end
 
+      context "when VINE API is not set up properly" do
+        before do
+          # VineApiService will raise a KeyError if VINE_API_URL is not set
+          allow(VineApiService).to receive(:new).and_raise(KeyError)
+        end
+
+        it "redirects to enterprise edit page, with an error" do
+          params = {
+            type: ConnectedApps::Vine,
+            vine_api_key: "12345678",
+            vine_secret: "my_secret"
+          }
+          post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
+
+          expect(response).to redirect_to(edit_enterprise_url)
+          expect(flash[:error]).to eq(
+            "VINE API is not configured, please contact your instance manager"
+          )
+        end
+
+        it "notifies Bugsnag" do
+          expect(Bugsnag).to receive(:notify)
+
+          params = {
+            type: ConnectedApps::Vine,
+            vine_api_key: "12345678",
+            vine_secret: "my_secret"
+          }
+          post("/admin/enterprises/#{enterprise.id}/connected_apps", params: )
+        end
+      end
+
       context "when there is a connection error" do
         before do
           allow(vine_api).to receive(:my_team).and_raise(Faraday::Error)

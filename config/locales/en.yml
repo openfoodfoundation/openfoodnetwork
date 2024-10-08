@@ -1441,6 +1441,7 @@ en:
             api_parameters_empty: "Please enter an API key and a secret"
             api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
             connection_error: "API connection error, please try again"
+            setup_error: "VINE API is not configured, please contact your instance manager"
       actions:
         edit_profile: Settings
         properties: Properties

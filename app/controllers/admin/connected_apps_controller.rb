@@ -57,6 +57,9 @@ module Admin
     rescue Faraday::Error => e
       log_and_notify_exception(e)
       handle_error(I18n.t("admin.enterprises.form.connected_apps.vine.connection_error"))
+    rescue KeyError => e
+      log_and_notify_exception(e)
+      handle_error(I18n.t("admin.enterprises.form.connected_apps.vine.setup_error"))
     end
 
     def enterprise
