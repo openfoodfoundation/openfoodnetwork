@@ -20,9 +20,7 @@ module Reporting
         end
 
         def query_result
-          report_line_items.list(line_item_includes).group_by { |e|
-            [e.variant_id, e.price, e.order.distributor_id]
-          }.values
+          report_line_items.list(line_item_includes)
         end
 
         def columns
@@ -56,17 +54,19 @@ module Reporting
             {
               group_by: :producer,
               header: true,
-              summary_row: proc do |_key, items|
-                line_items = items.flatten
+              summary_row: proc do |_key, line_items|
+                summary_hash = Hash.new(0)
 
-                {
-                  total_excl_vat_and_fees: total_excl_vat_and_fees.call(line_items),
-                  total_excl_vat: total_excl_vat.call(line_items),
-                  total_fees_excl_vat: total_fees_excl_vat.call(line_items),
-                  total_vat_on_fees: total_vat_on_fees.call(line_items),
-                  total_tax: total_tax.call(line_items),
-                  total: total.call(line_items),
-                }
+                line_items.each do |line_item|
+                  summary_hash[:total_excl_vat_and_fees] += total_excl_vat_and_fees.call(line_item)
+                  summary_hash[:total_excl_vat] += total_excl_vat.call(line_item)
+                  summary_hash[:total_fees_excl_vat] += total_fees_excl_vat.call(line_item)
+                  summary_hash[:total_vat_on_fees] += total_vat_on_fees.call(line_item)
+                  summary_hash[:total_tax] += total_tax.call(line_item)
+                  summary_hash[:total] += total.call(line_item)
+                end
+
+                summary_hash
               end
             }
           ]
