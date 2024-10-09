@@ -59,18 +59,18 @@
                     .variant-unit
                       = variant.unit_to_display
                   .small-4.medium-3.columns.variant-price
-                    = number_to_currency(variant.price)
+                    = Spree::Money.new(variant.price)
                     .unit-price.variant-unit-price
                       = render AdminTooltipComponent.new(text: t("js.shopfront.unit_price_tooltip"), link_text: "", placement: "top", link_class: "question-mark-icon")
                       - # TODO use an helper
                       - unit_price = UnitPrice.new(variant)
                       - price_per_unit = variant.price / (unit_price.denominator || 1)
-                      = "#{number_to_currency(price_per_unit)}&nbsp;/&nbsp;#{unit_price.unit}".html_safe
+                      = "#{Spree::Money.new(price_per_unit)}&nbsp;/&nbsp;#{unit_price.unit}".html_safe
 
 
                   .medium-3.columns.total-price
                     %span
-                      = number_to_currency(0.00) 
+                      = Spree::Money.new(0.00) 
                   .small-5.medium-3.large-3.columns.variant-quantity-column.text-right
                     .variant-quantity-inputs
                       %button.add-variant
