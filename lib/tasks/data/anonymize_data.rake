@@ -46,10 +46,14 @@ namespace :ofn do
                               unconfirmed_email = concat(id, '_ofn_user@example.com')")
       Customer.where(user_id: nil)
         .update_all("email = concat(id, '_ofn_customer@example.com'),
-                     name = concat('Customer Number ', id, ' (without connected User)')")
+                     name = concat('Customer Number ', id, ' (without connected User)'),
+                     first_name = concat('Customer Number ', id),
+                     last_name = '(without connected User)'")
       Customer.where.not(user_id: nil)
         .update_all("email = concat(user_id, '_ofn_user@example.com'),
-                     name = concat('Customer Number ', id, ' - User ', user_id)")
+                     name = concat('Customer Number ', id, ' - User ', user_id),
+                     first_name = concat('Customer Number ', id),
+                     last_name = concat('User ', user_id)")
 
       Spree::Order.update_all("email = concat(id, '_ofn_order@example.com')")
     end
