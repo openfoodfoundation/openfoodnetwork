@@ -220,6 +220,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
       end
     end
 
+    # it "can select only the producers that I manage"
+
     it "discards changes and reloads latest data" do
       within row_containing_name("Apples") do
         fill_in "Name", with: "Pommes"
@@ -437,6 +439,14 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         # Only when all non persistent variants are gone that product is non modified
         expect(page).not_to have_text("1 product modified.")
         expect(page).not_to have_css('form.disabled-section#filters')
+      end
+
+      describe "producer" do
+        # it "can select only the producers that I manage"
+
+        context " when I manage only one producer" do
+          # it "producer select doesn't show, and is saved correctly"
+        end
       end
 
       context "With 2 products" do
