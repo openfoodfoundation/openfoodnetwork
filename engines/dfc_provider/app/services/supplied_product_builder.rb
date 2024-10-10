@@ -38,6 +38,15 @@ class SuppliedProductBuilder < DfcBuilder
     variant
   end
 
+  def self.update_product(supplied_product, variant)
+    apply(supplied_product, variant)
+
+    variant.product.save!
+    variant.save!
+
+    variant
+  end
+
   def self.import_variant(supplied_product, supplier)
     product = referenced_spree_product(supplied_product, supplier)
 

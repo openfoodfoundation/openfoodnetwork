@@ -48,6 +48,10 @@ RSpec.describe "DFC Product Import" do
       refresh_token: ENV.fetch("OPENID_REFRESH_TOKEN"),
       updated_at: 1.day.ago,
     )
+    product_id =
+      "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
+    linked_variant = source_product.variants.first
+    linked_variant.semantic_links << SemanticLink.new(semantic_id: product_id)
 
     visit admin_product_import_path
 
@@ -58,14 +62,14 @@ RSpec.describe "DFC Product Import" do
 
     expect {
       click_button "Import"
-    }.to change {
-      enterprise.supplied_products.count
-    }
+      linked_variant.reload
+    }.to change { enterprise.supplied_products.count }
+      .and change { linked_variant.display_name }
+      .and change { linked_variant.unit_value }
 
     expect(page).to have_content "Importing a DFC product catalog"
 
     product = Spree::Product.last
-
     expect(product.variants[0].semantic_links).to be_present
     expect(product.image).to be_present
   end

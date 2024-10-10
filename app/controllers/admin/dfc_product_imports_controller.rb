@@ -26,7 +26,15 @@ module Admin
       # * First step: import all products for given enterprise.
       # * Second step: render table and let user decide which ones to import.
       imported = graph.map do |subject|
-        SuppliedProductBuilder.store_product(subject, enterprise)
+        next unless subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
+
+        existing_variant = enterprise.supplied_variants.linked_to(subject.semanticId)
+
+        if existing_variant
+          SuppliedProductBuilder.update_product(subject, existing_variant)
+        else
+          SuppliedProductBuilder.store_product(subject, enterprise)
+        end
       end
 
       @count = imported.compact.count
