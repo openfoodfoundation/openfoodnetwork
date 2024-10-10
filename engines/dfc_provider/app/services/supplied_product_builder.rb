@@ -42,11 +42,7 @@ class SuppliedProductBuilder < DfcBuilder
     product = referenced_spree_product(supplied_product, supplier)
 
     if product
-      Spree::Variant.new(
-        product:,
-        supplier:,
-        price: 0,
-      ).tap do |variant|
+      Spree::Variant.new( product:, supplier:, price: 0,).tap do |variant|
         apply(supplied_product, variant)
       end
     else
