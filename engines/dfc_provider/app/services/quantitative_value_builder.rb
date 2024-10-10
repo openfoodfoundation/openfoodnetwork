@@ -29,11 +29,18 @@ class QuantitativeValueBuilder < DfcBuilder
 
   def self.apply(quantity, product)
     measure, unit_name, unit_scale = map_unit(quantity.unit)
+    value = quantity.value.to_f * unit_scale
+
+    if measure.in?(%w(weight volume)) && value <= 0
+      measure = "items"
+      unit_name = "items"
+      value = 1
+    end
 
     product.variant_unit = measure
     product.variant_unit_name = unit_name if measure == "items"
     product.variant_unit_scale = unit_scale
-    product.unit_value = quantity.value.to_f * unit_scale
+    product.unit_value = value
   end
 
   # Map DFC units to OFN fields:

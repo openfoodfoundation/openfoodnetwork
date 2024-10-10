@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "private_address_check"
-require "private_address_check/tcpsocket_ext"
-
 class SuppliedProductBuilder < DfcBuilder
   def self.supplied_product(variant)
     id = urls.enterprise_supplied_product_url(
@@ -26,27 +23,40 @@ class SuppliedProductBuilder < DfcBuilder
     )
   end
 
+  def self.store_product(subject, enterprise)
+    return unless subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
+
+    variant = SuppliedProductBuilder.import_variant(subject, enterprise)
+    product = variant.product
+
+    product.save! if product.new_record?
+    variant.save! if variant.new_record?
+
+    variant
+  end
+
+  def self.update_product(supplied_product, variant)
+    apply(supplied_product, variant)
+
+    variant.product.save!
+    variant.save!
+
+    variant
+  end
+
   def self.import_variant(supplied_product, supplier)
     product = referenced_spree_product(supplied_product, supplier)
 
     if product
-      Spree::Variant.new(
-        product:,
-        supplier:,
-        price: 0,
-      ).tap do |variant|
+      Spree::Variant.new( product:, supplier:, price: 0,).tap do |variant|
         apply(supplied_product, variant)
       end
     else
       product = import_product(supplied_product, supplier)
-      product.variants.first
+      product.variants.first.tap { |variant| apply(supplied_product, variant) }
     end.tap do |variant|
       link = supplied_product.semanticId
-      catalog_item = supplied_product&.catalogItems&.first
-      offer = catalog_item&.offers&.first
       variant.semantic_links.new(semantic_id: link) if link.present?
-      CatalogItemBuilder.apply_stock(catalog_item, variant)
-      OfferBuilder.apply(offer, variant)
     end
   end
 
@@ -74,7 +84,7 @@ class SuppliedProductBuilder < DfcBuilder
       price: 0, # will be in DFC Offer
       supplier_id: supplier.id,
       primary_taxon_id: taxon(supplied_product).id,
-      image: image(supplied_product),
+      image: ImageBuilder.import(supplied_product.image),
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
       product.ensure_standard_variant
@@ -88,6 +98,11 @@ class SuppliedProductBuilder < DfcBuilder
     variant.primary_taxon = taxon(supplied_product)
     QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
     variant.unit_value = variant.product.unit_value
+
+    catalog_item = supplied_product&.catalogItems&.first
+    offer = catalog_item&.offers&.first
+    CatalogItemBuilder.apply_stock(catalog_item, variant)
+    OfferBuilder.apply(offer, variant)
   end
 
   def self.product_type(variant)
@@ -102,21 +117,6 @@ class SuppliedProductBuilder < DfcBuilder
     # Every product needs a primary taxon to be valid. So if we don't have
     # one or can't find it we just take a random one.
     Spree::Taxon.find_by(dfc_id:) || Spree::Taxon.first
-  end
-
-  def self.image(supplied_product)
-    url = URI.parse(supplied_product.image)
-    filename = File.basename(supplied_product.image)
-
-    Spree::Image.new.tap do |image|
-      PrivateAddressCheck.only_public_connections do
-        image.attachment.attach(io: url.open, filename:)
-      end
-    end
-  rescue StandardError
-    # Any URL parsing or network error shouldn't impact the product import
-    # at all. Maybe we'll add UX for error handling later.
-    nil
   end
 
   private_class_method :product_type, :taxon

@@ -1,0 +1,38 @@
+{
+  "@context": "https://www.datafoodconsortium.org",
+  "@graph": [
+    {
+      "@id": "_:b433",
+      "@type": "dfc-b:QuantitativeValue",
+      "dfc-b:hasUnit": "dfc-m:Kilogram",
+      "dfc-b:value": "0"
+    },
+    {
+      "@id": "_:b434",
+      "@type": "dfc-b:Price",
+      "dfc-b:VATrate": "1",
+      "dfc-b:hasUnit": "dfc-m:Euro",
+      "dfc-b:value": "12.06"
+    },
+    {
+      "@id": "https://example-producer.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/5c21b9-95/SuppliedProducts/49055026544964",
+      "@type": "dfc-b:SuppliedProduct",
+      "dfc-b:hasQuantity": "_:b433",
+      "dfc-b:name": "Fillet Steak - 201g x 1 Steak",
+      "dfc-b:referencedBy": "https://example-producer.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/5c21b9-95/SuppliedProducts/49055026544964/CatalogItem"
+    },
+    {
+      "@id": "https://example-producer.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/5c21b9-95/SuppliedProducts/49055026544964/CatalogItem",
+      "@type": "dfc-b:CatalogItem",
+      "dfc-b:offeredThrough": "https://example-producer.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/5c21b9-95/SuppliedProducts/49055026544964/Offer",
+      "dfc-b:stockLimitation": "11"
+    },
+    {
+      "@id": "https://example-producer.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/5c21b9-95/SuppliedProducts/49055026544964/Offer",
+      "@type": "dfc-b:Offer",
+      "dfc-b:hasPrice": {
+        "@id": "_:b434"
+      }
+    }
+  ]
+}

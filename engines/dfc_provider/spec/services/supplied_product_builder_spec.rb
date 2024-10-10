@@ -84,6 +84,33 @@ RSpec.describe SuppliedProductBuilder do
     end
   end
 
+  describe ".store_product" do
+    let(:subject) { builder.store_product(product, supplier) }
+    let(:product) {
+      DfcIo.import(product_json).find do |subject|
+        subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
+      end
+    }
+    let(:product_json) { ExampleJson.read("product.GET") }
+
+    before do
+      taxon.save!
+    end
+
+    it "stores a new Spree Product and Variant" do
+      expect { subject }.to change {
+        Spree::Product.count
+      }.by(1)
+
+      expect(subject).to be_a(Spree::Variant)
+      expect(subject).to be_valid
+      expect(subject).to be_persisted
+      expect(subject.name).to eq("Fillet Steak - 201g x 1 Steak")
+      expect(subject.variant_unit).to eq("items")
+      expect(subject.unit_value).to eq(1)
+    end
+  end
+
   describe ".import_product" do
     let(:supplied_product) do
       DfcProvider::SuppliedProduct.new(
