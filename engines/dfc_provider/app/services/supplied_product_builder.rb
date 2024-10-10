@@ -53,14 +53,10 @@ class SuppliedProductBuilder < DfcBuilder
       end
     else
       product = import_product(supplied_product, supplier)
-      product.variants.first
+      product.variants.first.tap { |variant| apply(supplied_product, variant) }
     end.tap do |variant|
       link = supplied_product.semanticId
-      catalog_item = supplied_product&.catalogItems&.first
-      offer = catalog_item&.offers&.first
       variant.semantic_links.new(semantic_id: link) if link.present?
-      CatalogItemBuilder.apply_stock(catalog_item, variant)
-      OfferBuilder.apply(offer, variant)
     end
   end
 
@@ -102,6 +98,11 @@ class SuppliedProductBuilder < DfcBuilder
     variant.primary_taxon = taxon(supplied_product)
     QuantitativeValueBuilder.apply(supplied_product.quantity, variant.product)
     variant.unit_value = variant.product.unit_value
+
+    catalog_item = supplied_product&.catalogItems&.first
+    offer = catalog_item&.offers&.first
+    CatalogItemBuilder.apply_stock(catalog_item, variant)
+    OfferBuilder.apply(offer, variant)
   end
 
   def self.product_type(variant)

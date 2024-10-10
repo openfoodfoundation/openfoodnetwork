@@ -66,6 +66,7 @@ RSpec.describe "DFC Product Import" do
     }.to change { enterprise.supplied_products.count }
       .and change { linked_variant.display_name }
       .and change { linked_variant.unit_value }
+      .and change { linked_variant.price }
 
     expect(page).to have_content "Importing a DFC product catalog"
 
