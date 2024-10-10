@@ -49,6 +49,7 @@ fr_CA:
         price: "Prix"
         primary_taxon_id: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
+        variant_unit: "Unit Scale"
         variant_unit_name: "Unité de la variante"
         unit_value: "Nb unités"
       spree/variant:
@@ -317,7 +318,34 @@ fr_CA:
         L'édition de ce rapport a échoué. Il est probablement trop volumineux. Nous allons examiner cela, mais faites-nous signe si le problème persiste.
   backorder_mailer:
     backorder_failed:
+      subject: "An automatic backorder failed"
+      headline: "Backordering failed"
+      description: |
+          We tried to place or update a backorder for out-of-stock items but
+          something went wrong. You may have negative stock and need to resolve
+          the issue to order more stock in.
+      hints: |
+          You may need to go to the OIDC settings and reconnect your account.
+          Also check that your supplier's catalog hasn't changed and is still
+          supplying all the products you need. And please get in touch with us if
+          you have any questions.
+      order: "Affected order: %{number}"
+      stock: "Stock"
       product: "Produit"
+    backorder_incomplete:
+      subject: "An automatic backorder failed to complete"
+      headline: "Your backorder is still in draft"
+      description: |
+          Nous avons essayé de passer ou mettre à jour une commande fournisseur pour des articles en rupture de stock mais
+          cela n'a pas fonctionné. Les quantités en attente peuvent être trop élevées si
+          vous avez eu des annulations. De plus, votre commande fournisseur ne sera pas exécutée
+          tant qu'elle est à l'état de projet.
+      hints: |
+          Il se peut que vous deviez aller dans les paramètres du cycle de vente et reconnecter votre compte.
+          Vérifiez également que le catalogue de votre fournisseur n'a pas changé et qu'il fournit
+          toujours les produits dont vous avez besoin. N'hésitez pas à nous contacter si
+          vous avez des questions.
+      affected: "%{enterprise}:%{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirmez l'adresse email pour %{enterprise}"
@@ -556,10 +584,13 @@ fr_CA:
         clone: Dupliquer
         delete: Supprimer
         remove: Supprimer
+        preview: Prévisualisation
       image:
         edit: Modifier
       product_preview:
+        product_preview: Prévisualisation du produit
         shop_tab: Boutique
+        product_details_tab: Détail produits
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence à
@@ -825,6 +856,10 @@ fr_CA:
         search: Chercher
       sort:
         pagination:
+          products_total_html:
+            one: "<strong> %{count} product </strong> found for your search criteria. Showing %{from} to %{to}."
+            many: "<strong> %{count} products </strong> found for your search criteria. Showing %{from} to %{to}."
+            other: "<strong> %{count} produits </strong>  trouvés pour vos critères de recherche. Affichage  %{from} à  %{to}."
           per_page:
             show: Montrer
             per_page: "%{num} par page"
@@ -1337,8 +1372,7 @@ fr_CA:
                 Cela simplifie la façon dont les producteurs peuvent se connecter dans la région de Waterloo autour de la justice et de la souveraineté alimentaires.
 
                 <p>
-                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-                target="_blank"><b>En savoir plus sur le projet Waterloo Food Commons </b>
+                <a href="https://waterlooregionfood.ca/" target="_blank"><b>En savoir plus sur le Annuaire alimentaire de Waterloo. </b>
                 <i class="icon-external-link"></i></a>
                 </p>
       actions:
@@ -3605,7 +3639,22 @@ fr_CA:
           Merci de rafraîchir la page. Si cela ne fonctionne pas une seconde fois,
           merci de nous contacter.
     trix:
+      bold: "Gras"
+      bullets: "Puces"
       code: "Code"
+      heading1: "En-tête"
+      hr: "Règle horizontale"
+      indent: "Augmenter d'un niveau"
+      italic: "Italique"
+      link: "Lien"
+      numbers: "Nombres"
+      outdent: "Diminuer d'un niveau"
+      quote: "Citation"
+      redo: "Rééditer"
+      strike: "Barré"
+      undo: "Annuler"
+      unlink: "Supprimer le lien"
+      url: "URL"
       urlPlaceholder: "Veuillez entrer l'URL à insérer"
   inflections:
     each:

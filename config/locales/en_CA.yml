@@ -49,6 +49,7 @@ en_CA:
         price: "Price"
         primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
+        variant_unit: "Unit Scale"
         variant_unit_name: "Variant Unit Name"
         unit_value: "Unit value"
       spree/variant:
@@ -317,7 +318,34 @@ en_CA:
         We will look into it but please let us know if the problem persists.
   backorder_mailer:
     backorder_failed:
+      subject: "An automatic backorder failed"
+      headline: "Backordering failed"
+      description: |
+          We tried to place or update a backorder for out-of-stock items but
+          something went wrong. You may have negative stock and need to resolve
+          the issue to order more stock in.
+      hints: |
+          You may need to go to the OIDC settings and reconnect your account.
+          Also check that your supplier's catalog hasn't changed and is still
+          supplying all products you need. And please get in touch with us if
+          you have any questions.
+      order: "Affected order: %{number}"
+      stock: "Stock"
       product: "Product"
+    backorder_incomplete:
+      subject: "An automatic backorder failed to complete"
+      headline: "Your backorder is still a draft"
+      description: |
+          We tried to complete a backorder for out-of-stock items but
+          something went wrong. The backorder quantities may be too high if
+          you had cancellations. And your backorder won't be fulfilled while
+          it is in a draft state.
+      hints: |
+          You may need to go to the OIDC settings and reconnect your account.
+          Also check that your supplier's catalog hasn't changed and is still
+          supplying all products you need. And please get in touch with us if
+          you have any questions.
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -556,10 +584,13 @@ en_CA:
         clone: Clone
         delete: Delete
         remove: Remove
+        preview: Prévisualisation
       image:
         edit: Edit
       product_preview:
+        product_preview: Prévisualisation du produit
         shop_tab: Shop
+        product_details_tab: Product details
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -825,6 +856,9 @@ en_CA:
         search: Search
       sort:
         pagination:
+          products_total_html:
+            one: "<strong> %{count} product </strong> found for your search criteria. Showing %{from} to %{to}."
+            other: "<strong>%{count} products </strong> found for your search criteria. Showing %{from} to %{to}."
           per_page:
             show: Show
             per_page: "%{num} per page"
@@ -1335,7 +1369,7 @@ en_CA:
                 This simplifies how producers can connect in the Waterloo region around food justice and sovereignty.
                 </p>
                 <p>
-                <a href="https://foodsystemroundtablewr.ca/" target="_blank">Learn more about the Waterloo Food Commons Project
+                <a href="https://waterlooregionfood.ca/" target="_blank">Learn more about the Waterloo Food Directory.
                 <i class="icon-external-link"></i></a>
                 </p>
       actions:
@@ -3586,7 +3620,22 @@ en_CA:
           Please refresh the page and try again, if it fails a second time,
           please contact us for support.
     trix:
+      bold: "Bold"
+      bullets: "Bullets"
       code: "Code"
+      heading1: "Heading"
+      hr: "Horizontal rule"
+      indent: "Increase Level"
+      italic: "Italic"
+      link: "Link"
+      numbers: "Numbers"
+      outdent: "Decrease Level"
+      quote: "Quote"
+      redo: "Redo"
+      strike: "Strikethrough"
+      undo: "Undo"
+      unlink: "Unlink"
+      url: "URL"
       urlPlaceholder: "Please enter a URL to insert"
   inflections:
     each:

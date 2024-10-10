@@ -373,7 +373,7 @@ fr_BE:
   enterprises: Entreprises
   enterprise_groups: Groupes
   reports: Rapports
-  listing_reports: Report de référencement
+  listing_reports: Liste des rapports disponibles
   variant_overrides: Catalogue magasin
   import: Importer
   spree_products: Produits
@@ -1234,8 +1234,10 @@ fr_BE:
         contact_name: Nom du contact principal
       edit:
         editing: 'Configuration:'
+        back_link: Retour à la liste des entreprises
       new:
         title: Nouvelle entreprise
+        back_link: Retour à la liste des entreprises
       welcome:
         welcome_title: Bienvenue sur Open Food Network !
         welcome_text: 'Vous avez créé avec succès '
@@ -1749,7 +1751,7 @@ fr_BE:
         message_html: "J'accepte les %{terms_and_conditions_link} du vendeur et la plateforme %{tos_link}."
         terms_and_conditions: "Termes et conditions"
       submit: Finaliser la commande
-      cancel: Retour à Mode de paiement
+      cancel: Retour à Méthodes de paiement
     errors:
       saving_failed: "L'enregistrement a échoué, veuillez mettre à jour les champs en surbrillance."
       terms_not_accepted: Veuillez accepter les termes et conditions
@@ -3577,6 +3579,7 @@ fr_BE:
     iso_name: "Nom ISO"
     states_required: "Provinces requises"
     editing_country: "Éditer le pays"
+    back_to_countries_list: "Retour à la liste des pays"
     states: "Provinces"
     abbreviation: "Abréviation"
     new_state: "Nouvelle Province"
