@@ -5,21 +5,34 @@ require "system_helper"
 RSpec.describe "Pay Your Suppliers Report" do
   include ReportsHelper
 
-  let(:hub) { create(:distributor_enterprise) }
-  let(:order_cycle) { create(:open_order_cycle, distributors: [hub]) }
-  let(:product) { order.products.first }
-  let(:variant) { product.variants.first }
-  let(:supplier) { variant.supplier }
-  let(:current_user) { hub.owner }
-  let!(:order) do
-    create(:completed_order_with_totals, distributor: hub, order_cycle:, line_items_count: 1)
+  let(:owner) { create(:user) }
+  let(:hub1) { create(:enterprise, owner:) }
+  let(:order_cycle1) { create(:open_order_cycle, distributors: [hub1]) }
+  let!(:order1) do
+    create(
+      :completed_order_with_totals,
+      distributor: hub1,
+      order_cycle: order_cycle1,
+      line_items_count: 2
+    )
   end
-  let(:params) { { display_summary_row: true } }
-  let(:report) { Reporting::Reports::Suppliers::Base.new(current_user, { q: params }) }
-  let(:report_table_rows) { report.rows }
+
+  let(:hub2) { create(:enterprise, owner:) }
+  let(:product2) { order1.products.first }
+  let(:variant2) { product2.variants.first }
+  let(:supplier2) { variant2.supplier }
+  let(:order_cycle2) { create(:open_order_cycle, distributors: [hub2]) }
+  let!(:order2) do
+    create(
+      :completed_order_with_totals,
+      distributor: hub2,
+      order_cycle: order_cycle2,
+      line_items_count: 3
+    )
+  end
 
   before do
-    login_as current_user
+    login_as owner
     visit admin_reports_path
   end
 
@@ -53,30 +66,76 @@ RSpec.describe "Pay Your Suppliers Report" do
         "Total ($)"
       ].join(" "))
 
-      line = page.find('table.report__table tbody tr').text
-      expect(line).to have_content([
-        supplier.name,
-        supplier.address.full_address,
-        "none",
-        "none",
-        hub.name,
-        hub.address.full_address,
-        "none",
-        order.number,
-        order.completed_at.to_date.to_s,
-        order_cycle.name,
-        order_cycle.orders_open_at.to_date.to_s,
-        order_cycle.orders_close_at.to_date.to_s,
-        product.name,
-        variant.full_name,
-        '1',
-        '10.0',
-        '10.0',
-        '0.0',
-        '0.0',
-        '0.0',
-        '10.0',
-      ].compact.join(" "))
+      lines = page.all('table.report__table tbody tr').map(&:text)
+      # 5 line_item rows + 1 summary row = 6 rows
+      expect(lines.count).to be(6)
+
+      hub1_rows = lines.select { |line| line.include?(hub1.name) }
+      order1.line_items.each_with_index do |line_item, index|
+        variant = line_item.variant
+        supplier = line_item.supplier
+        product = line_item.variant.product
+        line = hub1_rows[index]
+
+        expect(line).to have_content([
+          supplier.name,
+          supplier.address.full_address,
+          "none",
+          "none",
+          hub1.name,
+          hub1.address.full_address,
+          "none",
+          order1.number,
+          order1.completed_at.to_date.to_s,
+          order_cycle1.name,
+          order_cycle1.orders_open_at.to_date.to_s,
+          order_cycle1.orders_close_at.to_date.to_s,
+          product.name,
+          variant.full_name,
+          1,
+          10.0,
+          10.0,
+          0.0,
+          0.0,
+          0.0,
+          10.0,
+        ].compact.join(" "))
+      end
+
+      hub2_rows = lines.select { |line| line.include?(hub2.name) }
+      order2.line_items.each_with_index do |line_item, index|
+        variant = line_item.variant
+        supplier = line_item.supplier
+        product = line_item.variant.product
+        line = hub2_rows[index]
+
+        expect(line).to have_content([
+          supplier.name,
+          supplier.address.full_address,
+          "none",
+          "none",
+          hub2.name,
+          hub2.address.full_address,
+          "none",
+          order2.number,
+          order2.completed_at.to_date.to_s,
+          order_cycle2.name,
+          order_cycle2.orders_open_at.to_date.to_s,
+          order_cycle2.orders_close_at.to_date.to_s,
+          product.name,
+          variant.full_name,
+          1,
+          10.0,
+          10.0,
+          0.0,
+          0.0,
+          0.0,
+          10.0,
+        ].compact.join(" "))
+      end
+
+      # summary row
+      expect(lines.last).to have_content("TOTAL 50.0 50.0 0.0 0.0 0.0 50.0")
     end
   end
 end
