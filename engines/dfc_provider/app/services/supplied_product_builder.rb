@@ -26,6 +26,18 @@ class SuppliedProductBuilder < DfcBuilder
     )
   end
 
+  def self.store_product(subject, enterprise)
+    return unless subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
+
+    variant = SuppliedProductBuilder.import_variant(subject, enterprise)
+    product = variant.product
+
+    product.save! if product.new_record?
+    variant.save! if variant.new_record?
+
+    variant
+  end
+
   def self.import_variant(supplied_product, supplier)
     product = referenced_spree_product(supplied_product, supplier)
 
