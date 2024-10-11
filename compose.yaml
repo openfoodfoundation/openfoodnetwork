@@ -32,6 +32,7 @@ services:
       OFN_DB_HOST: db
       OFN_REDIS_URL: redis://redis/
       OFN_REDIS_JOBS_URL: redis://redis
+      OFN_REDIS_TEST_URL: redis://redis/3
       WEBPACKER_DEV_SERVER_HOST: webpack
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
