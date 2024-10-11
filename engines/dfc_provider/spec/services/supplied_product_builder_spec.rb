@@ -111,6 +111,31 @@ RSpec.describe SuppliedProductBuilder do
     end
   end
 
+  describe ".update_product" do
+    let(:subject) { builder.update_product(product, variant) }
+    let(:product) {
+      DfcIo.import(product_json).find do |subject|
+        subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
+      end
+    }
+    let(:product_json) { ExampleJson.read("product.GET") }
+
+    it "updates a variant" do
+      variant # Create test data first
+
+      expect { subject }.not_to change {
+        Spree::Variant.count
+      }
+
+      expect(subject).to eq variant
+      expect(subject.display_name).to eq "Fillet Steak - 201g x 1 Steak"
+      expect(subject.variant_unit).to eq "items"
+      expect(subject.unit_value).to eq 1
+      expect(subject.on_demand).to eq false
+      expect(subject.on_hand).to eq 11
+    end
+  end
+
   describe ".import_product" do
     let(:supplied_product) do
       DfcProvider::SuppliedProduct.new(

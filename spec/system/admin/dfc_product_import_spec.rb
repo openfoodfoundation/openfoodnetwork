@@ -66,12 +66,41 @@ RSpec.describe "DFC Product Import" do
     }.to change { enterprise.supplied_products.count }
       .and change { linked_variant.display_name }
       .and change { linked_variant.unit_value }
-      .and change { linked_variant.price }
+      .and change { linked_variant.price }.to(2.09)
+      .and change { linked_variant.on_demand }.to(true)
+      .and change { linked_variant.on_hand }.by(0)
 
     expect(page).to have_content "Importing a DFC product catalog"
 
     product = Spree::Product.last
     expect(product.variants[0].semantic_links).to be_present
     expect(product.image).to be_present
+  end
+
+  it "fails gracefully" do
+    user.oidc_account.update!(
+      uid: "anonymous@example.net",
+      updated_at: 1.minute.ago,
+    )
+    url = "https://example.net/unauthorized"
+    stub_request(:get, url).to_return(status: [401, "Unauthorized"])
+
+    visit admin_product_import_path
+    select enterprise.name, from: "Enterprise"
+    fill_in "catalog_url", with: url
+
+    expect { click_button "Import" }.not_to change { Spree::Variant.count }
+
+    expect(page).to have_content "the server responded with status 401"
+
+    select enterprise.name, from: "Enterprise"
+    fill_in "catalog_url", with: "badurl"
+    click_button "Import"
+    expect(page).to have_content "Absolute URI missing hierarchical segment: 'http://:80'"
+
+    select enterprise.name, from: "Enterprise"
+    fill_in "catalog_url", with: ""
+    click_button "Import"
+    expect(page).to have_content "param is missing or the value is empty: catalog_url"
   end
 end
