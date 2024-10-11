@@ -9,7 +9,7 @@ DATE=`date +%Y%m%d-%H%M%S-%3N`
 echo '--------------------------------------------------------------'
 echo 'BEGIN: docker compose run web bundle exec rake db:test:prepare'
 echo '--------------------------------------------------------------'
-docker compose run web bundle exec rake db:test:prepare 2>&1 | tee log/test-prepare-$DATE.log
+docker compose run web rake db:test:prepare 2>&1 | tee log/test-prepare-$DATE.log
 echo '------------------------------------------------------------'
 echo 'END: docker compose run web bundle exec rake db:test:prepare'
 echo '------------------------------------------------------------'
@@ -17,7 +17,7 @@ echo '------------------------------------------------------------'
 echo '----------------------------------------------------'
 echo 'BEGIN: docker compose run web bundle exec rspec spec'
 echo '----------------------------------------------------'
-docker compose run web bundle exec rspec --no-color spec 2>&1 | tee log/test-rspec-$DATE.log
+docker compose run web rspec --no-color spec 2>&1 | tee log/test-rspec-$DATE.log
 echo '--------------------------------------------------'
 echo 'END: docker compose run web bundle exec rspec spec'
 echo '--------------------------------------------------'
