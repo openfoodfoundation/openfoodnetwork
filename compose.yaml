@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     image: postgres:10.19
@@ -17,7 +15,9 @@ services:
   web:
     tty: true
     stdin_open: true
-    build: .
+    build:
+      target: development
+      context: .
     ports:
       - 3000:3000
     volumes:
@@ -37,9 +37,10 @@ services:
       bash -c "wait-for-it -t 30 db:5432 &&
                rm -f tmp/pids/server.pid &&
                (bundle check || bundle install) &&
-               bundle exec rake db:create &&
+               rake db:create &&
                yarn install &&
-               bundle exec rails s -p 3000 -b '0.0.0.0'"
+               rake ofn:sample_data &&
+               rails s -p 3000 -b '0.0.0.0'"
   webpack:
     build: .
     command: ./bin/webpack-dev-server
@@ -70,7 +71,7 @@ services:
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
                (bundle check || bundle install) &&
-               bundle exec sidekiq -q mailers -q default"
+               sidekiq -q mailers -q default"
 volumes:
   gems:
   postgres:
