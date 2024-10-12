@@ -1,5 +1,5 @@
 #forgot-tab
-  = form_with url: spree_user_password_path, scope: :spree_user, data: { remote: "true" } do |form|
+  = form_with url: spree_user_password_path, scope: :spree_user, data: { turbo: true } do |form|
     .row
       .large-12.columns#forgot-feedback
 
