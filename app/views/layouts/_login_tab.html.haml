@@ -1,5 +1,5 @@
 #login-content
-  = form_with url: spree_user_session_path, scope: :spree_user, data: { remote: "true" } do |form|
+  = form_with url: spree_user_session_path, scope: :spree_user, data: { turbo: true } do |form|
     .row
       .large-12.columns#login-feedback
         - confirmation_result = request.query_parameters[:validation]
