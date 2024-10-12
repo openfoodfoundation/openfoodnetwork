@@ -14,8 +14,7 @@ RSpec.describe Spree::UserSessionsController, type: :controller do
       context "when referer is not '/checkout'" do
         it "redirects to root" do
           spree_post :create, spree_user: { email: user.email, password: user.password }
-
-          expect(response).to have_http_status(:ok)
+          expect(response).to have_http_status(:found)
           expect(response.body).to match(root_path).and match("redirect")
         end
       end
@@ -26,7 +25,7 @@ RSpec.describe Spree::UserSessionsController, type: :controller do
         it "redirects to checkout" do
           spree_post :create, spree_user: { email: user.email, password: user.password }
 
-          expect(response).to have_http_status(:ok)
+          expect(response).to have_http_status(:found)
           expect(response.body).to match(checkout_path).and match("redirect")
         end
       end
@@ -36,7 +35,8 @@ RSpec.describe Spree::UserSessionsController, type: :controller do
       render_views
 
       it "returns an error" do
-        spree_post :create, spree_user: { email: user.email, password: "wrong" }
+        spree_post :create, spree_user: { email: user.email, password: "wrong" },
+                            format: :turbo_stream
 
         expect(response).to have_http_status(:unauthorized)
         expect(response.body).to include "Invalid email or password"
