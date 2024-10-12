@@ -1,0 +1,2 @@
+= turbo_stream.update 'forgot-feedback' do
+  = render partial: 'layouts/alert', locals: { type: @type, message: @message, tab: @tab, unconfirmed: @unconfirmed, email: params.dig(:spree_user, :email) }
