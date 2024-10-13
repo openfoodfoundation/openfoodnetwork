@@ -1,4 +1,4 @@
-= form_with url: checkout_update_path(checkout_step), model: @order, method: :put, data: { remote: "true", 'guest-checkout-target': 'summary' } do |f|
+= form_with url: checkout_update_path(checkout_step), model: @order, method: :put, data: { turbo: "true", 'guest-checkout-target': 'summary' } do |f|
   .summary-main
     = render partial: "checkout/already_ordered" if show_bought_items? && checkout_step?(:summary)
     .checkout-substep
