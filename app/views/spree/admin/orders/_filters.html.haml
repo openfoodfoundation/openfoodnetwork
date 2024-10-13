@@ -1,5 +1,5 @@
-%div.admin-orders-index-search{ "data-controller": "search", "data-search-restore-value": @stored_query }
-  = form_with url: spree.admin_orders_url, id: "orders_form", method: :get, data: { remote: true, "search-target": "form" } do
+%div.admin-orders-index-search{ "data-controller": "search turbo-search", "data-search-restore-value": @stored_query }
+  = form_with url: spree.admin_orders_url, id: "orders_form", method: :get, data: { turbo: false, turbo_frame: 'order-results', 'turbo-search-target': 'form', "search-target": "form" } do
     = hidden_field_tag :page, 1, class: "page"
     = hidden_field_tag :per_page, 15, class: "per-page"
     = hidden_field_tag "[q][s]", params.dig(:q, :s) || "completed_at desc", class: "sort", "data-default": "completed_at desc"
@@ -57,5 +57,4 @@
           %i.icon-search
           = t(:filter_results)
       .eight.columns.omega
-        %button.float-left{"id": "clear_filters_button", type: "button", "data-controller": "search", "data-action": "click->search#reset" }
-          =  t(:clear_filters)
+        = link_to t(:clear_filters), admin_orders_url, "id": "clear_filters_button", class: 'float-left primary button'
