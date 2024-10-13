@@ -22,13 +22,13 @@ export default class extends Controller {
       `?stimulus=true&enterprise_sells=${this.enterpriseSellsValue}&is_primary_producer=${this.primaryProducerValue}`,
       {
         method: "GET",
-        headers: { "Content-type": "application/json; charset=UTF-8" },
+        headers: { 
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'text/vnd.turbo-stream.html'
+        }
       }
     )
-      .then((data) => data.json())
-      .then((operation) => {
-        CableReady.perform(operation);
-        this.spinnerTarget.classList.add("hidden");
-      });
-  }
+    .then(response => response.text())
+    .then(html => Turbo.renderStreamMessage(html))
+    .then(() => this.spinnerTarget.classList.add("hidden"))}
 }
