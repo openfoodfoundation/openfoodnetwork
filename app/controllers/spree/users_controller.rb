@@ -4,7 +4,6 @@ module Spree
   class UsersController < ::BaseController
     include Spree::Core::ControllerHelpers
     include I18nHelper
-    include CablecarResponses
 
     layout 'darkswarm'
 
@@ -31,13 +30,10 @@ module Spree
       registered = Spree::User.find_by(email: params[:email]).present?
 
       if registered
-        render status: :ok, cable_ready: cable_car.
-          inner_html(
-            "#login-feedback",
-            partial("layouts/alert",
-                    locals: { type: "alert", message: t('devise.failure.already_registered') })
-          ).
-          dispatch_event(name: "login:modal:open")
+        respond_to do |format|
+          format.html { head :ok }
+          format.turbo_stream { :registered_email }
+        end
       else
         head :not_found
       end
@@ -48,12 +44,12 @@ module Spree
 
       if @user.save
         flash[:success] = t('devise.user_registrations.spree_user.signed_up_but_unconfirmed')
-        render cable_ready: cable_car.redirect_to(url: main_app.root_path)
+        redirect_to main_app.root_path
       else
-        render status: :unprocessable_entity, cable_ready: cable_car.morph(
-          "#signup-tab",
-          partial("layouts/signup_tab", locals: { signup_form_user: @user })
-        )
+        respond_to do |format|
+          format.html { head :unprocessable_entity }
+          format.turbo_stream { render :create, status: :unprocessable_entity }
+        end
       end
     end
 
@@ -98,14 +94,10 @@ module Spree
     end
 
     def render_alert_timestamp_error_message
-      render cable_ready: cable_car.inner_html(
-        "#signup-feedback",
-        partial("layouts/alert",
-                locals: {
-                  type: "alert",
-                  message: InvisibleCaptcha.timestamp_error_message
-                })
-      )
+      respond_to do |format|
+        format.html { head :ok }
+        format.turbo_stream { render :render_alert_timestamp_error_message }
+      end
     end
   end
 end
