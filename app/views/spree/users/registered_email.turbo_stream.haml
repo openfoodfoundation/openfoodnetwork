@@ -1,0 +1,2 @@
+= turbo_stream.replace 'login-feedback' do
+  = render partial: "layouts/alert", locals: { type: "alert", message: t('devise.failure.already_registered') }
