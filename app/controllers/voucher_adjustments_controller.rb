@@ -60,24 +60,19 @@ class VoucherAdjustmentsController < BaseController
   end
 
   def update_payment_section
-    render cable_ready: cable_car.replace(
-      selector: "#checkout-payment-methods",
-      html: render_to_string(partial: "checkout/payment", locals: { step: "payment" })
-    )
+    respond_to do |format|
+      format.html { head :ok }
+      format.turbo_stream { render :update_payment_section }
+    end
   end
 
   def render_error
     flash.now[:error] = @order.errors.full_messages.to_sentence
 
-    render status: :unprocessable_entity, cable_ready: cable_car.
-      replace("#flashes", partial("shared/flashes", locals: { flashes: flash })).
-      replace(
-        "#voucher-section",
-        partial(
-          "checkout/voucher_section",
-          locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }
-        )
-      )
+    respond_to do |format|
+      format.html { head :unprocessable_entity }
+      format.turbo_stream { render :render_error, status: :unprocessable_entity }
+    end
   end
 
   def voucher_params
