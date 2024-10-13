@@ -15,8 +15,9 @@
 - content_for :table_filter do
   = render partial: 'filters'
 
-#orders-index{"data-controller": "search checked"}
-  = render partial: "table", locals: { pagy: @pagy, orders: @orders }
+%turbo-frame#order-results
+  #orders-index{"data-controller": "search checked"}
+    = render partial: "table", locals: { pagy: @pagy, orders: @orders }
 
 = render 'spree/admin/shared/custom-confirm'
 

@@ -11,15 +11,11 @@ module Spree
       before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print]
       before_action :load_distribution_choices, only: [:new, :create, :edit, :update]
       before_action :require_distributor_abn, only: :invoice
-      before_action :restore_saved_query!, only: :index
-
-      respond_to :html, :json
 
       def index
         orders = SearchOrders.new(search_params, spree_current_user).orders
         @pagy, @orders = pagy(orders, items: params[:per_page] || 15)
-
-        update_search_results if searching?
+        @stored_query = search_params.to_query
       end
 
       def new
@@ -121,19 +117,6 @@ module Spree
         false
       end
 
-      def update_search_results
-        session[:admin_orders_search] = search_params
-
-        render cable_ready: cable_car.inner_html(
-          "#orders-index",
-          partial("spree/admin/orders/table", locals: { pagy: @pagy, orders: @orders })
-        )
-      end
-
-      def searching?
-        params[:q].present? && request.format.symbol == :cable_ready
-      end
-
       def search_params
         default_filters.deep_merge(
           params.permit(:page, :per_page, :shipping_method_id, q: {})
@@ -142,13 +125,6 @@ module Spree
 
       def default_filters
         { q: { completed_at_not_null: 1, s: "completed_at desc" } }
-      end
-
-      def restore_saved_query!
-        return unless request.format.html?
-
-        @_params = ActionController::Parameters.new(session[:admin_orders_search] || {})
-        @stored_query = search_params.to_query
       end
 
       def on_update
