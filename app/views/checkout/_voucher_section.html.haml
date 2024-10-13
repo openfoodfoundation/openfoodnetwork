@@ -2,13 +2,13 @@
   .checkout-title
     = t("checkout.step2.voucher.apply_voucher")
   .checkout-input{"data-controller": "toggle-control"}
-    = form_with url: voucher_adjustments_path, model: @order, method: :post, data: { remote: true } do |form|
+    = form_with url: voucher_adjustments_path, model: @order, method: :post, data: { turbo: true } do |form|
       - if voucher_adjustment.present?
         .two-columns-inputs.voucher
           %span.button.voucher-added
             %i.ofn-i_051-check-big
               = t("checkout.step2.voucher.voucher", voucher_amount: voucher_adjustment.originator.display_value)
-          = link_to t("checkout.step2.voucher.remove_code"), voucher_adjustment_path(id: voucher_adjustment.id), method: "delete", data: { confirm: t("checkout.step2.voucher.confirm_delete") }
+          = link_to t("checkout.step2.voucher.remove_code"), voucher_adjustment_path(id: voucher_adjustment.id), data: { turbo_method: "delete", confirm: t("checkout.step2.voucher.confirm_delete") }
 
           - # This might not be true, ie payment method including a fee which wouldn't be covered by voucher or tax implication raising total to be bigger than the voucher amount ?
           - if voucher_adjustment.originator.amount > order.pre_discount_total && voucher_adjustment.originator.is_a?(Vouchers::FlatRate)
@@ -22,4 +22,4 @@
             = form.error_message_on :voucher_code
 
           %div.checkout-input
-            = form.submit t("checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher-button", "data-disable-with": false, data: { "toggle-control-target": "control" }
+            = form.submit t("checkout.step2.voucher.apply"), disabled: true, class: "button cancel voucher-button", data: { "toggle-control-target": "control" }
