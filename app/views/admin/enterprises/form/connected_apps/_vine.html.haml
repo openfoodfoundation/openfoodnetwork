@@ -1,0 +1,30 @@
+%section.connected_app
+  .connected-app__head
+    %div
+      %h3= t ".title"
+      %p= t ".tagline"
+  .connected-app__vine 
+    - if connected_app.nil?
+      = form_with url: admin_enterprise_connected_apps_path(enterprise.id) do |f|
+        .connected-app__vine-content
+          .vine-api-key 
+            = f.hidden_field :type, value: "ConnectedApps::Vine"
+            = f.label :vine_api_key, t(".vine_api_key")
+            %span.required *
+            = f.text_field :vine_api_key, { disabled: !managed_by_user?(enterprise) }
+            = f.label :vine_secret, t(".vine_secret")
+            %span.required *
+            = f.text_field :vine_secret, { disabled: !managed_by_user?(enterprise) }
+          %div 
+            - disabled = managed_by_user?(enterprise) ? {} : { disabled: true, "data-disable-with": false } 
+            = f.submit t(".enable"), disabled
+
+      -# This is only seen by super-admins:
+      %em= t(".need_to_be_manager") unless managed_by_user?(enterprise)
+    - else
+      .connected-app__vine-content
+        .vine-disable
+          = button_to t(".disable"), admin_enterprise_connected_app_path(connected_app.id, enterprise_id: enterprise.id), method: :delete
+  %hr
+  .connected-app__description
+    = t ".description_html"

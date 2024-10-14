@@ -4,13 +4,14 @@
 #
 # Here we store keys and links to access the app.
 class ConnectedApp < ApplicationRecord
-  TYPES = ['discover_regen', 'affiliate_sales_data'].freeze
+  TYPES = ['discover_regen', 'affiliate_sales_data', 'vine'].freeze
 
   belongs_to :enterprise
   after_destroy :disconnect
 
   scope :discover_regen, -> { where(type: "ConnectedApp") }
   scope :affiliate_sales_data, -> { where(type: "ConnectedApps::AffiliateSalesData") }
+  scope :vine, -> { where(type: "ConnectedApps::Vine") }
 
   scope :connecting, -> { where(data: nil) }
   scope :ready, -> { where.not(data: nil) }
