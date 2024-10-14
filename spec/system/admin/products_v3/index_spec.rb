@@ -89,7 +89,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           let(:producer2) { create(:supplier_enterprise, name: "Producer B") }
 
           it "displays a select box for suppliers, with the appropriate supplier selected" do
-            producer3 = create(:supplier_enterprise, name: "Producer C")
+           create(:supplier_enterprise, name: "Producer C")
             variant1.update!(supplier: producer1)
             variant2a.update!(supplier: producer2)
 
