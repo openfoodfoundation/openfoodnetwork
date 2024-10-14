@@ -80,7 +80,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         it "when I have one enterprise" do
           visit spree.admin_products_path
 
-          expect(page).to_not have_select "Producer"
+          expect(page).not_to have_select "Producer"
         end
 
         context "when I have multiple enterprises" do
@@ -89,7 +89,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           let(:producer2) { create(:supplier_enterprise, name: "Producer B") }
 
           it "displays a select box for suppliers, with the appropriate supplier selected" do
-           create(:supplier_enterprise, name: "Producer C")
+            create(:supplier_enterprise, name: "Producer C")
             variant1.update!(supplier: producer1)
             variant2a.update!(supplier: producer2)
 
@@ -354,7 +354,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       it "producer filter does not show" do
         visit admin_products_url
 
-        expect(page).to_not have_select "Producers"
+        expect(page).not_to have_select "Producers"
       end
     end
 
