@@ -107,6 +107,8 @@ RSpec.describe SuppliedProductBuilder do
       expect(subject).to be_persisted
       expect(subject.name).to eq("Fillet Steak - 201g x 1 Steak")
       expect(subject.variant_unit).to eq("items")
+      expect(subject.product.variant_unit_scale).to eq(nil)
+      expect(subject.product.variant_unit_with_scale).to eq("items")
       expect(subject.unit_value).to eq(1)
     end
   end

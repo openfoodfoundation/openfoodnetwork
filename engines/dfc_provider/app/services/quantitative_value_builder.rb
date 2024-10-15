@@ -31,11 +31,15 @@ class QuantitativeValueBuilder < DfcBuilder
     measure, unit_name, unit_scale = map_unit(quantity.unit)
     value = quantity.value.to_f * unit_scale
 
+    # Import invalid value as one item.
     if measure.in?(%w(weight volume)) && value <= 0
       measure = "items"
       unit_name = "items"
       value = 1
     end
+
+    # Items don't have a scale, only a value on the variant.
+    unit_scale = nil if measure == "items"
 
     product.variant_unit = measure
     product.variant_unit_name = unit_name if measure == "items"
