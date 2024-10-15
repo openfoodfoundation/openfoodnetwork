@@ -441,11 +441,11 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         expect(page).not_to have_css('form.disabled-section#filters')
       end
 
-      describe "producer" do
-        # it "can select only the producers that I manage"
+      xdescribe "producer" do
+        it "can select only the producers that I manage"
 
         context " when I manage only one producer" do
-          # it "producer select doesn't show, and is saved correctly"
+          it "producer select doesn't show, and is saved correctly"
         end
       end
 
