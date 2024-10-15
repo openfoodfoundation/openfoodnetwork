@@ -83,8 +83,10 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
-    # duplicate old path for reference when admin_style_v3 enabled
-    resources :products_old, to: 'products#index', only: :index
+    if Rails.env.development?
+      # duplicate old path for reference when admin_style_v3 enabled
+      resources :products_old, to: 'products#index', only: :index
+    end
 
     get '/variants/search', :to => "variants#search", :as => :search_variants
 
