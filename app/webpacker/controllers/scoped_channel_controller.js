@@ -1,6 +1,5 @@
 import { Controller } from "stimulus";
 import consumer from "../channels/consumer";
-import CableReady from "cable_ready";
 
 export default class extends Controller {
   static values = { id: String };
@@ -10,7 +9,9 @@ export default class extends Controller {
       { channel: "ScopedChannel", id: this.idValue },
       {
         received(data) {
-          if (data.cableReady) CableReady.perform(data.operations);
+          if (!data.selector) return;
+
+          document.querySelector(data.selector).innerHTML = data.html;
         },
       }
     );

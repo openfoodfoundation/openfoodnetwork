@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe ReportJob do
-  include CableReady::Broadcaster
-
   let(:report_args) {
     { report_class:, user:, params:, format:, blob: }
   }
@@ -41,8 +39,10 @@ RSpec.describe ReportJob do
     with_channel = report_args.merge(channel:)
 
     ReportJob.perform_later(**with_channel)
-
-    expect(cable_ready[channel]).to receive(:broadcast).and_call_original
+    expect(ActionCable.server).to receive(:broadcast).with(
+      channel,
+      instance_of(Hash)
+    ).twice.and_call_original
 
     expect {
       perform_enqueued_jobs(only: ReportJob)
