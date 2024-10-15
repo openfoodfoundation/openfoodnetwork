@@ -57,7 +57,7 @@ RSpec.describe QuantitativeValueBuilder do
 
       expect(variant.variant_unit).to eq "items"
       expect(variant.variant_unit_name).to eq "Jar"
-      expect(variant.variant_unit_scale).to eq 1
+      expect(variant.variant_unit_scale).to eq nil
       expect(variant.unit_value).to eq 3
     end
 
@@ -141,7 +141,7 @@ RSpec.describe QuantitativeValueBuilder do
 
       expect(variant.variant_unit).to eq "items"
       expect(variant.variant_unit_name).to eq "dozen"
-      expect(variant.variant_unit_scale).to eq 12
+      expect(variant.variant_unit_scale).to eq nil
       expect(variant.unit_value).to eq 24
     end
   end
