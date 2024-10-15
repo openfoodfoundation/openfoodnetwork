@@ -50,8 +50,6 @@ RSpec.describe '
       expect(page.find("#product_description",
                        visible: false).value).to eq('<div>A description...</div>')
       expect(page.find("#product_variant_unit_field")).to have_content 'Weight (kg)'
-
-      expect(page).to have_content "Name can't be blank"
     end
 
     it "display all attributes when submitting with error: Unit Value must be grater than 0" do
@@ -111,21 +109,23 @@ RSpec.describe '
 
       expect(current_path).to eq spree.admin_products_path
       expect(flash_message).to eq('Product "A new product !!!" has been successfully created!')
+
       product = Spree::Product.find_by(name: 'A new product !!!')
-      expect(product.variant_unit).to eq('weight')
-      expect(product.variant_unit_scale).to eq(1000)
-      expect(product.variants.first.unit_value).to eq(5000)
-      expect(product.variants.first.unit_description).to eq("")
-      expect(product.variant_unit_name).to eq("")
-      expect(product.variants.first.primary_taxon_id).to eq(taxon.id)
-      expect(product.variants.first.price.to_s).to eq('19.99')
-      expect(product.on_hand).to eq(5)
-      expect(product.variants.first.tax_category_id).to eq(tax_category.id)
-      expect(product.variants.first.shipping_category).to eq(shipping_category)
+      variant = product.variants.first
+
       expect(product.description).to eq("<div>A description...</div>")
       expect(product.group_buy).to be_falsey
 
-      variant = product.variants.first
+      expect(variant.variant_unit).to eq('weight')
+      expect(variant.variant_unit_scale).to eq(1000)
+      expect(variant.unit_value).to eq(5000)
+      expect(variant.unit_description).to eq("")
+      expect(variant.variant_unit_name).to eq("")
+      expect(variant.primary_taxon_id).to eq(taxon.id)
+      expect(variant.price.to_s).to eq('19.99')
+      expect(variant.on_hand).to eq(5)
+      expect(variant.tax_category_id).to eq(tax_category.id)
+      expect(variant.shipping_category).to eq(shipping_category)
       expect(variant.unit_presentation).to eq("5kg")
       expect(variant.supplier).to eq(supplier)
     end
@@ -167,7 +167,7 @@ RSpec.describe '
       click_button 'Create'
 
       expect(current_path).to eq spree.admin_products_path
-      expect(page).to have_content "Unit value is not a number"
+      expect(page).to have_content "Unit value can't be blank"
     end
 
     it "creating product with empty product category fails" do
@@ -638,47 +638,6 @@ RSpec.describe '
 
         uri = URI.parse(current_url)
         expect("#{uri.path}?#{uri.query}").to eq spree.admin_product_images_path(product, filter)
-      end
-    end
-
-    context "editing a product's variant unit scale" do
-      let(:product) { create(:simple_product, name: 'a product', supplier_id: supplier2.id) }
-
-      before do
-        allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
-        visit spree.edit_admin_product_path product
-      end
-
-      shared_examples 'selecting a unit from dropdown' do |dropdown_option,
-                                                           var_unit:, var_unit_scale:|
-        it 'checks if the dropdown selection is persistent' do
-          select dropdown_option, from: 'product_variant_unit_with_scale'
-          click_button 'Update'
-          expect(flash_message).to eq('Product "a product" has been successfully updated!')
-          product.reload
-          expect(product.variant_unit).to eq(var_unit)
-          expect(page).to have_select('product_variant_unit_with_scale', selected: dropdown_option)
-          expect(product.variant_unit_scale).to eq(var_unit_scale)
-        end
-      end
-
-      describe 'a shared example' do
-        it_behaves_like 'selecting a unit from dropdown', 'Weight (g)', var_unit: 'weight',
-                                                                        var_unit_scale: 1
-        it_behaves_like 'selecting a unit from dropdown', 'Weight (kg)', var_unit: 'weight',
-                                                                         var_unit_scale: 1000
-        it_behaves_like 'selecting a unit from dropdown', 'Weight (T)', var_unit: 'weight',
-                                                                        var_unit_scale: 1_000_000
-        it_behaves_like 'selecting a unit from dropdown', 'Weight (oz)', var_unit: 'weight',
-                                                                         var_unit_scale: 28.35
-        it_behaves_like 'selecting a unit from dropdown', 'Weight (lb)', var_unit: 'weight',
-                                                                         var_unit_scale: 453.6
-        it_behaves_like 'selecting a unit from dropdown', 'Volume (mL)', var_unit: 'volume',
-                                                                         var_unit_scale: 0.001
-        it_behaves_like 'selecting a unit from dropdown', 'Volume (L)', var_unit: 'volume',
-                                                                        var_unit_scale: 1
-        it_behaves_like 'selecting a unit from dropdown', 'Volume (kL)', var_unit: 'volume',
-                                                                         var_unit_scale: 1000
       end
     end
   end

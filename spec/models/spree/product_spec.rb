@@ -19,8 +19,8 @@ module Spree
         end
 
         it 'fails to duplicate invalid product' do
-          # Existing product is invalid:
-          product.update_columns(variant_unit: nil)
+          # cloned product will be invalid
+          product.update_columns(name: "l" * 254)
 
           expect{ product.duplicate }.to raise_error(ActiveRecord::ActiveRecordError)
         end
@@ -123,27 +123,6 @@ module Spree
       it { is_expected.to validate_length_of(:name).is_at_most(255) }
       it { is_expected.to validate_length_of(:sku).is_at_most(255) }
 
-      context "unit value" do
-        it "requires a unit value when variant unit is weight" do
-          expect(build(:simple_product, variant_unit: 'weight', variant_unit_name: 'name',
-                                        unit_value: nil)).not_to be_valid
-          expect(build(:simple_product, variant_unit: 'weight', variant_unit_name: 'name',
-                                        unit_value: 0)).not_to be_valid
-        end
-
-        it "requires a unit value when variant unit is volume" do
-          expect(build(:simple_product, variant_unit: 'volume', variant_unit_name: 'name',
-                                        unit_value: nil)).not_to be_valid
-          expect(build(:simple_product, variant_unit: 'volume', variant_unit_name: 'name',
-                                        unit_value: 0)).not_to be_valid
-        end
-
-        it "does not require a unit value when variant unit is items" do
-          expect(build(:simple_product, variant_unit: 'items', variant_unit_name: 'name',
-                                        unit_value: nil)).to be_valid
-        end
-      end
-
       context "when the product has variants" do
         let(:product) do
           product = create(:simple_product)
@@ -153,29 +132,6 @@ module Spree
 
         it { is_expected.to validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
 
-        it "requires a unit" do
-          product.variant_unit = nil
-          expect(product).not_to be_valid
-        end
-
-        %w(weight volume).each do |unit|
-          context "when unit is #{unit}" do
-            it "is valid when unit scale is set and unit name is not" do
-              product.variant_unit = unit
-              product.variant_unit_scale = 1
-              product.variant_unit_name = nil
-              expect(product).to be_valid
-            end
-
-            it "is invalid when unit scale is not set" do
-              product.variant_unit = unit
-              product.variant_unit_scale = nil
-              product.variant_unit_name = nil
-              expect(product).not_to be_valid
-            end
-          end
-        end
-
         context "saving a new product" do
           let!(:product){ Spree::Product.new }
           let!(:shipping_category){ create(:shipping_category) }
@@ -184,62 +140,127 @@ module Spree
 
           before do
             create(:stock_location)
+          end
+
+          it "copies properties to the first standard variant" do
             product.primary_taxon_id = taxon.id
             product.name = "Product1"
             product.variant_unit = "weight"
             product.variant_unit_scale = 1000
             product.unit_value = 1
+            product.unit_description = "some product"
             product.price = 4.27
             product.shipping_category_id = shipping_category.id
             product.supplier_id = supplier.id
-            product.save!
-          end
+            product.save(context: :create_and_create_standard_variant)
 
-          it "copies properties to the first standard variant" do
             expect(product.variants.reload.length).to eq 1
             standard_variant = product.variants.reload.first
+
             expect(standard_variant).to be_valid
+            expect(standard_variant.variant_unit).to eq("weight")
+            expect(standard_variant.variant_unit_scale).to eq(1000)
+            expect(standard_variant.unit_value).to eq(1)
+            expect(standard_variant.unit_description).to eq("some product")
             expect(standard_variant.price).to eq 4.27
             expect(standard_variant.shipping_category).to eq shipping_category
             expect(standard_variant.primary_taxon).to eq taxon
             expect(standard_variant.supplier).to eq supplier
           end
-        end
 
-        context "when the unit is items" do
-          it "is valid when unit name is set and unit scale is not" do
-            product.variant_unit = 'items'
-            product.variant_unit_name = 'loaf'
-            product.variant_unit_scale = nil
-            expect(product).to be_valid
+          context "with variant attributes" do
+            it {
+              is_expected.to validate_presence_of(:variant_unit)
+                .on(:create_and_create_standard_variant)
+            }
+            it {
+              is_expected.to validate_presence_of(:supplier_id)
+                .on(:create_and_create_standard_variant)
+            }
+            it {
+              is_expected.to validate_presence_of(:primary_taxon_id)
+                .on(:create_and_create_standard_variant)
+            }
+
+            describe "unit_value" do
+              subject { build(:simple_product, variant_unit: "items") }
+
+              it {
+                is_expected.to validate_numericality_of(:unit_value).is_greater_than(0)
+                  .on(:create_and_create_standard_variant)
+              }
+              it {
+                is_expected.not_to validate_presence_of(:unit_value)
+                  .on(:create_and_create_standard_variant)
+              }
+
+              ["weight", "volume"].each do |variant_unit|
+                context "when variant_unit is #{variant_unit}" do
+                  subject { build(:simple_product, variant_unit:) }
+
+                  it {
+                    is_expected.to validate_presence_of(:unit_value)
+                      .on(:create_and_create_standard_variant)
+                  }
+                end
+              end
+
+              describe "unit_description" do
+                it {
+                  is_expected.not_to validate_presence_of(:unit_description)
+                    .on(:create_and_create_standard_variant)
+                }
+
+                context "when variant_unit is et and unit_value is nil" do
+                  subject {
+                    build(:simple_product, variant_unit: "items", unit_value: nil,
+                                           unit_description: "box")
+                  }
+
+                  it {
+                    is_expected.to validate_presence_of(:unit_description)
+                      .on(:create_and_create_standard_variant)
+                  }
+                end
+              end
+
+              describe "variant_unit_scale" do
+                it {
+                  is_expected.not_to validate_presence_of(:variant_unit_scale)
+                    .on(:create_and_create_standard_variant)
+                }
+
+                ["weight", "volume"].each do |variant_unit|
+                  context "when variant_unit is #{variant_unit}" do
+                    subject { build(:simple_product, variant_unit:) }
+
+                    it {
+                      is_expected.to validate_presence_of(:variant_unit_scale)
+                        .on(:create_and_create_standard_variant)
+                    }
+                  end
+                end
+              end
+
+              describe "variant_unit_name" do
+                subject { build(:simple_product, variant_unit: "volume") }
+
+                it {
+                  is_expected.not_to validate_presence_of(:variant_unit_name)
+                    .on(:create_and_create_standard_variant)
+                }
+
+                context "when variant_unit is items" do
+                  subject { build(:simple_product, variant_unit: "items") }
+
+                  it {
+                    is_expected.to validate_presence_of(:variant_unit_name)
+                      .on(:create_and_create_standard_variant)
+                  }
+                end
+              end
+            end
           end
-
-          it "is invalid when unit name is not set" do
-            product.variant_unit = 'items'
-            product.variant_unit_name = nil
-            product.variant_unit_scale = nil
-            expect(product).not_to be_valid
-          end
-        end
-      end
-
-      context "a basic product" do
-        let(:product) { build_stubbed(:simple_product) }
-
-        it "requires variant unit fields" do
-          product.variant_unit = nil
-          product.variant_unit_name = nil
-          product.variant_unit_scale = nil
-
-          expect(product).not_to be_valid
-        end
-
-        it "requires a unit scale when variant unit is weight" do
-          product.variant_unit = 'weight'
-          product.variant_unit_scale = nil
-          product.variant_unit_name = nil
-
-          expect(product).not_to be_valid
         end
       end
 
@@ -327,30 +348,6 @@ module Spree
             expect { product.touch }.not_to raise_error
           end
         end
-      end
-
-      it "updates units when saved change to variant unit" do
-        product.variant_unit = 'items'
-        product.variant_unit_scale = nil
-        product.variant_unit_name = 'loaf'
-        product.save!
-
-        expect(product.variant_unit_name).to eq 'loaf'
-
-        product.update(variant_unit_name: 'bag')
-
-        expect(product.variant_unit_name).to eq 'bag'
-
-        product.variant_unit = 'weight'
-        product.variant_unit_scale = 1
-        product.variant_unit_name = 'g'
-        product.save!
-
-        expect(product.variant_unit).to eq 'weight'
-
-        product.update(variant_unit: 'volume')
-
-        expect(product.variant_unit).to eq 'volume'
       end
     end
 
@@ -679,28 +676,6 @@ module Spree
 
         expect(p1).to be_in_order_cycle oc1
         expect(p1).not_to be_in_order_cycle oc2
-      end
-    end
-
-    describe "variant units" do
-      context "when the product already has a variant unit set" do
-        let!(:p) {
-          create(:simple_product,
-                 variant_unit: 'weight',
-                 variant_unit_scale: 1,
-                 variant_unit_name: nil)
-        }
-
-        it "updates its variants unit values" do
-          v = create(:variant, unit_value: 1, product: p)
-          p.reload
-
-          expect(v.unit_presentation).to eq "1g"
-
-          p.update!(variant_unit: 'volume', variant_unit_scale: 0.001)
-
-          expect(v.reload.unit_presentation).to eq "1L"
-        end
       end
     end
 

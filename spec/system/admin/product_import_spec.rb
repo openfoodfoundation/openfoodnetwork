@@ -704,8 +704,9 @@ RSpec.describe "Product Import" do
 
       expect(page).to have_input("[products][2][variants_attributes][0][display_name]",
                                  text: "Cupcake")
-      expect(page).to have_select "_products_2_variant_unit_with_scale", selected: "Items"
-      expect(page).to have_input("[products][2][variant_unit_name]",
+      expect(page).to have_select("_products_2_variants_attributes_0_variant_unit_with_scale",
+                                  selected: "Items")
+      expect(page).to have_input("[products][2][variants_attributes][0][variant_unit_name]",
                                  text: "Bunch")
       within(:xpath, '//*[@id="products-form"]/table/tbody[3]/tr[2]/td[7]') do
         expect(page).to have_content("5")

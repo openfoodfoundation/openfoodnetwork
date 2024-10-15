@@ -20,10 +20,8 @@ FactoryBot.define do
 
     unit_value { 1 }
     unit_description { '' }
-
     variant_unit { 'weight' }
     variant_unit_scale { 1 }
-    variant_unit_name { '' }
 
     # ensure stock item will be created for this products master
     before(:create) { DefaultStockLocation.find_or_create }

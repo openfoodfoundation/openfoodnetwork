@@ -1,15 +1,14 @@
 # Controller for "New Products" form (spree/admin/products/new)
 angular.module("admin.products")
   .controller "unitsCtrl", ($scope, VariantUnitManager, OptionValueNamer, UnitPrices, PriceParser) ->
-    $scope.product = { master: {} }
-    $scope.product.master.product = $scope.product
+    $scope.product = {}
     $scope.placeholder_text = ""
 
-    $scope.$watchCollection '[product.variant_unit_with_scale, product.master.unit_value_with_description, product.price, product.variant_unit_name]', ->
+    $scope.$watchCollection '[product.variant_unit_with_scale, product.unit_value_with_description, product.price, product.variant_unit_name]', ->
       $scope.processVariantUnitWithScale()
       $scope.processUnitValueWithDescription()
       $scope.processUnitPrice()
-      $scope.placeholder_text = new OptionValueNamer($scope.product.master).name() if $scope.product.variant_unit_scale
+      $scope.placeholder_text = new OptionValueNamer($scope.product).name() if $scope.product.variant_unit_scale
 
     $scope.variant_unit_options = VariantUnitManager.variantUnitOptions()
 
@@ -38,24 +37,24 @@ angular.module("admin.products")
     # Extract unit_value and unit_description from text field unit_value_with_description,
     # and update hidden variant fields
     $scope.processUnitValueWithDescription = ->
-      if $scope.product.master.hasOwnProperty("unit_value_with_description")
-        match = $scope.product.master.unit_value_with_description.match(/^([\d\.,]+(?= *|$)|)( *)(.*)$/)
+      if $scope.product.hasOwnProperty("unit_value_with_description")
+        match = $scope.product.unit_value_with_description.match(/^([\d\.,]+(?= *|$)|)( *)(.*)$/)
         if match
-          $scope.product.master.unit_value  = PriceParser.parse(match[1])
-          $scope.product.master.unit_value  = null if isNaN($scope.product.master.unit_value)
-          $scope.product.master.unit_value = window.bigDecimal.multiply($scope.product.master.unit_value, $scope.product.variant_unit_scale, 2) if $scope.product.master.unit_value && $scope.product.variant_unit_scale
-          $scope.product.master.unit_description = match[3]
+          $scope.product.unit_value  = PriceParser.parse(match[1])
+          $scope.product.unit_value  = null if isNaN($scope.product.unit_value)
+          $scope.product.unit_value = window.bigDecimal.multiply($scope.product.unit_value, $scope.product.variant_unit_scale, 2) if $scope.product.unit_value && $scope.product.variant_unit_scale
+          $scope.product.unit_description = match[3]
       else
-        value = $scope.product.master.unit_value
-        value = window.bigDecimal.divide(value, $scope.product.variant_unit_scale, 2) if $scope.product.master.unit_value && $scope.product.variant_unit_scale
-        $scope.product.master.unit_value_with_description = value + " " + $scope.product.master.unit_description
+        value = $scope.product.unit_value
+        value = window.bigDecimal.divide(value, $scope.product.variant_unit_scale, 2) if $scope.product.unit_value && $scope.product.variant_unit_scale
+        $scope.product.unit_value_with_description = value + " " + $scope.product.unit_description
 
     # Calculate unit price based on product price and variant_unit_scale
     $scope.processUnitPrice = ->
       price = $scope.product.price
       scale = $scope.product.variant_unit_scale
       unit_type = $scope.product.variant_unit
-      unit_value = $scope.product.master.unit_value
+      unit_value = $scope.product.unit_value
       variant_unit_name = $scope.product.variant_unit_name
       $scope.unit_price = UnitPrices.displayableUnitPrice(price, scale, unit_type, unit_value, variant_unit_name)
 

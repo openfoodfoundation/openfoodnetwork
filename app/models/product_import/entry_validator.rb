@@ -6,8 +6,6 @@
 
 module ProductImport
   class EntryValidator
-    SKIP_VALIDATE_ON_UPDATE = [:description].freeze
-
     # rubocop:disable Metrics/ParameterLists
     def initialize(current_user, import_time, spreadsheet_data, editable_enterprises,
                    inventory_permissions, reset_counts, import_settings, all_entries)
@@ -22,9 +20,8 @@ module ProductImport
     end
     # rubocop:enable Metrics/ParameterLists
 
-    def self.non_updatable_fields
+    def self.non_updatable_variant_fields
       {
-        description: :description,
         unit_type: :variant_unit_scale,
         variant_unit_name: :variant_unit_name,
       }
@@ -67,8 +64,7 @@ module ProductImport
 
     def mark_as_new_variant(entry, product_id)
       variant_attributes = entry.assignable_attributes.except(
-        'id', 'product_id', 'on_hand', 'on_demand', 'variant_unit', 'variant_unit_name',
-        'variant_unit_scale'
+        'id', 'product_id', 'on_hand', 'on_demand'
       )
       # Variant needs a product. Product needs to be assigned first in order for
       # delegate to work. name= will fail otherwise.
@@ -297,11 +293,11 @@ module ProductImport
       end
 
       products.flat_map(&:variants).each do |existing_variant|
-        unit_scale = existing_variant.product.variant_unit_scale
+        unit_scale = existing_variant.variant_unit_scale
         unscaled_units = entry.unscaled_units.to_f || 0
         entry.unit_value = unscaled_units * unit_scale unless unit_scale.nil?
 
-        if entry_matches_existing_variant?(entry, existing_variant)
+        if entry.match_inventory_variant?(existing_variant)
           variant_override = create_inventory_item(entry, existing_variant)
           return validate_inventory_item(entry, variant_override)
         end
@@ -309,17 +305,6 @@ module ProductImport
 
       mark_as_invalid(entry, attribute: 'product',
                              error: I18n.t('admin.product_import.model.not_found'))
-    end
-
-    def entry_matches_existing_variant?(entry, existing_variant)
-      display_name_are_the_same?(entry, existing_variant) &&
-        existing_variant.unit_value == entry.unit_value.to_f
-    end
-
-    def display_name_are_the_same?(entry, existing_variant)
-      return true if entry.display_name.blank? && existing_variant.display_name.blank?
-
-      existing_variant.display_name == entry.display_name
     end
 
     def category_validation(entry)
@@ -364,13 +349,13 @@ module ProductImport
         return
       end
 
-      products.each { |product| product_field_errors(entry, product) }
-
       products.flat_map(&:variants).each do |existing_variant|
-        if entry_matches_existing_variant?(entry, existing_variant) &&
-           existing_variant.deleted_at.nil?
-          return mark_as_existing_variant(entry, existing_variant)
-        end
+        next unless entry.match_variant?(existing_variant) &&
+                    existing_variant.deleted_at.nil?
+
+        variant_field_errors(entry, existing_variant)
+
+        return mark_as_existing_variant(entry, existing_variant)
       end
 
       mark_as_new_variant(entry, products.first.id)
@@ -392,8 +377,7 @@ module ProductImport
 
     def mark_as_existing_variant(entry, existing_variant)
       existing_variant.assign_attributes(
-        entry.assignable_attributes.except('id', 'product_id', 'variant_unit', 'variant_unit_name',
-                                           'variant_unit_scale')
+        entry.assignable_attributes.except('id', 'product_id')
       )
       check_on_hand_nil(entry, existing_variant)
 
@@ -406,11 +390,10 @@ module ProductImport
       end
     end
 
-    def product_field_errors(entry, existing_product)
-      EntryValidator.non_updatable_fields.each do |display_name, attribute|
-        next if attributes_match?(attribute, existing_product, entry) ||
-                attributes_blank?(attribute, existing_product, entry)
-        next if ignore_when_updating_product?(attribute)
+    def variant_field_errors(entry, existing_variant)
+      EntryValidator.non_updatable_variant_fields.each do |display_name, attribute|
+        next if attributes_match?(attribute, existing_variant, entry) ||
+                attributes_blank?(attribute, existing_variant, entry)
 
         mark_as_invalid(entry, attribute: display_name,
                                error: I18n.t('admin.product_import.model.not_updatable'))
@@ -421,10 +404,6 @@ module ProductImport
       existing_product_value = existing_product.public_send(attribute)
       entry_value = entry.public_send(attribute)
       existing_product_value == convert_to_trusted_type(entry_value, existing_product_value)
-    end
-
-    def ignore_when_updating_product?(attribute)
-      SKIP_VALIDATE_ON_UPDATE.include? attribute
     end
 
     def convert_to_trusted_type(untrusted_attribute, trusted_attribute)

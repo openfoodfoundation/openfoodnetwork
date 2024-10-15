@@ -49,7 +49,7 @@ module Reporting
 
         def group_buy_unit_size(line_items)
           unit_size = line_items.first.variant.product.group_buy_unit_size || 0.0
-          unit_size / (line_items.first.product.variant_unit_scale || 1)
+          unit_size / (line_items.first.variant.variant_unit_scale || 1)
         end
 
         def max_quantity_excess(line_items)
@@ -64,7 +64,7 @@ module Reporting
         end
 
         def scaled_unit_value(variant)
-          (variant.unit_value || 0) / (variant.product.variant_unit_scale || 1)
+          (variant.unit_value || 0) / (variant.variant_unit_scale || 1)
         end
 
         def option_value_value(line_items)
@@ -98,7 +98,7 @@ module Reporting
         end
 
         def scaled_final_weight_volume(line_item)
-          (line_item.final_weight_volume || 0) / (line_item.product.variant_unit_scale || 1)
+          (line_item.final_weight_volume || 0) / (line_item.variant.variant_unit_scale || 1)
         end
 
         def total_available(line_items)

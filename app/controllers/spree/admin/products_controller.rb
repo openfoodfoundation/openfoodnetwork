@@ -39,7 +39,7 @@ module Spree
       def create
         delete_stock_params_and_set_after do
           @object.attributes = permitted_resource_params
-          if @object.save
+          if @object.save(context: :create_and_create_standard_variant)
             flash[:success] = flash_message_for(@object, :successfully_created)
             redirect_after_save
           else

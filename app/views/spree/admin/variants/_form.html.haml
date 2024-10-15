@@ -1,83 +1,112 @@
-.label-block.left.six.columns.alpha{'ng-app' => 'admin.products', 'ng-controller' => 'variantUnitsCtrl'}
-  .field
-    = f.label :display_name, t('.display_name')
-    = f.text_field :display_name, class: "fullwidth", placeholder: t('.display_name_placeholder')
-  .field
-    = f.label :display_as, t('.display_as')
-    = f.text_field :display_as, class: "fullwidth", placeholder: t('.display_as_placeholder')
+%div{'data-controller': "edit-variant", id: "edit_variant"}
+  .label-block.left.six.columns.alpha
+    %script= render partial: "admin/shared/global_var_ofn", formats: :js,
+      locals: { name: :available_units_sorted, value: WeightsAndMeasures.available_units_sorted }
 
-  - if @product.variant_unit != 'items'
-    .field
-      = label_tag :unit_value_human, "#{t('admin.'+@product.variant_unit)} ({{unitName(#{@product.variant_unit_scale}, '#{@product.variant_unit}')}})"
-      = hidden_field_tag 'product_variant_unit_scale', @product.variant_unit_scale
-      = number_field_tag :unit_value_human, nil, {class: "fullwidth", step: 0.01, 'ng-model' => 'unit_value_human', 'ng-change' => 'updateValue()'}
-      = f.number_field :unit_value, {hidden: true, 'ng-value' => 'unit_value'}
+    %script= render partial: "admin/shared/global_var_ofn", formats: :js,
+      locals: { name: :currency_config, value: Api::CurrencyConfigSerializer.new({}) }
 
-  .field
-    = f.label :unit_description, t(:spree_admin_unit_description)
-    = f.text_field :unit_description, class: "fullwidth", placeholder: t('admin.products.unit_name_placeholder')
+    .field
+      = f.label :display_name, t('.display_name')
+      = f.text_field :display_name, class: "fullwidth", placeholder: t('.display_name_placeholder')
 
-  %div
-    .field
-      = f.label :sku, t('.sku')
-      = f.text_field :sku, class: 'fullwidth'
-    .field
-      = f.label :price, t('.price')
-      = f.text_field :price, class: 'fullwidth', "ng-model" => "variant.price", "ng-init" => "variant.price = '#{number_to_currency(@variant.price, unit: '')&.strip}'"
-    .field
-      = hidden_field_tag 'product_variant_unit', @product.variant_unit
-      = hidden_field_tag 'product_variant_unit_name', @product.variant_unit_name
-      = f.field_container :unit_price do
-        %div{style: "display: flex"}
-          = f.label :unit_price, t(".unit_price"), {style: "display: inline-block"}
-          %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
-            "question-mark-with-tooltip-append-to-body" => "true",
-            "question-mark-with-tooltip-placement" => "top",
-            "question-mark-with-tooltip-animation" => true, 
-            key: "'js.admin.unit_price_tooltip'"}
-        %input{ "type" => "text", "id" => "variant_unit_price", "name" => "variant[unit_price]",
-          "class" => 'fullwidth', "disabled" => true, "ng-model" => "unit_price"}
-        %div{style: "color: black"}
-          = t("spree.admin.products.new.unit_price_legend")
-    %div{ 'set-on-demand' => '' }
-      .field.checkbox
-        %label
-          = f.check_box :on_demand
-          = t(:on_demand)
-        %div{'ofn-with-tip' => t('admin.products.variants.to_order_tip')}
-          %a= t('admin.whats_this')
+    .field{ 'data-controller': 'toggle-control', 'data-toggle-control-match-value': 'items' }
+      = f.label :unit_scale do 
+        = t('.unit_scale')
+        = content_tag(:span, ' *', class: 'required')
+      = f.hidden_field :variant_unit
+      = f.hidden_field :variant_unit_scale
+      = f.select :variant_unit_with_scale,
+          options_for_select(WeightsAndMeasures.variant_unit_options, @variant.variant_unit_with_scale),
+          { include_blank: true },
+          { class: "fullwidth no-input", 'aria-label': t('.unit_scale'), data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }', action: "change->toggle-control#displayIfMatch" } }
+      = error_message_on @variant, :variant_unit, 'data-toggle-control-target': 'control'
       .field
-        = f.label :on_hand, t(:on_hand)
-        .fullwidth
-          = f.text_field :on_hand
+        = f.text_field :variant_unit_name, 'aria-label': t('items'), 'data-toggle-control-target': 'control', style: (@variant.variant_unit == "items" ? "" : "display: none")
+        = error_message_on @variant, :variant_unit_name, 'data-toggle-control-target': 'control'
+    
+    .field.popout{'data-controller': "popout", 'data-popout-update-display-value': "false"}
+      = f.label :unit do
+        = t('.unit')
+        = content_tag(:span, ' *', class: 'required')
+      = f.button :unit_to_display, class: "popout__button", 'aria-label': t('.unit'), 'data-popout-target': "button" do
+        = @variant.unit_to_display # Show the generated summary of unit values
+      %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
+        .field
+          -# Show a composite field for unit_value and unit_description
+          = f.hidden_field :unit_value
+          = f.hidden_field :unit_description
+          = f.text_field :unit_value_with_description,
+              value: unit_value_with_description(@variant), 'aria-label': t('.unit_value'), required: true
+        .field
+          = f.label :display_as, t('.display_as')
+          = f.text_field :display_as, placeholder: VariantUnits::OptionValueNamer.new(@variant).name
+      = error_message_on @variant, :unit_value
 
-.right.six.columns.omega.label-block
-  - if @product.variant_unit != 'weight'
+    %div
+      .field
+        = f.label :sku, t('.sku')
+        = f.text_field :sku, class: 'fullwidth'
+      .field
+        = f.label :price do
+          = t('.price')
+          = content_tag(:span, ' *', class: 'required')
+        = f.text_field :price, class: 'fullwidth', value: number_to_currency(@variant.price, unit: '')&.strip
+      .field
+        = hidden_field_tag 'variant_variant_unit', @variant.variant_unit
+        = hidden_field_tag 'variant_variant_unit_name', @variant.variant_unit_name
+        = f.field_container :unit_price do
+          %div{style: "display: flex"}
+            = f.label :unit_price, t(".unit_price"), {style: "display: inline-block"}
+            %question-mark-with-tooltip{"question-mark-with-tooltip" => "_",
+              "question-mark-with-tooltip-append-to-body" => "true",
+              "question-mark-with-tooltip-placement" => "top",
+              "question-mark-with-tooltip-animation" => true, 
+              key: "'js.admin.unit_price_tooltip'"}
+          %input{ "type" => "text", "id" => "variant_unit_price", "name" => "variant[unit_price]", "class" => 'fullwidth', "disabled" => true}
+          %div{style: "color: black"}
+            = t("spree.admin.products.new.unit_price_legend")
+      %div
+        .field.checkbox
+          %label
+            = f.check_box :on_demand, data: { "action": "click->edit-variant#toggleOnHand" }
+            = t(:on_demand)
+
+          = render AdminTooltipComponent.new(text: t('admin.products.variants.to_order_tip'), link_text: t('admin.whats_this'), placement: "right")
+        .field
+          = f.label :on_hand, t(:on_hand)
+          .fullwidth
+            = f.text_field :on_hand, data: { "edit-variant-target": "onHand" }
+
+  .right.six.columns.omega.label-block
     .field
       = f.label 'weight', t(:weight)+' (kg)'
       - value = number_with_precision(@variant.weight, precision: 3)
       = f.number_field 'weight', value: value, class: 'fullwidth', step: 0.001
 
-  - [:height, :width, :depth].each do |field|
+    - [:height, :width, :depth].each do |field|
+      .field
+        = f.label field, t(field)
+        - value = number_with_precision(@variant.send(field), precision: 2)
+        = f.number_field field, value: value, class: 'fullwidth', step: 0.01
+
     .field
-      = f.label field, t(field)
-      - value = number_with_precision(@variant.send(field), precision: 2)
-      = f.number_field field, value: value, class: 'fullwidth', step: 0.01
+      = f.label :tax_category, t(:tax_category), for: :tax_category_id
+      = f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: t(:none) }, { class: 'select2 fullwidth' })
 
-  .field
-    = f.label :tax_category, t(:tax_category), for: :tax_category_id
-    = f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: t(:none) }, { class: 'select2 fullwidth' })
+    .field
+      = f.label :shipping_category_id, t(:shipping_categories)
+      = f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, {}, { class: 'select2 fullwidth' })
 
-  .field
-    = f.label :shipping_category_id, t(:shipping_categories)
-    = f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, {}, { class: 'select2 fullwidth' })
+    .field
+      = f.label :primary_taxon, t('.variant_category')
+      = f.collection_select(:primary_taxon_id, Spree::Taxon.order(:name), :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
 
-  .field
-    = f.label :primary_taxon, t('spree.admin.products.primary_taxon_form.product_category')
-    = f.collection_select(:primary_taxon_id, Spree::Taxon.order(:name), :id, :name, { include_blank: true }, { class: "select2 fullwidth" })
+    .field
+      = f.label :supplier do
+        = t(:spree_admin_supplier)
+        = content_tag(:span, ' *', class: 'required')
 
-  .field
-    = f.label :supplier, t(:spree_admin_supplier)
-    = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
+      = f.collection_select(:supplier_id, @producers, :id, :name, {:include_blank => true}, {:class => "select2 fullwidth"})
 
-.clear
+  .clear

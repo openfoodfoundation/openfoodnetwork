@@ -72,19 +72,21 @@ RSpec.describe '
     end
 
     it "displays a select box for the unit of measure for the product's variants" do
-      p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1,
-                                      variant_unit_name: '')
+      create(:product, variant_unit: 'weight', variant_unit_scale: 1,
+                       variant_unit_name: '')
 
       visit spree.admin_products_path
+      click_expand_all
 
       expect(page).to have_select "variant_unit_with_scale", selected: "Weight (g)"
     end
 
     it "displays a text field for the item name when unit is set to 'Items'" do
-      p = FactoryBot.create(:product, variant_unit: 'items', variant_unit_scale: nil,
-                                      variant_unit_name: 'packet')
+      create(:product, variant_unit: 'items', variant_unit_scale: nil,
+                       variant_unit_name: 'packet')
 
       visit spree.admin_products_path
+      click_expand_all
 
       expect(page).to have_select "variant_unit_with_scale", selected: "Items"
       expect(page).to have_field "variant_unit_name", with: "packet"
@@ -145,17 +147,15 @@ RSpec.describe '
     end
 
     it "displays a unit value field (for each variant) for each product" do
-      p1 = FactoryBot.create(:product, price: 2.0, variant_unit: "weight",
-                                       variant_unit_scale: "1000")
-      v1 = FactoryBot.create(:variant, product: p1, price: 12.75,
-                                       unit_value: 1200, unit_description: "(small bag)",
-                                       display_as: "bag")
-      v2 = FactoryBot.create(:variant, product: p1, price: 2.50,
-                                       unit_value: 4800, unit_description: "(large bag)",
-                                       display_as: "bin")
+      p1 = create(:product, price: 2.0, variant_unit: "weight", variant_unit_scale: "1000")
+      v1 = create(:variant, product: p1, price: 12.75, unit_value: 1200, variant_unit_scale: "1000",
+                            unit_description: "(small bag)", display_as: "bag")
+      v2 = create(:variant, product: p1, price: 2.50, unit_value: 4800, variant_unit_scale: "1000",
+                            unit_description: "(large bag)", display_as: "bin")
 
       visit spree.admin_products_path
       expect(page).to have_selector "a.view-variants", count: 1
+
       all("a.view-variants").each(&:click)
 
       expect(page).to have_field "variant_unit_value_with_description", with: "1.2 (small bag)"
@@ -220,7 +220,7 @@ RSpec.describe '
     let!(:new_supplier) { create(:supplier_enterprise) }
     let!(:product) {
       create(:product, variant_unit: 'weight', variant_unit_scale: 1000, supplier_id: supplier.id)
-    }
+    } # Weight (kg)
 
     before do
       login_as_admin
@@ -249,6 +249,7 @@ RSpec.describe '
 
       # When I fill out variant details and hit update
       select new_supplier.name, from: 'producer_id'
+      tomselect_select "Weight (kg)", from: "variant_unit_with_scale"
       fill_in "variant_display_name", with: "Case of 12 Bottles"
       fill_in "variant_unit_value_with_description", with: "3 (12x250 mL bottles)"
       fill_in "variant_display_as", with: "Case"
@@ -290,6 +291,7 @@ RSpec.describe '
 
         within "tr#v_-1" do
           select supplier.name, from: 'producer_id'
+          tomselect_select "Weight (kg)", from: "variant_unit_with_scale"
           fill_in "variant_unit_value_with_description", with: "120"
           fill_in "variant_price", with: "6.66"
         end
@@ -304,6 +306,7 @@ RSpec.describe '
         end
 
         within "tr#v_-1" do
+          tomselect_select "Weight (g)", from: "variant_unit_with_scale"
           fill_in "variant_unit_value_with_description", with: "120g"
           fill_in "variant_price", with: "6.66"
           fill_in "variant_on_hand", with: "222"
@@ -322,6 +325,7 @@ RSpec.describe '
         end
 
         within "tr#v_-1" do
+          tomselect_select "Weight (g)", from: "variant_unit_with_scale"
           fill_in "variant_unit_value_with_description", with: "120g"
           fill_in "variant_price", with: "6.66"
           check "variant_on_demand"
@@ -335,12 +339,13 @@ RSpec.describe '
   end
 
   it "updating product attributes" do
-    s1 = FactoryBot.create(:supplier_enterprise)
-    s2 = FactoryBot.create(:supplier_enterprise)
-    t1 = FactoryBot.create(:taxon)
-    t2 = FactoryBot.create(:taxon)
-    p = FactoryBot.create(:product, supplier_id: s1.id, variant_unit: 'volume',
-                                    variant_unit_scale: 1, primary_taxon: t2, sku: "OLD SKU")
+    s1 = create(:supplier_enterprise)
+    create(:supplier_enterprise)
+    create(:taxon)
+    t2 = create(:taxon)
+    p = create(:product, supplier_id: s1.id, variant_unit: 'volume', variant_unit_scale: 1,
+                         primary_taxon: t2, sku: "OLD SKU")
+    variant = p.variants.first
 
     login_as_admin
     visit spree.admin_products_path
@@ -348,15 +353,20 @@ RSpec.describe '
     toggle_columns /^Category?/i, "Inherits Properties?", "SKU"
 
     within "tr#p_#{p.id}" do
+      page.find('a.view-variants').click
+
       expect(page).to have_field "product_name", with: p.name
-      expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
       expect(page).to have_checked_field "inherits_properties"
       expect(page).to have_field "product_sku", with: p.sku
 
       fill_in "product_name", with: "Big Bag Of Potatoes"
-      select "Weight (kg)", from: "variant_unit_with_scale"
       uncheck "inherits_properties"
       fill_in "product_sku", with: "NEW SKU"
+    end
+    within "tr#v_#{variant.id}" do
+      expect(page).to have_select "variant_unit_with_scale", selected: "Volume (L)"
+
+      tomselect_select "Weight (kg)", from: "variant_unit_with_scale"
     end
 
     click_button 'Save Changes', match: :first
@@ -364,17 +374,21 @@ RSpec.describe '
 
     p.reload
     expect(p.name).to eq "Big Bag Of Potatoes"
-    expect(p.variant_unit).to eq "weight"
-    expect(p.variant_unit_scale).to eq 1000 # Kg
     expect(p.inherits_properties).to be false
     expect(p.sku).to eq "NEW SKU"
+
+    variant.reload
+    expect(variant.variant_unit).to eq "weight"
+    expect(variant.variant_unit_scale).to eq 1000 # Kg
   end
 
   it "updating a product with a variant unit of 'items'" do
-    p = FactoryBot.create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
+    p = create(:product, variant_unit: 'weight', variant_unit_scale: 1000)
 
     login_as_admin
     visit spree.admin_products_path
+
+    page.find('a.view-variants').click
 
     expect(page).to have_select "variant_unit_with_scale", selected: "Weight (kg)"
 
@@ -384,10 +398,10 @@ RSpec.describe '
     click_button 'Save Changes', match: :first
     expect(page.find("#status-message")).to have_content "Changes saved."
 
-    p.reload
-    expect(p.variant_unit).to eq "items"
-    expect(p.variant_unit_scale).to be_nil
-    expect(p.variant_unit_name).to eq "loaf"
+    variant = p.variants.first
+    expect(variant.variant_unit).to eq "items"
+    expect(variant.variant_unit_scale).to be_nil
+    expect(variant.variant_unit_name).to eq "loaf"
   end
 
   it "updating a product with variants" do
@@ -853,14 +867,15 @@ RSpec.describe '
         expect(page).to have_field "product_name", with: p.name
 
         fill_in "product_name", with: "Big Bag Of Potatoes"
-        select "Weight (kg)", from: "variant_unit_with_scale"
 
         find("a.view-variants").click
       end
 
       within "#v_#{v.id}" do
         expect(page).to have_select "producer_id", selected: supplier_permitted.name
+
         select supplier_managed2.name, from: 'producer_id'
+        select "Weight (kg)", from: "variant_unit_with_scale"
         fill_in "variant_price", with: "20"
         fill_in "variant_on_hand", with: "18"
         fill_in "variant_display_as", with: "Big Bag"
@@ -872,8 +887,8 @@ RSpec.describe '
       p.reload
       v.reload
       expect(p.name).to eq "Big Bag Of Potatoes"
-      expect(p.variant_unit).to eq "weight"
-      expect(p.variant_unit_scale).to eq 1000 # Kg
+      expect(v.variant_unit).to eq "weight"
+      expect(v.variant_unit_scale).to eq 1000 # Kg
       expect(v.supplier).to eq supplier_managed2
       expect(v.display_as).to eq "Big Bag"
       expect(v.price).to eq 20.0

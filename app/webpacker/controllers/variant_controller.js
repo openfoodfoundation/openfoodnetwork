@@ -5,11 +5,17 @@ import OptionValueNamer from "js/services/option_value_namer";
 //
 export default class VariantController extends Controller {
   connect() {
-    // Assuming these will be available on the variant soon, just a quick hack to find the product fields:
-    const product = this.element.closest("[data-record-id]");
-    this.variantUnit = product.querySelector('[name$="[variant_unit]"]');
-    this.variantUnitScale = product.querySelector('[name$="[variant_unit_scale]"]');
-    this.variantUnitName = product.querySelector('[name$="[variant_unit_name]"]');
+    // idea: create a helper that includes a nice getter/setter for Rails model attr values, just pass it the attribute name.
+    // It could automatically find (and cache a ref to) each dom element and get/set the values.
+    this.variantUnit = this.element.querySelector('[name$="[variant_unit]"]');
+    this.variantUnitScale = this.element.querySelector('[name$="[variant_unit_scale]"]');
+    this.variantUnitName = this.element.querySelector('[name$="[variant_unit_name]"]');
+    this.variantUnitWithScale = this.element.querySelector('[name$="[variant_unit_with_scale]"]');
+
+    // on variant_unit_with_scale changed; update variant_unit and variant_unit_scale
+    this.variantUnitWithScale.addEventListener("change", this.#updateUnitAndScale.bind(this), {
+      passive: true,
+    });
 
     this.unitValue = this.element.querySelector('[name$="[unit_value]"]');
     this.unitDescription = this.element.querySelector('[name$="[unit_description]"]');
@@ -76,11 +82,27 @@ export default class VariantController extends Controller {
     return {
       unit_value: parseFloat(this.unitValue.value),
       unit_description: this.unitDescription.value,
-      product: {
-        variant_unit: this.variantUnit.value,
-        variant_unit_scale: parseFloat(this.variantUnitScale.value),
-        variant_unit_name: this.variantUnitName.value,
-      },
+      variant_unit: this.variantUnit.value,
+      variant_unit_scale: parseFloat(this.variantUnitScale.value),
+      variant_unit_name: this.variantUnitName.value,
     };
+  }
+
+  // Extract variant_unit and variant_unit_scale from dropdown variant_unit_with_scale,
+  // and update hidden product fields
+  #updateUnitAndScale(event) {
+    const variant_unit_with_scale = this.variantUnitWithScale.value;
+    const match = variant_unit_with_scale.match(/^([^_]+)_([\d\.]+)$/); // eg "weight_1000"
+
+    if (match) {
+      this.variantUnit.value = match[1];
+      this.variantUnitScale.value = parseFloat(match[2]);
+    } else {
+      // "items"
+      this.variantUnit.value = variant_unit_with_scale;
+      this.variantUnitScale.value = "";
+    }
+    this.variantUnit.dispatchEvent(new Event("change"));
+    this.variantUnitScale.dispatchEvent(new Event("change"));
   }
 }

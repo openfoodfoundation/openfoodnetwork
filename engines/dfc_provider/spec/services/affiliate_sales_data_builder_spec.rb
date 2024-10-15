@@ -25,7 +25,8 @@ RSpec.describe AffiliateSalesDataBuilder do
           :product,
           name: "Pomme",
           supplier_id: supplier.id,
-          variant_unit: "item",
+          variant_unit: "items",
+          variant_unit_name: "bag",
         )
         variant = product.variants.first
         distributor = create(

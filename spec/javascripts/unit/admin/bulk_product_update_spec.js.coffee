@@ -156,14 +156,20 @@ describe "filtering products for submission to database", ->
   it "returns variant_unit_with_scale as variant_unit and variant_unit_scale", ->
     testProduct =
       id: 1
-      variant_unit: 'weight'
-      variant_unit_scale: 1
-      variant_unit_with_scale: 'weight_1'
+      variants: [
+        id: 1
+        variant_unit: 'weight'
+        variant_unit_scale: 1
+        variant_unit_with_scale: 'weight_1'
+      ]
 
     expect(filterSubmitProducts([testProduct])).toEqual [
       id: 1
-      variant_unit: 'weight'
-      variant_unit_scale: 1
+      variants_attributes: [
+        id: 1
+        variant_unit: 'weight'
+        variant_unit_scale: 1
+      ]
     ]
 
   it "returns stock properties of a product if no variant is provided", ->
@@ -204,18 +210,15 @@ describe "filtering products for submission to database", ->
         display_as: "bottle"
         display_name: "nothing"
         producer_id: 5
+        variant_unit: 'volume'
+        variant_unit_scale: 1
+        variant_unit_name: 'loaf'
+        variant_unit_with_scale: 'volume_1'
       ]
-      variant_unit: 'volume'
-      variant_unit_scale: 1
-      variant_unit_name: 'loaf'
-      variant_unit_with_scale: 'volume_1'
 
     expect(filterSubmitProducts([testProduct])).toEqual [
       id: 1
       name: "TestProduct"
-      variant_unit: 'volume'
-      variant_unit_scale: 1
-      variant_unit_name: 'loaf'
       variants_attributes: [
         id: 1
         on_hand: 2
@@ -226,6 +229,9 @@ describe "filtering products for submission to database", ->
         display_as: "bottle"
         display_name: "nothing"
         supplier_id: 5
+        variant_unit: 'volume'
+        variant_unit_scale: 1
+        variant_unit_name: 'loaf'
       ]
     ]
 
@@ -281,7 +287,6 @@ describe "AdminProductEditCtrl", ->
       $scope.initialise()
 
       expect($scope.q.query).toBe query
-      expect($scope.q.producerFilter).toBe producerFilter
       expect($scope.q.categoryFilter).toBe categoryFilter
       expect($scope.q.sorting).toBe sorting
       expect($scope.q.importDateFilter).toBe importDateFilter
@@ -476,13 +481,13 @@ describe "AdminProductEditCtrl", ->
 
   describe "determining whether a product has a unit", ->
     it "returns true when it does", ->
-      product =
-        variant_unit_with_scale: 'weight_1000'
-      expect($scope.hasUnit(product)).toBe(true)
+      variant ={variant_unit_with_scale: 'weight_1000'}
+
+      expect($scope.hasUnit(variant)).toBe(true)
 
     it "returns false when its unit is undefined", ->
-      product = {}
-      expect($scope.hasUnit(product)).toBe(false)
+      variant = {}
+      expect($scope.hasUnit(variant)).toBe(false)
 
 
   describe "determining whether a variant has been saved", ->
@@ -505,51 +510,6 @@ describe "AdminProductEditCtrl", ->
         window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["multiply"]
         window.bigDecimal.multiply.and.callFake (a, b, c) -> (a * b).toFixed(c)
 
-      it "extracts variant_unit_with_scale into variant_unit and variant_unit_scale", ->
-        testProduct =
-          id: 1
-          variant_unit: 'weight'
-          variant_unit_scale: 1
-          variant_unit_with_scale: 'volume_1000'
-
-        $scope.packProduct(testProduct)
-
-        expect(testProduct).toEqual
-          id: 1
-          variant_unit: 'volume'
-          variant_unit_scale: 1000
-          variant_unit_with_scale: 'volume_1000'
-
-      it "extracts a null value into null variant_unit and variant_unit_scale", ->
-        testProduct =
-          id: 1
-          variant_unit: 'weight'
-          variant_unit_scale: 1
-          variant_unit_with_scale: null
-
-        $scope.packProduct(testProduct)
-
-        expect(testProduct).toEqual
-          id: 1
-          variant_unit: null
-          variant_unit_scale: null
-          variant_unit_with_scale: null
-
-      it "extracts when variant_unit_with_scale is 'items'", ->
-        testProduct =
-          id: 1
-          variant_unit: 'weight'
-          variant_unit_scale: 1
-          variant_unit_with_scale: 'items'
-
-        $scope.packProduct(testProduct)
-
-        expect(testProduct).toEqual
-          id: 1
-          variant_unit: 'items'
-          variant_unit_scale: null
-          variant_unit_with_scale: 'items'
-
       it "packs each variant", ->
         spyOn $scope, "packVariant"
         testVariant = {id: 1}
@@ -559,120 +519,154 @@ describe "AdminProductEditCtrl", ->
 
         $scope.packProduct(testProduct)
 
-        expect($scope.packVariant).toHaveBeenCalledWith(testProduct, testVariant)
+        expect($scope.packVariant).toHaveBeenCalledWith(testVariant)
 
     describe "packing variants", ->
       beforeEach ->
         window.bigDecimal = jasmine.createSpyObj "bigDecimal", ["multiply"]
         window.bigDecimal.multiply.and.callFake (a, b, c) -> (a * b).toFixed(c)
 
+      it "extracts variant_unit_with_scale into variant_unit and variant_unit_scale", ->
+        testVariant =
+          id: 1
+          variant_unit: 'weight'
+          variant_unit_scale: 1
+          variant_unit_with_scale: 'volume_1000'
+
+        $scope.packVariant(testVariant)
+
+        expect(testVariant).toEqual
+          id: 1
+          variant_unit: 'volume'
+          variant_unit_scale: 1000
+          variant_unit_with_scale: 'volume_1000'
+
+      it "extracts when variant_unit_with_scale is 'items'", ->
+        testVariant =
+          id: 1
+          variant_unit: 'weight'
+          variant_unit_scale: 1
+          variant_unit_with_scale: 'items'
+
+        $scope.packVariant(testVariant)
+
+        expect(testVariant).toEqual
+          id: 1
+          variant_unit: 'items'
+          variant_unit_scale: null
+          variant_unit_with_scale: 'items'
+
       it "extracts unit_value and unit_description from unit_value_with_description", ->
-        testProduct = {id: 123, variant_unit_scale: 1.0}
         testVariant = {unit_value_with_description: "250.5 (bottle)"}
-        BulkProducts.products = [testProduct]
-        $scope.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: 250.5
           unit_description: "(bottle)"
           unit_value_with_description: "250.5 (bottle)"
 
       it "extracts into unit_value when only a number is provided", ->
-        testProduct = {id: 123, variant_unit_scale: 1.0}
-        testVariant = {unit_value_with_description: "250.5"}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+        testVariant = {variant_unit_scale: 1.0, unit_value_with_description: "250.5"}
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: 250.5
           unit_description: ''
           unit_value_with_description: "250.5"
+          variant_unit_scale: 1.0
 
       it "extracts into unit_description when only a string is provided", ->
-        testProduct = {id: 123}
         testVariant = {unit_value_with_description: "Medium"}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: null
           unit_description: 'Medium'
           unit_value_with_description: "Medium"
 
       it "extracts into unit_description when a string starting with a number is provided", ->
-        testProduct = {id: 123}
         testVariant = {unit_value_with_description: "1kg"}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: null
           unit_description: '1kg'
           unit_value_with_description: "1kg"
 
       it "sets blank values when no value provided", ->
-        testProduct = {id: 123}
         testVariant = {unit_value_with_description: ""}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: null
           unit_description: ''
           unit_value_with_description: ""
 
       it "sets nothing when the field is undefined", ->
-        testProduct = {id: 123}
         testVariant = {}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
-        expect(testVariant).toEqual {}
+
+        $scope.packVariant(testVariant)
+
+        expect(testVariant).toEqual({})
 
       it "sets zero when the field is zero", ->
-        testProduct = {id: 123, variant_unit_scale: 1.0}
-        testVariant = {unit_value_with_description: "0"}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+        testVariant = {variant_unit_scale: 1.0, unit_value_with_description: "0"}
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: 0
           unit_description: ''
           unit_value_with_description: "0"
+          variant_unit_scale: 1.0
 
       it "converts value from chosen unit to base unit", ->
-        testProduct = {id: 123, variant_unit_scale: 1000}
-        testVariant = {unit_value_with_description: "250.5"}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+        testVariant = {variant_unit_scale: 1000, unit_value_with_description: "250.5"}
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: 250500
           unit_description: ''
           unit_value_with_description: "250.5"
+          variant_unit_scale: 1000
 
       it "does not convert value when using a non-scaled unit", ->
-        testProduct = {id: 123}
         testVariant = {unit_value_with_description: "12"}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: 12
           unit_description: ''
           unit_value_with_description: "12"
 
       it "converts unit_value into a float when a comma separated number is provided", ->
-        testProduct = {id: 123, variant_unit_scale: 1.0}
-        testVariant = {unit_value_with_description: "250,5"}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+        testVariant = {variant_unit_scale: 1.0, unit_value_with_description: "250,5"}
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: 250.5
           unit_description: ''
           unit_value_with_description: "250,5"
+          variant_unit_scale: 1.0
 
       it "rounds off the unit_value upto 2 decimal places", ->
-        testProduct = {id: 123, variant_unit_scale: 1.0}
-        testVariant = {unit_value_with_description: "1234.567"}
-        BulkProducts.products = [testProduct]
-        $scope.packVariant(testProduct, testVariant)
+        testVariant = {variant_unit_scale: 1.0, unit_value_with_description: "1234.567"}
+
+        $scope.packVariant(testVariant)
+
         expect(testVariant).toEqual
           unit_value: 1234.57
           unit_description: ''
           unit_value_with_description: "1234.567"
+          variant_unit_scale: 1.0
 
 
     describe "filtering products", ->

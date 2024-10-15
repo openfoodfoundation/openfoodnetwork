@@ -93,6 +93,16 @@ export default class BulkFormController extends Controller {
     }
   }
 
+  // Pop out empty variant unit to allow browser side validation to focus the element
+  popoutEmptyVariantUnit() {
+    this.variantUnits = this.element.querySelectorAll("button.popout__button");
+    this.variantUnits.forEach((element) => {
+      if (element.textContent == "") {
+        element.click();
+      }
+    });
+  }
+
   // private
 
   #registerSubmit() {
@@ -135,7 +145,7 @@ export default class BulkFormController extends Controller {
 
   // Check if changed, and mark with class if it is.
   #checkIsChanged(element) {
-    if(!element.isConnected) return false;
+    if (!element.isConnected) return false;
 
     const changed = this.#isChanged(element);
     element.classList.toggle("changed", changed);
@@ -143,9 +153,8 @@ export default class BulkFormController extends Controller {
   }
 
   #isChanged(element) {
-     if (element.type == "checkbox") {
+    if (element.type == "checkbox") {
       return element.defaultChecked !== undefined && element.checked != element.defaultChecked;
-
     } else if (element.type == "select-one") {
       // (weird) Behavior of select element's include_blank option in Rails:
       //   If a select field has include_blank option selected (its value will be ''),
@@ -155,42 +164,49 @@ export default class BulkFormController extends Controller {
         opt.hasAttribute("selected"),
       );
       const selectedOption = element.selectedOptions[0];
-      const areBothBlank = selectedOption.value === '' && defaultSelected === undefined
+      const areBothBlank = selectedOption.value === "" && defaultSelected === undefined;
 
       return !areBothBlank && selectedOption !== defaultSelected;
-
     } else {
       return element.defaultValue !== undefined && element.value != element.defaultValue;
     }
   }
 
   #removeAnimationClasses(productRowElement) {
-    productRowElement.classList.remove('slide-in');
-    productRowElement.removeEventListener('animationend', this.#removeAnimationClasses.bind(this, productRowElement));
+    productRowElement.classList.remove("slide-in");
+    productRowElement.removeEventListener(
+      "animationend",
+      this.#removeAnimationClasses.bind(this, productRowElement),
+    );
   }
 
   #observeProductsTableRows() {
     this.productsTableObserver = new MutationObserver((mutationList, _observer) => {
       const mutationRecord = mutationList[0];
 
-      if(mutationRecord) {
+      if (mutationRecord) {
         // Right now we are only using it for product clone, so it's always first
         const productRowElement = mutationRecord.addedNodes[0];
 
         if (productRowElement) {
-          productRowElement.addEventListener('animationend', this.#removeAnimationClasses.bind(this, productRowElement));
+          productRowElement.addEventListener(
+            "animationend",
+            this.#removeAnimationClasses.bind(this, productRowElement),
+          );
           // This is equivalent to form.elements.
-          const productRowFormElements = productRowElement.querySelectorAll('input, select, textarea, button');
+          const productRowFormElements = productRowElement.querySelectorAll(
+            "input, select, textarea, button",
+          );
           this.#registerElements(productRowFormElements);
           this.toggleFormChanged();
         }
       }
     });
 
-    const productsTable = document.querySelector('.products');
+    const productsTable = document.querySelector(".products");
     // Above mutation function will trigger,
     // whenever +products+ table rows (first level children) are mutated i.e. added or removed
-    // right now we are using this for product clone 
+    // right now we are using this for product clone
     this.productsTableObserver.observe(productsTable, { childList: true });
   }
 }

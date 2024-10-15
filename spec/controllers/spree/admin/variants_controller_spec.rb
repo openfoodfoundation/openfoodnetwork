@@ -12,8 +12,8 @@ module Spree
           let(:product) { create(:product, name: 'Product A') }
           let(:deleted_variant) do
             deleted_variant = product.variants.create(
-              unit_value: "2", price: 1, primary_taxon: create(:taxon),
-              supplier: create(:supplier_enterprise)
+              unit_value: "2", variant_unit: "weight", variant_unit_scale: 1, price: 1,
+              primary_taxon: create(:taxon), supplier: create(:supplier_enterprise)
             )
             deleted_variant.delete
             deleted_variant

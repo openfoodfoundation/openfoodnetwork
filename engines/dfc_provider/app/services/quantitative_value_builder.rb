@@ -11,7 +11,7 @@
 class QuantitativeValueBuilder < DfcBuilder
   def self.quantity(variant)
     DataFoodConsortium::Connector::QuantitativeValue.new(
-      unit: unit(variant.product.variant_unit),
+      unit: unit(variant.variant_unit),
       value: variant.unit_value,
     )
   end
@@ -27,7 +27,7 @@ class QuantitativeValueBuilder < DfcBuilder
     end
   end
 
-  def self.apply(quantity, product)
+  def self.apply(quantity, variant)
     measure, unit_name, unit_scale = map_unit(quantity.unit)
     value = quantity.value.to_f * unit_scale
 
@@ -37,10 +37,10 @@ class QuantitativeValueBuilder < DfcBuilder
       value = 1
     end
 
-    product.variant_unit = measure
-    product.variant_unit_name = unit_name if measure == "items"
-    product.variant_unit_scale = unit_scale
-    product.unit_value = value
+    variant.variant_unit = measure
+    variant.variant_unit_name = unit_name if measure == "items"
+    variant.variant_unit_scale = unit_scale
+    variant.unit_value = value
   end
 
   # Map DFC units to OFN fields:

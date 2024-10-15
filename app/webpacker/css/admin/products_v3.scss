@@ -1,5 +1,7 @@
 // Customisations for the new Bulk Edit Products page only
 // Scoped to containing div, because Turbo messes with body classes
+@import "../admin_v3/pages/unit_popout";
+
 #products_v3_page {
   #content > .row:first-child > .container:first-child {
     // Allow table to extend to full width of available screen space
@@ -311,89 +313,7 @@
 
   // Popout widget (todo: move to separate fiel)
   .popout {
-    position: relative;
-
-    &__button {
-      // override button styles
-      &.popout__button {
-        background: $color-tbl-cell-bg;
-        color: $color-txt-text;
-        white-space: nowrap;
-        border-color: transparent;
-        font-weight: normal;
-        padding-left: $border-radius; // Super compact
-        padding-right: 1rem; // Retain space for arrow
-        height: auto;
-        min-width: 2em;
-        min-height: 1lh; // Line height of parent
-
-        &:hover,
-        &:active,
-        &:focus {
-          background: $color-tbl-cell-bg;
-          color: $color-txt-text;
-          position: relative;
-        }
-
-        &.changed {
-          border-color: $color-txt-changed-brd;
-        }
-      }
-
-      &:hover:not(:active):not(:focus):not(.changed) {
-        border-color: transparent;
-      }
-
-      &:hover,
-      &:active,
-      &:focus {
-        // for some reason, sass ignores &:active, &:focus here. we could make this a mixin and include it in multiple rules instead
-        &:before {
-          // for some reason, sass seems to extends the selector to include every other :before selector in the app! probably causing the above, and potentially breaking other styles.
-          // extending .icon-chevron-down causes infinite loop in compilation. does @include work for classes?
-          font-family: FontAwesome;
-          text-decoration: inherit;
-          display: inline-block;
-          speak: none;
-          content: "\f078";
-
-          position: absolute;
-          top: 0; // Required for empty buttons
-          right: $border-radius;
-          font-size: 0.67em;
-        }
-      }
-    }
-
-    &__container {
-      position: absolute;
-      top: -0.6em;
-      left: -0.2em;
-      z-index: 1; // Cover below row when hover
-      width: 9em;
-
-      padding: $padding-tbl-cell;
-
-      background: $color-tbl-cell-bg;
-      border-radius: $border-radius;
-      box-shadow: 0px 0px 8px 0px rgba($near-black, 0.25);
-
-      .field {
-        margin-bottom: 0.75em;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-
-      input {
-        height: auto;
-
-        &[disabled] {
-          color: transparent; // hide value completely
-        }
-      }
-    }
+    @include unit_popout;
   }
 
   a.image-field {

@@ -44,21 +44,164 @@ RSpec.describe Spree::Variant do
     end
   end
 
-  # add test for the other validation
-  context "validations" do
-    it "should validate price is greater than 0" do
-      variant.price = -1
-      expect(variant).not_to be_valid
+  describe "validations" do
+    describe "variant_unit" do
+      subject(:variant) { build(:variant) }
+
+      it { is_expected.to validate_presence_of :variant_unit }
+
+      context "when the unit is items" do
+        subject(:variant) { build(:variant, variant_unit: "items", variant_unit_name: "box") }
+
+        it "is valid with only unit value set" do
+          variant.unit_value = 1
+          variant.unit_description = nil
+          expect(variant).to be_valid
+        end
+
+        it "is valid with only unit description set" do
+          variant.unit_value = nil
+          variant.unit_description = 'Medium'
+          expect(variant).to be_valid
+        end
+
+        it "sets unit_value to 1.0 before validation if it's nil" do
+          variant.unit_value = nil
+          variant.unit_description = nil
+          expect(variant).to be_valid
+          expect(variant.unit_value).to eq 1.0
+        end
+      end
+
+      context "when the product's unit is non-weight" do
+        subject(:variant) { build(:variant, variant_unit: "volume") }
+
+        it "sets weight to decimal before save if it's integer" do
+          variant.weight = 1
+          variant.save!
+          expect(variant.weight).to eq 1.0
+        end
+
+        it "sets weight to 0.0 before save if it's nil" do
+          variant.weight = nil
+          variant.save!
+          expect(variant.weight).to eq 0.0
+        end
+
+        it "sets weight to 0.0 if input is a non numerical string" do
+          variant.weight = "BANANAS!"
+          variant.save!
+          expect(variant.weight).to eq 0.0
+        end
+
+        it "sets weight to correct decimal value if input is numerical string" do
+          variant.weight = "2"
+          variant.save!
+          expect(variant.weight).to eq 2.0
+        end
+      end
     end
 
-    it "should validate price is 0" do
-      variant.price = 0
-      expect(variant).to be_valid
+    describe "price" do
+      it { is_expected.to validate_presence_of :price }
+
+      it "should validate price is greater than 0" do
+        variant.price = -1
+        expect(variant).not_to be_valid
+      end
+
+      it "should validate price is 0" do
+        variant.price = 0
+        expect(variant).to be_valid
+      end
+
+      it "should validate unit_value is greater than 0" do
+        variant.unit_value = 0
+
+        expect(variant).not_to be_valid
+      end
     end
 
-    it "should validate unit_value is greater than 0" do
-      variant.unit_value = 0
-      expect(variant).not_to be_valid
+    describe "unit_value" do
+      subject(:variant) { build(:variant, variant_unit: "item", unit_value: "") }
+
+      it { is_expected.not_to validate_presence_of(:unit_value) }
+
+      %w(weight volume).each do |unit|
+        context "when variant_unit is #{unit}" do
+          subject(:variant) { build(:variant, variant_unit: unit) }
+
+          it { is_expected.to validate_presence_of(:unit_value) }
+          it { is_expected.to validate_numericality_of(:unit_value).is_greater_than(0) }
+        end
+      end
+    end
+
+    describe "unit_description" do
+      subject(:variant) { build(:variant) }
+
+      it { expect(variant).to be_valid }
+      it { is_expected.not_to validate_presence_of(:unit_description) }
+
+      context "when variant_unit is set and unit_value is nil" do
+        subject(:variant) {
+          build(:variant, variant_unit: "item", unit_value: nil, unit_description: "box")
+        }
+
+        it { is_expected.to validate_presence_of(:unit_description) }
+      end
+    end
+
+    describe "variant_unit_scale" do
+      subject(:variant) { build(:variant, variant_unit: "box") }
+
+      it { is_expected.not_to validate_presence_of :variant_unit_scale }
+
+      %w(weight volume).each do |unit|
+        context "when variant_unit is #{unit}" do
+          subject(:variant) { build(:variant, variant_unit: unit, variant_unit_scale: 1.0) }
+
+          it { is_expected.to validate_presence_of :variant_unit_scale }
+        end
+      end
+    end
+
+    describe "variant_unit_name" do
+      subject(:variant) { build(:variant) }
+
+      it { is_expected.not_to validate_presence_of :variant_unit_name }
+
+      context "when variant_unit is items" do
+        subject(:variant) { build(:variant, variant_unit: "items") }
+
+        it { is_expected.to validate_presence_of :variant_unit_name }
+      end
+    end
+
+    describe "variant_unit_scale" do
+      subject(:variant) { build(:variant, variant_unit: "box") }
+
+      it { is_expected.not_to validate_presence_of :variant_unit_scale }
+
+      %w(weight volume).each do |unit|
+        context "when variant_unit is #{unit}" do
+          subject(:variant) { build(:variant, variant_unit: unit, variant_unit_scale: 1.0) }
+
+          it { is_expected.to validate_presence_of :variant_unit_scale }
+        end
+      end
+    end
+
+    describe "variant_unit_name" do
+      subject(:variant) { build(:variant) }
+
+      it { is_expected.not_to validate_presence_of :variant_unit_name }
+
+      context "when variant_unit is items" do
+        subject(:variant) { build(:variant, variant_unit: "items") }
+
+        it { is_expected.to validate_presence_of :variant_unit_name }
+      end
     end
 
     describe "tax category" do
@@ -529,8 +672,8 @@ RSpec.describe Spree::Variant do
     context "handling nil values for related naming attributes" do
       it "returns empty string or product name" do
         product.name = "Apple"
-        product.variant_unit = "items"
         product.display_as = nil
+        variant.variant_unit = "items"
         variant.display_as = nil
         variant.display_name = nil
 
@@ -540,8 +683,8 @@ RSpec.describe Spree::Variant do
 
       it "uses the display name correctly" do
         product.name = "Apple"
-        product.variant_unit = "items"
         product.display_as = nil
+        variant.variant_unit = "items"
         variant.display_as = nil
         variant.unit_presentation = nil
         variant.display_name = "Green"
@@ -554,8 +697,8 @@ RSpec.describe Spree::Variant do
 
   describe "calculating the price with enterprise fees" do
     it "returns the price plus the fees" do
-      distributor = double(:distributor)
-      order_cycle = double(:order_cycle)
+      distributor = instance_double(Enterprise)
+      order_cycle = instance_double(OrderCycle)
 
       variant = Spree::Variant.new price: 100
       expect(variant).to receive(:fees_for).with(distributor, order_cycle) { 23 }
@@ -565,8 +708,8 @@ RSpec.describe Spree::Variant do
 
   describe "calculating the fees" do
     it "delegates to EnterpriseFeeCalculator" do
-      distributor = double(:distributor)
-      order_cycle = double(:order_cycle)
+      distributor = instance_double(Enterprise)
+      order_cycle = instance_double(OrderCycle)
       variant = Spree::Variant.new
 
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator)
@@ -578,99 +721,15 @@ RSpec.describe Spree::Variant do
 
   describe "calculating fees broken down by fee type" do
     it "delegates to EnterpriseFeeCalculator" do
-      distributor = double(:distributor)
-      order_cycle = double(:order_cycle)
+      distributor = instance_double(Enterprise)
+      order_cycle = instance_double(OrderCycle)
       variant = Spree::Variant.new
-      fees = double(:fees)
+      fees = instance_double(EnterpriseFee)
 
       expect_any_instance_of(OpenFoodNetwork::EnterpriseFeeCalculator)
         .to receive(:fees_by_type_for).with(variant) { fees }
 
       expect(variant.fees_by_type_for(distributor, order_cycle)).to eq(fees)
-    end
-  end
-
-  context "when the product has variants" do
-    let!(:product) { create(:simple_product) }
-    let!(:variant) { create(:variant, product:) }
-
-    %w(weight volume).each do |unit|
-      context "when the product's unit is #{unit}" do
-        before do
-          product.update_attribute :variant_unit, unit
-          product.reload
-        end
-
-        it "is valid when unit value is set and unit description is not" do
-          variant.unit_value = 1
-          variant.unit_description = nil
-          expect(variant).to be_valid
-        end
-
-        it "is invalid when unit value is not set" do
-          variant.unit_value = nil
-          expect(variant).not_to be_valid
-        end
-      end
-    end
-
-    context "when the product's unit is items" do
-      before do
-        product.update_attribute :variant_unit, 'items'
-        product.reload
-        variant.reload
-      end
-
-      it "is valid with only unit value set" do
-        variant.unit_value = 1
-        variant.unit_description = nil
-        expect(variant).to be_valid
-      end
-
-      it "is valid with only unit description set" do
-        variant.unit_value = nil
-        variant.unit_description = 'Medium'
-        expect(variant).to be_valid
-      end
-
-      it "sets unit_value to 1.0 before validation if it's nil" do
-        variant.unit_value = nil
-        variant.unit_description = nil
-        expect(variant).to be_valid
-        expect(variant.unit_value).to eq 1.0
-      end
-    end
-
-    context "when the product's unit is non-weight" do
-      before do
-        product.update_attribute :variant_unit, 'volume'
-        product.reload
-        variant.reload
-      end
-
-      it "sets weight to decimal before save if it's integer" do
-        variant.weight = 1
-        variant.save!
-        expect(variant.weight).to eq 1.0
-      end
-
-      it "sets weight to 0.0 before save if it's nil" do
-        variant.weight = nil
-        variant.save!
-        expect(variant.weight).to eq 0.0
-      end
-
-      it "sets weight to 0.0 if input is a non numerical string" do
-        variant.weight = "BANANAS!"
-        variant.save!
-        expect(variant.weight).to eq 0.0
-      end
-
-      it "sets weight to correct decimal value if input is numerical string" do
-        variant.weight = "2"
-        variant.save!
-        expect(variant.weight).to eq 2.0
-      end
     end
   end
 
@@ -739,42 +798,41 @@ RSpec.describe Spree::Variant do
 
     describe "setting the variant's weight from the unit value" do
       it "sets the variant's weight when unit is weight" do
-        p = create(:simple_product, variant_unit: 'volume')
-        v = create(:variant, product: p, weight: 0)
-
-        p.update! variant_unit: 'weight', variant_unit_scale: 1
-        v.update! unit_value: 10, unit_description: 'foo'
+        v = create(:variant, weight: 0)
+        v.update!(
+          variant_unit: 'weight', variant_unit_scale: 1, unit_value: 10, unit_description: 'foo'
+        )
 
         expect(v.reload.weight).to eq(0.01)
       end
 
       it "does nothing when unit is not weight" do
-        p = create(:simple_product, variant_unit: 'volume')
-        v = create(:variant, product: p, weight: 123)
-
-        p.update! variant_unit: 'volume', variant_unit_scale: 1
-        v.update! unit_value: 10, unit_description: 'foo'
+        v = create(:variant, weight: 123, variant_unit: 'volume')
+        v.update! variant_unit: 'volume', variant_unit_scale: 1, unit_value: 10,
+                  unit_description: 'foo'
 
         expect(v.reload.weight).to eq(123)
       end
 
       it "does nothing when unit_value is not set" do
-        p = create(:simple_product, variant_unit: 'volume')
-        v = create(:variant, product: p, weight: 123)
-
-        p.update! variant_unit: 'weight', variant_unit_scale: 1
+        v = create(:variant, weight: 123, variant_unit: 'volume')
 
         # Although invalid, this calls the before_validation callback, which would
         # error if not handling unit_value == nil case
-        expect(v.update(unit_value: nil, unit_description: 'foo')).to be false
+        expect(
+          v.update(variant_unit: "weight", variant_unit_scale: 1, unit_value: nil,
+                   unit_description: "foo")
+        ).to be false
 
         expect(v.reload.weight).to eq(123)
       end
     end
 
     context "when the variant already has a value set" do
-      let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
-      let!(:v) { create(:variant, product: p, unit_value: 5, unit_description: 'bar') }
+      let!(:v) {
+        create(:variant, variant_unit: 'weight', variant_unit_scale: 1, unit_value: 5,
+                         unit_description: 'bar')
+      }
 
       it "assigns the new option value" do
         expect(v.unit_presentation).to eq "5g bar"
@@ -786,28 +844,30 @@ RSpec.describe Spree::Variant do
     end
 
     context "when the variant does not have a display_as value set" do
-      let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
       let!(:v) {
-        create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: '')
+        create(:variant, variant_unit: 'weight', variant_unit_scale: 1, unit_value: 5,
+                         unit_description: 'bar', display_as: '')
       }
 
       it "requests the new value from OptionValueName" do
         expect_any_instance_of(VariantUnits::OptionValueNamer)
           .to receive(:name).exactly(1).times.and_call_original
         v.update(unit_value: 10, unit_description: 'foo')
+
         expect(v.unit_presentation).to eq "10g foo"
       end
     end
 
     context "when the variant has a display_as value set" do
-      let!(:p) { create(:simple_product, variant_unit: 'weight', variant_unit_scale: 1) }
       let!(:v) {
-        create(:variant, product: p, unit_value: 5, unit_description: 'bar', display_as: 'FOOS!')
+        create(:variant, variant_unit: 'weight', variant_unit_scale: 1, unit_value: 5,
+                         unit_description: 'bar', display_as: 'FOOS!')
       }
 
       it "does not request the new value from OptionValueName" do
         expect_any_instance_of(VariantUnits::OptionValueNamer).not_to receive(:name)
         v.update!(unit_value: 10, unit_description: 'foo')
+
         expect(v.unit_presentation).to eq("FOOS!")
       end
     end
@@ -873,12 +933,11 @@ RSpec.describe Spree::Variant do
   end
 
   describe "#ensure_unit_value" do
-    let(:product) { create(:product, variant_unit: "weight") }
-    let(:variant) { create(:variant, product_id: product.id) }
+    let(:variant) { create(:variant, variant_unit: "weight") }
 
-    context "when a product's variant_unit value is changed from weight to items" do
+    context "when  variant_unit value is changed from weight to items" do
       it "sets the variant's unit_value to 1" do
-        product.update(variant_unit: "items")
+        variant.update(variant_unit: "items")
 
         expect(variant.unit_value).to eq 1
       end
@@ -906,6 +965,42 @@ RSpec.describe Spree::Variant do
         expect(variant.reload.default_price).to be_a Spree::Price
         expect(variant.default_price.id).to eq price_id
       end
+    end
+  end
+
+  describe "after save callback" do
+    let(:variant) { create(:variant) }
+
+    it "updates units and unit_presenation when saved change to variant unit" do
+      variant.variant_unit = 'items'
+      variant.variant_unit_scale = nil
+      variant.variant_unit_name = 'loaf'
+      variant.save!
+
+      expect(variant.variant_unit_name).to eq 'loaf'
+      expect(variant.unit_presentation).to eq "1 loaf"
+
+      variant.update(variant_unit_name: 'bag')
+
+      expect(variant.variant_unit_name).to eq 'bag'
+      expect(variant.unit_presentation).to eq "1 bag"
+
+      variant.variant_unit = 'weight'
+      variant.variant_unit_scale = 1
+      variant.variant_unit_name = 'g'
+      variant.save!
+
+      expect(variant.variant_unit).to eq 'weight'
+      expect(variant.unit_presentation).to eq "1g"
+
+      variant.update(variant_unit: 'volume')
+
+      expect(variant.variant_unit).to eq 'volume'
+      expect(variant.unit_presentation).to eq "1L"
+
+      variant.update(display_as: 'My display')
+
+      expect(variant.unit_presentation).to eq "My display"
     end
   end
 end

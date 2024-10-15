@@ -5,9 +5,8 @@ require 'spec_helper'
 module VariantUnits
   RSpec.describe OptionValueNamer do
     describe "generating option value name" do
+      subject { OptionValueNamer.new(v) }
       let(:v) { Spree::Variant.new }
-      let(:p) { Spree::Product.new }
-      let(:subject) { OptionValueNamer.new(v) }
 
       it "when description is blank" do
         allow(v).to receive(:unit_description) { nil }
@@ -40,18 +39,14 @@ module VariantUnits
 
     describe "determining if a variant's value is scaled" do
       it "returns true when the product has a scale" do
-        p = Spree::Product.new variant_unit_scale: 1000
-        v = Spree::Variant.new
-        allow(v).to receive(:product) { p }
+        v = Spree::Variant.new variant_unit_scale: 1000
         subject = OptionValueNamer.new v
 
         expect(subject.__send__(:value_scaled?)).to be true
       end
 
       it "returns false otherwise" do
-        p = Spree::Product.new
         v = Spree::Variant.new
-        allow(v).to receive(:product) { p }
         subject = OptionValueNamer.new v
 
         expect(subject.__send__(:value_scaled?)).to be false
@@ -59,115 +54,109 @@ module VariantUnits
     end
 
     describe "generating option value's value and unit" do
-      let(:v) { Spree::Variant.new }
-      let(:subject) { OptionValueNamer.new v }
-
       before do
         allow(Spree::Config).to receive(:available_units).and_return("g,lb,oz,kg,T,mL,L,kL")
       end
 
       it "generates simple values" do
-        p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
-        allow(v).to receive(:product) { p }
-        allow(p).to receive(:persisted?) { true }
-        allow(v).to receive(:unit_value) { 100 }
+        v = instance_double(Spree::Variant, variant_unit: 'weight', variant_unit_scale: 1.0,
+                                            unit_value: 100)
 
-        expect(subject.__send__(:option_value_value_unit)).to eq [100, 'g']
+        option_value_namer = OptionValueNamer.new v
+        expect(option_value_namer.__send__(:option_value_value_unit)).to eq [100, 'g']
       end
 
       it "generates values when unit value is non-integer" do
-        p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
-        allow(v).to receive(:product) { p }
-        allow(p).to receive(:persisted?) { true }
-        allow(v).to receive(:unit_value) { 123.45 }
+        v = instance_double(Spree::Variant, variant_unit: 'weight', variant_unit_scale: 1.0,
+                                            unit_value: 123.45)
 
-        expect(subject.__send__(:option_value_value_unit)).to eq [123.45, 'g']
+        option_value_namer = OptionValueNamer.new v
+        expect(option_value_namer.__send__(:option_value_value_unit)).to eq [123.45, 'g']
       end
 
       it "returns a value of 1 when unit value equals the scale" do
-        p = double(:product, variant_unit: 'weight', variant_unit_scale: 1000.0)
-        allow(v).to receive(:product) { p }
-        allow(p).to receive(:persisted?) { true }
-        allow(v).to receive(:unit_value) { 1000.0 }
+        v = instance_double(Spree::Variant, variant_unit: 'weight', variant_unit_scale: 1000.0,
+                                            unit_value: 1000.0)
 
-        expect(subject.__send__(:option_value_value_unit)).to eq [1, 'kg']
+        option_value_namer = OptionValueNamer.new v
+        expect(option_value_namer.__send__(:option_value_value_unit)).to eq [1, 'kg']
       end
 
       it "returns only values that are in the same measurement systems" do
-        p = double(:product, variant_unit: 'weight', variant_unit_scale: 1.0)
-        allow(v).to receive(:product) { p }
-        allow(p).to receive(:persisted?) { true }
-        allow(v).to receive(:unit_value) { 500 }
+        v = instance_double(Spree::Variant, variant_unit: 'weight', variant_unit_scale: 1.0,
+                                            unit_value: 500)
+
         # 500g would convert to > 1 pound, but we don't want the namer to use
         # pounds since it's in a different measurement system.
-        expect(subject.__send__(:option_value_value_unit)).to eq [500, 'g']
+        option_value_namer = OptionValueNamer.new v
+        expect(option_value_namer.__send__(:option_value_value_unit)).to eq [500, 'g']
       end
 
       it "generates values for all weight scales" do
         [[1.0, 'g'], [28.35, 'oz'], [453.6, 'lb'], [1000.0, 'kg'],
          [1_000_000.0, 'T']].each do |scale, unit|
-          p = double(:product, variant_unit: 'weight', variant_unit_scale: scale)
-          allow(v).to receive(:product) { p }
-          allow(p).to receive(:persisted?) { true }
-          allow(v).to receive(:unit_value) { 10.0 * scale }
-          expect(subject.__send__(:option_value_value_unit)).to eq [10, unit]
+          v = instance_double(Spree::Variant, variant_unit: 'weight', variant_unit_scale: scale,
+                                              unit_value: 10.0 * scale)
+
+          option_value_namer = OptionValueNamer.new v
+          expect(option_value_namer.__send__(:option_value_value_unit)).to eq [10, unit]
         end
       end
 
       it "generates values for all volume scales" do
         [[0.001, 'mL'], [1.0, 'L'], [1000.0, 'kL']].each do |scale, unit|
-          p = double(:product, variant_unit: 'volume', variant_unit_scale: scale)
-          allow(v).to receive(:product) { p }
-          allow(p).to receive(:persisted?) { true }
-          allow(v).to receive(:unit_value) { 3 * scale }
-          expect(subject.__send__(:option_value_value_unit)).to eq [3, unit]
+          v = instance_double(Spree::Variant, variant_unit: 'volume', variant_unit_scale: scale,
+                                              unit_value: 3 * scale)
+
+          option_value_namer = OptionValueNamer.new v
+          expect(option_value_namer.__send__(:option_value_value_unit)).to eq [3, unit]
         end
       end
 
       it "chooses the correct scale when value is very small" do
-        p = double(:product, variant_unit: 'volume', variant_unit_scale: 0.001)
-        allow(v).to receive(:product) { p }
-        allow(p).to receive(:persisted?) { true }
-        allow(v).to receive(:unit_value) { 0.0001 }
-        expect(subject.__send__(:option_value_value_unit)).to eq [0.1, 'mL']
+        v = instance_double(Spree::Variant, variant_unit: 'volume', variant_unit_scale: 0.001,
+                                            unit_value: 0.0001)
+
+        option_value_namer = OptionValueNamer.new v
+        expect(option_value_namer.__send__(:option_value_value_unit)).to eq [0.1, 'mL']
       end
 
       it "generates values for item units" do
         %w(packet box).each do |unit|
-          p = double(:product, variant_unit: 'items', variant_unit_scale: nil,
-                               variant_unit_name: unit)
-          allow(v).to receive(:product) { p }
-          allow(p).to receive(:persisted?) { true }
-          allow(v).to receive(:unit_value) { 100 }
-          expect(subject.__send__(:option_value_value_unit)).to eq [100, unit.pluralize]
+          v = instance_double(Spree::Variant, variant_unit: 'items', variant_unit_scale: nil,
+                                              variant_unit_name: unit, unit_value: 100)
+
+          option_value_namer = OptionValueNamer.new v
+          expect(option_value_namer.__send__(:option_value_value_unit)).to eq [100, unit.pluralize]
         end
       end
 
       it "generates singular values for item units when value is 1" do
-        p = double(:product, variant_unit: 'items', variant_unit_scale: nil,
-                             variant_unit_name: 'packet')
-        allow(v).to receive(:product) { p }
-        allow(p).to receive(:persisted?) { true }
-        allow(v).to receive(:unit_value) { 1 }
-        expect(subject.__send__(:option_value_value_unit)).to eq [1, 'packet']
+        v = instance_double(Spree::Variant, variant_unit: 'items', variant_unit_scale: nil,
+                                            variant_unit_name: 'packet', unit_value: 1)
+
+        option_value_namer = OptionValueNamer.new v
+        expect(option_value_namer.__send__(:option_value_value_unit)).to eq [1, 'packet']
       end
 
       it "returns [nil, nil] when unit value is not set" do
-        p = double(:product, variant_unit: 'items', variant_unit_scale: nil,
-                             variant_unit_name: 'foo')
-        allow(v).to receive(:product) { p }
-        allow(v).to receive(:unit_value) { nil }
-        expect(subject.__send__(:option_value_value_unit)).to eq [nil, nil]
+        v = instance_double(Spree::Variant, variant_unit: 'items', variant_unit_scale: nil,
+                                            variant_unit_name: 'foo', unit_value: nil)
+
+        option_value_namer = OptionValueNamer.new v
+        expect(option_value_namer.__send__(:option_value_value_unit)).to eq [nil, nil]
       end
 
       it "truncates value to 2 decimals maximum" do
         oz_scale = 28.35
-        p = double(:product, variant_unit: 'weight', variant_unit_scale: oz_scale)
-        allow(v).to receive(:product) { p }
-        allow(p).to receive(:persisted?) { true }
+        v = instance_double(Spree::Variant, variant_unit: 'weight', variant_unit_scale: oz_scale,
+                                            unit_value: (12.5 * oz_scale).round(2))
+
         # The unit_value is stored rounded to 2 decimals
-        allow(v).to receive(:unit_value) { (12.5 * oz_scale).round(2) }
-        expect(subject.__send__(:option_value_value_unit)).to eq [BigDecimal(12.5, 6), 'oz']
+        # allow(v).to receive(:unit_value) { (12.5 * oz_scale).round(2) }
+        option_value_namer = OptionValueNamer.new v
+        expect(option_value_namer.__send__(:option_value_value_unit)).to eq [BigDecimal(12.5, 6),
+                                                                             'oz']
       end
     end
   end
