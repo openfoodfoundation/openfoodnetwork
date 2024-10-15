@@ -47,22 +47,6 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       end
     end
 
-    it "displays a select box for suppliers, with the appropriate supplier selected" do
-      pending( "[BUU] Change producer, unit type, category and tax category #11060" )
-      s1 = FactoryBot.create(:supplier_enterprise)
-      s2 = FactoryBot.create(:supplier_enterprise)
-      s3 = FactoryBot.create(:supplier_enterprise)
-      p1 = FactoryBot.create(:product, supplier_id: s2.id)
-      p2 = FactoryBot.create(:product, supplier_id: s3.id)
-
-      visit spree.admin_products_path
-
-      expect(page).to have_select "producer_id", with_options: [s1.name, s2.name, s3.name],
-                                                 selected: s2.name
-      expect(page).to have_select "producer_id", with_options: [s1.name, s2.name, s3.name],
-                                                 selected: s3.name
-    end
-
     context "with several variants" do
       let!(:variant1) { p1.variants.first }
       let!(:variant2a) { p2.variants.first }
@@ -89,6 +73,38 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         end
         within row_containing_name "Variant2b" do
           expect(page).to have_content "4"
+        end
+      end
+
+      describe "Producer column" do
+        it "when I have one enterprise" do
+          visit spree.admin_products_path
+
+          expect(page).not_to have_select "Producer"
+        end
+
+        context "when I have multiple enterprises" do
+          let(:user) { create(:user, enterprises: [producer2, producer1]) }
+          let(:producer1) { create(:supplier_enterprise, name: "Producer A") }
+          let(:producer2) { create(:supplier_enterprise, name: "Producer B") }
+
+          it "displays a select box for suppliers, with the appropriate supplier selected" do
+            create(:supplier_enterprise, name: "Producer C")
+            variant1.update!(supplier: producer1)
+            variant2a.update!(supplier: producer2)
+
+            visit spree.admin_products_path
+
+            within row_containing_name "Variant1" do
+              expect(page).to have_select "Producer", with_options: ["Producer A", "Producer B"],
+                                                      selected: "Producer A"
+            end
+
+            within row_containing_name "Variant2a" do
+              expect(page).to have_select "Producer", with_options: ["Producer A", "Producer B"],
+                                                      selected: "Producer B"
+            end
+          end
         end
       end
     end
@@ -296,7 +312,7 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
       end
     end
 
-    context "product has producer" do
+    context "User has multiple producers" do
       before { create_products 1 }
 
       # create a product with a different supplier
@@ -331,6 +347,14 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
         # expect(page).to have_content "1 product found for your search criteria."
         expect(page).to have_select "producer_id", selected: "Producer 1"
         expect_products_count_to_be 1
+      end
+    end
+
+    context "User has single producer" do
+      it "producer filter does not show" do
+        visit admin_products_url
+
+        expect(page).not_to have_select "Producers"
       end
     end
 
