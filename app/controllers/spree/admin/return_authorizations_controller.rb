@@ -23,7 +23,7 @@ module Spree
 
       def permitted_resource_params
         params.require(:return_authorization).
-          permit(:amount, :reason, :stock_location_id)
+          permit(:amount, :reason)
       end
     end
   end
