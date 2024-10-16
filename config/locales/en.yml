@@ -2128,6 +2128,7 @@ en:
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
       voucher_not_found: Not found
       add_voucher_error: There was an error while adding the voucher
+      create_voucher_error: "There was an error while creating the voucher: %{error}"
   shops:
     hubs:
       show_closed_shops: "Show closed shops"

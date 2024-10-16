@@ -18,6 +18,9 @@ class Voucher < ApplicationRecord
 
   TYPES = ["Vouchers::FlatRate", "Vouchers::PercentageRate"].freeze
 
+  scope :vine, -> { where(voucher_type: "VINE") }
+  scope :not_vine, -> { where.not(voucher_type: "VINE").or(where(voucher_type: nil)) }
+
   def code=(value)
     super(value.to_s.strip)
   end
