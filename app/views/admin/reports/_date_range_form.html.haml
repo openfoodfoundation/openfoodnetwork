@@ -1,8 +1,8 @@
 -# Field used for ransack search. This date range is mostly used for Spree::Order
 -# so default field is 'completed_at'
 - field ||= 'completed_at'
-- start_date ||= params[:q].try(:[], :completed_at_gt)
-- end_date ||= params[:q].try(:[], :completed_at_lt)
+- start_date ||= params[:q].try(:[], :completed_at_gt) || 3.months.ago.beginning_of_day
+- end_date ||= params[:q].try(:[], :completed_at_lt) || Time.zone.tomorrow.beginning_of_day
 
 .row.date-range-filter
   .alpha.two.columns= label_tag nil, t(:date_range)
