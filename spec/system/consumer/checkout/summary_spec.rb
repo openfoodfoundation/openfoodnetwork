@@ -10,6 +10,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
   include StripeStubs
   include PaypalHelper
   include AuthenticationHelper
+  include UIComponentHelper
 
   let!(:zone) { create(:zone_with_member) }
   let(:supplier) { create(:supplier_enterprise) }
@@ -48,7 +49,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
     before do
       login_as(user)
-      visit checkout_path
     end
 
     context "summary step" do

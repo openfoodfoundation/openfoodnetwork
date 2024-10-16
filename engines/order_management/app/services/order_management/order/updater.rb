@@ -240,7 +240,30 @@ module OrderManagement
         return unless order.state.in? ["payment", "confirmation", "complete"]
         return unless order.pending_payments.any?
 
-        order.pending_payments.first.update_attribute :amount, order.total
+        @payment = order.pending_payments.first
+        return update_payment if @payment.adjustment.nil?
+
+        # Update payment tax fees if needed
+        new_amount = @payment.payment_method.compute_amount(@payment)
+        if new_amount != @payment.adjustment.amount
+          update_payment_adjustment(new_amount)
+        end
+
+        update_payment
+      end
+
+      def update_payment
+        # Update payment with correct amount
+        @payment.update_attribute :amount, order.total
+      end
+
+      def update_payment_adjustment(amount)
+        @payment.adjustment.update_attribute(:amount, amount)
+
+        # Update order total to take into account updated payment fees
+        update_adjustment_total
+        update_order_total
+        persist_totals
       end
     end
   end
