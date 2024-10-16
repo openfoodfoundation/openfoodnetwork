@@ -574,7 +574,12 @@ en:
   depth: "Depth"
   payment_could_not_process: "The payment could not be processed"
   payment_could_not_complete: "The payment could not be completed"
-
+  vine_voucher_validator_service:
+    errors:
+      vine_settings: "No Vine api settings for the given enterprise" 
+      vine_api: "There was an error communicating with the API"
+      invalid_voucher: "The voucher is not valid"
+      not_found_voucher: "The voucher doesn't exist"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
