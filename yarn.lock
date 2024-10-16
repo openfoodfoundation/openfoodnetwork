@@ -1129,10 +1129,10 @@
   resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.2.tgz#071aab59c600fed95b97939e605ff261a4251608"
   integrity sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==
 
-"@hotwired/turbo@^8.0.11":
-  version "8.0.11"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-8.0.11.tgz#d18ec698d507493b98f7e4bfdb967ada52466ac1"
-  integrity sha512-gU1h7ZCFOOKhbA2D+ELMO7KU3Y9Xkoz4VWOK/zA37EsoRht3NJzU/19w/etx0O1qnhL+Rl8VCJ7sVsK1DVbJ3A==
+"@hotwired/turbo@^8.0.12":
+  version "8.0.12"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-8.0.12.tgz#50aa8345d7f62402680c6d2d9814660761837001"
+  integrity sha512-l3BiQRkD7qrnQv6ms6sqPLczvwbQpXt5iAVwjDvX0iumrz6yEonQkNAzNjeDX25/OJMFDTxpHjkJZHGpM9ikWw==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
