@@ -155,7 +155,7 @@ if ENV["OPENID_APP_ID"].present? && ENV["OPENID_APP_SECRET"].present?
     config.omniauth :openid_connect, {
       name: :openid_connect,
       issuer: "https://login.lescommuns.org/auth/realms/data-food-consortium",
-      scope: [:openid, :profile, :email],
+      scope: [:openid, :profile, :email, :offline_access],
       response_type: :code,
       uid_field: "email",
       discovery: true,
