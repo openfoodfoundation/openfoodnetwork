@@ -9,7 +9,6 @@ module Spree
     include Spree::Core::ControllerHelpers::Auth
     include Spree::Core::ControllerHelpers::Common
     include Spree::Core::ControllerHelpers::Order
-    include CablecarResponses
 
     helper 'spree/base'
 
@@ -24,14 +23,15 @@ module Spree
       if spree_user_signed_in?
         flash[:success] = t('devise.success.logged_in_succesfully')
 
-        render cable_ready: cable_car.redirect_to(
-          url: return_url_or_default(after_sign_in_path_for(spree_current_user))
-        )
+        redirect_to after_sign_in_path_for(spree_current_user)
       else
-        render status: :unauthorized, cable_ready: cable_car.inner_html(
-          "#login-feedback",
-          partial("layouts/alert", locals: { type: "alert", message: t('devise.failure.invalid') })
-        )
+        @message = t('devise.failure.invalid')
+        respond_to do |format|
+          format.html { head :unauthorized }
+          format.turbo_stream do
+            render :create, status: :unauthorized
+          end
+        end
       end
     end
 
@@ -60,11 +60,19 @@ module Spree
     end
 
     def render_unconfirmed_response
-      render status: :unprocessable_entity, cable_ready: cable_car.inner_html(
-        "#login-feedback",
-        partial("layouts/alert", locals: { type: "alert", message: t(:email_unconfirmed),
-                                           unconfirmed: true, tab: "login" })
-      )
+      message = t(:email_unconfirmed)
+      local_values = { type: "alert", message:, unconfirmed: true,
+                       tab: "login", email: params.dig(:spree_user, :email) }
+      respond_to do |format|
+        format.html { head :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update(
+              "login-feedback", partial: "layouts/alert", locals: local_values
+            )
+          ], status: :unprocessable_entity
+        end
+      end
     end
 
     def ensure_valid_locale_persisted

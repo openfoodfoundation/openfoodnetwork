@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module OrderStockCheck
-  include CablecarResponses
   extend ActiveSupport::Concern
 
   def valid_order_line_items?
@@ -27,13 +26,7 @@ module OrderStockCheck
     current_order.set_order_cycle! nil
 
     flash[:info] = I18n.t('order_cycle_closed')
-    respond_to do |format|
-      format.cable_ready {
-        render status: :see_other, cable_ready: cable_car.redirect_to(url: main_app.shop_path)
-      }
-      format.json { render json: { path: main_app.shop_path }, status: :see_other }
-      format.html { redirect_to main_app.shop_path, status: :see_other }
-    end
+    redirect_to main_app.shop_path
   end
 
   private
