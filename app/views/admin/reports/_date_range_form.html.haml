@@ -4,8 +4,8 @@
 - start_field = "#{field}_gt"
 - end_field = "#{field}_lt"
 - query = params[:q].to_h
-- start_date ||= query[start_field].presence || 3.months.ago.beginning_of_day.strftime('%Y-%m-%d %H:%M')
-- end_date ||= query[end_field].presence || Time.zone.tomorrow.beginning_of_day.strftime('%Y-%m-%d %H:%M')
+- start_date = datepicker_time(query[start_field].presence || 3.months.ago.beginning_of_day)
+- end_date = datepicker_time(query[end_field].presence || Time.zone.tomorrow.beginning_of_day)
 
 .row.date-range-filter
   .alpha.two.columns= label_tag nil, t(:date_range)

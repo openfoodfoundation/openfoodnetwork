@@ -58,4 +58,9 @@ module ReportsHelper
       .where(order_id: orders.map(&:id))
       .pluck(:originator_id)
   end
+
+  def datepicker_time(datetime)
+    datetime = Time.zone.parse(datetime) if datetime.is_a? String
+    datetime.strftime('%Y-%m-%d %H:%M')
+  end
 end
