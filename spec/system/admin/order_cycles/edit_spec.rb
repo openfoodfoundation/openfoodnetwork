@@ -41,11 +41,8 @@ RSpec.describe '
 
         # change date range field value
         find('#order_cycle_orders_close_at').click
-        within(".flatpickr-calendar.open") do
-          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-          find("button", text: "Close").click
-        end
+        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+        close_datepicker
         expect(page).to have_content('You have unsaved changes')
 
         # click save to open warning modal
@@ -66,11 +63,8 @@ RSpec.describe '
 
         # change date range field value
         find('#order_cycle_orders_close_at').click
-        within(".flatpickr-calendar.open") do
-          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-          find("button", text: "Close").click
-        end
+        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+        close_datepicker
 
         # click save to open warning modal
         click_button('Save')
@@ -102,11 +96,8 @@ RSpec.describe '
 
         # Now change date range field value
         find('#order_cycle_orders_close_at').click
-        within(".flatpickr-calendar.open") do
-          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-          find("button", text: "Close").click
-        end
+        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+        close_datepicker
         expect(page).to have_content('You have unsaved changes')
 
         click_button('Save')
@@ -137,11 +128,8 @@ RSpec.describe '
 
         # change date range field value
         find('#order_cycle_orders_close_at').click
-        within(".flatpickr-calendar.open") do
-          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-          find("button", text: "Close").click
-        end
+        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+        close_datepicker
 
         expect(page).to have_content('You have unsaved changes')
 
@@ -175,11 +163,8 @@ RSpec.describe '
 
         # Now change date range field value
         find('#order_cycle_orders_close_at').click
-        within(".flatpickr-calendar.open") do
-          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-          find("button", text: "Close").click
-        end
+        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+        close_datepicker
         expect(page).to have_content('You have unsaved changes')
         sleep(2)
 

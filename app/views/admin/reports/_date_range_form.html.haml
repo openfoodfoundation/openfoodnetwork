@@ -1,14 +1,17 @@
 -# Field used for ransack search. This date range is mostly used for Spree::Order
 -# so default field is 'completed_at'
 - field ||= 'completed_at'
-- start_date ||= params[:q].try(:[], :completed_at_gt)
-- end_date ||= params[:q].try(:[], :completed_at_lt)
+- start_field = "#{field}_gt"
+- end_field = "#{field}_lt"
+- query = params[:q].to_h
+- start_date = datepicker_time(query[start_field].presence || 3.months.ago.beginning_of_day)
+- end_date = datepicker_time(query[end_field].presence || Time.zone.tomorrow.beginning_of_day)
 
 .row.date-range-filter
   .alpha.two.columns= label_tag nil, t(:date_range)
   .omega.fourteen.columns
     .field-block.omega.four.columns
-      .date-range-fields{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-enable-time-value": true , "flatpickr-default-hour": 0 } }
+      .date-range-fields{ data: { controller: "flatpickr", "flatpickr-mode-value": "range", "flatpickr-enable-time-value": true , "flatpickr-default-hour": 0, "flatpickr-default-date": [start_date, end_date] } }
         = text_field_tag nil, nil, class: "datepicker fullwidth", data: { "flatpickr-target": "instance", action: "flatpickr_clear@window->flatpickr#clear" }
-        = text_field_tag "q[#{field}_gt]", nil, data: { "flatpickr-target": "start" }, style: "display: none", value: start_date
-        = text_field_tag "q[#{field}_lt]", nil, data: { "flatpickr-target": "end" }, style: "display: none", value: end_date
+        = text_field_tag "q[#{start_field}]", nil, data: { "flatpickr-target": "start" }, style: "display: none", value: start_date
+        = text_field_tag "q[#{end_field}]", nil, data: { "flatpickr-target": "end" }, style: "display: none", value: end_date

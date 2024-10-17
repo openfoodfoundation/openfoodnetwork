@@ -182,12 +182,8 @@ RSpec.describe '
           find('input.datetimepicker', match: :first).click
         end
 
-        # Sets the value to test_value then looks for the close button and click it
-        within(".flatpickr-calendar.open") do
-          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-          select_datetime_from_datepicker test_value
-          find("button", text: "Close").click
-        end
+        select_datetime_from_datepicker test_value
+        close_datepicker
 
         # Should no more have opened flatpickr
         expect(page).not_to have_selector '.flatpickr-calendar.open'
@@ -213,11 +209,8 @@ RSpec.describe '
         within("tr.order-cycle-#{order_cycle.id}") do
           find('input.datetimepicker', match: :first).click
         end
-        within(".flatpickr-calendar.open") do
-          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-          find("button", text: "Close").click
-        end
+        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+        close_datepicker
         expect(page).to have_content('You have unsaved changes')
 
         # click save to open warning modal
@@ -237,11 +230,8 @@ RSpec.describe '
         within("tr.order-cycle-#{order_cycle.id}") do
           find('input.datetimepicker', match: :first).click
         end
-        within(".flatpickr-calendar.open") do
-          expect(page).to have_selector '.shortcut-buttons-flatpickr-buttons'
-          select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-          find("button", text: "Close").click
-        end
+        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
+        close_datepicker
         expect(page).to have_content('You have unsaved changes')
 
         click_button('Save')
