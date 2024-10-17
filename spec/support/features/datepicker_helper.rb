@@ -43,5 +43,11 @@ module Features
       select_datetime_from_datepicker datetime_selector
       find("body").send_keys(:escape)
     end
+
+    def close_datepicker
+      within(".flatpickr-calendar.open") do
+        click_button "Close"
+      end
+    end
   end
 end
