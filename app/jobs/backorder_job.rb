@@ -40,6 +40,8 @@ class BackorderJob < ApplicationJob
     user = order.distributor.owner
     items = backorderable_items(order)
 
+    return if items.empty?
+
     # We are assuming that all variants are linked to the same wholesale
     # shop and its catalog:
     reference_link = items[0].variant.semantic_links[0].semantic_id

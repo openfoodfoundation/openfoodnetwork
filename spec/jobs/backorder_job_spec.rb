@@ -104,6 +104,14 @@ RSpec.describe BackorderJob do
       # Clean up after ourselves:
       perform_enqueued_jobs(only: CompleteBackorderJob)
     end
+
+    it "succeeds when no work to be done" do
+      # The database can change before the job is run. So maybe there's nothing
+      # to do.
+      expect {
+        subject.place_backorder(order)
+      }.not_to raise_error
+    end
   end
 
   describe "#place_order" do
