@@ -45,6 +45,11 @@ class CompleteBackorderJob < ApplicationJob
       transformation = broker.wholesale_to_retail(wholesale_product_id)
       linked_variant = variants.linked_to(transformation.retail_product_id)
 
+      # Assumption: If a transformation is present then we only sell the retail
+      # variant. If that can't be found, it was deleted and we'll ignore that
+      # for now.
+      next if linked_variant.nil?
+
       # Find all line items for this order cycle
       # Update quantity accordingly
       if linked_variant.on_demand
