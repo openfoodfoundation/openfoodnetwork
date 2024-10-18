@@ -126,7 +126,7 @@ RSpec.describe '
 
             within ".reveal-modal" do
               expect {
-                find_button("Confirm").click
+                find_link("Confirm").click
               }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
             end
 
@@ -473,7 +473,7 @@ RSpec.describe '
 
         within ".reveal-modal" do
           expect {
-            find_button("Confirm").click # Confirms the cancel action
+            find_link("Confirm").click # Confirms the cancel action
           }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
         end
 
@@ -514,7 +514,7 @@ RSpec.describe '
 
         within ".reveal-modal" do
           expect {
-            find_button("Confirm").click
+            find_link("Confirm").click
           }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
         end
       end

@@ -14,10 +14,10 @@
             = t('spree.admin.orders.index.resend_confirmation')
         - if Spree::Config[:enable_invoices?]
           %div.menu_item
-            %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "send_invoice" }
+            %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open bulk-actions#perform", "data-modal-link-target-value": "send_invoice" }
               = t('spree.admin.orders.index.send_invoice')
-          %div.menu_item
-            %span.name{ "data-controller": "bulk-actions", "data-action": "click->bulk-actions#perform", "data-bulk-actions-reflex-value": "Admin::Orders#bulk_invoice" }
+          = link_to spree.bulk_invoice_admin_orders_path, class: 'menu_item', data: { turbo: true, turbo_method: :post } do
+            %span
               = t('spree.admin.orders.index.print_invoices')
         %div.menu_item
           %span.name{ "data-controller": "modal-link", "data-action": "click->modal-link#open", "data-modal-link-target-value": "cancel_orders" }

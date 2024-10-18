@@ -1,24 +1,34 @@
-import ApplicationController from "./application_controller";
+import { Controller } from "stimulus";
 
-export default class extends ApplicationController {
-  static targets = ["extraParams"]
-  static values = { reflex: String }
-
+export default class extends Controller {
   connect() {
-    super.connect();
+    document.addEventListener('modal-open', this.modalOpen.bind(this));
+    document.addEventListener('modal-close', this.modalClose.bind(this));
   }
 
-  perform() {
-    let params = { bulk_ids: this.getSelectedIds() };
+  disconnect() {
+    document.removeEventListener('modal-open', this.modalOpen);
+    document.removeEventListener('modal-close', this.modalClose);
+  }
 
-    if (this.hasExtraParamsTarget) {
-      Object.assign(params, this.extraFormData())
+  appendParams(url, modal) {
+    const search_url = new URL(url);
+    const search_params = new URLSearchParams(search_url.search);
+    this.getSelectedIds().forEach((value) => {
+      search_params.append('bulk_ids[]', value);
+    });
+
+    const form = modal.querySelector("form[data-bulk-actions='extraParams']");
+    if (form) {
+      for (const pair of new FormData(form).entries()) {
+        search_params.append(pair[0], pair[1]);
+      }
     }
-
-    this.stimulate(this.reflexValue, params);
+    
+    search_url.search = search_params;
+    
+    return search_url;
   }
-
-  // private
 
   getSelectedIds() {
     const checkboxes = document.querySelectorAll(
@@ -27,9 +37,14 @@ export default class extends ApplicationController {
     return Array.from(checkboxes).map((checkbox) => checkbox.value);
   }
 
-  extraFormData() {
-    if (this.extraParamsTarget.constructor.name !== "HTMLFormElement") { return {} }
+  modalOpen(e) {
+    const modal = e.target;
+    this.submitUrl = modal.querySelector("a[data-type='submit']").getAttribute('href');
+    const href = this.appendParams(this.submitUrl, modal);
+    modal.querySelector("a[data-type='submit']").setAttribute('href', href);
+  }
 
-    return Object.fromEntries(new FormData(this.extraParamsTarget).entries())
+  modalClose(e) {
+    e.target.querySelector("a[data-type='submit']").setAttribute('href', this.submitUrl);
   }
 }

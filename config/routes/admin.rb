@@ -33,6 +33,7 @@ Openfoodnetwork::Application.routes.draw do
       member do
         get :welcome
         patch :register
+        patch :remove_logo
       end
 
       resources :connected_apps, only: [:create, :destroy]

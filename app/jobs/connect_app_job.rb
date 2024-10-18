@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ConnectAppJob < ApplicationJob
-  include CableReady::Broadcaster
-
   def perform(app, token, channel: nil)
     url = I18n.t("connect_app.url")
     event = "connect-app"
@@ -23,6 +21,6 @@ class ConnectAppJob < ApplicationJob
       locals: { enterprise:, connected_app: enterprise.connected_apps.discover_regen.first },
     )
 
-    cable_ready[channel].morph(selector:, html:).broadcast
+    ActionCable.server.broadcast(channel, { selector:, html: })
   end
 end

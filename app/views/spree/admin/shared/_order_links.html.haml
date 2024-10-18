@@ -13,7 +13,7 @@
                 %i{ class: link[:icon] }
               %span=link[:name]
           - else
-            %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { method: link[:method], "ujs-navigate": link[:method] ? "false" : "undefined", confirm: link[:confirm] } }
+            %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { method: link[:method], confirm: link[:confirm] } }
               %span
                 %i{ class: link[:icon] }
               %span=link[:name]
