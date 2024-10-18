@@ -11,7 +11,7 @@ class UpdateItemNameToProductInODReport < ActiveRecord::Migration[7.0]
 
         fields_to_show.delete('item_name')
         fields_to_show << 'product'
-        option.update(options: option.options)
+        option.save
       rescue StandardError => e
         puts "Failed to update rendering option with id: #{option.id}"
         puts "Error: #{e.message}"
