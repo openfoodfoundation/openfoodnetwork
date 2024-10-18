@@ -244,7 +244,7 @@ module Spree
       can [:admin, :index, :show, :create], ::Admin::ReportsController
       can [:admin, :show, :create, :customers, :orders_and_distributors, :group_buys, :payments,
            :orders_and_fulfillment, :products_and_inventory, :order_cycle_management,
-           :packing, :enterprise_fee_summary, :bulk_coop], :report
+           :packing, :enterprise_fee_summary, :bulk_coop, :suppliers], :report
     end
 
     def add_order_cycle_management_abilities(user)
