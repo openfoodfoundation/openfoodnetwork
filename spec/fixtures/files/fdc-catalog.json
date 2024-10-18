@@ -1,0 +1,395 @@
+{
+   "@context" : "https://www.datafoodconsortium.org",
+   "@graph" : [
+      {
+         "@id" : "_:b1095",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Kilogram",
+         "dfc-b:value" : "0.04"
+      },
+      {
+         "@id" : "_:b1096",
+         "@type" : "dfc-b:Price",
+         "dfc-b:VATrate" : "0",
+         "dfc-b:hasUnit" : "dfc-m:PoundSterling",
+         "dfc-b:value" : "6.25"
+      },
+      {
+         "@id" : "_:b1097",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Kilogram",
+         "dfc-b:value" : "0.4"
+      },
+      {
+         "@id" : "_:b1098",
+         "@type" : "dfc-b:Price",
+         "dfc-b:VATrate" : "0",
+         "dfc-b:hasUnit" : "dfc-m:PoundSterling",
+         "dfc-b:value" : "2.09"
+      },
+      {
+         "@id" : "_:b1099",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Kilogram",
+         "dfc-b:value" : "0.3"
+      },
+      {
+         "@id" : "_:b1100",
+         "@type" : "dfc-b:Price",
+         "dfc-b:VATrate" : "0",
+         "dfc-b:hasUnit" : "dfc-m:PoundSterling",
+         "dfc-b:value" : "3.99"
+      },
+      {
+         "@id" : "_:b1101",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Kilogram",
+         "dfc-b:value" : "0"
+      },
+      {
+         "@id" : "_:b1102",
+         "@type" : "dfc-b:Price",
+         "dfc-b:VATrate" : "0",
+         "dfc-b:hasUnit" : "dfc-m:PoundSterling",
+         "dfc-b:value" : "5.95"
+      },
+      {
+         "@id" : "_:b1103",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Kilogram",
+         "dfc-b:value" : "0.24"
+      },
+      {
+         "@id" : "_:b1104",
+         "@type" : "dfc-b:Price",
+         "dfc-b:VATrate" : "0",
+         "dfc-b:hasUnit" : "dfc-m:PoundSterling",
+         "dfc-b:value" : "30.20"
+      },
+      {
+         "@id" : "_:b1105",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Kilogram",
+         "dfc-b:value" : "4.8"
+      },
+      {
+         "@id" : "_:b1106",
+         "@type" : "dfc-b:Price",
+         "dfc-b:VATrate" : "0",
+         "dfc-b:hasUnit" : "dfc-m:PoundSterling",
+         "dfc-b:value" : "18.85"
+      },
+      {
+         "@id" : "_:b1107",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Kilogram",
+         "dfc-b:value" : "2.4"
+      },
+      {
+         "@id" : "_:b1108",
+         "@type" : "dfc-b:Price",
+         "dfc-b:VATrate" : "0",
+         "dfc-b:hasUnit" : "dfc-m:PoundSterling",
+         "dfc-b:value" : "23.95"
+      },
+      {
+         "@id" : "_:b1109",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Kilogram",
+         "dfc-b:value" : "0"
+      },
+      {
+         "@id" : "_:b1110",
+         "@type" : "dfc-b:Price",
+         "dfc-b:VATrate" : "0",
+         "dfc-b:hasUnit" : "dfc-m:PoundSterling",
+         "dfc-b:value" : "45.00"
+      },
+      {
+         "@id" : "_:b1111",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Piece",
+         "dfc-b:value" : "6"
+      },
+      {
+         "@id" : "_:b1112",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Piece",
+         "dfc-b:value" : "1"
+      },
+      {
+         "@id" : "_:b1113",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Piece",
+         "dfc-b:value" : "12"
+      },
+      {
+         "@id" : "_:b1114",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Piece",
+         "dfc-b:value" : "1"
+      },
+      {
+         "@id" : "_:b1115",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Piece",
+         "dfc-b:value" : "8"
+      },
+      {
+         "@id" : "_:b1116",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Piece",
+         "dfc-b:value" : "1"
+      },
+      {
+         "@id" : "_:b1117",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Piece",
+         "dfc-b:value" : "10"
+      },
+      {
+         "@id" : "_:b1118",
+         "@type" : "dfc-b:QuantitativeValue",
+         "dfc-b:hasUnit" : "dfc-m:Piece",
+         "dfc-b:value" : "1"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259",
+         "@type" : "dfc-b:SuppliedProduct",
+         "dfc-b:description" : "<table width=\"100%\">\n<tbody>\n<tr style=\"border: 0px;\" data-mce-style=\"border: 0px;\">\n<td bgcolor=\"#d6fbed\" style=\"color: #000000; border: 0px; width: 526px;\" data-mce-style=\"color: #000000; border: 0px; width: 526px;\"><b>This rich, intense and deeply flavoured 6-year old apple balsamic vinegar is made using the traditional Italian method of reduction and concentration of the juice over a lengthy period of time, rather than by adding flavouring and colouring. </b></td>\n</tr>\n</tbody>\n</table>\n<p>Liberty Fields produce small batches of superb syrup, balsamic vinegar, cider and vodka by hand from the fruit of their own Dorset apple orchards, planted from 2010.<br></p>\n<p>The balsamic vinegar is aged for 6 years in barrels. The only ingredient is apples.</p>\n<h5 class=\"product-detail-title\">How to use</h5>\n<p>Use like Italian balsamic vinegar. <span data-mce-fragment=\"1\">As well as using on salads, it’s a great partner for grilled meats or charcuterie; a drop brings out the taste of strawberries and other soft fruits; and it can really enhance a stew, sauce or a soup. </span></p>\n<h5 class=\"product-detail-title\">To store<br>\n</h5>\n<p>For best before date see pack. Store in a cool, dry place.<br></p>\n<h5 class=\"product-detail-title\">Ingredients</h5>\n<p>Apples<br></p>\n<h5 class=\"product-detail-title\">Allergy information</h5>\n<p>No allergens.</p><h5 class=\"product-detail-title\">More</h5>\n<p>Product of Dorset<br>Suitable for vegans and vegetarians<br></p>",
+         "dfc-b:hasQuantity" : "_:b1095",
+         "dfc-b:image" : "https://cdn.shopify.com/s/files/1/0731/8483/7939/products/Liberty-Fields-Apple-Balsamic-Vinegar-40ml_79617eea-ab8c-4070-9e4d-711bf030ad07.jpg?v=1677760772",
+         "dfc-b:name" : "Apple Balsamic Vinegar - Retail bottle, 40ml",
+         "dfc-b:referencedBy" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259/CatalogItem"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259/AsPlannedConsumptionFlow",
+         "@type" : "dfc-b:AsPlannedConsumptionFlow",
+         "dfc-b:consumes" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259",
+         "dfc-b:hasQuantity" : "_:b1111"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259/AsPlannedProductionFlow",
+         "@type" : "dfc-b:AsPlannedProductionFlow",
+         "dfc-b:hasQuantity" : "_:b1112",
+         "dfc-b:produces" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466271027"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259/AsPlannedTransformation",
+         "@type" : "dfc-b:AsPlannedTransformation",
+         "dfc-b:hasIncome" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259/AsPlannedConsumptionFlow",
+         "dfc-b:hasOutcome" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259/AsPlannedProductionFlow"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259/CatalogItem",
+         "@type" : "dfc-b:CatalogItem",
+         "dfc-b:offeredThrough" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259/Offer",
+         "dfc-b:sku" : "LIB/NABVI/BF",
+         "dfc-b:stockLimitation" : "-1"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466238259/Offer",
+         "@type" : "dfc-b:Offer",
+         "dfc-b:hasPrice" : {
+            "@id" : "_:b1096"
+         }
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466271027",
+         "@type" : "dfc-b:SuppliedProduct",
+         "dfc-b:description" : "<table width=\"100%\">\n<tbody>\n<tr style=\"border: 0px;\" data-mce-style=\"border: 0px;\">\n<td bgcolor=\"#d6fbed\" style=\"color: #000000; border: 0px; width: 526px;\" data-mce-style=\"color: #000000; border: 0px; width: 526px;\"><b>This rich, intense and deeply flavoured 6-year old apple balsamic vinegar is made using the traditional Italian method of reduction and concentration of the juice over a lengthy period of time, rather than by adding flavouring and colouring. </b></td>\n</tr>\n</tbody>\n</table>\n<p>Liberty Fields produce small batches of superb syrup, balsamic vinegar, cider and vodka by hand from the fruit of their own Dorset apple orchards, planted from 2010.<br></p>\n<p>The balsamic vinegar is aged for 6 years in barrels. The only ingredient is apples.</p>\n<h5 class=\"product-detail-title\">How to use</h5>\n<p>Use like Italian balsamic vinegar. <span data-mce-fragment=\"1\">As well as using on salads, it’s a great partner for grilled meats or charcuterie; a drop brings out the taste of strawberries and other soft fruits; and it can really enhance a stew, sauce or a soup. </span></p>\n<h5 class=\"product-detail-title\">To store<br>\n</h5>\n<p>For best before date see pack. Store in a cool, dry place.<br></p>\n<h5 class=\"product-detail-title\">Ingredients</h5>\n<p>Apples<br></p>\n<h5 class=\"product-detail-title\">Allergy information</h5>\n<p>No allergens.</p><h5 class=\"product-detail-title\">More</h5>\n<p>Product of Dorset<br>Suitable for vegans and vegetarians<br></p>",
+         "dfc-b:hasQuantity" : "_:b1103",
+         "dfc-b:image" : "https://cdn.shopify.com/s/files/1/0731/8483/7939/products/Liberty-Fields-Apple-Balsamic-Vinegar-40ml_79617eea-ab8c-4070-9e4d-711bf030ad07.jpg?v=1677760772",
+         "dfc-b:name" : "Apple Balsamic Vinegar - Case, 6 x 40ml",
+         "dfc-b:referencedBy" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466271027/CatalogItem"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466271027/CatalogItem",
+         "@type" : "dfc-b:CatalogItem",
+         "dfc-b:offeredThrough" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466271027/Offer",
+         "dfc-b:sku" : "LIB/NABVI/C6",
+         "dfc-b:stockLimitation" : "5"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466271027/Offer",
+         "@type" : "dfc-b:Offer",
+         "dfc-b:hasPrice" : {
+            "@id" : "_:b1104"
+         }
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635",
+         "@type" : "dfc-b:SuppliedProduct",
+         "dfc-b:description" : "<table width=\"100%\">\n<tbody>\n<tr style=\"border: 0px;\">\n<td bgcolor=\"#d6fbed\" style=\"color: #000000; border: 0px;\"><strong>They're back!</strong></td>\n</tr>\n</tbody>\n</table>\n<p><strong>Think baked beans are British? They are now! We use only British-grown fava beans - Britain's original bean, grown here since the Iron Age. Our Baked British Beans are deliciously different, with large meaty fava beans in a tasty tomato sauce.</strong></p>\n<p><strong><a title=\"What are fava beans? Aren't they just broad beans?\" href=\"/blogs/news/what-are-fava-beans-are-they-just-broad-beans\" data-mce-fragment=\"1\" data-mce-href=\"/blogs/news/what-are-fava-beans-are-they-just-broad-beans\">What are fava beans? Find out here...</a></strong></p>\n<!-- split --><h3>Complete Product Details</h3><p>Our Baked British Beans are cooked and ready to eat, hot or cold. They're good served on toast but also delicious added to stews, curries or casseroles. Or even in a pie.</p>\n<h5 class=\"product-detail-title\">Cooking instructions</h5>\n<p><strong>Cooking on the Hob</strong><br>Empty contents into saucepan. Heat gently for 4-5 minutes while stirring. For best flavour do not boil or overcook. Do not reheat.</p>\n<p><strong>Microwave Cooking</strong><br>Empty contents into a non-metallic bowl and cover. Heat for 2 to 3 minutes, stirring halfway. Check the food is hot, stir well and serve. Do not reheat.</p>\n<h5 class=\"product-detail-title\">To Store</h5>\n<p>Store in a cool, dry place. Once opened, transfer contents to a non-metallic container, cover refrigerate and use with 2 days.</p>\n<h5 class=\"product-detail-title\">Ingredients</h5>\n<p>Fava Beans (Broad Beans) (42%), Water, Tomato Puree, Sugar, Modified Maize Starch, Salt, Herbs &amp; Spices, Concentrated Lemon Juice</p>\n<h5 class=\"product-detail-title\">Allergy information</h5>\n<p>No Allergens</p>\n<table width=\"100%\">\n<tbody>\n<tr>\n<td><strong>Typical values</strong></td>\n<td><strong>Per 100g</strong></td>\n</tr>\n<tr>\n<td>Energy</td>\n<td>292kJ (69kcal)</td>\n</tr>\n<tr>\n<td>Fat</td>\n<td>0.4g</td>\n</tr>\n<tr>\n<td>of which saturates</td>\n<td>0.1g</td>\n</tr>\n<tr>\n<td>Carbohydrate</td>\n<td>10.1g</td>\n</tr>\n<tr>\n<td>of which sugars</td>\n<td>4.6g</td>\n</tr>\n<tr>\n<td>Fibre</td>\n<td>5g</td>\n</tr>\n<tr>\n<td>Protein</td>\n<td>4g</td>\n</tr>\n<tr>\n<td>Salt</td>\n<td>0.6g</td>\n</tr>\n</tbody>\n</table><h5 class=\"product-detail-title\">More</h5>\n<p>Delicious, nutritious and good for the soil, fava beans are a variety of broad bean, Vicia faba, left to ripen and dry before harvest. They’re also known as field beans, horse beans, Windsor beans or ful.</p>\n<p>Suitable for vegans and vegetarians</p>\n",
+         "dfc-b:hasQuantity" : "_:b1097",
+         "dfc-b:image" : "https://cdn.shopify.com/s/files/1/0731/8483/7939/products/Pack-Can-Baked-Beans-1800x6_983x656_513758e6-2616-4687-a8b2-ba6dde864923.jpg?v=1677760778",
+         "dfc-b:name" : "Baked British Beans - Retail can, 400g (can)",
+         "dfc-b:referencedBy" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635/CatalogItem"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635/AsPlannedConsumptionFlow",
+         "@type" : "dfc-b:AsPlannedConsumptionFlow",
+         "dfc-b:consumes" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635",
+         "dfc-b:hasQuantity" : "_:b1113"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635/AsPlannedProductionFlow",
+         "@type" : "dfc-b:AsPlannedProductionFlow",
+         "dfc-b:hasQuantity" : "_:b1114",
+         "dfc-b:produces" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466500403"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635/AsPlannedTransformation",
+         "@type" : "dfc-b:AsPlannedTransformation",
+         "dfc-b:hasIncome" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635/AsPlannedConsumptionFlow",
+         "dfc-b:hasOutcome" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635/AsPlannedProductionFlow"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635/CatalogItem",
+         "@type" : "dfc-b:CatalogItem",
+         "dfc-b:offeredThrough" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635/Offer",
+         "dfc-b:sku" : "NCBB/T4",
+         "dfc-b:stockLimitation" : "-1"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635/Offer",
+         "@type" : "dfc-b:Offer",
+         "dfc-b:hasPrice" : {
+            "@id" : "_:b1098"
+         }
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466500403",
+         "@type" : "dfc-b:SuppliedProduct",
+         "dfc-b:description" : "<table width=\"100%\">\n<tbody>\n<tr style=\"border: 0px;\">\n<td bgcolor=\"#d6fbed\" style=\"color: #000000; border: 0px;\"><strong>They're back!</strong></td>\n</tr>\n</tbody>\n</table>\n<p><strong>Think baked beans are British? They are now! We use only British-grown fava beans - Britain's original bean, grown here since the Iron Age. Our Baked British Beans are deliciously different, with large meaty fava beans in a tasty tomato sauce.</strong></p>\n<p><strong><a title=\"What are fava beans? Aren't they just broad beans?\" href=\"/blogs/news/what-are-fava-beans-are-they-just-broad-beans\" data-mce-fragment=\"1\" data-mce-href=\"/blogs/news/what-are-fava-beans-are-they-just-broad-beans\">What are fava beans? Find out here...</a></strong></p>\n<!-- split --><h3>Complete Product Details</h3><p>Our Baked British Beans are cooked and ready to eat, hot or cold. They're good served on toast but also delicious added to stews, curries or casseroles. Or even in a pie.</p>\n<h5 class=\"product-detail-title\">Cooking instructions</h5>\n<p><strong>Cooking on the Hob</strong><br>Empty contents into saucepan. Heat gently for 4-5 minutes while stirring. For best flavour do not boil or overcook. Do not reheat.</p>\n<p><strong>Microwave Cooking</strong><br>Empty contents into a non-metallic bowl and cover. Heat for 2 to 3 minutes, stirring halfway. Check the food is hot, stir well and serve. Do not reheat.</p>\n<h5 class=\"product-detail-title\">To Store</h5>\n<p>Store in a cool, dry place. Once opened, transfer contents to a non-metallic container, cover refrigerate and use with 2 days.</p>\n<h5 class=\"product-detail-title\">Ingredients</h5>\n<p>Fava Beans (Broad Beans) (42%), Water, Tomato Puree, Sugar, Modified Maize Starch, Salt, Herbs &amp; Spices, Concentrated Lemon Juice</p>\n<h5 class=\"product-detail-title\">Allergy information</h5>\n<p>No Allergens</p>\n<table width=\"100%\">\n<tbody>\n<tr>\n<td><strong>Typical values</strong></td>\n<td><strong>Per 100g</strong></td>\n</tr>\n<tr>\n<td>Energy</td>\n<td>292kJ (69kcal)</td>\n</tr>\n<tr>\n<td>Fat</td>\n<td>0.4g</td>\n</tr>\n<tr>\n<td>of which saturates</td>\n<td>0.1g</td>\n</tr>\n<tr>\n<td>Carbohydrate</td>\n<td>10.1g</td>\n</tr>\n<tr>\n<td>of which sugars</td>\n<td>4.6g</td>\n</tr>\n<tr>\n<td>Fibre</td>\n<td>5g</td>\n</tr>\n<tr>\n<td>Protein</td>\n<td>4g</td>\n</tr>\n<tr>\n<td>Salt</td>\n<td>0.6g</td>\n</tr>\n</tbody>\n</table><h5 class=\"product-detail-title\">More</h5>\n<p>Delicious, nutritious and good for the soil, fava beans are a variety of broad bean, Vicia faba, left to ripen and dry before harvest. They’re also known as field beans, horse beans, Windsor beans or ful.</p>\n<p>Suitable for vegans and vegetarians</p>\n",
+         "dfc-b:hasQuantity" : "_:b1105",
+         "dfc-b:image" : "https://cdn.shopify.com/s/files/1/0731/8483/7939/products/Pack-Can-Baked-Beans-1800x6_983x656_513758e6-2616-4687-a8b2-ba6dde864923.jpg?v=1677760778",
+         "dfc-b:name" : "Baked British Beans - Case, 12 x 400g (can)",
+         "dfc-b:referencedBy" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466500403/CatalogItem"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466500403/CatalogItem",
+         "@type" : "dfc-b:CatalogItem",
+         "dfc-b:offeredThrough" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466500403/Offer",
+         "dfc-b:sku" : "NCBB/CD",
+         "dfc-b:stockLimitation" : "-1"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466500403/Offer",
+         "@type" : "dfc-b:Offer",
+         "dfc-b:hasPrice" : {
+            "@id" : "_:b1106"
+         }
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468400947",
+         "@type" : "dfc-b:SuppliedProduct",
+         "dfc-b:description" : "<p><strong>The first ever British-grown organic chia seeds! </strong></p>\n<p><strong>These versatile and nutritious seeds are delicious sprinkled on salads, added to smoothies or in baking. They make a great vegan egg replacement too.</strong></p>\n<p>Organically grown by John and Alice Pawsey in Suffolk, with guidance from <a title=\"Reasons to be Chia-ful\" href=\"https://hodmedods.co.uk/blogs/news/first-british-chia\">chia pioneers Peter and Andrew Fairs</a>, these chia seeds are the result of five years of crop trials and developments. The tiny oil-rich seeds are harvested from the <em>Salvia hispanica</em> plant, a member of the mint family originating in central America, where chia was a staple food in Aztec cultures, alongside beans and corn.</p>\n<!-- split --><h3>Complete Product Details</h3>\n<li id=\"tab1\" class=\"active\">\n<p>Sprinkle on salads, use in baking, add to smoothies, porridge or granola.</p>\n<p>Advised maximum daily intake: 15g</p>\n<h5 class=\"product-detail-title\">Cooking instructions</h5>\n<p><strong>As an egg substitute</strong><br>Soak 1 tablespoon of seeds in 3 tablespoons of warm water for 30 minutes to replace one egg in vegan baking.</p>\n<p><strong>In baking</strong><br>Add whole or ground chia seeds to bread mixes at up to 5%<br>Add whole chia seeds to other baking mixes at up to 10%</p>\n<p><strong>Other uses</strong><br> Add whole chia seeds to breakfast cereal at up to 10%<br>Add whole chia seeds to fruit, nut, and seed mixes at up to 10%<br>Add whole, mashed or ground chia seeds to fruit juices or smoothies at up to 15g/day</p>\n<h5 class=\"product-detail-title\">Ingredients</h5>\n<p>Chia seeds (<em>Salvia Hispanica</em>)</p>\n<h5 class=\"product-detail-title\">Allergy information</h5>\n<p>No Allergens</p>\n<table height=\"247\" width=\"416\">\n<tbody>\n<tr>\n<td style=\"width: 203.295px;\"><strong>Typical values</strong></td>\n<td style=\"width: 199.659px;\"><strong>Per 100g</strong></td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Energy</td>\n<td style=\"width: 199.659px;\">1,675kJ / 404kcal</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Fat</td>\n<td style=\"width: 199.659px;\">23.2g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">of which saturates</td>\n<td style=\"width: 199.659px;\">2.3g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Carbohydrate</td>\n<td style=\"width: 199.659px;\">16.7g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">of which sugars</td>\n<td style=\"width: 199.659px;\">0.8g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Fibre</td>\n<td style=\"width: 199.659px;\">27.7g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Protein</td>\n<td style=\"width: 199.659px;\">18.2g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Salt</td>\n<td style=\"width: 199.659px;\">0.01g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Calcium</td>\n<td style=\"width: 199.659px;\">701mg</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Iron</td>\n<td style=\"width: 199.659px;\">7.2mg</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Magnesium</td>\n<td style=\"width: 199.659px;\">230mg</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Phosphorous</td>\n<td style=\"width: 199.659px;\">583mg</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Omega 3 ALA</td>\n<td style=\"width: 199.659px;\">11.5g</td>\n</tr>\n</tbody>\n</table>\n<h5 class=\"product-detail-title\">More</h5>\n<p>Chia Seeds are high in dietary fibre and Omega 3 ALA oils, and a source of protein.</p>\n<p>Suitable for Vegans &amp; Vegetarians.</p>\n<p>Grown by John and Alice Pawsey in Suffolk.</p>\n</li>",
+         "dfc-b:hasQuantity" : "_:b1099",
+         "dfc-b:image" : "https://cdn.shopify.com/s/files/1/0731/8483/7939/products/Organic-Chia-2400x1800_3f9b29c6-f1fe-4899-957f-038be976da68.jpg?v=1677760816",
+         "dfc-b:name" : "Chia Seed, Organic - Retail pack, 300g",
+         "dfc-b:referencedBy" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468400947/CatalogItem"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468400947/CatalogItem",
+         "@type" : "dfc-b:CatalogItem",
+         "dfc-b:offeredThrough" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468400947/Offer",
+         "dfc-b:sku" : "OGCH/R3",
+         "dfc-b:stockLimitation" : "-1"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468400947/Offer",
+         "@type" : "dfc-b:Offer",
+         "dfc-b:hasPrice" : {
+            "@id" : "_:b1100"
+         }
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468433715",
+         "@type" : "dfc-b:SuppliedProduct",
+         "dfc-b:description" : "<p><strong>The first ever British-grown organic chia seeds! </strong></p>\n<p><strong>These versatile and nutritious seeds are delicious sprinkled on salads, added to smoothies or in baking. They make a great vegan egg replacement too.</strong></p>\n<p>Organically grown by John and Alice Pawsey in Suffolk, with guidance from <a title=\"Reasons to be Chia-ful\" href=\"https://hodmedods.co.uk/blogs/news/first-british-chia\">chia pioneers Peter and Andrew Fairs</a>, these chia seeds are the result of five years of crop trials and developments. The tiny oil-rich seeds are harvested from the <em>Salvia hispanica</em> plant, a member of the mint family originating in central America, where chia was a staple food in Aztec cultures, alongside beans and corn.</p>\n<!-- split --><h3>Complete Product Details</h3>\n<li id=\"tab1\" class=\"active\">\n<p>Sprinkle on salads, use in baking, add to smoothies, porridge or granola.</p>\n<p>Advised maximum daily intake: 15g</p>\n<h5 class=\"product-detail-title\">Cooking instructions</h5>\n<p><strong>As an egg substitute</strong><br>Soak 1 tablespoon of seeds in 3 tablespoons of warm water for 30 minutes to replace one egg in vegan baking.</p>\n<p><strong>In baking</strong><br>Add whole or ground chia seeds to bread mixes at up to 5%<br>Add whole chia seeds to other baking mixes at up to 10%</p>\n<p><strong>Other uses</strong><br> Add whole chia seeds to breakfast cereal at up to 10%<br>Add whole chia seeds to fruit, nut, and seed mixes at up to 10%<br>Add whole, mashed or ground chia seeds to fruit juices or smoothies at up to 15g/day</p>\n<h5 class=\"product-detail-title\">Ingredients</h5>\n<p>Chia seeds (<em>Salvia Hispanica</em>)</p>\n<h5 class=\"product-detail-title\">Allergy information</h5>\n<p>No Allergens</p>\n<table height=\"247\" width=\"416\">\n<tbody>\n<tr>\n<td style=\"width: 203.295px;\"><strong>Typical values</strong></td>\n<td style=\"width: 199.659px;\"><strong>Per 100g</strong></td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Energy</td>\n<td style=\"width: 199.659px;\">1,675kJ / 404kcal</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Fat</td>\n<td style=\"width: 199.659px;\">23.2g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">of which saturates</td>\n<td style=\"width: 199.659px;\">2.3g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Carbohydrate</td>\n<td style=\"width: 199.659px;\">16.7g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">of which sugars</td>\n<td style=\"width: 199.659px;\">0.8g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Fibre</td>\n<td style=\"width: 199.659px;\">27.7g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Protein</td>\n<td style=\"width: 199.659px;\">18.2g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Salt</td>\n<td style=\"width: 199.659px;\">0.01g</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Calcium</td>\n<td style=\"width: 199.659px;\">701mg</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Iron</td>\n<td style=\"width: 199.659px;\">7.2mg</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Magnesium</td>\n<td style=\"width: 199.659px;\">230mg</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Phosphorous</td>\n<td style=\"width: 199.659px;\">583mg</td>\n</tr>\n<tr>\n<td style=\"width: 203.295px;\">Omega 3 ALA</td>\n<td style=\"width: 199.659px;\">11.5g</td>\n</tr>\n</tbody>\n</table>\n<h5 class=\"product-detail-title\">More</h5>\n<p>Chia Seeds are high in dietary fibre and Omega 3 ALA oils, and a source of protein.</p>\n<p>Suitable for Vegans &amp; Vegetarians.</p>\n<p>Grown by John and Alice Pawsey in Suffolk.</p>\n</li>",
+         "dfc-b:hasQuantity" : "_:b1107",
+         "dfc-b:image" : "https://cdn.shopify.com/s/files/1/0731/8483/7939/products/Organic-Chia-2400x1800_3f9b29c6-f1fe-4899-957f-038be976da68.jpg?v=1677760816",
+         "dfc-b:name" : "Chia Seed, Organic - Case, 8 x 300g",
+         "dfc-b:referencedBy" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468433715/CatalogItem"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468433715/CatalogItem",
+         "@type" : "dfc-b:CatalogItem",
+         "dfc-b:offeredThrough" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468433715/Offer",
+         "dfc-b:sku" : "OGCH/C8",
+         "dfc-b:stockLimitation" : "-1"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519468433715/Offer",
+         "@type" : "dfc-b:Offer",
+         "dfc-b:hasPrice" : {
+            "@id" : "_:b1108"
+         }
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083",
+         "@type" : "dfc-b:SuppliedProduct",
+         "dfc-b:description" : "<table width=\"100%\">\n<tbody>\n<tr style=\"border: 0px;\">\n<td bgcolor=\"#d6fbed\" style=\"color: #000000; border: 0px; width: 526px;\"><b>The rich, smoky and salty taste of dulse adds depth to dishes of all kinds.</b></td>\n</tr>\n</tbody>\n</table>\n<p>Eating dulse is an ancient tradition in Scots and Irish culture. It adds a wonderful depth of flavour and is rich in minerals and protein.</p>\n<p>Sometimes known as 'vegetarian bacon' it has a wonderful robust flavour that pairs well with seafood, leafy greens and tomatoes.</p>\n<p>Mara Seaweed is harvested sustainably from the pure, wild waters around Scotland and Ireland. <span>To avoid contamination, the seaweed is packed into sealed sacks before being brought up the beach and delivered fresh, directly to the factory. The seaweed is picked and processed within 24 hours to lock in flavour, ensure quality and secure maximum nutritional benefits.</span></p><h5 class=\"product-detail-title\">How to use</h5>\n<p>Dulse has a natural, lingering smoky taste. It's delicious when generously shaken on dark green vegetables and rich pulse dishes.</p>\n<p>For an extra savoury hit without the salt, use dulse flakes to season roasted vegetable, or stir into bolognese sauce or chilli before serving. Dulse is also perfect scattered mixed through crispy kale.</p>\n<p>For an unusual salted caramel-style twist, try pairing dulse with dark chocolate. Just combine a pinch of dulse with the other dry ingredients in any brownie or truffle recipe.</p>\n<h5 class=\"product-detail-title\">Ingredients</h5>\n<p>100% Dulse (<em>Palmaria palmata</em>)</p>\n<h5 class=\"product-detail-title\">Allergy information</h5>\n<p>May contain fish, crustaceans, molluscs.\n</p>\n<table width=\"100%\">\n<tbody>\n<tr>\n<td><strong>Typical values</strong></td>\n<td><strong>Per 100g</strong></td>\n</tr>\n<tr>\n<td>Energy</td>\n<td>974kJ (234kcal)</td>\n</tr>\n<tr>\n<td>Fat</td>\n<td>\n<p>1.5g</p>\n</td>\n</tr>\n<tr>\n<td>of which saturates</td>\n<td>0.4g</td>\n</tr>\n<tr>\n<td>Carbohydrate</td>\n<td>22.8g</td>\n</tr>\n<tr>\n<td>of which sugars</td>\n<td>1.0g</td>\n</tr>\n<tr>\n<td>Fibre</td>\n<td>36.9g</td>\n</tr>\n<tr>\n<td>Protein</td>\n<td>13.8g</td>\n</tr>\n<tr>\n<td>Salt</td>\n<td>4.9g</td>\n</tr>\n</tbody>\n</table><h5 class=\"product-detail-title\">More</h5>\n<p>Product of Scotland<br>Great Taste award winner<br>Suitable for vegans and vegetarians<br>A source of iodine, calcium, potassium, magnesium, manganese, copper, iron, zinc</p>",
+         "dfc-b:hasQuantity" : "_:b1101",
+         "dfc-b:image" : "https://cdn.shopify.com/s/files/1/0731/8483/7939/products/Mara-Dulse-30g-tin-1800x1200.jpg?v=1677760832",
+         "dfc-b:name" : "Dulse Flakes - Retail pouch, 30g",
+         "dfc-b:referencedBy" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083/CatalogItem"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083/AsPlannedConsumptionFlow",
+         "@type" : "dfc-b:AsPlannedConsumptionFlow",
+         "dfc-b:consumes" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083",
+         "dfc-b:hasQuantity" : "_:b1117"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083/AsPlannedProductionFlow",
+         "@type" : "dfc-b:AsPlannedProductionFlow",
+         "dfc-b:hasQuantity" : "_:b1118",
+         "dfc-b:produces" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470956851"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083/AsPlannedTransformation",
+         "@type" : "dfc-b:AsPlannedTransformation",
+         "dfc-b:hasIncome" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083/AsPlannedConsumptionFlow",
+         "dfc-b:hasOutcome" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083/AsPlannedProductionFlow"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083/CatalogItem",
+         "@type" : "dfc-b:CatalogItem",
+         "dfc-b:offeredThrough" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083/Offer",
+         "dfc-b:sku" : "MAR/WDULS/P3",
+         "dfc-b:stockLimitation" : "5"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470924083/Offer",
+         "@type" : "dfc-b:Offer",
+         "dfc-b:hasPrice" : {
+            "@id" : "_:b1102"
+         }
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470956851",
+         "@type" : "dfc-b:SuppliedProduct",
+         "dfc-b:description" : "<table width=\"100%\">\n<tbody>\n<tr style=\"border: 0px;\">\n<td bgcolor=\"#d6fbed\" style=\"color: #000000; border: 0px; width: 526px;\"><b>The rich, smoky and salty taste of dulse adds depth to dishes of all kinds.</b></td>\n</tr>\n</tbody>\n</table>\n<p>Eating dulse is an ancient tradition in Scots and Irish culture. It adds a wonderful depth of flavour and is rich in minerals and protein.</p>\n<p>Sometimes known as 'vegetarian bacon' it has a wonderful robust flavour that pairs well with seafood, leafy greens and tomatoes.</p>\n<p>Mara Seaweed is harvested sustainably from the pure, wild waters around Scotland and Ireland. <span>To avoid contamination, the seaweed is packed into sealed sacks before being brought up the beach and delivered fresh, directly to the factory. The seaweed is picked and processed within 24 hours to lock in flavour, ensure quality and secure maximum nutritional benefits.</span></p><h5 class=\"product-detail-title\">How to use</h5>\n<p>Dulse has a natural, lingering smoky taste. It's delicious when generously shaken on dark green vegetables and rich pulse dishes.</p>\n<p>For an extra savoury hit without the salt, use dulse flakes to season roasted vegetable, or stir into bolognese sauce or chilli before serving. Dulse is also perfect scattered mixed through crispy kale.</p>\n<p>For an unusual salted caramel-style twist, try pairing dulse with dark chocolate. Just combine a pinch of dulse with the other dry ingredients in any brownie or truffle recipe.</p>\n<h5 class=\"product-detail-title\">Ingredients</h5>\n<p>100% Dulse (<em>Palmaria palmata</em>)</p>\n<h5 class=\"product-detail-title\">Allergy information</h5>\n<p>May contain fish, crustaceans, molluscs.\n</p>\n<table width=\"100%\">\n<tbody>\n<tr>\n<td><strong>Typical values</strong></td>\n<td><strong>Per 100g</strong></td>\n</tr>\n<tr>\n<td>Energy</td>\n<td>974kJ (234kcal)</td>\n</tr>\n<tr>\n<td>Fat</td>\n<td>\n<p>1.5g</p>\n</td>\n</tr>\n<tr>\n<td>of which saturates</td>\n<td>0.4g</td>\n</tr>\n<tr>\n<td>Carbohydrate</td>\n<td>22.8g</td>\n</tr>\n<tr>\n<td>of which sugars</td>\n<td>1.0g</td>\n</tr>\n<tr>\n<td>Fibre</td>\n<td>36.9g</td>\n</tr>\n<tr>\n<td>Protein</td>\n<td>13.8g</td>\n</tr>\n<tr>\n<td>Salt</td>\n<td>4.9g</td>\n</tr>\n</tbody>\n</table><h5 class=\"product-detail-title\">More</h5>\n<p>Product of Scotland<br>Great Taste award winner<br>Suitable for vegans and vegetarians<br>A source of iodine, calcium, potassium, magnesium, manganese, copper, iron, zinc</p>",
+         "dfc-b:hasQuantity" : "_:b1109",
+         "dfc-b:image" : "https://cdn.shopify.com/s/files/1/0731/8483/7939/products/Mara-Dulse-30g-tin-1800x1200.jpg?v=1677760832",
+         "dfc-b:name" : "Dulse Flakes - Case, 10 x 30g",
+         "dfc-b:referencedBy" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470956851/CatalogItem"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470956851/CatalogItem",
+         "@type" : "dfc-b:CatalogItem",
+         "dfc-b:offeredThrough" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470956851/Offer",
+         "dfc-b:sku" : "MAR/WDULS/CX",
+         "dfc-b:stockLimitation" : "2"
+      },
+      {
+         "@id" : "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519470956851/Offer",
+         "@type" : "dfc-b:Offer",
+         "dfc-b:hasPrice" : {
+            "@id" : "_:b1110"
+         }
+      }
+   ]
+}
