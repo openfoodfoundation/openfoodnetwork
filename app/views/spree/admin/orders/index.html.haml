@@ -21,14 +21,36 @@
 
 = render 'spree/admin/shared/custom-confirm'
 
-= render ConfirmModalComponent.new(id: "resend_confirmation", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "Admin::Orders#resend_confirmation_emails") do
-  .margin-bottom-30
-    = t('.resend_confirmation_confirm_html')
+= render ModalComponent.new(id: "resend_confirmation", modal_class: 'tiny', close_button: false) do
+  = form_with(url: resend_confirmation_emails_admin_orders_path, method: :post, data: { turbo: true, controller: 'bulk-actions' }) do
+    .margin-bottom-30
+      = t('.resend_confirmation_confirm_html')
+    %p.modal-actions.justify-space-around
+      %button.button.secondary{ type: "button", 'data-action': 'click->modal#close' }
+        = t('js.admin.modals.cancel')
+      %button.button.primary{ type: 'submit' }
+        = t('js.admin.modals.confirm')
 
-= render ConfirmModalComponent.new(id: "send_invoice", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "Admin::Orders#send_invoices") do
-  .margin-bottom-30
-    = t('.send_invoice_confirm_html')
+= render ModalComponent.new(id: "send_invoice", modal_class: 'tiny', close_button: false) do
+  = form_with(url: send_invoices_admin_orders_path, method: :post, data: { turbo: true, controller: 'bulk-actions' }) do
+    .margin-bottom-30
+      = t('.send_invoice_confirm_html')
+    %p.modal-actions.justify-space-around
+      %button.button.secondary{ type: "button", 'data-action': 'click->modal#close' }
+        = t('js.admin.modals.cancel')
+      %button.button.primary{ type: 'submit' }
+        = t('js.admin.modals.confirm')
 
-= render ConfirmModalComponent.new(id: "cancel_orders", confirm_actions: "click->bulk-actions#perform", controller: "bulk-actions", reflex: "Admin::Orders#cancel_orders", message: "spree/admin/orders/messages/cancel_orders") do
-  .margin-bottom-30
-    = t("js.admin.orders.cancel_the_order_html")
+
+= render ModalComponent.new(id: "cancel_orders", modal_class: 'tiny', close_button: false) do
+  = form_with(url: cancel_orders_admin_orders_path, method: :post, data: { turbo: true, controller: 'bulk-actions' }) do
+    .margin-bottom-30
+      = t("js.admin.orders.cancel_the_order_html")
+    .margin-bottom-30
+      = render partial: "spree/admin/orders/messages/cancel_orders"
+
+    %p.modal-actions.justify-space-around
+      %button.button.secondary{ type: "button", 'data-action': 'click->modal#close' }
+        = t('js.admin.modals.cancel')
+      %button.button.primary{ type: 'submit' }
+        = t('js.admin.modals.confirm')
