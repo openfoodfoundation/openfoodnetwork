@@ -3,11 +3,13 @@ export const useOpenAndCloseAsAModal = (controller) => {
     open: function () {
       this.backgroundTarget.style.display = "block";
       this.modalTarget.style.display = "block";
+      let modalOpen = new Event('modal-open', { bubbles: true });
 
       setTimeout(() => {
         this.modalTarget.classList.add("in");
         this.backgroundTarget.classList.add("in");
         document.querySelector("body").classList.add("modal-open");
+        this.element.dispatchEvent(modalOpen);
       });
     }.bind(controller),
 
@@ -17,11 +19,13 @@ export const useOpenAndCloseAsAModal = (controller) => {
 
       this.modalTarget.classList.remove("in");
       this.backgroundTarget.classList.remove("in");
+      let modalClose = new Event('modal-close', { bubbles: true });
       document.querySelector("body").classList.remove("modal-open");
 
       setTimeout(() => {
         this.backgroundTarget.style.display = "none";
         this.modalTarget.style.display = "none";
+        this.element.dispatchEvent(modalClose)
         if (remove) { this.element.remove() }
       }, 200);
     }.bind(controller),
