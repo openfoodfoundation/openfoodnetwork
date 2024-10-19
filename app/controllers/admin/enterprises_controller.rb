@@ -13,7 +13,7 @@ module Admin
     prepend_before_action :override_owner, only: :create
     prepend_before_action :override_sells, only: :create
 
-    before_action :load_countries, except: [:index, :register, :check_permalink]
+    before_action :load_countries, except: [:index, :register, :check_permalink, :remove_logo]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
     before_action :load_taxons, only: [:new, :edit, :update, :create]
@@ -138,6 +138,33 @@ module Admin
         format.json do
           render_as_json @collection, ams_prefix: params[:ams_prefix] || 'basic',
                                       spree_current_user:
+        end
+      end
+    end
+
+    def remove_logo
+      # delete the white_label_logo_link attribute as well since it has no meaning without the logo
+      @object.update!(white_label_logo: nil, white_label_logo_link: "")
+
+      f = ActionView::Helpers::FormBuilder.new(:enterprise, @object, view_context, {})
+
+      respond_to do |format|
+        format.html do
+          flash[:success] = I18n.t("admin.enterprises.form.white_label.remove_logo_success")
+          redirect_to edit_admin_enterprise_path
+        end
+        format.turbo_stream do
+          flash.now[:success] = I18n.t("admin.enterprises.form.white_label.remove_logo_success")
+          render turbo_stream: [
+            turbo_stream.replace(
+              'white_label_panel',
+              partial: "admin/enterprises/form/white_label", locals: { f:, enterprise: @object }
+            ),
+            turbo_stream.append(
+              "flashes",
+              partial: 'admin/shared/flashes', locals: { flashes: flash }
+            )
+          ]
         end
       end
     end

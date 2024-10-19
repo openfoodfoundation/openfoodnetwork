@@ -685,7 +685,7 @@ RSpec.describe '
             expect(distributor1.white_label_logo).to be_attached
             click_button "Remove"
             within ".reveal-modal" do
-              click_button "Confirm"
+              click_link "Confirm"
             end
             expect(flash_message).to match(/Logo removed/)
             distributor1.reload
