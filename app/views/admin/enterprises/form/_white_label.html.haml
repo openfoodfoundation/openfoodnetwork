@@ -29,9 +29,13 @@
     
 
 - if @object.white_label_logo.present?
-  = render ConfirmModalComponent.new(id: "remove_logo", confirm_reflexes: "click->WhiteLabel#remove_logo" ) do
-    .margin-bottom-30
+  = render ModalComponent.new(id: "remove_logo", close_button: false, modal_class: 'tiny') do
+    .content.margin-bottom-30
       = t('.remove_logo_confirm')
+    %p.modal-actions.justify-space-around
+      = link_to t('js.admin.modals.confirm'), remove_logo_admin_enterprise_path, class: 'button primary', data: { turbo: true, turbo_method: :patch, action: 'click->modal#close' }
+      %button.button.primary{ type: "button", 'data-action': 'click->modal#close' }
+        = t('js.admin.modals.cancel')
 
 // Hide groups tab boolean attribute
 
