@@ -951,10 +951,12 @@ RSpec.describe '
           order.finalize! # ensure order has a payment to capture
           order.payments << create(:check_payment, order:, amount: order.total)
           order.payments.first.capture!
+          login_as_admin
           visit spree.edit_admin_order_path(order)
         end
 
         it "ships the order and shipment email is sent" do
+          login_as_admin
           expect(order.reload.shipped?).to be false
 
           click_button 'Ship'
@@ -972,6 +974,7 @@ RSpec.describe '
         end
 
         it "ships the order without sending email" do
+          login_as_admin
           expect(order.reload.shipped?).to be false
 
           click_button 'Ship'
