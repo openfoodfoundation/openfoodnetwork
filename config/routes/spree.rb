@@ -155,5 +155,21 @@ Spree::Core::Engine.routes.draw do
     resources :payment_methods
   end
 
+  namespace :admin do
+    resources :orders do
+      member do
+        post :capture
+        post :ship
+      end
+
+      collection do
+        post :bulk_invoice
+        post :cancel_orders
+        post :resend_confirmation_emails
+        post :send_invoices
+      end
+    end
+  end
+
   resources :products
 end
