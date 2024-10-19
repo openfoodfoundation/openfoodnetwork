@@ -76,7 +76,7 @@ export default class extends Controller {
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
     .then(response => response.text())
-    .then(html => {console.log(html); Turbo.renderStreamMessage(html)});
+    .then(html => { Turbo.renderStreamMessage(html) });
   }
 
   returnHome() {
