@@ -13,12 +13,11 @@
                 %i{ class: link[:icon] }
               %span=link[:name]
           - else
-            %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { method: link[:method], "ujs-navigate": link[:method] ? "false" : "undefined", confirm: link[:confirm] } }
+            %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { method: link[:method], confirm: link[:confirm] } }
               %span
                 %i{ class: link[:icon] }
               %span=link[:name]
 
 = render 'spree/admin/shared/custom-confirm'
 - if order_shipment_ready?(@order)
-  %form
-    = render ShipOrderComponent.new(order: @order)
+  = render ShipOrderComponent.new(order: @order, current_page: :edit)
