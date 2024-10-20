@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://vine-staging.openfoodnetwork.org.au/api/v1/voucher-validation
+    body:
+      encoding: UTF-8
+      string: '{"type":"voucher_code","value":"KM1891"}'
+    headers:
+      X-Authorization:
+      - "<HIDDEN-VINE-TOKEN>"
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, private
+      Date:
+      - Sun, 20 Oct 2024 03:42:25 GMT
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '59'
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"meta":{"responseCode":400,"limit":50,"offset":0,"message":"Invalid
+        merchant team."},"data":[]}'
+  recorded_at: Sun, 20 Oct 2024 03:42:25 GMT
+recorded_with: VCR 6.2.0
