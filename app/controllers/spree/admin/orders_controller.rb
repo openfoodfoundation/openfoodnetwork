@@ -127,8 +127,9 @@ module Spree
         @order.send_shipment_email = false unless params[:send_shipment_email]
         @order.send_shipment_email
         if @order.ship
-          return redirect_back fallback_location: admin_orders_path if params[:current_page] != 'index'
-
+          if params[:current_page] != 'index'
+            return redirect_back fallback_location: admin_orders_path
+          end
           @shipped = true
         end
 
