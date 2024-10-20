@@ -5,7 +5,6 @@ import { definitionsFromContext } from "stimulus/webpack-helpers";
 import StimulusReflex from "stimulus_reflex";
 import consumer from "../channels/consumer";
 import controller from "../controllers/application_controller";
-import CableReady from "cable_ready";
 import RailsNestedForm from '@stimulus-components/rails-nested-form/dist/stimulus-rails-nested-form.umd.js' // the default module entry point is broken
 
 const application = Application.start();

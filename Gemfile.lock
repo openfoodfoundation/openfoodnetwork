@@ -869,7 +869,6 @@ DEPENDENCIES
   bootsnap
   bugsnag
   bullet
-  cable_ready
   cancancan (~> 1.15.0)
   capybara
   catalog!
