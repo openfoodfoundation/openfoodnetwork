@@ -13,7 +13,7 @@
                 %i{ class: link[:icon] }
               %span=link[:name]
           - else
-            %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { method: link[:method], confirm: link[:confirm] } }
+            = link_to link[:url], class: 'menu_item', target: link[:target] || "_self", data: { turbo: true, turbo_method: link[:method], turbo_confirm: link[:confirm], action: 'dropdown#submitLink' } do
               %span
                 %i{ class: link[:icon] }
               %span=link[:name]
