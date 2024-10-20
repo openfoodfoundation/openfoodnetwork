@@ -8,6 +8,12 @@
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
+Layout/EmptyLineAfterGuardClause:
+  Exclude:
+    - 'app/controllers/spree/admin/orders_controller.rb'
+
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLines:
   Exclude:
     - 'app/services/products_renderer.rb'
@@ -35,15 +41,8 @@ Lint/EmptyClass:
     - 'spec/lib/reports/report_loader_spec.rb'
 
 # Offense count: 1
-# Configuration parameters: AllowComments.
-Lint/EmptyFile:
-  Exclude:
-    - 'spec/lib/open_food_network/enterprise_injection_data_spec.rb'
-
-# Offense count: 2
 Lint/FloatComparison:
   Exclude:
-    - 'app/models/product_import/entry_validator.rb'
     - 'app/models/spree/gateway/pay_pal_express.rb'
 
 # Offense count: 1
@@ -85,14 +84,13 @@ Lint/UselessMethodDefinition:
   Exclude:
     - 'app/models/spree/gateway.rb'
 
-# Offense count: 24
+# Offense count: 23
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
     - 'app/controllers/admin/enterprises_controller.rb'
     - 'app/controllers/payment_gateways/paypal_controller.rb'
     - 'app/controllers/spree/admin/payments_controller.rb'
-    - 'app/controllers/spree/admin/taxons_controller.rb'
     - 'app/controllers/spree/admin/variants_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/helpers/spree/admin/navigation_helper.rb'
@@ -137,6 +135,7 @@ Metrics/ClassLength:
     - 'app/controllers/admin/resource_controller.rb'
     - 'app/controllers/admin/subscriptions_controller.rb'
     - 'app/controllers/application_controller.rb'
+    - 'app/controllers/checkout_controller.rb'
     - 'app/controllers/payment_gateways/paypal_controller.rb'
     - 'app/controllers/spree/admin/orders_controller.rb'
     - 'app/controllers/spree/admin/payment_methods_controller.rb'
@@ -162,7 +161,6 @@ Metrics/ClassLength:
     - 'app/models/spree/user.rb'
     - 'app/models/spree/variant.rb'
     - 'app/models/spree/zone.rb'
-    - 'app/reflexes/admin/orders_reflex.rb'
     - 'app/serializers/api/cached_enterprise_serializer.rb'
     - 'app/serializers/api/enterprise_shopfront_serializer.rb'
     - 'app/services/cart_service.rb'
@@ -178,12 +176,11 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
 
-# Offense count: 32
+# Offense count: 30
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
   Exclude:
     - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/spree/admin/taxons_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/helpers/checkout_helper.rb'
     - 'app/helpers/order_cycles_helper.rb'
@@ -199,7 +196,6 @@ Metrics/CyclomaticComplexity:
     - 'app/models/spree/preferences/preferable_class_methods.rb'
     - 'app/models/spree/return_authorization.rb'
     - 'app/models/spree/tax_rate.rb'
-    - 'app/models/spree/variant.rb'
     - 'app/models/spree/zone.rb'
     - 'lib/open_food_network/enterprise_issue_validator.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
@@ -208,13 +204,12 @@ Metrics/CyclomaticComplexity:
     - 'lib/spree/localized_number.rb'
     - 'spec/models/product_importer_spec.rb'
 
-# Offense count: 24
+# Offense count: 23
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/admin/enterprises_controller.rb'
     - 'app/controllers/payment_gateways/paypal_controller.rb'
-    - 'app/controllers/spree/admin/taxons_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/helpers/spree/admin/navigation_helper.rb'
     - 'app/models/spree/ability.rb'
@@ -293,19 +288,17 @@ Metrics/ParameterLists:
     - 'spec/support/controller_requests_helper.rb'
     - 'spec/system/admin/reports_spec.rb'
 
-# Offense count: 4
+# Offense count: 3
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/PerceivedComplexity:
   Exclude:
-    - 'app/controllers/spree/admin/taxons_controller.rb'
     - 'app/models/enterprise_relationship.rb'
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 8
+# Offense count: 7
 Naming/AccessorMethodName:
   Exclude:
-    - 'app/controllers/spree/admin/taxonomies_controller.rb'
     - 'app/mailers/producer_mailer.rb'
     - 'app/models/spree/order.rb'
     - 'app/services/checkout/post_checkout_actions.rb'
@@ -353,7 +346,7 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
-# Offense count: 142
+# Offense count: 141
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ResponseMethods.
 # ResponseMethods: response, last_response
@@ -557,7 +550,7 @@ RSpecRails/InferredSpecType:
     - 'spec/requests/voucher_adjustments_spec.rb'
     - 'spec/routing/stripe_spec.rb'
 
-# Offense count: 22
+# Offense count: 21
 # Configuration parameters: IgnoreScopes, Include.
 # Include: app/models/**/*.rb
 Rails/InverseOf:
@@ -572,11 +565,10 @@ Rails/InverseOf:
     - 'app/models/spree/price.rb'
     - 'app/models/spree/product.rb'
     - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/taxonomy.rb'
     - 'app/models/spree/variant.rb'
     - 'app/models/subscription_line_item.rb'
 
-# Offense count: 35
+# Offense count: 36
 # Configuration parameters: Include.
 # Include: app/controllers/**/*.rb, app/mailers/**/*.rb
 Rails/LexicallyScopedActionFilter:
@@ -720,7 +712,7 @@ Style/GlobalStdStream:
     - 'lib/tasks/subscriptions/debug.rake'
     - 'lib/tasks/subscriptions/test.rake'
 
-# Offense count: 12
+# Offense count: 10
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowSplatArgument.
 Style/HashConversion:
@@ -728,9 +720,7 @@ Style/HashConversion:
     - 'app/controllers/admin/column_preferences_controller.rb'
     - 'app/controllers/admin/variant_overrides_controller.rb'
     - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/models/order_cycle.rb'
     - 'app/models/product_import/product_importer.rb'
-    - 'app/models/spree/shipping_method.rb'
     - 'app/serializers/api/admin/exchange_serializer.rb'
     - 'app/services/variants_stock_levels.rb'
     - 'spec/controllers/admin/inventory_items_controller_spec.rb'
