@@ -580,6 +580,11 @@ en:
       vine_api: "There was an error communicating with the API"
       invalid_voucher: "The voucher is not valid"
       not_found_voucher: "The voucher doesn't exist"
+  vine_voucher_redeemer_service:
+    errors:
+      vine_settings: "No Vine api settings for the given enterprise" 
+      vine_api: "There was an error communicating with the API"
+      redeeming_failed: "Redeeming the voucher failed"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
