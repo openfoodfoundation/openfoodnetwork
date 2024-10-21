@@ -35,6 +35,20 @@ class VineApiService
     response
   end
 
+  def voucher_redemptions(voucher_id, voucher_set_id, amount)
+    voucher_redemptions_url = "#{@vine_api_url}/voucher-redemptions"
+
+    response = connection.post(
+      voucher_redemptions_url,
+      { voucher_id:, voucher_set_id:, amount: amount.to_i },
+      'Content-Type': "application/json"
+    )
+
+    log_error("VineApiService#voucher_redemptions", response)
+
+    response
+  end
+
   private
 
   def connection
