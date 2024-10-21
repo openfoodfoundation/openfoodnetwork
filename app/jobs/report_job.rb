@@ -2,7 +2,6 @@
 
 # Renders a report and stores it in a given blob.
 class ReportJob < ApplicationJob
-  include CableReady::Broadcaster
   delegate :render, to: ActionController::Base
 
   before_perform :enable_active_storage_urls
@@ -39,21 +38,25 @@ class ReportJob < ApplicationJob
   end
 
   def broadcast_result(channel, format, blob)
-    cable_ready[channel]
-      .inner_html(
+    ActionCable.server.broadcast(
+      channel,
+      {
         selector: "#report-go",
         html: Spree::Admin::BaseController.helpers.button(I18n.t(:go), "report__submit-btn")
-      ).inner_html(
-        selector: "#report-table",
-        html: actioncable_content(format, blob)
-      ).broadcast
+      }
+    )
+
+    ActionCable.server.broadcast(
+      channel,
+      { selector: "#report-table", html: actioncable_content(format, blob) }
+    )
   end
 
   def broadcast_error(channel)
-    cable_ready[channel].inner_html(
-      selector: "#report-table",
-      html: I18n.t("report_job.report_failed")
-    ).broadcast
+    ActionCable.server.broadcast(
+      channel,
+      { selector: "#report-table", html: I18n.t("report_job.report_failed") }
+    )
   end
 
   def actioncable_content(format, blob)

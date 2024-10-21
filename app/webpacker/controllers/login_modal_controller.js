@@ -75,8 +75,8 @@ export default class extends Controller {
       }),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
-      .then((data) => data.json())
-      .then(CableReady.perform);
+    .then(response => response.text())
+    .then(html => { Turbo.renderStreamMessage(html) });
   }
 
   returnHome() {

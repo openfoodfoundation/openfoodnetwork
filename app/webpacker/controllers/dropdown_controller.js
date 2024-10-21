@@ -18,6 +18,22 @@ export default class extends Controller {
     this.#stopPropagation(event);
   }
 
+  submitLink(event) {
+    const link = event.currentTarget;
+    const method = link.getAttribute('data-turbo-method');
+    const confirmMessage = link.getAttribute('data-turbo-confirm');
+
+    if (link && confirmMessage && [null, 'get'].includes(method)) {
+      // Manualy visit link
+      event.preventDefault();
+      if (confirm(link.getAttribute('data-turbo-confirm'))) {
+        Turbo.visit(link.href);
+      }
+    }
+
+    this.closeOnMenu(event);
+  }
+
   // private
 
   #close(event) {

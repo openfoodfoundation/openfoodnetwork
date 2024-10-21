@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class BulkInvoiceJob < ApplicationJob
-  include CableReady::Broadcaster
   delegate :render, to: ActionController::Base
   attr_reader :options
 
@@ -40,13 +39,14 @@ class BulkInvoiceJob < ApplicationJob
   def broadcast(filepath, channel)
     file_id = filepath.split("/").last.split(".").first
 
-    cable_ready[channel].
-      inner_html(
+    ActionCable.server.broadcast(
+      channel,
+      {
         selector: "#bulk_invoices_modal .modal-content",
         html: render(partial: "spree/admin/orders/bulk/invoice_link",
                      locals: { invoice_url: "/admin/orders/invoices/#{file_id}" })
-      ).
-      broadcast
+      }
+    )
   end
 
   def ensure_directory_exists(filepath)
