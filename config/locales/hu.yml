@@ -49,12 +49,12 @@ hu:
         price: "Ár"
         primary_taxon_id: "Termékkategória"
         shipping_category_id: "Szállítási mód"
-        variant_unit_name: "Változat egység neve"
-        unit_value: "Egység értéke"
       spree/variant:
         primary_taxon: "Termékkategória"
         shipping_category_id: "Szállítási mód"
         supplier: "Beszállító"
+        variant_unit_name: "Változat egység neve"
+        unit_value: "Egység értéke"
       spree/credit_card:
         base: "Hitelkártya"
         number: "Szám"
@@ -1323,6 +1323,10 @@ hu:
                 target="_blank"><b> Tudj meg többet a Regeneratív gyakorlatokról. </b>
                 <i class="icon-external-link"></i></a>
                 </p>
+          vine:
+            enable: "Csatlakozás"
+            disable: "Lecsatlakozás"
+            need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
       actions:
         edit_profile: Beállítások
         properties: Tulajdonságok
@@ -4362,12 +4366,16 @@ hu:
           new_variant: "Új Változat"
         form:
           sku: "SKU"
-          price: "Ár"
           unit_price: "Egységár"
           display_as: "Megjelenítés mint"
           display_name: "Megjelenítendő név"
           display_as_placeholder: 'például. 2 kg'''
           display_name_placeholder: 'például. paradicsom'
+          unit_scale: "Mértékegység skála"
+          unit: Mértékegység
+          price: Ár
+          unit_value: Egység értéke
+          variant_category: Kategória
         autocomplete:
           out_of_stock: "Nincs raktáron"
           producer_name: "Termelő"

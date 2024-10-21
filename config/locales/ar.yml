@@ -46,12 +46,12 @@ ar:
         price: "السعر"
         primary_taxon_id: "نوع المنتج "
         shipping_category_id: "نوع الشحن"
-        variant_unit_name: "اسم وحدة النوع"
-        unit_value: "قيمةالوحدة"
       spree/variant:
         primary_taxon: "نوع المنتج "
         shipping_category_id: "نوع الشحن"
         supplier: "المورد"
+        variant_unit_name: "اسم وحدة النوع"
+        unit_value: "قيمةالوحدة"
       spree/credit_card:
         base: "بطاقة ائتمان"
         number: "رقم "
@@ -1146,6 +1146,8 @@ ar:
                 <a href="https://regenerative.org.au/" target="_blank"><b>Visit Discover Regenerative</b>
                 <i class="icon-external-link"></i></a>
                 </p>
+          vine:
+            enable: "الاتصال"
       actions:
         edit_profile: الإعدادات
         properties: الخصائص
@@ -4190,12 +4192,15 @@ ar:
           new_variant: "نوع جديد"
         form:
           sku: "SKU"
-          price: "السعر"
           unit_price: "سعر الوحدة"
           display_as: "عرض ب"
           display_name: "اسم العرض"
           display_as_placeholder: 'على سبيل المثال 2 كجم'
           display_name_placeholder: 'على سبيل المثال طماطم'
+          unit: وحدة
+          price: السعر
+          unit_value: قيمةالوحدة
+          variant_category: الفئة
         autocomplete:
           out_of_stock: "غير متوفر"
           producer_name: "المنتج"

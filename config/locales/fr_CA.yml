@@ -49,13 +49,13 @@ fr_CA:
         price: "Prix"
         primary_taxon_id: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
-        variant_unit: "Unit Scale"
-        variant_unit_name: "Unité de la variante"
-        unit_value: "Nb unités"
       spree/variant:
         primary_taxon: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
         supplier: "Fournisseur"
+        variant_unit: "Unit Scale"
+        variant_unit_name: "Unité de la variante"
+        unit_value: "Nb unités"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -1375,6 +1375,10 @@ fr_CA:
                 <a href="https://waterlooregionfood.ca/" target="_blank"><b>En savoir plus sur le Annuaire alimentaire de Waterloo. </b>
                 <i class="icon-external-link"></i></a>
                 </p>
+          vine:
+            enable: "Se connecter"
+            disable: "Déconnecter"
+            need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -4472,12 +4476,16 @@ fr_CA:
           new_variant: "Nouvelle variante"
         form:
           sku: "Référence Produit"
-          price: "Prix"
           unit_price: "Prix unitaire"
           display_as: "Afficher comme"
           display_name: "Nom affiché"
           display_as_placeholder: 'ex. 2 kg'
           display_name_placeholder: 'ex. Tomates'
+          unit_scale: "Échelle d'unité"
+          unit: Unité
+          price: Prix
+          unit_value: Nb unités
+          variant_category: Catégorie
         autocomplete:
           out_of_stock: "En rupture de stock"
           producer_name: "Producteur"

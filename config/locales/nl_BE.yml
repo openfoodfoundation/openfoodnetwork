@@ -31,11 +31,11 @@ nl_BE:
         price: "Prijs"
         primary_taxon_id: "Product categorie"
         shipping_category_id: "Verzendcategorie"
-        variant_unit_name: "Variant Unit Name"
       spree/variant:
         primary_taxon: "Product categorie"
         shipping_category_id: "Verzendcategorie"
         supplier: "Leverancier"
+        variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Kredietkaart"
         number: "Nummer"
@@ -932,6 +932,8 @@ nl_BE:
             loading: "Aan het opladen"
           discover_regen:
             loading: "Aan het opladen"
+          vine:
+            enable: "Connecteer je "
       actions:
         edit_profile: Instellingen
         properties: Eigenschappen
@@ -3491,12 +3493,14 @@ nl_BE:
           new_variant: "Nieuw variant"
         form:
           sku: "SKU"
-          price: "Prijs"
           unit_price: "Stukprijs"
           display_as: "Weergeven als"
           display_name: "Weergave naam"
           display_as_placeholder: 'bv. 2.kg'
           display_name_placeholder: 'bv. Tomaten'
+          unit: Unit
+          price: Prijs
+          variant_category: Categorie
         autocomplete:
           out_of_stock: "Geen voorraad"
           producer_name: "Producent"

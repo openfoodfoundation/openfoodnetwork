@@ -33,11 +33,11 @@ uk:
         price: "Ціна"
         primary_taxon_id: "Категорія товару"
         shipping_category_id: "Категорія доставки"
-        variant_unit_name: "Назва варіанта одиниці"
       spree/variant:
         primary_taxon: "Категорія товару"
         shipping_category_id: "Категорія доставки"
         supplier: "Постачальник"
+        variant_unit_name: "Назва варіанта одиниці"
       spree/credit_card:
         base: "Кредитна картка"
         number: "Номер"
@@ -1116,6 +1116,8 @@ uk:
             loading: "Завантаження"
           discover_regen:
             loading: "Завантаження"
+          vine:
+            enable: "Підключитися"
       actions:
         edit_profile: Налаштування
         properties: Властивості
@@ -4023,12 +4025,14 @@ uk:
           new_variant: "Новий Варіант"
         form:
           sku: "Артикул"
-          price: "Ціна"
           unit_price: "Ціна за од."
           display_as: "Відображати як"
           display_name: "Відображуване ім'я"
           display_as_placeholder: 'напр. 2 кг'
           display_name_placeholder: 'напр. Помідори'
+          unit: Одиниця
+          price: Ціна
+          variant_category: Категорія
         autocomplete:
           out_of_stock: "Немає в наявності"
           producer_name: "Виробник"

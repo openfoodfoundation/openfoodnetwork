@@ -31,11 +31,11 @@ tr:
         price: "Fiyat"
         primary_taxon_id: "ÜRÜN KATEGORİSİ"
         shipping_category_id: "TESLİMAT KATEGORİSİ"
-        variant_unit_name: "Çeşit Birim Adı"
       spree/variant:
         primary_taxon: "ÜRÜN KATEGORİSİ"
         shipping_category_id: "TESLİMAT KATEGORİSİ"
         supplier: "TEDARİKÇİ"
+        variant_unit_name: "Çeşit Birim Adı"
       spree/credit_card:
         base: "Kredİ kartı"
         number: "Numara"
@@ -1001,6 +1001,8 @@ tr:
             loading: "Yükleniyor"
           discover_regen:
             loading: "Yükleniyor"
+          vine:
+            enable: "Bağlan"
       actions:
         edit_profile: Ayarlar
         properties: ÖZELLİKLER
@@ -3785,12 +3787,14 @@ tr:
           new_variant: "Yeni Çeşit"
         form:
           sku: "Stok Kodu"
-          price: "Fiyat"
           unit_price: "Birim Fiyat"
           display_as: "Gösterme Şekli"
           display_name: "Ekran adı"
           display_as_placeholder: 'Örn. 2 kg'
           display_name_placeholder: 'Örn. Domates'
+          unit: Birim
+          price: Fiyat
+          variant_category: Kategori
         autocomplete:
           out_of_stock: "Stokta Yok"
           producer_name: "Üretici"

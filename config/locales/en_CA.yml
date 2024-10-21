@@ -49,13 +49,13 @@ en_CA:
         price: "Price"
         primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
-        variant_unit: "Unit Scale"
-        variant_unit_name: "Variant Unit Name"
-        unit_value: "Unit value"
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
         supplier: "Supplier"
+        variant_unit: "Unit Scale"
+        variant_unit_name: "Variant Unit Name"
+        unit_value: "Unit value"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -1372,6 +1372,10 @@ en_CA:
                 <a href="https://waterlooregionfood.ca/" target="_blank">Learn more about the Waterloo Food Directory.
                 <i class="icon-external-link"></i></a>
                 </p>
+          vine:
+            enable: "Donate"
+            disable: "Disconnect"
+            need_to_be_manager: "Only managers can connect apps."
       actions:
         edit_profile: Settings
         properties: Properties
@@ -4429,12 +4433,16 @@ en_CA:
           new_variant: "New Variant"
         form:
           sku: "SKU"
-          price: "Price"
           unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
           display_as_placeholder: 'eg. 2 kg'
           display_name_placeholder: 'eg. Tomatoes'
+          unit_scale: "Unit scale"
+          unit: Unit
+          price: Price
+          unit_value: Unit value
+          variant_category: Category
         autocomplete:
           out_of_stock: "Out of Stock"
           producer_name: "Producer"

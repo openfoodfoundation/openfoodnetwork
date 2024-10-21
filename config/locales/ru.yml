@@ -49,12 +49,12 @@ ru:
         price: "Цена"
         primary_taxon_id: "Категория Товара"
         shipping_category_id: "Категория Доставки"
-        variant_unit_name: "Название Единицы Варианта"
-        unit_value: "Значение товара"
       spree/variant:
         primary_taxon: "Категория Товара"
         shipping_category_id: "Категория Доставки"
         supplier: "Поставщик"
+        variant_unit_name: "Название Единицы Варианта"
+        unit_value: "Значение товара"
       spree/credit_card:
         base: "Кредитная Карта"
         number: "Номер"
@@ -1286,6 +1286,9 @@ ru:
                 Ваша учетная запись Открытой Сети Продуктов подключена к Discover Regenerative.
                 Добавьте или обновите информацию о своем списке Discover Regenerative здесь.
             link_label: "Управление списком"
+          vine:
+            enable: "Подключить"
+            disable: "Отключить"
       actions:
         edit_profile: Настройки
         properties: Свойства
@@ -4374,12 +4377,16 @@ ru:
           new_variant: "Новый Вариант"
         form:
           sku: "SKU"
-          price: "Цена"
           unit_price: "Цена за единицу"
           display_as: "Показать как"
           display_name: "Показать имя"
           display_as_placeholder: 'напр. 2 кг'
           display_name_placeholder: 'напр. Помидоры'
+          unit_scale: "Единицы"
+          unit: Единица измерения
+          price: Цена
+          unit_value: Значение товара
+          variant_category: Категория
         autocomplete:
           out_of_stock: "Нет в Наличии"
           producer_name: "Производитель"

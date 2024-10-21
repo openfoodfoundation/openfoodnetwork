@@ -567,6 +567,9 @@ sv:
           managers_tip: Andra användare med tillstånd att leda detta företag.
         vouchers:
           customers: Kund
+        connected_apps:
+          vine:
+            enable: "Anslut"
       actions:
         edit_profile: Inställningar
         properties: Egenskaper
@@ -2349,9 +2352,11 @@ sv:
           price: "Pris"
         form:
           sku: "SKU"
-          price: "Pris"
           unit_price: "Styckpris"
           display_as: "Visa som"
+          unit: Enhet
+          price: Pris
+          variant_category: Kategori
         autocomplete:
           producer_name: "Producent"
           unit: "Enhet"

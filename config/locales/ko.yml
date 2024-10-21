@@ -31,11 +31,11 @@ ko:
         price: "가격"
         primary_taxon_id: "물품 목록"
         shipping_category_id: "전송물품 목록"
-        variant_unit_name: "변경된 구성 단위 이름"
       spree/variant:
         primary_taxon: "물품 목록"
         shipping_category_id: "전송물품 목록"
         supplier: "공급업체"
+        variant_unit_name: "변경된 구성 단위 이름"
       spree/credit_card:
         base: "신용카드"
         number: "숫자"
@@ -1099,6 +1099,8 @@ ko:
             loading: "로딩 중"
           discover_regen:
             loading: "로딩 중"
+          vine:
+            enable: "함께하고 싶으시다면"
       actions:
         edit_profile: 설정
         properties: 특성
@@ -3898,12 +3900,14 @@ ko:
           new_variant: "새로운 변경사항"
         form:
           sku: "재고 관리 단위"
-          price: "가격"
           unit_price: "단가"
           display_as: "다른 이름으로 표시"
           display_name: "이름 표시"
           display_as_placeholder: '예. 2 kg'
           display_name_placeholder: '예. Tomatoes'
+          unit: 단위
+          price: 가격
+          variant_category: 목록
         autocomplete:
           out_of_stock: "품절"
           producer_name: "제공자"

@@ -49,12 +49,12 @@ hi:
         price: "कीमत"
         primary_taxon_id: "उत्पाद की श्रेणी"
         shipping_category_id: "शिपिंग श्रेणी"
-        variant_unit_name: "वेरिएंट यूनिट का नाम"
-        unit_value: "यूनिट वैल्यू"
       spree/variant:
         primary_taxon: "उत्पाद की श्रेणी"
         shipping_category_id: "शिपिंग श्रेणी"
         supplier: "आपूर्तिकर्ता"
+        variant_unit_name: "वेरिएंट यूनिट का नाम"
+        unit_value: "यूनिट वैल्यू"
       spree/credit_card:
         base: "क्रेडिट कार्ड"
         number: "नंबर"
@@ -1233,6 +1233,8 @@ hi:
             loading: "लोड हो रहा"
           discover_regen:
             loading: "लोड हो रहा"
+          vine:
+            enable: "मूल्य निर्धारण"
       actions:
         edit_profile: सेटिंग्स
         properties: प्रॉपर्टीज़
@@ -4235,12 +4237,15 @@ hi:
           new_variant: "नया वैरिएंट"
         form:
           sku: "SKU"
-          price: "कीमत"
           unit_price: "यूनिट की कीमत"
           display_as: "इस रूप में प्रदर्शित करें"
           display_name: "नाम प्रदर्शित करें"
           display_as_placeholder: 'उदाहरण 2 किलोग्राम'
           display_name_placeholder: 'उदाहरण टमाटर'
+          unit: यूनिट
+          price: कीमत
+          unit_value: यूनिट वैल्यू
+          variant_category: श्रेणी
         autocomplete:
           out_of_stock: "आउट ऑफ स्टॉक"
           producer_name: "उत्पादक"

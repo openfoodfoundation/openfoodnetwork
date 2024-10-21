@@ -49,12 +49,12 @@ cy:
         price: "Pris"
         primary_taxon_id: "Categori Cynnyrch"
         shipping_category_id: "Categori dosbarthu."
-        variant_unit_name: "Enw Uned Amrywiol"
-        unit_value: "Gwerth yr uned"
       spree/variant:
         primary_taxon: "Categori Cynnyrch"
         shipping_category_id: "Categori Anfon"
         supplier: "Cyflenwr"
+        variant_unit_name: "Enw Uned Amrywiolyn"
+        unit_value: "Gwerth yr uned"
       spree/credit_card:
         base: "Cerdyn credyd"
         number: "Rhif"
@@ -1260,6 +1260,8 @@ cy:
             disable: "Rhoi’r gorau i rannu"
             loading: "Yn llwytho"
             link_label: "Rheoli’r rhestru"
+          vine:
+            enable: "Adnoddau"
       actions:
         edit_profile: Gosodiadau
         properties: Manylion
@@ -4320,12 +4322,15 @@ cy:
           new_variant: "Amrywiolyn newydd"
         form:
           sku: "Cod y Cynnyrch"
-          price: "Pris"
           unit_price: "Pris Uned"
           display_as: "Arddangos fel"
           display_name: "Enw Arddangos"
           display_as_placeholder: 'e.e. 2 kg'
           display_name_placeholder: 'e.e. Tomatos'
+          unit: Uned
+          price: Pris
+          unit_value: Gwerth yr uned
+          variant_category: Categori
         autocomplete:
           out_of_stock: "Allan o stoc"
           producer_name: "Cynhyrchydd"

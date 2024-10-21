@@ -49,12 +49,12 @@ nb:
         price: "Pris"
         primary_taxon_id: "Produktkategori"
         shipping_category_id: "Leveringskategori"
-        variant_unit_name: "Enhetsnavn Variant"
-        unit_value: "Enhetsverdi"
       spree/variant:
         primary_taxon: "Produktkategori"
         shipping_category_id: "Leveringskategori"
         supplier: "Leverandør"
+        variant_unit_name: "Enhetsnavn Variant"
+        unit_value: "Enhetsverdi"
       spree/credit_card:
         base: "Kredittkort"
         number: "Antall"
@@ -1328,6 +1328,10 @@ nb:
                 target="_blank"><b>Lær mer om Discover Regenerativ</b>
                 <i class="icon-external-link"></i></a>
                 </p>
+          vine:
+            enable: "Koble til"
+            disable: "Koble fra"
+            need_to_be_manager: "Bare ledere kan koble til apper."
       actions:
         edit_profile: Innstillinger
         properties: Egenskaper
@@ -4358,12 +4362,16 @@ nb:
           new_variant: "Ny Variant"
         form:
           sku: "SKU"
-          price: "Pris"
           unit_price: "Enhetspris"
           display_as: "Vis som"
           display_name: "Visningsnavn"
           display_as_placeholder: 'f.eks. 2 kg'
           display_name_placeholder: 'f.eks. Tomater'
+          unit_scale: "Enhetsskala"
+          unit: Enhet
+          price: Pris
+          unit_value: Enhetsverdi
+          variant_category: Kategori
         autocomplete:
           out_of_stock: "Ikke på Lager"
           producer_name: "Produsent"

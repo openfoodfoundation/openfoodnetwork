@@ -31,11 +31,11 @@ fr_CH:
         price: "Prix"
         primary_taxon_id: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
-        variant_unit_name: "Unité de la variante"
       spree/variant:
         primary_taxon: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
         supplier: "Fournisseur"
+        variant_unit_name: "Unité de la variante"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -1105,6 +1105,8 @@ fr_CH:
             loading: "Chargement en cours"
           discover_regen:
             loading: "Chargement en cours"
+          vine:
+            enable: "A propos"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -4002,12 +4004,14 @@ fr_CH:
           new_variant: "Nouvelle variante"
         form:
           sku: "Référence Produit"
-          price: "Prix"
           unit_price: "Prix unitaire"
           display_as: "Unité affichée"
           display_name: "Nom affiché"
           display_as_placeholder: 'ex. 2 kg'
           display_name_placeholder: 'ex. Tomates'
+          unit: Unité
+          price: Prix
+          variant_category: Catégorie
         autocomplete:
           out_of_stock: "En rupture de stock"
           producer_name: "Producteur"

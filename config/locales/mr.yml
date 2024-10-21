@@ -49,12 +49,12 @@ mr:
         price: "किंमत"
         primary_taxon_id: "उत्पादन श्रेणी"
         shipping_category_id: "शिपिंग श्रेणी"
-        variant_unit_name: "वेरिएंट युनिटचे नाव"
-        unit_value: "युनिट मूल्य"
       spree/variant:
         primary_taxon: "उत्पादन श्रेणी"
         shipping_category_id: "शिपिंग श्रेणी"
         supplier: "पुरवठादार"
+        variant_unit_name: "वेरिएंट युनिटचे नाव"
+        unit_value: "युनिट मूल्य"
       spree/credit_card:
         base: "क्रेडीट कार्ड"
         number: "क्रमांक"
@@ -1221,6 +1221,9 @@ mr:
           create_custom_tab: "शॉपफ्रंटमध्ये कस्टम टॅब तयार करा"
           custom_tab_title: "कस्टम टॅबसाठी शीर्षक"
           custom_tab_content: "कस्टम टॅबसाठी मजकूर"
+        connected_apps:
+          vine:
+            enable: "किंमत"
       actions:
         edit_profile: सेटिंग्ज
         properties: 'गुणधर्म '
@@ -4148,12 +4151,14 @@ mr:
           new_variant: "नवीन प्रकार"
         form:
           sku: "SKU"
-          price: "किंमत"
           unit_price: "युनिट किंमत"
           display_as: "म्हणून प्रदर्शित करा"
           display_name: "डिस्प्ले नाव"
           display_as_placeholder: 'उदा. 2 किलो'
           display_name_placeholder: 'उदा. टोमॅटो'
+          price: किंमत
+          unit_value: युनिट मूल्य
+          variant_category: श्रेणी
         autocomplete:
           out_of_stock: "स्टॉक संपला"
           producer_name: "उत्पादक"

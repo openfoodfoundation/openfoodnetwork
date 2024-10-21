@@ -26,11 +26,11 @@ pl:
         price: "Cena"
         primary_taxon_id: "Kategoria produktu"
         shipping_category_id: "Kategoria dostawy"
-        variant_unit_name: "Nazwa jednostki wariantu"
       spree/variant:
         primary_taxon: "Kategoria produktu"
         shipping_category_id: "Kategoria dostawy"
         supplier: "Dostawca"
+        variant_unit_name: "Nazwa jednostki wariantu"
       spree/credit_card:
         base: "Karta kredytowa"
         number: "Numer zamówienia"
@@ -880,6 +880,9 @@ pl:
           email_not_confirmed: "Adres e-mail nie został potwierdzony"
         vouchers:
           customers: Klient
+        connected_apps:
+          vine:
+            enable: "Połącz się"
       actions:
         edit_profile: Ustawienia
         properties: Właściwości
@@ -3455,11 +3458,13 @@ pl:
           new_variant: "New Variant"
         form:
           sku: "SKU"
-          price: "Cena"
           display_as: "Wyświetl jako"
           display_name: "Wyświetlana nazwa"
           display_as_placeholder: 'na przykład. 2 kg'
           display_name_placeholder: 'np. Pomidory'
+          unit: Jednostka
+          price: Cena
+          variant_category: Kategoria
         autocomplete:
           out_of_stock: "Obecnie brak na stanie"
           producer_name: "Producent"

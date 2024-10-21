@@ -46,12 +46,12 @@ el:
         price: "Τιμή"
         primary_taxon_id: "Κατηγορία προϊόντος"
         shipping_category_id: "Κατηγορία μεταφορικών"
-        variant_unit_name: "Όνομα μεταβλητής"
-        unit_value: "Τιμή μεταβλητής"
       spree/variant:
         primary_taxon: "Κατηγορία προϊόντος"
         shipping_category_id: "Κατηγορία μεταφοράς"
         supplier: "Προμηθευτής"
+        variant_unit_name: "Όνομα μεταβλητής"
+        unit_value: "Τιμή μεταβλητής"
       spree/credit_card:
         base: "Κάρτα πιστωτική/χρεωστική"
         number: "Αριθμός"
@@ -1314,6 +1314,10 @@ el:
                 target="_blank"><b>Μάθετε περισσότερα για το Discover Regenerative</b>
                 <i class="icon-external-link"></i></a>
                 </p>
+          vine:
+            enable: "Σύνδεση"
+            disable: "Αποσύνδεση."
+            need_to_be_manager: "Μόνο οι διαχειριστές μπορούν να συνδέουν εφαρμογές."
       actions:
         edit_profile: Ρυθμήσεις
         properties: Ιδιότητες
@@ -4326,12 +4330,16 @@ el:
           new_variant: "Νέα παραλλαγή"
         form:
           sku: "SKU"
-          price: "Τιμή"
           unit_price: "Τιμή Μονάδας"
           display_as: "Εμφάνιση Ως"
           display_name: "Εμφανιζόμενο όνομα"
           display_as_placeholder: 'π.χ. 2 κιλά'
           display_name_placeholder: 'π.χ. Ντομάτες'
+          unit_scale: "Κλίμακα μονάδας"
+          unit: Μονάδα
+          price: Τιμή
+          unit_value: Τιμή μεταβλητής
+          variant_category: Κατηγορία
         autocomplete:
           out_of_stock: "Εκτός αποθέματος"
           producer_name: "Παραγωγός"

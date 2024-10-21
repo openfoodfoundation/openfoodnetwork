@@ -31,11 +31,11 @@ pt:
         price: "Preço"
         primary_taxon_id: "Categoria de Produto"
         shipping_category_id: "Categoria de Envio"
-        variant_unit_name: "Nome da Unidade da Variante"
       spree/variant:
         primary_taxon: "Categoria de Produto"
         shipping_category_id: "Categoria de Envio"
         supplier: "Fornecedor"
+        variant_unit_name: "Nome da Unidade da Variante"
       spree/credit_card:
         base: "Cartão de Crédito"
         number: "Número"
@@ -972,6 +972,8 @@ pt:
             loading: "A carregar"
           discover_regen:
             loading: "A carregar"
+          vine:
+            enable: "Conectar"
       actions:
         edit_profile: Definições
         properties: Propriedades
@@ -3457,12 +3459,14 @@ pt:
           new_variant: "Nova variante"
         form:
           sku: "SKU"
-          price: "Preço"
           unit_price: "Preço Unitário"
           display_as: "Mostrar como"
           display_name: "Nome a apresentar"
           display_as_placeholder: 'por ex. 2 kg'
           display_name_placeholder: 'por ex. Tomates'
+          unit: Unidade
+          price: Preço
+          variant_category: Categoria
         autocomplete:
           out_of_stock: "Sem Stock"
           producer_name: "Produtor"

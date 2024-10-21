@@ -35,11 +35,11 @@ de_CH:
         price: "Preis"
         primary_taxon_id: "Produktkategorie"
         shipping_category_id: "Lieferkategorie"
-        variant_unit_name: "Name der Varianteneinheit"
       spree/variant:
         primary_taxon: "Produktkategorie"
         shipping_category_id: "Lieferkategorie"
         supplier: "Lieferant"
+        variant_unit_name: "Name der Varianteneinheit"
       spree/credit_card:
         base: "Kreditkarte"
         number: "Kreditkartennummer"
@@ -1112,6 +1112,8 @@ de_CH:
             loading: "Wird geladen ..."
           discover_regen:
             loading: "Wird geladen ..."
+          vine:
+            enable: "Über OFN"
       actions:
         edit_profile: Einstellungen
         properties: Eigenschaften
@@ -3974,12 +3976,14 @@ de_CH:
           new_variant: "Neue Produktvariante"
         form:
           sku: "Artikelnummer"
-          price: "Preis"
           unit_price: "Grundpreis"
           display_as: "Anzeigen als"
           display_name: "Variantenname"
           display_as_placeholder: 'z. B. 2 kg'
           display_name_placeholder: 'z. B. Tomaten'
+          unit: Einheit
+          price: Preis
+          variant_category: Kategorie
         autocomplete:
           out_of_stock: "nicht vorrätig"
           producer_name: "Produzent"

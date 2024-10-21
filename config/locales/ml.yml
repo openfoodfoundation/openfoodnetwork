@@ -49,12 +49,12 @@ ml:
         price: "വില"
         primary_taxon_id: "ഉൽപ്പന്ന വിഭാഗം"
         shipping_category_id: "ഷിപ്പിംഗ് വിഭാഗം"
-        variant_unit_name: "വേരിയന്റ് യൂണിറ്റിന്റെ പേര്"
-        unit_value: "യൂണിറ്റ് മൂല്യം"
       spree/variant:
         primary_taxon: "ഉൽപ്പന്ന വിഭാഗം"
         shipping_category_id: "അയക്കൽ വിഭാഗം"
         supplier: "വിതരണക്കാരൻ"
+        variant_unit_name: "വേരിയന്റ് യൂണിറ്റിന്റെ പേര്"
+        unit_value: "യൂണിറ്റ് മൂല്യം"
       spree/credit_card:
         base: "ക്രെഡിറ്റ് കാർഡ്"
         number: "നമ്പർ"
@@ -1242,6 +1242,8 @@ ml:
           discover_regen:
             title: "റീജനറേറ്റീവ് കണ്ടെത്തുക"
             loading: "ലോഡിംഗ്"
+          vine:
+            enable: "ബന്ധിപ്പിക്കുക"
       actions:
         edit_profile: ക്രമീകരണങ്ങൾ
         properties: പ്രോപ്പർട്ടികൾ
@@ -4262,12 +4264,15 @@ ml:
           new_variant: "പുതിയ വേരിയന്റ്"
         form:
           sku: "എസ്.കെ.യു"
-          price: "വില"
           unit_price: "യൂണിറ്റ് വില"
           display_as: "പ്രദർശന മാർഗ്ഗം"
           display_name: "പ്രദർശന നാമം"
           display_as_placeholder: 'ഉദാ. 2 കി.ഗ്രാം'
           display_name_placeholder: 'ഉദാ. തക്കാളി'
+          unit: യൂണിറ്റ്
+          price: വില
+          unit_value: യൂണിറ്റ് മൂല്യം
+          variant_category: വിഭാഗം
         autocomplete:
           out_of_stock: "സ്റ്റോക്കില്ല"
           producer_name: "പ്രൊഡ്യൂസർ"

@@ -33,11 +33,11 @@ es_CR:
         price: "Precio"
         primary_taxon_id: "Categoría del producto"
         shipping_category_id: "Categoría de envío"
-        variant_unit_name: "Nombre de la unidad de la variante"
       spree/variant:
         primary_taxon: "Categoría del producto"
         shipping_category_id: "Categoría de envío"
         supplier: "Proveedor"
+        variant_unit_name: "Nombre de la unidad de la variante"
       spree/credit_card:
         base: "Tarjeta de crédito"
         number: "Número"
@@ -1118,6 +1118,8 @@ es_CR:
             loading: "Cargando"
           discover_regen:
             loading: "Cargando"
+          vine:
+            enable: "Conectar"
       actions:
         edit_profile: Configuración
         properties: Propiedades
@@ -3930,10 +3932,12 @@ es_CR:
           new_variant: "Nueva variante"
         form:
           sku: "SKU"
-          price: "Precio"
           unit_price: "Precio por unidad"
           display_as: "Mostrar como"
           display_name: "Nombre para mostrar"
+          unit: Unidad
+          price: Precio
+          variant_category: Categoría
         autocomplete:
           out_of_stock: "Agotado"
           producer_name: "Productor"

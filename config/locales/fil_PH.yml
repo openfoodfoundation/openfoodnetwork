@@ -29,11 +29,11 @@ fil_PH:
         price: "Presyo"
         primary_taxon_id: "Kategorya ng Produkto"
         shipping_category_id: "Kategorya ng Pagpapadala"
-        variant_unit_name: "pangalan ng yunit ng variant"
       spree/variant:
         primary_taxon: "Kategorya ng Produkto"
         shipping_category_id: "Kategorya ng Pagpapadala"
         supplier: "Supplier"
+        variant_unit_name: "pangalan ng yunit ng variant"
       spree/credit_card:
         base: "Credit Card"
         number: "Bilang"
@@ -909,6 +909,8 @@ fil_PH:
             loading: "naglo-load"
           discover_regen:
             loading: "naglo-load"
+          vine:
+            enable: "Kumonekta"
       actions:
         edit_profile: Settings
         properties: mga katangian
@@ -3480,10 +3482,12 @@ fil_PH:
           new_variant: "bagong variant"
         form:
           sku: "SKU"
-          price: "presyo"
           unit_price: "Presyo kada Yunit"
           display_as: "Ipakita Bilang"
           display_name: "Pangalan na nakikita"
+          unit: yunit
+          price: presyo
+          variant_category: kategorya
         autocomplete:
           out_of_stock: "Walang stock"
           producer_name: "Producer"

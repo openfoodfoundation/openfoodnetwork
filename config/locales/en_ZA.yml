@@ -29,11 +29,11 @@ en_ZA:
         price: "Price"
         primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
-        variant_unit_name: "Variant Unit Name"
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
         supplier: "Supplier"
+        variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -909,6 +909,8 @@ en_ZA:
             loading: "Loading"
           discover_regen:
             loading: "Loading"
+          vine:
+            enable: "Connect"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -3363,9 +3365,11 @@ en_ZA:
           and: "and"
         form:
           sku: "SKU"
-          price: "Price"
           unit_price: "Unit Price"
           display_as: "Display As"
+          unit: Unit
+          price: Price
+          variant_category: Category
         autocomplete:
           out_of_stock: "Out of Stock"
           producer_name: "Producer"

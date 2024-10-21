@@ -46,12 +46,12 @@ fr_BE:
         price: "Prix"
         primary_taxon_id: "Catégorie de Produit"
         shipping_category_id: "Catégorie de livraison"
-        variant_unit_name: "Nom de la variante"
-        unit_value: "Valeur unitaire"
       spree/variant:
         primary_taxon: "Catégorie de Produit"
         shipping_category_id: "Catégorie de livraison"
         supplier: "Disitributeur·trice"
+        variant_unit_name: "Nom de la variante"
+        unit_value: "Valeur unitaire"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -193,6 +193,7 @@ fr_BE:
               no_default_card: "Pas de carte de paiement par défaut pour cet acheteur"
             shipping_method:
               not_available_to_shop: "n'est pas disponible pour %{shop}"
+  card_details: "Détails de la carte"
   customer_instructions: "Précisions pour la personne qui achète"
   devise:
     passwords:
@@ -485,10 +486,13 @@ fr_BE:
         clone: Dupliquer
         delete: Supprimer
         remove: Supprimer
+        preview: Aperçu
       image:
         edit: Modifier
       product_preview:
+        product_preview: Aperçu du produit
         shop_tab: Comptoir
+        product_details_tab: Détails du produit
     adjustments:
       skipped_changing_canceled_order: "Vous ne pouvez pas modifier une commande annulée."
     begins_at: Commence
@@ -1182,6 +1186,8 @@ fr_BE:
             loading: "Chargement en cours"
           discover_regen:
             loading: "Chargement en cours"
+          vine:
+            enable: "Se connecter"
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1469,6 +1475,9 @@ fr_BE:
       pack_by_customer: Préparation des commandes par Acheteur·euse
       pack_by_supplier: Préparation des commandes par Producteur·trice
       pack_by_product: Préparation des commandes par produit
+      display:
+        report_is_big: "Ce rapport est volumineux et peut ralentir votre appareil."
+        display_anyway: "Afficher quand même"
       download:
         button: "Télécharger le rapport"
       show:
@@ -1722,6 +1731,7 @@ fr_BE:
         stripe:
           use_saved_card: Utiliser la carte enregistrée
           save_card: Enregistrer la carte pour une utilisation ultérieure
+          create_new_card: ou entrez les détails de la nouvelle carte ci-dessous
       explaination: Vous pouvez vérifier et confirmer votre commande à l'étape suivante qui comprend les coûts finaux.
       submit: Suivant - Récapitulatif de la commande
       cancel: Retour à Vos coordonnées
@@ -1730,7 +1740,7 @@ fr_BE:
         apply_voucher: Appliquer le bon d'achat
         placeholder: Entrer le code du bon d'achat
         confirm_delete: Êtes-vous sûr de vouloir supprimer le bon ?
-        warning_forfeit_remaining_amount: "Remarque : si le total de votre commande est inférieur à votre bon, vous ne pourrez peut-être pas dépenser la valeur restante."
+        warning_forfeit_remaining_amount: "Remarque : si le total de votre commande est inférieur à votre bon, vous ne pourrez peut-être pas dépenser la valeur restante."
     step3:
       delivery_details:
         title: Détails de livraison
@@ -3626,6 +3636,7 @@ fr_BE:
     email: Email
     account_updated: "Compte mis à jour!"
     email_updated: "Le compte sera mis à jour une fois la nouvelle adresse-mail confirmée"
+    show_api_key_view_toggled: "L'affichage de la clé API a été modifié !"
     my_account: "Mon compte"
     date: "Date"
     time: "Heure"
@@ -4013,12 +4024,16 @@ fr_BE:
           new_variant: "Nouvelle variante"
         form:
           sku: "Référence produit"
-          price: "Prix"
           unit_price: "Prix unitaire"
           display_as: "Unité affichéé"
           display_name: "Nom d'affichage"
           display_as_placeholder: 'Ex: 2 kilo'
           display_name_placeholder: 'ex: Tomates'
+          unit_scale: "Unité"
+          unit: Unité
+          price: Prix
+          unit_value: Valeur unitaire
+          variant_category: Catégorie
         autocomplete:
           out_of_stock: "Pas en stock"
           producer_name: "Producteur·trice"
@@ -4232,6 +4247,7 @@ fr_BE:
       key_cleared: "clé effacée"
       shipment:
         cannot_ready: "Impossible de préparer l'expédition."
+      toggle_api_key_view: "Afficher la vue de la clé API pour l'utilisateur"
     unit: unité
     per_unit: Montant par unité
   datetime:

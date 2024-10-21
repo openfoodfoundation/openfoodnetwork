@@ -49,13 +49,13 @@ fr:
         price: "Prix"
         primary_taxon_id: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
-        variant_unit: "Unité"
-        variant_unit_name: "Unité de la variante"
-        unit_value: "Nb unités"
       spree/variant:
         primary_taxon: "Catégorie Produit"
         shipping_category_id: "Condition de transport"
         supplier: "Fournisseur"
+        variant_unit: "Unité"
+        variant_unit_name: "Unité de la variante"
+        unit_value: "Nb unités"
       spree/credit_card:
         base: "Carte de crédit"
         number: "N° commande"
@@ -1377,6 +1377,10 @@ fr:
                 target="_blank"><b>En savoir plus sur Discover Regenerative</b>
                 <i class="icon-external-link"></i></a>
                 </p>
+          vine:
+            enable: "A propos"
+            disable: "Déconnecter"
+            need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -4491,12 +4495,16 @@ fr:
           new_variant: "Nouvelle variante"
         form:
           sku: "Référence Produit"
-          price: "Prix"
           unit_price: "Prix unitaire"
           display_as: "Unité affichée"
           display_name: "Nom affiché"
           display_as_placeholder: 'ex. 2 kg'
           display_name_placeholder: 'ex. Tomates'
+          unit_scale: "Unité"
+          unit: Unité affichée
+          price: Prix
+          unit_value: Nb unités
+          variant_category: Catégorie
         autocomplete:
           out_of_stock: "En rupture de stock"
           producer_name: "Producteur"

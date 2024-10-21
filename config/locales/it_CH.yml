@@ -31,11 +31,11 @@ it_CH:
         price: "Prezzo"
         primary_taxon_id: "Categoria prodotto"
         shipping_category_id: "Categoria Spedizioni"
-        variant_unit_name: "Nome Unità Variante"
       spree/variant:
         primary_taxon: "Categoria prodotto"
         shipping_category_id: "Categoria Spedizioni"
         supplier: "Fornitore"
+        variant_unit_name: "Nome Unità Variante"
       spree/credit_card:
         base: "Carta di Credito"
         number: "Numero"
@@ -1079,6 +1079,8 @@ it_CH:
             loading: "Caricamento"
           discover_regen:
             loading: "Caricamento"
+          vine:
+            enable: "Blog"
       actions:
         edit_profile: Impostazioni
         properties: Proprietà
@@ -3931,12 +3933,14 @@ it_CH:
           new_variant: "Nuova variante"
         form:
           sku: "Codice ID"
-          price: "Prezzo"
           unit_price: "Prezzo unitario"
           display_as: "Visualizza come"
           display_name: "Nome da visualizzare"
           display_as_placeholder: 'es. 2 kg'
           display_name_placeholder: 'es. Pomodori'
+          unit: Unità
+          price: Prezzo
+          variant_category: Categoria
         autocomplete:
           out_of_stock: "Esaurito"
           producer_name: "Produttore"

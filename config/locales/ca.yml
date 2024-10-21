@@ -46,12 +46,12 @@ ca:
         price: "Preu"
         primary_taxon_id: "Categoria del producte"
         shipping_category_id: "Categoria d'enviament"
-        variant_unit_name: "Nom de la unitat de la variant"
-        unit_value: "Valor de la unitat"
       spree/variant:
         primary_taxon: "Categoria del producte"
         shipping_category_id: "Categoria d'enviament"
         supplier: "Proveïdora"
+        variant_unit_name: "Nom de la unitat de la variant"
+        unit_value: "Valor de la unitat"
       spree/credit_card:
         base: "Targeta de crèdit"
         number: "Número"
@@ -1200,6 +1200,8 @@ ca:
             loading: "S'està carregant"
           discover_regen:
             loading: "S'està carregant"
+          vine:
+            enable: "Connecta"
       actions:
         edit_profile: Configuració
         properties: Propietats
@@ -4068,12 +4070,15 @@ ca:
           new_variant: "Nova variant"
         form:
           sku: "Número de referència (SKU)"
-          price: "Preu"
           unit_price: "Preu unitari"
           display_as: "Mostra com"
           display_name: "Nom de visualització"
           display_as_placeholder: 'per exemple. 2 kg'
           display_name_placeholder: 'per exemple. Tomàquets'
+          unit: Unitat
+          price: Preu
+          unit_value: Valor de la unitat
+          variant_category: Categoria
         autocomplete:
           out_of_stock: "Fora d'existència"
           producer_name: "Productor"

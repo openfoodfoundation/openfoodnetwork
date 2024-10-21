@@ -46,12 +46,12 @@ es:
         price: "Precio"
         primary_taxon_id: "categoría del producto"
         shipping_category_id: "Categoría de envío"
-        variant_unit_name: "Nombre de la unidad de la variante"
-        unit_value: "Valor unidad"
       spree/variant:
         primary_taxon: "categoría del producto"
         shipping_category_id: "Categoría de envío"
         supplier: "Proveedora"
+        variant_unit_name: "Nombre de la unidad de la variante"
+        unit_value: "Valor unidad"
       spree/credit_card:
         base: "Tarjeta de crédito"
         number: "Número"
@@ -1143,6 +1143,8 @@ es:
             loading: "Cargando"
           discover_regen:
             loading: "Cargando"
+          vine:
+            enable: "Conectar"
       actions:
         edit_profile: Configuración
         properties: Propiedades
@@ -4052,12 +4054,15 @@ es:
           new_variant: "Nueva Variante"
         form:
           sku: "SKU"
-          price: "Precio"
           unit_price: "Precio por unidad"
           display_as: "Mostrar como"
           display_name: "Nombre para mostrar"
           display_as_placeholder: 'p. ej. 2 Kg'
           display_name_placeholder: 'p. ej. Tomates'
+          unit: Unidad
+          price: Precio
+          unit_value: Valor unidad
+          variant_category: Categoría
         autocomplete:
           out_of_stock: "Agotado"
           producer_name: "Productora"

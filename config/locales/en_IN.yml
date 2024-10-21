@@ -29,11 +29,11 @@ en_IN:
         price: "Price"
         primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
-        variant_unit_name: "Variant Unit Name"
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
         supplier: "Supplier"
+        variant_unit_name: "Variant Unit Name"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -918,6 +918,8 @@ en_IN:
             loading: "Loading"
           discover_regen:
             loading: "Loading"
+          vine:
+            enable: "Pricing"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -3532,12 +3534,14 @@ en_IN:
           new_variant: "New Variant"
         form:
           sku: "Product Code"
-          price: "Price"
           unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
           display_as_placeholder: 'eg. 2 kg'
           display_name_placeholder: 'eg. Tomatoes'
+          unit: Unit
+          price: Price
+          variant_category: Category
         autocomplete:
           out_of_stock: "Out of Stock"
           producer_name: "Producer"

@@ -49,12 +49,12 @@ en_GB:
         price: "Price"
         primary_taxon_id: "Product Category"
         shipping_category_id: "Shipping Category"
-        variant_unit_name: "Variant Unit Name"
-        unit_value: "Unit value"
       spree/variant:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
         supplier: "Supplier"
+        variant_unit_name: "Variant Unit Name"
+        unit_value: "Unit value"
       spree/credit_card:
         base: "Credit Card"
         number: "Number"
@@ -1331,6 +1331,10 @@ en_GB:
                 target="_blank"><b>Learn more about Discover Regenerative</b>
                 <i class="icon-external-link"></i></a>
                 </p>
+          vine:
+            enable: "Resources"
+            disable: "Disconnect"
+            need_to_be_manager: "Only managers can connect apps."
       actions:
         edit_profile: Settings
         properties: Properties
@@ -4373,12 +4377,16 @@ en_GB:
           new_variant: "New Variant"
         form:
           sku: "Product Code"
-          price: "Price"
           unit_price: "Unit Price"
           display_as: "Display As"
           display_name: "Display Name"
           display_as_placeholder: 'eg. 2 kg'
           display_name_placeholder: 'eg. Tomatoes'
+          unit_scale: "Unit scale"
+          unit: Unit
+          price: Price
+          unit_value: Unit value
+          variant_category: Category
         autocomplete:
           out_of_stock: "Out of Stock"
           producer_name: "Producer"
