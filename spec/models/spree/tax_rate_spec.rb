@@ -392,7 +392,7 @@ module Spree
                 expect(Bugsnag).to receive(:notify).with(
                   "Notice: Tax refund should not be possible, please check the default zone and " \
                   "the tax rate zone configuration"
-                ).twice
+                ).twice.and_call_original
 
                 Spree::TaxRate.adjust(order, order.line_items)
               end

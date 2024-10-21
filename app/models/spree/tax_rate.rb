@@ -110,7 +110,7 @@ module Spree
             "Notice: Tax refund should not be possible, please check the default zone and " \
             "the tax rate zone configuration"
           ) do |payload|
-            payload.add_metadata :order_tax_zone, order.tax_zone
+            payload.add_metadata :order_tax_zone, item.order.tax_zone
             payload.add_metadata :tax_rate_zone, zone
             payload.add_metadata :default_zone, Zone.default_tax
           end
