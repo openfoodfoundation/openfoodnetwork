@@ -105,6 +105,15 @@ module Spree
         if default_zone_or_zone_match?(item.order)
           calculator.compute(item)
         else
+          # Tax refund should not be possible with the way our production server are configured
+          Bugsnag.notify(
+            "Notice: Tax refund should not be possible, please check the default zone and " \
+            "the tax rate zone configuration"
+          ) do |payload|
+            payload.add_metadata :order_tax_zone, item.order.tax_zone
+            payload.add_metadata :tax_rate_zone, zone
+            payload.add_metadata :default_zone, Zone.default_tax
+          end
           # In this case, it's a refund.
           calculator.compute(item) * - 1
         end
