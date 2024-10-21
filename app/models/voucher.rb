@@ -1,6 +1,8 @@
 # frozen_string_literal: false
 
 class Voucher < ApplicationRecord
+  VINE_TYPE = "VINE".freeze
+
   self.belongs_to_required_by_default = false
 
   acts_as_paranoid
@@ -18,8 +20,8 @@ class Voucher < ApplicationRecord
 
   TYPES = ["Vouchers::FlatRate", "Vouchers::PercentageRate"].freeze
 
-  scope :vine, -> { where(voucher_type: "VINE") }
-  scope :not_vine, -> { where.not(voucher_type: "VINE").or(where(voucher_type: nil)) }
+  scope :vine, -> { where(voucher_type: VINE_TYPE) }
+  scope :not_vine, -> { where.not(voucher_type: VINE_TYPE).or(where(voucher_type: nil)) }
 
   def code=(value)
     super(value.to_s.strip)
@@ -43,6 +45,10 @@ class Voucher < ApplicationRecord
     }
 
     order.adjustments.create(adjustment_attributes)
+  end
+
+  def vine?
+    voucher_type == VINE_TYPE
   end
 
   # The following method must be overriden in a concrete voucher.
