@@ -393,47 +393,45 @@ RSpec.describe "As a consumer, I want to checkout my order" do
       }
       let(:payment) { completed_order.payments.first }
 
-      shared_examples "order confirmation page" do |paid_state, paid_amount|
-        it "displays the relevant information" do
-          expect(page).to have_content paid_state.to_s
-          expect(page).to have_selector('strong', text: "Amount Paid")
-          expect(page).to have_selector('strong', text: with_currency(paid_amount))
-        end
-      end
-
       context "an order with balance due" do
         before { set_up_order(-10, "balance_due") }
 
-        it_behaves_like "order confirmation page", "NOT PAID", "40" do
-          before do
-            expect(page).to have_selector('h5', text: "Balance Due")
-            expect(page).to have_selector('h5', text: with_currency(10))
-          end
+        it "displays balance due and paid state" do
+          expect(page).to have_selector('h5', text: "Balance Due")
+          expect(page).to have_selector('h5', text: with_currency(10))
+
+          confirmation_page_expect_paid(paid_state: "NOT PAID" ,paid_amount: 40)
         end
       end
 
       context "an order with credit owed" do
         before { set_up_order(10, "credit_owed") }
 
-        it_behaves_like "order confirmation page", "PAID", "60" do
-          before do
-            expect(page).to have_selector('h5', text: "Credit Owed")
-            expect(page).to have_selector('h5', text: with_currency(-10))
-          end
+        it "displays Credit owned and paid state" do
+          expect(page).to have_selector('h5', text: "Credit Owed")
+          expect(page).to have_selector('h5', text: with_currency(-10))
+
+          confirmation_page_expect_paid(paid_state: "PAID" ,paid_amount: 60)
         end
       end
 
       context "an order with no outstanding balance" do
         before { set_up_order(0, "paid") }
 
-        it_behaves_like "order confirmation page", "PAID", "50" do
-          before do
-            expect(page).not_to have_selector('h5', text: "Credit Owed")
-            expect(page).not_to have_selector('h5', text: "Balance Due")
-          end
+        it "displays paid state" do
+          expect(page).not_to have_selector('h5', text: "Credit Owed")
+          expect(page).not_to have_selector('h5', text: "Balance Due")
+
+          confirmation_page_expect_paid(paid_state: "PAID" ,paid_amount: 50)
         end
       end
     end
+  end
+
+  def confirmation_page_expect_paid(paid_state: ,paid_amount:)
+    expect(page).to have_content paid_state.to_s
+    expect(page).to have_selector('strong', text: "Amount Paid")
+    expect(page).to have_selector('strong', text: with_currency(paid_amount))
   end
 
   def add_voucher_to_order(voucher, order)
