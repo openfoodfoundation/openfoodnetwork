@@ -433,6 +433,7 @@ RSpec.describe CheckoutController, type: :controller do
 
     context "summary step" do
       let(:step) { "summary" }
+      let(:checkout_params) { { confirm_order: "Complete order" } }
 
       before do
         order.bill_address = address
@@ -492,6 +493,60 @@ RSpec.describe CheckoutController, type: :controller do
 
             expect(response).to redirect_to order_path(order, order_token: order.token)
             expect(order.reload.state).to eq "complete"
+          end
+        end
+      end
+
+      context "with a VINE voucher", feature: :connected_apps do
+        let(:vine_voucher) {
+          create(:voucher_flat_rate, voucher_type: "VINE", code: 'some_code',
+                                     enterprise: distributor, amount: 6)
+        }
+        let(:vine_voucher_redeemer) { instance_double(VineVoucherRedeemerService) }
+
+        before do
+          # Adding voucher to the order
+          vine_voucher.create_adjustment(vine_voucher.code, order)
+          VoucherAdjustmentsService.new(order).update
+          order.update_totals_and_states
+
+          allow(VineVoucherRedeemerService).to receive(:new).and_return(vine_voucher_redeemer)
+        end
+
+        it "completes the order and redirects to order confirmation" do
+          expect(vine_voucher_redeemer).to receive(:call).and_return(true)
+
+          put(:update, params:)
+
+          expect(response).to redirect_to order_path(order, order_token: order.token)
+          expect(order.reload.state).to eq "complete"
+        end
+
+        context "when redeeming the voucher fails" do
+          it "returns 422 and some error" do
+            allow(vine_voucher_redeemer).to receive(:call).and_return(false)
+            allow(vine_voucher_redeemer).to receive(:errors).and_return(
+              { redeeming_failed: "Redeeming the voucher failed" }
+            )
+
+            put(:update, params:)
+
+            expect(response.status).to eq 422
+            expect(flash[:error]).to match "Redeeming the voucher failed"
+          end
+        end
+
+        context "when an other error happens" do
+          it "returns 422 and some error" do
+            allow(vine_voucher_redeemer).to receive(:call).and_return(false)
+            allow(vine_voucher_redeemer).to receive(:errors).and_return(
+              { vine_api: "There was an error communicating with the API" }
+            )
+
+            put(:update, params:)
+
+            expect(response.status).to eq 422
+            expect(flash[:error]).to match "There was an error while trying to redeem your voucher"
           end
         end
       end

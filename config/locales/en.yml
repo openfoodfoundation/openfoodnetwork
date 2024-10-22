@@ -2134,6 +2134,7 @@ en:
       voucher_not_found: Not found
       add_voucher_error: There was an error while adding the voucher
       create_voucher_error: "There was an error while creating the voucher: %{error}"
+      voucher_redeeming_error: There was an error while trying to redeem your voucher 
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
