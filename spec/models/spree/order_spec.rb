@@ -400,6 +400,27 @@ RSpec.describe Spree::Order do
         end
       end
     end
+
+    it "restocks items without reload" do
+      pending "Cancelling a newly created order updates shipments without callbacks"
+      # But in production, orders are always created in one request and
+      # cancelled in another request. This is only an issue in specs.
+
+      expect { order.cancel }.to change {
+        order.variants.first.on_hand
+      }.by(1)
+    end
+
+    it "restocks items" do
+      # If we don't reload the order, it keeps thinking that its shipping
+      # address changed and triggers a shipment update without shipment
+      # callbacks. This can be removed if the above spec passes.
+      order.reload
+
+      expect { order.cancel }.to change {
+        order.variants.first.on_hand
+      }.by(1)
+    end
   end
 
   describe "#resume" do
