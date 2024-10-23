@@ -8,7 +8,7 @@ class ConfirmModalComponent < ModalComponent
     controller: nil,
     message: nil,
     confirm_actions: nil,
-    confirm_reflexes: nil,
+    form_url: nil,
     confirm_button_class: :primary,
     confirm_button_text: I18n.t('js.admin.modals.confirm'),
     cancel_button_text: I18n.t('js.admin.modals.cancel'),
@@ -17,7 +17,7 @@ class ConfirmModalComponent < ModalComponent
     super(id:, close_button: true)
     @confirm_actions = confirm_actions
     @reflex = reflex
-    @confirm_reflexes = confirm_reflexes
+    @form_url = form_url
     @controller = controller
     @message = message
     @confirm_button_class = confirm_button_class
