@@ -375,7 +375,7 @@ RSpec.describe Spree::Order do
     end
   end
 
-  describe "#cancel" do
+  describe "#cancel!" do
     let(:order) { create(:order_with_totals_and_distribution, :completed) }
 
     before { order.cancel! }
