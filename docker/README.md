@@ -44,6 +44,26 @@ $ docker/build
 ```sh
 $ docker/server
 ```
+* Alternatively, you can run the server in detached mode. This will return you to the terminal prompt without stopping the server. No logs will be displayed:
+```sh
+$ docker compose up -d
+```
+* To stop the server, run:
+```sh
+$ docker compose down
+```
+* To access the server logs, run:
+```sh
+$ docker compose logs -f
+```
+* To run tests or access the server directly, you can use bash:
+```sh
+$ docker compose exec web bash
+```
+* Once you have connected, you can run tests and other operations without `bundle exec`:
+```sh
+$ rspec spec/models/voucher_spec.rb
+```
 * The default admin user is 'ofn@example.com' with the password 'ofn123'.
 * View the app in the browser at `http://localhost:3000`.
 * You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
@@ -72,6 +92,26 @@ $ docker/build.ps1
 * Run the Rails server and its required Docker containers:
 ```command
 $ docker/server.ps1
+```
+* Alternatively, you can run the server in detached mode. This will return you to the terminal prompt without stopping the server. No logs will be displayed:
+```sh
+$ docker compose up -d
+```
+* To stop the server, run:
+```sh
+$ docker compose down
+```
+* To access the server logs, run:
+```sh
+$ docker compose logs -f
+```
+* To run tests or access the server directly, you can use bash:
+```sh
+$ docker compose exec web bash
+```
+* Once you have connected, you can run tests and other operations without `bundle exec`:
+```sh
+$ rspec spec/models/voucher_spec.rb
 ```
 You may need to wait several minutes before getting the server up and running properly.
 * The default admin user is 'ofn@example.com' with the password 'ofn123'.
