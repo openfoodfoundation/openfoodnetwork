@@ -41,7 +41,9 @@ module VariantUnits
           value, unit_name = option_value_value_unit_scaled
         else
           value = @nameable.unit_value
-          unit_name = pluralize(@nameable.variant_unit_name, value)
+
+          unit_name = @nameable.variant_unit_name
+          unit_name = pluralize(unit_name, value) if unit_name.present?
         end
 
         value = value.to_i if value == value.to_i
