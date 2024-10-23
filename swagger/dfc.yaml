@@ -99,7 +99,7 @@ paths:
                         dfc-b:hasPostalCode: '20170'
                       dfc-b:supplies:
                         "@type": dfc-b:SuppliedProduct
-                        dfc-b:name: 'Product #3 - 3355'
+                        dfc-b:name: Tomato
                         dfc-b:hasQuantity:
                           "@type": dfc-b:QuantitativeValue
                           dfc-b:hasUnit: dfc-m:Gram
