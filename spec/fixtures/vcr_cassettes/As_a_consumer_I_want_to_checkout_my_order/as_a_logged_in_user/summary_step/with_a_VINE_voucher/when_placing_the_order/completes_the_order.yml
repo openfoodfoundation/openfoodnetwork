@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://vine-staging.openfoodnetwork.org.au/api/v1/voucher-redemptions
+    body:
+      encoding: UTF-8
+      string: '{"voucher_id":"9d316d27-4e3c-4c8c-b3c8-8e23cc171f20","voucher_set_id":"9d314daa-0878-4b73-922d-698047640cf4","amount":1}'
+    headers:
+      X-Authorization:
+      - "<HIDDEN-VINE-TOKEN>"
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Cache-Control:
+      - no-cache, private
+      Date:
+      - Wed, 23 Oct 2024 03:16:39 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: '{"meta":{"responseCode":200,"limit":50,"offset":0,"message":"Redemption
+        successful. This was a test redemption. Do NOT provide the person with goods
+        or services."},"data":{"voucher_id":"9d316d27-4e3c-4c8c-b3c8-8e23cc171f20","voucher_set_id":"9d314daa-0878-4b73-922d-698047640cf4","redeemed_by_user_id":8,"redeemed_by_team_id":4,"redeemed_amount":1,"is_test":1,"updated_at":"2024-10-23T03:16:39.000000Z","created_at":"2024-10-23T03:16:39.000000Z","id":7}}'
+  recorded_at: Wed, 23 Oct 2024 03:16:39 GMT
+recorded_with: VCR 6.2.0

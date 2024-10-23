@@ -344,6 +344,49 @@ RSpec.describe "As a consumer, I want to checkout my order" do
           end
         end
       end
+
+      context "with a VINE voucher", feature: :connected_apps do
+        let!(:vine_connected_app) {
+          ConnectedApps::Vine.create(
+            enterprise: distributor, data: { api_key: "1234568", secret: "my_secret" }
+          )
+        }
+        let(:vine_voucher) {
+          create(:voucher_flat_rate, voucher_type: "VINE", code: 'some_vine_code',
+                                     enterprise: distributor, amount: 0.01)
+        }
+
+        before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with("VINE_API_URL")
+            .and_return("https://vine-staging.openfoodnetwork.org.au/api/v1")
+
+          add_voucher_to_order(vine_voucher, order)
+        end
+
+        it "shows the applied voucher" do
+          visit checkout_step_path(:summary)
+
+          within ".summary-right" do
+            expect(page).to have_content "some_vine_code"
+            expect(page).to have_content "-0.01"
+          end
+        end
+
+        context "when placing the order" do
+          it "completes the order", :vcr do
+            visit checkout_step_path(:summary)
+
+            place_order
+
+            within "#line-items" do
+              expect(page).to have_content "Voucher: some_vine_code"
+              expect(page).to have_content "$-0.01"
+            end
+            expect(order.reload.state).to eq "complete"
+          end
+        end
+      end
     end
 
     context "with previous open orders" do
@@ -400,7 +443,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
           expect(page).to have_selector('h5', text: "Balance Due")
           expect(page).to have_selector('h5', text: with_currency(10))
 
-          confirmation_page_expect_paid(paid_state: "NOT PAID" ,paid_amount: 40)
+          confirmation_page_expect_paid(paid_state: "NOT PAID", paid_amount: 40)
         end
       end
 
@@ -411,7 +454,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
           expect(page).to have_selector('h5', text: "Credit Owed")
           expect(page).to have_selector('h5', text: with_currency(-10))
 
-          confirmation_page_expect_paid(paid_state: "PAID" ,paid_amount: 60)
+          confirmation_page_expect_paid(paid_state: "PAID", paid_amount: 60)
         end
       end
 
@@ -422,13 +465,13 @@ RSpec.describe "As a consumer, I want to checkout my order" do
           expect(page).not_to have_selector('h5', text: "Credit Owed")
           expect(page).not_to have_selector('h5', text: "Balance Due")
 
-          confirmation_page_expect_paid(paid_state: "PAID" ,paid_amount: 50)
+          confirmation_page_expect_paid(paid_state: "PAID", paid_amount: 50)
         end
       end
     end
   end
 
-  def confirmation_page_expect_paid(paid_state: ,paid_amount:)
+  def confirmation_page_expect_paid(paid_state:, paid_amount:)
     expect(page).to have_content paid_state.to_s
     expect(page).to have_selector('strong', text: "Amount Paid")
     expect(page).to have_selector('strong', text: with_currency(paid_amount))
