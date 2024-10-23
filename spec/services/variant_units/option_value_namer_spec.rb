@@ -131,6 +131,15 @@ module VariantUnits
         end
       end
 
+      it "don't crash when variant_unit_name is nil" do
+        pending "#12939"
+        v = instance_double(Spree::Variant, variant_unit: 'items', variant_unit_scale: nil,
+                                            variant_unit_name: nil, unit_value: 100)
+
+        option_value_namer = OptionValueNamer.new v
+        expect(option_value_namer.__send__(:option_value_value_unit)).to eq [100, ""]
+      end
+
       it "generates singular values for item units when value is 1" do
         v = instance_double(Spree::Variant, variant_unit: 'items', variant_unit_scale: nil,
                                             variant_unit_name: 'packet', unit_value: 1)
