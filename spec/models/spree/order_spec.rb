@@ -378,21 +378,25 @@ RSpec.describe Spree::Order do
   describe "#cancel!" do
     let(:order) { create(:order_with_totals_and_distribution, :completed) }
 
-    before { order.cancel! }
-
     it "should cancel the order" do
-      expect(order.state).to eq 'canceled'
+      expect { order.cancel! }.to change { order.state }.to("canceled")
     end
 
     it "should cancel the shipments" do
-      expect(order.shipments.pluck(:state)).to eq ['canceled']
+      expect { order.cancel! }.to change {
+        order.shipments.pluck(:state)
+      }.to(["canceled"])
     end
 
     context "when payment has not been taken" do
       context "and payment is in checkout state" do
         it "should change the state of the payment to void" do
-          order.payments.reload
-          expect(order.payments.pluck(:state)).to eq ['void']
+          expect {
+            order.cancel!
+            order.payments.reload
+          }.to change {
+            order.payments.pluck(:state)
+          }.to(["void"])
         end
       end
     end
