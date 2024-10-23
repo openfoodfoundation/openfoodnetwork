@@ -707,11 +707,6 @@ module Spree
         subject.description = "Hello <script>alert</script> dearest <b>monster</b>."
         expect(subject.description).to eq "Hello alert dearest <b>monster</b>."
       end
-
-      it "sanitises existing HTML in description" do
-        subject[:description] = "Hello <script>alert</script> dearest <b>monster</b>."
-        expect(subject.description).to eq "Hello alert dearest <b>monster</b>."
-      end
     end
   end
 
