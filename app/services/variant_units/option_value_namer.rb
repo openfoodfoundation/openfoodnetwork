@@ -39,9 +39,13 @@ module VariantUnits
       if @nameable.unit_value.present?
         if %w(weight volume).include? @nameable.variant_unit
           value, unit_name = option_value_value_unit_scaled
-        else
+        # on some production server Spree::Variant.new gives a variant with unit_value = 1.0 and
+        # nothing else set, which breaks the OptionValueNamer
+        elsif @nameable.variant_unit_name.present?
           value = @nameable.unit_value
           unit_name = pluralize(@nameable.variant_unit_name, value)
+        else
+          value = unit_name = nil
         end
 
         value = value.to_i if value == value.to_i

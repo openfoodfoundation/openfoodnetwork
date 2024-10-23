@@ -35,6 +35,14 @@ module VariantUnits
         allow(subject).to receive(:value_scaled?) { false }
         expect(subject.name).to eq("value unit")
       end
+
+      context "when only unit_value is set" do
+        it "returns an empty string" do
+          v.unit_value = 1.0
+
+          expect(subject.name).to eq("")
+        end
+      end
     end
 
     describe "determining if a variant's value is scaled" do
