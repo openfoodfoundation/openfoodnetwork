@@ -13,7 +13,9 @@ module Admin
     prepend_before_action :override_owner, only: :create
     prepend_before_action :override_sells, only: :create
 
-    before_action :load_countries, except: [:index, :register, :check_permalink, :remove_logo]
+    before_action :load_countries,
+                  except: [:index, :register, :check_permalink, :remove_logo,
+                           :remove_terms_and_conditions]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
     before_action :load_taxons, only: [:new, :edit, :update, :create]
@@ -151,7 +153,7 @@ module Admin
       respond_to do |format|
         format.html do
           flash[:success] = I18n.t("admin.enterprises.form.white_label.remove_logo_success")
-          redirect_to edit_admin_enterprise_path
+          redirect_to main_app.edit_admin_enterprise_path(@enterprise)
         end
         format.turbo_stream do
           flash.now[:success] = I18n.t("admin.enterprises.form.white_label.remove_logo_success")
@@ -167,6 +169,13 @@ module Admin
           ]
         end
       end
+    end
+
+    def remove_terms_and_conditions
+      authorize! :remove_terms_and_conditions, @object
+
+      @object.terms_and_conditions.purge_later
+      redirect_to edit_admin_enterprise_path(@object)
     end
 
     protected

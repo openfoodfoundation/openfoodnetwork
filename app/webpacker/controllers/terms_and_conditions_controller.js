@@ -13,17 +13,6 @@ export default class extends ApplicationController {
     });
   }
 
-  remove(event) {
-    let confirmation = confirm(this.messageValue);
-    if (confirmation) {
-      location.hash = "";
-      this.stimulate(
-        "EnterpriseEdit#remove_terms_and_conditions",
-        event.target
-      );
-    }
-  }
-
   add() {
     this.fileinputTarget.click();
   }

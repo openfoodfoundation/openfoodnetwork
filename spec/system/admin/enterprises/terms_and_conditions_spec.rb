@@ -55,6 +55,33 @@ RSpec.describe "Uploading Terms and Conditions PDF" do
         go_to_business_details
         expect(page).to have_selector "a[href*='Terms-of-ServiceUK.pdf']"
       end
+
+      it "uploading terms and conditions" do
+        go_to_business_details
+
+        # Add PDF
+        attach_file "enterprise[terms_and_conditions]", original_terms, make_visible: true
+
+        time = Time.zone.local(2002, 4, 13, 0, 0, 0)
+        Timecop.freeze(run_time = time) do
+          click_button "Update"
+          expect(distributor.reload.terms_and_conditions_blob.created_at).to eq run_time
+        end
+        expect(page).
+          to have_content "Enterprise \"#{distributor.name}\" has been successfully updated!"
+
+        go_to_business_details
+        expect(page).to have_selector "a[href*='Terms-of-service.pdf'][target=\"_blank\"]"
+        expect(page).to have_content 'Remove File'
+
+        # Remove PDF
+        accept_confirm "The Terms and Conditions file will be removed immediately after you confirm." do
+          click_on "Remove File"
+        end
+        go_to_business_details
+        expect(page).not_to have_selector "a[href*='Terms-of-service.pdf'][target=\"_blank\"]"
+        expect(page).not_to have_content 'Remove File'
+      end
     end
   end
 end
