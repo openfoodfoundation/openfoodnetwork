@@ -38,4 +38,19 @@ RSpec.describe Spree::Admin::UsersController do
       expect(response).to redirect_to('/unauthorized')
     end
   end
+
+  context '#accept_terms_of_services' do
+    before(:each) { controller_login_as_admin }
+    it "updates terms_of_service_accepted_at" do
+      expect {
+        spree_post :accept_terms_of_services, format: :turbo_stream
+        @admin_user.reload
+      }.to change{ @admin_user.terms_of_service_accepted_at }
+    end
+
+    it "removes banner from the page" do
+      spree_post :accept_terms_of_services, format: :turbo_stream
+      expect(response.body).not_to have_selector("#banner-container")
+    end
+  end
 end
