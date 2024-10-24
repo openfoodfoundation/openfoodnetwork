@@ -101,8 +101,6 @@ gem 'redis'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
-gem "stimulus_reflex"
-
 gem "turbo_power"
 gem "turbo-rails"
 

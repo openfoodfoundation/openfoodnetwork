@@ -4,7 +4,6 @@ class ConfirmModalComponent < ModalComponent
   # @param actions_alignment_class [String] possible classes: 'justify-space-around', 'justify-end'
   def initialize(
     id:,
-    reflex: nil,
     controller: nil,
     message: nil,
     confirm_actions: nil,
@@ -16,7 +15,6 @@ class ConfirmModalComponent < ModalComponent
   )
     super(id:, close_button: true)
     @confirm_actions = confirm_actions
-    @reflex = reflex
     @form_url = form_url
     @controller = controller
     @message = message

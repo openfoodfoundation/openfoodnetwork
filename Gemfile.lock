@@ -969,7 +969,6 @@ DEPENDENCIES
   spring-commands-rspec
   spring-commands-rubocop
   state_machines-activerecord
-  stimulus_reflex
   stimulus_reflex_testing!
   stringex (~> 2.8.5)
   stripe
