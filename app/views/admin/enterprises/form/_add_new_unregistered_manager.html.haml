@@ -1,4 +1,4 @@
-%form#add_manager_modal{ 'data-reflex': 'submit->InviteManager#invite', 'data-reflex-serialize-form': true }
+= form_with(url: invite_admin_enterprise_path, id: 'add_manager_modal', method: :patch, data: { turbo: true }) do
   .margin-bottom-30.text-center
     .text-big
       = t('js.admin.modals.invite_title')

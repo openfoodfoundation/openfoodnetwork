@@ -7,6 +7,7 @@ require 'open_food_network/order_cycle_permissions'
 module Admin
   class EnterprisesController < Admin::ResourceController
     include GeocodeEnterpriseAddress
+    include ManagerInvitations
     include Pagy::Backend
 
     # These need to run before #load_resource so that @object is initialised with sanitised values
@@ -14,7 +15,7 @@ module Admin
     prepend_before_action :override_sells, only: :create
 
     before_action :load_countries,
-                  except: [:index, :register, :check_permalink, :remove_logo,
+                  except: [:index, :register, :check_permalink, :remove_logo, :invite,
                            :remove_terms_and_conditions]
     before_action :load_methods_and_fees, only: [:edit, :update]
     before_action :load_groups, only: [:new, :edit, :update, :create]
@@ -167,6 +168,36 @@ module Admin
               partial: 'admin/shared/flashes', locals: { flashes: flash }
             )
           ]
+        end
+      end
+    end
+
+    def invite
+      return head :bad_request if params[:email].blank?
+
+      authorize! :edit, @object
+      email = params[:email]
+      existing_user = Spree::User.find_by(email:)
+
+      locals = { error: nil, success: nil, email:, enterprise: @object }
+
+      if existing_user
+        locals[:error] = I18n.t('admin.enterprises.invite_manager.user_already_exists')
+      else
+        new_user = create_new_manager(email, @object)
+        if new_user.errors.empty?
+          locals[:success] = true
+        else
+          locals[:error] = new_user.errors.full_messages.to_sentence
+        end
+      end
+      respond_to do |format|
+        format.html { redirect_to main_app.edit_admin_enterprise_path(@object) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            'add_manager_modal',
+            partial: "admin/enterprises/form/add_new_unregistered_manager", locals:
+          )
         end
       end
     end

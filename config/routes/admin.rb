@@ -34,6 +34,7 @@ Openfoodnetwork::Application.routes.draw do
         get :welcome
         patch :register
         patch :remove_logo
+        patch :invite
         delete :remove_terms_and_conditions
       end
 
