@@ -49,6 +49,7 @@ Spree::Core::Engine.routes.draw do
     get '/search/customers' => 'search#customers', :as => :search_customers
 
     resources :users
+    post 'accept_terms_of_services', to: 'users#accept_terms_of_services'
 
     constraints FeatureToggleConstraint.new(:admin_style_v3, negate: true) do
       # Show old bulk products screen

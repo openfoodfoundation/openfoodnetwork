@@ -57,6 +57,15 @@ module Spree
         end
       end
 
+      def accept_terms_of_services
+        spree_current_user.update(terms_of_service_accepted_at: DateTime.now)
+
+        respond_to do |format|
+          format.html { redirect_back(fallback_location: spree.admin_dashboard_path) }
+          format.turbo_stream { render turbo_stream: turbo_stream.remove('banner-container') }
+        end
+      end
+
       protected
 
       def collection
