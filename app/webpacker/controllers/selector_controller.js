@@ -1,23 +1,17 @@
-import ApplicationController from "./application_controller";
+import { Controller } from "stimulus";
 
-export default class extends ApplicationController {
+export default class extends Controller {
   connect() {
-    super.connect();
     window.addEventListener("click", this.closeOnClickOutside);
     this.computeItemsHeight();
   }
 
   disconnect() {
-    super.disconnect();
     window.removeEventListener("click", this.closeOnClickOutside);
   }
 
   initialize() {
     this.close();
-  }
-
-  afterReflex() {
-    this.computeItemsHeight();
   }
 
   toggle = (event) => {

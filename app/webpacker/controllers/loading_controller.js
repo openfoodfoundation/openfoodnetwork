@@ -1,10 +1,6 @@
-import ApplicationController from "./application_controller";
+import { Controller } from "stimulus";
 
-export default class extends ApplicationController {
-  connect() {
-    super.connect();
-  }
-
+export default class extends Controller {
   hideLoading = () => {
     this.element.classList.add("hidden");
   };

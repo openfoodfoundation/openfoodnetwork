@@ -1,21 +1,8 @@
-import ApplicationController from "./application_controller";
+import { Controller } from "stimulus";
 
-export default class extends ApplicationController {
+export default class extends Controller {
   static targets = ["loading"];
   static values = { currentId: Number };
-
-  connect() {
-    super.connect();
-  }
-
-  beforeReflex() {
-    this.showLoading();
-    this.scrollToElement();
-  }
-
-  afterReflex() {
-    this.hideLoading();
-  }
 
   delete_product() {
     this.#deleteByRecordType('product');

@@ -1,13 +1,12 @@
-import ApplicationController from "./application_controller";
+import { Controller } from "stimulus";
 
-export default class extends ApplicationController {
+export default class extends Controller {
   static targets = ["filename", "fileinput"];
   static values = {
     message: String,
   };
 
   connect() {
-    super.connect();
     this.fileinputTarget.addEventListener("change", (event) => {
       this.filenameTarget.innerText = event.target.files[0].name;
     });
