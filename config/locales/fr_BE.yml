@@ -4264,6 +4264,10 @@ fr_BE:
         one: environ 1 an
         many: environ %{count} ans
         other: environ %{count} an(s)
+      almost_x_years:
+        one: presque 1 an
+        many: presque %{count} ans
+        other: presque %{count} an(s)
       x_days:
         one: "Un jour"
         many: "%{count} jours"

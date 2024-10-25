@@ -53,6 +53,7 @@ nb:
         primary_taxon: "Produktkategori"
         shipping_category_id: "Leveringskategori"
         supplier: "Leverandør"
+        variant_unit: "Enhetsskala"
         variant_unit_name: "Enhetsnavn Variant"
         unit_value: "Enhetsverdi"
       spree/credit_card:
@@ -80,6 +81,8 @@ nb:
         white_label_logo_link: "Link til logoen som brukes i butikk"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Å arve skattekategorien krever en per-stk kalkulator."
         spree/image:
           attributes:
             attachment:
@@ -104,6 +107,9 @@ nb:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "må være tomt fordi du bruker produsentens lagerinnstillinger"
             limited_stock_but_no_count_on_hand: "må spesifiseres fordi det tvinger begrenset lager"
+        connected_apps:
+          vine:
+            api_request_error: "Det oppsto en feil under tilkobling til VINE API"
       messages:
         confirmation: "samsvarer ikke med %{attribute}"
         blank: "kan ikke være tomt"
@@ -315,7 +321,34 @@ nb:
         Vi vil se nærmere på det, men gi oss beskjed hvis problemet vedvarer.
   backorder_mailer:
     backorder_failed:
+      subject: "En automatisk restordre mislyktes"
+      headline: "Restbestilling mislyktes"
+      description: |
+          Vi prøvde å legge inn eller oppdatere en restordre for varer som ikke er på lager, men
+          noe gikk galt. Du kan ha negativ beholdning og trenger å løse
+          problemet med å bestille mer til lager.
+      hints: |
+          Du må kanskje gå til OIDC-innstillingene og koble til kontoen din på nytt.
+          Sjekk også at leverandørens katalog ikke er endret og fortsatt
+          leverer alle produktene du trenger. Og ta gjerne kontakt med oss hvis
+          du har spørsmål.
+      order: "Berørt bestilling: %{number}"
+      stock: "Lager"
       product: "Produkt"
+    backorder_incomplete:
+      subject: "En automatisk restordre ble ikke fullført"
+      headline: "Din restordre er fortsatt et utkast"
+      description: |
+          Vi prøvde å fullføre en restordre for varer som ikke er på lager, men
+          noe gikk galt. Restbestillingsmengdene kan være for høye hvis
+          du hadde kanselleringer. Og restordren din blir ikke oppfylt mens
+          den er i utkasttilstand.
+      hints: |
+          Du må kanskje gå til OIDC-innstillingene og koble til kontoen din på nytt.
+          Sjekk også at leverandørens katalog ikke er endret og fortsatt
+          leverer alle produktene du trenger. Og ta gjerne kontakt med oss hvis
+          du har spørsmål.
+      affected: "%{enterprise} : %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Vennligst bekreft epostadressen til %{enterprise}"
@@ -554,10 +587,13 @@ nb:
         clone: Klon
         delete: Slett
         remove: Fjern
+        preview: Forhåndsvisning
       image:
         edit: Rediger
       product_preview:
+        product_preview: Forhåndsvisning av produktet
         shop_tab: Butikk
+        product_details_tab: Produktdetaljer
     adjustments:
       skipped_changing_canceled_order: "Du kan ikke endre en avbrutt bestilling."
     begins_at: Begynner på
@@ -676,6 +712,17 @@ nb:
         info_html: "Matomo er en web- og mobilanalyseapplikasjon. Du kan enten sette opp en egen server for Matomo eller bruke en skybasert tjeneste. Se <a href='http://matomo.org' target='_blank'>matomo.org</a> for mer informasjon."
         config_instructions_html: "Her kan du konfigurere OFN-Matomo integrasjonen. URL til Matomo nedenfor skal peke på Matomo-instansen der brukersporingsinformasjonen skal sendes til; Hvis den er tom, blir Matomo-brukersporing deaktivert. Site-ID feltet er ikke obligatorisk, men nyttig hvis du sporer mer enn ett nettsted på en enkelt Matomo-instans; den kan bli funnet på Matomo-konsollen."
         config_instructions_tag_manager_html: "Å sette Matomo Tag Manager URL muliggjør Matomo Tag Manager. Dette verktøyet lar deg konfigurere analysehendelser. Matomo Tag Manager URL kopieres fra Installer kode-delen i Matomo Tag Manager. Forsikre deg om at du velger riktig beholder og miljø, da disse alternativene endrer nettadressen."
+    connected_app_settings:
+      edit:
+        title: "Innstillinger for tilkoblet app"
+        info_html: "Aktiverte apper vises under Enterprise Settings > Connected Apps."
+        enabled_legend: "Aktiverte tilkoblede apper"
+        connected_apps_enabled:
+          discover_regen: Discover Regenerative portal
+          affiliate_sales_data: DFC anonymiserte ordre-API for forskningsformål
+          vine: Voucher Integration Engine (VINE)
+      update:
+        resource: Innstillinger for tilkoblet app
     customers:
       index:
         new_customer: "Ny kunde"
@@ -773,6 +820,7 @@ nb:
       variants:
         infinity: "Uendelig"
         to_order_tip: "Varer laget for bestilling har ikke et lagernivå, slik som ferske skiver brød laget for bestilling."
+      back_to_products_list: "Tilbake til produktliste"
       editing_product: "Redigerer produkt"
       tabs:
         product_details: "Produktdetaljer"
@@ -812,6 +860,9 @@ nb:
         search: Søk
       sort:
         pagination:
+          products_total_html:
+            one: "<strong>%{count} produkt</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
+            other: "<strong>%{count} produkter</strong> funnet for søkekriteriene dine. Viser %{from} til %{to} ."
           per_page:
             show: Vis
             per_page: "%{num} per side"
@@ -1329,9 +1380,25 @@ nb:
                 <i class="icon-external-link"></i></a>
                 </p>
           vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Tillat innløsning av VINE-kuponger i butikken din."
             enable: "Koble til"
             disable: "Koble fra"
             need_to_be_manager: "Bare ledere kan koble til apper."
+            vine_api_key: "VINE API-nøkkel"
+            vine_secret: "VINE-hemmelighet"
+            description_html: |
+                <p>
+                For å aktivere VINE for bedriften din, skriv inn API-nøkkelen og hemmeligheten.
+                </p>
+                <p>
+                <a href="#" target="_blank"><b>VINE</b>
+                <i class="icon-external-link"></i></a>
+                </p>
+            api_parameters_empty: "Vennligst skriv inn en API-nøkkel og en hemmelighet"
+            api_parameters_error: "Sjekk at du skrev inn API-nøkkelen og hemmeligheten din riktig, kontakt administratoren din hvis feilen vedvarer"
+            connection_error: "API-tilkoblingsfeil. Vennligst prøv igjen"
+            setup_error: "VINE API er ikke konfigurert. Ta kontakt med administrator"
       actions:
         edit_profile: Innstillinger
         properties: Egenskaper
@@ -1384,8 +1451,10 @@ nb:
         contact_name: Kontaktnavn
       edit:
         editing: 'innstillinger:'
+        back_link: Tilbake til bedriftslisten
       new:
         title: Ny Bedrift
+        back_link: Tilbake til bedriftslisten
       welcome:
         welcome_title: Velkommen til Open Food Network!
         welcome_text: Du har opprettet en
@@ -1423,6 +1492,9 @@ nb:
         re_notify_producers: Varsle produsentene på nytt
         notify_producers_tip: Dette vil sende en epost til hver produsent med listen over deres bestillinger.
       date_time_warning_modal_content:
+        title: 'Bestillinger er knyttet til denne bestillingsrunden.'
+        content: 'Hvis du ønsker å opprette en ny bestillingsrunde, anbefales det å duplisere bestillingsrudnen først og deretter endre datoene.'
+        proceed: 'Fortsett uansett'
         cancel: 'Avbryt'
       incoming:
         incoming: "Innkommende"
@@ -3573,7 +3645,22 @@ nb:
       unknown_error_from_stripe: |
           Det oppsto et problem med å konfigurere kortet ditt i betalingsportalen vår. Oppdater siden og prøv igjen. Hvis den mislykkes en gang til, kan du kontakte oss for support.
     trix:
+      bold: "Fet"
+      bullets: "Punkter"
       code: "Kode"
+      heading1: "Overskrift"
+      hr: "Horisontal linjal"
+      indent: "Øk nivået"
+      italic: "Kursiv"
+      link: "Link"
+      numbers: "Tall"
+      outdent: "Reduser nivået"
+      quote: "Sitat"
+      redo: "Gjenta"
+      strike: "Gjennomstreking"
+      undo: "Angre"
+      unlink: "Fjern tilknytningen"
+      url: "URL"
       urlPlaceholder: "Vennligst skriv inn en URL for å sette inn"
   inflections:
     each:
@@ -3886,6 +3973,7 @@ nb:
     tax_rate_amount_explanation: "Avgiftssatser er et desimalbeløp til hjelp i beregninger, (dvs. dersom avgiftssatsen er 5%, angi 0,05)"
     included_in_price: "Inkludert i Pris"
     show_rate_in_label: "Vis sats på merkelapp"
+    back_to_tax_rates_list: "Tilbake til skattesatslisten"
     tax_settings: "Avgiftsinnstillinger"
     zones: "Soner"
     new_zone: "Ny Sone"
@@ -3898,6 +3986,7 @@ nb:
     iso_name: "ISO-navn"
     states_required: "Regioner Påkrevd"
     editing_country: "Redigerer Land"
+    back_to_countries_list: "Tilbake til listen over land"
     states: "Regioner"
     abbreviation: "Forkortelse"
     new_state: "Ny Region"
@@ -4062,6 +4151,7 @@ nb:
           continue: "Fortsett"
         new:
           new_return_authorization: "Ny Returautorisasjon"
+          back_to_return_authorizations_list: "Tilbake til liste over returautorisasjoner"
           continue: "Fortsett"
         edit:
           receive: "motta"
@@ -4274,6 +4364,8 @@ nb:
           new_product: "Nytt produkt"
           supplier: "Leverandør"
           supplier_select_placeholder: "Velg en leverandør"
+          search_for_suppliers: "Søk etter leverandører"
+          search_for_units: "Søk etter enheter"
           product_name: "Produktnavn"
           units: "Enhetsstørrelse"
           value: "Verdi"
@@ -4390,8 +4482,18 @@ nb:
           total: "Total"
           billing_address_name: "Navn"
       taxons:
+        back_to_list: "Tilbake til produktkategorilisten"
         index:
           title: "Produktkategorier"
+          new_taxon: 'Ny produktkategori'
+        new:
+          title: "Ny produktkategori"
+        edit:
+          title: "Rediger produktkategori"
+        destroy:
+          delete_taxon:
+            success: "Produktkategorien er slettet"
+            error: "Kan ikke slette produktkategorien på grunn av tildelte produkter."
         form:
           name: Navn
           meta_title: Metatittel

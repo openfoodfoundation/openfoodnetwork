@@ -107,6 +107,9 @@ fr:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
+        connected_apps:
+          vine:
+            api_request_error: "Une erreur s'est produite lors de la connexion à l'API VINE"
       messages:
         confirmation: "ne correspond pas %{attribute}"
         blank: "Champ obligatoire"
@@ -716,6 +719,7 @@ fr:
         connected_apps_enabled:
           discover_regen: Portail Discover Regenerative
           affiliate_sales_data: API de commandes anonymisées DFC à fins de recherche
+          vine: Éditeur de bons de réduction (VINE)
       update:
         resource: Paramètres de l'application connectée
     customers:
@@ -1378,9 +1382,25 @@ fr:
                 <i class="icon-external-link"></i></a>
                 </p>
           vine:
+            title: "Éditeur de bons de réduction (VINE)"
+            tagline: "Autoriser l'utilisation de bons de réduction VINE dans votre boutique"
             enable: "A propos"
             disable: "Déconnecter"
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            vine_api_key: "clé API VINE"
+            vine_secret: "VINE secret"
+            description_html: |
+                <p>
+                Pour mettre en place l'éditeur de bons de réduction VINE  pour votre entreprise, entrer votre clé API et secret.
+                </p>
+                <p>
+                <a href="#" target="_blank"><b>VINE</b>
+                <i class="icon-external-link"></i></a>
+                </p>
+            api_parameters_empty: "Entrer une clé API et un secret"
+            api_parameters_error: "Vérifiez que vous avez entré la clé API et le secret correctement. Contactez l'équipe support de la plateforme si l'erreur persiste. "
+            connection_error: "Erreur de connexion à l'API. Merci de réessayer."
+            setup_error: "L'API VINE n'est pas configurée. Veuillez contacter l'équipe support de la plateforme."
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
