@@ -375,26 +375,51 @@ RSpec.describe Spree::Order do
     end
   end
 
-  describe "#cancel" do
+  describe "#cancel!" do
     let(:order) { create(:order_with_totals_and_distribution, :completed) }
 
-    before { order.cancel! }
-
     it "should cancel the order" do
-      expect(order.state).to eq 'canceled'
+      expect { order.cancel! }.to change { order.state }.to("canceled")
     end
 
     it "should cancel the shipments" do
-      expect(order.shipments.pluck(:state)).to eq ['canceled']
+      expect { order.cancel! }.to change {
+        order.shipments.pluck(:state)
+      }.to(["canceled"])
     end
 
     context "when payment has not been taken" do
       context "and payment is in checkout state" do
         it "should change the state of the payment to void" do
-          order.payments.reload
-          expect(order.payments.pluck(:state)).to eq ['void']
+          expect {
+            order.cancel!
+            order.payments.reload
+          }.to change {
+            order.payments.pluck(:state)
+          }.to(["void"])
         end
       end
+    end
+
+    it "restocks items without reload" do
+      pending "Cancelling a newly created order updates shipments without callbacks"
+      # But in production, orders are always created in one request and
+      # cancelled in another request. This is only an issue in specs.
+
+      expect { order.cancel }.to change {
+        order.variants.first.on_hand
+      }.by(1)
+    end
+
+    it "restocks items" do
+      # If we don't reload the order, it keeps thinking that its shipping
+      # address changed and triggers a shipment update without shipment
+      # callbacks. This can be removed if the above spec passes.
+      order.reload
+
+      expect { order.cancel }.to change {
+        order.variants.first.on_hand
+      }.by(1)
     end
   end
 
