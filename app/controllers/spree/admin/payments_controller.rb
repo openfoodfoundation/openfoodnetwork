@@ -24,9 +24,12 @@ module Spree
       end
 
       def create
+        # Try to redeem VINE voucher first as we don't want to create a payment and complete
+        # the order if it fails
+        return redirect_to spree.admin_order_payments_path(@order) unless redeem_vine_voucher
+
         @payment = @order.payments.build(object_params)
         load_payment_source
-
         begin
           unless @payment.save
             redirect_to spree.admin_order_payments_path(@order)
@@ -181,6 +184,22 @@ module Spree
       def allowed_events
         %w{capture void_transaction credit refund resend_authorization_email
            capture_and_complete_order}
+      end
+
+      def redeem_vine_voucher
+        vine_voucher_redeemer = VineVoucherRedeemerService.new(order: @order)
+        if vine_voucher_redeemer.call == false
+          # rubocop:disable Rails/DeprecatedActiveModelErrorsMethods
+          flash[:error] = if vine_voucher_redeemer.errors.keys.include?(:redeeming_failed)
+                            vine_voucher_redeemer.errors[:redeeming_failed]
+                          else
+                            I18n.t('checkout.errors.voucher_redeeming_error')
+                          end
+          # rubocop:enable Rails/DeprecatedActiveModelErrorsMethods
+          return false
+        end
+
+        true
       end
     end
   end

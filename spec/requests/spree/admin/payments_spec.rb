@@ -70,6 +70,62 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
         expect(flash[:error]).to eq("Authorization Failure")
       end
     end
+
+    context "with a VINE voucher", feature: :connected_apps do
+      let(:vine_voucher) {
+        create(:voucher_flat_rate, voucher_type: "VINE", code: 'some_code',
+                                   enterprise: order.distributor, amount: 6)
+      }
+      let(:vine_voucher_redeemer) { instance_double(VineVoucherRedeemerService) }
+
+      before do
+        # Adding voucher to the order
+        vine_voucher.create_adjustment(vine_voucher.code, order)
+        VoucherAdjustmentsService.new(order).update
+        order.update_totals_and_states
+
+        allow(VineVoucherRedeemerService).to receive(:new).and_return(vine_voucher_redeemer)
+      end
+
+      it "completes the order and redirects to payment page" do
+        expect(vine_voucher_redeemer).to receive(:call).and_return(true)
+
+        post("/admin/orders/#{order.number}/payments.json", params:)
+
+        expect(response).to redirect_to(spree.admin_order_payments_path(order))
+        expect(flash[:success]).to eq "Payment has been successfully created!"
+
+        expect(order.reload.state).to eq "complete"
+      end
+
+      context "when redeeming the voucher fails" do
+        it "redirect to payments page" do
+          allow(vine_voucher_redeemer).to receive(:call).and_return(false)
+          allow(vine_voucher_redeemer).to receive(:errors).and_return(
+            { redeeming_failed: "Redeeming the voucher failed" }
+          )
+
+          post("/admin/orders/#{order.number}/payments.json", params:)
+
+          expect(response).to redirect_to(spree.admin_order_payments_path(order))
+          expect(flash[:error]).to match "Redeeming the voucher failed"
+        end
+      end
+
+      context "when an other error happens" do
+        it "redirect to payments page" do
+          allow(vine_voucher_redeemer).to receive(:call).and_return(false)
+          allow(vine_voucher_redeemer).to receive(:errors).and_return(
+            { vine_api: "There was an error communicating with the API" }
+          )
+
+          post("/admin/orders/#{order.number}/payments.json", params:)
+
+          expect(response).to redirect_to(spree.admin_order_payments_path(order))
+          expect(flash[:error]).to match "There was an error while trying to redeem your voucher"
+        end
+      end
+    end
   end
 
   describe "PUT /admin/orders/:order_number/payments/:id/fire" do
