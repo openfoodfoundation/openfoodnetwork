@@ -175,7 +175,7 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
       end
     end
 
-    context "with 'void' parameter" do
+    context "with 'void' event" do
       before do
         allow(Spree::Payment).to receive(:find).and_return(payment)
       end
@@ -209,6 +209,53 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
 
           put(
             "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/fire?e=void",
+            params: {},
+            headers:
+          )
+
+          expect(response).to redirect_to(spree.admin_order_payments_url(order))
+          expect(flash[:error]).to eq "Could not update the payment"
+        end
+      end
+    end
+
+    context "with 'capture_and_complete_order' event" do
+      before do
+        allow(Spree::Payment).to receive(:find).and_return(payment)
+      end
+
+      it "calls capture_and_complete_order! on payment" do
+        expect(payment).to receive(:capture_and_complete_order!)
+
+        put(
+          "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/" \
+          "fire?e=capture_and_complete_order",
+          params: {},
+          headers:
+        )
+      end
+
+      it "redirect to payments page" do
+        allow(payment).to receive(:capture_and_complete_order!).and_return(true)
+
+        put(
+          "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/" \
+          "fire?e=capture_and_complete_order",
+          params: {},
+          headers:
+        )
+
+        expect(response).to redirect_to(spree.admin_order_payments_url(order))
+        expect(flash[:success]).to eq "Payment Updated"
+      end
+
+      context "when capture_and_complete_order! fails" do
+        it "set an error flash message" do
+          allow(payment).to receive(:capture_and_complete_order!).and_return(false)
+
+          put(
+            "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/" \
+            "fire?e=capture_and_complete_order",
             params: {},
             headers:
           )
