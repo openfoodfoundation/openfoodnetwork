@@ -2,15 +2,15 @@
 
 require "spec_helper"
 
-RSpec.describe VineVoucherValidatorService, feature: :connected_apps do
+RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
   subject(:validate_voucher_service) { described_class.new(voucher_code:, enterprise: distributor) }
 
   let(:voucher_code) { "good_code" }
   let(:distributor) { create(:distributor_enterprise) }
-  let(:vine_api_service) { instance_double(VineApiService) }
+  let(:vine_api_service) { instance_double(Vine::ApiService) }
 
   before do
-    allow(VineApiService).to receive(:new).and_return(vine_api_service)
+    allow(Vine::ApiService).to receive(:new).and_return(vine_api_service)
   end
 
   describe "#validate" do

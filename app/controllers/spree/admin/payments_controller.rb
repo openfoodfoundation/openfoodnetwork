@@ -191,8 +191,8 @@ module Spree
       end
 
       def redeem_vine_voucher
-        vine_voucher_redeemer = VineVoucherRedeemerService.new(order: @order)
-        if vine_voucher_redeemer.call == false
+        vine_voucher_redeemer = Vine::VoucherRedeemerService.new(order: @order)
+        if vine_voucher_redeemer.redeem == false
           # rubocop:disable Rails/DeprecatedActiveModelErrorsMethods
           flash[:error] = if vine_voucher_redeemer.errors.keys.include?(:redeeming_failed)
                             vine_voucher_redeemer.errors[:redeeming_failed]

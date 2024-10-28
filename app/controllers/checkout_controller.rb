@@ -79,8 +79,8 @@ class CheckoutController < BaseController
     return true if redirect_to_payment_gateway
 
     # Redeem VINE voucher
-    vine_voucher_redeemer = VineVoucherRedeemerService.new(order: @order)
-    if vine_voucher_redeemer.call == false
+    vine_voucher_redeemer = Vine::VoucherRedeemerService.new(order: @order)
+    if vine_voucher_redeemer.redeem == false
       # rubocop:disable Rails/DeprecatedActiveModelErrorsMethods
       flash[:error] = if vine_voucher_redeemer.errors.keys.include?(:redeeming_failed)
                         vine_voucher_redeemer.errors[:redeeming_failed]

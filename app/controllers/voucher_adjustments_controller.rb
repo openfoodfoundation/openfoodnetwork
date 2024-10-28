@@ -87,7 +87,7 @@ class VoucherAdjustmentsController < BaseController
   end
 
   def vine_voucher
-    vine_voucher_validator = VineVoucherValidatorService.new(
+    vine_voucher_validator = Vine::VoucherValidatorService.new(
       voucher_code: voucher_params[:voucher_code], enterprise: @order.distributor
     )
     voucher = vine_voucher_validator.validate

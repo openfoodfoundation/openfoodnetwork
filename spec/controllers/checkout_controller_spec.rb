@@ -502,7 +502,7 @@ RSpec.describe CheckoutController, type: :controller do
           create(:voucher_flat_rate, voucher_type: "VINE", code: 'some_code',
                                      enterprise: distributor, amount: 6)
         }
-        let(:vine_voucher_redeemer) { instance_double(VineVoucherRedeemerService) }
+        let(:vine_voucher_redeemer) { instance_double(Vine::VoucherRedeemerService) }
 
         before do
           # Adding voucher to the order
@@ -510,11 +510,11 @@ RSpec.describe CheckoutController, type: :controller do
           VoucherAdjustmentsService.new(order).update
           order.update_totals_and_states
 
-          allow(VineVoucherRedeemerService).to receive(:new).and_return(vine_voucher_redeemer)
+          allow(Vine::VoucherRedeemerService).to receive(:new).and_return(vine_voucher_redeemer)
         end
 
         it "completes the order and redirects to order confirmation" do
-          expect(vine_voucher_redeemer).to receive(:call).and_return(true)
+          expect(vine_voucher_redeemer).to receive(:redeem).and_return(true)
 
           put(:update, params:)
 
@@ -524,7 +524,7 @@ RSpec.describe CheckoutController, type: :controller do
 
         context "when redeeming the voucher fails" do
           it "returns 422 and some error" do
-            allow(vine_voucher_redeemer).to receive(:call).and_return(false)
+            allow(vine_voucher_redeemer).to receive(:redeem).and_return(false)
             allow(vine_voucher_redeemer).to receive(:errors).and_return(
               { redeeming_failed: "Redeeming the voucher failed" }
             )
@@ -538,7 +538,7 @@ RSpec.describe CheckoutController, type: :controller do
 
         context "when an other error happens" do
           it "returns 422 and some error" do
-            allow(vine_voucher_redeemer).to receive(:call).and_return(false)
+            allow(vine_voucher_redeemer).to receive(:redeem).and_return(false)
             allow(vine_voucher_redeemer).to receive(:errors).and_return(
               { vine_api: "There was an error communicating with the API" }
             )

@@ -13,11 +13,11 @@ RSpec.describe "Admin ConnectedApp" do
 
   describe "POST /admin/enterprises/:enterprise_id/connected_apps" do
     context "with type ConnectedApps::Vine" do
-      let(:vine_api) { instance_double(VineApiService) }
+      let(:vine_api) { instance_double(Vine::ApiService) }
 
       before do
-        allow(VineJwtService).to receive(:new).and_return(instance_double(VineJwtService))
-        allow(VineApiService).to receive(:new).and_return(vine_api)
+        allow(Vine::JwtService).to receive(:new).and_return(instance_double(Vine::JwtService))
+        allow(Vine::ApiService).to receive(:new).and_return(vine_api)
       end
 
       it "creates a new connected app" do
@@ -115,7 +115,7 @@ RSpec.describe "Admin ConnectedApp" do
         before do
           allow(ENV).to receive(:fetch).and_call_original
           allow(ENV).to receive(:fetch).with("VINE_API_URL").and_raise(KeyError)
-          allow(VineApiService).to receive(:new).and_call_original
+          allow(Vine::ApiService).to receive(:new).and_call_original
         end
 
         it "redirects to enterprise edit page, with an error" do

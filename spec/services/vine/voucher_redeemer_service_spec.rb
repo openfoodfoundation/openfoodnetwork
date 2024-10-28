@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
+RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
   subject(:voucher_redeemer_service) { described_class.new(order: ) }
 
   let(:user) { order.user }
@@ -17,13 +17,13 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
   }
   let(:voucher_id) { "9d316d27-0dad-411a-8953-316a1aaf7742" }
   let(:voucher_set_id) { "9d314daa-0878-4b73-922d-698047640cf4" }
-  let(:vine_api_service) { instance_double(VineApiService) }
+  let(:vine_api_service) { instance_double(Vine::ApiService) }
 
   before do
-    allow(VineApiService).to receive(:new).and_return(vine_api_service)
+    allow(Vine::ApiService).to receive(:new).and_return(vine_api_service)
   end
 
-  describe "#call" do
+  describe "#redeem" do
     context "with a valid voucher" do
       let!(:vine_connected_app) {
         ConnectedApps::Vine.create(
@@ -60,7 +60,7 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
           .with(voucher_id, voucher_set_id, 600)
           .and_return(mock_api_response(success: true, data:))
 
-        voucher_redeemer_service.call
+        voucher_redeemer_service.redeem
       end
 
       it "closes the linked assement" do
@@ -68,7 +68,7 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
           .and_return(mock_api_response(success: true, data:))
 
         expect {
-          voucher_redeemer_service.call
+          voucher_redeemer_service.redeem
         }.to change { order.voucher_adjustments.first.state }.to("closed")
       end
 
@@ -76,7 +76,7 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
         allow(vine_api_service).to receive(:voucher_redemptions)
           .and_return(mock_api_response(success: true, data:))
 
-        expect(voucher_redeemer_service.call).to be(true)
+        expect(voucher_redeemer_service.redeem).to be(true)
       end
 
       context "when redeeming fails" do
@@ -93,16 +93,16 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
 
         it "doesn't close the linked assement" do
           expect {
-            voucher_redeemer_service.call
+            voucher_redeemer_service.redeem
           }.not_to change { order.voucher_adjustments.first.state }
         end
 
         it "returns false" do
-          expect(voucher_redeemer_service.call).to be(false)
+          expect(voucher_redeemer_service.redeem).to be(false)
         end
 
         it "adds an error message" do
-          voucher_redeemer_service.call
+          voucher_redeemer_service.redeem
 
           expect(voucher_redeemer_service.errors).to include(
             { redeeming_failed: "Redeeming the voucher failed" }
@@ -115,17 +115,17 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
       before { add_voucher(vine_voucher) }
 
       it "returns false" do
-        expect(voucher_redeemer_service.call).to be(false)
+        expect(voucher_redeemer_service.redeem).to be(false)
       end
 
-      it "doesn't call the VINE API" do
+      it "doesn't redeem the VINE API" do
         expect(vine_api_service).not_to receive(:voucher_redemptions)
 
-        voucher_redeemer_service.call
+        voucher_redeemer_service.redeem
       end
 
       it "adds an error message" do
-        voucher_redeemer_service.call
+        voucher_redeemer_service.redeem
 
         expect(voucher_redeemer_service.errors).to include(
           { vine_settings: "No Vine api settings for the given enterprise" }
@@ -134,7 +134,7 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
 
       it "doesn't close the linked assement" do
         expect {
-          voucher_redeemer_service.call
+          voucher_redeemer_service.redeem
         }.not_to change { order.voucher_adjustments.first.state }
       end
     end
@@ -148,13 +148,13 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
       }
 
       it "returns true" do
-        expect(voucher_redeemer_service.call).to be(true)
+        expect(voucher_redeemer_service.redeem).to be(true)
       end
 
-      it "doesn't call the VINE API" do
+      it "doesn't redeem the VINE API" do
         expect(vine_api_service).not_to receive(:voucher_redemptions)
 
-        voucher_redeemer_service.call
+        voucher_redeemer_service.redeem
       end
     end
 
@@ -169,13 +169,13 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
       before { add_voucher(voucher) }
 
       it "returns true" do
-        expect(voucher_redeemer_service.call).to be(true)
+        expect(voucher_redeemer_service.redeem).to be(true)
       end
 
-      it "doesn't call the VINE API" do
+      it "doesn't redeem the VINE API" do
         expect(vine_api_service).not_to receive(:voucher_redemptions)
 
-        voucher_redeemer_service.call
+        voucher_redeemer_service.redeem
       end
     end
 
@@ -192,11 +192,11 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
       end
 
       it "returns false" do
-        expect(voucher_redeemer_service.call).to be(false)
+        expect(voucher_redeemer_service.redeem).to be(false)
       end
 
       it "adds an error message" do
-        voucher_redeemer_service.call
+        voucher_redeemer_service.redeem
 
         expect(voucher_redeemer_service.errors).to include(
           { vine_api: "There was an error communicating with the API" }
@@ -205,7 +205,7 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
 
       it "doesn't close the linked assement" do
         expect {
-          voucher_redeemer_service.call
+          voucher_redeemer_service.redeem
         }.not_to change { order.voucher_adjustments.first.state }
       end
 
@@ -213,7 +213,7 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
         expect(Rails.logger).to receive(:error)
         expect(Bugsnag).to receive(:notify)
 
-        voucher_redeemer_service.call
+        voucher_redeemer_service.redeem
       end
     end
 
@@ -240,11 +240,11 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
       end
 
       it "returns false" do
-        expect(voucher_redeemer_service.call).to be(false)
+        expect(voucher_redeemer_service.redeem).to be(false)
       end
 
       it "adds an error message" do
-        voucher_redeemer_service.call
+        voucher_redeemer_service.redeem
 
         expect(voucher_redeemer_service.errors).to include(
           { vine_api: "There was an error communicating with the API" }
@@ -253,7 +253,7 @@ RSpec.describe VineVoucherRedeemerService, feature: :connected_apps do
 
       it "doesn't close the linked assement" do
         expect {
-          voucher_redeemer_service.call
+          voucher_redeemer_service.redeem
         }.not_to change { order.voucher_adjustments.first.state }
       end
     end

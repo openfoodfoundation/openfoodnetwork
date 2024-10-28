@@ -2,12 +2,12 @@
 
 require "spec_helper"
 
-RSpec.describe VineApiService do
+RSpec.describe Vine::ApiService do
   subject(:vine_api) { described_class.new(api_key: vine_api_key, jwt_generator: jwt_service) }
 
   let(:vine_api_url) { "https://vine-staging.openfoodnetwork.org.au/api/v1" }
   let(:vine_api_key) { "12345" }
-  let(:jwt_service) { VineJwtService.new(secret:) }
+  let(:jwt_service) { Vine::JwtService.new(secret:) }
   let(:secret) { "my_secret" }
   let(:token) { "some.jwt.token" }
 
@@ -59,7 +59,7 @@ RSpec.describe VineApiService do
       it "logs the error" do
         stub_request(:get, my_team_url).to_return(body: "error", status: 401)
 
-        expect(Rails.logger).to receive(:error).with(match("VineApiService#my_team")).twice
+        expect(Rails.logger).to receive(:error).with(match("Vine::ApiService#my_team")).twice
 
         response = vine_api.my_team
 
@@ -124,7 +124,7 @@ RSpec.describe VineApiService do
         stub_request(:post, voucher_validation_url).to_return(body: "error", status: 401)
 
         expect(Rails.logger).to receive(:error).with(
-          match("VineApiService#voucher_validation")
+          match("Vine::ApiService#voucher_validation")
         ).twice
 
         response = vine_api.voucher_validation(voucher_short_code)
@@ -192,7 +192,7 @@ RSpec.describe VineApiService do
         stub_request(:post, voucher_redemptions_url).to_return(body: "error", status: 401)
 
         expect(Rails.logger).to receive(:error).with(
-          match("VineApiService#voucher_redemptions")
+          match("Vine::ApiService#voucher_redemptions")
         ).twice
 
         response = vine_api.voucher_redemptions(voucher_id, voucher_set_id, amount)

@@ -87,10 +87,10 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
     end
 
     context "with a VINE voucher", feature: :connected_apps do
-      let(:vine_voucher_validator) { instance_double(VineVoucherValidatorService) }
+      let(:vine_voucher_validator) { instance_double(Vine::VoucherValidatorService) }
 
       before do
-        allow(VineVoucherValidatorService).to receive(:new).and_return(vine_voucher_validator)
+        allow(Vine::VoucherValidatorService).to receive(:new).and_return(vine_voucher_validator)
       end
 
       context "with a new voucher" do
