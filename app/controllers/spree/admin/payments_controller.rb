@@ -54,6 +54,10 @@ module Spree
         event = params[:e]
         return unless event && @payment.payment_source
 
+        # capture_and_complete_order will complete the order, so we want to try to redeem VINE
+        # voucher first and exit if it fails
+        return if event == "capture_and_complete_order" && !redeem_vine_voucher
+
         # Because we have a transition method also called void, we do this to avoid conflicts.
         event = "void_transaction" if event == "void"
         if allowed_events.include?(event) && @payment.public_send("#{event}!")

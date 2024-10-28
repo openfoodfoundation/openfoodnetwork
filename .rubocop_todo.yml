@@ -79,7 +79,7 @@ Lint/UselessMethodDefinition:
   Exclude:
     - 'app/models/spree/gateway.rb'
 
-# Offense count: 23
+# Offense count: 24
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
@@ -172,11 +172,12 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
 
-# Offense count: 31
+# Offense count: 32
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
   Exclude:
     - 'app/controllers/admin/enterprises_controller.rb'
+    - 'app/controllers/spree/admin/payments_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/helpers/checkout_helper.rb'
     - 'app/helpers/order_cycles_helper.rb'

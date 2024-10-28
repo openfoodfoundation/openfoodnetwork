@@ -79,10 +79,7 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
       let(:vine_voucher_redeemer) { instance_double(VineVoucherRedeemerService) }
 
       before do
-        # Adding voucher to the order
-        vine_voucher.create_adjustment(vine_voucher.code, order)
-        VoucherAdjustmentsService.new(order).update
-        order.update_totals_and_states
+        add_voucher_to_order(vine_voucher, order)
 
         allow(VineVoucherRedeemerService).to receive(:new).and_return(vine_voucher_redeemer)
       end
@@ -264,6 +261,74 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
           expect(flash[:error]).to eq "Could not update the payment"
         end
       end
+
+      context "with a VINE voucher", feature: :connected_apps do
+        let(:vine_voucher) {
+          create(:voucher_flat_rate, voucher_type: "VINE", code: 'some_code',
+                                     enterprise: order.distributor, amount: 6)
+        }
+        let(:vine_voucher_redeemer) { instance_double(VineVoucherRedeemerService) }
+
+        before do
+          add_voucher_to_order(vine_voucher, order)
+
+          allow(VineVoucherRedeemerService).to receive(:new).and_return(vine_voucher_redeemer)
+        end
+
+        it "completes the order and redirects to payment page" do
+          expect(vine_voucher_redeemer).to receive(:call).and_return(true)
+
+          put(
+            "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/" \
+            "fire?e=capture_and_complete_order",
+            params: {},
+            headers:
+          )
+
+          expect(response).to redirect_to(spree.admin_order_payments_url(order))
+          expect(flash[:success]).to eq "Payment Updated"
+
+          expect(order.reload.state).to eq "complete"
+        end
+
+        context "when redeeming the voucher fails" do
+          it "redirect to payments page" do
+            allow(vine_voucher_redeemer).to receive(:call).and_return(false)
+            allow(vine_voucher_redeemer).to receive(:errors).and_return(
+              { redeeming_failed: "Redeeming the voucher failed" }
+            )
+
+            put(
+              "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/" \
+              "fire?e=capture_and_complete_order",
+              params: {},
+              headers:
+            )
+
+            expect(response).to redirect_to(spree.admin_order_payments_url(order))
+            expect(flash[:error]).to match "Redeeming the voucher failed"
+          end
+        end
+
+        context "when an other error happens" do
+          it "redirect to payments page" do
+            allow(vine_voucher_redeemer).to receive(:call).and_return(false)
+            allow(vine_voucher_redeemer).to receive(:errors).and_return(
+              { vine_api: "There was an error communicating with the API" }
+            )
+
+            put(
+              "/admin/orders/#{order.number}/payments/#{order.payments.first.id}/" \
+              "fire?e=capture_and_complete_order",
+              params: {},
+              headers:
+            )
+
+            expect(response).to redirect_to(spree.admin_order_payments_url(order))
+            expect(flash[:error]).to match "There was an error while trying to redeem your voucher"
+          end
+        end
+      end
     end
 
     context "when something unexpected happen" do
@@ -297,5 +362,11 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
         expect(response).to redirect_to(spree.admin_order_payments_url(order))
       end
     end
+  end
+
+  def add_voucher_to_order(voucher, order)
+    voucher.create_adjustment(voucher.code, order)
+    VoucherAdjustmentsService.new(order).update
+    order.update_totals_and_states
   end
 end
