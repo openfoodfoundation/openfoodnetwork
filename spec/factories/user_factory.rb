@@ -39,20 +39,12 @@ FactoryBot.define do
     end
 
     factory :oidc_user do
-      oidc_account {
-        OidcAccount.new(provider: "openid_connect", uid: email)
-      }
+      oidc_account { build(:oidc_account, uid: email) }
     end
 
     # This is a live test user authenticated via Les Communes.
     factory :testdfc_user do
-      oidc_account {
-        OidcAccount.new(
-          uid: "testdfc@protonmail.com",
-          refresh_token: ENV.fetch("OPENID_REFRESH_TOKEN"),
-          updated_at: 1.day.ago,
-        )
-      }
+      oidc_account { build(:testdfc_account) }
     end
   end
 end

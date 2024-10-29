@@ -1,34 +1,39 @@
 # frozen_string_literal: true
 
-# After an order cycle closed, we need to finalise open draft orders placed
-# to replenish stock.
-class CompleteBackorderJob < ApplicationJob
+# When orders are cancelled, we need to amend
+# an existing backorder as well.
+# We're not dealing with line item changes just yet.
+class AmendBackorderJob < ApplicationJob
   sidekiq_options retry: 0
 
-  # Required parameters:
-  #
-  # * user: to authenticate DFC requests
-  # * distributor: to reconile with its catalog
-  # * order_cycle: to scope the catalog when looking up variants
-  #                Multiple variants can be linked to the same remote product.
-  #                To reduce ambiguity, we'll reconcile only with products
-  #                from the given distributor in a given order cycle for which
-  #                the remote backorder was placed.
-  # * order_id: the remote semantic id of a draft order
-  #             Having the id makes sure that we don't accidentally finalise
-  #             someone else's order.
-  def perform(user, distributor, order_cycle, order_id)
-    order = FdcBackorderer.new(user, nil).find_order(order_id)
-    urls = FdcUrlBuilder.new(order.lines[0].offer.offeredItem.semanticId)
+  def perform(order)
+    OrderLocker.lock_order_and_variants(order) do
+      amend_backorder(order)
+    end
+  end
+
+  # The following is a mix of the BackorderJob and the CompleteBackorderJob.
+  # TODO: Move the common code into a re-usable service class.
+  def amend_backorder(order)
+    order_cycle = order.order_cycle
+    distributor = order.distributor
+    user = distributor.owner
+    items = backorderable_items(order)
+
+    return if items.empty?
+
+    # We are assuming that all variants are linked to the same wholesale
+    # shop and its catalog:
+    reference_link = items[0].variant.semantic_links[0].semantic_id
+    urls = FdcUrlBuilder.new(reference_link)
+    orderer = FdcBackorderer.new(user, urls)
+
+    backorder = orderer.find_open_order
 
     variants = order_cycle.variants_distributed_by(distributor)
-    adjust_quantities(order_cycle, user, order, urls, variants)
+    adjust_quantities(order_cycle, user, backorder, urls, variants)
 
-    FdcBackorderer.new(user, urls).complete_order(order)
-  rescue StandardError
-    BackorderMailer.backorder_incomplete(user, distributor, order_cycle, order_id).deliver_later
-
-    raise
+    FdcBackorderer.new(user, urls).send_order(backorder)
   end
 
   # Check if we have enough stock to reduce the backorder.
@@ -61,6 +66,15 @@ class CompleteBackorderJob < ApplicationJob
 
     # Clean up empty lines:
     order.lines.reject! { |line| line.quantity.zero? }
+  end
+
+  # We look at all linked variants.
+  def backorderable_items(order)
+    order.line_items.select do |item|
+      # TODO: scope variants to hub.
+      # We are only supporting producer stock at the moment.
+      item.variant.semantic_links.present?
+    end
   end
 
   def release_superfluous_stock(line, linked_variant, transformation)
