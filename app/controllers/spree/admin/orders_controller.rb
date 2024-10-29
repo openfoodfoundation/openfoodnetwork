@@ -8,10 +8,10 @@ module Spree
       include OpenFoodNetwork::SpreeApiKeyLoader
       helper CheckoutHelper
 
-      before_action :load_order, only: [:edit, :update, :fire, :resend, :invoice, :print]
+      before_action :load_order,
+                    only: [:edit, :update, :fire, :resend, :invoice, :print, :capture, :ship]
       before_action :load_distribution_choices, only: [:new, :create, :edit, :update]
       before_action :require_distributor_abn, only: :invoice
-      before_action :authorize_order, only: [:capture, :ship]
 
       def index
         orders = SearchOrders.new(search_params, spree_current_user).orders
@@ -125,7 +125,6 @@ module Spree
 
       def ship
         @order.send_shipment_email = false unless params[:send_shipment_email]
-        @order.send_shipment_email
         if @order.ship
           if params[:current_page] != 'index'
             return redirect_back fallback_location: admin_orders_path
@@ -261,11 +260,6 @@ module Spree
             find_by!(number: params[:id])
         end
         authorize! action, @order
-      end
-
-      def authorize_order
-        @order = Spree::Order.find_by(number: params[:id])
-        authorize! :admin, @order
       end
 
       def set_param_for_controller
