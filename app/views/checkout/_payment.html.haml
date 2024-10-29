@@ -1,5 +1,5 @@
 .medium-6#checkout-payment-methods
-  - if @order.distributor.vouchers.present?
+  - if @order.distributor.vouchers.present? || @order.distributor.connected_apps.vine.present?
     %div.checkout-substep
       = render partial: "checkout/voucher_section", locals: { order: @order, voucher_adjustment: @order.voucher_adjustments.first }
 
