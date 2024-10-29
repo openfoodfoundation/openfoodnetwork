@@ -5,6 +5,7 @@
 
 set -e
 
+# Load default values if not already set.
 : ${DB_USER='ofn_user'}
 : ${DB_DATABASE='openfoodnetwork'}
 
