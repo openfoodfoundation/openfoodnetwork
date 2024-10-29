@@ -66,19 +66,6 @@ export default class extends Controller {
     }, 200);
   }
 
-  resend_confirmation(event) {
-    fetch("/user/spree_user/confirmation", {
-      method: "POST",
-      body: JSON.stringify({
-        spree_user: { email: this.emailValue },
-        tab: event.currentTarget.dataset.tab,
-      }),
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-    })
-    .then(response => response.text())
-    .then(html => { Turbo.renderStreamMessage(html) });
-  }
-
   returnHome() {
     window.location = "/";
   }

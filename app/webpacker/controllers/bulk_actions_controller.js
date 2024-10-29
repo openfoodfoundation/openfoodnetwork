@@ -13,6 +13,9 @@ export default class extends Controller {
     document.removeEventListener('modal-close', this.modalClose);
   }
 
+  // Manually submit request for bulk print invoics since selected orders
+  // cannot be passed directly as params in haml template. So we use JS (#getSelectedIds)
+  // to get selected orders inorder to print the appropriate invoices.
   printInvoices(e) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const data = { bulk_ids: this.getSelectedIds() };
