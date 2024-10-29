@@ -507,8 +507,7 @@ RSpec.describe CheckoutController, type: :controller do
         before do
           # Adding voucher to the order
           vine_voucher.create_adjustment(vine_voucher.code, order)
-          VoucherAdjustmentsService.new(order).update
-          order.update_totals_and_states
+          OrderManagement::Order::Updater.new(order).update_voucher
 
           allow(Vine::VoucherRedeemerService).to receive(:new).and_return(vine_voucher_redeemer)
         end

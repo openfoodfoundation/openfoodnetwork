@@ -72,8 +72,7 @@ class VoucherAdjustmentsController < BaseController
     # calculate_voucher_adjustment
     clear_payments
 
-    VoucherAdjustmentsService.new(@order).update
-    @order.update_totals_and_states
+    OrderManagement::Order::Updater.new(@order).update_voucher
 
     true
   end

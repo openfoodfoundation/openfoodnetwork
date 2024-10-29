@@ -261,8 +261,7 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
 
   def add_voucher(voucher)
     voucher.create_adjustment(voucher.code, order)
-    VoucherAdjustmentsService.new(order).update
-    order.update_totals_and_states
+    OrderManagement::Order::Updater.new(order).update_voucher
   end
 
   def mock_api_response(success:, data: nil, status: 200)

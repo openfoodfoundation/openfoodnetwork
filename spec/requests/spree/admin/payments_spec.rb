@@ -366,7 +366,6 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
 
   def add_voucher_to_order(voucher, order)
     voucher.create_adjustment(voucher.code, order)
-    VoucherAdjustmentsService.new(order).update
-    order.update_totals_and_states
+    OrderManagement::Order::Updater.new(order).update_voucher
   end
 end

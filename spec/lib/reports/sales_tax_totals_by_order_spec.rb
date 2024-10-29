@@ -272,8 +272,7 @@ RSpec.describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
   def add_voucher(order, voucher)
     # Add voucher to the order
     voucher.create_adjustment(voucher.code, order)
-    VoucherAdjustmentsService.new(order).update
-    order.update_totals_and_states
+    OrderManagement::Order::Updater.new(order).update_voucher
 
     Orders::WorkflowService.new(order).complete!
   end
