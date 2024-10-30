@@ -10,7 +10,7 @@
     .row
       .large-12.columns
         = form.label :email, t(:email)
-        = form.email_field :email, { tabindex: 1, inputmode: "email", autocomplete: "off", "data-login-modal-target": "email", "data-action": "input->login-modal#emailOnInput" }
+        = form.email_field :email, { tabindex: 1, inputmode: "email", autocomplete: "off" }
     .row
       .large-12.columns
         = form.label :password, t(:password)

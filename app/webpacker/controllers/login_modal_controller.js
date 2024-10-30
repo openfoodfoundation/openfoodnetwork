@@ -1,8 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["background", "modal", "email"];
-  static values = { email: String };
+  static targets = ["background", "modal"];
 
   connect() {
     if (this.hasModalTarget) {
@@ -17,13 +16,6 @@ export default class extends Controller {
   call(event) {
     event.preventDefault();
     window.dispatchEvent(new Event("login:modal:open"));
-  }
-
-  emailOnInput(event) {
-    this.emailValue = event.currentTarget.value;
-    this.emailTargets.forEach((element) => {
-      element.value = this.emailValue;
-    });
   }
 
   open = () => {

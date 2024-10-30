@@ -8,7 +8,7 @@
     .row
       .large-12.columns
         = form.label :email, t(:signup_email)
-        = form.email_field :email, { tabindex: 1, "data-login-modal-target": "email", "data-action": "input->login-modal#emailOnInput" }
+        = form.email_field :email, { tabindex: 1 }
         = form.error_message_on :email
     .row
       .large-12.columns
