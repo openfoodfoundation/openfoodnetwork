@@ -22,6 +22,8 @@ class Exchange < ApplicationRecord
   has_many :exchange_fees, dependent: :destroy
   has_many :enterprise_fees, through: :exchange_fees
 
+  has_many :semantic_links, as: :subject, dependent: :delete_all
+
   validates :sender_id, uniqueness: { scope: [:order_cycle_id, :receiver_id, :incoming] }
 
   before_destroy :delete_related_exchange_variants, prepend: true

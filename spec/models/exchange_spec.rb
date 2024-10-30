@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe Exchange do
+  it { is_expected.to have_many :semantic_links }
+
   it "should be valid when built from factory" do
     expect(build(:exchange)).to be_valid
   end
