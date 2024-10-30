@@ -10,10 +10,10 @@ RSpec.describe CopySubjectOnSemanticLinks do
 
     it "copies the original data" do
       link = SemanticLink.create!(
-        variant: original_variant,
         subject: dummy_variant, # This would be NULL when migration runs.
         semantic_id: "some-url",
       )
+      SemanticLink.update_all("variant_id = #{original_variant.id}")
 
       expect { subject.up }.to change {
         link.reload.subject
