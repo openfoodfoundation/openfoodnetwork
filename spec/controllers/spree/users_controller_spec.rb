@@ -55,22 +55,6 @@ RSpec.describe Spree::UsersController, type: :controller do
     end
   end
 
-  describe "#registered_email" do
-    routes { Openfoodnetwork::Application.routes }
-
-    let!(:user) { create(:user) }
-
-    it "returns ok (200) if email corresponds to a registered user" do
-      post :registered_email, params: { email: user.email }
-      expect(response).to have_http_status(:ok)
-    end
-
-    it "returns not_found (404) if email does not correspond to a registered user" do
-      post :registered_email, params: { email: 'nonregistereduser@example.com' }
-      expect(response).to have_http_status(:not_found)
-    end
-  end
-
   describe '#load_object' do
     it 'redirects to signup path if user is not found' do
       allow(controller).to receive_messages(spree_current_user: nil)

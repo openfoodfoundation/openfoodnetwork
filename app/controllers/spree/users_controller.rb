@@ -25,20 +25,6 @@ module Spree
       @unconfirmed_email = spree_current_user.unconfirmed_email
     end
 
-    # Endpoint for queries to check if a user is already registered
-    def registered_email
-      registered = Spree::User.find_by(email: params[:email]).present?
-
-      if registered
-        respond_to do |format|
-          format.html { head :ok }
-          format.turbo_stream { :registered_email }
-        end
-      else
-        head :not_found
-      end
-    end
-
     def create
       @user = Spree::User.new(user_params)
 
