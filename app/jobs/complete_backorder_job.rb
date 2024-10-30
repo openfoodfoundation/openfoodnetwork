@@ -25,6 +25,9 @@ class CompleteBackorderJob < ApplicationJob
     adjust_quantities(order_cycle, user, order, urls, variants)
 
     FdcBackorderer.new(user, urls).complete_order(order)
+
+    exchange = order_cycle.exchanges.outgoing.find_by(receiver: distributor)
+    exchange.semantic_links.find_by(semantic_id: order_id)&.destroy!
   rescue StandardError
     BackorderMailer.backorder_incomplete(user, distributor, order_cycle, order_id).deliver_later
 

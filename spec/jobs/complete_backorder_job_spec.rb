@@ -25,11 +25,14 @@ RSpec.describe CompleteBackorderJob do
     chia_line = orderer.find_or_build_order_line(backorder, chia_offer)
     chia_line.quantity = 5
 
-    orderer.send_order(backorder)
+    orderer.send_order(backorder).tap do |o|
+      exchange.semantic_links.create!(semantic_id: o.semanticId)
+    end
   }
   let(:ofn_order) { create(:completed_order_with_totals) }
   let(:distributor) { ofn_order.distributor }
   let(:order_cycle) { ofn_order.order_cycle }
+  let(:exchange) { order_cycle.exchanges.outgoing.first }
   let(:beans) { ofn_order.line_items[0].variant }
   let(:chia) { chia_item.variant }
   let(:chia_item) { ofn_order.line_items[1] }
@@ -77,6 +80,9 @@ RSpec.describe CompleteBackorderJob do
         .and change {
           current_order.lines[1].quantity.to_i
         }.from(5).to(7)
+        .and change {
+          exchange.semantic_links.count
+        }.by(-1)
     end
 
     it "removes line items", vcr: true do
