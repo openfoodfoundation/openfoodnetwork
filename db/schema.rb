@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_23_054951) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_30_023153) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -405,6 +405,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_23_054951) do
     t.string "semantic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "subject_type"
+    t.bigint "subject_id"
+    t.index ["subject_type", "subject_id"], name: "index_semantic_links_on_subject"
     t.index ["variant_id"], name: "index_semantic_links_on_variant_id"
   end
 
