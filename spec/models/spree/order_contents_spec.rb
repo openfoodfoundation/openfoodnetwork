@@ -166,6 +166,12 @@ RSpec.describe Spree::OrderContents do
   end
 
   describe "#update_or_create" do
+    it "ensures shipments are updated" do
+      expect(order).to receive(:ensure_updated_shipments)
+
+      subject.update_or_create(variant, { quantity: 2, max_quantity: 3 })
+    end
+
     describe "creating" do
       it "creates a new line item with given attributes" do
         subject.update_or_create(variant, { quantity: 2, max_quantity: 3 })
