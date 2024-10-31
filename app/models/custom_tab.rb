@@ -6,11 +6,6 @@ class CustomTab < ApplicationRecord
   validates :title, presence: true, length: { maximum: 20 }
 
   # Remove any unsupported HTML.
-  def content
-    HtmlSanitizer.sanitize(super)
-  end
-
-  # Remove any unsupported HTML.
   def content=(html)
     super(HtmlSanitizer.sanitize(html))
   end

@@ -280,11 +280,6 @@ module Spree
     # rubocop:enable Metrics/AbcSize
 
     # Remove any unsupported HTML.
-    def description
-      HtmlSanitizer.sanitize(super)
-    end
-
-    # Remove any unsupported HTML.
     def description=(html)
       super(HtmlSanitizer.sanitize(html))
     end
