@@ -10,6 +10,8 @@
 class Customer < ApplicationRecord
   include SetUnusedAddressFields
 
+  self.ignored_columns += ['name']
+
   acts_as_taggable
 
   searchable_attributes :first_name, :last_name, :email, :code
