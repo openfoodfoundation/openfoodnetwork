@@ -67,8 +67,11 @@ module Spree
              class_name: 'Spree::Adjustment',
              dependent: :destroy
     has_many :invoices, dependent: :restrict_with_exception
-
     belongs_to :order_cycle, optional: true
+    has_one :exchange, ->(order) {
+      outgoing.to_enterprise(order.distributor)
+    }, through: :order_cycle, source: :exchanges
+
     belongs_to :distributor, class_name: 'Enterprise', optional: true
     belongs_to :customer, optional: true
     has_one :proxy_order, dependent: :destroy

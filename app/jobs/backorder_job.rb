@@ -134,7 +134,6 @@ class BackorderJob < ApplicationJob
         user, order.distributor, order.order_cycle, placed_order.semanticId
       )
 
-    exchange = order.order_cycle.exchanges.outgoing.find_by(receiver: order.distributor)
-    exchange.semantic_links.create!(semantic_id: placed_order.semanticId)
+    order.exchange.semantic_links.create!(semantic_id: placed_order.semanticId)
   end
 end
