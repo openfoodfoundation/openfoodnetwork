@@ -71,6 +71,7 @@ module Spree
     has_one :exchange, ->(order) {
       outgoing.to_enterprise(order.distributor)
     }, through: :order_cycle, source: :exchanges
+    has_many :semantic_links, through: :exchange
 
     belongs_to :distributor, class_name: 'Enterprise', optional: true
     belongs_to :customer, optional: true

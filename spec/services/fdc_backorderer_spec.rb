@@ -27,7 +27,7 @@ RSpec.describe FdcBackorderer do
     # After closing the order at the end, the test can be repeated live again.
 
     # Build a new order when no open one is found:
-    order.order_cycle = build(:order_cycle)
+    order.order_cycle = create(:order_cycle, distributors: [order.distributor])
     backorder = subject.find_or_build_order(order)
     expect(backorder.semanticId).to eq urls.orders_url
     expect(backorder.lines).to eq []
@@ -50,10 +50,19 @@ RSpec.describe FdcBackorderer do
     expect(found_backorder.lines.count).to eq 1
     expect(found_backorder.lines[0].quantity.to_i).to eq 3
 
+    # Without a stored semantic link, it can't look it up directly though:
+    found_backorder = subject.lookup_open_order(order)
+    expect(found_backorder).to eq nil
+
+    # But with a semantic link, it works:
+    order.exchange.semantic_links.create!(semantic_id: placed_order.semanticId)
+    found_backorder = subject.lookup_open_order(order)
+    expect(found_backorder.semanticId).to eq placed_order.semanticId
+
     # And close the order again:
     subject.complete_order(placed_order)
     remaining_open_order = subject.find_or_build_order(order)
-    expect(remaining_open_order.semanticId).not_to eq placed_order.semanticId
+    expect(remaining_open_order.semanticId).to eq urls.orders_url
   end
 
   describe "#find_or_build_order" do

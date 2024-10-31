@@ -28,7 +28,7 @@ class AmendBackorderJob < ApplicationJob
     urls = FdcUrlBuilder.new(reference_link)
     orderer = FdcBackorderer.new(user, urls)
 
-    backorder = orderer.find_open_order
+    backorder = orderer.find_open_order(order)
 
     variants = order_cycle.variants_distributed_by(distributor)
     adjust_quantities(order_cycle, user, backorder, urls, variants)

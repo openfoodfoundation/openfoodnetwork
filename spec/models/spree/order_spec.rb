@@ -7,6 +7,7 @@ RSpec.describe Spree::Order do
   let(:order) { build(:order, user:) }
 
   it { is_expected.to have_one :exchange }
+  it { is_expected.to have_many :semantic_links }
 
   describe "#errors" do
     it "provides friendly error messages" do
