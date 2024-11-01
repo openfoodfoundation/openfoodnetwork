@@ -109,9 +109,10 @@ module Reporting
             proc do |line_item|
               total_price = total_excl_vat_and_fees.call(line_item)
               total_fees = total_fees_excl_vat.call(line_item)
+              total_fees_tax = total_vat_on_fees.call(line_item)
               tax = total_tax.call(line_item)
 
-              total_price + total_fees + tax
+              total_price + total_fees + total_fees_tax + tax
             end
           end
         end
