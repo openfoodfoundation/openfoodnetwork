@@ -2798,6 +2798,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   confirm_hub_change: "Are you sure? This will change your selected hub and remove any items in your shopping cart."
   confirm_oc_change: "Are you sure? This will change your selected order cycle and remove any items in your shopping cart."
   location_placeholder: "Type in a location..."
+  gmap_load_failure: "Unable to load map. Please check your browser settings and allow 3rd party cookies for this website."
   error_required: "can't be blank"
   error_number: "must be number"
   error_email: "must be email address"

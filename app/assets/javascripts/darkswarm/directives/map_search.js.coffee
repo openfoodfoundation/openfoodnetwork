@@ -20,10 +20,13 @@ angular.module('Darkswarm').directive 'mapSearch', ($timeout, Search) ->
     $timeout =>
       map = ctrl.getMap()
 
-      searchBox = scope.createSearchBox map
-      scope.bindSearchResponse map, searchBox
-      scope.biasResults map, searchBox
-      scope.performUrlSearch map
+      if !map
+        alert(t('gmap_load_failure'))
+      else
+        searchBox = scope.createSearchBox map
+        scope.bindSearchResponse map, searchBox
+        scope.biasResults map, searchBox
+        scope.performUrlSearch map
 
     scope.createSearchBox = (map) ->
       map.controls[google.maps.ControlPosition.TOP_LEFT].push scope.input
