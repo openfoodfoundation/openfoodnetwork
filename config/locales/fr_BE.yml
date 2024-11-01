@@ -72,6 +72,10 @@ fr_BE:
         white_label_logo_link: "Lien pour le logo utilisé en vitrine"
     errors:
       models:
+        spree/image:
+          attributes:
+            attachment:
+              integrity_error: "Echec de chargement. Veuillez vérifier que le fichier n'est pas corrompu et réessayez."
         spree/user:
           attributes:
             email:
@@ -556,6 +560,9 @@ fr_BE:
     has_n_rules: "a %{num} règle(s)"
     unsaved_confirm_leave: "Des modifications n'ont pas été sauvegardées et seront perdues si vous quittez la page. Souhaitez-vous quitter la page?"
     available_units: "Unités disponibles"
+    terms_of_service_have_been_updated_html: "Les conditions d'utilisation d'Open Food Network ont été mises à jour : %{tos_link}"
+    terms_of_service: Lire les conditions d'utilisation
+    accept_terms_of_service: Accepter les conditions d'utilisation
     shopfront_settings:
       embedded_shopfront_settings: "Paramètres comptoir Intégrées"
       enable_embedded_shopfronts: "Autoriser l'intégration des comptoirs"

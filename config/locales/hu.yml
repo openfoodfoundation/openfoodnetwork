@@ -315,6 +315,8 @@ hu:
         Megvizsgáljuk, de kérjük, értesíts minket, ha a probléma továbbra is fennáll.
   backorder_mailer:
     backorder_failed:
+      order: "Az érintett rendelés: %{number}"
+      stock: "Készlet"
       product: "Termék"
   enterprise_mailer:
     confirmation_instructions:
@@ -396,7 +398,7 @@ hu:
   business_address: "Vállalkozás címe"
   print_invoice: "Számla nyomtatása"
   print_ticket: "Jegy nyomtatása"
-  select_ticket_printer: "Válasszon nyomtatót a jegyekhez"
+  select_ticket_printer: "Válassz nyomtatót a jegyekhez"
   send_invoice: "Számla küldése"
   resend_confirmation: "Visszaigazolás újraküldése"
   view_order: "Megtekintési sorrend"
@@ -524,8 +526,8 @@ hu:
       columns:
         image: Kép
         name: Név
-        unit_scale: Mértékegység skála
-        unit: Mértékegység
+        unit_scale: Mértékegység
+        unit: Kiszerelés
         unit_value: Egység értéke
         display_as: Egység megjelenítése mint
         price: Ár
@@ -539,7 +541,7 @@ hu:
         import_date: "Importálás dátuma"
         actions: Műveletek
       columns_selector:
-        unit: Mértékegység
+        unit: Kiszerelés
         price: Ár
         producer: Termelő
         category: Kategória
@@ -554,10 +556,13 @@ hu:
         clone: Klón
         delete: Töröl
         remove: Eltávolítás
+        preview: Előnézet
       image:
         edit: Szerkesztés
       product_preview:
+        product_preview: Termék előnézet
         shop_tab: Átvételi pont
+        product_details_tab: Termék részletek
     adjustments:
       skipped_changing_canceled_order: "A törölt rendelést nem módosíthatod."
     begins_at: 'Kezdete:'
@@ -676,6 +681,11 @@ hu:
         info_html: "A Matomo egy webes és mobilelemző alkalmazás. A Matomo helyszíni üzemeltetését vagy felhőalapú szolgáltatást is használhatja. További információért lásd: <a href='http://matomo.org' target='_blank'>matomo.org</a>."
         config_instructions_html: "Itt konfigurálhatja az OFN Matomo integrációt. Az alábbi Matomo URL-nek arra a Matomo-példányra kell mutatnia, ahová a felhasználó követési információkat küldi; ha üresen marad, a Matomo felhasználókövetés le lesz tiltva. A Webhelyazonosító mező nem kötelező, de hasznos, ha egynél több webhelyet követ nyomon egyetlen Matomo-példányon; a Matomo példánykonzolon található."
         config_instructions_tag_manager_html: "A Matomo Címkekezelő URL-címének beállítása engedélyezi a Matomo Címkekezelőt. Ez az eszköz lehetővé teszi az elemzési események beállítását. A Matomo Címkekezelő URL-címe a Matomo Tag Manager Telepítési kód szakaszából lett kimásolva. Győződjön meg róla, hogy a megfelelő tárolót és környezetet választotta, mivel ezek a beállítások megváltoztatják az URL-t."
+    connected_app_settings:
+      edit:
+        title: "Kapcsolt app beállítás"
+      update:
+        resource: Kapcsolt app beállítás
     customers:
       index:
         new_customer: "Új vevő"
@@ -773,6 +783,7 @@ hu:
       variants:
         infinity: "Végtelen"
         to_order_tip: "A megrendelésre készült termékeknek nincs meghatározott készletszintjük, például a rendelésre frissen készült kenyérnek."
+      back_to_products_list: "Vissza a Terméklistához"
       editing_product: "Termék szerkesztése"
       tabs:
         product_details: "Termék leírás"
@@ -813,7 +824,7 @@ hu:
       sort:
         pagination:
           per_page:
-            show: Mutasd
+            show: Mutass
             per_page: "%{num}per oldal"
           clear_search: Keresés törlése
       no_products:
@@ -1024,7 +1035,7 @@ hu:
         order_error: "A rendelések frissítése előtt bizonyos hibákat meg kell oldani.\nMinden piros szegélyű mező hibát tartalmaz."
         variants_without_unit_value: "FIGYELMEZTETÉS: Egyes változatok nem rendelkeznek egységértékkel"
         all: "Minden"
-      select_variant: "Válasszon egy változatot"
+      select_variant: "Válassz egy változatot"
       note:
         note_label: "Megjegyzés:"
         no_note_present: "Nincs megjegyzés."
@@ -1327,6 +1338,7 @@ hu:
             enable: "Csatlakozás"
             disable: "Lecsatlakozás"
             need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
+            connection_error: "API kapcsolódási hiba, kérjük próbáld újra"
       actions:
         edit_profile: Beállítások
         properties: Tulajdonságok
@@ -1420,6 +1432,7 @@ hu:
       date_time_warning_modal_content:
         title: 'Ebben a rendelési ciklusban már vannak rendelések.'
         content: 'Ha új rendelési ciklust szeretnél létrehozni, ajánlott először megduplázni a rendelési ciklust, majd módosítani a dátumokat.'
+        proceed: 'Folytatás mindenképp'
         cancel: 'Törlés'
       incoming:
         incoming: "Beérkező"
@@ -1666,7 +1679,7 @@ hu:
         name: "Vállalkozási díjak összefoglalója"
         description: "Összefoglaló a beszedett vállalkozási díjakról"
       enterprise_fees_with_tax_report_by_order: "Vállalkozási díjak adójelentéssei megrendelés alapján"
-      enterprise_fees_with_tax_report_by_producer: "Vállalkozási díjak termelői adóbevallással"
+      enterprise_fees_with_tax_report_by_producer: "Vállalkozási díjak Jelentés termelőnként"
       errors:
         no_report_type: "Adja meg a jelentés típusát"
         report_not_found: "A jelentés nem található"
@@ -1768,7 +1781,7 @@ hu:
         charges_not_allowed: Ez az ügyfél nem engedélyezi a díjakat
         no_default_card: Az ügyfélnek nem áll rendelkezésére kártya, amelyet megterhelhetne
         card_ok: Az Ügyfélnek van egy kártyája, amelyet megterhelhet
-        begins_at_placeholder: "Válasszon egy dátumot"
+        begins_at_placeholder: "Válassz egy dátumot"
         ends_at_placeholder: "Választható"
       loading_flash:
         loading: ELŐFIZETÉSEK BETÖLTÉSE
@@ -2612,7 +2625,7 @@ hu:
         registration_about_us: "Bemutatkozó szöveg"
         registration_outcome_headline: "Mit kapsz?"
         registration_outcome1_html: "Profilod segít az embereknek <strong>megtalálni</strong> és <strong>kapcsolatba lépni</strong> Veled az Open Food Network hálózaton."
-        registration_outcome2: "Használd ezt a helyet, hogy bemutasd az vállalkozásod, illetve hogy segíts kapcsolatokat teremteni - közösségi és online jelenléten keresztül."
+        registration_outcome2: "Használd ezt a helyet, hogy bemutasd a vállalkozásod, és segíts kapcsolatokat teremteni - közösségi és online jelenléten keresztül."
         registration_outcome3: "Ez egyben az első lépés az Open Food Network-ben történő értékesítés megnyitása felé."
         registration_action: "Lássunk neki!"
       details:
@@ -2698,7 +2711,7 @@ hu:
       promo:
         select_promo_image: "3. lépés Válassz egy Promóciós képet"
         promo_image_tip: "Tipp: Bannerként megjelenítve az előnyben részesített méret 1200×260 képpont"
-        promo_image_label: "Válasszon egy promóciós képet"
+        promo_image_label: "Válassz egy promóciós képet"
         promo_image_drag: "Húzd ide a képet"
         review_promo_image: "4. lépés: Nézd meg a Promo Bannered"
         review_promo_image_tip: "Tipp: a legjobb eredmény érdekében a képnek ki kell töltenie a rendelkezésre álló helyet"
@@ -3391,7 +3404,7 @@ hu:
         inventory_tagged_top: "Készletváltozatok felcímkézve"
         inventory_tagged_bottom: "vannak:"
       new_tag_rule_dialog:
-        select_rule_type: "Válasszon egy szabálytípust:"
+        select_rule_type: "Válassz egy szabálytípust:"
         add_rule: "Szabály hozzáadása"
       enterprise_fees:
         inherit_from_product: "Öröklés a terméktől"
@@ -3463,7 +3476,7 @@ hu:
           updated_schedule: "Frissített menetrend"
           deleted_schedule: "Ütemezés törölve"
           name_required_error: "Adj nevet ennek az ütemezésnek"
-          no_order_cycles_error: "Kérjük, válasszon legalább egy rendelési ciklust (húzással)"
+          no_order_cycles_error: "Válassz legalább egy rendelési ciklust (húzással)"
           available: "Elérhető"
           selected: "Kiválasztott"
       customers:
@@ -3475,7 +3488,7 @@ hu:
       subscriptions:
         error_saving: "Hiba az előfizetés mentése közben"
         new:
-          please_select_a_shop: "Kérjük, válasszon egy átvételi pontot"
+          please_select_a_shop: "Kérjük, válassz egy átvételi pontot"
       enterprises:
         form:
           images:
@@ -3557,7 +3570,7 @@ hu:
       producer: "Termelő"
       non_producer: "Nem-termelő"
     customers:
-      select_shop: 'Kérjük, először válasszon egy üzletet'
+      select_shop: 'Kérjük, először válassz egy átvételi pontot'
       could_not_create: Sajnálom! Nem sikerült létrehozni
     subscriptions:
       closes: bezár
@@ -3577,7 +3590,18 @@ hu:
           Kérjük, frissítsd az oldalt, és próbáld újra. Ha másodszorra sem sikerül
           kérjük, fordulj hozzánk támogatásért.
     trix:
+      bold: "Félkövér"
       code: "Kód"
+      heading1: "Címszó"
+      indent: "Növelés"
+      italic: "Dőlt"
+      link: "Link"
+      outdent: "Szint csökkentése"
+      redo: "Újra"
+      strike: "Áthúzás"
+      undo: "Visszavonás"
+      unlink: "Link feloldása"
+      url: "URL"
       urlPlaceholder: "Kérünk, adj meg egy URL-t"
   inflections:
     each:
@@ -3803,7 +3827,7 @@ hu:
     back_to_states_list: "Vissza a státusz listához"
     return_authorizations: "Visszaküldési engedélyek"
     cannot_create_returns: "Nem tudsz visszárut létrehozni, mivel a rendelésnek nincsenek kiszállított egységei."
-    select_stock: "Válasszon részvényt"
+    select_stock: "Válassz a készletről"
     location: "Elhelyezkedés"
     count_on_hand: "Count On Hand"
     quantity: "Mennyiség"
@@ -3890,6 +3914,7 @@ hu:
     tax_rate_amount_explanation: "Az adókulcsok tizedesjegyek, amelyek segítik a számításokat (azaz ha az adókulcs 5%, akkor írj be 0,05-öt)"
     included_in_price: "Az ár tartalmazza"
     show_rate_in_label: "Mutassa az arányát a címkén"
+    back_to_tax_rates_list: "Vissza az Adókategóriák listájához"
     tax_settings: "Adóbeállítások"
     zones: "Zónák"
     new_zone: "Új zóna"
@@ -3902,6 +3927,7 @@ hu:
     iso_name: "ISO név"
     states_required: "Állam kötelező"
     editing_country: "Ország szerkesztése"
+    back_to_countries_list: "Vissza az országok listájához"
     states: "Államok"
     abbreviation: "Rövidítés"
     new_state: "Új állam"
@@ -4278,6 +4304,8 @@ hu:
           new_product: "Új termék"
           supplier: "Beszállító"
           supplier_select_placeholder: "Válassz ki egy beszállítót"
+          search_for_suppliers: "Keresés beszállítóra"
+          search_for_units: "Keresés kiszerelésre"
           product_name: "Termék név"
           units: "Mértékegység"
           value: "Mennyiség"
@@ -4394,8 +4422,18 @@ hu:
           total: "Összesen"
           billing_address_name: "Név"
       taxons:
+        back_to_list: "Vissza a termékkategóriák listájához"
         index:
           title: "Termékkategóriák"
+          new_taxon: 'Új termék kategória'
+        new:
+          title: "Új termék kategória"
+        edit:
+          title: "Termék kategória szerkesztése"
+        destroy:
+          delete_taxon:
+            success: "Termék kategória sikeresen törölve"
+            error: "Nem lehet törölni a termékkategóriát a hozzárendelt termékek miatt."
         form:
           name: Név
           meta_title: Meta Cím (SEO cím)
