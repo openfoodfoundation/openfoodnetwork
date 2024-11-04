@@ -73,8 +73,7 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
 
     context "with a VINE voucher", feature: :connected_apps do
       let(:vine_voucher) {
-        create(:voucher_flat_rate, voucher_type: "VINE", code: 'some_code',
-                                   enterprise: order.distributor, amount: 6)
+        create(:vine_voucher, code: 'some_code', enterprise: order.distributor, amount: 6)
       }
       let(:vine_voucher_redeemer) { instance_double(Vine::VoucherRedeemerService) }
 
@@ -264,8 +263,7 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
 
       context "with a VINE voucher", feature: :connected_apps do
         let(:vine_voucher) {
-          create(:voucher_flat_rate, voucher_type: "VINE", code: 'some_code',
-                                     enterprise: order.distributor, amount: 6)
+          create(:vine_voucher, code: 'some_code', enterprise: order.distributor, amount: 6)
         }
         let(:vine_voucher_redeemer) { instance_double(Vine::VoucherRedeemerService) }
 

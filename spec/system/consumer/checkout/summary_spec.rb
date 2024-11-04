@@ -352,8 +352,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
           )
         }
         let(:vine_voucher) {
-          create(:voucher_flat_rate, voucher_type: "VINE", code: 'some_vine_code',
-                                     enterprise: distributor, amount: 0.01)
+          create(:vine_voucher, code: 'some_vine_code', enterprise: distributor, amount: 0.01)
         }
 
         before do

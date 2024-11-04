@@ -11,9 +11,9 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
   let(:order) { create(:order_with_line_items, line_items_count: 1, distributor:, order_cycle:) }
 
   let(:vine_voucher) {
-    create(:voucher_flat_rate, voucher_type: "VINE", code: 'some_code', enterprise: distributor,
-                               amount: 6, external_voucher_id: voucher_id,
-                               external_voucher_set_id: voucher_set_id )
+    create(:vine_voucher, code: 'some_code', enterprise: distributor,
+                          amount: 6, external_voucher_id: voucher_id,
+                          external_voucher_set_id: voucher_set_id )
   }
   let(:voucher_id) { "9d316d27-0dad-411a-8953-316a1aaf7742" }
   let(:voucher_set_id) { "9d314daa-0878-4b73-922d-698047640cf4" }

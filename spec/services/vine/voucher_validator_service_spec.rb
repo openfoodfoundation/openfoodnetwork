@@ -275,8 +275,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         )
       }
       let!(:voucher) {
-        create(:voucher_flat_rate, enterprise: distributor, code: voucher_code,
-                                   amount: 500, voucher_type: "VINE" )
+        create(:vine_voucher, enterprise: distributor, code: voucher_code, amount: 500)
       }
 
       let(:data) {
