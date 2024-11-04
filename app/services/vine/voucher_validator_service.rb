@@ -28,7 +28,6 @@ module Vine
       Rails.logger.error e.inspect
       Bugsnag.notify(e)
 
-      # TODO do we need a more specific error ?
       errors[:vine_api] = I18n.t("vine_voucher_validator_service.errors.vine_api")
       nil
     end
@@ -36,7 +35,7 @@ module Vine
     private
 
     def vine_settings
-      ConnectedApps::Vine.find_by(enterprise: @enterprise)&.data
+      @vine_settings ||= ConnectedApps::Vine.find_by(enterprise: @enterprise)&.data
     end
 
     def call_vine_api
@@ -74,7 +73,7 @@ module Vine
           amount:,
           external_voucher_id: voucher_data["id"],
           external_voucher_set_id: voucher_data["voucher_set_id"],
-          voucher_type: "VINE"
+          voucher_type: Voucher::VINE
         )
       end
 

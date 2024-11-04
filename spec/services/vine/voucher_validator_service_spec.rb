@@ -55,7 +55,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         expect(vine_voucher).not_to be_nil
         expect(vine_voucher.code).to eq(voucher_code)
         expect(vine_voucher.amount).to eq(5.00)
-        expect(vine_voucher.voucher_type).to eq("VINE")
+        expect(vine_voucher.vine?).to eq(true)
         expect(vine_voucher.external_voucher_id).to eq("9d2437c8-4559-4dda-802e-8d9c642a0c1d")
         expect(vine_voucher.external_voucher_set_id).to eq(
           "9d24349c-1fe8-4090-988b-d7355ed32559"
@@ -65,7 +65,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
 
     context "when distributor is not connected to VINE" do
       it "returns nil" do
-        expect(validate_voucher_service.validate).to be_nil
+        expect_validate_to_be_nil
       end
 
       it "doesn't call the VINE API" do
@@ -83,7 +83,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       end
 
       it "doesn't creates a new VINE voucher" do
-        expect { validate_voucher_service.validate }.not_to change { Voucher.count }
+        expect_voucher_count_not_to_change
       end
     end
 
@@ -95,11 +95,11 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       }
 
       before do
-        allow(vine_api_service).to receive(:voucher_validation).and_raise(Faraday::Error)
+        allow(vine_api_service).to receive(:voucher_validation).and_raise(Faraday::ConnectionFailed)
       end
 
       it "returns nil" do
-        expect(validate_voucher_service.validate).to be_nil
+        expect_validate_to_be_nil
       end
 
       it "adds an error message" do
@@ -111,7 +111,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       end
 
       it "doesn't creates a new VINE voucher" do
-        expect { validate_voucher_service.validate }.not_to change { Voucher.count }
+        expect_voucher_count_not_to_change
       end
 
       it "logs the error and notify bugsnag" do
@@ -143,7 +143,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       end
 
       it "returns nil" do
-        expect(validate_voucher_service.validate).to be_nil
+        expect_validate_to_be_nil
       end
 
       it "adds an error message" do
@@ -155,7 +155,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       end
 
       it "doesn't creates a new VINE voucher" do
-        expect { validate_voucher_service.validate }.not_to change { Voucher.count }
+        expect_voucher_count_not_to_change
       end
     end
 
@@ -179,7 +179,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       end
 
       it "returns nil" do
-        expect(validate_voucher_service.validate).to be_nil
+        expect_validate_to_be_nil
       end
 
       it "adds an error message" do
@@ -191,7 +191,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       end
 
       it "doesn't creates a new VINE voucher" do
-        expect { validate_voucher_service.validate }.not_to change { Voucher.count }
+        expect_voucher_count_not_to_change
       end
     end
 
@@ -215,7 +215,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       end
 
       it "returns nil" do
-        expect(validate_voucher_service.validate).to be_nil
+        expect_validate_to_be_nil
       end
 
       it "adds an error message" do
@@ -227,7 +227,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       end
 
       it "doesn't creates a new VINE voucher" do
-        expect { validate_voucher_service.validate }.not_to change { Voucher.count }
+        expect_voucher_count_not_to_change
       end
     end
 
@@ -265,6 +265,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       it "returns an invalid voucher" do
         voucher = validate_voucher_service.validate
         expect(voucher).not_to be_valid
+        expect(voucher.errors[:amount]).to include "must be greater than 0"
       end
     end
 
@@ -315,7 +316,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         vine_voucher = validate_voucher_service.validate
 
         expect(vine_voucher.id).to eq(voucher.id)
-        expect(vine_voucher.amount).to eq(2.50)
+        expect(vine_voucher.reload.amount).to eq(2.50)
       end
 
       context "when updating the voucher fails" do
@@ -350,6 +351,14 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         end
       end
     end
+  end
+
+  def expect_validate_to_be_nil
+    expect(validate_voucher_service.validate).to be_nil
+  end
+
+  def expect_voucher_count_not_to_change
+    expect { validate_voucher_service.validate }.not_to change { Voucher.count }
   end
 
   def mock_api_response(success:, data: nil, status: 200)
