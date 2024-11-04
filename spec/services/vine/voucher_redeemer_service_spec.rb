@@ -199,7 +199,7 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
         voucher_redeemer_service.redeem
 
         expect(voucher_redeemer_service.errors).to include(
-          { vine_api: "There was an error communicating with the API" }
+          { vine_api: "There was an error communicating with the API, please try again later." }
         )
       end
 

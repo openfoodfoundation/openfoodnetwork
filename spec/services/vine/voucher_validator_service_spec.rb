@@ -78,7 +78,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         validate_voucher_service.validate
 
         expect(validate_voucher_service.errors).to include(
-          { vine_settings: "No Vine api settings for the given enterprise" }
+          { vine_settings: "This shop is not enabled for VINE Vouchers." }
         )
       end
 
@@ -106,7 +106,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         validate_voucher_service.validate
 
         expect(validate_voucher_service.errors).to include(
-          { vine_api: "There was an error communicating with the API" }
+          { vine_api: "There was an error communicating with the API, please try again later." }
         )
       end
 
@@ -150,7 +150,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         validate_voucher_service.validate
 
         expect(validate_voucher_service.errors).to include(
-          { vine_api: "There was an error communicating with the API" }
+          { vine_api: "There was an error communicating with the API, please try again later." }
         )
       end
 
@@ -186,7 +186,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         validate_voucher_service.validate
 
         expect(validate_voucher_service.errors).to include(
-          { not_found_voucher: "The voucher doesn't exist" }
+          { not_found_voucher: "Sorry, we couldn't find that voucher, please check the code." }
         )
       end
 
