@@ -89,7 +89,6 @@ module Reporting
             order: [
               :distributor,
               :adjustments,
-              { shipments: { shipping_rates: :shipping_method } }
             ],
             variant: [:product, :supplier]
           }]
