@@ -56,7 +56,7 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
         # Create a non valid adjustment
         bad_adjustment = build(:adjustment, label: nil)
         allow(voucher).to receive(:create_adjustment).and_return(bad_adjustment)
-        allow(Voucher).to receive_message_chain(:not_vine, :find_by).and_return(voucher)
+        allow(Voucher).to receive_message_chain(:local, :find_by).and_return(voucher)
 
         post("/voucher_adjustments", params:)
 

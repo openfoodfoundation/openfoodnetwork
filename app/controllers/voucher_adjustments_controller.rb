@@ -78,8 +78,8 @@ class VoucherAdjustmentsController < BaseController
   end
 
   def load_voucher
-    voucher = Voucher.not_vine.find_by(code: voucher_params[:voucher_code],
-                                       enterprise: @order.distributor)
+    voucher = Voucher.local.find_by(code: voucher_params[:voucher_code],
+                                    enterprise: @order.distributor)
     return voucher unless voucher.nil?
 
     vine_voucher

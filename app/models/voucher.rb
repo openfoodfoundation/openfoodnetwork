@@ -21,7 +21,7 @@ class Voucher < ApplicationRecord
   TYPES = ["Vouchers::FlatRate", "Vouchers::PercentageRate"].freeze
 
   scope :vine, -> { where(voucher_type: VINE_TYPE) }
-  scope :not_vine, -> { where.not(voucher_type: VINE_TYPE).or(where(voucher_type: nil)) }
+  scope :local, -> { where("voucher_type IS DISTINCT FROM ?", VINE_TYPE) }
 
   def code=(value)
     super(value.to_s.strip)
