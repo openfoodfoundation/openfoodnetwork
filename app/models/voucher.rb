@@ -1,8 +1,6 @@
 # frozen_string_literal: false
 
 class Voucher < ApplicationRecord
-  VINE_TYPE = "VINE".freeze
-
   self.belongs_to_required_by_default = false
 
   acts_as_paranoid
@@ -16,12 +14,9 @@ class Voucher < ApplicationRecord
            class_name: 'Spree::Adjustment',
            dependent: nil
 
-  validates :code, presence: true, uniqueness: { scope: :enterprise_id }
+  validates :code, presence: true
 
   TYPES = ["Vouchers::FlatRate", "Vouchers::PercentageRate"].freeze
-
-  scope :vine, -> { where(voucher_type: VINE_TYPE) }
-  scope :local, -> { where("voucher_type IS DISTINCT FROM ?", VINE_TYPE) }
 
   def code=(value)
     super(value.to_s.strip)
@@ -45,10 +40,6 @@ class Voucher < ApplicationRecord
     }
 
     order.adjustments.create(adjustment_attributes)
-  end
-
-  def vine?
-    voucher_type == VINE_TYPE
   end
 
   # The following method must be overriden in a concrete voucher.

@@ -15,31 +15,6 @@ RSpec.describe Voucher do
     it { is_expected.to have_many(:adjustments).dependent(nil) }
   end
 
-  describe "scope" do
-    let!(:vine_voucher) { create(:vine_voucher) }
-
-    describe ".vine" do
-      it "returns only vine vouchers" do
-        create(:voucher)
-        expect(Voucher.vine.count).to eq(1)
-      end
-    end
-
-    describe ".local" do
-      it "returns only local vouchers" do
-        create(:voucher)
-        expect(Voucher.local.count).to eq(1)
-      end
-
-      context "with voucher type other than VINE" do
-        it "returns only local vouchers" do
-          create(:voucher, voucher_type: "other")
-          expect(Voucher.local.count).to eq(1)
-        end
-      end
-    end
-  end
-
   describe '#code=' do
     it "removes leading and trailing whitespace" do
       voucher = build(:voucher, code: "\r\n\t new_code \r\n\t")
@@ -52,7 +27,6 @@ RSpec.describe Voucher do
     subject { build(:voucher_flat_rate, code: 'new_code', enterprise:) }
 
     it { is_expected.to validate_presence_of(:code) }
-    it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
   end
 
   describe '#display_value' do

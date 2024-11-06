@@ -15,8 +15,8 @@ FactoryBot.define do
     amount { rand(1..100) }
   end
 
-  factory :vine_voucher, parent: :voucher_flat_rate do
-    voucher_type { Voucher::VINE_TYPE }
+  factory :vine_voucher, parent: :voucher, class: Vouchers::Vine do
+    amount { 20 }
     external_voucher_id { SecureRandom.uuid }
     external_voucher_set_id { SecureRandom.uuid }
   end

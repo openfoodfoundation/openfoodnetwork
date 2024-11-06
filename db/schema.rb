@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_30_033956) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_12_230401) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -1112,8 +1112,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_30_033956) do
     t.string "type", limit: 255, default: "Vouchers::FlatRate", null: false
     t.uuid "external_voucher_id"
     t.uuid "external_voucher_set_id"
-    t.string "voucher_type"
-    t.index ["code", "enterprise_id"], name: "index_vouchers_on_code_and_enterprise_id", unique: true
+    t.index ["code", "enterprise_id", "external_voucher_id"], name: "index_vouchers_on_code_and_enterprise_id_and_ext_voucher_id"
+    t.index ["code", "enterprise_id"], name: "index_vouchers_on_code_and_enterprise_id"
     t.index ["deleted_at"], name: "index_vouchers_on_deleted_at"
     t.index ["enterprise_id"], name: "index_vouchers_on_enterprise_id"
   end
