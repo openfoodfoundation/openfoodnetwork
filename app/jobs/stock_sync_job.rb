@@ -17,7 +17,7 @@ class StockSyncJob < ApplicationJob
     # Errors here shouldn't affect the shopping. So let's report them
     # separately:
     Bugsnag.notify(e) do |payload|
-      payload.add_metadata(:order, order)
+      payload.add_metadata(:order, :order, order)
     end
   end
 
@@ -30,7 +30,7 @@ class StockSyncJob < ApplicationJob
     # Errors here shouldn't affect the shopping. So let's report them
     # separately:
     Bugsnag.notify(e) do |payload|
-      payload.add_metadata(:order, order)
+      payload.add_metadata(:order, :order, order)
     end
   end
 

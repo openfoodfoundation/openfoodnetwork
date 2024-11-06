@@ -51,7 +51,7 @@ module OrderCompletion
 
   def order_invalid!
     Bugsnag.notify("Notice: invalid order loaded during checkout") do |payload|
-      payload.add_metadata :order, @order
+      payload.add_metadata :order, :order, @order
     end
 
     flash[:error] = t('checkout.order_not_loaded')
