@@ -25,7 +25,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 # Install Ruby gems
-FROM development-base AS development
+FROM development-base
 COPY . $RAILS_ROOT
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --jobs "$(nproc)"
