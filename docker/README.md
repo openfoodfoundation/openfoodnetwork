@@ -85,9 +85,13 @@ $ git clone git@github.com:openfoodfoundation/openfoodnetwork.git
 ```command
 $ cd openfoodnetwork
 ```
-* Download the Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
+* You have two choices of images you can build. The default Ubuntu image is most similar to the production servers but is larger in size and will take longer to build. Alternatively, you can use the Alpine image which is smaller, faster to setup, and should be compatible with the Ubuntu. To download the Ubuntu Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
 ```command
 $ docker/build.ps1
+```
+* To use the alpine image to start with append the name of the Dockerfile:
+```sh
+$ docker/build.ps1 alpine.Dockerfile
 ```
 * Run the Rails server and its required Docker containers:
 ```command
