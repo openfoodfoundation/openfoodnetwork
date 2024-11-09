@@ -36,9 +36,13 @@ $ git clone git@github.com:openfoodfoundation/openfoodnetwork.git
 ```sh
 $ cd openfoodnetwork
 ```
-* Download the Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
+* You have two choices of images you can build. The default Ubuntu image is most similar to the production servers but is larger in size and will take longer to build. Alternatively, you can use the Alpine image which is smaller, faster to setup, and should be compatible with the Ubuntu. To download the Ubuntu Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
 ```sh
 $ docker/build
+```
+* To use the alpine image to start with append the name of the Dockerfile:
+```sh
+$ docker/build alpine.Dockerfile
 ```
 * Run the Rails server and its required Docker containers:
 ```sh
@@ -59,10 +63,6 @@ $ docker compose logs -f
 * To run tests or access the server directly, you can use bash:
 ```sh
 $ docker compose exec web bash
-```
-* Once you have connected, you can run tests and other operations without `bundle exec`:
-```sh
-$ rspec spec/models/voucher_spec.rb
 ```
 * The default admin user is 'ofn@example.com' with the password 'ofn123'.
 * View the app in the browser at `http://localhost:3000`.
@@ -108,10 +108,6 @@ $ docker compose logs -f
 * To run tests or access the server directly, you can use bash:
 ```sh
 $ docker compose exec web bash
-```
-* Once you have connected, you can run tests and other operations without `bundle exec`:
-```sh
-$ rspec spec/models/voucher_spec.rb
 ```
 You may need to wait several minutes before getting the server up and running properly.
 * The default admin user is 'ofn@example.com' with the password 'ofn123'.
