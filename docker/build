@@ -4,9 +4,5 @@ set -e
 # This script builds the Docker container, seeds the app with sample data, and logs the screen output.
 
 DATE=`date +%Y%m%d-%H%M%S-%3N`
-if [ -n "$1" ]; then
-	docker/build-log $1 2>&1 | tee log/build-$DATE.log
-else
-	docker/build-log 2>&1 | tee log/build-$DATE.log
-fi
+docker/build-log $1 2>&1 | tee log/build-$DATE.log
 docker/seed 2>&1 | tee log/seed-$DATE.log
