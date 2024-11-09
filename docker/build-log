@@ -6,7 +6,11 @@ wait
 echo '###########################'
 echo 'BEGIN: docker compose build'
 echo '###########################'
-docker compose build # Set up the Docker containers
+if [ -n "$1" ]; then
+	docker build -f $1 . # Set up the Docker containers
+else
+	docker compose build # Set up the Docker containers
+fi
 echo '##############################'
 echo 'FINISHED: docker compose build'
 echo '##############################'
