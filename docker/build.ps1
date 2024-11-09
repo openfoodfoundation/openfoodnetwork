@@ -4,5 +4,11 @@
 
 $DateTime=Get-Date -Format "yyyyMMdd-HHmmss"
 
-docker/build-log.ps1 > log/build-$DateTime.log 2>&1
+# Check if an argument is provided
+if ($args.Count -gt 0) {
+    # Run the build command with the argument and log output
+    docker/build-log.ps1 $args[0] > log/build-$DateTime.log 2>&1
+} else {
+    docker/build-log.ps1 > log/build-$DateTime.log 2>&1
+}
 docker/seed.ps1  > log/seed-$DateTime.log 2>&1
