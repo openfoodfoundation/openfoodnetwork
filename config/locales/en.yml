@@ -981,6 +981,7 @@ en:
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
+        select_unit_scale: Select unit scale
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
