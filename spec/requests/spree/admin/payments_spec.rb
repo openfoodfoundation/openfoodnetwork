@@ -47,7 +47,7 @@ RSpec.describe Spree::Admin::PaymentsController, type: :request do
       end
     end
 
-    context "when a getway error happens" do
+    context "when a gateway error happens" do
       let(:payment_method) do
         create(:stripe_sca_payment_method, distributors: [order.distributor])
       end
