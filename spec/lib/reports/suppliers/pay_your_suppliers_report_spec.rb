@@ -50,21 +50,32 @@ RSpec.describe "Pay Your Suppliers Report" do
   context "with taxes and fees" do
     let(:line_item) { order.line_items.first }
     let!(:enterprise_fee) do
-      create(:enterprise_fee, enterprise: supplier, inherits_tax_category: true, fee_type: 'sales')
-    end
-    let!(:fees_adjustment) do
       create(
-        :adjustment,
-        originator: enterprise_fee,
-        adjustable: line_item,
+        :enterprise_fee,
+        enterprise: supplier,
+        fee_type: 'sales',
         amount: 0.1,
-        label: "#{enterprise_fee.name} fee by supplier #{supplier.name}",
       )
     end
     let!(:tax_adjustment) do
       create(:adjustment, originator_type: "Spree::TaxRate", adjustable: line_item, amount: 0.1)
     end
-    let!(:tax_on_fee) do
+
+    before do
+      hub.update!(charges_sales_tax: true)
+      supplier.update!(charges_sales_tax: true)
+
+      exchange = order_cycle.exchanges.take
+      exchange.enterprise_fees << enterprise_fee
+      exchange.exchange_variants.build(variant: line_item.variant)
+      exchange.incoming = true
+      exchange.save!
+
+      OpenFoodNetwork::EnterpriseFeeCalculator
+        .new(hub, order_cycle)
+        .create_line_item_adjustments_for(line_item)
+
+      fees_adjustment = line_item.adjustments.enterprise_fee.first
       create(
         :adjustment,
         originator_type: "Spree::TaxRate",
