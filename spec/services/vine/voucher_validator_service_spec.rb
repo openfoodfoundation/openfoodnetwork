@@ -24,9 +24,9 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         {
           meta: { responseCode: 200, limit: 50, offset: 0, message: "" },
           data: {
-            id: "9d2437c8-4559-4dda-802e-8d9c642a0c1d",
+            id: vine_voucher_id,
             voucher_short_code: voucher_code,
-            voucher_set_id: "9d24349c-1fe8-4090-988b-d7355ed32559",
+            voucher_set_id: vine_voucher_set_id,
             is_test: 1,
             voucher_value_original: 500,
             voucher_value_remaining: 500,
@@ -38,17 +38,19 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
           }
         }.deep_stringify_keys
       }
+      let(:vine_voucher_id) { "9d2437c8-4559-4dda-802e-8d9c642a0c1d" }
+      let(:vine_voucher_set_id) { "9d24349c-1fe8-4090-988b-d7355ed32559" }
 
       it "verifies the voucher with VINE API" do
         expect(vine_api_service).to receive(:voucher_validation)
-          .and_return(mock_api_response( success: true, data:))
+          .and_return(mock_api_response(success: true, data:))
 
         validate_voucher_service.validate
       end
 
       it "creates a new VINE voucher" do
         allow(vine_api_service).to receive(:voucher_validation)
-          .and_return(mock_api_response( success: true, data:))
+          .and_return(mock_api_response(success: true, data:))
 
         vine_voucher = validate_voucher_service.validate
 
@@ -56,10 +58,89 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         expect(vine_voucher.code).to eq(voucher_code)
         expect(vine_voucher.amount).to eq(5.00)
         expect(vine_voucher.vine?).to eq(true)
-        expect(vine_voucher.external_voucher_id).to eq("9d2437c8-4559-4dda-802e-8d9c642a0c1d")
-        expect(vine_voucher.external_voucher_set_id).to eq(
-          "9d24349c-1fe8-4090-988b-d7355ed32559"
-        )
+        expect(vine_voucher.external_voucher_id).to eq(vine_voucher_id)
+        expect(vine_voucher.external_voucher_set_id).to eq(vine_voucher_set_id)
+      end
+
+      context "when the VINE voucher has already been used by another enterprise" do
+        let(:data) {
+          {
+            meta: { responseCode: 200, limit: 50, offset: 0, message: "" },
+            data: {
+              id: vine_voucher_id,
+              voucher_short_code: voucher_code,
+              voucher_set_id: vine_voucher_set_id,
+              is_test: 1,
+              voucher_value_original: 500,
+              voucher_value_remaining: 250,
+              num_voucher_redemptions: 0,
+              last_redemption_at: "null",
+              created_at: "2024-10-01T13:20:02.000000Z",
+              updated_at: "2024-10-01T13:20:02.000000Z",
+              deleted_at: "null"
+            }
+          }.deep_stringify_keys
+        }
+
+        it "creates a new voucher" do
+          existing_voucher = create(:vine_voucher, enterprise: create(:enterprise),
+                                                   code: voucher_code,
+                                                   external_voucher_id: vine_voucher_id,
+                                                   external_voucher_set_id: vine_voucher_set_id)
+          allow(vine_api_service).to receive(:voucher_validation)
+            .and_return(mock_api_response(success: true, data:))
+
+          vine_voucher = validate_voucher_service.validate
+
+          expect(vine_voucher.id).not_to eq(existing_voucher.id)
+          expect(vine_voucher.enterprise).to eq(distributor)
+          expect(vine_voucher.code).to eq(voucher_code)
+          expect(vine_voucher.amount).to eq(2.50)
+          expect(vine_voucher.vine?).to eq(true)
+          expect(vine_voucher.external_voucher_id).to eq(vine_voucher_id)
+          expect(vine_voucher.external_voucher_set_id).to eq(vine_voucher_set_id)
+        end
+      end
+
+      context "with a recycled code" do
+        let(:data) {
+          {
+            meta: { responseCode: 200, limit: 50, offset: 0, message: "" },
+            data: {
+              id: new_vine_voucher_id,
+              voucher_short_code: voucher_code,
+              voucher_set_id: new_vine_voucher_set_id,
+              is_test: 1,
+              voucher_value_original: 500,
+              voucher_value_remaining: 140,
+              num_voucher_redemptions: 0,
+              last_redemption_at: "null",
+              created_at: "2024-10-01T13:20:02.000000Z",
+              updated_at: "2024-10-01T13:20:02.000000Z",
+              deleted_at: "null"
+            }
+          }.deep_stringify_keys
+        }
+        let(:new_vine_voucher_id) { "9d2437c8-4559-4dda-802e-8d9c642a0c5e" }
+        let(:new_vine_voucher_set_id) { "9d24349c-1fe8-4090-988b-d7355ed32590" }
+
+        it "creates a new voucher" do
+          existing_voucher = create(:vine_voucher, enterprise: distributor, code: voucher_code,
+                                                   external_voucher_id: vine_voucher_id,
+                                                   external_voucher_set_id: vine_voucher_set_id)
+          allow(vine_api_service).to receive(:voucher_validation)
+            .and_return(mock_api_response(success: true, data:))
+
+          vine_voucher = validate_voucher_service.validate
+
+          expect(vine_voucher.id).not_to eq(existing_voucher.id)
+          expect(vine_voucher.enterprise).to eq(distributor)
+          expect(vine_voucher.code).to eq(voucher_code)
+          expect(vine_voucher.amount).to eq(1.40)
+          expect(vine_voucher.vine?).to eq(true)
+          expect(vine_voucher.external_voucher_id).to eq(new_vine_voucher_id)
+          expect(vine_voucher.external_voucher_set_id).to eq(new_vine_voucher_set_id)
+        end
       end
     end
 
@@ -276,14 +357,17 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         )
       }
       let!(:voucher) {
-        create(:vine_voucher, enterprise: distributor, code: voucher_code, amount: 500)
+        create(:vine_voucher, enterprise: distributor, code: voucher_code, amount: 500,
+                              external_voucher_id: vine_voucher_id,
+                              external_voucher_set_id: "9d24349c-1fe8-4090-988b-d7355ed32559")
       }
+      let(:vine_voucher_id) { "9d2437c8-4559-4dda-802e-8d9c642a0c1d" }
 
       let(:data) {
         {
           meta: { responseCode: 200, limit: 50, offset: 0, message: "" },
           data: {
-            id: "9d2437c8-4559-4dda-802e-8d9c642a0c1d",
+            id: vine_voucher_id,
             voucher_short_code: voucher_code,
             voucher_set_id: "9d24349c-1fe8-4090-988b-d7355ed32559",
             is_test: 1,

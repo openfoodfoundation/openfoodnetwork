@@ -61,21 +61,14 @@ module Vine
       voucher_data = response.body["data"]
 
       # Check if voucher already exist
-      voucher = Voucher.vine.find_by(code: voucher_code, enterprise: @enterprise)
-
-      amount = voucher_data["voucher_value_remaining"].to_f / 100
-      if voucher.present?
-        voucher.update(amount: )
-      else
-        voucher = Vouchers::FlatRate.create(
-          enterprise: @enterprise,
-          code: voucher_data["voucher_short_code"],
-          amount:,
-          external_voucher_id: voucher_data["id"],
-          external_voucher_set_id: voucher_data["voucher_set_id"],
-          voucher_type: Voucher::VINE
-        )
-      end
+      voucher = Voucher.vine.find_or_initialize_by(
+        code: voucher_code,
+        enterprise: @enterprise,
+        external_voucher_id: voucher_data["id"],
+        external_voucher_set_id: voucher_data["voucher_set_id"]
+      )
+      voucher.amount = voucher_data["voucher_value_remaining"].to_f / 100
+      voucher.save
 
       voucher
     end
