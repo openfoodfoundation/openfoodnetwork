@@ -189,7 +189,8 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
                 expect(page).to have_content "$5.00 Voucher"
                 expect(order.reload.voucher_adjustments.length).to eq(1)
-                expect(Voucher.vine.find_by(code: "CI3922", enterprise: distributor)).not_to be_nil
+                expect(Vouchers::Vine.find_by(code: "CI3922",
+                                              enterprise: distributor)).not_to be_nil
               end
 
               context "with an invalid voucher" do
@@ -198,7 +199,7 @@ RSpec.describe "As a consumer, I want to checkout my order" do
                   click_button("Apply")
 
                   expect(page).to have_content("There was an error while adding the voucher")
-                  expect(Voucher.vine.find_by(code: "non_code", enterprise: distributor)).to be_nil
+                  expect(Vouchers::Vine.find_by(code: "KM1891", enterprise: distributor)).to be_nil
                 end
               end
             end

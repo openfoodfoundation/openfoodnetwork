@@ -14,7 +14,7 @@ module Vine
       voucher_adjustment = order.voucher_adjustments.first
       @voucher = voucher_adjustment&.originator
 
-      return true if voucher_adjustment.nil? || !@voucher.vine?
+      return true if voucher_adjustment.nil? || !@voucher.is_a?(Vouchers::Vine)
 
       if vine_settings.nil?
         errors[:vine_settings] = I18n.t("vine_voucher_redeemer_service.errors.vine_settings")

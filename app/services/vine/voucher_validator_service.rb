@@ -61,7 +61,7 @@ module Vine
       voucher_data = response.body["data"]
 
       # Check if voucher already exist
-      voucher = Voucher.vine.find_or_initialize_by(
+      voucher = Vouchers::Vine.find_or_initialize_by(
         code: voucher_code,
         enterprise: @enterprise,
         external_voucher_id: voucher_data["id"],

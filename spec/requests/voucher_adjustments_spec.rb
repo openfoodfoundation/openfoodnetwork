@@ -56,7 +56,7 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
         # Create a non valid adjustment
         bad_adjustment = build(:adjustment, label: nil)
         allow(voucher).to receive(:create_adjustment).and_return(bad_adjustment)
-        allow(Voucher).to receive_message_chain(:local, :find_by).and_return(voucher)
+        allow(Voucher).to receive(:find_by).and_return(voucher)
 
         post("/voucher_adjustments", params:)
 
@@ -106,7 +106,7 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
           end
 
           it "adds a voucher to the user's current order" do
-            vine_voucher = create(:voucher_flat_rate, code: vine_voucher_code)
+            vine_voucher = create(:vine_voucher, code: vine_voucher_code)
             mock_vine_voucher_validator(voucher: vine_voucher)
 
             post("/voucher_adjustments", params:)
@@ -170,8 +170,8 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
 
         context "when creating a new voucher fails" do
           it "returns 422 and an error message" do
-            vine_voucher = build(:voucher_flat_rate, code: vine_voucher_code,
-                                                     enterprise: distributor, amount: "")
+            vine_voucher = build(:vine_voucher, code: vine_voucher_code,
+                                                enterprise: distributor, amount: "")
             mock_vine_voucher_validator(voucher: vine_voucher)
 
             post("/voucher_adjustments", params:)
@@ -197,8 +197,8 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
         end
 
         it "adds a voucher to the user's current order" do
-          vine_voucher = create(:voucher_flat_rate, code: vine_voucher_code,
-                                                    enterprise: distributor)
+          vine_voucher = create(:vine_voucher, code: vine_voucher_code,
+                                               enterprise: distributor)
           mock_vine_voucher_validator(voucher: vine_voucher)
 
           expect {
@@ -209,8 +209,8 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
 
         context "when updating the voucher fails" do
           it "returns 422 and an error message" do
-            vine_voucher = build(:voucher_flat_rate, code: vine_voucher_code,
-                                                     enterprise: distributor, amount: "")
+            vine_voucher = build(:vine_voucher, code: vine_voucher_code,
+                                                enterprise: distributor, amount: "")
             mock_vine_voucher_validator(voucher: vine_voucher)
 
             post("/voucher_adjustments", params:)

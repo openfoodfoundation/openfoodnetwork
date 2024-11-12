@@ -55,9 +55,9 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         vine_voucher = validate_voucher_service.validate
 
         expect(vine_voucher).not_to be_nil
+        expect(vine_voucher).to be_a(Vouchers::Vine)
         expect(vine_voucher.code).to eq(voucher_code)
         expect(vine_voucher.amount).to eq(5.00)
-        expect(vine_voucher.vine?).to eq(true)
         expect(vine_voucher.external_voucher_id).to eq(vine_voucher_id)
         expect(vine_voucher.external_voucher_set_id).to eq(vine_voucher_set_id)
       end
@@ -96,7 +96,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
           expect(vine_voucher.enterprise).to eq(distributor)
           expect(vine_voucher.code).to eq(voucher_code)
           expect(vine_voucher.amount).to eq(2.50)
-          expect(vine_voucher.vine?).to eq(true)
+          expect(vine_voucher).to be_a(Vouchers::Vine)
           expect(vine_voucher.external_voucher_id).to eq(vine_voucher_id)
           expect(vine_voucher.external_voucher_set_id).to eq(vine_voucher_set_id)
         end
@@ -137,7 +137,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
           expect(vine_voucher.enterprise).to eq(distributor)
           expect(vine_voucher.code).to eq(voucher_code)
           expect(vine_voucher.amount).to eq(1.40)
-          expect(vine_voucher.vine?).to eq(true)
+          expect(vine_voucher).to be_a(Vouchers::Vine)
           expect(vine_voucher.external_voucher_id).to eq(new_vine_voucher_id)
           expect(vine_voucher.external_voucher_set_id).to eq(new_vine_voucher_set_id)
         end

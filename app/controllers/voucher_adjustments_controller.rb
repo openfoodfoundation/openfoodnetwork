@@ -78,9 +78,9 @@ class VoucherAdjustmentsController < BaseController
   end
 
   def load_voucher
-    voucher = Voucher.local.find_by(code: voucher_params[:voucher_code],
-                                    enterprise: @order.distributor)
-    return voucher unless voucher.nil?
+    voucher = Voucher.find_by(code: voucher_params[:voucher_code],
+                              enterprise: @order.distributor)
+    return voucher unless voucher.nil? || voucher.is_a?(Vouchers::Vine)
 
     vine_voucher
   end
