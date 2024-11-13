@@ -1,9 +1,6 @@
 # Docker Scripts
 
-## What's the point?
-* Setting up the Open Food Network app on your local machine is quick and easy with the aid of Docker.
-* Docker provides a common virtual environment available to all developers and resolves the infamous "but it works on my machine" problem.
-* Use the scripts in this directory to execute tasks in Docker. Please note that these scripts are intended to be executed from this app's root directory (/openfoodnetwork). These scripts allow you to bypass the need to keep typing "docker compose run web".
+Docker is intended to provide a common virtual environment available to all developers. Please note that it is not commonly used by developers at this time.
 
 ## Limitations
 1. The docker environment can't directly control your host system browser, which means that browser specs (under `/spec/system/`) and email previews will not work. You may be able to find a solution with [this article](https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing). If so, please contribute!
@@ -120,6 +117,8 @@ You may also need to comment out stuff related to Chromedriver and Chrome. Chrom
 See [#8421](https://github.com/openfoodfoundation/openfoodnetwork/issues/8421) for more info
 
 ## Script Summary
+Use the scripts in this directory to execute tasks in Docker. Please note that these scripts are intended to be executed from this app's root directory (/openfoodnetwork). These scripts allow you to bypass the need to keep typing "docker compose run web".
+
 * docker/build(.ps1): This script builds the Docker containers specified for this app, seeds the database, and logs the screen output for these operations. After you use "git clone" to download this repository, run the docker/build script to start the setup process.
 * docker/server(.ps1): Use this script to run this app in the Rails server. This script executes the "docker compose up" command and logs the results. If all goes well, you will be able to view this app on your local browser at http://localhost:3000/.
 * docker/test(.ps1): Use this script to run the entire test suite. **Note limitation with system specs mentioned above**.
