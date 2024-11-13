@@ -12,7 +12,7 @@ RSpec.describe Vouchers::PercentageRate do
         .is_greater_than(0)
         .is_less_than_or_equal_to(100)
     end
-    it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
+    it_behaves_like 'has a unique code per enterprise', "voucher_percentage_rate"
   end
 
   describe '#compute_amount' do

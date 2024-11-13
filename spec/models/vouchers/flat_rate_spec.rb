@@ -8,7 +8,7 @@ RSpec.describe Vouchers::FlatRate do
 
     it { is_expected.to validate_presence_of(:amount) }
     it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
-    it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
+    it_behaves_like 'has a unique code per enterprise', "voucher_flat_rate"
   end
 
   describe '#compute_amount' do

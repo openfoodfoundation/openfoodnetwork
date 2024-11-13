@@ -4,6 +4,6 @@ module Vouchers
   class FlatRate < Voucher
     include FlatRatable
 
-    validates :code, uniqueness: { scope: :enterprise_id }
+    validates_with ScopedUniquenessValidator
   end
 end
