@@ -18,22 +18,6 @@
   .five.columns.omega
     = f.check_box :is_primary_producer, data: { action: "change->primary-details#primaryProducerChanged" } 
     = f.label :is_primary_producer, t('.producer')
-- if spree_current_user.admin?
-  .row
-    .three.columns.alpha
-      = f.label :sells, t('.sells')
-      = render partial: 'admin/shared/whats_this_tooltip', locals: {tooltip_text: t('.sells_tip')}
-    .two.columns
-      = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"} 
-      = f.label :sells, t('.none'), value: "none"
-    .two.columns
-      = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"}
-      = f.label :sells, t('.own'), value: "own"
-    .four.columns.omega
-      = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells', data: {action: "change->primary-details#enterpriseSellsChanged"}
-      = f.label :sells, t('.any'), value: "any"
-      %span{ style: "width: 30px; height: 30px;", class: "hidden", data: { "primary-details-target": "spinner" } }
-        = render partial: "components/admin_spinner"
 .row
   .three.columns.alpha
     %label= t('.visible_in_search')
