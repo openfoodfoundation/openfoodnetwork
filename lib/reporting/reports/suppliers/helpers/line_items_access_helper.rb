@@ -29,10 +29,10 @@ module Reporting
             adjustments = line_item.adjustments
             return adjustments.tax if adjustment_type == 'Spree::TaxRate'
 
-            supplier_id = supplier(line_item).id
+            supplier_id = line_item.supplier_id
             adjustments.enterprise_fee.select do |adjustment|
               label = adjustment.label
-              adjustment_enterprise_id = adjustment.originator.enterprise.id
+              adjustment_enterprise_id = adjustment.originator.enterprise_id
               label.include?('supplier') && adjustment_enterprise_id == supplier_id
             end
           end
