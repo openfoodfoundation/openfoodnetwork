@@ -49,21 +49,33 @@ RSpec.describe "Pay Your Suppliers Report" do
 
   context "with taxes and fees" do
     let(:line_item) { order.line_items.first }
+    let(:tax_category) {
+      create(
+        :tax_category,
+        tax_rates: [
+          create(
+            :tax_rate,
+            zone: create(:zone_with_member)
+          )
+        ]
+      )
+    }
     let!(:enterprise_fee) do
       create(
         :enterprise_fee,
         enterprise: supplier,
         fee_type: 'sales',
         amount: 0.1,
+        tax_category:
       )
-    end
-    let!(:tax_adjustment) do
-      create(:adjustment, originator_type: "Spree::TaxRate", adjustable: line_item, amount: 0.1)
     end
 
     before do
+      # Prepare order or line_item to have respective tax adjustments
       hub.update!(charges_sales_tax: true)
       supplier.update!(charges_sales_tax: true)
+      line_item.variant.update!(tax_category:)
+      line_item.copy_tax_category
 
       exchange = order_cycle.exchanges.take
       exchange.enterprise_fees << enterprise_fee
@@ -75,13 +87,7 @@ RSpec.describe "Pay Your Suppliers Report" do
         .new(hub, order_cycle)
         .create_line_item_adjustments_for(line_item)
 
-      fees_adjustment = line_item.adjustments.enterprise_fee.first
-      create(
-        :adjustment,
-        originator_type: "Spree::TaxRate",
-        adjustable: fees_adjustment,
-        amount: 0.01
-      )
+      order.create_tax_charge!
     end
 
     it "Generates the report" do
@@ -92,8 +98,8 @@ RSpec.describe "Pay Your Suppliers Report" do
       expect(table_row.total_excl_vat.to_f).to eq(10.1)
       expect(table_row.total_fees_excl_tax.to_f).to eq(0.1)
       expect(table_row.total_tax_on_fees.to_f).to eq(0.01)
-      expect(table_row.total_tax.to_f).to eq(0.1)
-      expect(table_row.total.to_f).to eq(10.21)
+      expect(table_row.total_tax.to_f).to eq(1.0)
+      expect(table_row.total.to_f).to eq(11.11)
     end
   end
 end
