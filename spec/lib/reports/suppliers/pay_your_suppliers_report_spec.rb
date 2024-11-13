@@ -38,10 +38,10 @@ RSpec.describe "Pay Your Suppliers Report" do
       expect(table_row.product).to eq(product.name)
       expect(table_row.variant_unit_name).to eq(variant.full_name)
       expect(table_row.quantity).to eq(1)
-      expect(table_row.total_excl_vat_and_fees.to_f).to eq(10.0)
+      expect(table_row.total_excl_fees_and_tax.to_f).to eq(10.0)
       expect(table_row.total_excl_vat.to_f).to eq(10.0)
-      expect(table_row.total_fees_excl_vat.to_f).to eq(0.0)
-      expect(table_row.total_vat_on_fees.to_f).to eq(0.0)
+      expect(table_row.total_fees_excl_tax.to_f).to eq(0.0)
+      expect(table_row.total_tax_on_fees.to_f).to eq(0.0)
       expect(table_row.total_tax.to_f).to eq(0.0)
       expect(table_row.total.to_f).to eq(10.0)
     end
@@ -88,10 +88,10 @@ RSpec.describe "Pay Your Suppliers Report" do
       expect(report_table_rows.length).to eq(1)
       table_row = report_table_rows.first
 
-      expect(table_row.total_excl_vat_and_fees.to_f).to eq(10.0)
+      expect(table_row.total_excl_fees_and_tax.to_f).to eq(10.0)
       expect(table_row.total_excl_vat.to_f).to eq(10.1)
-      expect(table_row.total_fees_excl_vat.to_f).to eq(0.1)
-      expect(table_row.total_vat_on_fees.to_f).to eq(0.01)
+      expect(table_row.total_fees_excl_tax.to_f).to eq(0.1)
+      expect(table_row.total_tax_on_fees.to_f).to eq(0.01)
       expect(table_row.total_tax.to_f).to eq(0.1)
       expect(table_row.total.to_f).to eq(10.21)
     end

@@ -3332,11 +3332,11 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_total_units: Total Units
   report_header_sum_max_total: "Sum Max Total"
   report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
-  report_header_total_fees_excl_vat: "Total fees excl. tax (%{currency_symbol})"
-  report_header_total_vat_on_fees: "Total tax on fees (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Total fees excl. tax (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Total tax on fees (%{currency_symbol})"
   report_header_total: "Total (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
-  report_header_total_excl_vat_and_fees: "Total excl. fees and tax (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Total excl. fees and tax (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed

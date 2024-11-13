@@ -40,10 +40,10 @@ module Reporting
             product:,
             variant_unit_name:,
             quantity:,
-            total_excl_vat_and_fees:,
+            total_excl_fees_and_tax:,
             total_excl_vat:,
-            total_fees_excl_vat:,
-            total_vat_on_fees:,
+            total_fees_excl_tax:,
+            total_tax_on_fees:,
             total_tax:,
             total:,
           }
@@ -58,10 +58,10 @@ module Reporting
                 summary_hash = Hash.new(0)
 
                 line_items.each do |line_item|
-                  summary_hash[:total_excl_vat_and_fees] += total_excl_vat_and_fees.call(line_item)
+                  summary_hash[:total_excl_fees_and_tax] += total_excl_fees_and_tax.call(line_item)
                   summary_hash[:total_excl_vat] += total_excl_vat.call(line_item)
-                  summary_hash[:total_fees_excl_vat] += total_fees_excl_vat.call(line_item)
-                  summary_hash[:total_vat_on_fees] += total_vat_on_fees.call(line_item)
+                  summary_hash[:total_fees_excl_tax] += total_fees_excl_tax.call(line_item)
+                  summary_hash[:total_tax_on_fees] += total_tax_on_fees.call(line_item)
                   summary_hash[:total_tax] += total_tax.call(line_item)
                   summary_hash[:total] += total.call(line_item)
                 end

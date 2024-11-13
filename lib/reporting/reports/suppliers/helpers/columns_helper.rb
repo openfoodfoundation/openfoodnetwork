@@ -71,7 +71,7 @@ module Reporting
             proc { |line_item| line_item.quantity }
           end
 
-          def total_excl_vat_and_fees
+          def total_excl_fees_and_tax
             proc do |line_item|
               included_tax = adjustments_by_type(line_item, :tax, included: true)
               line_item.amount - included_tax
@@ -81,18 +81,18 @@ module Reporting
           def total_excl_vat
             proc do |line_item|
               total_fees = adjustments_by_type(line_item, :fees)
-              total_excl_vat_and_fees.call(line_item) + total_fees
+              total_excl_fees_and_tax.call(line_item) + total_fees
             end
           end
 
-          def total_fees_excl_vat
+          def total_fees_excl_tax
             proc do |line_item|
               included_tax = tax_on_fees(line_item, included: true)
               adjustments_by_type(line_item, :fees) - included_tax
             end
           end
 
-          def total_vat_on_fees
+          def total_tax_on_fees
             proc { |line_item| tax_on_fees(line_item) }
           end
 
@@ -107,9 +107,9 @@ module Reporting
 
           def total
             proc do |line_item|
-              total_price = total_excl_vat_and_fees.call(line_item)
-              total_fees = total_fees_excl_vat.call(line_item)
-              total_fees_tax = total_vat_on_fees.call(line_item)
+              total_price = total_excl_fees_and_tax.call(line_item)
+              total_fees = total_fees_excl_tax.call(line_item)
+              total_fees_tax = total_tax_on_fees.call(line_item)
               tax = total_tax.call(line_item)
 
               total_price + total_fees + total_fees_tax + tax
