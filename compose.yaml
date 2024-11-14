@@ -22,6 +22,8 @@ services:
       - .:/usr/src/app
       - gems:/bundles
       - ./config/database.yml:/usr/src/app/config/database.yml
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     depends_on:
       - db
       - redis
