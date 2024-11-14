@@ -3,7 +3,7 @@
 require 'spec_helper'
 require_relative '../../db/migrate/20241011071014_update_item_name_to_product_in_od_report'
 
-RSpec.describe UpdateItemNameToProductInODReport, type: :migration do
+RSpec.describe UpdateItemNameToProductInOdReport, type: :migration do
   let!(:report_option_without_item_name_product) do
     create(
       :orders_and_distributors_options,
