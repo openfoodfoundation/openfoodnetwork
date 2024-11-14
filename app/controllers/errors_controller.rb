@@ -7,7 +7,7 @@ class ErrorsController < ApplicationController
     Bugsnag.notify("404") do |event|
       event.severity = "info"
 
-      event.add_metadata(:request, request.env)
+      event.add_metadata(:request, :env, request.env)
     end
     render status: :not_found, formats: :html
   end
