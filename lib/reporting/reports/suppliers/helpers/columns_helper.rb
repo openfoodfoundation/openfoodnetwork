@@ -93,7 +93,7 @@ module Reporting
           end
 
           def total_tax_on_fees
-            proc { |line_item| tax_on_fees(line_item) }
+            proc { |line_item| tax_on_fees(line_item) + tax_on_fees(line_item, included: true) }
           end
 
           def total_tax
