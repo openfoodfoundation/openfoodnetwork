@@ -21,7 +21,8 @@ Note: There is no need to install Docker Desktop on Linux.
 * You may have to deselect the option to use Docker Compose V2 in Docker settings to make our scripts work.
 
 ## Getting Started
-### Linux
+
+1. **Clone the Repository**:
 * Open a terminal with a shell.
 * Clone the repository. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), begin by forking this repo with the Fork button in the top-right corner of this screen.
 * Use git clone to copy your fork onto your local machine.
@@ -32,88 +33,50 @@ $ git clone https://github.com/YOUR_GITHUB_USERNAME_HERE/openfoodnetwork
 ```sh
 $ git clone git@github.com:openfoodfoundation/openfoodnetwork.git
 ```
-* Go at the root of the app:
-```sh
-$ cd openfoodnetwork
-```
-* You have two choices of images you can build. The default Ubuntu image is most similar to the production servers but is larger in size and will take longer to build. Alternatively, you can use the Alpine image which is smaller, faster to setup, and should be compatible with the Ubuntu. To download the Ubuntu Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
-```sh
-$ docker/build
-```
-* To use the alpine image to start with append the name of the Dockerfile:
-```sh
-$ docker/build alpine.Dockerfile
-```
-* Run the Rails server and its required Docker containers:
-```sh
-$ docker/server
-```
-* Alternatively, you can run the server in detached mode. This will return you to the terminal prompt without stopping the server. No logs will be displayed:
-```sh
-$ docker compose up -d
-```
-* To stop the server, run:
-```sh
-$ docker compose down
-```
-* To access the server logs, run:
-```sh
-$ docker compose logs -f
-```
-* To run tests or access the server directly, you can use bash:
-```sh
-$ docker compose exec web bash
-```
-* The default admin user is 'ofn@example.com' with the password 'ofn123'.
-* View the app in the browser at `http://localhost:3000`.
-* You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
-* You can find some useful tips and commands [here](https://github.com/openfoodfoundation/openfoodnetwork/wiki/Docker:-useful-tips-and-commands).
 
-### Windows
-* Prerequisite : don't forget to activate the execution of powershell scripts following the instruction on [this page chosing "Using RemoteSigned Execution Policy"](https://shellgeek.com/powershell-fix-running-scripts-is-disabled-on-this-system/)
-* Open a terminal with a shell command.
-* Clone the repository. If you're planning on contributing code to the project (which we [LOVE](CONTRIBUTING.md)), begin by forking this repo with the Fork button in the top-right corner of this screen.
-* Use git clone to copy your fork onto your local machine.
-```command
-$ git clone https://github.com/YOUR_GITHUB_USERNAME_HERE/openfoodnetwork
-```
-* Otherwise, if you just want to get things running, clone from the OFN main repo:
-```command
-$ git clone git@github.com:openfoodfoundation/openfoodnetwork.git
-```
-* Go at the root of the app:
-```command
+2. **Navigate to the App Directory**:
+```sh
 $ cd openfoodnetwork
 ```
-* You have two choices of images you can build. The default Ubuntu image is most similar to the production servers but is larger in size and will take longer to build. Alternatively, you can use the Alpine image which is smaller, faster to setup, and should be compatible with the Ubuntu. To download the Ubuntu Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
-```command
-$ docker/build.ps1
-```
-* To use the alpine image to start with append the name of the Dockerfile:
-```sh
-$ docker/build.ps1 alpine.Dockerfile
-```
+
+3. **Choose and Build Docker Image**:
+* You have two choices of images you can build. The default Ubuntu image is most similar to the production servers but is larger in size and will take longer to build. Alternatively, you can use the Alpine image which is smaller, faster to setup, and should be compatible with the Ubuntu. However, it will need to be updated when ruby is updated. To download the Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
+  - **Ubuntu Image** (larger, production-like):
+    - **Linux**:
+    ```sh
+    $ docker/build
+    ```
+    - **Windows**:
+    ```command
+    $ docker/build.ps1
+    ```
+  - **Alpine Image** (smaller, faster):
+    - **Linux**:
+    ```sh
+    $ docker/build alpine.Dockerfile
+    ```
+    - **Windows**:
+    ```command
+    $ docker/build.ps1 alpine.Dockerfile
+    ```
+
+4. **Run the Rails Server**:
 * Run the Rails server and its required Docker containers:
-```command
-$ docker/server.ps1
-```
-* Alternatively, you can run the server in detached mode. This will return you to the terminal prompt without stopping the server. No logs will be displayed:
-```sh
-$ docker compose up -d
-```
-* To stop the server, run:
-```sh
-$ docker compose down
-```
-* To access the server logs, run:
-```sh
-$ docker compose logs -f
-```
-* To run tests or access the server directly, you can use bash:
-```sh
-$ docker compose exec web bash
-```
-You may need to wait several minutes before getting the server up and running properly.
+  - **Linux**:
+  ```sh
+  $ docker/server
+  ```
+  - **Windows**:
+  ```command
+  $ docker/server.ps1
+  ```
+  * To run tests or access the server directly, you can use bash:
+  ```sh
+  $ docker compose exec web bash
+  ```
+
+> **Note**: Windows users may need to enable PowerShell script execution by setting the RemoteSigned policy. See instructions [here](https://shellgeek.com/powershell-fix-running-scripts-is-disabled-on-this-system/).
+
 * The default admin user is 'ofn@example.com' with the password 'ofn123'.
 * View the app in the browser at `http://localhost:3000`.
 * You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
