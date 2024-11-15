@@ -297,7 +297,7 @@ module ProductImport
         unscaled_units = entry.unscaled_units.to_f || 0
         entry.unit_value = unscaled_units * unit_scale unless unit_scale.nil?
 
-        if entry.match_inventory_variant?(existing_variant)
+        if entry.match_variant?(existing_variant)
           variant_override = create_inventory_item(entry, existing_variant)
           return validate_inventory_item(entry, variant_override)
         end
