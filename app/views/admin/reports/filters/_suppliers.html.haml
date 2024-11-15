@@ -1,0 +1,14 @@
+= render 'admin/reports/date_range_form', f: f
+
+.row
+  .alpha.two.columns= label_tag nil, t(:report_hubs)
+  .omega.fourteen.columns= f.collection_select(:distributor_id_in, @data.orders_distributors, :id, :name, {}, {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:report_producers)
+  .omega.fourteen.columns= select_tag(:supplier_id_in, options_from_collection_for_select(@data.orders_suppliers, :id, :name, params[:supplier_id_in]), {class: "select2 fullwidth", multiple: true})
+
+.row
+  .alpha.two.columns= label_tag nil, t(:report_customers_cycle)
+  .omega.fourteen.columns
+    = f.select(:order_cycle_id_in, report_order_cycle_options(@data.order_cycles), {selected: params.dig(:q, :order_cycle_id_in)}, {class: "select2 fullwidth", multiple: true})
