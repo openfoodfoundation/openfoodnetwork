@@ -64,14 +64,6 @@ products .filter-box {
   li.active a {
     color: $clr-brick;
 
-    render-svg {
-      svg {
-        path {
-          fill: $clr-brick;
-        }
-      }
-    }
-
     &:hover, &:focus {
       border-color: $clr-brick-bright;
     }
@@ -102,43 +94,10 @@ products .filter-box {
 
     &:hover, &:focus {
       color: $clr-brick-bright;
-
-      render-svg {
-        svg {
-          path {
-            fill: $clr-brick-bright;
-          }
-        }
-      }
     }
 
     &:active, &.active {
       color: $clr-brick;
-
-      render-svg {
-        svg {
-          path {
-            fill: $clr-brick;
-          }
-        }
-      }
-    }
-
-    render-svg {
-      display: block;
-      width: 1.5rem;
-      height: 1.5rem;
-      margin: 0 0.2rem 0 0;
-      padding: 0;
-
-      svg {
-        width: 1.5rem;
-        height: 1.5rem;
-
-        path {
-          fill: #666;
-        }
-      }
     }
   }
 }
