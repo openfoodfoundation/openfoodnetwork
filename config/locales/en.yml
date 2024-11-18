@@ -576,13 +576,11 @@ en:
   payment_could_not_complete: "The payment could not be completed"
   vine_voucher_validator_service:
     errors:
-      vine_settings: "This shop is not enabled for VINE Vouchers." 
       vine_api: "There was an error communicating with the API, please try again later."
       invalid_voucher: "The voucher is not valid"
       not_found_voucher: "Sorry, we couldn't find that voucher, please check the code."
   vine_voucher_redeemer_service:
     errors:
-      vine_settings: "No Vine api settings for the given enterprise" 
       vine_api: "There was an error communicating with the API"
       redeeming_failed: "Redeeming the voucher failed"
   actions:
