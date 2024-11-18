@@ -11,19 +11,14 @@ module Vine
     end
 
     def validate
-      if vine_settings.nil?
-        errors[:vine_settings] = I18n.t("vine_voucher_validator_service.errors.vine_settings")
-        return nil
-      end
+      return nil if vine_settings.nil?
 
       response = call_vine_api
 
-      if !response.success?
-        handle_errors(response)
-        return nil
-      end
-
       save_voucher(response)
+    rescue Faraday::ClientError => e
+      handle_errors(e.response)
+      nil
     rescue Faraday::Error => e
       Rails.logger.error e.inspect
       Bugsnag.notify(e)
@@ -47,9 +42,9 @@ module Vine
     end
 
     def handle_errors(response)
-      if response.status == 400
+      if response[:status] == 400
         errors[:invalid_voucher] = I18n.t("vine_voucher_validator_service.errors.invalid_voucher")
-      elsif response.status == 404
+      elsif response[:status] == 404
         errors[:not_found_voucher] =
           I18n.t("vine_voucher_validator_service.errors.not_found_voucher")
       else

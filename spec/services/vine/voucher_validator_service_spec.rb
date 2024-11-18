@@ -42,15 +42,15 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       let(:vine_voucher_set_id) { "9d24349c-1fe8-4090-988b-d7355ed32559" }
 
       it "verifies the voucher with VINE API" do
-        expect(vine_api_service).to receive(:voucher_validation)
-          .and_return(mock_api_response(success: true, data:))
+        expect(vine_api_service).to receive(:voucher_validation).and_return(
+          mock_api_response(data:)
+        )
 
         validate_voucher_service.validate
       end
 
       it "creates a new VINE voucher" do
-        allow(vine_api_service).to receive(:voucher_validation)
-          .and_return(mock_api_response(success: true, data:))
+        allow(vine_api_service).to receive(:voucher_validation).and_return(mock_api_response(data:))
 
         vine_voucher = validate_voucher_service.validate
 
@@ -88,7 +88,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
                                                    external_voucher_id: vine_voucher_id,
                                                    external_voucher_set_id: vine_voucher_set_id)
           allow(vine_api_service).to receive(:voucher_validation)
-            .and_return(mock_api_response(success: true, data:))
+            .and_return(mock_api_response(data:))
 
           vine_voucher = validate_voucher_service.validate
 
@@ -129,7 +129,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
                                                    external_voucher_id: vine_voucher_id,
                                                    external_voucher_set_id: vine_voucher_set_id)
           allow(vine_api_service).to receive(:voucher_validation)
-            .and_return(mock_api_response(success: true, data:))
+            .and_return(mock_api_response(data:))
 
           vine_voucher = validate_voucher_service.validate
 
@@ -155,14 +155,6 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
         validate_voucher_service.validate
       end
 
-      it "adds an error message" do
-        validate_voucher_service.validate
-
-        expect(validate_voucher_service.errors).to include(
-          { vine_settings: "This shop is not enabled for VINE Vouchers." }
-        )
-      end
-
       it "doesn't creates a new VINE voucher" do
         expect_voucher_count_not_to_change
       end
@@ -176,7 +168,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       }
 
       before do
-        allow(vine_api_service).to receive(:voucher_validation).and_raise(Faraday::ConnectionFailed)
+        mock_api_exception(type: Faraday::ConnectionFailed)
       end
 
       it "returns nil" do
@@ -218,9 +210,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       }
 
       before do
-        allow(vine_api_service).to receive(:voucher_validation).and_return(
-          mock_api_response(success: false, status: 401, data: )
-        )
+        mock_api_exception(type: Faraday::UnauthorizedError, status: 401, body: data)
       end
 
       it "returns nil" do
@@ -254,9 +244,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       }
 
       before do
-        allow(vine_api_service).to receive(:voucher_validation).and_return(
-          mock_api_response(success: false, status: 404, data: )
-        )
+        mock_api_exception(type: Faraday::ResourceNotFound, status: 404, body: data)
       end
 
       it "returns nil" do
@@ -290,9 +278,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
       }
 
       before do
-        allow(vine_api_service).to receive(:voucher_validation).and_return(
-          mock_api_response(success: false, status: 400, data: )
-        )
+        mock_api_exception(type: Faraday::BadRequestError, status: 400, body: data)
       end
 
       it "returns nil" do
@@ -339,7 +325,7 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
 
       before do
         allow(vine_api_service).to receive(:voucher_validation).and_return(
-          mock_api_response(success: true, status: 200, data: )
+          mock_api_response(data: )
         )
       end
 
@@ -384,13 +370,13 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
 
       before do
         allow(vine_api_service).to receive(:voucher_validation).and_return(
-          mock_api_response(success: true, status: 200, data: )
+          mock_api_response(data: )
         )
       end
 
       it "verify the voucher with VINE API" do
         expect(vine_api_service).to receive(:voucher_validation).and_return(
-          mock_api_response(success: true, status: 200, data: )
+          mock_api_response(data: )
         )
 
         validate_voucher_service.validate
@@ -445,13 +431,16 @@ RSpec.describe Vine::VoucherValidatorService, feature: :connected_apps do
     expect { validate_voucher_service.validate }.not_to change { Voucher.count }
   end
 
-  def mock_api_response(success:, data: nil, status: 200)
+  def mock_api_response(data: nil)
     mock_response = instance_double(Faraday::Response)
-    allow(mock_response).to receive(:success?).and_return(success)
-    allow(mock_response).to receive(:status).and_return(status)
     if data.present?
       allow(mock_response).to receive(:body).and_return(data)
     end
     mock_response
+  end
+
+  def mock_api_exception(type: Faraday::Error, status: 503, body: nil)
+    allow(vine_api_service).to receive(:voucher_validation).and_raise(type.new(nil,
+                                                                               { status:, body: }) )
   end
 end

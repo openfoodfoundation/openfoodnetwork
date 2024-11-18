@@ -118,10 +118,7 @@ RSpec.describe VoucherAdjustmentsController, type: :request do
 
         context "when coordinator is not connected to VINE" do
           it "returns 422 and an error message" do
-            mock_vine_voucher_validator(
-              voucher: nil,
-              errors: { vine_settings: "No Vine api settings for the given enterprise" }
-            )
+            mock_vine_voucher_validator(voucher: nil)
 
             post("/voucher_adjustments", params:)
 

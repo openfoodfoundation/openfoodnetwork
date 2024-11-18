@@ -91,19 +91,14 @@ class VoucherAdjustmentsController < BaseController
     )
     voucher = vine_voucher_validator.validate
 
-    if vine_voucher_validator.errors.present?
-      return nil if ignored_vine_api_error(vine_voucher_validator)
+    return nil if vine_voucher_validator.errors[:not_found_voucher].present?
 
+    if vine_voucher_validator.errors.present?
       @order.errors.add(:voucher_code, I18n.t('checkout.errors.add_voucher_error'))
       return nil
     end
 
     voucher
-  end
-
-  def ignored_vine_api_error(validator)
-    # Ignore distributor not set up for VINE or not found error
-    validator.errors[:vine_settings].present? || validator.errors[:not_found_voucher].present?
   end
 
   def update_payment_section
