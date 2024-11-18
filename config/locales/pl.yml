@@ -2294,6 +2294,7 @@ pl:
   report_header_quantity: Ilość
   report_header_max_quantity: Maksymalna ilość
   report_header_variant: Wariant
+  report_header_variant_unit_name: Nazwa jednostki wariantu
   report_header_variant_value: Wartość wariantu
   report_header_variant_unit: Jednostka wariantu
   report_header_total_available: Całkowicie dostęny

@@ -2791,6 +2791,7 @@ ca:
   report_header_quantity: Quantitat
   report_header_max_quantity: Quantitat màxima
   report_header_variant: Variant
+  report_header_variant_unit_name: Nom de la unitat de la variant
   report_header_variant_value: Valor de la variant
   report_header_variant_unit: Unitat de la variant
   report_header_total_available: Total disponible

@@ -2993,6 +2993,7 @@ ru:
   report_header_quantity: Количество
   report_header_max_quantity: Max Количество
   report_header_variant: Вариант
+  report_header_variant_unit_name: Название Единицы Варианта
   report_header_variant_value: Значение Варианта
   report_header_variant_unit: Единица Варианта
   report_header_total_available: Всего доступно

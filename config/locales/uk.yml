@@ -2714,6 +2714,7 @@ uk:
   report_header_quantity: Кількість
   report_header_max_quantity: Максимальна кількість
   report_header_variant: Варіант
+  report_header_variant_unit_name: Назва варіанта одиниці
   report_header_variant_value: Значення Варіанту
   report_header_variant_unit: Варіант одиниці
   report_header_total_available: Всього доступно
