@@ -12,7 +12,7 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
 
   let(:vine_voucher) {
     create(:vine_voucher, code: 'some_code', enterprise: distributor,
-                          amount: 6, external_voucher_id: voucher_id,
+                          amount: 50, external_voucher_id: voucher_id,
                           external_voucher_set_id: voucher_set_id )
   }
   let(:voucher_id) { "9d316d27-0dad-411a-8953-316a1aaf7742" }
@@ -56,8 +56,9 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
       before { add_voucher(vine_voucher) }
 
       it "redeems the voucher with VINE" do
+        # Order pre discount total is $10, so we expect to redeen 1000 cents
         expect(vine_api_service).to receive(:voucher_redemptions)
-          .with(voucher_id, voucher_set_id, 600)
+          .with(voucher_id, voucher_set_id, 1000)
           .and_return(mock_api_response(data:))
 
         voucher_redeemer_service.redeem

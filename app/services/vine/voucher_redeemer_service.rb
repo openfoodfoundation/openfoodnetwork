@@ -11,16 +11,16 @@ module Vine
 
     def redeem
       # Do nothing if we don't have a vine voucher added to the order
-      voucher_adjustment = order.voucher_adjustments.first
-      @voucher = voucher_adjustment&.originator
+      @voucher_adjustment = order.voucher_adjustments.first
+      @voucher = @voucher_adjustment&.originator
 
-      return true if voucher_adjustment.nil? || !@voucher.is_a?(Vouchers::Vine)
+      return true if @voucher_adjustment.nil? || !@voucher.is_a?(Vouchers::Vine)
 
       return false if vine_settings.nil?
 
       call_vine_api
 
-      voucher_adjustment.close
+      @voucher_adjustment.close
 
       true
     rescue Faraday::ClientError => e
@@ -44,9 +44,10 @@ module Vine
       jwt_service = Vine::JwtService.new(secret: vine_settings["secret"])
       vine_api = Vine::ApiService.new(api_key: vine_settings["api_key"], jwt_generator: jwt_service)
 
-      # Voucher amount is stored in dollars, VINE expect cents
+      # Voucher adjustment amount is stored in dollars and negative, VINE expect cents
+      amount = -1 * @voucher_adjustment.amount * 100
       vine_api.voucher_redemptions(
-        @voucher.external_voucher_id, @voucher.external_voucher_set_id, (@voucher.amount * 100)
+        @voucher.external_voucher_id, @voucher.external_voucher_set_id, amount
       )
     end
 
