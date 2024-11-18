@@ -16,21 +16,16 @@ module Vine
 
       return true if voucher_adjustment.nil? || !@voucher.is_a?(Vouchers::Vine)
 
-      if vine_settings.nil?
-        errors[:vine_settings] = I18n.t("vine_voucher_redeemer_service.errors.vine_settings")
-        return false
-      end
+      return false if vine_settings.nil?
 
-      response = call_vine_api
-
-      if !response.success?
-        handle_errors(response)
-        return false
-      end
+      call_vine_api
 
       voucher_adjustment.close
 
       true
+    rescue Faraday::ClientError => e
+      handle_errors(e.response)
+      false
     rescue Faraday::Error => e
       Rails.logger.error e.inspect
       Bugsnag.notify(e)
@@ -42,7 +37,7 @@ module Vine
     private
 
     def vine_settings
-      ConnectedApps::Vine.find_by(enterprise: order.distributor)&.data
+      @vine_settings ||= ConnectedApps::Vine.find_by(enterprise: order.distributor)&.data
     end
 
     def call_vine_api
@@ -56,7 +51,7 @@ module Vine
     end
 
     def handle_errors(response)
-      if response.status == 400
+      if response[:status] == 400
         errors[:redeeming_failed] = I18n.t("vine_voucher_redeemer_service.errors.redeeming_failed")
       else
         errors[:vine_api] = I18n.t("vine_voucher_redeemer_service.errors.vine_api")

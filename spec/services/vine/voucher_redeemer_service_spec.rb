@@ -58,14 +58,14 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
       it "redeems the voucher with VINE" do
         expect(vine_api_service).to receive(:voucher_redemptions)
           .with(voucher_id, voucher_set_id, 600)
-          .and_return(mock_api_response(success: true, data:))
+          .and_return(mock_api_response(data:))
 
         voucher_redeemer_service.redeem
       end
 
       it "closes the linked assement" do
         allow(vine_api_service).to receive(:voucher_redemptions)
-          .and_return(mock_api_response(success: true, data:))
+          .and_return(mock_api_response(data:))
 
         expect {
           voucher_redeemer_service.redeem
@@ -74,7 +74,7 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
 
       it "returns true" do
         allow(vine_api_service).to receive(:voucher_redemptions)
-          .and_return(mock_api_response(success: true, data:))
+          .and_return(mock_api_response(data:))
 
         expect(voucher_redeemer_service.redeem).to be(true)
       end
@@ -87,8 +87,7 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
           }.deep_stringify_keys
         }
         before do
-          allow(vine_api_service).to receive(:voucher_redemptions)
-            .and_return(mock_api_response(success: false, data:, status: 400))
+          mock_api_exception(type: Faraday::BadRequestError, status: 400, body: data)
         end
 
         it "doesn't close the linked assement" do
@@ -124,14 +123,6 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
         voucher_redeemer_service.redeem
       end
 
-      it "adds an error message" do
-        voucher_redeemer_service.redeem
-
-        expect(voucher_redeemer_service.errors).to include(
-          { vine_settings: "No Vine api settings for the given enterprise" }
-        )
-      end
-
       it "doesn't close the linked assement" do
         expect {
           voucher_redeemer_service.redeem
@@ -139,7 +130,6 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
       end
     end
 
-    # TODO should we set an error or just do nothing ?
     context "when there are no voucher added to the order" do
       let!(:vine_connected_app) {
         ConnectedApps::Vine.create(
@@ -188,7 +178,7 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
 
       before do
         add_voucher(vine_voucher)
-        allow(vine_api_service).to receive(:voucher_redemptions).and_raise(Faraday::Error)
+        mock_api_exception(type: Faraday::ConnectionFailed)
       end
 
       it "returns false" do
@@ -234,9 +224,7 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
       before do
         add_voucher(vine_voucher)
 
-        allow(vine_api_service).to receive(:voucher_redemptions).and_return(
-          mock_api_response(success: false, status: 401, data: )
-        )
+        mock_api_exception(type: Faraday::UnauthorizedError, status: 401, body: data)
       end
 
       it "returns false" do
@@ -264,13 +252,17 @@ RSpec.describe Vine::VoucherRedeemerService, feature: :connected_apps do
     OrderManagement::Order::Updater.new(order).update_voucher
   end
 
-  def mock_api_response(success:, data: nil, status: 200)
+  def mock_api_response(data: nil)
     mock_response = instance_double(Faraday::Response)
-    allow(mock_response).to receive(:success?).and_return(success)
-    allow(mock_response).to receive(:status).and_return(status)
     if data.present?
       allow(mock_response).to receive(:body).and_return(data)
     end
     mock_response
+  end
+
+  def mock_api_exception(type: Faraday::Error, status: 503, body: nil)
+    allow(vine_api_service).to receive(:voucher_redemptions).and_raise(type.new(nil,
+                                                                                { status:,
+                                                                                  body: }) )
   end
 end
