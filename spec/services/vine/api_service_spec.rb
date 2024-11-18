@@ -60,18 +60,7 @@ RSpec.describe Vine::ApiService do
         stub_request(:get, my_team_url).to_return(body: "error", status: 401)
 
         expect(Rails.logger).to receive(:error).with(match("Vine::ApiService#my_team")).twice
-
-        response = vine_api.my_team
-
-        expect(response.success?).to be(false)
-      end
-
-      it "return the response" do
-        stub_request(:get, my_team_url).to_return(body: "error", status: 401)
-        response = vine_api.my_team
-
-        expect(response.success?).to be(false)
-        expect(response.body).not_to be_empty
+        expect { vine_api.my_team }.to raise_error(Faraday::UnauthorizedError)
       end
     end
   end
@@ -126,18 +115,9 @@ RSpec.describe Vine::ApiService do
         expect(Rails.logger).to receive(:error).with(
           match("Vine::ApiService#voucher_validation")
         ).twice
-
-        response = vine_api.voucher_validation(voucher_short_code)
-
-        expect(response.success?).to be(false)
-      end
-
-      it "return the response" do
-        stub_request(:post, voucher_validation_url).to_return(body: "error", status: 401)
-        response = vine_api.voucher_validation(voucher_short_code)
-
-        expect(response.success?).to be(false)
-        expect(response.body).not_to be_empty
+        expect {
+          vine_api.voucher_validation(voucher_short_code)
+        }.to raise_error(Faraday::UnauthorizedError)
       end
     end
   end
@@ -193,19 +173,11 @@ RSpec.describe Vine::ApiService do
 
         expect(Rails.logger).to receive(:error).with(
           match("Vine::ApiService#voucher_redemptions")
-        ).twice
+        ).twice.and_call_original
 
-        response = vine_api.voucher_redemptions(voucher_id, voucher_set_id, amount)
-
-        expect(response.success?).to be(false)
-      end
-
-      it "return the response" do
-        stub_request(:post, voucher_redemptions_url).to_return(body: "error", status: 401)
-        response = vine_api.voucher_redemptions(voucher_id, voucher_set_id, amount)
-
-        expect(response.success?).to be(false)
-        expect(response.body).not_to be_empty
+        expect {
+          vine_api.voucher_redemptions(voucher_id, voucher_set_id, amount)
+        }.to raise_error(Faraday::UnauthorizedError)
       end
     end
   end
