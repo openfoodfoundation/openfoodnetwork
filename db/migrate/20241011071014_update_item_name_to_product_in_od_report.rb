@@ -1,4 +1,6 @@
 class UpdateItemNameToProductInOdReport < ActiveRecord::Migration[7.0]
+  class ReportRenderingOptions < ActiveRecord::Base; end
+
   # OD: Orders and Distributors
   def up
     # adding subtype filter just to be safe
