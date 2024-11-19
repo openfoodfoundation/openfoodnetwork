@@ -161,7 +161,7 @@ module ProductImport
     end
 
     def unit_fields_validation(entry)
-      unit_types = ['g', 'oz', 'lb', 'kg', 't', 'ml', 'l', 'kl', '']
+      unit_types = ['mg', 'g', 'kg', 'oz', 'lb', 't', 'ml', 'cl', 'dl', 'l', 'kl', 'gal', '']
 
       if entry.units.blank?
         mark_as_invalid(entry, attribute: 'units',

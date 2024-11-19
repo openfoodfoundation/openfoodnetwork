@@ -32,14 +32,18 @@ module ProductImport
 
     def unit_scales
       {
+        'mg' => { scale: 0.001, unit: 'weight' },
         'g' => { scale: 1, unit: 'weight' },
         'kg' => { scale: 1000, unit: 'weight' },
         'oz' => { scale: 28.35, unit: 'weight' },
         'lb' => { scale: 453.6, unit: 'weight' },
         't' => { scale: 1_000_000, unit: 'weight' },
         'ml' => { scale: 0.001, unit: 'volume' },
+        'cl' => { scale: 0.01, unit: 'volume' },
+        'dl' => { scale: 0.1, unit: 'volume' },
         'l' => { scale: 1, unit: 'volume' },
-        'kl' => { scale: 1000, unit: 'volume' }
+        'kl' => { scale: 1000, unit: 'volume' },
+        'gal' => { scale: 4.54609, unit: 'volume' },
       }
     end
 
