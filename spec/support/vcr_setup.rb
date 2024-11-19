@@ -11,6 +11,7 @@ VCR.configure do |config|
 
   # Filter sensitive environment variables
   %w[
+    BUGSNAG_API_KEY
     STRIPE_INSTANCE_SECRET_KEY
     STRIPE_CUSTOMER
     STRIPE_ACCOUNT

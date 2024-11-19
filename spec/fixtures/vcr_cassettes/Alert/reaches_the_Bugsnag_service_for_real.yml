@@ -1,0 +1,291 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://notify.bugsnag.com/
+    body:
+      encoding: UTF-8
+      string: '{"apiKey":"<HIDDEN-BUGSNAG_API_KEY>","notifier":{"name":"Ruby Bugsnag
+        Notifier","version":"6.26.4","url":"https://www.bugsnag.com"},"payloadVersion":"4.0","events":[{"app":{"version":null,"releaseStage":"test","type":"rails"},"breadcrumbs":[{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.385Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.387Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.389Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.390Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.437Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.492Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.527Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.546Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.585Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.593Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.796Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.814Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.886Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"Spree::Country Exists?","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","binds":"{\"name\":\"?\",\"LIMIT\":\"?\"}","connection_id":42100},"timestamp":"2024-11-20T04:51:11.888Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"Spree::Country Exists?","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","binds":"{\"name\":\"?\",\"LIMIT\":\"?\"}","connection_id":42100},"timestamp":"2024-11-20T04:51:11.890Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.890Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"Spree::Country Load","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","binds":"{\"name\":\"?\",\"LIMIT\":\"?\"}","connection_id":42100},"timestamp":"2024-11-20T04:51:11.891Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.894Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.901Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"SCHEMA","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.904Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"Spree::Preference Load","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","binds":"{\"key\":\"?\",\"LIMIT\":\"?\"}","connection_id":42100},"timestamp":"2024-11-20T04:51:11.905Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"Spree::Country Load","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","binds":"{\"iso\":\"?\",\"LIMIT\":\"?\"}","connection_id":42100},"timestamp":"2024-11-20T04:51:11.933Z"},{"name":"Read
+        cache","type":"process","metaData":{"hit":true,"event_name":"cache_read.active_support","event_id":"4779ed9ba580ae3d3290"},"timestamp":"2024-11-20T04:51:11.933Z"},{"name":"Read
+        cache","type":"process","metaData":{"hit":true,"event_name":"cache_read.active_support","event_id":"4779ed9ba580ae3d3290"},"timestamp":"2024-11-20T04:51:11.933Z"},{"name":"ActiveRecord
+        SQL query","type":"process","metaData":{"name":"TRANSACTION","event_name":"sql.active_record","event_id":"4779ed9ba580ae3d3290","connection_id":42100},"timestamp":"2024-11-20T04:51:11.970Z"}],"device":{"hostname":"blackbox","runtimeVersions":{"ruby":"3.1.4","rails":"7.0.8","rack":"2.2.9"},"time":"2024-11-20T04:51:11.978Z"},"exceptions":[{"errorClass":"RuntimeError","message":"Testing
+        Bugsnag from RSpec","stacktrace":[{"lineNumber":129,"file":"gems/bugsnag-6.26.4/lib/bugsnag/report.rb","method":"initialize","code":{"126":"      self.configuration
+        = passed_configuration","127":"","128":"      @original_error = exception","129":"      self.raw_exceptions
+        = generate_raw_exceptions(exception)","130":"      self.exceptions = generate_exception_list","131":"      @errors
+        = generate_error_list","132":""}},{"lineNumber":90,"file":"gems/bugsnag-6.26.4/lib/bugsnag.rb","method":"new","code":{"87":"","88":"      exception
+        = NIL_EXCEPTION_DESCRIPTION if exception.nil?","89":"","90":"      report
+        = Report.new(exception, configuration, auto_notify)","91":"","92":"      #
+        If this is an auto_notify we yield the block before the any middleware is
+        run","93":"      begin"}},{"lineNumber":90,"file":"gems/bugsnag-6.26.4/lib/bugsnag.rb","method":"notify","code":{"87":"","88":"      exception
+        = NIL_EXCEPTION_DESCRIPTION if exception.nil?","89":"","90":"      report
+        = Report.new(exception, configuration, auto_notify)","91":"","92":"      #
+        If this is an auto_notify we yield the block before the any middleware is
+        run","93":"      begin"}},{"lineNumber":29,"inProject":true,"file":"app/services/alert.rb","method":"raise","code":{"26":"  #     }","27":"  #   )","28":"  def
+        self.raise(error, metadata = {}, &block)","29":"    Bugsnag.notify(error)
+        do |payload|","30":"      metadata.each do |name, data|","31":"        payload.add_metadata(name,
+        data)","32":"      end"}},{"lineNumber":34,"inProject":true,"file":"spec/services/alert_spec.rb","method":"block
+        (2 levels) in <main>","code":{"31":"      config.delivery_method = :synchronous","32":"    end","33":"","34":"    Alert.raise(","35":"      \"Testing
+        Bugsnag from RSpec\",","36":"      { RSpec: { file: __FILE__ }, env: { BUGSNAG:
+        ENV[\"BUGSNAG\"] } }","37":"    )"}},{"lineNumber":263,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"instance_exec","code":{"260":"              begin","261":"                run_before_example","262":"                RSpec.current_scope
+        = :example","263":"                @example_group_instance.instance_exec(self,
+        &@example_block)","264":"","265":"                if pending?","266":"                  Pending.mark_fixed!
+        self"}},{"lineNumber":263,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"block
+        in run","code":{"260":"              begin","261":"                run_before_example","262":"                RSpec.current_scope
+        = :example","263":"                @example_group_instance.instance_exec(self,
+        &@example_block)","264":"","265":"                if pending?","266":"                  Pending.mark_fixed!
+        self"}},{"lineNumber":511,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"block
+        in with_around_and_singleton_context_hooks","code":{"508":"      def with_around_and_singleton_context_hooks","509":"        singleton_context_hooks_host
+        = example_group_instance.singleton_class","510":"        singleton_context_hooks_host.run_before_context_hooks(example_group_instance)","511":"        with_around_example_hooks
+        { yield }","512":"      ensure","513":"        singleton_context_hooks_host.run_after_context_hooks(example_group_instance)","514":"      end"}},{"lineNumber":468,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"block
+        in with_around_example_hooks","code":{"465":"","466":"      def with_around_example_hooks","467":"        RSpec.current_scope
+        = :before_example_hook","468":"        hooks.run(:around, :example, self)
+        { yield }","469":"      rescue Support::AllExceptionsExceptOnesWeMustNotRescue
+        => e","470":"        set_exception(e)","471":"      end"}},{"lineNumber":486,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"block
+        in run","code":{"483":"            case position","484":"            when
+        :before then run_example_hooks_for(example_or_group, :before, :reverse_each)","485":"            when
+        :after  then run_example_hooks_for(example_or_group, :after,  :each)","486":"            when
+        :around then run_around_example_hooks_for(example_or_group) { yield }","487":"            end","488":"          end","489":"        end"}},{"lineNumber":626,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"block
+        in run_around_example_hooks_for","code":{"623":"","624":"          return
+        yield if hooks.empty? # exit early to avoid the extra allocation cost of `Example::Procsy`","625":"","626":"          initial_procsy
+        = Example::Procsy.new(example) { yield }","627":"          hooks.inject(initial_procsy)
+        do |procsy, around_hook|","628":"            procsy.wrap { around_hook.execute_with(example,
+        procsy) }","629":"          end.call"}},{"lineNumber":352,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"call","code":{"349":"        #
+        Calls the proc and notes that the example has been executed.","350":"        def
+        call(*args, &block)","351":"          @executed = true","352":"          @proc.call(*args,
+        &block)","353":"        end","354":"        alias run call","355":""}},{"lineNumber":75,"file":"gems/rspec-rails-6.1.2/lib/rspec/rails/adapters.rb","method":"block
+        (2 levels) in <module:MinitestLifecycleAdapter>","code":{"72":"","73":"        group.around
+        do |example|","74":"          before_setup","75":"          example.run","76":"          after_teardown","77":"        end","78":"      end"}},{"lineNumber":457,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"instance_exec","code":{"454":"","455":"      #
+        @private","456":"      def instance_exec(*args, &block)","457":"        @example_group_instance.instance_exec(*args,
+        &block)","458":"      end","459":"","460":"    private"}},{"lineNumber":457,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"instance_exec","code":{"454":"","455":"      #
+        @private","456":"      def instance_exec(*args, &block)","457":"        @example_group_instance.instance_exec(*args,
+        &block)","458":"      end","459":"","460":"    private"}},{"lineNumber":390,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"execute_with","code":{"387":"      #
+        @private","388":"      class AroundHook < Hook","389":"        def execute_with(example,
+        procsy)","390":"          example.instance_exec(procsy, &block)","391":"          return
+        if procsy.executed?","392":"          Pending.mark_skipped!(example,","393":"                                \"#{hook_description}
+        did not execute the example\")"}},{"lineNumber":628,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"block
+        (2 levels) in run_around_example_hooks_for","code":{"625":"","626":"          initial_procsy
+        = Example::Procsy.new(example) { yield }","627":"          hooks.inject(initial_procsy)
+        do |procsy, around_hook|","628":"            procsy.wrap { around_hook.execute_with(example,
+        procsy) }","629":"          end.call","630":"        end","631":""}},{"lineNumber":352,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"call","code":{"349":"        #
+        Calls the proc and notes that the example has been executed.","350":"        def
+        call(*args, &block)","351":"          @executed = true","352":"          @proc.call(*args,
+        &block)","353":"        end","354":"        alias run call","355":""}},{"lineNumber":153,"inProject":true,"file":"spec/base_spec_helper.rb","method":"block
+        (3 levels) in <main>","code":{"150":"","151":"  # Reset locale for all specs.","152":"  config.around(:each)
+        do |example|","153":"    I18n.with_locale(:en_AU) { example.run }","154":"  end","155":"","156":"  #
+        Reset all feature toggles to prevent leaking."}},{"lineNumber":351,"file":"gems/i18n-1.14.5/lib/i18n.rb","method":"with_locale","code":{"348":"        current_locale
+        = self.locale","349":"        self.locale = tmp_locale","350":"        begin","351":"          yield","352":"        ensure","353":"          self.locale
+        = current_locale","354":"        end"}},{"lineNumber":153,"inProject":true,"file":"spec/base_spec_helper.rb","method":"block
+        (2 levels) in <main>","code":{"150":"","151":"  # Reset locale for all specs.","152":"  config.around(:each)
+        do |example|","153":"    I18n.with_locale(:en_AU) { example.run }","154":"  end","155":"","156":"  #
+        Reset all feature toggles to prevent leaking."}},{"lineNumber":457,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"instance_exec","code":{"454":"","455":"      #
+        @private","456":"      def instance_exec(*args, &block)","457":"        @example_group_instance.instance_exec(*args,
+        &block)","458":"      end","459":"","460":"    private"}},{"lineNumber":457,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"instance_exec","code":{"454":"","455":"      #
+        @private","456":"      def instance_exec(*args, &block)","457":"        @example_group_instance.instance_exec(*args,
+        &block)","458":"      end","459":"","460":"    private"}},{"lineNumber":390,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"execute_with","code":{"387":"      #
+        @private","388":"      class AroundHook < Hook","389":"        def execute_with(example,
+        procsy)","390":"          example.instance_exec(procsy, &block)","391":"          return
+        if procsy.executed?","392":"          Pending.mark_skipped!(example,","393":"                                \"#{hook_description}
+        did not execute the example\")"}},{"lineNumber":628,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"block
+        (2 levels) in run_around_example_hooks_for","code":{"625":"","626":"          initial_procsy
+        = Example::Procsy.new(example) { yield }","627":"          hooks.inject(initial_procsy)
+        do |procsy, around_hook|","628":"            procsy.wrap { around_hook.execute_with(example,
+        procsy) }","629":"          end.call","630":"        end","631":""}},{"lineNumber":352,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"call","code":{"349":"        #
+        Calls the proc and notes that the example has been executed.","350":"        def
+        call(*args, &block)","351":"          @executed = true","352":"          @proc.call(*args,
+        &block)","353":"        end","354":"        alias run call","355":""}},{"lineNumber":39,"file":"gems/webmock-3.23.1/lib/webmock/rspec.rb","method":"block
+        (2 levels) in <main>","code":{"36":"  end","37":"","38":"  config.around(:each)
+        do |example|","39":"    example.run","40":"    WebMock.reset!","41":"  end","42":"}"}},{"lineNumber":457,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"instance_exec","code":{"454":"","455":"      #
+        @private","456":"      def instance_exec(*args, &block)","457":"        @example_group_instance.instance_exec(*args,
+        &block)","458":"      end","459":"","460":"    private"}},{"lineNumber":457,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"instance_exec","code":{"454":"","455":"      #
+        @private","456":"      def instance_exec(*args, &block)","457":"        @example_group_instance.instance_exec(*args,
+        &block)","458":"      end","459":"","460":"    private"}},{"lineNumber":390,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"execute_with","code":{"387":"      #
+        @private","388":"      class AroundHook < Hook","389":"        def execute_with(example,
+        procsy)","390":"          example.instance_exec(procsy, &block)","391":"          return
+        if procsy.executed?","392":"          Pending.mark_skipped!(example,","393":"                                \"#{hook_description}
+        did not execute the example\")"}},{"lineNumber":628,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"block
+        (2 levels) in run_around_example_hooks_for","code":{"625":"","626":"          initial_procsy
+        = Example::Procsy.new(example) { yield }","627":"          hooks.inject(initial_procsy)
+        do |procsy, around_hook|","628":"            procsy.wrap { around_hook.execute_with(example,
+        procsy) }","629":"          end.call","630":"        end","631":""}},{"lineNumber":352,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"call","code":{"349":"        #
+        Calls the proc and notes that the example has been executed.","350":"        def
+        call(*args, &block)","351":"          @executed = true","352":"          @proc.call(*args,
+        &block)","353":"        end","354":"        alias run call","355":""}},{"lineNumber":124,"file":"gems/rspec-retry-0.6.2/lib/rspec/retry.rb","method":"block
+        in run","code":{"121":"        example.metadata[:retry_exceptions] ||= []","122":"","123":"        example.clear_exception","124":"        ex.run","125":"","126":"        self.attempts
+        += 1","127":""}},{"lineNumber":110,"file":"gems/rspec-retry-0.6.2/lib/rspec/retry.rb","method":"loop","code":{"107":"    def
+        run","108":"      example = current_example","109":"","110":"      loop do","111":"        if
+        attempts > 0","112":"          RSpec.configuration.formatters.each { |f| f.retry(example)
+        if f.respond_to? :retry }","113":"          if verbose_retry?"}},{"lineNumber":110,"file":"gems/rspec-retry-0.6.2/lib/rspec/retry.rb","method":"run","code":{"107":"    def
+        run","108":"      example = current_example","109":"","110":"      loop do","111":"        if
+        attempts > 0","112":"          RSpec.configuration.formatters.each { |f| f.retry(example)
+        if f.respond_to? :retry }","113":"          if verbose_retry?"}},{"lineNumber":12,"file":"gems/rspec-retry-0.6.2/lib/rspec_ext/rspec_ext.rb","method":"run_with_retry","code":{"9":"","10":"      class
+        Procsy","11":"        def run_with_retry(opts = {})","12":"          RSpec::Retry.new(self,
+        opts).run","13":"        end","14":"","15":"        def attempts"}},{"lineNumber":37,"file":"gems/rspec-retry-0.6.2/lib/rspec/retry.rb","method":"block
+        (2 levels) in setup","code":{"34":"        config.add_setting :retry_callback,
+        :default => nil","35":"","36":"        config.around(:each) do |ex|","37":"          ex.run_with_retry","38":"        end","39":"      end","40":"    end"}},{"lineNumber":457,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"instance_exec","code":{"454":"","455":"      #
+        @private","456":"      def instance_exec(*args, &block)","457":"        @example_group_instance.instance_exec(*args,
+        &block)","458":"      end","459":"","460":"    private"}},{"lineNumber":457,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"instance_exec","code":{"454":"","455":"      #
+        @private","456":"      def instance_exec(*args, &block)","457":"        @example_group_instance.instance_exec(*args,
+        &block)","458":"      end","459":"","460":"    private"}},{"lineNumber":390,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"execute_with","code":{"387":"      #
+        @private","388":"      class AroundHook < Hook","389":"        def execute_with(example,
+        procsy)","390":"          example.instance_exec(procsy, &block)","391":"          return
+        if procsy.executed?","392":"          Pending.mark_skipped!(example,","393":"                                \"#{hook_description}
+        did not execute the example\")"}},{"lineNumber":628,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"block
+        (2 levels) in run_around_example_hooks_for","code":{"625":"","626":"          initial_procsy
+        = Example::Procsy.new(example) { yield }","627":"          hooks.inject(initial_procsy)
+        do |procsy, around_hook|","628":"            procsy.wrap { around_hook.execute_with(example,
+        procsy) }","629":"          end.call","630":"        end","631":""}},{"lineNumber":352,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"call","code":{"349":"        #
+        Calls the proc and notes that the example has been executed.","350":"        def
+        call(*args, &block)","351":"          @executed = true","352":"          @proc.call(*args,
+        &block)","353":"        end","354":"        alias run call","355":""}},{"lineNumber":629,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"run_around_example_hooks_for","code":{"626":"          initial_procsy
+        = Example::Procsy.new(example) { yield }","627":"          hooks.inject(initial_procsy)
+        do |procsy, around_hook|","628":"            procsy.wrap { around_hook.execute_with(example,
+        procsy) }","629":"          end.call","630":"        end","631":"","632":"        if
+        respond_to?(:singleton_class) && singleton_class.ancestors.include?(singleton_class)"}},{"lineNumber":486,"file":"gems/rspec-core-3.13.0/lib/rspec/core/hooks.rb","method":"run","code":{"483":"            case
+        position","484":"            when :before then run_example_hooks_for(example_or_group,
+        :before, :reverse_each)","485":"            when :after  then run_example_hooks_for(example_or_group,
+        :after,  :each)","486":"            when :around then run_around_example_hooks_for(example_or_group)
+        { yield }","487":"            end","488":"          end","489":"        end"}},{"lineNumber":468,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"with_around_example_hooks","code":{"465":"","466":"      def
+        with_around_example_hooks","467":"        RSpec.current_scope = :before_example_hook","468":"        hooks.run(:around,
+        :example, self) { yield }","469":"      rescue Support::AllExceptionsExceptOnesWeMustNotRescue
+        => e","470":"        set_exception(e)","471":"      end"}},{"lineNumber":511,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"with_around_and_singleton_context_hooks","code":{"508":"      def
+        with_around_and_singleton_context_hooks","509":"        singleton_context_hooks_host
+        = example_group_instance.singleton_class","510":"        singleton_context_hooks_host.run_before_context_hooks(example_group_instance)","511":"        with_around_example_hooks
+        { yield }","512":"      ensure","513":"        singleton_context_hooks_host.run_after_context_hooks(example_group_instance)","514":"      end"}},{"lineNumber":259,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example.rb","method":"run","code":{"256":"          if
+        skipped?","257":"            Pending.mark_pending! self, skip","258":"          elsif
+        !RSpec.configuration.dry_run?","259":"            with_around_and_singleton_context_hooks
+        do","260":"              begin","261":"                run_before_example","262":"                RSpec.current_scope
+        = :example"}},{"lineNumber":646,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example_group.rb","method":"block
+        in run_examples","code":{"643":"          next if RSpec.world.wants_to_quit","644":"          instance
+        = new(example.inspect_output)","645":"          set_ivars(instance, before_context_ivars)","646":"          succeeded
+        = example.run(instance, reporter)","647":"          if !succeeded && reporter.fail_fast_limit_met?","648":"            RSpec.world.wants_to_quit
+        = true","649":"          end"}},{"lineNumber":642,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example_group.rb","method":"map","code":{"639":"","640":"      #
+        @private","641":"      def self.run_examples(reporter)","642":"        ordering_strategy.order(filtered_examples).map
+        do |example|","643":"          next if RSpec.world.wants_to_quit","644":"          instance
+        = new(example.inspect_output)","645":"          set_ivars(instance, before_context_ivars)"}},{"lineNumber":642,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example_group.rb","method":"run_examples","code":{"639":"","640":"      #
+        @private","641":"      def self.run_examples(reporter)","642":"        ordering_strategy.order(filtered_examples).map
+        do |example|","643":"          next if RSpec.world.wants_to_quit","644":"          instance
+        = new(example.inspect_output)","645":"          set_ivars(instance, before_context_ivars)"}},{"lineNumber":607,"file":"gems/rspec-core-3.13.0/lib/rspec/core/example_group.rb","method":"run","code":{"604":"        begin","605":"          RSpec.current_scope
+        = :before_context_hook","606":"          run_before_context_hooks(new(''before(:context)
+        hook'')) if should_run_context_hooks","607":"          result_for_this_group
+        = run_examples(reporter)","608":"          results_for_descendants = ordering_strategy.order(children).map
+        { |child| child.run(reporter) }.all?","609":"          result_for_this_group
+        && results_for_descendants","610":"        rescue Pending::SkipDeclaredInExample
+        => ex"}},{"lineNumber":121,"file":"gems/rspec-core-3.13.0/lib/rspec/core/runner.rb","method":"block
+        (3 levels) in run_specs","code":{"118":"              return @configuration.failure_exit_code","119":"            end","120":"","121":"            example_groups.map
+        { |g| g.run(reporter) }.all?","122":"          end","123":"        end","124":""}},{"lineNumber":121,"file":"gems/rspec-core-3.13.0/lib/rspec/core/runner.rb","method":"map","code":{"118":"              return
+        @configuration.failure_exit_code","119":"            end","120":"","121":"            example_groups.map
+        { |g| g.run(reporter) }.all?","122":"          end","123":"        end","124":""}},{"lineNumber":121,"file":"gems/rspec-core-3.13.0/lib/rspec/core/runner.rb","method":"block
+        (2 levels) in run_specs","code":{"118":"              return @configuration.failure_exit_code","119":"            end","120":"","121":"            example_groups.map
+        { |g| g.run(reporter) }.all?","122":"          end","123":"        end","124":""}},{"lineNumber":2091,"file":"gems/rspec-core-3.13.0/lib/rspec/core/configuration.rb","method":"with_suite_hooks","code":{"2088":"        begin","2089":"          RSpec.current_scope
+        = :before_suite_hook","2090":"          run_suite_hooks(\"a `before(:suite)`
+        hook\", @before_suite_hooks)","2091":"          yield","2092":"        ensure","2093":"          RSpec.current_scope
+        = :after_suite_hook","2094":"          run_suite_hooks(\"an `after(:suite)`
+        hook\", @after_suite_hooks)"}},{"lineNumber":116,"file":"gems/rspec-core-3.13.0/lib/rspec/core/runner.rb","method":"block
+        in run_specs","code":{"113":"      def run_specs(example_groups)","114":"        examples_count
+        = @world.example_count(example_groups)","115":"        examples_passed = @configuration.reporter.report(examples_count)
+        do |reporter|","116":"          @configuration.with_suite_hooks do","117":"            if
+        examples_count == 0 && @configuration.fail_if_no_examples","118":"              return
+        @configuration.failure_exit_code","119":"            end"}},{"lineNumber":74,"file":"gems/rspec-core-3.13.0/lib/rspec/core/reporter.rb","method":"report","code":{"71":"    def
+        report(expected_example_count)","72":"      start(expected_example_count)","73":"      begin","74":"        yield
+        self","75":"      ensure","76":"        finish","77":"      end"}},{"lineNumber":115,"file":"gems/rspec-core-3.13.0/lib/rspec/core/runner.rb","method":"run_specs","code":{"112":"      #   failed.","113":"      def
+        run_specs(example_groups)","114":"        examples_count = @world.example_count(example_groups)","115":"        examples_passed
+        = @configuration.reporter.report(examples_count) do |reporter|","116":"          @configuration.with_suite_hooks
+        do","117":"            if examples_count == 0 && @configuration.fail_if_no_examples","118":"              return
+        @configuration.failure_exit_code"}},{"lineNumber":89,"file":"gems/rspec-core-3.13.0/lib/rspec/core/runner.rb","method":"run","code":{"86":"        setup(err,
+        out)","87":"        return @configuration.reporter.exit_early(exit_code) if
+        RSpec.world.wants_to_quit","88":"","89":"        run_specs(@world.ordered_example_groups).tap
+        do","90":"          persist_example_statuses","91":"        end","92":"      end"}},{"lineNumber":71,"file":"gems/rspec-core-3.13.0/lib/rspec/core/runner.rb","method":"run","code":{"68":"        if
+        options.options[:runner]","69":"          options.options[:runner].call(options,
+        err, out)","70":"        else","71":"          new(options).run(err, out)","72":"        end","73":"      end","74":""}},{"lineNumber":45,"file":"gems/rspec-core-3.13.0/lib/rspec/core/runner.rb","method":"invoke","code":{"42":"      #
+        code.","43":"      def self.invoke","44":"        disable_autorun!","45":"        status
+        = run(ARGV, $stderr, $stdout).to_i","46":"        exit(status) if status !=
+        0","47":"      end","48":""}},{"lineNumber":4,"file":"gems/rspec-core-3.13.0/exe/rspec","method":"<main>","code":{"1":"#!/usr/bin/env
+        ruby","2":"","3":"require ''rspec/core''","4":"RSpec::Core::Runner.invoke"}},{"lineNumber":18,"file":"gems/spring-commands-rspec-1.0.4/lib/spring/commands/rspec.rb","method":"load","code":{"15":"","16":"      def
+        call","17":"        ::RSpec.configuration.start_time = Time.now if defined?(::RSpec.configuration.start_time)","18":"        load
+        Gem.bin_path(gem_name, exec_name)","19":"      end","20":"    end","21":""}},{"lineNumber":18,"file":"gems/spring-commands-rspec-1.0.4/lib/spring/commands/rspec.rb","method":"call","code":{"15":"","16":"      def
+        call","17":"        ::RSpec.configuration.start_time = Time.now if defined?(::RSpec.configuration.start_time)","18":"        load
+        Gem.bin_path(gem_name, exec_name)","19":"      end","20":"    end","21":""}},{"lineNumber":38,"file":"gems/spring-4.2.1/lib/spring/command_wrapper.rb","method":"call","code":{"35":"","36":"    def
+        call","37":"      if command.respond_to?(:call)","38":"        command.call","39":"      else","40":"        load
+        exec","41":"      end"}},{"lineNumber":226,"file":"gems/spring-4.2.1/lib/spring/application.rb","method":"block
+        in serve","code":{"223":"        invoke_after_fork_callbacks","224":"        shush_backtraces","225":"","226":"        command.call","227":"      }","228":"","229":"      disconnect_database"}},{"lineNumber":190,"file":"gems/spring-4.2.1/lib/spring/application.rb","method":"fork","code":{"187":"        Rails.application.reloader.reload!","188":"      end","189":"","190":"      pid
+        = fork {","191":"        # Make sure to close other clients otherwise their
+        graceful termination","192":"        # will be impossible due to reference
+        from this fork.","193":"        @clients.each_key { |c| c.close if c != client
+        }"}},{"lineNumber":190,"file":"gems/spring-4.2.1/lib/spring/application.rb","method":"serve","code":{"187":"        Rails.application.reloader.reload!","188":"      end","189":"","190":"      pid
+        = fork {","191":"        # Make sure to close other clients otherwise their
+        graceful termination","192":"        # will be impossible due to reference
+        from this fork.","193":"        @clients.each_key { |c| c.close if c != client
+        }"}},{"lineNumber":153,"file":"gems/spring-4.2.1/lib/spring/application.rb","method":"block
+        in run","code":{"150":"        if terminating? || watcher_stale? || preload_failed?","151":"          exit","152":"        else","153":"          serve
+        manager.recv_io(UNIXSocket)","154":"        end","155":"      end","156":"    end"}},{"lineNumber":147,"file":"gems/spring-4.2.1/lib/spring/application.rb","method":"loop","code":{"144":"      state
+        :running","145":"      manager.puts","146":"","147":"      loop do","148":"        IO.select
+        [manager, @interrupt.first]","149":"","150":"        if terminating? || watcher_stale?
+        || preload_failed?"}},{"lineNumber":147,"file":"gems/spring-4.2.1/lib/spring/application.rb","method":"run","code":{"144":"      state
+        :running","145":"      manager.puts","146":"","147":"      loop do","148":"        IO.select
+        [manager, @interrupt.first]","149":"","150":"        if terminating? || watcher_stale?
+        || preload_failed?"}},{"lineNumber":25,"file":"gems/spring-4.2.1/lib/spring/application/boot.rb","method":"<top
+        (required)>","code":{"19":"    app.spawn_env,","20":"  ].compact","21":"  \"spring
+        app    | #{attributes.join(\" | \")}\"","22":"end","23":"","24":"app.eager_preload
+        if ENV.delete(\"SPRING_PRELOAD\") == \"1\"","25":"app.run"}},{"lineNumber":1,"file":"-e","method":"<main>","code":null}]}],"featureFlags":[],"metaData":{"RSpec":{"file":"/home/maikel/code/openfoodnetwork/spec/services/alert_spec.rb"},"env":{}},"severity":"warning","severityReason":{"type":"handledException"},"unhandled":false,"user":{}}]}'
+    headers:
+      Bugsnag-Api-Key:
+      - "<HIDDEN-BUGSNAG_API_KEY>"
+      Bugsnag-Payload-Version:
+      - '4.0'
+      Bugsnag-Sent-At:
+      - '2024-11-20T04:51:11.998Z'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Bugsnag-Event-Id:
+      - 673d6ac0010cfda42d8e0000
+      Date:
+      - Wed, 20 Nov 2024 04:51:12 GMT
+      Content-Length:
+      - '2'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: OK
+  recorded_at: Wed, 20 Nov 2024 04:51:12 GMT
+recorded_with: VCR 6.2.0
