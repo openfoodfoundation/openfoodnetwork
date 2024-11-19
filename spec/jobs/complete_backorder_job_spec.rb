@@ -115,5 +115,21 @@ RSpec.describe CompleteBackorderJob do
       }.to enqueue_mail(BackorderMailer, :backorder_incomplete)
         .and raise_error VCR::Errors::UnhandledHTTPRequestError
     end
+
+    it "skips empty backorders" do
+      user = nil
+      distributor = nil
+      order_cycle = nil
+      order_id = nil
+      backorder = DataFoodConsortium::Connector::Order.new(
+        order_id, orderStatus: "dfc-v:Held"
+      )
+      expect_any_instance_of(FdcBackorderer)
+        .to receive(:find_order).and_return(backorder)
+
+      expect {
+        subject.perform(user, distributor, order_cycle, order_id)
+      }.not_to raise_error
+    end
   end
 end

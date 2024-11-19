@@ -19,6 +19,9 @@ class CompleteBackorderJob < ApplicationJob
   #             someone else's order.
   def perform(user, distributor, order_cycle, order_id)
     order = FdcBackorderer.new(user, nil).find_order(order_id)
+
+    return if order&.lines.blank?
+
     urls = FdcUrlBuilder.new(order.lines[0].offer.offeredItem.semanticId)
 
     variants = order_cycle.variants_distributed_by(distributor)
