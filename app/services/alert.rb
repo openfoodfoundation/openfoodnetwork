@@ -20,7 +20,7 @@ class Alert
   #       env: { referer: "example.com" }
   #     }
   #   )
-  def self.raise(error, metadata, &block)
+  def self.raise(error, metadata = {}, &block)
     Bugsnag.notify(error) do |payload|
       metadata.each do |name, data|
         payload.add_metadata(name, data)
