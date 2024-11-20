@@ -11,7 +11,7 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
         [
           'Order date', 'Order Id',
           'Customer Name', 'Customer Email', 'Customer Phone', 'Customer City',
-          'SKU', 'Item name', 'Variant', 'Quantity', 'Max Quantity', 'Cost', 'Shipping Cost',
+          'SKU', 'Product', 'Variant', 'Quantity', 'Max Quantity', 'Cost', 'Shipping Cost',
           'Payment Method',
           'Distributor', 'Distributor address', 'Distributor city', 'Distributor postcode',
           'Shipping Method', 'Shipping instructions'
@@ -37,7 +37,7 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
       }
       let(:payment_method) { create(:payment_method, distributors: [distributor]) }
       let(:payment) { create(:payment, payment_method:, order:) }
-      let(:line_item) { create(:line_item_with_shipment, product:, order:) }
+      let(:line_item) { create(:line_item_with_shipment, variant:, order:) }
       subject { described_class.new user }
 
       before do
@@ -46,33 +46,35 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
         order.line_items << line_item
       end
 
-      it 'should denormalise order and distributor details for display as csv' do
-        allow(subject).to receive(:unformatted_render?).and_return(true)
-        table = subject.table_rows
+      context "without variant name" do
+        it 'should denormalise order and distributor details for display as csv' do
+          allow(subject).to receive(:unformatted_render?).and_return(true)
+          table = subject.table_rows
 
-        expect(table.size).to eq 1
-        expect(table[0]).to eq([
-                                 order.reload.completed_at.strftime("%F %T"),
-                                 order.id,
-                                 bill_address.full_name,
-                                 order.email,
-                                 bill_address.phone,
-                                 bill_address.city,
-                                 line_item.product.sku,
-                                 line_item.product.name,
-                                 line_item.unit_to_display,
-                                 line_item.quantity,
-                                 line_item.max_quantity,
-                                 line_item.price * line_item.quantity,
-                                 line_item.distribution_fee,
-                                 payment_method.name,
-                                 distributor.name,
-                                 distributor.address.address1,
-                                 distributor.address.city,
-                                 distributor.address.zipcode,
-                                 shipping_method.name,
-                                 shipping_instructions
-                               ])
+          expect(table.size).to eq 1
+          expect(table[0]).to eq([
+                                   order.reload.completed_at.strftime("%F %T"),
+                                   order.id,
+                                   bill_address.full_name,
+                                   order.email,
+                                   bill_address.phone,
+                                   bill_address.city,
+                                   line_item.product.sku,
+                                   line_item.product.name,
+                                   "1g",
+                                   line_item.quantity,
+                                   line_item.max_quantity,
+                                   line_item.price * line_item.quantity,
+                                   line_item.distribution_fee,
+                                   payment_method.name,
+                                   distributor.name,
+                                   distributor.address.address1,
+                                   distributor.address.city,
+                                   distributor.address.zipcode,
+                                   shipping_method.name,
+                                   shipping_instructions
+                                 ])
+        end
       end
 
       it "prints one row per line item" do
@@ -148,6 +150,17 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
           "Spree::ShippingRate Load",
           "Spree::ShippingMethod Load",
         ]
+      end
+
+      context "with variant name present" do
+        before do
+          variant.update_columns(display_name: 'Variant Name');
+        end
+        let(:row) { subject.table_rows.first }
+
+        it "should display variant name with unit" do
+          expect(row).to include("Variant Name (1g)")
+        end
       end
     end
   end
