@@ -213,7 +213,7 @@ module Spree
       end
 
       def notify_bugsnag(error, product, variant)
-        Bugsnag.notify(error) do |report|
+        Alert.raise(error) do |report|
           report.add_metadata(:product,
                               { product: product.attributes, variant: variant.attributes })
           report.add_metadata(:product, :product_error, product.errors.first) unless product.valid?

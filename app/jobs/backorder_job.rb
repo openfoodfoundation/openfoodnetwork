@@ -19,7 +19,7 @@ class BackorderJob < ApplicationJob
   rescue StandardError => e
     # Errors here shouldn't affect the checkout. So let's report them
     # separately:
-    Bugsnag.notify(e) do |payload|
+    Alert.raise(e) do |payload|
       payload.add_metadata(:order, :order, order)
     end
   end

@@ -15,7 +15,7 @@ class StripeAccount < ApplicationRecord
 
     destroy && Stripe::OAuth.deauthorize(stripe_user_id:)
   rescue Stripe::OAuth::OAuthError => e
-    Bugsnag.notify(
+    Alert.raise(
       e,
       stripe_account: stripe_user_id,
       enterprise_id:

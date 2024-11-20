@@ -106,7 +106,7 @@ module Spree
           calculator.compute(item)
         else
           # Tax refund should not be possible with the way our production server are configured
-          Bugsnag.notify(
+          Alert.raise(
             "Notice: Tax refund should not be possible, please check the default zone and " \
             "the tax rate zone configuration"
           ) do |payload|

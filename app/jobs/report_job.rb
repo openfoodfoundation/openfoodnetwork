@@ -22,7 +22,7 @@ class ReportJob < ApplicationJob
 
     broadcast_result(channel, format, blob) if channel
   rescue StandardError => e
-    Bugsnag.notify(e) do |payload|
+    Alert.raise(e) do |payload|
       payload.add_metadata :report, {
         report_class:, user:, params:, format:
       }

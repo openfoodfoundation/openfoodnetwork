@@ -481,7 +481,7 @@ class Enterprise < ApplicationRecord
 
     image_variant_url_for(image.variant(name))
   rescue StandardError => e
-    Bugsnag.notify "Enterprise ##{id} #{image.try(:name)} error: #{e.message}"
+    Alert.raise "Enterprise ##{id} #{image.try(:name)} error: #{e.message}"
     Rails.logger.error(e.message)
 
     nil

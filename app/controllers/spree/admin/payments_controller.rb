@@ -60,7 +60,7 @@ module Spree
         end
       rescue StandardError => e
         logger.error e.message
-        Bugsnag.notify(e)
+        Alert.raise(e)
         flash[:error] = e.message
       ensure
         redirect_to request.referer

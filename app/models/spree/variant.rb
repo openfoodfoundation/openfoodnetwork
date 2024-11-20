@@ -293,7 +293,7 @@ module Spree
     end
 
     def ensure_unit_value
-      Bugsnag.notify("Trying to set unit_value to NaN") if unit_value&.nan?
+      Alert.raise("Trying to set unit_value to NaN") if unit_value&.nan?
       return unless (variant_unit == "items" && unit_value.nil?) || unit_value&.nan?
 
       self.unit_value = 1.0
