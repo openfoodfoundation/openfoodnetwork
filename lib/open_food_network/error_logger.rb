@@ -9,7 +9,7 @@ module OpenFoodNetwork
     # If Bugsnag is configured, it will notify it. It would be nice to implement
     # some kind of fallback.
     def self.notify(error)
-      Bugsnag.notify(error)
+      Alert.raise(error)
     end
   end
 end

@@ -535,7 +535,7 @@ module Spree
       # because an outdated shipping fee is not as bad as a lost payment.
       # And the shipping fee is already up-to-date when this error occurs.
       # https://github.com/openfoodfoundation/openfoodnetwork/issues/3924
-      Bugsnag.notify(e) do |report|
+      Alert.raise(e) do |report|
         report.add_metadata(:order, attributes)
         report.add_metadata(:shipment, shipment.attributes)
         report.add_metadata(:shipment_in_db, Spree::Shipment.find_by(id: shipment.id).attributes)

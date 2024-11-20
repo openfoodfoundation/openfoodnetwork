@@ -34,7 +34,7 @@ module Spree
 
       image_variant_url_for(variant(size))
     rescue StandardError => e
-      Bugsnag.notify "Product ##{viewable_id} Image ##{id} error: #{e.message}"
+      Alert.raise "Product ##{viewable_id} Image ##{id} error: #{e.message}"
       Rails.logger.error(e.message)
 
       self.class.default_image_url(size)

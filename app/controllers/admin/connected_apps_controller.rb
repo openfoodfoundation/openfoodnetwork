@@ -77,7 +77,7 @@ module Admin
 
     def log_and_notify_exception(exception)
       Rails.logger.error exception.inspect
-      Bugsnag.notify(exception)
+      Alert.raise(exception)
     end
 
     def vine_params_empty?

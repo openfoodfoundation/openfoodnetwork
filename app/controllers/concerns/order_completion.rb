@@ -50,7 +50,7 @@ module OrderCompletion
   end
 
   def order_invalid!
-    Bugsnag.notify("Notice: invalid order loaded during checkout") do |payload|
+    Alert.raise("Notice: invalid order loaded during checkout") do |payload|
       payload.add_metadata :order, :order, @order
     end
 
@@ -92,7 +92,7 @@ module OrderCompletion
   end
 
   def notify_failure(error = RuntimeError.new(order_processing_error))
-    Bugsnag.notify(error) do |payload|
+    Alert.raise(error) do |payload|
       payload.add_metadata :order, @order
     end
     flash[:error] = order_processing_error if flash.blank?
