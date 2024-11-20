@@ -51,6 +51,23 @@ RSpec.describe Alert do
     end
   end
 
+  it "sends ActiveRecord objects" do
+    order = Spree::Order.new(number: "ABC123")
+
+    expect_any_instance_of(Bugsnag::Report).to receive(:add_metadata).with(
+      "Spree::Order", hash_including("number" => "ABC123")
+    )
+
+    Alert.raise_with_record("Wrong order", order)
+  end
+
+  it "notifies Bugsnag when ActiveRecord object is missing" do
+    expect_any_instance_of(Bugsnag::Report).to receive(:add_metadata).with(
+      "NilClass", { record_was_nil: true }
+    )
+    Alert.raise_with_record("Wrong order", nil)
+  end
+
   it "reaches the Bugsnag service for real", :vcr do
     # You need to have a valid Bugsnag API key to record this test.
     # And after recording, you need to check the Bugsnag account for the right

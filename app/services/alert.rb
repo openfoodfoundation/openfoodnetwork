@@ -28,4 +28,11 @@ class Alert
       block.call(payload)
     end
   end
+
+  def self.raise_with_record(error, record, &)
+    metadata = {
+      record.class.name => record&.attributes || { record_was_nil: true }
+    }
+    self.raise(error, metadata, &)
+  end
 end
