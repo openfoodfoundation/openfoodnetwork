@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'open_food_network/error_logger'
 require "spree/core/controller_helpers/auth"
 require "spree/core/controller_helpers/common"
 require "spree/core/controller_helpers/order"
@@ -37,7 +36,7 @@ class UserRegistrationsController < Devise::RegistrationsController
       end
     end
   rescue StandardError => e
-    OpenFoodNetwork::ErrorLogger.notify(e)
+    Alert.raise(e)
     render_error(message: I18n.t('unknown_error', scope: I18N_SCOPE))
   end
 
