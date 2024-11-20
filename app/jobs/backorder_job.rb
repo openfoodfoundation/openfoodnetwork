@@ -19,9 +19,7 @@ class BackorderJob < ApplicationJob
   rescue StandardError => e
     # Errors here shouldn't affect the checkout. So let's report them
     # separately:
-    Alert.raise(e) do |payload|
-      payload.add_metadata(:order, :order, order)
-    end
+    Alert.raise_with_record(e, order)
   end
 
   def perform(order)

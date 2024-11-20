@@ -24,9 +24,7 @@ class PlaceProxyOrder
     send_placement_email
   rescue StandardError => e
     summarizer.record_and_log_error(:processing, order, e.message)
-    Alert.raise(e) do |payload|
-      payload.add_metadata :order, :order, order
-    end
+    Alert.raise_with_record(e, order)
   end
 
   private

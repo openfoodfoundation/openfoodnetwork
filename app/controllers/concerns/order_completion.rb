@@ -50,9 +50,7 @@ module OrderCompletion
   end
 
   def order_invalid!
-    Alert.raise("Notice: invalid order loaded during checkout") do |payload|
-      payload.add_metadata :order, :order, @order
-    end
+    Alert.raise_with_record("Notice: invalid order loaded during checkout", @order)
 
     flash[:error] = t('checkout.order_not_loaded')
     redirect_to main_app.shop_path
@@ -92,9 +90,7 @@ module OrderCompletion
   end
 
   def notify_failure(error = RuntimeError.new(order_processing_error))
-    Alert.raise(error) do |payload|
-      payload.add_metadata :order, @order
-    end
+    Alert.raise_with_record(error, @order)
     flash[:error] = order_processing_error if flash.blank?
   end
 
