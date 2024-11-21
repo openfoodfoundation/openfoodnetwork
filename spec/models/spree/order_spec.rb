@@ -6,6 +6,9 @@ RSpec.describe Spree::Order do
   let(:user) { build(:user, email: "spree@example.com") }
   let(:order) { build(:order, user:) }
 
+  it { is_expected.to have_one :exchange }
+  it { is_expected.to have_many :semantic_links }
+
   describe "#errors" do
     it "provides friendly error messages" do
       order.ship_address = Spree::Address.new

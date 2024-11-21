@@ -10,7 +10,7 @@ class FdcBackorderer
   end
 
   def find_or_build_order(ofn_order)
-    find_open_order || build_new_order(ofn_order)
+    find_open_order(ofn_order) || build_new_order(ofn_order)
   end
 
   def build_new_order(ofn_order)
@@ -19,7 +19,37 @@ class FdcBackorderer
     end
   end
 
-  def find_open_order
+  # Try the new method and fall back to old method.
+  def find_open_order(ofn_order)
+    lookup_open_order(ofn_order) || find_last_open_order
+  end
+
+  def lookup_open_order(ofn_order)
+    # There should be only one link at the moment but we may support
+    # ordering from multiple suppliers one day.
+    semantic_ids = ofn_order.semantic_links.pluck(:semantic_id)
+
+    semantic_ids.lazy
+      # Make sure we select an order from the right supplier:
+      .select { |id| id.starts_with?(urls.orders_url) }
+      # Fetch the order from the remote DFC server, lazily:
+      .map { |id| find_order(id) }
+      .compact
+      # Just in case someone completed the order without updating our database:
+      .select { |o| o.orderStatus[:path] == "Held" }
+      .first
+      # The DFC Connector doesn't recognise status values properly yet.
+      # So we are overriding the value with something that can be exported.
+      &.tap { |o| o.orderStatus = "dfc-v:Held" }
+  end
+
+  # DEPRECATED
+  #
+  # We now store links to orders we placed. So we don't need to search
+  # through all orders and pick a random open one.
+  # But for compatibility with currently open order cycles that don't have
+  # a stored link yet, we keep this method as well.
+  def find_last_open_order
     graph = import(urls.orders_url)
     open_orders = graph&.select do |o|
       o.semanticType == "dfc-b:Order" && o.orderStatus[:path] == "Held"

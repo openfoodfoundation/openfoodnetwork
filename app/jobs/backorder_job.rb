@@ -13,7 +13,7 @@ class BackorderJob < ApplicationJob
   sidekiq_options retry: 0
 
   def self.check_stock(order)
-    links = SemanticLink.where(variant_id: order.line_items.select(:variant_id))
+    links = SemanticLink.where(subject: order.variants)
 
     perform_later(order) if links.exists?
   rescue StandardError => e
@@ -133,5 +133,7 @@ class BackorderJob < ApplicationJob
       .perform_later(
         user, order.distributor, order.order_cycle, placed_order.semanticId
       )
+
+    order.exchange.semantic_links.create!(semantic_id: placed_order.semanticId)
   end
 end

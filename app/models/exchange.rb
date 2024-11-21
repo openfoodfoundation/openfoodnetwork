@@ -22,6 +22,10 @@ class Exchange < ApplicationRecord
   has_many :exchange_fees, dependent: :destroy
   has_many :enterprise_fees, through: :exchange_fees
 
+  # Links to open backorders of a distributor (outgoing exchanges only)
+  # Don't allow removal of distributor from OC while we have an open backorder.
+  has_many :semantic_links, as: :subject, dependent: :restrict_with_error
+
   validates :sender_id, uniqueness: { scope: [:order_cycle_id, :receiver_id, :incoming] }
 
   before_destroy :delete_related_exchange_variants, prepend: true
