@@ -6,11 +6,11 @@
   .container
     .sixteen.columns
       = render partial: 'admin/shared/flashes', locals: { flashes: } if defined? flashes
-      = render partial: 'filters', locals: { search_term: search_term,
-                                              producer_id: producer_id,
-                                              producer_options: producer_options,
-                                              category_options: category_options,
-                                              category_id: category_id }
+      = render partial: 'filters', locals: { search_term:,
+                                              producer_id:,
+                                              producer_options:,
+                                              category_options:,
+                                              category_id: } if display_search_filter
   - if products.any?
     .container.results
       .sixteen.columns
