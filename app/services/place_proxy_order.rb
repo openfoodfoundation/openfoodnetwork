@@ -54,9 +54,7 @@ class PlaceProxyOrder
 
     true
   rescue StandardError => e
-    Alert.raise(e) do |payload|
-      payload.add_metadata(:proxy_order, { subscription:, proxy_order: })
-    end
+    Alert.raise(e, { proxy_order: { subscription:, proxy_order: } })
     false
   end
 
