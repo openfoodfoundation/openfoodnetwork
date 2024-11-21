@@ -108,8 +108,6 @@ class SubscriptionConfirmJob < ApplicationJob
     record_and_log_error(:failed_payment, order, error_message)
     SubscriptionMailer.failed_payment_email(order).deliver_now
   rescue StandardError => e
-    Alert.raise(e) do |payload|
-      payload.add_metadata :subscription_data, { order:, error_message: }
-    end
+    Alert.raise(e, { subscription_data: { order:, error_message: } })
   end
 end
