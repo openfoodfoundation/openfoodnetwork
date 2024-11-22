@@ -1695,6 +1695,7 @@ en_FR:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      pay_your_suppliers: Pay your suppliers
       display:
         report_is_big: "This report is big and may slow down your device."
         display_anyway: "Display anyway"
@@ -1740,6 +1741,8 @@ en_FR:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      suppliers:
+        name: Suppliers
       enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
       enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
@@ -3026,6 +3029,8 @@ en_FR:
   report_render_options: Rendering Options
   report_header_ofn_uid: OFN UID
   report_header_order_cycle: Order Cycle
+  report_header_order_cycle_start_date: OC Start Date
+  report_header_order_cycle_end_date: OC End Date
   report_header_user: User
   report_header_email: Email
   report_header_status: Status
@@ -3046,6 +3051,7 @@ en_FR:
   report_header_hub_legal_name: "Hub Legal Name"
   report_header_hub_contact_name: "Hub Contact Name"
   report_header_hub_email: "Hub Public Email"
+  report_header_hub_contact_email: Hub Contact Email
   report_header_hub_owner_email: Hub Owner Email
   report_header_hub_phone: "Hub Phone Number"
   report_header_hub_address_line1: "Hub Address Line 1"
@@ -3118,6 +3124,8 @@ en_FR:
   report_header_producer_suburb: Producer Suburb
   report_header_producer_tax_status: Producer Tax Status
   report_header_producer_charges_sales_tax?: GST/VAT Registered
+  report_header_producer_abn_acn: Producer ABN/ACN
+  report_header_producer_address: Producer Address
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
@@ -3178,7 +3186,11 @@ en_FR:
   report_header_total_units: Total Units
   report_header_sum_max_total: "Sum Max Total"
   report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Total fees excl. tax (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Total tax on fees (%{currency_symbol})"
+  report_header_total: "Total (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Total excl. fees and tax (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
