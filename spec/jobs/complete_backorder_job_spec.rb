@@ -36,6 +36,7 @@ RSpec.describe CompleteBackorderJob do
   let(:beans) { ofn_order.line_items[0].variant }
   let(:chia) { chia_item.variant }
   let(:chia_item) { ofn_order.line_items[1] }
+  let(:order_status) { DfcLoader.vocabulary("vocabulary").STATES.ORDERSTATE }
 
   describe "#perform" do
     before do
@@ -69,8 +70,8 @@ RSpec.describe CompleteBackorderJob do
         subject.perform(user, distributor, order_cycle, order.semanticId)
         current_order = orderer.find_order(order.semanticId)
       }.to change {
-        current_order.orderStatus[:path]
-      }.from("Held").to("Complete")
+        current_order.orderStatus
+      }.from(order_status.HELD).to(order_status.COMPLETE)
         .and change {
           current_order.lines[0].quantity.to_i
         }.from(3).to(2)
@@ -99,8 +100,8 @@ RSpec.describe CompleteBackorderJob do
         subject.perform(user, distributor, order_cycle, order.semanticId)
         current_order = orderer.find_order(order.semanticId)
       }.to change {
-        current_order.orderStatus[:path]
-      }.from("Held").to("Complete")
+        current_order.orderStatus
+      }.from(order_status.HELD).to(order_status.COMPLETE)
         .and change {
           current_order.lines.count
         }.from(1).to(0)

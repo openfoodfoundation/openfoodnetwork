@@ -9,6 +9,12 @@ RSpec.describe DfcIo do
   let(:enterprise) do
     DataFoodConsortium::Connector::Enterprise.new("Pete's Pumpkins")
   end
+  let(:order) do
+    DataFoodConsortium::Connector::Order.new("https://example.net", orderStatus: orderstate.HELD)
+  end
+  let(:orderstate) do
+    DfcLoader.vocabulary("vocabulary").STATES.ORDERSTATE
+  end
 
   describe ".export" do
     it "exports nothing" do
@@ -32,6 +38,23 @@ RSpec.describe DfcIo do
       expect(result["@graph"].first.keys).to include(
         *%w(@id @type dfc-b:affiliates)
       )
+    end
+
+    it "recognises loaded vocabularies" do
+      json = DfcIo.export(order)
+      result = JSON.parse(json)
+
+      expect(result["dfc-b:hasOrderStatus"]).to eq "dfc-v:Held"
+    end
+  end
+
+  describe ".import" do
+    it "recognises loaded vocabularies" do
+      json = DfcIo.export(order)
+      result = DfcIo.import(json)
+      result = DfcIo.import(DfcIo.export(order))
+
+      expect(result.orderStatus).to eq orderstate.HELD
     end
   end
 end
