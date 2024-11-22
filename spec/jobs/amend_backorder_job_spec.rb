@@ -86,13 +86,33 @@ RSpec.describe AmendBackorderJob do
       expect(backorder.lines[0].quantity).to eq 1 # beans
       expect(backorder.lines[1].quantity).to eq 5 # chia
 
-      # We cancel the only order and that should reduce the order lines to 0.
-      expect { order.cancel! }
-        .to change { beans.reload.on_hand }.from(9).to(15)
-        .and change { chia_seed.reload.on_hand }.from(7).to(12)
+      # We increase quantities which should be reflected in the backorder:
+      beans.on_hand = -1
+      chia_item.quantity += 3
+      chia_item.save!
 
       expect { subject.amend_backorder(order) }
-        .to change { backorder.lines.count }.from(2).to(0)
+        .to change { beans.on_hand }.from(-1).to(11)
+        .and change { backorder.lines[0].quantity }.from(1).to(2)
+        .and change { backorder.lines[1].quantity }.from(5).to(8)
+
+      # We cancel the only order.
+      expect { order.cancel! }
+        .to change { beans.reload.on_hand }.from(11).to(17)
+        .and change { chia_seed.reload.on_hand }.from(4).to(12)
+
+      # But we decreased the stock of beans outside of orders above.
+      # So only the chia seeds are cancelled. The beans still need replenishing.
+      expect { subject.amend_backorder(order) }
+        .to change { backorder.lines.count }.from(2).to(1)
+        .and change { beans.reload.on_hand }.by(-12)
+    end
+  end
+
+  describe "#distributed_linked_variants" do
+    it "selects available variants with semantic links" do
+      variants = subject.distributed_linked_variants(order)
+      expect(variants).to match_array [beans, chia_seed]
     end
   end
 end
