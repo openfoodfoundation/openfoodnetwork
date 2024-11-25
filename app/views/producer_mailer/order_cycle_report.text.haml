@@ -20,7 +20,7 @@ Orders summary
 \
 #{t :total}: #{@total}
 \
-- if @customer_grouped_line_items
+- if @customer_line_items
   = t :producer_mail_order_customer_text
   \
   - @customer_line_items.each do |line_item|
