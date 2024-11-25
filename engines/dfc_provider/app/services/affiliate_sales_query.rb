@@ -55,10 +55,8 @@ class AffiliateSalesQuery
         spree_variants.unit_presentation,
         spree_line_items.price,
         distributor_addresses.zipcode AS distributor_postcode,
-        distributor_addresses.city AS distributor_city,
         distributor_countries.name AS distributor_country,
         supplier_addresses.zipcode AS supplier_postcode,
-        supplier_addresses.city AS supplier_city,
         supplier_countries.name AS supplier_country,
 
         SUM(spree_line_items.quantity) AS quantity_sold
@@ -75,8 +73,6 @@ class AffiliateSalesQuery
         spree_line_items.price,
         distributor_postcode,
         supplier_postcode,
-        distributor_city,
-        supplier_city,
         distributor_country,
         supplier_country
       SQL
@@ -92,10 +88,8 @@ class AffiliateSalesQuery
         unit_presentation
         price
         distributor_postcode
-        distributor_city
         distributor_country
         supplier_postcode
-        supplier_city
         supplier_country
         quantity_sold
       ]

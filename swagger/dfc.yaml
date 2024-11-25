@@ -97,7 +97,6 @@ paths:
                       dfc-b:hasAddress:
                         "@type": dfc-b:Address
                         dfc-b:hasPostalCode: '20170'
-                        dfc-b:hasCity: Herndon
                         dfc-b:hasCountry: Australia
                       dfc-b:supplies:
                         "@type": dfc-b:SuppliedProduct
@@ -126,7 +125,6 @@ paths:
                                   dfc-b:hasAddress:
                                     "@type": dfc-b:Address
                                     dfc-b:hasPostalCode: '20170'
-                                    dfc-b:hasCity: Herndon
                                     dfc-b:hasCountry: Australia
         '400':
           description: bad request

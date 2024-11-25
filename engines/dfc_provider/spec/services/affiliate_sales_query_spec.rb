@@ -59,10 +59,8 @@ RSpec.describe AffiliateSalesQuery do
         nil,
         15.50,
         "3210",
-        "city1",
         "country1",
         "3211",
-        "city2",
         "country2",
         3,
       ]
@@ -75,10 +73,8 @@ RSpec.describe AffiliateSalesQuery do
           unit_presentation: nil,
           price: 15.50,
           distributor_postcode: "3210",
-          distributor_city: "city1",
           distributor_country: "country1",
           supplier_postcode: "3211",
-          supplier_city: "city2",
           supplier_country: "country2",
           quantity_sold: 3,
         }
