@@ -1,17 +1,21 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static values = { primaryProducer: String };
+  static values = { enterpriseSells: String };
   static targets = ["spinner"];
 
-  primaryProducerChanged(event) {
-    this.primaryProducerValue = event.currentTarget.checked;
-    this.makeRequest();
+  enterpriseSellsChanged(event) {
+    console.log("enterpriseSellsChanged");
+    if (event.currentTarget.checked) {
+      this.enterpriseSellsValue = event.currentTarget.value;
+      this.spinnerTarget.classList.remove("hidden");
+      this.makeRequest();
+    }
   }
 
   makeRequest() {
     fetch(
-      `?stimulus=true&is_primary_producer=${this.primaryProducerValue}`,
+      `?stimulus=true&enterprise_sells=${this.enterpriseSellsValue}`,
       {
         method: "GET",
         headers: { "Content-type": "application/json; charset=UTF-8" },
