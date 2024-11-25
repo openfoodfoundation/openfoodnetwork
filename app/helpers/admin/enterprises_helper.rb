@@ -56,6 +56,7 @@ module Admin
     )
       [
         { name: 'primary_details', icon_class: "icon-home", show: true, selected: 'selected' },
+        { name: 'admin_only', icon_class: "icon-gear", show: spree_current_user.admin? },
         { name: 'address', icon_class: "icon-map-marker", show: true },
         { name: 'contact', icon_class: "icon-phone", show: true },
         { name: 'social',  icon_class: "icon-twitter", show: true },
@@ -75,7 +76,6 @@ module Admin
         { name: 'white_label', icon_class: "icon-leaf", show: true },
         { name: 'users', icon_class: "icon-user", show: true },
         { name: 'connected_apps', icon_class: "icon-puzzle-piece", show: show_connected_apps },
-        { name: 'admin_only', icon_class: "icon-gear", show: spree_current_user.admin? },
       ]
     end
   end
