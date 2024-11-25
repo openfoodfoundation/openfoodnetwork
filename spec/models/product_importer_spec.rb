@@ -578,11 +578,11 @@ RSpec.describe ProductImport::ProductImporter do
   describe "updating non-updatable fields on existing variants" do
     let(:csv_data) {
       CSV.generate do |csv|
-        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "variant_unit_name",
                 "shipping_category"]
-        csv << ["Beetroot", enterprise3.name, "Vegetables", "5", "3.50", "500", "Kg",
+        csv << ["Beetroot", enterprise3.name, "Vegetables", "5", "3.50", "500", "Half",
                 shipping_category.name]
-        csv << ["Tomato", enterprise3.name, "Vegetables", "6", "5.50", "500", "Kg",
+        csv << ["Tomato", enterprise3.name, "Vegetables", "6", "5.50", "500", "Half",
                 shipping_category.name]
       end
     }
