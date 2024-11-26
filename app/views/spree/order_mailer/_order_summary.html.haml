@@ -43,6 +43,8 @@
     - checkout_adjustments_for(@order, exclude: [:line_item]).reverse_each do |adjustment|
       %tr
         %td{align: "right", colspan: "3"}
+          - if adjustment.originator_type == "Voucher"
+            = "#{t(:voucher)}:"
           = "#{adjustment.label}:"
         %td{align: "right"}
           = adjustment.display_amount
