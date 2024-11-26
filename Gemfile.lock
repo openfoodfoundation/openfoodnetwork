@@ -180,7 +180,7 @@ GEM
     base64 (0.2.0)
     bcp47_spec (0.2.1)
     bcrypt (3.1.20)
-    bigdecimal (3.0.2)
+    bigdecimal (3.1.8)
     bindata (2.5.0)
     bindex (0.8.1)
     bootsnap (1.18.3)
@@ -865,7 +865,7 @@ DEPENDENCIES
   angularjs-rails (= 1.8.0)
   arel-helpers (~> 2.12)
   aws-sdk-s3
-  bigdecimal (= 3.0.2)
+  bigdecimal
   bootsnap
   bugsnag
   bullet

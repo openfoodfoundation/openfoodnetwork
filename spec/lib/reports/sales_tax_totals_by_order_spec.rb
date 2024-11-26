@@ -145,7 +145,8 @@ RSpec.describe "Reporting::Reports::SalesTax::SalesTaxTotalsByOrder" do
         total = report.total_excl_tax(query_row)
 
         # discounted order total - discounted order tax
-        expect(total).to eq((113.3 - 10) - (3.3 - 0.29))
+        # (113.3 - 10) - (3.3 - 0.29)
+        expect(total).to eq 100.29
       end
     end
   end
