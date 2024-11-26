@@ -1,0 +1,3 @@
+= turbo_stream.update 'signup-feedback' do
+  = render  partial: 'layouts/alert',
+                locals: { type: "alert", message: InvisibleCaptcha.timestamp_error_message }
