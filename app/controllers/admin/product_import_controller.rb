@@ -30,13 +30,13 @@ module Admin
     def validate_data
       return unless process_data('validate')
 
-      render json: @importer.import_results, response: 200
+      render json: @importer.import_results
     end
 
     def save_data
       return unless process_data('save')
 
-      render json: @importer.save_results, response: 200
+      render json: @importer.save_results
     end
 
     def reset_absent_products
@@ -76,7 +76,7 @@ module Admin
       begin
         @importer.public_send("#{method}_entries")
       rescue StandardError => e
-        render json: e.message, response: 500
+        render plain: e.message, status: :internal_server_error
         return false
       end
 
