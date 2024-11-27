@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe AmendBackorderJob do
+RSpec.describe BackorderUpdater do
   let(:order) { create(:completed_order_with_totals) }
   let(:distributor) { order.distributor }
   let(:beans) { beans_item.variant }
@@ -106,6 +106,13 @@ RSpec.describe AmendBackorderJob do
       expect { subject.amend_backorder(order) }
         .to change { backorder.lines.count }.from(2).to(1)
         .and change { beans.reload.on_hand }.by(-12)
+    end
+  end
+
+  describe "#distributed_linked_variants" do
+    it "selects available variants with semantic links" do
+      variants = subject.distributed_linked_variants(order)
+      expect(variants).to match_array [beans, chia_seed]
     end
   end
 end
