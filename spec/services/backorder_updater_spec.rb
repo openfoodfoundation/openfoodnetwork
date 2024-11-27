@@ -110,8 +110,10 @@ RSpec.describe BackorderUpdater do
   end
 
   describe "#distributed_linked_variants" do
+    let(:order_cycle) { order.order_cycle }
+
     it "selects available variants with semantic links" do
-      variants = subject.distributed_linked_variants(order)
+      variants = subject.distributed_linked_variants(order_cycle, distributor)
       expect(variants).to match_array [beans, chia_seed]
     end
   end

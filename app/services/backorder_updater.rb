@@ -8,7 +8,9 @@ class BackorderUpdater
   # Given an OFN order was created, changed or cancelled,
   # we re-calculate how much to order in for every variant.
   def amend_backorder(order)
-    variants = distributed_linked_variants(order)
+    order_cycle = order.order_cycle
+    distributor = order.distributor
+    variants = distributed_linked_variants(order_cycle, distributor)
 
     # Temporary code: once we don't need a variant link to look up the
     # backorder, we don't need this check anymore.
@@ -17,8 +19,21 @@ class BackorderUpdater
     # cycle before and got ordered before being removed from the order cycle.
     return unless variants.any?
 
+    # We are assuming that all variants are linked to the same wholesale
+    # shop and its catalog:
+    reference_link = variants[0].semantic_links[0].semantic_id
     user = order.distributor.owner
-    order_cycle = order.order_cycle
+    urls = FdcUrlBuilder.new(reference_link)
+    orderer = FdcBackorderer.new(user, urls)
+
+    backorder = orderer.find_open_order(order)
+
+    update(backorder, user, distributor, order_cycle)
+  end
+
+  # Update a given backorder according to a distributor's order cycle.
+  def update(backorder, user, distributor, order_cycle)
+    variants = distributed_linked_variants(order_cycle, distributor)
 
     # We are assuming that all variants are linked to the same wholesale
     # shop and its catalog:
@@ -27,11 +42,10 @@ class BackorderUpdater
     orderer = FdcBackorderer.new(user, urls)
     broker = FdcOfferBroker.new(user, urls)
 
-    backorder = orderer.find_open_order(order)
-
     updated_lines = update_order_lines(backorder, order_cycle, variants, broker, orderer)
     unprocessed_lines = backorder.lines.to_set - updated_lines
-    cancel_stale_lines(unprocessed_lines, order, broker)
+    managed_variants = managed_linked_variants(user, order_cycle, distributor)
+    cancel_stale_lines(unprocessed_lines, managed_variants, broker)
 
     # Clean up empty lines:
     backorder.lines.reject! { |line| line.quantity.zero? }
@@ -54,8 +68,7 @@ class BackorderUpdater
     end
   end
 
-  def cancel_stale_lines(unprocessed_lines, order, broker)
-    managed_variants = managed_linked_variants(order)
+  def cancel_stale_lines(unprocessed_lines, managed_variants, broker)
     unprocessed_lines.each do |line|
       wholesale_quantity = line.quantity.to_i
       wholesale_product_id = line.offer.offeredItem.semanticId
@@ -79,6 +92,8 @@ class BackorderUpdater
   end
 
   def adjust_stock(variant, solution, line)
+    line.quantity = line.quantity.to_i
+
     if variant.on_hand.negative?
       needed_quantity = -1 * variant.on_hand # We need to replenish it.
 
@@ -92,7 +107,7 @@ class BackorderUpdater
       # and we'll account for that in our stock levels.
       retail_quantity = wholesale_quantity * solution.factor
 
-      line.quantity = line.quantity.to_i + wholesale_quantity
+      line.quantity += wholesale_quantity
       variant.on_hand += retail_quantity
     else
       # Note that a division of integers dismisses the remainder, like `floor`:
@@ -110,18 +125,15 @@ class BackorderUpdater
     end
   end
 
-  def managed_linked_variants(order)
-    user = order.distributor.owner
-    order_cycle = order.order_cycle
-
+  def managed_linked_variants(user, order_cycle, distributor)
     # These permissions may be too complex. Here may be scope to optimise.
     permissions = OpenFoodNetwork::OrderCyclePermissions.new(user, order_cycle)
-    permissions.visible_variants_for_outgoing_exchanges_to(order.distributor)
+    permissions.visible_variants_for_outgoing_exchanges_to(distributor)
       .where.associated(:semantic_links)
   end
 
-  def distributed_linked_variants(order)
-    order.order_cycle.variants_distributed_by(order.distributor)
+  def distributed_linked_variants(order_cycle, distributor)
+    order_cycle.variants_distributed_by(distributor)
       .where.associated(:semantic_links)
   end
 
