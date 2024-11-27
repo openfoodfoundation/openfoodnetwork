@@ -79,9 +79,8 @@ module ProductImport
         if entry.attributes['on_hand'].present?
           new_variant.on_hand = entry.attributes['on_hand']
         end
+        check_on_hand_nil(entry, new_variant)
       end
-
-      check_on_hand_nil(entry, new_variant)
 
       if new_variant.valid?
         entry.product_object = new_variant
