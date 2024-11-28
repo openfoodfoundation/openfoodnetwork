@@ -2804,6 +2804,7 @@ ar:
   report_header_quantity: الكمية
   report_header_max_quantity: اعلى كمية
   report_header_variant: النوع
+  report_header_variant_unit_name: اسم وحدة النوع
   report_header_variant_value: قيمة النوع
   report_header_variant_unit: وحدة النوع
   report_header_total_available: القيمة الكلية متاحة

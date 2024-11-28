@@ -3044,6 +3044,7 @@ hu:
   report_header_quantity: Mennyiség
   report_header_max_quantity: Max Mennyiség
   report_header_variant: Változat
+  report_header_variant_unit_name: Változat egység neve
   report_header_variant_value: Változat értéke
   report_header_variant_unit: Változat egysége
   report_header_total_available: Összesen elérhető

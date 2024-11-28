@@ -58,7 +58,7 @@ module VariantUnits
     def option_value_value_unit_scaled
       unit_scale, unit_name = scale_for_unit_value
 
-      value = (@nameable.unit_value / unit_scale).to_d.truncate(2)
+      value = (@nameable.unit_value.to_d / unit_scale).round(2)
 
       [value, unit_name]
     end

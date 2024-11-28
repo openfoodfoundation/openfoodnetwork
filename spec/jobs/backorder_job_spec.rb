@@ -116,12 +116,18 @@ RSpec.describe BackorderJob do
 
   describe "#place_order" do
     it "schedules backorder completion for specific enterprises" do
-      order.order_cycle = build(
+      order.order_cycle = create(
         :simple_order_cycle,
         id: 1,
         orders_close_at: Date.tomorrow.noon,
       )
       completion_time = Date.tomorrow.noon + 4.hours
+
+      exchange = order.order_cycle.exchanges.create!(
+        incoming: false,
+        sender: order.order_cycle.coordinator,
+        receiver: order.distributor,
+      )
 
       urls = FdcUrlBuilder.new(product_link)
       orderer = FdcBackorderer.new(user, urls)
@@ -132,6 +138,7 @@ RSpec.describe BackorderJob do
       expect {
         subject.place_order(user, order, orderer, backorder)
       }.to enqueue_job(CompleteBackorderJob).at(completion_time)
+        .and change { exchange.semantic_links.count }.by(1)
     end
   end
 end

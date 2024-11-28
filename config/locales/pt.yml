@@ -2428,6 +2428,7 @@ pt:
   report_header_quantity: Quantidade
   report_header_max_quantity: Quantidade Máxima
   report_header_variant: Variante
+  report_header_variant_unit_name: Nome da Unidade da Variante
   report_header_variant_value: Valor da Variante
   report_header_variant_unit: Unidade da Variante
   report_header_total_available: Total disponível

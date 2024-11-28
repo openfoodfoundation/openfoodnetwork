@@ -3106,6 +3106,7 @@ nb:
   report_header_quantity: Mengde
   report_header_max_quantity: Maks antall
   report_header_variant: Variant
+  report_header_variant_unit_name: Enhetsnavn Variant
   report_header_variant_value: Variantverdi
   report_header_variant_unit: Variant Enhet
   report_header_total_available: Totalt tilgjengelig

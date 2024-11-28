@@ -12,7 +12,10 @@ class AffiliateSalesDataRowBuilder < DfcBuilder
   def build_supplier
     DataFoodConsortium::Connector::Enterprise.new(
       nil,
-      localizations: [build_address(item[:supplier_postcode])],
+      localizations: [build_address(
+        item[:supplier_postcode],
+        item[:supplier_country]
+      )],
       suppliedProducts: [build_product],
     )
   end
@@ -20,7 +23,10 @@ class AffiliateSalesDataRowBuilder < DfcBuilder
   def build_distributor
     DataFoodConsortium::Connector::Enterprise.new(
       nil,
-      localizations: [build_address(item[:distributor_postcode])],
+      localizations: [build_address(
+        item[:distributor_postcode],
+        item[:distributor_country]
+      )],
     )
   end
 
@@ -89,9 +95,10 @@ class AffiliateSalesDataRowBuilder < DfcBuilder
     )
   end
 
-  def build_address(postcode)
+  def build_address(postcode, country)
     DataFoodConsortium::Connector::Address.new(
       nil,
+      country:,
       postalCode: postcode,
     )
   end

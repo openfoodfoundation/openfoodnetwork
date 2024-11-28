@@ -2329,6 +2329,7 @@ en_DE:
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
+  report_header_variant_unit_name: Variant Unit Name
   report_header_variant_value: Variant Value
   report_header_variant_unit: Variant Unit
   report_header_total_available: Total available

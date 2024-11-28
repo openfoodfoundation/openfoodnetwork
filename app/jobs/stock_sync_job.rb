@@ -36,7 +36,7 @@ class StockSyncJob < ApplicationJob
 
   def self.catalog_ids(order)
     stock_controlled_variants = order.variants.reject(&:on_demand)
-    links = SemanticLink.where(variant_id: stock_controlled_variants.map(&:id))
+    links = SemanticLink.where(subject: stock_controlled_variants)
     semantic_ids = links.pluck(:semantic_id)
     semantic_ids.map do |product_id|
       FdcUrlBuilder.new(product_id).catalog_url

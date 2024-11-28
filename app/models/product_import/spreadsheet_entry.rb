@@ -85,10 +85,6 @@ module ProductImport
     end
 
     def match_variant?(variant)
-      match_display_name?(variant) && variant.unit_value.to_d == unscaled_units.to_d
-    end
-
-    def match_inventory_variant?(variant)
       match_display_name?(variant) && variant.unit_value.to_d == unit_value.to_d
     end
 

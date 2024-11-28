@@ -62,6 +62,11 @@ es:
         orders_close_at: Fecha de cierre
       variant_override:
         count_on_hand: "Disponibles"
+      spree/payment_method/calculator:
+        preferred_flat_percent: "Calculadora Porcentaje fijo:"
+        preferred_amount: "Calculadora Importe:"
+      enterprise:
+        white_label_logo_link: "Enlace para el logo que se usara en el escaparate"
     errors:
       models:
         spree/user:
@@ -84,6 +89,9 @@ es:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "debe estar en blanco porque estás usando la configuración de estoc de la productora"
             limited_stock_but_no_count_on_hand: "se debe especificar porque se ha definido estoc limitado"
+        connected_apps:
+          vine:
+            api_request_error: "Un error se ha producido al conectarse a Vine API"
       messages:
         blank: "no puede estar vacío"
   errors:
@@ -93,9 +101,13 @@ es:
       image_metadata_missing: "no es una imagen valida"
       aspect_ratio_not_square: "la imagen tiene que ser cuadrada"
       aspect_ratio_not_portrait: "la imagen tiene que ser un retrato"
+      aspect_ratio_not_landscape: "debe ser una imagen de paisaje"
+      aspect_ratio_unknown: "tiene una relación de aspecto desconocida"
       image_not_processable: "no es una imagen valida"
     internal_server_error:
       title: "Lo sentimos pero algo fue mal (500)"
+    unprocessable_entity:
+      title: "El cambio deseado ha sido rechazado (422)"
   stripe:
     error_code:
       incorrect_number: "El número de tarjeta es incorrecto."
@@ -148,6 +160,8 @@ es:
       transaction_not_allowed: "La tarjeta ha sido denegada por una razón desconocida."
       try_again_later: "La tarjeta ha sido denegada por una razón desconocida."
       withdrawal_count_limit_exceeded: "El cliente ha superado el saldo o límite de crédito disponible en su tarjeta."
+    success_code:
+      disconnected: "Cuenta de Stripe desconectada."
   activemodel:
     errors:
       messages:
@@ -173,6 +187,7 @@ es:
               not_available_to_shop: "no está disponible para %{shop}"
   card_details: "Detalles de tarjeta"
   card_type: "Tipo de tarjeta"
+  what_is_this: "¿Qué es esto?"
   cardholder_name: "Nombre del titular de la tarjeta"
   community_forum_url: "URL del foro de la comunidad"
   customer_instructions: "Instrucciones del Consumidor"
@@ -344,8 +359,12 @@ es:
   cancel_order: "Cancelar pedido"
   confirm_send_invoice: "Una factura para esta orde se envió al cliente. ¿Está seguro que quiere continuar?"
   confirm_resend_order_confirmation: "¿Estás seguro que quieres reenviar el correo de confirmación del pedido?"
+  must_have_valid_business_number: "%{enterprise_name} tiene que tener un CIF valido para poder usar las facturas."
   invoice: "Factura"
+  invoices: "Facturas"
+  file: "Fichero"
   active: "Activo"
+  download: "Descargar"
   cancelled: "Cancelado"
   more: "Más"
   say_no: "No"
@@ -403,6 +422,7 @@ es:
   none: Ninguno
   notes: Notas
   error: Error
+  voucher: Bono
   processing_payment: "Procesando el pago..."
   no_pending_payments: "No tiene pagos pendientes"
   invalid_payment_state: "Estado de pago inválido: %{state}"
@@ -457,6 +477,7 @@ es:
         name: Nombre
         unit: Unidad
         unit_value: Valor unidad
+        display_as: Mostrar unidad como
         price: Precio
         producer: Productora
         category: Categoría
@@ -540,6 +561,7 @@ es:
     show_n_more: Mostrar %{num} más
     choose: "Escoger..."
     please_select: Por favor selecciona ...
+    column_save_as_default: Guardar por defecto
     columns: Columnas
     actions: Acciones
     viewing: "Viendo: %{current_view_name}"
@@ -550,6 +572,8 @@ es:
     has_n_rules: "Tiene %{num} reglas"
     unsaved_confirm_leave: "Has cambios sin guardar en esta página ¿Continuar sin guardar?"
     available_units: "Unidades disponibles"
+    terms_of_service: Leer los términos de servicio
+    accept_terms_of_service: Aceptar los terminos de servicio
     shopfront_settings:
       embedded_shopfront_settings: "Configuración de la tienda integrada"
       enable_embedded_shopfronts: "Habilitar tiendas integradas"
@@ -635,6 +659,9 @@ es:
         your_content: Tu contenido
         user_guide: Manual de Usuario
         map: Mapa
+    dfc_product_imports:
+      index:
+        imported_products: "Productos importados:"
     enterprise_fees:
       index:
         title: "Comisiones de la Organización"
@@ -701,7 +728,20 @@ es:
           title: Editar varios Productos
       content:
         loading: Cargando tus productos
+      delete_modal:
+        delete_product_modal:
+          heading: "Borrar producto"
+          confirmation_text: "Borrar producto"
+          cancellation_text: "Mantener producto"
+        delete_variant_modal:
+          heading: "Borrar variante"
+          confirmation_text: "Borrar variante"
+          cancellation_text: "Mantener variante"
       filters:
+        search_products: Buscar productos
+        search_for_producers: Buscar productoras
+        select_producer: Seleccionar productora
+        all_producers: Todas las productoras
         producers:
           label: Productoras
         categories:
@@ -709,6 +749,8 @@ es:
         search: Buscar
       sort:
         pagination:
+          per_page:
+            show: Mostrar
           clear_search: Limpiar la búsqueda
       no_products:
         no_products_found: No se encontraron productos
@@ -718,6 +760,8 @@ es:
         save: Guardar Cambios
       product_variant_row:
         new_variant: Nueva variante
+      bulk_update:
+        success: Cambios guardados
       variant_row:
         none_tax_category: Ninguno
         category_field_name: "Categoría"
@@ -763,6 +807,7 @@ es:
         tax_categories: Categorías de impuestos
         shipping_categories: Categorías de envío
       dfc_import_form:
+        title: "Importar del catálogo DFC"
         enterprise: "Organización"
         import: "Importar"
       import:
@@ -966,6 +1011,7 @@ es:
         images:
           legend: "Imágenes"
           logo: Logo
+          logo_size: "300 x 300 pixeles"
           promo_image_placeholder: 'Esta imagen aparece en "Sobre nosotras"'
           promo_image_note1: 'ATENCIÓN:'
           promo_image_note2: La imagen será recortada a  1200 x 260.
@@ -1068,6 +1114,7 @@ es:
           open_date: "Fecha de Inicio"
           close_date: "Fecha de Finalización"
           display_ordering_in_shopfront: "Mostrar pedidos en la tienda:"
+          shopfront_sort_by_product: "Por producto"
           shopfront_sort_by_category: "Por categoria"
           shopfront_sort_by_producer: "Por productora"
           shopfront_sort_by_category_placeholder: "Categoría"
@@ -1132,12 +1179,14 @@ es:
           net_value: Valor neto
           active: ¿Activo?
           add_new: Añadir nuevo
+          no_voucher_yet: Todavía no hay bonos
         white_label:
           hide_ofn_navigation: "Ocultar la navegación de OFN"
           upload_logo: "Logo que se utilizará en el escaparate"
           remove_logo: "Eliminar el logo"
           remove_logo_confirm: "¿Está seguro de que desea eliminar este logo?"
           remove_logo_success: "Logo eliminado"
+          white_label_logo_link_label: "Enlace para el log que se usara en el escaparate"
         connected_apps:
           affiliate_sales_data:
             loading: "Cargando"
@@ -1791,6 +1840,7 @@ es:
   abn: "NIF:"
   acn: "ACN:"
   invoice_issued_on: "Factura emitida el:"
+  order_number: "Número de pedido:"
   date_of_transaction: "Fecha de la transacción:"
   menu_1_title: "Tiendas"
   menu_1_url: "/shops"
@@ -2767,6 +2817,7 @@ es:
   report_header_quantity: Cantidad
   report_header_max_quantity: Cantidad máxima
   report_header_variant: Variante
+  report_header_variant_unit_name: Nombre de la unidad de la variante
   report_header_variant_value: Valor de la variante
   report_header_variant_unit: Unidad Variante
   report_header_total_available: Total disponible
@@ -2849,7 +2900,9 @@ es:
   report_header_transaction_fee: Comisión por transacción (sin impuestos)
   report_header_total_untaxable_admin: Total de ajustes administrativos no tributables (sin impuestos)
   report_header_total_taxable_admin: Total de ajustes tributarios de administración (impuestos incluidos)
+  invoice_date: "Fecha de factura"
   due_date: "Fecha de vencimiento"
+  account_code: "Código de cuenta"
   equals: "Iguales"
   contains: "Contiene"
   discount: "Descuento"
@@ -2926,9 +2979,11 @@ es:
   no_orders_found: "No se encontraron pedidos"
   order_information: "información del pedido"
   new_payment: "Nuevo pago"
+  create_or_update_invoice: "Crear o actualizar factura"
   date_completed: "Fecha de finalización"
   amount: "Cantidad"
   invoice_number: "Número de Factura"
+  invoice_file: "Fichero"
   state_names:
     ready: Listo
     pending: Pendiente
@@ -3283,7 +3338,14 @@ es:
       unknown_error_from_stripe: |
           Hubo un problema al configurar su tarjeta en nuestra pasarela de pagos. Actualice la página y vuelva a intentarlo; si falla por segunda vez, comuníquese con nosotros para obtener asistencia.
     trix:
+      bold: "Negrita"
       code: "Código"
+      italic: "Italica"
+      link: "Enlace"
+      numbers: "Numeros"
+      redo: "Rehacer"
+      undo: "Deshacer"
+      url: "URL"
       urlPlaceholder: "Por favor introduzca una URL para insertar"
   inflections:
     each:
@@ -3489,6 +3551,7 @@ es:
     editing_tax_category: "Editando categoría fiscal"
     editing_tax_rate: "Editando la tasa de impuestos"
     editing_zone: "Editando zona"
+    editing_state: "Editando provincia"
     expiration: "Vencimiento"
     invalid_payment_provider: "Proveedor de pago inválido"
     items_cannot_be_shipped: "Los artículos no se pueden enviar"
@@ -3716,7 +3779,9 @@ es:
     admin:
       images:
         edit:
+          title: Modificar la foto del producto
           close: Atrás
+          upload: Subir foto
       mail_methods:
         send_testmail: "Enviar correo electrónico de prueba"
         testmail:
@@ -3823,6 +3888,7 @@ es:
           print_invoices: "Imprimir facturas"
           cancel_orders: "Cancelar pedidos"
           resend_confirmation: "Reenviar confirmación"
+          send_invoice: "Enviar facturas"
           selected:
             zero: "Ningún pedido seleccionado"
             one: "1 pedido seleccionado"
@@ -4380,3 +4446,5 @@ es:
     pagination:
       next: Siguiente
       previous: Anterior
+  invisible_captcha:
+    sentence_for_humans: "Por favor, dejalo vacio"

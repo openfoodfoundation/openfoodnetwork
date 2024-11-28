@@ -2891,6 +2891,7 @@ pa:
   report_header_quantity: ਮਾਤਰਾ
   report_header_max_quantity: ਅਧਿਕਤਮ ਮਾਤਰਾ
   report_header_variant: ਵੇਰੀਐਂਟ
+  report_header_variant_unit_name: ਵੇਰੀਐਂਟ ਯੂਨਿਟ ਦਾ ਨਾਮ
   report_header_variant_value: ਵੇਰੀਐਂਟ ਵੈਲਯੂ
   report_header_variant_unit: '"ਵੇਰੀਐਂਟ ਯੂਨਿਟ"'
   report_header_total_available: ਕੁੱਲ ਉਪਲਬਧ

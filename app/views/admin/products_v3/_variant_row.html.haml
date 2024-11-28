@@ -12,7 +12,7 @@
   = f.hidden_field :variant_unit_scale
   = f.select :variant_unit_with_scale,
       options_for_select(WeightsAndMeasures.variant_unit_options, variant.variant_unit_with_scale),
-      { include_blank: true },
+      { include_blank: t('.select_unit_scale') },
       { class: "fullwidth no-input", 'aria-label': t('admin.products_page.columns.unit_scale'), data: { "controller": "tom-select", "tom-select-options-value": '{ "plugins": [] }', action: "change->toggle-control#displayIfMatch" }, required: true }
   = error_message_on variant, :variant_unit, 'data-toggle-control-target': 'control'
   .field
