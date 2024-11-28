@@ -53,9 +53,15 @@ RSpec.describe AffiliateSalesQuery do
     it "converts an array to a hash" do
       row = [
         "Apples",
-        "item", "item", nil, nil,
+        "item",
+        "item",
+        nil,
+        nil,
         15.50,
-        "3210", "3211",
+        "3210",
+        "country1",
+        "3211",
+        "country2",
         3,
       ]
       expect(query.label_row(row)).to eq(
@@ -67,7 +73,9 @@ RSpec.describe AffiliateSalesQuery do
           unit_presentation: nil,
           price: 15.50,
           distributor_postcode: "3210",
+          distributor_country: "country1",
           supplier_postcode: "3211",
+          supplier_country: "country2",
           quantity_sold: 3,
         }
       )

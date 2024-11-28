@@ -34,6 +34,8 @@ RSpec.describe "Pay Your Suppliers Report" do
   before do
     login_as owner
     visit admin_reports_path
+
+    update_line_items_product_names
   end
 
   context "on Reports page" do
@@ -137,5 +139,19 @@ RSpec.describe "Pay Your Suppliers Report" do
       # summary row
       expect(lines.last).to have_content("TOTAL 50.0 50.0 0.0 0.0 0.0 50.0")
     end
+  end
+
+  def update_line_items_product_names
+    n = 1
+    update_product_name_proc = proc do |order|
+      order.line_items.each do |line_item|
+        product = line_item.variant.product
+        product.update!(name: "Product##{n}")
+        n += 1
+      end
+    end
+
+    update_product_name_proc.call(order1)
+    update_product_name_proc.call(order2)
   end
 end

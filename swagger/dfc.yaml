@@ -97,12 +97,13 @@ paths:
                       dfc-b:hasAddress:
                         "@type": dfc-b:Address
                         dfc-b:hasPostalCode: '20170'
+                        dfc-b:hasCountry: Australia
                       dfc-b:supplies:
                         "@type": dfc-b:SuppliedProduct
                         dfc-b:name: Tomato
                         dfc-b:hasQuantity:
                           "@type": dfc-b:QuantitativeValue
-                          dfc-b:hasUnit: dfc-m:Gram
+                          dfc-b:hasUnit: dfc-m:Piece
                           dfc-b:value: 1.0
                         dfc-b:concernedBy:
                           "@type": dfc-b:OrderLine
@@ -124,6 +125,7 @@ paths:
                                   dfc-b:hasAddress:
                                     "@type": dfc-b:Address
                                     dfc-b:hasPostalCode: '20170'
+                                    dfc-b:hasCountry: Australia
         '400':
           description: bad request
   "/api/dfc/enterprises/{enterprise_id}/catalog_items":
