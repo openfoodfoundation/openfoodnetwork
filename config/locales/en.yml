@@ -1712,6 +1712,7 @@ en:
         enterprise:
           primary_details: "Primary Details"
           address: "Address"
+          admin_only: "Admin Only"
           contact: "Contact"
           social: "Social"
           about: "About"
