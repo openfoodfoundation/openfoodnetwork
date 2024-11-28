@@ -161,7 +161,7 @@ module ProductImport
     end
 
     def unit_fields_validation(entry)
-      unit_types = ['g', 'oz', 'lb', 'kg', 't', 'ml', 'l', 'kl', '']
+      unit_types = ['mg', 'g', 'kg', 'oz', 'lb', 't', 'ml', 'cl', 'dl', 'l', 'kl', 'gal', '']
 
       if entry.units.blank?
         mark_as_invalid(entry, attribute: 'units',
@@ -297,7 +297,7 @@ module ProductImport
         unscaled_units = entry.unscaled_units.to_f || 0
         entry.unit_value = unscaled_units * unit_scale unless unit_scale.nil?
 
-        if entry.match_inventory_variant?(existing_variant)
+        if entry.match_variant?(existing_variant)
           variant_override = create_inventory_item(entry, existing_variant)
           return validate_inventory_item(entry, variant_override)
         end

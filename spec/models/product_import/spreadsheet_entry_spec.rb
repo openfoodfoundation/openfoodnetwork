@@ -20,16 +20,15 @@ RSpec.describe ProductImport::SpreadsheetEntry do
   }
   let(:display_name) { "" }
 
-  # TODO test match on display_name
   describe "#match_variant?" do
     it "returns true if matching" do
-      variant = create(:variant, unit_value: 500)
+      variant = create(:variant, unit_value: 500_000)
 
       expect(entry.match_variant?(variant)).to be(true)
     end
 
     it "returns false if not machting" do
-      variant = create(:variant, unit_value: 250)
+      variant = create(:variant, unit_value: 500)
 
       expect(entry.match_variant?(variant)).to be(false)
     end
@@ -38,7 +37,7 @@ RSpec.describe ProductImport::SpreadsheetEntry do
       let(:display_name) { "Good" }
 
       it "returns true" do
-        variant = create(:variant, unit_value: 500, display_name: "Good")
+        variant = create(:variant, unit_value: 500_000, display_name: "Good")
 
         expect(entry.match_variant?(variant)).to be(true)
       end
@@ -48,43 +47,9 @@ RSpec.describe ProductImport::SpreadsheetEntry do
       let(:display_name) { "Bad" }
 
       it "returns false" do
-        variant = create(:variant, unit_value: 500, display_name: "Good")
+        variant = create(:variant, unit_value: 500_000, display_name: "Good")
 
         expect(entry.match_variant?(variant)).to be(false)
-      end
-    end
-  end
-
-  describe "#match_inventory_variant?" do
-    it "returns true if matching" do
-      variant = create(:variant, unit_value: 500_000)
-
-      expect(entry.match_inventory_variant?(variant)).to be(true)
-    end
-
-    it "returns false if not machting" do
-      variant = create(:variant, unit_value: 500)
-
-      expect(entry.match_inventory_variant?(variant)).to be(false)
-    end
-
-    context "with same display_name" do
-      let(:display_name) { "Good" }
-
-      it "returns true" do
-        variant = create(:variant, unit_value: 500_000, display_name: "Good")
-
-        expect(entry.match_inventory_variant?(variant)).to be(true)
-      end
-    end
-
-    context "with different display_name" do
-      let(:display_name) { "Bad" }
-
-      it "returns false" do
-        variant = create(:variant, unit_value: 500_000, display_name: "Good")
-
-        expect(entry.match_inventory_variant?(variant)).to be(false)
       end
     end
   end
