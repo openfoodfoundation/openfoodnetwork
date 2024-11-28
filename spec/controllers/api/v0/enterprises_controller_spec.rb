@@ -7,6 +7,31 @@ RSpec.describe Api::V0::EnterprisesController, type: :controller do
 
   let(:enterprise) { create(:distributor_enterprise) }
 
+  context "as an admin user" do
+    let(:admin) { create(:user) }
+    let!(:enterprise) { create(:distributor_enterprise) }
+
+    before do
+      allow(controller).to receive(:spree_current_user) { admin }
+    end
+
+    describe "updating an enterprise" do
+      let(:enterprise_params) do
+        {
+          enterprise_id: enterprise.id,
+          enterprise: { external_billing_id: 'INV123456' }
+        }
+      end
+
+      it "creates a visible=hidden enterprise" do
+        api_post :create, enterprise_params
+        expect(response.status).to eq 200
+
+        expect(enterprise.reload.external_billing_id).to eq('INV123456')
+      end
+    end
+  end
+
   context "as an enterprise owner" do
     let(:enterprise_owner) { create(:user) }
     let!(:enterprise) { create(:distributor_enterprise, owner: enterprise_owner) }

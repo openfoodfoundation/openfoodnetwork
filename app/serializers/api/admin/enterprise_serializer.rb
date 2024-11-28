@@ -15,7 +15,7 @@ module Api
                  :terms_and_conditions_file_name, :terms_and_conditions_updated_at,
                  :preferred_invoice_order_by_supplier, :preferred_product_low_stock_display,
                  :visible, :hide_ofn_navigation, :white_label_logo,
-                 :white_label_logo_link
+                 :white_label_logo_link, :external_billing_id
 
       has_one :owner, serializer: Api::Admin::UserSerializer
       has_many :users, serializer: Api::Admin::UserSerializer

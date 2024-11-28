@@ -3198,6 +3198,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_hub_code: Hub Code
   report_header_hub_id: Hub ID
   report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_external_billing_id: "Hub External Billing Id"
   report_header_hub_legal_name: "Hub Legal Name"
   report_header_hub_contact_name: "Hub Contact Name"
   report_header_hub_email: "Hub Public Email"
