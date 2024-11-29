@@ -1341,7 +1341,7 @@ en_FR:
         connected_apps:
           legend: "Connected apps"
           affiliate_sales_data:
-            title: "INRAE / UFC QUE CHOISIR Research"
+            title: "INRAE Research"
             tagline: "Allow this research project to access your orders data anonymously"
             enable: "Allow data sharing"
             disable: "Stop sharing"
@@ -1349,7 +1349,7 @@ en_FR:
             need_to_be_manager: "Only managers can connect apps."
             description_html: |
                 <p>
-                INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project.
+                INRAE are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project.
                 </p>
                 <p>
                 <a href="https://apropos.coopcircuits.fr/"
@@ -1382,7 +1382,7 @@ en_FR:
           vine:
             title: "Voucher Integration Engine (VINE)"
             tagline: "Allow redemption of VINE vouchers in your shopfront."
-            enable: "About"
+            enable: "Connect"
             disable: "Disconnect"
             need_to_be_manager: "Only managers can connect apps."
             vine_api_key: "VINE API Key"

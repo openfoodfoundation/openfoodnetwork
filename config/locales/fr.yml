@@ -718,7 +718,7 @@ fr:
         enabled_legend: "Applications connectées autorisées"
         connected_apps_enabled:
           discover_regen: Portail Discover Regenerative
-          affiliate_sales_data: API de commandes anonymisées DFC à fins de recherche
+          affiliate_sales_data: API DFC de commandes anonymisées à fins de recherche
           vine: Éditeur de bons de réduction (VINE)
       update:
         resource: Paramètres de l'application connectée
@@ -1343,7 +1343,7 @@ fr:
         connected_apps:
           legend: "Applications connectées"
           affiliate_sales_data:
-            title: "Programme de recherche INRAE / UFC QUE CHOISIR"
+            title: "Programme de recherche INRAE"
             tagline: "Autoriser ce programme de recherche à accéder à vos données de commandes anonymisées"
             enable: "Autoriser le partage de données"
             disable: "Arrêter le partage"
@@ -1351,7 +1351,7 @@ fr:
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
             description_html: |
                 <p>
-                L'INRAE et UFC QUE CHOISIR travaillent conjointement sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme.
+                L'INRAE travaille sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme.
                 </p>
                 <p>
                 <a href="https://apropos.coopcircuits.fr/"
