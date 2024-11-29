@@ -50,8 +50,6 @@ RSpec.describe DfcIo do
 
   describe ".import" do
     it "recognises loaded vocabularies" do
-      json = DfcIo.export(order)
-      result = DfcIo.import(json)
       result = DfcIo.import(DfcIo.export(order))
 
       expect(result.orderStatus).to eq orderstate.HELD
