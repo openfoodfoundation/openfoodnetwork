@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_30_033956) do
+
+ActiveRecord::Schema[7.0].define(version: 2024_11_01_231144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -556,7 +557,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_30_033956) do
     t.integer "max_quantity"
     t.string "currency", limit: 255
     t.decimal "distribution_fee", precision: 10, scale: 2
-    t.decimal "final_weight_volume", precision: 10, scale: 2
+    t.decimal "final_weight_volume", precision: 10, scale: 3
     t.integer "tax_category_id"
     t.decimal "weight", precision: 8, scale: 2
     t.decimal "height", precision: 8, scale: 2
