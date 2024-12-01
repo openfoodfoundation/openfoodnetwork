@@ -993,7 +993,7 @@ hu:
         add: Hozzáadás
         hide: Elrejt
         import_date: Importált
-        select_a_shop: Válaszd az árusítóhely lehetőséget
+        select_a_shop: Válassz Átvételi Pontot
         review_now: Tekintsd át most
         new_products_alert_message: '%{new_product_count} új termék áll rendelkezésre, amelyet hozzáadhat készletéhez.'
         currently_empty: A leltár jelenleg üres
@@ -1502,7 +1502,7 @@ hu:
       filters:
         search_by_order_cycle_name: "Keresés a rendelési ciklus neve alapján..."
         involving: "Bevonva"
-        any_enterprise: "Bármilyen szervezeti forma"
+        any_enterprise: "Bármilyen szervezet"
         any_schedule: "Bármilyen ütemterv"
       form:
         general_settings: "Általános beállítások"
@@ -1528,8 +1528,8 @@ hu:
         orders_close: A rendelések lezárulnak
       row:
         suppliers: beszállítók
-        distributors: elosztók
-        variants: változatai
+        distributors: elosztó
+        variants: változat
       simple_form:
         ready_for: Átvétel
         ready_for_placeholder: Dátum idő
@@ -2287,9 +2287,9 @@ hu:
   email_signoff: "Üdvözlettel,"
   email_signature: "%{sitename} csapata"
   email_confirm_customer_greeting: "Kedves %{name}!"
-  email_confirm_customer_intro_html: "Köszönjük a vásárlást! <strong>%{distributor}</strong>"
+  email_confirm_customer_intro_html: "Köszönjük a megrendelést! \n<strong>%{distributor}</strong>"
   email_confirm_customer_number_html: "- Megrendelés visszaigazolás <strong>#%{number}</strong>"
-  email_confirm_customer_details_html: "Íme a megrendelésed részletei <strong>%{distributor}</strong>:"
+  email_confirm_customer_details_html: "<strong>%{distributor}</strong> átvételi ponton leadott megrendelés részletei: "
   email_confirm_customer_signoff: "Üdvözlettel,"
   email_confirm_shop_greeting: "Kedves %{name}!"
   email_confirm_shop_order_html: "Köszönjük! Új megrendelésed van ezen az Átvételi Ponton: <strong>%{distributor}</strong>!"
@@ -2411,7 +2411,7 @@ hu:
   products_updating_cart: "Kosár frissítése..."
   products_cart_empty: "Kosár üres"
   products_edit_cart: "Kosár szerkesztése"
-  products_from: elosztó
+  products_from: termelő
   products_change: "Nincs mentendő módosítás."
   products_update_error: "A mentés a következő hibá(k) miatt nem sikerült:"
   products_update_error_msg: "A mentés nem sikerült."
@@ -2738,7 +2738,7 @@ hu:
       finished:
         headline: "Elkészült!"
         thanks: "Köszönjük, hogy kitöltötted a %{enterprise} adatlapját."
-        login: "Bármikor módosíthatod vagy frissítheted vállalkozásod adatlapját, ha bejelentkezel az Open Food Network-be, és az Adminisztráció??? oldalra lépsz."
+        login: "Bármikor módosíthatod vagy frissítheted vállalkozásod adatlapját, ha bejelentkezel az Open Food Network-be, és az Adminisztráció felületre lépsz."
         action: "Lépj a Vállalkozás Irányítópultjára"
   back: "Vissza"
   continue: "Tovább"
@@ -2873,7 +2873,7 @@ hu:
   spree_admin_enterprises_shipping_methods: "Szállítási módok"
   spree_admin_enterprises_fees: "Vállalkozási díjak"
   spree_admin_enterprises_none_create_a_new_enterprise: "ÚJ VÁLLALKOZÁS LÉTREHOZÁSA"
-  spree_admin_enterprises_none_text: "Még nincsenek vállalkozásai"
+  spree_admin_enterprises_none_text: "Még nincsenek vállalkozásaid"
   spree_admin_enterprises_tabs_hubs: "ÁTVÉTELI PONTOK"
   spree_admin_enterprises_producers_manage_products: "TERMÉKEK KEZELÉSE"
   spree_admin_enterprises_create_new_product: "ÚJ TERMÉK KÉSZÍTÉSE"
@@ -3044,6 +3044,7 @@ hu:
   report_header_quantity: Mennyiség
   report_header_max_quantity: Max Mennyiség
   report_header_variant: Változat
+  report_header_variant_unit_name: Változat egység neve
   report_header_variant_value: Változat értéke
   report_header_variant_unit: Változat egysége
   report_header_total_available: Összesen elérhető
@@ -3217,7 +3218,7 @@ hu:
   order_information: "Rendelési információ"
   new_payment: "Új fizetés"
   create_or_update_invoice: "Számla Létrehozása vagy Frissítése"
-  date_completed: "Teljesítés dátuma"
+  date_completed: "Megrendelés dátuma"
   amount: "Összeg"
   invoice_number: "A számla sorszáma"
   invoice_file: "File"
@@ -3596,13 +3597,13 @@ hu:
       indent: "Növelés"
       italic: "Dőlt"
       link: "Link"
-      outdent: "Szint csökkentése"
+      outdent: "Csökkentés"
       redo: "Újra"
       strike: "Áthúzás"
       undo: "Visszavonás"
       unlink: "Link feloldása"
       url: "URL"
-      urlPlaceholder: "Kérünk, adj meg egy URL-t"
+      urlPlaceholder: "Kérünk, adj meg egy URL-t a beillesztéshez"
   inflections:
     each:
       one: "mindegyik"
@@ -3709,7 +3710,7 @@ hu:
           distributor: "Kimenő"
           coordinator: "Koordinátor"
         tax_category_name:
-          shipping_instance_rate: "Kézbesítői díj"
+          shipping_instance_rate: "Platform Rate"
         formats:
           csv:
             header:
@@ -4192,7 +4193,7 @@ hu:
         products:
           products_tip: "A termékek, melyeket az Open Food hálózatán keresztül kínálsz"
           active_products:
-            zero: "Nincsenek aktív termékei."
+            zero: "Nincsenek aktív termékeid."
             one: "Egy aktív terméke van"
             few: "%{count} aktív terméke van"
             many: "%{count} aktív terméke van"
@@ -4503,7 +4504,7 @@ hu:
     order_mailer:
       cancel_email:
         customer_greeting: "Kedves %{name}!"
-        instructions_html: "Megrendelésed a(z) <strong>%{distributor}</strong>-tól TÖRLÉSRE KERÜLT. Kérjük, őrizd meg ezt a törlési információt."
+        instructions_html: "<strong>%{distributor}</strong> átvételi ponton leadott megrendelésed TÖRLÉSRE KERÜLT. Kérjük, őrizd meg ezt a törlési információt."
         dont_cancel: "Ha meggondoltad magad, vagy nem szeretnéd lemondani ezt a rendelést, ide írj: %{email}"
         order_summary_canceled_html: "<strong>Megrendelés összegzése #%{number}[TÖRÖLVE] </strong>"
         details: "Itt vannak a megrendelt termékek részletei:"

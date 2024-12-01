@@ -2425,6 +2425,7 @@ nl_BE:
   report_header_quantity: Kwantiteit
   report_header_max_quantity: Maximale Hoeveelheid
   report_header_variant: Variant
+  report_header_variant_unit_name: Variant Unit Name
   report_header_variant_value: Eénheidsaantal
   report_header_variant_unit: Eénheid
   report_header_total_available: Totaal beschikbaar

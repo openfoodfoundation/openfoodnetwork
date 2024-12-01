@@ -2921,6 +2921,7 @@ hi:
   report_header_quantity: मात्रा
   report_header_max_quantity: अधिकतम मात्रा
   report_header_variant: वेरिएंट
+  report_header_variant_unit_name: वेरिएंट यूनिट का नाम
   report_header_variant_value: वैरिएंट वैल्यू
   report_header_variant_unit: वेरिएंट यूनिट
   report_header_total_available: कुल उपलब्ध

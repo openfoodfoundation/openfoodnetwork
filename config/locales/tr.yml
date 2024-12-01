@@ -2547,6 +2547,7 @@ tr:
   report_header_quantity: miktar
   report_header_max_quantity: Maksimum Miktar
   report_header_variant: Çeşit
+  report_header_variant_unit_name: Çeşit Birim Adı
   report_header_variant_value: Çeşit Değeri
   report_header_variant_unit: Çeşit Birimi
   report_header_total_available: Toplam mevcut

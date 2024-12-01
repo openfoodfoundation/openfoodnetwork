@@ -86,7 +86,7 @@ gem "active_model_serializers", "0.8.4"
 gem 'activerecord-session_store'
 gem 'acts-as-taggable-on'
 gem 'angularjs-file-upload-rails', '~> 2.4.1'
-gem 'bigdecimal', '3.0.2'
+gem 'bigdecimal'
 gem 'bootsnap', require: false
 gem 'geocoder'
 gem 'gmaps4rails'

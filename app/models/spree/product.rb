@@ -211,10 +211,6 @@ module Spree
       end
     end
 
-    def total_on_hand
-      stock_items.sum(&:count_on_hand)
-    end
-
     def properties_including_inherited
       # Product properties override producer properties
       ps = product_properties.all

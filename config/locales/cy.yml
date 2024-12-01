@@ -2949,6 +2949,7 @@ cy:
   report_header_quantity: Nifer
   report_header_max_quantity: Uchafswm nifer
   report_header_variant: Amrywiolyn
+  report_header_variant_unit_name: Enw Uned Amrywiolyn
   report_header_variant_value: Gwerth Amrywiolyn
   report_header_variant_unit: Uned Amrywiolyn
   report_header_total_available: Cyfanswm ar gael

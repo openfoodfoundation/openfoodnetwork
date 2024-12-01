@@ -27,7 +27,7 @@ RSpec.describe "Orders And Distributors" do
     context "as an enterprise user" do
       let(:header) {
         ["Order date", "Order Id", "Customer Name", "Customer Email", "Customer Phone",
-         "Customer City", "SKU", "Item name", "Variant", "Quantity", "Max Quantity",
+         "Customer City", "SKU", "Product", "Variant", "Quantity", "Max Quantity",
          "Cost", "Shipping Cost", "Payment Method", "Distributor", "Distributor address",
          "Distributor city", "Distributor postcode", "Shipping Method",
          "Shipping instructions"]

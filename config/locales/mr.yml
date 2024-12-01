@@ -2845,6 +2845,7 @@ mr:
   report_header_quantity: प्रमाण
   report_header_max_quantity: कमाल प्रमाण
   report_header_variant: प्रकार
+  report_header_variant_unit_name: वेरिएंट युनिटचे नाव
   report_header_variant_value: भिन्न मूल्य
   report_header_variant_unit: व्हेरिएंट युनिट
   report_header_total_available: एकूण उपलब्ध

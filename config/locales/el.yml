@@ -2997,6 +2997,7 @@ el:
   report_header_quantity: Ποσότητα
   report_header_max_quantity: Μέγιστη Ποσότητα
   report_header_variant: Παραλαγή
+  report_header_variant_unit_name: Όνομα μεταβλητής
   report_header_variant_value: Παραλλαγή Αξίας
   report_header_variant_unit: Μονάδα μέτρησης μεταβλητής
   report_header_total_available: Σύνολο διαθέσιμο

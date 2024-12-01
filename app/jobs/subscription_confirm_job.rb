@@ -56,7 +56,7 @@ class SubscriptionConfirmJob < ApplicationJob
       send_failed_payment_email(order)
     else
       Bugsnag.notify(e) do |payload|
-        payload.add_metadata :order, order
+        payload.add_metadata :order, :order, order
       end
       send_failed_payment_email(order, e.message)
     end
@@ -109,8 +109,7 @@ class SubscriptionConfirmJob < ApplicationJob
     SubscriptionMailer.failed_payment_email(order).deliver_now
   rescue StandardError => e
     Bugsnag.notify(e) do |payload|
-      payload.add_metadata :order, order
-      payload.add_metadata :error_message, error_message
+      payload.add_metadata :subscription_data, { order:, error_message: }
     end
   end
 end

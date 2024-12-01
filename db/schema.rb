@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema[7.0].define(version: 2024_11_01_231144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -401,10 +402,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_231144) do
   end
 
   create_table "semantic_links", force: :cascade do |t|
-    t.bigint "variant_id", null: false
+    t.bigint "variant_id"
     t.string "semantic_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "subject_type", null: false
+    t.bigint "subject_id", null: false
+    t.index ["subject_type", "subject_id"], name: "index_semantic_links_on_subject"
     t.index ["variant_id"], name: "index_semantic_links_on_variant_id"
   end
 

@@ -2372,6 +2372,7 @@ fil_PH:
   report_header_quantity: dami
   report_header_max_quantity: Pinakamarami
   report_header_variant: Uri
+  report_header_variant_unit_name: pangalan ng yunit ng variant
   report_header_variant_value: Halaga ng Variant
   report_header_variant_unit: Yunit ng variant
   report_header_total_available: Kabuuan na mayroon

@@ -2937,6 +2937,7 @@ ml:
   report_header_quantity: അളവ്
   report_header_max_quantity: പരമാവധി അളവ്
   report_header_variant: വേരിയന്റ്
+  report_header_variant_unit_name: വേരിയന്റ് യൂണിറ്റിന്റെ പേര്
   report_header_variant_value: വേരിയന്റ് മൂല്യം
   report_header_variant_unit: വേരിയന്റ് യൂണിറ്റ്
   report_header_total_available: ആകെ ലഭ്യമായത്

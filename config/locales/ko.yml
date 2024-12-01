@@ -2691,6 +2691,7 @@ ko:
   report_header_quantity: 수량
   report_header_max_quantity: 최대 수량
   report_header_variant: 다른 상품
+  report_header_variant_unit_name: 변경된 구성 단위 이름
   report_header_variant_value: 변경된 값
   report_header_variant_unit: 구성 단위 변경
   report_header_total_available: 사용 가능한 항목 총합

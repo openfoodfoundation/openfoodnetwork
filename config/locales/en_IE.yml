@@ -53,6 +53,7 @@ en_IE:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
         supplier: "Supplier"
+        variant_unit: "Unit Scale"
         variant_unit_name: "Variant Unit Name"
         unit_value: "Unit value"
       spree/credit_card:
@@ -80,6 +81,8 @@ en_IE:
         white_label_logo_link: "Link for the logo used in shopfront"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
         spree/image:
           attributes:
             attachment:
@@ -104,6 +107,9 @@ en_IE:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+        connected_apps:
+          vine:
+            api_request_error: "An error occured when connecting to Vine API"
       messages:
         confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
@@ -193,6 +199,9 @@ en_IE:
       transaction_not_allowed: "The card has been declined for an unknown reason."
       try_again_later: "The card has been declined for an unknown reason."
       withdrawal_count_limit_exceeded: "The customer has exceeded the balance or credit limit available on their card."
+      disconnect_failure: "Failed to disconnect Stripe."
+    success_code:
+      disconnected: "Stripe account disconnected."
   activemodel:
     errors:
       messages:
@@ -218,10 +227,16 @@ en_IE:
               not_available_to_shop: "is not available to %{shop}"
   card_details: "Card details"
   card_type: "Card type"
+  card_type_is: "Card type is"
+  unrecognized_card_type: "Unrecognized card type"
+  use_new_cc: "Use a new credit card"
+  what_is_this: "What is this?"
   cardholder_name: "Cardholder name"
   community_forum_url: "Community forum URL"
   customer_instructions: "Customer instructions"
   additional_information: "Additional Information"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -306,7 +321,34 @@ en_IE:
         We will look into it but please let us know if the problem persists.
   backorder_mailer:
     backorder_failed:
+      subject: "An automatic backorder failed"
+      headline: "Backordering failed"
+      description: |
+          We tried to place or update a backorder for out-of-stock items but
+          something went wrong. You may have negative stock and need to resolve
+          the issue to order more stock in.
+      hints: |
+          You may need to go to the OIDC settings and reconnect your account.
+          Also check that your supplier's catalog hasn't changed and is still
+          supplying all products you need. And please get in touch with us if
+          you have any questions.
+      order: "Affected order: %{number}"
+      stock: "Stock"
       product: "Product"
+    backorder_incomplete:
+      subject: "An automatic backorder failed to complete"
+      headline: "Your backorder is still a draft"
+      description: |
+          We tried to complete a backorder for out-of-stock items but
+          something went wrong. The backorder quantities may be too high if
+          you had cancellations. And your backorder won't be fulfilled while
+          it's in draft state.
+      hints: |
+          You may need to go to the OIDC settings and reconnect your account.
+          Also check that your supplier's catalog hasn't changed and is still
+          supplying all products you need. And please get in touch with us if
+          you have any questions.
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -518,6 +560,7 @@ en_IE:
         unit_scale: Unit scale
         unit: Unit
         unit_value: Unit value
+        display_as: Display unit as
         price: Price
         producer: Producer
         category: Category
@@ -544,10 +587,13 @@ en_IE:
         clone: Clone
         delete: Delete
         remove: Remove
+        preview: Preview
       image:
         edit: Edit
       product_preview:
+        product_preview: Product preview
         shop_tab: Shop
+        product_details_tab: Product details
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -601,6 +647,7 @@ en_IE:
     show_n_more: Show %{num} more
     choose: "Choose..."
     please_select: Please select...
+    column_save_as_default: Save as default
     columns: Columns
     actions: Actions
     viewing: "Viewing: %{current_view_name}"
@@ -649,6 +696,7 @@ en_IE:
         status: Status
         ok: Ok
         instance_secret_key: Instance Secret Key
+        instance_publishable_key: Instance Publishable Key
         account_id: Account ID
         business_name: Business Name
         charges_enabled: Charges Enabled
@@ -664,6 +712,17 @@ en_IE:
         info_html: "Matomo is a Web and Mobile Analytics application. You can either host Matomo on-premises or use a cloud-hosted service. See <a href='http://matomo.org' target='_blank'>matomo.org</a> for more information."
         config_instructions_html: "Here you can configure the OFN Matomo integration. The Matomo URL below should point to the Matomo instance where the user tracking information will be sent to; if it is left empty, Matomo user tracking will be disabled. The Site ID field is not mandatory but useful if you are tracking more than one website on a single Matomo instance; it can be found on the Matomo instance console."
         config_instructions_tag_manager_html: "Setting the Matomo Tag Manager URL enables Matomo Tag Manager. This tool allows you to set up analytics events. The Matomo Tag Manager URL is copied from the Install Code section of Matomo Tag Manager. Ensure you select the right container and environment as these options change the URL."
+    connected_app_settings:
+      edit:
+        title: "Connected app settings"
+        info_html: "Enabled apps will appear under Enterprise Settings > Connected Apps."
+        enabled_legend: "Enabled connected apps"
+        connected_apps_enabled:
+          discover_regen: Discover Regenerative portal
+          affiliate_sales_data: DFC anonymised orders API for research purposes
+          vine: Voucher Integration Engine (VINE)
+      update:
+        resource: Connected app settings
     customers:
       index:
         new_customer: "New Customer"
@@ -688,6 +747,9 @@ en_IE:
         balance_due: "Balance Due"
       destroy:
         has_associated_subscriptions: "Delete failed: This customer has active subscriptions. Cancel them first."
+    column_preferences:
+      bulk_update:
+        success: "Column preferences saved"
     contents:
       edit:
         title: Content
@@ -701,6 +763,10 @@ en_IE:
         your_content: Your content
         user_guide: User Guide
         map: Map
+    dfc_product_imports:
+      index:
+        title: "Importing a DFC product catalog"
+        imported_products: "Imported products:"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -754,6 +820,7 @@ en_IE:
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
+      back_to_products_list: "Back To Products List"
       editing_product: "Editing Product"
       tabs:
         product_details: "Product Details"
@@ -781,8 +848,10 @@ en_IE:
       filters:
         search_products: Search for products
         search_for_producers: Search for producers
+        select_producer: Select producer
         all_producers: All producers
         search_for_categories: Search for categories
+        select_category: Select category
         all_categories: All categories
         producers:
           label: Producers
@@ -791,6 +860,9 @@ en_IE:
         search: Search
       sort:
         pagination:
+          products_total_html:
+            one: "<strong>%{count} product</strong> found for your search criteria. Showing %{from} to %{to}."
+            other: "<strong>%{count} products</strong> found for your search criteria. Showing %{from} to %{to}."
           per_page:
             show: Show
             per_page: "%{num} per page"
@@ -824,9 +896,13 @@ en_IE:
         error: Unable to delete the variant
       variant_row:
         none_tax_category: None
+        search_for_tax_categories: "Search for tax categories"
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
+      clone:
+        success: Successfully cloned the product
+        error: Unable to clone the product
     product_import:
       title: Product Import
       file_not_found: File not found or could not be opened
@@ -869,7 +945,9 @@ en_IE:
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
       dfc_import_form:
+        title: "Import from DFC catalog"
         enterprise: "Enterprise"
+        catalog_url: "DFC catalog URL"
         import: "Import"
       import:
         review: Review
@@ -973,6 +1051,7 @@ en_IE:
       edit:
         order_sure_want_to: Are you sure you want to %{event} this order?
         voucher_tax_included_in_price: "%{label} (tax included in voucher)"
+        tax_on_fees: "Tax on fees"
       invoice_email_sent: 'Invoice email has been sent'
       order_email_resent: 'Order email has been resent'
       bulk_management:
@@ -1177,6 +1256,7 @@ en_IE:
           open_date: "Open Date"
           close_date: "Close Date"
           display_ordering_in_shopfront: "Display ordering in shopfront:"
+          shopfront_sort_by_product: "By product"
           shopfront_sort_by_category: "By category"
           shopfront_sort_by_producer: "By producer"
           shopfront_sort_by_category_placeholder: "Category"
@@ -1261,15 +1341,28 @@ en_IE:
         connected_apps:
           legend: "Connected apps"
           affiliate_sales_data:
+            title: "INRAE / UFC QUE CHOISIR Research"
+            tagline: "Allow this research project to access your orders data anonymously"
             enable: "Allow data sharing"
             disable: "Stop sharing"
             loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
+            description_html: |
+                <p>
+                INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project.
+                </p>
+                <p>
+                <a href="https://apropos.coopcircuits.fr/"
+                target="_blank"><b>Learn more about this research project</b>
+                <i class="icon-external-link"></i></a>
+                </p>
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Allow Discover Regenerative to publish your enterprise information."
             enable: "Allow data sharing"
             disable: "Stop sharing"
             loading: "Loading"
+            need_to_be_manager: "Only managers can connect apps."
             note: |
                 Your Open Food Network account is connected to Discover Regenerative.
                 Add or update information on your Discover Regenerative listing here.
@@ -1287,8 +1380,25 @@ en_IE:
                 <i class="icon-external-link"></i></a>
                 </p>
           vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Allow redemption of VINE vouchers in your shopfront."
             enable: "Resources"
             disable: "Disconnect"
+            need_to_be_manager: "Only managers can connect apps."
+            vine_api_key: "VINE API Key"
+            vine_secret: "VINE secret"
+            description_html: |
+                <p>
+                To enable VINE for your enterprise, enter your API key and secret.
+                </p>
+                <p>
+                <a href="#" target="_blank"><b>VINE</b>
+                <i class="icon-external-link"></i></a>
+                </p>
+            api_parameters_empty: "Please enter an API key and a secret"
+            api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
+            connection_error: "API connection error, please try again"
+            setup_error: "VINE API is not configured, please contact your instance manager"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1341,8 +1451,10 @@ en_IE:
         contact_name: Contact Name
       edit:
         editing: 'Settings:'
+        back_link: Back To Enterprises List
       new:
         title: New Enterprise
+        back_link: Back To Enterprises List
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
@@ -1380,6 +1492,9 @@ en_IE:
         re_notify_producers: Re notify producers
         notify_producers_tip: This will send an email to each producer with the list of their orders.
       date_time_warning_modal_content:
+        title: 'Orders are linked to this order cycle.'
+        content: 'If you wish to create a new order cycle, it is recommended to duplicate the order cycle first and then change the dates.'
+        proceed: 'Proceed anyway'
         cancel: 'Cancel'
       incoming:
         incoming: "Incoming"
@@ -1580,6 +1695,9 @@ en_IE:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      display:
+        report_is_big: "This report is big and may slow down your device."
+        display_anyway: "Display anyway"
       download:
         button: "Download Report"
       show:
@@ -2490,6 +2608,7 @@ en_IE:
   orders_bought_already_confirmed: "* already confirmed"
   orders_confirm_cancel: "Are you sure you want to cancel this order?"
   order_processed_successfully: "Your order has been processed successfully"
+  thank_you_for_your_order: "Thank you for your order"
   products_cart_distributor_choice: "Distributor for your order:"
   products_cart_distributor_change: "Your distributor for this order will be changed to %{name} if you add this product to your cart."
   products_cart_distributor_is: "Your distributor for this order is %{name}."
@@ -2987,6 +3106,7 @@ en_IE:
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
+  report_header_variant_unit_name: Variant Unit Name
   report_header_variant_value: Variant Value
   report_header_variant_unit: Variant Unit
   report_header_total_available: Total available
@@ -3535,7 +3655,22 @@ en_IE:
           Please refresh the page and try again, if it fails a second time,
           please contact us for support.
     trix:
+      bold: "Bold"
+      bullets: "Bullets"
       code: "Code"
+      heading1: "Heading"
+      hr: "Horizontal rule"
+      indent: "Increase Level"
+      italic: "Italic"
+      link: "Link"
+      numbers: "Numbers"
+      outdent: "Decrease Level"
+      quote: "Quote"
+      redo: "Redo"
+      strike: "Strikethrough"
+      undo: "Undo"
+      unlink: "Unlink"
+      url: "URL"
       urlPlaceholder: "Please enter a URL to insert"
   inflections:
     each:
@@ -3724,6 +3859,7 @@ en_IE:
     editing_tax_category: "Editing tax category"
     editing_tax_rate: "Editing tax rate"
     editing_zone: "Editing zone"
+    editing_state: "Editing County"
     expiration: "Expiration"
     invalid_payment_provider: "Invalid payment provider"
     items_cannot_be_shipped: "Items cannot be shipped"
@@ -3757,6 +3893,7 @@ en_IE:
     resend: "Resend"
     back_to_orders_list: "Back To Orders List"
     back_to_payments_list: "Back To Payments List"
+    back_to_states_list: "Back to Counties List"
     return_authorizations: "Return Authorisations"
     cannot_create_returns: "Cannot create returns as this order has no shipped units."
     select_stock: "Select stock"
@@ -3846,6 +3983,7 @@ en_IE:
     tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
     included_in_price: "Included in Price"
     show_rate_in_label: "Show rate in label"
+    back_to_tax_rates_list: "Back To Tax Rates List"
     tax_settings: "Tax Settings"
     zones: "Zones"
     new_zone: "New Zone"
@@ -3858,6 +3996,7 @@ en_IE:
     iso_name: "ISO Name"
     states_required: "Counties Required"
     editing_country: "Editing Country"
+    back_to_countries_list: "Back To Countries List"
     states: "Counties"
     abbreviation: "Abbreviation"
     new_state: "New County"
@@ -4022,6 +4161,7 @@ en_IE:
           continue: "Continue"
         new:
           new_return_authorization: "New Return Authorisation"
+          back_to_return_authorizations_list: "Back to Return Authorisations List"
           continue: "Continue"
         edit:
           receive: "receive"
@@ -4234,6 +4374,8 @@ en_IE:
           new_product: "New Product"
           supplier: "Supplier"
           supplier_select_placeholder: "Select a supplier"
+          search_for_suppliers: "Search for suppliers"
+          search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
@@ -4350,8 +4492,18 @@ en_IE:
           total: "Total"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Back To Product Categories List"
         index:
           title: "Product Categories"
+          new_taxon: 'New product category'
+        new:
+          title: "New Product Category"
+        edit:
+          title: "Edit Product Category"
+        destroy:
+          delete_taxon:
+            success: "Successfully deleted the product category"
+            error: "Unable to delete the product category due to assigned products."
         form:
           name: Name
           meta_title: Meta Title

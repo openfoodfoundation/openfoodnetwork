@@ -2712,6 +2712,7 @@ de_CH:
   report_header_quantity: Menge
   report_header_max_quantity: Max Menge
   report_header_variant: Produktvariante
+  report_header_variant_unit_name: Name der Varianteneinheit
   report_header_variant_value: Wert der Produktvarianten
   report_header_variant_unit: Varianteneinheit
   report_header_total_available: Insgesamt verfügbar

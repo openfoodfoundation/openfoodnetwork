@@ -53,6 +53,7 @@ en_GB:
         primary_taxon: "Product Category"
         shipping_category_id: "Shipping Category"
         supplier: "Supplier"
+        variant_unit: "Unit Scale"
         variant_unit_name: "Variant Unit Name"
         unit_value: "Unit value"
       spree/credit_card:
@@ -80,6 +81,8 @@ en_GB:
         white_label_logo_link: "Link for the logo used in shopfront"
     errors:
       models:
+        enterprise_fee:
+          inherit_tax_requires_per_item_calculator: "Inheriting the tax category requires a per-item calculator."
         spree/image:
           attributes:
             attachment:
@@ -104,6 +107,9 @@ en_GB:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because using producer stock settings"
             limited_stock_but_no_count_on_hand: "must be specified because forcing limited stock"
+        connected_apps:
+          vine:
+            api_request_error: "An error occured when connecting to Vine API"
       messages:
         confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
@@ -315,7 +321,34 @@ en_GB:
         We will look into it but please let us know if the problem persists.
   backorder_mailer:
     backorder_failed:
+      subject: "An automatic backorder failed"
+      headline: "Backordering failed"
+      description: |
+          We tried to place or update a backorder for out-of-stock items but
+          something went wrong. You may have negative stock and need to resolve
+          the issue to order more stock in.
+      hints: |
+          You may need to go to the OIDC settings and reconnect your account.
+          Also check that your supplier's catalog hasn't changed and is still
+          supplying all products you need. And please get in touch with us if
+          you have any questions.
+      order: "Affected order: %{number}"
+      stock: "Stock "
       product: "Product"
+    backorder_incomplete:
+      subject: "An automatic backorder failed to complete"
+      headline: "Your backorder is still a draft"
+      description: |
+          We tried to complete a backorder for out-of-stock items but
+          something went wrong. The backorder quantities may be too high if
+          you had cancellations. And your backorder won't be fulfilled while
+          it's in draft state.
+      hints: |
+          You may need to go to the OIDC settings and reconnect your account.
+          Also check that your supplier's catalog hasn't changed and is still
+          supplying all products you need. And please get in touch with us if
+          you have any questions.
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Please confirm the email address for %{enterprise}"
@@ -554,10 +587,13 @@ en_GB:
         clone: Clone
         delete: Delete
         remove: Remove
+        preview: Preview
       image:
         edit: Edit
       product_preview:
+        product_preview: Product preview
         shop_tab: Shop
+        product_details_tab: Product details
     adjustments:
       skipped_changing_canceled_order: "You can't change a cancelled order."
     begins_at: Begins At
@@ -684,6 +720,7 @@ en_GB:
         connected_apps_enabled:
           discover_regen: Discover Regenerative portal
           affiliate_sales_data: DFC anonymised orders API for research purposes
+          vine: Voucher Integration Engine (VINE)
       update:
         resource: Connected app settings
     customers:
@@ -783,6 +820,7 @@ en_GB:
       variants:
         infinity: "Infinity"
         to_order_tip: "Items made to order do not have a set stock level, such as loaves of bread made fresh to order."
+      back_to_products_list: "Back To Products List"
       editing_product: "Editing Product"
       tabs:
         product_details: "Product Details"
@@ -1303,11 +1341,21 @@ en_GB:
         connected_apps:
           legend: "Connected apps"
           affiliate_sales_data:
+            title: "INRAE / UFC QUE CHOISIR Research"
             tagline: "Allow this research project to access your orders data anonymously"
             enable: "Allow data sharing"
             disable: "Stop sharing"
             loading: "Loading"
             need_to_be_manager: "Only managers can connect apps."
+            description_html: |
+                <p>
+                INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project.
+                </p>
+                <p>
+                <a href="https://apropos.coopcircuits.fr/"
+                target="_blank"><b>Learn more about this research project</b>
+                <i class="icon-external-link"></i></a>
+                </p>
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Allow Discover Regenerative to publish your enterprise information."
@@ -1332,9 +1380,25 @@ en_GB:
                 <i class="icon-external-link"></i></a>
                 </p>
           vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Allow redemption of VINE vouchers in your shopfront."
             enable: "Resources"
             disable: "Disconnect"
             need_to_be_manager: "Only managers can connect apps."
+            vine_api_key: "VINE API Key"
+            vine_secret: "VINE secret"
+            description_html: |
+                <p>
+                To enable VINE for your enterprise, enter your API key and secret.
+                </p>
+                <p>
+                <a href="#" target="_blank"><b>VINE</b>
+                <i class="icon-external-link"></i></a>
+                </p>
+            api_parameters_empty: "Please enter an API key and a secret"
+            api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
+            connection_error: "API connection error, please try again"
+            setup_error: "VINE API is not configured, please contact your instance manager"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1387,8 +1451,10 @@ en_GB:
         contact_name: Contact Name
       edit:
         editing: 'Settings:'
+        back_link: Back To Enterprises List
       new:
         title: New Enterprise
+        back_link: Back To Enterprises List
       welcome:
         welcome_title: Welcome to the Open Food Network!
         welcome_text: You have successfully created a
@@ -1629,6 +1695,7 @@ en_GB:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      pay_your_suppliers: Pay your suppliers
       display:
         report_is_big: "This report is big and may slow down your device."
         display_anyway: "Display anyway"
@@ -1674,6 +1741,8 @@ en_GB:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      suppliers:
+        name: Suppliers
       enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
       enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
@@ -2960,6 +3029,8 @@ en_GB:
   report_render_options: Rendering Options
   report_header_ofn_uid: OFN UID
   report_header_order_cycle: Order Cycle
+  report_header_order_cycle_start_date: OC Start Date
+  report_header_order_cycle_end_date: OC End Date
   report_header_user: User
   report_header_email: Email
   report_header_status: Status
@@ -2980,6 +3051,7 @@ en_GB:
   report_header_hub_legal_name: "Hub Legal Name"
   report_header_hub_contact_name: "Hub Contact Name"
   report_header_hub_email: "Hub Public Email"
+  report_header_hub_contact_email: Hub Contact Email
   report_header_hub_owner_email: Hub Owner Email
   report_header_hub_phone: "Hub Phone Number"
   report_header_hub_address_line1: "Hub Address Line 1"
@@ -3040,6 +3112,7 @@ en_GB:
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
+  report_header_variant_unit_name: Variant Unit Name
   report_header_variant_value: Variant Value
   report_header_variant_unit: Variant Unit
   report_header_total_available: Total available
@@ -3051,6 +3124,8 @@ en_GB:
   report_header_producer_suburb: Producer Suburb
   report_header_producer_tax_status: Tax Rate Name
   report_header_producer_charges_sales_tax?: GST/VAT Registered
+  report_header_producer_abn_acn: Producer ABN/ACN
+  report_header_producer_address: Producer Address
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
@@ -3111,7 +3186,11 @@ en_GB:
   report_header_total_units: Total Units
   report_header_sum_max_total: "Sum Max Total"
   report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Total fees excl. tax (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Total tax on fees (%{currency_symbol})"
+  report_header_total: "Total (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Total excl. fees and tax (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
@@ -3588,7 +3667,22 @@ en_GB:
           Please refresh the page and try again, if it fails a second time,
           please contact us for support.
     trix:
+      bold: "Bold"
+      bullets: "Bullets"
       code: "Code"
+      heading1: "Heading"
+      hr: "Horizontal rule"
+      indent: "Increase Level"
+      italic: "Italic"
+      link: "Link"
+      numbers: "Numbers"
+      outdent: "Decrease Level"
+      quote: "Quote"
+      redo: "Redo"
+      strike: "Strikethrough"
+      undo: "Undo"
+      unlink: "Unlink"
+      url: "URL"
       urlPlaceholder: "Please enter a URL to insert"
   inflections:
     each:
@@ -3901,6 +3995,7 @@ en_GB:
     tax_rate_amount_explanation: "Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)"
     included_in_price: "Included in Price"
     show_rate_in_label: "Show rate in label"
+    back_to_tax_rates_list: "Back To Tax Rates List"
     tax_settings: "Tax Settings"
     zones: "Zones"
     new_zone: "New Zone"
@@ -3913,6 +4008,7 @@ en_GB:
     iso_name: "ISO Name"
     states_required: "Counties Required"
     editing_country: "Editing Country"
+    back_to_countries_list: "Back To Countries List"
     states: "Counties"
     abbreviation: "Abbreviation"
     new_state: "New County"
@@ -4077,6 +4173,7 @@ en_GB:
           continue: "Continue"
         new:
           new_return_authorization: "New Return Authorisation"
+          back_to_return_authorizations_list: "Back To Return Authorisations List"
           continue: "Continue"
         edit:
           receive: "receive"
@@ -4289,6 +4386,8 @@ en_GB:
           new_product: "New Product"
           supplier: "Supplier"
           supplier_select_placeholder: "Select a supplier"
+          search_for_suppliers: "Search for suppliers"
+          search_for_units: "Search for units"
           product_name: "Product Name"
           units: "Unit Size"
           value: "Value"
@@ -4405,6 +4504,7 @@ en_GB:
           total: "Total"
           billing_address_name: "Name"
       taxons:
+        back_to_list: "Back To Product Categories List"
         index:
           title: "Product Categories"
           new_taxon: 'New product category'
@@ -4415,6 +4515,7 @@ en_GB:
         destroy:
           delete_taxon:
             success: "Successfully deleted the product category"
+            error: "Unable to delete the product category due to assigned products."
         form:
           name: Name
           meta_title: Meta Title

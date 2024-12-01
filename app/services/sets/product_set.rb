@@ -146,11 +146,11 @@ module Sets
 
     def notify_bugsnag(error, product, variant, variant_attributes)
       Bugsnag.notify(error) do |report|
-        report.add_metadata(:product, product.attributes)
-        report.add_metadata(:product_error, product.errors.first) unless product.valid?
-        report.add_metadata(:variant_attributes, variant_attributes)
-        report.add_metadata(:variant, variant.attributes)
-        report.add_metadata(:variant_error, variant.errors.first) unless variant.valid?
+        report.add_metadata( :product_set,
+                             { product: product.attributes, variant_attributes:,
+                               variant: variant.attributes } )
+        report.add_metadata(:product_set, :product_error, product.errors.first) if !product.valid?
+        report.add_metadata(:product_set, :variant_error, variant.errors.first) if !variant.valid?
       end
     end
   end

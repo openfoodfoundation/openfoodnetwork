@@ -107,6 +107,9 @@ en_CA:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "must be blank because you are using producer stock settings"
             limited_stock_but_no_count_on_hand: "must be specified because you are forcing limited stock"
+        connected_apps:
+          vine:
+            api_request_error: "An error occured when connecting to Vine API"
       messages:
         confirmation: "doesn't match %{attribute}"
         blank: "can't be blank"
@@ -717,6 +720,7 @@ en_CA:
         connected_apps_enabled:
           discover_regen: Discover Regenerative portal
           affiliate_sales_data: DFC anonymised orders API for research purposes
+          vine: Voucher Integration Engine (VINE)
       update:
         resource: Connected app settings
     customers:
@@ -1373,9 +1377,25 @@ en_CA:
                 <i class="icon-external-link"></i></a>
                 </p>
           vine:
+            title: "Voucher Integration Engine (VINE)"
+            tagline: "Allow redemption of VINE vouchers in your shopfront."
             enable: "Donate"
             disable: "Disconnect"
             need_to_be_manager: "Only managers can connect apps."
+            vine_api_key: "VINE API Key"
+            vine_secret: "VINE secret"
+            description_html: |
+                <p>
+                To enable VINE for your enterprise, enter your API key and secret.
+                </p>
+                <p>
+                <a href="#" target="_blank"><b>VINE</b>
+                <i class="icon-external-link"></i></a>
+                </p>
+            api_parameters_empty: "Please enter an API key and a secret"
+            api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
+            connection_error: "API connection error, please try again"
+            setup_error: "VINE API is not configured, please contact your instance manager"
       actions:
         edit_profile: Settings
         properties: Properties
@@ -1672,6 +1692,7 @@ en_CA:
       pack_by_customer: Pack By Customer
       pack_by_supplier: Pack By Supplier
       pack_by_product: Pack By Product
+      pay_your_suppliers: Pay your suppliers
       display:
         report_is_big: "This report is big and may slow down your device."
         display_anyway: "Display anyway"
@@ -1717,6 +1738,8 @@ en_CA:
       enterprise_fee_summary:
         name: "Enterprise Fee Summary"
         description: "Summary of Enterprise Fees collected"
+      suppliers:
+        name: Suppliers
       enterprise_fees_with_tax_report_by_order: "Enterprise Fees With Tax Report By Order"
       enterprise_fees_with_tax_report_by_producer: "Enterprise Fees With Tax Report By Producer"
       errors:
@@ -3003,6 +3026,8 @@ en_CA:
   report_render_options: Rendering Options
   report_header_ofn_uid: OFN UID
   report_header_order_cycle: Order Cycle
+  report_header_order_cycle_start_date: OC Start Date
+  report_header_order_cycle_end_date: OC End Date
   report_header_user: User
   report_header_email: Email
   report_header_status: Status
@@ -3023,6 +3048,7 @@ en_CA:
   report_header_hub_legal_name: "Hub Legal Name"
   report_header_hub_contact_name: "Hub Contact Name"
   report_header_hub_email: "Hub Public Email"
+  report_header_hub_contact_email: Hub Contact Email
   report_header_hub_owner_email: Hub Owner Email
   report_header_hub_phone: "Hub Phone Number"
   report_header_hub_address_line1: "Hub Address Line 1"
@@ -3083,6 +3109,7 @@ en_CA:
   report_header_quantity: Quantity
   report_header_max_quantity: Max Quantity
   report_header_variant: Variant
+  report_header_variant_unit_name: Variant Unit Name
   report_header_variant_value: Variant Value
   report_header_variant_unit: Variant Unit
   report_header_total_available: Total available
@@ -3094,6 +3121,8 @@ en_CA:
   report_header_producer_suburb: Producer City/Town
   report_header_producer_tax_status: Producer Tax Status
   report_header_producer_charges_sales_tax?: Tax registered
+  report_header_producer_abn_acn: Producer ABN/ACN
+  report_header_producer_address: Producer Address
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity
   report_header_cost: Cost
@@ -3154,7 +3183,11 @@ en_CA:
   report_header_total_units: Total Units
   report_header_sum_max_total: "Sum Max Total"
   report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Total fees excl. tax (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Total tax on fees (%{currency_symbol})"
+  report_header_total: "Total (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Total excl. fees and tax (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed

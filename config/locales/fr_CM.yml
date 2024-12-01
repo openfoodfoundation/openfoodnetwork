@@ -2602,6 +2602,7 @@ fr_CM:
   report_header_quantity: Quantité
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
+  report_header_variant_unit_name: Unité de la variante
   report_header_variant_value: Nb Unités Variante
   report_header_variant_unit: Unité
   report_header_total_available: Total disponible

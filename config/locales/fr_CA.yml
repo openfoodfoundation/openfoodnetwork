@@ -107,6 +107,9 @@ fr_CA:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "doit être vide car utilise les informations de stock du producteur"
             limited_stock_but_no_count_on_hand: "doit être spécifié car pas \"à volonté\""
+        connected_apps:
+          vine:
+            api_request_error: "Une erreur s'est produite lors de la connexion à l'API VINE"
       messages:
         confirmation: "ne correspond pas %{attribute}"
         blank: "Champ obligatoire"
@@ -717,6 +720,7 @@ fr_CA:
         connected_apps_enabled:
           discover_regen: Portail Discover Regenerative
           affiliate_sales_data: API de commandes anonymisées DFC à fins de recherche
+          vine: Éditeur de bons de réduction (VINE)
       update:
         resource: Paramètres de l'application connectée
     customers:
@@ -1376,9 +1380,25 @@ fr_CA:
                 <i class="icon-external-link"></i></a>
                 </p>
           vine:
+            title: "Éditeur de bons de réduction (VINE)"
+            tagline: "Autoriser l'utilisation de bons de réduction VINE dans votre boutique"
             enable: "Se connecter"
             disable: "Déconnecter"
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            vine_api_key: "clé API VINE"
+            vine_secret: "VINE secret"
+            description_html: |
+                <p>
+                Pour mettre en place l'éditeur de bons de réduction VINE pour votre entreprise, entrer votre clé API et secret.
+                </p>
+                <p>
+                <a href="#" target="_blank"><b>VINE</b>
+                <i class="icon-external-link"></i></a>
+                </p>
+            api_parameters_empty: "Entrer une clé API et un secret"
+            api_parameters_error: "Vérifiez que vous avez entré la clé API et le secret correctement. Contactez l'équipe support de la plateforme si l'erreur persiste. "
+            connection_error: "Erreur de connexion à l'API. Merci de réessayer."
+            setup_error: "L'API VINE n'est pas configurée. Veuillez contacter l'équipe support de la plateforme."
       actions:
         edit_profile: Paramètres
         properties: Labels / propriétés
@@ -1675,6 +1695,7 @@ fr_CA:
       pack_by_customer: Préparation des commandes par Acheteur
       pack_by_supplier: Préparation des commandes par Producteur
       pack_by_product: Préparation des commandes par Produit
+      pay_your_suppliers: Payer vos fournisseurs
       display:
         report_is_big: "Ce rapport est volumineux et risque de ralentir l'appareil sur lequel vous êtes en train de le consulter."
         display_anyway: "Afficher quand même"
@@ -1722,6 +1743,8 @@ fr_CA:
       enterprise_fee_summary:
         name: "Résumé des marges et commissions"
         description: "Résumé des marges et commissions collectées"
+      suppliers:
+        name: Fournisseurs
       enterprise_fees_with_tax_report_by_order: "Détail des montants de taxe par commande"
       enterprise_fees_with_tax_report_by_producer: "Détail des montants de taxe par producteur"
       errors:
@@ -3009,6 +3032,8 @@ fr_CA:
   report_render_options: Mise en forme
   report_header_ofn_uid: ID OFN
   report_header_order_cycle: Cycle de Vente
+  report_header_order_cycle_start_date: Date d'ouverture du cycle de vente
+  report_header_order_cycle_end_date: Date de fermeture du cycle de vente
   report_header_user: Utilisateur
   report_header_email: Email
   report_header_status: Statut
@@ -3029,6 +3054,7 @@ fr_CA:
   report_header_hub_legal_name: "Raison sociale"
   report_header_hub_contact_name: "Nom du contact"
   report_header_hub_email: "Email public"
+  report_header_hub_contact_email: e-mail de contact de la boutique multi-producteurs
   report_header_hub_owner_email: Email gestionnaire principal
   report_header_hub_phone: "Numéro de téléphone"
   report_header_hub_address_line1: "Adresse ligne 1"
@@ -3089,6 +3115,7 @@ fr_CA:
   report_header_quantity: Nb commandé
   report_header_max_quantity: Quantité Max
   report_header_variant: Variante
+  report_header_variant_unit_name: Unité de la variante
   report_header_variant_value: Nb Unités Variante
   report_header_variant_unit: Unité
   report_header_total_available: Total disponible
@@ -3100,6 +3127,8 @@ fr_CA:
   report_header_producer_suburb: Ville Producteur
   report_header_producer_tax_status: Soumis à la taxe
   report_header_producer_charges_sales_tax?: Soumis à la GST
+  report_header_producer_abn_acn: Numéro de SIRET/SIREN du producteur
+  report_header_producer_address: Adresse du producteur
   report_header_unit: Unité
   report_header_group_buy_unit_quantity: Nb d'unités achetées (vente par lots)
   report_header_cost: Coût
@@ -3160,7 +3189,11 @@ fr_CA:
   report_header_total_units: Vol. total
   report_header_sum_max_total: "Somme Max Total"
   report_header_total_excl_vat: "Total HT (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Total commission boutique hors taxe (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Total taxe sur la commission boutique (%{currency_symbol})"
+  report_header_total: "Total (%{currency_symbol})"
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Total hors commission boutique et taxe (%{currency_symbol})"
   report_header_temp_controlled: Temp Contrôlée ?
   report_header_is_producer: Producteur ?
   report_header_not_confirmed: Non confirmé
