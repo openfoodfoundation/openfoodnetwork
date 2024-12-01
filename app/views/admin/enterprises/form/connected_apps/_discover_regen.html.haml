@@ -27,4 +27,5 @@
 
   %hr
   .connected-app__description
-    = t ".description_html"
+    %p= t ".description"
+    %b= link_to( t(".link_label_html"), "#{t(".link_url")}", target: "_blank")
