@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     image: postgres:10.19
@@ -24,6 +22,8 @@ services:
       - .:/usr/src/app
       - gems:/bundles
       - ./config/database.yml:/usr/src/app/config/database.yml
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     depends_on:
       - db
       - redis
@@ -32,6 +32,7 @@ services:
       OFN_DB_HOST: db
       OFN_REDIS_URL: redis://redis/
       OFN_REDIS_JOBS_URL: redis://redis
+      OFN_REDIS_TEST_URL: redis://redis/3
       WEBPACKER_DEV_SERVER_HOST: webpack
     command: >
       bash -c "wait-for-it -t 30 db:5432 &&
