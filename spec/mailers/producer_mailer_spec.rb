@@ -183,6 +183,29 @@ RSpec.describe ProducerMailer, type: :mailer do
       expect(mail.body.encoded).to match(/.*Abby.*Doe.*smith/m)
       expect(customer_details_summary_text(mail)).to include('Abby', 'Doe', 'smith')
     end
+
+    context "validate business name" do
+      let(:table_header) do
+        body_as_html(mail).find("table.order-summary.customer-order thead")
+      end
+
+      context "when no customer has customer code" do
+        it 'should not displays business name column' do
+          expect(table_header).not_to have_selector("th", text: 'Business Name')
+        end
+      end
+
+      context "when customer have code" do
+        before { order.customer.update(code: 'Test Business Name') }
+
+        it 'displays business name for the customer' do
+          expect(table_header).to have_selector("th", text: 'Business Name')
+          expect(
+            body_as_html(mail).find("table.order-summary.customer-order tbody tr")
+          ).to have_selector("td", text: 'Test Business Name')
+        end
+      end
+    end
   end
 
   context 'when flag show_customer_names_to_suppliers is false' do
