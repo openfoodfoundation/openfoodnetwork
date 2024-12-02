@@ -91,6 +91,9 @@ RSpec.describe ProducerMailer, type: :mailer do
     # Tax for p1 line items
     expect(body_as_html(mail).find("table.order-summary tr", text: p1.name))
       .to have_selector("td.tax", text: "$2.73")
+    expect(
+      product_line_from_order_summary_text(mail, p1.name)
+    ).to include("($2.73 tax incl.)")
   end
 
   it "does not include incomplete orders" do
@@ -149,6 +152,7 @@ RSpec.describe ProducerMailer, type: :mailer do
 
     it "adds customer names table" do
       expect(body_as_html(mail).find(".order-summary.customer-order")).not_to be_nil
+      expect(customer_details_summary_text(mail)).to be_present
     end
 
     it "displays last name for each order" do
@@ -156,6 +160,9 @@ RSpec.describe ProducerMailer, type: :mailer do
       last_name = order.billing_address.lastname
       expect(body_as_html(mail).find("table.order-summary.customer-order tr",
                                      text: product_name)).to have_selector("td", text: last_name)
+      expect(
+        product_line_from_details_summary_text(mail, product_name)
+      ).to include(last_name)
     end
 
     it "displays first name for each order" do
@@ -163,6 +170,9 @@ RSpec.describe ProducerMailer, type: :mailer do
       first_name = order.billing_address.firstname
       expect(body_as_html(mail).find("table.order-summary.customer-order tr",
                                      text: product_name)).to have_selector("td", text: first_name)
+      expect(
+        product_line_from_details_summary_text(mail, product_name)
+      ).to include(first_name)
     end
 
     it "it orders list via last name" do
@@ -171,6 +181,7 @@ RSpec.describe ProducerMailer, type: :mailer do
       create(:order, :with_line_item, distributor: d1, order_cycle:, state: 'complete',
                                       bill_address: FactoryBot.create(:address, last_name: "smith"))
       expect(mail.body.encoded).to match(/.*Abby.*Doe.*smith/m)
+      expect(customer_details_summary_text(mail)).to include('Abby', 'Doe', 'smith')
     end
   end
 
@@ -183,6 +194,7 @@ RSpec.describe ProducerMailer, type: :mailer do
       expect {
         body_as_html(mail).find(".order-summary.customer-order")
       }.to raise_error(Capybara::ElementNotFound)
+      expect(customer_details_summary_text(mail)).to be_nil
     end
   end
 
@@ -237,5 +249,33 @@ RSpec.describe ProducerMailer, type: :mailer do
 
   def body_as_html(mail)
     Capybara.string(mail.html_part.body.encoded)
+  end
+
+  def body_as_text(mail)
+    mail.text_part.body.decoded
+  end
+
+  def customer_details_summary_text(mail)
+    body_as_text(mail)
+      .split(I18n.t(:producer_mail_order_customer_text))
+      .second
+  end
+
+  def product_line_from_details_summary_text(mail, product_name)
+    summary = customer_details_summary_text(mail)
+    product_line_by_summary(summary, product_name)
+  end
+  
+  def product_line_from_order_summary_text(mail, product_name)
+    summary = body_as_text(mail)
+      .split(I18n.t(:producer_mail_order_customer_text))
+      .first
+    product_line_by_summary(summary, product_name)
+  end
+
+  def product_line_by_summary(summary, product_name)
+    return '' unless summary
+
+    summary.lines.find { |line| line.include?(product_name) } || ''
   end
 end
