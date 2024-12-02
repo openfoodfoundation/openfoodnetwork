@@ -23,7 +23,7 @@ module Spree
       if spree_user_signed_in?
         flash[:success] = t('devise.success.logged_in_succesfully')
 
-        redirect_to after_sign_in_path_for(spree_current_user)
+        redirect_to return_url_or_default(after_sign_in_path_for(spree_current_user))
       else
         @message = t('devise.failure.invalid')
         render :create, status: :unauthorized
