@@ -81,7 +81,7 @@ class ProducerMailer < ApplicationMailer
 
     @display_business_name = false
     line_items.map do |line_item|
-      customer_code = line_item.order.customer.code
+      customer_code = line_item.order.customer&.code
       @display_business_name = true if customer_code.present?
 
       {
