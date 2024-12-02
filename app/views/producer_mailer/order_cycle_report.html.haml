@@ -81,8 +81,9 @@
           = t :first_name
         %th.text-right
           = t :last_name
-        %th.text-right
-          = t :business_name
+        - if @display_business_name
+          %th.text-right
+            = t :business_name
     %tbody
       - @customer_line_items.each do |line_item|
         %tr
@@ -99,8 +100,9 @@
             = line_item[:first_name]
           %td
             = line_item[:last_name]
-          %td
-            = line_item[:business_name]
+          - if @display_business_name
+            %td
+              = line_item[:business_name]
 %p
   = t :producer_mail_text_after
 %p
