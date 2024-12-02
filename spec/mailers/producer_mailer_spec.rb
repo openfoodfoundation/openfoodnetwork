@@ -265,7 +265,7 @@ RSpec.describe ProducerMailer, type: :mailer do
     summary = customer_details_summary_text(mail)
     product_line_by_summary(summary, product_name)
   end
-  
+
   def product_line_from_order_summary_text(mail, product_name)
     summary = body_as_text(mail)
       .split(I18n.t(:producer_mail_order_customer_text))
