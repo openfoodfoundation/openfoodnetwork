@@ -1,13 +1,13 @@
-#{t :producer_mail_greeting} #{@producer.name},
+#{t :producer_mail_greeting} #{raw(@producer.name)},
 \
 = t :producer_mail_text_before
 \
 - @distributors_pickup_times.each do |distributor_name, pickup_time|
-  \- #{distributor_name} (#{pickup_time})
+  \- #{raw(distributor_name)} (#{pickup_time})
 \
 - if @receival_instructions
   = t :producer_mail_delivery_instructions
-  = @receival_instructions
+  = raw(@receival_instructions)
 \
 Orders summary
 ================
@@ -30,7 +30,7 @@ Orders summary
 = t :producer_mail_text_after
 
 #{t :producer_mail_signoff},
-#{@coordinator.name}
-#{@coordinator.address.address1}, #{@coordinator.address.city}, #{@coordinator.address.zipcode}
+#{raw(@coordinator.name)}
+#{raw(@coordinator.address.address1)}, #{@coordinator.address.city}, #{@coordinator.address.zipcode}
 #{@coordinator.phone}
 #{@coordinator.contact.email}
