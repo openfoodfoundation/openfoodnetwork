@@ -86,7 +86,8 @@ class ProducerMailer < ApplicationMailer
         product_and_full_name: line_item.product_and_full_name,
         quantity: line_item.quantity,
         first_name: line_item.order.billing_address.first_name,
-        last_name: line_item.order.billing_address.last_name
+        last_name: line_item.order.billing_address.last_name,
+        business_name: line_item.order.customer.code,
       }
     end.sort_by { |line_item| [line_item[:last_name].downcase, line_item[:first_name].downcase] }
   end
