@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe VineJwtService do
+RSpec.describe Vine::JwtService do
   describe "#generate_token" do
     subject { described_class.new(secret: vine_secret) }
     let(:vine_secret) { "some_secret" }

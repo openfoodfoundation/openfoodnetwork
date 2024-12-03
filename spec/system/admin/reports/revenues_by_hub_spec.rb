@@ -154,8 +154,6 @@ RSpec.describe "Revenues By Hub Reports" do
     order.update_shipping_fees!
     order.update_order!
 
-    VoucherAdjustmentsService.new(order).update
-
-    order.update_totals_and_states
+    OrderManagement::Order::Updater.new(order).update_voucher
   end
 end

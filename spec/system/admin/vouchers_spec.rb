@@ -11,6 +11,7 @@ RSpec.describe '
 
   let(:enterprise) { create(:supplier_enterprise, name: 'Feedme', sells: 'own') }
   let(:voucher_code) { 'awesomevoucher' }
+  let(:vine_voucher_code) { 'vine_voucher' }
   let(:amount) { 25 }
   let(:enterprise_user) { create(:user, enterprise_limit: 1) }
 
@@ -22,6 +23,7 @@ RSpec.describe '
   it 'lists enterprise vouchers' do
     # Given an enterprise with vouchers
     create(:voucher_flat_rate, enterprise:, code: voucher_code, amount:)
+    create(:vine_voucher, enterprise:, code: vine_voucher_code, amount:)
 
     # When I go to the enterprise voucher tab
     visit edit_admin_enterprise_path(enterprise)
@@ -31,6 +33,8 @@ RSpec.describe '
     # Then I see a list of vouchers
     expect(page).to have_content voucher_code
     expect(page).to have_content amount
+
+    expect(page).not_to have_content vine_voucher_code
   end
 
   describe "adding voucher" do

@@ -14,7 +14,7 @@ class Voucher < ApplicationRecord
            class_name: 'Spree::Adjustment',
            dependent: nil
 
-  validates :code, presence: true, uniqueness: { scope: :enterprise_id }
+  validates :code, presence: true
 
   TYPES = ["Vouchers::FlatRate", "Vouchers::PercentageRate"].freeze
 

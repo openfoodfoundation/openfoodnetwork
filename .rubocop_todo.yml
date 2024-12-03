@@ -34,12 +34,6 @@ Lint/EmptyClass:
   Exclude:
     - 'spec/lib/reports/report_loader_spec.rb'
 
-# Offense count: 1
-# Configuration parameters: AllowComments.
-Lint/EmptyFile:
-  Exclude:
-    - 'spec/lib/open_food_network/enterprise_injection_data_spec.rb'
-
 # Offense count: 2
 Lint/FloatComparison:
   Exclude:
@@ -92,7 +86,6 @@ Metrics/AbcSize:
     - 'app/controllers/admin/enterprises_controller.rb'
     - 'app/controllers/payment_gateways/paypal_controller.rb'
     - 'app/controllers/spree/admin/payments_controller.rb'
-    - 'app/controllers/spree/admin/taxons_controller.rb'
     - 'app/controllers/spree/admin/variants_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/helpers/spree/admin/navigation_helper.rb'
@@ -127,7 +120,7 @@ Metrics/BlockNesting:
   Exclude:
     - 'app/models/spree/payment/processing.rb'
 
-# Offense count: 46
+# Offense count: 47
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
@@ -137,6 +130,7 @@ Metrics/ClassLength:
     - 'app/controllers/admin/resource_controller.rb'
     - 'app/controllers/admin/subscriptions_controller.rb'
     - 'app/controllers/application_controller.rb'
+    - 'app/controllers/checkout_controller.rb'
     - 'app/controllers/payment_gateways/paypal_controller.rb'
     - 'app/controllers/spree/admin/orders_controller.rb'
     - 'app/controllers/spree/admin/payment_methods_controller.rb'
@@ -183,7 +177,7 @@ Metrics/ClassLength:
 Metrics/CyclomaticComplexity:
   Exclude:
     - 'app/controllers/admin/enterprises_controller.rb'
-    - 'app/controllers/spree/admin/taxons_controller.rb'
+    - 'app/controllers/spree/admin/payments_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/helpers/checkout_helper.rb'
     - 'app/helpers/order_cycles_helper.rb'
@@ -208,13 +202,12 @@ Metrics/CyclomaticComplexity:
     - 'lib/spree/localized_number.rb'
     - 'spec/models/product_importer_spec.rb'
 
-# Offense count: 24
+# Offense count: 23
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/admin/enterprises_controller.rb'
     - 'app/controllers/payment_gateways/paypal_controller.rb'
-    - 'app/controllers/spree/admin/taxons_controller.rb'
     - 'app/controllers/spree/orders_controller.rb'
     - 'app/helpers/spree/admin/navigation_helper.rb'
     - 'app/models/spree/ability.rb'
@@ -293,19 +286,17 @@ Metrics/ParameterLists:
     - 'spec/support/controller_requests_helper.rb'
     - 'spec/system/admin/reports_spec.rb'
 
-# Offense count: 4
+# Offense count: 3
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/PerceivedComplexity:
   Exclude:
-    - 'app/controllers/spree/admin/taxons_controller.rb'
     - 'app/models/enterprise_relationship.rb'
     - 'app/models/spree/ability.rb'
     - 'app/models/spree/order/checkout.rb'
 
-# Offense count: 8
+# Offense count: 7
 Naming/AccessorMethodName:
   Exclude:
-    - 'app/controllers/spree/admin/taxonomies_controller.rb'
     - 'app/mailers/producer_mailer.rb'
     - 'app/models/spree/order.rb'
     - 'app/services/checkout/post_checkout_actions.rb'
@@ -353,7 +344,7 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
-# Offense count: 142
+# Offense count: 143
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ResponseMethods.
 # ResponseMethods: response, last_response
@@ -557,7 +548,7 @@ RSpecRails/InferredSpecType:
     - 'spec/requests/voucher_adjustments_spec.rb'
     - 'spec/routing/stripe_spec.rb'
 
-# Offense count: 22
+# Offense count: 21
 # Configuration parameters: IgnoreScopes, Include.
 # Include: app/models/**/*.rb
 Rails/InverseOf:
@@ -572,7 +563,6 @@ Rails/InverseOf:
     - 'app/models/spree/price.rb'
     - 'app/models/spree/product.rb'
     - 'app/models/spree/stock_item.rb'
-    - 'app/models/spree/taxonomy.rb'
     - 'app/models/spree/variant.rb'
     - 'app/models/subscription_line_item.rb'
 
@@ -720,7 +710,7 @@ Style/GlobalStdStream:
     - 'lib/tasks/subscriptions/debug.rake'
     - 'lib/tasks/subscriptions/test.rake'
 
-# Offense count: 12
+# Offense count: 10
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowSplatArgument.
 Style/HashConversion:
@@ -728,9 +718,7 @@ Style/HashConversion:
     - 'app/controllers/admin/column_preferences_controller.rb'
     - 'app/controllers/admin/variant_overrides_controller.rb'
     - 'app/controllers/spree/admin/products_controller.rb'
-    - 'app/models/order_cycle.rb'
     - 'app/models/product_import/product_importer.rb'
-    - 'app/models/spree/shipping_method.rb'
     - 'app/serializers/api/admin/exchange_serializer.rb'
     - 'app/services/variants_stock_levels.rb'
     - 'spec/controllers/admin/inventory_items_controller_spec.rb'

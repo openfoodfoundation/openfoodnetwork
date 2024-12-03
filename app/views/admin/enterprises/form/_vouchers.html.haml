@@ -3,7 +3,7 @@
     = t('.add_new')
 %br
 
-- if @enterprise.vouchers.with_deleted.present?
+- if @enterprise.vouchers.where.not(type: "Vouchers::Vine").with_deleted.present?
   %table
     %thead
       %tr
@@ -17,7 +17,7 @@
         /%th= t('.customers')
         /%th= t('.net_value')
     %tbody
-      - @enterprise.vouchers.with_deleted.order(deleted_at: :desc, code: :asc).each do |voucher|
+      - @enterprise.vouchers.where.not(type: "Vouchers::Vine").with_deleted.order(deleted_at: :desc, code: :asc).each do |voucher|
         %tr
           %td= voucher.code
           %td= voucher.display_value  

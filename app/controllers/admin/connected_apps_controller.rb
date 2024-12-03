@@ -44,9 +44,9 @@ module Admin
 
       create_connected_app
 
-      jwt_service = VineJwtService.new(secret: connected_app_params[:vine_secret])
-      vine_api = VineApiService.new(api_key: connected_app_params[:vine_api_key],
-                                    jwt_generator: jwt_service)
+      jwt_service = Vine::JwtService.new(secret: connected_app_params[:vine_secret])
+      vine_api = Vine::ApiService.new(api_key: connected_app_params[:vine_api_key],
+                                      jwt_generator: jwt_service)
 
       if !@app.connect(api_key: connected_app_params[:vine_api_key],
                        secret: connected_app_params[:vine_secret], vine_api:)

@@ -161,6 +161,11 @@ module OrderManagement
         persist_totals
       end
 
+      def update_voucher
+        VoucherAdjustmentsService.new(order).update
+        update_totals_and_states
+      end
+
       private
 
       def cancel_payments_requiring_auth

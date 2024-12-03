@@ -7,7 +7,7 @@ RSpec.describe ConnectedApps::Vine do
 
   let(:vine_api_key) { "12345" }
   let(:secret) { "my_secret" }
-  let(:vine_api) { instance_double(VineApiService) }
+  let(:vine_api) { instance_double(Vine::ApiService) }
 
   describe "#connect" do
     it "send a request to VINE api" do

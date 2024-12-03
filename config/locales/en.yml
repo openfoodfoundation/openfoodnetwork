@@ -574,7 +574,15 @@ en:
   depth: "Depth"
   payment_could_not_process: "The payment could not be processed"
   payment_could_not_complete: "The payment could not be completed"
-
+  vine_voucher_validator_service:
+    errors:
+      vine_api: "There was an error communicating with the API, please try again later."
+      invalid_voucher: "The voucher is not valid"
+      not_found_voucher: "Sorry, we couldn't find that voucher, please check the code."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "There was an error communicating with the API"
+      redeeming_failed: "Redeeming the voucher failed"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -2124,6 +2132,8 @@ en:
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
       voucher_not_found: Not found
       add_voucher_error: There was an error while adding the voucher
+      create_voucher_error: "There was an error while creating the voucher: %{error}"
+      voucher_redeeming_error: There was an error while trying to redeem your voucher 
   shops:
     hubs:
       show_closed_shops: "Show closed shops"

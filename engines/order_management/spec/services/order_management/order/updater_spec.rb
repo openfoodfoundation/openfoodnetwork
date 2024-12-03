@@ -460,6 +460,26 @@ module OrderManagement
         end
       end
 
+      describe "#update_voucher" do
+        let(:voucher_service) { instance_double(VoucherAdjustmentsService) }
+
+        it "calls VoucherAdjustmentsService" do
+          expect(VoucherAdjustmentsService).to receive(:new).and_return(voucher_service)
+          expect(voucher_service).to receive(:update)
+
+          updater.update_voucher
+        end
+
+        it "calls update_totals_and_states" do
+          allow(VoucherAdjustmentsService).to receive(:new).and_return(voucher_service)
+          allow(voucher_service).to receive(:update)
+
+          expect(updater).to receive(:update_totals_and_states)
+
+          updater.update_voucher
+        end
+      end
+
       def update_order_quantity(order)
         order.line_items.first.update_attribute(:quantity, 2)
       end

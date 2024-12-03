@@ -5,6 +5,7 @@ module Vouchers
     validates :amount,
               presence: true,
               numericality: { greater_than: 0, less_than_or_equal_to: 100 }
+    validates_with ScopedUniquenessValidator
 
     def display_value
       ActionController::Base.helpers.number_to_percentage(amount, precision: 2)

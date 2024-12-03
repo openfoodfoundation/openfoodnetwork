@@ -27,7 +27,6 @@ RSpec.describe Voucher do
     subject { build(:voucher_flat_rate, code: 'new_code', enterprise:) }
 
     it { is_expected.to validate_presence_of(:code) }
-    it { is_expected.to validate_uniqueness_of(:code).scoped_to(:enterprise_id) }
   end
 
   describe '#display_value' do
