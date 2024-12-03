@@ -55,9 +55,7 @@ class SubscriptionConfirmJob < ApplicationJob
     if order.errors.any?
       send_failed_payment_email(order)
     else
-      Alert.raise(e) do |payload|
-        payload.add_metadata :order, :order, order
-      end
+      Alert.raise_with_record(e, order)
       send_failed_payment_email(order, e.message)
     end
   end
