@@ -4,6 +4,12 @@ module Reporting
   module Reports
     module ProductsAndInventory
       class AllProducts < Base
+        def default_params
+          {
+            fields_to_hide: [:tax_category]
+          }
+        end
+
         def message
           I18n.t("spree.admin.reports.products_and_inventory.all_products.message")
         end
@@ -19,7 +25,8 @@ module Reporting
           super.merge(
             {
               on_demand: proc{ |variant| variant.on_demand },
-              on_hand: proc{ |variant| variant.on_demand ? I18n.t(:on_demand) : variant.on_hand }
+              on_hand: proc{ |variant| variant.on_demand ? I18n.t(:on_demand) : variant.on_hand },
+              tax_category: proc { |variant| variant.tax_category_id && variant.tax_category.name }
             }
           )
         end
