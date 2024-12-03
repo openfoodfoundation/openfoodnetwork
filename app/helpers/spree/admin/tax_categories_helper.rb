@@ -12,7 +12,6 @@ module Spree
         else
           {
             include_blank: t(:none),
-            selected: nil
           }
         end
       end
