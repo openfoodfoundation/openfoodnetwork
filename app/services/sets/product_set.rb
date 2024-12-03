@@ -145,7 +145,7 @@ module Sets
     end
 
     def notify_bugsnag(error, product, variant, variant_attributes)
-      Bugsnag.notify(error) do |report|
+      Alert.raise(error) do |report|
         report.add_metadata( :product_set,
                              { product: product.attributes, variant_attributes:,
                                variant: variant.attributes } )

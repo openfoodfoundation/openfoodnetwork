@@ -16,9 +16,7 @@ class StockSyncJob < ApplicationJob
   rescue StandardError => e
     # Errors here shouldn't affect the shopping. So let's report them
     # separately:
-    Bugsnag.notify(e) do |payload|
-      payload.add_metadata(:order, :order, order)
-    end
+    Alert.raise_with_record(e, order)
   end
 
   def self.sync_linked_catalogs_now(order)
@@ -29,9 +27,7 @@ class StockSyncJob < ApplicationJob
   rescue StandardError => e
     # Errors here shouldn't affect the shopping. So let's report them
     # separately:
-    Bugsnag.notify(e) do |payload|
-      payload.add_metadata(:order, :order, order)
-    end
+    Alert.raise_with_record(e, order)
   end
 
   def self.catalog_ids(order)

@@ -20,9 +20,7 @@ module OrderStockCheck
   def check_order_cycle_expiry
     return unless current_order_cycle&.closed?
 
-    Bugsnag.notify("Notice: order cycle closed during checkout completion") do |payload|
-      payload.add_metadata :order, :order, current_order
-    end
+    Alert.raise_with_record("Notice: order cycle closed during checkout completion", current_order)
     current_order.empty!
     current_order.set_order_cycle! nil
 
