@@ -44,8 +44,7 @@
       %tr
         %td{align: "right", colspan: "3"}
           - if adjustment.originator_type == "Voucher"
-            = "#{t(:voucher)}:"
-          = "#{adjustment.label}:"
+            = t(:email_order_summary_voucher_label, code: adjustment.label)
         %td{align: "right"}
           = adjustment.display_amount
     %tr

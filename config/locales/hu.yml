@@ -2309,6 +2309,7 @@ hu:
   email_order_summary_subtotal: "Részösszeg:"
   email_order_summary_total: "Összesen:"
   email_order_summary_includes_tax: "(adót tartalmaz):"
+  email_order_summary_voucher_label: "Kupon (%{code}):"
   email_payment_paid: FIZETETT
   email_payment_not_paid: NEM FIZETETT
   email_payment_description: Fizetési információk

@@ -2380,6 +2380,7 @@ en_FR:
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(includes tax):"
+  email_order_summary_voucher_label: "Voucher (%{code}):"
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
   email_payment_description: Payment Description at Checkout
