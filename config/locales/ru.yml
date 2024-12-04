@@ -2251,6 +2251,7 @@ ru:
   email_order_summary_subtotal: "Итого:"
   email_order_summary_total: "Всего:"
   email_order_summary_includes_tax: "(включает налог):"
+  email_order_summary_voucher_label: "Ваучер (%{code}):"
   email_payment_paid: ОПЛАЧЕН
   email_payment_not_paid: НЕ ОПЛАЧЕН
   email_payment_description: Описание Платежа при Оформлении Заказа

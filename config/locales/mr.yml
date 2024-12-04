@@ -2103,6 +2103,7 @@ mr:
   email_order_summary_subtotal: "सबटोटल:"
   email_order_summary_total: "टोटल:"
   email_order_summary_includes_tax: "(कर समावेश):"
+  email_order_summary_voucher_label: "व्हाउचर (%{code}):"
   email_payment_paid: पेड
   email_payment_not_paid: पैसे दिले नाहीत
   email_payment_description: चेकआउटवर पेमेंट वर्णन

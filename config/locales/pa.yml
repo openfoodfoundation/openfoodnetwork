@@ -2152,6 +2152,7 @@ pa:
   email_order_summary_subtotal: "ਉਪ-ਕੁੱਲ:"
   email_order_summary_total: "ਕੁੱਲ"
   email_order_summary_includes_tax: "(ਟੈਕਸ ਸਮੇਤ):"
+  email_order_summary_voucher_label: "ਵਾਊਚਰ (%{code}):"
   email_payment_paid: ਭੁਗਤਾਨ ਕੀਤਾ ਗਿਆ
   email_payment_not_paid: ਭੁਗਤਾਨ ਨਹੀਂ ਕੀਤਾ ਗਿਆ
   email_payment_description: ਚੈਕਆਉਟ ਤੇ ਭੁਗਤਾਨ ਦਾ ਵੇਰਵਾ
