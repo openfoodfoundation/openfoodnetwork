@@ -21,4 +21,10 @@ RSpec.describe DfcLoader do
     )
     expect(result["dfc-b:name"]).to eq "Tomato"
   end
+
+  it "loads vocabularies" do
+    terms = DfcLoader.vocabulary("vocabulary")
+    expect(terms.STATES.ORDERSTATE.HELD.semanticId)
+      .to eq "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/vocabulary.rdf#Held"
+  end
 end

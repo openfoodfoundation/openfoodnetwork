@@ -36,7 +36,7 @@ class FdcBackorderer
       .map { |id| find_order(id) }
       .compact
       # Just in case someone completed the order without updating our database:
-      .select { |o| o.orderStatus[:path] == "Held" }
+      .select { |o| o.orderStatus == order_status.HELD }
       .first
       # The DFC Connector doesn't recognise status values properly yet.
       # So we are overriding the value with something that can be exported.
@@ -52,7 +52,7 @@ class FdcBackorderer
   def find_last_open_order
     graph = import(urls.orders_url)
     open_orders = graph&.select do |o|
-      o.semanticType == "dfc-b:Order" && o.orderStatus[:path] == "Held"
+      o.semanticType == "dfc-b:Order" && o.orderStatus == order_status.HELD
     end
 
     return if open_orders.blank?
@@ -159,5 +159,11 @@ class FdcBackorderer
     SaleSessionBuilder.build(order.order_cycle).tap do |session|
       session.semanticId = urls.sale_session_url
     end
+  end
+
+  private
+
+  def order_status
+    DfcLoader.vocabulary("vocabulary").STATES.ORDERSTATE
   end
 end

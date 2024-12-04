@@ -33,8 +33,7 @@ class FdcOfferBroker
     production_flow = catalog_item("#{product_id}/AsPlannedProductionFlow")
 
     if production_flow
-      wholesale_product_id = production_flow.product
-      catalog_item(wholesale_product_id)
+      production_flow.product
     else
       # We didn't find a wholesale variant, falling back to the given product.
       catalog_item(product_id)
@@ -57,7 +56,7 @@ class FdcOfferBroker
     consumption_flow = catalog_item(
       production_flow.semanticId.sub("AsPlannedProductionFlow", "AsPlannedConsumptionFlow")
     )
-    retail_product_id = consumption_flow.product
+    retail_product_id = consumption_flow.product.semanticId
 
     contained_quantity = consumption_flow.quantity.value.to_i
 
@@ -77,7 +76,7 @@ class FdcOfferBroker
   end
 
   def flow_producing(wholesale_product_id)
-    @production_flows_by_product_id ||= production_flows.index_by(&:product)
+    @production_flows_by_product_id ||= production_flows.index_by { |flow| flow.product.semanticId }
     @production_flows_by_product_id[wholesale_product_id]
   end
 
