@@ -2266,7 +2266,6 @@ el:
   email_order_summary_subtotal: "ΜΕΡΙΚΟ ΣΥΝΟΛΟ:"
   email_order_summary_total: "Σύνολο:"
   email_order_summary_includes_tax: "(περιλαμβάνει φόρο):"
-  email_order_summary_voucher_label: "Κουπόνι (%{code}):"
   email_payment_paid: επι πληρώμη
   email_payment_not_paid: ΑΠΛΗΡΩΤΟΣ
   email_payment_description: Περιγραφή πληρωμής στο ταμείο

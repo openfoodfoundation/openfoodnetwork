@@ -2367,7 +2367,6 @@ sr:
   email_order_summary_subtotal: "међузбир:"
   email_order_summary_total: "Укупно:"
   email_order_summary_includes_tax: "(укључује порез):"
-  email_order_summary_voucher_label: "Ваучер (%{code}):"
   email_payment_paid: ПЛАЋЕН
   email_payment_not_paid: НЕПЛАЋЕН
   email_payment_description: Опис плаћања на благајни

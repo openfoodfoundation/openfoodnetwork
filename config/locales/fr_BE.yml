@@ -2101,7 +2101,6 @@ fr_BE:
   email_order_summary_subtotal: "Sous-total:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(dont TVA)"
-  email_order_summary_voucher_label: "Bon d'achat (%{code}):"
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_description: Description du paiement à la caisse

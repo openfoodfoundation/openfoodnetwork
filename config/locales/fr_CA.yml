@@ -2374,7 +2374,6 @@ fr_CA:
   email_order_summary_subtotal: "Sous-total:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(dont Taxe)"
-  email_order_summary_voucher_label: "Bon de réduction (%{code}):"
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_description: Informations concernant le mode de paiement

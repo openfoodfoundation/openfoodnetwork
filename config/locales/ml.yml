@@ -2195,7 +2195,6 @@ ml:
   email_order_summary_subtotal: "അകെ തുക:"
   email_order_summary_total: "ആകെ:"
   email_order_summary_includes_tax: "(നികുതി ഉൾപ്പെടുന്നു):"
-  email_order_summary_voucher_label: "വൗച്ചർ (%{code}):"
   email_payment_paid: പണം നൽകി
   email_payment_not_paid: പണം നൽകിയിട്ടില്ല
   email_payment_description: ചെക്ക്ഔട്ടിലെ പേയ്മെന്റ് വിവരണം
