@@ -2207,7 +2207,6 @@ cy:
   email_order_summary_subtotal: "Is-gyfanswm:"
   email_order_summary_total: "Cyfanswm:"
   email_order_summary_includes_tax: "(yn cynnwys treth):"
-  email_order_summary_voucher_label: "Taleb (%{code}):"
   email_payment_paid: TALWYD
   email_payment_not_paid: HEB EI DALU
   email_payment_description: Disgrifiad o'r tâl wrth y Ddesg Talu

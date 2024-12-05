@@ -2179,7 +2179,6 @@ hi:
   email_order_summary_subtotal: "उप-योग:"
   email_order_summary_total: "कुल:"
   email_order_summary_includes_tax: "(टैक्स सहित):"
-  email_order_summary_voucher_label: "वाउचर (%{code}):"
   email_payment_paid: भुगतान किया
   email_payment_not_paid: भुगतान नहीं किया गया
   email_payment_description: चेकआउट में भुगतान का विवरण
