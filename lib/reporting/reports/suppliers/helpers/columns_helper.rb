@@ -23,6 +23,12 @@ module Reporting
             end
           end
 
+          def producer_charges_gst
+            proc do |line_items|
+              supplier(line_items).charges_sales_tax ? I18n.t(:yes) : I18n.t(:no)
+            end
+          end
+
           def email
             proc { |line_item| supplier(line_item).email_address }
           end
