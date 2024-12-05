@@ -28,6 +28,7 @@ module Reporting
             producer:,
             producer_address:,
             producer_abn_acn:,
+            producer_charges_gst:,
             email:,
             hub:,
             hub_address:,
