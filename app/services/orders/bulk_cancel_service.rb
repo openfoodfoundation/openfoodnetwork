@@ -15,6 +15,7 @@ module Orders
         order.send_cancellation_email = @send_cancellation_email
         order.restock_items = @restock_items
         order.cancel
+        AmendBackorderJob.perform_later(order)
       end
       # rubocop:enable Rails/FindEach
     end
