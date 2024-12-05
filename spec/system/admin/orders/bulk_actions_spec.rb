@@ -447,6 +447,7 @@ RSpec.describe '
           end
         end
       end
+
       it "can bulk cancel 2 orders" do
         page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
         page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
@@ -463,7 +464,7 @@ RSpec.describe '
           uncheck "Send a cancellation email to the customer"
           expect {
             find_button("Cancel").click # Cancels the cancel action
-          }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+          }.not_to enqueue_mail
         end
 
         page.find("span.icon-reorder", text: "Actions").click
@@ -474,7 +475,7 @@ RSpec.describe '
         within ".reveal-modal" do
           expect {
             find_button("Confirm").click # Confirms the cancel action
-          }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+          }.not_to enqueue_mail
         end
 
         expect(page).to have_content("CANCELLED", count: 2)
