@@ -1012,6 +1012,30 @@ RSpec.describe ProductImport::ProductImporter do
       expect(lettuce.count_on_hand).to eq 96   # In different enterprise; unchanged
     end
   end
+
+  # Fix https://github.com/openfoodfoundation/openfoodnetwork/issues/12973
+  describe 'update existing product with units and on_hand/on_demand is empty' do
+    let(:csv_data) do
+      CSV.generate do |csv|
+        csv << ["name", "producer", "category", "on_hand", "price", "units", "unit_type",
+                "shipping_category", "on_demand"]
+        csv << ["Beetroot", enterprise3.name, "Vegetables", "", "6.50", "", "g",
+                shipping_category.name, "1"]
+      end
+    end
+    let(:importer) { import_data csv_data }
+
+    it "returns the units error due to invalid data" do
+      importer.validate_entries
+      entries = JSON.parse(importer.entries_json)
+
+      expect(entries.dig('2', 'errors')).to eq(
+        {
+          "units" => "Units can't be blank",
+        }
+      )
+    end
+  end
 end
 
 private
