@@ -463,7 +463,7 @@ RSpec.describe '
         within ".reveal-modal" do
           uncheck "Send a cancellation email to the customer"
           expect {
-            find_button("Cancel").click # Cancels the cancel action
+            click_on "Cancel" # Cancels the cancel action
           }.not_to enqueue_mail
         end
 
@@ -474,7 +474,7 @@ RSpec.describe '
 
         within ".reveal-modal" do
           expect {
-            find_button("Confirm").click # Confirms the cancel action
+            click_on "Confirm" # Confirms the cancel action
           }.not_to enqueue_mail
         end
 
