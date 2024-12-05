@@ -2187,7 +2187,6 @@ de_DE:
   email_order_summary_subtotal: "Zwischensumme:"
   email_order_summary_total: "Gesamt:"
   email_order_summary_includes_tax: "(inkl. Steuern):"
-  email_order_summary_voucher_label: "Gutschein (%{code}):"
   email_payment_paid: BEZAHLT
   email_payment_not_paid: NICHT BEZAHLT
   email_payment_description: 'Hinweise zur Zahlung '

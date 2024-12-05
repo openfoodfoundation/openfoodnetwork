@@ -2237,7 +2237,6 @@ es:
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(incluye impuestos):"
-  email_order_summary_voucher_label: "Bono (%{code}):"
   email_payment_paid: PAGADO
   email_payment_not_paid: NO PAGADO
   email_payment_description: Descripción de pago de la compra

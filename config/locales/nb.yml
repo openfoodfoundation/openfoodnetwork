@@ -2363,7 +2363,6 @@ nb:
   email_order_summary_subtotal: "Delsum:"
   email_order_summary_total: "Sum:"
   email_order_summary_includes_tax: "(inkluderer avgift):"
-  email_order_summary_voucher_label: "Kupong (%{code}):"
   email_payment_paid: BETALT
   email_payment_not_paid: IKKE BETALT
   email_payment_description: Betalingsbeskrivelse i kassen
