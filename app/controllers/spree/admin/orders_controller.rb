@@ -70,6 +70,7 @@ module Spree
         @order.restock_items = params.fetch(:restock_items, "true") == "true"
 
         if @order.public_send(event.to_s)
+          AmendBackorderJob.perform_later(@order) if event == "cancel"
           flash[:success] = Spree.t(:order_updated)
         else
           flash[:error] = Spree.t(:cannot_perform_operation)
