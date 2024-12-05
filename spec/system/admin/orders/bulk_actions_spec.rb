@@ -467,18 +467,21 @@ RSpec.describe '
           }.not_to enqueue_mail
         end
 
+        expect(page).not_to have_content "This will cancel the current order."
+
         page.find("span.icon-reorder", text: "Actions").click
         within ".ofn-drop-down .menu" do
           page.find("span", text: "Cancel Orders").click
         end
 
-        within ".reveal-modal" do
-          expect {
+        expect {
+          within ".reveal-modal" do
             click_on "Confirm" # Confirms the cancel action
-          }.not_to enqueue_mail
-        end
-
-        expect(page).to have_content("CANCELLED", count: 2)
+          end
+          expect(page).to have_content("CANCELLED", count: 2)
+        }.to enqueue_job(AmendBackorderJob).exactly(:twice)
+          # You can't combine negative matchers.
+          .and enqueue_mail.exactly(0).times
       end
     end
 
