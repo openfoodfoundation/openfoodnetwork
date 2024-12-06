@@ -35,32 +35,9 @@
         padding-left: 0.25rem;
       }
 
-      render-svg {
-        &, & svg {
-          width: 1rem;
-          height: 1rem;
-          float: left;
-          padding-right: 0.25rem;
-
-          path {
-            @include csstrans;
-
-            fill: $base-clr;
-          }
-        }
-      }
-
       &:hover, &:focus {
         border-color: $hover-clr;
         color: $hover-clr;
-
-        render-svg {
-          svg {
-            path {
-              fill: $hover-clr;
-            }
-          }
-        }
       }
 
       &.disabled {
@@ -69,14 +46,6 @@
         &:hover, &:focus {
           border-color: $border-clr;
           color: $base-clr;
-
-          render-svg {
-            svg {
-              path {
-                fill: $base-clr;
-              }
-            }
-          }
         }
       }
 
@@ -84,14 +53,6 @@
         border: 1px solid $base-clr;
         background: $base-clr;
         color: white;
-
-        render-svg {
-          svg {
-            path {
-              fill: white;
-            }
-          }
-        }
       }
     }
   }
