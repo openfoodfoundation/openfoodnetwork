@@ -5,6 +5,15 @@
 class AmendBackorderJob < ApplicationJob
   sidekiq_options retry: 0
 
+  def self.schedule_bulk_update_for(orders)
+    # We can have one backorder per order cycle and distributor.
+    groups = orders.group_by { |order| [order.order_cycle, order.distributor] }
+    groups.each_value do |orders_with_same_backorder|
+      # We need to trigger only one update per backorder.
+      perform_later(orders_with_same_backorder.first)
+    end
+  end
+
   def perform(order)
     OrderLocker.lock_order_and_variants(order) do
       amend_backorder(order)

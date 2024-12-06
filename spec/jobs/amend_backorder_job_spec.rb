@@ -50,6 +50,29 @@ RSpec.describe AmendBackorderJob do
     chia_seed.on_hand = 7
   end
 
+  describe ".schedule_bulk_update_for" do
+    let(:order_same_oc) {
+      create(
+        :completed_order_with_totals,
+        distributor: order.distributor,
+        order_cycle: order.order_cycle,
+      )
+    }
+    let(:order_other_oc) { create(:completed_order_with_totals) }
+
+    it "enqueues only one job per backorder" do
+      expect {
+        AmendBackorderJob.schedule_bulk_update_for([order, order_same_oc])
+      }.to enqueue_job(AmendBackorderJob).exactly(:once)
+    end
+
+    it "enqueues a job for each backorder" do
+      expect {
+        AmendBackorderJob.schedule_bulk_update_for([order, order_other_oc])
+      }.to enqueue_job(AmendBackorderJob).exactly(:twice)
+    end
+  end
+
   describe "#amend_backorder" do
     it "updates an order" do
       stub_request(:get, catalog_url).to_return(body: catalog_json)
