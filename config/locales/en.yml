@@ -1471,10 +1471,7 @@ en:
               <p>
               To enable VINE for your enterprise, enter your API key and secret.
               </p>
-              <p>
-              <a href="#" target="_blank"><b>VINE</b>
-              <i class="icon-external-link"></i></a>
-              </p>
+            link_html: <a href="https://vine.openfoodnetwork.org.au" target="_blank"><b>VINE</b><i class="icon-external-link"></i></a>
             api_parameters_empty: "Please enter an API key and a secret"
             api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
             connection_error: "API connection error, please try again"
