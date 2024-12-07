@@ -15,7 +15,7 @@ Orders summary
 = t :producer_mail_order_text
 \
 - @grouped_line_items.each_pair do |product_and_full_name, line_items|
-  #{line_items.first.variant.sku} - #{raw(line_items.first.variant.supplier.name)} - #{raw(product_and_full_name)} (QTY: #{line_items.sum(&:quantity)}) @ #{line_items.first.single_money} = #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency)} (#{Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency)} tax incl.)
+  #{line_items.first.variant.sku} - #{raw(line_items.first.variant.supplier.name)} - #{raw(product_and_full_name)} (#{t(:producer_mail_qty)}: #{line_items.sum(&:quantity)}) @ #{line_items.first.single_money} = #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency)} (#{t(:with_tax_incl, amount: Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency))})
 \
 \
 #{t :total}: #{@total}
@@ -24,7 +24,7 @@ Orders summary
   = t :producer_mail_order_customer_text
   \
   - @customer_line_items.each do |line_item|
-    #{line_item[:sku]} - #{raw(line_item[:supplier_name])} - #{raw(line_item[:product_and_full_name])} (QTY: #{line_item[:quantity]})  - #{raw(line_item[:first_name])} #{raw(line_item[:last_name])}
+    #{line_item[:sku]} - #{raw(line_item[:supplier_name])} - #{raw(line_item[:product_and_full_name])} (#{t(:producer_mail_qty)}: #{line_item[:quantity]})  - #{raw(line_item[:first_name])} #{raw(line_item[:last_name])}
 \
 \
 = t :producer_mail_text_after
