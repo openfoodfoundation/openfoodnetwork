@@ -18,7 +18,7 @@ Orders summary
   #{line_items.first.variant.sku} - #{raw(line_items.first.variant.supplier.name)} - #{raw(product_and_full_name)} (#{t(:producer_mail_qty)}: #{line_items.sum(&:quantity)}) @ #{line_items.first.single_money} = #{Spree::Money.new(line_items.sum(&:total), currency: line_items.first.currency)} (#{t(:with_tax_incl, amount: Spree::Money.new(line_items.sum(&:included_tax), currency: line_items.first.currency))})
 \
 \
-#{t :total}: #{@total}
+#{t :total}: #{@total} (#{t(:with_tax_incl, amount: @tax_total)})
 \
 - if @customer_line_items
   = t :producer_mail_order_customer_text
