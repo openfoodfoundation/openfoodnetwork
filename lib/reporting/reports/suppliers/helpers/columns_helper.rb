@@ -25,7 +25,7 @@ module Reporting
 
           def producer_charges_gst
             proc do |line_items|
-              supplier(line_items).charges_sales_tax ? I18n.t(:yes) : I18n.t(:no)
+              supplier(line_items).charges_sales_tax
             end
           end
 
@@ -86,8 +86,7 @@ module Reporting
 
           def total_excl_vat
             proc do |line_item|
-              total_fees = adjustments_by_type(line_item, :fees)
-              total_excl_fees_and_tax.call(line_item) + total_fees
+              total_excl_fees_and_tax.call(line_item) + total_fees_excl_tax.call(line_item)
             end
           end
 
@@ -98,11 +97,7 @@ module Reporting
             end
           end
 
-          def total_tax_on_fees
-            proc { |line_item| tax_on_fees(line_item) + tax_on_fees(line_item, included: true) }
-          end
-
-          def total_tax
+          def total_tax_on_product
             proc do |line_item|
               excluded_tax = adjustments_by_type(line_item, :tax)
               included_tax = adjustments_by_type(line_item, :tax, included: true)
@@ -111,14 +106,19 @@ module Reporting
             end
           end
 
+          def total_tax_on_fees
+            proc { |line_item| tax_on_fees(line_item) + tax_on_fees(line_item, included: true) }
+          end
+
+          def total_tax
+            proc do |line_item|
+              total_tax_on_product.call(line_item) + total_tax_on_fees.call(line_item)
+            end
+          end
+
           def total
             proc do |line_item|
-              total_price = total_excl_fees_and_tax.call(line_item)
-              total_fees = total_fees_excl_tax.call(line_item)
-              total_fees_tax = total_tax_on_fees.call(line_item)
-              tax = total_tax.call(line_item)
-
-              total_price + total_fees + total_fees_tax + tax
+              total_excl_vat.call(line_item) + total_tax.call(line_item)
             end
           end
         end

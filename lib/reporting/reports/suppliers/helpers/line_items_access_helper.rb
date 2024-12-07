@@ -38,8 +38,11 @@ module Reporting
           end
 
           def adjustments_by_type(line_item, type, included: false)
+            is_tax = type == :tax
+            return 0.0 if is_tax && !supplier(line_item).charges_sales_tax
+
             total_amount = 0.0
-            adjustment_type = type == :tax ? 'Spree::TaxRate' : 'EnterpriseFee'
+            adjustment_type = is_tax ? 'Spree::TaxRate' : 'EnterpriseFee'
             suppliers_adjustments(line_item, adjustment_type).each do |adjustment|
               amount = included == adjustment.included ? adjustment.amount : 0.0
               total_amount += amount
@@ -49,6 +52,8 @@ module Reporting
           end
 
           def tax_on_fees(line_item, included: false)
+            return 0.0 unless supplier(line_item).charges_sales_tax
+
             total_amount = 0.0
             suppliers_adjustments(line_item).each do |adjustment|
               adjustment.adjustments.tax.each do |fee_adjustment|
