@@ -13,6 +13,7 @@ import { ru } from "flatpickr/dist/l10n/ru";
 import { sv } from "flatpickr/dist/l10n/sv";
 import { tr } from "flatpickr/dist/l10n/tr";
 import { en } from "flatpickr/dist/l10n/default.js";
+import { hu } from "flatpickr/dist/l10n/hu";
 import ShortcutButtonsPlugin from "shortcut-buttons-flatpickr";
 import labelPlugin from "flatpickr/dist/plugins/labelPlugin/labelPlugin";
 
@@ -36,6 +37,7 @@ export default class extends Flatpickr {
     sv: sv,
     tr: tr,
     en: en,
+    hu: hu,
   };
 
   initialize() {
