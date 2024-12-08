@@ -142,8 +142,6 @@ module Spree
 
             OrderMailer.cancel_email(id).deliver_later if send_cancellation_email
             update(payment_state: updater.update_payment_state)
-
-            AmendBackorderJob.perform_later(self)
           end
 
           def after_resume

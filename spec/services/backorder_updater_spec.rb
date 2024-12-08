@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe AmendBackorderJob do
+RSpec.describe BackorderUpdater do
   let(:order) { create(:completed_order_with_totals) }
   let(:distributor) { order.distributor }
   let(:beans) { beans_item.variant }
@@ -48,29 +48,6 @@ RSpec.describe AmendBackorderJob do
     chia_item.update!(quantity: 5)
     chia_seed.on_demand = false
     chia_seed.on_hand = 7
-  end
-
-  describe ".schedule_bulk_update_for" do
-    let(:order_same_oc) {
-      create(
-        :completed_order_with_totals,
-        distributor: order.distributor,
-        order_cycle: order.order_cycle,
-      )
-    }
-    let(:order_other_oc) { create(:completed_order_with_totals) }
-
-    it "enqueues only one job per backorder" do
-      expect {
-        AmendBackorderJob.schedule_bulk_update_for([order, order_same_oc])
-      }.to enqueue_job(AmendBackorderJob).exactly(:once)
-    end
-
-    it "enqueues a job for each backorder" do
-      expect {
-        AmendBackorderJob.schedule_bulk_update_for([order, order_other_oc])
-      }.to enqueue_job(AmendBackorderJob).exactly(:twice)
-    end
   end
 
   describe "#amend_backorder" do
@@ -129,6 +106,15 @@ RSpec.describe AmendBackorderJob do
       expect { subject.amend_backorder(order) }
         .to change { backorder.lines.count }.from(2).to(1)
         .and change { beans.reload.on_hand }.by(-12)
+    end
+  end
+
+  describe "#distributed_linked_variants" do
+    let(:order_cycle) { order.order_cycle }
+
+    it "selects available variants with semantic links" do
+      variants = subject.distributed_linked_variants(order_cycle, distributor)
+      expect(variants).to match_array [beans, chia_seed]
     end
   end
 end
