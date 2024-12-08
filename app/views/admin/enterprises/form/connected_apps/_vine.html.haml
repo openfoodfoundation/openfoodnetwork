@@ -21,10 +21,12 @@
 
       -# This is only seen by super-admins:
       %em= t(".need_to_be_manager") unless managed_by_user?(enterprise)
+      %hr
+      .connected-app__description
+        = t ".description_html"
     - else
       .connected-app__vine-content
         .vine-disable
           = button_to t(".disable"), admin_enterprise_connected_app_path(connected_app.id, enterprise_id: enterprise.id), method: :delete
-  %hr
-  .connected-app__description
-    = t ".description_html"
+    .connected-app__vine-link
+      = t ".link_html"
