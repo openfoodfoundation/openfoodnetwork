@@ -283,7 +283,8 @@ module Reporting
                                                "Amount",
                                                "SKU",
                                                "On Demand?",
-                                               "On Hand"
+                                               "On Hand",
+                                               "Tax Category"
                                              ])
         end
 
@@ -293,8 +294,8 @@ module Reporting
           variant.save!
 
           last_row = report.table_rows.last
-          on_demand_column = last_row[-2]
-          on_hand_column = last_row[-1]
+          on_demand_column = last_row[-3]
+          on_hand_column = last_row[-2]
 
           expect(on_demand_column).to eq("Yes")
           expect(on_hand_column).to eq("On demand")
@@ -306,11 +307,22 @@ module Reporting
           variant.save!
 
           last_row = report.table_rows.last
-          on_demand_column = last_row[-2]
-          on_hand_column = last_row[-1]
+          on_demand_column = last_row[-3]
+          on_hand_column = last_row[-2]
 
           expect(on_demand_column).to eq("No")
           expect(on_hand_column).to eq(22)
+        end
+
+        it "renders tax category if present, otherwise none" do
+          variant.update!(tax_category: create(:tax_category, name: 'Test Category'))
+
+          table_rows = report.table_rows
+          first_row = table_rows.first # row for default variant, as result of product creation
+          last_row = table_rows.last # row for the variant created/updated above
+
+          expect(first_row.last).to eq('none')
+          expect(last_row.last).to eq('Test Category')
         end
       end
     end
