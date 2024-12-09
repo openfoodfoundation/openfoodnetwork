@@ -31,7 +31,7 @@ RSpec.describe Spree::Admin::TaxCategoriesHelper do
     context 'when products do not require a tax category' do
       it 'returns include_blank as the translated "none" string' do
         options = helper.tax_category_dropdown_options(false)
-        expect(options[:include_blank]).to eq(I18n.t(:none))
+        expect(options[:include_blank]).to eq("None")
       end
 
       it 'does not include a selected tax category' do
