@@ -3124,7 +3124,7 @@ en_GB:
   report_header_producer_suburb: Producer Suburb
   report_header_producer_tax_status: Tax Rate Name
   report_header_producer_charges_sales_tax?: GST/VAT Registered
-  report_header_producer_abn_acn: Producer ABN/ACN
+  report_header_producer_abn_acn: Producer company number
   report_header_producer_address: Producer Address
   report_header_unit: Unit
   report_header_group_buy_unit_quantity: Group Buy Unit Quantity

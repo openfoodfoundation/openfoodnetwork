@@ -438,7 +438,7 @@ en_CA:
   cancel_order: "Cancel Order"
   confirm_send_invoice: "An invoice for this order will be sent to the customer. Are you sure you want to continue?"
   confirm_resend_order_confirmation: "Are you sure you want to resend the order confirmation email?"
-  must_have_valid_business_number: "%{enterprise_name} must have a valid business number before invoices can be used."
+  must_have_valid_business_number: "%{enterprise_name} must have a valid business number before invoices can be used. Enter a number in enterprise settings."
   invoice: "Invoice"
   invoices: "Invoices"
   file: "File"
@@ -528,6 +528,15 @@ en_CA:
   depth: "Depth"
   payment_could_not_process: "The payment could not be processed"
   payment_could_not_complete: "The payment could not be completed"
+  vine_voucher_validator_service:
+    errors:
+      vine_api: "There was an error communicating with the API, please try again later."
+      invalid_voucher: "The voucher is not valid"
+      not_found_voucher: "Sorry, we couldn't find that voucher, please check the code."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "There was an error communicating with the API"
+      redeeming_failed: "Redeeming the voucher failed"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -587,11 +596,11 @@ en_CA:
         clone: Clone
         delete: Delete
         remove: Remove
-        preview: Prévisualisation
+        preview: Preview
       image:
         edit: Edit
       product_preview:
-        product_preview: Prévisualisation du produit
+        product_preview: Product preview
         shop_tab: Shop
         product_details_tab: Product details
     adjustments:
@@ -609,8 +618,8 @@ en_CA:
     first_name: First Name
     last_name: Last Name
     on_hand: On Hand
-    on_demand: On Demand
-    on_demand?: On Demand?
+    on_demand: Unlimited
+    on_demand?: Unlimited?
     order_cycle: Order Cycle
     payment: Payment
     payment_method: Payment Method
@@ -900,6 +909,7 @@ en_CA:
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
+        select_unit_scale: Select unit scale
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
@@ -1018,7 +1028,7 @@ en_CA:
         variant_unit_name: Variant Unit Name
         price: Price
         on_hand: On Hand
-        on_demand: On Demand
+        on_demand: Unlimited
         shipping_category: Shipping Category
         tax_category: Tax Category
     variant_overrides:
@@ -1101,9 +1111,9 @@ en_CA:
         business_details:
           legend: "Business Details"
           upload: 'upload'
-          abn: Business Number
-          abn_placeholder: eg. 80781 2466
-          acn: Busines Number
+          abn: Business Number (if applicable)
+          abn_placeholder: 1234 My Business
+          acn: GST Number (if applicable)
           acn_placeholder: eg.80781 2466
           display_invoice_logo: Display logo in invoices
           invoice_text: Add customized text at the end of invoices
@@ -1736,7 +1746,7 @@ en_CA:
         name: Xero Invoices
         description: Invoices for import into Xero
       enterprise_fee_summary:
-        name: "Enterprise Fee Summary"
+        name: "All Fees Summary"
         description: "Summary of Enterprise Fees collected"
       suppliers:
         name: Suppliers
@@ -2029,6 +2039,8 @@ en_CA:
       no_shipping_methods_available: Checkout is not possible because no shipping/pick-up options are available. Please contact the shop owner.
       voucher_not_found: Not found
       add_voucher_error: There was an error while adding the voucher
+      create_voucher_error: "There was an error while creating the voucher: %{error}"
+      voucher_redeeming_error: There was an error while trying to redeem your voucher
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -2642,6 +2654,7 @@ en_CA:
   confirm_hub_change: "Are you sure? This will change your selected hub and remove any items in your shopping cart."
   confirm_oc_change: "Are you sure? This will change your selected order cycle and remove any items in your shopping cart."
   location_placeholder: "Type in a location..."
+  gmap_load_failure: "Unable to load map. Please check your browser settings and allow 3rd party cookies for this website."
   error_required: "can't be blank"
   error_number: "must be number"
   error_email: "must be email address"

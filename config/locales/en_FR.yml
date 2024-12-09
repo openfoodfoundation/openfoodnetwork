@@ -528,6 +528,15 @@ en_FR:
   depth: "Depth"
   payment_could_not_process: "The payment could not be processed"
   payment_could_not_complete: "The payment could not be completed"
+  vine_voucher_validator_service:
+    errors:
+      vine_api: "There was an error communicating with the API, please try again later."
+      invalid_voucher: "The voucher is not valid"
+      not_found_voucher: "Sorry, we couldn't find that voucher, please check the code."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "There was an error communicating with the API"
+      redeeming_failed: "Redeeming the voucher failed"
   actions:
     create_and_add_another: "Create and Add Another"
     create: "Create"
@@ -900,6 +909,7 @@ en_FR:
         category_field_name: "Category"
         tax_category_field_name: "Tax Category"
         producer_field_name: "Producer"
+        select_unit_scale: Select unit scale
       clone:
         success: Successfully cloned the product
         error: Unable to clone the product
@@ -2032,6 +2042,8 @@ en_FR:
       no_shipping_methods_available: Checkout is not possible due to absence of shipping options. Please contact the shop owner.
       voucher_not_found: Not found
       add_voucher_error: There was an error while adding the voucher
+      create_voucher_error: "There was an error while creating the voucher: %{error}"
+      voucher_redeeming_error: There was an error while trying to redeem your voucher
   shops:
     hubs:
       show_closed_shops: "Show closed shops"
@@ -2645,6 +2657,7 @@ en_FR:
   confirm_hub_change: "Are you sure? This will change your selected hub and remove any items in your shopping cart."
   confirm_oc_change: "Are you sure? This will change your selected order cycle and remove any items in your shopping cart."
   location_placeholder: "Type in a location..."
+  gmap_load_failure: "Unable to load map. Please check your browser settings and allow 3rd party cookies for this website."
   error_required: "can't be blank"
   error_number: "must be number"
   error_email: "must be email address"

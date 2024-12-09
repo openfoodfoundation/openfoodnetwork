@@ -527,6 +527,15 @@ fr:
   depth: "Profondeur"
   payment_could_not_process: "Le paiement n'a pas pu être traité"
   payment_could_not_complete: "Le paiement n'a pas pu être finalisé"
+  vine_voucher_validator_service:
+    errors:
+      vine_api: "Il y a eu une erreur de communication avec l'API, merci de réessayer."
+      invalid_voucher: "Le bon de réduction n'est pas valide."
+      not_found_voucher: "Désolé, nous n'avons pas trouvé ce bon de réduction. Merci de vérifier le code qui vous a été transmis."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "Il y a eu une erreur de communication avec l'API"
+      redeeming_failed: "Echec de la prise en compte du bon de réduction"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
@@ -901,6 +910,7 @@ fr:
         category_field_name: "Catégorie"
         tax_category_field_name: "TVA applicable"
         producer_field_name: "Producteur"
+        select_unit_scale: Sélectionner l'échelle d'unité
       clone:
         success: Le produit a bien été dupliqué
         error: Impossible de dupliquer le produit
@@ -2038,6 +2048,8 @@ fr:
       no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
       voucher_not_found: Non trouvé
       add_voucher_error: Il y a eu une erreur lors de l'ajout de votre réduction.
+      create_voucher_error: "Il y a eu une erreur lors de la création du bon de réduction : %{error}"
+      voucher_redeeming_error: Il y a eu une erreur lors de la tentative d'utilisation de votre bon de réduction.
   shops:
     hubs:
       show_closed_shops: "Afficher toutes les boutiques"
@@ -2651,6 +2663,7 @@ fr:
   confirm_hub_change: "Confirmer? Cette action modifiera la boutique sélectionnée et tous les articles de votre panier seront effacés."
   confirm_oc_change: "Confirmer? Cette action modifiera le cycle de vente sélectionné et tous les articles de votre panier seront effacés."
   location_placeholder: "Saisissez une localisation..."
+  gmap_load_failure: "Impossible de charger la carte. Veuillez vérifier les paramètres de votre navigateur et accepter les cookies pour ce site web."
   error_required: "Champ obligatoire"
   error_number: "saisir un nombre"
   error_email: "saisir une adresse email"
