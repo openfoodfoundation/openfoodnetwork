@@ -1446,7 +1446,7 @@ en:
             vine_secret: "VINE secret"
             description: "To enable VINE for your enterprise, enter your API key and secret."
             link_label_html: "VINE <i class=\"icon-external-link\"></i>"
-            link_url: "https://apropos.coopcircuits.fr"
+            link_url: "https://vine.openfoodnetwork.org.au"
             api_parameters_empty: "Please enter an API key and a secret"
             api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
             connection_error: "API connection error, please try again"
