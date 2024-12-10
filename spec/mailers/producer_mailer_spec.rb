@@ -192,6 +192,7 @@ RSpec.describe ProducerMailer, type: :mailer do
       context "when no customer has customer code" do
         it 'should not displays business name column' do
           expect(table_header).not_to have_selector("th", text: 'Business Name')
+          expect(customer_details_summary_text(mail)).not_to include('Test Business Name')
         end
       end
 
@@ -203,6 +204,7 @@ RSpec.describe ProducerMailer, type: :mailer do
           expect(
             body_as_html(mail).find("table.order-summary.customer-order tbody tr")
           ).to have_selector("td", text: 'Test Business Name')
+          expect(customer_details_summary_text(mail)).to include('Test Business Name')
         end
       end
     end
