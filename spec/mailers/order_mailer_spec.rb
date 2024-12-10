@@ -257,4 +257,30 @@ RSpec.describe Spree::OrderMailer do
       end
     end
   end
+
+  context "display adjustments" do
+    let(:order) { create(:order_with_totals_and_distribution, :completed) }
+    let(:voucher) { create(:voucher, enterprise: order.distributor) }
+
+    before do
+      voucher.create_adjustment(voucher.code, order)
+      OrderManagement::Order::Updater.new(order).update_voucher
+    end
+
+    let!(:confirmation_email_for_customer) { Spree::OrderMailer.confirm_email_for_customer(order) }
+    let!(:confirmation_email_for_shop) { Spree::OrderMailer.confirm_email_for_shop(order) }
+    let!(:cancellation_email) { Spree::OrderMailer.cancel_email(order) }
+
+    it "includes Voucher text with label" do
+      expect(confirmation_email_for_customer.body).to include("Voucher (#{voucher.code}):")
+      expect(confirmation_email_for_shop.body).to include("Voucher (#{voucher.code}):")
+      expect(cancellation_email.body).to include("Voucher (#{voucher.code}):")
+    end
+
+    it "includes Shipping label" do
+      expect(confirmation_email_for_customer.body).to include("Shipping:")
+      expect(confirmation_email_for_shop.body).to include("Shipping:")
+      expect(cancellation_email.body).to include("Shipping:")
+    end
+  end
 end
