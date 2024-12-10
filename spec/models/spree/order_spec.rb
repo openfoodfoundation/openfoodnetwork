@@ -1211,76 +1211,73 @@ RSpec.describe Spree::Order do
     end
   end
 
-  describe "a completed order with shipping and transaction fees" do
-    let(:distributor) { create(:distributor_enterprise_with_tax) }
-    let(:zone) { create(:zone_with_member) }
-    let(:shipping_tax_rate) { create(:tax_rate, amount: 0.25, included_in_price: true, zone:) }
-    let(:shipping_tax_category) { create(:tax_category, tax_rates: [shipping_tax_rate]) }
+  describe "#update_shipping_fees!" do
+    let(:distributor) { create(:distributor_enterprise) }
     let(:order) {
-      create(:completed_order_with_fees, distributor:, shipping_fee:,
-                                         payment_fee:,
-                                         shipping_tax_category:)
+      create(:completed_order_with_fees, distributor:, shipping_fee:, payment_fee: 0)
     }
-    let(:shipping_fee) { 3 }
+    let(:shipping_fee) { 5 }
+
+    it "does nothing if shipment is shipped" do
+      # An order need to be paid before we can ship a shipment
+      create(:payment, amount: order.total, order:, state: "completed")
+
+      shipment = order.shipments.first
+      shipment.ship
+
+      expect(shipment).not_to receive(:save)
+
+      order.update_shipping_fees!
+    end
+
+    it "saves the each shipment" do
+      order.shipments << create(:shipment, order:)
+      order.shipments.each do |shipment|
+        expect(shipment).to receive(:save)
+      end
+
+      order.update_shipping_fees!
+    end
+
+    context "with shipment including a shipping fee" do
+      it "updates shipping fee" do
+        # Manually udate line item quantity, in a normal scenario we would use
+        # order.contents method, which takes care of updating shipments
+        order.line_items.first.update(quantity: 2)
+
+        order.update_shipping_fees!
+
+        item_num = order.line_items.sum(&:quantity)
+        expect(order.reload.adjustment_total).to eq(item_num * shipping_fee)
+      end
+    end
+  end
+
+  describe "a completed order with transaction fees" do
+    let(:distributor) { create(:distributor_enterprise_with_tax) }
+    let(:order) {
+      create(:completed_order_with_fees, distributor:, shipping_fee: 0, payment_fee:)
+    }
     let(:payment_fee) { 5 }
     let(:item_num) { order.line_items.length }
-    let(:expected_fees) { item_num * (shipping_fee + payment_fee) }
+    let(:expected_fees) { item_num * payment_fee }
 
     before do
       order.reload
       order.create_tax_charge!
 
       # Sanity check the fees
-      expect(order.all_adjustments.length).to eq 3
-      expect(order.shipment_adjustments.length).to eq 2
+      expect(order.all_adjustments.length).to eq 2
       expect(item_num).to eq 2
       expect(order.adjustment_total).to eq expected_fees
-      expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 1.2
-      expect(order.shipment.included_tax_total).to eq 1.2
     end
 
-    xcontext "removing line_items" do
-      it "updates shipping and transaction fees" do
+    context "removing line_items" do
+      it "updates transaction fees" do
         order.line_items.first.update_attribute(:quantity, 0)
         order.save
 
-        expect(order.adjustment_total).to eq expected_fees - shipping_fee - payment_fee
-        expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 0.6
-        expect(order.shipment.included_tax_total).to eq 0.6
-      end
-
-      context "when finalized fee adjustments exist on the order" do
-        before do
-          order.all_adjustments.each(&:finalize!)
-          order.reload
-        end
-
-        it "does not attempt to update such adjustments" do
-          order.update(line_items_attributes: [{ id: order.line_items.first.id, quantity: 0 }])
-
-          # Check if fees got updated
-          order.reload
-
-          expect(order.adjustment_total).to eq expected_fees
-          expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 1.2
-          expect(order.shipment.included_tax_total).to eq 1.2
-        end
-      end
-    end
-
-    context "changing the shipping method to one without fees" do
-      let(:shipping_method) {
-        create(:shipping_method, calculator: Calculator::FlatRate.new(preferred_amount: 0))
-      }
-
-      it "updates shipping fees" do
-        order.shipments = [create(:shipment_with, :shipping_method,
-                                  shipping_method:)]
-        order.save
-
-        expect(order.adjustment_total).to eq expected_fees - (item_num * shipping_fee)
-        expect(order.shipment.adjustments.tax.inclusive.sum(:amount)).to eq 0
-        expect(order.shipment.included_tax_total).to eq 0
+        expect(order.adjustment_total).to eq expected_fees - payment_fee
       end
     end
 
@@ -1296,6 +1293,7 @@ RSpec.describe Spree::Order do
 
         # Check if fees got updated
         order.reload
+
         expect(order.adjustment_total).to eq expected_fees - (item_num * payment_fee)
       end
     end
