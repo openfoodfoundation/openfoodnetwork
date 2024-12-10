@@ -452,14 +452,15 @@ RSpec.describe '
 
       context "orders with different order totals" do
         before do
-          Spree::LineItem.where(order_id: order2.id).first.update!(quantity: 5)
-          Spree::LineItem.where(order_id: order3.id).first.update!(quantity: 4)
-          Spree::LineItem.where(order_id: order4.id).first.update!(quantity: 3)
-          Spree::LineItem.where(order_id: order5.id).first.update!(quantity: 2)
-          order2.save
-          order3.save
-          order4.save
-          order5.save
+          order2.contents.update_item(Spree::LineItem.where(order_id: order2.id).first,
+                                      { quantity: 5 })
+          order3.contents.update_item(Spree::LineItem.where(order_id: order3.id).first,
+                                      { quantity: 4 })
+          order4.contents.update_item(Spree::LineItem.where(order_id: order4.id).first,
+                                      { quantity: 3 })
+          order5.contents.update_item(Spree::LineItem.where(order_id: order5.id).first,
+                                      { quantity: 2 })
+
           login_as_admin
           visit spree.admin_orders_path
         end
