@@ -152,7 +152,7 @@ class FdcBackorderer
   end
 
   def new?(order)
-    order.semanticId == urls.orders_url
+    order.semanticId == urls&.orders_url
   end
 
   def build_sale_session(order)
