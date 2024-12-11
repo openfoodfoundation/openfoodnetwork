@@ -65,6 +65,7 @@ module VariantUnits
     def unit_value_attributes
       units = { unit_presentation: option_value_name }
       units.merge!(variant_unit:) if has_attribute?(:variant_unit)
+      units.merge!(variant_unit_name: '') if reset_variant_unit_name?
       units
     end
 
@@ -78,6 +79,10 @@ module VariantUnits
       return display_as if has_attribute?(:display_as) && display_as.present?
 
       VariantUnits::OptionValueNamer.new(self).name
+    end
+
+    def reset_variant_unit_name?
+      has_attribute?(:variant_unit_name) && has_attribute?(:variant_unit) && variant_unit != 'items'
     end
   end
 end
