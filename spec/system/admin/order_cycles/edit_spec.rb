@@ -75,7 +75,7 @@ RSpec.describe '
     end
 
     context 'with no attached order' do
-      it "does not show warning modal", retry: 3 do
+      it "does not show warning modal" do
         login_as_admin
         visit edit_admin_order_cycle_path(order_cycle)
 
@@ -135,7 +135,7 @@ RSpec.describe '
     end
 
     context 'with no attached orders' do
-      it "does not show warning modal", retry: 3 do
+      it "does not show warning modal" do
         login_as_admin
         visit edit_admin_order_cycle_path(order_cycle)
 
