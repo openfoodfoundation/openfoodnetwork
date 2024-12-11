@@ -106,7 +106,6 @@ module Spree
     before_validation :clone_billing_address, if: :use_billing?
     before_validation :ensure_customer
 
-    before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
     before_create :link_by_email
 
