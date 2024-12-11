@@ -14,8 +14,8 @@ RSpec.describe StockSyncJob do
     "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
   }
 
-  describe ".sync_linked_catalogs" do
-    subject { StockSyncJob.sync_linked_catalogs(order) }
+  describe ".sync_linked_catalogs_later" do
+    subject { StockSyncJob.sync_linked_catalogs_later(order) }
     it "ignores products without semantic link" do
       expect { subject }.not_to enqueue_job(StockSyncJob)
     end
@@ -34,6 +34,15 @@ RSpec.describe StockSyncJob do
       expect(Bugsnag).to receive(:notify).and_call_original
 
       expect { subject }.not_to raise_error
+    end
+
+    context "when order has no distributor" do
+      let!(:order) { create(:order) }
+
+      it 'should not raise error' do
+        expect(Bugsnag).not_to receive(:notify).and_call_original
+        expect { subject }.not_to raise_error
+      end
     end
   end
 
@@ -58,6 +67,15 @@ RSpec.describe StockSyncJob do
       expect(Bugsnag).to receive(:notify).and_call_original
 
       expect { subject }.not_to raise_error
+    end
+
+    context "when order has no distributor" do
+      let!(:order) { create(:order) }
+
+      it 'should not raise error' do
+        expect(Bugsnag).not_to receive(:notify).and_call_original
+        expect { subject }.not_to raise_error
+      end
     end
   end
 

@@ -8,26 +8,12 @@ class StockSyncJob < ApplicationJob
   # product. These variants are rare though and we check first before we
   # enqueue a new job. That should save some time loading the order with
   # all the stock data to make this decision.
-  def self.sync_linked_catalogs(order)
-    user = order.distributor.owner
-    catalog_ids(order).each do |catalog_id|
-      perform_later(user, catalog_id)
-    end
-  rescue StandardError => e
-    # Errors here shouldn't affect the shopping. So let's report them
-    # separately:
-    Alert.raise_with_record(e, order)
+  def self.sync_linked_catalogs_later(order)
+    sync_categories_by_perform_method(order, :perform_later)
   end
 
   def self.sync_linked_catalogs_now(order)
-    user = order.distributor.owner
-    catalog_ids(order).each do |catalog_id|
-      perform_now(user, catalog_id)
-    end
-  rescue StandardError => e
-    # Errors here shouldn't affect the shopping. So let's report them
-    # separately:
-    Alert.raise_with_record(e, order)
+    sync_categories_by_perform_method(order, :perform_now)
   end
 
   def self.catalog_ids(order)
@@ -71,5 +57,19 @@ class StockSyncJob < ApplicationJob
     Spree::Variant.where(supplier: enterprises)
       .includes(:semantic_links).references(:semantic_links)
       .where(semantic_links: { semantic_id: product_ids })
+  end
+
+  def self.sync_categories_by_perform_method(order, perform_method)
+    distributor = order.distributor
+    return unless distributor
+
+    user = distributor.owner
+    catalog_ids(order).each do |catalog_id|
+      public_send(perform_method, user, catalog_id)
+    end
+  rescue StandardError => e
+    # Errors here shouldn't affect the shopping. So let's report them
+    # separately:
+    Alert.raise_with_record(e, order)
   end
 end
