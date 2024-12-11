@@ -24,6 +24,7 @@ module Api
         Orders::WorkflowService.new(@order).advance_to_payment if @order.line_items.any?
 
         @order.recreate_all_fees!
+        AmendBackorderJob.perform_later(@order) if @order.completed?
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
@@ -73,6 +74,7 @@ module Api
 
         @order.contents.add(variant, quantity, @shipment)
         @order.recreate_all_fees!
+        AmendBackorderJob.perform_later(@order) if @order.completed?
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end
@@ -86,6 +88,7 @@ module Api
         @shipment.reload if @shipment.persisted?
 
         @order.recreate_all_fees!
+        AmendBackorderJob.perform_later(@order) if @order.completed?
 
         render json: @shipment, serializer: Api::ShipmentSerializer, status: :ok
       end

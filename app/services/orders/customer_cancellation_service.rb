@@ -10,6 +10,7 @@ module Orders
       return unless order.cancel
 
       Spree::OrderMailer.cancel_email_for_shop(order).deliver_later
+      AmendBackorderJob.perform_later(order)
     end
 
     private
