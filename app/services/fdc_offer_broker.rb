@@ -6,19 +6,19 @@ class FdcOfferBroker
   Solution = Struct.new(:product, :factor, :offer)
   RetailSolution = Struct.new(:retail_product_id, :factor)
 
-  def self.load_catalog(user, urls)
+  def self.load_catalog(user, catalog_url)
     api = DfcRequest.new(user)
-    catalog_json = api.call(urls.catalog_url)
+    catalog_json = api.call(catalog_url)
     DfcIo.import(catalog_json)
   end
 
-  def initialize(user, urls)
+  def initialize(user, catalog_url)
     @user = user
-    @urls = urls
+    @catalog_url = catalog_url
   end
 
   def catalog
-    @catalog ||= self.class.load_catalog(@user, @urls)
+    @catalog ||= self.class.load_catalog(@user, @catalog_url)
   end
 
   def best_offer(product_id)

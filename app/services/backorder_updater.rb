@@ -40,7 +40,7 @@ class BackorderUpdater
     reference_link = variants[0].semantic_links[0].semantic_id
     urls = FdcUrlBuilder.new(reference_link)
     orderer = FdcBackorderer.new(user, urls)
-    broker = FdcOfferBroker.new(user, urls)
+    broker = FdcOfferBroker.new(user, urls.catalog_url)
 
     updated_lines = update_order_lines(backorder, order_cycle, variants, broker, orderer)
     unprocessed_lines = backorder.lines.to_set - updated_lines
