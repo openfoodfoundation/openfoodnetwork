@@ -43,11 +43,7 @@ RSpec.describe "DFC Product Import" do
   end
 
   it "imports from a FDC catalog", vcr: true do
-    user.oidc_account.update!(
-      uid: "testdfc@protonmail.com",
-      refresh_token: ENV.fetch("OPENID_REFRESH_TOKEN"),
-      updated_at: 1.day.ago,
-    )
+    user.update!(oidc_account: build(:testdfc_account))
     product_id =
       "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
     linked_variant = source_product.variants.first
