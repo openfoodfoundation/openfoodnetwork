@@ -3321,7 +3321,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_admin_handling_fees: "Admin & Handling (%{currency})"
   report_header_ship_price: "Ship (%{currency})"
   report_header_producer_charges_gst: Producer charges GST?
-  report_header_total_tax_on_product: Total tax on product
+  report_header_total_tax_on_product: "Total tax on product (%{currency})"
   report_header_pay_fee_price: "Pay fee (%{currency})"
   report_header_total_price: "Total (%{currency})"
   report_header_product_total_price: "Product Total (%{currency})"
