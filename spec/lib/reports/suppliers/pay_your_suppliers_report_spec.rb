@@ -24,6 +24,7 @@ RSpec.describe "Pay Your Suppliers Report" do
       expect(table_row.producer).to eq(supplier.name)
       expect(table_row.producer_address).to eq(supplier.address.full_address)
       expect(table_row.producer_abn_acn).to eq("none")
+      expect(table_row.producer_charges_gst).to eq("No")
       expect(table_row.email).to eq("none")
       expect(table_row.hub).to eq(hub.name)
       expect(table_row.hub_address).to eq(hub.address.full_address)
@@ -42,6 +43,7 @@ RSpec.describe "Pay Your Suppliers Report" do
       expect(table_row.total_excl_vat.to_f).to eq(10.0)
       expect(table_row.total_fees_excl_tax.to_f).to eq(0.0)
       expect(table_row.total_tax_on_fees.to_f).to eq(0.0)
+      expect(table_row.total_tax_on_product.to_f).to eq(0.0)
       expect(table_row.total_tax.to_f).to eq(0.0)
       expect(table_row.total.to_f).to eq(10.0)
     end
@@ -94,11 +96,13 @@ RSpec.describe "Pay Your Suppliers Report" do
       expect(report_table_rows.length).to eq(1)
       table_row = report_table_rows.first
 
+      expect(table_row.producer_charges_gst).to eq('Yes')
       expect(table_row.total_excl_fees_and_tax.to_f).to eq(10.0)
       expect(table_row.total_excl_vat.to_f).to eq(10.1)
       expect(table_row.total_fees_excl_tax.to_f).to eq(0.1)
       expect(table_row.total_tax_on_fees.to_f).to eq(0.01)
-      expect(table_row.total_tax.to_f).to eq(1.0)
+      expect(table_row.total_tax_on_product.to_f).to eq(1.0)
+      expect(table_row.total_tax.to_f).to eq(1.01)
       expect(table_row.total.to_f).to eq(11.11)
     end
   end
