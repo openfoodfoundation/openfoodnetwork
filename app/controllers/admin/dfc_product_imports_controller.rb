@@ -19,13 +19,11 @@ module Admin
         .find(params.require(:enterprise_id))
 
       catalog_url = params.require(:catalog_url)
-
-      json_catalog = fetch_catalog(catalog_url)
-      graph = DfcIo.import(json_catalog)
+      broker = FdcOfferBroker.new(spree_current_user, catalog_url)
 
       # * First step: import all products for given enterprise.
       # * Second step: render table and let user decide which ones to import.
-      imported = graph.map do |subject|
+      imported = broker.catalog.map do |subject|
         next unless subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
 
         existing_variant = enterprise.supplied_variants.linked_to(subject.semanticId)
@@ -43,12 +41,6 @@ module Admin
            ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
-    end
-
-    private
-
-    def fetch_catalog(url)
-      DfcRequest.new(spree_current_user).call(url)
     end
   end
 end
