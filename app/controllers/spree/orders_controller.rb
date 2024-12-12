@@ -77,6 +77,8 @@ module Spree
           @order.create_tax_charge!
         end
 
+        AmendBackorderJob.perform_later(@order) if @order.completed?
+
         respond_with(@order) do |format|
           format.html do
             if params.key?(:checkout)

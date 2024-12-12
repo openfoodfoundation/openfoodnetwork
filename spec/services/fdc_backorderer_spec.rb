@@ -106,4 +106,20 @@ RSpec.describe FdcBackorderer do
       expect(found_line).to eq existing_line
     end
   end
+
+  describe "#new?" do
+    describe "without knowing URLs" do
+      let(:subject) { FdcBackorderer.new(nil, nil) }
+
+      it "recognises new orders" do
+        order = DataFoodConsortium::Connector::Order.new(nil)
+        expect(subject.new?(order)).to eq true
+      end
+
+      it "recognises existing orders" do
+        order = DataFoodConsortium::Connector::Order.new("https://order")
+        expect(subject.new?(order)).to eq false
+      end
+    end
+  end
 end

@@ -447,6 +447,7 @@ RSpec.describe '
           end
         end
       end
+
       it "can bulk cancel 2 orders" do
         page.find("#listing_orders tbody tr:nth-child(1) input[name='bulk_ids[]']").click
         page.find("#listing_orders tbody tr:nth-child(2) input[name='bulk_ids[]']").click
@@ -462,22 +463,25 @@ RSpec.describe '
         within ".reveal-modal" do
           uncheck "Send a cancellation email to the customer"
           expect {
-            find_button("Cancel").click # Cancels the cancel action
-          }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+            click_on "Cancel" # Cancels the cancel action
+          }.not_to enqueue_mail
         end
+
+        expect(page).not_to have_content "This will cancel the current order."
 
         page.find("span.icon-reorder", text: "Actions").click
         within ".ofn-drop-down .menu" do
           page.find("span", text: "Cancel Orders").click
         end
 
-        within ".reveal-modal" do
-          expect {
-            find_button("Confirm").click # Confirms the cancel action
-          }.not_to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:twice)
-        end
-
-        expect(page).to have_content("CANCELLED", count: 2)
+        expect {
+          within ".reveal-modal" do
+            click_on "Confirm" # Confirms the cancel action
+          end
+          expect(page).to have_content("CANCELLED", count: 2)
+        }.to enqueue_job(AmendBackorderJob).exactly(:twice)
+          # You can't combine negative matchers.
+          .and enqueue_mail.exactly(0).times
       end
     end
 
