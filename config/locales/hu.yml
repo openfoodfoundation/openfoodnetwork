@@ -53,6 +53,7 @@ hu:
         primary_taxon: "Termékkategória"
         shipping_category_id: "Szállítási mód"
         supplier: "Beszállító"
+        variant_unit: "Mértékegység"
         variant_unit_name: "Változat egység neve"
         unit_value: "Egység értéke"
       spree/credit_card:
@@ -680,7 +681,7 @@ hu:
         matomo_tag_manager_url: "Matomo Címkekezelő URL-je"
         info_html: "A Matomo egy webes és mobilelemző alkalmazás. A Matomo helyszíni üzemeltetését vagy felhőalapú szolgáltatást is használhatja. További információért lásd: <a href='http://matomo.org' target='_blank'>matomo.org</a>."
         config_instructions_html: "Itt konfigurálhatja az OFN Matomo integrációt. Az alábbi Matomo URL-nek arra a Matomo-példányra kell mutatnia, ahová a felhasználó követési információkat küldi; ha üresen marad, a Matomo felhasználókövetés le lesz tiltva. A Webhelyazonosító mező nem kötelező, de hasznos, ha egynél több webhelyet követ nyomon egyetlen Matomo-példányon; a Matomo példánykonzolon található."
-        config_instructions_tag_manager_html: "A Matomo Címkekezelő URL-címének beállítása engedélyezi a Matomo Címkekezelőt. Ez az eszköz lehetővé teszi az elemzési események beállítását. A Matomo Címkekezelő URL-címe a Matomo Tag Manager Telepítési kód szakaszából lett kimásolva. Győződjön meg róla, hogy a megfelelő tárolót és környezetet választotta, mivel ezek a beállítások megváltoztatják az URL-t."
+        config_instructions_tag_manager_html: "A Matomo Címkekezelő URL-címének beállítása engedélyezi a Matomo Címkekezelőt. Ez az eszköz lehetővé teszi az elemzési események beállítását. A Matomo Címkekezelő URL-címe a Matomo Tag Manager Telepítési kód szakaszából lett kimásolva. Győződj meg róla, hogy a megfelelő tárolót és környezetet választotta, mivel ezek a beállítások megváltoztatják az URL-t."
     connected_app_settings:
       edit:
         title: "Kapcsolt app beállítás"
@@ -860,6 +861,7 @@ hu:
         category_field_name: "Kategória"
         tax_category_field_name: "Adókategória"
         producer_field_name: "Termelő"
+        select_unit_scale: Válassz mértékegységet
       clone:
         success: Sikeresen klónozta a terméket
         error: A terméket nem sikerült klónozni
@@ -1061,9 +1063,9 @@ hu:
         business_details:
           legend: "Vállalkozás adatai"
           upload: 'feltöltés'
-          abn: LÉGI ÚTON SZÁLLÍTOTT
+          abn: ADÓSZÁM
           abn_placeholder: pl. 99 123 456 789
-          acn: Közösségi Adószám (EU)
+          acn: Cégjegyzékszám
           acn_placeholder: pl. 123 456 789
           display_invoice_logo: Logó megjelenítése a vevői összesítőkön
           invoice_text: Adj testreszabott szöveget a vevői összesítők végéhez
@@ -1197,7 +1199,7 @@ hu:
           enable_subscriptions_false: "Tiltva"
           enable_subscriptions_true: "Engedélyezve"
           customer_names_in_reports: "Ügyfélnevek a jelentésekben"
-          customer_names_tip: "Engedélyezze beszállítóinak, hogy lássák az ügyfelek nevét a jelentésekben"
+          customer_names_tip: "Engedélyezd a beszállítóidnak, hogy lássák az ügyfelek nevét a jelentésekben"
           customer_names_false: "Tiltva"
           customer_names_true: "Engedélyezve"
           shopfront_message: "Online Kirakat üzenete"
@@ -1275,7 +1277,7 @@ hu:
         vouchers:
           legend: Kuponok
           voucher_code: Kupon kód
-          rate: Mérték
+          rate: Arány
           label: Címke
           purpose: Cél
           expiry: Lejárati idő
@@ -1317,7 +1319,7 @@ hu:
                 </p>
           discover_regen:
             title: "Discover Regenerative"
-            tagline: "Engedélyezd a Discover Regenerative számára a vállalati adatok közzétételét."
+            tagline: "Engedélyezd a Discover Regenerative számára a vállalkozási adatok közzétételét."
             enable: "Adatmegosztás engedélyezése"
             disable: "Megosztás leállítása"
             loading: "Betöltés"
@@ -1338,6 +1340,7 @@ hu:
             enable: "Csatlakozás"
             disable: "Lecsatlakozás"
             need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
+            vine_api_key: "VINE API kulcs"
             connection_error: "API kapcsolódási hiba, kérjük próbáld újra"
       actions:
         edit_profile: Beállítások
@@ -1391,8 +1394,10 @@ hu:
         contact_name: Kapcsolattartó neve
       edit:
         editing: 'Beállítások:'
+        back_link: Vissza a válllalkozások listájához
       new:
         title: Új Vállalkozás
+        back_link: Vissza a válllalkozások listájához
       welcome:
         welcome_title: Üdvözölünk az Open Food Network-ben!
         welcome_text: Sikeresen létrehoztad a
@@ -1633,6 +1638,7 @@ hu:
       pack_by_customer: Összekészítés Ügyfelenként
       pack_by_supplier: Összekészítés Beszállítónként
       pack_by_product: Összekészítés Termékenként
+      pay_your_suppliers: Fizetés a beszállítóknak
       display:
         report_is_big: "Ez a jelentés nagy méretű, így lelassíthatja az eszközödet."
         display_anyway: "Megjelenítés mindenképp"
@@ -1678,6 +1684,8 @@ hu:
       enterprise_fee_summary:
         name: "Vállalkozási díjak összefoglalója"
         description: "Összefoglaló a beszedett vállalkozási díjakról"
+      suppliers:
+        name: Beszállítók
       enterprise_fees_with_tax_report_by_order: "Vállalkozási díjak adójelentéssei megrendelés alapján"
       enterprise_fees_with_tax_report_by_producer: "Vállalkozási díjak Jelentés termelőnként"
       errors:
@@ -1688,7 +1696,7 @@ hu:
       summary_row:
         total: "ÖSSZESEN"
       table:
-        select_and_search: "Válaszd ki a szűrőket, és kattintson a %{option} elemre az adatok eléréséhez."
+        select_and_search: "Válaszd ki a szűrőket, és kattints a %{option} elemre az adatok eléréséhez."
         headings:
           hub: "Átvételi pont"
           customer_code: "Kód"
@@ -1745,18 +1753,18 @@ hu:
       setup_explanation:
         title: "Előfizetések"
         just_a_few_more_steps: 'Még néhány lépés, mielőtt elkezdhetné:'''
-        enable_subscriptions: "Engedélyezze a feliratkozásokat legalább egy oldalán"
-        enable_subscriptions_step_1_html: 1. Nyissa meg a %{enterprises_link} oldalt, keresse meg az oldalát, és kattintson a "Kezelés" gombra
-        enable_subscriptions_step_2: 2. Az "Oldalbeállítások" alatt", engedélyezze az Előfizetések opciót
-        set_up_shipping_and_payment_methods_html: Állítson be %{shipping_link} és %{payment_link} metódust
-        set_up_shipping_and_payment_methods_note_html: Ne feledje, hogy előfizetésekhez csak készpénzes és Stripe fizetési módok<br />használhatók
-        ensure_at_least_one_customer_html: Győződjön meg arról, hogy legalább egy %{customer_link} létezik
+        enable_subscriptions: "Engedélyezd a feliratkozásokat legalább egy oldalon"
+        enable_subscriptions_step_1_html: 1. Nyisd meg a %{enterprises_link} oldalt, keresd meg az oldalad, és kattints a "Kezelés" gombra
+        enable_subscriptions_step_2: 2. Az "Oldalbeállítások" alatt", engedélyezd az Előfizetések opciót
+        set_up_shipping_and_payment_methods_html: Állíts be %{shipping_link} és %{payment_link} metódust
+        set_up_shipping_and_payment_methods_note_html: Ne feledd, hogy előfizetésekhez csak készpénzes és Stripe fizetési módok<br />használhatók
+        ensure_at_least_one_customer_html: Győződj meg arról, hogy legalább egy %{customer_link} létezik
         create_at_least_one_schedule: Hozz létre legalább egy ütemezést
-        create_at_least_one_schedule_step_1_html: '1. Nyissa meg a következőt: %{order_cycles_link}'
-        create_at_least_one_schedule_step_2: 2. Hozz létre egy rendelési ciklust, ha még nem tette meg
-        create_at_least_one_schedule_step_3: 3. Kattintson a "+ Új ütemezés" gombra.", és töltse ki az űrlapot
+        create_at_least_one_schedule_step_1_html: '1. Nyisd meg a következőt: %{order_cycles_link}'
+        create_at_least_one_schedule_step_2: 2. Hozz létre egy rendelési ciklust, ha még nem tetted meg
+        create_at_least_one_schedule_step_3: 3. Kattints a "+ Új ütemterv" gombra.", és töltsd ki az űrlapot
         once_you_are_done_you_can_html: Ha végeztél, %{reload_this_page_link}
-        reload_this_page: töltse be újra ezt az oldalt
+        reload_this_page: töltsd be újra ezt az oldalt
       form:
         create: "Előfizetés létrehozása"
       steps:
@@ -1775,7 +1783,7 @@ hu:
         add: "Hozzáadás"
       details:
         details: Részletek
-        invalid_error: Hoppá! Kérjük, töltse ki az összes kötelező mezőt...
+        invalid_error: Hoppá! Kérjük, töltsd ki az összes kötelező mezőt...
         allowed_payment_method_types_tip: Jelenleg csak készpénzes és Stripe fizetési mód használhatók
         credit_card: Hitelkártya
         charges_not_allowed: Ez az ügyfél nem engedélyezi a díjakat
@@ -1843,7 +1851,7 @@ hu:
       other: "%{count} megrendelés esetén visszaigazoló e-mailt küldtünk."
     send_invoice_feedback:
       one: "1 rendelés számláját elküldtük emailben."
-      other: "%{count} rendelés számláját elküldtük emailben."
+      other: "%{count} rendelés összegzését elküldtük emailben."
   api:
     unknown_error: "Valami elromlott. Csapatunk értesítést kapott."
     invalid_api_key: "Érvénytelen API-kulcs (%{key}) van megadva."
@@ -2050,7 +2058,7 @@ hu:
   total_incl_tax: "Összesen (adóval együtt):"
   total_all_tax: "Összes adó:"
   abn: "Adószám:"
-  acn: "Közösségi Adószám (EU):"
+  acn: "Cégjegyzékszám:"
   invoice_issued_on: "Kiállítás dátuma:"
   order_number: "Rendelés sorszáma:"
   date_of_transaction: "A tranzakció dátuma:"
@@ -2274,7 +2282,7 @@ hu:
   products_in: "itt: %{oc}"
   products_at: "itt: %{distributor}"
   products_elsewhere: "Máshol talált termékek"
-  email_confirmed: "Köszönjük, hogy megerősítette e-mail címét."
+  email_confirmed: "Köszönjük, hogy megerősítetted az e-mail címed."
   email_confirmation_activate_account: "Mielőtt aktiválhatnánk az új fiókodat, meg kell erősíteni az e-mail címed."
   email_confirmation_greeting: "Kedves %{contact}!"
   email_confirmation_profile_created: "A %{name} profilod sikeresen létrejött! Profilod aktiválásához meg kell erősíteni ezt az e-mail címet."
@@ -2341,7 +2349,7 @@ hu:
     greeting: "Üdv!"
     invited_to_manage: "Meghívást kaptál, hogy kezeld a(z) %{enterprise} %{instance} szolgáltatást."
     confirm_your_email: "Egy megerősítő linket tartalmazó e-mailt kellett volna kapnia, vagy hamarosan kapni fog. Addig nem férhetsz hozzá %{enterprise} profiljához, amíg meg nem erősíted az e-mail címedet."
-    set_a_password: "Ezután a rendszer kéri, hogy állítson be egy jelszót, mielőtt felügyelheti a vállalkozásot."
+    set_a_password: "Ezután a rendszer kéri, hogy állítson be egy jelszót, mielőtt felügyelheti a vállalkozást."
     mistakenly_sent: "Nem tudod, miért kaptad ezt az e-mailt? További információért fordulj %{owner_email}-hoz."
   producer_mail_greeting: "Kedves"
   producer_mail_text_before: "Alább megtalálja a rendelési ciklusra vonatkozó frissítést:"
@@ -2690,7 +2698,7 @@ hu:
         enterprise_long_desc_length: "%{num} karakter / legfeljebb 600 ajánlott"
         enterprise_abn: "Adószám"
         enterprise_abn_placeholder: "például. 99 123 456 789"
-        enterprise_acn: "Közösségi Adószám (EU)"
+        enterprise_acn: "Cégjegyzékszám"
         enterprise_acn_placeholder: "például. 123 456 789"
         enterprise_tax_required: "Ki kell választani."
       images:
@@ -2790,7 +2798,7 @@ hu:
   admin_enterprise_relationships_permits: "engedélyezi"
   admin_enterprise_relationships_seach_placeholder: "Keresés"
   admin_enterprise_relationships_button_create: "Létrehozás"
-  admin_enterprise_relationships_to: "kapcsolat vele"
+  admin_enterprise_relationships_to: "számára"
   admin_enterprise_groups: "Vállalkozási csoportok"
   admin_enterprise_groups_name: "Név"
   admin_enterprise_groups_owner: "Tulajdonos"
@@ -2964,6 +2972,8 @@ hu:
   report_render_options: Rendezési beállítások
   report_header_ofn_uid: OFN Azonosító
   report_header_order_cycle: Rendelési Ciklus
+  report_header_order_cycle_start_date: RC kezdő dátum
+  report_header_order_cycle_end_date: RC záró dátum
   report_header_user: Felhasználó
   report_header_email: Email
   report_header_status: Státusz
@@ -2984,6 +2994,7 @@ hu:
   report_header_hub_legal_name: "Átvételi Pont hivatalos neve"
   report_header_hub_contact_name: "Átvételi Pont kapcsolattartó neve"
   report_header_hub_email: "Átvételi Pont nyilvános email"
+  report_header_hub_contact_email: Átvételi pont kapcsolattartói email
   report_header_hub_owner_email: Átvételi Pont üzemeltető email
   report_header_hub_phone: "Átvételi Pont telefonszám"
   report_header_hub_address_line1: "Átvételi Pont cím 1"
@@ -3044,18 +3055,20 @@ hu:
   report_header_quantity: Mennyiség
   report_header_max_quantity: Max Mennyiség
   report_header_variant: Változat
-  report_header_variant_unit_name: Változat egység neve
+  report_header_variant_unit_name: Változat egysége
   report_header_variant_value: Változat értéke
   report_header_variant_unit: Változat egysége
   report_header_total_available: Összesen elérhető
   report_header_unallocated: Kiosztatlan
   report_header_max_quantity_excess: Maximális Túllépési Mennyiség
-  report_header_taxons: Taxonok
+  report_header_taxons: Termékkategóriák
   report_header_supplier: Beszállító
   report_header_producer: Termelő
   report_header_producer_suburb: Termelő kerület
   report_header_producer_tax_status: Termelő adókategóriája
   report_header_producer_charges_sales_tax?: ÁFA nyilvántartott
+  report_header_producer_abn_acn: Termelő adószáma/cégjegyzékszáma
+  report_header_producer_address: Termelő címe
   report_header_unit: Mértékegység
   report_header_group_buy_unit_quantity: Csoportos vásárlási egység mennyisége
   report_header_cost: Költség
@@ -3115,8 +3128,12 @@ hu:
   report_header_total_max: Összesen max
   report_header_total_units: Összes egység
   report_header_sum_max_total: "Összeg Max összesen"
-  report_header_total_excl_vat: "Összesen, kivéve adó (%{currency_symbol})"
+  report_header_total_excl_vat: "Összesen, adó nélkül (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Össz díjak adó nélkül (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Össz adó a díjakon (%{currency_symbol})"
+  report_header_total: "Összesen (%{currency_symbol})"
   report_header_total_incl_vat: "Összesen, beleértve adó (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Összesen díjak és adók nélkül (%{currency_symbol})"
   report_header_temp_controlled: Hűtést igényel?
   report_header_is_producer: Termelő?
   report_header_not_confirmed: Nem megerősített
@@ -3256,7 +3273,7 @@ hu:
       enterprise_limit_reached: "Elérted a vállalkozások számlaszámonkénti standard korlátját. Írj a %{contact_email} címre, ha növelni szeretnéd."
       deleting_item_will_cancel_order: "Ez a művelet egy vagy több üres rendelést eredményez, amelyek törlésre kerülnek. Szeretné folytatni?"
       modals:
-        got_it: "Megvan"
+        got_it: "Értem"
         confirm: "Megerősítés"
         close: "Bezárás"
         continue: "Tovább"
@@ -3830,7 +3847,7 @@ hu:
     cannot_create_returns: "Nem tudsz visszárut létrehozni, mivel a rendelésnek nincsenek kiszállított egységei."
     select_stock: "Válassz a készletről"
     location: "Elhelyezkedés"
-    count_on_hand: "Count On Hand"
+    count_on_hand: "Készleten lévő mennyiség"
     quantity: "Mennyiség"
     on_demand: "Igény szerint"
     on_hand: "Készlet"
@@ -4482,7 +4499,7 @@ hu:
         out_of_stock: "Nincs raktáron"
         unavailable_item: "Jelenleg nem elérhető"
     shipment_states:
-      backorder: utólagos rendelés
+      backorder: visszamaradt rendelés/nem rendelhető
       partial: részleges
       pending: függőben levő
       ready: kész
@@ -4537,7 +4554,7 @@ hu:
         subject: "Kérjük, erősítsd meg Open Food fiókod"
     payment_mailer:
       authorize_payment:
-        subject: "Kérjük, engedélyezze fizetését %{distributor} részére az Open Food-on"
+        subject: "Kérjük, engedélyezd fizetést %{distributor} részére az Open Food-on"
         instructions: "%{amount} összegű befizetésed %{distributor} részére további hitelesítést igényel. Kérjük, keresd fel a következő URL-t a fizetés engedélyezéséhez:"
       authorization_required:
         subject: "A fizetéshez az ügyfél engedélye szükséges"

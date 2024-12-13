@@ -308,6 +308,8 @@ fr:
   sku: "Référence Produit"
   subtotal: "Sous-total"
   tax_rate: "TVA applicable"
+  with_tax_incl: "%{amount} taxes inclus"
+  producer_mail_qty: Quantité
   validators:
     date_time_string_validator:
       not_string_error: "doit être une série"
@@ -3205,11 +3207,11 @@ fr:
   report_header_total_units: Vol. total
   report_header_sum_max_total: "Somme Max Total"
   report_header_total_excl_vat: "Total HT (%{currency_symbol})"
-  report_header_total_fees_excl_tax: "Total commission boutique hors taxe (%{currency_symbol})"
-  report_header_total_tax_on_fees: "Total taxe sur la commission boutique (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Total commission fournisseur hors taxe (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Total taxe sur la commission fournisseur (%{currency_symbol})"
   report_header_total: "Total (%{currency_symbol})"
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
-  report_header_total_excl_fees_and_tax: "Total hors commission boutique et taxe (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Total hors commission fournisseur et taxe (%{currency_symbol})"
   report_header_temp_controlled: Temp Contrôlée ?
   report_header_is_producer: Producteur ?
   report_header_not_confirmed: Non confirmé

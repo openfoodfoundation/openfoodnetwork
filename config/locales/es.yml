@@ -1,5 +1,8 @@
 es:
   language_name: "Español"
+  time:
+    formats:
+      long: "%B %d, %Y %-l:%M %p"
   activerecord:
     models:
       spree/product: Producto
@@ -114,11 +117,23 @@ es:
   errors:
     messages:
       content_type_invalid: "Tiene un tipo de contenido invalido"
+      file_size_out_of_range: "el tamaño %{file_size} no está en el rango requerido"
       limit_out_of_range: "El número total está fuera de rango"
       image_metadata_missing: "no es una imagen valida"
+      dimension_min_inclusion: "debe ser mayor o igual a %{width} x %{height} píxeles."
+      dimension_max_inclusion: "debe ser inferior o igual a %{width} x %{height} píxeles."
+      dimension_width_inclusion: "la anchura no se incluye entre %{min} y %{max} píxel."
+      dimension_height_inclusion: "la altura no se incluye entre %{min} y %{max} píxel."
+      dimension_width_greater_than_or_equal_to: "La anchura debe ser mayor o igual a %{length} píxeles."
+      dimension_height_greater_than_or_equal_to: "La altura debe ser mayor o igual que %{length} píxel."
+      dimension_width_less_than_or_equal_to: "La anchura debe ser menor o igual a %{length} píxeles."
+      dimension_height_less_than_or_equal_to: "La altura debe ser menor o igual a %{length} píxel."
+      dimension_width_equal_to: "La anchura debe ser igual a %{length} píxeles."
+      dimension_height_equal_to: "la altura debe ser igual a %{length} pixel."
       aspect_ratio_not_square: "la imagen tiene que ser cuadrada"
       aspect_ratio_not_portrait: "la imagen tiene que ser un retrato"
       aspect_ratio_not_landscape: "debe ser una imagen de paisaje"
+      aspect_ratio_is_not: "debe tener una relación de aspecto de %{aspect_ratio}"
       aspect_ratio_unknown: "tiene una relación de aspecto desconocida"
       image_not_processable: "no es una imagen valida"
     not_found:
@@ -127,6 +142,8 @@ es:
       title: "Lo sentimos pero algo fue mal (500)"
     unprocessable_entity:
       title: "El cambio deseado ha sido rechazado (422)"
+    general_error:
+      message: "Lo sentimos, pero algo ha ido mal.\n\nPuede que se trate de un problema temporal, así que inténtalo de nuevo o recarga la página.\nRegistramos todos los errores y es posible que estemos trabajando en una solución.\nSi el problema persiste o es urgente, póngase en contacto con nosotras."
   stripe:
     error_code:
       incorrect_number: "El número de tarjeta es incorrecto."
@@ -179,6 +196,7 @@ es:
       transaction_not_allowed: "La tarjeta ha sido denegada por una razón desconocida."
       try_again_later: "La tarjeta ha sido denegada por una razón desconocida."
       withdrawal_count_limit_exceeded: "El cliente ha superado el saldo o límite de crédito disponible en su tarjeta."
+      disconnect_failure: "No hemos podido desconectar Stripe."
     success_code:
       disconnected: "Cuenta de Stripe desconectada."
   activemodel:
@@ -207,11 +225,15 @@ es:
   card_details: "Detalles de tarjeta"
   card_type: "Tipo de tarjeta"
   card_type_is: "El tipo de tarjeta es"
+  unrecognized_card_type: "Tipo de tarjeta no reconocido"
+  use_new_cc: "Utilizar otra tarjeta"
   what_is_this: "¿Qué es esto?"
   cardholder_name: "Nombre del titular de la tarjeta"
   community_forum_url: "URL del foro de la comunidad"
   customer_instructions: "Instrucciones del Consumidor"
   additional_information: "Información adicional"
+  connect_app:
+    url: "https://n8n.openfoodnetwork.org/webhook/regen/connect-enterprise"
   devise:
     passwords:
       spree_user:
@@ -248,6 +270,8 @@ es:
         updated_not_active: "Su contraseña ha sido restablecida, pero su correo electrónico aún no ha sido confirmado."
         updated: "Su contraseña ha sido cambiada con éxito. Ya tienes la sesión iniciada."
         send_instructions: "Recibirás un correo electrónico con instrucciones sobre cómo confirmar su cuenta en unos minutos."
+    oidc:
+      failure: "No se ha podido iniciar sesión: %{error}"
   home_page_alert_html: "HTML de alerta de página de inicio"
   hub_signup_case_studies_html: "HTML casos de estudio de registro de hub"
   hub_signup_detail_html: "HTML detalle de registro de hub"
@@ -281,6 +305,8 @@ es:
   sku: "SKU"
   subtotal: "Subtotal"
   tax_rate: "% Impuestos"
+  with_tax_incl: "%{amount}impuestos incluidos"
+  producer_mail_qty: Cant.
   validators:
     date_time_string_validator:
       not_string_error: "debe ser una cadena"
@@ -288,9 +314,40 @@ es:
     integer_array_validator:
       not_array_error: "debe ser una matriz"
       invalid_element_error: "debe contener solo enteros válidos"
+  report_job:
+    report_failed: |
+        Este informe ha fallado. Puede que sea demasiado grande para procesarlo.
+        Lo investigaremos, avísenos si el problema persiste.
   backorder_mailer:
     backorder_failed:
+      subject: "Ha fallado un pedido pendiente automático"
+      headline: "Fallo en el pedido pendiente"
+      description: |
+          Intentamos realizar o actualizar un pedido pendiente de artículos agotados, pero
+          algo salió mal. Es posible que tenga existencias negativas y
+          deba resolver el problema para pedir más existencias.
+      hints: |
+          Es posible que tenga que ir a la configuración de OIDC y volver a conectar su cuenta.
+          Compruebe también que el catálogo de su proveedor no ha cambiado y siguen
+          disponibles todos los productos que necesita. Póngase en contacto con nosotras si
+          tiene alguna duda.
+      order: "Pedido afectado: %{number}"
+      stock: "Existencias"
       product: "Producto"
+    backorder_incomplete:
+      subject: "No se ha completado un pedido pendiente automático"
+      headline: "Su pedido pendiente sigue siendo un borrador"
+      description: |
+          Intentamos completar un pedido pendiente de artículos
+          agotados pero algo salió mal. Las cantidades de pedidos pendientes
+          pueden ser demasiado altas si ha habido cancelaciones. Su pedido
+          pendiente no se cumplirá mientras está en estado de borrador.
+      hints: |
+          Es posible que tenga que ir a la configuración de OIDC y volver a conectar su cuenta.
+          Compruebe también que el catálogo de su proveedor no ha cambiado y siguen
+          disponibles todos los productos que necesita. Póngase en contacto con nosotras si
+          tiene alguna duda.
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Confirma la dirección de correo electrónico de %{enterprise}"
@@ -316,6 +373,7 @@ es:
       heading: "Informe listo para descargar"
       intro: |
           Este enlace caducara en una semana
+      link_label: "%{name}"
   shipment_mailer:
     shipped_email:
       dear_customer: "Estimada consumidora,"
@@ -471,7 +529,9 @@ es:
   payment_could_not_complete: "No se pudo completar el pago"
   vine_voucher_validator_service:
     errors:
+      vine_api: "Se ha producido un error en la comunicación con la API, inténtelo de nuevo más tarde."
       invalid_voucher: "El bono no es válido"
+      not_found_voucher: "Lo sentimos, no hemos podido encontrar ese vale, por favor, compruebe el código."
   vine_voucher_redeemer_service:
     errors:
       vine_api: "Ha habido un error en la comunicación con el API"
@@ -496,12 +556,14 @@ es:
       filters:
         categories:
           title: Categorías
+          selected_categories: "%{count} categorías seleccionadas"
         producers:
           title: Productoras
         colums: Columnas
       columns:
         image: Imagen
         name: Nombre
+        unit_scale: Escala de unidades
         unit: Unidad
         unit_value: Valor unidad
         display_as: Mostrar unidad como
@@ -535,7 +597,9 @@ es:
       image:
         edit: Editar
       product_preview:
+        product_preview: Vista previa del producto
         shop_tab: Tienda
+        product_details_tab: Detalles del producto
     adjustments:
       skipped_changing_canceled_order: "No puede cambiar un pedido cancelado."
     begins_at: Empieza en
@@ -600,6 +664,7 @@ es:
     has_n_rules: "Tiene %{num} reglas"
     unsaved_confirm_leave: "Has cambios sin guardar en esta página ¿Continuar sin guardar?"
     available_units: "Unidades disponibles"
+    terms_of_service_have_been_updated_html: "Se han actualizado las condiciones de servicio de Open Food Network:%{tos_link}"
     terms_of_service: Leer los términos de servicio
     accept_terms_of_service: Aceptar los terminos de servicio
     shopfront_settings:
@@ -655,6 +720,7 @@ es:
     connected_app_settings:
       edit:
         title: "Ajustes de la aplicación conectada"
+        enabled_legend: "Aplicaciones conectadas habilitadas"
       update:
         resource: Ajustes de la aplicación conectada
     customers:
@@ -1895,7 +1961,7 @@ es:
         login: "login"
         contact: "contactar"
         require_customer_login: "Sólo las consumidoras aprobadas pueden acceder a esta tienda."
-        require_login_2_html: "¿Quieres comprar en esta tienda? %{contact}%{enterprise}y solicita tu admisión."
+        require_login_2_html: "¿Quieres comprar en esta tienda? %{contact} %{enterprise} y solicita tu admisión."
         require_customer_html: "Si desea comenzar a comprar aquí, por favor %{contact} %{enterprise} para preguntar acerca de incorporación."
       select_oc:
         select_oc_html: "Por favor <span class='highlighted'>debes elegir cuando quieres tu pedido</span>, para poder ver qué productos hay disponibles."
@@ -2136,6 +2202,7 @@ es:
   order_back_to_store: Volver a la Tienda
   order_back_to_cart: Volver al Carrito
   order_back_to_website: Volver al sitio web
+  checkout_summary_title: Resumen de caja
   bom_tip: "Usa esta página para alterar la cantidad del producto en varios pedidos a la vez. Los productos pueden ser eliminados de los pedidos si es necesario. "
   unsaved_changes_warning: "Hay cambios no guardados, se perderán si continúas."
   unsaved_changes_error: "Los campos con bordes rojos contienen errores."
@@ -2415,6 +2482,7 @@ es:
   orders_bought_already_confirmed: "* ya confirmados"
   orders_confirm_cancel: "Seguro que desea cancelar este pedido?"
   order_processed_successfully: "Su pedido ha sido procesado con éxito."
+  thank_you_for_your_order: "Gracias por su pedido"
   products_cart_distributor_choice: "Distribuidora para tu pedido:"
   products_cart_distributor_change: "Su distribuidora para este pedido se cambiará a %{name} si agregas este producto al carrito."
   products_cart_distributor_is: "Tu distribuidora para este pedido es %{name}."
@@ -4049,6 +4117,8 @@ es:
             many: "Tienes %{count} ciclos de pedido activos."
             other: "Tienes %{count} ciclos de pedido activos."
           manage_order_cycles: "GESTIONA LOS CICLOS DE PEDIDO"
+        version:
+          view_all_releases: Ver todas las publicaciones
       shipping_methods:
         index:
           shipping_methods: "Métodos de envío"
@@ -4229,6 +4299,7 @@ es:
           display_name: "Nombre para mostrar"
           display_as_placeholder: 'p. ej. 2 Kg'
           display_name_placeholder: 'p. ej. Tomates'
+          unit_scale: "Escala de unidades"
           unit: Unidad
           price: Precio
           unit_value: Valor unidad
@@ -4420,6 +4491,7 @@ es:
       api_keys:
         regenerate_key: "Regenerar llave"
       webhook_endpoints:
+        description: Los eventos del sistema pueden desencadenar webhooks a sistemas externos.
         event_types:
           order_cycle_opened: Ciclo de pedidos abierto
       developer_settings:

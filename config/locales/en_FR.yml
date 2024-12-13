@@ -308,6 +308,8 @@ en_FR:
   sku: "SKU"
   subtotal: "Subtotal"
   tax_rate: "Tax rate"
+  with_tax_incl: "%{amount} tax incl."
+  producer_mail_qty: QTY
   validators:
     date_time_string_validator:
       not_string_error: "must be a string"
