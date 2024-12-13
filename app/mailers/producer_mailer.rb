@@ -79,14 +79,19 @@ class ProducerMailer < ApplicationMailer
   def set_customer_data(line_items)
     return unless @coordinator.show_customer_names_to_suppliers?
 
+    @display_business_name = false
     line_items.map do |line_item|
+      customer_code = line_item.order.customer&.code
+      @display_business_name = true if customer_code.present?
+
       {
         sku: line_item.variant.sku,
         supplier_name: line_item.variant.supplier.name,
         product_and_full_name: line_item.product_and_full_name,
         quantity: line_item.quantity,
         first_name: line_item.order.billing_address.first_name,
-        last_name: line_item.order.billing_address.last_name
+        last_name: line_item.order.billing_address.last_name,
+        business_name: customer_code,
       }
     end.sort_by { |line_item| [line_item[:last_name].downcase, line_item[:first_name].downcase] }
   end
