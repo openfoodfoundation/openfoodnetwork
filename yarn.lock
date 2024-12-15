@@ -4507,10 +4507,10 @@ homedir-polyfill@^1.0.1:
   dependencies:
     parse-passwd "^1.0.0"
 
-hotkeys-js@^3.13.7:
-  version "3.13.7"
-  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.13.7.tgz#0188d8e2fca16a3f1d66541b48de0bb9df613726"
-  integrity sha512-ygFIdTqqwG4fFP7kkiYlvayZppeIQX2aPpirsngkv1xM1lP0piDY5QEh68nQnIKvz64hfocxhBaD/uK3sSK1yQ==
+hotkeys-js@^3.13.9:
+  version "3.13.9"
+  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.13.9.tgz#e2f976dddfa695a4a40ee60d7888e3cf7637a77a"
+  integrity sha512-3TRCj9u9KUH6cKo25w4KIdBfdBfNRjfUwrljCLDC2XhmPDG0SjAZFcFZekpUZFmXzfYoGhFDcdx2gX/vUVtztQ==
 
 hpack.js@^2.1.6:
   version "2.1.6"
