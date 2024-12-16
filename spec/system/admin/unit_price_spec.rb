@@ -71,7 +71,7 @@ RSpec.describe '
       visit spree.admin_product_variants_path product
       click_link 'Nueva Variante'
 
-      tomselect_select "Peso (g)", from: "Unit scale"
+      tomselect_select "Peso (g)", from: "Escala de unidades"
       click_on "Unidad" # activate popout
       fill_in "Valor unidad", with: "1"
       fill_in 'Precio', with: '1,5'
