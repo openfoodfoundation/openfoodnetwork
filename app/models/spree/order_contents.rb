@@ -38,6 +38,7 @@ module Spree
         line_item.price = variant.price
         order.line_items << line_item
       end
+      update_shipment
 
       order.reload
       line_item
