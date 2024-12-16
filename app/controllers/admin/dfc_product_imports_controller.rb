@@ -19,14 +19,14 @@ module Admin
         .find(params.require(:enterprise_id))
 
       catalog_url = params.require(:catalog_url)
-
-      json_catalog = fetch_catalog(catalog_url)
-      graph = DfcIo.import(json_catalog)
+      broker = FdcOfferBroker.new(spree_current_user, catalog_url)
 
       # * First step: import all products for given enterprise.
       # * Second step: render table and let user decide which ones to import.
-      imported = graph.map do |subject|
+      imported = broker.catalog.map do |subject|
         next unless subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
+
+        adjust_to_wholesale_price(broker, subject)
 
         existing_variant = enterprise.supplied_variants.linked_to(subject.semanticId)
 
@@ -47,8 +47,21 @@ module Admin
 
     private
 
-    def fetch_catalog(url)
-      DfcRequest.new(spree_current_user).call(url)
+    def adjust_to_wholesale_price(broker, product)
+      transformation = broker.best_offer(product.semanticId)
+
+      return if transformation.factor == 1
+
+      wholesale_variant_price = transformation.offer.price
+
+      return unless wholesale_variant_price
+
+      offer = product.catalogItems&.first&.offers&.first
+
+      return unless offer
+
+      offer.price = wholesale_variant_price.dup
+      offer.price.value = offer.price.value.to_f / transformation.factor
     end
   end
 end

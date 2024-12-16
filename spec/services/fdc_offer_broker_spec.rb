@@ -3,11 +3,13 @@
 require 'spec_helper'
 
 RSpec.describe FdcOfferBroker do
-  subject { FdcOfferBroker.new(user, urls) }
+  subject { FdcOfferBroker.new(user, catalog_url) }
   let(:catalog) {
     VCR.use_cassette(:fdc_catalog) { subject.catalog }
   }
-  let(:urls) { FdcUrlBuilder.new(product_link) }
+  let(:catalog_url) {
+    "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
+  }
   let(:product_link) {
     "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
   }

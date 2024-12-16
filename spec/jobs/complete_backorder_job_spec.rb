@@ -14,7 +14,7 @@ RSpec.describe CompleteBackorderJob do
   let(:orderer) { FdcBackorderer.new(user, urls) }
   let(:order) {
     backorder = orderer.find_or_build_order(ofn_order)
-    broker = FdcOfferBroker.new(user, urls)
+    broker = FdcOfferBroker.new(user, urls.catalog_url)
 
     bean_offer = broker.best_offer(product_link).offer
     bean_line = orderer.find_or_build_order_line(backorder, bean_offer)
