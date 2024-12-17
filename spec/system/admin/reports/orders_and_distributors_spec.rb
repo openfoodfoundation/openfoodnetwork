@@ -23,6 +23,7 @@ RSpec.describe "Orders And Distributors" do
     let!(:order2) {
       create(:order_ready_to_ship, distributor_id: distributor2.id, completed_at:)
     }
+    let(:variant) { order.variants.first }
 
     context "as an enterprise user" do
       let(:header) {
@@ -34,27 +35,27 @@ RSpec.describe "Orders And Distributors" do
       }
       let(:line_item1) {
         [completed_at, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         "ABC", Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
          "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
       }
       let(:line_item2) {
         [completed_at, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         "ABC", Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
          "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
       }
       let(:line_item3) {
         [completed_at.to_s, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         "ABC", Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
          "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
       }
       let(:line_item4) {
         [completed_at.to_s, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         "ABC", Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
          "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
       }
       let(:line_item5) {
         [completed_at.to_s, order.id, "John Doe", order.email, "123-456-7890", "Herndon",
-         "ABC", Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
+         variant.sku, Spree::Product.first.name.to_s, "1g", "1", "none", "10.0", "none", "Check",
          "By Bike", "10 Lovely Street", "Herndon", "20170", "UPS Ground", "none"].join(" ")
       }
 
