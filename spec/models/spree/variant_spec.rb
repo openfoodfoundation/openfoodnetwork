@@ -987,11 +987,11 @@ RSpec.describe Spree::Variant do
 
       variant.variant_unit = 'weight'
       variant.variant_unit_scale = 1
-      variant.variant_unit_name = 'g'
       variant.save!
 
       expect(variant.variant_unit).to eq 'weight'
       expect(variant.unit_presentation).to eq "1g"
+      expect(variant.variant_unit_name).to eq('')
 
       variant.update(variant_unit: 'volume')
 
