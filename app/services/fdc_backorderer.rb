@@ -21,7 +21,7 @@ class FdcBackorderer
 
   # Try the new method and fall back to old method.
   def find_open_order(ofn_order)
-    lookup_open_order(ofn_order) || find_last_open_order
+    lookup_open_order(ofn_order)
   end
 
   def lookup_open_order(ofn_order)
@@ -41,45 +41,6 @@ class FdcBackorderer
       # The DFC Connector doesn't recognise status values properly yet.
       # So we are overriding the value with something that can be exported.
       &.tap { |o| o.orderStatus = "dfc-v:Held" }
-  end
-
-  # DEPRECATED
-  #
-  # We now store links to orders we placed. So we don't need to search
-  # through all orders and pick a random open one.
-  # But for compatibility with currently open order cycles that don't have
-  # a stored link yet, we keep this method as well.
-  def find_last_open_order
-    graph = import(urls.orders_url)
-    open_orders = graph&.select do |o|
-      o.semanticType == "dfc-b:Order" && o.orderStatus == order_status.HELD
-    end
-
-    return if open_orders.blank?
-
-    # If there are multiple open orders, we don't know which one to choose.
-    # We want the order we placed for the same distributor in the same order
-    # cycle before. So here are some assumptions for this to work:
-    #
-    # * We see only orders for our distributor. The endpoint URL contains the
-    #   the distributor name and is currently hardcoded.
-    # * There's only one open order cycle at a time. Otherwise we may select
-    #   an order of an old order cycle.
-    # * Orders are finalised when the order cycle closes. So _Held_ orders
-    #   always belong to an open order cycle.
-    # * We see only our own orders. This assumption is wrong. The Shopify
-    #   integration places held orders as well and they are visible to us.
-    #
-    # Unfortunately, the endpoint doesn't tell who placed the order.
-    # TODO: We need to remember the link to the order locally.
-    # Or the API is updated to include the orderer.
-    #
-    # For now, we just guess:
-    open_orders.last.tap do |order|
-      # The DFC Connector doesn't recognise status values properly yet.
-      # So we are overriding the value with something that can be exported.
-      order.orderStatus = "dfc-v:Held"
-    end
   end
 
   def find_order(semantic_id)
