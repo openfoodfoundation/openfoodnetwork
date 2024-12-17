@@ -13,7 +13,7 @@ if ! command -v rbenv > /dev/null; then
   # Install rbenv:
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
   ~/.rbenv/bin/rbenv init
-  eval "$(rbenv init -)"
+  eval "$(~/.rbenv/bin/rbenv init -)"
 
   # Install ruby-build:
   mkdir -p "$(rbenv root)"/plugins
