@@ -40,7 +40,10 @@ class StockSyncJob < ApplicationJob
   end
 
   def perform(user, catalog_id)
-    products = load_products(user, catalog_id)
+    catalog = DfcCatalog.load(user, catalog_id)
+    catalog.apply_wholesale_values!
+
+    products = catalog.products
     products_by_id = products.index_by(&:semanticId)
     product_ids = products_by_id.keys
     variants = linked_variants(user.enterprises, product_ids)
@@ -56,13 +59,6 @@ class StockSyncJob < ApplicationJob
         variant.stock_items[0].save!
       end
     end
-  end
-
-  def load_products(user, catalog_id)
-    json_catalog = DfcRequest.new(user).call(catalog_id)
-    graph = DfcIo.import(json_catalog)
-
-    DfcCatalog.new(graph).products
   end
 
   def linked_variants(enterprises, product_ids)
