@@ -21,4 +21,25 @@ RSpec.describe DfcCatalog do
       expect(products.map(&:semanticType).uniq).to eq ["dfc-b:SuppliedProduct"]
     end
   end
+
+  describe "#apply_wholesale_values!" do
+    let(:offer) { beans.catalogItems.first.offers.first }
+    let(:catalog_item) { beans.catalogItems.first }
+    let(:beans) { catalog.item(beans_id) }
+    let(:beans_id) {
+      "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
+    }
+
+    it "changes price of retail variants" do
+      expect { catalog.apply_wholesale_values! }.to change {
+        offer.price.value.to_f.round(2)
+      }.from(2.09).to(1.57) # 18.85 wholesale price divided by 12
+    end
+
+    it "changes stock level of retail variants" do
+      expect { catalog.apply_wholesale_values! }.to change {
+        catalog_item.stockLimitation
+      }.from("-1").to(-12)
+    end
+  end
 end

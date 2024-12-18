@@ -31,17 +31,18 @@ class DfcCatalog
   def apply_wholesale_values!
     broker = FdcOfferBroker.new(self)
     products.each do |product|
-      adjust_to_wholesale_price(broker, product)
+      transformation = broker.best_offer(product.semanticId)
+
+      next if transformation.factor == 1
+
+      adjust_to_wholesale_price(product, transformation)
+      adjust_to_wholesale_stock(product, transformation)
     end
   end
 
   private
 
-  def adjust_to_wholesale_price(broker, product)
-    transformation = broker.best_offer(product.semanticId)
-
-    return if transformation.factor == 1
-
+  def adjust_to_wholesale_price(product, transformation)
     wholesale_variant_price = transformation.offer.price
 
     return unless wholesale_variant_price
@@ -52,5 +53,28 @@ class DfcCatalog
 
     offer.price = wholesale_variant_price.dup
     offer.price.value = offer.price.value.to_f / transformation.factor
+  end
+
+  def adjust_to_wholesale_stock(product, transformation)
+    adjust_item_stock(product, transformation)
+    adjust_offer_stock(product, transformation)
+  end
+
+  def adjust_item_stock(product, transformation)
+    item = product.catalogItems&.first
+    wholesale_item = transformation.product.catalogItems&.first
+
+    return unless item && wholesale_item&.stockLimitation.present?
+
+    item.stockLimitation = wholesale_item.stockLimitation.to_i * transformation.factor
+  end
+
+  def adjust_offer_stock(product, transformation)
+    offer = product.catalogItems&.first&.offers&.first
+    wholesale_offer = transformation.offer
+
+    return unless offer && wholesale_offer&.stockLimitation.present?
+
+    offer.stockLimiation = wholesale_offer.stockLimitation.to_i * transformation.factor
   end
 end
