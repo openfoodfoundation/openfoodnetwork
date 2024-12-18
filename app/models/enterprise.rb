@@ -218,7 +218,7 @@ class Enterprise < ApplicationRecord
   }
 
   scope :managed_by, lambda { |user|
-    if user.has_spree_role?('admin')
+    if user.admin?
       where(nil)
     else
       joins(:enterprise_roles).where(enterprise_roles: { user_id: user.id })

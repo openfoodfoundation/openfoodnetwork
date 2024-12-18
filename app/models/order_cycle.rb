@@ -84,7 +84,7 @@ class OrderCycle < ApplicationRecord
   }
 
   scope :managed_by, lambda { |user|
-    if user.has_spree_role?('admin')
+    if user.admin?
       where(nil)
     else
       where(coordinator_id: user.enterprises.to_a)
@@ -93,7 +93,7 @@ class OrderCycle < ApplicationRecord
 
   # Return order cycles that user coordinates, sends to or receives from
   scope :visible_by, lambda { |user|
-    if user.has_spree_role?('admin')
+    if user.admin?
       where(nil)
     else
       with_exchanging_enterprises_outer.

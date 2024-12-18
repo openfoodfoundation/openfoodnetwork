@@ -58,14 +58,9 @@ module Spree
       User.admin.count > 0
     end
 
-    # Whether a user has a role or not.
-    def has_spree_role?(role_in_question)
-      spree_roles.where(name: role_in_question.to_s).any?
-    end
-
     # Checks whether the specified user is a superadmin, with full control of the instance
     def admin?
-      has_spree_role?('admin')
+      spree_roles.where(name: "admin").any?
     end
 
     # Send devise-based user emails asyncronously via ActiveJob

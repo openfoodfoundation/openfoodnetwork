@@ -168,7 +168,7 @@ module Spree
     scope :by_name, -> { order('spree_products.name') }
 
     scope :managed_by, lambda { |user|
-      if user.has_spree_role?('admin')
+      if user.admin?
         where(nil)
       else
         in_supplier(user.enterprises)

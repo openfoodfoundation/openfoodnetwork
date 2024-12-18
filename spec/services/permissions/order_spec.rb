@@ -199,7 +199,7 @@ module Permissions
         let(:permissions) { Permissions::Order.new(user, search_params) }
 
         before do
-          allow(user).to receive(:has_spree_role?) { "admin" }
+          allow(user).to receive(:admin?) { "admin" }
         end
 
         it "only returns line items from completed, " \

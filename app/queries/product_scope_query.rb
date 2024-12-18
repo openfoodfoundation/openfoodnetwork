@@ -46,7 +46,7 @@ class ProductScopeQuery
   end
 
   def product_scope
-    if @user.has_spree_role?("admin") || @user.enterprises.present?
+    if @user.admin? || @user.enterprises.present?
       scope = Spree::Product
       if @params[:show_deleted]
         scope = scope.with_deleted
