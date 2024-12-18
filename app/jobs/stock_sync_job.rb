@@ -9,11 +9,11 @@ class StockSyncJob < ApplicationJob
   # enqueue a new job. That should save some time loading the order with
   # all the stock data to make this decision.
   def self.sync_linked_catalogs_later(order)
-    sync_categories_by_perform_method(order, :perform_later)
+    sync_catalogs_by_perform_method(order, :perform_later)
   end
 
   def self.sync_linked_catalogs_now(order)
-    sync_categories_by_perform_method(order, :perform_now)
+    sync_catalogs_by_perform_method(order, :perform_now)
   end
 
   def self.catalog_ids(order)
@@ -59,7 +59,7 @@ class StockSyncJob < ApplicationJob
       .where(semantic_links: { semantic_id: product_ids })
   end
 
-  def self.sync_categories_by_perform_method(order, perform_method)
+  def self.sync_catalogs_by_perform_method(order, perform_method)
     distributor = order.distributor
     return unless distributor
 
