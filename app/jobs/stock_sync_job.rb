@@ -62,9 +62,7 @@ class StockSyncJob < ApplicationJob
     json_catalog = DfcRequest.new(user).call(catalog_id)
     graph = DfcIo.import(json_catalog)
 
-    graph.select do |subject|
-      subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
-    end
+    DfcCatalog.new(graph).products
   end
 
   def linked_variants(enterprises, product_ids)
