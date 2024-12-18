@@ -3,11 +3,11 @@
 require_relative "../spec_helper"
 
 RSpec.describe DfcCatalog do
-  subject(:catalog) { DfcCatalog.new(fdc_catalog_graph) }
-  let(:fdc_catalog_graph) {
-    VCR.use_cassette(:fdc_catalog) { broker.catalog }
+  subject(:catalog) {
+    VCR.use_cassette(:fdc_catalog) {
+      DfcCatalog.load(user, catalog_url)
+    }
   }
-  let(:broker) { FdcOfferBroker.new(user, catalog_url) }
   let(:user) { build(:testdfc_user) }
   let(:catalog_url) {
     "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"

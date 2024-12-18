@@ -117,7 +117,8 @@ class BackorderJob < ApplicationJob
   end
 
   def load_broker(user, urls)
-    FdcOfferBroker.new(user, urls.catalog_url)
+    catalog = DfcCatalog.load(user, urls.catalog_url)
+    FdcOfferBroker.new(catalog)
   end
 
   def place_order(user, order, orderer, backorder)

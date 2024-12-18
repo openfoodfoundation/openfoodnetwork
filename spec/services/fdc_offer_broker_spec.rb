@@ -3,9 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe FdcOfferBroker do
-  subject { FdcOfferBroker.new(user, catalog_url) }
+  subject { FdcOfferBroker.new(catalog) }
   let(:catalog) {
-    VCR.use_cassette(:fdc_catalog) { subject.catalog }
+    VCR.use_cassette(:fdc_catalog) {
+      DfcCatalog.load(user, catalog_url)
+    }
   }
   let(:catalog_url) {
     "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
@@ -15,7 +17,7 @@ RSpec.describe FdcOfferBroker do
   }
   let(:user) { build(:testdfc_user) }
   let(:product) {
-    catalog.find { |item| item.semanticType == "dfc-b:SuppliedProduct" }
+    catalog.products.first
   }
 
   describe ".best_offer" do
