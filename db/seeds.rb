@@ -7,7 +7,6 @@ MailConfiguration.apply!
 
 puts "[db:seed] Seeding Roles"
 Spree::Role.where(:name => "admin").first_or_create
-Spree::Role.where(:name => "user").first_or_create
 
 puts "[db:seed] Seeding Countries"
 unless Spree::Country.find_by(iso: ENV['DEFAULT_COUNTRY_CODE'])
