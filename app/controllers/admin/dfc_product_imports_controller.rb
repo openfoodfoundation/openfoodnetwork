@@ -20,12 +20,11 @@ module Admin
 
       catalog_url = params.require(:catalog_url)
       broker = FdcOfferBroker.new(spree_current_user, catalog_url)
+      catalog = DfcCatalog.new(broker.catalog)
 
       # * First step: import all products for given enterprise.
       # * Second step: render table and let user decide which ones to import.
-      imported = broker.catalog.map do |subject|
-        next unless subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
-
+      imported = catalog.products.map do |subject|
         adjust_to_wholesale_price(broker, subject)
 
         existing_variant = enterprise.supplied_variants.linked_to(subject.semanticId)
