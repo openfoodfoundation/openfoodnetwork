@@ -26,9 +26,7 @@ module Spree
     after_create :associate_customers, :associate_orders
     before_destroy :check_completed_orders
 
-    roles_table_name = Role.table_name
-
-    scope :admin, lambda { includes(:spree_roles).where("#{roles_table_name}.name" => "admin") }
+    scope :admin, lambda { includes(:spree_roles).where("spree_roles.name" => "admin") }
 
     has_many :enterprise_roles, dependent: :destroy
     has_many :enterprises, through: :enterprise_roles
