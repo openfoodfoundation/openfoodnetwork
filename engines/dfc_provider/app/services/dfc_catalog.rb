@@ -27,4 +27,30 @@ class DfcCatalog
   def select_type(semantic_type)
     @graph.select { |i| i.semanticType == semantic_type }
   end
+
+  def apply_wholesale_values!
+    broker = FdcOfferBroker.new(self)
+    products.each do |product|
+      adjust_to_wholesale_price(broker, product)
+    end
+  end
+
+  private
+
+  def adjust_to_wholesale_price(broker, product)
+    transformation = broker.best_offer(product.semanticId)
+
+    return if transformation.factor == 1
+
+    wholesale_variant_price = transformation.offer.price
+
+    return unless wholesale_variant_price
+
+    offer = product.catalogItems&.first&.offers&.first
+
+    return unless offer
+
+    offer.price = wholesale_variant_price.dup
+    offer.price.value = offer.price.value.to_f / transformation.factor
+  end
 end
