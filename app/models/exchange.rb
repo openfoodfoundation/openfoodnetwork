@@ -75,7 +75,7 @@ class Exchange < ApplicationRecord
   }
 
   scope :managed_by, lambda { |user|
-    if user.has_spree_role?('admin')
+    if user.admin?
       where(nil)
     else
       joins("LEFT JOIN enterprises senders ON senders.id = exchanges.sender_id").
