@@ -60,7 +60,7 @@ module Spree
 
     # Checks whether the specified user is a superadmin, with full control of the instance
     def admin?
-      spree_roles.where(name: "admin").any?
+      spree_roles.any? { |role| role.name == "admin" }
     end
 
     # Send devise-based user emails asyncronously via ActiveJob
