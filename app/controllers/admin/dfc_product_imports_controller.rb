@@ -19,8 +19,8 @@ module Admin
         .find(params.require(:enterprise_id))
 
       catalog_url = params.require(:catalog_url)
-      broker = FdcOfferBroker.new(spree_current_user, catalog_url)
-      catalog = DfcCatalog.new(broker.catalog)
+      catalog = DfcCatalog.load(spree_current_user, catalog_url)
+      broker = FdcOfferBroker.new(catalog)
 
       # * First step: import all products for given enterprise.
       # * Second step: render table and let user decide which ones to import.
