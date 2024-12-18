@@ -20,13 +20,11 @@ module Admin
 
       catalog_url = params.require(:catalog_url)
       catalog = DfcCatalog.load(spree_current_user, catalog_url)
-      broker = FdcOfferBroker.new(catalog)
+      catalog.apply_wholesale_values!
 
       # * First step: import all products for given enterprise.
       # * Second step: render table and let user decide which ones to import.
       imported = catalog.products.map do |subject|
-        adjust_to_wholesale_price(broker, subject)
-
         existing_variant = enterprise.supplied_variants.linked_to(subject.semanticId)
 
         if existing_variant
@@ -42,25 +40,6 @@ module Admin
            ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
-    end
-
-    private
-
-    def adjust_to_wholesale_price(broker, product)
-      transformation = broker.best_offer(product.semanticId)
-
-      return if transformation.factor == 1
-
-      wholesale_variant_price = transformation.offer.price
-
-      return unless wholesale_variant_price
-
-      offer = product.catalogItems&.first&.offers&.first
-
-      return unless offer
-
-      offer.price = wholesale_variant_price.dup
-      offer.price.value = offer.price.value.to_f / transformation.factor
     end
   end
 end
