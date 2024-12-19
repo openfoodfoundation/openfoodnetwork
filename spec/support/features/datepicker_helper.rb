@@ -15,6 +15,17 @@ module Features
       select_date_from_datepicker(to)
     end
 
+    def select_datetime_from(element, datetime)
+      datetime = Time.zone.parse(datetime) if datetime.is_a? String
+
+      # Wait for timepicker element to be loaded:
+      expect(page).to have_css "#{element}.datetimepicker"
+
+      find(element).click
+      select_datetime_from_datepicker(datetime)
+      close_datepicker
+    end
+
     def select_date_from_datepicker(date)
       within ".flatpickr-calendar.open" do
         # Unfortunately, flatpickr doesn't notice a change of year when we do
