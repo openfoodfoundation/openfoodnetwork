@@ -86,7 +86,6 @@ RSpec.describe '
 
         # click save
         click_button('Save')
-        sleep 10
         expect(page).to have_field 'order_cycle_name', with: 'OC1 name updated'
         expect(page).to have_content('Your order cycle has been updated.')
 
