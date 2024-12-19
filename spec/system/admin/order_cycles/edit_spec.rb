@@ -78,7 +78,6 @@ RSpec.describe '
       it "does not show warning modal" do
         login_as_admin
         visit edit_admin_order_cycle_path(order_cycle)
-        sleep 10
 
         # change non-date range field value
         fill_in 'order_cycle_name', with: "OC1 name updated"
