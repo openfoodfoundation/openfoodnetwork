@@ -84,7 +84,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/admin/**/*_spec.rb}"
 
         run: |
-          bin/rspec spec/system/admin/order_cycles/edit_spec.rb
+          bin/rspec spec/system/admin/order_cycles/edit_spec.rb:78
 
 
       - name: Archive failed tests screenshots
