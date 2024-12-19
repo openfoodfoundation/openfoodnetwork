@@ -42,11 +42,9 @@ module Features
     end
 
     def select_datetime_from_datepicker(datetime)
-      ## First of all select date
       select_date_from_datepicker(datetime)
-      # Then select time
-      find(".flatpickr-calendar.open .flatpickr-hour").set datetime.strftime("%H").to_s.strip
-      find(".flatpickr-calendar.open .flatpickr-minute").set datetime.strftime("%M").to_s.strip
+      fill_in "Hour", with: datetime.strftime("%H")
+      fill_in "Minute", with: datetime.strftime("%M")
     end
 
     def pick_datetime(calendar_selector, datetime_selector)

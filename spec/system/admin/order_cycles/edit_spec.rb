@@ -89,12 +89,13 @@ RSpec.describe '
         expect(page).to have_content "Your order cycle has been updated."
         expect(page).to have_field "order_cycle_name", with: "OC1 name updated"
 
-        select_datetime_from "#order_cycle_orders_close_at", "2024-03-30 00:00"
+        select_datetime_from "#order_cycle_orders_close_at", "2024-03-30 01:20"
         expect(page).to have_content "You have unsaved changes"
 
         click_button "Save"
-        expect(page).to have_field "order_cycle_orders_close_at", with: "2024-03-30 00:00"
+        expect(page).not_to have_content "You have unsaved changes"
         expect(page).to have_content "Your order cycle has been updated."
+        expect(page).to have_field "order_cycle_orders_close_at", with: "2024-03-30 01:20"
       end
     end
   end
