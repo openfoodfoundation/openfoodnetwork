@@ -45,6 +45,14 @@ module Features
       select_date_from_datepicker(datetime)
       fill_in "Hour", with: datetime.strftime("%H")
       fill_in "Minute", with: datetime.strftime("%M")
+
+      # Flatpickr needs time to update the time.
+      # Otherwise submitting the form may not work.
+      # CI experimentation: 10ms ->   7% success
+      #                     50ms ->  87% success
+      #                    100ms -> 100% success in 112 runs
+      # Let's double that to reduce flakiness even further.
+      sleep 0.2
     end
 
     def pick_datetime(calendar_selector, datetime_selector)
