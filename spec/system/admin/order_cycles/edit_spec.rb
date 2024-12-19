@@ -81,7 +81,6 @@ RSpec.describe '
 
         # change non-date range field value
         fill_in 'order_cycle_name', with: "OC1 name updated"
-        sleep 10
         expect(page).to have_content('You have unsaved changes')
 
         # click save
