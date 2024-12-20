@@ -15,6 +15,17 @@ module Features
       select_date_from_datepicker(to)
     end
 
+    def select_datetime_from(element, datetime)
+      datetime = Time.zone.parse(datetime) if datetime.is_a? String
+
+      # Wait for timepicker element to be loaded:
+      expect(page).to have_css "#{element}.datetimepicker"
+
+      find(element).click
+      select_datetime_from_datepicker(datetime)
+      close_datepicker
+    end
+
     def select_date_from_datepicker(date)
       within ".flatpickr-calendar.open" do
         # Unfortunately, flatpickr doesn't notice a change of year when we do
@@ -31,11 +42,17 @@ module Features
     end
 
     def select_datetime_from_datepicker(datetime)
-      ## First of all select date
       select_date_from_datepicker(datetime)
-      # Then select time
-      find(".flatpickr-calendar.open .flatpickr-hour").set datetime.strftime("%H").to_s.strip
-      find(".flatpickr-calendar.open .flatpickr-minute").set datetime.strftime("%M").to_s.strip
+      fill_in "Hour", with: datetime.strftime("%H")
+      fill_in "Minute", with: datetime.strftime("%M")
+
+      # Flatpickr needs time to update the time.
+      # Otherwise submitting the form may not work.
+      # CI experimentation: 10ms ->   7% success
+      #                     50ms ->  87% success
+      #                    100ms -> 100% success in 112 runs
+      # Let's double that to reduce flakiness even further.
+      sleep 0.2
     end
 
     def pick_datetime(calendar_selector, datetime_selector)
