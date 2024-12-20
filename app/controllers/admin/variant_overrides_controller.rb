@@ -71,6 +71,12 @@ module Admin
 
     def load_collection
       collection_hash = Hash[variant_overrides_params.each_with_index.map { |vo, i| [i, vo] }]
+
+      # Reset count_on_hand when switching to producer settings:
+      collection_hash.each_value do |vo|
+        vo["count_on_hand"] = nil if vo.fetch("on_demand", :unchanged).nil?
+      end
+
       @vo_set = Sets::VariantOverrideSet.new(@variant_overrides,
                                              collection_attributes: collection_hash)
     end
