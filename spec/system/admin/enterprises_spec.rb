@@ -87,12 +87,12 @@ RSpec.describe '
 
     fill_in 'enterprise_name', with: 'Eaterprises'
 
-    accept_alert do
-      click_link "Admin Only"
-    end
+    accept_alert { click_link "Admin Only" }
+    choose 'Own'
+
+    accept_alert { click_link "Primary Details" }
     fill_in 'enterprise_permalink', with: 'eaterprises-permalink'
     expect(page).to have_selector '.available'
-    choose 'Own'
 
     # Require login to view shopfront or for checkout
     accept_alert do
@@ -119,34 +119,36 @@ RSpec.describe '
     fill_in_trix_editor 'enterprise_long_description',
                         with: 'This is an interesting long description'
 
-    # Check StimulusJs switching of sidebar elements
-    accept_alert do
-      click_link "Primary Details"
-    end
-
     # Unchecking hides the Properties tab
+    accept_alert { click_link "Primary Details" }
     uncheck 'enterprise_is_primary_producer'
+    accept_alert { click_link "Admin Only" }
     choose 'None'
     expect(page).not_to have_selector "[data-test=link_for_enterprise_fees]"
     expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
     expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
     expect(page).not_to have_selector "[data-test=link_for_properties]"
     # Checking displays the Properties tab
+    accept_alert { click_link "Primary Details" }
     check 'enterprise_is_primary_producer'
     expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
     expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
     expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
     expect(page).to have_selector "[data-test=link_for_properties]"
+    accept_alert { click_link "Primary Details" }
     uncheck 'enterprise_is_primary_producer'
+    accept_alert { click_link "Admin Only" }
     choose 'Own'
     expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
     expect(page).to have_selector "[data-test=link_for_payment_methods]"
     expect(page).to have_selector "[data-test=link_for_shipping_methods]"
+    accept_alert { click_link "Admin Only" }
     choose 'Any'
     expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
     expect(page).to have_selector "[data-test=link_for_payment_methods]"
     expect(page).to have_selector "[data-test=link_for_shipping_methods]"
 
+    accept_alert { click_link "Primary Details" }
     page.find("#enterprise_group_ids-ts-control").set(eg1.name)
     page.find("#enterprise_group_ids-ts-dropdown .option.active").click
 
