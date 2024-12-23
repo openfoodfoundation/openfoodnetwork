@@ -26,9 +26,7 @@ module Spree
     after_create :associate_customers, :associate_orders
     before_destroy :check_completed_orders
 
-    roles_table_name = Role.table_name
-
-    scope :admin, lambda { includes(:spree_roles).where("#{roles_table_name}.name" => "admin") }
+    scope :admin, lambda { includes(:spree_roles).where("spree_roles.name" => "admin") }
 
     has_many :enterprise_roles, dependent: :destroy
     has_many :enterprises, through: :enterprise_roles
@@ -60,14 +58,9 @@ module Spree
       User.admin.count > 0
     end
 
-    # Whether a user has a role or not.
-    def has_spree_role?(role_in_question)
-      spree_roles.where(name: role_in_question.to_s).any?
-    end
-
     # Checks whether the specified user is a superadmin, with full control of the instance
     def admin?
-      has_spree_role?('admin')
+      spree_roles.any? { |role| role.name == "admin" }
     end
 
     # Send devise-based user emails asyncronously via ActiveJob

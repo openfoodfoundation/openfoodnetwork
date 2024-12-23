@@ -140,8 +140,6 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
         subject # build context first
 
         expect { subject.table_rows }.to query_database [
-          "Spree::Role Exists?",
-          "Spree::Role Exists?",
           "SQL",
           "Spree::LineItem Load",
           "Spree::PaymentMethod Load",
