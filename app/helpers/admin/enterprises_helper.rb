@@ -28,6 +28,7 @@ module Admin
       show_connected_apps = can?(:manage_connected_apps, enterprise) &&
                             feature?(:connected_apps, spree_current_user, enterprise) &&
                             Spree::Config.connected_apps_enabled.present?
+      show_admin_only = spree_current_user.admin?
 
       build_enterprise_side_menu_items(
         is_shop:,
@@ -36,6 +37,7 @@ module Admin
         show_payment_methods:,
         show_enterprise_fees:,
         show_connected_apps:,
+        show_admin_only:,
       )
     end
 
@@ -52,11 +54,12 @@ module Admin
       show_shipping_methods:,
       show_payment_methods:,
       show_enterprise_fees:,
-      show_connected_apps:
+      show_connected_apps:,
+      show_admin_only:
     )
       [
         { name: 'primary_details', icon_class: "icon-home", show: true, selected: 'selected' },
-        { name: 'admin_only', icon_class: "icon-gear", show: spree_current_user.admin? },
+        { name: 'admin_only', icon_class: "icon-gear", show: show_admin_only },
         { name: 'address', icon_class: "icon-map-marker", show: true },
         { name: 'contact', icon_class: "icon-phone", show: true },
         { name: 'social',  icon_class: "icon-twitter", show: true },
