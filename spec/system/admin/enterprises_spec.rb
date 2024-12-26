@@ -122,38 +122,38 @@ RSpec.describe '
     # Unchecking hides the Properties tab
     accept_alert { click_link "Primary Details" }
     uncheck 'enterprise_is_primary_producer'
-    accept_alert { click_link "Admin Only" }
+    click_button 'Update'
+    click_link "Admin Only"
     choose 'None'
     expect(page).not_to have_selector "[data-test=link_for_enterprise_fees]"
     expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
     expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
     expect(page).not_to have_selector "[data-test=link_for_properties]"
+    click_button 'Update'
     # Checking displays the Properties tab
-    accept_alert { click_link "Primary Details" }
     check 'enterprise_is_primary_producer'
     expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
     expect(page).not_to have_selector "[data-test=link_for_payment_methods]"
     expect(page).not_to have_selector "[data-test=link_for_shipping_methods]"
     expect(page).to have_selector "[data-test=link_for_properties]"
-    accept_alert { click_link "Primary Details" }
     uncheck 'enterprise_is_primary_producer'
-    accept_alert { click_link "Admin Only" }
+    click_button 'Update'
+    click_link "Admin Only"
     choose 'Own'
     expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
     expect(page).to have_selector "[data-test=link_for_payment_methods]"
     expect(page).to have_selector "[data-test=link_for_shipping_methods]"
-    accept_alert { click_link "Admin Only" }
     choose 'Any'
     expect(page).to have_selector "[data-test=link_for_enterprise_fees]"
     expect(page).to have_selector "[data-test=link_for_payment_methods]"
     expect(page).to have_selector "[data-test=link_for_shipping_methods]"
+    click_button 'Update'
 
-    accept_alert { click_link "Primary Details" }
     page.find("#enterprise_group_ids-ts-control").set(eg1.name)
     page.find("#enterprise_group_ids-ts-dropdown .option.active").click
 
     within(".permalink") do
-      link_path = "#{main_app.root_url}#{@enterprise.permalink}/shop"
+      link_path = "#{main_app.root_url}#{@enterprise.reload.permalink}/shop"
       link = find_link(link_path)
       expect(link[:href]).to eq link_path
       expect(link[:target]).to eq '_blank'
