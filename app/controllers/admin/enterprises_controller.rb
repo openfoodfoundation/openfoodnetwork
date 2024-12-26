@@ -49,8 +49,11 @@ module Admin
       @object.build_custom_tab if @object.custom_tab.nil?
       return unless params[:stimulus]
 
-      @enterprise.is_primary_producer = params[:is_primary_producer]
-      @enterprise.sells = params[:enterprise_sells]
+      if params[:is_primary_producer].present?
+        @enterprise.is_primary_producer = params[:is_primary_producer]
+      end
+      @enterprise.sells = params[:enterprise_sells] if params[:enterprise_sells].present?
+
       render cable_ready: cable_car.morph("#side_menu", partial("admin/shared/side_menu"))
         .morph("#permalink", partial("admin/enterprises/form/permalink"))
     end
