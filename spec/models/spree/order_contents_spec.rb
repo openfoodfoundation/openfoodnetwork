@@ -175,6 +175,12 @@ RSpec.describe Spree::OrderContents do
         expect(line_item.max_quantity).to eq 3
         expect(line_item.price).to eq variant.price
       end
+
+      it "ensures shipments are updated" do
+        expect(order).to receive(:ensure_updated_shipments)
+
+        subject.update_or_create(variant, { quantity: 2, max_quantity: 3 })
+      end
     end
 
     describe "updating" do
@@ -185,6 +191,12 @@ RSpec.describe Spree::OrderContents do
 
         expect(line_item.reload.quantity).to eq 3
         expect(line_item.max_quantity).to eq 4
+      end
+
+      it "ensures shipments are updated" do
+        expect(order).to receive(:ensure_updated_shipments)
+
+        subject.update_or_create(variant, { quantity: 3, max_quantity: 4 })
       end
     end
   end
