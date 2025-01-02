@@ -75,6 +75,6 @@ class DfcCatalog
 
     return unless offer && wholesale_offer&.stockLimitation.present?
 
-    offer.stockLimiation = wholesale_offer.stockLimitation.to_i * transformation.factor
+    offer.stockLimitation = wholesale_offer.stockLimitation.to_i * transformation.factor
   end
 end
