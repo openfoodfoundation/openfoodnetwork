@@ -125,7 +125,7 @@ module Spree
     }
 
     scope :managed_by, lambda { |user|
-      if user.has_spree_role?('admin')
+      if user.admin?
         where(nil)
       else
         # Find orders that are distributed by the user or have products supplied by the user
@@ -140,7 +140,7 @@ module Spree
     }
 
     scope :distributed_by_user, lambda { |user|
-      if user.has_spree_role?('admin')
+      if user.admin?
         where(nil)
       else
         where(spree_orders: { distributor_id: user.enterprises.select(&:id) })

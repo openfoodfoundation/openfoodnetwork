@@ -33,7 +33,7 @@ RSpec.describe Spree::Admin::UsersController do
     end
 
     it 'should deny access to users without an admin role' do
-      allow(user).to receive_messages has_spree_role?: false
+      allow(user).to receive_messages admin?: false
       spree_post :index
       expect(response).to redirect_to('/unauthorized')
     end

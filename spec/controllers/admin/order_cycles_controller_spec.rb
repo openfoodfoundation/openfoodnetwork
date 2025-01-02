@@ -148,7 +148,6 @@ module Admin
                   order_cycles: 6,
                   proxy_orders: 1,
                   schedules: 1,
-                  spree_roles: 9,
                   spree_variants: 8,
                   tags: 1
                 },
