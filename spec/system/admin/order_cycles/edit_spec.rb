@@ -39,10 +39,7 @@ RSpec.describe '
         expect(page).to have_field 'order_cycle_name', with: "Order cycle name updated"
         expect(page).to have_content('Your order cycle has been updated.')
 
-        # change date range field value
-        find('#order_cycle_orders_close_at').click
-        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-        close_datepicker
+        select_datetime_from "#order_cycle_orders_close_at", "2024-03-30 00:00"
         expect(page).to have_content('You have unsaved changes')
 
         # click save to open warning modal
@@ -61,10 +58,7 @@ RSpec.describe '
         login_as_admin
         visit edit_admin_order_cycle_path(order_cycle)
 
-        # change date range field value
-        find('#order_cycle_orders_close_at').click
-        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-        close_datepicker
+        select_datetime_from "#order_cycle_orders_open_at", "2024-03-30 00:00"
 
         # click save to open warning modal
         click_button('Save')
@@ -80,29 +74,28 @@ RSpec.describe '
       end
     end
 
-    context 'with no attached order' do
-      it "does not show warning modal", retry: 3 do
+    context "with no attached order" do
+      it "does not show warning modal" do
         login_as_admin
         visit edit_admin_order_cycle_path(order_cycle)
 
         # change non-date range field value
-        fill_in 'order_cycle_name', with: "OC1 name updated"
-        expect(page).to have_content('You have unsaved changes')
+        fill_in "order_cycle_name", with: "OC1 name updated"
+        expect(page).to have_content "You have unsaved changes"
 
         # click save
-        click_button('Save')
-        expect(page).to have_field 'order_cycle_name', with: 'OC1 name updated'
-        expect(page).to have_content('Your order cycle has been updated.')
+        click_button "Save"
+        expect(page).not_to have_content "You have unsaved changes"
+        expect(page).to have_content "Your order cycle has been updated."
+        expect(page).to have_field "order_cycle_name", with: "OC1 name updated"
 
-        # Now change date range field value
-        find('#order_cycle_orders_close_at').click
-        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-        close_datepicker
-        expect(page).to have_content('You have unsaved changes')
+        select_datetime_from "#order_cycle_orders_close_at", "2024-03-30 01:20"
+        expect(page).to have_content "You have unsaved changes"
 
-        click_button('Save')
-        expect(page).to have_field 'order_cycle_orders_close_at', with: '2024-03-30 00:00'
-        expect(page).to have_content('Your order cycle has been updated.')
+        click_button "Save"
+        expect(page).not_to have_content "You have unsaved changes"
+        expect(page).to have_content "Your order cycle has been updated."
+        expect(page).to have_field "order_cycle_orders_close_at", with: "2024-03-30 01:20"
       end
     end
   end
@@ -126,10 +119,7 @@ RSpec.describe '
         expect(page).to have_content('Your order cycle has been updated.')
         expect(page).to have_field 'order_cycle_name', with: "Order cycle name updated"
 
-        # change date range field value
-        find('#order_cycle_orders_close_at').click
-        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-        close_datepicker
+        select_datetime_from "#order_cycle_orders_close_at", "2024-03-30 00:00"
 
         expect(page).to have_content('You have unsaved changes')
 
@@ -147,7 +137,7 @@ RSpec.describe '
     end
 
     context 'with no attached orders' do
-      it "does not show warning modal", retry: 3 do
+      it "does not show warning modal" do
         login_as_admin
         visit edit_admin_order_cycle_path(order_cycle)
 
@@ -161,10 +151,7 @@ RSpec.describe '
         expect(page).to have_content('Your order cycle has been updated.')
         expect(page.find('#order_cycle_name').value).to eq 'OC1 name updated'
 
-        # Now change date range field value
-        find('#order_cycle_orders_close_at').click
-        select_datetime_from_datepicker Time.zone.parse("2024-03-30 00:00")
-        close_datepicker
+        select_datetime_from "#order_cycle_orders_close_at", "2024-03-30 00:00"
         expect(page).to have_content('You have unsaved changes')
         sleep(2)
 
