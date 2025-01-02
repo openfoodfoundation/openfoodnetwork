@@ -1,4 +1,4 @@
-angular.module('Darkswarm').factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, $resource, localStorageService, Messages) ->
+angular.module('Darkswarm').factory 'Cart', (CurrentOrder, Variants, $timeout, $http, $modal, $rootScope, $resource, Messages) ->
   # Handles syncing of current cart/order state to server
   new class Cart
     dirty: false
@@ -113,7 +113,6 @@ angular.module('Darkswarm').factory 'Cart', (CurrentOrder, Variants, $timeout, $
 
     clear: ->
       @line_items = []
-      localStorageService.clearAll() # One day this will have to be moar GRANULAR
 
     isOnlyItemInOrder: (id) =>
       deletedItem = @line_items_finalised.find((item) -> item.id == id)
