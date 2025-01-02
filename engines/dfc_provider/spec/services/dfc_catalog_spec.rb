@@ -36,10 +36,21 @@ RSpec.describe DfcCatalog do
       }.from(2.09).to(1.57) # 18.85 wholesale price divided by 12
     end
 
-    it "changes stock level of retail variants" do
+    it "changes stock level of retail variant's catalog item" do
       expect { catalog.apply_wholesale_values! }.to change {
         catalog_item.stockLimitation
       }.from("-1").to(-12)
+    end
+
+    it "changes stock level of retail variant's offer" do
+      wholesale_offer = catalog.item(
+        "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466500403/Offer"
+      )
+      wholesale_offer.stockLimitation = 2
+
+      expect { catalog.apply_wholesale_values! }.to change {
+        offer.stockLimitation
+      }.from(nil).to(24)
     end
   end
 end
