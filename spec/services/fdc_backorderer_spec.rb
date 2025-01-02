@@ -33,9 +33,9 @@ RSpec.describe FdcBackorderer do
     expect(backorder.lines).to eq []
 
     # Add items and place the new order:
-    catalog = FdcOfferBroker.load_catalog(order.distributor.owner, urls.catalog_url)
-    product = catalog.find { |i| i.semanticType == "dfc-b:SuppliedProduct" }
-    offer = FdcOfferBroker.new(nil, nil).offer_of(product)
+    catalog = DfcCatalog.load(order.distributor.owner, urls.catalog_url)
+    product = catalog.products.first
+    offer = FdcOfferBroker.new(nil).offer_of(product)
     line = subject.find_or_build_order_line(backorder, offer)
     line.quantity = 3
     placed_order = subject.send_order(backorder)
@@ -80,7 +80,7 @@ RSpec.describe FdcBackorderer do
 
   describe "#find_or_build_order_line" do
     it "add quantity to an existing line item", vcr: true do
-      catalog = FdcOfferBroker.load_catalog(order.distributor.owner, urls.catalog_url)
+      catalog = DfcCatalog.load(order.distributor.owner, urls.catalog_url)
       backorder = subject.find_or_build_order(order)
       existing_line = backorder.lines[0]
 
@@ -89,10 +89,8 @@ RSpec.describe FdcBackorderer do
       # the catalog offer here which is different to the offer on the
       # existing order line.
       ordered_product = existing_line.offer.offeredItem
-      catalog_product = catalog.find do |i|
-        i.semanticId == ordered_product.semanticId
-      end
-      catalog_offer = FdcOfferBroker.new(nil, nil).offer_of(catalog_product)
+      catalog_product = catalog.item(ordered_product.semanticId)
+      catalog_offer = FdcOfferBroker.new(nil).offer_of(catalog_product)
 
       # The API response is missing this connection:
       catalog_offer.offeredItem = catalog_product

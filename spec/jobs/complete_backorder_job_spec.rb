@@ -14,13 +14,14 @@ RSpec.describe CompleteBackorderJob do
   let(:orderer) { FdcBackorderer.new(user, urls) }
   let(:order) {
     backorder = orderer.find_or_build_order(ofn_order)
-    broker = FdcOfferBroker.new(user, urls.catalog_url)
+    catalog = DfcCatalog.load(user, urls.catalog_url)
+    broker = FdcOfferBroker.new(catalog)
 
     bean_offer = broker.best_offer(product_link).offer
     bean_line = orderer.find_or_build_order_line(backorder, bean_offer)
     bean_line.quantity = 3
 
-    chia = broker.catalog_item(chia_seed_retail_link)
+    chia = catalog.item(chia_seed_retail_link)
     chia_offer = broker.offer_of(chia)
     chia_line = orderer.find_or_build_order_line(backorder, chia_offer)
     chia_line.quantity = 5
