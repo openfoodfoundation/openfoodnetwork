@@ -17,7 +17,6 @@
 #= require angular-google-maps.min.js
 #= require ../shared/mm-foundation-tpls-0.9.0-20180826174721.min.js
 #= require ../shared/ng-infinite-scroll.min.js
-#= require ../shared/angular-local-storage.js
 #= require ../shared/angular-slideables.js
 #= require ../shared/shared
 #= require_tree ../shared/directives
