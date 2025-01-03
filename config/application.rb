@@ -93,7 +93,6 @@ module Openfoodnetwork
     #       of Spree
     initializer 'ofn.spree_locale_settings', before: 'spree.promo.environment' do |app|
       Rails.application.reloader.to_prepare do
-        Spree::Config['checkout_zone'] = ENV['CHECKOUT_ZONE']
         Spree::Config['currency'] = ENV['CURRENCY']
       end
     end
