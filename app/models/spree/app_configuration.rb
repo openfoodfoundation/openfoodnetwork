@@ -33,9 +33,6 @@ module Spree
     preference :allow_backorder_shipping, :boolean, default: false
     preference :allow_checkout_on_gateway_error, :boolean, default: false
     preference :allow_guest_checkout, :boolean, default: true
-    # Replace with the name of a zone if you would like to limit the countries
-    preference :checkout_zone, :string, default: nil
-    preference :currency, :string, default: "USD"
     preference :currency_decimal_mark, :string, default: "."
     preference :currency_symbol_position, :string, default: "before"
     preference :currency_thousands_separator, :string, default: ","
