@@ -7,7 +7,6 @@ RSpec.describe Spree::Money do
 
   before do
     configure_spree_preferences do |config|
-      config.currency = "USD"
       config.currency_symbol_position = :before
       config.display_currency = false
     end
@@ -97,7 +96,6 @@ RSpec.describe Spree::Money do
   context "EUR" do
     before do
       configure_spree_preferences do |config|
-        config.currency = "EUR"
         config.currency_symbol_position = :after
         config.display_currency = false
       end
