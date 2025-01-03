@@ -8931,10 +8931,10 @@ tty-browserify@0.0.0:
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
 
-turbo_power@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/turbo_power/-/turbo_power-0.7.0.tgz#537cc82f3617feb1c70b94ee6c8b7d42cdce81db"
-  integrity sha512-KU5YbHnyYXluETUKmq02tH4/Vy/yJ4my1Nn7USRPWyEFV6LiXICPlhr2ETJ90pf11khs7WMNKEEqNTcGLngs6w==
+turbo_power@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/turbo_power/-/turbo_power-0.7.1.tgz#591769f37cca9b8149ea07682021081039c9f32c"
+  integrity sha512-xnB1Yb3xXSVcDQyiqZV8kLjbHdCmyBfQYZJeJklEnEz+jM5xl6JUNo2yy5vc/8ZPKKMzS05INvvvLxafQYJVuQ==
 
 type-check@~0.3.2:
   version "0.3.2"
