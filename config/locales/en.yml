@@ -2455,6 +2455,7 @@ en:
   order_back_to_store: Back To Store
   order_back_to_cart: Back To Cart
   order_back_to_website: Back To Website
+  order_voucher_label: "Voucher: %{code}"
   checkout_details_title: Checkout Details
   checkout_payment_title: Checkout Payment
   checkout_summary_title: Checkout Summary
