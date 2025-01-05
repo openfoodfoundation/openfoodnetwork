@@ -18,8 +18,6 @@
   .five.columns.omega
     = f.check_box :is_primary_producer, data: { action: "change->primary-details#primaryProducerChanged" } 
     = f.label :is_primary_producer, t('.producer')
-    %span{ style: "width: 30px; height: 30px;", class: "hidden", data: { "primary-details-target": "spinner" } }
-      = render partial: "components/admin_spinner"
 .row
   .three.columns.alpha
     %label= t('.visible_in_search')
