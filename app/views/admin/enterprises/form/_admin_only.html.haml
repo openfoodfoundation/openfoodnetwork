@@ -14,6 +14,8 @@
     %span{ style: "width: 30px; height: 30px;", class: "hidden", data: { "admin-only-target": "spinner" } }
       = render partial: "components/admin_spinner"
 
+= render partial: 'admin/enterprises/form/permalink'
+
 .row
   .three.columns.alpha
     = f.label :external_billing_id, t('.external_billing_id')

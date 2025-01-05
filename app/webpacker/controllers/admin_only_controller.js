@@ -5,6 +5,7 @@ export default class extends Controller {
   static targets = ["spinner"];
 
   enterpriseSellsChanged(event) {
+    console.log("enterpriseSellsChanged");
     if (event.currentTarget.checked) {
       this.enterpriseSellsValue = event.currentTarget.value;
       this.spinnerTarget.classList.remove("hidden");
