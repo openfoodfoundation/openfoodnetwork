@@ -1187,16 +1187,6 @@ en:
           desc_long_placeholder: Tell customers about yourself. This information appears on your public profile.
         address:
           legend: "Address"
-        admin_only:
-          legend: "Admin Only"
-          any: Any
-          none: None
-          own: Own
-          sells: Sells
-          sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
-          external_billing_id: External Billing ID
-          external_billing_id_placeholder: eg. INV-2024-123456
-          external_billing_id_tip: "This is the ID used by the external billing system to identify this enterprise."
         business_details:
           legend: "Business Details"
           upload: 'upload'
@@ -1289,6 +1279,14 @@ en:
           primary_producer: Primary Producer?
           primary_producer_tip: Select 'Producer' if you are a primary producer of food.
           producer: Producer
+          any: Any
+          none: None
+          own: Own
+          sells: Sells
+          sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
+          external_billing_id: External Billing ID
+          external_billing_id_placeholder: eg. INV-2024-123456
+          external_billing_id_tip: "This is the ID used by the external billing system to identify this enterprise."
           visible_in_search: Visible in search?
           visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the OFN map and listings. <br />2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
           visible: Public
@@ -1712,7 +1710,6 @@ en:
         enterprise:
           primary_details: "Primary Details"
           address: "Address"
-          admin_only: "Admin Only"
           contact: "Contact"
           social: "Social"
           about: "About"
