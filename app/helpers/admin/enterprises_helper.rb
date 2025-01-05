@@ -56,7 +56,6 @@ module Admin
     )
       [
         { name: 'primary_details', icon_class: "icon-home", show: true, selected: 'selected' },
-        { name: 'admin_only', icon_class: "icon-gear", show: spree_current_user.admin? },
         { name: 'address', icon_class: "icon-map-marker", show: true },
         { name: 'contact', icon_class: "icon-phone", show: true },
         { name: 'social',  icon_class: "icon-twitter", show: true },

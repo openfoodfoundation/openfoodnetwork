@@ -33,13 +33,5 @@ RSpec.describe Admin::EnterprisesHelper, type: :helper do
       user.enterprises << enterprise
       expect(visible_items.pluck(:name)).to include "connected_apps"
     end
-
-    context 'when user is an admin' do
-      let(:user) { create(:admin_user) }
-
-      it "includes admin-only item" do
-        expect(visible_items.pluck(:name)).to include "admin_only"
-      end
-    end
   end
 end

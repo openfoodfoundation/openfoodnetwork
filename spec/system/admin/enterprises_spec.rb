@@ -86,10 +86,6 @@ RSpec.describe '
     end
 
     fill_in 'enterprise_name', with: 'Eaterprises'
-
-    accept_alert do
-      click_link "Admin Only"
-    end
     fill_in 'enterprise_permalink', with: 'eaterprises-permalink'
     expect(page).to have_selector '.available'
     choose 'Own'

@@ -28,21 +28,21 @@
   .row
     .alpha.eleven.columns
       .three.columns.alpha
-        = f.label :sells, t('admin_only.sells', scope: scope)
-        %div{'ofn-with-tip' => t('admin_only.sells_tip', scope: scope)}
+        = f.label :sells, t('primary_details.sells', scope: scope)
+        %div{'ofn-with-tip' => t('primary_details.sells_tip', scope: scope)}
           %a What's this?
       .two.columns
         = f.radio_button :sells, "none", 'ng-model' => 'Enterprise.sells'
         &nbsp;
-        = f.label :sells, t('admin_only.none', scope: scope), value: "none"
+        = f.label :sells, t('primary_details.none', scope: scope), value: "none"
       .two.columns
         = f.radio_button :sells, "own", 'ng-model' => 'Enterprise.sells'
         &nbsp;
-        = f.label :sells, t('admin_only.own', scope: scope), value: "own"
+        = f.label :sells, t('primary_details.own', scope: scope), value: "own"
       .four.columns.omega
         = f.radio_button :sells, "any", 'ng-model' => 'Enterprise.sells'
         &nbsp;
-        = f.label :sells, t('admin_only.any', scope: scope), value: "any"
+        = f.label :sells, t('primary_details.any', scope: scope), value: "any"
 
 .row
   .alpha.three.columns
