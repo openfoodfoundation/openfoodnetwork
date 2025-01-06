@@ -1292,6 +1292,7 @@ en:
           visible: Public
           not_visible: Hidden
           hidden: Hide all references
+          admin_only_legend: Admin only
         properties:
           legend: "Properties"
         permalink:
