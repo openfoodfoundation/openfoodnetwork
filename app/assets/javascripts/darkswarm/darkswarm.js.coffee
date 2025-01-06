@@ -1,7 +1,6 @@
 angular.module("Darkswarm", [
   'ngResource',
   'mm.foundation',
-  'LocalStorageModule',
   'infinite-scroll',
   'angular-flash.service',
   'templates',
