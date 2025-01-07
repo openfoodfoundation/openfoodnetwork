@@ -11,6 +11,7 @@ module Spree
       include OrderCyclesHelper
       include EnterprisesHelper
       helper ::Admin::ProductsHelper
+      helper Spree::Admin::TaxCategoriesHelper
 
       before_action :load_data
       before_action :load_producers, only: [:index, :new]
