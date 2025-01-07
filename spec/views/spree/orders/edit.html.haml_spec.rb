@@ -42,17 +42,19 @@ RSpec.describe "spree/orders/edit.html.haml" do
     end
 
     it "includes Voucher text with label" do
-      expect(rendered).to include("Voucher: #{voucher.code}")
+      expect(rendered).to have_content("Voucher:\n#{voucher.code}")
     end
 
-    # shipping fee is derived from 'completed_order_with_fees' factory, it applies when using shipping method such as Home Delivery.
+    # Shipping fee is derived from 'completed_order_with_fees' factory.
+    # It applies when using shipping method such as Home Delivery.
     it "includes Shipping label" do
-      expect(rendered).to include("Shipping")
+      expect(rendered).to have_content("Shipping")
     end
 
-    # transaction fee is derived from 'completed_order_with_fees' factory, it applies when using payment methods such as Check & Stripe.
+    # Transaction fee is derived from 'completed_order_with_fees' factory.
+    # It applies when using payment methods such as Check & Stripe.
     it "includes Transaction fee label" do
-      expect(rendered).to include("Transaction fee")
+      expect(rendered).to have_content("Transaction fee")
     end
   end
 end

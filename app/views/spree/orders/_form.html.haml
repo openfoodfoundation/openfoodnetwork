@@ -35,7 +35,8 @@
           %tr.order-adjustment
             %td.text-right{:colspan => "3"}
               - if adjustment.originator_type == "Voucher"
-                = t(:order_voucher_label, code: adjustment.label)
+                = "#{t(:voucher)}:"
+                = adjustment.label
               - else
                 = adjustment.label
             %td.text-right.total
