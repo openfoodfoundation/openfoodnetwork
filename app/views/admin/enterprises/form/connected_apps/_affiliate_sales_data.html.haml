@@ -10,6 +10,8 @@
         %em= t(".need_to_be_manager") unless managed_by_user?(enterprise)
       - else
         = button_to t(".disable"), admin_enterprise_connected_app_path(connected_app.id, enterprise_id: enterprise.id), method: :delete
+
   %hr
   .connected-app__description
-    = t ".description_html"
+    %p= t ".description"
+    %b= link_to(t(".link_label_html"), t(".link_url"), target: "_blank")
