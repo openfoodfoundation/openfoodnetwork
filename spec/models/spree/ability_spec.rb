@@ -9,14 +9,6 @@ RSpec.describe Spree::Ability do
   let(:subject) { Spree::Ability.new(user) }
   let(:token) { nil }
 
-  before do
-    user.spree_roles.clear
-  end
-
-  after(:each) {
-    user.spree_roles = []
-  }
-
   context 'for general resource' do
     let(:resource) { Object.new }
 
@@ -43,7 +35,7 @@ RSpec.describe Spree::Ability do
 
     context 'with admin user' do
       it 'should be able to admin' do
-        user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+        user.update!(admin: true)
         expect(subject).to be_able_to :admin, resource
         expect(subject).to be_able_to :index, resource_order
         expect(subject).to be_able_to :show, resource_product
@@ -303,7 +295,6 @@ RSpec.describe Spree::Ability do
       # create supplier_enterprise1 user without full admin access
       let(:user) do
         user = create(:user)
-        user.spree_roles = []
         s1.enterprise_roles.build(user:).save
         user
       end
@@ -487,7 +478,6 @@ RSpec.describe Spree::Ability do
     context "when is a distributor enterprise user" do
       let(:user) do
         user = create(:user)
-        user.spree_roles = []
         d1.enterprise_roles.build(user:).save
         user
       end
@@ -699,7 +689,6 @@ RSpec.describe Spree::Ability do
     context 'Order Cycle co-ordinator, distributor enterprise manager' do
       let(:user) do
         user = create(:user)
-        user.spree_roles = []
         d1.enterprise_roles.build(user:).save
         user
       end
@@ -738,7 +727,6 @@ RSpec.describe Spree::Ability do
     context 'enterprise manager' do
       let(:user) do
         user = create(:user)
-        user.spree_roles = []
         s1.enterprise_roles.build(user:).save
         user
       end
@@ -797,7 +785,7 @@ RSpec.describe Spree::Ability do
     let(:manage_actions) { [:admin, :index, :read, :update, :bulk_update, :bulk_reset] }
 
     describe "when admin" do
-      before { user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin') }
+      before { user.update!(admin: true) }
 
       it "should have permission" do
         is_expected.to have_ability(manage_actions, for: variant_override)

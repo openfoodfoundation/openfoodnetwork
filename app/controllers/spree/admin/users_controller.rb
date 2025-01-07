@@ -20,16 +20,8 @@ module Spree
       end
 
       def create
-        if params[:user]
-          roles = params[:user].delete("spree_role_ids")
-        end
-
         @user = Spree::User.new(user_params)
         if @user.save
-
-          if roles
-            @user.spree_roles = roles.compact_blank.collect{ |r| Spree::Role.find(r) }
-          end
 
           flash[:success] = Spree.t(:created_successfully)
           redirect_to edit_admin_user_path(@user)
@@ -39,15 +31,7 @@ module Spree
       end
 
       def update
-        if params[:user]
-          roles = params[:user].delete("spree_role_ids")
-        end
-
         if @user.update(user_params)
-          if roles
-            @user.spree_roles = roles.compact_blank.collect{ |r| Spree::Role.find(r) }
-          end
-
           flash[:success] = update_message
           redirect_to edit_admin_user_path(@user)
         else
@@ -131,7 +115,7 @@ module Spree
 
       def user_params
         ::PermittedAttributes::User.new(params).call(
-          %i[enterprise_limit show_api_key_view]
+          %i[admin enterprise_limit show_api_key_view]
         )
       end
     end

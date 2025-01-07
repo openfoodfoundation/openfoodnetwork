@@ -5,13 +5,8 @@
       = f.email_field :email, class: "fullwidth"
       = error_message_on :user, :email
     .field
-      = label_tag nil, t(".roles")
-      %ul
-        - [Spree::Role.admin].each do |role|
-          %li
-            = check_box_tag "user[spree_role_ids][]", role.id, @user.spree_roles.include?(role), id: "user_spree_role_#{role.name}"
-            = label_tag role.name
-      = hidden_field_tag "user[spree_role_ids][]", ""
+      = f.label :admin, t(".admin")
+      = f.check_box :admin
     = f.field_container :locale do
       = f.label :locale, t(".locale")
       = f.select :locale, locale_options, class: "fullwidth"

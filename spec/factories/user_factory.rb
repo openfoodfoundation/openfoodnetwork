@@ -35,7 +35,7 @@ FactoryBot.define do
     end
 
     factory :admin_user do
-      spree_roles { [Spree::Role.find_or_create_by!(name: 'admin')] }
+      admin { true }
     end
 
     factory :oidc_user do

@@ -512,7 +512,6 @@ module Spree
 
         it "shows only products for given user" do
           user = create(:user)
-          user.spree_roles = []
           e1.enterprise_roles.build(user:).save
 
           product = Product.managed_by user

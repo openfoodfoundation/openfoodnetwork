@@ -60,7 +60,6 @@ def create_admin_user
   ValidEmail2::Address.define_method(:valid_mx?) { true }
 
   if admin.save
-    admin.spree_roles << Spree::Role.admin
     say "New admin user persisted!"
   else
     say "There was some problems with persisting new admin user:"
@@ -81,6 +80,7 @@ def read_user_attributes
   end
 
   {
+    admin: true,
     password:,
     password_confirmation: password,
     email:,

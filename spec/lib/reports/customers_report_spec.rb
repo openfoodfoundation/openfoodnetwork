@@ -7,11 +7,7 @@ module Reporting
     module Customers
       RSpec.describe Base do
         context "as a site admin" do
-          let(:user) do
-            user = create(:user)
-            user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
-            user
-          end
+          let(:user) { create(:admin_user) }
           subject { Base.new user, {} }
 
           describe "addresses report" do
@@ -198,12 +194,7 @@ module Reporting
         end
 
         context "as an enterprise user" do
-          let(:user) do
-            user = create(:user)
-            user.spree_roles = []
-            user.save!
-            user
-          end
+          let(:user) { create(:user) }
 
           subject { Base.new user, {} }
 
