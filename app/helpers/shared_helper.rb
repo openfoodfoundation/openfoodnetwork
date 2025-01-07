@@ -6,7 +6,7 @@ module SharedHelper
   end
 
   def admin_user?
-    spree_current_user&.has_spree_role? 'admin'
+    spree_current_user&.admin?
   end
 
   def current_shop_products_path
