@@ -59,7 +59,7 @@ RSpec.describe Reporting::Reports::OrdersAndDistributors::Base do
                                    order.email,
                                    bill_address.phone,
                                    bill_address.city,
-                                   line_item.product.sku,
+                                   line_item.variant.sku,
                                    line_item.product.name,
                                    "1g",
                                    line_item.quantity,

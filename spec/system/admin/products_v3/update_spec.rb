@@ -47,7 +47,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
     it "updates product and variant fields" do
       within row_containing_name("Apples") do
         fill_in "Name", with: "Pommes"
-        fill_in "SKU", with: "POM-00"
       end
 
       within row_containing_name("Medium box") do
@@ -83,7 +82,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         product_a.reload
         variant_a1.reload
       }.to change { product_a.name }.to("Pommes")
-        .and change{ product_a.sku }.to("POM-00")
         .and change{ variant_a1.display_name }.to("Large box")
         .and change{ variant_a1.sku }.to("POM-01")
         .and change{ variant_a1.unit_value }.to(0.5001) # volumes are stored in litres
@@ -94,7 +92,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
       within row_containing_name("Pommes") do
         expect(page).to have_field "Name", with: "Pommes"
-        expect(page).to have_field "SKU", with: "POM-00"
       end
       within row_containing_name("Large box") do
         expect(page).to have_field "Name", with: "Large box"
@@ -230,8 +227,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         expect(page).to have_field "Name", with: "Pommes" # Changed value wasn't lost
       end
 
-      # Meanwhile, the SKU was updated
-      product_a.update! sku: "APL-10"
+      # Meanwhile, the price was updated
+      variant_a1.update!(price: 10.25)
 
       expect {
         accept_confirm do
@@ -242,19 +239,22 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
       within row_containing_name("Apples") do
         expect(page).to have_field "Name", with: "Apples" # Changed value wasn't saved
-        expect(page).to have_field "SKU", with: "APL-10" # Updated value shown
+      end
+
+      within row_containing_name("Medium box") do
+        expect(page).to have_field "Price", with: "10.25" # Updated value shown
       end
     end
 
     context "with invalid data" do
       let!(:product_b) { create(:simple_product, name: "Bananas") }
+      let(:invalid_product_name) { "A" * 256 }
 
       before do
         visit admin_products_url
 
         within row_containing_name("Apples") do
-          fill_in "Name", with: ""
-          fill_in "SKU", with: "A" * 256
+          fill_in "Name", with: invalid_product_name
         end
       end
 
@@ -280,10 +280,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
         }.not_to change { product_a.name }
 
         # (there's no identifier displayed, so the user must remember which product it is..)
-        within row_containing_name("") do
-          expect(page).to have_field "Name", with: ""
-          expect(page).to have_content "can't be blank"
-          expect(page).to have_field "SKU", with: "A" * 256
+        within row_containing_name(invalid_product_name) do
+          expect(page).to have_field "Name", with: invalid_product_name
           expect(page).to have_content "is too long"
         end
 
@@ -304,9 +302,8 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           product_a.reload
         }.not_to change { product_a.name }
 
-        within row_containing_name("") do
+        within row_containing_name(invalid_product_name) do
           fill_in "Name", with: "Pommes"
-          fill_in "SKU", with: "POM-00"
         end
 
         expect {
@@ -316,7 +313,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           product_a.reload
           variant_a1.reload
         }.to change { product_a.name }.to("Pommes")
-          .and change{ product_a.sku }.to("POM-00")
       end
     end
 
@@ -638,7 +634,6 @@ RSpec.describe 'As an enterprise user, I can update my products' do
 
         within row_containing_name("Apples") do
           fill_in "Name", with: ""
-          fill_in "SKU", with: "A" * 256
         end
       end
 

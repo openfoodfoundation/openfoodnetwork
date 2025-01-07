@@ -13,7 +13,7 @@ module Reporting
             customer_email: proc { |line_item| line_item.order.email },
             customer_phone: proc { |line_item| line_item.order.bill_address.phone },
             customer_city: proc { |line_item| line_item.order.bill_address.city },
-            sku: proc { |line_item| line_item.product.sku },
+            sku: proc { |line_item| line_item.variant.sku },
             product: proc { |line_item| line_item.product.name },
             variant: proc { |line_item| line_item.full_name },
             quantity: proc { |line_item| line_item.quantity },
