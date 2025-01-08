@@ -6,19 +6,10 @@ class FdcOfferBroker
   Solution = Struct.new(:product, :factor, :offer)
   RetailSolution = Struct.new(:retail_product_id, :factor)
 
-  def self.load_catalog(user, catalog_url)
-    api = DfcRequest.new(user)
-    catalog_json = api.call(catalog_url)
-    DfcIo.import(catalog_json)
-  end
+  attr_reader :catalog
 
-  def initialize(user, catalog_url)
-    @user = user
-    @catalog_url = catalog_url
-  end
-
-  def catalog
-    @catalog ||= self.class.load_catalog(@user, @catalog_url)
+  def initialize(catalog)
+    @catalog = catalog
   end
 
   def best_offer(product_id)
@@ -30,18 +21,18 @@ class FdcOfferBroker
   end
 
   def wholesale_product(product_id)
-    production_flow = catalog_item("#{product_id}/AsPlannedProductionFlow")
+    production_flow = catalog.item("#{product_id}/AsPlannedProductionFlow")
 
     if production_flow
       production_flow.product
     else
       # We didn't find a wholesale variant, falling back to the given product.
-      catalog_item(product_id)
+      catalog.item(product_id)
     end
   end
 
   def contained_quantity(product_id)
-    consumption_flow = catalog_item("#{product_id}/AsPlannedConsumptionFlow")
+    consumption_flow = catalog.item("#{product_id}/AsPlannedConsumptionFlow")
 
     # If we don't find a transformation, we return the original product,
     # which contains exactly one of itself (identity).
@@ -53,7 +44,7 @@ class FdcOfferBroker
 
     return RetailSolution.new(wholesale_product_id, 1) if production_flow.nil?
 
-    consumption_flow = catalog_item(
+    consumption_flow = catalog.item(
       production_flow.semanticId.sub("AsPlannedProductionFlow", "AsPlannedConsumptionFlow")
     )
     retail_product_id = consumption_flow.product.semanticId
@@ -70,19 +61,12 @@ class FdcOfferBroker
     end
   end
 
-  def catalog_item(id)
-    @catalog_by_id ||= catalog.index_by(&:semanticId)
-    @catalog_by_id[id]
-  end
-
   def flow_producing(wholesale_product_id)
     @production_flows_by_product_id ||= production_flows.index_by { |flow| flow.product.semanticId }
     @production_flows_by_product_id[wholesale_product_id]
   end
 
   def production_flows
-    @production_flows ||= catalog.select do |i|
-      i.semanticType == "dfc-b:AsPlannedProductionFlow"
-    end
+    @production_flows ||= catalog.select_type("dfc-b:AsPlannedProductionFlow")
   end
 end
