@@ -37,9 +37,9 @@ RSpec.describe "Revenues By Hub Reports" do
       tax_rate_name: "Tax 1"
     )
   end
-  let(:distributor1) { create(:enterprise, name: "Hub 1", owner:) }
+  let(:distributor1) { create(:enterprise, name: "Hub 1", owner:, external_billing_id: 'INV1234') }
   let(:distributor2) { create(:enterprise, name: "Hub 2", owner:) }
-  let(:distributor3) { create(:enterprise, name: "Hub 3", owner:) }
+  let(:distributor3) { create(:enterprise, name: "Hub 3", owner:, external_billing_id: 'INV4321') }
   let(:owner) { create(:user, email: 'email@email.com') }
   let(:order_cycle) { create(:simple_order_cycle) }
   let(:product) { create(:product) }
@@ -90,7 +90,7 @@ RSpec.describe "Revenues By Hub Reports" do
         "none",
         "none",
         "none",
-        "none",
+        "INV1234",
         "email@email.com",
         "none",
         "10 Lovely Street",
@@ -134,7 +134,7 @@ RSpec.describe "Revenues By Hub Reports" do
         "none",
         "none",
         "none",
-        "none",
+        "INV4321",
         "email@email.com",
         "none",
         "10 Lovely Street",
