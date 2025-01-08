@@ -31,9 +31,9 @@ RSpec.describe FdcBackorderer do
     expect(backorder.lines).to eq []
 
     # Add items and place the new order:
-    catalog = FdcOfferBroker.load_catalog(order.distributor.owner, urls.catalog_url)
-    product = catalog.find { |i| i.semanticType == "dfc-b:SuppliedProduct" }
-    offer = FdcOfferBroker.new(nil, nil).offer_of(product)
+    catalog = DfcCatalog.load(order.distributor.owner, urls.catalog_url)
+    product = catalog.products.first
+    offer = FdcOfferBroker.new(nil).offer_of(product)
     line = subject.find_or_build_order_line(backorder, offer)
     line.quantity = 3
     placed_order = subject.send_order(backorder)
@@ -74,15 +74,14 @@ RSpec.describe FdcBackorderer do
 
   describe "#find_or_build_order_line" do
     it "add quantity to an existing line item", vcr: true do
-      catalog = FdcOfferBroker.load_catalog(order.distributor.owner, urls.catalog_url)
+      catalog = DfcCatalog.load(order.distributor.owner, urls.catalog_url)
       backorder = subject.find_or_build_order(order)
 
       expect(backorder.lines.count).to eq 0
 
       # Add new item to the new order:
-      catalog = FdcOfferBroker.load_catalog(order.distributor.owner, urls.catalog_url)
-      product = catalog.find { |i| i.semanticType == "dfc-b:SuppliedProduct" }
-      offer = FdcOfferBroker.new(nil, nil).offer_of(product)
+      product = catalog.products.first
+      offer = FdcOfferBroker.new(nil).offer_of(product)
       line = subject.find_or_build_order_line(backorder, offer)
 
       expect(backorder.lines.count).to eq 1
