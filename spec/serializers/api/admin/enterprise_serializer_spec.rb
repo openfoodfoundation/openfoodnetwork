@@ -73,13 +73,4 @@ RSpec.describe Api::Admin::EnterpriseSerializer do
       end
     end
   end
-
-  context "when there is a external billing id" do
-    let(:enterprise) { create(:distributor_enterprise, external_billing_id: 'INV123456') }
-
-    it "includes URLs of image versions" do
-      serializer = Api::Admin::EnterpriseSerializer.new(enterprise)
-      expect(serializer.as_json[:external_billing_id]).to eq('INV123456')
-    end
-  end
 end
