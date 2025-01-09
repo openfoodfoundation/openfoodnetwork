@@ -8,7 +8,7 @@ FactoryBot.define do
       contents { [] }
     end
 
-    initialize_with { new(stock_location, order, contents) }
+    initialize_with { new(order, contents) }
 
     factory :stock_package_fulfilled do
       after(:build) do |package, evaluator|

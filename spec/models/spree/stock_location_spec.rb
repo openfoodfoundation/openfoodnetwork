@@ -12,21 +12,6 @@ module Spree
       expect(subject.stock_items.count).to eq Variant.count
     end
 
-    context "handling stock items" do
-      let!(:variant) { create(:variant) }
-
-      context "given a variant" do
-        context "propagate all variants" do
-          subject { StockLocation.new(name: "testing") }
-
-          specify do
-            expect(subject.stock_items).to receive(:create!).at_least(:once)
-            subject.save!
-          end
-        end
-      end
-    end
-
     it 'finds a stock_item for a variant' do
       stock_item = subject.stock_item(variant)
       expect(stock_item.count_on_hand).to eq 15

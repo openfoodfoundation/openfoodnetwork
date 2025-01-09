@@ -8,7 +8,9 @@ module Spree
 
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :address, class_name: 'Spree::Address'
-    belongs_to :stock_location, class_name: 'Spree::StockLocation'
+
+    # WIP: phasing out stock location, it's not used.
+    belongs_to :stock_location, class_name: 'Spree::StockLocation', optional: true
 
     has_many :shipping_rates, dependent: :delete_all
     has_many :shipping_methods, through: :shipping_rates
@@ -257,7 +259,7 @@ module Spree
     end
 
     def to_package
-      package = OrderManagement::Stock::Package.new(stock_location, order)
+      package = OrderManagement::Stock::Package.new(order)
       grouped_inventory_units = inventory_units.includes(:variant).group_by do |iu|
         [iu.variant, iu.state_name]
       end
@@ -299,6 +301,11 @@ module Spree
 
     def can_modify?
       !shipped? && !order.canceled?
+    end
+
+    # We still use the `unstock` and `restock` methods of the stock location.
+    def stock_location
+      @stock_location ||= DefaultStockLocation.find_or_create
     end
 
     private

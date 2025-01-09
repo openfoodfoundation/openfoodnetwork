@@ -13,11 +13,19 @@ module Spree
 
     validates :name, presence: true
 
-    after_create :create_stock_items
-
     # Wrapper for creating a new stock item respecting the backorderable config
     def stock_item(variant)
-      stock_items.where(variant_id: variant).order(:id).first
+      StockItem.where(variant_id: variant).order(:id).first
+    end
+
+    # We have only one default stock location and it may be unpersisted.
+    # So all stock items belong to any unpersisted stock location.
+    def stock_items
+      StockItem.all
+    end
+
+    def stock_movements
+      StockMovement.all
     end
 
     def stock_item_or_create(variant)
@@ -46,12 +54,6 @@ module Spree
 
     def fill_status(variant, quantity)
       variant.fill_status(quantity)
-    end
-
-    private
-
-    def create_stock_items
-      Variant.find_each { |variant| stock_items.create!(variant:) }
     end
   end
 end

@@ -268,9 +268,7 @@ module Spree
     def create_stock_items
       return unless stock_items.empty?
 
-      StockLocation.find_each do |stock_location|
-        stock_items.create!(stock_location:)
-      end
+      stock_items.create!
     end
 
     def update_weight_from_unit_value

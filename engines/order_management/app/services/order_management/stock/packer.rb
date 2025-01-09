@@ -11,7 +11,7 @@ module OrderManagement
       end
 
       def package
-        package = OrderManagement::Stock::Package.new(stock_location, order)
+        package = OrderManagement::Stock::Package.new(order)
         order.line_items.each do |line_item|
           next unless stock_location.stock_item(line_item.variant)
 
