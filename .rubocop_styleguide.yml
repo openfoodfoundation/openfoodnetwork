@@ -7,7 +7,6 @@ AllCops:
     - bin/**/*
     - config/**/*
     - db/bad_migrations/*
-    - db/default/*
     - db/migrate/*
     - db/schema.rb
     - script/**/*
