@@ -36,20 +36,7 @@ def prompt_for_admin_email
 end
 
 def create_admin_user
-  if ENV.fetch("AUTO_ACCEPT", true)
-    password = ENV.fetch("ADMIN_PASSWORD", "ofn123")
-    email = ENV.fetch("ADMIN_EMAIL", "ofn@example.com")
-  else
-    Rails.logger.debug 'Create the admin user (press enter for defaults).'
-    email = prompt_for_admin_email
-    password = prompt_for_admin_password
-  end
-  attributes = {
-    password:,
-    password_confirmation: password,
-    email:,
-    login: email
-  }
+  attributes = read_user_attributes
 
   load 'spree/user.rb'
 
@@ -61,24 +48,44 @@ def create_admin_user
       user, please run rake spree_auth:admin:create again with a different email.
 
     TEXT
+
+    return
+  end
+
+  admin = Spree::User.new(attributes)
+  admin.skip_confirmation!
+  admin.skip_confirmation_notification!
+
+  # The default domain example.com is not resolved by all nameservers.
+  ValidEmail2::Address.define_method(:valid_mx?) { true }
+
+  if admin.save
+    admin.spree_roles << Spree::Role.admin
+    say "New admin user persisted!"
   else
-    admin = Spree::User.new(attributes)
-    admin.skip_confirmation!
-    admin.skip_confirmation_notification!
-
-    # The default domain example.com is not resolved by all nameservers.
-    ValidEmail2::Address.define_method(:valid_mx?) { true }
-
-    if admin.save
-      admin.spree_roles << Spree::Role.admin
-      say "New admin user persisted!"
-    else
-      say "There was some problems with persisting new admin user:"
-      admin.errors.full_messages.each do |error|
-        say error
-      end
+    say "There was some problems with persisting new admin user:"
+    admin.errors.full_messages.each do |error|
+      say error
     end
   end
+end
+
+def read_user_attributes
+  if ENV.fetch("AUTO_ACCEPT", true)
+    password = ENV.fetch("ADMIN_PASSWORD", "ofn123")
+    email = ENV.fetch("ADMIN_EMAIL", "ofn@example.com")
+  else
+    Rails.logger.debug 'Create the admin user (press enter for defaults).'
+    email = prompt_for_admin_email
+    password = prompt_for_admin_password
+  end
+
+  {
+    password:,
+    password_confirmation: password,
+    email:,
+    login: email
+  }
 end
 
 create_admin_user if Spree::User.admin.empty?
