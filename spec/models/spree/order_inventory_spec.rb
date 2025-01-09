@@ -36,7 +36,7 @@ RSpec.describe Spree::OrderInventory do
       before { allow(order).to receive_messages completed?: false }
 
       it "doesn't unstock items" do
-        expect(shipment.stock_location).not_to receive(:unstock)
+        expect(line_item.variant).not_to receive(:move)
         expect(subject.__send__(:add_to_shipment, shipment, variant, 5)).to eq 5
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe Spree::OrderInventory do
         before { allow(order).to receive_messages completed?: false }
 
         it "doesn't restock items" do
-          expect(shipment.stock_location).not_to receive(:restock)
+          expect(variant).not_to receive(:move)
           expect(subject.__send__(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
         end
       end
@@ -97,7 +97,7 @@ RSpec.describe Spree::OrderInventory do
         before { allow(order).to receive_messages completed?: true }
 
         it "doesn't restock items" do
-          expect(shipment.stock_location).not_to receive(:restock)
+          expect(variant).not_to receive(:move)
           expect(subject.__send__(:remove_from_shipment, shipment, variant, 1, false)).to eq 1
         end
       end

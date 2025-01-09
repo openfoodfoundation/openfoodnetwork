@@ -35,25 +35,6 @@ module Spree
       expect(subject.backorderable?(variant)).to eq false
     end
 
-    it 'restocks a variant with a positive stock movement' do
-      originator = double
-      expect(subject).to receive(:move).with(variant, 5, originator)
-      subject.restock(variant, 5, originator)
-    end
-
-    it 'unstocks a variant with a negative stock movement' do
-      originator = double
-      expect(subject).to receive(:move).with(variant, -5, originator)
-      subject.unstock(variant, 5, originator)
-    end
-
-    it 'it creates a stock_movement' do
-      variant.on_demand = false
-      expect {
-        subject.move variant, 5
-      }.to change { subject.stock_movements.where(stock_item_id: stock_item).count }.by(1)
-    end
-
     context 'fill_status' do
       before { variant.on_demand = false }
 

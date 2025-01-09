@@ -303,7 +303,7 @@ module Spree
       !shipped? && !order.canceled?
     end
 
-    # We still use the `unstock` and `restock` methods of the stock location.
+    # Other code still calls this for convenience.
     def stock_location
       @stock_location ||= DefaultStockLocation.find_or_create
     end
@@ -320,11 +320,11 @@ module Spree
     end
 
     def manifest_unstock(item)
-      stock_location.unstock item.variant, item.quantity, self
+      item.variant.move(-1 * item.quantity, self)
     end
 
     def manifest_restock(item)
-      stock_location.restock item.variant, item.quantity, self
+      item.variant.move(item.quantity, self)
     end
 
     def generate_shipment_number

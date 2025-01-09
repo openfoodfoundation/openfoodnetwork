@@ -325,7 +325,7 @@ RSpec.describe Spree::Shipment do
                                                :group_by,
                                                map: [unit])
       shipment.stock_location = build(:stock_location)
-      expect(shipment.stock_location).to receive(:restock).with(variant, 1, shipment)
+      expect(variant).to receive(:move).with(1, shipment)
       shipment.after_cancel
     end
   end
@@ -349,7 +349,7 @@ RSpec.describe Spree::Shipment do
                                                :group_by,
                                                map: [unit])
       shipment.stock_location = create(:stock_location)
-      expect(shipment.stock_location).to receive(:unstock).with(variant, 1, shipment)
+      expect(variant).to receive(:move).with(-1, shipment)
       shipment.after_resume
     end
 

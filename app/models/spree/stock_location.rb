@@ -40,18 +40,6 @@ module Spree
       stock_item(variant).try(:backorderable?)
     end
 
-    def restock(variant, quantity, originator = nil)
-      move(variant, quantity, originator)
-    end
-
-    def unstock(variant, quantity, originator = nil)
-      move(variant, -quantity, originator)
-    end
-
-    def move(variant, quantity, originator = nil)
-      variant.move(quantity, originator)
-    end
-
     def fill_status(variant, quantity)
       variant.fill_status(quantity)
     end

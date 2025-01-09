@@ -218,7 +218,6 @@ RSpec.describe '
       let(:shipment) { order.shipments.first }
 
       it "and by default an Email is sent and the items are restocked" do
-        expect_any_instance_of(Spree::StockLocation).to receive(:restock).at_least(1).times
         expect do
           within(".modal") do
             click_on("OK")
@@ -226,10 +225,10 @@ RSpec.describe '
           expect(page).to have_content "Cannot add item to canceled order"
           expect(order.reload.state).to eq("canceled")
         end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+          .and change { Spree::StockItem.pluck(:count_on_hand) }
       end
 
       it "and then the order is cancelled and email is not sent when unchecked" do
-        expect_any_instance_of(Spree::StockLocation).to receive(:restock).at_least(1).times
         expect do
           within(".modal") do
             uncheck("send_cancellation_email")
@@ -237,11 +236,12 @@ RSpec.describe '
           end
           expect(page).to have_content "Cannot add item to canceled order"
           expect(order.reload.state).to eq("canceled")
-        end.not_to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+        end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email).at_most(0).times
+          .and change { Spree::StockItem.pluck(:count_on_hand) }
       end
 
       it "and the items are not restocked when the user uncheck the checkbox to restock items" do
-        expect_any_instance_of(Spree::StockLocation).not_to receive(:restock)
+        expect_any_instance_of(Spree::Variant).not_to receive(:move)
         expect do
           within(".modal") do
             uncheck("restock_items")
@@ -250,6 +250,8 @@ RSpec.describe '
           expect(page).to have_content "Cannot add item to canceled order"
           expect(order.reload.state).to eq("canceled")
         end.to have_enqueued_mail(Spree::OrderMailer, :cancel_email)
+          # Not change stock. Rspec can't combine `to` and `not_to` though.
+          .and change { Spree::StockItem.pluck(:count_on_hand) }.by([])
       end
     end
   end

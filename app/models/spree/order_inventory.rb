@@ -12,8 +12,8 @@ module Spree
     # have inventory assigned via +order.create_proposed_shipment+) or when
     # shipment is explicitly passed
     #
-    # In case shipment is passed the stock location should only unstock or
-    # restock items if the order is completed. That is so because stock items
+    # In case shipment is passed stock should only be adjusted
+    # if the order is completed. That is so because stock items
     # are always unstocked when the order is completed through +shipment.finalize+
     def verify(line_item, shipment = nil)
       if order.completed? || shipment.present?
@@ -79,7 +79,7 @@ module Spree
 
       # adding to this shipment, and removing from stock_location
       if order.completed?
-        shipment.stock_location.unstock(variant, quantity, shipment)
+        variant.move(-quantity, shipment)
       end
 
       quantity
@@ -104,7 +104,7 @@ module Spree
 
       # removing this from shipment, and adding to stock_location
       if order.completed? && restock_item
-        shipment.stock_location.restock variant, removed_quantity, shipment
+        variant.move(removed_quantity, shipment)
       end
 
       removed_quantity
