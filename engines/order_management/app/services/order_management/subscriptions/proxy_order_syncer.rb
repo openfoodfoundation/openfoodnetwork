@@ -90,9 +90,8 @@ module OrderManagement
       end
 
       def in_range_order_cycles
-        order_cycles.where("orders_close_at >= ? AND orders_close_at <= ?",
-                           begins_at,
-                           ends_at || 100.years.from_now)
+        ends_at_or_limit = ends_at || 100.years.from_now
+        order_cycles.where(orders_close_at: begins_at..ends_at_or_limit )
       end
     end
   end

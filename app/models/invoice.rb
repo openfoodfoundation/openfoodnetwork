@@ -32,6 +32,6 @@ class Invoice < ApplicationRecord
   end
 
   def previous_invoice
-    order.invoices.where("id < ?", id).first
+    order.invoices.where(id: ...id).first
   end
 end

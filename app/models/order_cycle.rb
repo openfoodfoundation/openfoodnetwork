@@ -53,7 +53,7 @@ class OrderCycle < ApplicationRecord
           Time.zone.now,
           Time.zone.now)
   }
-  scope :active_or_complete, lambda { where('order_cycles.orders_open_at <= ?', Time.zone.now) }
+  scope :active_or_complete, lambda { where(order_cycles: { orders_open_at: ..Time.zone.now }) }
   scope :inactive, lambda {
     where('order_cycles.orders_open_at > ? OR order_cycles.orders_close_at < ?',
           Time.zone.now,
@@ -64,8 +64,8 @@ class OrderCycle < ApplicationRecord
     where('order_cycles.orders_close_at > ? OR order_cycles.orders_close_at IS NULL', Time.zone.now)
   }
   scope :closed, lambda {
-    where('order_cycles.orders_close_at < ?',
-          Time.zone.now).order("order_cycles.orders_close_at DESC")
+    where(order_cycles: { orders_close_at: ...Time.zone.now })
+      .order("order_cycles.orders_close_at DESC")
   }
   scope :unprocessed, -> { where(processed_at: nil) }
   scope :undated, -> { where('order_cycles.orders_open_at IS NULL OR orders_close_at IS NULL') }
