@@ -5,10 +5,11 @@ require "spec_helper"
 RSpec.describe Api::Admin::EnterpriseSerializer do
   include FileHelper
 
-  let(:enterprise) { create(:distributor_enterprise) }
+  let(:enterprise) { create(:distributor_enterprise, external_billing_id: 'INV123456') }
   it "serializes an enterprise" do
     serializer = Api::Admin::EnterpriseSerializer.new enterprise
     expect(serializer.to_json).to match enterprise.name
+    expect(serializer.as_json[:external_billing_id]).to eq('INV123456')
   end
 
   context "for logo" do
