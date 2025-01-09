@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'highline/import'
 
 # see last line where we create an admin if there is none, asking for email and password
@@ -35,25 +37,30 @@ end
 
 def create_admin_user
   if ENV.fetch("AUTO_ACCEPT", true)
-    password = ENV.fetch("ADMIN_PASSWORD", "ofn123").dup
-    email = ENV.fetch("ADMIN_EMAIL", "ofn@example.com").dup
+    password = ENV.fetch("ADMIN_PASSWORD", "ofn123")
+    email = ENV.fetch("ADMIN_EMAIL", "ofn@example.com")
   else
-    puts 'Create the admin user (press enter for defaults).'
-    #name = prompt_for_admin_name unless name
+    Rails.logger.debug 'Create the admin user (press enter for defaults).'
     email = prompt_for_admin_email
     password = prompt_for_admin_password
   end
   attributes = {
-    :password => password,
-    :password_confirmation => password,
-    :email => email,
-    :login => email
+    password:,
+    password_confirmation: password,
+    email:,
+    login: email
   }
 
   load 'spree/user.rb'
 
-  if Spree::User.find_by(email: email)
-    say "\nWARNING: There is already a user with the email: #{email}, so no account changes were made.  If you wish to create an additional admin user, please run rake spree_auth:admin:create again with a different email.\n\n"
+  if Spree::User.find_by(email:)
+    say <<~TEXT
+
+      WARNING: There is already a user with the email: #{email},
+      so no account changes were made. If you wish to create an additional admin
+      user, please run rake spree_auth:admin:create again with a different email.
+
+    TEXT
   else
     admin = Spree::User.new(attributes)
     admin.skip_confirmation!
