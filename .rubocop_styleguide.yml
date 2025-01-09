@@ -5,8 +5,12 @@ AllCops:
   NewCops: enable
   Exclude:
     - bin/**/*
-    - db/**/*
     - config/**/*
+    - db/bad_migrations/*
+    - db/default/*
+    - db/migrate/*
+    - db/schema.rb
+    - db/seeds.rb
     - script/**/*
     - vendor/**/*
     - node_modules/**/*
