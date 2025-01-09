@@ -44,7 +44,7 @@ WebMock.disable_net_connect!(
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
+Rails.root.glob("spec/support/**/*.rb").sort.each { |f| require f }
 
 Capybara.server = :puma
 Capybara.disable_animation = true
