@@ -3,11 +3,13 @@
 # These are the rules we agreed upon and we work towards.
 AllCops:
   NewCops: enable
+  MigratedSchemaVersion: "20250111000000"
   Exclude:
     - bin/**/*
     - config/**/*
     - db/bad_migrations/*
-    - db/migrate/*
+    - db/migrate/201*
+    - db/migrate/202[0-4]*
     - db/schema.rb
     - script/**/*
     - vendor/**/*
