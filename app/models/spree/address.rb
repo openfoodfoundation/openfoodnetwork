@@ -126,7 +126,7 @@ module Spree
     end
 
     def address_and_city
-      [address1, address2, city].select(&:present?).join(' ')
+      [address1, address2, city].compact_blank.join(' ')
     end
 
     private
@@ -176,7 +176,7 @@ module Spree
     end
 
     def render_address(parts)
-      parts.select(&:present?).join(', ')
+      parts.compact_blank.join(', ')
     end
   end
 end

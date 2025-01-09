@@ -18,7 +18,7 @@ class AddressGeocoder
   attr_reader :address
 
   def geocode_address
-    address_parts.select(&:present?).join(', ')
+    address_parts.compact_blank.join(', ')
   end
 
   def address_parts
