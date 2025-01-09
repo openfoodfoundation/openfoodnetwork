@@ -23,8 +23,16 @@ class AmendBackorderJob < ApplicationJob
   def amend_backorder(order)
     backorder = BackorderUpdater.new.amend_backorder(order)
 
-    user = order.distributor.owner
-    urls = nil # Not needed to send order. The backorder id is the URL.
-    FdcBackorderer.new(user, urls).send_order(backorder) if backorder
+    if backorder
+      user = order.distributor.owner
+      urls = nil # Not needed to send order. The backorder id is the URL.
+      FdcBackorderer.new(user, urls).send_order(backorder)
+    elsif order.order_cycle.open?
+
+      # We don't have an order to amend but the order cycle is open.
+      # We can assume that this job was triggered by an admin creating a new
+      # order or adding backorderable items to an order.
+      BackorderJob.new.place_backorder(order)
+    end
   end
 end
