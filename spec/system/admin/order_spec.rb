@@ -189,12 +189,13 @@ RSpec.describe '
 
       expect {
         select2_select product.name, from: 'add_variant_id', search: true
+
         find('button.add_variant').click
+
+        expect(page).to have_css("#order_adjustments", text: 15.00)
+        expect(page).to have_css(".order-total", text: 63.99)
       }.to change { order_with_fees.payments.first.adjustment.amount }.from(10.00).to(15.00)
         .and change { order_with_fees.reload.total }.from(36.00).to(63.99)
-
-      expect(page).to have_css("#order_adjustments", text: 15.00)
-      expect(page).to have_css(".order-total", text: 63.99)
     end
   end
 
