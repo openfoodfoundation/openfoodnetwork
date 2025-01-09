@@ -2960,6 +2960,7 @@ ca:
     ready: Llest
     pending: Pendents
     shipped: Enviat
+  business_name: Nom de l'empresa
   js:
     saving: 'Desant...'
     changes_saved: 'S''han desat els canvis.'

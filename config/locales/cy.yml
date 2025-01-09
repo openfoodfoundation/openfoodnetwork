@@ -3132,6 +3132,7 @@ cy:
     ready: Yn barod
     pending: Yn yr arfaeth
     shipped: Wedi'i anfon
+  business_name: Enw Busnes
   js:
     saving: 'Yn cadw  ...'
     changes_saved: 'Cadwyd newidiadau.'

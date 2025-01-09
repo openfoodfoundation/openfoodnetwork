@@ -2821,6 +2821,7 @@ it_CH:
     ready: Pronto
     pending: In sospeso
     shipped: Spedito
+  business_name: Ragione sociale
   js:
     saving: 'Salvataggio...'
     changes_saved: 'Modifiche salvate.'

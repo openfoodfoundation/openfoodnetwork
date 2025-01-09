@@ -2814,6 +2814,7 @@ en_US:
     ready: Ready
     pending: Pending
     shipped: Shipped
+  business_name: Business Name
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'

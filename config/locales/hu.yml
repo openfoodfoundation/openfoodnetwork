@@ -105,6 +105,9 @@ hu:
           count_on_hand:
             using_producer_stock_settings_but_count_on_hand_set: "üresnek kell lennie, mert a termelői készlet beállításait használja"
             limited_stock_but_no_count_on_hand: "meg kell adni, mert korlátozott a készlet"
+        connected_apps:
+          vine:
+            api_request_error: "Hiba lépett fel a Vine API-hoz való csatlakozáskor"
       messages:
         confirmation: "nem egyezik %{attribute}"
         blank: "nem lehet üres"
@@ -425,7 +428,7 @@ hu:
   required_fields: A kötelező mezőket csillag jelöli
   select_continue: Válassz és Folytasd
   remove: Eltávolítás
-  collapse_all: Mindet összecsuk
+  collapse_all: Az összes bezárása
   expand_all: Az összes kibontása
   loading: Betöltés...
   show_more: Mutass többet
@@ -445,7 +448,7 @@ hu:
   variant_overrides: Leltár
   import: Importálás
   spree_products: Spree termékek
-  all: Minden
+  all: Mind
   current: Jelenlegi
   available: Elérhető
   dashboard: Irányítópult
@@ -498,6 +501,13 @@ hu:
   depth: "Mélység"
   payment_could_not_process: "A fizetést nem sikerült feldolgozni"
   payment_could_not_complete: "A fizetés nem hajtható végre"
+  vine_voucher_validator_service:
+    errors:
+      vine_api: "Hiba lépett fel az API-hoz való csatlakozáskor. Próbáld újra később."
+      invalid_voucher: "Az utalvány nem érvényes"
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "Hiba lépett fel az API-hoz való csatlakozáskor."
   actions:
     create_and_add_another: "Hozz létre és adj hozzá egy másikat"
     create: "Létrehozás"
@@ -685,6 +695,8 @@ hu:
     connected_app_settings:
       edit:
         title: "Kapcsolt app beállítás"
+        connected_apps_enabled:
+          vine: Voucher Integration Engine (VINE)
       update:
         resource: Kapcsolt app beállítás
     customers:
@@ -1036,7 +1048,7 @@ hu:
         max_fulfilled_units: "Maximális teljesített egységek"
         order_error: "A rendelések frissítése előtt bizonyos hibákat meg kell oldani.\nMinden piros szegélyű mező hibát tartalmaz."
         variants_without_unit_value: "FIGYELMEZTETÉS: Egyes változatok nem rendelkeznek egységértékkel"
-        all: "Minden"
+        all: "Mind"
       select_variant: "Válassz egy változatot"
       note:
         note_label: "Megjegyzés:"
@@ -1303,20 +1315,10 @@ hu:
           legend: "Csatlakoztatott alkalmazások"
           affiliate_sales_data:
             title: "INRAE / UFC QUE CHOISIR Kutatás"
-            tagline: "Engedélyezd ennek a kutatási projektnek, hogy névtelenül hozzáférjen rendelési adataidhoz"
             enable: "Adatmegosztás engedélyezése"
             disable: "Megosztás leállítása"
             loading: "Betöltés"
             need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
-            description_html: |
-                <p>
-                INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project.
-                </p>
-                <p>
-                <a href="https://apropos.coopcircuits.fr/"
-                target="_blank"><b>Learn more about this research project</b>
-                <i class="icon-external-link"></i></a>
-                </p>
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Engedélyezd a Discover Regenerative számára a vállalkozási adatok közzétételét."
@@ -1328,15 +1330,8 @@ hu:
                 Open Food Network fiókod a Discover Regenerative szolgáltatáshoz kapcsolódik.
                 Adj hozzá vagy frissíts információkat a Discover Regenerative adatlapjáról itt.
             link_label: "Listázás kezelése"
-            description_html: |
-                <p>
-                Termelők bemutathatják bio gazdálkodási tanúsítványukat, egyéb gazdálkodási gyakorlatukat és tevékenységeiket a profiljukban. Ez egyszerűsíti a fogyasztók számára, hogy megtalálják a fenntartható gyakorlatokkal előállított termékeket, és kapcsolatba lépjenek a termelőkkel.</p>
-                <p>
-                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-                target="_blank"><b> Tudj meg többet a Regeneratív gyakorlatokról. </b>
-                <i class="icon-external-link"></i></a>
-                </p>
           vine:
+            title: "Voucher Integration Engine (VINE)"
             enable: "Csatlakozás"
             disable: "Lecsatlakozás"
             need_to_be_manager: "Csak a megfelelő jogosultsággal rendelkező felhasználók csatlakoztathatnak alkalmazásokat."
@@ -2117,7 +2112,7 @@ hu:
   unauthorized: Jogosulatlan
   terms_of_service: "Szolgáltatás feltételei"
   on_demand: Igény szerint
-  not_allowed: Nem megengedett
+  not_allowed: Nem engedélyezett
   no_shipping: nincs szállítási mód
   no_payment: nincs fizetési mód
   no_shipping_or_payment: nincs szállítási vagy fizetési mód
@@ -2958,7 +2953,7 @@ hu:
   report_payment_by: 'Fizetés Típusonként'
   report_itemised_payment: 'Tételes Fizetési Összegek'
   report_payment_totals: 'Fizetési Összegek'
-  report_all: 'minden'
+  report_all: 'mind'
   report_order_cycle: "Rendelési Ciklus"
   report_hide_columns: Elrejtendő Oszlopok
   report_columns: Oszlopok
@@ -3244,6 +3239,7 @@ hu:
     ready: Kész
     pending: Függőben levő
     shipped: Kiszállítva
+  business_name: Vállalkozás neve
   js:
     saving: 'Mentés...'
     changes_saved: 'Változtatások elmentve.'''
@@ -3716,7 +3712,7 @@ hu:
       enterprise_fee_summary:
         date_end_before_start_error: "indítás után kell lennie"
         parameter_not_allowed_error: "Nem jogosult egy vagy több kiválasztott szűrő használatára ehhez a jelentéshez."
-        fee_calculated_on_transfer_through_all: "Minden"
+        fee_calculated_on_transfer_through_all: "Mind"
         fee_calculated_on_transfer_through_entire_orders: "Teljes rendelés a következőn keresztül: %{distributor}"
         tax_category_various: "Különféle"
         fee_type:
@@ -3795,7 +3791,7 @@ hu:
     add_country: "Ország hozzáadása"
     add_state: "Állam hozzáadása"
     adjustment: "Beállítás"
-    all: "Minden"
+    all: "Mind"
     associated_adjustment_closed: "A kapcsolódó beállítás lezárva"
     back_to_adjustments_list: "Vissza a beállításokhoz"
     back_to_users_list: "Vissza a felhasználókhoz"

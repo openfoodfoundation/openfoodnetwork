@@ -2454,6 +2454,7 @@ pl:
     ready: Gotowy
     pending: W oczekiwaniu
     shipped: Wysłane
+  business_name: Nazwa firmy
   js:
     saving: 'Zapisywanie...'
     changes_saved: 'Zmiany zapisane.'

@@ -3110,6 +3110,7 @@ de_DE:
     ready: bereit
     pending: ausstehend
     shipped: versandt
+  business_name: Unternehmensname
   js:
     saving: 'Wird gespeichert ...'
     changes_saved: 'Die Änderungen wurden gespeichert.'

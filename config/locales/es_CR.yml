@@ -2884,6 +2884,7 @@ es_CR:
     ready: Listo
     pending: Pendiente
     shipped: Enviado
+  business_name: Nombre de la organización
   js:
     saving: 'Guardando...'
     changes_saved: 'Cambios guardados.'

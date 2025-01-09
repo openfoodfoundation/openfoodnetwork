@@ -138,6 +138,7 @@ es:
       image_not_processable: "no es una imagen valida"
     not_found:
       title: "La página que estas buscando no existe (404)"
+      message_html: "<b>Por favor, inténtelo de nuevo</b> <p>Esto puede ser un problema temporal. Haga clic en el botón Atrás para volver a la pantalla anterior o vuelva a <a href='/'>Inicio</a> e inténtelo de nuevo</p>. <b>Póngase en contacto con el servicio de asistencia</b> <p>Si el problema persiste o es urgente, comuníquenoslo. Encuentre nuestros datos de contacto en la <a href='https://openfoodnetwork.org/ofn-local/' target='blank'>página local de Open Food Network</a>. </p><p>Nos será de gran ayuda que nos facilite todos los detalles posibles sobre el motivo de la página que falta.</p>"
     internal_server_error:
       title: "Lo sentimos pero algo fue mal (500)"
     unprocessable_entity:
@@ -3149,6 +3150,7 @@ es:
     ready: Listo
     pending: Pendiente
     shipped: Enviado
+  business_name: Nombre de la Organización
   js:
     saving: 'Guardando...'
     changes_saved: 'Cambios guardados.'

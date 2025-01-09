@@ -147,6 +147,10 @@ en_FR:
       message_html: "<p> The change you wanted was rejected. Maybe you tried to change something you don't have access to. <br><h3><a href='/' > Return home </a></h3></p>"
     general_error:
       message: "We're sorry, but something went wrong.\n\nThis might be a temporary problem, so please try again or reload the page.\nWe record all errors and may be working on a fix.\nIf the problem persists or is urgent, please contact us."
+    unauthorized:
+      message: "You are not authorised to perform that action."
+    network_error:
+      message: "Network error: please try again later."
   stripe:
     error_code:
       incorrect_number: "The card number is incorrect."
@@ -1354,20 +1358,14 @@ en_FR:
           legend: "Connected apps"
           affiliate_sales_data:
             title: "INRAE Research"
-            tagline: "Allow this research project to access your orders data anonymously"
+            tagline: "Allow this research project to access your orders data anonymously."
             enable: "Allow data sharing"
             disable: "Stop sharing"
             loading: "Loading"
             need_to_be_manager: "Only managers can connect apps."
-            description_html: |
-                <p>
-                INRAE are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project.
-                </p>
-                <p>
-                <a href="https://apropos.coopcircuits.fr/"
-                target="_blank"><b>Learn more about this research project</b>
-                <i class="icon-external-link"></i></a>
-                </p>
+            description: "INRAE and UFC QUE CHOISIR are teaming up to study food prices in short food systems and compare them with prices in the supermarket, for a given set of products. The data that is used by INRAE is mixed with data coming from other short food chain platforms in France. No individual product prices will be publicly disclosed through this project."
+            link_label_html: "Learn more about this research project <i class=\"icon-external-link\"></i>"
+            link_url: "https://apropos.coopcircuits.fr/"
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Allow Discover Regenerative to publish your enterprise information."
@@ -1379,18 +1377,9 @@ en_FR:
                 Your Open Food Network account is connected to Discover Regenerative.
                 Add or update information on your Discover Regenerative listing here.
             link_label: "Manage listing"
-            description_html: |
-                <p>
-                Eligible producers can showcase their regenerative credentials,
-                farming practices and more through a profile listing.
-                Simplifying how buyers can find regenerative produce and connect
-                with producers of interest.
-                </p>
-                <p>
-                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-                target="_blank"><b>Learn more about Discover Regenerative</b>
-                <i class="icon-external-link"></i></a>
-                </p>
+            description: "Eligible producers can showcase their regenerative credentials, farming practices and more through a profile listing. Simplifying how buyers can find regenerative produce and connect with producers of interest."
+            link_label_html: "Learn more about Discover Regenerative <i class=\"icon-external-link\"></i>"
+            link_url: "https://about.openfoodnetwork.org.au/regen-produce-portal/"
           vine:
             title: "Voucher Integration Engine (VINE)"
             tagline: "Allow redemption of VINE vouchers in your shopfront."
@@ -1399,14 +1388,9 @@ en_FR:
             need_to_be_manager: "Only managers can connect apps."
             vine_api_key: "VINE API Key"
             vine_secret: "VINE secret"
-            description_html: |
-                <p>
-                To enable VINE for your enterprise, enter your API key and secret.
-                </p>
-                <p>
-                <a href="#" target="_blank"><b>VINE</b>
-                <i class="icon-external-link"></i></a>
-                </p>
+            description: "To enable VINE for your enterprise, enter your API key and secret."
+            link_label_html: "VINE <i class=\"icon-external-link\"></i>"
+            link_url: "https://vine.openfoodnetwork.org.au"
             api_parameters_empty: "Please enter an API key and a secret"
             api_parameters_error: "Check you entered your API key and secret correctly, contact your instance manager if the error persists"
             connection_error: "API connection error, please try again"
@@ -2380,6 +2364,7 @@ en_FR:
   email_order_summary_subtotal: "Subtotal:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(includes tax):"
+  email_order_summary_voucher_label: "Voucher (%{code}):"
   email_payment_paid: PAID
   email_payment_not_paid: NOT PAID
   email_payment_description: Payment Description at Checkout
@@ -3316,6 +3301,7 @@ en_FR:
     ready: Ready
     pending: Pending
     shipped: Shipped
+  business_name: Business Name
   js:
     saving: 'Saving...'
     changes_saved: 'Changes saved.'

@@ -3071,6 +3071,7 @@ pa:
     ready: ਤਿਆਰ
     pending: ਲੰਬਿਤ
     shipped: ਭੇਜਿਆ ਗਿਆ
+  business_name: ਕਾਰੋਬਾਰ ਦਾ ਨਾਮ
   js:
     saving: 'ਸੇਵ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...'''
     changes_saved: 'ਬਦਲਾਵਾਂ ਨੂੰ ਸੇਵ ਕੀਤਾ ਗਿਆ।'

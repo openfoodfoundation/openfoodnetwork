@@ -2586,6 +2586,7 @@ pt:
     ready: Pronta
     pending: Pendente
     shipped: Enviado
+  business_name: Nome do Negócio
   js:
     saving: 'A guardar....'
     changes_saved: 'Alterações guardadas.'

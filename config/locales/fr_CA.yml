@@ -309,6 +309,8 @@ fr_CA:
   sku: "Référence Produit"
   subtotal: "Sous-total"
   tax_rate: "Taux de taxe"
+  with_tax_incl: "%{amount}taxes inclus "
+  producer_mail_qty: Quantité
   validators:
     date_time_string_validator:
       not_string_error: "doit être une série"
@@ -532,6 +534,11 @@ fr_CA:
     errors:
       vine_api: "There was an error communicating with the API, please try again later."
       invalid_voucher: "The voucher is not valid"
+      not_found_voucher: "Désolé, nous n'avons pas trouvé ce bon de réduction. Merci de vérifier le code qui vous a été transmis."
+  vine_voucher_redeemer_service:
+    errors:
+      vine_api: "Il y a eu une erreur de communication avec l'API"
+      redeeming_failed: "Echec de la prise en compte du bon de réduction"
   actions:
     create_and_add_another: "Créer et ajouter nouveau"
     create: "Créer"
@@ -1351,20 +1358,10 @@ fr_CA:
           legend: "Applications connectées"
           affiliate_sales_data:
             title: "Programme de recherche INRAE / UFC QUE CHOISIR"
-            tagline: "Autoriser ce programme de recherche à accéder à vos données de commandes anonymisées"
             enable: "Autoriser le partage de données"
             disable: "Arrêter le partage"
             loading: "Chargement en cours"
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
-            description_html: |
-                <p>
-                L'INRAE et UFC QUE CHOISIR travaillent conjointement sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme.
-                </p>
-                <p>
-                <a href="https://apropos.coopcircuits.fr/"
-                target="_blank"><b>En savoir plus à propos de ce programme de recherche</b>
-                <i class="icon-external-link"></i></a>
-                </p>
           discover_regen:
             title: "Annuaire alimentaire de Waterloo"
             tagline: "Permettre à l'OFN Canada de publier les informations relatives à votre entreprise."
@@ -1376,14 +1373,6 @@ fr_CA:
                 Votre compte Open Food Network est connecté à Annuaire alimentaire de Waterloo.
                 Les modifications apportées à votre profil OFN mettront à jour votre liste Waterloo Food Directory lorsque vous cliquerez sur le bouton 'Mise à jour de la liste'. Pour toute autre modification, veuillez contacter le service d'assistance de l'OFN et support@openfoodnetwork.ca.
             link_label: "Mise à jour de la liste"
-            description_html: |
-                <p>Les producteurs éligibles peuvent présenter des appels à l'action en faveur du manger local, donner local, et/ou cultiver local..
-                Cela simplifie la façon dont les producteurs peuvent se connecter dans la région de Waterloo autour de la justice et de la souveraineté alimentaires.
-
-                <p>
-                <a href="https://waterlooregionfood.ca/" target="_blank"><b>En savoir plus sur le Annuaire alimentaire de Waterloo. </b>
-                <i class="icon-external-link"></i></a>
-                </p>
           vine:
             title: "Éditeur de bons de réduction (VINE)"
             tagline: "Autoriser l'utilisation de bons de réduction VINE dans votre boutique"
@@ -1392,14 +1381,6 @@ fr_CA:
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
             vine_api_key: "clé API VINE"
             vine_secret: "VINE secret"
-            description_html: |
-                <p>
-                Pour mettre en place l'éditeur de bons de réduction VINE pour votre entreprise, entrer votre clé API et secret.
-                </p>
-                <p>
-                <a href="#" target="_blank"><b>VINE</b>
-                <i class="icon-external-link"></i></a>
-                </p>
             api_parameters_empty: "Entrer une clé API et un secret"
             api_parameters_error: "Vérifiez que vous avez entré la clé API et le secret correctement. Contactez l'équipe support de la plateforme si l'erreur persiste. "
             connection_error: "Erreur de connexion à l'API. Merci de réessayer."
@@ -2040,6 +2021,8 @@ fr_CA:
       no_shipping_methods_available: Il n'est pas possible de passer commande car il n'y a pas d'options de livraison / récupération de commande. Veuillez contacter le gestionnaire de la boutique.
       voucher_not_found: Non trouvé
       add_voucher_error: Il y a eu une erreur lors de l'ajout de votre réduction.
+      create_voucher_error: "Il y a eu une erreur lors de la création du bon de réduction : %{error}"
+      voucher_redeeming_error: Il y a eu une erreur lors de la tentative d'utilisation de votre bon de réduction.
   shops:
     hubs:
       show_closed_shops: "Afficher les boutiques fermées"
@@ -3312,6 +3295,7 @@ fr_CA:
     ready: Prêt
     pending: En attente
     shipped: Expédié
+  business_name: Nom de l'entreprise
   js:
     saving: 'Enregistrement en cours...'
     changes_saved: 'Modifications sauvegardées.'

@@ -3102,6 +3102,7 @@ hi:
     ready: रेडी
     pending: पेंडिंग
     shipped: शिप किया गया
+  business_name: बिज़नेस का नाम
   js:
     saving: 'सेव हो रहा है...'
     changes_saved: 'बदलाव सेव किए गए।'

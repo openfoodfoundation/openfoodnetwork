@@ -2531,6 +2531,7 @@ fil_PH:
     ready: handa
     pending: nakabinbin
     shipped: na-ship na
+  business_name: Pangalan ng negosyo
   js:
     saving: 'sine-save...'
     changes_saved: 'nai-save ang mga pagbabago'

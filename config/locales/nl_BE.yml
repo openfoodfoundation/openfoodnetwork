@@ -2586,6 +2586,7 @@ nl_BE:
     ready: Klaar
     pending: In afwachting
     shipped: Verzonden
+  business_name: Bedrijfsnaam
   js:
     saving: 'Aan het opslaan'
     changes_saved: 'Veranderingen bewaard.'

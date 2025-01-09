@@ -1342,20 +1342,10 @@ nb:
           legend: "Tilkoblede apper"
           affiliate_sales_data:
             title: "INRAE / UFC QUE CHOISIR Research"
-            tagline: "La dette forskningsprosjektet få tilgang til ordredataene dine anonymt"
             enable: "Tillat datadeling"
             disable: "Stopp deling"
             loading: "Laster"
             need_to_be_manager: "Bare ledere kan koble til apper."
-            description_html: |
-                <p>
-                INRAE og UFC QUE CHOISIR går sammen for å studere matvarepriser i korte matsystemer og sammenligne dem med prisene i supermarkedet, for et gitt sett med produkter. Dataene som brukes av INRAE er blandet med data som kommer fra andre korte matkjedeplattformer i Frankrike. Ingen individuelle produktpriser vil bli offentliggjort gjennom dette prosjektet.
-                </p>
-                <p>
-                <a href="https://apropos.coopcircuits.fr/"
-                target="_blank"></b>Lær mer om dette forskningsprosjektet</b>
-                <i class="icon-external-link"></i></a>
-                </p>
           discover_regen:
             title: "Oppdag Regenerativ"
             tagline: "Tillat Discover Regenerativ å publisere bedriftsinformasjonen din."
@@ -1367,18 +1357,6 @@ nb:
                 Open Food Network-kontoen din er koblet til Discover Regenerativ.
                 Legg til eller oppdater informasjon om Discover Regenerativ-oppføringen din her.
             link_label: "Administrer oppføring"
-            description_html: |
-                <p>
-                Kvalifiserte produsenter kan vise frem sin regenerative legitimasjon,
-                oppdrettspraksis og mer gjennom en profiloppføring.
-                Forenkler hvordan kunder kan finne regenerative produkter og koble sammen
-                med produsenter av interesse.
-                </p>
-                <p>
-                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-                target="_blank"><b>Lær mer om Discover Regenerativ</b>
-                <i class="icon-external-link"></i></a>
-                </p>
           vine:
             title: "Voucher Integration Engine (VINE)"
             tagline: "Tillat innløsning av VINE-kuponger i butikken din."
@@ -1387,14 +1365,6 @@ nb:
             need_to_be_manager: "Bare ledere kan koble til apper."
             vine_api_key: "VINE API-nøkkel"
             vine_secret: "VINE-hemmelighet"
-            description_html: |
-                <p>
-                For å aktivere VINE for bedriften din, skriv inn API-nøkkelen og hemmeligheten.
-                </p>
-                <p>
-                <a href="#" target="_blank"><b>VINE</b>
-                <i class="icon-external-link"></i></a>
-                </p>
             api_parameters_empty: "Vennligst skriv inn en API-nøkkel og en hemmelighet"
             api_parameters_error: "Sjekk at du skrev inn API-nøkkelen og hemmeligheten din riktig, kontakt administratoren din hvis feilen vedvarer"
             connection_error: "API-tilkoblingsfeil. Vennligst prøv igjen"
@@ -3289,6 +3259,7 @@ nb:
     ready: Klar
     pending: Venter
     shipped: Levert
+  business_name: Bedriftsnavn
   js:
     saving: 'Lagrer...'
     changes_saved: 'Endringene er lagret.'

@@ -2711,6 +2711,7 @@ tr:
     ready: hazır
     pending: Bekliyor
     shipped: Gönderildi
+  business_name: İşletme Adı
   js:
     saving: 'Kaydediyor ...'
     changes_saved: 'Değişiklikler kaydedildi.'

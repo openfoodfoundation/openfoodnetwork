@@ -3118,6 +3118,7 @@ ml:
     ready: തയ്യാറാണ്
     pending: തീർപ്പാക്കാത്തത്
     shipped: ഷിപ് ചെയ്തു
+  business_name: ബിസിനസ്സ് പേര്
   js:
     saving: 'സേവ് ചെയ്യുന്നു..'
     changes_saved: 'മാറ്റങ്ങൾ സേവ് ചെയ്തു.'

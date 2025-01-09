@@ -3176,6 +3176,7 @@ ru:
     ready: Готово
     pending: В ожидании
     shipped: Отправлено
+  business_name: Наименование фирмы
   js:
     saving: 'Сохранение...'
     changes_saved: 'Изменения сохранены.'

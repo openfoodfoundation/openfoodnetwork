@@ -147,6 +147,10 @@ fr:
       message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p>"
     general_error:
       message: "Nous sommes désolés mais quelque chose s'est mal passé. \n\nC'est un problème temporaire, merci donc de réessayer ou de recharger la page. \nNous enregistrons toutes les erreurs et travaillons sur les améliorations nécessaires.\nSi le problème persiste ou est urgent, merci de nous contacter."
+    unauthorized:
+      message: "Vous n'êtes pas autorisé à réaliser cette action."
+    network_error:
+      message: "Erreur réseau : merci de réessayer plus tard."
   stripe:
     error_code:
       incorrect_number: "Le numéro de carte bancaire est incorrect."
@@ -1361,15 +1365,9 @@ fr:
             disable: "Arrêter le partage"
             loading: "Chargement en cours"
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
-            description_html: |
-                <p>
-                L'INRAE travaille sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme.
-                </p>
-                <p>
-                <a href="https://apropos.coopcircuits.fr/"
-                target="_blank"><b>En savoir plus à propos de ce programme de recherche</b>
-                <i class="icon-external-link"></i></a>
-                </p>
+            description: "L'INRAE et UFC QUE CHOISIR travaillent conjointement sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme."
+            link_label_html: "En savoir plus à propos de ce projet de recherche <i class=\"icon-external-link\"></i>"
+            link_url: "https://apropos.coopcircuits.fr/"
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Autoriser Discover Regenerative à publier les informations de votre entreprise"
@@ -1381,18 +1379,9 @@ fr:
                 Votre compte Open Food Network est connecté à Discover Regenerative.
                 Ajouter et mettre à jour les informations sur votre liste Discover Regenerative ici.
             link_label: "Gérer la liste"
-            description_html: |
-                <p>
-                Les producteurs éligibles peuvent mettre en avant leurs références Regenerative,
-                pratiques agricoles et plus à travers le listing du profil.
-                Simplifier comment les acheteurs peuvent trouver les produits regeneratives et se connecter
-                avec des producteurs.
-                </p>
-                <p>
-                <a href="https://about.openfoodnetwork.org.au/regen-produce-portal/"
-                target="_blank"><b>En savoir plus sur Discover Regenerative</b>
-                <i class="icon-external-link"></i></a>
-                </p>
+            description: "Les producteurs éligibles peuvent mettre en avant leurs références Regenerative, pratiques agricoles et plus, à travers le listing du profil. Simplifier comment les acheteurs peuvent trouver les produits Regenerative et se connecter avec des producteurs."
+            link_label_html: "En savoir plus sur Discover Regenerative <i class=\"icon-external-link\"></i>"
+            link_url: "https://about.openfoodnetwork.org.au/regen-produce-portal/"
           vine:
             title: "Éditeur de bons de réduction (VINE)"
             tagline: "Autoriser l'utilisation de bons de réduction VINE dans votre boutique"
@@ -1401,14 +1390,9 @@ fr:
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
             vine_api_key: "clé API VINE"
             vine_secret: "VINE secret"
-            description_html: |
-                <p>
-                Pour mettre en place l'éditeur de bons de réduction VINE  pour votre entreprise, entrer votre clé API et secret.
-                </p>
-                <p>
-                <a href="#" target="_blank"><b>VINE</b>
-                <i class="icon-external-link"></i></a>
-                </p>
+            description: "Pour autoriser l'éditeur de bons de réduction VINE pour votre entreprise, entrer votre clé API et clé secrète"
+            link_label_html: "Editeur de bons de réduction VINE <i class=\"icon-external-link\"></i>"
+            link_url: "https://vine.openfoodnetwork.org.au"
             api_parameters_empty: "Entrer une clé API et un secret"
             api_parameters_error: "Vérifiez que vous avez entré la clé API et le secret correctement. Contactez l'équipe support de la plateforme si l'erreur persiste. "
             connection_error: "Erreur de connexion à l'API. Merci de réessayer."
@@ -2386,6 +2370,7 @@ fr:
   email_order_summary_subtotal: "Sous-total:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(dont TVA)"
+  email_order_summary_voucher_label: "Réduction (%{code}):"
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_description: Informations concernant le mode de paiement
@@ -3324,6 +3309,7 @@ fr:
     ready: Prêt
     pending: En attente
     shipped: Expédié
+  business_name: Nom de l'entreprise
   js:
     saving: 'Enregistrement en cours...'
     changes_saved: 'Modifications sauvegardées.'

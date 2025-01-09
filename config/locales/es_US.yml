@@ -2762,6 +2762,7 @@ es_US:
     ready: Listo
     pending: Pendiente
     shipped: Enviado
+  business_name: Nombre de la Organización
   js:
     saving: 'Guardando...'
     changes_saved: 'Cambios guardados.'

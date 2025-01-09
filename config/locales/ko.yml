@@ -2858,6 +2858,7 @@ ko:
     ready: 준비
     pending: 보류 중
     shipped: 배송됨
+  business_name: 사업자명
   js:
     saving: '저장 중...'
     changes_saved: '변경 내용이 저장되었습니다.'

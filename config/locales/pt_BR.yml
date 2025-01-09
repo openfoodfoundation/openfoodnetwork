@@ -2697,6 +2697,7 @@ pt_BR:
     ready: Pronto
     pending: Pendente
     shipped: Enviado
+  business_name: Nome da iniciativa
   js:
     saving: 'Salvando...'
     changes_saved: 'Alterações salvas.'

@@ -2883,6 +2883,7 @@ uk:
     ready: Готовий
     pending: В очікуванні
     shipped: Відправлено
+  business_name: Найменування фірми
   js:
     saving: 'Збереження...'
     changes_saved: 'Зміни збережено.'
