@@ -33,7 +33,7 @@
     "stimulus_reflex": "3.5.3",
     "tom-select": "^2.4.1",
     "trix": "^2.1.12",
-    "turbo_power": "^0.7.0",
+    "turbo_power": "^0.7.1",
     "webpack": "~4"
   },
   "devDependencies": {
