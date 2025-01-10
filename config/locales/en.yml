@@ -1284,11 +1284,15 @@ en:
           own: Own
           sells: Sells
           sells_tip: "None - enterprise does not sell to customers directly.<br />Own - Enterprise sells own products to customers.<br />Any - Enterprise can sell own or other enterprises products.<br />"
+          external_billing_id: External Billing ID
+          external_billing_id_placeholder: eg. INV-2024-123456
+          external_billing_id_tip: "This is the ID used by the external billing system to identify this enterprise."
           visible_in_search: Visible in search?
           visible_in_search_tip: "Shops can be <br />1. publicly visible, appearing on the OFN map and listings. <br />2. Hidden on maps and listings but referenced by other shops and linked in their profile. <br />3. Completely hidden."
           visible: Public
           not_visible: Hidden
           hidden: Hide all references
+          admin_only_legend: Admin only
         properties:
           legend: "Properties"
         permalink:
@@ -3193,6 +3197,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
   report_header_hub_code: Hub Code
   report_header_hub_id: Hub ID
   report_header_hub_business_number: "Hub Business Number"
+  report_header_hub_external_billing_id: "Hub External Billing Id"
   report_header_hub_legal_name: "Hub Legal Name"
   report_header_hub_contact_name: "Hub Contact Name"
   report_header_hub_email: "Hub Public Email"
