@@ -14,6 +14,7 @@ module Admin
       # e.g producer_options = [['producer name', id]]
       product.variants.build do |new_variant|
         new_variant.supplier_id = producer_options.first.second if producer_options.one?
+        new_variant.tax_category_id = product.variants.first.tax_category_id
       end
     end
 
