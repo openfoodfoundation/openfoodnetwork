@@ -107,6 +107,13 @@ RSpec.describe BackorderUpdater do
         .to change { backorder.lines.count }.from(2).to(1)
         .and change { beans.reload.on_hand }.by(-12)
     end
+
+    it "skips updating if there's is no backorder" do
+      allow_any_instance_of(FdcBackorderer).to receive(:find_open_order)
+        .and_return(nil)
+
+      expect { subject.amend_backorder(order) }.not_to raise_error
+    end
   end
 
   describe "#distributed_linked_variants" do

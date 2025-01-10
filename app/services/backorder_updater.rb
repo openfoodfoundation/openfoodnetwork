@@ -28,7 +28,7 @@ class BackorderUpdater
 
     backorder = orderer.find_open_order(order)
 
-    update(backorder, user, distributor, order_cycle)
+    update(backorder, user, distributor, order_cycle) if backorder
   end
 
   # Update a given backorder according to a distributor's order cycle.
