@@ -46,4 +46,19 @@ RSpec.describe Admin::ProductsHelper do
       end
     end
   end
+
+  describe '#prepare_new_variant' do
+    let(:zone) { create(:zone_with_member) }
+    let(:product) {
+      create(:taxed_product, zone:, price: 12.54, tax_rate_amount: 0,
+                             included_in_price: true)
+    }
+
+    context 'when tax category is present for first varient' do
+      it 'sets tax category for new variant' do
+        first_variant_tax_id = product.variants.first.tax_category_id
+        expect(helper.prepare_new_variant(product, []).tax_category_id).to eq(first_variant_tax_id)
+      end
+    end
+  end
 end
