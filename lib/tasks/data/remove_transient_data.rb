@@ -18,9 +18,9 @@ class RemoveTransientData
   def call
     Rails.logger.info("#{self.class.name}: processing")
 
-    Spree::StateChange.where("created_at < ?", expiration_date).delete_all
-    Spree::LogEntry.where("created_at < ?", expiration_date).delete_all
-    Session.where("updated_at < ?", expiration_date).delete_all
+    Spree::StateChange.where(created_at: ...expiration_date).delete_all
+    Spree::LogEntry.where(created_at: ...expiration_date).delete_all
+    Session.where(updated_at: ...expiration_date).delete_all
 
     clear_old_cart_data!
   end

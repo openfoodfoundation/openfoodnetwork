@@ -37,7 +37,7 @@ module Reporting
             order.line_items[0].variant.product.update(name: "Cucumber")
             order.line_items[1].variant.product.update(name: "Apple")
             order.line_items[2].variant.product.update(name: "Banane")
-            product_names = report.rows.map(&:product).filter(&:present?)
+            product_names = report.rows.map(&:product).compact_blank
             expect(product_names).to eq(["Apple", "Banane", "Cucumber"])
           end
         end
@@ -84,7 +84,7 @@ module Reporting
             order.line_items[0].variant.product.update(name: "Cucumber")
             order.line_items[1].variant.product.update(name: "Apple")
             order.line_items[2].variant.product.update(name: "Banane")
-            product_names = report.rows.map(&:product).filter(&:present?)
+            product_names = report.rows.map(&:product).compact_blank
             # only the supplier's variant is displayed
             expect(product_names).to include("Cucumber")
             expect(product_names).not_to include("Apple", "Banane")
