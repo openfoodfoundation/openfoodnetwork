@@ -409,6 +409,16 @@ RSpec.describe Admin::EnterprisesController, type: :controller do
         distributor.reload
         expect(distributor.users).to include user
       end
+
+      it "allows 'external_billing_id' to be changed" do
+        allow(controller).to receive_messages spree_current_user: admin_user
+        enterprise_params =
+          { id: profile_enterprise, enterprise: { external_billing_id: 'INV123456' } }
+
+        spree_put :update, enterprise_params
+        profile_enterprise.reload
+        expect(profile_enterprise.external_billing_id).to eq 'INV123456'
+      end
     end
 
     context "geocoding" do
