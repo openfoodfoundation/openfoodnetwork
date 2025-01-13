@@ -5,12 +5,12 @@ development:
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("OFN_REDIS_URL", "redis://localhost:6380/0") %>
+  url: <%= ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/0") %>
   channel_prefix: your_application_production
 
 staging:
   adapter: redis
-  url: <%= ENV.fetch("OFN_REDIS_URL", "redis://localhost:6380/0") %>
+  url: <%= ENV.fetch("OFN_REDIS_URL", "redis://localhost:6379/0") %>
   channel_prefix: your_application_staging
 
 test:
