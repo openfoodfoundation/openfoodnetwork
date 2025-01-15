@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Spree::Zone do
-  context "#match" do
+  describe "#match" do
     let(:country_zone) { create(:zone, name: 'CountryZone') }
     let(:country) do
       country = create(:country)
@@ -63,7 +63,7 @@ RSpec.describe Spree::Zone do
     end
   end
 
-  context "#countries" do
+  describe "#countries" do
     let(:state) { create(:state) }
     let(:country) { state.country }
 
@@ -88,7 +88,7 @@ RSpec.describe Spree::Zone do
     end
   end
 
-  context "#contains_address?" do
+  describe "#contains_address?" do
     let(:state) { create(:state) }
     let(:country) { state.country }
     let(:address) { create(:address, country:, state:) }
@@ -112,7 +112,7 @@ RSpec.describe Spree::Zone do
     end
   end
 
-  context ".default_tax" do
+  describe ".default_tax" do
     context "when there is a default tax zone specified" do
       before { @foo_zone = create(:zone, name: 'whatever', default_tax: true) }
 
@@ -129,7 +129,7 @@ RSpec.describe Spree::Zone do
     end
   end
 
-  context "#contains?" do
+  describe "#contains?" do
     let(:country1) { create(:country) }
     let(:country2) { create(:country) }
     let(:country3) { create(:country) }
@@ -257,7 +257,7 @@ RSpec.describe Spree::Zone do
     end
   end
 
-  context "#save" do
+  describe "#save" do
     context "when default_tax is true" do
       it "should clear previous default tax zone" do
         zone1 = create(:zone, name: 'foo', default_tax: true)
@@ -279,7 +279,7 @@ RSpec.describe Spree::Zone do
     end
   end
 
-  context "#kind" do
+  describe "#kind" do
     context "when the zone consists of country zone members" do
       before do
         @zone = create(:zone, name: 'country', zone_members: [])
