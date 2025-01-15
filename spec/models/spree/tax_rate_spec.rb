@@ -55,25 +55,22 @@ module Spree
           end
 
           context "when there is no default tax zone" do
-            before do
-              @zone = create(:zone, name: "Country Zone", default_tax: false, zone_members: [])
-              @zone.zone_members.create(zoneable: country)
-            end
+            let(:zone) { create( :zone, name: "Country Zone", default_tax: false, member: country) }
 
             it "should return an empty array" do
-              allow(order).to receive(:tax_zone) { @zone }
+              allow(order).to receive(:tax_zone).and_return(zone)
               expect(Spree::TaxRate.match(order)).to eq []
             end
 
             it "should return the rate that matches the rate zone" do
               rate = Spree::TaxRate.create(
                 amount: 1,
-                zone: @zone,
+                zone:,
                 tax_category:,
                 calculator:
               )
 
-              allow(order).to receive(:tax_zone) { @zone }
+              allow(order).to receive(:tax_zone).and_return(zone)
 
               expect(Spree::TaxRate.match(order)).to eq [rate]
             end
@@ -81,53 +78,47 @@ module Spree
             it "should return all rates that match the rate zone" do
               rate1 = Spree::TaxRate.create(
                 amount: 1,
-                zone: @zone,
+                zone:,
                 tax_category:,
                 calculator:
               )
 
               rate2 = Spree::TaxRate.create(
                 amount: 2,
-                zone: @zone,
+                zone:,
                 tax_category:,
                 calculator: ::Calculator::FlatRate.new
               )
 
-              allow(order).to receive(:tax_zone) { @zone }
+              allow(order).to receive(:tax_zone).and_return(zone)
 
               expect(Spree::TaxRate.match(order)).to eq [rate1, rate2]
             end
 
             context "when the tax_zone is contained within a rate zone" do
-              before do
-                sub_zone = create(:zone, name: "State Zone", zone_members: [])
-                sub_zone.zone_members.create(zoneable: create(:state, country:))
-                allow(order).to receive(:tax_zone) { sub_zone }
+              let(:sub_zone) { create(:zone, name: "State Zone", member: create(:state, country:)) }
 
-                @rate = Spree::TaxRate.create(
+              it "should return the rate zone" do
+                allow(order).to receive(:tax_zone).and_return(sub_zone)
+
+                rate = Spree::TaxRate.create(
                   amount: 1,
-                  zone: @zone,
+                  zone:,
                   tax_category:,
                   calculator:
                 )
-              end
 
-              it "should return the rate zone" do
-                expect(Spree::TaxRate.match(order)).to eq [@rate]
+                expect(Spree::TaxRate.match(order)).to eq [rate]
               end
             end
           end
 
           context "when there is a default tax zone" do
-            before do
-              @zone = create(:zone, name: "Country Zone", default_tax: true, zone_members: [])
-              @zone.zone_members.create(zoneable: country)
-            end
-
+            let(:zone) { create(:zone, name: "Country Zone", default_tax: true, member: country) }
             let(:included_in_price) { false }
             let!(:rate) do
               Spree::TaxRate.create(amount: 1,
-                                    zone: @zone,
+                                    zone:,
                                     tax_category:,
                                     calculator:,
                                     included_in_price:)
@@ -137,7 +128,7 @@ module Spree
 
             context "when the order has the same tax zone" do
               before do
-                allow(order).to receive(:tax_zone) { @zone }
+                allow(order).to receive(:tax_zone) { zone }
                 allow(order).to receive(:billing_address) { tax_address }
               end
 
@@ -149,12 +140,13 @@ module Spree
 
               context "when the tax is a VAT" do
                 let(:included_in_price) { true }
+
                 it { is_expected.to eq [rate] }
               end
             end
 
             context "when the order has a different tax zone" do
-              let(:other_zone) { create(:zone, name: "Other Zone") }
+              let(:other_zone) { create(:zone, name: "Other Zone", default_tax: false) }
 
               before do
                 allow(order).to receive(:tax_zone) { other_zone }
