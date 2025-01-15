@@ -40,7 +40,7 @@ def create_admin_user
 
   load 'spree/user.rb'
 
-  if Spree::User.find_by(email:)
+  if Spree::User.find_by(email: attributes[:email])
     say <<~TEXT
 
       WARNING: There is already a user with the email: #{email},
@@ -75,7 +75,7 @@ def read_user_attributes
     password = ENV.fetch("ADMIN_PASSWORD", "ofn123")
     email = ENV.fetch("ADMIN_EMAIL", "ofn@example.com")
   else
-    Rails.logger.debug 'Create the admin user (press enter for defaults).'
+    say 'Create the admin user (press enter for defaults).'
     email = prompt_for_admin_email
     password = prompt_for_admin_password
   end
