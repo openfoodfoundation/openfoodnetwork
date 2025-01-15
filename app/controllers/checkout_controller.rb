@@ -92,6 +92,7 @@ class CheckoutController < BaseController
     end
     @order.process_payments!
     @order.confirm!
+    BackorderJob.check_stock(@order)
     order_completion_reset @order
   end
 
