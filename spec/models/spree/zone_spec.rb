@@ -74,9 +74,7 @@ RSpec.describe Spree::Zone do
     let(:country) { state.country }
 
     context "when zone consists of countries" do
-      let(:country_zone) { create(:zone, name: 'CountryZone') }
-
-      before { country_zone.members.create(zoneable: country) }
+      let(:country_zone) { create(:zone, name: 'CountryZone', member: country) }
 
       it 'should return a list of countries' do
         expect(country_zone.countries).to eq [country]
@@ -84,12 +82,10 @@ RSpec.describe Spree::Zone do
     end
 
     context "when zone consists of states" do
-      let(:state_zone) { create(:zone, name: 'StateZone') }
-
-      before { state_zone.members.create(zoneable: state) }
+      let(:state_zone) { create(:zone, name: 'StateZone', member: state) }
 
       it 'should return a list of countries' do
-        expect(state_zone.countries).to eq [state.country]
+        expect(state_zone.countries).to eq [country]
       end
     end
   end
@@ -120,11 +116,11 @@ RSpec.describe Spree::Zone do
 
   describe ".default_tax" do
     context "when there is a default tax zone specified" do
-      before { @foo_zone = create(:zone, name: 'whatever', default_tax: true) }
+      let!(:default_zone) { create(:zone, name: 'whatever', default_tax: true) }
 
       it "should be the correct zone" do
-        foo_zone = create(:zone, name: 'foo')
-        expect(Spree::Zone.default_tax).to eq @foo_zone
+        create(:zone, name: 'foo', default_tax: false)
+        expect(Spree::Zone.default_tax).to eq default_zone
       end
     end
 
@@ -136,128 +132,115 @@ RSpec.describe Spree::Zone do
   end
 
   describe "#contains?" do
-    let(:country1) { create(:country) }
-    let(:country2) { create(:country) }
-    let(:country3) { create(:country) }
-
-    before do
-      @source = create(:zone, name: 'source', zone_members: [])
-      @target = create(:zone, name: 'target', zone_members: [])
-    end
-
-    context "when the target has no members" do
-      before { @source.members.create(zoneable: country1) }
-
-      it "should be false" do
-        expect(@source.contains?(@target)).to be_falsy
-      end
-    end
-
-    context "when the source has no members" do
-      before { @target.members.create(zoneable: country1) }
-
-      it "should be false" do
-        expect(@source.contains?(@target)).to be_falsy
-      end
-    end
+    let(:country_member1) { Spree::ZoneMember.create(zoneable: create(:country)) }
+    let(:country_member2) { Spree::ZoneMember.create(zoneable: create(:country)) }
+    let(:country_member3) { Spree::ZoneMember.create(zoneable: create(:country)) }
+    let(:source) { create(:zone, name: 'source') }
+    let(:target) { create(:zone, name: 'target') }
 
     context "when both zones are the same zone" do
       before do
-        @source.members.create(zoneable: country1)
-        @target = @source
+        source.zone_members = [country_member1]
       end
 
       it "should be true" do
-        expect(@source.contains?(@target)).to be_truthy
+        target = source
+
+        expect(source.contains?(target)).to be_truthy
       end
     end
 
     context "when both zones are of the same type" do
       before do
-        @source.members.create(zoneable: country1)
-        @source.members.create(zoneable: country2)
+        source.zone_members = [country_member1, country_member2]
       end
 
       context "when all members are included in the zone we check against" do
         before do
-          @target.members.create(zoneable: country1)
-          @target.members.create(zoneable: country2)
+          target.zone_members = [country_member1, country_member2]
         end
 
         it "should be true" do
-          expect(@source.contains?(@target)).to be_truthy
+          expect(source.contains?(target)).to be_truthy
         end
       end
 
       context "when some members are included in the zone we check against" do
         before do
-          @target.members.create(zoneable: country1)
-          @target.members.create(zoneable: country2)
-          @target.members.create(zoneable: create(:country))
+          target.zone_members = [
+            country_member1, country_member2, Spree::ZoneMember.create(zoneable: create(:country))
+          ]
         end
 
         it "should be false" do
-          expect(@source.contains?(@target)).to be_falsy
+          expect(source.contains?(target)).to be_falsy
         end
       end
 
       context "when none of the members are included in the zone we check against" do
         before do
-          @target.members.create(zoneable: create(:country))
-          @target.members.create(zoneable: create(:country))
+          target.zone_members = [
+            Spree::ZoneMember.create(zoneable: create(:country)),
+            Spree::ZoneMember.create(zoneable: create(:country))
+          ]
         end
 
         it "should be false" do
-          expect(@source.contains?(@target)).to be_falsy
+          expect(source.contains?(target)).to be_falsy
         end
       end
     end
 
     context "when checking country against state" do
       before do
-        @source.members.create(zoneable: create(:state))
-        @target.members.create(zoneable: country1)
+        source.zone_members = [Spree::ZoneMember.create(zoneable: create(:state))]
+        target.zone_members = [country_member1]
       end
 
       it "should be false" do
-        expect(@source.contains?(@target)).to be_falsy
+        expect(source.contains?(target)).to be_falsy
       end
     end
 
     context "when checking state against country" do
-      before { @source.members.create(zoneable: country1) }
+      before { source.zone_members = [country_member1] }
 
       context "when all states contained in one of the countries we check against" do
         before do
-          state1 = create(:state, country: country1)
-          @target.members.create(zoneable: state1)
+          state1 = create(:state, country: country_member1.zoneable)
+          target.zone_members = [Spree::ZoneMember.create(zoneable: state1)]
         end
 
         it "should be true" do
-          expect(@source.contains?(@target)).to be_truthy
+          expect(source.contains?(target)).to be_truthy
         end
       end
 
       context "when some states contained in one of the countries we check against" do
         before do
-          state1 = create(:state, country: country1)
-          @target.members.create(zoneable: state1)
-          @target.members.create(zoneable: create(:state, country: country2))
+          state1 = create(:state, country: country_member1.zoneable)
+          state2 = create(:state, country: country_member2.zoneable)
+          target.zone_members = [
+            Spree::ZoneMember.create(zoneable: state1),
+            Spree::ZoneMember.create(zoneable: state2)
+          ]
         end
 
         it "should be false" do
-          expect(@source.contains?(@target)).to be_falsy
+          expect(source.contains?(target)).to be_falsy
         end
       end
 
       context "when none of the states contained in any of the countries we check against" do
         before do
-          @target.members.create(zoneable: create(:state, country: country2))
-          @target.members.create(zoneable: create(:state, country: country2))
+          target.zone_members = [
+            Spree::ZoneMember.create(zoneable: create(:state, country: country_member2.zoneable)),
+            Spree::ZoneMember.create(zoneable: create(:state, country: country_member2.zoneable))
+          ]
         end
 
         it "should be false" do
-          expect(@source.contains?(@target)).to be_falsy
+          expect(source.contains?(target)).to be_falsy
         end
       end
     end
@@ -274,12 +257,13 @@ RSpec.describe Spree::Zone do
 
     context "when a zone member country is added to an existing zone consisting of state members" do
       it "should remove existing state members" do
-        zone = create(:zone, name: 'foo', zone_members: [])
         state = create(:state)
+        zone = create(:zone, name: 'foo', member: state)
+
         country = create(:country)
-        zone.members.create(zoneable: state)
         country_member = zone.members.create(zoneable: country)
         zone.save
+
         expect(zone.reload.members).to eq [country_member]
       end
     end
@@ -287,24 +271,18 @@ RSpec.describe Spree::Zone do
 
   describe "#kind" do
     context "when the zone consists of country zone members" do
-      before do
-        @zone = create(:zone, name: 'country', zone_members: [])
-        @zone.members.create(zoneable: create(:country))
-      end
+      let!(:zone) { create(:zone, name: 'country', member: create(:country)) }
 
       it "should return the kind of zone member" do
-        expect(@zone.kind).to eq "country"
+        expect(zone.kind).to eq "country"
       end
     end
 
     context "when the zone consists of state zone members" do
-      before do
-        @zone = create(:zone, name: 'state', zone_members: [])
-        @zone.members.create(zoneable: create(:state))
-      end
+      let!(:zone) { create(:zone, name: 'country', member: create(:state)) }
 
       it "should return the kind of zone member" do
-        expect(@zone.kind).to eq "state"
+        expect(zone.kind).to eq "state"
       end
     end
   end
