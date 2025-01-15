@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - "<HIDDEN-AUTHORIZATION-HEADER>"
+      User-Agent:
+      - Faraday v2.9.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Server:
+      - openresty
+      Date:
+      - Tue, 21 Jan 2025 00:56:03 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '78'
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - Express
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"4e-vJeBLxgahmv23yP9gdPJW/woako"
+      Strict-Transport-Security:
+      - max-age=15811200
+    body:
+      encoding: UTF-8
+      string: '{"message":"User access denied - token missing","error":"User not authorized"}'
+  recorded_at: Tue, 21 Jan 2025 00:56:04 GMT
+recorded_with: VCR 6.2.0

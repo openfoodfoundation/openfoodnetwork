@@ -74,6 +74,27 @@ RSpec.describe "DFC Product Import" do
     expect(product.image).to be_present
   end
 
+  it "shows oauth error message", vcr: true do
+    allow_any_instance_of(DfcRequest).to receive(:refresh_access_token!).and_raise(
+      Rack::OAuth2::Client::Error.new(
+        1, { error: "invalid_grant", error_description: "session not active" }
+      )
+    )
+
+    user.update!(oidc_account: build(:testdfc_account))
+
+    visit admin_product_import_path
+
+    select enterprise.name, from: "Enterprise"
+    url = "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
+    fill_in "catalog_url", with: url
+
+    click_button "Import"
+
+    expect(page).to have_content "invalid_grant"
+    expect(page).to have_content "session not active"
+  end
+
   it "fails gracefully" do
     user.oidc_account.update!(
       uid: "anonymous@example.net",

@@ -37,7 +37,8 @@ module Admin
       @count = imported.compact.count
     rescue Faraday::Error,
            Addressable::URI::InvalidURIError,
-           ActionController::ParameterMissing => e
+           ActionController::ParameterMissing,
+           Rack::OAuth2::Client::Error => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
     end
