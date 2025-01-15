@@ -3,6 +3,12 @@
 require 'spec_helper'
 
 RSpec.describe Spree::Zone do
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_uniqueness_of(:name) }
+    it { is_expected.to validate_presence_of(:zone_members) }
+  end
+
   describe "#match" do
     let(:country_zone) { create(:zone, name: 'CountryZone') }
     let(:country) do
