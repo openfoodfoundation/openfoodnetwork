@@ -3907,7 +3907,39 @@ See the %{link} to find out more about %{sitename}'s features and to start using
     sack:
       one: "sack"
       other: "sacks"
-
+    bucket:
+      one: "bucket"
+      other: "buckets"
+    pail:
+      one: "pail"
+      other: pails
+    stem:
+      one: "stem"
+      other: "stems"
+    plug:
+      one: "plug"
+      other: "plugs"
+    plant:
+      one: "plant"
+      other: "plants"
+    bundle:
+      one: "bundle"
+      other: "bundles"
+    bulb:
+      one: "bulb"
+      other: "bulbs"
+    root:
+      one: "root"
+      other: "roots"
+    tuber:
+      one: "tuber"
+      other: "tubers"
+    corm:
+      one: "corm"
+      other: "corms"
+    crate:
+      one: "crate"
+      other: "crates"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
