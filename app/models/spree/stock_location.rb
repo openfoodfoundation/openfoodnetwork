@@ -31,9 +31,5 @@ module Spree
     def stock_item_or_create(variant)
       stock_item(variant) || stock_items.create(variant:)
     end
-
-    def count_on_hand(variant)
-      stock_item(variant).try(:count_on_hand)
-    end
   end
 end

@@ -26,9 +26,5 @@ module Spree
       stock_item = subject.stock_item(100)
       expect(stock_item).to be_nil
     end
-
-    it 'finds a count_on_hand for a variant' do
-      expect(subject.count_on_hand(variant)).to eq 15
-    end
   end
 end
