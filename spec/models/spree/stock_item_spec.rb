@@ -3,13 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe Spree::StockItem do
-  let(:stock_location) { create(:stock_location_with_items) }
+  let!(:stock_location) { create(:stock_location_with_items) }
 
-  subject { stock_location.stock_items.order(:id).first }
+  subject(:stock_item) { Spree::StockItem.order(:id).first }
 
   describe "validation" do
-    let(:stock_item) { stock_location.stock_items.first }
-
     it "requires count_on_hand to be positive if not backorderable" do
       stock_item.backorderable = false
 

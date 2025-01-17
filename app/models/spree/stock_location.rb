@@ -5,8 +5,6 @@ module Spree
     self.belongs_to_required_by_default = false
     self.ignored_columns += [:backorderable_default, :active]
 
-    has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
-
     belongs_to :state, class_name: 'Spree::State'
     belongs_to :country, class_name: 'Spree::Country'
 
@@ -15,12 +13,6 @@ module Spree
     # Wrapper for creating a new stock item respecting the backorderable config
     def stock_item(variant)
       StockItem.where(variant_id: variant).order(:id).first
-    end
-
-    # We have only one default stock location and it may be unpersisted.
-    # So all stock items belong to any unpersisted stock location.
-    def stock_items
-      StockItem.all
     end
   end
 end

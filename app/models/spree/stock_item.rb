@@ -4,9 +4,6 @@ module Spree
   class StockItem < ApplicationRecord
     acts_as_paranoid
 
-    # WIP: phasing out stock location, it's not used.
-    belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items,
-                                optional: true
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'
     has_many :stock_movements, dependent: :destroy
 
@@ -47,6 +44,8 @@ module Spree
     def stock_location
       @stock_location ||= DefaultStockLocation.find_or_create
     end
+
+    attr_writer :stock_location
 
     private
 

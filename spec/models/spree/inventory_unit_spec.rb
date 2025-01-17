@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe Spree::InventoryUnit do
-  let(:stock_location) { create(:stock_location_with_items) }
-  let(:stock_item) { stock_location.stock_items.order(:id).first }
+  let!(:stock_location) { create(:stock_location_with_items) }
+  let(:stock_item) { Spree::StockItem.order(:id).first }
 
   context "#backordered_for_stock_item" do
     let(:order) { create(:order) }

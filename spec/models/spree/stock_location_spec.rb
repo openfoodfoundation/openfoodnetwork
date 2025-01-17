@@ -5,12 +5,8 @@ require 'spec_helper'
 module Spree
   RSpec.describe StockLocation do
     subject { create(:stock_location_with_items) }
-    let(:stock_item) { subject.stock_items.order(:id).first }
+    let(:stock_item) { StockItem.order(:id).first }
     let(:variant) { stock_item.variant }
-
-    it 'creates stock_items for all variants' do
-      expect(subject.stock_items.count).to eq Variant.count
-    end
 
     it 'finds a stock_item for a variant' do
       stock_item = subject.stock_item(variant)
