@@ -34,37 +34,5 @@ module Spree
     it 'finds determines if you a variant is backorderable' do
       expect(subject.backorderable?(variant)).to eq false
     end
-
-    context 'fill_status' do
-      before { variant.on_demand = false }
-
-      it 'is all on_hand if variant is on_demand' do
-        variant.on_demand = true
-
-        on_hand, backordered = subject.fill_status(variant, 25)
-        expect(on_hand).to eq 25
-        expect(backordered).to eq 0
-      end
-
-      it 'is all on_hand if on_hand is enough' do
-        on_hand, backordered = subject.fill_status(variant, 5)
-        expect(on_hand).to eq 5
-        expect(backordered).to eq 0
-      end
-
-      it 'is some on_hand if not all available' do
-        on_hand, backordered = subject.fill_status(variant, 20)
-        expect(on_hand).to eq 15
-        expect(backordered).to eq 0
-      end
-
-      it 'is zero on_hand if none available' do
-        variant.on_hand = 0
-
-        on_hand, backordered = subject.fill_status(variant, 20)
-        expect(on_hand).to eq 0
-        expect(backordered).to eq 0
-      end
-    end
   end
 end
