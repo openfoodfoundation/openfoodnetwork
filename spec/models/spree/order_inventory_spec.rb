@@ -55,8 +55,7 @@ RSpec.describe Spree::OrderInventory do
     it 'should create stock_movement' do
       expect(subject.__send__(:add_to_shipment, shipment, variant, 5)).to eq 5
 
-      stock_item = shipment.stock_location.stock_item(variant)
-      movement = stock_item.stock_movements.last
+      movement = variant.stock_item.stock_movements.last
       expect(movement.quantity).to eq(-5)
     end
   end
@@ -105,8 +104,7 @@ RSpec.describe Spree::OrderInventory do
       it 'should create stock_movement' do
         expect(subject.__send__(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
 
-        stock_item = shipment.stock_location.stock_item(variant)
-        movement = stock_item.stock_movements.last
+        movement = variant.stock_item.stock_movements.last
         expect(movement.quantity).to eq 1
       end
 

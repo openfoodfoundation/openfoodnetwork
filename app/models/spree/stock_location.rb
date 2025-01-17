@@ -9,10 +9,5 @@ module Spree
     belongs_to :country, class_name: 'Spree::Country'
 
     validates :name, presence: true
-
-    # Wrapper for creating a new stock item respecting the backorderable config
-    def stock_item(variant)
-      StockItem.where(variant_id: variant).order(:id).first
-    end
   end
 end

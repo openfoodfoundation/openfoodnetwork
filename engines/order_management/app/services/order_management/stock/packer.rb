@@ -13,9 +13,9 @@ module OrderManagement
       def package
         package = OrderManagement::Stock::Package.new(order)
         order.line_items.each do |line_item|
-          next unless stock_location.stock_item(line_item.variant)
-
           variant = line_item.variant
+          next unless variant.stock_item
+
           OpenFoodNetwork::ScopeVariantToHub.new(order.distributor).scope(variant)
 
           on_hand, backordered = variant.fill_status(line_item.quantity)
