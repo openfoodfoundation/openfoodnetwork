@@ -147,6 +147,10 @@ fr_CA:
       message_html: "<p> La modification souhaitée a été refusée. Peut-être avez-vous essayé de faire quelque chose sans avoir les droits d'accès suffisants ? <br> <h3> <a href='/' > Retourner à l'accueil </a> </h3> </p> "
     general_error:
       message: "Nous sommes désolés mais quelque chose s'est mal passé.\n\n C'est un problème temporaire, merci donc de réessayer ou de recharger la page. \nNous enregistrons toutes les erreurs et travaillons sur les améliorations nécessaires.\nSi le problème persiste ou est urgent, merci de nous contacter.\n "
+    unauthorized:
+      message: "Vous n'êtes pas autorisé à réaliser cette action."
+    network_error:
+      message: "Erreur réseau : merci de réessayer plus tard."
   stripe:
     error_code:
       incorrect_number: "e numéro de carte bancaire est incorrect."
@@ -1358,10 +1362,14 @@ fr_CA:
           legend: "Applications connectées"
           affiliate_sales_data:
             title: "Programme de recherche INRAE / UFC QUE CHOISIR"
+            tagline: "Autoriser ce programme de recherche à accéder à vos données de commandes anonymisées"
             enable: "Autoriser le partage de données"
             disable: "Arrêter le partage"
             loading: "Chargement en cours"
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
+            description: "L'INRAE et UFC QUE CHOISIR travaillent conjointement sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme."
+            link_label_html: "En savoir plus à propos de ce projet de recherche <i class=\"icon-external-link\"></i>"
+            link_url: "https://apropos.coopcircuits.fr/"
           discover_regen:
             title: "Annuaire alimentaire de Waterloo"
             tagline: "Permettre à l'OFN Canada de publier les informations relatives à votre entreprise."
@@ -1373,6 +1381,9 @@ fr_CA:
                 Votre compte Open Food Network est connecté à Annuaire alimentaire de Waterloo.
                 Les modifications apportées à votre profil OFN mettront à jour votre liste Waterloo Food Directory lorsque vous cliquerez sur le bouton 'Mise à jour de la liste'. Pour toute autre modification, veuillez contacter le service d'assistance de l'OFN et support@openfoodnetwork.ca.
             link_label: "Mise à jour de la liste"
+            description: "Les producteurs éligibles peuvent mettre en avant leurs références Regenerative, pratiques agricoles et plus, à travers le listing du profil. Simplifier comment les acheteurs peuvent trouver les produits Regenerative et se connecter avec des producteurs."
+            link_label_html: "En savoir plus sur Discover Regenerative  <i class=\"icon-external-link\"></i>"
+            link_url: "https://about.openfoodnetwork.org.au/regen-produce-portal/"
           vine:
             title: "Éditeur de bons de réduction (VINE)"
             tagline: "Autoriser l'utilisation de bons de réduction VINE dans votre boutique"
@@ -1381,6 +1392,9 @@ fr_CA:
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
             vine_api_key: "clé API VINE"
             vine_secret: "VINE secret"
+            description: "Pour autoriser l'éditeur de bons de réduction VINE pour votre entreprise, entrer votre clé API et clé secrète"
+            link_label_html: "VINE <i class=\"icon-external-link\"></i>"
+            link_url: "https://vine.openfoodnetwork.org.au"
             api_parameters_empty: "Entrer une clé API et un secret"
             api_parameters_error: "Vérifiez que vous avez entré la clé API et le secret correctement. Contactez l'équipe support de la plateforme si l'erreur persiste. "
             connection_error: "Erreur de connexion à l'API. Merci de réessayer."
@@ -2357,6 +2371,7 @@ fr_CA:
   email_order_summary_subtotal: "Sous-total:"
   email_order_summary_total: "Total:"
   email_order_summary_includes_tax: "(dont Taxe)"
+  email_order_summary_voucher_label: "Réduction (%{code}):"
   email_payment_paid: RÉGLÉ
   email_payment_not_paid: NON RÉGLÉ
   email_payment_description: Informations concernant le mode de paiement
@@ -3764,10 +3779,6 @@ fr_CA:
       one: "pot"
       many: "pots"
       other: "pots"
-    bundle:
-      one: "botte"
-      many: "bottes"
-      other: "bottes"
     flask:
       one: "flacons"
       many: "flacon"
@@ -3780,6 +3791,10 @@ fr_CA:
       one: "sachet"
       many: "sachets"
       other: "sachets"
+    bundle:
+      one: "botte"
+      many: "bottes"
+      other: "bottes"
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, c'est gratuit, et changez de formule quand vous êtes prêt !"

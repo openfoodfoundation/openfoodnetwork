@@ -3468,13 +3468,6 @@ ar:
       few: "الأواني"
       many: "الأواني"
       other: "اصص"
-    bundle:
-      zero: "حزم"
-      one: "حزمة"
-      two: "حزم"
-      few: "حزم"
-      many: "حزم"
-      other: "حزم"
     flask:
       zero: "قوارير"
       one: "قارورة"
@@ -3496,6 +3489,13 @@ ar:
       few: "أكياس"
       many: "أكياس"
       other: "أكياس"
+    bundle:
+      zero: "حزم"
+      one: "حزمة"
+      two: "حزم"
+      few: "حزم"
+      many: "حزم"
+      other: "حزم"
   producers:
     signup:
       start_free_profile: "ابدأ بملف تعريف مجاني ، وتوسع عندما تكون جاهزًا!"

@@ -3695,9 +3695,6 @@ nb:
     pot:
       one: "gryte"
       other: "gryter"
-    bundle:
-      one: "bunt"
-      other: "bunter"
     flask:
       one: "kolbe"
       other: "kolber"
@@ -3707,6 +3704,9 @@ nb:
     sack:
       one: "sekk"
       other: "sekker"
+    bundle:
+      one: "bunt"
+      other: "bunter"
   producers:
     signup:
       start_free_profile: "Start med en gratis profil, og utvid når du er klar!"

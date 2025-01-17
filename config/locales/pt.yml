@@ -2923,10 +2923,6 @@ pt:
       one: "pote"
       many: "potes"
       other: "potes"
-    bundle:
-      one: "pacote"
-      many: "pacotes"
-      other: "pacotes"
     flask:
       one: "frasco"
       many: "frascos"
@@ -2939,6 +2935,10 @@ pt:
       one: "saco"
       many: "sacos"
       other: "sacos"
+    bundle:
+      one: "pacote"
+      many: "pacotes"
+      other: "pacotes"
   producers:
     signup:
       start_free_profile: "Comece com um perfil gratuito e expanda quando estivere pronto/a!"

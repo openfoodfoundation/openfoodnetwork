@@ -3324,10 +3324,6 @@ es_CR:
       one: "maceta"
       many: "contenedores"
       other: "contenedores"
-    bundle:
-      one: "haz"
-      many: "paquetes"
-      other: "paquetes"
     flask:
       one: "flask"
       many: "frascos"
@@ -3340,6 +3336,10 @@ es_CR:
       one: "sacos"
       many: "sacos"
       other: "sacos"
+    bundle:
+      one: "haz"
+      many: "paquetes"
+      other: "paquetes"
   producers:
     signup:
       start_free_profile: "¡Empieze con un perfil gratuito, y amplíelo cuando esté preparado!"

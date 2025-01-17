@@ -125,7 +125,7 @@ el:
       aspect_ratio_not_portrait: "πρέπει να είναι εικόνα πορτρέτο. "
       aspect_ratio_not_landscape: "πρέπει να είναι εικόνα τοπίου."
       aspect_ratio_is_not: "πρέπει να έχει λόγο διαστάσεων %{aspect_ratio}"
-      aspect_ratio_unknown: "έχει άγνωστη αναλογία απεικόνισης (aspect ratio)."
+      aspect_ratio_unknown: "έχει άγνωστη αναλογία εμφάνισης (aspect ratio)."
       image_not_processable: "δεν είναι έγκυρη εικόνα"
     not_found:
       title: "Η συγκεκριμένη σελίδα δεν υπάρχει (404) "
@@ -421,7 +421,7 @@ el:
   ongoing: Σε εξέλιξη
   bill_address: Διεύθυνση Τιμολόγησης
   ship_address: Διεύθυνση Αποστολής
-  sort_order_cycles_on_shopfront_by: "Μικρός Κύκλος Παραγγελιών Από "
+  sort_order_cycles_on_shopfront_by: "Ταξινόμηση κύκλων παραγγελιών στο καταστήμα κατά"
   required_fields: Τα πεδία με αστερίσκο συμπληρώνονται υποχρεωτικά
   select_continue: Επιλογή και συνέχεια
   remove: Αφαίρεση
@@ -602,7 +602,7 @@ el:
     clear_all: Καθαρισμός
     start_date: "Ημερομηνία εκκίνησης"
     end_date: "Ημερομηνία λήξης"
-    unsaved_changes: "Αποτυχημένη προσπάθεισ"
+    unsaved_changes: "Έχετε μη αποθηκευμένες αλλαγές"
     form_invalid: "Η φόρμα έχει ελλειπή ή μη έγκυρα στοιχεία"
     clear_filters: Καθαρισμός φίλτρων
     clear: Καθαρισμός
@@ -619,9 +619,9 @@ el:
     viewing: "Προβολή : %{current_view_name}"
     description: Περιγραφή
     whats_this: Τι είναι αυτό?
-    tag_has_rules: "Ισχύουν κανόνες γι'αυτή την ενέργεια:%{αριθ}"
+    tag_has_rules: "Ισχύουν κανόνες γι'αυτή την ενέργεια: %{num}"
     has_one_rule: "έχει έναν κανόνα"
-    has_n_rules: "έχει %{αριθ} κανόνες"
+    has_n_rules: "έχει %{num} κανόνες"
     unsaved_confirm_leave: "Δεν έχουν αποθηκευτεί οι αλλαγές στην σελίδα. Συνέχεια χωρίς αποθήκευση?"
     available_units: "Διαθέσιμες Μονάδες"
     terms_of_service_have_been_updated_html: "Οι όροι χρήσης του Open Food Network έχουν ανανεωθεί: %{tos_link}"
@@ -723,7 +723,7 @@ el:
         imported_products: "Εισαγόμενα προϊόντα:"
     enterprise_fees:
       index:
-        title: "Χρεώσεις επιχείρησης"
+        title: "Τέλη επιχείρησης"
         enterprise: "Επιχείρηση"
         fee_type: "Κατηγορίες αμοιβών"
         name: "Όνομα"
@@ -1065,7 +1065,7 @@ el:
         business_address:
           company_legal_name: Νομικό όνομα εταιρείας
           company_placeholder: Παράδειγμα Inc.
-          address1: Νόμιμη διεύθυνση
+          address1: Νόμικη διεύθυνση
           address1_placeholder: 123 High St.
           address2: Διεύθυνση (συνέχεια)
           legal_phone_number: Νομικός αριθμός τηλεφώνου
@@ -1087,10 +1087,10 @@ el:
           website: Ιστότοπος
           website_placeholder: π.χ. www.truffles.com
         enterprise_fees:
-          legend: "Χρεώσεις επιχείρησης"
+          legend: "Τέλη επιχείρησης"
           name: Όνομα
           fee_type: Κατηγορίες αμοιβών
-          manage_fees: Διαχείριση αμοιβών επιχειρήσεων
+          manage_fees: Διαχείριση τελών επιχείρησης
           no_fees_yet: Δεν έχετε τέλη επιχείρησης ακόμα.
           create_button: Δημιούργησε έναν τώρα
         enterprise_permissions:
@@ -1133,8 +1133,8 @@ el:
           groups: Ομάδες
           groups_tip: Επέλεξε κάποια ομάδα ή περιοχή. Αυτό θα βοηθήσει τους καταναλωτές να βρίσκουν την επιχείρησή σου.
           groups_placeholder: Πληκτρολόγησε για να βρείς διαθέσιμες ομάδες...
-          primary_producer: Πρωτογενής Παραγωγός?
-          primary_producer_tip: Επέλεξε "Παραγωγός" εάν είσαι Πρωτογενής Παραγωγός σε τρόφιμα.
+          primary_producer: Βασικός παραγωγός;
+          primary_producer_tip: 'Επίλεξε "Παραγωγός" εάν είσαι ο βασικός παραγωγός των προϊόντων. '
           producer: Παραγωγός
           any: Οποιοσδήποτε
           none: Κανένας
@@ -1227,11 +1227,11 @@ el:
             title: Σύνδεση με Stripe
             part1: Το Stripe είναι μια υπηρεσία επεξεργασίας πληρωμών που επιτρέπει στα καταστήματα στο OFN να δέχονται πληρωμές με πιστωτική κάρτα από πελάτες.
             part2: Για να χρησιμοποιήσετε αυτήν τη λειτουργία, πρέπει να συνδέσετε τον λογαριασμό Stripe στο OFN. Κάνοντας κλικ στο «Συμφωνώ» παρακάτω, θα ανακατευθυνθείτε στον ιστότοπο του Stripe, όπου μπορείτε να συνδέσετε έναν υπάρχοντα λογαριασμό Stripe ή να δημιουργήσετε έναν νέο, εάν δεν τον έχετε ήδη.
-            part3: Αυτό θα επιτρέψει στο Open Food Network να δέχεται πληρωμές με πιστωτική κάρτα από πελάτες για λογαριασμό σας. Λάβετε υπόψη ότι θα χρειαστεί να διατηρήσετε τον δικό σας λογαριασμό Stripe, να πληρώσετε τις χρεώσεις των χρεώσεων Stripe και να χειριστείτε εσείς τυχόν αντιστροφές χρέωσης και εξυπηρέτηση πελατών.
+            part3: Αυτό θα επιτρέψει στο Open Food Network να δέχεται πληρωμές με πιστωτική κάρτα από πελάτες για λογαριασμό σας. Λάβετε υπόψη ότι θα χρειαστεί να διατηρήσετε τον δικό σας λογαριασμό Stripe, να πληρώσετε τις προμήθειες των χρεώσεων του Stripe και να χειριστείτε εσείς τυχόν αντιστροφές χρέωσης και εξυπηρέτηση πελατών.
             i_agree: Συμφωνώ
             cancel: Ακύρωση
         tag_rules:
-          legend: "Κανόνες ετικέτας"
+          legend: "Κανόνες ετικετών"
           default_rules:
             by_default: Από προεπιλογή
             no_rules_yet: 'Καμία προεπιλογή '
@@ -1313,8 +1313,8 @@ el:
         payment_methods_tip: Αυτή η επιχείρηση δεν διαθέτει τρόπους πληρωμής
         shipping_methods: Τρόποι αποστολής
         shipping_methods_tip: Η επιχείρηση έχει τρόπους αποστολής
-        enterprise_fees: Αμοιβή επιχείρησης
-        enterprise_fees_tip: Η επιχείρηση δεν αμήβεται
+        enterprise_fees: Τέλη επιχείρησης
+        enterprise_fees_tip: Η επιχείρηση δεν έχει τέλη.
       admin_index:
         name: Όνομα
         role: Ρόλος
@@ -1331,13 +1331,13 @@ el:
         sell_your_produce: Πούλα τα δικά σου προιόντα
         producer_shop_description_text: Πουλήστε τα προϊόντα σας απευθείας στους πελάτες μέσω της δικής σας βιτρίνας Open Food Network.
         producer_shop_description_text2: Ένα Κατάστημα Παραγωγών προορίζεται μόνο για τα προϊόντα σας, εάν θέλετε να πουλήσετε προϊόντα που καλλιεργούνται/παράγονται εκτός ιστότοπου, επιλέξτε «Κέντρο διανομής».
-        producer_hub: Hub Παραγωγού
+        producer_hub: Κέντρο Διανομής Παραγωγού
         producer_hub_text: Πούλα προιόντα παραγωγής σου ή και άλλων
         producer_hub_description_text: Η επιχείρησή σας είναι η ραχοκοκαλιά του τοπικού σας συστήματος τροφίμων. Μπορείτε να πουλήσετε τα δικά σας προϊόντα καθώς και να συγκεντρώσετε προϊόντα από άλλες επιχειρήσεις μέσω της βιτρίνας σας στο Open Food Network.
         profile: 'Προφίλ '
         get_listing: Φτιάξε μια λίστα
         profile_description_text: Ο κόσμος μπορεί να σε βρει και να επικοινωνήσει μαζί σου μέσα από το Open Food Network. Η επιχείρηση σου θα εμφανίζεται στον χάρτη και θα μπορούν να σε βρίσκουν κάνοντας αναζήτηση.
-        hub_shop: Hub Shop
+        hub_shop: Κέντρο διανομής - Κατάστημα
         hub_shop_text: Πούλα προιόντα άλλων
         hub_shop_description_text: Η επιχείρησή σας είναι η ραχοκοκαλιά του τοπικού σας συστήματος τροφίμων. Συγκεντρώνετε προϊόντα από άλλες επιχειρήσεις και μπορείτε να τα πουλήσετε μέσω του καταστήματός σας στο Open Food Network.
         choose_option: Επιλέξτε μία από τις παραπάνω επιλογές.
@@ -1549,10 +1549,10 @@ el:
           properties: "Ιδιότητες"
           shipping_methods: "Τρόποι αποστολής"
           payment_methods: "Τρόποι πληρωμής"
-          enterprise_fees: "Χρεώσεις επιχείρησης"
+          enterprise_fees: "Τέλη επιχείρησης"
           enterprise_permissions: "Δικαιώματα Επιχείρησης "
           inventory_settings: "Ρυθμίσεις Αποθεμάτων"
-          tag_rules: "Κανόνες ετικέτας"
+          tag_rules: "Κανόνες ετικετών"
           shop_preferences: "Επιλογές καταστήματος"
           users: "Χρήστες"
           vouchers: Κουπόνια
@@ -1651,7 +1651,7 @@ el:
       table:
         select_and_search: "Επιλέξτε φίλτρα και κάντε κλικ στο %{option} για να αποκτήσετε πρόσβαση στα δεδομένα σας."
         headings:
-          hub: "Κεντρικό σημείο"
+          hub: "Κέντρο διανομής"
           customer_code: "Κωδικός"
           first_name: "Όνομα"
           last_name: "Επίθετο"
@@ -1727,7 +1727,7 @@ el:
       subscription_line_items:
         this_is_an_estimate: |
             Οι εμφανιζόμενες τιμές είναι μόνο εκτιμήσεις και υπολογίζονται τη στιγμή που αλλάζει η συνδρομή.
-            Εάν αλλάξετε τιμές ή χρεώσεις, οι παραγγελίες θα ενημερωθούν, αλλά η συνδρομή θα εξακολουθεί να εμφανίζει τις παλιές τιμές.
+            Εάν αλλάξετε τις τιμές ή τα τέλη, οι παραγγελίες θα ενημερωθούν, αλλά η συνδρομή θα εξακολουθεί να εμφανίζει τις παλιές τιμές.
         not_in_open_and_upcoming_order_cycles_warning: "Δεν υπάρχουν ανοικτοί ή επερχόμενοι κύκλοι παραγγελιών για αυτό το προϊόν."
       autocomplete:
         name_or_sku: "ΟΝΟΜΑ Ή SKU"
@@ -1747,7 +1747,7 @@ el:
         loading: ΕΓΓΡΑΦΕΣ ΦΟΡΤΩΣΗΣ
       review:
         details: Λεπτομέριες
-        address: Επόμενο
+        address: Διεύθυνση
         products: Προίόντα
         no_open_or_upcoming_order_cycle: "Χωρίς κύκλο παραγγελιών που έρχονται"
       products_panel:
@@ -2043,7 +2043,7 @@ el:
   email: Email
   phone: Τηλέφωνο
   next: Επόμενο
-  address: Επόμενο
+  address: Διεύθυνση
   address_placeholder: π.χ. 123 High Street
   address2: Διεύθυνση (συνέχεια)
   city: Πόλη
@@ -2320,7 +2320,7 @@ el:
   shopping_producers_of_hub: "Παραγωγοί %{hub}:"
   enterprises_next_closing: "Κλείσιμο επόμενης παραγγελίας"
   enterprises_currently_open: "Οι παραγγελίες είναι προς το παρόν ανοιχτές"
-  enterprises_ready_for: "Έτοιμος για"
+  enterprises_ready_for: "Να είναι έτοιμη εώς"
   enterprises_choose: "Επιλέξτε πότε θέλετε την παραγγελία σας:"
   maps_open: "Άνοιγμα"
   maps_closed: "Κλειστό"
@@ -2330,7 +2330,7 @@ el:
   hubs_orders_closed: "Οι παραγγελίες έκλεισαν"
   hubs_profile_only: "Προφίλ μόνο"
   hubs_delivery_options: "Επιλογές παράδοσης"
-  hubs_pickup: "Μαζεύω"
+  hubs_pickup: "Παραλαβή"
   hubs_delivery: "Διανομή"
   hubs_producers: "Οι παραγωγοί μας"
   hubs_filter_by: "Φιλτράρισμα κατά"
@@ -2466,10 +2466,10 @@ el:
   shops_signup_help_text: Χρειάζεστε καλύτερη επιστροφή. Χρειάζεστε νέους αγοραστές και συνεργάτες logistics. Χρειάζεστε την ιστορία σας να λέγεται σε χονδρική, λιανική και στο τραπέζι της κουζίνας.
   shops_signup_detail: Εδώ είναι η λεπτομέρεια.
   orders: "Παραγγελίες"
-  orders_fees: "Αμοιβές..."
+  orders_fees: "Τέλη..."
   orders_edit_title: "Καλάθι αγορών"
   orders_edit_headline: "Το καλάθι σου"
-  orders_edit_time: "Παραγγελία έτοιμη για"
+  orders_edit_time: "Η παραγγελία να είναι έτοιμη εώς"
   orders_edit_continue: "Συνέχισε τις αγορές"
   orders_edit_checkout: "Ολοκλήρωση"
   orders_form_empty_cart: "Αδειο καλάθι"
@@ -2513,7 +2513,7 @@ el:
   products_distributor: Διανομέας
   products_distributor_info: Όταν επιλέγετε διανομέα για την παραγγελία σας, η διεύθυνση και οι ώρες παραλαβής τους θα εμφανίζονται εδώ.
   password: Κωδικός
-  remember_me: Θυμήσου με
+  remember_me: 'Αποθήκευση των στοιχείων '
   are_you_sure: "Είσαι σίγουρος?"
   orders_open: "Οι παραγγελίες ανοίγουν"
   closing: "Κλείσιμο"
@@ -2775,13 +2775,13 @@ el:
   units: "Μονάδα μέτρησης"
   coordinator: "Συντονιστής"
   distributor: "Διανομέας"
-  enterprise_fees: "Αμοιβή επιχείρησης"
+  enterprise_fees: "Τέλη επιχείρησης"
   process_my_order: "Επεξεργασία της παραγγελίας μου"
   delivery_instructions: Οδηγίες παράδοσης
   delivery_method: Μέθοδος παράδοσης
   fee_type: "Κατηγορίες αμοιβών"
   tax_category: "Φορολογική κατηγορία"
-  display: "Απεικόνιση"
+  display: "Εμφάνιση"
   tags: "Ετικέτες"
   calculator: "Υπολογισμός"
   calculator_values: "Τιμές αριθμομηχανής"
@@ -2812,7 +2812,7 @@ el:
   loading_customers: "Φόρτωση πελατών"
   no_customers_found: "Δεν βρέθηκαν πελάτες"
   go: "Πηγαίνω"
-  hub: "Κεντρικό σημείο"
+  hub: "Κέντρο διανομής"
   product: "Προϊόν"
   price: "Τιμή"
   review: "Αναθεώρηση"
@@ -2824,10 +2824,10 @@ el:
   spree_admin_enterprises_hubs_name: "Όνομα"
   spree_admin_enterprises_create_new: "ΔΗΜΙΟΥΡΓΗΣΤΕ ΝΕΟ"
   spree_admin_enterprises_shipping_methods: "Τρόποι αποστολής"
-  spree_admin_enterprises_fees: "Αμοιβή επιχείρησης"
+  spree_admin_enterprises_fees: "Τέλη επιχείρησης"
   spree_admin_enterprises_none_create_a_new_enterprise: "ΔΗΜΙΟΥΡΓΗΣΤΕ ΝΕΑ ΕΠΙΧΕΙΡΗΣΗ"
   spree_admin_enterprises_none_text: "Δεν έχετε ακόμη επιχειρήσεις"
-  spree_admin_enterprises_tabs_hubs: "HUBS"
+  spree_admin_enterprises_tabs_hubs: "ΚΕΝΤΡΑ ΔΙΑΝΟΜΗΣ"
   spree_admin_enterprises_producers_manage_products: "Διαχείριση προϊόντων"
   spree_admin_enterprises_create_new_product: "ΔΗΜΙΟΥΡΓΗΣΤΕ ΝΕΟ ΠΡΟDΟΝ"
   spree_admin_single_enterprise_alert_mail_confirmation: "Παρακαλώ επιβεβαιώστε τη διεύθυνση email για"
@@ -2889,7 +2889,7 @@ el:
   hub_sidebar_red: "το κόκκινο"
   order_cycles_closed_for_hub: "Το κέντρο διανομής που επιλέξατε είναι προσωρινά κλειστός για παραγγελίες. Παρακαλώ προσπαθήστε ξανά αργότερα."
   report_customers_distributor: "Διανομέας"
-  report_customers_hub: "Κεντρικό σημείο"
+  report_customers_hub: "Κέντρο διανομής"
   report_customers_supplier: "Προμηθευτής"
   report_customers_cycle: "Κύκλος Παραγγελειών"
   report_customers_type: "Τύπος αναφοράς"
@@ -2908,7 +2908,7 @@ el:
   report_hide_columns: Κελιά προς απόκρυψη
   report_columns: Στήλες
   report_enterprises: "Επιχειρήσεις"
-  report_enterprise_fee: "Ονομασία Χρεώσεων"
+  report_enterprise_fee: "Ονομασία τελών"
   report_users: "Χρήστες"
   report_tax_rates: Φορολογικοί δείκτες
   report_tax_types: Φορολογικοί τύποι
@@ -2928,9 +2928,9 @@ el:
   report_header_address: Διεύθυνση
   report_header_billing_address: Διεύθυνση Τιμολόγησης
   report_header_relationship: Σχέση
-  report_header_hub: Κεντρικό σημείο
+  report_header_hub: Κέντρο διανομής
   report_header_hub_address: Διεύθυνση κέντρου διανομής
-  report_header_to_hub: Στο Hub
+  report_header_to_hub: Στο κέντρο διανομής
   report_header_hub_code: 'Κωδικός κέντρου διανομής. '
   report_header_code: Κώδικας
   report_header_paid: Επί πληρωμή?
@@ -2963,7 +2963,7 @@ el:
   report_header_delivery_charge: "Χρέωση παράδοσης (%{currency_symbol})"
   report_header_tax: "Φόρος"
   report_header_tax_on_delivery: "Φόρος παράδοσης (%{currency_symbol})"
-  report_header_tax_on_fees: "Φόρος Τέλη (%{currency_symbol})"
+  report_header_tax_on_fees: "Φορολογία τελών (%{currency_symbol})"
   report_header_tax_category: "Φορολογική Κατηγορία"
   report_header_tax_rate_name: "Όνομα φορολογικού συντελεστή"
   report_header_tax_rate: "Φορολογικός συντελεστής"
@@ -3058,7 +3058,10 @@ el:
   report_header_total_units: Σύνολο Μονάδων
   report_header_sum_max_total: "Σύνολο Μέγιστο Σύνολο"
   report_header_total_excl_vat: "Σύνολο χωρίς φόρος (%{currency_symbol})"
+  report_header_total_fees_excl_tax: "Συνολικά έξοδα άνευ φόρου (%{currency_symbol})"
+  report_header_total_tax_on_fees: "Συνολικά εξόδα συμπεριλαμβανομένου του φόρου (%{currency_symbol})"
   report_header_total_incl_vat: "Σύνολο συμπ. φόρος (%{currency_symbol})"
+  report_header_total_excl_fees_and_tax: "Σύνολο χωρίς τέλη και φορολογία (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
   report_header_is_producer: Παραγωγός?
   report_header_not_confirmed: Δεν έχει επιβεβαιωθεί
@@ -3143,7 +3146,7 @@ el:
       Τα κέντρα διανομής %{distributor_names} παρατίθενται σε έναν ενεργό κύκλο παραγγελιών,
       αλλά δεν διαθέτουν έγκυρους τρόπους αποστολής και πληρωμής. Μέχρι να τα ρυθμίσετε,
       οι πελάτες δεν θα μπορούν να ψωνίζουν σε αυτά τα κέντρα διανομής.
-  enterprise_fees_update_notice: Οι χρεώσεις της επιχείρησής σας ενημερώθηκαν.
+  enterprise_fees_update_notice: Τα τέλη της επιχείρησής σας ενημερώθηκαν.
   enterprise_register_package_error: "Επιλέξτε ένα πακέτο"
   enterprise_register_error: "Δεν ήταν δυνατή η ολοκλήρωση της εγγραφής για το %{enterprise}"
   enterprise_register_success_notice: "Συγχαρητήρια! Η εγγραφή για το %{enterprise} ολοκληρώθηκε!"
@@ -3182,7 +3185,7 @@ el:
     error: Πρόβλημα
     unavailable: Μη διαθέσιμο
     profile: Προφίλ
-    hub: Κεντρικό σημείο
+    hub: Κέντρο διανομής
     shop: Κατάστημα
     choose: Επιλέγω
     resolve_errors: Επιλύστε τα ακόλουθα σφάλματα
@@ -3207,12 +3210,12 @@ el:
         invite_title: "Πρόσκληση νέου χρήστη"
         tag_rule_help:
           title: Κανόνες ετικετών
-          overview: ΣΦΑΙΡΙΚΗ ΕΙΚΟΝΑ
+          overview: Γενική εικόνα
           overview_text: >
               Οι κανόνες ετικετών παρέχουν έναν τρόπο να περιγράψουμε ποια αντικείμενα
               είναι ορατά ή όχι σε ποιούς πελάτες. Τα αντικείμενα μπορούν να είναι
               Μέθοδοι Αποστολής, Μέθοδοι Πληρωμής, Προϊόντα και Κύκλοι Παραγγελιών.
-          by_default_rules: "Κανόνες &quot;Από προεπιλογή ...&quot;"
+          by_default_rules: "Κανόνες \"Απο προεπιλογή\""
           by_default_rules_text: >
               Οι προεπιλεγμένοι κανόνες επιτρέπουν την απόκρυψη αντικειμένων έτσι
               ώστε να μην είναι ορατά από προεπιλογή. Αυτή η συμπεριφορά μπορεί στη
@@ -3285,8 +3288,8 @@ el:
           producer_shop_text2: >
               Ένα Κατάστημα Παραγωγού προορίζεται μόνο για τα δικά σας προϊόντα. Αν
               θέλετε να πουλάτε προϊόντα που καλλιεργούνται ή παράγονται εκτός της
-              επιχείρησής σας, παρακαλώ επιλέξτε 'Producer Hub'.
-          producer_hub: Hub Παραγωγού
+              επιχείρησής σας, παρακαλώ επιλέξτε 'Κέντρο διανομής παραγωγού'.
+          producer_hub: Κέντρο διανομής παραγωγού
           producer_hub_text1: >
               Η επιχείρησή σας είναι η ραχοκοκαλιά του τοπικού σας συστήματος τροφίμων.
               Μπορείτε να πουλάτε τα δικά σας προϊόντα καθώς και προϊόντα που συγκεντρώνονται
@@ -3426,7 +3429,7 @@ el:
       customers:
         index:
           add_customer: "Προσθήκη πελάτη"
-          add_a_new_customer_for: "Πρόσθεσε νεο πελάτη για%{κατάστημα_όνομα}"
+          add_a_new_customer_for: "Πρόσθεσε νεο πελάτη για %{shop_name}"
           customer_placeholder: "customer@example.org"
           valid_email_error: "Παρακαλώ εισάγετε έγκυρο email"
       subscriptions:
@@ -3486,7 +3489,7 @@ el:
       show_hide_shipping: 'Εμφάνιση ή απόκρυψη μεθόδων αποστολής στο ταμείο'
       show_hide_payment: 'Εμφάνιση ή απόκρυψη τρόπων πληρωμής κατά την ολοκλήρωση αγοράς'
       show_hide_order_cycles: 'Εμφάνιση ή απόκρυψη κύκλων παραγγελίας στη βιτρίνα μου'
-      visible: ΟΡΑΤΟΣ
+      visible: ΟΡΑΤΟ
       not_visible: ΜΗ ΟΡΑΤΟ
     services:
       unsaved_changes_message: Υπάρχουν μη αποθηκευμένες αλλαγές προς το παρόν, αποθηκεύστε τώρα ή αγνοήστε;
@@ -3596,9 +3599,6 @@ el:
     pot:
       one: "δοχείο"
       other: "γλάστρες"
-    bundle:
-      one: "δέσμη"
-      other: "δέσμες"
     flask:
       one: "φλάσκα"
       other: "φιάλες"
@@ -3608,6 +3608,9 @@ el:
     sack:
       one: "σάκος"
       other: "σάκοι"
+    bundle:
+      one: "δέσμη"
+      other: "δέσμες"
   producers:
     signup:
       start_free_profile: "Ξεκινήστε με ένα δωρεάν προφίλ και επεκτείνετε όταν είστε έτοιμοι!"
@@ -3836,7 +3839,7 @@ el:
     send_copy_of_all_mails_to: "Αποστολή αντιγράφου όλων των μηνυμάτων σε"
     smtp_send_copy_to_this_addresses: "Στέλνει αντίγραφο όλων των εξερχόμενων μηνυμάτων σε αυτήν τη διεύθυνση. Για πολλές διευθύνσεις, διαχωρίστε με κόμματα."
     tax_categories: "Κατηγορίες Φορολόγησης"
-    listing_tax_categories: "Καταχώριση Φορολογικών Κατηγοριών"
+    listing_tax_categories: "Καταχώρηση Φορολογικών Κατηγοριών"
     back_to_tax_categories_list: "Επιστροφή στη λίστα κατηγοριών φόρων"
     tax rate: "Φορολογικοί δείκτες"
     new_tax_rate: "Νέος φορολογικός συντελεστής"
@@ -3854,7 +3857,7 @@ el:
     country_based: "Με βάση τη χώρα"
     state_based: "Με βάση το κράτος"
     countries: "Χώρες"
-    listing_countries: "Χώρες καταχώρισης"
+    listing_countries: "Χώρες καταχώρησης"
     iso_name: "Όνομα ISO"
     states_required: "Απαιτούνται κράτη"
     editing_country: "Χώρα επεξεργασίας"
@@ -3878,9 +3881,9 @@ el:
     default: "Προκαθορισμένο"
     calculator: "Υπολογισμός"
     zone: "Ζώνη"
-    display: "Απεικόνιση"
+    display: "Εμφάνιση"
     environment: "περιβάλλον"
-    active: "Ενεργός"
+    active: "Ενεργό"
     nore: "Περισσότερα"
     no_results: "Χωρίς αποτέλεσμα"
     create: "Δημιουργία"
@@ -4052,7 +4055,7 @@ el:
           mark_as_shipped_message_html: "Η παραγγελία πρόκειται να σημειωθεί ως \"Απεσταλμένη\". <br />Θέλετε σίγουρα να συνεχίσετε; "
           mark_as_shipped_label_message: "Αποστολή email ειδοποίησης αποστολής/παραλαβής στον πελάτη."
         index:
-          listing_orders: "Καταχώριση παραγγελιών"
+          listing_orders: "Καταχώρηση παραγγελιών"
           new_order: "Νέα παραγγελία"
           capture: "Πιάνω"
           ship: "Αποστολή"
@@ -4116,7 +4119,7 @@ el:
         enterprises_header:
           ofn_with_tip: Οι επιχειρήσεις είναι Παραγωγοί ή/και Κέντρα και αποτελούν τη βασική μονάδα οργάνωσης στο Ανοιχτό Δίκτυο Τροφίμων.
         enterprise_row:
-          has_no_enterprise_fees: "δεν έχει επιχειρηματικά τέλη"
+          has_no_enterprise_fees: "δεν έχει τέλη επιχείρησης"
           has_no_payment_methods: "δεν έχει τρόπους πληρωμής"
           has_no_shipping_methods: "δεν έχει τρόπους αποστολής"
         products:
@@ -4147,9 +4150,9 @@ el:
           products_distributor: "Διανομέας"
           zone: "Ζώνη"
           calculator: "Υπολογισμός"
-          display: "Απεικόνιση"
+          display: "Εμφάνιση"
           both: "Στη σελίδα ολοκλήρωσης παραγγελίας και στο back office"
-          back_end: "Μόνο πίσω γραφείο"
+          back_end: "Μόνο στο back office"
           no_shipping_methods_found: "Δεν βρέθηκαν μέθοδοι αποστολής"
         new:
           new_shipping_method: "Νέος τρόπος αποστολής"
@@ -4163,8 +4166,8 @@ el:
           tax_category: "Φορολογική Κατηγορία"
           zones: "Ζώνες"
           both: "Στη σελίδα ολοκλήρωσης παραγγελίας και στο back office"
-          back_end: "Μόνο πίσω γραφείο"
-          deactivation_warning: "Η απενεργοποίηση μιας μεθόδου αποστολής μπορεί να εξαφανίσει τη μέθοδο αποστολής από τη λίστα σας. Εναλλακτικά, μπορείτε να αποκρύψετε μια μέθοδο αποστολής από τη σελίδα ολοκλήρωσης αγοράς, ορίζοντας παρακάτω την απεικόνιση ως \"Μόνο στο back office\" "
+          back_end: "Μόνο στο back office"
+          deactivation_warning: "Η απενεργοποίηση μιας μεθόδου αποστολής μπορεί να εξαφανίσει τη μέθοδο αποστολής από τη λίστα σας. Εναλλακτικά, μπορείτε να αποκρύψετε μια μέθοδο αποστολής από τη σελίδα ολοκλήρωσης αγοράς, ορίζοντας παρακάτω την επιλογή εμφάνισης ως \"Μόνο στο back office\" "
       payment_methods:
         index:
           payment_methods: "τρόποι πληρωμής"
@@ -4173,10 +4176,10 @@ el:
           products_distributor: "Διανομέας"
           provider: "Προμηθευτής"
           environment: "περιβάλλον"
-          display: "Απεικόνιση"
-          active: "Ενεργός"
+          display: "Εμφάνιση"
+          active: "Ενεργό"
           both: "Και τα δυο"
-          back_end: "Μόνο πίσω γραφείο"
+          back_end: "Μόνο στο back office"
           active_yes: "Nαι"
           active_no: "Όχι"
           no_payment_methods_found: "Δεν βρέθηκαν τρόποι πληρωμής"
@@ -4204,14 +4207,14 @@ el:
           name: "Όνομα"
           description: "Περιγραφή"
           environment: "περιβάλλον"
-          display: "Απεικόνιση"
-          active: "Ενεργός"
+          display: "Εμφάνιση"
+          active: "Ενεργό"
           active_yes: "Nαι"
           active_no: "Όχι"
           both: "Στη σελίδα ολοκλήρωσης παραγγελίας και στο back office"
-          back_end: "Μόνο πίσω γραφείο"
+          back_end: "Μόνο στο back office"
           tags: "Ετικέτες"
-          deactivation_warning: "Η απενεργοποίηση ενός τρόπου πληρωμής μπορεί να εξαφανίσει τον τρόπο πληρωμής από τη λίστα σας. Εναλλακτικά, μπορείτε να αποκρύψετε έναν τρόπο πληρωμής από τη σελίδα ολοκλήρωσης αγοράς, ορίζοντας παρακάτω την επιλογή απεικόνιση ώς \"Μόνο στο back office\" "
+          deactivation_warning: "Η απενεργοποίηση ενός τρόπου πληρωμής μπορεί να εξαφανίσει τον τρόπο πληρωμής από τη λίστα σας. Εναλλακτικά, μπορείτε να αποκρύψετε έναν τρόπο πληρωμής από τη σελίδα ολοκλήρωσης αγοράς, ορίζοντας παρακάτω την επιλογή εμφάνιση ώς \"Μόνο στο back office\" "
         providers:
           provider: "Προμηθευτής"
           check: "Μετρητά/EFT/κλπ. (πληρωμές για τις οποίες δεν απαιτείται αυτόματη επικύρωση)"
@@ -4491,7 +4494,7 @@ el:
       resumed: ξανάρχισε
       returned: Επέστρεψαν
     subscription_state:
-      active: ενεργός
+      active: ενεργό
       pending: εκκρεμής
       ended: τελείωσε
       paused: παύση

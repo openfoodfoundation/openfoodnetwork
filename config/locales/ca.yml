@@ -3374,9 +3374,6 @@ ca:
     pot:
       one: "pot"
       other: "pots"
-    bundle:
-      one: "paquet"
-      other: "paquets"
     flask:
       one: "matràs"
       other: "ampolleta"
@@ -3386,6 +3383,9 @@ ca:
     sack:
       one: "sac"
       other: "sacs"
+    bundle:
+      one: "paquet"
+      other: "paquets"
   producers:
     signup:
       start_free_profile: "Comença amb un perfil gratuït i amplia'l quan estiguis preparada."

@@ -2465,7 +2465,7 @@ hu:
   producers_contact: Kapcsolat
   producers_contact_phone: Hívás
   producers_contact_social: Kövesse
-  producers_buy_at_html: "Vásárolj %{enterprise} termékeket a következő címen:"
+  producers_buy_at_html: "%{enterprise} termékei itt érhetők el:"
   producers_filter: Szűrés
   producers_filter_type: típus
   producers_filter_property: Tulajdonság
@@ -3678,9 +3678,6 @@ hu:
     pot:
       one: "edény"
       other: "edények"
-    bundle:
-      one: "csomag"
-      other: "kötegek"
     flask:
       one: "lombik"
       other: "flaskák"
@@ -3690,6 +3687,9 @@ hu:
     sack:
       one: "zsák"
       other: "zsákokat"
+    bundle:
+      one: "csomag"
+      other: "kötegek"
   producers:
     signup:
       start_free_profile: "Kezd egy ingyenes profillal, és bővítsd ki, ha készen állsz!"

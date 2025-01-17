@@ -3595,11 +3595,6 @@ cy:
       two: "potiau"
       many: "potiau"
       other: "potiau"
-    bundle:
-      one: "bwndel"
-      two: "bwndeli"
-      many: "bwndeli"
-      other: "bwndeli"
     flask:
       one: "fflasg"
       two: "fflasgiau"
@@ -3615,6 +3610,11 @@ cy:
       two: "sachau"
       many: "sachau"
       other: "sachau"
+    bundle:
+      one: "bwndel"
+      two: "bwndeli"
+      many: "bwndeli"
+      other: "bwndeli"
   producers:
     signup:
       start_free_profile: "Dechreuwch gyda phroffil am ddim, a gallwch ehangu an fyddwch yn barod!"

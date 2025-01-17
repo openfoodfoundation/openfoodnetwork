@@ -3527,9 +3527,6 @@ hi:
     pot:
       one: "पॉट"
       other: "पॉट्स"
-    bundle:
-      one: "बंडल"
-      other: "बंडल्स"
     flask:
       one: "फ्लास्क"
       other: "फ्लास्क"
@@ -3539,6 +3536,9 @@ hi:
     sack:
       one: "बोरी"
       other: "बोरियाँ"
+    bundle:
+      one: "बंडल"
+      other: "बंडल्स"
   producers:
     signup:
       start_free_profile: "एक फ्री प्रोफ़ाइल से शुरुआत करें और जब आप तैयार हों तो उसका विस्तार करें!"

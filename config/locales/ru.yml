@@ -3647,11 +3647,6 @@ ru:
       few: "горшки"
       many: "горшки"
       other: "горшки"
-    bundle:
-      one: "связка"
-      few: "связки"
-      many: "связки"
-      other: "связки"
     flask:
       one: "фляга"
       few: "колбы"
@@ -3667,6 +3662,11 @@ ru:
       few: "мешки"
       many: "мешки"
       other: "мешки"
+    bundle:
+      one: "связка"
+      few: "связки"
+      many: "связки"
+      other: "связки"
   producers:
     signup:
       start_free_profile: "Начните с бесплатного профиля и расширяйтесь, когда будете готовы!"

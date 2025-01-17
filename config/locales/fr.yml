@@ -3794,10 +3794,6 @@ fr:
       one: "pot"
       many: "pots"
       other: "pots"
-    bundle:
-      one: "botte"
-      many: "bottes"
-      other: "bottes"
     flask:
       one: "flacon"
       many: "flacons"
@@ -3810,6 +3806,10 @@ fr:
       one: "sachet"
       many: "sachets"
       other: "sachets"
+    bundle:
+      one: "botte"
+      many: "bottes"
+      other: "bottes"
   producers:
     signup:
       start_free_profile: "Créez votre profil producteur, et dès que vous êtes prêt, changez de formule pour ouvrir votre boutique en ligne."

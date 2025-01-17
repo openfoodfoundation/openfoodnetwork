@@ -3399,10 +3399,6 @@ it:
       one: "pentola"
       many: "vasi"
       other: "vasi"
-    bundle:
-      one: "fascio"
-      many: "gruppi"
-      other: "gruppi"
     flask:
       one: "borraccia"
       many: "fiaschi"
@@ -3415,6 +3411,10 @@ it:
       one: "sacco"
       many: "sacchi"
       other: "sacchi"
+    bundle:
+      one: "fascio"
+      many: "gruppi"
+      other: "gruppi"
   producers:
     signup:
       start_free_profile: "Inizia con un profilo gratuito e migliora quando sei pronto!"

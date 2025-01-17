@@ -3448,9 +3448,6 @@ mr:
     pot:
       one: "भांडे"
       other: "भांडी"
-    bundle:
-      one: "मोळी"
-      other: "बंडले"
     flask:
       one: "फ्लास्क"
       other: "फ्लास्कस्"
@@ -3460,6 +3457,9 @@ mr:
     sack:
       one: "गोणी"
       other: "पोती"
+    bundle:
+      one: "मोळी"
+      other: "बंडले"
   producers:
     signup:
       start_free_profile: "विनामूल्य प्रोफाइलसह प्रारंभ करा आणि जेव्हा तुम्ही तयार असाल तेव्हा विस्तार करा!"

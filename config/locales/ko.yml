@@ -3233,14 +3233,14 @@ ko:
       other: "조각"
     pot:
       other: "냄비 갯수"
-    bundle:
-      other: "묶음"
     flask:
       other: "플라스크 몇 개"
     basket:
       other: "바구니"
     sack:
       other: "자루"
+    bundle:
+      other: "묶음"
   producers:
     signup:
       start_free_profile: "무료 프로필로 시작해보시고, 준비가 되면 확장해보세요!"

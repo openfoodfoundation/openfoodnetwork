@@ -2917,9 +2917,6 @@ fil_PH:
     pot:
       one: "paso"
       other: "mga paso"
-    bundle:
-      one: "bigkis"
-      other: "mga bigkis"
     flask:
       one: "prasko"
       other: "mga prasko"
@@ -2929,6 +2926,9 @@ fil_PH:
     sack:
       one: "sako"
       other: "mga sako"
+    bundle:
+      one: "bigkis"
+      other: "mga bigkis"
   producers:
     signup:
       start_free_profile: "Magsimula sa libreng profile at palawakin kapag handa ka na!"

@@ -2879,11 +2879,6 @@ pl:
       few: "garnki"
       many: "garnki"
       other: "garnki"
-    bundle:
-      one: "pakiet"
-      few: "wiązki"
-      many: "wiązki"
-      other: "wiązki"
     flask:
       one: "kolba"
       few: "kolby"
@@ -2899,6 +2894,11 @@ pl:
       few: "worki"
       many: "worki"
       other: "worki"
+    bundle:
+      one: "pakiet"
+      few: "wiązki"
+      many: "wiązki"
+      other: "wiązki"
   producers:
     signup:
       start_free_profile: "Zacznij od bezpłatnego profilu i rozszerzaj, gdy będziesz gotowy!"

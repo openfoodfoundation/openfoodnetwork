@@ -3338,11 +3338,6 @@ uk:
       few: "горщики"
       many: "горщики"
       other: "горщики"
-    bundle:
-      one: "пучок"
-      few: "пучки"
-      many: "пучки"
-      other: "пучки"
     flask:
       one: "колба"
       few: "колби"
@@ -3358,6 +3353,11 @@ uk:
       few: "мішки"
       many: "мішки"
       other: "мішки"
+    bundle:
+      one: "пучок"
+      few: "пучки"
+      many: "пучки"
+      other: "пучки"
   producers:
     signup:
       start_free_profile: "Почніть із безкоштовного профілю та розширюйте, коли будете готові!"

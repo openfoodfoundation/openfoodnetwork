@@ -3704,9 +3704,6 @@ en_IE:
     pot:
       one: "pot"
       other: "pots"
-    bundle:
-      one: "bundle"
-      other: "bundles"
     flask:
       one: "flask"
       other: "flasks"
@@ -3716,6 +3713,9 @@ en_IE:
     sack:
       one: "sack"
       other: "sacks"
+    bundle:
+      one: "bundle"
+      other: "bundles"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"

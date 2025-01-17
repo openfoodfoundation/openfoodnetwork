@@ -3120,9 +3120,6 @@ tr:
     pot:
       one: "pot"
       other: "pots"
-    bundle:
-      one: "demeti"
-      other: "demet"
     flask:
       one: "şişe"
       other: "cep şişesi"
@@ -3132,6 +3129,9 @@ tr:
     sack:
       one: "çuval"
       other: "çuval"
+    bundle:
+      one: "demeti"
+      other: "demet"
   producers:
     signup:
       start_free_profile: "Ücretsiz bir profille başlayın ve hazır olduğunuzda devam edin!"
