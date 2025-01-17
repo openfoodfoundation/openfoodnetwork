@@ -30,9 +30,5 @@ module Spree
     it 'finds a count_on_hand for a variant' do
       expect(subject.count_on_hand(variant)).to eq 15
     end
-
-    it 'finds determines if you a variant is backorderable' do
-      expect(subject.backorderable?(variant)).to eq false
-    end
   end
 end

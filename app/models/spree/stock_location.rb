@@ -35,9 +35,5 @@ module Spree
     def count_on_hand(variant)
       stock_item(variant).try(:count_on_hand)
     end
-
-    def backorderable?(variant)
-      stock_item(variant).try(:backorderable?)
-    end
   end
 end
