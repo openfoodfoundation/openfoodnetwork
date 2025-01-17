@@ -39,9 +39,5 @@ module Spree
     def backorderable?(variant)
       stock_item(variant).try(:backorderable?)
     end
-
-    def fill_status(variant, quantity)
-      variant.fill_status(quantity)
-    end
   end
 end

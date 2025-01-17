@@ -72,7 +72,7 @@ module Spree
     end
 
     def add_to_shipment(shipment, variant, quantity)
-      on_hand, back_order = shipment.stock_location.fill_status(variant, quantity)
+      on_hand, back_order = variant.fill_status(quantity)
 
       on_hand.times { shipment.set_up_inventory('on_hand', variant, order) }
       back_order.times { shipment.set_up_inventory('backordered', variant, order) }

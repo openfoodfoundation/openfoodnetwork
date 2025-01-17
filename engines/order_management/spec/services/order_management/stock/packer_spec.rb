@@ -21,7 +21,9 @@ module OrderManagement
       end
 
       it 'variants are added as backordered without enough on_hand' do
-        expect(stock_location).to receive(:fill_status).exactly(5).times.and_return([2, 3])
+        order.line_items.each do |item|
+          expect(item.variant).to receive(:fill_status).and_return([2, 3])
+        end
 
         package = subject.package
         expect(package.on_hand.size).to eq 5

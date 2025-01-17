@@ -42,7 +42,7 @@ RSpec.describe Spree::OrderInventory do
     end
 
     it 'should create inventory_units in the necessary states' do
-      expect(shipment.stock_location).to receive(:fill_status).with(variant, 5).and_return([3, 2])
+      expect(variant).to receive(:fill_status).with(5).and_return([3, 2])
 
       expect(subject.__send__(:add_to_shipment, shipment, variant, 5)).to eq 5
 
