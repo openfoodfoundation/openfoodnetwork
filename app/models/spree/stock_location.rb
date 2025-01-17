@@ -27,9 +27,5 @@ module Spree
     def stock_movements
       StockMovement.all
     end
-
-    def stock_item_or_create(variant)
-      stock_item(variant) || stock_items.create(variant:)
-    end
   end
 end
