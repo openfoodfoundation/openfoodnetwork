@@ -4,6 +4,7 @@ require 'spec_helper'
 
 RSpec.describe BackorderUpdater do
   let(:order) { create(:completed_order_with_totals) }
+  let(:order_cycle) { order.order_cycle }
   let(:distributor) { order.distributor }
   let(:beans) { beans_item.variant }
   let(:beans_item) { order.line_items[0] }
@@ -116,9 +117,42 @@ RSpec.describe BackorderUpdater do
     end
   end
 
-  describe "#distributed_linked_variants" do
-    let(:order_cycle) { order.order_cycle }
+  describe "#update_order_lines" do
+    it "skips unavailable items" do
+      stub_request(:get, catalog_url).to_return(body: catalog_json)
 
+      # Record the placed backorder:
+      backorder = nil
+      allow_any_instance_of(FdcBackorderer).to receive(:find_order) do |*_args|
+        backorder
+      end
+      allow_any_instance_of(FdcBackorderer).to receive(:send_order) do |*args|
+        backorder = args[1]
+      end
+
+      BackorderJob.new.place_backorder(order)
+
+      # Now one of the products becomes unavailable in the catalog.
+      # I simulate that by changing the link so something unknown.
+      beans.semantic_links[0].update!(semantic_id: "https://example.net/unknown")
+
+      variants = [beans, chia_seed]
+      reference_link = chia_seed.semantic_links[0].semantic_id
+      urls = FdcUrlBuilder.new(reference_link)
+      catalog = DfcCatalog.load(user, urls.catalog_url)
+      orderer = FdcBackorderer.new(user, urls)
+      broker = FdcOfferBroker.new(catalog)
+      updated_lines = subject.update_order_lines(
+        backorder, order_cycle, variants, broker, orderer
+      )
+
+      expect(updated_lines.count).to eq 1
+      expect(updated_lines[0].offer.offeredItem.semanticId)
+        .to eq chia_seed.semantic_links[0].semantic_id
+    end
+  end
+
+  describe "#distributed_linked_variants" do
     it "selects available variants with semantic links" do
       variants = subject.distributed_linked_variants(order_cycle, distributor)
       expect(variants).to match_array [beans, chia_seed]

@@ -58,6 +58,9 @@ class BackorderUpdater
     variants.map do |variant|
       link = variant.semantic_links[0].semantic_id
       solution = broker.best_offer(link)
+
+      next unless solution.offer
+
       line = orderer.find_or_build_order_line(backorder, solution.offer)
       if variant.on_demand
         adjust_stock(variant, solution, line)
@@ -66,7 +69,7 @@ class BackorderUpdater
       end
 
       line
-    end
+    end.compact
   end
 
   def cancel_stale_lines(unprocessed_lines, managed_variants, broker)
