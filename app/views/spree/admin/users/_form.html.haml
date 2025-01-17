@@ -7,7 +7,7 @@
     .field
       = label_tag nil, t(".roles")
       %ul
-        - @roles.each do |role|
+        - [Spree::Role.admin].each do |role|
           %li
             = check_box_tag "user[spree_role_ids][]", role.id, @user.spree_roles.include?(role), id: "user_spree_role_#{role.name}"
             = label_tag role.name

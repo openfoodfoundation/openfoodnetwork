@@ -30,7 +30,7 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
 
     before do
       allow(current_api_user)
-        .to receive(:has_spree_role?).with("admin").and_return(false)
+        .to receive(:admin?).and_return(false)
     end
 
     it "gets a single product" do
@@ -96,7 +96,7 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
   context "as an administrator" do
     before do
       allow(current_api_user)
-        .to receive(:has_spree_role?).with("admin").and_return(true)
+        .to receive(:admin?).and_return(true)
     end
 
     it "can create a new product" do
@@ -153,7 +153,7 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
     context 'as a normal user' do
       before do
         allow(current_api_user)
-          .to receive(:has_spree_role?).with("admin").and_return(false)
+          .to receive(:admin?).and_return(false)
       end
 
       it 'denies access' do
@@ -204,7 +204,7 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
     context 'as an administrator' do
       before do
         allow(current_api_user)
-          .to receive(:has_spree_role?).with("admin").and_return(true)
+          .to receive(:admin?).and_return(true)
       end
 
       it 'responds with a successful response' do

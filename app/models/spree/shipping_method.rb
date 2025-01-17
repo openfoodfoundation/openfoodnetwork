@@ -37,7 +37,7 @@ module Spree
     after_save :touch_distributors
 
     scope :managed_by, lambda { |user|
-      if user.has_spree_role?('admin')
+      if user.admin?
         where(nil)
       else
         joins(:distributors).

@@ -144,7 +144,7 @@ module Admin
 
     def product_scope
       user = spree_current_user
-      scope = if user.has_spree_role?("admin") || user.enterprises.present?
+      scope = if user.admin? || user.enterprises.present?
                 Spree::Product
               else
                 Spree::Product.active

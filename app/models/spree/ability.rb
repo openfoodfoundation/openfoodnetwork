@@ -18,7 +18,7 @@ module Spree
 
       user ||= Spree::User.new
 
-      if user.respond_to?(:has_spree_role?) && user.has_spree_role?('admin')
+      if user.try(:admin?)
         can :manage, :all
       else
         can [:index, :read], Country

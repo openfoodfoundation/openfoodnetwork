@@ -11,8 +11,6 @@ module Spree
 
       # http://spreecommerce.com/blog/2010/11/02/json-hijacking-vulnerability/
       before_action :check_json_authenticity, only: :index
-      before_action :load_roles, only: [:edit, :new, :update, :create,
-                                        :generate_api_key, :clear_api_key]
 
       def index
         respond_with(@collection) do |format|
@@ -121,10 +119,6 @@ module Spree
         return unless spree_current_user == @user && @user.password.present?
 
         sign_in(@user, event: :authentication, bypass: true)
-      end
-
-      def load_roles
-        @roles = Spree::Role.where(nil)
       end
 
       def new_email_unconfirmed?

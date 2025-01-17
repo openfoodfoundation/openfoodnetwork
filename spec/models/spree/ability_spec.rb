@@ -21,7 +21,7 @@ RSpec.describe Spree::Ability do
     let(:resource) { Object.new }
 
     context 'with admin user' do
-      before(:each) { allow(user).to receive(:has_spree_role?).and_return(true) }
+      before(:each) { allow(user).to receive(:admin?).and_return(true) }
       it_should_behave_like 'access granted'
       it_should_behave_like 'index allowed'
     end

@@ -28,7 +28,7 @@ class EnterpriseFee < ApplicationRecord
   scope :for_enterprises, lambda { |enterprises| where(enterprise_id: enterprises) }
 
   scope :managed_by, lambda { |user|
-    if user.has_spree_role?('admin')
+    if user.admin?
       where(nil)
     else
       where(enterprise_id: user.enterprises.select(&:id))

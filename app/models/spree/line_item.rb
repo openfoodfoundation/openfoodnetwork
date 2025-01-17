@@ -55,7 +55,7 @@ module Spree
 
     # -- Scopes
     scope :managed_by, lambda { |user|
-      if user.has_spree_role?('admin')
+      if user.admin?
         where(nil)
       else
         # Find line items that are from orders distributed by the user or supplied by the user
