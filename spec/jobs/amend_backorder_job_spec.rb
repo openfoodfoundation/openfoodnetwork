@@ -130,5 +130,32 @@ RSpec.describe AmendBackorderJob do
         .to change { backorder.lines.count }.from(2).to(1)
         .and change { beans.reload.on_hand }.by(-12)
     end
+
+    it "creates a new order" do
+      stub_request(:get, catalog_url).to_return(body: catalog_json)
+
+      # Record the placed backorder:
+      backorder = nil
+      allow_any_instance_of(FdcBackorderer).to receive(:find_order) do |*_args|
+        backorder
+      end
+      allow_any_instance_of(FdcBackorderer).to receive(:send_order) do |*args|
+        backorder = args[1]
+      end
+
+      # Call amending before a backorder has been placed.
+      expect { subject.amend_backorder(order) }
+        .to change { backorder.present? }
+        .to(true)
+
+      # We ordered a case of 12 cans: -3 + 12 = 9
+      expect(beans.on_hand).to eq 9
+
+      # Stock controlled items don't change stock in backorder:
+      expect(chia_seed.on_hand).to eq 7
+
+      expect(backorder.lines[0].quantity).to eq 1 # beans
+      expect(backorder.lines[1].quantity).to eq 5 # chia
+    end
   end
 end
