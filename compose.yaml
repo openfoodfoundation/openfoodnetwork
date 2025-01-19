@@ -40,7 +40,7 @@ services:
                (bundle check || bundle install) &&
                bundle exec rake db:create &&
                yarn install &&
-               tail -f log/development.log"
+               bundle exec foreman start -f Procfile.docker"
 volumes:
   gems:
   postgres:
