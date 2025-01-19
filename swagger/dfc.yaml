@@ -181,7 +181,10 @@ paths:
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                     - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
-                      dfc-b:hasPrice: 19.99
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AUD
                       dfc-b:stockLimitation: 0
         '401':
           description: unauthorized
@@ -219,7 +222,10 @@ paths:
                       dfc-b:offeredThrough: http://test.host/api/dfc/enterprises/10000/offers/10001
                     - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
-                      dfc-b:hasPrice: 19.99
+                      dfc-b:hasPrice:
+                        "@type": dfc-b:Price
+                        dfc-b:value: 19.99
+                        dfc-b:hasUnit: dfc-m:AUD
                       dfc-b:stockLimitation: 0
         '404':
           description: not found
@@ -499,7 +505,10 @@ paths:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                     "@type": dfc-b:Offer
-                    dfc-b:hasPrice: 19.99
+                    dfc-b:hasPrice:
+                      "@type": dfc-b:Price
+                      dfc-b:value: 19.99
+                      dfc-b:hasUnit: dfc-m:AUD
                     dfc-b:stockLimitation: 5
     put:
       summary: Update Offer
