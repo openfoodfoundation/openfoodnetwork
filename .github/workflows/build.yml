@@ -553,7 +553,6 @@ jobs:
         with:
           pattern: simplecov-chunk-*
           path: tmp/simplecov
-          merge-multiple: true
 
       - name: collate results from each of the workers
         run: bundle exec rake 'simplecov:collate_results[tmp/simplecov]'
