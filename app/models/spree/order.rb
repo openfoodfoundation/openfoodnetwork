@@ -673,10 +673,6 @@ module Spree
         break if payment_total >= total
 
         yield payment
-
-        if payment.completed?
-          self.payment_total += payment.amount
-        end
       end
     end
 

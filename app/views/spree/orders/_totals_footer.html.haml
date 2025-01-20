@@ -29,7 +29,7 @@
       %td.text-right{colspan: "3"}
         %strong
           = t :order_amount_paid
-      %td.text-right.total
+      %td.text-right.total{id: "amount-paid"}
         %strong
           = order.display_payment_total.to_html
   - if order.outstanding_balance.positive?

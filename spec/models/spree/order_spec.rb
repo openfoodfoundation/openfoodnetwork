@@ -294,15 +294,6 @@ RSpec.describe Spree::Order do
         expect(payment).to receive(:process!)
         expect(order.process_payments!).to be_truthy
       end
-
-      it "stores the payment total on the order" do
-        allow(payment).to receive(:process!)
-        allow(payment).to receive(:completed?).and_return(true)
-
-        order.process_payments!
-
-        expect(order.payment_total).to eq(payment.amount)
-      end
     end
 
     context "when a payment raises a GatewayError" do
