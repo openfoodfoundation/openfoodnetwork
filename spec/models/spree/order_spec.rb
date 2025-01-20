@@ -280,17 +280,17 @@ RSpec.describe Spree::Order do
     end
   end
 
-  context "#process_payments!" do
+  describe "#process_payments!" do
     let(:payment) { build(:payment) }
     before { allow(order).to receive_messages pending_payments: [payment], total: 10 }
 
-    it "should return false if no pending_payments available" do
+    it "returns false if no pending_payments available" do
       allow(order).to receive_messages pending_payments: []
       expect(order.process_payments!).to be_falsy
     end
 
     context "when the processing is sucessful" do
-      it "should process the payments" do
+      it "processes the payments" do
         expect(payment).to receive(:process!)
         expect(order.process_payments!).to be_truthy
       end
@@ -299,12 +299,12 @@ RSpec.describe Spree::Order do
     context "when a payment raises a GatewayError" do
       before { expect(payment).to receive(:process!).and_raise(Spree::Core::GatewayError) }
 
-      it "should return true when configured to allow checkout on gateway failures" do
+      it "returns true when configured to allow checkout on gateway failures" do
         Spree::Config.set allow_checkout_on_gateway_error: true
         expect(order.process_payments!).to be_truthy
       end
 
-      it "should return false when not configured to allow checkout on gateway failures" do
+      it "returns false when not configured to allow checkout on gateway failures" do
         Spree::Config.set allow_checkout_on_gateway_error: false
         expect(order.process_payments!).to be_falsy
       end
