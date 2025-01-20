@@ -1238,8 +1238,7 @@ RSpec.describe Spree::Order do
 
         order.update_shipping_fees!
 
-        item_num = order.line_items.sum(&:quantity)
-        expect(order.reload.adjustment_total).to eq(item_num * shipping_fee)
+        expect(order.reload.adjustment_total).to eq(15) # 3 items * 5
       end
     end
   end
