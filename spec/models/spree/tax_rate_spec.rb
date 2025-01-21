@@ -192,46 +192,6 @@ module Spree
         end
       end
 
-      context "adjust" do
-        let(:order) { create(:order) }
-        let(:tax_category_1) { build_stubbed(:tax_category) }
-        let(:tax_category_2) { build_stubbed(:tax_category) }
-        let(:rate_1) { build_stubbed(:tax_rate, tax_category: tax_category_1) }
-        let(:rate_2) { build_stubbed(:tax_rate, tax_category: tax_category_2) }
-        let(:line_items) { [build_stubbed(:line_item)] }
-
-        context "with line items" do
-          let(:line_item) { build_stubbed(:line_item, tax_category: tax_category_1) }
-          let(:line_items) { [line_item] }
-
-          before do
-            allow(Spree::TaxRate).to receive(:match) { [rate_1, rate_2] }
-          end
-
-          it "should apply adjustments for two tax rates to the order" do
-            expect(rate_1).to receive(:adjust)
-            expect(rate_2).not_to receive(:adjust)
-            Spree::TaxRate.adjust(order, line_items)
-          end
-        end
-
-        context "with shipments" do
-          let(:shipment) { build_stubbed(:shipment, order:) }
-          let(:shipments) { [shipment] }
-
-          before do
-            allow(shipment).to receive(:tax_category) { tax_category_1 }
-            allow(Spree::TaxRate).to receive(:match) { [rate_1, rate_2] }
-          end
-
-          it "should apply adjustments for two tax rates to the order" do
-            expect(rate_1).to receive(:adjust)
-            expect(rate_2).not_to receive(:adjust)
-            Spree::TaxRate.adjust(order, shipments)
-          end
-        end
-      end
-
       context "default" do
         let(:tax_category) { create(:tax_category) }
         let(:country) { create(:country) }
@@ -274,7 +234,7 @@ module Spree
         end
       end
 
-      describe "#adjust" do
+      describe ".adjust" do
         let!(:country) { create(:country, name: "Default Country") }
         let!(:state) { create(:state, name: "Default State", country:) }
         let!(:zone) { create(:zone_with_member, default_tax: true, member: country ) }
@@ -318,9 +278,21 @@ module Spree
             rate2.update_column(:included_in_price, true)
           end
 
+          it "applies adjustments for the matching tax rates to the order" do
+            line_item = build_stubbed(:line_item, tax_category: category)
+            rate3 = create(:tax_rate, amount: 0.05, zone:)
+
+            allow(Spree::TaxRate).to receive(:match) { [rate1, rate3] }
+
+            expect(rate1).to receive(:adjust)
+            expect(rate3).not_to receive(:adjust)
+
+            Spree::TaxRate.adjust(order, [line_item])
+          end
+
           context "when price includes tax" do
             context "when zone is contained by default tax zone" do
-              it "should create two adjustments, one for each tax rate" do
+              it "creates two adjustments, one for each tax rate" do
                 Spree::TaxRate.adjust(order, order.line_items)
                 expect(line_item.adjustments.count).to eq 2
               end
@@ -328,7 +300,7 @@ module Spree
 
             context "when order's zone is neither the default zone, or included " \
                     "in the default zone, but matches the rate's zone" do
-              it "should create an adjustment" do
+              it "creates an adjustment" do
                 # Create a new default zone, so the order's zone won't match this new one
                 create(:zone_with_member, default_tax: true)
 
@@ -374,22 +346,38 @@ module Spree
               Spree::TaxRate.adjust(order, order.line_items)
             end
 
-            it "should not delete adjustments for complete order when taxrate is deleted" do
+            it "does not delete adjustments for complete order when taxrate is deleted" do
               rate1.destroy!
               rate2.destroy!
               expect(line_item.adjustments.count).to eq 2
             end
 
-            it "should create adjustments" do
+            it "creates adjustments" do
               expect(line_item.adjustments.count).to eq 2
             end
 
-            it "should remove adjustments when tax_zone is removed" do
+            it "removes adjustments when tax_zone is removed" do
               expect(line_item.adjustments.count).to eq 2
               allow(order).to receive(:tax_zone) { nil }
               Spree::TaxRate.adjust(order, order.line_items)
               expect(line_item.adjustments.count).to eq 0
             end
+          end
+        end
+
+        context "with shipments" do
+          let(:shipment) { build_stubbed(:shipment, order:) }
+
+          it "applies adjustments for two tax rates to the order" do
+            rate3 = create(:tax_rate, amount: 0.05, zone:)
+
+            allow(shipment).to receive(:tax_category) { category }
+            allow(Spree::TaxRate).to receive(:match) { [rate1, rate3] }
+
+            expect(rate1).to receive(:adjust)
+            expect(rate3).not_to receive(:adjust)
+
+            Spree::TaxRate.adjust(order, [shipment])
           end
         end
       end
