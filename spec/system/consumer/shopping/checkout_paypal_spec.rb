@@ -69,6 +69,7 @@ RSpec.describe "Check out with Paypal" do
 
         click_on "Complete order"
         expect(page).to have_content "Your order has been processed successfully"
+        expect(page.find("#amount-paid").text).to have_content "$19.99"
 
         expect(order.reload.state).to eq "complete"
         expect(order.payments.count).to eq 1

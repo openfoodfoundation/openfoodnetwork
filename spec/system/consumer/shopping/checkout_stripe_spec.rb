@@ -71,6 +71,8 @@ RSpec.describe "Check out with Stripe" do
           checkout_with_stripe
 
           expect(page).to have_content "Confirmed"
+          expect(page.find("#amount-paid").text).to have_content "$19.99"
+
           expect(order.reload.completed?).to eq true
           expect(order.payments.first.state).to eq "completed"
         end
