@@ -2,12 +2,14 @@
 
 module Spree
   class StockItem < ApplicationRecord
+    self.ignored_columns += [:stock_location_id]
+
     acts_as_paranoid
 
     belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant'
     has_many :stock_movements, dependent: :destroy
 
-    validates :variant_id, uniqueness: { scope: [:stock_location_id, :deleted_at] }
+    validates :variant_id, uniqueness: { scope: [:deleted_at] }
     validates :count_on_hand, numericality: { greater_than_or_equal_to: 0, unless: :backorderable? }
 
     delegate :weight, to: :variant
@@ -38,14 +40,6 @@ module Spree
     def count_on_hand=(value)
       self[:count_on_hand] = value
     end
-
-    # Other code still calls this.
-    # TODO: remove usage
-    def stock_location
-      @stock_location ||= DefaultStockLocation.find_or_create
-    end
-
-    attr_writer :stock_location
 
     private
 
