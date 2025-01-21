@@ -42,9 +42,7 @@ module Spree
     #
     # Returns an array of backordered inventory units as per a given stock item
     def self.backordered_for_stock_item(stock_item)
-      backordered_per_variant(stock_item).select do |unit|
-        unit.shipment.stock_location == stock_item.stock_location
-      end
+      backordered_per_variant(stock_item)
     end
 
     def self.finalize_units!(inventory_units)

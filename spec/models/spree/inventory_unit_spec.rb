@@ -11,7 +11,6 @@ RSpec.describe Spree::InventoryUnit do
 
     let(:shipment) do
       shipment = Spree::Shipment.new
-      shipment.stock_location = stock_location
       shipment.shipping_methods << create(:shipping_method)
       shipment.order = order
       # We don't care about this in this test

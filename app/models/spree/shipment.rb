@@ -5,12 +5,10 @@ require 'ostruct'
 module Spree
   class Shipment < ApplicationRecord
     self.belongs_to_required_by_default = false
+    self.ignored_columns += [:stock_location_id]
 
     belongs_to :order, class_name: 'Spree::Order'
     belongs_to :address, class_name: 'Spree::Address'
-
-    # WIP: phasing out stock location, it's not used.
-    belongs_to :stock_location, class_name: 'Spree::StockLocation', optional: true
 
     has_many :shipping_rates, dependent: :delete_all
     has_many :shipping_methods, through: :shipping_rates
@@ -301,11 +299,6 @@ module Spree
 
     def can_modify?
       !shipped? && !order.canceled?
-    end
-
-    # Other code still calls this for convenience.
-    def stock_location
-      @stock_location ||= DefaultStockLocation.find_or_create
     end
 
     private
