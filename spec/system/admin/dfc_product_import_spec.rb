@@ -91,8 +91,11 @@ RSpec.describe "DFC Product Import" do
 
     click_button "Import"
 
-    expect(page).to have_content "invalid_grant"
-    expect(page).to have_content "session not active"
+    within ".flash" do
+      expect(page).to have_content "invalid_grant"
+      expect(page).to have_content "session not active"
+      expect(page).to have_link "OIDC Settings"
+    end
   end
 
   it "fails gracefully" do

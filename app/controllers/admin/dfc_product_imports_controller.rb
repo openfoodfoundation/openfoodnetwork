@@ -35,10 +35,18 @@ module Admin
       end
 
       @count = imported.compact.count
+    rescue Rack::OAuth2::Client::Error => e
+      flash[:error] = I18n.t(
+        'admin.dfc_product_imports.index.oauth_error_html',
+        message: e.message,
+        oidc_settings_link: ActionController::Base.helpers.link_to(
+          I18n.t('spree.admin.tab.oidc_settings'), Rails.application.routes.url_helpers.admin_oidc_settings_path
+        )
+      ).html_safe
+      redirect_to admin_product_import_path
     rescue Faraday::Error,
            Addressable::URI::InvalidURIError,
-           ActionController::ParameterMissing,
-           Rack::OAuth2::Client::Error => e
+           ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
     end

@@ -849,6 +849,7 @@ en:
       index:
         title: "Importing a DFC product catalog"
         imported_products: "Imported products:"
+        oauth_error_html: "Authentication error: %{message}. See %{oidc_settings_link}"
     enterprise_fees:
       index:
         title: "Enterprise Fees"
