@@ -38,7 +38,7 @@ module Admin
     rescue Rack::OAuth2::Client::Error => e
       flash[:error] = I18n.t(
         'admin.dfc_product_imports.index.oauth_error_html',
-        message: e.message,
+        message: ActionController::Base.helpers.sanitize(e.message),
         oidc_settings_link: ActionController::Base.helpers.link_to(
           I18n.t('spree.admin.tab.oidc_settings'), Rails.application.routes.url_helpers.admin_oidc_settings_path
         )
