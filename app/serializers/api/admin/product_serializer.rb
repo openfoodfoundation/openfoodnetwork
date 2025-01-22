@@ -11,7 +11,6 @@ module Api
           object.variants,
           each_serializer: Api::Admin::VariantSerializer,
           image: thumb_url,
-          stock_location: Spree::StockLocation.first
         )
       end
 

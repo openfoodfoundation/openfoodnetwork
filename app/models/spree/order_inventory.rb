@@ -60,7 +60,6 @@ module Spree
     # Returns either one of the shipment:
     #
     # first unshipped that already includes this variant
-    # first unshipped that's leaving from a stock_location that stocks this variant
     def determine_target_shipment(variant)
       target_shipment = order.shipments.detect do |shipment|
         (shipment.ready? || shipment.pending?) && shipment.contains?(variant)
@@ -77,7 +76,6 @@ module Spree
       on_hand.times { shipment.set_up_inventory('on_hand', variant, order) }
       back_order.times { shipment.set_up_inventory('backordered', variant, order) }
 
-      # adding to this shipment, and removing from stock_location
       if order.completed?
         variant.move(-quantity, shipment)
       end
@@ -102,7 +100,6 @@ module Spree
       end
       shipment.destroy if shipment.inventory_units.reload.count == 0
 
-      # removing this from shipment, and adding to stock_location
       if order.completed? && restock_item
         variant.move(removed_quantity, shipment)
       end
