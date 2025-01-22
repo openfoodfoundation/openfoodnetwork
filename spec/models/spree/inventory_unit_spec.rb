@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe Spree::InventoryUnit do
-  let!(:stock_location) { create(:stock_location_with_items) }
-  let(:stock_item) { Spree::StockItem.order(:id).first }
+  let(:variant) { create(:variant) }
+  let(:stock_item) { variant.stock_item }
 
   context "variants deleted" do
     let!(:unit) do
@@ -18,8 +18,6 @@ RSpec.describe Spree::InventoryUnit do
   end
 
   context "#finalize_units!" do
-    let!(:stock_location) { create(:stock_location) }
-    let(:variant) { create(:variant) }
     let(:inventory_units) {
       [
         create(:inventory_unit, variant:),

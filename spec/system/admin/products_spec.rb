@@ -11,7 +11,6 @@ RSpec.describe '
   include FileHelper
 
   let!(:taxon) { create(:taxon) }
-  let!(:stock_location) { create(:stock_location) }
   let!(:shipping_category) { DefaultShippingCategory.find_or_create }
   let!(:supplier) { create(:supplier_enterprise, name: 'New supplier') }
 
