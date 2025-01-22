@@ -86,6 +86,6 @@ class DfcRequest
         token: nil,
         refresh_token: nil
       )
-      throw e
+      raise
   end
 end
