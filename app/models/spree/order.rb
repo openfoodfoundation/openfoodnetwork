@@ -392,8 +392,6 @@ module Spree
 
       deliver_order_confirmation_email
 
-      BackorderJob.check_stock(self)
-
       state_changes.create(
         previous_state: 'cart',
         next_state: 'complete',
