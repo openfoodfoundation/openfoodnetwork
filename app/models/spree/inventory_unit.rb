@@ -35,16 +35,6 @@ module Spree
       end
     end
 
-    # This was refactored from a simpler query because the previous implementation
-    # lead to issues once users tried to modify the objects returned. That's due
-    # to ActiveRecord `joins(shipment: :stock_location)` only return readonly
-    # objects
-    #
-    # Returns an array of backordered inventory units as per a given stock item
-    def self.backordered_for_stock_item(stock_item)
-      backordered_per_variant(stock_item)
-    end
-
     def self.finalize_units!(inventory_units)
       inventory_units.map do |iu|
         iu.update_columns(
