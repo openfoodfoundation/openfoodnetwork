@@ -63,27 +63,30 @@ RSpec.describe DfcRequest do
     # The absence of errors makes this test pass.
   end
 
-  it "refreshes the access token and retrieves the FDC catalog", vcr: true do
-    # A refresh is only attempted if the token is stale.
-    account.uid = "testdfc@protonmail.com"
-    account.refresh_token = ENV.fetch("OPENID_REFRESH_TOKEN")
-    account.updated_at = 1.day.ago
+  describe "refreshing token when stale" do
+    before do
+      account.uid = "testdfc@protonmail.com"
+      account.refresh_token = ENV.fetch("OPENID_REFRESH_TOKEN")
+      account.updated_at = 1.day.ago
+    end
 
-    response = nil
-    expect {
-      response = api.call(
-        "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
-      )
-    }.to change {
-      account.token
-    }.and change {
-      account.refresh_token
-    }
+    it "refreshes the access token and retrieves the FDC catalog", vcr: true do
+      response = nil
+      expect {
+        response = api.call(
+          "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
+        )
+      }.to change {
+        account.token
+      }.and change {
+        account.refresh_token
+      }
 
-    json = JSON.parse(response)
+      json = JSON.parse(response)
 
-    graph = DfcIo.import(json)
-    products = graph.select { |s| s.semanticType == "dfc-b:SuppliedProduct" }
-    expect(products).to be_present
+      graph = DfcIo.import(json)
+      products = graph.select { |s| s.semanticType == "dfc-b:SuppliedProduct" }
+      expect(products).to be_present
+    end
   end
 end
