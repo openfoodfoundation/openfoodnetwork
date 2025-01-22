@@ -516,7 +516,7 @@ RSpec.describe Spree::Order do
       before { order.currency = nil }
 
       it "returns the globally configured currency" do
-        expect(order.currency).to eq Spree::Config[:currency]
+        expect(order.currency).to eq "AUD"
       end
     end
   end

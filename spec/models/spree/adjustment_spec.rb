@@ -133,7 +133,7 @@ module Spree
         before { Spree::Config[:display_currency] = true }
 
         it "shows the currency" do
-          expect(adjustment.display_amount.to_s).to eq "$10.55 #{Spree::Config[:currency]}"
+          expect(adjustment.display_amount.to_s).to eq "$10.55 AUD"
         end
       end
 
@@ -167,7 +167,7 @@ module Spree
 
     context '#currency' do
       it 'returns the globally configured currency' do
-        expect(adjustment.currency).to eq Spree::Config[:currency]
+        expect(adjustment.currency).to eq "AUD"
       end
     end
 

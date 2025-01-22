@@ -3,7 +3,7 @@
 module Spree
   module BaseHelper
     def available_countries
-      checkout_zone = Zone.find_by(name: Spree::Config[:checkout_zone])
+      checkout_zone = Zone.find_by(name: ENV.fetch("CHECKOUT_ZONE", nil))
 
       countries = if checkout_zone && checkout_zone.kind == 'country'
                     checkout_zone.countries

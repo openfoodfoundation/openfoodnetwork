@@ -737,7 +737,7 @@ RSpec.describe '
        sku,
        description,
        quantity,
-       amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', Spree::Config.currency,
+       amount.to_s, '', opts[:account_code], tax_type, '', '', '', '', "AUD",
        '', 'N']
     end
   end
