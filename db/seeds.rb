@@ -30,5 +30,4 @@ require File.join(File.dirname(__FILE__), 'default', 'zones')
 Rails.logger.info "[db:seed] Seeding Users"
 require File.join(File.dirname(__FILE__), 'default', 'users')
 
-DefaultStockLocation.find_or_create
 DefaultShippingCategory.find_or_create

@@ -78,11 +78,6 @@ module VariantStock
     on_demand || total_on_hand >= quantity
   end
 
-  # Moving Spree::StockLocation.fill_status to the variant enables us
-  #   to override this behaviour for variant overrides
-  # We can have this responsibility here in the variant because there is
-  #   only one stock item per variant
-  #
   # Here we depend only on variant.total_on_hand and variant.on_demand.
   #   This way, variant_overrides only need to override variant.total_on_hand and variant.on_demand.
   def fill_status(quantity)
@@ -107,10 +102,6 @@ module VariantStock
     raise_error_if_no_stock_item_available
 
     # Creates a stock movement: it updates stock_item.count_on_hand and fills backorders
-    #
-    # This is the original Spree::StockLocation#move,
-    #   except that we raise an error if the stock item is missing,
-    #   because, unlike Spree, we should always have exactly one stock item per variant.
     stock_item.stock_movements.create!(quantity:, originator:)
   end
 
