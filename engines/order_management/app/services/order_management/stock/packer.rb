@@ -3,10 +3,9 @@
 module OrderManagement
   module Stock
     class Packer
-      attr_reader :stock_location, :order
+      attr_reader :order
 
-      def initialize(stock_location, order)
-        @stock_location = stock_location
+      def initialize(order)
         @order = order
       end
 

@@ -7,9 +7,8 @@ module OrderManagement
     RSpec.describe Packer do
       let(:distributor) { create(:distributor_enterprise) }
       let(:order) { create(:order_with_line_items, line_items_count: 5, distributor:) }
-      let(:stock_location) { create(:stock_location) }
 
-      subject { Packer.new(stock_location, order) }
+      subject { Packer.new(order) }
 
       before { order.line_items.first.variant.update(unit_value: 100) }
 
