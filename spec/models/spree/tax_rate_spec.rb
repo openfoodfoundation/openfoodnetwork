@@ -267,6 +267,11 @@ module Spree
             Spree::TaxRate.adjust(order, order.line_items)
             expect(line_item.adjustments.tax.charge.count).to eq 0
           end
+
+          it "does not create a refund" do
+            Spree::TaxRate.adjust(order, order.line_items)
+            expect(line_item.adjustments.credit.count).to eq 0
+          end
         end
 
         context "taxable line item" do
@@ -295,17 +300,29 @@ module Spree
                 Spree::TaxRate.adjust(order, order.line_items)
                 expect(line_item.adjustments.count).to eq 2
               end
+
+              it "does not create a tax refund" do
+                Spree::TaxRate.adjust(order, order.line_items)
+                expect(line_item.adjustments.credit.count).to eq 0
+              end
             end
 
             context "when order's zone is neither the default zone, or included " \
                     "in the default zone, but matches the rate's zone" do
-              it "creates an adjustment" do
+              before do
                 # Create a new default zone, so the order's zone won't match this new one
                 create(:zone_with_member, default_tax: true)
+              end
 
+              it "creates an adjustment" do
                 Spree::TaxRate.adjust(order, order.line_items)
 
                 expect(line_item.adjustments.charge.count).to eq 2
+              end
+
+              it "does not create a tax refund for each tax rate" do
+                Spree::TaxRate.adjust(order, order.line_items)
+                expect(line_item.adjustments.credit.count).to eq 0
               end
             end
 
@@ -325,12 +342,13 @@ module Spree
               end
 
               it "does not create positive adjustments" do
+                Spree::TaxRate.adjust(order, order.line_items)
                 expect(line_item.adjustments.charge.count).to eq 0
               end
 
-              it "does not create a tax refund for each tax rate" do
+              it "creates a tax refund for each tax rate" do
                 Spree::TaxRate.adjust(order, order.line_items)
-                expect(line_item.adjustments.credit.count).to eq 0
+                expect(line_item.adjustments.credit.count).to eq 2
               end
             end
           end
@@ -353,6 +371,10 @@ module Spree
 
             it "creates adjustments" do
               expect(line_item.adjustments.count).to eq 2
+            end
+
+            it "does not create a tax refund" do
+              expect(line_item.adjustments.credit.count).to eq 0
             end
 
             it "removes adjustments when tax_zone is removed" do
