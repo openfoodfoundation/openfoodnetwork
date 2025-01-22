@@ -25,7 +25,7 @@ RSpec.describe '
   }
 
   let!(:tax_category_included) { create(:tax_category, name: 'TVA 20%', is_default: true) }
-  let!(:default_tax_zone) { create(:zone, default_tax: true) }
+  let!(:default_tax_zone) { create(:zone, default_tax: true, member: Spree::Country.last) }
   let!(:tax_rate2) {
     create(:tax_rate, name: "TVA 20%", amount: 0.2, zone: default_tax_zone, included_in_price: true,
                       tax_category: tax_category_included, calculator: Calculator::DefaultTax.new )
