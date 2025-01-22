@@ -81,5 +81,11 @@ class DfcRequest
       token: token.access_token,
       refresh_token: token.refresh_token
     )
+    rescue Rack::OAuth2::Client::Error => e
+      @user.oidc_account.update!(
+        token: nil,
+        refresh_token: nil
+      )
+      throw e
   end
 end
