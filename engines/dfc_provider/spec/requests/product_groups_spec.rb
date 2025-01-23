@@ -2,7 +2,7 @@
 
 require_relative "../swagger_helper"
 
-RSpec.describe "ProductGroups", swagger_doc: "dfc.yaml", rswag_autodoc: true do
+RSpec.describe "ProductGroups", swagger_doc: "dfc.yaml" do
   let!(:user) { create(:oidc_user) }
   let!(:enterprise) { create(:distributor_enterprise, id: 10_000, owner: user) }
   let!(:product) {
