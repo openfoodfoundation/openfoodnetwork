@@ -261,6 +261,15 @@ RSpec.describe SuppliedProductImporter do
       expect(result).to eq nil
     end
 
+    it "returns a product referenced by semantic id" do
+      variant.save!
+      supplied_product.isVariantOf <<
+        DataFoodConsortium::Connector::TechnicalProduct.new(
+          "http://test.host/api/dfc/enterprises/7/technical_products/6"
+        )
+      expect(result).to eq spree_product
+    end
+
     it "returns a product referenced by URI" do
       variant.save!
       supplied_product.spree_product_uri =
