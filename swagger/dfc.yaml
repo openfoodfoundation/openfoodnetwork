@@ -554,6 +554,34 @@ paths:
                     "@type": dfc-b:Person
         '404':
           description: not found
+  "/api/dfc/enterprises/{enterprise_id}/product_groups/{id}":
+    parameters:
+    - name: enterprise_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show ProductGroup
+      tags:
+      - ProductGroups
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                test_example:
+                  value:
+                    "@context": https://www.datafoodconsortium.org
+                    "@id": http://test.host/api/dfc/enterprises/10000/product_groups/90000
+                    "@type": dfc-b:SuppliedProduct
+                    dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
   "/api/dfc/enterprises/{enterprise_id}/social_medias/{name}":
     get:
       summary: Show social media

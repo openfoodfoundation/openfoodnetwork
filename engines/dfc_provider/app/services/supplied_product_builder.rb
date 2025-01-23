@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class SuppliedProductBuilder < DfcBuilder
-  def self.supplied_product(variant)
-    id = urls.enterprise_supplied_product_url(
+  def self.semantic_id(variant)
+    urls.enterprise_supplied_product_url(
       enterprise_id: variant.supplier_id,
       id: variant.id,
     )
+  end
+
+  def self.supplied_product(variant)
     product_uri = urls.enterprise_url(
       variant.supplier_id,
       spree_product_id: variant.product_id
@@ -16,7 +19,7 @@ class SuppliedProductBuilder < DfcBuilder
     )
 
     DfcProvider::SuppliedProduct.new(
-      id,
+      semantic_id(variant),
       name: variant.product_and_full_name,
       description: variant.description,
       productType: product_type(variant),
