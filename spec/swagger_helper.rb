@@ -71,6 +71,29 @@ RSpec.configure do |config|
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.openapi_format = :yaml
+
+  # Take example responses from Rswag specs for API documentation.
+  # https://github.com/rswag/rswag#enable-auto-generation-examples-from-responses
+  config.after(:each, :rswag_autodoc) do |example|
+    # Categories and group operations of the same API endpoint.
+    example.metadata[:operation][:tags] ||= [self.class.top_level_description]
+
+    next if response&.body.blank?
+
+    # Include response as example in the documentation.
+    example.metadata[:response][:content] ||= {}
+    example.metadata[:response][:content].deep_merge!(
+      {
+        "application/json" => {
+          examples: {
+            test_example: {
+              value: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        }
+      }
+    )
+  end
 end
 
 module RswagExtension
