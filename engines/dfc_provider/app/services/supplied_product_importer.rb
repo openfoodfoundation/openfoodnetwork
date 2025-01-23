@@ -38,21 +38,44 @@ class SuppliedProductImporter < DfcBuilder
     end
   end
 
+  # DEPRECATION WARNING
+  # Reference by custom `ofn:spree_product_id` and `ofn:spree_product_uri`
+  # properties is now replaced by the official `dfc-b:isVariantOf`.
+  # We will remove the old methods at some point.
   def self.referenced_spree_product(supplied_product, supplier)
-    uri = supplied_product.spree_product_uri
-    id = supplied_product.spree_product_id
+    spree_product(supplied_product, supplier) ||
+      spree_product_from_uri(supplied_product, supplier) ||
+      spree_product_from_id(supplied_product, supplier)
+  end
 
-    if uri.present?
-      route = Rails.application.routes.recognize_path(uri)
-      params = Rack::Utils.parse_nested_query(URI.parse(uri).query)
+  def self.spree_product(supplied_product, supplier)
+    supplied_product.isVariantOf.lazy.map do |group|
+      group_id = group.semanticId
+      route = Rails.application.routes.recognize_path(group_id)
 
       # Check that the given URI points to us:
-      return unless uri == urls.enterprise_url(route.merge(params))
+      next if group_id != urls.enterprise_technical_product_url(route)
 
-      supplier.supplied_products.find_by(id: params["spree_product_id"])
-    elsif id.present?
-      supplier.supplied_products.find_by(id:)
-    end
+      supplier.supplied_products.find_by(id: route[:id])
+    end.compact.first
+  end
+
+  def self.spree_product_from_uri(supplied_product, supplier)
+    uri = supplied_product.spree_product_uri
+    return if uri.blank?
+
+    route = Rails.application.routes.recognize_path(uri)
+    params = Rack::Utils.parse_nested_query(URI.parse(uri).query)
+
+    # Check that the given URI points to us:
+    return unless uri == urls.enterprise_url(route.merge(params))
+
+    supplier.supplied_products.find_by(id: params["spree_product_id"])
+  end
+
+  def self.spree_product_from_id(supplied_product, supplier)
+    id = supplied_product.spree_product_id
+    supplier.supplied_products.find_by(id:) if id.present?
   end
 
   def self.import_product(supplied_product, supplier)
