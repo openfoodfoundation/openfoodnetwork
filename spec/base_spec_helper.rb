@@ -177,29 +177,6 @@ RSpec.configure do |config|
     ActionController::Base.perform_caching = caching
   end
 
-  # Take example responses from Rswag specs for API documentation.
-  # https://github.com/rswag/rswag#enable-auto-generation-examples-from-responses
-  config.after(:each, :rswag_autodoc) do |example|
-    # Categories and group operations of the same API endpoint.
-    example.metadata[:operation][:tags] ||= [self.class.top_level_description]
-
-    next if response&.body.blank?
-
-    # Include response as example in the documentation.
-    example.metadata[:response][:content] ||= {}
-    example.metadata[:response][:content].deep_merge!(
-      {
-        "application/json" => {
-          examples: {
-            test_example: {
-              value: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        }
-      }
-    )
-  end
-
   # Show javascript errors in test output with `js_debug: true`
   config.after(:each, :js_debug) do
     errors = page.driver.browser.manage.logs.get(:browser)
