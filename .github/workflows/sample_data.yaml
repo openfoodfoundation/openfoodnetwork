@@ -1,0 +1,39 @@
+name: "Deploy Sample Data"
+
+on:
+  pull_request_target:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      server:
+        description: "Staging Server"
+        type: choice
+        required: true
+        options:
+          - staging.openfoodnetwork.org.uk
+          - staging.openfoodnetwork.org.au
+          - staging.coopcircuits.fr
+      sample_data:
+        description: "Sample Data Name"
+        type: string
+        required: true
+
+jobs:
+  deploy_sample_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check user has write access"
+        uses: "lannonbr/repo-permission-check-action@2.0.2"
+        with:
+          permission: "write"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run sample data script
+        if: success()
+        run: |
+          sudo systemctl stop puma sidekiq
+          mkdir -p ~/backup/
+          pg_dump -h localhost -U ofn_user openfoodnetwork | gzip > ~/backup/staging-`date +%Y%m%d%H%M%S`-before-reset.sql.gz
+          bundle exec rake db:reset ofn:sample_data
+          sudo systemctl stop puma sidekiq
