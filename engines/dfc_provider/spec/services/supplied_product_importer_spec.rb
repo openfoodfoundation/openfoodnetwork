@@ -186,7 +186,7 @@ RSpec.describe SuppliedProductImporter do
       expect(imported_variant.on_hand).to eq 0
     end
 
-    context "with spree_product_id supplied" do
+    context "linked to product group" do
       let(:imported_variant) { importer.import_variant(supplied_product, supplier) }
 
       let(:supplied_product) do
@@ -229,7 +229,13 @@ RSpec.describe SuppliedProductImporter do
               value: 2,
             ),
             productType: product_type,
-            spree_product_uri: "http://another.host/api/dfc/enterprises/10/supplied_products/50"
+            spree_product_uri: "http://another.host/api/dfc/enterprises/10/supplied_products/50",
+            isVariantOf: [technical_product],
+          )
+        end
+        let(:technical_product) do
+          DataFoodConsortium::Connector::TechnicalProduct.new(
+            "http://test.host/api/dfc/enterprises/7/technical_products/6"
           )
         end
 
@@ -243,6 +249,8 @@ RSpec.describe SuppliedProductImporter do
           expect(imported_product.name).to eq("Tomato")
           expect(imported_product.description).to eq("Awesome tomato")
           expect(imported_product.variant_unit).to eq("weight")
+          expect(imported_product.semantic_link.semantic_id)
+            .to eq "http://test.host/api/dfc/enterprises/7/technical_products/6"
         end
       end
     end
@@ -267,6 +275,19 @@ RSpec.describe SuppliedProductImporter do
         DataFoodConsortium::Connector::TechnicalProduct.new(
           "http://test.host/api/dfc/enterprises/7/technical_products/6"
         )
+      expect(result).to eq spree_product
+    end
+
+    it "returns a product referenced by external URI" do
+      variant.save!
+      supplied_product.isVariantOf <<
+        DataFoodConsortium::Connector::TechnicalProduct.new(
+          "http://example.net/product_group"
+        )
+      SemanticLink.create!(
+        subject: spree_product,
+        semantic_id: "http://example.net/product_group",
+      )
       expect(result).to eq spree_product
     end
 

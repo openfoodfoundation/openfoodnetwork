@@ -44,6 +44,7 @@ class SuppliedProductImporter < DfcBuilder
   # We will remove the old methods at some point.
   def self.referenced_spree_product(supplied_product, supplier)
     spree_product(supplied_product, supplier) ||
+      spree_product_linked(supplied_product, supplier) ||
       spree_product_from_uri(supplied_product, supplier) ||
       spree_product_from_id(supplied_product, supplier)
   end
@@ -51,13 +52,26 @@ class SuppliedProductImporter < DfcBuilder
   def self.spree_product(supplied_product, supplier)
     supplied_product.isVariantOf.lazy.map do |group|
       group_id = group.semanticId
-      route = Rails.application.routes.recognize_path(group_id)
+      id = begin
+        route = Rails.application.routes.recognize_path(group_id)
 
-      # Check that the given URI points to us:
-      next if group_id != urls.enterprise_technical_product_url(route)
+        # Check that the given URI points to us:
+        next if group_id != urls.enterprise_technical_product_url(route)
 
-      supplier.supplied_products.find_by(id: route[:id])
+        route[:id]
+      rescue ActionController::RoutingError
+        next
+      end
+
+      supplier.supplied_products.find_by(id:)
     end.compact.first
+  end
+
+  def self.spree_product_linked(supplied_product, supplier)
+    semantic_ids = supplied_product.isVariantOf.map(&:semanticId)
+    supplier.supplied_products.includes(:semantic_link)
+      .where(semantic_link: { semantic_id: semantic_ids })
+      .first
   end
 
   def self.spree_product_from_uri(supplied_product, supplier)
@@ -86,6 +100,7 @@ class SuppliedProductImporter < DfcBuilder
       supplier_id: supplier.id,
       primary_taxon_id: taxon(supplied_product).id,
       image: ImageBuilder.import(supplied_product.image),
+      semantic_link: semantic_link(supplied_product),
     ).tap do |product|
       QuantitativeValueBuilder.apply(supplied_product.quantity, product)
       product.ensure_standard_variant
@@ -105,9 +120,14 @@ class SuppliedProductImporter < DfcBuilder
     OfferBuilder.apply(offer, variant)
   end
 
+  def self.semantic_link(supplied_product)
+    semantic_id = supplied_product.isVariantOf.first&.semanticId
+
+    SemanticLink.new(semantic_id:) if semantic_id.present?
+  end
+
   def self.taxon(supplied_product)
     ProductTypeImporter.taxon(supplied_product.productType)
   end
-
   private_class_method :taxon
 end

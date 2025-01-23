@@ -36,6 +36,7 @@ module Spree
     searchable_scopes :active, :with_properties
 
     has_one :image, class_name: "Spree::Image", as: :viewable, dependent: :destroy
+    has_one :semantic_link, as: :subject, dependent: :delete
 
     has_many :product_properties, dependent: :destroy
     has_many :properties, through: :product_properties
