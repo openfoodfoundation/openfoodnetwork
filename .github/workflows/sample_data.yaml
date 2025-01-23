@@ -13,7 +13,7 @@ on:
           - staging.openfoodnetwork.org.uk
           - staging.openfoodnetwork.org.au
           - staging.coopcircuits.fr
-      sample_data:
+      sample_data_name:
         description: "Sample Data Name"
         type: string
         required: true
@@ -35,5 +35,5 @@ jobs:
           sudo systemctl stop puma sidekiq
           mkdir -p ~/backup/
           pg_dump -h localhost -U ofn_user openfoodnetwork | gzip > ~/backup/staging-`date +%Y%m%d%H%M%S`-before-reset.sql.gz
-          bundle exec rake db:reset ofn:sample_data
+          bundle exec rake db:reset ofn:${{ secrets.sample_data_name }}
           sudo systemctl stop puma sidekiq
