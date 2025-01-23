@@ -20,7 +20,7 @@ class AuthorizationControl
 
   def user
     oidc_user || ofn_api_user || ofn_user
-  rescue JWT::ExpiredSignature
+  rescue JWT::DecodeError
     nil
   end
 

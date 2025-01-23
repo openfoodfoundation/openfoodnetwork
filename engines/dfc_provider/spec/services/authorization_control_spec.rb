@@ -34,6 +34,12 @@ RSpec.describe AuthorizationControl do
 
       expect(auth(oidc_token: token).user).to eq nil
     end
+
+    it "ignores malformed tokens" do
+      token = "eyJhbGciOiJSUzI1NiIsInR5c"
+
+      expect(auth(oidc_token: token).user).to eq nil
+    end
   end
 
   describe "with OFN API token" do
