@@ -95,10 +95,3 @@ RSpec.configure do |config|
     )
   end
 end
-
-module RswagExtension
-  def param(args, &)
-    let(args) { instance_eval(&) }
-  end
-end
-Rswag::Specs::ExampleGroupHelpers.prepend RswagExtension
