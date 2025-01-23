@@ -33,7 +33,6 @@ jobs:
         if: success()
         run: |
           sudo systemctl stop puma sidekiq
-          mkdir -p ~/backup/
-          pg_dump -h localhost -U ofn_user openfoodnetwork | gzip > ~/backup/staging-`date +%Y%m%d%H%M%S`-before-reset.sql.gz
+          ~/apps/openfoodnetwork/current/script/ci/save-staging-baseline.sh
           bundle exec rake db:reset ofn:${{ secrets.sample_data_name }}
           sudo systemctl stop puma sidekiq
