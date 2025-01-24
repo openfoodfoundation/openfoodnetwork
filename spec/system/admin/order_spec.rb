@@ -956,36 +956,37 @@ RSpec.describe '
         end
 
         it "ships the order and shipment email is sent" do
-          expect(order.reload.shipped?).to be false
+          expect(page).to have_content "ready"
+          expect(page).not_to have_content "shipped"
 
           click_button 'Ship'
 
-          within ".reveal-modal" do
-            expect(page).to have_checked_field('Send a shipment/pick up ' \
-                                               'notification email to the customer.')
-            expect {
-              find_button("Confirm").click
-            }.to enqueue_job(ActionMailer::MailDeliveryJob).exactly(:once)
-          end
-
-          expect(order.reload.shipped?).to be true
-          expect(page).to have_text 'SHIPPED'
+          expect {
+            within ".reveal-modal" do
+              expect(page).to have_checked_field(
+                'Send a shipment/pick up notification email to the customer.'
+              )
+              click_button "Confirm"
+            end
+            expect(page).to have_content "shipped"
+          }.to enqueue_mail
+            .and change { order.reload.shipped? }.to true
         end
 
         it "ships the order without sending email" do
-          expect(order.reload.shipped?).to be false
+          expect(page).to have_content "ready"
+          expect(page).not_to have_content "shipped"
 
           click_button 'Ship'
 
-          within ".reveal-modal" do
-            uncheck 'Send a shipment/pick up notification email to the customer.'
-            expect {
-              find_button("Confirm").click
-            }.not_to enqueue_job(ActionMailer::MailDeliveryJob)
-          end
-
-          expect(order.reload.shipped?).to be true
-          expect(page).to have_text 'SHIPPED'
+          expect {
+            within ".reveal-modal" do
+              uncheck 'Send a shipment/pick up notification email to the customer.'
+              click_button "Confirm"
+            end
+            expect(page).to have_content "shipped"
+          }.to enqueue_mail.exactly(0).times
+            .and change { order.reload.shipped? }.to true
         end
 
         shared_examples "ship order from dropdown" do |subpage|
@@ -1004,11 +1005,10 @@ RSpec.describe '
               end
 
               expect(page).to have_selector('.reveal-modal', visible: false)
+              expect(page).to have_content "SHIPPED"
               click_link('Order Details') unless subpage == 'Order Details'
 
-              sleep(0.5) # avoid flakyness
               expect(order.reload.shipped?).to be true
-              expect(page).to have_text 'SHIPPED'
               expect(ActionMailer::MailDeliveryJob).to have_been_enqueued
                 .exactly(:once)
                 .with("Spree::ShipmentMailer", "shipped_email", "deliver_now",
@@ -1030,9 +1030,8 @@ RSpec.describe '
               expect(page).to have_selector('.reveal-modal', visible: false)
               click_link('Order Details') unless subpage == 'Order Details'
 
-              sleep(0.5) # avoir flakyness
+              expect(page).to have_content "SHIPPED"
               expect(order.reload.shipped?).to be true
-              expect(page).to have_text 'SHIPPED'
               expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued
                 .with(array_including("Spree::ShipmentMailer"))
             end
