@@ -105,7 +105,7 @@ module Spree
         if default_zone_or_zone_match?(item.order)
           calculator.compute(item)
         else
-          # In this case, it's a refund.
+          # In this case, it's a refund (for instance offering a manual discount via an adjustment)
           calculator.compute(item) * - 1
         end
       else
