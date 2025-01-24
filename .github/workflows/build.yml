@@ -67,7 +67,7 @@ jobs:
       - name: Set up database
         run: |
           bin/rails db:create db:schema:load
-          bin/rails runner spec/support/seeds.rb
+          bin/rails runner spec/support/seeds.rb # Asset compile needs a country.
 
       - name: Run tests
         env:
@@ -213,7 +213,7 @@ jobs:
       - name: Set up database
         run: |
           bin/rails db:create db:schema:load
-          bin/rails runner spec/support/seeds.rb
+          bin/rails runner spec/support/seeds.rb # Asset compile needs a country.
 
       - name: Run tests
 
@@ -301,7 +301,7 @@ jobs:
       - name: Set up database
         run: |
           bin/rails db:create db:schema:load
-          bin/rails runner spec/support/seeds.rb
+          bin/rails runner spec/support/seeds.rb # Asset compile needs a country.
 
       - name: Run tests
 
@@ -390,7 +390,7 @@ jobs:
       - name: Set up database
         run: |
           bin/rails db:create db:schema:load
-          bin/rails runner spec/support/seeds.rb
+          bin/rails runner spec/support/seeds.rb # Asset compile needs a country.
 
       - name: Run tests
 
@@ -470,7 +470,7 @@ jobs:
       - name: Set up database
         run: |
           bin/rails db:create db:schema:load
-          bin/rails runner spec/support/seeds.rb
+          bin/rails runner spec/support/seeds.rb # Asset compile needs a country.
 
       - name: Run tests
         env:
