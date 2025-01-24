@@ -230,12 +230,12 @@ RSpec.describe SuppliedProductImporter do
             ),
             productType: product_type,
             spree_product_uri: "http://another.host/api/dfc/enterprises/10/supplied_products/50",
-            isVariantOf: [technical_product],
+            isVariantOf: [product_group],
           )
         end
-        let(:technical_product) do
-          DataFoodConsortium::Connector::TechnicalProduct.new(
-            "http://test.host/api/dfc/enterprises/7/technical_products/6"
+        let(:product_group) do
+          DataFoodConsortium::Connector::SuppliedProduct.new(
+            "http://test.host/api/dfc/enterprises/7/product_groups/6"
           )
         end
 
@@ -250,7 +250,7 @@ RSpec.describe SuppliedProductImporter do
           expect(imported_product.description).to eq("Awesome tomato")
           expect(imported_product.variant_unit).to eq("weight")
           expect(imported_product.semantic_link.semantic_id)
-            .to eq "http://test.host/api/dfc/enterprises/7/technical_products/6"
+            .to eq "http://test.host/api/dfc/enterprises/7/product_groups/6"
         end
       end
     end
@@ -272,8 +272,8 @@ RSpec.describe SuppliedProductImporter do
     it "returns a product referenced by semantic id" do
       variant.save!
       supplied_product.isVariantOf <<
-        DataFoodConsortium::Connector::TechnicalProduct.new(
-          "http://test.host/api/dfc/enterprises/7/technical_products/6"
+        DataFoodConsortium::Connector::SuppliedProduct.new(
+          "http://test.host/api/dfc/enterprises/7/product_groups/6"
         )
       expect(result).to eq spree_product
     end
@@ -281,7 +281,7 @@ RSpec.describe SuppliedProductImporter do
     it "returns a product referenced by external URI" do
       variant.save!
       supplied_product.isVariantOf <<
-        DataFoodConsortium::Connector::TechnicalProduct.new(
+        DataFoodConsortium::Connector::SuppliedProduct.new(
           "http://example.net/product_group"
         )
       SemanticLink.create!(

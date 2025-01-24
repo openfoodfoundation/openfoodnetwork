@@ -13,10 +13,7 @@ class SuppliedProductBuilder < DfcBuilder
       variant.supplier_id,
       spree_product_id: variant.product_id
     )
-    product_group_id = urls.enterprise_product_group_url(
-      enterprise_id: variant.supplier_id,
-      id: variant.product_id,
-    )
+    product_group = ProductGroupBuilder.product_group(variant.product)
 
     DfcProvider::SuppliedProduct.new(
       semantic_id(variant),
@@ -24,7 +21,7 @@ class SuppliedProductBuilder < DfcBuilder
       description: variant.description,
       productType: product_type(variant),
       quantity: QuantitativeValueBuilder.quantity(variant),
-      isVariantOf: [product_group_id],
+      isVariantOf: [product_group],
       spree_product_uri: product_uri,
       spree_product_id: variant.product.id,
       image_url: variant.product&.image&.url(:product)

@@ -51,12 +51,14 @@ class SuppliedProductImporter < DfcBuilder
 
   def self.spree_product(supplied_product, supplier)
     supplied_product.isVariantOf.lazy.map do |group|
-      group_id = group.semanticId
+      # We may have an object or just the id here:
+      group_id = group.try(:semanticId) || group
+
       id = begin
         route = Rails.application.routes.recognize_path(group_id)
 
         # Check that the given URI points to us:
-        next if group_id != urls.enterprise_technical_product_url(route)
+        next if group_id != urls.enterprise_product_group_url(route)
 
         route[:id]
       rescue ActionController::RoutingError
@@ -68,7 +70,9 @@ class SuppliedProductImporter < DfcBuilder
   end
 
   def self.spree_product_linked(supplied_product, supplier)
-    semantic_ids = supplied_product.isVariantOf.map(&:semanticId)
+    semantic_ids = supplied_product.isVariantOf.map do |id_or_object|
+      id_or_object.try(:semanticId) || id_or_object
+    end
     supplier.supplied_products.includes(:semantic_link)
       .where(semantic_link: { semantic_id: semantic_ids })
       .first
@@ -121,7 +125,8 @@ class SuppliedProductImporter < DfcBuilder
   end
 
   def self.semantic_link(supplied_product)
-    semantic_id = supplied_product.isVariantOf.first&.semanticId
+    group = supplied_product.isVariantOf.first
+    semantic_id = group.try(:semanticId) || semantic_id
 
     SemanticLink.new(semantic_id:) if semantic_id.present?
   end
