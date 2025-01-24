@@ -85,8 +85,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/controllers/**/*_spec.rb}"
         run: |
           git show --no-patch # the commit being tested (which is often a merge due to actions/checkout@v3)
-          bin/rails assets:precompile
-          bin/rake knapsack_pro:rspec
+          bin/rails assets:precompile knapsack_pro:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v4
@@ -233,8 +232,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/admin/**/*_spec.rb}"
 
         run: |
-          bin/rails assets:precompile
-          bin/rake knapsack_pro:queue:rspec
+          bin/rails assets:precompile knapsack_pro:queue:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v4
@@ -322,8 +320,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/consumer/**/*_spec.rb}"
 
         run: |
-          bin/rails assets:precompile
-          bin/rake knapsack_pro:queue:rspec
+          bin/rails assets:precompile knapsack_pro:queue:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v4
@@ -412,8 +409,7 @@ jobs:
           KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/serializers/**/*_spec.rb,engines/**/*_spec.rb}"
 
         run: |
-          bin/rails assets:precompile
-          bin/rake knapsack_pro:rspec
+          bin/rails assets:precompile knapsack_pro:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v4
@@ -491,8 +487,7 @@ jobs:
           #KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_TEST_FILE_EXCLUDE_PATTERN: "{engines/**/*_spec.rb,spec/models/**/*_spec.rb,spec/controllers/**/*_spec.rb,spec/serializers/**/*_spec.rb,spec/lib/**/*_spec.rb,spec/migrations/**/*_spec.rb,spec/system/**/*_spec.rb}"
         run: |
-          bin/rails assets:precompile
-          bin/rake knapsack_pro:rspec
+          bin/rails assets:precompile knapsack_pro:rspec
 
       - name: Save SimpleCov file
         uses: actions/upload-artifact@v4
