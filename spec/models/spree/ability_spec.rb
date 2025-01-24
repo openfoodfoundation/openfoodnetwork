@@ -34,6 +34,8 @@ RSpec.describe Spree::Ability do
     let(:fakedispatch_ability) { Spree::Ability.new(fakedispatch_user) }
 
     context 'with admin user' do
+      let(:user) { create(:admin_user) }
+
       it 'should be able to admin' do
         user.update!(admin: true)
         expect(subject).to be_able_to :admin, resource
@@ -785,7 +787,7 @@ RSpec.describe Spree::Ability do
     let(:manage_actions) { [:admin, :index, :read, :update, :bulk_update, :bulk_reset] }
 
     describe "when admin" do
-      before { user.update!(admin: true) }
+      let(:user) { create(:admin_user) }
 
       it "should have permission" do
         is_expected.to have_ability(manage_actions, for: variant_override)
