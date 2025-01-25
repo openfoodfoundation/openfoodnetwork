@@ -28,9 +28,6 @@ FactoryBot.define do
     # create a "standard variant"
     product { association :base_product }
 
-    # ensure stock item will be created for this variant
-    before(:create) { DefaultStockLocation.find_or_create }
-
     factory :variant do
       transient do
         on_demand { false }

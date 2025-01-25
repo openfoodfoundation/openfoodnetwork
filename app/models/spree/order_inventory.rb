@@ -12,8 +12,8 @@ module Spree
     # have inventory assigned via +order.create_proposed_shipment+) or when
     # shipment is explicitly passed
     #
-    # In case shipment is passed the stock location should only unstock or
-    # restock items if the order is completed. That is so because stock items
+    # In case shipment is passed stock should only be adjusted
+    # if the order is completed. That is so because stock items
     # are always unstocked when the order is completed through +shipment.finalize+
     def verify(line_item, shipment = nil)
       if order.completed? || shipment.present?
@@ -60,27 +60,24 @@ module Spree
     # Returns either one of the shipment:
     #
     # first unshipped that already includes this variant
-    # first unshipped that's leaving from a stock_location that stocks this variant
     def determine_target_shipment(variant)
       target_shipment = order.shipments.detect do |shipment|
         (shipment.ready? || shipment.pending?) && shipment.contains?(variant)
       end
 
       target_shipment || order.shipments.detect do |shipment|
-        (shipment.ready? || shipment.pending?) &&
-          variant.stock_location_ids.include?(shipment.stock_location_id)
+        shipment.ready? || shipment.pending?
       end
     end
 
     def add_to_shipment(shipment, variant, quantity)
-      on_hand, back_order = shipment.stock_location.fill_status(variant, quantity)
+      on_hand, back_order = variant.fill_status(quantity)
 
       on_hand.times { shipment.set_up_inventory('on_hand', variant, order) }
       back_order.times { shipment.set_up_inventory('backordered', variant, order) }
 
-      # adding to this shipment, and removing from stock_location
       if order.completed?
-        shipment.stock_location.unstock(variant, quantity, shipment)
+        variant.move(-quantity, shipment)
       end
 
       quantity
@@ -103,9 +100,8 @@ module Spree
       end
       shipment.destroy if shipment.inventory_units.reload.count == 0
 
-      # removing this from shipment, and adding to stock_location
       if order.completed? && restock_item
-        shipment.stock_location.restock variant, removed_quantity, shipment
+        variant.move(removed_quantity, shipment)
       end
 
       removed_quantity

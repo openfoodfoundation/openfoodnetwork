@@ -3,12 +3,11 @@
 FactoryBot.define do
   factory :stock_package, class: OrderManagement::Stock::Package do
     transient do
-      stock_location { build(:stock_location) }
       order { create(:order_with_line_items, line_items_count: 2) }
       contents { [] }
     end
 
-    initialize_with { new(stock_location, order, contents) }
+    initialize_with { new(order, contents) }
 
     factory :stock_package_fulfilled do
       after(:build) do |package, evaluator|

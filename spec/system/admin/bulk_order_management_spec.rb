@@ -1100,7 +1100,7 @@ RSpec.describe '
           end
 
           it "the user can confirm : line item is then deleted and order is canceled" do
-            expect_any_instance_of(Spree::StockLocation).to receive(:restock).at_least(1).times
+            expect_any_instance_of(Spree::Variant).to receive(:move).at_least(1).times
             expect do
               within(".modal") do
                 uncheck("send_cancellation_email")
@@ -1113,7 +1113,7 @@ RSpec.describe '
 
           it "the user can confirm + wants to send email confirmation : line item is " \
              "then deleted, order is canceled and email is sent" do
-            expect_any_instance_of(Spree::StockLocation).to receive(:restock).at_least(1).times
+            expect_any_instance_of(Spree::Variant).to receive(:move).at_least(1).times
             expect do
               within(".modal") do
                 check("send_cancellation_email")
@@ -1126,7 +1126,7 @@ RSpec.describe '
 
           it "the user can confirm + uncheck the restock option: line item is then deleted and " \
              "order is canceled without retocking" do
-            expect_any_instance_of(Spree::StockLocation).not_to receive(:restock)
+            expect_any_instance_of(Spree::Variant).not_to receive(:move)
             expect do
               within(".modal") do
                 uncheck("Restock Items: return all items to stock")

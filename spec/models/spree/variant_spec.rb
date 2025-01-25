@@ -12,7 +12,6 @@ RSpec.describe Spree::Variant do
   it { is_expected.to have_many(:inventory_units) }
   it { is_expected.to have_many(:line_items) }
   it { is_expected.to have_many(:stock_items) }
-  it { is_expected.to have_many(:stock_locations).through(:stock_items) }
   it { is_expected.to have_many(:images) }
   it { is_expected.to have_one(:default_price) }
   it { is_expected.to have_many(:prices) }

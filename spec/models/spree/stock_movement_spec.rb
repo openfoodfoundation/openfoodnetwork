@@ -3,8 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Spree::StockMovement do
-  let(:stock_location) { create(:stock_location_with_items) }
-  let(:stock_item) { stock_location.stock_items.order(:id).first }
+  let(:stock_item) { create(:variant, on_hand: 15).stock_item }
   subject { build(:stock_movement, stock_item:) }
 
   it 'should belong to a stock item' do

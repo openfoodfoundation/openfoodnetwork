@@ -3,22 +3,21 @@
 module OrderManagement
   module Stock
     class Packer
-      attr_reader :stock_location, :order
+      attr_reader :order
 
-      def initialize(stock_location, order)
-        @stock_location = stock_location
+      def initialize(order)
         @order = order
       end
 
       def package
-        package = OrderManagement::Stock::Package.new(stock_location, order)
+        package = OrderManagement::Stock::Package.new(order)
         order.line_items.each do |line_item|
-          next unless stock_location.stock_item(line_item.variant)
-
           variant = line_item.variant
+          next unless variant.stock_item
+
           OpenFoodNetwork::ScopeVariantToHub.new(order.distributor).scope(variant)
 
-          on_hand, backordered = stock_location.fill_status(variant, line_item.quantity)
+          on_hand, backordered = variant.fill_status(line_item.quantity)
           package.add variant, on_hand, :on_hand if on_hand.positive?
           package.add variant, backordered, :backordered if backordered.positive?
         end

@@ -61,7 +61,7 @@ class ProductScopeQuery
   def product_query_includes
     [
       image: { attachment_attachment: :blob },
-      variants: [:default_price, :stock_locations, :stock_items, :variant_overrides]
+      variants: [:default_price, :stock_items, :variant_overrides]
     ]
   end
 
