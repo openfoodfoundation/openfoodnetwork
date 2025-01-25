@@ -15,13 +15,13 @@ module Spree
       create(:credit_card)
     }
     let(:payment1) {
-      create(:payment, amount: 50, payment_method:, source:, response_code: "12345")
+      create(:payment, order:, amount: 50, payment_method:, source:, response_code: "12345")
     }
     let(:payment2) {
-      create(:payment, amount: 50, payment_method:, source:, response_code: "12345")
+      create(:payment, order:, amount: 50, payment_method:, source:, response_code: "12345")
     }
     let(:payment3) {
-      create(:payment, amount: 50, payment_method:, source:, response_code: "12345")
+      create(:payment, order:, amount: 50, payment_method:, source:, response_code: "12345")
     }
     let(:failed_payment) {
       create(:payment, amount: 50, state: 'failed', payment_method:, source:,

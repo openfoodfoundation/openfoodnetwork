@@ -1367,7 +1367,7 @@ fr:
             need_to_be_manager: "Seuls les gestionnaires peuvent connecter des applications."
             description: "L'INRAE et UFC QUE CHOISIR travaillent conjointement sur les prix des produits distribués en circuit court, comparés aux prix des mêmes produits vendus en supermarché, pour un échantillon de produits. Les données utilisées dans le cadre de ce programme de recherche sont une agrégation des données fournies par plusieurs plateformes de vente en circuit court en France. Aucun prix de produit d'une boutique en particulier ne sera transmis publiquement à travers ce programme."
             link_label_html: "En savoir plus à propos de ce projet de recherche <i class=\"icon-external-link\"></i>"
-            link_url: "https://apropos.coopcircuits.fr/"
+            link_url: "https://pepr-sams.fr/2024/03/12/plat4terfood/"
           discover_regen:
             title: "Discover Regenerative"
             tagline: "Autoriser Discover Regenerative à publier les informations de votre entreprise"

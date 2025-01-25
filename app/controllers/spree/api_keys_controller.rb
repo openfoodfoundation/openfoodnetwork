@@ -2,7 +2,6 @@
 
 module Spree
   class ApiKeysController < ::BaseController
-    include Spree::Core::ControllerHelpers
     include I18nHelper
 
     prepend_before_action :load_object

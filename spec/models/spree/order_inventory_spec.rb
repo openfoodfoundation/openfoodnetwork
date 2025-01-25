@@ -36,13 +36,13 @@ RSpec.describe Spree::OrderInventory do
       before { allow(order).to receive_messages completed?: false }
 
       it "doesn't unstock items" do
-        expect(shipment.stock_location).not_to receive(:unstock)
+        expect(line_item.variant).not_to receive(:move)
         expect(subject.__send__(:add_to_shipment, shipment, variant, 5)).to eq 5
       end
     end
 
     it 'should create inventory_units in the necessary states' do
-      expect(shipment.stock_location).to receive(:fill_status).with(variant, 5).and_return([3, 2])
+      expect(variant).to receive(:fill_status).with(5).and_return([3, 2])
 
       expect(subject.__send__(:add_to_shipment, shipment, variant, 5)).to eq 5
 
@@ -55,8 +55,7 @@ RSpec.describe Spree::OrderInventory do
     it 'should create stock_movement' do
       expect(subject.__send__(:add_to_shipment, shipment, variant, 5)).to eq 5
 
-      stock_item = shipment.stock_location.stock_item(variant)
-      movement = stock_item.stock_movements.last
+      movement = variant.stock_item.stock_movements.last
       expect(movement.quantity).to eq(-5)
     end
   end
@@ -88,7 +87,7 @@ RSpec.describe Spree::OrderInventory do
         before { allow(order).to receive_messages completed?: false }
 
         it "doesn't restock items" do
-          expect(shipment.stock_location).not_to receive(:restock)
+          expect(variant).not_to receive(:move)
           expect(subject.__send__(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
         end
       end
@@ -97,7 +96,7 @@ RSpec.describe Spree::OrderInventory do
         before { allow(order).to receive_messages completed?: true }
 
         it "doesn't restock items" do
-          expect(shipment.stock_location).not_to receive(:restock)
+          expect(variant).not_to receive(:move)
           expect(subject.__send__(:remove_from_shipment, shipment, variant, 1, false)).to eq 1
         end
       end
@@ -105,8 +104,7 @@ RSpec.describe Spree::OrderInventory do
       it 'should create stock_movement' do
         expect(subject.__send__(:remove_from_shipment, shipment, variant, 1, true)).to eq 1
 
-        stock_item = shipment.stock_location.stock_item(variant)
-        movement = stock_item.stock_movements.last
+        movement = variant.stock_item.stock_movements.last
         expect(movement.quantity).to eq 1
       end
 

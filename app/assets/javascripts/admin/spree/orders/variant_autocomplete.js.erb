@@ -187,18 +187,17 @@ addVariantFromStockLocation = function() {
   $('#stock_details').hide();
 
   var variant_id = $('input.variant_autocomplete').val();
-  var stock_location_id = $(this).data('stock-location-id');
-  var quantity = $("input.quantity[data-stock-location-id='" + stock_location_id + "']").val();
+  var quantity = $("input.quantity").val();
 
   var shipment = _.find(shipments, function(shipment){
-    return shipment.stock_location_id == stock_location_id && (shipment.state == 'ready' || shipment.state == 'pending');
+    return shipment.state == 'ready' || shipment.state == 'pending';
   });
 
   if(shipment==undefined){
     $.ajax({
       type: "POST",
       url: Spree.url(Spree.routes.orders_api + "/" + order_number + "/shipments.json"),
-      data: { variant_id: variant_id, quantity: quantity, stock_location_id: stock_location_id }
+      data: { variant_id: variant_id, quantity: quantity }
     }).done(function( msg ) {
       window.location.reload();
     }).error(function( msg ) {

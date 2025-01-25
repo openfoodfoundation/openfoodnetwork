@@ -19,6 +19,7 @@ module Api
       end
 
       def on_hand
+        return if object.on_demand
         return 0 if object.on_hand.nil?
 
         object.on_hand

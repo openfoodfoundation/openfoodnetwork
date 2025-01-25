@@ -222,9 +222,6 @@ RSpec.describe SuppliedProductBuilder do
     }
 
     it "creates a new Spree::Product and variant" do
-      # We need this to save stock:
-      DefaultStockLocation.find_or_create
-
       create(:taxon)
 
       expect(imported_variant).to be_a(Spree::Variant)

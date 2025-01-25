@@ -142,7 +142,6 @@ RSpec.describe Spree::Admin::ProductsController, type: :controller do
 
     before do
       controller_login_as_admin
-      create(:stock_location)
     end
 
     it "redirects to products when the user hits 'create'" do

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Spree::Variant do
-  # This method is defined in app/models/concerns/variant_stock.rb.
+  # These methods are defined in app/models/concerns/variant_stock.rb.
   # There is a separate spec for that concern but here I want to test
   # the interplay of Spree::Variant and VariantOverride.
   #
@@ -11,6 +11,38 @@ RSpec.describe Spree::Variant do
   # like this one get overridden. Future calls to `variant.move` are then
   # handled by the ScopeVariantToHub module which may call the
   # VariantOverride.
+  describe "#fill_status" do
+    subject(:variant) { create(:variant, on_hand: 15) }
+
+    it 'is all on_hand if variant is on_demand' do
+      variant.on_demand = true
+
+      on_hand, backordered = subject.fill_status(25)
+      expect(on_hand).to eq 25
+      expect(backordered).to eq 0
+    end
+
+    it 'is all on_hand if on_hand is enough' do
+      on_hand, backordered = subject.fill_status(5)
+      expect(on_hand).to eq 5
+      expect(backordered).to eq 0
+    end
+
+    it 'is some on_hand if not all available' do
+      on_hand, backordered = subject.fill_status(20)
+      expect(on_hand).to eq 15
+      expect(backordered).to eq 0
+    end
+
+    it 'is zero on_hand if none available' do
+      variant.on_hand = 0
+
+      on_hand, backordered = subject.fill_status(20)
+      expect(on_hand).to eq 0
+      expect(backordered).to eq 0
+    end
+  end
+
   describe "#move" do
     subject(:variant) { create(:variant, on_hand: 5) }
 

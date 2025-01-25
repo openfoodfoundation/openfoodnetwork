@@ -5,11 +5,10 @@ module OrderManagement
     class Package
       ContentItem = Struct.new(:variant, :quantity, :state)
 
-      attr_reader :stock_location, :order, :contents
+      attr_reader :order, :contents
       attr_accessor :shipping_rates
 
-      def initialize(stock_location, order, contents = [])
-        @stock_location = stock_location
+      def initialize(order, contents = [])
         @order = order
         @contents = contents
         @shipping_rates = []
@@ -94,7 +93,6 @@ module OrderManagement
       def to_shipment
         shipment = Spree::Shipment.new
         shipment.order = order
-        shipment.stock_location = stock_location
         shipment.shipping_rates = shipping_rates
 
         contents.each do |item|

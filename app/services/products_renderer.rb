@@ -117,7 +117,7 @@ class ProductsRenderer
 
       # rubocop:disable Rails/FindEach # .each returns an array, .find_each returns nil
       distributed_products.variants_relation.
-        includes(:default_price, :stock_locations, :product).
+        includes(:default_price, :product).
         where(product_id: products).
         each { |v| scoper.scope(v) } # Scope results with variant_overrides
       # rubocop:enable Rails/FindEach

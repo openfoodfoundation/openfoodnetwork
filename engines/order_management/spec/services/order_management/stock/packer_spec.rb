@@ -7,9 +7,8 @@ module OrderManagement
     RSpec.describe Packer do
       let(:distributor) { create(:distributor_enterprise) }
       let(:order) { create(:order_with_line_items, line_items_count: 5, distributor:) }
-      let(:stock_location) { create(:stock_location) }
 
-      subject { Packer.new(stock_location, order) }
+      subject { Packer.new(order) }
 
       before { order.line_items.first.variant.update(unit_value: 100) }
 
@@ -21,7 +20,9 @@ module OrderManagement
       end
 
       it 'variants are added as backordered without enough on_hand' do
-        expect(stock_location).to receive(:fill_status).exactly(5).times.and_return([2, 3])
+        order.line_items.each do |item|
+          expect(item.variant).to receive(:fill_status).and_return([2, 3])
+        end
 
         package = subject.package
         expect(package.on_hand.size).to eq 5

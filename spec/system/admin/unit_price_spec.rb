@@ -9,8 +9,6 @@ RSpec.describe '
   include AuthenticationHelper
   include WebHelper
 
-  let!(:stock_location) { create(:stock_location) }
-
   describe "product" do
     it "creating a new product" do
       login_as_admin

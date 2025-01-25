@@ -106,7 +106,6 @@ module Spree
     before_validation :clone_billing_address, if: :use_billing?
     before_validation :ensure_customer
 
-    before_save :update_shipping_fees!, if: :complete?
     before_save :update_payment_fees!, if: :complete?
     before_create :link_by_email
 
@@ -392,8 +391,6 @@ module Spree
 
       deliver_order_confirmation_email
 
-      BackorderJob.check_stock(self)
-
       state_changes.create(
         previous_state: 'cart',
         next_state: 'complete',
@@ -674,10 +671,6 @@ module Spree
         break if payment_total >= total
 
         yield payment
-
-        if payment.completed?
-          self.payment_total += payment.amount
-        end
       end
     end
 

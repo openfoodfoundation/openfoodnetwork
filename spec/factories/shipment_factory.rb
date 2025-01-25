@@ -11,7 +11,6 @@ FactoryBot.define do
     state { 'pending' }
     order
     address
-    stock_location { DefaultStockLocation.find_or_create }
 
     after(:create) do |shipment, _evalulator|
       shipment.add_shipping_method(create(:shipping_method), true)
@@ -31,7 +30,6 @@ FactoryBot.define do
     state { 'pending' }
     order
     address
-    stock_location { DefaultStockLocation.find_or_create }
 
     trait :shipping_method do
       transient do

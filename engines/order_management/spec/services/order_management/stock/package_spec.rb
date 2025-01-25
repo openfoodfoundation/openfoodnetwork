@@ -7,11 +7,10 @@ module OrderManagement
     RSpec.describe Package do
       context "base tests" do
         let(:variant) { build(:variant, weight: 25.0) }
-        let(:stock_location) { build(:stock_location) }
         let(:distributor) { create(:enterprise) }
         let(:order) { build(:order, distributor:) }
 
-        subject { Package.new(stock_location, order) }
+        subject { Package.new(order) }
 
         it 'calculates the weight of all the contents' do
           subject.add variant, 4
@@ -80,7 +79,7 @@ module OrderManagement
                       Package::ContentItem.new(variant2, 1),
                       Package::ContentItem.new(variant3, 1)]
 
-          package = Package.new(stock_location, order, contents)
+          package = Package.new(order, contents)
           expect(package.shipping_methods.size).to eq 2
         end
 
@@ -96,7 +95,6 @@ module OrderManagement
 
           shipment = subject.to_shipment
           expect(shipment.order).to eq subject.order
-          expect(shipment.stock_location).to eq subject.stock_location
           expect(shipment.inventory_units.size).to eq 3
 
           first_unit = shipment.inventory_units.first
@@ -122,9 +120,7 @@ module OrderManagement
       end
 
       context "#shipping_methods and #shipping_categories" do
-        let(:stock_location) { double(:stock_location) }
-
-        subject(:package) { Package.new(stock_location, order, contents) }
+        subject(:package) { Package.new(order, contents) }
 
         let(:enterprise) { create(:enterprise) }
         let(:other_enterprise) { create(:enterprise) }

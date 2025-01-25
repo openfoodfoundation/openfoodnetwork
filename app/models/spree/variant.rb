@@ -39,7 +39,6 @@ module Spree
     has_many :line_items, inverse_of: :variant, dependent: nil
 
     has_many :stock_items, dependent: :destroy, inverse_of: :variant
-    has_many :stock_locations, through: :stock_items
     has_many :images, -> { order(:position) }, as: :viewable,
                                                dependent: :destroy,
                                                class_name: "Spree::Image"
@@ -268,9 +267,7 @@ module Spree
     def create_stock_items
       return unless stock_items.empty?
 
-      StockLocation.find_each do |stock_location|
-        stock_items.create!(stock_location:)
-      end
+      stock_items.create!
     end
 
     def update_weight_from_unit_value

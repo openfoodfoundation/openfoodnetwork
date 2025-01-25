@@ -83,13 +83,9 @@ module Admin
               let!(:variant) { create(:variant, price: 10.0) }
 
               before do
-                allow_any_instance_of(Spree::Payment).to receive(:completed?).and_return(true)
-
                 order.contents.add(variant)
-                order.payments << create(:payment, order:, amount: order.total)
-                order.reload
+                order.payments << create(:payment, :completed, order:, amount: order.total)
 
-                order.process_payments!
                 order.update_attribute(:state, 'canceled')
               end
 

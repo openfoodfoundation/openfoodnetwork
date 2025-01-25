@@ -254,9 +254,12 @@ RSpec.describe "
 
         context "with overrides" do
           let!(:vo) {
-            create(:variant_override, :on_demand, variant:, hub:, price: 77.77,
-                                                  default_stock: 1000, resettable: true,
-                                                  tag_list: ["tag1", "tag2", "tag3"])
+            create(
+              :variant_override,
+              on_demand: true, count_on_hand: -5,
+              variant:, hub:, price: 77.77, default_stock: 1000, resettable: true,
+              tag_list: ["tag1", "tag2", "tag3"]
+            )
           }
           let!(:vo_no_auth) {
             create(:variant_override, variant:, hub: hub2, price: 1, count_on_hand: 2)

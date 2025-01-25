@@ -822,7 +822,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_13_055412) do
   end
 
   create_table "spree_stock_items", id: :serial, force: :cascade do |t|
-    t.integer "stock_location_id", null: false
+    t.integer "stock_location_id"
     t.integer "variant_id", null: false
     t.integer "count_on_hand", default: 0, null: false
     t.datetime "created_at", precision: nil, null: false

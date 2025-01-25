@@ -42,10 +42,8 @@ RSpec.describe Api::V0::ProductsController, type: :controller do
 
       api_get :show, id: product.to_param
 
-      expect(all_attributes.all?{ |attr| json_response.keys.include? attr }).to eq(true)
-      expect(variants_attributes.all?{ |attr|
-               json_response['variants'].first.keys.include? attr
-             } ).to eq(true)
+      expect(json_response.keys).to include(*all_attributes)
+      expect(json_response["variants"].first.keys).to include(*variants_attributes)
     end
 
     it "returns a 404 error when it cannot find a product" do

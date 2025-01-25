@@ -41,8 +41,7 @@ module OrderManagement
       end
 
       def build_packer(order)
-        stock_location = DefaultStockLocation.find_or_create
-        OrderManagement::Stock::Packer.new(stock_location, order)
+        OrderManagement::Stock::Packer.new(order)
       end
     end
   end

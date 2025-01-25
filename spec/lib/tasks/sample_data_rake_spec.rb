@@ -12,7 +12,6 @@ RSpec.describe 'sample_data.rake' do
   before do
     # Create seed data required by the sample data.
     create(:user)
-    DefaultStockLocation.find_or_create
     DefaultShippingCategory.find_or_create
   end
 

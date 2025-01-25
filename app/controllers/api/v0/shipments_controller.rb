@@ -14,7 +14,7 @@ module Api
       def create
         variant = scoped_variant(params[:variant_id])
         quantity = params[:quantity].to_i
-        @shipment = get_or_create_shipment(params[:stock_location_id])
+        @shipment = @order.shipment || @order.shipments.create
 
         @order.contents.add(variant, quantity, @shipment)
 
@@ -114,10 +114,6 @@ module Api
         variant = Spree::Variant.find(variant_id)
         OpenFoodNetwork::ScopeVariantToHub.new(@order.distributor).scope(variant)
         variant
-      end
-
-      def get_or_create_shipment(stock_location_id)
-        @order.shipment || @order.shipments.create(stock_location_id:)
       end
 
       def shipment_params

@@ -83,7 +83,6 @@ RSpec.describe VariantStock do
         it 'returns false' do
           variant = build_stubbed(
             :variant,
-            stock_locations: [build_stubbed(:stock_location)]
           )
           expect(variant.on_demand).to be_falsy
         end
@@ -94,9 +93,6 @@ RSpec.describe VariantStock do
       let(:variant) do
         build_stubbed(
           :variant,
-          stock_locations: [
-            build_stubbed(:stock_location)
-          ]
         )
       end
 
@@ -148,7 +144,6 @@ RSpec.describe VariantStock do
         build_stubbed(
           :variant,
           on_demand: true,
-          stock_locations: [build_stubbed(:stock_location)]
         )
       end
       let(:stock_item) { Spree::StockItem.new(backorderable: true) }
@@ -172,7 +167,6 @@ RSpec.describe VariantStock do
           build_stubbed(
             :variant,
             on_demand: false,
-            stock_locations: [build_stubbed(:stock_location)]
           )
         end
 
