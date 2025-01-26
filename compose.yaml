@@ -15,9 +15,7 @@ services:
   web:
     tty: true
     stdin_open: true
-    build:
-      context: .
-      dockerfile: alpine.Dockerfile
+    build: .
     ports:
       - 3000:3000
       - 3035:3035
