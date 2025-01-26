@@ -339,7 +339,6 @@ Naming/VariableNumber:
     - 'app/models/preference_sections/main_links_section.rb'
     - 'lib/spree/core/controller_helpers/common.rb'
     - 'spec/controllers/spree/admin/search_controller_spec.rb'
-    - 'spec/factories/stock_location_factory.rb'
     - 'spec/models/spree/stock_item_spec.rb'
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'

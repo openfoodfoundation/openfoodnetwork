@@ -130,10 +130,6 @@ module Spree
           let!(:taxon){ create(:taxon) }
           let(:supplier){ create(:enterprise) }
 
-          before do
-            create(:stock_location)
-          end
-
           it "copies properties to the first standard variant" do
             product.primary_taxon_id = taxon.id
             product.name = "Product1"

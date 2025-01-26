@@ -6,6 +6,12 @@ module Api
       attributes :id, :hub_id, :variant_id, :sku, :price, :count_on_hand, :on_demand,
                  :default_stock, :resettable, :tag_list, :tags, :import_date
 
+      def count_on_hand
+        return if object.on_demand
+
+        object.count_on_hand
+      end
+
       def tag_list
         object.tag_list.join(",")
       end

@@ -23,9 +23,6 @@ FactoryBot.define do
     variant_unit { 'weight' }
     variant_unit_scale { 1 }
 
-    # ensure stock item will be created for this products master
-    before(:create) { DefaultStockLocation.find_or_create }
-
     factory :product do
       transient do
         on_hand { 5 }

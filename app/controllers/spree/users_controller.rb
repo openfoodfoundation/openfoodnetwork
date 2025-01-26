@@ -2,7 +2,6 @@
 
 module Spree
   class UsersController < ::BaseController
-    include Spree::Core::ControllerHelpers
     include I18nHelper
     include CablecarResponses
 

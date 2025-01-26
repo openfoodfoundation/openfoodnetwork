@@ -81,23 +81,6 @@ module Openfoodnetwork
       ]
     end
 
-    # Settings dependent on locale
-    #
-    # We need to set this config before the promo environment gets loaded and
-    # after the spree environment gets loaded...
-    # This is because Spree uses `Spree::Config` while evaluating classes :scream:
-    #
-    # https://github.com/spree/spree/blob/2-0-stable/core/app/models/spree/calculator/per_item.rb#L6
-    #
-    # TODO: move back to spree initializer once we upgrade to a more recent version
-    #       of Spree
-    initializer 'ofn.spree_locale_settings', before: 'spree.promo.environment' do |app|
-      Rails.application.reloader.to_prepare do
-        Spree::Config['checkout_zone'] = ENV['CHECKOUT_ZONE']
-        Spree::Config['currency'] = ENV['CURRENCY']
-      end
-    end
-
     initializer "load_spree_calculators" do |app|
       # Register Spree calculators
       Rails.application.reloader.to_prepare do

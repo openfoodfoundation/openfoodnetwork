@@ -8,7 +8,6 @@ class CatalogItemBuilder < DfcBuilder
 
     if variant.stock_items.empty?
       variant.stock_items << Spree::StockItem.new(
-        stock_location: DefaultStockLocation.find_or_create,
         variant:,
       )
     end

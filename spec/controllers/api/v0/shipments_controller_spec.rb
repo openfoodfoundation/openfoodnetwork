@@ -6,9 +6,7 @@ RSpec.describe Api::V0::ShipmentsController, type: :controller do
   render_views
 
   let!(:shipment) { create(:shipment) }
-  let!(:attributes) do
-    [:id, :tracking, :number, :cost, :shipped_at, :stock_location_name, :order_id]
-  end
+  let(:attributes) { %w[id tracking number cost shipped_at order_id] }
   let(:current_api_user) { build(:user) }
 
   before do
@@ -31,13 +29,11 @@ RSpec.describe Api::V0::ShipmentsController, type: :controller do
     let(:current_api_user) { build(:admin_user) }
     let!(:order) { shipment.order }
     let(:order_ship_address) { create(:address) }
-    let!(:stock_location) { DefaultStockLocation.find_or_create }
     let!(:variant) { create(:variant) }
     let(:params) do
       { quantity: 2,
         variant_id: variant.to_param,
         order_id: order.number,
-        stock_location_id: stock_location.to_param,
         format: :json }
     end
     let(:error_message) { "broken shipments creation" }
@@ -109,7 +105,7 @@ RSpec.describe Api::V0::ShipmentsController, type: :controller do
       allow_any_instance_of(Spree::Order).to receive_messages(paid?: true, complete?: true)
       api_put :ready, order_id: shipment.order.to_param, id: shipment.to_param
 
-      expect(attributes.all?{ |attr| json_response.key? attr.to_s }).to be_truthy
+      expect(json_response.keys).to include(*attributes)
       expect(json_response["state"]).to eq("ready")
       expect(shipment.reload.state).to eq("ready")
     end
@@ -120,7 +116,7 @@ RSpec.describe Api::V0::ShipmentsController, type: :controller do
 
       api_put :ready, order_id: shipment.order.to_param, id: shipment.to_param
 
-      expect(attributes.all?{ |attr| json_response.key? attr.to_s }).to be_truthy
+      expect(json_response.keys).to include(*attributes)
       expect(json_response["state"]).to eq("ready")
       expect(shipment.reload.state).to eq("ready")
     end
@@ -324,7 +320,7 @@ RSpec.describe Api::V0::ShipmentsController, type: :controller do
                        id: shipment.to_param,
                        shipment: { tracking: "123123" }
 
-        expect(attributes.all?{ |attr| json_response.key? attr.to_s }).to be_truthy
+        expect(json_response.keys).to include(*attributes)
         expect(json_response["state"]).to eq("shipped")
       end
     end
@@ -424,7 +420,7 @@ RSpec.describe Api::V0::ShipmentsController, type: :controller do
 
     def expect_valid_response
       expect(response.status).to eq 200
-      attributes.all?{ |attr| json_response.key? attr.to_s }
+      expect(json_response.keys).to include(*attributes)
     end
 
     def make_order_contents_fail

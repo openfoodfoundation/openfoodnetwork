@@ -22,10 +22,4 @@ RSpec.describe Api::Admin::VariantSerializer do
 
     expect(serializer.to_json).to match variant.full_name
   end
-
-  it "serializes the variant stock location id" do
-    serializer = Api::Admin::VariantSerializer.new variant
-
-    expect(serializer.to_json).to match variant.stock_items.first.stock_location.id.to_s
-  end
 end
