@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 unless Spree::Zone.find_by(name: "EU_VAT")
-  eu_vat = Spree::Zone.create(name: "EU_VAT", description: "Countries that make up the EU VAT zone.")
+  eu_vat = Spree::Zone.create(name: "EU_VAT",
+                              description: "Countries that make up the EU VAT zone.")
 
   ["Poland", "Finland", "Portugal", "Romania", "Germany", "France",
    "Slovakia", "Hungary", "Slovenia", "Ireland", "Austria", "Spain",
