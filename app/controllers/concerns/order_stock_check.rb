@@ -11,7 +11,8 @@ module OrderStockCheck
   end
 
   def handle_insufficient_stock
-    return if sufficient_stock?
+    stock_service = Orders::CheckStockService.new(@order)
+    return if stock_service.sufficient_stock?
 
     flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
     redirect_to main_app.cart_path
@@ -32,11 +33,5 @@ module OrderStockCheck
       format.json { render json: { path: main_app.shop_path }, status: :see_other }
       format.html { redirect_to main_app.shop_path, status: :see_other }
     end
-  end
-
-  private
-
-  def sufficient_stock?
-    @sufficient_stock ||= @order.insufficient_stock_lines.blank?
   end
 end
