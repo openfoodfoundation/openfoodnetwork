@@ -88,21 +88,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
     end
   end
 
-  shared_examples "when I have an out of stock product in my cart" do
-    before do
-      variant.update!(on_demand: false, on_hand: 0)
-    end
-
-    it "returns me to the cart with an error message" do
-      visit checkout_path
-
-      expect(page).not_to have_selector 'closing', text: "Checkout now"
-      expect(page).to have_selector 'closing', text: "Your shopping cart"
-      expect(page).to have_content "An item in your cart has become unavailable"
-      expect(page).to have_content "Update"
-    end
-  end
-
   context "as a guest user" do
     before do
       visit checkout_path
@@ -222,8 +207,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
           "Local", "Shipping with Fee", "Z Free Shipping without required address"
         ]
       end
-
-      it_behaves_like "when I have an out of stock product in my cart"
     end
 
     context "on the 'payment' step" do
@@ -235,8 +218,6 @@ RSpec.describe "As a consumer, I want to checkout my order" do
       it "should allow visit '/checkout/payment'" do
         expect(page).to have_current_path("/checkout/payment")
       end
-
-      it_behaves_like "when I have an out of stock product in my cart"
     end
 
     describe "hidding a shipping method" do
@@ -305,8 +286,14 @@ RSpec.describe "As a consumer, I want to checkout my order" do
           login_as(user)
         end
       end
-      it "returns me to the cart with an error message" do
-        out_of_stock_check(step)
+
+      it "displays a modal warning the user of updated cart" do
+        visit checkout_step_path(step)
+
+        expect(page).to have_selector 'closing', text: "Checkout now"
+        within "#out-of-stock-items" do
+          expect(page).to have_content "Some items are out of stock"
+        end
       end
     end
   end

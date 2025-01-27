@@ -20,6 +20,11 @@
     = render partial: "shopping_shared/order_cycles"
 
   %div{ "data-controller": "guest-checkout", "data-guest-checkout-distributor-value": @order.distributor.id }
+    = #TODO create new component ? reuse out_of_stock.html.haml template
+    - if @any_out_of_stock
+      = render ModalComponent.new(id: "out-of-stock-items", instant: true) do
+        %div
+          Some items are out of stock
     %div{ style: "display: #{spree_current_user ? 'block' : 'none'}", "data-guest-checkout-target": "checkout" }
       = render partial: "checkout"
 

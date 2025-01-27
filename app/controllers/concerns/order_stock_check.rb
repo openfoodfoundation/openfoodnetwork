@@ -11,11 +11,12 @@ module OrderStockCheck
   end
 
   def handle_insufficient_stock
-    stock_service = Orders::CheckStockService.new(@order)
+    @any_out_of_stock = false
+
+    stock_service = Orders::CheckStockService.new(order: @order)
     return if stock_service.sufficient_stock?
 
-    flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
-    redirect_to main_app.cart_path
+    @any_out_of_stock = true
   end
 
   def check_order_cycle_expiry
