@@ -66,6 +66,7 @@ module Reporting
                   summary_hash[:total_tax_on_fees] += total_tax_on_fees.call(line_item)
                   summary_hash[:total_tax] += total_tax.call(line_item)
                   summary_hash[:total] += total.call(line_item)
+                  summary_hash[:total_tax_on_product] += total_tax_on_product.call(line_item)
                 end
 
                 summary_hash
