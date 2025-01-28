@@ -23,8 +23,21 @@
     = #TODO create new component ? reuse out_of_stock.html.haml template
     - if @any_out_of_stock
       = render ModalComponent.new(id: "out-of-stock-items", instant: true) do
-        %div
-          Some items are out of stock
+        %h3
+          = t("js.out_of_stock.reduced_stock_available")
+        %p
+          = t("js.out_of_stock.out_of_stock_text")
+        %p
+          - @updated_variants.each do |variant|
+            %em 
+              = "#{variant.name_to_display} - #{variant.unit_to_display}"
+              - if variant.on_hand == 0
+                %span
+                  = t("js.out_of_stock.now_out_of_stock")
+              - if variant.on_hand > 0
+                %span
+                  = t("js.out_of_stock.only_n_remainging", num: variant.on_hand)
+
     %div{ style: "display: #{spree_current_user ? 'block' : 'none'}", "data-guest-checkout-target": "checkout" }
       = render partial: "checkout"
 
