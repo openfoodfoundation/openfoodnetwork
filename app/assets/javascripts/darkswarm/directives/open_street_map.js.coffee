@@ -13,6 +13,8 @@ angular.module('Darkswarm').directive 'ofnOpenStreetMap', ($window, MapCentreCal
 
     buildMarker = (enterprise, latlng, title) ->
       icon = L.icon
+        iconAnchor: [14, 33]
+        iconSize: [28, 33]
         iconUrl: enterprise.icon
       marker = L.marker latlng,
         draggable:   true,
