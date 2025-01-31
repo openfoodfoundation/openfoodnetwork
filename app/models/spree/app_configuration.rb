@@ -37,7 +37,6 @@ module Spree
     preference :currency_symbol_position, :string, default: "before"
     preference :currency_thousands_separator, :string, default: ","
     preference :display_currency, :boolean, default: false
-    preference :default_country_id, :integer
     preference :default_meta_description, :string, default: 'OFN demo site'
     preference :default_meta_keywords, :string, default: 'ofn, demo'
     preference :default_seo_title, :string, default: ''
