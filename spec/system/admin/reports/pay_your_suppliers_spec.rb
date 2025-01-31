@@ -143,7 +143,7 @@ RSpec.describe "Pay Your Suppliers Report" do
       end
 
       # summary row
-      expect(lines.last).to have_content("TOTAL 50.0 50.0 0.0 0.0 0.0 50.0")
+      expect(lines.last).to have_content("TOTAL 50.0 50.0 0.0 0.0 0.0 0.0 50.0")
     end
   end
 
