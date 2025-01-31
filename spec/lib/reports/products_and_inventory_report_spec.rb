@@ -7,11 +7,7 @@ module Reporting
     module ProductsAndInventory
       RSpec.describe Base do
         context "As a site admin" do
-          let(:user) do
-            user = create(:user)
-            user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
-            user
-          end
+          let(:user) { create(:admin_user) }
           subject do
             Base.new user, {}
           end
@@ -72,7 +68,6 @@ module Reporting
           let(:enterprise_user) do
             user = create(:user)
             user.enterprise_roles.create(enterprise: supplier)
-            user.spree_roles = []
             user.save!
             user
           end
@@ -259,11 +254,7 @@ module Reporting
       end
 
       RSpec.describe AllProducts do
-        let(:user) do
-          user = create(:user)
-          user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
-          user
-        end
+        let(:user) { create(:admin_user) }
         let(:report) do
           AllProducts.new user, { fields_to_hide: [] }
         end

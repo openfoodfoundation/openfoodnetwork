@@ -5,11 +5,9 @@ require 'system_helper'
 RSpec.describe 'Multilingual' do
   include AuthenticationHelper
   include WebHelper
-  let(:admin_role) { Spree::Role.find_or_create_by!(name: 'admin') }
-  let(:admin_user) { create(:user) }
+  let(:admin_user) { create(:admin_user) }
 
   before do
-    admin_user.spree_roles << admin_role
     login_as admin_user
     visit spree.admin_dashboard_path
   end

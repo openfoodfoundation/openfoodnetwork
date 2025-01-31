@@ -209,11 +209,11 @@ RSpec.describe Spree::User do
   end
 
   describe '#admin?' do
-    it 'returns true when the user has an admin spree role' do
+    it 'returns true when the user has an admin role' do
       expect(create(:admin_user).admin?).to be_truthy
     end
 
-    it 'returns false when the user does not have an admin spree role' do
+    it 'returns false when the user does not have an admin role' do
       expect(create(:user).admin?).to eq(false)
     end
   end

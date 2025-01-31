@@ -62,8 +62,7 @@ RSpec.describe OrderCycle do
   it "finds order cycles accessible by a user" do
     e1 = create(:enterprise, is_primary_producer: true, sells: "any")
     e2 = create(:enterprise, is_primary_producer: true, sells: "any")
-    user = create(:user, enterprises: [e2], spree_roles: [])
-    user.spree_roles = []
+    user = create(:user, enterprises: [e2])
 
     oc_coordinated = create(:simple_order_cycle, coordinator: e2)
     oc_sent = create(:simple_order_cycle, suppliers: [e2])
