@@ -61,9 +61,10 @@ RSpec.describe Invoice::DataPresenter do
         expect(presenter.display_line_item_tax_rate(taxable_line_item)).to eq "15.0%, 20.0%"
       end
 
-      context "one of the tax rate is appliable to a different tax zone" do
+      context "one of the tax rate is applicable to a different tax zone" do
         before do
-          order.line_items.last.tax_category.tax_rates.last.update!(zone: create(:zone))
+          new_zone = create(:zone, default_tax: false, member: Spree::Country.last)
+          order.line_items.last.tax_category.tax_rates.last.update!(zone: new_zone)
           order.create_tax_charge!
           Orders::GenerateInvoiceService.new(order).generate_or_update_latest_invoice
         end

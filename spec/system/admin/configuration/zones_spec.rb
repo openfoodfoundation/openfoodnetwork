@@ -6,6 +6,10 @@ RSpec.describe "Zones" do
   include AuthenticationHelper
   include WebHelper
 
+  before do
+    Spree::Zone.delete_all
+  end
+
   it "list existing zones" do
     login_as_admin
     visit spree.edit_admin_general_settings_path
@@ -34,6 +38,11 @@ RSpec.describe "Zones" do
 
     fill_in "zone_name", with: "japan"
     fill_in "zone_description", with: "japanese time zone"
+    choose "Country Based"
+
+    click_link "Add country"
+    find('.select2').find(:xpath, 'option[2]').select_option
+
     click_button "Create"
 
     expect(page).to have_content("successfully created!")
