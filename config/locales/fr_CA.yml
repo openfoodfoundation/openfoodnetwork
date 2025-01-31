@@ -3791,6 +3791,10 @@ fr_CA:
       one: "sachet"
       many: "sachets"
       other: "sachets"
+    bucket:
+      one: "bucket"
+      many: "buckets"
+      other: "buckets"
     bundle:
       one: "botte"
       many: "bottes"

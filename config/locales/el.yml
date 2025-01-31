@@ -61,7 +61,7 @@ el:
       order_cycle:
         orders_close_at: Ημερομηνία Κλεισίματος
       variant_override:
-        count_on_hand: "Στο χέρι"
+        count_on_hand: "Διαθέσιμο απόθεμα"
       spree/payment_method/calculator:
         preferred_flat_percent: "Υπολογιστής Σταθερού Ποσοστού:"
         preferred_amount: "Υπολογιστής Ποσού: "
@@ -433,7 +433,7 @@ el:
   show_all_with_more: "Εμφάνιση όλων"
   cancel: Ακύρωση
   edit: Επεξεργασία
-  clone: Κλώνος
+  clone: Κλωνοποίηση
   distributors: Διανομείς
   distribution: Κατανομή
   order_cycles: Κύκλοι παραγγελιών
@@ -488,8 +488,8 @@ el:
   back_to_payments_list: "Επιστροφή στη λίστα πληρωμών"
   maestro_or_solo_cards: "Κάρτα Maestro/Sola"
   backordered: "Σε εκκρεμότητα"
-  on_hand: "Στο χέρι"
-  on hand: "Στο χέρι"
+  on_hand: "Διαθέσιμο απόθεμα"
+  on hand: "Διαθέσιμο απόθεμα"
   ship: "Αποστολή"
   shipping_category: "Κατηγορία μεταφορικών"
   height: "Ύψος"
@@ -534,26 +534,26 @@ el:
         producer: Παραγωγός
         category: Κατηγορία
         sku: SKU
-        on_hand: "Στο χέρι"
+        on_hand: "Διαθέσιμο απόθεμα"
         on_demand: "Κατά παραγγελία"
         tax_category: "Φορολογική Κατηγορία"
         inherits_properties: "Διατήρηση Ιδιοτήτων"
         import_date: "Ημερομηνία καταχώρησης"
-        actions: Δράση
+        actions: Ενέργειες
       columns_selector:
         unit: Μονάδα
         price: Τιμή
         producer: Παραγωγός
         category: Κατηγορία
         sku: SKU
-        on_hand: "Στο χέρι"
+        on_hand: "Διαθέσιμο απόθεμα"
         on_demand: "Κατά παραγγελία"
         tax_category: "Φορολογική Κατηγορία"
         inherits_properties: "Διατήρηση Ιδιοτήτων"
         import_date: "Ημερομηνία καταχώρησης"
       actions:
         edit: Επεξεργασία
-        clone: Κλώνος
+        clone: Κλωνοποίηση
         delete: Διαγραφή
         remove: Αφαίρεση
       image:
@@ -574,7 +574,7 @@ el:
     name: Όνομα
     first_name: Όνομα
     last_name: Επίθετο
-    on_hand: Στο χέρι
+    on_hand: Διαθέσιμο απόθεμα
     on_demand: Κατά παραγγελία
     on_demand?: Κατά παραγγελία?
     order_cycle: Κύκλος Παραγγελειών
@@ -615,7 +615,7 @@ el:
     please_select: Παρακαλώ επιλέξτε...
     column_save_as_default: Αποθήκευση ως πρότυπο
     columns: Στήλες
-    actions: Δράση
+    actions: Ενέργειες
     viewing: "Προβολή : %{current_view_name}"
     description: Περιγραφή
     whats_this: Τι είναι αυτό?
@@ -725,7 +725,7 @@ el:
       index:
         title: "Τέλη επιχείρησης"
         enterprise: "Επιχείρηση"
-        fee_type: "Κατηγορίες αμοιβών"
+        fee_type: "Κατηγορίες τελών"
         name: "Όνομα"
         tax_category: "Φορολογική Κατηγορία"
         calculator: "Υπολογισμός"
@@ -769,7 +769,7 @@ el:
         seo_tip: "Χρησιμοποιήστε λέξεις - κλειδιά για να βοηθήσετε στην αναζήτηση των προϊόντων σας στο διαδίκτυο. Χρησιμοποιήστε κενό για να διαχωρίσετε κάθε λέξη -κλειδί."
       search: "Αναζήτηση"
       properties:
-        property_name: "Όνομα Ιδιοκτησίας"
+        property_name: "Όνομα ιδιότητας"
         inherited_property: "Επίκτητη ιδιότητα"
       variants:
         infinity: "Άπειρο"
@@ -962,7 +962,7 @@ el:
         unit_type: Τύπος μονάδας
         variant_unit_name: Όνομα μεταβλητής
         price: Τιμή
-        on_hand: Στο χέρι
+        on_hand: Διαθέσιμο απόθεμα
         on_demand: Κατά παραγγελία
         shipping_category: Κατηγορία μεταφορικών
         tax_category: Φορολογική Κατηγορία
@@ -1089,12 +1089,12 @@ el:
         enterprise_fees:
           legend: "Τέλη επιχείρησης"
           name: Όνομα
-          fee_type: Κατηγορίες αμοιβών
+          fee_type: Κατηγορίες τελών
           manage_fees: Διαχείριση τελών επιχείρησης
           no_fees_yet: Δεν έχετε τέλη επιχείρησης ακόμα.
           create_button: Δημιούργησε έναν τώρα
         enterprise_permissions:
-          legend: "Δικαιώματα Επιχείρησης "
+          legend: "Άδειες επιχείρησης"
           enterprise_relationships: Σχέσεις Επιχειρήσεων
         images:
           legend: "Εικόνες"
@@ -1341,7 +1341,7 @@ el:
         hub_shop_text: Πούλα προιόντα άλλων
         hub_shop_description_text: Η επιχείρησή σας είναι η ραχοκοκαλιά του τοπικού σας συστήματος τροφίμων. Συγκεντρώνετε προϊόντα από άλλες επιχειρήσεις και μπορείτε να τα πουλήσετε μέσω του καταστήματός σας στο Open Food Network.
         choose_option: Επιλέξτε μία από τις παραπάνω επιλογές.
-        change_now: Άλαξέ το τώρα
+        change_now: Εφαρμογή αλλαγής
       enterprise_user_index:
         loading_enterprises: ΦΌΡΤΩΣΕ ΤΙΣ ΕΠΙΧΕΙΡΉΣΕΙΣ
         no_enterprises_found: Δεν βρέθηκε επιχείρηση.
@@ -1550,7 +1550,7 @@ el:
           shipping_methods: "Τρόποι αποστολής"
           payment_methods: "Τρόποι πληρωμής"
           enterprise_fees: "Τέλη επιχείρησης"
-          enterprise_permissions: "Δικαιώματα Επιχείρησης "
+          enterprise_permissions: "Άδειες επιχείρησης"
           inventory_settings: "Ρυθμίσεις Αποθεμάτων"
           tag_rules: "Κανόνες ετικετών"
           shop_preferences: "Επιλογές καταστήματος"
@@ -1585,7 +1585,7 @@ el:
       totals_by_supplier: Παραγγείλετε συνολικά διανομέας κύκλου ανά προμηθευτή
       customer_totals: Σύνολο κύκλου παραγγελιών για τον πελάτη
       all_products: Ολα τα προϊόντα
-      inventory: Απογραφή (στο χέρι)
+      inventory: 'Απόθεμα (Διαθέσιμο) '
       lettuce_share: Μαρούλι
       payment_methods: Αναφορά μεθόδων πληρωμής
       delivery: Αναφορά παράδοσης
@@ -2307,7 +2307,7 @@ el:
   shopping_oc_last_closed: "Ο τελευταίος κύκλος έκλεισε %{distance_of_time} πριν"
   shopping_oc_next_open: "Ο επόμενος κύκλος ανοίγει σε %{distance_of_time}"
   shopping_oc_select: "Επιλέγω..."
-  shopping_tabs_home: "Home"
+  shopping_tabs_home: "Αρχική"
   shopping_tabs_shop: "Κατάστημα"
   shopping_tabs_about: "Σχετικά"
   shopping_tabs_producers: "Παραγωγοί"
@@ -2336,7 +2336,7 @@ el:
   hubs_filter_by: "Φιλτράρισμα κατά"
   hubs_filter_type: "Τύπος"
   hubs_filter_delivery: "Διανομή"
-  hubs_filter_property: "Ιδιοκτησία"
+  hubs_filter_property: "Ιδιότητα"
   hubs_matches: "Εννοείς?"
   hubs_intro: Ψώνισε στην περιοχή σου
   hubs_distance: Πιο κοντά στο
@@ -2418,7 +2418,7 @@ el:
   producers_buy_at_html: "Αγοράστε προϊόντα %{enterprise} στη διεύθυνση:"
   producers_filter: Φιλτράρισμα κατά
   producers_filter_type: Τύπος
-  producers_filter_property: Ιδιοκτησία
+  producers_filter_property: Ιδιότητα
   producers_title: Παραγωγοί
   producers_headline: Βρες τοπικούς παραγωγούς
   producers_signup_title: Εγγραφείτε ως παραγωγός
@@ -2689,9 +2689,9 @@ el:
         text: "Έχετε συμπληρώσει το όριο για τον αριθμό των επιχειρήσεων που επιτρέπεται να έχετε στην ιδιοκτησία σας"
         action: "Επιστροφή στην αρχική σελίδα"
       finished:
-        headline: "Πεπερασμένος!"
+        headline: "Η διαδικασία ολοκληρώθηκε!"
         thanks: "Ευχαριστούμε για τη συμπλήρωση των στοιχείων για το %{enterprise}."
-        login: "Μπορείτε να αλλάξετε ή να ενημερώσετε την επιχείρησή σας σε οποιοδήποτε στάδιο, συνδεθείτε στο Open Food Network και μεταβείτε στον Διαχειριστή."
+        login: "Μπορείτε να αλλάξετε ή να ενημερώσετε την επιχείρησή σας σε οποιοδήποτε στάδιο, συνδεθείτε στο Open Food Network και μεταβείτε στον πίνακα διαχείρισης."
         action: "Μεταβείτε στον Πίνακα Επιχειρήσεων"
   back: "Πίσω"
   continue: "Συνέχεια"
@@ -2779,7 +2779,7 @@ el:
   process_my_order: "Επεξεργασία της παραγγελίας μου"
   delivery_instructions: Οδηγίες παράδοσης
   delivery_method: Μέθοδος παράδοσης
-  fee_type: "Κατηγορίες αμοιβών"
+  fee_type: "Κατηγορίες τελών"
   tax_category: "Φορολογική κατηγορία"
   display: "Εμφάνιση"
   tags: "Ετικέτες"
@@ -2802,7 +2802,7 @@ el:
   roles: "Ρόλοι"
   update: "Ανανέωση"
   delete: Διαγραφή
-  add_producer_property: "Προσθήκη ιδιοκτησίας παραγωγού"
+  add_producer_property: "Προσθήκη ιδιότητας παραγωγού"
   in_progress: "Σε εξέλιξη"
   started_at: "Ξεκίνησε στις"
   queued: "Ουρά"
@@ -2832,7 +2832,7 @@ el:
   spree_admin_enterprises_create_new_product: "ΔΗΜΙΟΥΡΓΗΣΤΕ ΝΕΟ ΠΡΟDΟΝ"
   spree_admin_single_enterprise_alert_mail_confirmation: "Παρακαλώ επιβεβαιώστε τη διεύθυνση email για"
   spree_admin_single_enterprise_alert_mail_sent: "Έχουμε στείλει ένα email στο"
-  spree_admin_overview_action_required: "Απαιτείται δράση"
+  spree_admin_overview_action_required: "Απαιτείται Ενέργεια"
   spree_admin_overview_check_your_inbox: "Ελέγξτε τα εισερχόμενά σας για περισσότερες οδηγίες. Ευχαριστώ!"
   spree_admin_unit_value: Αξία μονάδας
   spree_admin_unit_description: Περιγραφή μονάδας
@@ -2854,7 +2854,7 @@ el:
   spree_user_enterprise_limit_error: "^%{email} δεν επιτρέπεται να κατέχει άλλες επιχειρήσεις (το όριο είναι %{enterprise_limit})."
   spree_variant_product_error: πρέπει να έχει τουλάχιστον μία παραλλαγή
   your_profil_live: "Προφίλ καταστήματος"
-  see: "ΕΜΦΑΝΙΣΗ"
+  see: "Εμφάνιση"
   live: " "
   manage: "Διαχείριση"
   resend: "Ξαναστείλτε"
@@ -2865,7 +2865,7 @@ el:
   edit_profile_details: "Επεξεργασία στοιχείων προφίλ"
   edit_profile_details_etc: "Αλλάξτε την περιγραφή του καταστήματός σας, εικόνες κ.λ.π."
   order_cycle: "Κύκλος Παραγγελειών"
-  enterprise_relationships: "Δικαιώματα επιχείρησης"
+  enterprise_relationships: "Άδειες επιχείρησης"
   first_name_begins_with: "Το όνομα αρχίζει με"
   last_name_begins_with: "Το επώνυμο αρχίζει με"
   shipping_method: "Μέθοδος αποστολής"
@@ -3114,7 +3114,7 @@ el:
   payment_method_not_supported: "Αυτός ο τρόπος πληρωμής δεν υποστηρίζεται. Παρακαλώ επιλέξτε ένα άλλο."
   payment_updated: "Η πληρωμή ενημερώθηκε"
   cannot_perform_operation: "Δεν ήταν δυνατή η ενημέρωση της πληρωμής"
-  action_required: "Απαιτείται δράση"
+  action_required: "Απαιτείται Ενέργεια"
   tag_rules: "Κανόνες ετικετών"
   enterprise_fee_whole_order: Ολόκληρη παραγγελία
   enterprise_fee_by_name: "%{name} κρατήσεις απο %{role} %{enterprise_name}"
@@ -3458,6 +3458,7 @@ el:
         add_to_cart: "Προσθήκη"
         in_cart: "στο καλάθι"
         quantity_in_cart: "%{quantity} στο καλάθι"
+        remaining_in_stock: "Έχουν απομείνει %{quantity}"
       bulk_buy_modal:
         min_quantity: "Ελάχιστη ποσότητα"
         max_quantity: "Μέγιστη ποσότητα"
@@ -3648,7 +3649,7 @@ el:
         formats:
           csv:
             header:
-              fee_type: "Κατηγορίες αμοιβών"
+              fee_type: "Κατηγορίες τελών"
               enterprise_name: "Ιδιοκτήτης Επιχειρήσεων"
               fee_name: "Όνομα τέλους"
               customer_name: "Πελάτης"
@@ -3658,7 +3659,7 @@ el:
               total_amount: "$ $ SUM"
           html:
             header:
-              fee_type: "Κατηγορίες αμοιβών"
+              fee_type: "Κατηγορίες τελών"
               enterprise_name: "Ιδιοκτήτης Επιχειρήσεων"
               fee_name: "Όνομα τέλους"
               customer_name: "Πελάτης"
@@ -3767,7 +3768,7 @@ el:
     count_on_hand: "Μετρήστε στο χέρι"
     quantity: "Ποσότητα"
     on_demand: "Κατά παραγγελία"
-    on_hand: "Στο χέρι"
+    on_hand: "Διαθέσιμο απόθεμα"
     package_from: "πακέτο από"
     item_description: "περιγραφή αντικειμένου"
     price: "Τιμή"
@@ -3861,7 +3862,7 @@ el:
     iso_name: "Όνομα ISO"
     states_required: "Απαιτούνται κράτη"
     editing_country: "Χώρα επεξεργασίας"
-    states: "Κρατών"
+    states: "Γεωγραφικά διαμερίσματα"
     abbreviation: "Συντομογραφία"
     new_state: "Νέα Πολιτεία"
     payment_methods: "τρόποι πληρωμής"
@@ -3902,7 +3903,7 @@ el:
     new_image: "Νέα εικόνα"
     filename: "Ονομα αρχείου"
     alt_text: "Εναλλακτικό Κείμενο"
-    thumbnail: "Ονυξ του αντίχειρος"
+    thumbnail: "Μικρογραφία (Thumnail) "
     back_to_images_list: "Επιστροφή στη λίστα εικόνων"
     email: ΗΛΕΚΤΡΟΝΙΚΗ ΔΙΕΥΘΥΝΣΗ
     account_updated: "Ο λογαριασμός ενημερώθηκε!"
@@ -4002,17 +4003,17 @@ el:
       properties:
         index:
           properties: "Ιδιότητες"
-          new_property: "Νέα ιδιοκτησία"
+          new_property: "Νέα ιδιότητα"
           name: "Όνομα"
-          presentation: "Παρουσίαση"
+          presentation: "Περιγραφή"
         new:
-          new_property: "Νέα ιδιοκτησία"
+          new_property: "Νέα ιδιότητα"
         edit:
-          editing_property: "Επεξεργασία ιδιοκτησίας"
+          editing_property: "Επεξεργασία ιδιότητας"
           back_to_properties_list: "Επιστροφή στη λίστα ιδιοτήτων"
         form:
           name: "Όνομα"
-          presentation: "Παρουσίαση"
+          presentation: "Περιγραφή"
       return_authorizations:
         index:
           new_return_authorization: "Νέα εξουσιοδότηση επιστροφής"
@@ -4244,7 +4245,7 @@ el:
           price: "Τιμή"
           unit_price: "Τιμή Μονάδας"
           unit_price_legend: "Υπολογίζεται με βάση την τιμή του προϊόντος"
-          on_hand: "Στο χέρι"
+          on_hand: "Διαθέσιμο απόθεμα"
           on_demand: "Κατά παραγγελία"
           product_description: "περιγραφή προϊόντος"
           image: "Εικόνα"
@@ -4274,7 +4275,7 @@ el:
           search_for_categories: "Αναζήτηση κατηγοριών"
         group_buy_form:
           group_buy: "Ομαδική αγορά;"
-          bulk_unit_size: Μέγεθος μονάδας χύδην
+          bulk_unit_size: Μέγεθος χονδρικής μονάδας
         display_as:
           display_as: Εμφάνιση ως
         clone:
