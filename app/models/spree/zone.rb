@@ -7,6 +7,8 @@ module Spree
     has_and_belongs_to_many :shipping_methods, join_table: 'spree_shipping_methods_zones'
 
     validates :name, presence: true, uniqueness: true
+    validates :zone_members, presence: true
+
     after_save :remove_defunct_members
     after_save :remove_previous_default
 

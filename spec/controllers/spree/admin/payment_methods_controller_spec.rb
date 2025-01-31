@@ -235,8 +235,6 @@ module Spree
       let(:user) do
         new_user = create(:user, email: 'enterprise@hub.com', password: 'blahblah',
                                  password_confirmation: 'blahblah', )
-        # for some reason unbeknown to me, this new user gets admin permissions by default.
-        new_user.spree_roles = []
         new_user.enterprise_roles.build(enterprise:).save
         new_user.save
         new_user

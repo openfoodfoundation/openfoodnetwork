@@ -431,11 +431,7 @@ module Admin
 
     describe "notifying producers" do
       let(:user) { create(:user) }
-      let(:admin_user) do
-        user = create(:user)
-        user.spree_roles << Spree::Role.find_or_create_by!(name: 'admin')
-        user
-      end
+      let(:admin_user) { create(:admin_user) }
       let(:order_cycle) { create(:simple_order_cycle) }
 
       before do

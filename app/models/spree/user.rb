@@ -18,15 +18,11 @@ module Spree
     belongs_to :ship_address, class_name: 'Spree::Address'
     belongs_to :bill_address, class_name: 'Spree::Address'
 
-    has_and_belongs_to_many :spree_roles,
-                            join_table: 'spree_roles_users',
-                            class_name: "Spree::Role"
-
     before_validation :set_login
     after_create :associate_customers, :associate_orders
     before_destroy :check_completed_orders
 
-    scope :admin, lambda { includes(:spree_roles).where("spree_roles.name" => "admin") }
+    scope :admin, -> { where(admin: true) }
 
     has_many :enterprise_roles, dependent: :destroy
     has_many :enterprises, through: :enterprise_roles
@@ -56,11 +52,6 @@ module Spree
 
     def self.admin_created?
       User.admin.count > 0
-    end
-
-    # Checks whether the specified user is a superadmin, with full control of the instance
-    def admin?
-      spree_roles.any? { |role| role.name == "admin" }
     end
 
     # Send devise-based user emails asyncronously via ActiveJob

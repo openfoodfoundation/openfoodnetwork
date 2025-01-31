@@ -6,8 +6,10 @@ RSpec.describe "Tax Rates" do
   include AuthenticationHelper
 
   let!(:calculator) { create(:calculator_per_item, calculable: create(:order)) }
-  let!(:tax_rate) { create(:tax_rate, name: "IVA", calculator:) }
-  let!(:zone) { create(:zone, name: "Ilhas") }
+  let!(:tax_rate) {
+    create(:tax_rate, name: "IVA", calculator:, zone: create(:zone, default_tax: false))
+  }
+  let!(:zone) { create(:zone, name: "Ilhas", default_tax: false) }
   let!(:tax_category) { create(:tax_category, name: "Full") }
 
   before do

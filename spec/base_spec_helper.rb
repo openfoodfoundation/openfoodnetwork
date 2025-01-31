@@ -234,12 +234,10 @@ RSpec.configure do |config|
     end
   end
 
-  default_country_id = DefaultCountry.id
   # Ensure we start with consistent config settings
   config.before(:each) do
     reset_spree_preferences do |spree_config|
       # These are all settings that differ from Spree's defaults
-      spree_config.default_country_id = default_country_id
       spree_config.shipping_instructions = true
     end
     CurrentConfig.clear_all

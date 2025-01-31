@@ -26,9 +26,8 @@ RSpec.describe Spree::BaseHelper do
     context "with a checkout zone defined" do
       context "checkout zone is of type country" do
         before do
-          @country_zone = create(:zone, name: "CountryZone")
-          @country_zone.members.create(zoneable: country)
-          allow(ENV).to receive(:fetch).and_return(@country_zone.name)
+          country_zone = create(:zone, name: "CountryZone", member: country)
+          allow(ENV).to receive(:fetch).and_return(country_zone.name)          
         end
 
         it "return only the countries defined by the checkout zone" do

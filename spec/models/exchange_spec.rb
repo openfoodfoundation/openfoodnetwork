@@ -107,11 +107,7 @@ RSpec.describe Exchange do
     let(:oc) { create(:simple_order_cycle, coordinator:) }
 
     describe "finding exchanges managed by a particular user" do
-      let(:user) do
-        user = create(:user)
-        user.spree_roles = []
-        user
-      end
+      let(:user) { create(:user) }
 
       before { Exchange.destroy_all }
 

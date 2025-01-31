@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_13_055412) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_28_031518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -945,6 +945,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_13_055412) do
     t.string "provider"
     t.string "uid"
     t.datetime "terms_of_service_accepted_at"
+    t.boolean "admin", default: false, null: false
     t.index ["confirmation_token"], name: "index_spree_users_on_confirmation_token", unique: true
     t.index ["email"], name: "email_idx_unique", unique: true
     t.index ["persistence_token"], name: "index_users_on_persistence_token"

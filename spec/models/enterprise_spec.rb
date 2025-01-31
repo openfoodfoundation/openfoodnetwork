@@ -651,7 +651,6 @@ RSpec.describe Enterprise do
     describe "managed_by" do
       it "shows only enterprises for given user" do
         user = create(:user)
-        user.spree_roles = []
         e1 = create(:enterprise)
         e2 = create(:enterprise)
         e1.enterprise_roles.build(user:).save

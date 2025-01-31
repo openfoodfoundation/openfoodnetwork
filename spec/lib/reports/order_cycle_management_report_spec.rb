@@ -10,11 +10,7 @@ module Reporting
           subject { Base.new(user, params) }
           let(:params) { {} }
 
-          let(:user) do
-            user = create(:user)
-            user.spree_roles << Spree::Role.find_or_create_by!(name: "admin")
-            user
-          end
+          let(:user) { create(:admin_user) }
 
           describe "fetching orders" do
             it 'calls the OutstandingBalanceQuery query object' do

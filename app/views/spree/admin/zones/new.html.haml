@@ -11,5 +11,7 @@
 
 = form_for [:admin, @zone] do |zone_form|
   = render partial: 'form', locals: { zone_form: zone_form }
+  = render partial: 'member_type', locals: { type: 'country', zone_form: zone_form }
+  = render partial: 'member_type', locals: { type: 'state', zone_form: zone_form }
   .clear
   = render partial: 'spree/admin/shared/new_resource_links'
