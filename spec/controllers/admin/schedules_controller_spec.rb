@@ -98,8 +98,8 @@ RSpec.describe Admin::SchedulesController, type: :controller do
         it "allows me to update basic information" do
           spree_put :update, format: :json, id: coordinated_schedule.id,
                              schedule: { name: "my awesome schedule" }
-          expect(JSON.parse(response.body)["id"]).to eq coordinated_schedule.id
-          expect(JSON.parse(response.body)["name"]).to eq "my awesome schedule"
+          expect(response.parsed_body["id"]).to eq coordinated_schedule.id
+          expect(response.parsed_body["name"]).to eq "my awesome schedule"
           expect(assigns(:schedule)).to eq coordinated_schedule
           expect(coordinated_schedule.reload.name).to eq 'my awesome schedule'
         end
@@ -258,7 +258,7 @@ RSpec.describe Admin::SchedulesController, type: :controller do
 
             it "returns an error message and prevents me from deleting the schedule" do
               expect { spree_delete :destroy, params }.not_to change { Schedule.count }
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response["errors"])
                 .to include 'This schedule cannot be deleted ' \
                             'because it has associated subscriptions'

@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+# rubocop:disable Rails/ResponseParsedBody
 RSpec.describe UserRegistrationsController, type: :controller do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
@@ -54,3 +55,4 @@ RSpec.describe UserRegistrationsController, type: :controller do
     end
   end
 end
+# rubocop:enable Rails/ResponseParsedBody

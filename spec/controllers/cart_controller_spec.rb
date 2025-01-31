@@ -37,7 +37,7 @@ RSpec.describe CartController, type: :controller do
 
       post :populate, xhr: true, params: { use_route: :spree }, as: :json
 
-      data = JSON.parse(response.body)
+      data = response.parsed_body
       expect(data['stock_levels']).to eq('my_stock_levels')
     end
   end
@@ -79,7 +79,7 @@ RSpec.describe CartController, type: :controller do
     it "returns the variant override stock levels of the variant in the order" do
       spree_post :populate, variants: { variant_in_the_order.id => 1 }
 
-      data = JSON.parse(response.body)
+      data = response.parsed_body
       expect(data['stock_levels'][variant_in_the_order.id.to_s]["on_hand"]).to eq 20
     end
 
@@ -91,7 +91,7 @@ RSpec.describe CartController, type: :controller do
       # This indicates that the VariantsStockLevels alternative calculation is never reached
       spree_post :populate, variants: { variant_not_in_the_order.id => 1 }
 
-      data = JSON.parse(response.body)
+      data = response.parsed_body
       expect(data['stock_levels'][variant_not_in_the_order.id.to_s]["on_hand"]).to eq 7
     end
   end

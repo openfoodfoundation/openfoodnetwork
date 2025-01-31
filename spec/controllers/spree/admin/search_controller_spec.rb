@@ -41,7 +41,7 @@ RSpec.describe Spree::Admin::SearchController, type: :controller do
       describe 'when search owned enterprises' do
         before do
           spree_get :customers, q: "test", distributor_id: enterprise.id
-          @results = JSON.parse(response.body)
+          @results = response.parsed_body
         end
 
         describe 'when search query matches the email or name' do
@@ -63,7 +63,7 @@ RSpec.describe Spree::Admin::SearchController, type: :controller do
       describe 'when search in unmanaged enterprise' do
         before do
           spree_get :customers, q: "test", distributor_id: customer_3.enterprise_id
-          @results = JSON.parse(response.body)
+          @results = response.parsed_body
         end
 
         it 'returns empty array' do

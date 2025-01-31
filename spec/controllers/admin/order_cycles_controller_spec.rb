@@ -185,7 +185,7 @@ module Admin
 
           it "returns success: true and a valid edit path" do
             spree_post :create, params
-            json_response = JSON.parse(response.body)
+            json_response = response.parsed_body
             expect(json_response['success']).to be true
             expect(json_response['edit_path']).to eq "/admin/order_cycles/1/incoming"
           end
@@ -196,7 +196,7 @@ module Admin
 
           it "returns an errors hash" do
             spree_post :create, params
-            json_response = JSON.parse(response.body)
+            json_response = response.parsed_body
             expect(json_response['errors']).to be
           end
         end
@@ -271,7 +271,7 @@ module Admin
           it "returns an error message" do
             spree_put :update, params
 
-            json_response = JSON.parse(response.body)
+            json_response = response.parsed_body
             expect(json_response['errors']).to be
           end
         end
@@ -384,7 +384,7 @@ module Admin
           expect do
             spree_put :bulk_update, format: :json
           end.to change { oc.orders_open_at }.by(0)
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           expect(json_response['errors'])
             .to eq 'Hm, something went wrong. No order cycle data found.'
         end
@@ -401,7 +401,7 @@ module Admin
 
           it "returns an error message" do
             spree_put :bulk_update, params
-            json_response = JSON.parse(response.body)
+            json_response = response.parsed_body
             expect(json_response['errors']).to be_present
           end
         end
