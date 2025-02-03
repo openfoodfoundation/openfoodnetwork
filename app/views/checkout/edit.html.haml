@@ -22,19 +22,24 @@
   %div{ "data-controller": "guest-checkout", "data-guest-checkout-distributor-value": @order.distributor.id }
     = #TODO create new component ? reuse out_of_stock.html.haml template
     - if @any_out_of_stock
-      = render ModalComponent.new(id: "out-of-stock-items", instant: true) do
+      = render ModalComponent.new(id: "out-of-stock-items", modal_class: "medium" ,instant: true, close_button: false) do
+        %a.close-reveal-modal{"data-action": "click->modal#close" }
+          %i.ofn-i_009-close
         %h3
           = t("js.out_of_stock.reduced_stock_available")
         %p
           = t("js.out_of_stock.out_of_stock_text")
-        %p
-          - @updated_variants.each do |variant|
-            %em 
-              = "#{variant.name_to_display} - #{variant.unit_to_display}"
-              - if variant.on_hand == 0
+        - @updated_variants.each do |variant|
+          - if variant.on_hand == 0
+            %p
+              %em
+                = "#{variant.name_to_display} - #{variant.unit_to_display}"
                 %span
                   = t("js.out_of_stock.now_out_of_stock")
-              - if variant.on_hand > 0
+          - if variant.on_hand > 0
+            %p
+              %em
+                = "#{variant.name_to_display} - #{variant.unit_to_display}"
                 %span
                   = t("js.out_of_stock.only_n_remainging", num: variant.on_hand)
 
