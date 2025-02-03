@@ -70,8 +70,9 @@ module PaymentGateways
             get :confirm, params: { payment_intent: "pi_123" }
 
             expect(response).to redirect_to shop_url
-            expect(flash[:info]).to eq "The order cycle you've selected has just closed. \
-Please try again!"
+            expect(flash[:info]).to eq(
+              "The order cycle you've selected has just closed. Please try again!"
+            )
           end
         end
 
@@ -111,8 +112,9 @@ Please try again!"
 
           expect(order.completed?).to be false
           expect(response).to redirect_to checkout_step_path(step: :details)
-          expect(flash[:error]).to eq "Payment could not be processed, \
-please check the details you entered"
+          expect(flash[:error]).to eq(
+            "Payment could not be processed, please check the details you entered"
+          )
         end
       end
 
@@ -124,8 +126,9 @@ please check the details you entered"
 
           expect(order.completed?).to be false
           expect(response).to redirect_to checkout_step_path(step: :details)
-          expect(flash[:error]).to eq "Payment could not be processed, \
-please check the details you entered"
+          expect(flash[:error]).to eq(
+            "Payment could not be processed, please check the details you entered"
+          )
         end
       end
 
@@ -142,8 +145,9 @@ please check the details you entered"
 
           expect(order.completed?).to be false
           expect(response).to redirect_to checkout_step_path(step: :details)
-          expect(flash[:error]).to eq "Payment could not be processed, \
-please check the details you entered"
+          expect(flash[:error]).to eq(
+            "Payment could not be processed, please check the details you entered"
+          )
         end
       end
 
@@ -178,8 +182,9 @@ please check the details you entered"
             get :confirm, params: { payment_intent: "pi_123" }
 
             expect(response).to redirect_to cart_path
-            expect(flash[:notice]).to eq "Payment cancelled: the checkout could not be \
-completed due to stock issues."
+            expect(flash[:notice]).to eq(
+              "Payment cancelled: the checkout could not be completed due to stock issues."
+            )
 
             expect(order.state).to eq "cart"
             expect(payment.state).to eq "void"
