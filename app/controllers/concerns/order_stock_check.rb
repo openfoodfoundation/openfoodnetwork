@@ -5,9 +5,12 @@ module OrderStockCheck
   extend ActiveSupport::Concern
 
   def valid_order_line_items?
-    @order.insufficient_stock_lines.empty? &&
-      OrderCycles::DistributedVariantsService.new(@order.order_cycle, @order.distributor).
-        distributes_order_variants?(@order)
+    OrderCycles::DistributedVariantsService.new(@order.order_cycle, @order.distributor).
+      distributes_order_variants?(@order)
+  end
+
+  def sufficient_stock?
+    Orders::CheckStockService.new(order: @order).sufficient_stock?
   end
 
   def handle_insufficient_stock
@@ -17,6 +20,7 @@ module OrderStockCheck
     return if stock_service.sufficient_stock?
 
     @any_out_of_stock = true
+    @updated_variants = stock_service.update_line_items
   end
 
   def check_order_cycle_expiry

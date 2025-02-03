@@ -14,15 +14,24 @@ RSpec.describe "As a consumer, I want to checkout my order" do
   let(:product) {
     create(:taxed_product, supplier_id: supplier.id, price: 10, zone:, tax_rate_amount: 0.1)
   }
+  let(:product2) {
+    create(:taxed_product, supplier_id: supplier.id, price: 15, zone:, tax_rate_amount: 0.1)
+  }
+
   let(:variant) { product.variants.first }
+  let(:variant2 ) { product2.variants.first }
   let!(:order_cycle) {
     create(:simple_order_cycle, suppliers: [supplier], distributors: [distributor],
-                                coordinator: create(:distributor_enterprise), variants: [variant])
+                                coordinator: create(:distributor_enterprise),
+                                variants: [variant, variant2])
   }
   let(:order) {
     create(:order, order_cycle:, distributor:, bill_address_id: nil,
                    ship_address_id: nil, state: "cart",
-                   line_items: [create(:line_item, variant:)])
+                   line_items: [
+                     create(:line_item, variant:),
+                     create(:line_item, variant: variant2, quantity: 3)
+                   ])
   }
 
   let(:fee_tax_rate) { create(:tax_rate, amount: 0.10, zone:, included_in_price: true) }
@@ -277,10 +286,17 @@ RSpec.describe "As a consumer, I want to checkout my order" do
   shared_examples "when a line item is out of stock" do |session, step|
     context "as a #{session} user" do
       let(:user) { create(:user) }
+
       before do
+        # Out of stock
         variant.on_demand = false
         variant.on_hand = 0
         variant.save!
+
+        # Reduced stock
+        variant2.on_demand = false
+        variant2.on_hand = 1
+        variant2.save!
 
         if session == "logged"
           login_as(user)
@@ -292,7 +308,13 @@ RSpec.describe "As a consumer, I want to checkout my order" do
 
         expect(page).to have_selector 'closing', text: "Checkout now"
         within "#out-of-stock-items" do
-          expect(page).to have_content "Some items are out of stock"
+          expect(page).to have_content "Reduced stock available"
+          expect(page).to have_content(
+            "#{variant.name_to_display} - #{variant.unit_to_display} is now out of stock"
+          )
+          expect(page).to have_content(
+            "#{variant2.name_to_display} - #{variant2.unit_to_display} now only has 1 remaining"
+          )
         end
       end
     end
