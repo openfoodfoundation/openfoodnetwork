@@ -72,7 +72,7 @@ class DfcRequest
       # It results in an empty config hash and we lose our config.
     )
     client = strategy.client
-    client.token_endpoint = strategy.config.token_endpoint
+    client.token_endpoint = strategy.config.token_endpoint # tried to mock this but doesn't work.
     client.refresh_token = @user.oidc_account.refresh_token
 
     token = client.access_token!

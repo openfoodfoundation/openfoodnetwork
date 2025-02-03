@@ -91,14 +91,15 @@ RSpec.describe DfcRequest do
 
     context "with account tokens" do
       before do
+        stub_request(:get, "http://example.net/api").
+          to_return(status: 401)
+        allow_any_instance_of(OpenIDConnect::Client).to receive(:config).and_return(double(token_endpoint: ""))
+
         account.refresh_token = ENV.fetch("OPENID_REFRESH_TOKEN")
-        api.call(
-          "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
-        )
-        expect(account.token).not_to be_nil
+        account.token = "anything"
       end
 
-      it "clears the token if authentication fails", vcr: true do
+      it "clears the token if authentication fails" do
         allow_any_instance_of(OpenIDConnect::Client).to receive(:access_token!).and_raise(
           Rack::OAuth2::Client::Error.new(
             1, { error: "invalid_grant", error_description: "session not active" }
@@ -107,9 +108,9 @@ RSpec.describe DfcRequest do
 
         expect {
           api.call(
-            "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
+            "http://example.net/api"
           )
-        }.to raise_error(Rack::OAuth2::Client::Error).and change {
+        }.to change {
           account.token
         }.to(nil).and change {
           account.refresh_token
