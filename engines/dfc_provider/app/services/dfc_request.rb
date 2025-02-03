@@ -72,7 +72,8 @@ class DfcRequest
       # It results in an empty config hash and we lose our config.
     )
     client = strategy.client
-    client.token_endpoint = strategy.config.token_endpoint # tried to mock this but doesn't work.
+    binding.pry
+    client.token_endpoint = strategy.config.token_endpoint # can't work out what's happening under the hood or  how to stub it
     client.refresh_token = @user.oidc_account.refresh_token
 
     token = client.access_token!

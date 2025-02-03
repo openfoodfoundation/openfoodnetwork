@@ -93,7 +93,11 @@ RSpec.describe DfcRequest do
       before do
         stub_request(:get, "http://example.net/api").
           to_return(status: 401)
-        allow_any_instance_of(OpenIDConnect::Client).to receive(:config).and_return(double(token_endpoint: ""))
+
+        # allow_any_instance_of(OpenIDConnect::Client).to receive(:config).and_return(double(token_endpoint: ""))
+        stub_request(:get, "https://login.lescommuns.org/auth/realms/data-food-consortium/.well-known/openid-configuration").
+          to_return(status: 200, body: {token_endpoint: "/token"}.to_json)
+
 
         account.refresh_token = ENV.fetch("OPENID_REFRESH_TOKEN")
         account.token = "anything"
