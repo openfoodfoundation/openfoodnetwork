@@ -13,8 +13,7 @@ default: &default
     'vendor',
     'app/webpacker/css',
     'app/webpacker/fonts',
-    'app/webpacker/images',
-    'app/assets/images', # images should be outside of webpacker where possible
+    'app/assets/images',
     'engines/web/app/assets/stylesheets',
     'app/components'
   ]
