@@ -107,15 +107,11 @@ class SuppliedProductBuilder < DfcBuilder
   def self.product_type(variant)
     taxon_dfc_id = variant.primary_taxon&.dfc_id
 
-    DfcProductTypeFactory.for(taxon_dfc_id)
+    DataFoodConsortium::Connector::SKOSParser.concepts[taxon_dfc_id]
   end
 
   def self.taxon(supplied_product)
-    dfc_id = supplied_product.productType&.semanticId
-
-    # Every product needs a primary taxon to be valid. So if we don't have
-    # one or can't find it we just take a random one.
-    Spree::Taxon.find_by(dfc_id:) || Spree::Taxon.first
+    ProductTypeImporter.taxon(supplied_product.productType)
   end
 
   private_class_method :product_type, :taxon
