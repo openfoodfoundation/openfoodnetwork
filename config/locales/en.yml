@@ -1041,7 +1041,7 @@ en:
         shipping_categories: Shipping Categories
       dfc_import_form:
         title: "Import from DFC catalog"
-        enterprise: "Enterprise"
+        enterprise: "Create products for enterprise"
         catalog_url: "DFC catalog URL"
         preview: Preview
       import:

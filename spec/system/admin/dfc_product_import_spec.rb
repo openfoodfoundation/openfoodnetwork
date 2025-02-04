@@ -25,7 +25,7 @@ RSpec.describe "DFC Product Import" do
     host = Rails.application.default_url_options[:host]
     url = "http://#{host}/api/dfc/enterprises/#{enterprise.id}/catalog_items"
     fill_in "catalog_url", with: url
-    select enterprise.name, from: "Enterprise"
+    select enterprise.name, from: "Create products for enterprise"
     click_button "Preview"
 
     expect(page).to have_content "Saucy preserves"
@@ -55,7 +55,7 @@ RSpec.describe "DFC Product Import" do
 
     url = "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
     fill_in "catalog_url", with: url
-    select enterprise.name, from: "Enterprise"
+    select enterprise.name, from: "Create products for enterprise"
     click_button "Preview"
 
     expect(page).to have_content "4 products to be imported"
@@ -97,19 +97,19 @@ RSpec.describe "DFC Product Import" do
     stub_request(:get, url).to_return(status: [401, "Unauthorized"])
 
     visit admin_product_import_path
-    select enterprise.name, from: "Enterprise"
+    select enterprise.name, from: "Create products for enterprise"
     fill_in "catalog_url", with: url
 
     expect { click_button "Preview" }.not_to change { Spree::Variant.count }
 
     expect(page).to have_content "the server responded with status 401"
 
-    select enterprise.name, from: "Enterprise"
+    select enterprise.name, from: "Create products for enterprise"
     fill_in "catalog_url", with: "badurl"
     click_button "Preview"
     expect(page).to have_content "Absolute URI missing hierarchical segment: 'http://:80'"
 
-    select enterprise.name, from: "Enterprise"
+    select enterprise.name, from: "Create products for enterprise"
     fill_in "catalog_url", with: ""
     click_button "Preview"
     expect(page).to have_content "param is missing or the value is empty: catalog_url"
