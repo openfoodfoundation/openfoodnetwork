@@ -30,13 +30,12 @@ module PaymentGateways
       end
 
       context "if the stock ran out whilst the payment was being placed" do
-        before do
-          allow(controller.current_order).to receive(:insufficient_stock_lines).and_return(true)
-        end
+        it "redirects to the details page with out of stock error" do
+          mock_order_check_stock_service(controller.current_order)
 
-        it "redirects to the cart with out of stock error" do
-          expect(post(:confirm, params: { payment_method_id: payment_method.id })).
-            to redirect_to cart_path
+          post(:confirm, params: { payment_method_id: payment_method.id })
+
+          expect(response).to redirect_to checkout_step_path(step: :details)
 
           order = controller.current_order.reload
 
@@ -104,6 +103,16 @@ module PaymentGateways
           expect(flash[:error]).to eq "Could not connect to PayPal."
         end
       end
+
+      context "when the stock ran out whilst the payment was being placed" do
+        it "redirects to the details page with out of stock error" do
+          mock_order_check_stock_service(controller.current_order)
+
+          post(:express)
+
+          expect(response).to redirect_to checkout_step_path(step: :details)
+        end
+      end
     end
 
     describe '#expire_current_order' do
@@ -116,6 +125,13 @@ module PaymentGateways
         controller.__send__(:expire_current_order)
         expect(controller.instance_variable_get(:@current_order)).to be_nil
       end
+    end
+
+    def mock_order_check_stock_service(order)
+      check_stock_service_mock = instance_double(Orders::CheckStockService)
+      expect(Orders::CheckStockService).to receive(:new).and_return(check_stock_service_mock)
+      expect(check_stock_service_mock).to receive(:sufficient_stock?).and_return(false)
+      expect(check_stock_service_mock).to receive(:update_line_items).and_return(order.variants)
     end
   end
 end
