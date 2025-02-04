@@ -40,8 +40,8 @@ $ cd openfoodnetwork
 ```
 
 3. **Choose and Build Docker Image**:
-* You have two choices of images you can build. The default Ubuntu image is most similar to the production servers but is larger in size and will take longer to build. Alternatively, you can use the Alpine image which is smaller, faster to setup, and should be compatible with the Ubuntu. However, it will need to be updated when ruby is updated. To download the Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
-  - **Ubuntu Image** (larger, production-like):
+* You have two choices of images you can build. The default Alpine image is faster to setup and should be compatible with Ubuntu setup. Alternatively, you can use the Ubuntu image which is most similar to the production servers but is larger in size and will take longer to build. Note that the Alpine image will need to be updated when ruby is updated. To download the Docker images, build the Docker containers, seed the database with sample data, AND log the screen output from these tasks:
+  - **Alpine Image** (smaller, faster):
     - **Linux**:
     ```sh
     $ docker/build
@@ -50,14 +50,14 @@ $ cd openfoodnetwork
     ```command
     $ docker/build.ps1
     ```
-  - **Alpine Image** (smaller, faster):
+  - **Ubuntu Image** (larger, production-like):
     - **Linux**:
     ```sh
-    $ docker/build alpine.Dockerfile
+    $ docker/build Dockerfile.ubuntu
     ```
     - **Windows**:
     ```command
-    $ docker/build.ps1 alpine.Dockerfile
+    $ docker/build.ps1 Dockerfile.ubuntu
     ```
 
 4. **Run the Rails Server**:
