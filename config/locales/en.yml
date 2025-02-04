@@ -846,7 +846,7 @@ en:
         map: Map
 
     dfc_product_imports:
-      index:
+      import:
         title: "Importing a DFC product catalog"
         imported_products: "Imported products:"
     enterprise_fees:

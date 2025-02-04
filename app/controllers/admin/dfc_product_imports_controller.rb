@@ -10,7 +10,7 @@ module Admin
       self.class
     end
 
-    def index
+    def import
       # The plan:
       #
       # * Fetch DFC catalog as JSON from URL.
