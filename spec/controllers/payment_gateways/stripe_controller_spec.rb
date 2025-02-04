@@ -151,13 +151,17 @@ module PaymentGateways
         end
       end
 
-      context "items running out of stock during order completion" do
+      context "when items run out of stock during order completion" do
+        before do
+          mock_order_check_stock_service(order)
+        end
+
         it "redirects to cart when some items are out of stock" do
           allow(controller).to receive(:valid_payment_intent?).and_return true
-          allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
 
           get :confirm, params: { payment_intent: "pi_123" }
-          expect(response).to redirect_to cart_path
+
+          expect(response).to redirect_to checkout_step_path(step: :details)
         end
 
         context "handling pending payments" do
@@ -167,7 +171,6 @@ module PaymentGateways
           }
 
           before do
-            allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?) { false }
             order.save
             allow(order).to receive_message_chain(:payments, :completed) { [] }
             allow(order).to receive_message_chain(:payments, :incomplete) { [payment] }
@@ -181,7 +184,7 @@ module PaymentGateways
 
             get :confirm, params: { payment_intent: "pi_123" }
 
-            expect(response).to redirect_to cart_path
+            expect(response).to redirect_to checkout_step_path(step: :details)
             expect(flash[:notice]).to eq(
               "Payment cancelled: the checkout could not be completed due to stock issues."
             )
@@ -333,6 +336,13 @@ module PaymentGateways
           end
         end
       end
+    end
+
+    def mock_order_check_stock_service(order)
+      check_stock_service_mock = instance_double(Orders::CheckStockService)
+      expect(Orders::CheckStockService).to receive(:new).and_return(check_stock_service_mock)
+      expect(check_stock_service_mock).to receive(:sufficient_stock?).and_return(false).twice
+      expect(check_stock_service_mock).to receive(:update_line_items).and_return(order.variants)
     end
   end
 end
