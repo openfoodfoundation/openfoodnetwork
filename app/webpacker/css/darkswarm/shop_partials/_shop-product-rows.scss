@@ -141,21 +141,24 @@
     }
 
     .product-description {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       margin-bottom: 0.75rem;
       cursor: pointer;
       // Force product description to be on one line
       // and truncate with ellipsis
       display: -webkit-box;
-      -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow: hidden; 
+      white-space: nowrap;
       // line-clamp is not supported in Safari
       // Trick to get overflow: hidden to work in old Safari
       line-height: 1rem;
       height: 1.75rem;
+
+      // Force truncation with ellipsis on all the children
+      * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
       > div {
         margin-bottom: 1.5rem; // Equivalent to p (trix doesn't use p as separator by default, so emulate div as p to be backward compatible)
