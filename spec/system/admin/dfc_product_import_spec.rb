@@ -132,7 +132,8 @@ RSpec.describe "DFC Product Import" do
 
     click_button "Preview"
 
-    expect(page).to have_content "OIDC Settings"
+    expect(page).to have_content "Product Import"
     expect(page).to have_content "Connecting with your OIDC account failed."
+    expect(page).to have_content "Please refresh your OIDC connection at: OIDC Settings"
   end
 end
