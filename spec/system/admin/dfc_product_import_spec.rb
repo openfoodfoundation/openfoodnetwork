@@ -58,16 +58,20 @@ RSpec.describe "DFC Product Import" do
     select enterprise.name, from: "Enterprise"
     click_button "Preview"
 
+    expect(page).to have_content "4 products to be imported"
     expect(page).to have_content "Saucy preserves"
     expect(page).not_to have_content "Sauce - 1g" # Does not show other product
     expect(page).to have_content "Beans - Retail can, 400g (can) Update" # existing product
     expect(page).to have_content "Beans - Case, 12 x 400g (can) New"
+    expect(page).to have_content "Chia Seed, Organic - Retail pack, 300g"
+
+    uncheck "Chia Seed, Organic - Case, 8 x 300g" # don't import this one
 
     expect {
       click_button "Import"
-      expect(page).to have_content "Imported products: 4"
+      expect(page).to have_content "Imported products: 3"
       linked_variant.reload
-    }.to change { enterprise.supplied_products.count }
+    }.to change { enterprise.supplied_products.count }.by(2) # 1 updated, 2 new
       .and change { linked_variant.display_name }
       .and change { linked_variant.unit_value }
       # 18.85 wholesale variant price divided by 12 cans in the slab.
@@ -78,6 +82,10 @@ RSpec.describe "DFC Product Import" do
     product = Spree::Product.last
     expect(product.variants[0].semantic_links).to be_present
     expect(product.image).to be_present
+
+    names = Spree::Product.pluck(:name)
+    expect(names).to include "Baked British Beans - Case, 12 x 400g (can)"
+    expect(names).not_to include "Chia Seed, Organic - Case, 8 x 300g"
   end
 
   it "fails gracefully" do

@@ -848,7 +848,7 @@ en:
     dfc_product_imports:
       index:
         title: "DFC product catalog"
-        catalog_url: "Products to be imported from: %{catalog_url}"
+        catalog_url: "%{count} products to be imported from: %{catalog_url}"
         enterprise: "Import to enterprise: %{enterprise_name}"
         import: Import
       import:

@@ -3,7 +3,7 @@
 
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-%p= t('.catalog_url', catalog_url: @catalog_url)
+%p= t('.catalog_url', count: @items.count, catalog_url: @catalog_url)
 %p= t('.enterprise', enterprise_name: @enterprise.name)
 %br
 
@@ -16,7 +16,10 @@
     %tbody
       - @items.each do |supplied_product, existing_product|
         %tr{id: supplied_product.semanticId }
-          %td= supplied_product.name
+          %td
+            %label
+              = form.check_box 'semanticIds[]', { checked: true }, supplied_product.semanticId, ""
+              = supplied_product.name
           %td
             - if existing_product.present?
               Update

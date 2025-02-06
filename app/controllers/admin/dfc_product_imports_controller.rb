@@ -35,13 +35,16 @@ module Admin
     end
 
     def import
+      ids = params.require(:semanticIds)
+
       # Load DFC catalog JSON
       graph = DfcIo.import(params.require(:catalog_json))
       catalog = DfcCatalog.new(graph)
       catalog.apply_wholesale_values!
 
       # Import all selected products for given enterprise.
-      imported = catalog.products.map do |subject|
+      imported = catalog.products.select{ |subject| ids.include?(subject.semanticId) }
+        .map do |subject|
         existing_variant = @enterprise.supplied_variants.linked_to(subject.semanticId)
 
         if existing_variant
