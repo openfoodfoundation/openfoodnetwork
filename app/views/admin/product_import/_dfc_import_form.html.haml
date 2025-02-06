@@ -13,4 +13,4 @@
   = form.select :enterprise_id, options_from_collection_for_select(@producers, :id, :name, @producers.first&.id), { "data-controller": "tom-select", class: "primary" }
   %br
   %br
-  = form.submit t(".import")
+  = form.submit t(".preview")

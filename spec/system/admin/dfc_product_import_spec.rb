@@ -7,8 +7,8 @@ RSpec.describe "DFC Product Import" do
   include AuthorizationHelper
 
   let(:user) { create(:oidc_user, owned_enterprises: [enterprise]) }
-  let(:enterprise) { create(:supplier_enterprise) }
-  let(:source_product) { create(:product, supplier_id: enterprise.id) }
+  let(:enterprise) { create(:supplier_enterprise, name: "Saucy preserves") }
+  let(:source_product) { create(:product, name: "Sauce", supplier_id: enterprise.id) }
 
   before do
     login_as user
@@ -20,13 +20,16 @@ RSpec.describe "DFC Product Import" do
   it "imports from given catalog" do
     visit admin_product_import_path
 
-    select enterprise.name, from: "Enterprise"
-
     # We are testing against our own catalog for now but we want to replace
     # this with the URL of another app when available.
     host = Rails.application.default_url_options[:host]
     url = "http://#{host}/api/dfc/enterprises/#{enterprise.id}/catalog_items"
     fill_in "catalog_url", with: url
+    select enterprise.name, from: "Enterprise"
+    click_button "Preview"
+
+    expect(page).to have_content "Saucy preserves"
+    expect(page).to have_content "Sauce - 1g New"
 
     # By feeding our own catalog to the import, we are effectively cloning the
     # products. But the DFC product references the spree_product_id which
@@ -34,16 +37,15 @@ RSpec.describe "DFC Product Import" do
     # a new independent product.
     expect {
       click_button "Import"
+      expect(page).to have_content "Imported products: 1"
     }.to change {
       source_product.variants.count
     }.by(1)
-
-    expect(page).to have_content "Importing a DFC product catalog"
-    expect(page).to have_content "Imported products: 1"
   end
 
   it "imports from a FDC catalog", vcr: true do
     user.update!(oidc_account: build(:testdfc_account))
+    # One product is existing in OFN
     product_id =
       "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts/44519466467635"
     linked_variant = source_product.variants.first
@@ -51,13 +53,19 @@ RSpec.describe "DFC Product Import" do
 
     visit admin_product_import_path
 
-    select enterprise.name, from: "Enterprise"
-
     url = "https://env-0105831.jcloud-ver-jpe.ik-server.com/api/dfc/Enterprises/test-hodmedod/SuppliedProducts"
     fill_in "catalog_url", with: url
+    select enterprise.name, from: "Enterprise"
+    click_button "Preview"
+
+    expect(page).to have_content "Saucy preserves"
+    expect(page).not_to have_content "Sauce - 1g" # Does not show other product
+    expect(page).to have_content "Beans - Retail can, 400g (can) Update" # existing product
+    expect(page).to have_content "Beans - Case, 12 x 400g (can) New"
 
     expect {
       click_button "Import"
+      expect(page).to have_content "Imported products: 4"
       linked_variant.reload
     }.to change { enterprise.supplied_products.count }
       .and change { linked_variant.display_name }
@@ -66,8 +74,6 @@ RSpec.describe "DFC Product Import" do
       .and change { linked_variant.price }.to(1.57)
       .and change { linked_variant.on_demand }.to(true)
       .and change { linked_variant.on_hand }.by(0)
-
-    expect(page).to have_content "Importing a DFC product catalog"
 
     product = Spree::Product.last
     expect(product.variants[0].semantic_links).to be_present
@@ -86,18 +92,18 @@ RSpec.describe "DFC Product Import" do
     select enterprise.name, from: "Enterprise"
     fill_in "catalog_url", with: url
 
-    expect { click_button "Import" }.not_to change { Spree::Variant.count }
+    expect { click_button "Preview" }.not_to change { Spree::Variant.count }
 
     expect(page).to have_content "the server responded with status 401"
 
     select enterprise.name, from: "Enterprise"
     fill_in "catalog_url", with: "badurl"
-    click_button "Import"
+    click_button "Preview"
     expect(page).to have_content "Absolute URI missing hierarchical segment: 'http://:80'"
 
     select enterprise.name, from: "Enterprise"
     fill_in "catalog_url", with: ""
-    click_button "Import"
+    click_button "Preview"
     expect(page).to have_content "param is missing or the value is empty: catalog_url"
   end
 end
