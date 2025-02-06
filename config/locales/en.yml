@@ -847,6 +847,9 @@ en:
         map: Map
 
     dfc_product_imports:
+      connection_invalid: |
+        Connecting with your OIDC account failed.
+        Please refresh your OIDC connection.
       index:
         title: "DFC product catalog"
         catalog_url: "%{count} products to be imported from: %{catalog_url}"

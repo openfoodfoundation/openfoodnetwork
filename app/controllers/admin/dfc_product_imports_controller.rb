@@ -32,6 +32,9 @@ module Admin
            ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
+    rescue Rack::OAuth2::Client::Error
+      flash[:error] = t(".connection_invalid")
+      redirect_to admin_oidc_settings_path
     end
 
     def import

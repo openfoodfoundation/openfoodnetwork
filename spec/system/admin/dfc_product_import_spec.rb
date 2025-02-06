@@ -114,4 +114,25 @@ RSpec.describe "DFC Product Import" do
     click_button "Preview"
     expect(page).to have_content "param is missing or the value is empty: catalog_url"
   end
+
+  it "prompts to refresh OIDC connection", vcr: true do
+    # Stale access token will be renewed, but refresh token isn't valid either.
+    user.oidc_account.update!(
+      refresh_token: "something-expired-or-invalid",
+      updated_at: 1.day.ago,
+    )
+
+    catalog_url = "https://example.net/unauthorized"
+    stub_request(:get, catalog_url).to_return(status: [401, "Unauthorized"])
+
+    visit admin_product_import_path
+
+    select enterprise.name, from: "Enterprise"
+    fill_in "catalog_url", with: catalog_url
+
+    click_button "Preview"
+
+    expect(page).to have_content "OIDC Settings"
+    expect(page).to have_content "Connecting with your OIDC account failed."
+  end
 end
