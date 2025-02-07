@@ -28,6 +28,7 @@ module Reporting
             producer:,
             producer_address:,
             producer_abn_acn:,
+            producer_charges_gst:,
             email:,
             hub:,
             hub_address:,
@@ -43,6 +44,7 @@ module Reporting
             total_excl_fees_and_tax:,
             total_excl_vat:,
             total_fees_excl_tax:,
+            total_tax_on_product:,
             total_tax_on_fees:,
             total_tax:,
             total:,
@@ -64,6 +66,7 @@ module Reporting
                   summary_hash[:total_tax_on_fees] += total_tax_on_fees.call(line_item)
                   summary_hash[:total_tax] += total_tax.call(line_item)
                   summary_hash[:total] += total.call(line_item)
+                  summary_hash[:total_tax_on_product] += total_tax_on_product.call(line_item)
                 end
 
                 summary_hash

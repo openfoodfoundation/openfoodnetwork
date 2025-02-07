@@ -48,6 +48,7 @@ RSpec.describe "Pay Your Suppliers Report" do
         "Producer",
         "Producer Address",
         "Producer ABN/ACN",
+        "Producer charges GST?",
         "Email",
         "Hub",
         "Hub Address",
@@ -63,6 +64,7 @@ RSpec.describe "Pay Your Suppliers Report" do
         "Total excl. fees and tax ($)",
         "Total excl. tax ($)",
         "Total fees excl. tax ($)",
+        "Total tax on product ($)",
         "Total tax on fees ($)",
         "Total Tax ($)",
         "Total ($)"
@@ -83,6 +85,7 @@ RSpec.describe "Pay Your Suppliers Report" do
           supplier.name,
           supplier.address.full_address,
           "none",
+          "No",
           "none",
           hub1.name,
           hub1.address.full_address,
@@ -97,6 +100,7 @@ RSpec.describe "Pay Your Suppliers Report" do
           1,
           10.0,
           10.0,
+          0.0,
           0.0,
           0.0,
           0.0,
@@ -115,6 +119,7 @@ RSpec.describe "Pay Your Suppliers Report" do
           supplier.name,
           supplier.address.full_address,
           "none",
+          "No",
           "none",
           hub2.name,
           hub2.address.full_address,
@@ -132,12 +137,13 @@ RSpec.describe "Pay Your Suppliers Report" do
           0.0,
           0.0,
           0.0,
+          0.0,
           10.0,
         ].compact.join(" "))
       end
 
       # summary row
-      expect(lines.last).to have_content("TOTAL 50.0 50.0 0.0 0.0 0.0 50.0")
+      expect(lines.last).to have_content("TOTAL 50.0 50.0 0.0 0.0 0.0 0.0 50.0")
     end
   end
 
