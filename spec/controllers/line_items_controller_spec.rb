@@ -24,7 +24,7 @@ RSpec.describe LineItemsController, type: :controller do
     it "lists items bought by the user from the same shop in the same order_cycle" do
       get :bought, format: :json
       expect(response.status).to eq 200
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
       expect(json_response.length).to eq completed_order.line_items.reload.count
       expect(json_response[0]['id']).to eq completed_order.line_items.first.id
     end

@@ -34,10 +34,9 @@ Lint/EmptyClass:
   Exclude:
     - 'spec/lib/reports/report_loader_spec.rb'
 
-# Offense count: 2
+# Offense count: 1
 Lint/FloatComparison:
   Exclude:
-    - 'app/models/product_import/entry_validator.rb'
     - 'app/models/spree/gateway/pay_pal_express.rb'
 
 # Offense count: 1
@@ -50,13 +49,12 @@ Lint/NoReturnInBeginEndBlocks:
   Exclude:
     - 'app/controllers/payment_gateways/stripe_controller.rb'
 
-# Offense count: 4
+# Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Lint/RedundantDirGlobSort:
   Exclude:
     - 'engines/catalog/spec/spec_helper.rb'
     - 'engines/dfc_provider/spec/spec_helper.rb'
-    - 'spec/base_spec_helper.rb'
     - 'spec/system_helper.rb'
 
 # Offense count: 1
@@ -172,7 +170,7 @@ Metrics/ClassLength:
     - 'lib/reporting/reports/enterprise_fee_summary/scope.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
 
-# Offense count: 32
+# Offense count: 30
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
   Exclude:
@@ -193,7 +191,6 @@ Metrics/CyclomaticComplexity:
     - 'app/models/spree/preferences/preferable_class_methods.rb'
     - 'app/models/spree/return_authorization.rb'
     - 'app/models/spree/tax_rate.rb'
-    - 'app/models/spree/variant.rb'
     - 'app/models/spree/zone.rb'
     - 'lib/open_food_network/enterprise_issue_validator.rb'
     - 'lib/reporting/reports/xero_invoices/base.rb'
@@ -328,7 +325,7 @@ Naming/MethodParameterName:
   Exclude:
     - 'app/services/process_payment_intent.rb'
 
-# Offense count: 28
+# Offense count: 26
 # Configuration parameters: EnforcedStyle, CheckMethodNames, CheckSymbols, AllowedIdentifiers, AllowedPatterns.
 # SupportedStyles: snake_case, normalcase, non_integer
 # AllowedIdentifiers: capture3, iso8601, rfc1123_date, rfc822, rfc2822, rfc3339, x86_64
@@ -343,7 +340,7 @@ Naming/VariableNumber:
     - 'spec/models/spree/tax_rate_spec.rb'
     - 'spec/requests/api/orders_spec.rb'
 
-# Offense count: 143
+# Offense count: 144
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ResponseMethods.
 # ResponseMethods: response, last_response
@@ -586,29 +583,8 @@ Rails/LexicallyScopedActionFilter:
     - 'app/controllers/spree/admin/return_authorizations_controller.rb'
     - 'app/controllers/spree/admin/search_controller.rb'
     - 'app/controllers/spree/admin/shipping_methods_controller.rb'
-    - 'app/controllers/spree/admin/users_controller.rb'
     - 'app/controllers/spree/admin/zones_controller.rb'
     - 'app/controllers/spree/users_controller.rb'
-
-# Offense count: 56
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Include.
-# Include: spec/controllers/**/*.rb, spec/requests/**/*.rb, test/controllers/**/*.rb, test/integration/**/*.rb
-Rails/ResponseParsedBody:
-  Exclude:
-    - 'spec/controllers/admin/bulk_line_items_controller_spec.rb'
-    - 'spec/controllers/admin/customers_controller_spec.rb'
-    - 'spec/controllers/admin/order_cycles_controller_spec.rb'
-    - 'spec/controllers/admin/proxy_orders_controller_spec.rb'
-    - 'spec/controllers/admin/schedules_controller_spec.rb'
-    - 'spec/controllers/admin/stripe_accounts_controller_spec.rb'
-    - 'spec/controllers/admin/subscription_line_items_controller_spec.rb'
-    - 'spec/controllers/admin/subscriptions_controller_spec.rb'
-    - 'spec/controllers/cart_controller_spec.rb'
-    - 'spec/controllers/line_items_controller_spec.rb'
-    - 'spec/controllers/spree/admin/search_controller_spec.rb'
-    - 'spec/controllers/spree/credit_cards_controller_spec.rb'
-    - 'spec/controllers/user_registrations_controller_spec.rb'
 
 # Offense count: 7
 # This cop supports unsafe autocorrection (--autocorrect-all).

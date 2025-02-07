@@ -31,7 +31,7 @@ class UserRegistrationsController < Devise::RegistrationsController
     associate_user
 
     respond_to do |format|
-      format.js do
+      format.json do
         render json: { email: @user.email }
       end
     end
@@ -51,7 +51,7 @@ class UserRegistrationsController < Devise::RegistrationsController
   def render_error(errors = {})
     clean_up_passwords(resource)
     respond_to do |format|
-      format.js do
+      format.json do
         render json: errors, status: :unauthorized
       end
     end

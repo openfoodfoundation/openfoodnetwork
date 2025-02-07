@@ -162,7 +162,7 @@ module Admin
           it "allows me to update the customer" do
             spree_put :update, format: :json, id: customer.id,
                                customer: { email: 'new.email@gmail.com' }
-            expect(JSON.parse(response.body)["id"]).to eq customer.id
+            expect(response.parsed_body["id"]).to eq customer.id
             expect(assigns(:customer)).to eq customer
             expect(customer.reload.email).to eq 'new.email@gmail.com'
           end
@@ -243,7 +243,7 @@ module Admin
 
           it "renders the customer as json" do
             get :show, as: :json, params: { id: customer.id }
-            expect(JSON.parse(response.body)["id"]).to eq customer.id
+            expect(response.parsed_body["id"]).to eq customer.id
           end
         end
 

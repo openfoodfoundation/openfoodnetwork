@@ -45,7 +45,7 @@ RSpec.describe Admin::ProxyOrdersController, type: :controller do
           context "when cancellation succeeds" do
             it 'renders the cancelled proxy_order as json' do
               get(:cancel, params:)
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['state']).to eq "canceled"
               expect(json_response['id']).to eq proxy_order.id
               expect(proxy_order.reload.canceled_at).to be_within(5.seconds).of Time.zone.now
@@ -57,7 +57,7 @@ RSpec.describe Admin::ProxyOrdersController, type: :controller do
 
             it "shows an error" do
               get(:cancel, params:)
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['errors']).to eq ['Could not cancel the order']
             end
           end
@@ -116,7 +116,7 @@ RSpec.describe Admin::ProxyOrdersController, type: :controller do
           context "when resuming succeeds" do
             it 'renders the resumed proxy_order as json' do
               get(:resume, params:)
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['state']).to eq "resumed"
               expect(json_response['id']).to eq proxy_order.id
               expect(proxy_order.reload.canceled_at).to be nil
@@ -128,7 +128,7 @@ RSpec.describe Admin::ProxyOrdersController, type: :controller do
 
             it "shows an error" do
               get(:resume, params:)
-              json_response = JSON.parse(response.body)
+              json_response = response.parsed_body
               expect(json_response['errors']).to eq ['Could not resume the order']
             end
           end

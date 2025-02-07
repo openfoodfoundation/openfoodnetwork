@@ -7,7 +7,7 @@ RSpec.describe UserRegistrationsController, type: :controller do
     @request.env["devise.mapping"] = Devise.mappings[:spree_user]
   end
 
-  describe "via ajax" do
+  describe "create" do
     render_views
 
     let(:user_params) do
@@ -19,9 +19,9 @@ RSpec.describe UserRegistrationsController, type: :controller do
     end
 
     it "returns validation errors" do
-      post :create, xhr: true, params: { spree_user: {}, use_route: :spree }
+      post :create, params: { spree_user: {}, use_route: :spree }, as: :json
       expect(response.status).to eq(401)
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json).to eq("email" => ["can't be blank"], "password" => ["can't be blank"])
     end
 
@@ -29,10 +29,10 @@ RSpec.describe UserRegistrationsController, type: :controller do
       allow(Spree::UserMailer).to receive(:confirmation_instructions).and_raise("Some error")
       expect(Alert).to receive(:raise)
 
-      post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
+      post :create, params: { spree_user: user_params, use_route: :spree }, as: :json
 
       expect(response.status).to eq(401)
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json).to eq(
         "message" =>
         'Something went wrong while creating your account. Check your email address and try again.'
@@ -40,16 +40,16 @@ RSpec.describe UserRegistrationsController, type: :controller do
     end
 
     it "returns 200 when registration succeeds" do
-      post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
+      post :create, params: { spree_user: user_params, use_route: :spree }, as: :json
       expect(response.status).to eq(200)
-      json = JSON.parse(response.body)
+      json = response.parsed_body
       expect(json).to eq("email" => "test@test.com")
       expect(controller.spree_current_user).to be_nil
     end
 
     it "sets user.locale from cookie on create" do
       cookies[:locale] = "pt"
-      post :create, xhr: true, params: { spree_user: user_params, use_route: :spree }
+      post :create, params: { spree_user: user_params, use_route: :spree }, as: :json
       expect(assigns[:user].locale).to eq("pt")
     end
   end
