@@ -4011,7 +4011,6 @@ fr_BE:
         form:
           disabled: "Désactivé?"
           email: "Email"
-          roles: "Roles"
           enterprise_limit: "Nombre max d'entreprises"
           confirm_password: "Confirmer le mot de passe "
           password: "Mot de passe"

@@ -706,7 +706,7 @@ el:
         success: "Οι προτιμήσεις στήλης αποθηκεύτηκαν"
     contents:
       edit:
-        title: Περιεχόμνο
+        title: Περιεχόμενο
         header: Κεφαλίδα
         home_page: Αρχική Σελίδα
         producer_signup_page: Σελίδα εγγραφής παραγωγού
@@ -4302,7 +4302,6 @@ el:
           general_settings: "Γενικές Ρυθμίσεις"
         form:
           email: "Email"
-          roles: "Ρόλοι"
           enterprise_limit: "Όριο Επιχειρήσεων"
           confirm_password: "Επιβεβαίωση Κωδικού"
           password: "Κωδικός"

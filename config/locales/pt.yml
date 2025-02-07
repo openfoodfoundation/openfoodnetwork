@@ -3439,7 +3439,6 @@ pt:
           general_settings: "Configurações Gerais"
         form:
           email: "Email"
-          roles: "Papeis"
           enterprise_limit: "Limite da Organização"
           confirm_password: "Confirme a palavra-passe"
           password: "Palavra-passe"

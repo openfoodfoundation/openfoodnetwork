@@ -4243,7 +4243,6 @@ ml:
         form:
           disabled: "പ്രവർത്തനരഹിതമാണോ?"
           email: "ഇമെയിൽ"
-          roles: "കർത്തവ്യങ്ങൾ"
           enterprise_limit: "എന്റർപ്രൈസ് പരിധി"
           confirm_password: "പാസ്സ്‌വേർഡ് സ്ഥിരീകരിക്കുക"
           password: "പാസ്സ്‌വേർഡ്"

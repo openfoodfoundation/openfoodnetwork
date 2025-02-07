@@ -4436,7 +4436,6 @@ sr:
         form:
           disabled: "Онемогућено?"
           email: "Емаил"
-          roles: "Улоге"
           enterprise_limit: "Ентерприсе Лимит"
           confirm_password: "Потврди лозинку"
           password: "Лозинка"

@@ -3451,7 +3451,6 @@ en_PH:
           general_settings: "General Settings"
         form:
           email: "Email"
-          roles: "Roles"
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"

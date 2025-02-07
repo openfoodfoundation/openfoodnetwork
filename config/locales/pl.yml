@@ -3438,7 +3438,6 @@ pl:
           general_settings: "Ustawienia główne"
         form:
           email: "E-mail"
-          roles: "Role"
           enterprise_limit: "Limit podmiotu"
           confirm_password: "Potwierdź hasło"
           password: "Hasło"

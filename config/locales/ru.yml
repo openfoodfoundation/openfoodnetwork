@@ -4356,7 +4356,6 @@ ru:
         form:
           disabled: "Выключен?"
           email: "Почта"
-          roles: "Роли"
           enterprise_limit: "Ограничение Предприятий"
           confirm_password: "Подтвердить пароль"
           password: "Пароль"

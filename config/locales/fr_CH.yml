@@ -3990,7 +3990,6 @@ fr_CH:
           general_settings: "Configurations générales"
         form:
           email: "Email"
-          roles: "Roles"
           enterprise_limit: "Nombre max d'entreprises"
           confirm_password: "Confirmez votre mot de passe"
           password: "Mot de passe"

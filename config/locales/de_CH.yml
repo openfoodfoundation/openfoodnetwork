@@ -3956,7 +3956,6 @@ de_CH:
           general_settings: "Allgemeine Einstellungen"
         form:
           email: "E-Mail-Adresse"
-          roles: "Rollen"
           enterprise_limit: "Maximale Anzahl der Unternehmen"
           confirm_password: "Passwort erneut eingeben"
           password: "Passwort"

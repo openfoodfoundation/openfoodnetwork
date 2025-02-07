@@ -4129,7 +4129,6 @@ mr:
         form:
           disabled: "डिसेबल्ड आहे?"
           email: "ईमेल"
-          roles: "भूमिका"
           enterprise_limit: "एंटरप्राइझ मर्यादा"
           confirm_password: "पासवर्डची पुष्टी करा"
           password: "पासवर्ड"

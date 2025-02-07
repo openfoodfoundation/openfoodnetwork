@@ -322,6 +322,8 @@ hu:
       order: "Az érintett rendelés: %{number}"
       stock: "Készlet"
       product: "Termék"
+    backorder_incomplete:
+      affected: "%{enterprise}: %{order_cycle}"
   enterprise_mailer:
     confirmation_instructions:
       subject: "Kérjük, erősítsd meg %{enterprise} email címét"
@@ -548,7 +550,7 @@ hu:
         on_hand: "Készlet"
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
-        inherits_properties: "Megörökli az tulajdonságokat?"
+        inherits_properties: "Örökölje a tulajdonságokat?"
         import_date: "Importálás dátuma"
         actions: Műveletek
       columns_selector:
@@ -560,7 +562,7 @@ hu:
         on_hand: "Készlet"
         on_demand: "Igény szerint"
         tax_category: "Adókategória"
-        inherits_properties: "Megörökli az tulajdonságokat?"
+        inherits_properties: "Örökölje a tulajdonságokat?"
         import_date: "Importálás dátuma"
       actions:
         edit: Szerkesztés
@@ -781,7 +783,7 @@ hu:
         display_as: Megjelenítés mint
         category: Kategória
         tax_category: Adókategória
-        inherits_properties?: Megörökli az tulajdonságokat?
+        inherits_properties?: Örökölje a tulajdonságokat?
         av_on: "Av. On"
         import_date: Importált
         upload_an_image: Tölts fel egy képet
@@ -838,7 +840,7 @@ hu:
         pagination:
           per_page:
             show: Mutass
-            per_page: "%{num}per oldal"
+            per_page: "%{num}/ oldal"
           clear_search: Keresés törlése
       no_products:
         no_products_found: Nem találtunk termékeket
@@ -1068,7 +1070,7 @@ hu:
           legend: "Rólunk"
           desc_short: Rövid leírás
           desc_short_placeholder: Meséljen egy-két mondatban vállalkozásáról
-          desc_long: Rólunk
+          desc_long: Bemutatkozás
           desc_long_placeholder: Mesélj magadról a fogyasztóknak. Ez az információ a nyilvános profilodon jelenik meg.
         address:
           legend: "Cím"
@@ -1129,7 +1131,7 @@ hu:
           legend: "Képek"
           logo: Logó
           logo_size: "300 x 300 pixel"
-          promo_image_placeholder: 'Ez a kép a "Rólunk" részben látható.'
+          promo_image_placeholder: 'Ez a kép a "Bemutatkozás" részben látható.'
           promo_image_note1: 'FIGYELEM:'
           promo_image_note2: Minden ide feltöltött promóciós kép 1200 x 260-ra lesz levágva.
           promo_image_note3: A promóciós kép a vállalkozás profiloldalának és előugró ablakainak tetején jelenik meg.
@@ -2432,7 +2434,7 @@ hu:
   groups_text: "Minden termelő egyedi. Minden gazdaság valami mást tud nyújtani. Csoportjaink olyan termelők, átvételi pontok és forgalmazók kollektívái, akikben van valami közös, mint például a helyszín, a termelői piac vagy a filozófia. Ez könnyebbé teszi számodra az eligazodást. Fedezd fel csoportjainkat, és hagyd, hogy a válogatást elvégezzék helyetted."
   groups_search: "Keresés név vagy kulcsszó"
   groups_no_groups: "Nem található csoport"
-  groups_about: "Rólunk"
+  groups_about: "Bemutatkozás"
   groups_producers: "Termelőink"
   groups_hubs: "A mi Átvételi Pontjaink"
   groups_contact_web: Kapcsolat
@@ -2460,7 +2462,7 @@ hu:
   groups_signup_contact_text: "Vegye fel a kapcsolatot, hogy megtudja, mit tehet az OFN az Ön számára:"
   groups_signup_detail: "Itt a részlet."
   login_invalid: "Rossz email cím vagy jelszó"
-  producers_about: Rólunk
+  producers_about: Bemutatkozás
   producers_buy: 'Kínálat:'
   producers_contact: Kapcsolat
   producers_contact_phone: Hívás
@@ -2603,7 +2605,7 @@ hu:
   november: "november"
   december: "december"
   email_not_found: "Az email cím nem található"
-  email_unconfirmed: "A jelszó visszaállítása előtt meg kell erősítened az email címed."
+  email_unconfirmed: "Bejelentkezés előtt meg kell erősítened az email címedet a kiküldött megerősítő email alapján."
   email_required: "Meg kell adnod egy email címet"
   logging_in: "Várj egy kicsit, amíg bejelentkeztetünk"
   signup_email: "Email címed"
@@ -4345,7 +4347,7 @@ hu:
             display_as: Megjelenítés mint
             category: Kategória
             tax_category: Adókategória
-            inherits_properties?: Megörökli az tulajdonságokat?
+            inherits_properties?: Örökölje a tulajdonságokat?
             av_on: "Av. On"
             import_date: "Importálás dátuma"
           products_variant:
@@ -4385,7 +4387,6 @@ hu:
         form:
           disabled: "Tiltva?"
           email: "Email"
-          roles: "Szerepek"
           enterprise_limit: "Vállalkozási korlát"
           confirm_password: "Jelszó megerősítése"
           password: "Jelszó"

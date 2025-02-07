@@ -4482,7 +4482,7 @@ en_CA:
         form:
           disabled: "Disabled?"
           email: "Email"
-          roles: "Roles"
+          admin: "Super admin?"
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"

@@ -3462,7 +3462,6 @@ fil_PH:
           general_settings: "Pangkalahatang Setting"
         form:
           email: "email"
-          roles: "mga tungkulin"
           enterprise_limit: "Limitasyon ng enterprise"
           confirm_password: "Kumpirmahin ang password"
           password: "Password"

@@ -4403,7 +4403,6 @@ nb:
         form:
           disabled: "Deaktivert?"
           email: "Epost"
-          roles: "Roller"
           enterprise_limit: "Bedriftsgrense"
           confirm_password: "Bekreft Passord"
           password: "Passord"

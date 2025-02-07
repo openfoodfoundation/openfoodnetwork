@@ -4049,7 +4049,6 @@ ca:
         form:
           disabled: "Deshabilitat?"
           email: "E-mail"
-          roles: "Rols"
           enterprise_limit: "Límit d'organitzacions"
           confirm_password: "Confirma la contrassenya"
           password: "Contrasenya"

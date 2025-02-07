@@ -4216,7 +4216,6 @@ hi:
         form:
           disabled: "अक्षम किया गया है?"
           email: "ईमेल"
-          roles: "भूमिकाएँ"
           enterprise_limit: "एंटरप्राइज़ सीमा"
           confirm_password: "पासवर्ड की पुष्टि करें"
           password: "पासवर्ड"

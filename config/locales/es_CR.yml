@@ -3912,7 +3912,6 @@ es_CR:
           general_settings: "Configuración general"
         form:
           email: "Correo electrónico"
-          roles: "Roles"
           enterprise_limit: "Límite de la organización"
           confirm_password: "Confirmar contraseña"
           password: "Contraseña"

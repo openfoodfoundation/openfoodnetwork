@@ -4231,7 +4231,6 @@ de_DE:
         form:
           disabled: "Benutzer sperren"
           email: "E-Mail-Adresse"
-          roles: "Rollen"
           enterprise_limit: "Maximale Anzahl der Unternehmen"
           confirm_password: "Passwort erneut eingeben"
           password: "Passwort"

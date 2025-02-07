@@ -4073,7 +4073,6 @@ it:
         form:
           disabled: "Disabilitato?"
           email: "Email"
-          roles: "Ruoli"
           enterprise_limit: "Limite azienda"
           confirm_password: "Conferma la password"
           password: "Password"

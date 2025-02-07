@@ -3473,7 +3473,6 @@ nl_BE:
           general_settings: "Algemene instellingen"
         form:
           email: "Email"
-          roles: "Rollen"
           enterprise_limit: "Max aantal bedrijven"
           confirm_password: "Bevestig Wachtwoord"
           password: "Wachtwoord"

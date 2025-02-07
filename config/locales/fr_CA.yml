@@ -4495,7 +4495,6 @@ fr_CA:
         form:
           disabled: "Désactivé?"
           email: "Email"
-          roles: "Roles"
           enterprise_limit: "Nombre max d'entreprises"
           confirm_password: "Confirmez votre mot de passe"
           password: "Mot de passe"

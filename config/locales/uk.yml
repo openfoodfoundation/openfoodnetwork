@@ -4005,7 +4005,6 @@ uk:
         form:
           disabled: "Вимкнено?"
           email: "Email"
-          roles: "Ролі"
           enterprise_limit: "Корпоративний ліміт"
           confirm_password: "Підтвердіть пароль"
           password: "Пароль"

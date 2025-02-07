@@ -4110,7 +4110,6 @@ pa:
         form:
           disabled: "ਅਸਮਰੱਥ ਕੀਤਾ ਗਿਆ"
           email: "ਈਮੇਲ"
-          roles: "ਭੂਮਿਕਾਵਾਂ"
           enterprise_limit: "ਐਂਟਰਪ੍ਰਾਈਜ਼ ਸੀਮਾ"
           confirm_password: "ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
           password: "ਪਾਸਵਰਡ"

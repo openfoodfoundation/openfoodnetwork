@@ -4273,7 +4273,6 @@ es:
         form:
           disabled: "¿Deshabilitado?"
           email: "Email"
-          roles: "Roles"
           enterprise_limit: "Límite de la Organización"
           confirm_password: "Confirmar contraseña"
           password: "Contraseña"

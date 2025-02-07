@@ -3767,7 +3767,6 @@ tr:
           general_settings: "Genel Ayarlar"
         form:
           email: "E-posta"
-          roles: "Roller"
           enterprise_limit: "İŞLETME LİMİTİ"
           confirm_password: "Parolayı Onayla"
           password: "Parola"

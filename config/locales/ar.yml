@@ -4164,7 +4164,6 @@ ar:
         form:
           disabled: "تعطيل؟"
           email: "البريد الإلكتروني"
-          roles: "الأدوار"
           enterprise_limit: "حد المؤسسة"
           confirm_password: "تأكيد كلمة المرور"
           password: "كلمه السر"

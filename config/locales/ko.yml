@@ -3880,7 +3880,6 @@ ko:
         form:
           disabled: "비활성화 하시겠습니까?"
           email: "이메일"
-          roles: "역할"
           enterprise_limit: "회사 최대치"
           confirm_password: "비밀번호 확인"
           password: "비밀번호"

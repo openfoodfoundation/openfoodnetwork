@@ -3762,7 +3762,6 @@ pt_BR:
           general_settings: "Configurações Gerais"
         form:
           email: "E-mail"
-          roles: "Funções"
           enterprise_limit: "Limite de iniciativa"
           confirm_password: "Confirme a Senha"
           password: "Senha"

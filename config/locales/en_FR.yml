@@ -4453,7 +4453,6 @@ en_FR:
         form:
           disabled: "Disabled?"
           email: "Email"
-          roles: "Roles"
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"

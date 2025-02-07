@@ -4301,7 +4301,6 @@ cy:
         form:
           disabled: "Analluogwyd?"
           email: "E-bost"
-          roles: "Rolau"
           enterprise_limit: "Uchafswm Mentrau"
           confirm_password: "Cadarnhau Cyfrinair"
           password: "Cyfrinair"
