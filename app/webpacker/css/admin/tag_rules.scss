@@ -1,4 +1,10 @@
 tags-input {
+  .tags {
+    border: $border-input;
+    border-radius: $border-radius;
+    box-shadow: none;
+    padding: 4px; // hack to make the height match other inputs
+  }
   &.limit-reached {
     input,
     span.input {

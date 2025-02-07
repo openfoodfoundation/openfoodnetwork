@@ -17,10 +17,9 @@
 
   .ts-control {
     box-shadow: none;
-    border-color: $lighter-grey;
-    background-color: $lighter-grey;
+    border: $border-input;
+    border-radius: $border-radius;
     background-image: none;
-    @include border-radius($border-radius);
 
     input {
       font-size: $body-font-size;
