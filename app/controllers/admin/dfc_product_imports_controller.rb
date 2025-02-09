@@ -43,9 +43,9 @@ module Admin
       catalog.apply_wholesale_values!
 
       # Import all selected products for given enterprise.
-      imported = catalog.products.select{ |subject| ids.include?(subject.semanticId) }
-        .map do |subject|
-        existing_variant = @enterprise.supplied_variants.linked_to(subject.semanticId)
+      imported = ids.map do |semantic_id|
+        subject = catalog.item(semantic_id)
+        existing_variant = @enterprise.supplied_variants.linked_to(semantic_id)
 
         if existing_variant
           SuppliedProductBuilder.update_product(subject, existing_variant)
