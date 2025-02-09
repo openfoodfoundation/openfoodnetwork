@@ -850,6 +850,8 @@ en:
         title: "DFC product catalog"
         catalog_url: "%{count} products to be imported from: %{catalog_url}"
         enterprise: "Import to enterprise: %{enterprise_name}"
+        update: Update
+        new: New
         import: Import
       import:
         title: "DFC product catalog import"

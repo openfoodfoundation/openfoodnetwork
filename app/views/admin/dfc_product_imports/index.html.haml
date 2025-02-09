@@ -22,10 +22,10 @@
               = supplied_product.name
           %td
             - if existing_product.present?
-              Update
+              = t(".update")
               = link_to(existing_product.id, edit_admin_product_path(existing_product))
             - else
-              New
+              = t(".new")
 
   %br
   = form.submit t(".import")
