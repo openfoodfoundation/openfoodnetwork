@@ -156,7 +156,6 @@ class CheckoutController < BaseController
   # state. We need to do this when moving back to a previous checkout step, the update action takes
   # care of moving the order state forward.
   def update_order_state
-    # debugger
     return @order.back_to_payment if @order.confirmation? && payment_step?
 
     return unless @order.after_delivery_state? && details_step?
