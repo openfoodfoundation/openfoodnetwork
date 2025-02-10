@@ -142,10 +142,11 @@ RSpec.describe EnterpriseFee do
     end
   end
 
-  describe "clearing all enterprise fee adjustments on an order" do
+  describe ".clear_all_adjustments" do
+    let(:order_cycle) { create(:order_cycle) }
+    let(:order) { create(:order, order_cycle:) }
+
     it "clears adjustments from many fees and on all line items" do
-      order_cycle = create(:order_cycle)
-      order = create(:order, order_cycle:)
       line_item1 = create(:line_item, order:, variant: order_cycle.variants.first)
       line_item2 = create(:line_item, order:, variant: order_cycle.variants.second)
 
@@ -160,7 +161,6 @@ RSpec.describe EnterpriseFee do
     end
 
     it "clears adjustments from per-order fees" do
-      order = create(:order)
       enterprise_fee = create(:enterprise_fee)
       enterprise_fee_aplicator = OpenFoodNetwork::EnterpriseFeeApplicator.new(enterprise_fee, nil,
                                                                               'coordinator')
@@ -172,7 +172,6 @@ RSpec.describe EnterpriseFee do
     end
 
     it "does not clear adjustments from another originator" do
-      order = create(:order)
       tax_rate = create(:tax_rate, calculator: build(:calculator))
       order.adjustments.create({ amount: 12.34,
                                  originator: tax_rate,
