@@ -317,6 +317,8 @@ RSpec.describe '
       it "inserts values which persist" do
         expect(page).to have_content("you must save first before")
         click_button 'Update'
+        click_on "Dismiss"
+
         fill_in "Flat Percent", with: '2.5'
         click_button 'Update'
         expect(page).to have_content("Payment Method has been successfully updated!")
@@ -330,6 +332,8 @@ RSpec.describe '
       it "inserts values which persist" do
         expect(page).to have_content("you must save first before")
         click_button 'Update'
+        click_on "Dismiss"
+
         fill_in "Amount", with: 2.2
         click_button 'Update'
         expect(page).to have_content("Payment Method has been successfully updated!")
@@ -343,6 +347,8 @@ RSpec.describe '
       it "inserts values which persist" do
         expect(page).to have_content("you must save first before")
         click_button 'Update'
+        click_on "Dismiss"
+
         fill_in "First Item Cost", with: 2
         fill_in "Additional Item Cost", with: 1.1
         fill_in "Max Items", with: 10
@@ -360,6 +366,8 @@ RSpec.describe '
       it "inserts values which persist" do
         expect(page).to have_content("you must save first before")
         click_button 'Update'
+        click_on "Dismiss"
+
         fill_in "Amount", with: 2.2
         click_button 'Update'
         expect(page).to have_content("Payment Method has been successfully updated!")
