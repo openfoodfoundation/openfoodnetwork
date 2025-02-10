@@ -9,6 +9,8 @@ module Orders
     end
 
     def sufficient_stock?
+      return @sufficient_stock if defined? @sufficient_stock
+
       @sufficient_stock ||= order.insufficient_stock_lines.blank?
     end
 
