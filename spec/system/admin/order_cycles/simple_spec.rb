@@ -488,6 +488,7 @@ RSpec.describe '
           expect(page).to have_content v1.product.name
 
           expect(page).not_to have_content "No variant available for this product"
+          expect(page).to have_content "(Some variants might be hidden via inventory settings)"
         end
       end
 
