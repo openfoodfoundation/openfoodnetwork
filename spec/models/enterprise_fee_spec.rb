@@ -142,23 +142,9 @@ RSpec.describe EnterpriseFee do
     end
   end
 
-  describe ".clear_all_adjustments" do
+  describe ".clear_order_adjustments" do
     let(:order_cycle) { create(:order_cycle) }
     let(:order) { create(:order, order_cycle:) }
-
-    it "clears adjustments from many fees and on all line items" do
-      line_item1 = create(:line_item, order:, variant: order_cycle.variants.first)
-      line_item2 = create(:line_item, order:, variant: order_cycle.variants.second)
-
-      order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1.order, true)
-      order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2.order, true)
-      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo3', line_item1, true)
-      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2, true)
-
-      expect do
-        EnterpriseFee.clear_all_adjustments order
-      end.to change { order.all_adjustments.count }.by(-4)
-    end
 
     it "clears adjustments from per-order fees" do
       enterprise_fee = create(:enterprise_fee)
@@ -167,7 +153,7 @@ RSpec.describe EnterpriseFee do
       enterprise_fee_aplicator.create_order_adjustment(order)
 
       expect do
-        EnterpriseFee.clear_all_adjustments order
+        described_class.clear_order_adjustments order
       end.to change { order.adjustments.count }.by(-1)
     end
 
@@ -179,8 +165,25 @@ RSpec.describe EnterpriseFee do
                                  label: 'hello' })
 
       expect do
-        EnterpriseFee.clear_all_adjustments order
+        described_class.clear_order_adjustments order
       end.to change { order.adjustments.count }.by(0)
+    end
+
+    it "doesn't clear adjustments from many fees and on all line items" do
+      line_item1 = create(:line_item, order:, variant: order_cycle.variants.first)
+      line_item2 = create(:line_item, order:, variant: order_cycle.variants.second)
+
+      # Order adjustment
+      order_cycle.coordinator_fees[0].create_adjustment('foo1', line_item1.order, true)
+      order_cycle.coordinator_fees[0].create_adjustment('foo2', line_item2.order, true)
+      # Line item adjustment
+      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo3', line_item1, true)
+      order_cycle.exchanges[0].enterprise_fees[0].create_adjustment('foo4', line_item2, true)
+
+      # does not clear line item adjustments
+      expect do
+        described_class.clear_order_adjustments order
+      end.to change { order.all_adjustments.count }.by(-2)
     end
   end
 
