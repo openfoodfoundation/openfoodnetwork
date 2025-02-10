@@ -3057,7 +3057,7 @@ fr_CM:
           un ou plusieurs produits dans votre panier est devenu insuffisant pour répondre
           à votre demande. Voilà les modifications opérées:
       now_out_of_stock: est maintenant en rupture de stock.
-      only_n_remainging: "plus que %{num} en stock."
+      only_n_remaining: "plus que %{num} en stock."
     shopfront:
       variant:
         add_to_cart: "Ajouter"

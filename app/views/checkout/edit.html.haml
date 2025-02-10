@@ -41,7 +41,7 @@
               %em
                 = "#{variant.name_to_display} - #{variant.unit_to_display}"
                 %span
-                  = t("js.out_of_stock.only_n_remainging", num: variant.on_hand)
+                  = t("js.out_of_stock.only_n_remaining", num: variant.on_hand)
 
     %div{ style: "display: #{spree_current_user ? 'block' : 'none'}", "data-guest-checkout-target": "checkout" }
       = render partial: "checkout"

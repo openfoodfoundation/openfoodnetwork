@@ -3158,7 +3158,7 @@ de_CH:
           Während des Einkaufs haben sich die Lagerbestände für ein oder mehrere Produkte
           in Ihrem Warenkorb verringert. Das Folgende hat sich geändert:
       now_out_of_stock: ist jetzt ausverkauft.
-      only_n_remainging: "hat jetzt nur noch %{num} übrig."
+      only_n_remaining: "hat jetzt nur noch %{num} übrig."
     shopfront:
       variant:
         add_to_cart: "Hinzufügen"

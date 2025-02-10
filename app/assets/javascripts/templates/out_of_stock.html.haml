@@ -13,4 +13,4 @@
   %span{'ng-if' => "v.on_hand == 0"}
     {{ 'js.out_of_stock.now_out_of_stock' | t }}
   %span{'ng-if' => "v.on_hand > 0"}
-    {{ 'js.out_of_stock.only_n_remainging' | t:{ num: v.on_hand } }}
+    {{ 'js.out_of_stock.only_n_remaining' | t:{ num: v.on_hand } }}
