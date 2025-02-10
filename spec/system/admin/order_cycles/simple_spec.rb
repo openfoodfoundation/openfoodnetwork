@@ -459,6 +459,7 @@ RSpec.describe '
 
           visit edit_admin_order_cycle_path(oc)
           click_link "Outgoing Products"
+          expect(page).to have_content "Managed distributor"
           within "tr.distributor-#{distributor_managed.id}" do
             page.find("td.products").click
           end
