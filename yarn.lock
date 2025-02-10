@@ -5782,10 +5782,10 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
-leaflet-geosearch@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/leaflet-geosearch/-/leaflet-geosearch-4.1.0.tgz#adfc6dd8679aba73daf19b67beda41f503245a77"
-  integrity sha512-HyqmRWInm5/B28PpAscruOFnYztamJji4OTsueNluvaHg/hYVMWpaReyWvfVUQGVn8U42+Mm01gBpOcRsqh60g==
+leaflet-geosearch@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/leaflet-geosearch/-/leaflet-geosearch-4.2.0.tgz#0b3e3eb35377be37e7cec65f9b08b093c40ee78a"
+  integrity sha512-UWNhFSaUcLlAP5UQY75ziWCl3cp0UCcmcFczPHLHjuAVPOHoPTe0nSgHJuI3pSTJBQm46NYoZOlgonrWceUznQ==
   optionalDependencies:
     "@googlemaps/js-api-loader" "^1.16.6"
     leaflet "^1.6.0"
