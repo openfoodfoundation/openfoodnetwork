@@ -8,7 +8,7 @@ RSpec.describe Alert do
     Bugsnag.configure do |config|
       original_config = config.dup
       config.api_key ||= "00000000000000000000000000000000"
-      config.notify_release_stages = ["test"]
+      config.enabled_release_stages = ["test"]
       config.delivery_method = :synchronous
     end
 
@@ -16,7 +16,7 @@ RSpec.describe Alert do
 
     Bugsnag.configure do |config|
       config.api_key = original_config.api_key
-      config.notify_release_stages = original_config.notify_release_stages
+      config.enabled_release_stages = original_config.notify_release_stages
       config.delivery_method = original_config.delivery_method
     end
   end

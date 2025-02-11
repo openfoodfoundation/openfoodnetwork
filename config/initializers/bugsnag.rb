@@ -12,5 +12,5 @@ Bugsnag.configure do |config|
   # If you want to notify Bugsnag in dev or test then set the env var:
   #   spring stop
   #   BUGSNAG=true ./bin/rails console
-  config.notify_release_stages = %w(production staging) unless ENV["BUGSNAG"]
+  config.enabled_release_stages = %w(production staging) unless ENV["BUGSNAG"]
 end
