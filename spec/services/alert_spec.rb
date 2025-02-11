@@ -7,7 +7,7 @@ RSpec.describe Alert do
     original_config = nil
     Bugsnag.configure do |config|
       original_config = config.dup
-      config.api_key ||= "dummy-key"
+      config.api_key ||= "00000000000000000000000000000000"
       config.notify_release_stages = ["test"]
       config.delivery_method = :synchronous
     end
@@ -15,7 +15,7 @@ RSpec.describe Alert do
     example.run
 
     Bugsnag.configure do |config|
-      config.api_key ||= original_config.api_key
+      config.api_key = original_config.api_key
       config.notify_release_stages = original_config.notify_release_stages
       config.delivery_method = original_config.delivery_method
     end
@@ -28,8 +28,6 @@ RSpec.describe Alert do
   end
 
   it "adds context" do
-    pending "Bugsnag calls in CI" if ENV.fetch("CI", false)
-
     expect_any_instance_of(Bugsnag::Report).to receive(:add_metadata).with(
       :order, { number: "ABC123" }
     )
@@ -44,8 +42,6 @@ RSpec.describe Alert do
   end
 
   it "is compatible with Bugsnag API" do
-    pending "Bugsnag calls in CI" if ENV.fetch("CI", false)
-
     expect_any_instance_of(Bugsnag::Report).to receive(:add_metadata).with(
       :order, { number: "ABC123" }
     )
@@ -56,8 +52,6 @@ RSpec.describe Alert do
   end
 
   it "sends ActiveRecord objects" do
-    pending "Bugsnag calls in CI" if ENV.fetch("CI", false)
-
     order = Spree::Order.new(number: "ABC123")
 
     expect_any_instance_of(Bugsnag::Report).to receive(:add_metadata).with(
@@ -68,8 +62,6 @@ RSpec.describe Alert do
   end
 
   it "notifies Bugsnag when ActiveRecord object is missing" do
-    pending "Bugsnag calls in CI" if ENV.fetch("CI", false)
-
     expect_any_instance_of(Bugsnag::Report).to receive(:add_metadata).with(
       "NilClass", { record_was_nil: true }
     )
