@@ -38,15 +38,10 @@ RSpec.describe DfcRequest do
     account.refresh_token = ENV.fetch("OPENID_REFRESH_TOKEN")
     account.updated_at = 1.day.ago
 
-    expect {
-      api.call("http://example.net/api")
-    }
+    expect { api.call("http://example.net/api") }
       .to raise_error(Faraday::UnauthorizedError)
-      .and change {
-             account.token
-           }.and change {
-                   account.refresh_token
-                 }
+      .and change { account.token }
+      .and change { account.refresh_token }
   end
 
   it "doesn't try to refresh the token when it's still fresh" do
