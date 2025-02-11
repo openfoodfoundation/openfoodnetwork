@@ -81,4 +81,13 @@ RSpec.describe DfcRequest do
     products = graph.select { |s| s.semanticType == "dfc-b:SuppliedProduct" }
     expect(products).to be_present
   end
+
+  it "reports and raises server errors" do
+    stub_request(:get, "http://example.net/api").to_return(status: 500)
+
+    expect(Bugsnag).to receive(:notify)
+
+    expect { api.call("http://example.net/api") }
+      .to raise_error(Faraday::ServerError)
+  end
 end
