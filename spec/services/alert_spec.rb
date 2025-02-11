@@ -41,6 +41,14 @@ RSpec.describe Alert do
     )
   end
 
+  it "adds context given as keyword argument" do
+    expect_any_instance_of(Bugsnag::Report).to receive(:add_metadata).with(
+      :data, { data: "ABC123" }
+    )
+
+    Alert.raise("hey", data: "ABC123")
+  end
+
   it "is compatible with Bugsnag API" do
     expect_any_instance_of(Bugsnag::Report).to receive(:add_metadata).with(
       :order, { number: "ABC123" }
