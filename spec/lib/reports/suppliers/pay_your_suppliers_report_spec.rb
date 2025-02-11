@@ -75,7 +75,6 @@ RSpec.describe "Pay Your Suppliers Report" do
     before do
       # Prepare order or line_item to have respective tax adjustments
       hub.update!(charges_sales_tax: true)
-      supplier.update!(charges_sales_tax: true)
       line_item.variant.update!(tax_category:)
       line_item.copy_tax_category
 
@@ -92,18 +91,44 @@ RSpec.describe "Pay Your Suppliers Report" do
       order.create_tax_charge!
     end
 
-    it "Generates the report" do
-      expect(report_table_rows.length).to eq(1)
-      table_row = report_table_rows.first
+    context "supplier charges tax" do
+      before do
+        supplier.update!(charges_sales_tax: true)
+      end
 
-      expect(table_row.producer_charges_gst).to eq('Yes')
-      expect(table_row.total_excl_fees_and_tax.to_f).to eq(10.0)
-      expect(table_row.total_excl_vat.to_f).to eq(10.1)
-      expect(table_row.total_fees_excl_tax.to_f).to eq(0.1)
-      expect(table_row.total_tax_on_fees.to_f).to eq(0.01)
-      expect(table_row.total_tax_on_product.to_f).to eq(1.0)
-      expect(table_row.total_tax.to_f).to eq(1.01)
-      expect(table_row.total.to_f).to eq(11.11)
+      it "Generates the report" do
+        expect(report_table_rows.length).to eq(1)
+        table_row = report_table_rows.first
+
+        expect(table_row.producer_charges_gst).to eq('Yes')
+        expect(table_row.total_excl_fees_and_tax.to_f).to eq(10.0)
+        expect(table_row.total_excl_vat.to_f).to eq(10.1)
+        expect(table_row.total_fees_excl_tax.to_f).to eq(0.1)
+        expect(table_row.total_tax_on_fees.to_f).to eq(0.01)
+        expect(table_row.total_tax_on_product.to_f).to eq(1.0)
+        expect(table_row.total_tax.to_f).to eq(1.01)
+        expect(table_row.total.to_f).to eq(11.11)
+      end
+    end
+
+    context "supplier does not charge tax" do
+      before do
+        supplier.update!(charges_sales_tax: false)
+      end
+
+      it "Generates the report" do
+        expect(report_table_rows.length).to eq(1)
+        table_row = report_table_rows.first
+
+        expect(table_row.producer_charges_gst).to eq('No')
+        expect(table_row.total_excl_fees_and_tax.to_f).to eq(10.0)
+        expect(table_row.total_excl_vat.to_f).to eq(10.1)
+        expect(table_row.total_fees_excl_tax.to_f).to eq(0.1)
+        expect(table_row.total_tax_on_fees.to_f).to eq(0.00)
+        expect(table_row.total_tax_on_product.to_f).to eq(0.0)
+        expect(table_row.total_tax.to_f).to eq(0.00)
+        expect(table_row.total.to_f).to eq(10.1)
+      end
     end
   end
 end
