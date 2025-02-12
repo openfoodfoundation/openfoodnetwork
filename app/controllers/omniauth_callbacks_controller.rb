@@ -2,7 +2,9 @@
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def openid_connect
-    OidcAccount.link(spree_current_user, request.env["omniauth.auth"])
+    ActiveRecord::Base.transaction do
+      OidcAccount.link(spree_current_user, request.env["omniauth.auth"])
+    end
 
     redirect_to admin_oidc_settings_path
   rescue ActiveRecord::RecordNotUnique
