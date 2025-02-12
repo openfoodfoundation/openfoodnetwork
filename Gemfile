@@ -182,6 +182,7 @@ end
 group :development do
   gem 'debugger-linecache'
   gem 'foreman'
+  gem 'i18n-tasks'
   gem 'listen'
   gem 'pry', '~> 0.13.0'
   gem 'query_count'
