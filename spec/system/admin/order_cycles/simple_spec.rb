@@ -459,6 +459,7 @@ RSpec.describe '
 
           visit edit_admin_order_cycle_path(oc)
           click_link "Outgoing Products"
+          expect(page).to have_content "Managed distributor"
           within "tr.distributor-#{distributor_managed.id}" do
             page.find("td.products").click
           end
@@ -487,6 +488,7 @@ RSpec.describe '
           expect(page).to have_content v1.product.name
 
           expect(page).not_to have_content "No variant available for this product"
+          expect(page).to have_content "(Some variants might be hidden via inventory settings)"
         end
       end
 
