@@ -16,7 +16,7 @@ RSpec.describe "States" do
     allow(ENV).to receive(:[]).with("DEFAULT_COUNTRY_CODE").and_return("HU")
   end
 
-  # For whatever reason, rendering of the states page takes a non-trivial amount of time. 
+  # For whatever reason, rendering of the states page takes a non-trivial amount of time.
   # Therefore we navigate to it, and wait until what we see is visible.
   def go_to_states_page
     visit spree.admin_country_states_path(country)
