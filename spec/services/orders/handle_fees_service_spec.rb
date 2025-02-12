@@ -107,6 +107,35 @@ RSpec.describe Orders::HandleFeesService do
         end
       end
 
+      context "when an enterprise fee is deleted" do
+        before do
+          fee.create_adjustment('foo', line_item, true)
+          allow(calculator).to receive(
+            :order_cycle_per_item_enterprise_fee_applicators_for
+          ).and_return([])
+        end
+
+        context "soft delete" do
+          it "deletes the line item fee" do
+            fee.destroy
+
+            expect do
+              service.create_or_update_line_item_fees!
+            end.to change { line_item.adjustments.enterprise_fee.count }.by(-1)
+          end
+        end
+
+        context "hard delete" do
+          it "deletes the line item fee" do
+            fee.really_destroy!
+
+            expect do
+              service.create_or_update_line_item_fees!
+            end.to change { line_item.adjustments.enterprise_fee.count }.by(-1)
+          end
+        end
+      end
+
       context "with a new enterprise fee added to the order cylce" do
         let(:new_fee) { create(:enterprise_fee, enterprise: fee.enterprise) }
         let(:fee_applicator2) {

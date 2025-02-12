@@ -92,8 +92,13 @@ module Orders
     def update_removed_fees!(line_item)
       order_cycle_fees = fee_applicators(line_item.variant).map(&:enterprise_fee)
       removed_fees = line_item.enterprise_fee_adjustments.where.not(originator: order_cycle_fees)
+
       removed_fees.each do |removed_fee|
-        removed_fee.update_adjustment!(line_item, force: true)
+        if removed_fee.originator.nil? || removed_fee.originator.deleted?
+          removed_fee.destroy
+        else
+          removed_fee.update_adjustment!(line_item, force: true)
+        end
       end
     end
 
