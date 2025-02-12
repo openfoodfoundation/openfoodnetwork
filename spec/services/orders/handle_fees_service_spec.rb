@@ -19,6 +19,48 @@ RSpec.describe Orders::HandleFeesService do
     allow(service).to receive(:calculator) { calculator }
   end
 
+  describe "#recreate_all_fees!" do
+    before do
+      allow(order).to receive(:update_order!)
+    end
+
+    it "clears order enterprise fee adjustments on the order" do
+      expect(EnterpriseFee).to receive(:clear_order_adjustments).with(order)
+
+      service.recreate_all_fees!
+    end
+
+    # both create_or_update_line_item_fees! and create_order_fees! are tested below,
+    # so it's enough to check they get called
+    it "creates line item and order fee adjustments" do
+      expect(service).to receive(:create_or_update_line_item_fees!)
+      expect(service).to receive(:create_order_fees!)
+
+      service.recreate_all_fees!
+    end
+
+    it "updates the order" do
+      expect(order).to receive(:update_order!)
+
+      service.recreate_all_fees!
+    end
+
+    it "doesn't create tax adjustment" do
+      expect(service).not_to receive(:tax_enterprise_fees!)
+
+      service.recreate_all_fees!
+    end
+
+    context "when after payment state" do
+      it "creates the tax adjustment for the fees" do
+        expect(service).to receive(:tax_enterprise_fees!)
+
+        order.update(state: "confirmation")
+        service.recreate_all_fees!
+      end
+    end
+  end
+
   describe "#create_or_update_line_item_fees!" do
     context "with no existing fee" do
       it "creates per line item fee adjustments for line items in the order cylce" do
