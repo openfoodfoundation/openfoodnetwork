@@ -1,7 +1,7 @@
 - color_class = "warning" unless @order_cycle_count.positive?
 - icon_class = @order_cycle_count.positive? ? "icon-ok-sign" : "icon-warning-sign"
-%div.dashboard_item.seven.columns.omega#order_cycles
-  %div.header.sixteen.columns.alpha{class: color_class}
+.dashboard_item.seven.columns.omega#order_cycles
+  .header.sixteen.columns.alpha{class: color_class}
     %h3.ten.columns.alpha
       = t ".order_cycles"
     - if @order_cycle_count.positive?
@@ -10,8 +10,8 @@
     - else
       %a{ "ofn-with-tip" => t(".order_cycles_tip") }
         = t "admin.whats_this"
-  %div.sixteen.columns.alpha.list
-    %div.sixteen.columns.alpha.list-item{class: color_class}
+  .sixteen.columns.alpha.list
+    .sixteen.columns.alpha.list-item{class: color_class}
       %span.thirteen.columns.alpha
         = t(".you_have_active", count: @order_cycle_count)
       %span.three.columns.omega

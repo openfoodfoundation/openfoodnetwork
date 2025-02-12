@@ -15,7 +15,7 @@
           %div
             %span.fat-properties{"ng-repeat" => "property in hub.distributed_properties"}
               %span{"ng-bind" => "property.presentation"}
-      %div.show-for-medium-up{"ng-if" => "::hub.taxons.length==0"}
+      .show-for-medium-up{"ng-if" => "::hub.taxons.length==0"}
         &nbsp;
     .columns.small-12.medium-3.large-2.fat{"ng-show" => "open() && !shopfront_loading"}
       %div{"ng-if" => "::(hub.pickup || hub.delivery)"}
@@ -50,5 +50,5 @@
               .less
                 = t :label_less
 
-      %div.show-for-medium-up{"ng-if" => "::hub.producers.length==0"}
+      .show-for-medium-up{"ng-if" => "::hub.producers.length==0"}
         &nbsp;

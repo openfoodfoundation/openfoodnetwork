@@ -1,8 +1,8 @@
-%div.dashboard_item.sixteen.columns.alpha#enterprises
+.dashboard_item.sixteen.columns.alpha#enterprises
   = render 'enterprises_header'
 
   - if @enterprises.empty?
-    %div.sixteen.columns.alpha.list-item.warning
+    .sixteen.columns.alpha.list-item.warning
       %span.text.fifteen.columns.alpha
         = t "spree_admin_enterprises_none_text"
       %span.one.columns.omega
@@ -12,7 +12,7 @@
       %span.icon-arrow-right
 
   - else
-    %div.sixteen.columns.alpha.list-title
+    .sixteen.columns.alpha.list-title
       %span.five.columns.alpha
         = t "spree_admin_enterprises_hubs_name"
       - if can? :admin, Spree::PaymentMethod
@@ -24,7 +24,7 @@
       - if can? :admin, EnterpriseFee
         %span.centered.three.columns
           = t "spree_admin_enterprises_fees"
-    %div.sixteen.columns.alpha.list
+    .sixteen.columns.alpha.list
       = render partial: 'enterprise_row', collection: @enterprises, as: :enterprise
 
     %a.sixteen.columns.alpha.button.bottom{ href: "#{main_app.admin_enterprises_path}" }
