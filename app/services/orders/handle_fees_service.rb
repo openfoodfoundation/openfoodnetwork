@@ -16,9 +16,9 @@ module Orders
       # See https://github.com/rails/rails/blob/3-2-stable/activerecord/lib/active_record/locking/pessimistic.rb#L69
       # and https://www.postgresql.org/docs/current/static/sql-select.html#SQL-FOR-UPDATE-SHARE
       order.with_lock do
-        EnterpriseFee.clear_all_adjustments order
+        EnterpriseFee.clear_order_adjustments order
 
-        create_line_item_fees!
+        create_or_update_line_item_fees!
         create_order_fees!
       end
 
@@ -26,11 +26,15 @@ module Orders
       order.update_order!
     end
 
-    def create_line_item_fees!
-      order.line_items.includes(variant: :product).each do |line_item|
-        if provided_by_order_cycle? line_item
-          calculator.create_line_item_adjustments_for line_item
-        end
+    def create_or_update_line_item_fees!
+      order.line_items.includes(:variant).each do |line_item|
+        # No fee associated with the line item so we just create them
+        next create_line_item_fees!(line_item) if line_item.enterprise_fee_adjustments.blank?
+
+        create_or_update_line_item_fee!(line_item)
+
+        # update any fees removed from the Order Cycle
+        update_removed_fees!(line_item)
       end
     end
 
@@ -65,6 +69,36 @@ module Orders
     def provided_by_order_cycle?(line_item)
       @order_cycle_variant_ids ||= order_cycle&.variants&.map(&:id) || []
       @order_cycle_variant_ids.include? line_item.variant_id
+    end
+
+    def create_line_item_fees!(line_item)
+      return unless provided_by_order_cycle? line_item
+
+      calculator.create_line_item_adjustments_for(line_item)
+    end
+
+    def create_or_update_line_item_fee!(line_item)
+      fee_applicators(line_item.variant).each do |fee_applicator|
+        fee_adjustment = line_item.adjustments.find_by(originator: fee_applicator.enterprise_fee)
+
+        if fee_adjustment
+          fee_adjustment.update_adjustment!(line_item, force: true)
+        elsif provided_by_order_cycle? line_item
+          fee_applicator.create_line_item_adjustment(line_item)
+        end
+      end
+    end
+
+    def update_removed_fees!(line_item)
+      order_cycle_fees = fee_applicators(line_item.variant).map(&:enterprise_fee)
+      removed_fees = line_item.enterprise_fee_adjustments.where.not(originator: order_cycle_fees)
+      removed_fees.each do |removed_fee|
+        removed_fee.update_adjustment!(line_item, force: true)
+      end
+    end
+
+    def fee_applicators(variant)
+      calculator.order_cycle_per_item_enterprise_fee_applicators_for(variant)
     end
   end
 end
