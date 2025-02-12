@@ -38,15 +38,10 @@ RSpec.describe DfcRequest do
     account.refresh_token = ENV.fetch("OPENID_REFRESH_TOKEN")
     account.updated_at = 1.day.ago
 
-    expect {
-      api.call("http://example.net/api")
-    }
+    expect { api.call("http://example.net/api") }
       .to raise_error(Faraday::UnauthorizedError)
-      .and change {
-             account.token
-           }.and change {
-                   account.refresh_token
-                 }
+      .and change { account.token }
+      .and change { account.refresh_token }
   end
 
   it "doesn't try to refresh the token when it's still fresh" do
@@ -85,5 +80,14 @@ RSpec.describe DfcRequest do
     graph = DfcIo.import(json)
     products = graph.select { |s| s.semanticType == "dfc-b:SuppliedProduct" }
     expect(products).to be_present
+  end
+
+  it "reports and raises server errors" do
+    stub_request(:get, "http://example.net/api").to_return(status: 500)
+
+    expect(Bugsnag).to receive(:notify)
+
+    expect { api.call("http://example.net/api") }
+      .to raise_error(Faraday::ServerError)
   end
 end

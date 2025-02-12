@@ -22,6 +22,9 @@ class DfcRequest
       # If access was denied and our token is stale then refresh and retry:
       refresh_access_token!
       response = request(url, data, method:)
+    rescue Faraday::ServerError => e
+      Alert.raise(e, { dfc_request: { data: } })
+      raise
     end
 
     response.body
