@@ -26,6 +26,9 @@
           = t "spree_admin_enterprises_fees"
     .sixteen.columns.alpha.list
       = render partial: 'enterprise_row', collection: @enterprises, as: :enterprise
+      - if defined? @enterprises_count
+        .sixteen.columns.alpha.list-item.centered
+          = t "spree_admin_enterprises_showing", count: @enterprises.count, total: @enterprises_count
 
     %a.sixteen.columns.alpha.button.bottom{ href: "#{main_app.admin_enterprises_path}" }
       = t "spree_admin_overview_enterprises_footer"
