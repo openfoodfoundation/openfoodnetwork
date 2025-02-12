@@ -90,9 +90,9 @@ RSpec.describe 'As an enterprise user, I can manage my products' do
           select taxon.name, from: 'Category'
 
           if stock == "on_hand"
-            find('input[id$="_on_hand"]').fill_in with: "66"
+            find('input[id$="_on_hand_desired"]').fill_in with: "66"
           elsif stock == "on_demand"
-            find('input[id$="_on_demand"]').check
+            find('input[id$="_on_demand_desired"]').check
           end
         end
 

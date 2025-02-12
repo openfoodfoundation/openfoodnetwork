@@ -667,6 +667,9 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           fill_in "Name", with: "Large box"
           click_on "On Hand"
           fill_in "On Hand", with: "19"
+          tomselect_select("Weight (kg)", from: "Unit scale")
+          click_on "Unit"
+          fill_in "Unit value", with: "1"
         end
 
         click_button "Save changes"
@@ -682,6 +685,9 @@ RSpec.describe 'As an enterprise user, I can update my products' do
           fill_in "Name", with: "Large box"
           click_on "On Hand"
           check "On demand"
+          tomselect_select("Weight (kg)", from: "Unit scale")
+          click_on "Unit"
+          fill_in "Unit value", with: "1"
         end
 
         click_button "Save changes"
