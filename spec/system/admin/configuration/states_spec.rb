@@ -35,6 +35,9 @@ RSpec.describe "States" do
     it "should correctly display the states" do
       visit spree.admin_country_states_path(country)
       expect(page).to have_content(state.name)
+
+      # and it has contextual navigation
+      expect(page).to have_link "General Settings"
     end
   end
 

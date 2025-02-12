@@ -17,6 +17,9 @@ RSpec.describe "General Settings" do
       expect(page).to have_content("General Settings")
       expect(find("#site_name").value).to eq("OFN Demo Site")
       expect(find("#site_url").value).to eq("demo.openfoodnetwork.org")
+
+      # and it has contextual navigation
+      expect(page).to have_link "General Settings"
     end
   end
 
