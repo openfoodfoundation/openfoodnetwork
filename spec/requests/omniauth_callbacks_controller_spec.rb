@@ -38,8 +38,8 @@ RSpec.describe '/user/spree_user/auth/openid_connect/callback', type: :request d
 
     context 'when OIDC account already linked with a different user' do
       before do
-        other_user = create(:user, email: "ofn@elsewhere.com")
-        OidcAccount.create! user_id: other_user.id, uid: "ofn@example.com"
+        create(:user, email: "ofn@elsewhere.com")
+          .create_oidc_account!(uid: "ofn@example.com")
       end
 
       it 'fails with error message' do
