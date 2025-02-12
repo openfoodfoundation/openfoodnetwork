@@ -1,4 +1,4 @@
-%div.admin-order-form-fields
+.admin-order-form-fields
   - if @line_item.try(:errors).present?
     = render :partial => 'spree/shared/error_messages', :locals => { :target => @line_item }
 

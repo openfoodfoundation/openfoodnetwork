@@ -24,9 +24,9 @@
           = hidden_field_tag "order[payments_attributes][][source_attributes][cc_type]", nil, { "data-stripe-target": "brand" }
           = hidden_field_tag "order[payments_attributes][][source_attributes][last_digits]", nil, { "data-stripe-target": "last4" }
           = hidden_field_tag "order[payments_attributes][][source_attributes][gateway_payment_profile_id]", nil, { "data-stripe-target": "pmId" }
-          %div.card-element{ "data-stripe-target": "cardElement" }
+          .card-element{ "data-stripe-target": "cardElement" }
 
-        %div.error.card-errors{ "data-stripe-target": "cardErrors" }
+        .error.card-errors{ "data-stripe-target": "cardErrors" }
 
     - if spree_current_user
       .checkout-input

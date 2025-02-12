@@ -42,7 +42,7 @@
     %span
       = order.display_total
   %td.actions
-    %div.row-loading-icons
+    .row-loading-icons
       - if local_assigns[:success]
         %i.success.icon-ok-sign{"data-controller": "ephemeral"}
     = render AdminTooltipComponent.new(text: t('spree.admin.orders.index.edit'), link_text: "", link: edit_admin_order_path(order), link_class: "icon_link with-tip icon-edit no-text")

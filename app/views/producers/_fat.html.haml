@@ -11,7 +11,7 @@
           = t :producers_about
         %img.right.show-for-medium-up{"ng-src" => "{{::producer.logo}}" }
         %p.text-small{ "ng-bind" => "::producer.description"}
-      %div.show-for-medium-up{"ng-if" => "::producer.description.length==0"}
+      .show-for-medium-up{"ng-if" => "::producer.description.length==0"}
         %label &nbsp;
         %img.right.show-for-medium-up{"ng-src" => "{{::producer.logo}}" }
 
@@ -28,7 +28,7 @@
             %span.fat-properties{"ng-repeat" => "property in producer.supplied_properties"}
               %span{"ng-bind" => "property.presentation"}
 
-      %div.show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
+      .show-for-medium-up{"ng-if" => "producer.supplied_taxons.length==0"}
         &nbsp;
 
       %div{"ng-if" => "::producer.email_address || producer.website || producer.phone"}
@@ -79,7 +79,7 @@
           %div{"ng-if" => "::producer.name"}
             %label
               = t :producers_buy_at_html, enterprise: '<span class="turquoise" ng-bind="::producer.name"></span>'.html_safe
-          %div.show-for-medium-up{"ng-if" => "::!producer.name"}
+          .show-for-medium-up{"ng-if" => "::!producer.name"}
             &nbsp;
       .row.cta-container
         .columns.small-12

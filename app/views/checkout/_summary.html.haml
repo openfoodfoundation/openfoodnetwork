@@ -71,8 +71,8 @@
               = payment_method&.description
 
 
-    %div.checkout-substep
-      %div.checkout-title
+    .checkout-substep
+      .checkout-title
         = t("checkout.step3.order.title")
         %a.summary-edit{ href: main_app.cart_path, data: { action: "guest-checkout#removeUnloadEvent" } }
           = t("checkout.step3.order.edit")

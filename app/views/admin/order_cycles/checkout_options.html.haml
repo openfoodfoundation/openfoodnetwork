@@ -79,12 +79,12 @@
                     = t('.no_payment_methods')
 
   %div#save-bar
-    %div.container
-      %div.seven.columns.alpha
+    .container
+      .seven.columns.alpha
         - if @order_cycle.errors.any?
           %h5#status-message.error
             = @order_cycle.errors.to_a.to_sentence
-      %div.nine.columns.omega.text-right
+      .nine.columns.omega.text-right
         = hidden_field_tag :context, :checkout_options
         = f.submit t('.save'), class: "red", name: :save
         = f.submit t('.save_and_back_to_list'), class: "red", name: :save_and_back_to_list

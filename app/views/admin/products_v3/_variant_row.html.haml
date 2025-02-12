@@ -22,7 +22,7 @@
 %td.col-unit.field.popout{'data-controller': "popout", 'data-popout-update-display-value': "false"}
   = f.button :unit_to_display, class: "popout__button", 'aria-label': t('admin.products_page.columns.unit'), 'data-popout-target': "button" do
     = variant.unit_to_display # Show the generated summary of unit values
-  %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
+  .popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
     .field
       -# Show a composite field for unit_value and unit_description
       = f.hidden_field :unit_value
@@ -39,7 +39,7 @@
 %td.col-on_hand.field.popout{'data-controller': "popout"}
   %button.popout__button{'data-popout-target': "button", 'aria-label': t('admin.products_page.columns.on_hand')}
     = variant.on_demand_desired_or_current ? t(:on_demand) : variant.on_hand_desired_or_current
-  %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
+  .popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
     .field
       = f.number_field method_on_hand, min: 0, 'aria-label': t('admin.products_page.columns.on_hand'), 'data-toggle-control-target': 'control', disabled: f.object.on_demand_desired_or_current
       = error_message_on variant, method_on_hand

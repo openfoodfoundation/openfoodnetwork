@@ -1,7 +1,7 @@
 - color_class = "warning" unless @product_count.positive?
 - icon_class = @product_count.positive? ? "icon-ok-sign" : "icon-remove-sign"
-%div.dashboard_item.seven.columns.alpha#products
-  %div.header.sixteen.columns.alpha{class: color_class}
+.dashboard_item.seven.columns.alpha#products
+  .header.sixteen.columns.alpha{class: color_class}
     %h3.ten.columns.alpha
       = t "products"
     - if @product_count.positive?
@@ -10,8 +10,8 @@
     - else
       %a{ "ofn-with-tip" => t(".products_tip") }
         = t "admin.whats_this"
-  %div.sixteen.columns.alpha.list
-    %div.sixteen.columns.alpha.list-item{class: color_class}
+  .sixteen.columns.alpha.list
+    .sixteen.columns.alpha.list-item{class: color_class}
       %span.thirteen.columns.alpha
         = t(".active_products", count: @product_count)
       %span.three.columns.omega

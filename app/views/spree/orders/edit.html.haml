@@ -25,7 +25,7 @@
 
   #cart-container
     - if @order.line_items.empty?
-      %div.row
+      .row
         %p= t(:cart_empty)
         %p= link_to t(:orders_edit_continue), current_shop_products_path, :class => 'button continue'
 

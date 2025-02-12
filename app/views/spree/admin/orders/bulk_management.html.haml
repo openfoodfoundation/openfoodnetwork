@@ -60,7 +60,7 @@
 
   %hr.divider.sixteen.columns.alpha.omega{ "ng-show": 'unitsVariantSelected()' }
 
-  %div.sixteen.columns.alpha.omega#group_buy_calculation{ "ng-show": 'unitsVariantSelected()', "ng-cloak": true }
+  .sixteen.columns.alpha.omega#group_buy_calculation{ "ng-show": 'unitsVariantSelected()', "ng-cloak": true }
     .one.columns.alpha
     .shared_resource.four.columns.alpha
       %input{ type: 'checkbox', :id => 'shared_resource', 'ng-model' => 'sharedResource'}
@@ -116,7 +116,7 @@
         = render partial: 'admin/shared/angular_per_page_controls', locals: { position: "right", model: "line_items" }
  
 
-  %div.sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
+  .sixteen.columns.alpha#loading{ 'ng-if' => 'RequestMonitor.loading' }
     = render partial: "components/admin_spinner"
     %h1
       = t("admin.orders.bulk_management.loading")
