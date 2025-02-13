@@ -180,6 +180,9 @@ paths:
                       dfc-b:isVariantOf: http://test.host/api/dfc/enterprises/10000/product_groups/90000
                       ofn:spree_product_id: 90000
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
+                    - "@id": http://test.host/api/dfc/enterprises/10000/product_groups/90000
+                      "@type": dfc-b:SuppliedProduct
+                      dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
                       dfc-b:hasPrice:
