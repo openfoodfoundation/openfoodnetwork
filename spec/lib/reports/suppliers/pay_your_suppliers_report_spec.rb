@@ -51,15 +51,17 @@ RSpec.describe "Pay Your Suppliers Report" do
 
   context "with taxes and fees" do
     let(:line_item) { order.line_items.first }
+    let(:tax_rate) {
+      create(
+        :tax_rate,
+        included_in_price: false,
+        zone: create(:zone_with_member)
+      )
+    }
     let(:tax_category) {
       create(
         :tax_category,
-        tax_rates: [
-          create(
-            :tax_rate,
-            zone: create(:zone_with_member)
-          )
-        ]
+        tax_rates: [tax_rate]
       )
     }
     let!(:enterprise_fee) do
@@ -96,18 +98,40 @@ RSpec.describe "Pay Your Suppliers Report" do
         supplier.update!(charges_sales_tax: true)
       end
 
-      it "Generates the report" do
-        expect(report_table_rows.length).to eq(1)
-        table_row = report_table_rows.first
+      context "added tax" do
+        it "Generates the report" do
+          expect(report_table_rows.length).to eq(1)
+          table_row = report_table_rows.first
 
-        expect(table_row.producer_charges_gst).to eq('Yes')
-        expect(table_row.total_excl_fees_and_tax.to_f).to eq(10.0)
-        expect(table_row.total_excl_vat.to_f).to eq(10.1)
-        expect(table_row.total_fees_excl_tax.to_f).to eq(0.1)
-        expect(table_row.total_tax_on_fees.to_f).to eq(0.01)
-        expect(table_row.total_tax_on_product.to_f).to eq(1.0)
-        expect(table_row.total_tax.to_f).to eq(1.01)
-        expect(table_row.total.to_f).to eq(11.11)
+          expect(table_row.producer_charges_gst).to eq('Yes')
+          expect(table_row.total_excl_fees_and_tax.to_f).to eq(10.0)
+          expect(table_row.total_excl_vat.to_f).to eq(10.1)
+          expect(table_row.total_fees_excl_tax.to_f).to eq(0.1)
+          expect(table_row.total_tax_on_fees.to_f).to eq(0.01)
+          expect(table_row.total_tax_on_product.to_f).to eq(1.0)
+          expect(table_row.total_tax.to_f).to eq(1.01)
+          expect(table_row.total.to_f).to eq(11.11)
+        end
+      end
+
+      context "included tax" do
+        before do
+          tax_rate.update(included_in_price: true)
+          order.create_tax_charge!
+        end
+        it "Generates the report" do
+          expect(report_table_rows.length).to eq(1)
+          table_row = report_table_rows.first
+
+          expect(table_row.producer_charges_gst).to eq('Yes')
+          expect(table_row.total_excl_fees_and_tax.to_f).to eq(9.09)
+          expect(table_row.total_excl_vat.to_f).to eq(9.18)
+          expect(table_row.total_fees_excl_tax.to_f).to eq(0.09)
+          expect(table_row.total_tax_on_fees.to_f).to eq(0.01)
+          expect(table_row.total_tax_on_product.to_f).to eq(0.91)
+          expect(table_row.total_tax.to_f).to eq(0.92)
+          expect(table_row.total.to_f).to eq(10.10)
+        end
       end
     end
 
