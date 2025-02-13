@@ -112,7 +112,7 @@ class SuppliedProductImporter < DfcBuilder
   end
 
   def self.apply(supplied_product, variant)
-    variant.product.assign_attributes(description: supplied_product.description)
+    ProductGroupBuilder.apply(supplied_product, variant.product)
 
     variant.display_name = supplied_product.name
     variant.primary_taxon = taxon(supplied_product)

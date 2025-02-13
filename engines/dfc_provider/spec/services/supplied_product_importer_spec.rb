@@ -218,6 +218,15 @@ RSpec.describe SuppliedProductImporter do
         expect(imported_variant.primary_taxon).to eq(new_taxon)
       end
 
+      it "copies name and description from parent product" do
+        supplied_product.isVariantOf << DfcProvider::SuppliedProduct.new(
+          "some-id", name: "Our tomatoes", description: "Choose a variety."
+        )
+        imported_product = imported_variant.product
+        expect(imported_product.name).to eq "Our tomatoes"
+        expect(imported_product.description).to eq "Choose a variety."
+      end
+
       context "when spree_product_uri doesn't match the server host" do
         let(:supplied_product) do
           DfcProvider::SuppliedProduct.new(

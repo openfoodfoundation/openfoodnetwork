@@ -12,6 +12,15 @@ class ProductGroupBuilder < DfcBuilder
 
     DataFoodConsortium::Connector::SuppliedProduct.new(
       id, variants:,
+          name: product.name,
     )
+  end
+
+  def self.apply(supplied_product, spree_product)
+    description = supplied_product.isVariantOf.first.try(:description) ||
+                  supplied_product.description
+    name = supplied_product.isVariantOf.first.try(:name)
+    spree_product.description = description if description.present?
+    spree_product.name = name if name.present?
   end
 end
