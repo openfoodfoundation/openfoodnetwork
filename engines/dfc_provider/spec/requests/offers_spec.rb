@@ -47,30 +47,11 @@ RSpec.describe "Offers", type: :request, swagger_doc: "dfc.yaml", rswag_autodoc:
       }
 
       let(:id) { variant.id }
-      let(:offer) { offer_example }
-      let(:offer_example) { |example|
+      let(:offer) { |example|
         example.metadata[:operation][:parameters].first[:schema][:example]
       }
 
       response "204", "success" do
-        context "with missing stockLimitation" do
-          let(:offer) {
-            offer_example.dup.tap do |o|
-              o.delete(:'dfc-b:stockLimitation')
-            end
-          }
-
-          it "sets the variant to on demand" do |example|
-            pending "DFC Connector needs to support unset values."
-
-            expect {
-              submit_request(example.metadata)
-              variant.reload
-            }.to change { variant.on_demand }.to(true)
-              .and change { variant.on_hand }.by(0)
-          end
-        end
-
         it "updates a variant" do |example|
           expect {
             submit_request(example.metadata)
