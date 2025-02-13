@@ -13,9 +13,13 @@ class DfcCatalog
     @graph = graph
   end
 
+  # List all products in this catalog.
+  # These are SuppliedProduct objects which may be grouped as variants.
+  # But we don't return the parent products having variants.
   def products
     @products ||= @graph.select do |subject|
-      subject.is_a? DataFoodConsortium::Connector::SuppliedProduct
+      subject.is_a?(DataFoodConsortium::Connector::SuppliedProduct) &&
+        subject.variants.blank?
     end
   end
 

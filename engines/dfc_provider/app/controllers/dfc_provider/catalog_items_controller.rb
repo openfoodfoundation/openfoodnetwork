@@ -19,6 +19,7 @@ module DfcProvider
         *person.affiliatedOrganizations,
         *person.affiliatedOrganizations.flat_map(&:catalogItems),
         *person.affiliatedOrganizations.flat_map(&:catalogItems).map(&:product),
+        *person.affiliatedOrganizations.flat_map(&:catalogItems).map(&:product).flat_map(&:isVariantOf),
         *person.affiliatedOrganizations.flat_map(&:catalogItems).flat_map(&:offers),
       )
     end
