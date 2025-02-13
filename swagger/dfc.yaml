@@ -182,6 +182,7 @@ paths:
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                     - "@id": http://test.host/api/dfc/enterprises/10000/product_groups/90000
                       "@type": dfc-b:SuppliedProduct
+                      dfc-b:name: Apple
                       dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
                     - "@id": http://test.host/api/dfc/enterprises/10000/offers/10001
                       "@type": dfc-b:Offer
@@ -584,6 +585,7 @@ paths:
                     "@context": https://www.datafoodconsortium.org
                     "@id": http://test.host/api/dfc/enterprises/10000/product_groups/90000
                     "@type": dfc-b:SuppliedProduct
+                    dfc-b:name: Pesto
                     dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
   "/api/dfc/enterprises/{enterprise_id}/social_medias/{name}":
     get:
