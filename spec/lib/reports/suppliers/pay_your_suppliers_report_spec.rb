@@ -139,8 +139,7 @@ RSpec.describe "Pay Your Suppliers Report" do
       before do
         supplier.update!(charges_sales_tax: false)
       end
-
-      it "Generates the report" do
+      it "Generates the report, without displaying taxes" do
         expect(report_table_rows.length).to eq(1)
         table_row = report_table_rows.first
 
@@ -152,6 +151,32 @@ RSpec.describe "Pay Your Suppliers Report" do
         expect(table_row.total_tax_on_product.to_f).to eq(0.0)
         expect(table_row.total_tax.to_f).to eq(0.00)
         expect(table_row.total.to_f).to eq(10.1)
+      end
+    end
+
+    context "fee is owned by the hub" do
+      before do
+        enterprise_fee.update(enterprise: hub)
+        order.create_tax_charge!
+      end
+
+      it "Generates the report, without displaying enterprise fees" do
+        # enterprise fee exists on the order
+        fee = Spree::Adjustment.where(originator_type: "EnterpriseFee")[0]
+        expect(fee.amount.to_f).to eq(0.1)
+
+        # but is not displayed on the report
+        expect(report_table_rows.length).to eq(1)
+        table_row = report_table_rows.first
+
+        expect(table_row.producer_charges_gst).to eq('No')
+        expect(table_row.total_excl_fees_and_tax.to_f).to eq(10.0)
+        expect(table_row.total_excl_vat.to_f).to eq(10.0)
+        expect(table_row.total_fees_excl_tax.to_f).to eq(0.0)
+        expect(table_row.total_tax_on_fees.to_f).to eq(0.00)
+        expect(table_row.total_tax_on_product.to_f).to eq(0.0)
+        expect(table_row.total_tax.to_f).to eq(0.00)
+        expect(table_row.total.to_f).to eq(10.0)
       end
     end
   end
