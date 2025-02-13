@@ -28,4 +28,23 @@ RSpec.describe DfcBuilder do
       )
     end
   end
+
+  describe ".apply_stock" do
+    let(:item) { CatalogItemBuilder.catalog_item(variant) }
+
+    it "updates from on-demand to out-of-stock" do
+      variant.save!
+      variant.on_demand = true
+      variant.on_hand = -3
+
+      item.stockLimitation = 0
+
+      expect {
+        CatalogItemBuilder.apply_stock(item, variant)
+        variant.save!
+      }
+        .to change { variant.on_demand }.to(false)
+        .and change { variant.on_hand }.to(0)
+    end
+  end
 end
