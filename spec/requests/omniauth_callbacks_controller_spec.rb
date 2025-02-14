@@ -35,6 +35,20 @@ RSpec.describe '/user/spree_user/auth/openid_connect/callback', type: :request d
       expect(account.uid).to eq "ofn@example.com"
       expect(response.status).to eq(302)
     end
+
+    context 'when OIDC account already linked with a different user' do
+      before do
+        create(:user, email: "ofn@elsewhere.com")
+          .create_oidc_account!(uid: "ofn@example.com")
+      end
+
+      it 'fails with error message' do
+        expect { request! }.not_to change { OidcAccount.count }
+
+        expect(response.status).to eq(302)
+        expect(flash[:error]).to match "ofn@example.com is already associated with another account"
+      end
+    end
   end
 
   context 'when the omniauth openid_connect is mocked with an error' do
@@ -46,6 +60,7 @@ RSpec.describe '/user/spree_user/auth/openid_connect/callback', type: :request d
       expect { request! }.not_to change { OidcAccount.count }
 
       expect(response.status).to eq(302)
+      expect(flash[:error]).to match "Could not sign in"
     end
   end
 end
