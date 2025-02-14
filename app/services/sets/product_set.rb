@@ -127,11 +127,15 @@ module Sets
       on_demand = variant_attributes.delete(:on_demand)
 
       variant = product.variants.create(variant_attributes)
+
       return variant if variant.errors.present?
 
       begin
-        variant.on_demand = on_demand if on_demand.present?
-        variant.on_hand = on_hand.to_i if on_hand.present?
+        if on_hand || on_demand
+          create_stock_for_variant(variant, on_demand, on_hand)
+        else
+          create_stock_for_variant_from_desired(variant)
+        end
       rescue StandardError => e
         notify_bugsnag(e, product, variant, variant_attributes)
         raise e
@@ -152,6 +156,16 @@ module Sets
         report.add_metadata(:product_set, :product_error, product.errors.first) if !product.valid?
         report.add_metadata(:product_set, :variant_error, variant.errors.first) if !variant.valid?
       end
+    end
+
+    def create_stock_for_variant(variant, on_demand, on_hand)
+      variant.on_demand = on_demand if on_demand.present?
+      variant.on_hand = on_hand.to_i if on_hand.present?
+    end
+
+    def create_stock_for_variant_from_desired(variant)
+      variant.on_demand = variant.on_demand_desired if variant.on_demand_desired.present?
+      variant.on_hand = variant.on_hand_desired.to_i if variant.on_hand_desired.present?
     end
   end
 end

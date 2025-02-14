@@ -160,6 +160,7 @@ Metrics/ClassLength:
     - 'app/services/cart_service.rb'
     - 'app/services/order_cycles/form_service.rb'
     - 'app/services/orders/sync_service.rb'
+    - 'app/services/sets/product_set.rb'
     - 'engines/order_management/app/services/order_management/order/updater.rb'
     - 'lib/open_food_network/enterprise_fee_calculator.rb'
     - 'lib/open_food_network/order_cycle_form_applicator.rb'
