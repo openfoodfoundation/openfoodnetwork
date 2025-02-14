@@ -3175,6 +3175,8 @@ en_FR:
   report_header_item_fees_price: "Item + Fees (%{currency})"
   report_header_admin_handling_fees: "Admin & Handling (%{currency})"
   report_header_ship_price: "Ship (%{currency})"
+  report_header_producer_charges_gst: Producer charges GST?
+  report_header_total_tax_on_product: "Total tax on product (%{currency})"
   report_header_pay_fee_price: "Pay fee (%{currency})"
   report_header_total_price: "Total (%{currency})"
   report_header_product_total_price: "Product Total (%{currency})"
@@ -3754,9 +3756,39 @@ en_FR:
     sack:
       one: "sack"
       other: "sacks"
+    bucket:
+      one: "buckets"
+      other: "buckets"
+    pail:
+      one: pails
+      other: pails
+    stem:
+      one: "stems"
+      other: "stems"
+    plug:
+      one: "plugs"
+      other: "plugs"
+    plant:
+      one: "plants"
+      other: "plants"
     bundle:
       one: "bundle"
       other: "bundles"
+    bulb:
+      one: "bulbs"
+      other: "bulbs"
+    root:
+      one: "roots"
+      other: "roots"
+    tuber:
+      one: "tubers"
+      other: "tubers"
+    corm:
+      one: "corms"
+      other: "corms"
+    crate:
+      one: "crates"
+      other: "crates"
   producers:
     signup:
       start_free_profile: "Start with a free profile, and expand when you're ready!"
@@ -4453,6 +4485,7 @@ en_FR:
         form:
           disabled: "Disabled?"
           email: "Email"
+          admin: "Super admin?"
           enterprise_limit: "Enterprise Limit"
           confirm_password: "Confirm Password"
           password: "Password"
