@@ -14,7 +14,7 @@ module DfcProvider
 
       return head :bad_request unless supplied_product
 
-      variant = SuppliedProductBuilder.store_product(
+      variant = SuppliedProductImporter.store_product(
         supplied_product,
         current_enterprise,
       )
@@ -33,7 +33,7 @@ module DfcProvider
 
       return head :bad_request unless supplied_product
 
-      SuppliedProductBuilder.update_product(supplied_product, variant)
+      SuppliedProductImporter.update_product(supplied_product, variant)
     end
 
     private

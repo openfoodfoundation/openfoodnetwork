@@ -33,8 +33,8 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       produces "application/json"
 
       response "200", "Customers list" do
-        param(:enterprise_id) { enterprise1.id }
-        param("extra_fields[customer]") { :balance }
+        let(:enterprise_id) { enterprise1.id }
+        let("extra_fields[customer]") { :balance }
         schema '$ref': "#/components/schemas/customers_collection"
 
         run_test!
@@ -176,7 +176,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       }
 
       response "201", "Minimal customer created" do
-        param(:customer) do
+        let(:customer) do
           {
             email: "test@example.com",
             enterprise_id: enterprise1.id.to_s
@@ -196,7 +196,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       end
 
       response "201", "Example customer created" do
-        param(:customer) do
+        let(:customer) do
           CustomerSchema.writable_attributes.transform_values do |attribute|
             attribute[:example]
           end.merge(
@@ -219,7 +219,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       end
 
       response "422", "Unpermitted parameter" do
-        param(:customer) do
+        let(:customer) do
           {
             email: "test@example.com",
             enterprise_id: enterprise1.id.to_s,
@@ -234,7 +234,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       end
 
       response "422", "Unprocessable entity" do
-        param(:customer) { {} }
+        let(:customer) { {} }
         schema '$ref': "#/components/schemas/error_response"
 
         run_test! do
@@ -252,7 +252,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       produces "application/json"
 
       response "200", "Customer" do
-        param(:id) { customer1.id }
+        let(:id) { customer1.id }
         schema CustomerSchema.schema(
           require_all: true,
           extra_fields: { name: :balance, required: true }
@@ -269,7 +269,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       end
 
       response "404", "Not found" do
-        param(:id) { 0 }
+        let(:id) { 0 }
         schema '$ref': "#/components/schemas/error_response"
 
         run_test! do
@@ -281,7 +281,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
         before { logout }
 
         response "401", "Unauthorized" do
-          param(:id) { customer1.id }
+          let(:id) { customer1.id }
           schema '$ref': "#/components/schemas/error_response"
 
           run_test! do
@@ -350,8 +350,8 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       }
 
       response "200", "Customer updated" do
-        param(:id) { customer1.id }
-        param(:customer) do
+        let(:id) { customer1.id }
+        let(:customer) do
           {
             email: "test@example.com",
             enterprise_id: enterprise1.id.to_s
@@ -421,8 +421,8 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       end
 
       response "422", "Unprocessable entity" do
-        param(:id) { customer1.id }
-        param(:customer) { {} }
+        let(:id) { customer1.id }
+        let(:customer) { {} }
         schema '$ref': "#/components/schemas/error_response"
 
         run_test!
@@ -435,7 +435,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       produces "application/json"
 
       response "200", "Customer deleted" do
-        param(:id) { customer1.id }
+        let(:id) { customer1.id }
         schema '$ref': "#/components/schemas/customer"
 
         run_test!
@@ -450,7 +450,7 @@ RSpec.describe "Customers", type: :request, swagger_doc: "v1.yaml", feature: :ap
       produces "application/json"
 
       response "200", "Customers list" do
-        param(:enterprise_id) { enterprise1.id }
+        let(:enterprise_id) { enterprise1.id }
         schema '$ref': "#/components/schemas/customers_collection"
 
         run_test!

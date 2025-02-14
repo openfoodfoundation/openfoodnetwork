@@ -28,9 +28,9 @@ module Admin
         existing_variant = enterprise.supplied_variants.linked_to(subject.semanticId)
 
         if existing_variant
-          SuppliedProductBuilder.update_product(subject, existing_variant)
+          SuppliedProductImporter.update_product(subject, existing_variant)
         else
-          SuppliedProductBuilder.store_product(subject, enterprise)
+          SuppliedProductImporter.store_product(subject, enterprise)
         end
       end
 

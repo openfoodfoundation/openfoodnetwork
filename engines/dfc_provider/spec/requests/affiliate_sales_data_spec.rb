@@ -2,7 +2,7 @@
 
 require_relative "../swagger_helper"
 
-RSpec.describe "AffiliateSalesData", swagger_doc: "dfc.yaml", rswag_autodoc: true do
+RSpec.describe "AffiliateSalesData", swagger_doc: "dfc.yaml" do
   let(:user) { create(:oidc_user) }
 
   before { login_as user }

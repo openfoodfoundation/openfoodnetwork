@@ -4,17 +4,10 @@ class DfcLoader
   def self.connector
     unless @connector
       @connector = DataFoodConsortium::Connector::Connector.instance
-      load_context
       load_vocabularies
     end
 
     @connector
-  end
-
-  def self.load_context
-    JSON::LD::Context.add_preloaded("http://www.datafoodconsortium.org/") {
-      JSON::LD::Context.parse(read_file("context_1.8.2")["@context"])
-    }
   end
 
   def self.vocabulary(name)
