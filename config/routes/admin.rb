@@ -69,7 +69,9 @@ Openfoodnetwork::Application.routes.draw do
     post '/product_import/save_data', to: 'product_import#save_data', as: 'product_import_save_async'
     post '/product_import/reset_absent', to: 'product_import#reset_absent_products', as: 'product_import_reset_async'
 
-    resources :dfc_product_imports, only: [:index]
+    resources :dfc_product_imports, only: [:index] do
+      post :import, on: :collection
+    end
 
     constraints FeatureToggleConstraint.new(:admin_style_v3) do
       # This might be easier to arrange once we rename the controller to plain old "products"

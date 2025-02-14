@@ -5,32 +5,52 @@ require "private_address_check/tcpsocket_ext"
 
 module Admin
   class DfcProductImportsController < Spree::Admin::BaseController
+    before_action :load_enterprise
+
     # Define model class for `can?` permissions:
     def model_class
       self.class
     end
 
     def index
-      # The plan:
-      #
-      # * Fetch DFC catalog as JSON from URL.
-      enterprise = OpenFoodNetwork::Permissions.new(spree_current_user)
-        .managed_product_enterprises.is_primary_producer
-        .find(params.require(:enterprise_id))
+      # Fetch DFC catalog JSON for preview
+      api = DfcRequest.new(spree_current_user)
+      @catalog_url = params.require(:catalog_url)
+      @catalog_json = api.call(@catalog_url)
+      graph = DfcIo.import(@catalog_json)
+      catalog = DfcCatalog.new(graph)
 
-      catalog_url = params.require(:catalog_url)
-      catalog = DfcCatalog.load(spree_current_user, catalog_url)
+      # Render table and let user decide which ones to import.
+      @items = catalog.products.map do |subject|
+        [
+          subject,
+          @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
+        ]
+      end
+    rescue Faraday::Error,
+           Addressable::URI::InvalidURIError,
+           ActionController::ParameterMissing => e
+      flash[:error] = e.message
+      redirect_to admin_product_import_path
+    end
+
+    def import
+      ids = params.require(:semanticIds)
+
+      # Load DFC catalog JSON
+      graph = DfcIo.import(params.require(:catalog_json))
+      catalog = DfcCatalog.new(graph)
       catalog.apply_wholesale_values!
 
-      # * First step: import all products for given enterprise.
-      # * Second step: render table and let user decide which ones to import.
-      imported = catalog.products.map do |subject|
-        existing_variant = enterprise.supplied_variants.linked_to(subject.semanticId)
+      # Import all selected products for given enterprise.
+      imported = ids.map do |semantic_id|
+        subject = catalog.item(semantic_id)
+        existing_variant = @enterprise.supplied_variants.linked_to(semantic_id)
 
         if existing_variant
           SuppliedProductBuilder.update_product(subject, existing_variant)
         else
-          SuppliedProductBuilder.store_product(subject, enterprise)
+          SuppliedProductBuilder.store_product(subject, @enterprise)
         end
       end
 
@@ -40,6 +60,14 @@ module Admin
            ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
+    end
+
+    private
+
+    def load_enterprise
+      @enterprise = OpenFoodNetwork::Permissions.new(spree_current_user)
+        .managed_product_enterprises.is_primary_producer
+        .find(params.require(:enterprise_id))
     end
   end
 end

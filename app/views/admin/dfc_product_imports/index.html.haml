@@ -3,5 +3,29 @@
 
 = render partial: 'spree/admin/shared/product_sub_menu'
 
-%p= t(".imported_products")
-= @count
+%p= t('.catalog_url', count: @items.count, catalog_url: @catalog_url)
+%p= t('.enterprise', enterprise_name: @enterprise.name)
+%br
+
+= form_with url: main_app.import_admin_dfc_product_imports_path do |form|
+  -# This is a very inefficient way of holding a json blob. Maybe base64 encode or store as a temporary file
+  = form.hidden_field :enterprise_id, value: @enterprise.id
+  = form.hidden_field :catalog_json, value: @catalog_json
+
+  %table
+    %tbody
+      - @items.each do |supplied_product, existing_product|
+        %tr{id: supplied_product.semanticId }
+          %td
+            %label
+              = form.check_box 'semanticIds[]', { checked: true }, supplied_product.semanticId, ""
+              = supplied_product.name
+          %td
+            - if existing_product.present?
+              = t(".update")
+              = link_to(existing_product.id, edit_admin_product_path(existing_product))
+            - else
+              = t(".new")
+
+  %br
+  = form.submit t(".import")
