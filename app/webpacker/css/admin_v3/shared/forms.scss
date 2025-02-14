@@ -14,11 +14,10 @@ input[type="datetime"],
 input[type="time"],
 input[type="number"],
 textarea {
-  @include border-radius($border-radius);
   padding: ($vpadding-txt - 1px) ($hpadding-txt - 1px); // Minus 1px for border
-  border: 1px solid $color-txt-brd;
+  border: $border-input;
+  border-radius: $border-radius;
   color: $color-txt-text;
-  background-color: $color-txt-bg;
   font-size: 14px;
   line-height: 22px;
 

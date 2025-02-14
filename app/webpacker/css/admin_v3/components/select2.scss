@@ -1,4 +1,10 @@
 .select2-container {
+  border: $border-input;
+  border-radius: $border-radius;
+  padding-bottom: 7px;  // hack to make the height match other inputs
+}
+
+.select2-container {
   &:hover .select2-choice,
   &.select2-container-active .select2-choice {
     background-color: $color-sel-hover-bg !important;
@@ -6,7 +12,6 @@
   }
   .select2-choice {
     background-image: none !important;
-    background-color: $color-sel-bg;
     border: none !important;
     box-shadow: none !important;
     @include border-radius($border-radius);
@@ -40,7 +45,7 @@
 }
 
 .select2-drop {
-  border-color: $color-sel-hover-bg;
+  border-color: $color-txt-brd;
   box-shadow: none !important;
   z-index: 1000000;
 
@@ -141,6 +146,7 @@
   }
   .select2-choices {
     @extend input, [type="text"];
+    border: none;
     padding: 6px 3px 3px 3px;
     box-shadow: none;
     background-image: none !important;

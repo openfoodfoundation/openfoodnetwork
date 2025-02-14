@@ -146,6 +146,7 @@ $h2-size:                        $h3-size + 2 !default;
 $h1-size:                        $h2-size + 2 !default;
 
 $border-radius:                  3px !default;
+$border-input:                   1px solid #2e3132; // Copied over from admin_v3 variables as a temporary solution
 
 $font-weight-bold:               600 !default;
 $font-weight-normal:             400 !default;
