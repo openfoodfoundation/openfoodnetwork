@@ -162,6 +162,9 @@ module Spree
       end
     end
 
+    def can_manage_line_items_in_orders_only?
+      !can_manage_orders? && can_manage_line_items_in_orders?
+    end
 
     protected
 
