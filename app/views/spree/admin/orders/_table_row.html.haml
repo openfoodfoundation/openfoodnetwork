@@ -34,10 +34,11 @@
       %span.state{ class: order.shipment_state.to_s}
         = t('js.admin.orders.shipment_states.' + order.shipment_state.to_s)
   %td
-    %a{ href: "mailto:#{order.email}", target: "_blank" }
-      = order.email
+    - email_value = display_value_for_producer(order, order.email)
+    %a{ href: "mailto:#{email_value}", target: "_blank" }
+      = email_value
   %td
-    = order&.bill_address&.full_name_for_sorting
+    = display_value_for_producer(order, order.bill_address&.full_name_for_sorting)
   %td.align-left
     %span
       = order.display_total
