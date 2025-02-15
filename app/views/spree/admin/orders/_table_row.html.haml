@@ -51,5 +51,5 @@
         = render ShipOrderComponent.new(order: order)
       = render partial: 'admin/shared/tooltip_button', locals: {button_class: "icon-road icon_link with-tip no-text", reflex_data_id: order.id.to_s, tooltip_text: t('spree.admin.orders.index.ship'), shipment: true}
 
-    - if order.payment_required? && order.pending_payments.reject(&:requires_authorization?).any?
+    - if can?(:update, Spree::Payment) && order.payment_required? && order.pending_payments.reject(&:requires_authorization?).any?
       = render partial: 'admin/shared/tooltip_button', locals: {button_class: "icon-capture icon_link no-text", button_reflex: "click->Admin::OrdersReflex#capture", reflex_data_id: order.id.to_s,  tooltip_text: t('spree.admin.orders.index.capture')}
