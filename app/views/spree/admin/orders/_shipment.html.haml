@@ -62,7 +62,7 @@
 
         - if shipment.fee_adjustment.present? && shipment.can_modify?
           %td.actions
-            - if can? :update, shipment
+            - if can? :update, shipment.shipping_method
               = link_to '', '', :class => 'edit-method icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
 
       %tr.edit-tracking.hidden.total
@@ -86,7 +86,7 @@
             = Spree.t(:no_tracking_present)
 
         %td.actions
-          - if can?(:update, shipment) && shipment.can_modify?
+          - if spree_current_user.can_manage_orders? && can?(:update, shipment) && shipment.can_modify?
             = link_to '', '', :class => 'edit-tracking icon_link icon-edit no-text with-tip', :data => { :action => 'edit' }, :title => Spree.t('edit')
             - if shipment.tracking.present?
               = link_to '', '', :class => 'delete-tracking icon_link icon-trash no-text with-tip', :data => { 'shipment-number' => shipment.number, :action => 'remove' }, :title => Spree.t('delete')
