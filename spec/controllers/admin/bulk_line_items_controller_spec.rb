@@ -123,8 +123,24 @@ RSpec.describe Admin::BulkLineItemsController, type: :controller do
           get :index, as: :json
         end
 
-        it "does not display line items for which my enterprise is a supplier" do
-          expect(response).to redirect_to unauthorized_path
+        context "with no distributor allows to edit orders" do
+          before { get :index, as: :json }
+
+          it "does not display line items for which my enterprise is a supplier" do
+            expect(response).to redirect_to unauthorized_path
+          end
+        end
+
+        context "with distributor allows to edit orders" do
+          before do
+            distributor1.update_columns(enable_producers_to_edit_orders: true)
+            get :index, as: :json
+          end
+
+          it "retrieves a list of line_items from the supplier" do
+            keys = json_response['line_items'].first.keys.map(&:to_sym)
+            expect(line_item_attributes.all?{ |attr| keys.include? attr }).to eq(true)
+          end
         end
       end
 

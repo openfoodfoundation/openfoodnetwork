@@ -19,8 +19,9 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
   let!(:oc3) { create(:simple_order_cycle, distributors: [d2], variants: [v4]) }
   let!(:s1) { create(:schedule, order_cycles: [oc1]) }
   let!(:s2) { create(:schedule, order_cycles: [oc2]) }
+  let(:spree_current_user) { create(:user) }
 
-  let(:scoper) { OpenFoodNetwork::ScopeVariantsForSearch.new(params) }
+  let(:scoper) { OpenFoodNetwork::ScopeVariantsForSearch.new(params, spree_current_user) }
 
   describe "search" do
     let(:result) { scoper.search }
@@ -66,10 +67,20 @@ RSpec.describe OpenFoodNetwork::ScopeVariantsForSearch do
 
       it "returns all products distributed through that distributor" do
         expect{ result }.to query_database [
+          "TRANSACTION",
+          "Spree::User Exists?",
+          "Spree::User Create",
+          "Customer Load",
+          "Customer Load",
+          "Spree::Order Load",
+          "TRANSACTION",
           "Enterprise Load",
           "VariantOverride Load",
-          "SQL"
+          "SQL",
+          "Enterprise Pluck",
+          "Enterprise Load"
         ]
+
         expect(result).to include v4
         expect(result).not_to include v1, v2, v3
       end

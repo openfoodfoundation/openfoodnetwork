@@ -84,11 +84,25 @@ module Api
         context 'producer enterprise' do
           before do
             allow(controller).to receive(:spree_current_user) { supplier.owner }
-            get :index
           end
 
-          it "does not display line items for which my enterprise is a supplier" do
-            assert_unauthorized!
+          context "with no distributor allows to edit orders" do
+            before { get :index }
+
+            it "does not display line items for which my enterprise is a supplier" do
+              assert_unauthorized!
+            end
+          end
+
+          context "with distributor allows to edit orders" do
+            before do
+              distributor.update_columns(enable_producers_to_edit_orders: true)
+              get :index
+            end
+
+            it "retrieves a list of orders which have my supplied products" do
+              returns_orders(json_response)
+            end
           end
         end
 
