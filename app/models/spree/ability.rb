@@ -47,7 +47,11 @@ module Spree
       add_group_management_abilities user if can_manage_groups? user
       add_product_management_abilities user if can_manage_products? user
       add_order_cycle_management_abilities user if can_manage_order_cycles? user
-      add_order_management_abilities user if can_manage_orders? user
+      if can_manage_orders? user
+        add_order_management_abilities user
+      elsif can_manage_line_items_in_orders? user
+        add_manage_line_items_abilities user
+      end
       add_relationship_management_abilities user if can_manage_relationships? user
     end
 
@@ -81,7 +85,13 @@ module Spree
 
     # Users can manage orders if they have a sells own/any enterprise.
     def can_manage_orders?(user)
-      ( user.enterprises.map(&:sells) & %w(own any) ).any?
+      user.can_manage_orders?
+    end
+
+    # Users can manage line items in orders if they have producer enterprise and
+    # any of order distributors allow them to edit their orders.
+    def can_manage_line_items_in_orders?(user)
+      user.can_manage_line_items_in_orders?
     end
 
     def can_manage_relationships?(user)
@@ -340,6 +350,15 @@ module Spree
       end
       can [:admin, :edit, :cancel, :resume], ProxyOrder do |proxy_order|
         user.enterprises.include?(proxy_order.subscription.shop)
+      end
+    end
+
+    def add_manage_line_items_abilities(user)
+      can [:admin, :read, :index], Spree::Order do |order|
+        if order.distributor&.enable_producers_to_edit_orders
+          user_enterprises_ids = user.enterprises.ids
+          order.variants.any? { |variant| user_enterprises_ids.include?(variant.supplier_id) }
+        end
       end
     end
 

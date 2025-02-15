@@ -171,6 +171,14 @@ module Spree
     scope :invoiceable, -> { where(state: [:complete, :resumed]) }
     scope :by_state, lambda { |state| where(state:) }
     scope :not_state, lambda { |state| where.not(state:) }
+    scope :editable_by_producers, ->(enterprises) {
+      joins(
+        :distributor, line_items: :supplier
+      ).where(
+        supplier: { id: enterprises.ids },
+        distributor: { enable_producers_to_edit_orders: true }
+      )
+    }
 
     def initialize(*_args)
       @checkout_processing = nil
