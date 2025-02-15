@@ -159,6 +159,11 @@ module Spree
           spree_current_user.can_manage_line_items_in_orders_only?
       end
 
+      def display_value_for_producer(order, value)
+        return value unless distributor_allows_order_editing?(order)
+
+        order.distributor&.show_customer_names_to_suppliers ? value : t("admin.reports.hidden")
+      end
     end
   end
 end
