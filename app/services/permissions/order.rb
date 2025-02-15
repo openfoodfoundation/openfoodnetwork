@@ -43,7 +43,13 @@ module Permissions
 
     # Any line items that I can edit
     def editable_line_items
-      Spree::LineItem.where(order_id: editable_orders.select(:id))
+      if @user.can_manage_line_items_in_orders_only?
+        Spree::LineItem.editable_by_producers(
+          @permissions.managed_enterprises.select("enterprises.id")
+        )
+      else
+        Spree::LineItem.where(order_id: editable_orders.select(:id))
+      end
     end
 
     private

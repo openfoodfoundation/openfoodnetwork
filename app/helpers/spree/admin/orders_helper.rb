@@ -142,6 +142,23 @@ module Spree
         end
         number_field_tag :quantity, manifest_item.quantity, html_options
       end
+
+      def prepare_shipment_manifest(shipment)
+        manifest = shipment.manifest
+
+        if distributor_allows_order_editing?(shipment.order)
+          supplier_ids = spree_current_user.enterprises.ids
+          manifest.select! { |mi| supplier_ids.include?(mi.variant.supplier_id) }
+        end
+
+        manifest
+      end
+
+      def distributor_allows_order_editing?(order)
+        order.distributor&.enable_producers_to_edit_orders &&
+          spree_current_user.can_manage_line_items_in_orders_only?
+      end
+
     end
   end
 end

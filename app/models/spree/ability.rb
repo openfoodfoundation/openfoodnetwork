@@ -354,12 +354,22 @@ module Spree
     end
 
     def add_manage_line_items_abilities(user)
-      can [:admin, :read, :index], Spree::Order do |order|
-        if order.distributor&.enable_producers_to_edit_orders
-          user_enterprises_ids = user.enterprises.ids
-          order.variants.any? { |variant| user_enterprises_ids.include?(variant.supplier_id) }
-        end
+      can_edit_order_lambda = lambda do |order|
+        return unless order.distributor&.enable_producers_to_edit_orders
+
+        order.variants.any? { |variant| user.enterprises.ids.include?(variant.supplier_id) }
       end
+
+      can [:admin, :read, :index, :edit, :update], Spree::Order do |order|
+        can_edit_order_lambda.call(order)
+      end
+      can [:admin, :index, :create, :destroy, :update], Spree::LineItem do |item|
+        can_edit_order_lambda.call(item.order)
+      end
+      can [:index, :create, :add, :read, :edit, :update], Spree::Shipment do |shipment|
+        can_edit_order_lambda.call(shipment.order)
+      end
+
     end
 
     def add_relationship_management_abilities(user)

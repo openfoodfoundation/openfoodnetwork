@@ -1,4 +1,4 @@
-- shipment.manifest.each do |item|
+- prepare_shipment_manifest(shipment).each do |item|
   - line_item = order.find_line_item_by_variant(item.variant)
 
   - if line_item.present?
