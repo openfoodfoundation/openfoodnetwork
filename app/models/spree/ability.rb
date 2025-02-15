@@ -360,7 +360,7 @@ module Spree
         order.variants.any? { |variant| user.enterprises.ids.include?(variant.supplier_id) }
       end
 
-      can [:admin, :read, :index, :edit, :update], Spree::Order do |order|
+      can [:admin, :read, :index, :edit, :update, :bulk_management], Spree::Order do |order|
         can_edit_order_lambda.call(order)
       end
       can [:admin, :index, :create, :destroy, :update], Spree::LineItem do |item|
@@ -370,6 +370,7 @@ module Spree
         can_edit_order_lambda.call(shipment.order)
       end
 
+      can [:visible], Enterprise
     end
 
     def add_relationship_management_abilities(user)
