@@ -3,6 +3,11 @@
 require 'sidekiq/api'
 
 namespace :ofn do
+  task reset_sample_data: :environment do
+    Rake::Task["ofn:reset"].invoke
+    Rake::Task["ofn:sample_data"].invoke
+  end
+
   task reset: :environment do
     Rake::Task["ofn:reset_sidekiq"].invoke
     Rake::Task["db:reset"].invoke
