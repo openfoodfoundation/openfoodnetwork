@@ -33,7 +33,14 @@ module Spree
         end
 
         describe "#update" do
-          let!(:variant) { create(:variant, display_name: "Tomatoes", sku: 123, supplier: producer) }
+          let!(:variant) {
+            create(
+              :variant,
+              display_name: "Tomatoes",
+              sku: 123,
+              supplier: producer
+            )
+          }
           let(:producer) { create(:enterprise) }
 
           it "updates the variant" do
