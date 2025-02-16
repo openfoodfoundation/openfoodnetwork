@@ -1,7 +1,7 @@
 .admin-orders-index-search {
-  .inline-checkbox {
-    // Ensure it lines up with other fields
-    min-height: 5.4em;
+  // Ensure all fields have same min. height so they align well
+  .field {
+    min-height: 6em;
   }
 }
 
