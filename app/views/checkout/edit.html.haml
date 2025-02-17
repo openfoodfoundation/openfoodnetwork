@@ -21,27 +21,7 @@
 
   %div{ "data-controller": "guest-checkout", "data-guest-checkout-distributor-value": @order.distributor.id }
     - if @any_out_of_stock
-      = render ModalComponent.new(id: "out-of-stock-items", modal_class: "medium" ,instant: true, close_button: false) do
-        - # please update app/assets/javascripts/templates/out_of_stock.html.haml if updating the modal html
-        %a.close-reveal-modal{"data-action": "click->modal#close" }
-          %i.ofn-i_009-close
-        %h3
-          = t("js.out_of_stock.reduced_stock_available")
-        %p
-          = t("js.out_of_stock.out_of_stock_text")
-        - @updated_variants.each do |variant|
-          - if variant.on_hand == 0
-            %p
-              %em
-                = "#{variant.name_to_display} - #{variant.unit_to_display}"
-                %span
-                  = t("js.out_of_stock.now_out_of_stock")
-          - if variant.on_hand > 0
-            %p
-              %em
-                = "#{variant.name_to_display} - #{variant.unit_to_display}"
-                %span
-                  = t("js.out_of_stock.only_n_remaining", num: variant.on_hand)
+      = render OutOfStockModalComponent.new(id: "out-of-stock-items", variants: @updated_variants, redirect: @order.line_items.empty?)
 
     %div{ style: "display: #{spree_current_user ? 'block' : 'none'}", "data-guest-checkout-target": "checkout" }
       = render partial: "checkout"
