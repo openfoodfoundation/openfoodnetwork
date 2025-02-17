@@ -11,7 +11,7 @@ module Orders
     def sufficient_stock?
       return @sufficient_stock if defined? @sufficient_stock
 
-      @sufficient_stock ||= order.insufficient_stock_lines.blank?
+      @sufficient_stock = order.insufficient_stock_lines.blank?
     end
 
     def update_line_items
