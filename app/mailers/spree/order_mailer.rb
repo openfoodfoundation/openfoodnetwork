@@ -13,7 +13,8 @@ module Spree
       @order = find_order(order_or_order_id)
       I18n.with_locale valid_locale(@order.user) do
         mail(to: @order.email,
-             subject: mail_subject(t('spree.order_mailer.cancel_email.subject'), resend))
+             subject: mail_subject(t('spree.order_mailer.cancel_email.subject'), resend),
+             reply_to: @order.distributor.contact.email)
       end
     end
 
