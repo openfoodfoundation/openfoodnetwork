@@ -294,4 +294,59 @@ RSpec.describe Spree::Admin::OrdersController, type: :controller do
       end
     end
   end
+
+  describe "#fire" do
+    let(:order) { create(:completed_order_with_totals) }
+
+    before do
+      controller_login_as_admin
+
+      allow(Spree::Order).to receive_message_chain(:includes, :find_by!).and_return(order)
+      @request.env['HTTP_REFERER'] = spree.edit_admin_order_path(order)
+    end
+
+    %w{cancel resume}.each do |event|
+      it "calls allowed event #{event}" do
+        expect(order).to receive(:public_send).with(event)
+
+        spree_get :fire, { id: order, e: event }
+
+        expect(response).to redirect_to spree.edit_admin_order_path(order)
+      end
+    end
+
+    it "returns a success flash message" do
+      spree_get :fire, { id: order, e: "cancel" }
+
+      expect(flash[:success]).to eq "Order Updated"
+    end
+
+    it "amends back order" do
+      expect(AmendBackorderJob).to receive(:perform_later)
+
+      spree_get :fire, { id: order, e: "cancel" }
+    end
+
+    context "with a non allowed event" do
+      it "returns an error" do
+        expect(order).not_to receive(:public_send).with("state")
+
+        spree_get :fire, { id: order, e: "state" }
+
+        expect(flash[:error]).to eq "Can not perform this operation"
+        expect(response).to redirect_to spree.edit_admin_order_path(order)
+      end
+    end
+
+    context "when a GatewayError is raised" do
+      it "returns an error flash message" do
+        allow(order).to receive(:public_send).and_raise(Spree::Core::GatewayError, "Some error")
+
+        spree_get :fire, { id: order, e: "cancel" }
+
+        expect(flash[:error]).to eq "Some error"
+        expect(response).to redirect_to spree.edit_admin_order_path(order)
+      end
+    end
+  end
 end
