@@ -26,7 +26,7 @@ RSpec.describe "ProductGroups", swagger_doc: "dfc.yaml" do
 
   before { login_as user }
 
-  path "/api/dfc/enterprises/{enterprise_id}/product_groups/{id}" do
+  path "/api/dfc/product_groups/{id}" do
     parameter name: :enterprise_id, in: :path, type: :string
     parameter name: :id, in: :path, type: :string
 
@@ -39,7 +39,7 @@ RSpec.describe "ProductGroups", swagger_doc: "dfc.yaml" do
         let(:id) { product.id }
 
         run_test! do
-          expect(json_response["@id"]).to eq "http://test.host/api/dfc/enterprises/10000/product_groups/90000"
+          expect(json_response["@id"]).to eq "http://test.host/api/dfc/product_groups/90000"
 
           expect(json_response["dfc-b:hasVariant"]).to eq "http://test.host/api/dfc/enterprises/10000/supplied_products/10001"
         end

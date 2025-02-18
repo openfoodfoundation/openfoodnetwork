@@ -2,10 +2,7 @@
 
 class ProductGroupBuilder < DfcBuilder
   def self.product_group(product)
-    id = urls.enterprise_product_group_url(
-      enterprise_id: product.variants.first.supplier_id,
-      id: product.id,
-    )
+    id = urls.product_group_url(id: product.id)
     variants = product.variants.map do |spree_variant|
       SuppliedProductBuilder.semantic_id(spree_variant)
     end

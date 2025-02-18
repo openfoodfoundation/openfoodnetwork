@@ -58,7 +58,7 @@ class SuppliedProductImporter < DfcBuilder
         route = Rails.application.routes.recognize_path(group_id)
 
         # Check that the given URI points to us:
-        next if group_id != urls.enterprise_product_group_url(route)
+        next if group_id != urls.product_group_url(route)
 
         route[:id]
       rescue ActionController::RoutingError

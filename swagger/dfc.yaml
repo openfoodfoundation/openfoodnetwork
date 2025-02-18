@@ -177,10 +177,10 @@ paths:
                         "@type": dfc-b:QuantitativeValue
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
-                      dfc-b:isVariantOf: http://test.host/api/dfc/enterprises/10000/product_groups/90000
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
-                    - "@id": http://test.host/api/dfc/enterprises/10000/product_groups/90000
+                    - "@id": http://test.host/api/dfc/product_groups/90000
                       "@type": dfc-b:SuppliedProduct
                       dfc-b:name: Apple
                       dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
@@ -468,7 +468,7 @@ paths:
                         dfc-b:hasUnit: dfc-m:Gram
                         dfc-b:value: 1.0
                       dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
-                      dfc-b:isVariantOf: http://test.host/api/dfc/enterprises/10000/product_groups/90000
+                      dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                       ofn:spree_product_id: 90000
                       ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                       ofn:image: http://test.host/rails/active_storage/url/logo-white.png
@@ -558,7 +558,7 @@ paths:
                     "@type": dfc-b:Person
         '404':
           description: not found
-  "/api/dfc/enterprises/{enterprise_id}/product_groups/{id}":
+  "/api/dfc/product_groups/{id}":
     parameters:
     - name: enterprise_id
       in: path
@@ -583,7 +583,7 @@ paths:
                 test_example:
                   value:
                     "@context": https://www.datafoodconsortium.org
-                    "@id": http://test.host/api/dfc/enterprises/10000/product_groups/90000
+                    "@id": http://test.host/api/dfc/product_groups/90000
                     "@type": dfc-b:SuppliedProduct
                     dfc-b:name: Pesto
                     dfc-b:hasVariant: http://test.host/api/dfc/enterprises/10000/supplied_products/10001
@@ -650,7 +650,7 @@ paths:
                       "@type": dfc-b:QuantitativeValue
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 6.0
-                    dfc-b:isVariantOf: http://test.host/api/dfc/enterprises/10000/product_groups/90000
+                    dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
                     ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                     dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
@@ -711,7 +711,7 @@ paths:
                       dfc-b:hasUnit: dfc-m:Gram
                       dfc-b:value: 1.0
                     dfc-b:image: http://test.host/rails/active_storage/url/logo-white.png
-                    dfc-b:isVariantOf: http://test.host/api/dfc/enterprises/10000/product_groups/90000
+                    dfc-b:isVariantOf: http://test.host/api/dfc/product_groups/90000
                     ofn:spree_product_id: 90000
                     ofn:spree_product_uri: http://test.host/api/dfc/enterprises/10000?spree_product_id=90000
                     ofn:image: http://test.host/rails/active_storage/url/logo-white.png

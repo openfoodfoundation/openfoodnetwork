@@ -191,7 +191,7 @@ RSpec.describe "SuppliedProducts", type: :request, swagger_doc: "dfc.yaml" do
 
         run_test! do
           expect(response.body).to include variant.name
-          expect(json_response["dfc-b:isVariantOf"]).to eq "http://test.host/api/dfc/enterprises/10000/product_groups/90000"
+          expect(json_response["dfc-b:isVariantOf"]).to eq "http://test.host/api/dfc/product_groups/90000"
           expect(json_response["ofn:spree_product_id"]).to eq 90_000
           expect(json_response["dfc-b:hasType"]).to eq("dfc-pt:processed-vegetable")
           expect(json_response["ofn:image"]).to include("logo-white.png")

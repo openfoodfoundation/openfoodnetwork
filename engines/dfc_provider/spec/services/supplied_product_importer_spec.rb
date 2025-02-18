@@ -244,7 +244,7 @@ RSpec.describe SuppliedProductImporter do
         end
         let(:product_group) do
           DataFoodConsortium::Connector::SuppliedProduct.new(
-            "http://test.host/api/dfc/enterprises/7/product_groups/6"
+            "http://test.host/api/dfc/product_groups/6"
           )
         end
 
@@ -259,7 +259,7 @@ RSpec.describe SuppliedProductImporter do
           expect(imported_product.description).to eq("Awesome tomato")
           expect(imported_product.variant_unit).to eq("weight")
           expect(imported_product.semantic_link.semantic_id)
-            .to eq "http://test.host/api/dfc/enterprises/7/product_groups/6"
+            .to eq "http://test.host/api/dfc/product_groups/6"
         end
       end
     end
@@ -282,7 +282,7 @@ RSpec.describe SuppliedProductImporter do
       variant.save!
       supplied_product.isVariantOf <<
         DataFoodConsortium::Connector::SuppliedProduct.new(
-          "http://test.host/api/dfc/enterprises/7/product_groups/6"
+          "http://test.host/api/dfc/product_groups/6"
         )
       expect(result).to eq spree_product
     end
