@@ -13,6 +13,23 @@ RSpec.describe "Packing Reports" do
   let!(:open_datetime) { 1.month.ago.strftime("%Y-%m-%d 00:00") }
   let!(:close_datetime) { Time.zone.now.strftime("%Y-%m-%d 00:00") }
 
+  shared_examples "shipment state and shipping method specs" do |report_name|
+    it "makes shipping method and shipment state visible in #{report_name}" do
+      find('.ofn-drop-down').click
+      within ".menu" do
+        page.find("span", text: "Shipment State").click
+        page.find("span", text: "Shipping Method").click
+      end
+
+      run_report
+
+      within "table.report__table" do
+        expect(page).to have_selector("th", text: "Shipment State")
+        expect(page).to have_selector("th", text: "Shipping Method")
+      end
+    end
+  end
+
   describe "Packing reports" do
     before do
       login_as_admin
@@ -49,9 +66,9 @@ RSpec.describe "Packing Reports" do
     end
 
     describe "Pack By Customer" do
-      it "displays the report" do
-        click_link "Pack By Customer"
+      before { click_link "Pack By Customer" }
 
+      it "displays the report" do
         # pre-fills with dates
         check_prefilled_dates
 
@@ -71,8 +88,6 @@ RSpec.describe "Packing Reports" do
       end
 
       it "sorts alphabetically" do
-        click_link "Pack By Customer"
-
         # pre-fills with dates
         check_prefilled_dates
 
@@ -91,12 +106,14 @@ RSpec.describe "Packing Reports" do
         # date range is kept after form submission
         check_prefilled_dates
       end
+
+      it_behaves_like "shipment state and shipping method specs", "Pack By Customer"
     end
 
     describe "Pack By Supplier" do
-      it "displays the report" do
-        click_link "Pack By Supplier"
+      before { click_link "Pack By Supplier" }
 
+      it "displays the report" do
         # pre-fills with dates
         check_prefilled_dates
 
@@ -116,6 +133,8 @@ RSpec.describe "Packing Reports" do
         # date range is kept after form submission
         check_prefilled_dates
       end
+
+      it_behaves_like "shipment state and shipping method specs", "Pack By Supplier"
     end
   end
 
@@ -157,6 +176,8 @@ RSpec.describe "Packing Reports" do
           # date range is kept after form submission
           check_prefilled_dates
         end
+
+        it_behaves_like "shipment state and shipping method specs", "Pack By Product"
       end
     end
   end

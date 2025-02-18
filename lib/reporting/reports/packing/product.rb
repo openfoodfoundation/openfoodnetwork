@@ -7,7 +7,8 @@ module Reporting
         def table_columns
           Struct.new(:keys).new(
             [:hub, :supplier, :product, :variant, :customer_code, :first_name,
-             :last_name, :phone, :quantity, :price, :temp_controlled]
+             :last_name, :phone, :quantity, :price, :temp_controlled, :shipment_state,
+             :shipping_method]
           )
         end
 

@@ -20,6 +20,7 @@ module Reporting
             joins_variant_product.
             joins_variant_supplier.
             joins_variant_shipping_category.
+            joins_selected_shipping_methods.
             selecting(select_fields).
             ordered_by(ordering_fields)
         end
@@ -30,7 +31,7 @@ module Reporting
 
         def default_params
           # Prevent breaking change in this report by hidding new columns by default
-          { fields_to_hide: ["phone", "price"],
+          { fields_to_hide: ["phone", "price", "shipment_state", "shipping_method"],
             q: {  order_completed_at_gt: 1.month.ago.beginning_of_day,
                   order_completed_at_lt: 1.day.from_now.beginning_of_day } }
         end
@@ -54,6 +55,8 @@ module Reporting
               depth: line_item_table[:depth],
               quantity: line_item_table[:quantity],
               price: (line_item_table[:quantity] * line_item_table[:price]),
+              shipment_state: order_table[:shipment_state],
+              shipping_method: shipping_method_table[:name],
               temp_controlled: shipping_category_table[:temperature_controlled],
             }
           end
