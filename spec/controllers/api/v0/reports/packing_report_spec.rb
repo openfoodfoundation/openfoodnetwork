@@ -67,7 +67,9 @@ RSpec.describe Api::V0::ReportsController, type: :controller do
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
       "price" => (line_item.quantity * line_item.price).to_s,
-      "temp_controlled" => line_item.variant.shipping_category&.temperature_controlled
+      "temp_controlled" => line_item.variant.shipping_category&.temperature_controlled,
+      "shipment_state" => line_item.order.shipment_state,
+      "shipping_method" => line_item.order.shipping_method&.name,
     }.
       merge(dimensions(line_item)).
       merge(contacts(line_item.order.bill_address))
@@ -85,7 +87,9 @@ RSpec.describe Api::V0::ReportsController, type: :controller do
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
       "price" => (line_item.quantity * line_item.price).to_s,
-      "temp_controlled" => line_item.variant.shipping_category&.temperature_controlled
+      "temp_controlled" => line_item.variant.shipping_category&.temperature_controlled,
+      "shipment_state" => line_item.order.shipment_state,
+      "shipping_method" => line_item.order.shipping_method&.name,
     }.merge(dimensions(line_item))
   end
 

@@ -186,5 +186,12 @@ RSpec.describe "Packing Reports" do
         )
       end
     end
+
+    context "shipping method and shipment state" do
+      it "includes shipping method and shipment state" do
+        expect(report_data.first["shipping_method"]).to eq order.shipping_method.name
+        expect(report_data.first["shipment_state"]).to eq order.shipment_state
+      end
+    end
   end
 end
