@@ -31,7 +31,7 @@
         = content_tag(:span, ' *', class: 'required')
       = f.button :unit_to_display, class: "popout__button", 'aria-label': t('.unit'), 'data-popout-target': "button" do
         = @variant.unit_to_display # Show the generated summary of unit values
-      %div.popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
+      .popout__container{ style: 'display: none;', 'data-controller': 'toggle-control', 'data-popout-target': "dialog" }
         .field
           -# Show a composite field for unit_value and unit_description
           = f.hidden_field :unit_value

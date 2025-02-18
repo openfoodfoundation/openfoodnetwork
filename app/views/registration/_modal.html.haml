@@ -1,5 +1,5 @@
 %script{ type: "text/ng-template", id: "registration.html" }
-  %div#registration-modal{"ng-controller" => "RegistrationCtrl"}
+  #registration-modal{"ng-controller" => "RegistrationCtrl"}
     %div{ "ng-show": "currentStep() == 'introduction'" }
       %ng-include{ src: "'registration/introduction.html'" }
     %div{ "ng-repeat": 'step in steps', "ng-show": "currentStep() == step" }

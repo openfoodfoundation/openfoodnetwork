@@ -1,5 +1,5 @@
-%div.contact-container
-  %div.modal-centered{"ng-if" => "::enterprise.email_address || enterprise.website || enterprise.phone || enterprise.whatsapp_phone"}
+.contact-container
+  .modal-centered{"ng-if" => "::enterprise.email_address || enterprise.website || enterprise.phone || enterprise.whatsapp_phone"}
     %p.modal-header {{'contact' | t}}
     %p{"ng-if" => "::enterprise.phone", "ng-bind" => "::enterprise.phone"}
 

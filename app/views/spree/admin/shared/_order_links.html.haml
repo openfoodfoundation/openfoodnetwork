@@ -5,7 +5,7 @@
         %span
           %i.icon-check
           = I18n.t 'admin.actions'
-      %div.menu{"data-action": "click->dropdown#closeOnMenu"}
+      .menu{"data-action": "click->dropdown#closeOnMenu"}
         - order_links(@order).each do |link|
           - if link[:name] == t(:ship_order)
             %a.menu_item{ href: link[:url], target: link[:target] || "_self", data: { "modal-link-target-value": dom_id(@order, :ship), "action":  "click->modal-link#open", "controller": "modal-link" } }

@@ -3,34 +3,34 @@
 
 - @importer.enterprises_index.each do |name, attrs|
   - if name and attrs[:id] and @importer.permission_by_id?(attrs[:id])
-    %div.panel-section.import-settings
-      %div.panel-header{ "ng-click": 'togglePanel()', "ng-class": '{active: active}' }
-        %div.header-icon.success
+    .panel-section.import-settings
+      .panel-header{ "ng-click": 'togglePanel()', "ng-class": '{active: active}' }
+        .header-icon.success
           %i.fa.fa-check-circle
-        %div.header-description
+        .header-description
           = name
   - elsif name and attrs[:id]
-    %div.panel-section.import-settings
-      %div.panel-header
-        %div.header-icon.error
+    .panel-section.import-settings
+      .panel-header
+        .header-icon.error
           %i.fa.fa-warning
-        %div.header-description
+        .header-description
           = name
           %span.header-error= " - #{t('admin.product_import.import.no_permission')}"
   - elsif name
-    %div.panel-section.import-settings
-      %div.panel-header
-        %div.header-icon.error
+    .panel-section.import-settings
+      .panel-header
+        .header-icon.error
           %i.fa.fa-warning
-        %div.header-description
+        .header-description
           = name
           %span.header-error= " - #{t('admin.product_import.import.not_found')}"
   - else
-    %div.panel-section.import-settings
-      %div.panel-header
-        %div.header-icon.error
+    .panel-section.import-settings
+      .panel-header
+        .header-icon.error
           %i.fa.fa-warning
-        %div.header-description
+        .header-description
           = t('admin.product_import.import.no_name')
           %span.header-error= " - #{t('admin.product_import.import.blank_enterprise')}"
 

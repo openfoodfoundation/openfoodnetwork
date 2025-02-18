@@ -50,7 +50,7 @@
           = t 'total'
           {{ Cart.total()  | localizeCurrency }}
 
-      %div.fullwidth
+      .fullwidth
         %a.edit-cart.button.large.dark.left{href: main_app.cart_path, "ng-disabled" => "Cart.dirty || Cart.empty()", "ng-class" => "{ dirty: Cart.dirty }"}
           %div{ "ng-if": "Cart.dirty" }= t(:cart_updating)
           %div{ "ng-if": "!Cart.dirty && Cart.empty()" }= t(:cart_empty)

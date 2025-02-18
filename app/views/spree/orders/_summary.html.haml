@@ -16,7 +16,7 @@
     - order.line_items.sorted_by_name_and_unit_value.each do |item|
       %tr.line_item{ class: "variant-#{item.variant.id}" }
         %td
-          %div.item-thumb-image
+          .item-thumb-image
             = render 'spree/shared/variant_thumbnail', variant: item.variant
 
           = render 'spree/shared/line_item_name', line_item: item
