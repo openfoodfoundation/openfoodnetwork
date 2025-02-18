@@ -94,7 +94,7 @@ RSpec.describe Orders::HandleFeesService do
       end
 
       context "when enterprise fee is removed from the order cycle" do
-        it "updates the line item fee" do
+        it "removes the line item fee" do
           adjustment = fee.create_adjustment('foo', line_item, true)
           order_cycle.exchanges.first.enterprise_fees.destroy(fee)
           allow(calculator).to receive(
@@ -103,7 +103,7 @@ RSpec.describe Orders::HandleFeesService do
 
           expect do
             service.create_or_update_line_item_fees!
-          end.to change { adjustment.reload.updated_at }
+          end.to change { line_item.adjustments.reload.enterprise_fee.count }.by(-1)
         end
       end
 

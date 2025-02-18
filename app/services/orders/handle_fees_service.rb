@@ -33,8 +33,7 @@ module Orders
 
         create_or_update_line_item_fee!(line_item)
 
-        # update any fees removed from the Order Cycle
-        update_removed_fees!(line_item)
+        delete_removed_fees!(line_item)
       end
     end
 
@@ -89,17 +88,11 @@ module Orders
       end
     end
 
-    def update_removed_fees!(line_item)
+    def delete_removed_fees!(line_item)
       order_cycle_fees = fee_applicators(line_item.variant).map(&:enterprise_fee)
       removed_fees = line_item.enterprise_fee_adjustments.where.not(originator: order_cycle_fees)
 
-      removed_fees.each do |removed_fee|
-        if removed_fee.originator.nil? || removed_fee.originator.deleted?
-          removed_fee.destroy
-        else
-          removed_fee.update_adjustment!(line_item, force: true)
-        end
-      end
+      removed_fees.each(&:destroy)
     end
 
     def fee_applicators(variant)
