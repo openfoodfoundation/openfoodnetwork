@@ -59,17 +59,20 @@ RSpec.describe Api::V0::ReportsController, type: :controller do
   end
 
   def distributor_report_row(line_item)
+    order = line_item.order
+    variant = line_item.variant
+
     {
-      "hub" => line_item.order.distributor.name,
-      "customer_code" => line_item.order.customer&.code,
-      "supplier" => line_item.variant.supplier.name,
+      "hub" => order.distributor.name,
+      "customer_code" => order.customer&.code,
+      "supplier" => variant.supplier.name,
       "product" => line_item.product.name,
       "variant" => line_item.full_name,
       "quantity" => line_item.quantity,
       "price" => (line_item.quantity * line_item.price).to_s,
-      "temp_controlled" => line_item.variant.shipping_category&.temperature_controlled,
-      "shipment_state" => line_item.order.shipment_state,
-      "shipping_method" => line_item.order.shipping_method&.name,
+      "temp_controlled" => variant.shipping_category&.temperature_controlled,
+      "shipment_state" => order.shipment_state,
+      "shipping_method" => order.shipping_method&.name,
     }.
       merge(dimensions(line_item)).
       merge(contacts(line_item.order.bill_address))
