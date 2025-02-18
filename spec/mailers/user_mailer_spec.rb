@@ -35,15 +35,15 @@ RSpec.describe Spree::UserMailer do
 
   describe "#confirmation_instructions" do
     let(:token) { "random" }
-    subject(:email) { Spree::UserMailer.confirmation_instructions(user, token) }
+    subject(:mail) { Spree::UserMailer.confirmation_instructions(user, token) }
 
     it "sends an email" do
-      expect { email.deliver_now }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { mail.deliver_now }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 
     context 'when the language is English' do
       it 'sends an email with the translated subject' do
-        email.deliver_now
+        mail.deliver_now
 
         expect(ActionMailer::Base.deliveries.first.subject).to include(
           "Please confirm your OFN account"
@@ -55,7 +55,7 @@ RSpec.describe Spree::UserMailer do
       let(:user) { build(:user, locale: 'es') }
 
       it 'sends an email with the translated subject' do
-        email.deliver_now
+        mail.deliver_now
 
         expect(ActionMailer::Base.deliveries.first.subject).to include(
           "Por favor, confirma tu cuenta de OFN"
@@ -67,21 +67,21 @@ RSpec.describe Spree::UserMailer do
   # adapted from https://github.com/spree/spree_auth_devise/blob/70737af/spec/mailers/user_mailer_spec.rb
   describe '#reset_password_instructions' do
     describe 'message contents' do
-      let(:message) { described_class.reset_password_instructions(user, nil).deliver_now }
+      subject(:mail) { described_class.reset_password_instructions(user, nil).deliver_now }
 
       context 'subject includes' do
         it 'translated devise instructions' do
-          expect(message.subject).to include "Reset password instructions"
+          expect(mail.subject).to include "Reset password instructions"
         end
 
         it 'Spree site name' do
-          expect(message.subject).to include Spree::Config[:site_name]
+          expect(mail.subject).to include Spree::Config[:site_name]
         end
       end
 
       context 'body includes' do
         it 'password reset url' do
-          expect(message.body.raw_source).to include spree.edit_spree_user_password_url
+          expect(mail.body.raw_source).to include spree.edit_spree_user_password_url
         end
       end
 
@@ -90,12 +90,12 @@ RSpec.describe Spree::UserMailer do
 
         it 'calls with_locale method with user selected locale' do
           expect(I18n).to receive(:with_locale).with('es')
-          message
+          mail
         end
 
         it 'calls devise reset_password_instructions subject' do
           expect(I18n).to receive(:t).with('spree.user_mailer.reset_password_instructions.subject')
-          message
+          mail
         end
       end
     end
