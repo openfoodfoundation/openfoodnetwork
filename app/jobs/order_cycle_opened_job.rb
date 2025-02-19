@@ -7,29 +7,33 @@ class OrderCycleOpenedJob < ApplicationJob
       recently_opened_order_cycles.find_each do |order_cycle|
         # Process the order cycle. this might take a while, so this should be shifted to a separate job to allow concurrent processing.        
 
-        dfc_user = order_cycle.coordinator.owner # have to assume for now. But probably we should import as the owner of the variant's supplier?
+        order_cycle.suppliers.each do |supplier|
+          # Find authorised user to access remote products
+          dfc_user = supplier.owner # we assume the owner's account is linked with dfc. maybe instead we could search for supplier.users.joins(:oidc_account).first
 
-        links = SemanticLink.where(subject: order_cycle.variants)
-        semantic_ids = links.pluck(:semantic_id)
+          variants = order_cycle.exchanges.incoming.from_enterprise(supplier).joins(:exchange_variants).pluck('exchange_variants.variant_id') #todo: actually we probably only need to look at outgoing products. no need to sync products if they're not being sold.
+          links = SemanticLink.where(subject: variants) #todo: we should be able to join with above query. in fact why not includes(:subject)
+          semantic_ids = links.pluck(:semantic_id)
 
-        # find any catalogues associated with the variants
-        # todo: why not group the links by catalog_url.
-        catalog_urls = semantic_ids.map do |semantic_id|
-          FdcUrlBuilder.new(semantic_id).catalog_url
-        end.uniq
+          # Find any catalogues associated with the variants
+          # todo: why not group the links by catalog_url.
+          catalog_urls = semantic_ids.map do |semantic_id|
+            FdcUrlBuilder.new(semantic_id).catalog_url
+          end.uniq
 
-        # Import selected variants from each catalog
-        catalog_urls.each do |catalog_url|
-          catalog_json = DfcRequest.new(dfc_user).call(catalog_url)
-          graph = DfcIo.import(catalog_json)
-          catalog = DfcCatalog.new(graph)
-          catalog.apply_wholesale_values!
+          # Import selected variants from each catalog
+          catalog_urls.each do |catalog_url|
+            catalog_json = DfcRequest.new(dfc_user).call(catalog_url)
+            graph = DfcIo.import(catalog_json)
+            catalog = DfcCatalog.new(graph)
+            catalog.apply_wholesale_values!
 
-          links.each do |link|
-            catalog_item = catalog.item(link.semantic_id)
+            links.each do |link|
+              catalog_item = catalog.item(link.semantic_id)
 
-            if catalog_item
-              SuppliedProductBuilder.update_product(catalog_item, link.subject)
+              if catalog_item
+                SuppliedProductBuilder.update_product(catalog_item, link.subject)
+              end
             end
           end
         end

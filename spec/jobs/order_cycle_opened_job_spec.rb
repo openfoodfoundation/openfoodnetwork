@@ -71,8 +71,7 @@ RSpec.describe OrderCycleOpenedJob do
     let(:enterprise) { create(:supplier_enterprise) }
     let!(:variant) { create(:variant, name: "Sauce", supplier_id: enterprise.id) }
     let!(:order_cycle) { create(:simple_order_cycle, orders_open_at: Time.zone.now, 
-                                suppliers: [enterprise], variants: [variant],
-                                coordinator: enterprise) } # todo: remove
+                                suppliers: [enterprise], variants: [variant]) }
 
     before do
       user.oidc_account.update!(token: allow_token_for(email: user.email))
@@ -98,7 +97,7 @@ RSpec.describe OrderCycleOpenedJob do
         .and change { variant.price }.to(1.57)
         .and change { variant.on_demand }.to(true)
         .and change { variant.on_hand }.by(0)
-        .and query_database 45
+        .and query_database 47
     end
   end
 end
