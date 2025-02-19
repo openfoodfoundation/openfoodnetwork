@@ -373,4 +373,44 @@ RSpec.describe OpenFoodNetwork::EnterpriseFeeCalculator do
       end
     end
   end
+
+  describe "#order_cycle_per_item_enterprise_fee_applicators_for" do
+    subject { calculator.order_cycle_per_item_enterprise_fee_applicators_for(variant) }
+
+    let(:calculator) { described_class.new(distributor, order_cycle) }
+    let(:distributor) { create(:distributor_enterprise) }
+    let(:order_cycle) { create(:order_cycle, distributors: [distributor]) }
+    let(:variant) { instance_double(Spree::Variant) }
+
+    context "with no distributor" do
+      let(:order_cycle) { create(:order_cycle) }
+      let(:distributor) { nil }
+
+      it "return an empty array" do
+        expect(subject).to eq([])
+      end
+    end
+
+    context "with no order cycle" do
+      let(:order_cycle) { nil }
+
+      it "return an empty array" do
+        expect(subject).to eq([])
+      end
+    end
+
+    it "returns enterprise fee applicators including per item exchange fees" do
+      applicators = subject
+      exchanges = order_cycle.exchanges.supplying_to(distributor)
+      fees = exchanges.map { |ex| ex.enterprise_fees.per_item }.flatten
+
+      expect(applicators.map(&:enterprise_fee)).to include(*fees)
+    end
+
+    it "returns enterprise fee applicators including per item coordinator fees" do
+      applicators = subject
+
+      expect(applicators.map(&:enterprise_fee)).to include(*order_cycle.coordinator_fees.per_item)
+    end
+  end
 end
