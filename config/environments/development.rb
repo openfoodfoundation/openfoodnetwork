@@ -70,8 +70,6 @@ Openfoodnetwork::Application.configure do
   # Show emails using Letter Opener
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.default_url_options = { host: "localhost:3000" }
-  config.action_mailer.asset_host = "http://localhost:3000"
-  config.asset_host = "http://localhost:3000"
 
   config.log_level = ENV.fetch("DEV_LOG_LEVEL", :debug)
 end
