@@ -13,22 +13,20 @@ class OrderCycleOpenedJob < ApplicationJob
 
           variants = order_cycle.exchanges.incoming.from_enterprise(supplier).joins(:exchange_variants).pluck('exchange_variants.variant_id') #todo: actually we probably only need to look at outgoing products. no need to sync products if they're not being sold.
           links = SemanticLink.where(subject: variants) #todo: we should be able to join with above query. in fact why not includes(:subject)
-          semantic_ids = links.pluck(:semantic_id)
 
           # Find any catalogues associated with the variants
-          # todo: why not group the links by catalog_url.
-          catalog_urls = semantic_ids.map do |semantic_id|
-            FdcUrlBuilder.new(semantic_id).catalog_url
-          end.uniq
+          catalogs = links.group_by do |link|
+            FdcUrlBuilder.new(link.semantic_id).catalog_url
+          end
 
           # Import selected variants from each catalog
-          catalog_urls.each do |catalog_url|
+          catalogs.each do |catalog_url, catalog_links|
             catalog_json = DfcRequest.new(dfc_user).call(catalog_url)
             graph = DfcIo.import(catalog_json)
             catalog = DfcCatalog.new(graph)
             catalog.apply_wholesale_values!
 
-            links.each do |link|
+            catalog_links.each do |link|
               catalog_item = catalog.item(link.semantic_id)
 
               if catalog_item
