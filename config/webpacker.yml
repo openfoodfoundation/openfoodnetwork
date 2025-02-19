@@ -13,7 +13,7 @@ default: &default
     'vendor',
     'app/webpacker/css',
     'app/webpacker/fonts',
-    # 'app/assets/images',
+    'app/assets/images',
     'engines/web/app/assets/stylesheets',
     'app/components'
   ]
