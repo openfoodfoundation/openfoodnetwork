@@ -851,6 +851,7 @@ en:
         title: "DFC product catalog"
         catalog_url: "%{count} products to be imported from: %{catalog_url}"
         enterprise: "Import to enterprise: %{enterprise_name}"
+        select_all: "Select/deselect all"
         update: Update
         new: New
         import: Import

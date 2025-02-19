@@ -65,7 +65,13 @@ RSpec.describe "DFC Product Import" do
     expect(page).to have_content "Beans - Case, 12 x 400g (can) New"
     expect(page).to have_content "Chia Seed, Organic - Retail pack, 300g"
 
-    uncheck "Chia Seed, Organic - Case, 8 x 300g" # don't import this one
+    # I can select all
+    uncheck "Chia Seed, Organic - Case, 8 x 300g"
+    check "Select/deselect all"
+    expect(page).to have_checked_field "Chia Seed, Organic - Case, 8 x 300g"
+
+    # And deselect one
+    uncheck "Chia Seed, Organic - Case, 8 x 300g"
 
     expect {
       click_button "Import"

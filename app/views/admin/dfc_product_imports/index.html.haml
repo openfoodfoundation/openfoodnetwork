@@ -12,13 +12,18 @@
   = form.hidden_field :enterprise_id, value: @enterprise.id
   = form.hidden_field :catalog_json, value: @catalog_json
 
-  %table
+  %table{"data-controller": "checked" }
+    %thead
+      %tr
+        %th
+          %input{ type: 'checkbox', title: t('.select_all'), 'aria-label': t('.select_all'), data: { "checked-target": "all", action: "change->checked#toggleAll" } }
+        %th
     %tbody
       - @items.each do |supplied_product, existing_product|
         %tr{id: supplied_product.semanticId }
           %td
             %label
-              = form.check_box 'semanticIds[]', { checked: true }, supplied_product.semanticId, ""
+              = form.check_box 'semanticIds[]', { checked: true, data: { "action" => "change->checked#toggleCheckbox", "checked-target" => "checkbox" } }, supplied_product.semanticId, ""
               = supplied_product.name
           %td
             - if existing_product.present?
