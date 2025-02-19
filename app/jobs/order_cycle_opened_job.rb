@@ -7,17 +7,34 @@ class OrderCycleOpenedJob < ApplicationJob
       recently_opened_order_cycles.find_each do |order_cycle|
         # Process the order cycle. this might take a while, so this should be shifted to a separate job to allow concurrent processing.        
 
-        # Sync any remote products
-        updated_products = order_cycle.products.joins(:semantic_links).find_each.map do |product|
-          DfcImporter.import(product) # request DFC product from semantic_id and import it. may take some time
+        dfc_user = order_cycle.coordinator.owner # have to assume for now. But probably we should import as the owner of the variant's supplier?
+
+        links = SemanticLink.where(subject: order_cycle.variants)
+        semantic_ids = links.pluck(:semantic_id)
+
+        # find any catalogues associated with the variants
+        # todo: why not group the links by catalog_url.
+        catalog_urls = semantic_ids.map do |semantic_id|
+          FdcUrlBuilder.new(semantic_id).catalog_url
+        end.uniq
+
+        # Import selected variants from each catalog
+        catalog_urls.each do |catalog_url|
+          catalog_json = DfcRequest.new(dfc_user).call(catalog_url)
+          graph = DfcIo.import(catalog_json)
+          catalog = DfcCatalog.new(graph)
+          catalog.apply_wholesale_values!
+
+          links.each do |link|
+            catalog_item = catalog.item(link.semantic_id)
+
+            if catalog_item
+              SuppliedProductBuilder.update_product(catalog_item, link.subject)
+            end
+          end
         end
-        # actually, that might not be possible. 
-        # Instead we might use FdcUrlBuilder and load the whole shop catalogue (which is probably more efficient anyway)
 
-        # then notify shop owners. and/or order cycle co-ordinator.
-        OcSyncedMailer.new(to: contacts, order_cycle, updated_products).deliver_later
-
-        # and notify anyone else
+        # And notify any subscribers
         OrderCycles::WebhookService.create_webhook_job(order_cycle, 'order_cycle.opened')
       end
       mark_as_opened(recently_opened_order_cycles)
