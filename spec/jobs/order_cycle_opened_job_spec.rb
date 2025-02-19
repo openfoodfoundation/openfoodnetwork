@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe OrderCycleOpenedJob do
+  #todo: I don't think we need order cycles with exchanges. we don't need the factory at all here.
+  # also, maybe rearrange the spec. test selection with opened_at. then webhooks can have it's own define block.
   let(:oc_opened_before) {
     create(:order_cycle, orders_open_at: 1.hour.ago)
   }
