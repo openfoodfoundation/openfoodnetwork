@@ -69,7 +69,7 @@ module Spree
         @order.send_cancellation_email = params[:send_cancellation_email] != "false"
         @order.restock_items = params.fetch(:restock_items, "true") == "true"
 
-        if @order.public_send(event.to_s)
+        if allowed_events.include?(event) && @order.public_send(event.to_s)
           AmendBackorderJob.perform_later(@order) if @order.completed?
           flash[:success] = Spree.t(:order_updated)
         else
@@ -197,6 +197,10 @@ module Spree
                         ocs.soonest_opening +
                         ocs.closed +
                         ocs.undated
+      end
+
+      def allowed_events
+        %w{cancel resume}
       end
     end
   end
