@@ -9,10 +9,11 @@ class OrderCycleOpenedJob < ApplicationJob
 
         order_cycle.suppliers.each do |supplier|
           # Find authorised user to access remote products
-          dfc_user = supplier.owner # we assume the owner's account is linked with dfc. maybe instead we could search for supplier.users.joins(:oidc_account).first
+          dfc_user = supplier.owner # we assume the owner's account is the one used to import from dfc.
 
-          variants = order_cycle.exchanges.incoming.from_enterprise(supplier).joins(:exchange_variants).pluck('exchange_variants.variant_id') #todo: actually we probably only need to look at outgoing products. no need to sync products if they're not being sold.
-          links = SemanticLink.where(subject: variants) #todo: we should be able to join with above query. in fact why not includes(:subject)
+          # Fetch all variants for this supplier in the order cycle
+          variants = order_cycle.exchanges.incoming.from_enterprise(supplier).joins(:exchange_variants).select('exchange_variants.variant_id')
+          links = SemanticLink.where(subject_id: variants) #todo: why not includes(:subject)
 
           # Find any catalogues associated with the variants
           catalogs = links.group_by do |link|
