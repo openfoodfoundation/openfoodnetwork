@@ -97,7 +97,7 @@ RSpec.describe OrderCycleOpenedJob do
         .and change { variant.price }.to(1.57)
         .and change { variant.on_demand }.to(true)
         .and change { variant.on_hand }.by(0)
-        .and query_database 46
+        .and query_database 45
     end
   end
 end
