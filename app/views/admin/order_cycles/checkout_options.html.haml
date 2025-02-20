@@ -36,7 +36,7 @@
                           distributor_shipping_method.id,
                           @order_cycle.distributor_shipping_methods.include?(distributor_shipping_method),
                           id: "order_cycle_selected_distributor_shipping_method_ids_#{distributor_shipping_method.id}",
-                          data: ({ "action" => "change->checked#toggleCheckbox", "checked-target" => "checkbox" } if distributor_shipping_method.shipping_method.frontend?)
+                          data: ({ "checked-target" => "checkbox" } if distributor_shipping_method.shipping_method.frontend?)
                       = distributor_shipping_method.shipping_method.name
                 - distributor.shipping_methods.backend.each do |shipping_method|
                   %label.disabled
@@ -67,7 +67,7 @@
                           distributor_payment_method.id,
                           @order_cycle.distributor_payment_methods.include?(distributor_payment_method),
                           id: "order_cycle_selected_distributor_payment_method_ids_#{distributor_payment_method.id}",
-                          data: ({ "action" => "change->checked#toggleCheckbox", "checked-target" => "checkbox" } if distributor_payment_method.payment_method.frontend?)
+                          data: ({ "checked-target" => "checkbox" } if distributor_payment_method.payment_method.frontend?)
                       = distributor_payment_method.payment_method.name
                 - distributor.payment_methods.inactive_or_backend.each do |payment_method|
                   %label.disabled

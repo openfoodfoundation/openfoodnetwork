@@ -23,7 +23,7 @@
         %tr{id: supplied_product.semanticId }
           %td
             %label
-              = form.check_box 'semanticIds[]', { checked: true, data: { "action" => "change->checked#toggleCheckbox", "checked-target" => "checkbox" } }, supplied_product.semanticId, ""
+              = form.check_box 'semanticIds[]', { checked: true, 'data-checked-target': "checkbox" }, supplied_product.semanticId, ""
               = supplied_product.name
           %td
             - if existing_product.present?
