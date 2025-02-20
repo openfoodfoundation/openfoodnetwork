@@ -32,6 +32,13 @@ module Admin
            ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
+    rescue Rack::OAuth2::Client::Error
+      oidc_settings_link = helpers.link_to(
+        t('spree.admin.tab.oidc_settings'),
+        admin_oidc_settings_path
+      )
+      flash[:error] = t(".connection_invalid_html", oidc_settings_link:)
+      redirect_to admin_product_import_path
     end
 
     def import
@@ -55,9 +62,7 @@ module Admin
       end
 
       @count = imported.compact.count
-    rescue Faraday::Error,
-           Addressable::URI::InvalidURIError,
-           ActionController::ParameterMissing => e
+    rescue ActionController::ParameterMissing => e
       flash[:error] = e.message
       redirect_to admin_product_import_path
     end

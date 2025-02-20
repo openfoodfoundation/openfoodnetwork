@@ -58,6 +58,18 @@ RSpec.describe DfcRequest do
     # The absence of errors makes this test pass.
   end
 
+  it "clears invalid refresh tokens", vcr: true do
+    stub_request(:get, "http://example.net/api").to_return(status: 401)
+
+    account.refresh_token = "some-invalid-token"
+    account.updated_at = 1.day.ago
+
+    expect { api.call("http://example.net/api") }
+      .to raise_error(Rack::OAuth2::Client::Error)
+
+    expect(account.refresh_token).to eq nil
+  end
+
   it "refreshes the access token and retrieves the FDC catalog", vcr: true do
     # A refresh is only attempted if the token is stale.
     account.uid = "testdfc@protonmail.com"
