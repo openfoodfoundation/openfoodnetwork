@@ -854,6 +854,10 @@ en:
         select_all: "Select/deselect all"
         update: Update
         new: New
+        selected:
+          zero: "0 selected"
+          one: "1 selected"
+          other: "%{count} selected"
         import: Import
       import:
         title: "DFC product catalog import"

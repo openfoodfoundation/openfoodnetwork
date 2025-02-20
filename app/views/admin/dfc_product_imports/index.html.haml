@@ -8,12 +8,12 @@
   %p= t('.enterprise', enterprise_name: @enterprise.name)
   %br
 
-  = form_with url: main_app.import_admin_dfc_product_imports_path do |form|
+  = form_with url: main_app.import_admin_dfc_product_imports_path, html: { "data-controller": "checked" } do |form|
     -# This is a very inefficient way of holding a json blob. Maybe base64 encode or store as a temporary file
     = form.hidden_field :enterprise_id, value: @enterprise.id
     = form.hidden_field :catalog_json, value: @catalog_json
 
-    %table{"data-controller": "checked" }
+    %table
       %thead
         %tr
           %th
@@ -32,6 +32,9 @@
                 = link_to(existing_product.id, edit_admin_product_path(existing_product))
               - else
                 = t(".new")
+
+    %span{ "data-controller": "checked-feedback", "data-checked-feedback-translation-value": "admin.dfc_product_imports.index.selected" }
+      = t(".selected", count: @items.count)
 
     %br
     = form.submit t(".import")
