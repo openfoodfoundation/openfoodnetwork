@@ -7,7 +7,11 @@ export default class extends Controller {
   connect() {
     this.toggleCheckbox();
 
-    this.element.addEventListener("change", this.#toggleChangeListener.bind(this), {passive: true});
+    this.allTarget.addEventListener("change", this.toggleAll.bind(this));
+
+    this.checkboxTargets.forEach((checkbox) => {
+      checkbox.addEventListener("change", this.toggleCheckbox.bind(this));
+    });
   }
 
   toggleAll() {
@@ -34,15 +38,6 @@ export default class extends Controller {
   }
 
   // private
-
-  // Delegate events for targets (this ensures we catch events from newly-added elements after an ajax action)
-  #toggleChangeListener(event) {
-    if (event.target == this.allTarget) {
-      this.toggleAll();
-    } else if (this.checkboxTargets.includes(event.target)) {
-      this.toggleCheckbox();
-    }
-  }
 
   #checkedCount() {
     return this.checkboxTargets.filter((checkbox) => checkbox.checked).length;
