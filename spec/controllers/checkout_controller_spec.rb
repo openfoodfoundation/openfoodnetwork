@@ -144,6 +144,17 @@ RSpec.describe CheckoutController, type: :controller do
           expect(order.reload.state).to eq "payment"
         end
 
+        context "with insufficient stock" do
+          it "redirects to details page" do
+            allow(order).to receive_message_chain(:insufficient_stock_lines,
+                                                  :empty?).and_return false
+
+            put(:update, params:)
+
+            expect_cable_ready_redirect(response)
+          end
+        end
+
         describe "saving default addresses" do
           it "doesn't update default bill address on user" do
             expect {
@@ -304,6 +315,17 @@ RSpec.describe CheckoutController, type: :controller do
             put(:update, params:)
 
             expect(response).to redirect_to checkout_step_path(:summary)
+          end
+        end
+
+        context "with insufficient stock" do
+          it "redirects to details page" do
+            allow(order).to receive_message_chain(:insufficient_stock_lines,
+                                                  :empty?).and_return false
+
+            put(:update, params:)
+
+            expect_cable_ready_redirect(response)
           end
         end
       end
@@ -468,6 +490,16 @@ RSpec.describe CheckoutController, type: :controller do
         end
       end
 
+      context "with insufficient stock" do
+        it "redirects to details page" do
+          allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
+
+          put(:update, params:)
+
+          expect_cable_ready_redirect(response)
+        end
+      end
+
       context "when accepting T&Cs is required" do
         before do
           allow(TermsOfService).to receive(:platform_terms_required?) { true }
@@ -582,16 +614,9 @@ RSpec.describe CheckoutController, type: :controller do
       )
     end
 
-    shared_examples "handling stock issues" do |step|
+    shared_examples "handling not available items" do |step|
       context "#{step} step" do
         let(:step) { step.to_s }
-
-        it "redirects when some items are out of stock" do
-          allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return false
-
-          get :edit
-          expect(response).to redirect_to cart_path
-        end
 
         it "redirects when some items are not available" do
           allow(order).to receive_message_chain(:insufficient_stock_lines, :empty?).and_return true
@@ -605,9 +630,9 @@ RSpec.describe CheckoutController, type: :controller do
       end
     end
 
-    it_behaves_like "handling stock issues", "details"
-    it_behaves_like "handling stock issues", "payment"
-    it_behaves_like "handling stock issues", "summary"
+    it_behaves_like "handling not available items", "details"
+    it_behaves_like "handling not available items", "payment"
+    it_behaves_like "handling not available items", "summary"
   end
 
   def mock_voucher_adjustment_service
@@ -615,5 +640,11 @@ RSpec.describe CheckoutController, type: :controller do
     allow(VoucherAdjustmentsService).to receive(:new).and_return(voucher_adjustment_service)
 
     voucher_adjustment_service
+  end
+
+  def expect_cable_ready_redirect(response)
+    expect(response.parsed_body).to eq(
+      [{ "url" => "/checkout/details", "operation" => "redirectTo" }].to_json
+    )
   end
 end

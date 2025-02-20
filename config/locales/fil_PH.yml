@@ -2780,7 +2780,7 @@ fil_PH:
           habang ikaw ay namimili, ang lebel ng stock para sa isa o higit pang mga
           produkto sa inyong cart ay nabawasan. ito ang nagbago:
       now_out_of_stock: ay out of stock na ngayon
-      only_n_remainging: "ngayon ay may%{num}na natitira"
+      only_n_remaining: "ngayon ay may%{num}na natitira"
     shopfront:
       variant:
         add_to_cart: "idagdag"

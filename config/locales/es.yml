@@ -3420,7 +3420,7 @@ es:
           Mientras estabas comprando, los niveles de stock para uno o más de los productos
           de tu carrito se han reducido. Aquí está lo que ha cambiado:
       now_out_of_stock: está ahora fuera de stock.
-      only_n_remainging: "Solo quedan %{num} ."
+      only_n_remaining: "Solo quedan %{num} ."
     shopfront:
       variant:
         add_to_cart: "Añadir"

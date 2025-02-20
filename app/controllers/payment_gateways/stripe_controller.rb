@@ -8,9 +8,12 @@ module PaymentGateways
     before_action :load_checkout_order, only: :confirm
     before_action :validate_payment_intent, only: :confirm
     before_action :check_order_cycle_expiry, only: :confirm
-    before_action :validate_stock, only: :confirm
 
     def confirm
+      validate_stock
+
+      return redirect_to order_failed_route if @any_out_of_stock == true
+
       process_payment_completion!
     end
 

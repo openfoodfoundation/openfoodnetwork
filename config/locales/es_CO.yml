@@ -2838,7 +2838,7 @@ es_CO:
           Mientras usted estaba comprando, los niveles de inventario para uno o más
           de los productos de su carrito se han reducido. Aquí está lo que ha cambiado:
       now_out_of_stock: está ahora fuera de inventario.
-      only_n_remainging: "ahora solo hay %{num} restantes."
+      only_n_remaining: "ahora solo hay %{num} restantes."
     shopfront:
       variant:
         add_to_cart: "Añadir"

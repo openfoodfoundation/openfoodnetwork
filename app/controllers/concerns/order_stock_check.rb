@@ -4,17 +4,20 @@ module OrderStockCheck
   include CablecarResponses
   extend ActiveSupport::Concern
 
+  delegate :sufficient_stock?, to: :check_stock_service
+
   def valid_order_line_items?
-    @order.insufficient_stock_lines.empty? &&
-      OrderCycles::DistributedVariantsService.new(@order.order_cycle, @order.distributor).
-        distributes_order_variants?(@order)
+    OrderCycles::DistributedVariantsService.new(@order.order_cycle, @order.distributor).
+      distributes_order_variants?(@order)
   end
 
   def handle_insufficient_stock
+    @any_out_of_stock = false
+
     return if sufficient_stock?
 
-    flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
-    redirect_to main_app.cart_path
+    @any_out_of_stock = true
+    @updated_variants = check_stock_service.update_line_items
   end
 
   def check_order_cycle_expiry
@@ -36,7 +39,7 @@ module OrderStockCheck
 
   private
 
-  def sufficient_stock?
-    @sufficient_stock ||= @order.insufficient_stock_lines.blank?
+  def check_stock_service
+    @check_stock_service ||= Orders::CheckStockService.new(order: @order)
   end
 end

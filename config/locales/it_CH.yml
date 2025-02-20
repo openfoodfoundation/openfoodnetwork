@@ -3091,7 +3091,7 @@ it_CH:
           Mentre stavi acquistando, le quantità disponibili per uno o più prodotti
           nel tuo carrello sono diminuite. Ecco cosa è cambiato:
       now_out_of_stock: non è al momento disponibile
-      only_n_remainging: "attualmente solo %{num} rimasto."
+      only_n_remaining: "attualmente solo %{num} rimasto."
     shopfront:
       variant:
         add_to_cart: "Aggiungi"

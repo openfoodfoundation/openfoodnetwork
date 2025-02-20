@@ -2974,7 +2974,7 @@ tr:
           Siz alışveriş yaparken sepetinizdeki ürünlerden bir veya birkaç tanesinin
           stok seviyesi düşürüldü. Değişiklikler:
       now_out_of_stock: artık stokta yok.
-      only_n_remainging: "artık sadece %{num} kaldı."
+      only_n_remaining: "artık sadece %{num} kaldı."
     shopfront:
       variant:
         add_to_cart: "Ekle"

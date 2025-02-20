@@ -2958,7 +2958,7 @@ pt_BR:
           Enquanto você fez compras, os níveis de estoque de um ou mais dos produtos
           em seu carrinho foram reduzidos. Aqui está o que mudou:
       now_out_of_stock: está agora fora de estoque.
-      only_n_remainging: "agora só tem %{num} restantes."
+      only_n_remaining: "agora só tem %{num} restantes."
     shopfront:
       variant:
         add_to_cart: "Adicionar"

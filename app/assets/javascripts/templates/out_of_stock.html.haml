@@ -1,3 +1,4 @@
+// please update the modal html in app/components/out_of_stock_modal_component/out_of_stock_modal_component.html.haml if updating this template
 %a.close-reveal-modal{"ng-click" => "$close()"}
   %i.ofn-i_009-close
 
@@ -12,4 +13,4 @@
   %span{'ng-if' => "v.on_hand == 0"}
     {{ 'js.out_of_stock.now_out_of_stock' | t }}
   %span{'ng-if' => "v.on_hand > 0"}
-    {{ 'js.out_of_stock.only_n_remainging' | t:{ num: v.on_hand } }}
+    {{ 'js.out_of_stock.only_n_remaining' | t:{ num: v.on_hand } }}

@@ -2043,7 +2043,7 @@ sv:
           Under tiden du handlat har lagernivån för en eller flera produkter i din
           kundvagn minskat. Detta har ändrats:
       now_out_of_stock: Är nu slut
-      only_n_remainging: "nu  återstår endast %{num}"
+      only_n_remaining: "nu  återstår endast %{num}"
     shopfront:
       variant:
         add_to_cart: "Tillägga"

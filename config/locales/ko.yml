@@ -3106,7 +3106,7 @@ ko:
       out_of_stock_text: >
           쇼핑하는 동안 카트에 있는 하나 이상의 제품에 대한 재고 수준이 감소했습니다. 변경된 내용은 다음과 같습니다 :
       now_out_of_stock: 현재 품절되었습니다.
-      only_n_remainging: "이제 %{num}개만 남았습니다."
+      only_n_remaining: "이제 %{num}개만 남았습니다."
     shopfront:
       variant:
         add_to_cart: "추가"

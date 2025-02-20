@@ -20,6 +20,9 @@
     = render partial: "shopping_shared/order_cycles"
 
   %div{ "data-controller": "guest-checkout", "data-guest-checkout-distributor-value": @order.distributor.id }
+    - if @any_out_of_stock
+      = render OutOfStockModalComponent.new(id: "out-of-stock-items", variants: @updated_variants, redirect: @order.line_items.empty?)
+
     %div{ style: "display: #{spree_current_user ? 'block' : 'none'}", "data-guest-checkout-target": "checkout" }
       = render partial: "checkout"
 

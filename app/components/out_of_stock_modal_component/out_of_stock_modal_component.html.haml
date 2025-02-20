@@ -1,0 +1,26 @@
+%div{ id: @id, "data-controller": "modal out-of-stock-modal", "data-action": "keyup@document->modal#closeIfEscapeKey modal:closing->out-of-stock-modal#redirect", "data-modal-instant-value": @instant, "data-out-of-stock-modal-redirect-value": @redirect }
+  .reveal-modal-bg.fade{ "data-modal-target": "background", "data-action": "click->modal#close" }
+  .reveal-modal.fade.modal-component{ "data-modal-target": "modal", class: @modal_class }
+    - # please update app/assets/javascripts/templates/out_of_stock.html.haml if updating this view
+    %a.close-reveal-modal{"data-action": "click->modal#close" }
+      %i.ofn-i_009-close
+    %h3
+      = t("js.out_of_stock.reduced_stock_available")
+    %p
+      = t("js.out_of_stock.out_of_stock_text")
+    - @variants.each do |variant|
+      - if variant.on_hand == 0
+        %p
+          %em
+            = "#{variant.name_to_display} - #{variant.unit_to_display}"
+            %span
+              = t("js.out_of_stock.now_out_of_stock")
+      - if variant.on_hand > 0
+        %p
+          %em
+            = "#{variant.name_to_display} - #{variant.unit_to_display}"
+            %span
+              = t("js.out_of_stock.only_n_remaining", num: variant.on_hand)
+
+    .text-center
+      %input{ class: "button icon-plus #{close_button_class}", type: 'button', value: t('js.admin.modals.close'), "data-action": "click->modal#close" }

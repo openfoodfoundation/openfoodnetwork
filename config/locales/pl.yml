@@ -2704,7 +2704,7 @@ pl:
           Podczas zakupów zmniejszył się poziom zapasów co najmniej jednego produktu
           w Twoim koszyku. Oto, co się zmieniło:
       now_out_of_stock: jest teraz niedostępny.
-      only_n_remainging: "teraz pozostało tylko %{num}."
+      only_n_remaining: "teraz pozostało tylko %{num}."
     shopfront:
       variant:
         add_to_cart: "Dodaj"
