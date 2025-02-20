@@ -16,7 +16,7 @@
     %thead
       %tr
         %th
-          %input{ type: 'checkbox', title: t('.select_all'), 'aria-label': t('.select_all'), data: { "checked-target": "all", action: "change->checked#toggleAll" } }
+          %input{ type: 'checkbox', title: t('.select_all'), 'aria-label': t('.select_all'), 'data-checked-target': "all" }
         %th
     %tbody
       - @items.each do |supplied_product, existing_product|

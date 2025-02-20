@@ -6,6 +6,8 @@ export default class extends Controller {
 
   connect() {
     this.toggleCheckbox();
+
+    this.allTarget.addEventListener("change", this.toggleAll.bind(this));
   }
 
   toggleAll() {

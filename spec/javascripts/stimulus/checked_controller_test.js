@@ -17,7 +17,6 @@ describe("CheckedController", () => {
         <input
           id="selectAllCheckbox"
           type="checkbox"
-          data-action="change->checked#toggleAll"
           data-checked-target="all">
         <input
           id="checkboxA"
@@ -87,7 +86,6 @@ describe("CheckedController", () => {
           <input
             id="selectAllCheckbox"
             type="checkbox"
-            data-action="change->checked#toggleAll"
             data-checked-target="all">
           <input
             id="checkboxA"

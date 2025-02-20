@@ -25,7 +25,7 @@
               %td.text-center
                 - if distributor_shipping_methods.many?
                   %label
-                    = check_box_tag nil, nil, nil, { "data-action": "change->checked#toggleAll", "data-checked-target": "all" }
+                    = check_box_tag nil, nil, nil, { "data-checked-target": "all" }
                     = t(".select_all")
               %td
                 %em= distributor.name
