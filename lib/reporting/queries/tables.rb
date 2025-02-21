@@ -42,6 +42,18 @@ module Reporting
       def shipping_category_table
         Spree::ShippingCategory.arel_table
       end
+
+      def shipping_method_table
+        Spree::ShippingMethod.arel_table
+      end
+
+      def shipping_rate_table
+        Spree::ShippingRate.arel_table
+      end
+
+      def shipment_table
+        Spree::Shipment.arel_table
+      end
     end
   end
 end

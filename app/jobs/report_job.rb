@@ -23,6 +23,7 @@ class ReportJob < ApplicationJob
     broadcast_result(channel, format, blob) if channel
   rescue StandardError => e
     Alert.raise(e, { report: { report_class:, user:, params:, format: } })
+    Rails.logger.error(e.message)
 
     broadcast_error(channel)
   end
