@@ -37,7 +37,7 @@
           %td= f.ng_select :fee_type, enterprise_fee_type_options, 'enterprise_fee.fee_type'
           %td= f.ng_text_field :name, { placeholder: t('.name_placeholder') }
           %td
-            %ofn-select{ id: angular_id(:tax_category_id), data: 'tax_categories', include_blank: true, "ng-model": 'enterprise_fee.tax_category_id' }
+            %ofn-select{ id: angular_id(:tax_category_id), data: 'tax_categories', "ng-model": 'enterprise_fee.tax_category_id' }
             %input{ type: "hidden", name: angular_name(:tax_category_id), 'watch-tax-category' => true }
             %input{ type: "hidden", name: angular_name(:inherits_tax_category), "ng-value": "enterprise_fee.inherits_tax_category" }
           %td
