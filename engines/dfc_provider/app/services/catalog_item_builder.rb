@@ -15,6 +15,7 @@ class CatalogItemBuilder < DfcBuilder
     if limit.to_i.negative?
       variant.stock_items[0].backorderable = true
     else
+      variant.stock_items[0].backorderable = false
       variant.stock_items[0].count_on_hand = limit
     end
   end
