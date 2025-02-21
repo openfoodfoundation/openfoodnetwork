@@ -34,10 +34,11 @@
       %span.state{ class: order.shipment_state.to_s}
         = t('js.admin.orders.shipment_states.' + order.shipment_state.to_s)
   %td
-    %a{ href: "mailto:#{order.email}", target: "_blank" }
-      = order.email
+    - email_value = display_value_for_producer(order, order.email)
+    %a{ href: "mailto:#{email_value}", target: "_blank" }
+      = email_value
   %td
-    = order&.bill_address&.full_name_for_sorting
+    = display_value_for_producer(order, order.bill_address&.full_name_for_sorting)
   %td.align-left
     %span
       = order.display_total
@@ -51,5 +52,5 @@
         = render ShipOrderComponent.new(order: order)
       = render partial: 'admin/shared/tooltip_button', locals: {button_class: "icon-road icon_link with-tip no-text", reflex_data_id: order.id.to_s, tooltip_text: t('spree.admin.orders.index.ship'), shipment: true}
 
-    - if order.payment_required? && order.pending_payments.reject(&:requires_authorization?).any?
+    - if can?(:update, Spree::Payment) && order.payment_required? && order.pending_payments.reject(&:requires_authorization?).any?
       = render partial: 'admin/shared/tooltip_button', locals: {button_class: "icon-capture icon_link no-text", button_reflex: "click->Admin::OrdersReflex#capture", reflex_data_id: order.id.to_s,  tooltip_text: t('spree.admin.orders.index.capture')}

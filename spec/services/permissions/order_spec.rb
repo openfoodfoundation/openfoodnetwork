@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Permissions
   RSpec.describe Order do
-    let(:user) { double(:user) }
+    let(:user) { double(:user, can_manage_line_items_in_orders_only?: false) }
     let(:permissions) { Permissions::Order.new(user) }
     let!(:basic_permissions) { OpenFoodNetwork::Permissions.new(user) }
     let(:distributor) { create(:distributor_enterprise) }
