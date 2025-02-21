@@ -43,7 +43,7 @@ class OrderCycleOpenedJob < ApplicationJob
         order_cycle.update_columns(opened_at:, updated_at: opened_at)
 
         # And notify any subscribers
-        OrderCycles::WebhookService.create_webhook_job(order_cycle, 'order_cycle.opened')
+        OrderCycles::WebhookService.create_webhook_job(order_cycle, 'order_cycle.opened', opened_at)
       end
     end
   end

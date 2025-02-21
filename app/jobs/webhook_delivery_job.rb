@@ -13,11 +13,11 @@ class WebhookDeliveryJob < ApplicationJob
 
   queue_as :default
 
-  def perform(url, event, payload)
+  def perform(url, event, payload, at: Time.zone.now)
     body = {
       id: job_id,
-      at: Time.zone.now.to_s,
       event:,
+      at: at.to_s,
       data: payload,
     }
 
