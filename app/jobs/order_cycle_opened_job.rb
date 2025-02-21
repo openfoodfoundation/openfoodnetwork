@@ -1,17 +1,21 @@
 # frozen_string_literal: true
 
 # Trigger jobs for any order cycles that recently opened
+#
+# Currently, an order cycle is considered open in the shopfront when orders_open_at >= now.
+# But now there are some pre-conditions for opening an order cycle, so we would like to change that.
+# When it changes, this would become OrderCycleOpeningJob, with the responsibility of opening each
+# order cycle by setting opened_at = now.
 class OrderCycleOpenedJob < ApplicationJob
   def perform
     ActiveRecord::Base.transaction do
       recently_opened_order_cycles.find_each do |order_cycle|
-        # Process the order cycle. this might take a while, so this should be shifted to a separate job to allow concurrent processing.        
-
+        # Process the order cycle. this might take a while, so this should be shifted to a separate job to allow concurrent processing.
         order_cycle.suppliers.each do |supplier|
           # Find authorised user to access remote products
           dfc_user = supplier.owner # we assume the owner's account is the one used to import from dfc.
 
-          # Fetch all variants for this supplier in the order cycle
+          # Fetch all remote variants for this supplier in the order cycle
           variants = order_cycle.exchanges.incoming.from_enterprise(supplier).joins(:exchange_variants).select('exchange_variants.variant_id')
           links = SemanticLink.where(subject_id: variants)
 
@@ -35,10 +39,12 @@ class OrderCycleOpenedJob < ApplicationJob
           end
         end
 
+        opened_at = Time.zone.now
+        order_cycle.update_columns(opened_at:, updated_at: opened_at)
+
         # And notify any subscribers
         OrderCycles::WebhookService.create_webhook_job(order_cycle, 'order_cycle.opened')
       end
-      mark_as_opened(recently_opened_order_cycles)
     end
   end
 
@@ -49,10 +55,5 @@ class OrderCycleOpenedJob < ApplicationJob
       .where(opened_at: nil)
       .where(orders_open_at: 1.hour.ago..Time.zone.now)
       .lock.order(:id)
-  end
-
-  def mark_as_opened(order_cycles)
-    now = Time.zone.now
-    order_cycles.update_all(opened_at: now, updated_at: now)
   end
 end
