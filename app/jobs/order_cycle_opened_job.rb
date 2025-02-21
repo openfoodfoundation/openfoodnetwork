@@ -13,7 +13,7 @@ class OrderCycleOpenedJob < ApplicationJob
 
           # Fetch all variants for this supplier in the order cycle
           variants = order_cycle.exchanges.incoming.from_enterprise(supplier).joins(:exchange_variants).select('exchange_variants.variant_id')
-          links = SemanticLink.where(subject_id: variants) #todo: why not includes(:subject)
+          links = SemanticLink.where(subject_id: variants)
 
           # Find any catalogues associated with the variants
           catalogs = links.group_by do |link|
