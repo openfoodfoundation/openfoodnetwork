@@ -2,7 +2,7 @@
   .row
     .small-12.large-4.columns
       - if current_distributor.address.address1 || current_distributor.address.address2 || current_distributor.address.city || current_distributor.address.state || current_distributor.address.zipcode
-        %div.center
+        .center
           .header
             = t :shopping_contact_address
           %span= current_distributor.name
@@ -18,7 +18,7 @@
 
     .small-12.large-4.columns
       - if current_distributor.website || current_distributor.email_address || current_distributor.phone || current_distributor.whatsapp_phone
-        %div.center
+        .center
           .header
             = t :shopping_contact_web
           %p
@@ -41,10 +41,10 @@
 
     .small-12.large-4.columns
       - if current_distributor.twitter.present? || current_distributor.facebook.present? || current_distributor.linkedin.present? || current_distributor.instagram.present?
-        %div.center
+        .center
           .header
             = t :shopping_contact_social
-          %div.follow-icons
+          .follow-icons
             - if current_distributor.twitter.present?
               %span
                 %a{href: "http://twitter.com/#{current_distributor.twitter}", target: "_blank" }

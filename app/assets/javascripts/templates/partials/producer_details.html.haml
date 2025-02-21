@@ -7,7 +7,7 @@
       .columns.small-12.fat
         %div{"ng-if" => "::enterprise.name"}
           %label{"ng-bind-html" => "::'shop_for_products_html' | t:{enterprise: enterprise.name}"}
-        %div.show-for-medium-up{"ng-if" => "::!enterprise.name"}
+        .show-for-medium-up{"ng-if" => "::!enterprise.name"}
           &nbsp;
     .row
       .columns.small-12

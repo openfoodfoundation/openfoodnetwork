@@ -15,7 +15,7 @@
                 {{ query }}
             = render partial: 'shop/products/applied_filters_feedback'
 
-        %div.no-results-bar{"ng-show" => "Products.products.length == 0 && !Products.loading"}
+        .no-results-bar{"ng-show" => "Products.products.length == 0 && !Products.loading"}
           .row.summary
             .small-12.columns
               %p.no-results
