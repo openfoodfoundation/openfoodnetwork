@@ -4057,6 +4057,7 @@ See the %{link} to find out more about %{sitename}'s features and to start using
 
   spree:
     order_updated: "Order Updated"
+    cannot_perform_operation: "Can not perform this operation"
     add_country: "Add country"
     add_state: "Add state"
     adjustment: "Adjustment"
