@@ -13,13 +13,15 @@ module DfcProvider
         EnterpriseBuilder.enterprise(enterprise)
       end
       person.affiliatedOrganizations = enterprises
+      catalog_items = enterprises.flat_map(&:catalogItems)
 
       render json: DfcIo.export(
         person,
-        *person.affiliatedOrganizations,
-        *person.affiliatedOrganizations.flat_map(&:catalogItems),
-        *person.affiliatedOrganizations.flat_map(&:catalogItems).map(&:product),
-        *person.affiliatedOrganizations.flat_map(&:catalogItems).flat_map(&:offers),
+        *enterprises,
+        *catalog_items,
+        *catalog_items.map(&:product),
+        *catalog_items.map(&:product).flat_map(&:isVariantOf),
+        *catalog_items.flat_map(&:offers),
       )
     end
 
