@@ -2838,7 +2838,7 @@ nl_BE:
           Tijdens uw aankoop is de beschikbaarheid van de stock voor ééen of meerdere
           van uw produkten  onvoldoende. Ziehier de wijzigingen :
       now_out_of_stock: is niet meer in stock
-      only_n_remainging: "%{num}blijven over."
+      only_n_remaining: "%{num}blijven over."
     shopfront:
       variant:
         add_to_cart: "Voeg toe"

@@ -3228,7 +3228,7 @@ ca:
           Mentre heu estat comprant, s'han reduït els nivells d'existències d'un o
           més dels productes de la cistella. Aquí podeu veure el que ha canviat:
       now_out_of_stock: ara està fora d'estoc.
-      only_n_remainging: "ara només n'hi ha %{num} restants."
+      only_n_remaining: "ara només n'hi ha %{num} restants."
     shopfront:
       variant:
         add_to_cart: "Afegeix"

@@ -2813,7 +2813,7 @@ pt:
           Enquanto estava a comprar, o nível de stock de um ou mais produtos no seu
           carrinho baixou. Aqui está o que mudou:
       now_out_of_stock: está agora sem stock.
-      only_n_remainging: "agora só tem %{num}restantes."
+      only_n_remaining: "agora só tem %{num}restantes."
     shopfront:
       variant:
         add_to_cart: "Adicionar"

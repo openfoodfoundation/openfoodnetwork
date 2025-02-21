@@ -2720,7 +2720,7 @@ en_DE:
           While you've been shopping, the stock levels for one or more of the products
           in your cart have reduced. Here's what's changed:
       now_out_of_stock: is now out of stock.
-      only_n_remainging: "now only has %{num} remaining."
+      only_n_remaining: "now only has %{num} remaining."
     shopfront:
       variant:
         add_to_cart: "Add"

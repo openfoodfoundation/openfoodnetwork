@@ -3521,7 +3521,7 @@ hu:
           Amíg vásároltál, egy vagy több termék készlete lecsökkent, így a kosaradban
           is levettük. Ezek a változások:
       now_out_of_stock: jelenleg nincs készleten.
-      only_n_remainging: "már csak %{num} maradt."
+      only_n_remaining: "már csak %{num} maradt."
     shopfront:
       variant:
         add_to_cart: "Hozzáadás"

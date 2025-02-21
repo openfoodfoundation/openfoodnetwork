@@ -3535,7 +3535,7 @@ nb:
           Samtidig som du har handlet har lagernivået for en eller flere av produktene
           i din handlekurv gått ned. Her er hva som er endret.
       now_out_of_stock: er nå ikke på lager.
-      only_n_remainging: "har nå kun %{num} igjen."
+      only_n_remaining: "har nå kun %{num} igjen."
     shopfront:
       variant:
         add_to_cart: "Legg til"

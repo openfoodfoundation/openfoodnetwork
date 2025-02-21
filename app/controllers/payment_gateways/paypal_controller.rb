@@ -14,6 +14,8 @@ module PaymentGateways
     after_action :reset_order_when_complete, only: :confirm
 
     def express
+      return redirect_to order_failed_route if @any_out_of_stock == true
+
       pp_request = provider.build_set_express_checkout(
         express_checkout_request_details(@order)
       )
@@ -41,6 +43,8 @@ module PaymentGateways
     end
 
     def confirm
+      return redirect_to order_failed_route if @any_out_of_stock == true
+
       # At this point the user has come back from the Paypal form, and we get one
       # last chance to interact with the payment process before the money moves...
 

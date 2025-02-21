@@ -26,6 +26,7 @@ class CheckoutController < BaseController
     if params[:step].blank?
       redirect_to_step_based_on_order
     else
+      handle_insufficient_stock if details_step?
       update_order_state
       check_step
     end
@@ -36,6 +37,9 @@ class CheckoutController < BaseController
   end
 
   def update
+    return render cable_ready: cable_car.redirect_to(url: checkout_step_path(:details)) \
+      unless sufficient_stock?
+
     if confirm_order || update_order
       return if performed?
 

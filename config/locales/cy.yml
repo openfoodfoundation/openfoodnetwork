@@ -3407,7 +3407,7 @@ cy:
           Wrth ichi siopa, mae lefelau stoc un neu fwy o'r eitemau yn eich basged
           wedi lleihau.  Dyma'r hyn sydd wedi newid:
       now_out_of_stock: allan o stoc bellach.
-      only_n_remainging: "nawr dim ond %{num} sydd ar ôl."
+      only_n_remaining: "nawr dim ond %{num} sydd ar ôl."
     shopfront:
       variant:
         add_to_cart: "Ychwanegu"
