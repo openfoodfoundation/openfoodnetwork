@@ -1,6 +1,6 @@
 %tr{ id: dom_id(order), class: "state-#{order.state}" }
   %td.align-left
-    %input{type: 'checkbox', value: order.id, name: 'bulk_ids[]', "data-checked-target": "checkbox", "data-action": "change->checked#toggleCheckbox" }
+    %input{type: 'checkbox', value: order.id, name: 'bulk_ids[]', "data-checked-target": "checkbox" }
   %td.align-left
     = order.distributor.name
   %td.align-left

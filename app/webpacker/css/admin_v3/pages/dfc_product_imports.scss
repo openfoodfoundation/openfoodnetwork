@@ -1,0 +1,12 @@
+
+#dfc_product_imports {
+  // Ensure label reaches to edge of table cell
+  td:has(> label) {
+    padding: 0;
+  }
+  td > label {
+    display: block;
+    padding: 7px 5px;
+    font-size: inherit;
+  }
+}
