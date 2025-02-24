@@ -3,10 +3,8 @@
 # Trigger jobs for any order cycles that recently opened
 class OrderCycleOpenedJob < ApplicationJob
   def perform
-    ActiveRecord::Base.transaction do
-      recently_opened_order_cycles.find_each do |order_cycle|
-        OpenOrderCycleJob.perform_later(order_cycle.id)
-      end
+    recently_opened_order_cycles.find_each do |order_cycle|
+      OpenOrderCycleJob.perform_later(order_cycle.id)
     end
   end
 
@@ -16,6 +14,5 @@ class OrderCycleOpenedJob < ApplicationJob
     OrderCycle
       .where(opened_at: nil)
       .where(orders_open_at: 1.hour.ago..Time.zone.now)
-      .lock.order(:id)
   end
 end

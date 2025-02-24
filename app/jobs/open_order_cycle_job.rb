@@ -7,15 +7,20 @@
 # Instead, the presence of opened_at (and absence of closed_at) should indicate it is open.
 class OpenOrderCycleJob < ApplicationJob
   def perform(order_cycle_id)
-    order_cycle = OrderCycle.find(order_cycle_id)
-    sync_remote_variants(order_cycle)
+    ActiveRecord::Base.transaction do
+      # Fetch order cycle if it's still unopened, and lock DB row until finished
+      order_cycle = OrderCycle.lock.find_by(id: order_cycle_id, opened_at: nil)
+      return if order_cycle.nil?
 
-    # Mark as opened
-    opened_at = Time.zone.now
-    order_cycle.update_columns(opened_at:, updated_at: opened_at)
+      sync_remote_variants(order_cycle)
 
-    # And notify any subscribers
-    OrderCycles::WebhookService.create_webhook_job(order_cycle, 'order_cycle.opened', opened_at)
+      # Mark as opened
+      opened_at = Time.zone.now
+      order_cycle.update_columns(opened_at:, updated_at: opened_at)
+
+      # And notify any subscribers
+      OrderCycles::WebhookService.create_webhook_job(order_cycle, 'order_cycle.opened', opened_at)
+    end
   end
 
   private
