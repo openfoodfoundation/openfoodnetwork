@@ -602,6 +602,11 @@ en_US:
         your_content: Your content
         user_guide: User Guide
         map: Map
+    dfc_product_imports:
+      index:
+        update: Update
+        new: New
+        import: Import
     enterprise_fees:
       index:
         title: "Enterprise Fees"
@@ -721,9 +726,6 @@ en_US:
         product_categories: Product Categories
         tax_categories: Tax Categories
         shipping_categories: Shipping Categories
-      dfc_import_form:
-        enterprise: "Enterprise"
-        import: "Import"
       import:
         review: Review
         import: Import
@@ -2608,7 +2610,6 @@ en_US:
   report_header_paid: Paid?
   report_header_delivery: Delivery?
   report_header_shipping: Shipping
-  report_header_shipping_method: Shipping Method
   report_header_shipping_instructions: Shipping instructions
   report_header_ship_street: Ship Street
   report_header_ship_street_2: Ship Street 2
@@ -2724,6 +2725,8 @@ en_US:
   report_header_total_excl_vat: "Total excl. tax (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
+  report_header_shipment_state: "Shipment State"
+  report_header_shipping_method: "Shipping Method"
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
   report_header_gst_on_income: Tax on Income

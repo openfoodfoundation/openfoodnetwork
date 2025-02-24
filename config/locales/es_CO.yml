@@ -490,6 +490,11 @@ es_CO:
         your_content: Tu contenido
         user_guide: Manual de usuario
         map: Mapa
+    dfc_product_imports:
+      index:
+        update: Actualizar
+        new: Nuevo
+        import: Importar
     enterprise_fees:
       index:
         title: "Comisiones de la organización"
@@ -606,9 +611,6 @@ es_CO:
         product_categories: Categorías de producto
         tax_categories: Categorías de impuestos
         shipping_categories: Categorías de envío
-      dfc_import_form:
-        enterprise: "Organización"
-        import: "Importar"
       import:
         review: Revisión
         import: Importar
@@ -2386,7 +2388,6 @@ es_CO:
   report_header_paid: ¿Pagado?
   report_header_delivery: ¿Entregado?
   report_header_shipping: Envío
-  report_header_shipping_method: Método de envío
   report_header_shipping_instructions: Instrucciones de envío
   report_header_ship_street: Calle de envío
   report_header_ship_street_2: 'Calle 2 de envío '
@@ -2497,6 +2498,8 @@ es_CO:
   report_header_total_excl_vat: "Total Impuestos excl. (%{currency_symbol})"
   report_header_total_incl_vat: "Total Impuestos incl. (%{currency_symbol})"
   report_header_temp_controlled: ¿Control de Temperatura?
+  report_header_shipment_state: "Estado del envío"
+  report_header_shipping_method: "Método de envío"
   report_header_is_producer: ¿Productora?
   report_header_not_confirmed: No confirmado
   report_header_gst_on_income: IVA sobre Ingresos

@@ -625,6 +625,11 @@ uk:
         your_content: Ваш контент
         user_guide: Посібник користувача
         map: Карта
+    dfc_product_imports:
+      index:
+        update: Оновити
+        new: Новий
+        import: Імпорт
     enterprise_fees:
       index:
         title: "Комісія підприємства"
@@ -744,9 +749,6 @@ uk:
         product_categories: Категорії продуктів
         tax_categories: Податкові категорії
         shipping_categories: Категорії доставки
-      dfc_import_form:
-        enterprise: "Підприємство"
-        import: "Імпорт"
       import:
         review: Огляд
         import: Імпорт
@@ -2669,7 +2671,6 @@ uk:
   report_header_paid: Заплачено?
   report_header_delivery: Доставка?
   report_header_shipping: Доставка
-  report_header_shipping_method: Спосіб доставки
   report_header_shipping_instructions: Інструкції з доставки
   report_header_ship_street: Вулиця Доставки
   report_header_ship_street_2: Вулиця Доставки 2
@@ -2784,6 +2785,8 @@ uk:
   report_header_total_excl_vat: "Всього без податків (%{currency_symbol})"
   report_header_total_incl_vat: "Всього в т.ч. податок (%{currency_symbol})"
   report_header_temp_controlled: Темпер. контроль?
+  report_header_shipment_state: "Стан відвантаження"
+  report_header_shipping_method: "Спосіб доставки"
   report_header_is_producer: Виробник?
   report_header_not_confirmed: Не підтверджено
   report_header_gst_on_income: Податок на дохід

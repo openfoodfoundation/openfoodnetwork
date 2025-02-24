@@ -538,6 +538,11 @@ tr:
         your_content: İçeriğiniz
         user_guide: Kullanici Kılavuzu
         map: HARİTA
+    dfc_product_imports:
+      index:
+        update: Güncelle
+        new: YENİ
+        import: Aktar
     enterprise_fees:
       index:
         title: "İşletme Ücretleri"
@@ -657,9 +662,6 @@ tr:
         product_categories: Ürün Kategorileri
         tax_categories: Vergi Kategorileri
         shipping_categories: Teslimat Kategorileri
-      dfc_import_form:
-        enterprise: "İşletme"
-        import: "Aktar"
       import:
         review: İncele
         import: İçe Aktar
@@ -2503,7 +2505,6 @@ tr:
   report_header_paid: Ödeme?
   report_header_delivery: Teslimat?
   report_header_shipping: Teslimat
-  report_header_shipping_method: TESLİMAT YÖNTEMİ
   report_header_shipping_instructions: Teslimat  bilgileri
   report_header_ship_street: Teslimat Adresi
   report_header_ship_street_2: Teslimat Adresi 2
@@ -2617,6 +2618,8 @@ tr:
   report_header_total_excl_vat: "Vergi Hariç Toplam (%{currency_symbol})"
   report_header_total_incl_vat: "Vergi Dahil Toplam (%{currency_symbol})"
   report_header_temp_controlled: SoğukSevkiyat?
+  report_header_shipment_state: " TESLİMAT Durumu"
+  report_header_shipping_method: "TESLİMAT YÖNTEMİ"
   report_header_is_producer: Üretici?
   report_header_not_confirmed: Onaylanmadı
   report_header_gst_on_income: Gelir Üzerindeki KDV

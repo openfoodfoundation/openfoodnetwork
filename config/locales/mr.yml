@@ -688,6 +688,9 @@ mr:
         your_content: तुमची सामग्री
         user_guide: वापरकर्ता मार्गदर्शक
         map: मॅप
+    dfc_product_imports:
+      index:
+        import: Import करा
     enterprise_fees:
       index:
         title: "एंटरप्राइझ फी"
@@ -829,9 +832,6 @@ mr:
         product_categories: उत्पादन श्रेणी
         tax_categories: कर श्रेणी
         shipping_categories: शिपिंग श्रेण्या
-      dfc_import_form:
-        enterprise: "एंटरप्राइझ"
-        import: "Import करा"
       import:
         review: पुनरावलोकन करा
         import: आयात करा
@@ -2796,7 +2796,6 @@ mr:
   report_header_paid: पैसे दिले?
   report_header_delivery: डिलिव्हरी?
   report_header_shipping: शिपिंग
-  report_header_shipping_method: 'शिपिंग पद्धत '
   report_header_shipping_instructions: शिपिंग सूचना
   report_header_ship_street: शिप स्ट्रीट
   report_header_ship_street_2: शिप स्ट्रीट 2
@@ -2919,6 +2918,8 @@ mr:
   report_header_total_excl_vat: "एकूण करा व्यतिरिक्त ( %{currency_symbol} )"
   report_header_total_incl_vat: "एकूण करा समवेत ( %{currency_symbol} )"
   report_header_temp_controlled: TempControlled?
+  report_header_shipment_state: "शिपमेंट स्थिती"
+  report_header_shipping_method: "शिपिंग पद्धत "
   report_header_is_producer: उत्पादक?
   report_header_not_confirmed: पुष्टी नाही
   report_header_gst_on_income: उत्पन्नावर जीएसटी
@@ -3301,7 +3302,6 @@ mr:
           तुम्ही खरेदी करत असताना, तुमच्या कार्टमधील एक किंवा अधिक उत्पादनांसाठी स्टॉक
           पातळी कमी झाली आहे. काय बदलले आहे ते येथे पहा:
       now_out_of_stock: आता साठा संपला आहे.
-      only_n_remaining: "आता फक्त %{num} शिल्लक आहे."
     shopfront:
       variant:
         add_to_cart: "जमा करा"

@@ -780,7 +780,10 @@ fr_CA:
         map: Carte
     dfc_product_imports:
       index:
-        title: "Importation d'un produit du catalogue DFC"
+        update: Mettre à jour
+        new: Nouveau
+        import: Importer
+      import:
         imported_products: "Produits importés :"
     enterprise_fees:
       index:
@@ -964,9 +967,8 @@ fr_CA:
         shipping_categories: Condition de transport
       dfc_import_form:
         title: "Importer depuis le catalogue DFC"
-        enterprise: "Entreprise"
         catalog_url: "URL du catalogue DFC"
-        import: "Importer"
+        preview: Prévisualisation
       import:
         review: Vérifier
         import: Importer
@@ -3070,7 +3072,6 @@ fr_CA:
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
   report_header_shipping: Livraison
-  report_header_shipping_method: Méthode de Livraison
   report_header_shipping_instructions: Instructions de Livraison
   report_header_ship_street: Rue Livraison
   report_header_ship_street_2: ' Rue (2) Livraison'
@@ -3199,6 +3200,8 @@ fr_CA:
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
   report_header_total_excl_fees_and_tax: "Total hors commission boutique et taxe (%{currency_symbol})"
   report_header_temp_controlled: Temp Contrôlée ?
+  report_header_shipment_state: "Statut de la livraison"
+  report_header_shipping_method: "Méthode de Livraison"
   report_header_is_producer: Producteur ?
   report_header_not_confirmed: Non confirmé
   report_header_gst_on_income: Taxe sur revenu
@@ -3795,10 +3798,46 @@ fr_CA:
       one: "bucket"
       many: "buckets"
       other: "buckets"
+    pail:
+      one: seau
+      many: seaux
+      other: seaux
+    stem:
+      one: "tige"
+      many: "tiges"
+      other: "tiges"
+    plug:
+      one: "fiche"
+      many: "bouchons"
+      other: "bouchons"
+    plant:
+      one: "plante"
+      many: "plantes"
+      other: "plantes"
     bundle:
       one: "botte"
       many: "bottes"
       other: "bottes"
+    bulb:
+      one: "bulbe"
+      many: "ampoules"
+      other: "ampoules"
+    root:
+      one: "racine"
+      many: "racines"
+      other: "racines"
+    tuber:
+      one: "tubercule"
+      many: "tubercules"
+      other: "tubercules"
+    corm:
+      one: "corme"
+      many: "cormes"
+      other: "cormes"
+    crate:
+      one: "caisse"
+      many: "caisses"
+      other: "caisses"
   producers:
     signup:
       start_free_profile: "Commencez par créer votre profil entreprise, c'est gratuit, et changez de formule quand vous êtes prêt !"

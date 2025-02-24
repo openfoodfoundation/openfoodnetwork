@@ -275,6 +275,9 @@ sv:
         your_content: Ditt innehåll
         user_guide: Användarinstruktion
         map: Karta
+    dfc_product_imports:
+      index:
+        update: Uppdatera
     enterprise_fees:
       index:
         title: "Företagsavgifter"
@@ -344,8 +347,6 @@ sv:
         could_not_process: "kunde inte hantera filen: ogiltig filtyp"
         blank: kan inte vara blank
         none_saved: sparade inte några produkter
-      dfc_import_form:
-        enterprise: "Företag"
       product_headings:
         distributor: Distributör
         producer: Producent
@@ -1678,7 +1679,6 @@ sv:
   report_header_paid: Betald?
   report_header_delivery: Leverans?
   report_header_shipping: Frakt
-  report_header_shipping_method: Fraktmetod
   report_header_shipping_instructions: Leveransinstruktioner
   report_header_ship_street: Leveransadress
   report_header_ship_street_2: Leveransadress 2
@@ -1789,6 +1789,8 @@ sv:
   report_header_total_excl_vat: "Summa exkl skatt (%{currency_symbol})"
   report_header_total_incl_vat: "Summa inkl skatt (%{currency_symbol})"
   report_header_temp_controlled: Temperaturkontrollerad?
+  report_header_shipment_state: "Leveransstatus"
+  report_header_shipping_method: "Fraktmetod"
   report_header_is_producer: Producent?
   report_header_not_confirmed: Inte bekräftad
   report_header_gst_on_income: Moms på intäkter

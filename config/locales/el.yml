@@ -719,7 +719,10 @@ el:
         map: Χάρτης
     dfc_product_imports:
       index:
-        title: "Εισαγωγή καταλόγου προϊόντων DFC"
+        update: Ανανέωση
+        new: Νέος
+        import: Εισαγωγή
+      import:
         imported_products: "Εισαγόμενα προϊόντα:"
     enterprise_fees:
       index:
@@ -891,9 +894,7 @@ el:
         shipping_categories: Κατηγορίες Μεταφορικών
       dfc_import_form:
         title: "Εισαγωγή από τον κατάλογο DFC"
-        enterprise: "Επιχείρηση"
         catalog_url: "Σύνδεσμος καταλόγου DFC"
-        import: "Εισαγωγή"
       import:
         review: Αναθεώρηση
         import: Εισαγωγή
@@ -2936,7 +2937,6 @@ el:
   report_header_paid: Επί πληρωμή?
   report_header_delivery: Διανομή?
   report_header_shipping: Αποστολή
-  report_header_shipping_method: Τρόπος Αποστολής
   report_header_shipping_instructions: Οδηγίες αποστολής
   report_header_ship_street: Ship Street
   report_header_ship_street_2: Ship Street 2
@@ -3063,6 +3063,8 @@ el:
   report_header_total_incl_vat: "Σύνολο συμπ. φόρος (%{currency_symbol})"
   report_header_total_excl_fees_and_tax: "Σύνολο χωρίς τέλη και φορολογία (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
+  report_header_shipment_state: "Κατάσταση αποστολής"
+  report_header_shipping_method: "Τρόπος Αποστολής"
   report_header_is_producer: Παραγωγός?
   report_header_not_confirmed: Δεν έχει επιβεβαιωθεί
   report_header_gst_on_income: ΦΠΑ για το εισόδημα

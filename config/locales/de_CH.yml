@@ -623,6 +623,11 @@ de_CH:
         your_content: Ihr Inhalt
         user_guide: Benutzerhandbuch
         map: Karte
+    dfc_product_imports:
+      index:
+        update: Speichern
+        new: Neu
+        import: Importieren
     enterprise_fees:
       index:
         title: "Unternehmensgebühren"
@@ -744,9 +749,6 @@ de_CH:
         product_categories: Produktkategorien
         tax_categories: Steuerkategorien
         shipping_categories: Lieferkategorien
-      dfc_import_form:
-        enterprise: "Unternehmen"
-        import: "Importieren"
       import:
         review: Überprüfung
         import: Importieren
@@ -2666,7 +2668,6 @@ de_CH:
   report_header_paid: Bezahlt?
   report_header_delivery: Lieferung?
   report_header_shipping: Lieferung
-  report_header_shipping_method: Lieferoption
   report_header_shipping_instructions: Informationen zur Lieferung
   report_header_ship_street: Lieferstrasse
   report_header_ship_street_2: Lieferadresszusatz
@@ -2782,6 +2783,8 @@ de_CH:
   report_header_total_excl_vat: "Summe exkl. Steuern (%{currency_symbol})"
   report_header_total_incl_vat: "Summe inkl. Steuern (%{currency_symbol})"
   report_header_temp_controlled: Temperaturüberwachte Artikel?
+  report_header_shipment_state: "Lieferstatus"
+  report_header_shipping_method: "Lieferoption"
   report_header_is_producer: Produzent?
   report_header_not_confirmed: Nicht bestätigt
   report_header_gst_on_income: Umsatzsteuer auf Einkommen

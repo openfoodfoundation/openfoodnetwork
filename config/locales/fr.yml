@@ -279,6 +279,7 @@ fr:
         send_instructions: "Un email a été envoyé avec des instructions pour confirmer votre adresse email. Vérifiez votre boite mail!"
     oidc:
       failure: "La connexion n'a pas fonctionné : %{error}"
+      record_not_unique: "%{uid} est déjà associé à un autre compte"
   home_page_alert_html: "Bannière d'alerte sur la page d'acceuil en HTML"
   hub_signup_case_studies_html: "HTML page cas d'études hub"
   hub_signup_detail_html: "HTML page inscription hub"
@@ -779,7 +780,14 @@ fr:
         map: Carte
     dfc_product_imports:
       index:
-        title: "Importation d'un produit du catalogue DFC"
+        title: "Catalogue produit DFC"
+        catalog_url: "%{count} produits à importer de : %{catalog_url}"
+        enterprise: "Import vers l'entreprise : %{enterprise_name}"
+        update: Mettre à jour
+        new: Nouveau
+        import: Importer
+      import:
+        title: "Import du catalogue produit DFC"
         imported_products: "Produits importés :"
     enterprise_fees:
       index:
@@ -963,9 +971,8 @@ fr:
         shipping_categories: Conditions de transport
       dfc_import_form:
         title: "Importer depuis le catalogue DFC"
-        enterprise: "Entreprise"
         catalog_url: "URL du catalogue DFC"
-        import: "Importer"
+        preview: Prévisualisation
       import:
         review: Vérifier
         import: Importer
@@ -1218,6 +1225,7 @@ fr:
           visible: Visible par tous
           not_visible: Cachée
           hidden: Invisible
+          admin_only_legend: Admin seulement
         properties:
           legend: "Propriétés / labels"
         permalink:
@@ -3069,7 +3077,6 @@ fr:
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
   report_header_shipping: Méthode de livraison
-  report_header_shipping_method: Méthode de Livraison
   report_header_shipping_instructions: Instructions de Livraison
   report_header_ship_street: Rue Livraison
   report_header_ship_street_2: ' Rue (2) Livraison'
@@ -3176,6 +3183,7 @@ fr:
   report_header_item_fees_price: "Coût produits + Marge (%{currency})"
   report_header_admin_handling_fees: "Frais si par commande (%{currency})"
   report_header_ship_price: "Frais de livraison (%{currency})"
+  report_header_total_tax_on_product: "Total taxe sur produit (%{currency})"
   report_header_pay_fee_price: "Frais de Transaction (%{currency})"
   report_header_total_price: "Total (%{currency})"
   report_header_product_total_price: "Total Produit (%{currency})"
@@ -3198,6 +3206,8 @@ fr:
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
   report_header_total_excl_fees_and_tax: "Total hors commission fournisseur et taxe (%{currency_symbol})"
   report_header_temp_controlled: Temp Contrôlée ?
+  report_header_shipment_state: "Statut livraison"
+  report_header_shipping_method: "Méthode de Livraison"
   report_header_is_producer: Producteur ?
   report_header_not_confirmed: Non confirmé
   report_header_gst_on_income: TVA

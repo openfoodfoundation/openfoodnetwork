@@ -620,6 +620,11 @@ ko:
         your_content: 당신의 콘텐트
         user_guide: 사용자 가이드
         map: 지도
+    dfc_product_imports:
+      index:
+        update: 업데이트
+        new: 새로하기
+        import: 수입
     enterprise_fees:
       index:
         title: "회사 수수료"
@@ -739,9 +744,6 @@ ko:
         product_categories: 제품 카테고리
         tax_categories: 세금 카테고리
         shipping_categories: 배송 카테고리
-      dfc_import_form:
-        enterprise: "회사"
-        import: "수입"
       import:
         review: 리뷰
         import: 수입
@@ -2646,7 +2648,6 @@ ko:
   report_header_paid: 유급 입니까?
   report_header_delivery: 배달 입니까?
   report_header_shipping: 배송
-  report_header_shipping_method: 배송 방법
   report_header_shipping_instructions: 배송 지침
   report_header_ship_street: 주문 도로명
   report_header_ship_street_2: 주문 도로명 2
@@ -2761,6 +2762,8 @@ ko:
   report_header_total_excl_vat: "세금 제외 합계 (%{currency_symbol})"
   report_header_total_incl_vat: "세금 포함 합계 (%{currency_symbol})"
   report_header_temp_controlled: 온도를 제어하시겠습니까?
+  report_header_shipment_state: "배송 현황"
+  report_header_shipping_method: "배송 방법"
   report_header_is_producer: 생산자 이십니까?
   report_header_not_confirmed: 확인되지 않음
   report_header_gst_on_income: 소득 내 물품·용역소비세

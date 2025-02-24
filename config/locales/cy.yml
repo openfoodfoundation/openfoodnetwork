@@ -695,6 +695,11 @@ cy:
         your_content: Eich cynnwys
         user_guide: Canllaw Defnyddiwr
         map: Cefndir
+    dfc_product_imports:
+      index:
+        update: Diweddaru
+        new: Newydd
+        import: Mewnforio
     enterprise_fees:
       index:
         title: "Ffioedd Menter"
@@ -859,9 +864,6 @@ cy:
         product_categories: Categorïau Cynnyrch
         tax_categories: Categorïau Treth
         shipping_categories: Categorïau Cludo
-      dfc_import_form:
-        enterprise: "Menter"
-        import: "Mewnforio"
       import:
         review: Adolygu
         import: Mewnforio
@@ -2900,7 +2902,6 @@ cy:
   report_header_paid: Wedi talu?
   report_header_delivery: Dosbarthu?
   report_header_shipping: Anfon
-  report_header_shipping_method: Dull anfon
   report_header_shipping_instructions: Cyfarwyddiadau anfon
   report_header_ship_street: Stryd anfon
   report_header_ship_street_2: Stryd anfon 2
@@ -3023,6 +3024,8 @@ cy:
   report_header_total_excl_vat: "Cyfanswm heb dreth (%{currency_symbol})"
   report_header_total_incl_vat: "Cyfanswm gan gynnwys treth (%{currency_symbol})"
   report_header_temp_controlled: Rheoli tymheredd?
+  report_header_shipment_state: "Sir Anfon"
+  report_header_shipping_method: "Dull anfon"
   report_header_is_producer: Cynhyrchydd?
   report_header_not_confirmed: Heb ei Gadarnhau
   report_header_gst_on_income: 20%

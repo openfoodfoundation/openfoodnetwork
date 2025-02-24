@@ -515,6 +515,11 @@ pt:
         your_content: O seu conteúdo
         user_guide: Manual do Utilizador
         map: Mapa
+    dfc_product_imports:
+      index:
+        update: Atualizar
+        new: Novo
+        import: Importar
     enterprise_fees:
       index:
         title: "Taxas de Organização"
@@ -631,9 +636,6 @@ pt:
         product_categories: Categorias de Produtos
         tax_categories: Categorias de Impostos
         shipping_categories: Categorias de Envio
-      dfc_import_form:
-        enterprise: "Organização"
-        import: "Importar"
       import:
         review: Rever
         import: Importar
@@ -2383,7 +2385,6 @@ pt:
   report_header_paid: Pago?
   report_header_delivery: Entrega?
   report_header_shipping: Envio
-  report_header_shipping_method: Método de Envio
   report_header_shipping_instructions: Instruções de Envio
   report_header_ship_street: Rua de Envio
   report_header_ship_street_2: Rua de Envio 2
@@ -2498,6 +2499,8 @@ pt:
   report_header_total_excl_vat: "Total excl. impostos (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. impostos (%{currency_symbol})"
   report_header_temp_controlled: TempControlada?
+  report_header_shipment_state: "Estado do envio"
+  report_header_shipping_method: "Método de Envio"
   report_header_is_producer: Produtor/a?
   report_header_not_confirmed: Não Confirmado
   report_header_gst_on_income: IVA sobre rendimentos

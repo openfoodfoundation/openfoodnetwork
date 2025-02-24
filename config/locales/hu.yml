@@ -145,6 +145,8 @@ hu:
       message_html: "<p>A művelet nem végrehajtható. Lehet, hogy olyan műveletet szeretnél végrehajtani, amihez nincs jogosultságod. <br><h3><a href='/' > Vissza a Kezdőlapra</a></h3></p>"
     general_error:
       message: "Sajnáljuk! Hiba történt.\n\nEz lehet egy átmeneti probléma. Kérjük, próbáld újra, vagy frissítsd az oldalt.\nMinden felmerülő hibát rögzítünk és valószínűleg már dolgozunk rajta.\nHa a probléma továbbra is fennáll, vagy sürgős, kérjük, értesíts minket róla. "
+    network_error:
+      message: "Hálózati hiba: Kérjük próbáld meg később."
   stripe:
     error_code:
       incorrect_number: "A kártyaszám hibás."
@@ -459,7 +461,7 @@ hu:
   admin_and_handling: Adminisztráció és Kezelés
   profile: Profil
   supplier_only: Csak Beszállító
-  has_shopfront: Kirakatot üzemeltet
+  has_shopfront: Átvételi Pont üzemeltető
   weight: Súly
   volume: Űrtartalom
   items: Tételek
@@ -743,7 +745,10 @@ hu:
         map: Térkép
     dfc_product_imports:
       index:
-        title: "DFC termékkatalógus importálása"
+        update: Frissítés
+        new: Új
+        import: Importálás
+      import:
         imported_products: "Importált termékek:"
     enterprise_fees:
       index:
@@ -777,7 +782,7 @@ hu:
       enterprise_role:
         manages: kezeli
     products:
-      unit_name_placeholder: 'például. csokrok'
+      unit_name_placeholder: 'például csokrok'
       index:
         unit: Mértékegység
         display_as: Megjelenítés mint
@@ -838,6 +843,9 @@ hu:
         search: Keresés
       sort:
         pagination:
+          products_total_html:
+            one: "A keresési feltételeknek megfelelő <strong>%{count} terméket</strong> találtunk. %{from} – %{to} megjelenítése."
+            other: "A keresési feltételek alapján <strong>%{count} terméket</strong> találtunk. %{from} – %{to} megjelenítése."
           per_page:
             show: Mutass
             per_page: "%{num}/ oldal"
@@ -922,9 +930,8 @@ hu:
         shipping_categories: Szállítási Kategóriák
       dfc_import_form:
         title: "Importálás a DFC katalógusból"
-        enterprise: "Vállalkozás"
         catalog_url: "DFC katalógus URL"
-        import: "Importálás"
+        preview: Előnézet
       import:
         review: Felülvizsgálat
         import: Importálás
@@ -1116,7 +1123,7 @@ hu:
           whatsapp_phone_placeholder: pl. +36 28 1234567
           whatsapp_phone_tip: "A telefonszám a nyilvános profilodban látszódni fog mint WhatsApp link."
           website: Weboldal
-          website_placeholder: például. www.truffles.com
+          website_placeholder: például www.truffles.com
         enterprise_fees:
           legend: "Vállalkozási díjak"
           name: Név
@@ -1176,6 +1183,7 @@ hu:
           visible: Nyilvános
           not_visible: Rejtve
           hidden: Minden hivatkozás rejtve
+          admin_only_legend: Kizárólag admin
         properties:
           legend: "Tulajdonságok"
         permalink:
@@ -1242,8 +1250,8 @@ hu:
           disabled: "Tiltva"
         social:
           legend: "Közösségi média"
-          twitter_placeholder: "például. @the_prof"
-          instagram_placeholder: "például. the_prof"
+          twitter_placeholder: "például @the_prof"
+          instagram_placeholder: "például the_prof"
           facebook_placeholder: "pl. www.facebook.com/OldalNevedItt"
           linkedin_placeholder: "pl. www.linkedin.com/in/TeNevedItt"
         stripe_connect:
@@ -1369,10 +1377,10 @@ hu:
         producer_hub_description_text: 'Az Open Food Network gerincét az átvételi pontok adják. Amennyiben termelő vagy, értékesítheted saját termékeidet, de átvételi pontként más termelőktől, vállalkozásoktól átvett termékeket is. '
         profile: Csak profil
         get_listing: Kerülj fel a térképre, csatlakozz listákhoz, csoportokhoz
-        profile_description_text: Az Open Food Network-ön keresztül megtalálnak a fogyasztók és kapcsolatba is léphetnek veled. Vállalkozásod látható lesz a térképen, és kereshető lesz a listákban.
-        hub_shop: Átvételi pont kirakat
-        hub_shop_text: Kínálj másoktól származó termékeket
-        hub_shop_description_text: Szervezeted a helyi élelemrendszer kulcsa lehet. Összegyűjthetsz több termelőtől származó termékeket, és az Open Food Hálózati profilodon keresztül kínálhatod a fogyasztóknak. Lehetsz bevásárlóközösség, vásárlói csoport, kiskereskedő, nagykereskedő. Értékesítheted vegyesen saját és mások termékeit is.
+        profile_description_text: Az Open Food Network platformján keresztül megtalálnak a fogyasztók és kapcsolatba is léphetnek veled. Vállalkozásod látható lesz a térképen, és kereshető lesz a listákban.
+        hub_shop: Átvételi pont
+        hub_shop_text: 'Tedd elérhetővé más termelők termékeit is! '
+        hub_shop_description_text: Kezdeményezésed a helyi élelemrendszer kulcsa lehet. Összegyűjthetsz több termelőtől termékeket és Átvételi Pontként kínálhatod a fogyasztóknak. Lehetsz bevásárlóközösség, vásárlói csoport. Értékesítheted vegyesen saját és mások termékeit is.
         choose_option: Kérjük, válasszon a fenti lehetőségek közül.
         change_now: Változtass most
       enterprise_user_index:
@@ -1396,10 +1404,10 @@ hu:
         title: Új Vállalkozás
         back_link: Vissza a válllalkozások listájához
       welcome:
-        welcome_title: Üdvözölünk az Open Food Network-ben!
+        welcome_title: Üdvözlünk az Open Food hálózatban!
         welcome_text: Sikeresen létrehoztad a
         next_step: Következő lépés
-        choose_starting_point: 'Válaszd ki csomagját:'''
+        choose_starting_point: 'Válaszd ki a profil típusát'
         profile: 'Profilt'
         producer_profile: 'Termelői profil'
       invite_manager:
@@ -2021,9 +2029,9 @@ hu:
       customer_required:
         login: "Belépés"
         contact: "kapcsolatba lépni"
-        require_customer_login: "Csak regisztrált és jóváhagyott vásárlók férhetnek hozzá az átadópont kínálatához."
+        require_customer_login: "Csak regisztrált és jóváhagyott vásárlók férhetnek hozzá az Átvételi Pont kínálatához."
         require_login_link_html: "Ha már regisztrált felhasználó vagy,  a folytatáshoz be kell lépned: %{login}"
-        require_login_2_html: "Ezen az átadóponton szeretnél vásárolni?  %{enterprise}-el  itt tudsz %{contact}, és érdeklődni a csatlakozásról."
+        require_login_2_html: "Ezen az átvételi ponton szeretnél vásárolni?  %{enterprise}-el  itt tudsz %{contact}, és érdeklődni a csatlakozásról."
         require_customer_html: "Ha itt szeretne vásárolni, kérjük, %{contact} %{enterprise} érdeklődjön a csatlakozásról."
       select_oc:
         select_oc_html: "Kérjük, <span class='highlighted'>válaszd ki, hogy mikorra szeretnéd megrendelni</span>, hogy megtudd, milyen termékek állnak rendelkezésre."
@@ -2096,19 +2104,19 @@ hu:
   phone: Telefon
   next: Következő
   address: Cím
-  address_placeholder: például. High Street 123
+  address_placeholder: például Saláta köz 15.
   address2: Cím (folyt.)
   city: Város
-  city_placeholder: például. Northcote
+  city_placeholder: például Kukutyin
   latitude: Szélességi kör
-  latitude_placeholder: például. -37.4713077
+  latitude_placeholder: például -37.4713077
   latitude_longitude_tip: A szélességi és hosszúsági fok szükséges ahhoz, hogy vállalkozása megjelenjen a térképen.
   longitude: Hosszúság
-  longitude_placeholder: például. 144.7851531
+  longitude_placeholder: például 144.7851531
   use_geocoder: Automatikusan kiszámítja a szélességi és hosszúsági fokokat a címből?
   state: Ország
   postcode: Irányítószám
-  postcode_placeholder: például. 3070
+  postcode_placeholder: például 3070
   suburb: Település
   country: Ország
   unauthorized: Jogosulatlan
@@ -2425,7 +2433,7 @@ hu:
   products_no_results_html: "Sajnáljuk, nem található találat a következőre: %{query}"
   products_clear_search: "Keresés törlése"
   search_no_results_html: "Sajnáljuk, nem találtunk Átvételi pontot/Termelőt a következő szűrésre: %{query} \nPróbálkozz másik kereséssel!"
-  components_profiles_popover: "A Profiloknak nincs online kirakata az Open Food Network-ben, de lehet, hogy van saját fizikai vagy online átvételi pontjuk máshol."
+  components_profiles_popover: "A Profiloknak nincs online felülete az Open Food Network-ben, de lehet, hogy van saját fizikai vagy online átvételi pontjuk máshol."
   components_profiles_show: "Profilok megjelenítése"
   components_filters_nofilters: "Nincsenek szűrők"
   components_filters_clearfilters: "Törölje az összes szűrőt"
@@ -2452,7 +2460,7 @@ hu:
   groups_signup_motivation3: Tudjuk, hogy nagy ötleteid vannak", és segíteni akarunk. Megosztjuk tudásunkat," hálózatok és erőforrások. Tudjuk, hogy az elszigeteltség nem hoz változást", így partnerek leszünk veled.
   groups_signup_motivation4: Ott találkozunk, ahol vagy.
   groups_signup_motivation5: Lehetsz átvételi pontok szövetsége, termelő, vagy forgalmazó, egy ipari testület, vagy épp egy önkormányzat.
-  groups_signup_motivation6: Bármi legyen is a szerepe a helyi élelmiszermozgalomban," készek vagyunk segíteni. Mindazonáltal felmerül a kérdés, hogy az Open Food Network hogyan nézne ki vagy hogyan működik a világnak az Ön részén", kezdjük a beszélgetést.
+  groups_signup_motivation6: Bármi legyen is a szereped a helyi élelmiszermozgalomban, készek vagyunk segíteni. Ha felmerül a kérdés, hogy az Open Food Network hogyan nézne ki vagy hogyan működik a te régiódban, terepeden, kezdjünk el beszélgetni.
   groups_signup_motivation7: Értelmesebbé tesszük az ételmozgásokat.
   groups_signup_motivation8: Aktiválnia és engedélyeznie kell a hálózatait, platformot kínálunk a beszélgetéshez és a cselekvéshez. Igazi elkötelezettségre van szüksége. Segítünk elérni minden játékost, az összes érdekelt fél, az összes szektort.
   groups_signup_motivation9: Erőforrásra van szüksége. Minden tapasztalatunkat felhasználjuk. Együttműködésre van szüksége. Jobban összekapcsoljuk Önt a partnerek globális hálózatával.
@@ -2460,7 +2468,7 @@ hu:
   groups_signup_studies: Esettanulmányok
   groups_signup_contact: Készen áll a vitára?
   groups_signup_contact_text: "Vegye fel a kapcsolatot, hogy megtudja, mit tehet az OFN az Ön számára:"
-  groups_signup_detail: "Itt a részlet."
+  groups_signup_detail: "Részletek"
   login_invalid: "Rossz email cím vagy jelszó"
   producers_about: Bemutatkozás
   producers_buy: 'Kínálat:'
@@ -2474,14 +2482,14 @@ hu:
   producers_title: Termelők
   producers_headline: Keress helyi termelőket
   producers_signup_title: Regisztrálj termelőként
-  producers_signup_headline: Élelmiszer-termelők, felhatalmazott.
-  producers_signup_motivation: 'Értékesítsd termékeid, és meséld el történeteid ennek a sokszínű fogyasztói közösségnek. Spórolj időt és költségeket, mindezt kockázat nélkül. '
+  producers_signup_headline: Élelmiszer termelők platformja
+  producers_signup_motivation: 'Értékesítsd termékeid, és meséld el történeteid egy  sokszínű fogyasztói közösségnek. Spórolj időt és költségeket, kapcsolódj közösségi átvételi pontokhoz, mindezt kockázat nélkül. '
   producers_signup_send: Csatlakozz most
-  producers_signup_enterprise: Vállalkozási fiókok
+  producers_signup_enterprise: Vállalkozások számára
   producers_signup_studies: Termelőink történetei.
-  producers_signup_cta_headline: Csatlakozz most!
+  producers_signup_cta_headline: Csatlakozz bátran!
   producers_signup_cta_action: Csatlakozz most
-  producers_signup_detail: Itt a részlet.
+  producers_signup_detail: Részletek
   producer: Termelő
   products_item: Tétel
   products_description: Leírás
@@ -2510,13 +2518,13 @@ hu:
   shops_text: Rendelési ciklusokban dolgozunk. A növénytermesztés, az állattenyésztés, az élelem előállítása ciklikus folyamat. Így nálunk az áruátadás is ciklusokban történik, pont ahogy a növények is hétről hétre, és eltérő ütemben fejlődnek. Ha lezárt rendelési ciklust találsz valahol, nézd meg, ki van-e írva a rendelési ciklus nyitásának időpontja. Ha nem, látogass vissza később az adott termelőhöz, közösséghez.
   shops_signup_title: Regisztrálj Átvételi Pontként
   shops_signup_headline: Átvételi Pontok, szabad szerveződések.
-  shops_signup_motivation: Bármi legyen is a modelled, támogatunk téged. Azonban változol, veled vagyunk. Mi non-profit, független," és nyílt forráskódú. Mi vagyunk azok a szoftverpartnerek, akikről álmodott.
+  shops_signup_motivation: Bármi legyen is a modelled, támogatunk téged. Ha változol, veled vagyunk. Non-profit, független és nyílt forráskódú felület vagyunk, közösségi élelemrendszerben gondolkozunk. Ha együttműködnél, várunk!
   shops_signup_action: Csatlakozz most
-  shops_signup_pricing: Vállalkozási fiókok
+  shops_signup_pricing: Vállalkozói fiókok
   shops_signup_stories: Történetek Átvételi Pontjainktól
-  shops_signup_help: Készek vagyunk segíteni.
-  shops_signup_help_text: Jobb megtérülésre van szüksége. Új vevőkre és logisztikai partnerekre van szüksége. El kell mesélnie a történetét a nagykereskedelemben, kiskereskedelem, és a konyhaasztalt.
-  shops_signup_detail: Itt a részlet.
+  shops_signup_help: Gondolkodjunk együtt!
+  shops_signup_help_text: Nehezen éred el a fogyasztókat? Partnerekre van szükséged akik segítenek termékeid eljuttatásában a fogyasztókhoz? Elmesélnéd a saját és a termékeid történetét, hogy eljusson a vacsoraasztalokhoz, közösségekhez, kis- és nagykereskedőkhöz?
+  shops_signup_detail: Részletek
   orders: "Megrendelések"
   orders_fees: "Díjak..."
   orders_edit_title: "Bevásárlókosár"
@@ -2628,15 +2636,15 @@ hu:
         registration_logo: "A logó képe"
         registration_promo_image: "Fejléckép a profilodhoz"
         registration_about_us: "Bemutatkozó szöveg"
-        registration_outcome_headline: "Mit kapsz?"
+        registration_outcome_headline: "Milyen előnnyel jár ez?"
         registration_outcome1_html: "Profilod segít az embereknek <strong>megtalálni</strong> és <strong>kapcsolatba lépni</strong> Veled az Open Food Network hálózaton."
-        registration_outcome2: "Használd ezt a helyet, hogy bemutasd a vállalkozásod, és segíts kapcsolatokat teremteni - közösségi és online jelenléten keresztül."
+        registration_outcome2: "Használd ezt a lehetőséget vállalkozásod bemutatására, és segíts kapcsolatokat teremteni - közösségi és online jelenléten keresztül."
         registration_outcome3: "Ez egyben az első lépés az Open Food Network-ben történő értékesítés megnyitása felé."
         registration_action: "Lássunk neki!"
       details:
         title: "Részletek"
         headline: "Lássunk neki"
-        enterprise: "Először is tudnunk kell egy kicsit a gazdaságodról:"
+        enterprise: "Először add meg a gazdaságod, vállalkozásod fő adatait!"
         producer: "Először is tudnunk kell egy kicsit a gazdaságáról:"
         enterprise_name_field: "Vállalkozás neve:"
         producer_name_field: "Gazdaság neve:"
@@ -2663,18 +2671,18 @@ hu:
         drag_map_marker: "Sok vidéki termelőnek köszönhetően a térképek pontossága folyamatosan javul. Segíts nekünk jobban megérteni, hol tartózkodsz: használd a fenti térképet, és mozgasd a gombostűt úgy, hogy rákattintasz vagy koppintasz a gombostű tartásához, majd húzd azt a helyre, amely ismereteid alapján pontosabb."
       contact:
         title: "Kapcsolat"
-        who_is_managing_enterprise: "Ki a felelős a %{enterprise} kezeléséért?"
+        who_is_managing_enterprise: "Ki a felelős %{enterprise} oldal kezeléséért?"
         contact_field: "Elsődleges kapcsolattartó"
         contact_field_placeholder: "Kapcsolattartó neve"
         contact_field_required: "Meg kell adnod egy elsődleges kapcsolattartót."
         phone_field: "Telefonszám"
         whatsapp_phone_field: "WhatsApp telefonszám"
         whatsapp_phone_tooltip: "Ez a szám a nyilvános profilodban látszódni fog, mint WhatsApp link."
-        phone_field_placeholder: "például. +36 30 1234 567"
-        whatsapp_phone_field_placeholder: "például. +36 20 123 5678"
+        phone_field_placeholder: "például +36 30 1234 567"
+        whatsapp_phone_field_placeholder: "például +36 20 123 5678"
       type:
         title: "Típus"
-        headline: "Utolsó lépés a %{enterprise} hozzáadásához!"
+        headline: "Utolsó lépés %{enterprise} profil létrehozásához!"
         question: "Termelő vagy?"
         yes_producer: "Igen, termelő vagyok"
         no_producer: "Nem, nem vagyok termelő"
@@ -2686,7 +2694,7 @@ hu:
         title: "Rólunk"
         headline: "Szép munka!"
         message: "Most lássuk a részleteket"
-        success: "A(z) %{enterprise} sikeresen hozzáadva az Open Food Network-höz"
+        success: "%{enterprise} profilt sikeresen hozzáadtuk az Open Food hálózathoz."
         registration_exit_message: "Ha bármelyik szakaszban kilépsz ebből a folyamatból, folytathatod profilod létrehozását az adminisztrációs felületen."
         enterprise_description: "Rövid Leírás"
         enterprise_description_placeholder: "Egy rövid mondat, amely leírja vállalkozásod"
@@ -2694,14 +2702,14 @@ hu:
         enterprise_long_desc_placeholder: "Itt a lehetőség, hogy elmeséld vállalkozásod történetét – mitől vagy más és különleges? Javasoljuk, hogy a leírás ne haladja meg a 600 karaktert vagy 150 szót."
         enterprise_long_desc_length: "%{num} karakter / legfeljebb 600 ajánlott"
         enterprise_abn: "Adószám"
-        enterprise_abn_placeholder: "például. 99 123 456 789"
+        enterprise_abn_placeholder: "például 12345678-2-19"
         enterprise_acn: "Cégjegyzékszám"
-        enterprise_acn_placeholder: "például. 123 456 789"
+        enterprise_acn_placeholder: "például 01-09-562739"
         enterprise_tax_required: "Ki kell választani."
       images:
         title: "Képek"
         headline: "Köszönjük!"
-        description: "Tölts fel néhány szép képet, hogy jól nézzen ki a profilod! :)"
+        description: "Tölts fel néhány szép képet, hogy jól nézzen ki a profilod!"
         uploading: "Feltöltés..."
         continue: "Tovább"
         back: "Vissza"
@@ -2709,8 +2717,8 @@ hu:
         select_logo: "1. lépés: Tölts fel egy Logo Képet"
         logo_tip: "Tipp: A négyzet alakú képek működnek a legjobban, lehetőleg legalább 300 × 300 képpont"
         logo_label: "Válassz egy logóképet"
-        logo_drag: "Húzd ide a logo-d"
-        review_logo: "2. lépés: Nézd meg a Logo-d előnézetben"
+        logo_drag: "Húzd ide a feltöltendő fájlt"
+        review_logo: "2. lépés: Nézd meg előnézetben"
         review_logo_tip: "Tipp: a legjobb eredmény érdekében a képnek ki kell töltenie a rendelkezésre álló helyet"
         logo_placeholder: "Feltöltés után a kép itt jelenik meg ellenőrzés céljából"
       promo:
@@ -2726,15 +2734,15 @@ hu:
         enterprise_final_step: "Utolsó lépés!"
         enterprise_social_text: "Hogyan találhatják meg az emberek a %{enterprise}-t  online?"
         website: "Weboldal"
-        website_placeholder: "például. openfoodnetwork.org.au"
+        website_placeholder: "például openfoodnetwork.org.au"
         facebook: "Facebook"
-        facebook_placeholder: "például. www.facebook.com/PageNameItt"
+        facebook_placeholder: "például www.facebook.com/OldalNev"
         linkedin: "LinkedIn"
-        linkedin_placeholder: "például. www.linkedin.com/YourNameItt"
+        linkedin_placeholder: "például www.linkedin.com/neved"
         twitter: "Twitter"
-        twitter_placeholder: "például. @twitter_handle"
+        twitter_placeholder: "például @twitter_handle"
         instagram: "Instagram"
-        instagram_placeholder: "például. @instagram_handle"
+        instagram_placeholder: "például @instagram_handle"
       limit_reached:
         headline: "Ó ne!"
         message: "Elérted a korlátot!"
@@ -2742,7 +2750,7 @@ hu:
         action: "Vissza a kezdőlapra"
       finished:
         headline: "Elkészült!"
-        thanks: "Köszönjük, hogy kitöltötted a %{enterprise} adatlapját."
+        thanks: "Köszönjük, hogy kitöltötted a regisztrációs adatlapot."
         login: "Bármikor módosíthatod vagy frissítheted vállalkozásod adatlapját, ha bejelentkezel az Open Food Network-be, és az Adminisztráció felületre lépsz."
         action: "Lépj a Vállalkozás Irányítópultjára"
   back: "Vissza"
@@ -2804,16 +2812,16 @@ hu:
   admin_enterprise_groups_data_powertip: "A csoportért felelős elsődleges felhasználó."
   admin_enterprise_groups_data_powertip_logo: "Ez a csoport logója"
   admin_enterprise_groups_data_powertip_promo_image: "Ez a kép a Csoport profil tetején jelenik meg"
-  admin_enterprise_groups_contact_phone_placeholder: "például. 98 7654 3210"
-  admin_enterprise_groups_contact_address1_placeholder: "például. High Street 123"
+  admin_enterprise_groups_contact_phone_placeholder: "például 98 7654 3210"
+  admin_enterprise_groups_contact_address1_placeholder: "például Saláta köz 15."
   admin_enterprise_groups_contact_city: "Település"
-  admin_enterprise_groups_contact_city_placeholder: "például. Northcote"
+  admin_enterprise_groups_contact_city_placeholder: "például Kukutyin"
   admin_enterprise_groups_contact_zipcode: "Irányítószám"
-  admin_enterprise_groups_contact_zipcode_placeholder: "például. 3070"
+  admin_enterprise_groups_contact_zipcode_placeholder: "például 3070"
   admin_enterprise_groups_contact_state_id: "Ország"
   admin_enterprise_groups_contact_country_id: "Ország"
-  admin_enterprise_groups_web_twitter: "például. @the_prof"
-  admin_enterprise_groups_web_website_placeholder: "például. www.truffles.com"
+  admin_enterprise_groups_web_twitter: "például @the_prof"
+  admin_enterprise_groups_web_website_placeholder: "például www.truffles.com"
   admin_order_cycles: "Admin Rendelési Ciklusok"
   open: "Nyit"
   close: "Zár"
@@ -2894,10 +2902,10 @@ hu:
   spree_admin_product_category: Termékkategória
   spree_admin_variant_unit_name: Változat egység neve
   unit_name: "Egység neve"
-  change_package: "Csomag Módosítása"
-  spree_admin_single_enterprise_hint: "Tipp: Ha szeretnéd, hogy mások megtaláljanak, kapcsold be a nyilvános beállítást:"
-  spree_admin_eg_pickup_from_school: "például. \"Átvétel az Általános iskolából\""
-  spree_admin_eg_collect_your_order: "például. \"Kérjük, vegye át rendelését a 123 Imaginary St, Northcote, 3070 címről\""
+  change_package: "Felhasználótípus módosítása"
+  spree_admin_single_enterprise_hint: "Tipp: Ha szeretnéd, hogy mások megtaláljanak, állítsd a profilod láthatóságát nyilvánosra alább: "
+  spree_admin_eg_pickup_from_school: "például \"Átvétel az Általános Iskolában\""
+  spree_admin_eg_collect_your_order: "például \"Kérjük, vedd át rendelésed a Képzelt utca 12-es címen\""
   spree_order_availability_error: "A forgalmazó vagy a rendelési ciklus nem tudja szállítani a kosárban lévő termékeket"
   spree_order_populator_error: "Ez a forgalmazó vagy a rendelési ciklus nem tudja a kosárban lévő összes terméket szállítani. Kérjük, válasszon másikat."
   spree_order_cycle_error: "Kérjük, válassz rendelési ciklust ehhez a rendeléshez."
@@ -2905,9 +2913,9 @@ hu:
   spree_distributors_error: "Legalább egy Átvételi Pontot ki kell választani"
   spree_user_enterprise_limit_error: "^%{email} nem birtokolhat több vállalkozásot (a korlát %{enterprise_limit})."
   spree_variant_product_error: legalább egy változattal kell rendelkeznie
-  your_profil_live: "Élő profilod"
-  see: "Lásd"
-  live: "élő"
+  your_profil_live: "Aktuális profilod"
+  see: "Nézd meg a(z) "
+  live: "profilt"
   manage: "Szerkesztés"
   resend: "Újraküldés"
   add_and_manage_products: "Termékek hozzáadása és kezelése"
@@ -3003,7 +3011,6 @@ hu:
   report_header_paid: Fizetett?
   report_header_delivery: Szállítás?
   report_header_shipping: Szállítás
-  report_header_shipping_method: Szállítási Mód
   report_header_shipping_instructions: Szállítási utasítások
   report_header_ship_street: Szállítási utca
   report_header_ship_street_2: Szállítási utca 2
@@ -3132,6 +3139,8 @@ hu:
   report_header_total_incl_vat: "Összesen, beleértve adó (%{currency_symbol})"
   report_header_total_excl_fees_and_tax: "Összesen díjak és adók nélkül (%{currency_symbol})"
   report_header_temp_controlled: Hűtést igényel?
+  report_header_shipment_state: "Szállítási Státusz"
+  report_header_shipping_method: "Szállítási Mód"
   report_header_is_producer: Termelő?
   report_header_not_confirmed: Nem megerősített
   report_header_gst_on_income: GST a bevételekre
@@ -3597,7 +3606,7 @@ hu:
         order: "Rendelés"
     registration:
       welcome_to_ofn: "Köszöntünk az Open Food Hálózatában!"
-      signup_or_login: "Kezd a regisztrációval (vagy bejelentkezéssel)"
+      signup_or_login: "Kezdd a regisztrációval (vagy bejelentkezéssel)"
       have_an_account: "Már van fiókod?"
       action_login: "Jelentkezz be most."
     stripe_elements:
@@ -4333,7 +4342,7 @@ hu:
           on_demand: "Igény szerint"
           product_description: "Termékleírás"
           image: "Kép"
-        unit_name_placeholder: 'például. csokrok'
+        unit_name_placeholder: 'például csokrok'
         index:
           header:
             title: Termékek tömeges szerkesztése
@@ -4412,8 +4421,8 @@ hu:
           unit_price: "Egységár"
           display_as: "Megjelenítés mint"
           display_name: "Megjelenítendő név"
-          display_as_placeholder: 'például. 2 kg'''
-          display_name_placeholder: 'például. paradicsom'
+          display_as_placeholder: 'például 2 kg'
+          display_name_placeholder: 'például paradicsom'
           unit_scale: "Mértékegység skála"
           unit: Mértékegység
           price: Ár

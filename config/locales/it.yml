@@ -657,6 +657,11 @@ it:
         your_content: I tuoi contenuti
         user_guide: Guida per gli utenti
         map: Mappa
+    dfc_product_imports:
+      index:
+        update: Aggiorna
+        new: Nuovo
+        import: Importazione
     enterprise_fees:
       index:
         title: "Tariffe azienda"
@@ -778,9 +783,6 @@ it:
         product_categories: Categorie Prodotti
         tax_categories: Categorie imposte
         shipping_categories: Categorie Spedizioni
-      dfc_import_form:
-        enterprise: "Azienda"
-        import: "Importazione"
       import:
         review: Revisione
         import: Importazione
@@ -2735,7 +2737,6 @@ it:
   report_header_paid: Pagato?
   report_header_delivery: Consegna?
   report_header_shipping: Spedizione
-  report_header_shipping_method: Metodo di spedizione
   report_header_shipping_instructions: Istruzioni spedizione
   report_header_ship_street: Indirizzo di spedizione
   report_header_ship_street_2: Indirizzo di spedizione 2
@@ -2858,6 +2859,8 @@ it:
   report_header_total_excl_vat: "Totale imponibile (%{currency_symbol})"
   report_header_total_incl_vat: "Totale IVA incl. (%{currency_symbol})"
   report_header_temp_controlled: Controllo Temperatura?
+  report_header_shipment_state: "Stato Spedizione"
+  report_header_shipping_method: "Metodo di spedizione"
   report_header_is_producer: Produttore?
   report_header_not_confirmed: Non confermato
   report_header_gst_on_income: IVA sulle entrate

@@ -705,7 +705,10 @@ ru:
         map: Карта
     dfc_product_imports:
       index:
-        title: "Импорт каталога продуктов DFC"
+        update: Обновить
+        new: Новый
+        import: Импорт
+      import:
         imported_products: "Внесенные товары:"
     enterprise_fees:
       index:
@@ -878,9 +881,7 @@ ru:
         shipping_categories: Категории Доставки
       dfc_import_form:
         title: "Импорт из каталога DFC"
-        enterprise: "Предприятие"
         catalog_url: "URL-адрес каталога DFC"
-        import: "Импорт"
       import:
         review: Просмотр
         import: Импорт
@@ -2944,7 +2945,6 @@ ru:
   report_header_paid: Оплачен?
   report_header_delivery: Доставка?
   report_header_shipping: Доставка
-  report_header_shipping_method: Способ Доставки
   report_header_shipping_instructions: Инструкции по Доставке
   report_header_ship_street: Улица Доставки
   report_header_ship_street_2: Улица Доставки 2
@@ -3067,6 +3067,8 @@ ru:
   report_header_total_excl_vat: "Итого искл. налог (%{currency_symbol})"
   report_header_total_incl_vat: "Итого, вкл. налог (%{currency_symbol})"
   report_header_temp_controlled: Контроль Температуры?
+  report_header_shipment_state: "Статус Доставки"
+  report_header_shipping_method: "Способ Доставки"
   report_header_is_producer: Производитель?
   report_header_not_confirmed: Не Подтверждено
   report_header_gst_on_income: Налог на доход

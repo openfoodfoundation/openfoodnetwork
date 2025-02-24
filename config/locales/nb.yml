@@ -765,7 +765,10 @@ nb:
         map: Kart
     dfc_product_imports:
       index:
-        title: "Importere en DFC-produktkatalog"
+        update: Oppdater
+        new: Ny
+        import: Import
+      import:
         imported_products: "Importerte produkter:"
     enterprise_fees:
       index:
@@ -946,9 +949,8 @@ nb:
         shipping_categories: Fraktkategorier
       dfc_import_form:
         title: "Importer fra DFC-katalogen"
-        enterprise: "Bedrift"
         catalog_url: "DFC-katalog-URL"
-        import: "Import"
+        preview: Forhåndsvisning
       import:
         review: Anmeldelse
         import: Import
@@ -3027,7 +3029,6 @@ nb:
   report_header_paid: Betalt?
   report_header_delivery: Levert?
   report_header_shipping: Levering
-  report_header_shipping_method: Leveringsmetod
   report_header_shipping_instructions: Leveringsanvisninger
   report_header_ship_street: Gatenavn Levering
   report_header_ship_street_2: Gatenavn Levering 2
@@ -3150,6 +3151,8 @@ nb:
   report_header_total_excl_vat: "Sum eks. avgift (%{currency_symbol})"
   report_header_total_incl_vat: "Sum inkl. avgift (%{currency_symbol})"
   report_header_temp_controlled: Temperaturkontrollert?
+  report_header_shipment_state: "Leveringsstatus"
+  report_header_shipping_method: "Leveringsmetod"
   report_header_is_producer: Produsent?
   report_header_not_confirmed: Ikke bekreftet
   report_header_gst_on_income: MVA på Inntekter

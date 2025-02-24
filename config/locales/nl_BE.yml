@@ -476,6 +476,11 @@ nl_BE:
         your_content: Uw inhoud
         user_guide: Gebruikershandleiding
         map: Kaart
+    dfc_product_imports:
+      index:
+        update: Update
+        new: Nieuw
+        import: Importeren
     enterprise_fees:
       index:
         title: "Ondernemingsvergoedingen"
@@ -595,9 +600,6 @@ nl_BE:
         product_categories: Productcategorieën
         tax_categories: Belastingcategorieën
         shipping_categories: Verzendingscategorieën
-      dfc_import_form:
-        enterprise: "Onderneming"
-        import: "Importeren"
       import:
         review: Beoordeling
         import: Importeren
@@ -2380,7 +2382,6 @@ nl_BE:
   report_header_paid: Betaald?
   report_header_delivery: Levering?
   report_header_shipping: Verzending
-  report_header_shipping_method: Het verschepen Methode
   report_header_shipping_instructions: Verzendingsinstructie
   report_header_ship_street: Verzending Straat
   report_header_ship_street_2: Verzend Straat 2
@@ -2495,6 +2496,8 @@ nl_BE:
   report_header_total_excl_vat: "Totaal excl. belastingen (%{currency_symbol}) "
   report_header_total_incl_vat: "Totaal incl. belastingen(%{currency_symbol}) "
   report_header_temp_controlled: Onder gecontroleerde temperatuur ?
+  report_header_shipment_state: "Status Verzending"
+  report_header_shipping_method: "Het verschepen Methode"
   report_header_is_producer: Producent?
   report_header_not_confirmed: Niet bevestigd
   report_header_gst_on_income: BTW

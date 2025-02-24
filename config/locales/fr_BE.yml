@@ -652,6 +652,11 @@ fr_BE:
         your_content: 'Votre contenu '
         user_guide: Guide d'utilisation
         map: Carte
+    dfc_product_imports:
+      index:
+        update: Mettre à jour
+        new: Nouveau
+        import: Importer
     enterprise_fees:
       index:
         title: "Marges et Commissions"
@@ -810,8 +815,7 @@ fr_BE:
         tax_categories: TVA applicable
         shipping_categories: Condition de transport
       dfc_import_form:
-        enterprise: "Entreprise"
-        import: "Importer"
+        preview: Aperçu
       import:
         review: Vérifier
         import: Importer
@@ -2784,7 +2788,6 @@ fr_BE:
   report_header_paid: Payé ?
   report_header_delivery: Livré ?
   report_header_shipping: Livraison
-  report_header_shipping_method: Méthode de Livraison
   report_header_shipping_instructions: Instructions de Livraison
   report_header_ship_street: Rue de la livraison
   report_header_ship_street_2: ' Rue (2) Livraison'
@@ -2906,6 +2909,8 @@ fr_BE:
   report_header_total_excl_vat: "Total HT (%{currency_symbol})"
   report_header_total_incl_vat: "Total TTC (%{currency_symbol})"
   report_header_temp_controlled: Temp Contrôlée ?
+  report_header_shipment_state: "Statut livraison"
+  report_header_shipping_method: "Méthode de Livraison"
   report_header_is_producer: Producteur·trice ?
   report_header_not_confirmed: Non confirmé
   report_header_gst_on_income: TVA

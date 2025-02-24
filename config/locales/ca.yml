@@ -667,6 +667,11 @@ ca:
         your_content: El vostre contingut
         user_guide: Guia de l'usuari
         map: Mapa
+    dfc_product_imports:
+      index:
+        update: Actualitzar
+        new: Nou
+        import: Importa
     enterprise_fees:
       index:
         title: "Comissions de l'organització"
@@ -823,9 +828,6 @@ ca:
         product_categories: Tipus de productes
         tax_categories: Tipus d'impostos
         shipping_categories: Tipus d'enviament
-      dfc_import_form:
-        enterprise: "Organització"
-        import: "Importa"
       import:
         review: Revisa
         import: Importa
@@ -2746,7 +2748,6 @@ ca:
   report_header_paid: Pagat?
   report_header_delivery: Lliurament?
   report_header_shipping: Enviament
-  report_header_shipping_method: Mètode d'enviament
   report_header_shipping_instructions: Instruccions d'enviament
   report_header_ship_street: Carrer d'enviament
   report_header_ship_street_2: Carrer d'enviament 2
@@ -2861,6 +2862,8 @@ ca:
   report_header_total_excl_vat: "Total excl. impostos (%{currency_symbol})"
   report_header_total_incl_vat: "Total incl. impostos (%{currency_symbol})"
   report_header_temp_controlled: Control de temperatura?
+  report_header_shipment_state: "Estat de la Tramesa"
+  report_header_shipping_method: "Mètode d'enviament"
   report_header_is_producer: Productor?
   report_header_not_confirmed: No confirmat
   report_header_gst_on_income: IVA sobre ingressos

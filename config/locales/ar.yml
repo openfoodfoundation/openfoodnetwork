@@ -636,6 +636,11 @@ ar:
         your_content: المحتوى الخاص بك
         user_guide: دليل المستخدم
         map: خريطة
+    dfc_product_imports:
+      index:
+        update: تحديث
+        new: جديد
+        import: استيراد
     enterprise_fees:
       index:
         title: "رسوم الشركة"
@@ -757,9 +762,6 @@ ar:
         product_categories: فئات المنتجات
         tax_categories: فئات الضرائب
         shipping_categories: فئات الشحن
-      dfc_import_form:
-        enterprise: "الشركة"
-        import: "استيراد"
       import:
         review: مراجعة
         import: استيراد
@@ -2747,7 +2749,6 @@ ar:
   report_header_paid: دفع؟
   report_header_delivery: توصيل؟
   report_header_shipping: الشحن
-  report_header_shipping_method: طريقة الشحن
   report_header_shipping_instructions: تعليمات الشحن
   report_header_ship_street: شارع الشحن
   report_header_ship_street_2: شارع الشحن 2
@@ -2870,6 +2871,8 @@ ar:
   report_header_total_excl_vat: "المجموع باستثناء الضريبة (%{currency_symbol})"
   report_header_total_incl_vat: "إجمالي مدفوع الضريبة (%{currency_symbol})"
   report_header_temp_controlled: التحكم المؤقت؟
+  report_header_shipment_state: "حالة الشحن"
+  report_header_shipping_method: "طريقة الشحن"
   report_header_is_producer: المنتج؟
   report_header_not_confirmed: غير مؤكد
   report_header_gst_on_income: ضريبة السلع والخدمات على الدخل

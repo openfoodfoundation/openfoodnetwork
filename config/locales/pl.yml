@@ -468,6 +468,10 @@ pl:
         your_content: Twoja treść
         user_guide: Podręcznik użytkownika
         map: Mapa
+    dfc_product_imports:
+      index:
+        update: Aktualizuj
+        import: Import
     enterprise_fees:
       index:
         title: "Opłaty dla podmiotów"
@@ -569,9 +573,6 @@ pl:
         product_categories: Kategorie produktów
         tax_categories: Kategorie podatków
         shipping_categories: Kategorie dostaw
-      dfc_import_form:
-        enterprise: "Podmiot"
-        import: "Import"
       import:
         review: Przejrzyj
         import: Import
@@ -2256,7 +2257,6 @@ pl:
   report_header_paid: Opłacony?
   report_header_delivery: Dostawa?
   report_header_shipping: Dostawa
-  report_header_shipping_method: Metoda wysyłki
   report_header_shipping_instructions: Instrukcje dotyczące dostaw
   report_header_ship_street: Ship Street
   report_header_ship_street_2: Ship Street 2
@@ -2364,6 +2364,8 @@ pl:
   report_header_total_excl_vat: "Razem wył. podatek (%{currency_symbol})"
   report_header_total_incl_vat: "Razem łącznie podatek (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
+  report_header_shipment_state: "Status dostawy"
+  report_header_shipping_method: "Metoda wysyłki"
   report_header_is_producer: Producent?
   report_header_not_confirmed: Nie potwierdzone
   report_header_gst_on_income: VAT od dochodu
@@ -2704,7 +2706,6 @@ pl:
           Podczas zakupów zmniejszył się poziom zapasów co najmniej jednego produktu
           w Twoim koszyku. Oto, co się zmieniło:
       now_out_of_stock: jest teraz niedostępny.
-      only_n_remaining: "teraz pozostało tylko %{num}."
     shopfront:
       variant:
         add_to_cart: "Dodaj"

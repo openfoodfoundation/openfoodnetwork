@@ -279,6 +279,7 @@ en_FR:
         send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
     oidc:
       failure: "Could not sign in: %{error}"
+      record_not_unique: "%{uid} is already associated with another account"
   home_page_alert_html: "Home page alert HTML"
   hub_signup_case_studies_html: "Hub signup case studies HTML"
   hub_signup_detail_html: "Hub signup detail HTML"
@@ -780,7 +781,14 @@ en_FR:
         map: Map
     dfc_product_imports:
       index:
-        title: "Importing a DFC product catalog"
+        title: "DFC product catalog"
+        catalog_url: "%{count} products to be imported from: %{catalog_url}"
+        enterprise: "Import to enterprise: %{enterprise_name}"
+        update: Update
+        new: New
+        import: Import
+      import:
+        title: "DFC product catalog import"
         imported_products: "Imported products:"
     enterprise_fees:
       index:
@@ -962,9 +970,8 @@ en_FR:
         shipping_categories: Shipping Categories
       dfc_import_form:
         title: "Import from DFC catalog"
-        enterprise: "Enterprise"
         catalog_url: "DFC catalog URL"
-        import: "Import"
+        preview: Preview
       import:
         review: Review
         import: Import
@@ -3068,7 +3075,6 @@ en_FR:
   report_header_paid: Paid?
   report_header_delivery: Delivery?
   report_header_shipping: Shipping
-  report_header_shipping_method: Shipping Method
   report_header_shipping_instructions: Shipping instructions
   report_header_ship_street: Ship Street
   report_header_ship_street_2: Ship Street 2
@@ -3199,6 +3205,8 @@ en_FR:
   report_header_total_incl_vat: "Total incl. tax (%{currency_symbol})"
   report_header_total_excl_fees_and_tax: "Total excl. fees and tax (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
+  report_header_shipment_state: "Shipment State"
+  report_header_shipping_method: "Shipping Method"
   report_header_is_producer: Producer?
   report_header_not_confirmed: Not Confirmed
   report_header_gst_on_income: GST on Income

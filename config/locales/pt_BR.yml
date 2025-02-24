@@ -558,6 +558,11 @@ pt_BR:
         your_content: Seu conteúdo
         user_guide: Guia do Usuário
         map: Mapa
+    dfc_product_imports:
+      index:
+        update: Atualizar
+        new: Novo
+        import: Importar
     enterprise_fees:
       index:
         title: "Taxas da iniciativa"
@@ -673,9 +678,6 @@ pt_BR:
         product_categories: Categorias de Produtos
         tax_categories: Categorias fiscais
         shipping_categories: Categorias de Remessa
-      dfc_import_form:
-        enterprise: "Iniciativas"
-        import: "Importar"
       import:
         review: Reveja
         import: Importar
@@ -2488,7 +2490,6 @@ pt_BR:
   report_header_paid: Pago?
   report_header_delivery: Entrega?
   report_header_shipping: Envio
-  report_header_shipping_method: Método de envio
   report_header_shipping_instructions: Instruções de envio
   report_header_ship_street: Rua de envio
   report_header_ship_street_2: Rua de envio 2
@@ -2603,6 +2604,8 @@ pt_BR:
   report_header_total_excl_vat: "Total imposto excluído (%{currency_symbol})"
   report_header_total_incl_vat: "Total imposto incluído (%{currency_symbol})"
   report_header_temp_controlled: Temperatura controlada?
+  report_header_shipment_state: "Situação do Envio"
+  report_header_shipping_method: "Método de envio"
   report_header_is_producer: Produtor?
   report_header_not_confirmed: Não confirmado
   report_header_gst_on_income: Receita de ICMS

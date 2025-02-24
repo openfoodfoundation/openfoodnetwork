@@ -684,6 +684,11 @@ pa:
         your_content: ਤੁਹਾਡਾ ਕੰਟੇਂਟ
         user_guide: ਉਪਭੋਗਤਾ ਗਾਈਡ
         map: ਮੈਪ
+    dfc_product_imports:
+      index:
+        update: ਅੱਪਡੇਟ
+        new: ਨਵਾਂ
+        import: ਇਮਪੋਰਟ
     enterprise_fees:
       index:
         title: "ਐਂਟਰਪ੍ਰਾਈਜ਼ ਫ਼ੀਸ"
@@ -822,9 +827,6 @@ pa:
         product_categories: ਉਤਪਾਦ ਸ਼੍ਰੇਣੀਆਂ
         tax_categories: ਟੈਕਸ ਸ਼੍ਰੇਣੀਆਂ
         shipping_categories: ਸ਼ਿਪਿੰਗ ਸ਼੍ਰੇਣੀਆਂ
-      dfc_import_form:
-        enterprise: "ਐਂਟਰਪ੍ਰਾਈਜ਼"
-        import: "ਇਮਪੋਰਟ"
       import:
         review: ਸਮੀਖਿਆ
         import: ਇਮਪੋਰਟ
@@ -2842,7 +2844,6 @@ pa:
   report_header_paid: ਭੁਗਤਾਨ ਕੀਤਾ?
   report_header_delivery: ਡਿਲਿਵਰੀ?
   report_header_shipping: ਸ਼ਿਪਿੰਗ
-  report_header_shipping_method: ਸ਼ਿਪਿੰਗ ਦਾ ਤਰੀਕਾ
   report_header_shipping_instructions: ਸ਼ਿਪਿੰਗ ਨਿਰਦੇਸ਼
   report_header_ship_street: ਸ਼ਿਪ ਸਟ੍ਰੀਟ
   report_header_ship_street_2: ਸ਼ਿਪ ਸਟ੍ਰੀਟ 2
@@ -2965,6 +2966,8 @@ pa:
   report_header_total_excl_vat: "ਟੈਕਸ ਹਟਾ ਕੇ ਕੁੱਲ (%{currency_symbol})"
   report_header_total_incl_vat: "ਕੁੱਲ ਟੈਕਸ ਸਮੇਤ (%{currency_symbol})"
   report_header_temp_controlled: ਤਾਪਮਾਨ ਦਵਾਰਾ ਨਿਯੰਤ੍ਰਿਤ?
+  report_header_shipment_state: "ਸ਼ਿਪਮੈਂਟ ਦੀ ਸਥਿਤੀ"
+  report_header_shipping_method: "ਸ਼ਿਪਿੰਗ ਦਾ ਤਰੀਕਾ"
   report_header_is_producer: ਉਤਪਾਦਕ?
   report_header_not_confirmed: ਪੁਸ਼ਟੀ ਨਹੀਂ ਹੋਈ
   report_header_gst_on_income: ਆਮਦਨੀ ਤੇ ਜੀਐਸਟੀ

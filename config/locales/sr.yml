@@ -763,10 +763,6 @@ sr:
         your_content: Ваш садржај
         user_guide: Упутство за употребу
         map: Мапа
-    dfc_product_imports:
-      index:
-        title: "Увоз ДФЦ каталога производа"
-        imported_products: "Увезени производи:"
     enterprise_fees:
       index:
         title: "Ентерприсе Феес"
@@ -948,9 +944,7 @@ sr:
         shipping_categories: Категорије отпреме
       dfc_import_form:
         title: "Увоз из ДФЦ каталога"
-        enterprise: "Ентерприсе"
         catalog_url: "УРЛ ДФЦ каталога"
-        import: "Увоз"
       import:
         review: Преглед
         import: Увоз
@@ -3030,7 +3024,6 @@ sr:
   report_header_paid: Плаћено?
   report_header_delivery: Испорука?
   report_header_shipping: поштарина
-  report_header_shipping_method: начин куповине
   report_header_shipping_instructions: Инструкције за доставу
   report_header_ship_street: Улица бродова
   report_header_ship_street_2: Улица бродова 2
@@ -3152,6 +3145,7 @@ sr:
   report_header_total_excl_vat: "Тотал екцл. порез ( %{currency_symbol} )"
   report_header_total_incl_vat: "Укупно укљ. порез ( %{currency_symbol} )"
   report_header_temp_controlled: ТемпЦонтроллед?
+  report_header_shipping_method: "начин куповине"
   report_header_is_producer: Продуцент?
   report_header_not_confirmed: Није потврђена
   report_header_gst_on_income: ГСТ на приход
@@ -3541,7 +3535,6 @@ sr:
           Док сте куповали, нивои залиха за један или више производа у вашој корпи
           су смањени. Ево шта се променило:
       now_out_of_stock: сада нема на залихама.
-      only_n_remaining: "сада је остало само %{num} ."
     shopfront:
       variant:
         add_to_cart: "Додати"

@@ -463,6 +463,11 @@ fil_PH:
         your_content: ang iyong nilalaman
         user_guide: gabay sa gumagamit
         map: Mapa
+    dfc_product_imports:
+      index:
+        update: i-update
+        new: Bago
+        import: ilipat
     enterprise_fees:
       index:
         title: "fees para sa Enterprise"
@@ -578,9 +583,6 @@ fil_PH:
         product_categories: kategorya ng produkto
         tax_categories: kategorya ng tax
         shipping_categories: mga kategorya ng pagpapadala
-      dfc_import_form:
-        enterprise: "Enterprise"
-        import: "ilipat"
       import:
         review: suriin
         import: i-import
@@ -2328,7 +2330,6 @@ fil_PH:
   report_header_paid: bayad na?
   report_header_delivery: dini-deliver?
   report_header_shipping: pagpapadala
-  report_header_shipping_method: paraan ng pagpapadala
   report_header_shipping_instructions: panuto sa pagpapadala
   report_header_ship_street: kalsada na pagpapadalahan
   report_header_ship_street_2: kalsada na pagpapadalahan 2
@@ -2439,6 +2440,8 @@ fil_PH:
   report_header_total_excl_vat: "Kabuuang tax na hindi kasama (%{currency_symbol})"
   report_header_total_incl_vat: "Kabuuang tax na kasama (%{currency_symbol})"
   report_header_temp_controlled: TempControlled?
+  report_header_shipment_state: "status ng kargamento"
+  report_header_shipping_method: "paraan ng pagpapadala"
   report_header_is_producer: Producer?
   report_header_not_confirmed: hindi kumpirmado
   report_header_gst_on_income: GST sa Kinikita

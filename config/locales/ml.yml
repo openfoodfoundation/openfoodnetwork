@@ -695,6 +695,11 @@ ml:
         your_content: നിങ്ങളുടെ ഉള്ളടക്കം
         user_guide: ഉപയോക്തൃ ഗൈഡ്
         map: മാപ്പ്
+    dfc_product_imports:
+      index:
+        update: അപ്ഡേറ്റ് ചെയ്യുക
+        new: പുതിയത്
+        import: ഇറക്കുമതി ചെയ്യുക
     enterprise_fees:
       index:
         title: "എന്റർപ്രൈസ് ഫീസ്"
@@ -843,9 +848,6 @@ ml:
         product_categories: ഉൽപ്പന്ന വിഭാഗങ്ങൾ
         tax_categories: നികുതി വിഭാഗങ്ങൾ
         shipping_categories: ഷിപ്പിംഗ് വിഭാഗങ്ങൾ
-      dfc_import_form:
-        enterprise: "എന്റർപ്രൈസ്"
-        import: "ഇറക്കുമതി ചെയ്യുക"
       import:
         review: അവലോകനം
         import: ഇറക്കുമതി ചെയ്യുക
@@ -2888,7 +2890,6 @@ ml:
   report_header_paid: പണം നൽകിയോ?
   report_header_delivery: ഡെലിവറി?
   report_header_shipping: ഷിപ്പിംഗ്
-  report_header_shipping_method: ഷിപ്പിംഗ് രീതി
   report_header_shipping_instructions: ഷിപ്പിംഗ് നിർദ്ദേശങ്ങൾ
   report_header_ship_street: ഷിപ്പിംഗ് തെരുവ്
   report_header_ship_street_2: ഷിപ്പിംഗ് തെരുവ് 2
@@ -3011,6 +3012,8 @@ ml:
   report_header_total_excl_vat: "ആകെ ഒഴികെ. നികുതി (%{currency_symbol})"
   report_header_total_incl_vat: "മൊത്തം നികുതി ഉൾപ്പെടെ (%{currency_symbol})"
   report_header_temp_controlled: ടെമ്പ് കൺട്രോൾഡ്?
+  report_header_shipment_state: "ഷിപ്പിംഗ് സ്റ്റേറ്റ്"
+  report_header_shipping_method: "ഷിപ്പിംഗ് രീതി"
   report_header_is_producer: പ്രൊഡ്യൂസർ?
   report_header_not_confirmed: സ്ഥിരീകരിച്ചില്ല
   report_header_gst_on_income: വരുമാനത്തിൽ ജി.എസ്.ടി

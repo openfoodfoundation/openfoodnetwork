@@ -692,6 +692,11 @@ hi:
         your_content: आपका कंटेन्ट
         user_guide: यूज़र गाइड
         map: नक्शा
+    dfc_product_imports:
+      index:
+        update: अपडेट करें
+        new: नया
+        import: इम्पोर्ट करें
     enterprise_fees:
       index:
         title: "एंटरप्राइज फीस"
@@ -838,9 +843,6 @@ hi:
         product_categories: उत्पाद श्रेणियां
         tax_categories: टैक्स श्रेणियां
         shipping_categories: शिपिंग श्रेणियां
-      dfc_import_form:
-        enterprise: "एंटरप्राइज़"
-        import: "इम्पोर्ट करें"
       import:
         review: रिव्यू
         import: इम्पोर्ट करें
@@ -2872,7 +2874,6 @@ hi:
   report_header_paid: भुगतान किया गया?
   report_header_delivery: डिलिवरी?
   report_header_shipping: शिपिंग
-  report_header_shipping_method: शिपिंग की विधि
   report_header_shipping_instructions: शिपिंग निर्देश
   report_header_ship_street: शिप स्ट्रीट
   report_header_ship_street_2: शिप स्ट्रीट 2
@@ -2995,6 +2996,8 @@ hi:
   report_header_total_excl_vat: "टैक्स को छोड़कर कुल (%{currency_symbol} )"
   report_header_total_incl_vat: "टैक्स सहित कुल (%{currency_symbol} )"
   report_header_temp_controlled: TEMPनियंत्रित?
+  report_header_shipment_state: "शिपमेंट का स्टेटस"
+  report_header_shipping_method: "शिपिंग की विधि"
   report_header_is_producer: उत्पादक?
   report_header_not_confirmed: पुष्टि नहीं की गई
   report_header_gst_on_income: आय पर GST
