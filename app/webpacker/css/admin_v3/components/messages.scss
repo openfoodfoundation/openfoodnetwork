@@ -58,6 +58,11 @@
     &.error {
       color: $color-flash-error-text;
       background-color: $color-flash-error-bg;
+
+      a:not(.button) {
+        color: $color-flash-error-text;
+        text-decoration: underline;
+      }
     }
 
     .msg {
