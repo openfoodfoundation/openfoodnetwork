@@ -1,6 +1,6 @@
-%div.contact-container
+.contact-container
   - if @group.email.present? || @group.website.present? || @group.phone.present?
-    %div.modal-centered
+    .modal-centered
       %p.modal-header
         = t :groups_contact_web
       - if @group.phone.present?
@@ -18,7 +18,7 @@
 
 %div
   - if @group.facebook.present? || @group.twitter.present? || @group.linkedin.present? || @group.instagram.present?
-    %div.modal-centered.pad-top
+    .modal-centered.pad-top
       %p.modal-header
         = t :groups_contact_web
       .follow-icons
@@ -33,7 +33,7 @@
 
 %div
   - if @group.address1.present? || @group.city.present?
-    %div.modal-centered.pad-top
+    .modal-centered.pad-top
       %p.modal-header
         = t :groups_contact_web
       %p
