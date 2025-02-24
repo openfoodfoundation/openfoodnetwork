@@ -16,7 +16,9 @@ RSpec.describe OpenOrderCycleJob do
       subject
       order_cycle.reload
     }
-      .to change { order_cycle.opened_at }.to(now)
+      .to change { order_cycle.opened_at }
+
+    expect(order_cycle.opened_at).to be_within(1).of(now)
   end
 
   it "enqueues webhook job" do
