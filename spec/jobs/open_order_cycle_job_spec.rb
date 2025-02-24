@@ -54,7 +54,43 @@ RSpec.describe OpenOrderCycleJob do
         .and change { variant.price }.to(1.57)
         .and change { variant.on_demand }.to(true)
         .and change { variant.on_hand }.by(0)
-        .and query_database 50
+        .and query_database 46
+    end
+  end
+
+  describe "concurrency", concurrency: true do
+    let(:breakpoint) { Mutex.new }
+
+    around do |example|
+      Timecop.freeze { example.run }
+    end
+
+    it "doesn't open order cycle twice" do
+      # Pause jobs when placing new job:
+      breakpoint.lock
+      allow(OpenOrderCycleJob).to(
+        receive(:new).and_wrap_original do |method, *args|
+          breakpoint.synchronize {} # rubocop:disable Lint/EmptyBlock
+          method.call(*args)
+        end
+      )
+
+      expect(OrderCycles::WebhookService)
+        .to receive(:create_webhook_job).with(order_cycle, 'order_cycle.opened', Time.zone.now).once
+
+      # Start two jobs in parallel:
+      threads = [
+        Thread.new { OpenOrderCycleJob.perform_now(order_cycle.id) },
+        Thread.new { OpenOrderCycleJob.perform_now(order_cycle.id) },
+      ]
+
+      # Wait for both to jobs to pause.
+      # This can reveal a race condition.
+      sleep 0.1
+
+      # Resume and complete both jobs:
+      breakpoint.unlock
+      threads.each(&:join)
     end
   end
 end
