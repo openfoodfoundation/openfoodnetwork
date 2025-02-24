@@ -313,10 +313,15 @@ select {
   background-color: white;
 }
 
+.rendering-options {
+  .inline-checkbox {
+    margin-top: 2px;
+  }
+}
+
 .inline-checkbox {
   display: inline-flex;
   align-items: center;
-  margin-top: 3px;
 
   input,
   label {
