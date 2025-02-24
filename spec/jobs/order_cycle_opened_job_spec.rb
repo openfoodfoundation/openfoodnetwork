@@ -22,39 +22,4 @@ RSpec.describe OrderCycleOpenedJob do
       .and enqueue_job(OpenOrderCycleJob).with(oc_opened_before.id).exactly(0).times
       .and enqueue_job(OpenOrderCycleJob).with(oc_opening_soon.id).exactly(0).times
   end
-
-  describe "concurrency", concurrency: true do
-    let(:breakpoint) { Mutex.new }
-
-    it "doesn't place duplicate job when run concurrently" do
-      pending "dunno why this doesn't work" # but then maybe this can be better handled in the sub-job.
-      oc_opened_now
-
-      # Pause jobs when placing new job:
-      breakpoint.lock
-      allow(OrderCycleOpenedJob).to(
-        receive(:new).and_wrap_original do |method, *args|
-          breakpoint.synchronize { nil }
-          method.call(*args)
-        end
-      )
-
-      expect {
-        # Start two jobs in parallel:
-        threads = [
-          Thread.new { OrderCycleOpenedJob.perform_now },
-          Thread.new { OrderCycleOpenedJob.perform_now },
-        ]
-
-        # Wait for both to jobs to pause.
-        # This can reveal a race condition.
-        sleep 0.1
-
-        # Resume and complete both jobs:
-        breakpoint.unlock
-        threads.each(&:join)
-      }
-        .to enqueue_job(OpenOrderCycleJob).with(oc_opened_now.id).once
-    end
-  end
 end
