@@ -117,7 +117,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     end
 
     it "display the OFN header by default" do
-      expect(email.body).to include(ContentConfig.url_for(:footer_logo))
+      expect(email.body).to include(ContentConfig.url_for(:logo))
     end
 
     describe "linking to order page" do
@@ -162,7 +162,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
       end
 
       it 'does not display the OFN navigation' do
-        expect(email.body).not_to include(ContentConfig.url_for(:footer_logo))
+        expect(email.body).not_to include(ContentConfig.url_for(:logo))
       end
     end
   end
