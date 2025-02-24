@@ -3,26 +3,27 @@
 require 'spec_helper'
 
 RSpec.describe OpenOrderCycleJob do
-  let(:order_cycle) { create(:simple_order_cycle, orders_open_at: Time.zone.now) }
+  let(:now){ Time.zone.now }
+  let(:order_cycle) { create(:simple_order_cycle, orders_open_at: now) }
   subject { OpenOrderCycleJob.perform_now(order_cycle.id) }
 
+  around do |example|
+    Timecop.freeze(now) { example.run }
+  end
+
   it "marks as open" do
-    Timecop.freeze do
-      expect {
-        subject
-        order_cycle.reload
-      }
-        .to change { order_cycle.opened_at }.to(Time.zone.now)
-    end
+    expect {
+      subject
+      order_cycle.reload
+    }
+      .to change { order_cycle.opened_at }.to(now)
   end
 
   it "enqueues webhook job" do
-    Timecop.freeze do
-      expect(OrderCycles::WebhookService)
-        .to receive(:create_webhook_job).with(order_cycle, 'order_cycle.opened', Time.zone.now).once
+    expect(OrderCycles::WebhookService)
+      .to receive(:create_webhook_job).with(order_cycle, 'order_cycle.opened', now).once
 
-      subject
-    end
+    subject
   end
 
   describe "syncing remote products" do
@@ -31,7 +32,7 @@ RSpec.describe OpenOrderCycleJob do
     let(:enterprise) { create(:supplier_enterprise) }
     let!(:variant) { create(:variant, name: "Sauce", supplier_id: enterprise.id) }
     let!(:order_cycle) {
-      create(:simple_order_cycle, orders_open_at: Time.zone.now,
+      create(:simple_order_cycle, orders_open_at: now,
                                   suppliers: [enterprise], variants: [variant])
     }
 
@@ -61,10 +62,6 @@ RSpec.describe OpenOrderCycleJob do
   describe "concurrency", concurrency: true do
     let(:breakpoint) { Mutex.new }
 
-    around do |example|
-      Timecop.freeze { example.run }
-    end
-
     it "doesn't open order cycle twice" do
       # Pause jobs when placing new job:
       breakpoint.lock
@@ -76,7 +73,7 @@ RSpec.describe OpenOrderCycleJob do
       )
 
       expect(OrderCycles::WebhookService)
-        .to receive(:create_webhook_job).with(order_cycle, 'order_cycle.opened', Time.zone.now).once
+        .to receive(:create_webhook_job).with(order_cycle, 'order_cycle.opened', now).once
 
       # Start two jobs in parallel:
       threads = [
