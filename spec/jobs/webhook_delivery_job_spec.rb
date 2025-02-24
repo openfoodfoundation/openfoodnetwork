@@ -3,9 +3,10 @@
 require 'spec_helper'
 
 RSpec.describe WebhookDeliveryJob do
-  subject { WebhookDeliveryJob.new(url, event, data) }
+  subject { WebhookDeliveryJob.new(url, event, data, at:) }
   let(:url) { 'https://test/endpoint' }
   let(:event) { 'order_cycle.opened' }
+  let(:at) { 1.second.ago }
   let(:data) {
     {
       order_cycle_id: 123, name: "Order cycle 1", open_at: 1.minute.ago.to_s, tags: ["tag1", "tag2"]
@@ -25,7 +26,7 @@ RSpec.describe WebhookDeliveryJob do
     Timecop.freeze do
       expected_body = {
         id: /.+/,
-        at: Time.zone.now.to_s,
+        at: at.to_s,
         event:,
         data:,
       }

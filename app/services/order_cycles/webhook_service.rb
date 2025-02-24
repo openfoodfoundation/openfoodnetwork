@@ -5,9 +5,9 @@
 
 module OrderCycles
   class WebhookService
-    def self.create_webhook_job(order_cycle, event)
+    def self.create_webhook_job(order_cycle, event, at)
       webhook_payload = order_cycle
-        .slice(:id, :name, :orders_open_at, :orders_close_at, :coordinator_id)
+        .slice(:id, :name, :orders_open_at, :opened_at, :orders_close_at, :coordinator_id)
         .merge(coordinator_name: order_cycle.coordinator.name)
 
       # Endpoints for coordinator owner
@@ -17,7 +17,7 @@ module OrderCycles
       webhook_endpoints |= order_cycle.distributors.map(&:owner).flat_map(&:webhook_endpoints)
 
       webhook_endpoints.each do |endpoint|
-        WebhookDeliveryJob.perform_later(endpoint.url, event, webhook_payload)
+        WebhookDeliveryJob.perform_later(endpoint.url, event, webhook_payload, at:)
       end
     end
   end

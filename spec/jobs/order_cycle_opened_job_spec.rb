@@ -1,62 +1,25 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require_relative '../../engines/dfc_provider/spec/support/authorization_helper'
 
 RSpec.describe OrderCycleOpenedJob do
+  include AuthorizationHelper
+
   let(:oc_opened_before) {
-    create(:order_cycle, orders_open_at: 1.hour.ago)
+    create(:simple_order_cycle, orders_open_at: 1.hour.ago)
   }
   let(:oc_opened_now) {
-    create(:order_cycle, orders_open_at: Time.zone.now)
+    create(:simple_order_cycle, orders_open_at: Time.zone.now)
   }
   let(:oc_opening_soon) {
-    create(:order_cycle, orders_open_at: 1.minute.from_now)
+    create(:simple_order_cycle, orders_open_at: 1.minute.from_now)
   }
 
   it "enqueues jobs for recently opened order cycles only" do
-    expect(OrderCycles::WebhookService)
-      .to receive(:create_webhook_job).with(oc_opened_now, 'order_cycle.opened')
-
-    expect(OrderCycles::WebhookService)
-      .not_to receive(:create_webhook_job).with(oc_opened_before, 'order_cycle.opened')
-
-    expect(OrderCycles::WebhookService)
-      .not_to receive(:create_webhook_job).with(oc_opening_soon, 'order_cycle.opened')
-
-    OrderCycleOpenedJob.perform_now
-  end
-
-  describe "concurrency", concurrency: true do
-    let(:breakpoint) { Mutex.new }
-
-    it "doesn't place duplicate job when run concurrently" do
-      oc_opened_now
-
-      # Pause jobs when placing new job:
-      breakpoint.lock
-      allow(OrderCycleOpenedJob).to(
-        receive(:new).and_wrap_original do |method, *args|
-          breakpoint.synchronize {}
-          method.call(*args)
-        end
-      )
-
-      expect(OrderCycles::WebhookService)
-        .to receive(:create_webhook_job).with(oc_opened_now, 'order_cycle.opened').once
-
-      # Start two jobs in parallel:
-      threads = [
-        Thread.new { OrderCycleOpenedJob.perform_now },
-        Thread.new { OrderCycleOpenedJob.perform_now },
-      ]
-
-      # Wait for both to jobs to pause.
-      # This can reveal a race condition.
-      sleep 0.1
-
-      # Resume and complete both jobs:
-      breakpoint.unlock
-      threads.each(&:join)
-    end
+    expect{ OrderCycleOpenedJob.perform_now }
+      .to enqueue_job(OpenOrderCycleJob).with(oc_opened_now.id)
+      .and enqueue_job(OpenOrderCycleJob).with(oc_opened_before.id).exactly(0).times
+      .and enqueue_job(OpenOrderCycleJob).with(oc_opening_soon.id).exactly(0).times
   end
 end
