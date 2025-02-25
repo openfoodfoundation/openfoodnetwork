@@ -15,7 +15,7 @@ module Admin
     def index
       # Fetch DFC catalog JSON for preview
       api = DfcRequest.new(spree_current_user)
-      @catalog_url = params.require(:catalog_url)
+      @catalog_url = params.require(:catalog_url).strip
       @catalog_json = api.call(@catalog_url)
       graph = DfcIo.import(@catalog_json)
       catalog = DfcCatalog.new(graph)
