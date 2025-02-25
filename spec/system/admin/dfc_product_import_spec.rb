@@ -22,7 +22,15 @@ RSpec.describe "DFC Product Import" do
 
     # We are testing against our own catalog for now but we want to replace
     # this with the URL of another app when available.
+    # We also add a common mistake: copying the URL with an extra space.
     host = Rails.application.default_url_options[:host]
+    url = " http://#{host}/api/dfc/enterprises/#{enterprise.id}/catalog_items"
+    fill_in "catalog_url", with: url
+    select enterprise.name, from: "Create products for enterprise"
+    click_button "Preview"
+
+    expect(page).to have_content "This catalog URL is not valid"
+
     url = "http://#{host}/api/dfc/enterprises/#{enterprise.id}/catalog_items"
     fill_in "catalog_url", with: url
     select enterprise.name, from: "Create products for enterprise"
