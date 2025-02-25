@@ -17,8 +17,7 @@ module Admin
       api = DfcRequest.new(spree_current_user)
       @catalog_url = params.require(:catalog_url).strip
       @catalog_json = api.call(@catalog_url)
-      graph = DfcIo.import(@catalog_json)
-      catalog = DfcCatalog.new(graph)
+      catalog = DfcCatalog.from_json(@catalog_json)
 
       # Render table and let user decide which ones to import.
       @items = catalog.products.map do |subject|
@@ -48,8 +47,7 @@ module Admin
       ids = params.require(:semanticIds)
 
       # Load DFC catalog JSON
-      graph = DfcIo.import(params.require(:catalog_json))
-      catalog = DfcCatalog.new(graph)
+      catalog = DfcCatalog.from_json(params.require(:catalog_json))
       catalog.apply_wholesale_values!
 
       # Import all selected products for given enterprise.
