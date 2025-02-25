@@ -25,8 +25,7 @@ class OrderCycleClosingJob < ApplicationJob
 
   def mark_as_processed
     OrderCycle.where(id: recently_closed_order_cycles).update_all(
-      processed_at: Time.zone.now,
-      updated_at: Time.zone.now
+      processed_at: Time.zone.now
     )
   end
 end
