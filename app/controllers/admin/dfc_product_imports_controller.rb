@@ -20,12 +20,7 @@ module Admin
       catalog = DfcCatalog.from_json(@catalog_json)
 
       # Render table and let user decide which ones to import.
-      @items = catalog.products.map do |subject|
-        [
-          subject,
-          @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
-        ]
-      end
+      @items = list_products(catalog)
     rescue URI::InvalidURIError
       flash[:error] = t ".invalid_url"
       redirect_to admin_product_import_path
@@ -74,6 +69,16 @@ module Admin
       @enterprise = OpenFoodNetwork::Permissions.new(spree_current_user)
         .managed_product_enterprises.is_primary_producer
         .find(params.require(:enterprise_id))
+    end
+
+    # List internal and external products for the preview.
+    def list_products(catalog)
+      catalog.products.map do |subject|
+        [
+          subject,
+          @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
+        ]
+      end
     end
   end
 end
