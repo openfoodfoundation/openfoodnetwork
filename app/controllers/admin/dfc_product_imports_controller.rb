@@ -27,6 +27,9 @@ module Admin
           @enterprise.supplied_variants.linked_to(subject.semanticId)&.product
         ]
       end
+    rescue URI::InvalidURIError
+      flash[:error] = t ".invalid_url"
+      redirect_to admin_product_import_path
     rescue Faraday::Error,
            Addressable::URI::InvalidURIError,
            ActionController::ParameterMissing => e
