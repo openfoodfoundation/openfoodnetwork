@@ -16,7 +16,7 @@ class OpenOrderCycleJob < ApplicationJob
 
       # Mark as opened
       opened_at = Time.zone.now
-      order_cycle.update_columns(opened_at:, updated_at: opened_at)
+      order_cycle.update_columns(opened_at:)
 
       # And notify any subscribers
       OrderCycles::WebhookService.create_webhook_job(order_cycle, 'order_cycle.opened', opened_at)
