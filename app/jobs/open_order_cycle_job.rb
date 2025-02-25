@@ -4,13 +4,14 @@
 #
 # Currently, an order cycle is considered open in the shopfront when orders_open_at >= now.
 # But now there are some pre-conditions for opening an order cycle, so we would like to change that.
-# Instead, the presence of opened_at (and absence of closed_at) should indicate it is open.
+# Instead, the presence of opened_at (and absence of processed_at) should indicate it is open.
 class OpenOrderCycleJob < ApplicationJob
+  sidekiq_options retry_for: 10.minutes
+
   def perform(order_cycle_id)
     ActiveRecord::Base.transaction do
       # Fetch order cycle if it's still unopened, and lock DB row until finished
-      order_cycle = OrderCycle.lock.find_by(id: order_cycle_id, opened_at: nil)
-      return if order_cycle.nil?
+      order_cycle = OrderCycle.lock.find_by!(id: order_cycle_id, opened_at: nil)
 
       sync_remote_variants(order_cycle)
 

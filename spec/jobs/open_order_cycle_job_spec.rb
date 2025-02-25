@@ -89,7 +89,13 @@ RSpec.describe OpenOrderCycleJob do
 
       # Resume and complete both jobs:
       breakpoint.unlock
-      threads.each(&:join)
+
+      # Join each thread to the main thread to ensure they end.
+      # Any exceptions that were raised, are raised to the main thread.
+      # We're expecting RecordNotFound because the record was locked by the first concurrent thread.
+      expect{
+        threads.each(&:join)
+      }.to raise_error ActiveRecord::RecordNotFound
     end
   end
 end
