@@ -53,9 +53,7 @@ class OpenOrderCycleJob < ApplicationJob
 
     # Import selected variants from each catalog
     catalogs.each do |catalog_url, catalog_links|
-      catalog_json = DfcRequest.new(dfc_user).call(catalog_url)
-      graph = DfcIo.import(catalog_json)
-      catalog = DfcCatalog.new(graph)
+      catalog = DfcCatalog.load(dfc_user, catalog_url)
       catalog.apply_wholesale_values!
 
       catalog_links.each do |link|
