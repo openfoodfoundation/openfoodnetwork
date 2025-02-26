@@ -15,7 +15,7 @@
       every: "5m"
     SubscriptionConfirmJob:
       every: "5m"
-    OrderCycleOpenedJob:
+    TriggerOrderCyclesToOpenJob:
       every: "5m"
     OrderCycleClosingJob:
       every: "5m"
