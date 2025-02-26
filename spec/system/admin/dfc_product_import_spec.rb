@@ -127,7 +127,7 @@ RSpec.describe "DFC Product Import" do
 
     visit admin_product_import_path
 
-    select enterprise.name, from: "Enterprise"
+    select enterprise.name, from: "Create products for enterprise"
     fill_in "catalog_url", with: catalog_url
 
     click_button "Preview"
