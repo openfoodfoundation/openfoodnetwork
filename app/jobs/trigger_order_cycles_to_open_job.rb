@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Trigger jobs for any order cycles that recently opened
-class OrderCycleOpenedJob < ApplicationJob
+class TriggerOrderCyclesToOpenJob < ApplicationJob
   def perform
     recently_opened_order_cycles.find_each do |order_cycle|
       OpenOrderCycleJob.perform_later(order_cycle.id)
