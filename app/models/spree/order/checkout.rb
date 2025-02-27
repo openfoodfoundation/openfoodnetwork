@@ -40,10 +40,7 @@ module Spree
               klass.next_event_transitions.each { |t| transition(t.merge(on: :next)) }
 
               # Persist the state on the order
-              after_transition do |order|
-                order.state = order.state
-                order.save
-              end
+              after_transition ->(order) { order.save }
 
               event :cancel do
                 transition to: :canceled, if: :allow_cancel?

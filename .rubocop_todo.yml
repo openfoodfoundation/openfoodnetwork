@@ -57,26 +57,6 @@ Lint/RedundantDirGlobSort:
     - 'engines/dfc_provider/spec/spec_helper.rb'
     - 'spec/system_helper.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: instance_of?, kind_of?, is_a?, eql?, respond_to?, equal?, presence, present?
-Lint/RedundantSafeNavigation:
-  Exclude:
-    - 'app/models/spree/payment.rb'
-
-# Offense count: 1
-Lint/SelfAssignment:
-  Exclude:
-    - 'app/models/spree/order/checkout.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AutoCorrect.
-Lint/UselessMethodDefinition:
-  Exclude:
-    - 'app/models/spree/gateway.rb'
-
 # Offense count: 24
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
