@@ -129,7 +129,7 @@ module Spree
     end
 
     def actions
-      return [] unless payment_source&.respond_to?(:actions)
+      return [] unless payment_source.respond_to?(:actions)
 
       payment_source.actions.select do |action|
         !payment_source.respond_to?("can_#{action}?") ||
